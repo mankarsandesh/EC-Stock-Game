@@ -1,0 +1,80 @@
+{
+    "filter": "filter",
+    "sort": "sort",
+    "search": "search",
+    "stock": "stock",
+    "default": "default",
+    "menu": {
+        "home": "home",
+        "profile": "profile",
+        "current bet": "current bet",
+        "history": "history",
+        "stock list": "stock list",
+        "announcement": "announcement",
+        "rule": "rule",
+        "setting": "setting"
+    },
+    "stock-list": {
+        "live price": "Live Price",
+        "reference": "reference",
+        "load more": "load more",
+        "search stock": "SEARCH STOCK"
+    },
+    "home": {
+        "welcome": "Welcome",
+        "goodluck": "GoodLuck"
+    },
+    "about": {
+        "title": "About",
+        "introduction": "This page is made to give you more informations."
+    },
+    "msg": {
+        "calculating": "Calculating...",
+        "marketclosed": "Market Closed!",
+        "reset": "Reset",
+        "confirm": "Confirm",
+        "gamerule": "Game Rule",
+        "payout": "Payout",
+        "deleteall": "Delete All",
+        "totalbet": "Total Bet",
+        "totalamount": "Total Amount",
+        "ok": "Ok",
+        "cancel": "Cancel",
+        "changechartview": "Change Chart View",
+        "reference": "Reference",
+        "totals": "Totals",
+        "winbet": "Win Bet",
+        "losebet": "Lose Bet",
+        "amount": "Amount",
+        "preset": "Preset",
+        "betnow": "Bet Now",
+        "gameid": "GameID"
+    },
+    "navlist": {
+        "live Stock": "live Stock",
+        "Us Stock": "Us Stock",
+        "Cypto Currency": "Cypto Currency",
+        "China Stocck": "China Stocck"
+    },
+    "gamemsg": {
+        "All games": "All games",
+        "Big-Small": "Big-Small",
+        "Odd-Even": "Odd-Even",
+        "High-Mid-Low": "High-Mid-Low",
+        "Specific-Number": "Specific-Number",
+
+        "firstdigit": "first digit",
+        "lastdigit": "last digit",
+        "bothdigit": "both digit",
+        "twodigit": "two digit",
+
+        "big": "big",
+        "small": "small",
+        "odd": "odd",
+        "even": "even",
+        "high": "high",
+        "mid": "mid",
+        "low": "low",
+        "tie": "tie"
+    }
+}

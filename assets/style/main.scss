@@ -1,0 +1,431 @@
+$mainColor: #003e70;
+$mainbg: #003e70;
+
+.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+  display: none !important;
+}
+%mainBtn {
+  background-color: $mainbg;
+  color: #ffffff;
+}
+%rules {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 20px 0px;
+}
+span.text-blue {
+  @extend %rules;
+  color: blue !important;
+}
+span.text-success {
+  @extend %rules;
+  color: green !important;
+}
+span.text-purple {
+  @extend %rules;
+  color: purple !important;
+}
+span.text-yellow {
+  @extend %rules;
+  color: #9d9338 !important;
+}
+span.text-blue-light {
+  @extend %rules;
+  color: blue !important;
+}
+span.text-blue-dark {
+  @extend %rules;
+}
+span.text-dont-no {
+  @extend %rules;
+}
+span.text-red {
+  @extend %rules;
+  color: red !important;
+}
+
+%notactive {
+  background-color: transparent;
+  box-shadow: none;
+  color: $mainColor;
+  height: 50px;
+  margin: 10px 0px;
+}
+%mainButton {
+  color: #ffffff;
+  background-color: $mainColor;
+  border-radius: 0;
+  height: 50px;
+  margin: 10px 0px;
+}
+.v-content__wrap {
+  .container {
+    .layout {
+      button.main-btn.v-btn--active {
+        @extend %mainButton;
+      }
+      button.main-btn.back {
+        color: #ffffff;
+        float: left;
+        background-color: $mainbg;
+      }
+    }
+  }
+}
+.v-content__wrap {
+  .container {
+    .layout {
+      button.main-btn {
+        @extend %notactive;
+      }
+    }
+  }
+}
+.d-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  .v-avatar {
+    background-color: #f1f1f196;
+    padding: 100px;
+    margin: 10px;
+  }
+  p {
+    margin: 0;
+    color: $mainColor;
+
+    font-size: 1rem;
+    text-transform: capitalize;
+    right: 50px;
+  }
+  span {
+    margin: 0 10px 0 50px;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+span.text-white {
+  i.fa.fa-bell {
+    color: #ffc107;
+  }
+}
+
+.table.table-striped {
+  tbody {
+    color: $mainColor;
+    tr {
+      .row {
+        font-size: 1rem;
+        font-weight: normal;
+        text-transform: uppercase;
+        color: $mainColor;
+        padding: 20px;
+      }
+      .v-input {
+        padding: 0;
+        label {
+          color: $mainColor;
+          text-transform: uppercase;
+        }
+        .v-text-field__details {
+          display: none;
+        }
+      }
+    }
+  }
+}
+nav {
+  .v-toolbar__content {
+    .v-toolbar__items {
+      a.v-btn--active {
+        color: #ffc107;
+      }
+      .v-btn--active:before,
+      .v-btn:hover:before,
+      .v-btn:focus:before {
+        background-color: transparent;
+      }
+    }
+  }
+}
+.v-window__container {
+  .v-window-item {
+    .flex {
+      table.table {
+        border: 0;
+        thead.thead-dark {
+          color: #ffffff;
+          background-color: $mainbg;
+          tr:nth-child(even) {
+            background-color: #003e702b;
+          }
+          tr {
+            height: 50px;
+            text-transform: uppercase;
+            th {
+              text-align: center;
+              border: 0;
+            }
+          }
+        }
+        tbody {
+          tr:nth-child(even) {
+            background-color: #003e702b;
+          }
+          tr {
+            height: 50px;
+            text-transform: uppercase;
+            th,
+            td {
+              text-transform: uppercase;
+              text-align: center;
+              color: $mainColor;
+              font-weight: 400;
+            }
+          }
+        }
+      }
+    }
+    .my-bg {
+      text-align: left;
+      background-color: #003e702b;
+      .v-input {
+        .v-input__control {
+          .v-input__slot {
+            label {
+              color: $mainColor;
+              font-size: 20px;
+              font-weight: 700;
+              text-transform: uppercase;
+            }
+            .v-input--selection-controls__input {
+              .accent--text {
+                color: $mainColor !important;
+                caret-color: $mainColor !important;
+              }
+            }
+          }
+        }
+      }
+      .layout {
+        button {
+          background-color: $mainbg;
+          color: #ffffff;
+        }
+
+        .flex {
+          text-align: center;
+          justify-content: center;
+          display: flex;
+          .v-responsive {
+            .v-responsive__content {
+              .text-white {
+                .v-input__control {
+                  background-color: transparent;
+                  .v-input__slot {
+                    .v-text-field__slot {
+                      input {
+                        color: #ffffff !important;
+                      }
+                    }
+                  }
+                }
+              }
+              .v-input {
+                .v-input__control {
+                  background-color: transparent;
+                  .v-input__slot {
+                    .v-text-field__slot {
+                      input {
+                        color: $mainColor;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .v-card__actions {
+            button {
+              background-color: $mainbg;
+              color: #ffffff;
+            }
+          }
+          .v-card__text {
+            font-style: italic;
+          }
+        }
+      }
+      .v-card__title {
+        color: $mainColor;
+        margin: 10px 10px 0 10px;
+        padding: 10px 10px 0 0;
+        font-size: 2rem;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      ul {
+        li {
+          .v-expansion-panel__header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: $mainColor;
+          }
+        }
+      }
+    }
+    .v-item-group {
+      button.view-chart {
+        float: left;
+        margin-left: 10px;
+        color: #ffffff !important;
+        background-color: $mainbg !important;
+      }
+      button.more-detail {
+        float: right;
+        margin-right: 10px;
+        color: #ffffff !important;
+        background-color: $mainbg !important;
+      }
+    }
+    .layout,
+    .action {
+      .won {
+        label {
+          color: $mainColor;
+        }
+        .v-input__control {
+          background-color: transparent !important;
+        }
+      }
+      .lost {
+        label {
+          color: red;
+        }
+        .v-input__control {
+          background-color: transparent !important;
+        }
+      }
+      .more {
+        position: absolute;
+        right: 0;
+      }
+      .v-card {
+        box-shadow: none;
+        .v-card__text {
+          color: $mainColor;
+          display: block;
+          text-align: left;
+          font-size: 1rem;
+          text-transform: capitalize;
+        }
+      }
+    }
+    button.my-btn.v-btn.theme--light {
+      @extend %mainBtn;
+    }
+    button.my-btn.cancel.v-btn.theme--light {
+      @extend %mainBtn;
+      background-color: #8c8c8c;
+    }
+    button.my-btn.go {
+      margin-top: 30px;
+      height: 40px;
+    }
+    .flex.float-right {
+      position: absolute;
+      right: 0;
+
+      .v-input {
+        .v-input__control {
+          .v-select__slot {
+            .v-select__selections {
+              color: #ffffff;
+            }
+          }
+          .v-input__slot {
+            background-color: $mainbg;
+
+            label {
+              color: #ffffff;
+            }
+            .v-input__append-inner {
+              .v-input__icon {
+                i {
+                  color: #ffffff;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .flex.main-select {
+      .v-input {
+        .v-input__control {
+          .v-select__slot {
+            .v-select__selections {
+              color: #ffffff;
+            }
+          }
+          .v-input__slot {
+            background-color: $mainbg;
+
+            label {
+              color: #ffffff;
+            }
+            .v-input__append-inner {
+              .v-input__icon {
+                i {
+                  color: #ffffff;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .layout {
+      .flex {
+        .v-input {
+          margin: 20px;
+          .v-input__prepend-outer {
+            .v-input__icon {
+              i {
+                color: $mainColor;
+              }
+            }
+          }
+          .v-input__control {
+            background-color: $mainbg;
+            border-radius: 4px;
+            .v-text-field__details {
+              display: none;
+            }
+            .v-input__slot {
+              .v-text-field__slot {
+                label {
+                  color: $mainColor;
+                  font-size: 1.8rem;
+                  margin: -6px;
+                }
+
+                input {
+                  color: #ffffff;
+                  font-size: 1.2rem;
+                  padding: 11px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

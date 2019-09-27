@@ -1,0 +1,79 @@
+{
+    "filter": "股票筛选",
+    "sort": "排序方式",
+    "search": "搜索",
+    "stock": "股票",
+    "default": "默认",
+    "menu": {
+        "home": "主页",
+        "profile": "我的资料",
+        "current bet": "下注状况",
+        "history": "历史",
+        "stock list": "股票信息",
+        "announcement": "公告",
+        "rule": "游戏规则",
+        "setting": "設置"
+    },
+    "stock-list": {
+        "live price": "实时报价",
+        "reference": "参考网址",
+        "load more": "更多"
+    },
+    "home": {
+        "welcome": "欢迎",
+        "goodluck": "祝好运"
+    },
+    "about": {
+        "title": "About",
+        "introduction": "This page is made to give you more informations."
+    },
+    "msg": {
+        "calculating": "计算中...",
+        "marketclosed": "市場收盤!",
+        "reset": "重啟",
+        "confirm": "确定",
+        "gamerule": "游戏规则",
+        "payout": "赔率",
+        "deleteall": "刪除所有",
+        "totalbet": "總賭注",
+        "totalamount": "總金額",
+        "ok": "好",
+        "cancel": "取消",
+        "changechartview": "转换走势图",
+        "reference": "开奖验证",
+        "totals": "總",
+        "winbet": "贏得賭注",
+        "losebet": "輸掉賭注",
+        "amount": "下注金额",
+        "preset": "預置",
+        "betnow": "距离关盘",
+        "gameid": "游戏期号"
+    },
+    "navlist": {
+        "live Stock": "正开放股票",
+        "Us Stock": "美国 股票",
+        "Cypto Currency": "虚拟币市场",
+        "China Stocck": "中国 股票"
+    },
+    "gamemsg": {
+        "All games": "所有遊戲",
+        "Big-Small": "大-小",
+        "Odd-Even": "单-双",
+        "High-Mid-Low": "上-中-下",
+        "Specific-Number": "数字",
+
+        "firstdigit": "第一位数",
+        "lastdigit": "第二位数",
+        "bothdigit": "合数",
+        "twodigit": "=两位数",
+
+        "big": "大",
+        "small": "小",
+        "odd": "单",
+        "even": "双",
+        "high": "上",
+        "mid": "中",
+        "low": "下",
+        "tie": "和"
+    }
+}

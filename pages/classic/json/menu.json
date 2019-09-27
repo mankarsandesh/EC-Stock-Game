@@ -1,0 +1,263 @@
+[{
+        "url": "l-btc1-live",
+        "name": "live Stock",
+        "children": [{
+                "url": "l-btc1-live",
+                "name": "BTC/USDT 1",
+                "childrens": [{
+                        "url": "l-btc1-live",
+                        "name": "live"
+                    },
+                    {
+                        "url": "l-btc1-bsf",
+                        "name": "Big-Small First digit"
+                    },
+                    {
+                        "url": "l-btc1-bsl",
+                        "name": "Big-Small Last Digit"
+                    },
+                    {
+                        "url": "l-btc1-bsb",
+                        "name": "Big-Small Both Digit"
+                    },
+                    {
+                        "url": "l-btc1-bst",
+                        "name": "Big-Small Two Digit"
+                    },
+                    {
+                        "url": "l-btc1-oef",
+                        "name": "Odd-Even First Digit"
+                    },
+                    {
+                        "url": "l-btc1-oel",
+                        "name": "Odd-Even Last Digit"
+                    },
+                    {
+                        "url": "l-btc1-oeb",
+                        "name": "Odd-Even Both Digit"
+                    },
+                    {
+                        "url": "l-btc1-oet",
+                        "name": "Odd-Even Two Digit"
+                    }
+                ]
+            },
+            {
+                "url": "l-btc5-live",
+                "name": "BTC/USDT 5",
+                "childrens": [{
+                        "url": "l-btc5-live",
+                        "name": "live"
+                    },
+                    {
+                        "url": "l-btc5-bsf",
+                        "name": "Big-Small First digit"
+                    },
+                    {
+                        "url": "l-btc5-bsl",
+                        "name": "Big-Small Last Digit"
+                    },
+                    {
+                        "url": "l-btc5-bsb",
+                        "name": "Big-Small Both Digit"
+                    },
+                    {
+                        "url": "l-btc5-bst",
+                        "name": "Big-Small Two Digit"
+                    },
+                    {
+                        "url": "l-btc5-oef",
+                        "name": "Odd-Even First Digit"
+                    },
+                    {
+                        "url": "l-btc5-oel",
+                        "name": "Odd-Even Last Digit"
+                    },
+                    {
+                        "url": "l-btc5-oeb",
+                        "name": "Odd-Even Both Digit"
+                    },
+                    {
+                        "url": "l-btc5-oet",
+                        "name": "Odd-Even Two Digit"
+                    }
+                ]
+            },
+            {
+                "url": "l-usindex-live",
+                "name": "US dollar Index",
+                "childrens": [{
+                        "url": "l-usindex-live",
+                        "name": "live"
+                    },
+                    {
+                        "url": "l-usindex-bsf",
+                        "name": "Big-Small First digit"
+                    },
+                    {
+                        "url": "l-usindex-bsl",
+                        "name": "Big-Small Last Digit"
+                    },
+                    {
+                        "url": "l-usindex-bsb",
+                        "name": "Big-Small Both Digit"
+                    },
+                    {
+                        "url": "l-usindex-bst",
+                        "name": "Big-Small Two Digit"
+                    },
+                    {
+                        "url": "l-usindex-oef",
+                        "name": "Odd-Even First Digit"
+                    },
+                    {
+                        "url": "l-usindex-oel",
+                        "name": "Odd-Even Last Digit"
+                    },
+                    {
+                        "url": "l-usindex-oeb",
+                        "name": "Odd-Even Both Digit"
+                    },
+                    {
+                        "url": "l-usindex-oet",
+                        "name": "Odd-Even Two Digit"
+                    }
+                ]
+            }
+
+        ]
+    },
+
+    {
+        "url": "st-usindex-live",
+        "name": "Us Stock",
+        "children": [{
+            "url": "st-usindex-live",
+            "name": "US dollar Index",
+            "childrens": [{
+                    "url": "st-usindex-live",
+                    "name": "live"
+                },
+                {
+                    "url": "st-usindex-bsf",
+                    "name": "Big-Small First digit"
+                },
+                {
+                    "url": "st-usindex-bsl",
+                    "name": "Big-Small Last Digit"
+                },
+                {
+                    "url": "st-usindex-bsb",
+                    "name": "Big-Small Both Digit"
+                },
+                {
+                    "url": "st-usindex-bst",
+                    "name": "Big-Small Two Digit"
+                },
+                {
+                    "url": "st-usindex-oef",
+                    "name": "Odd-Even First Digit"
+                },
+                {
+                    "url": "st-usindex-oel",
+                    "name": "Odd-Even Last Digit"
+                },
+                {
+                    "url": "st-usindex-oeb",
+                    "name": "Odd-Even Both Digit"
+                },
+                {
+                    "url": "st-usindex-oet",
+                    "name": "Odd-Even Two Digit"
+                }
+            ]
+        }]
+    },
+    {
+        "url": "st-btc1-live",
+        "name": "Cypto Currency",
+        "children": [{
+                "url": "st-btc1-live",
+                "name": "BTC/USDT 1",
+                "childrens": [{
+                        "url": "st-btc1-live",
+                        "name": "live"
+                    },
+                    {
+                        "url": "st-btc1-bsf",
+                        "name": "Big-Small First digit"
+                    },
+                    {
+                        "url": "st-btc1-bsl",
+                        "name": "Big-Small Last Digit"
+                    },
+                    {
+                        "url": "st-btc1-bsb",
+                        "name": "Big-Small Both Digit"
+                    },
+                    {
+                        "url": "st-btc1-bst",
+                        "name": "Big-Small Two Digit"
+                    },
+                    {
+                        "url": "st-btc1-oef",
+                        "name": "Odd-Even First Digit"
+                    },
+                    {
+                        "url": "st-btc1-oel",
+                        "name": "Odd-Even Last Digit"
+                    },
+                    {
+                        "url": "st-btc1-oeb",
+                        "name": "Odd-Even Both Digit"
+                    },
+                    {
+                        "url": "st-btc1-oet",
+                        "name": "Odd-Even Two Digit"
+                    }
+                ]
+            },
+            {
+                "url": "st-btc5-live",
+                "name": "BTC/USDT 5",
+                "childrens": [{
+                        "url": "st-btc5-live",
+                        "name": "live"
+                    },
+                    {
+                        "url": "st-btc5-bsf",
+                        "name": "Big-Small First digit"
+                    },
+                    {
+                        "url": "st-btc5-bsl",
+                        "name": "Big-Small Last Digit"
+                    },
+                    {
+                        "url": "st-btc5-bsb",
+                        "name": "Big-Small Both Digit"
+                    },
+                    {
+                        "url": "st-btc5-bst",
+                        "name": "Big-Small Two Digit"
+                    },
+                    {
+                        "url": "st-btc5-oef",
+                        "name": "Odd-Even First Digit"
+                    },
+                    {
+                        "url": "st-btc5-oel",
+                        "name": "Odd-Even Last Digit"
+                    },
+                    {
+                        "url": "st-btc5-oeb",
+                        "name": "Odd-Even Both Digit"
+                    },
+                    {
+                        "url": "st-btc5-oet",
+                        "name": "Odd-Even Two Digit"
+                    }
+                ]
+            }
+        ]
+    }
+]
