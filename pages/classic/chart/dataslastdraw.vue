@@ -45,9 +45,9 @@ export default {
             }
 
             if (times > calculat) {
-                this.time = this.$t('msg.calculating')
+                this.time = "Calculating..."
             } else if (times == 'close') {
-                this.time = this.$t('msg.marketclosed')
+                this.time = "Market Closed!"
             } else {
                 this.time = this.$t('msg.betnow') + ': ' + this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
             }

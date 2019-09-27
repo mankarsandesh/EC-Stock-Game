@@ -1,7 +1,5 @@
 <template>
 <div>
-    <!-- {{getStockName($route.params.id)}} -->
-    <!-- <animated-number :value="balance" :formatValue="formatToPrice" /> -->
     <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
         <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
     </v-tabs>
@@ -13,15 +11,11 @@
         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
         <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
 
-        <v-avatar size="65" justify-content-center  v-for="(item,key1) in chips" :key="key1">
-            <!-- <img class="ma-5" :src="item.img" :alt="item.title" />] -->
-             <v-img :src="item.img">
-              <v-text-field outlined v-model="item.price"></v-text-field>
+        <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+            <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                <span :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
             </v-img>
         </v-avatar>
-
-
-        <!-- <v-btn class="btn-50" v-for="(chip, idx2) in chips" :key="idx2" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name" :color="chip.color">{{chip.name}}</v-btn> -->
     </v-card>
 
     <v-tabs-items v-model="currentItem">
@@ -89,7 +83,7 @@
                                     </td>
                                     <td class="top-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'">
                                         <div class="text-bet">{{datas.name4}}</div>
-                                        <div class="text-stock">{{items.payoutt}}</div>
+                                        <div class="text-stock"></div>
                                         <div class="bet-box">
                                             <button class="form-btn" @click="getsnTwo(datas.name4)" />
                                         </div>
@@ -112,26 +106,30 @@
         <input type="text" class="form-input width-15" v-model="price" />
         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
         <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
-        <v-btn class="btn-50" v-for="(chip, idx2) in chips" :key="idx2" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name" :color="chip.color">{{chip.name}}</v-btn>
+        <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+            <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                <span :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+            </v-img>
+        </v-avatar>
     </v-card>
 
-    <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
-        <v-tab class="text-sm-left text-whites" v-for="(item1, idx1) in items" v-show="item1.name !='All games'" :key="idx1" :href="'#tab-' + item1.name">{{ $t('gamemsg.'+item1.name )}} </v-tab>
+    <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
+        <v-tab class="text-sm-left text-whites" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ baccarat1.name }} </v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="currentItem">
-        <v-tab-item v-for="(item1, idx3) in items" :key="idx3" :value="'tab-' + item1.name">
+    <v-tabs-items v-model="currentItems">
+        <v-tab-item v-for="(baccarat1, idx3) in baccarat" :key="idx3" :value="'tab-' + baccarat1.name">
             <v-card flat>
-                <v-expansion-panel v-model="panel" expand>
-                    {{ $t('gamemsg.'+item1.name )}}
-                </v-expansion-panel>
+                <v-tabs class="bg-colors" color="transparent" fixed-tabs slider-color="yellow" grow>
+                    <v-tab class="text-sm-left text-whites" v-for="(item5, idx11) in baccarat1.children" :key="idx11">{{ item5.name }} </v-tab>
+                </v-tabs>
+                {{ baccarat1.name }}
             </v-card>
         </v-tab-item>
     </v-tabs-items>
 
     <!-- tag ldialog -->
     <v-dialog v-model="dialog" persistent max-width="1240px">
-
         <v-card>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -142,7 +140,11 @@
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input type="text" class="form-input width-15" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
-                    <v-btn class="btn-50" v-for="(chip, idx2) in chips" :key="idx2" :disabled="balance < chip.name" @click="setPricetop($event)" :name="chip.name" :color="chip.color">{{chip.name}}</v-btn>
+                    <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                            <span :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                        </v-img>
+                    </v-avatar>
                 </v-card>
                 <table>
                     <tr>
@@ -151,11 +153,11 @@
                         <th>{{$t('msg.amount')}}</th>
                         <th><span @click="setPrice('reset')">{{$t('msg.deleteall')}}</span></th>
                     </tr>
-                    <tr v-for="(data ,idx11) in this.betData.betdetails" :key="idx11">
-                        <td>{{data.ruledt.split("-")[1] >= 0 ? $t('gamemsg.'+data.ruledt.split("-")[0])+' - '+data.ruledt.split("-")[1]: $t('gamemsg.'+data.ruledt.split("-")[0])+' - '+$t('gamemsg.'+data.ruledt.split("-")[1])}}</td>
+                    <tr v-for="(data ,idx11) in betDataShows" :key="idx11">
+                        <td>{{data.rule.split("-")[1] >= 0 ? $t('gamemsg.'+data.rule.split("-")[0])+' - '+data.rule.split("-")[1]: $t('gamemsg.'+data.rule.split("-")[0])+' - '+$t('gamemsg.'+data.rule.split("-")[1])}}</td>
                         <td>{{data.payout}}</td>
                         <td>
-                            <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :name="data.ruledt" :value="data.amount" />
+                            <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :name="data.rule" :value="data.amount" />
                         </td>
                         <td><button @click="deleteTodo(idx11)">Delete</button></td>
                     </tr>
@@ -177,7 +179,11 @@
     <v-dialog v-model="dialogtwo" persistent max-width="440px">
         <v-card>
             <v-card-text>
-                <v-btn class="btn-50" v-for="(chip, idx2) in chips" :key="idx2" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name" :color="chip.color">{{chip.name}}</v-btn>
+                <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                    <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <span :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                    </v-img>
+                </v-avatar>
                 <table>
                     <tr>
                         <th>TWO DIGIT</th>
@@ -204,8 +210,8 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click="dialogtwo = false">Close</v-btn>
-                <v-btn color="blue darken-1" flat @click="dialogtwo = false">Save</v-btn>
+                <v-btn color="blue darken-1" flat @click="dialogtwo = false">{{$t('msg.cancel')}}</v-btn>
+                <v-btn color="blue darken-1" flat @click="dialogtwo = false">{{$t('msg.ok')}}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -213,8 +219,10 @@
 </template>
 
 <script>
+import baccarats from "./chart/baccarat";
 import table from "./json/table.json";
 import chips from "./json/chips.json";
+import baccarat from "./json/baccarat.json";
 import openSocket from 'socket.io-client'
 import AnimatedNumber from "animated-number-vue";
 import {
@@ -223,7 +231,8 @@ import {
 export default {
     layout: "classic",
     components: {
-        AnimatedNumber
+        AnimatedNumber,
+        baccarats
     },
 
     async validate({
@@ -236,6 +245,8 @@ export default {
 
     data() {
         return {
+            currentItems: "tab-Big Small",
+            baccarat: baccarat,
             chips: chips,
             panel: [true, true, true, true],
             currentItem: "tab-All games",
@@ -246,6 +257,7 @@ export default {
                 betdetails: [],
                 betName: []
             },
+            betDataShows: [],
             dialog: false,
             dialogtwo: false,
             balance: this.$store.state.balance,
@@ -259,6 +271,7 @@ export default {
     mounted() {
         // console.log(this.getStockName(this.$route.params.id).loop)
         // this.getTime()
+        console.log(this.baccarat)
     },
     computed: {
         ...mapGetters(["getStockName"]),
@@ -278,7 +291,6 @@ export default {
                 total: this.sumTotalAll,
                 data: this.betData.betdetails,
                 webid: "001",
-                loop: this.getStockName(this.$route.params.id).loop
             }
         }
     },
@@ -312,6 +324,7 @@ export default {
         setPrice(e) {
             if (e == "reset") {
                 this.betData.betdetails = [];
+                this.betDataShows = [];
                 this.betData.betName = [];
                 this.price = null;
                 $("input:text").val("");
@@ -338,7 +351,7 @@ export default {
                 e.target.parentElement.children[2].children[0].className = "form-inputadd";
 
                 this.betData.betName.push({
-                    ruledt: e.target.parentElement.children[2].children[0].name,
+                    rule: e.target.parentElement.children[2].children[0].name,
                     stock: e.target.parentElement.children[2].children[0].dataset.stock,
                     payout: e.target.parentElement.children[1].innerText,
                 });
@@ -355,13 +368,13 @@ export default {
                 let index = this.betData.betName.indexOf(this.betData.betName);
                 if (index !== -1) this.betData.betName.splice(index, 1);
                 if (index !== -1) this.betData.betdetails.splice(index, 1);
+                if (index !== -1) this.betDataShows.splice(index, 1);
             }
             // console.log(this.betData.betName);
         },
 
         bet(e, specialName = "none") {
             // console.log(e)
-            // this.sumTotalAll()
             if (this.price == 0 || this.price == null) {
                 // console.log("Null-0");
                 return;
@@ -373,31 +386,61 @@ export default {
                 e.target.value = this.price;
             }
 
+            this.loop = this.getStockName(this.$route.params.id).loop
+
+            // Data send to server
             if (specialName !== "none") {
-                this.ruledt = specialName.ruledt;
+                this.rule = specialName.rule;
                 this.stock = specialName.stock;
-                this.payout = specialName.payout;
                 this.amount = this.price;
             } else {
-                this.ruledt = e.target.name;
+                this.rule = e.target.name;
                 this.stock = e.target.dataset.stock;
                 this.payout = e.target.parentElement.parentElement.children[1].innerText;
                 this.amount = parseInt(e.target.value);
             }
 
-            this.index = this.betData.betdetails.findIndex(x => x.ruledt === this.ruledt);
+            this.index = this.betData.betdetails.findIndex(x => x.rule === this.rule);
             if (this.index == -1) {
                 this.betData.betdetails.push({
-                    ruledt: this.ruledt,
+                    rule: this.rule,
                     stock: this.stock,
-                    payout: this.payout,
-                    amount: this.amount
+                    amount: this.amount,
+                    loop: this.loop
                 });
             } else {
                 this.betData.betdetails[this.index].amount = this.amount;
             }
+            // End data send to server
 
-            // console.log(this.betData.betdetails);
+            // Data Show 
+            if (specialName !== "none") {
+                this.rule = specialName.rule;
+                this.stock = specialName.stock;
+                this.payout = specialName.payout;
+                this.amount = this.price;
+            } else {
+                this.rule = e.target.name;
+                this.stock = e.target.dataset.stock;
+                this.payout = e.target.parentElement.parentElement.children[1].innerText;
+                this.amount = parseInt(e.target.value);
+            }
+
+            this.index = this.betDataShows.findIndex(x => x.rule === this.rule);
+            if (this.index == -1) {
+                this.betDataShows.push({
+                    rule: this.rule,
+                    stock: this.stock,
+                    payout: this.payout,
+                    amount: this.amount,
+                    loop: this.loop
+                });
+            } else {
+                this.betDataShows[this.index].amount = this.amount;
+            }
+            // End  data Show 
+            console.log(this.betDataShows)
+
         },
 
         getTime() {

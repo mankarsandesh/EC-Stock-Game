@@ -1,0 +1,85 @@
+[{
+        "id": "bs",
+        "name": "Big Small",
+        "children": [{
+                "id": "bsf",
+                "name": "First Digit"
+            },
+            {
+                "id": "bsl",
+                "name": "Last Digit"
+            },
+            {
+                "id": "bsb",
+                "name": "Both Digit"
+            },
+            {
+                "id": "bst",
+                "name": "Tow Digit"
+            }
+        ]
+    },
+    {
+        "id": "oe",
+        "name": "Odd Even",
+        "children": [{
+                "id": "oef",
+                "name": "First Digit"
+            },
+            {
+                "id": "oel",
+                "name": "Last Digit"
+            },
+            {
+                "id": "oeb",
+                "name": "Both Digit"
+            },
+            {
+                "id": "oet",
+                "name": "Tow Digit"
+            }
+        ]
+    },
+    {
+        "id": "hml",
+        "name": "High Mid Low",
+        "children": [{
+                "id": "hmlf",
+                "name": "First Digit"
+            },
+            {
+                "id": "hmll",
+                "name": "Last Digit"
+            },
+            {
+                "id": "hmlb",
+                "name": "Both Digit"
+            },
+            {
+                "id": "hmlt",
+                "name": "Tow Digit"
+            }
+        ]
+    },
+    {
+        "id": "sn",
+        "name": "Specific Number",
+        "children": [{
+                "id": "snf",
+                "name": "First Digit"
+            },
+            {
+                "id": "snl",
+                "name": "Last Digit"
+            },
+            {
+                "id": "snb",
+                "name": "Both Digit"
+            },
+            {
+                "id": "snt",
+                "name": "Tow Digit"
+            }
+        ]
+    }
+]
