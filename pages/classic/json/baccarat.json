@@ -1,83 +1,83 @@
 [{
-        "id": "bs",
+        "namech": "bs",
         "name": "Big Small",
         "children": [{
-                "id": "bsf",
+                "namech": "bsf",
                 "name": "First Digit"
             },
             {
-                "id": "bsl",
+                "namech": "bsl",
                 "name": "Last Digit"
             },
             {
-                "id": "bsb",
+                "namech": "bsb",
                 "name": "Both Digit"
             },
             {
-                "id": "bst",
+                "namech": "bst",
                 "name": "Tow Digit"
             }
         ]
     },
     {
-        "id": "oe",
+        "namech": "oe",
         "name": "Odd Even",
         "children": [{
-                "id": "oef",
+                "namech": "oef",
                 "name": "First Digit"
             },
             {
-                "id": "oel",
+                "namech": "oel",
                 "name": "Last Digit"
             },
             {
-                "id": "oeb",
+                "namech": "oeb",
                 "name": "Both Digit"
             },
             {
-                "id": "oet",
+                "namech": "oet",
                 "name": "Tow Digit"
             }
         ]
     },
     {
-        "id": "hml",
+        "namech": "hml",
         "name": "High Mid Low",
         "children": [{
-                "id": "hmlf",
+                "namech": "hmlf",
                 "name": "First Digit"
             },
             {
-                "id": "hmll",
+                "namech": "hmll",
                 "name": "Last Digit"
             },
             {
-                "id": "hmlb",
+                "namech": "hmlb",
                 "name": "Both Digit"
             },
             {
-                "id": "hmlt",
+                "namech": "hmlt",
                 "name": "Tow Digit"
             }
         ]
     },
     {
-        "id": "sn",
+        "namech": "sn",
         "name": "Specific Number",
         "children": [{
-                "id": "snf",
+                "namech": "snf",
                 "name": "First Digit"
             },
             {
-                "id": "snl",
+                "namech": "snl",
                 "name": "Last Digit"
             },
             {
-                "id": "snb",
+                "namech": "snb",
                 "name": "Both Digit"
             },
             {
-                "id": "snt",
+                "namech": "snt",
                 "name": "Tow Digit"
             }
         ]

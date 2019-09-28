@@ -114,16 +114,20 @@
     </v-card>
 
     <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
-        <v-tab class="text-sm-left text-whites" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ baccarat1.name }} </v-tab>
+        <v-tab class="text-sm-left text-whites"  @click="loadchart()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ baccarat1.name }} </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="currentItems">
         <v-tab-item v-for="(baccarat1, idx3) in baccarat" :key="idx3" :value="'tab-' + baccarat1.name">
             <v-card flat>
-                <v-tabs class="bg-colors" color="transparent" fixed-tabs slider-color="yellow" grow>
-                    <v-tab class="text-sm-left text-whites" v-for="(item5, idx11) in baccarat1.children" :key="idx11">{{ item5.name }} </v-tab>
+                <v-tabs class="bg-colors" v-model="currentItemss" color="transparent" fixed-tabs slider-color="yellow" grow>
+                    <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ baccarat2.name }}</v-tab>
                 </v-tabs>
-                {{ baccarat1.name }}
+                <!-- {{baccarat1.namech}}
+                <br>
+                {{currentItemss}} -->
+                <baccarats :chtable="baccarat1.namech" :chlists="currentItemss"/>
+
             </v-card>
         </v-tab-item>
     </v-tabs-items>
@@ -246,6 +250,7 @@ export default {
     data() {
         return {
             currentItems: "tab-Big Small",
+            currentItemss: null,
             baccarat: baccarat,
             chips: chips,
             panel: [true, true, true, true],
@@ -264,14 +269,15 @@ export default {
             sntwoloopstart: null,
             sntwoloopend: null,
             stockname: this.$route.params.id.split('-')[1],
-            twodigit_payout: 98.82
+            twodigit_payout: 98.82,
+            show1:true
         };
     },
 
     mounted() {
         // console.log(this.getStockName(this.$route.params.id).loop)
         // this.getTime()
-        console.log(this.baccarat)
+        // console.log(this.baccarat)
     },
     computed: {
         ...mapGetters(["getStockName"]),
@@ -295,6 +301,12 @@ export default {
         }
     },
     methods: {
+        loadchart() {
+            this.show1 = false
+            setTimeout(() => {
+                this.show1 = true
+            }, 60)
+        },
         formatToPrice(value) {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
