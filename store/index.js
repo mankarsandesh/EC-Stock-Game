@@ -6,6 +6,7 @@ const createStore = () => {
             locales: ['us', 'cn'],
             locale: localStorage.getItem('lang'),
             balance: 895000,
+
             // all stocks data 
             // if we have new stock available we can add it here with same object format 
             liveprice: {
@@ -196,6 +197,14 @@ const createStore = () => {
                 }
                 const previousPrice = state.liveprice[id].previousPrice
                 return previousPrice
+            },
+            getLoop: (state) => (id) => {
+                console.log("getLoop")
+                if (id == "") {
+                    return
+                }
+                const loop = state.stocks[id].loop
+                return loop
             },
             getLiveTime: (state) => (id) => {
                 // alert(Object.keys(state.time).length)

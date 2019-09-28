@@ -8,7 +8,7 @@
         <span>Stock Name: {{stockName}}-{{loop}}</span>
       </v-flex>
       <v-flex class="pt-1">
-        <span>odd: 1.92</span>
+        <span>odd: {{payout}}</span>
       </v-flex>
       <v-flex>
         <v-layout row>
@@ -54,6 +54,10 @@ export default {
     },
     betId: {
       type: String
+    },
+    payout:{
+      type:Number,
+      required:true
     }
   },
   data() {
