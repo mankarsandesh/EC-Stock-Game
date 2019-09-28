@@ -99,7 +99,7 @@
             </v-card>
         </v-tab-item>
     </v-tabs-items>
-
+test
     <v-card>
         <input type="checkbox" />{{$t('msg.preset')}}
         <button class="btn-preset">{{$t('msg.amount')}}</button>
