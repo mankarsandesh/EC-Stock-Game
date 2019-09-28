@@ -5,7 +5,7 @@
       v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
     >
       <p>bet close</p>
-    </div> -->
+    </div>-->
     <v-layout row>
       <popper
         v-for="data in firstDigit"
@@ -419,27 +419,8 @@
         </div>
         <v-btn slot="reference" v-show="number == 'both' " class="btn-small">{{index}}</v-btn>
       </popper>
-
-      <!-- <popper
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal
-            :stockName="$route.params.id"
-            :loop="getLoop($route.params.id)"
-            betId="twodigit-00"
-            :payout="payout_99"
-          ></betModal>
-        </div>
-        <v-btn slot="reference" v-show="number == 'two' " class="btn-small">00</v-btn>
-      </popper> -->
-
       <popper
-        v-for="(n,index) in 99"
+        v-for="(n,index) in 100"
         :key="index"
         trigger="click"
         :options="{
