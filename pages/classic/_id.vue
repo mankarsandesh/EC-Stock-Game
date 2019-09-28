@@ -17,7 +17,7 @@
             </v-img>
         </v-avatar>
     </v-card>
-testtthhhhhhhhhhhhh
+    
     <v-tabs-items v-model="currentItem">
         <v-tab-item v-for="(item, idx3) in items" :key="idx3" :value="'tab-' + item.name">
             <v-card flat>
