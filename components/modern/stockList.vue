@@ -14,7 +14,7 @@
         <td>
           <nuxt-link :to="'/modern/desktop/'+data.id">{{ data.stockname }}</nuxt-link>
         </td>
-        <td v-html="$options.filters.livePriceColor( data.currentPrice,data.previousPrice )"></td>
+        <td v-html="$options.filters.livePriceColor(getLivePrice(data.id),getPreviousPrice(data.id) )"></td>
         <td>{{getLotteryDraw(data.id) | betstatus(getStockById(data.id).loop)}}</td>
         <td>{{getLotteryDraw(data.id) | lotterydraw(getStockById(data.id).loop)}}</td>
       </tr>
@@ -25,7 +25,7 @@
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["getStockList", "getLotteryDraw", "getStockById"])
+    ...mapGetters(["getStockList", "getLotteryDraw", "getStockById","getLivePrice","getPreviousPrice"])
   },
   data() {
     return {};
