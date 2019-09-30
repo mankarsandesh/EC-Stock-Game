@@ -8,6 +8,8 @@
     </div>-->
     <v-layout row>
       <popper
+        v-for="data in firstDigit"
+        :key="data.rule"
         class="w20"
         trigger="click"
         :options="{
@@ -16,64 +18,15 @@
                 }"
       >
         <div class="popper">
-          <betModal stockName="sdfgsdfg" loop="1" betId="big first digit-1"></betModal>
+          <betModal
+            :stockName="$route.params.id"
+            :loop="getLoop($route.params.id)"
+            :betId="'firstdigit-'+data.rule"
+            :payout="data.payout"
+          ></betModal>
         </div>
         <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">BIG</span>
-          <br />
-          <span class="small-digit">First Digit</span>
-        </v-btn>
-      </popper>
-
-      <popper
-        class="w20"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">SMALL</span>
-          <br />
-          <span class="small-digit">First Digit</span>
-        </v-btn>
-      </popper>
-
-      <popper
-        class="w20"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">ODD</span>
-          <br />
-          <span class="small-digit">First Digit</span>
-        </v-btn>
-      </popper>
-
-      <popper
-        class="w20"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">EVEN</span>
+          <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">First Digit</span>
         </v-btn>
@@ -88,7 +41,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="firstdigit-high"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">HIGH</v-btn>
         </popper>
@@ -100,7 +58,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="firstdigit-mid"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">MID</v-btn>
         </popper>
@@ -112,7 +75,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="firstdigit-low"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">LOW</v-btn>
         </popper>
@@ -121,6 +89,8 @@
     <!-- Row betting button2 -->
     <v-layout row>
       <popper
+        v-for="data in lastDigit"
+        :key="data.rule"
         class="w20"
         trigger="click"
         :options="{
@@ -129,61 +99,15 @@
                 }"
       >
         <div class="popper">
-          <betModal></betModal>
+          <betModal
+            :stockName="$route.params.id"
+            :loop="getLoop($route.params.id)"
+            :betId="'lastdigit-'+data.rule"
+            :payout="data.payout"
+          ></betModal>
         </div>
         <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">BIG</span>
-          <br />
-          <span class="small-digit">Last Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w20"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">SMALL</span>
-          <br />
-          <span class="small-digit">Last Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w20"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">ODD</span>
-          <br />
-          <span class="small-digit">Last Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w20"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">EVEN</span>
+          <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Last Digit</span>
         </v-btn>
@@ -197,7 +121,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="twodigit-high"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">HIGH</v-btn>
         </popper>
@@ -209,7 +138,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="twodigit-mid"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">MID</v-btn>
         </popper>
@@ -221,7 +155,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="twodigit-low"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">LOW</v-btn>
         </popper>
@@ -231,6 +170,8 @@
     <!-- Row betting button3 -->
     <v-layout row>
       <popper
+        v-for="data in bothDigit"
+        :key="data.rule"
         class="w16"
         trigger="click"
         :options="{
@@ -239,82 +180,20 @@
                 }"
       >
         <div class="popper">
-          <betModal></betModal>
+          <betModal
+            :stockName="$route.params.id"
+            :loop="getLoop($route.params.id)"
+            :betId="'bothdigit-'+data.rule"
+            :payout="data.payout"
+          ></betModal>
         </div>
         <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">BIG</span>
+          <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Both Digit</span>
         </v-btn>
       </popper>
-      <popper
-        class="w16"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">TIE (0)</span>
-          <br />
-          <span class="small-digit">Both Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w16"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">SMALL</span>
-          <br />
-          <span class="small-digit">Both Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w16"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">ODD</span>
-          <br />
-          <span class="small-digit">Both Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w16"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">EVEN</span>
-          <br />
-          <span class="small-digit">Both Digit</span>
-        </v-btn>
-      </popper>
+
       <div class="d-block w18">
         <popper
           trigger="click"
@@ -324,7 +203,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="bothdigit-high"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">HIGH</v-btn>
         </popper>
@@ -336,7 +220,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="bothdigit-mid"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">MID</v-btn>
         </popper>
@@ -348,7 +237,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="bothdigit-low"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">LOW</v-btn>
         </popper>
@@ -358,6 +252,8 @@
     <!-- Row betting button3 -->
     <v-layout row>
       <popper
+        v-for="data in twoDigit"
+        :key="data.rule"
         class="w16"
         trigger="click"
         :options="{
@@ -366,78 +262,15 @@
                 }"
       >
         <div class="popper">
-          <betModal></betModal>
+          <betModal
+            :stockName="$route.params.id"
+            :loop="getLoop($route.params.id)"
+            :betId="'twodigit-'+data.rule"
+            :payout="data.payout"
+          ></betModal>
         </div>
         <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">BIG</span>
-          <br />
-          <span class="small-digit">Two Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w16"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">TIE (0)</span>
-          <br />
-          <span class="small-digit">Two Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w16"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">SMALL</span>
-          <br />
-          <span class="small-digit">Two Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w16"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">ODD</span>
-          <br />
-          <span class="small-digit">Two Digit</span>
-        </v-btn>
-      </popper>
-      <popper
-        class="w16"
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn class="align_button4" slot="reference">
-          <span class="big-digit">EVEN</span>
+          <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Two Digit</span>
         </v-btn>
@@ -451,7 +284,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="twodigit-high"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">HIGH</v-btn>
         </popper>
@@ -463,7 +301,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="twodigit-mid"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">MID</v-btn>
         </popper>
@@ -475,7 +318,12 @@
                 }"
         >
           <div class="popper">
-            <betModal></betModal>
+            <betModal
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+              betId="twodigit-low"
+              :payout="payout_high_mid_low"
+            ></betModal>
           </div>
           <v-btn class="betting-small" slot="reference">LOW</v-btn>
         </popper>
@@ -515,7 +363,7 @@
     <!-- Row betting button5 -->
     <v-layout row class="container-btn-small">
       <popper
-        v-for="index in 10"
+        v-for="(n,index) in 10"
         :key="index"
         trigger="click"
         :options="{
@@ -524,12 +372,17 @@
                 }"
       >
         <div class="popper">
-          <betModal></betModal>
+          <betModal
+            :stockName="$route.params.id"
+            :loop="getLoop($route.params.id)"
+            :betId="'firstdigit-'+index"
+            :payout="payout_09"
+          ></betModal>
         </div>
-        <v-btn slot="reference" v-show="number == 'first'" class="btn-small">{{index-1}}</v-btn>
+        <v-btn slot="reference" v-show="number == 'first'" class="btn-small">{{index}}</v-btn>
       </popper>
       <popper
-        v-for="index in 10"
+        v-for="(n,index) in 10"
         :key="index"
         trigger="click"
         :options="{
@@ -538,12 +391,17 @@
                 }"
       >
         <div class="popper">
-          <betModal></betModal>
+          <betModal
+            :stockName="$route.params.id"
+            :loop="getLoop($route.params.id)"
+            :betId="'lastdigit-'+index"
+            :payout="payout_09"
+          ></betModal>
         </div>
-        <v-btn slot="reference" v-show="number == 'last' " class="btn-small">{{index-1}}</v-btn>
+        <v-btn slot="reference" v-show="number == 'last' " class="btn-small">{{index}}</v-btn>
       </popper>
       <popper
-        v-for="index in 19"
+        v-for="(n,index) in 19"
         :key="index"
         trigger="click"
         :options="{
@@ -552,26 +410,17 @@
                 }"
       >
         <div class="popper">
-          <betModal></betModal>
+          <betModal
+            :stockName="$route.params.id"
+            :loop="getLoop($route.params.id)"
+            :betId="'bothdigit-'+index"
+            :payout="payout_18"
+          ></betModal>
         </div>
-        <v-btn slot="reference" v-show="number == 'both' " class="btn-small">{{index-1}}</v-btn>
+        <v-btn slot="reference" v-show="number == 'both' " class="btn-small">{{index}}</v-btn>
       </popper>
-
       <popper
-        trigger="click"
-        :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '25px' } }
-                }"
-      >
-        <div class="popper">
-          <betModal></betModal>
-        </div>
-        <v-btn slot="reference" v-show="number == 'two' " class="btn-small">00</v-btn>
-      </popper>
-      
-      <popper
-        v-for="index in 99"
+        v-for="(n,index) in 100"
         :key="index"
         trigger="click"
         :options="{
@@ -580,13 +429,18 @@
                 }"
       >
         <div class="popper">
-          <betModal></betModal>
+          <betModal
+            :stockName="$route.params.id"
+            :loop="getLoop($route.params.id)"
+            :betId="'twodigit-'+ index"
+            :payout="payout_99"
+          ></betModal>
         </div>
         <v-btn
           slot="reference"
           v-show="number == 'two' "
           class="btn-small"
-        >{{ index-1 < 9 ? "0" + index :index}}</v-btn>
+        >{{ index < 10 ? "0" + index :index}}</v-btn>
       </popper>
     </v-layout>
   </div>
@@ -597,11 +451,137 @@ import { mapGetters } from "vuex";
 import betModal from "~/components/modern/betModal";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-
+let payout = {
+  big_small: 1.92,
+  high_mid_low: 2.92,
+  _09: 9.82,
+  _18: 19.92,
+  _99: 98.82
+};
 export default {
   data() {
     return {
-      number: null
+      number: null,
+      payout_high_mid_low: payout.high_mid_low,
+      payout_09: payout._09,
+      payout_18: payout._18,
+      payout_99: payout._99,
+      firstDigit: [
+        {
+          rule: "big",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "small",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "odd",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "even",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        }
+      ],
+      lastDigit: [
+        {
+          rule: "big",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "small",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "odd",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "even",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        }
+      ],
+      bothDigit: [
+        {
+          rule: "big",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "tie",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "small",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "odd",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "even",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        }
+      ],
+      twoDigit: [
+        {
+          rule: "big",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "tie",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "small",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "odd",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        },
+        {
+          rule: "even",
+          stock_id: this.$route.params.id,
+          stock_name: this.$route.params.id,
+          payout: payout.big_small
+        }
+      ]
     };
   },
   components: {
@@ -609,7 +589,13 @@ export default {
     betModal
   },
   computed: {
-    ...mapGetters(["getLotteryDraw", "getStockLoop", "getLotteryDraw"]),
+    ...mapGetters([
+      "getLotteryDraw",
+      "getStockLoop",
+      "getLotteryDraw",
+      "getLoop"
+    ]),
+
     checkBetClose() {
       if (this.getStockLoop(this.$route.params.id) == 1) {
         return this.getLotteryDraw(this.$route.params.id) > 40;
@@ -619,11 +605,14 @@ export default {
     }
   },
   methods: {
+    payoutBigSmall() {
+      return this.payout.big_small;
+    },
     btnnumber(value) {
       value == this.number ? (this.number = null) : (this.number = value);
     }
   }
 };
-</script>  
+</script>
 <style scoped>
 </style>
