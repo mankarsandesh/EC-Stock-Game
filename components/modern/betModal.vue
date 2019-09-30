@@ -38,7 +38,7 @@
       <v-divider></v-divider>
       <v-flex xs-12 class="pt-2 text-uppercase">
         <v-btn color="#003e70" dark>confirm</v-btn>
-        <v-btn color="#003e70" dark>close</v-btn>
+        <v-btn color="#003e70" dark @click="closePopper">close</v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -93,6 +93,9 @@ export default {
     };
   },
   methods: {
+    closePopper(){
+      $('.closepopper').click()
+    },
     clear() {
       this.betValue = 0;
     }

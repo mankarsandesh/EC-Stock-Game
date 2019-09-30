@@ -1,5 +1,6 @@
 <template>
   <div class="p-relative">
+    <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <!-- <div
       class="bet-close"
