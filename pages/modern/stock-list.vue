@@ -129,9 +129,9 @@
       </v-flex>
     </v-layout>
     <!-- back to top -->
-    <back-to-top bottom="22px" right="22px" visibleoffset="150">
+    <!-- <back-to-top bottom="22px" right="22px" visibleoffset="150">
       <v-icon color="#fff" size="35">keyboard_arrow_up</v-icon>
-    </back-to-top>
+    </back-to-top> -->
   </div>
 </template>
 <script>

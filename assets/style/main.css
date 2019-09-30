@@ -472,14 +472,15 @@ button.btn-small.v-btn.theme--light {
     margin: 0;
 }
 
-.vue-back-to-top i {
+
+/* .vue-back-to-top i {
     width: 50%;
     display: block;
     height: 50%;
     border-radius: 50%;
     font-size: 25px !important;
     padding: 6px;
-}
+} */
 
 
 /* ================= Betting Button ===================== */

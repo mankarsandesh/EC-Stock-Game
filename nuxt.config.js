@@ -46,7 +46,6 @@ module.exports = {
      */
     plugins: [
         "@/plugins/vuetify",
-        "@/plugins/backtotop",
         "@/plugins/filters",
         "@/plugins/callApi",
         "@/plugins/i18n",
