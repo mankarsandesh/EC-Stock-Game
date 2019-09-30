@@ -70,6 +70,7 @@
               :data="getStockById($route.params.id).stockPrice"
               :time="getStockById($route.params.id).stockTime"
               :key="getStockById($route.params.id).stockPrice[0]"
+              height="550px"
             ></chartApp>
           </v-flex>
           <v-flex>
@@ -115,7 +116,7 @@
           <betButton :isFullscreen="true"></betButton>
         </v-flex>
       </v-flex>
-      <v-flex xs12 class="text-xs-center pt-5">
+      <v-flex xs12 class="text-xs-center">
         <footerBet></footerBet>
         <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''" style="background-color:#003f70">
           <tableTrendMap isFullscreen ></tableTrendMap>

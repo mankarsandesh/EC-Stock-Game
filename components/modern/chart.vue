@@ -10,7 +10,7 @@
         <span class="text-second">{{getLivePrice($route.params.id)}}</span>
       </v-flex>
     </v-layout>
-    <apexchart type="area" width="100%" height="400" :options="chartOptions" :series="series" />
+    <apexchart type="area" width="100%" :height="height" :options="chartOptions" :series="series" />
   </div>
 </template>
 <script>
@@ -18,6 +18,10 @@ import VueApexCharts from "vue-apexcharts";
 import {mapGetters} from "vuex"
 export default {
   props: {
+    height:{
+      type:String,
+      default:"400px"
+    },
     data: {
       type: Array,
       required: true
