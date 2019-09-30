@@ -7,8 +7,8 @@ const createStore = () => {
             locale: localStorage.getItem('lang'),
             balance: 895000,
 
-            // all stocks data 
-            // if we have new stock available we can add it here with same object format 
+            // all stocks data
+            // if we have new stock available we can add it here with same object format
             liveprice: {
                 btc1: {
                     currentPrice: 0,

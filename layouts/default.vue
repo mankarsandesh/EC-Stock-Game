@@ -57,7 +57,7 @@
   </v-app>
 </template>
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 
 import menu from "~/data/menu";
 
@@ -88,36 +88,12 @@ export default {
   },
 
   created() {
-    this.setLanguage();
+
   },
   mounted() {
-    this.asynInitCallApi();
 
-    // websocket broadcast live time aand timer
-    const socket = openSocket("https://websocket-timer.herokuapp.com");
-    socket.on("liveprice", data => {
-     this.setLivePrice(data)
-    });
-    socket.on("time", data => {
-      let time5 = data.SH000001.timer;
-      let time1 = data.btc1.timer;
-      // get new data
-      if (time5 == 241 || time1 == 41) {
-        this.asynInitCallApi();
-      }
-      this.SET_TIME(data);
-    });
   },
   methods: {
-    ...mapActions(["asynInitCallApi"]),
-    ...mapMutations(["SET_LANG", "SET_TIME","setLivePrice"]),
-    setLanguage() {
-      let lang = localStorage.getItem("lang");
-      if (lang == null) {
-        this.SET_LANG("cn");
-        localStorage.setItem("lang", this.getlocale);
-      }
-    }
   },
   computed: {
     ...mapGetters(["getBalance", "getStockLength", "getlocale"]),

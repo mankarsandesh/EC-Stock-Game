@@ -117,7 +117,7 @@
         </v-flex>
       </v-flex>
       <v-flex xs12 class="text-xs-center">
-        <footerBet></footerBet>
+        <footerBet v-if="getStockCrawlerData($route.params.id) !== ''"></footerBet>
         <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''" style="background-color:#003f70">
           <tableTrendMap isFullscreen ></tableTrendMap>
         </v-flex>
