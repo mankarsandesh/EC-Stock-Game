@@ -277,12 +277,24 @@ const createStore = () => {
                 let stock = id.split('-')[1]
                 let loop = state.stocks[stock].loop
 
+
                 let result = {
                     names,
                     stock,
                     loop,
 
                 }
+                return result
+            },
+            getStockNewData: (state) => (id) => {
+                console.log("getStockNewData")
+                if (id == "") return
+                let stock = id.split('-')[1]
+                let result = [null]
+                if (state.stocks[stock].crawlerData.length < 0) {
+                    return result
+                }
+                result = state.stocks[stock].crawlerData
                 return result
             },
 

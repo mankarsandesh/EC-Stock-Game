@@ -1,5 +1,8 @@
 <template>
 <div>
+    {{getStockName($route.params.id)}}
+     <!-- <br/> -->
+    <!-- {{getStockNewData($route.params.id)}} -->
     <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
         <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
     </v-tabs>
@@ -17,7 +20,7 @@
             </v-img>
         </v-avatar>
     </v-card>
-    
+
     <v-tabs-items v-model="currentItem">
         <v-tab-item v-for="(item, idx3) in items" :key="idx3" :value="'tab-' + item.name">
             <v-card flat>
@@ -114,7 +117,7 @@
     </v-card>
 
     <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
-        <v-tab class="text-sm-left text-whites"  @click="loadchart()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ baccarat1.name }} </v-tab>
+        <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ baccarat1.name }} </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="currentItems">
@@ -123,10 +126,11 @@
                 <v-tabs class="bg-colors" v-model="currentItemss" color="transparent" fixed-tabs slider-color="yellow" grow>
                     <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ baccarat2.name }}</v-tab>
                 </v-tabs>
-                <!-- {{baccarat1.namech}}
+                {{baccarat1.namech}}
                 <br>
-                {{currentItemss}} -->
-                <baccarats :chtable="baccarat1.namech" :chlists="currentItemss"/>
+                {{currentItemss}}
+                <!-- <baccarats :which_one="baccarat1.namech" :trendType="currentItemss" :dataArray="getStockNewData($route.params.id)" /> -->
+                <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" />
 
             </v-card>
         </v-tab-item>
@@ -253,7 +257,7 @@ export default {
             currentItemss: null,
             baccarat: baccarat,
             chips: chips,
-            panel: [true, true, true, true],
+            panel: [false, false, false, false],
             currentItem: "tab-All games",
             header: ["firstdigit", "lastdigit", "bothdigit", "twodigit"],
             items: table,
@@ -270,17 +274,17 @@ export default {
             sntwoloopend: null,
             stockname: this.$route.params.id.split('-')[1],
             twodigit_payout: 98.82,
-            show1:true
+            show1: true
         };
     },
 
     mounted() {
         // console.log(this.getStockName(this.$route.params.id).loop)
-        // this.getTime()
+        this.getTime()
         // console.log(this.baccarat)
     },
     computed: {
-        ...mapGetters(["getStockName"]),
+        ...mapGetters(["getStockName","getStockNewData"]),
         sumTotalAll() {
             let total = 0;
             if (this.betData.betdetails.length >= 0) {
@@ -305,7 +309,7 @@ export default {
             this.show1 = false
             setTimeout(() => {
                 this.show1 = true
-            }, 60)
+            }, 0)
         },
         formatToPrice(value) {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
@@ -495,11 +499,12 @@ export default {
 </script>
 
 <style>
-.btn-chips{
-        top: 31%;
+.btn-chips {
+    top: 31%;
     position: relative;
     margin-left: -4%;
 }
+
 .cancel {
     width: 2%;
 }

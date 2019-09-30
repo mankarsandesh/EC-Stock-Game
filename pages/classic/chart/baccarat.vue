@@ -2,55 +2,54 @@
 <div>
     {{chtable}} ==>> {{chlists}}
     <v-layout wrap>
-        <v-flex xs12 pb-2>
-            <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile" v-show="which_one=='B/S' || which_one==true ">
+        <v-flex v-show="chtable=='bs'">
+            <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <!-- <div v-show="isFullscreen">
                     <span class="countBig text-white"></span>
                     <span class="countSmall text-white"></span>
                 </div> -->
                 <div class="my-coltabledivlast">
-                    <table class="table-responsive" ref="tablebsTwo">
-                        <tr v-for="tr in rowTable">
-                            <td v-for="td in 500" style="border:1px solid #000000;"></td>
+                    <table class="table-responsive" ref="tablebsFirst">
+                        <tr v-for="tr in rowTable" :key="tr">
+                            <td v-for="td in 500" :key="td" style="border:1px solid #000000;"></td>
                         </tr>
                     </table>
                 </div>
             </div>
         </v-flex>
-
-        <v-flex xs12 pb-2>
-            <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile" v-show="which_one=='O/E' || which_one==true ">
+        <v-flex v-show="chtable=='oe'">
+            <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <!-- <div v-show="isFullscreen">
                     <span class="countOdd text-white"></span>
                     <span class="countEven text-white"></span>
                 </div> -->
                 <div class="my-coltabledivlast">
-                    <table class="table-responsive" ref="tableOETwo">
-                        <tr v-for="tr in rowTable">
-                            <td v-for="td in 300" style="border:1px solid #000000;"></td>
+                    <table class="table-responsive" ref="tableOEFirst">
+                        <tr v-for="tr in rowTable" :key="tr">
+                            <td v-for="td in 300" :key="td" style="border:1px solid #000000;"></td>
                         </tr>
                     </table>
                 </div>
             </div>
         </v-flex>
-        <v-flex xs12 pb-2>
-            <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile" v-show="which_one=='U/L' || which_one==true ">
+        <v-flex v-show="chtable=='hml'">
+            <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <!-- <div v-show="isFullscreen">
                     <span class="countUpper text-white"></span>
                     <span class="countMiddle text-white"></span>
                     <span class="countLower text-white"></span>
                 </div> -->
                 <div class="my-coltabledivlast">
-                    <table class="table-responsive" ref="tablebUMLTwo">
-                        <tr v-for="tr in rowTable">
-                            <td v-for="td in 900" style="border:1px solid #000000;"></td>
+                    <table class="table-responsive" ref="tablebUMLFirst">
+                        <tr v-for="tr in rowTable" :key="tr">
+                            <td v-for="td in 900" :key="td" style="border:1px solid #000000;"></td>
                         </tr>
                     </table>
                 </div>
             </div>
         </v-flex>
-        <v-flex xs12 pb-2>
-            <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile" v-show="which_one=='NUM' || which_one==true ">
+        <v-flex v-show="chtable=='sn'">
+            <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <!-- <div v-show="isFullscreen" ref="sortNumber">
                     <span class="text-white"></span>
                     <span class="text-white"></span>
@@ -60,9 +59,9 @@
                     <span class="text-white"></span>
                 </div> -->
                 <div class="my-coltabledivlast">
-                    <table class="table-responsive" ref="tableNumberTwo">
-                        <tr v-for="tr in rowTable">
-                            <td v-for="td in 100" style="border:1px solid #000000;"></td>
+                    <table class="table-responsive" ref="tableNumberFirst">
+                        <tr v-for="tr in rowTable" :key="tr">
+                            <td v-for="td in 100" :key="td" style="border:1px solid #000000;"></td>
                         </tr>
                     </table>
                 </div>
@@ -75,34 +74,21 @@
 <script>
 export default {
     props: {
-        // dataArray: {
-        //     type: Array,
-        //     required: true
-        // },
-        //first,last,both,two
-        // chlist: {
-        //     type: String,
-        //     required: true
-        // },
         rowTable: {
             type: Number,
             default: 6
         },
         chtable: String,
         chlists: String,
-        // tbdatachart: String,
-        which_one: {
-            default: true
-        },
         isFullscreen: Boolean
     },
     data() {
         return {
             url: "",
-            trent: [],
-            trentNumber: [],
-            trentOE: [],
-            trentUML: [],
+            trentFirst: [],
+            trentOEFirst: [],
+            trentUMLFirst: [],
+            trentNumberFirst: [],
             gameID: [],
             is_show_bs: true,
             is_show_oe: true,
@@ -112,13 +98,13 @@ export default {
     },
     mounted() {
         this.getTableChartBS();
-
         // this.autoScroll();
+
     },
     watch: {
         chlist() {
             this.getTableChartBS();
-        }
+        },
         // tbdatachart() {
         //   this.number =
         //     this.tbdatachart[this.tbdatachart.length - 2] +
@@ -131,36 +117,38 @@ export default {
     },
     methods: {
         clearTrendMap() {
-            this.trent = [];
-            this.trentNumber = [];
-            this.trentOE = [];
-            this.trentUML = [];
+            this.trentFirst = [];
+            this.trentOEFirst = [];
+            this.trentUMLFirst = [];
+            this.trentNumberFirst = [];
+
             //bs
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 500; j++) {
-                    this.$refs.tablebsTwo.children[i].children[j].textContent = "";
-                    this.$refs.tablebsTwo.children[i].children[j].className = "";
+                    this.$refs.tablebsFirst.children[i].children[j].textContent = "";
+                    this.$refs.tablebsFirst.children[i].children[j].className = "";
                 }
             }
             //oe
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 300; j++) {
-                    this.$refs.tableOETwo.children[i].children[j].textContent = "";
-                    this.$refs.tableOETwo.children[i].children[j].className = "";
+                    this.$refs.tableOEFirst.children[i].children[j].textContent = "";
+                    this.$refs.tableOEFirst.children[i].children[j].className = "";
                 }
             }
+
             //uml
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 900; j++) {
-                    this.$refs.tablebUMLTwo.children[i].children[j].textContent = "";
-                    this.$refs.tablebUMLTwo.children[i].children[j].className = "";
+                    this.$refs.tablebUMLFirst.children[i].children[j].textContent = "";
+                    this.$refs.tablebUMLFirst.children[i].children[j].className = "";
                 }
             }
             //number
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 100; j++) {
-                    this.$refs.tableNumberTwo.children[i].children[j].textContent = "";
-                    this.$refs.tableNumberTwo.children[i].children[j].className = "";
+                    this.$refs.tableNumberFirst.children[i].children[j].textContent = "";
+                    this.$refs.tableNumberFirst.children[i].children[j].className = "";
                 }
             }
         },
@@ -171,185 +159,174 @@ export default {
         // },
         autoScroll() {
             let _this = this;
-            // setTimeout(function() {
-            let lop =
-                $(".my-coltabledivlast")
-                .first()
-                .width() - 30;
-            let valuebs = $(_this.$refs.tablebsTwo).find(".mystylelast")[0]
-                .offsetLeft;
-            let valueoe = $(_this.$refs.tableOETwo).find(".oestylelast")[0]
-                .offsetLeft;
-            let valueuml = $(_this.$refs.tablebUMLTwo).find(".umlstylelast")[0]
-                .offsetLeft;
-            let valuenum = $(_this.$refs.tableNumberTwo).find(".numScroll")[0]
-                .offsetLeft;
-            $(_this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
-            $(_this.$refs.tableOETwo).scrollLeft(valueoe - lop);
-            $(_this.$refs.tablebUMLTwo).scrollLeft(valueuml - lop);
-            $(_this.$refs.tableNumberTwo).scrollLeft(valuenum - lop);
-            // }, 1000);
+            setTimeout(function () {
+                let lop =
+                    $(".my-coltabledivlast")
+                    .first()
+                    .width() - 30;
+                let valuebs = $(_this.$refs.tablebsFirst).find(".mystylelast")[0].offsetLeft;
+                let valueoe = $(_this.$refs.tableOEFirst).find(".oestylelast")[0].offsetLeft;
+                let valueuml = $(_this.$refs.tablebUMLFirst).find(".umlstylelast")[0].offsetLeft;
+                let valuenum = $(_this.$refs.tableNumberFirst).find(".numScroll")[0].offsetLeft;
+                $(_this.$refs.tablebsFirst).scrollLeft(valuebs - lop);
+                $(_this.$refs.tableOEFirst).scrollLeft(valueoe - lop);
+                $(_this.$refs.tablebUMLFirst).scrollLeft(valueuml - lop);
+                $(_this.$refs.tableNumberFirst).scrollLeft(valuenum - lop);
+            }, 1000);
         },
         // sleep(milliseconds) {
         //   return new Promise(resolve => setTimeout(resolve, milliseconds));
         // },
         getTableChartBS() {
-            // if (response.data.data === "") return;
             this.clearTrendMap();
-
             this.apis = "http://159.138.54.214/api/datahistory/BTCUSDT1";
             this.$axios(this.apis).then(response => {
-                console.log(response.data)
+
                 let n = 0;
                 response.data.forEach(element => {
-
                     n++;
-                    if (this.chtable == "bs") {
-                        this.gameID.push(
-                            element.gameid + "\n" + element.PT + "\n" + element.created_at
-                        );
-                        //bigsmall
-                        if (this.chlists == "First Digit") {
-                            let rs = element.PT[element.PT.length - 2].toString();
-                            let firstlast = parseInt(rs);
+                    this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
 
-                            if (firstlast < 5) {
-                                this.trent.push(0);
+                    if (this.chtable == "bs") {
+                        //bigsmall
+                        if (this.chlists == "bs-First Digit") {
+                            let rs1 = element.PT[element.PT.length - 2].toString();
+                            let firstlast1 = parseInt(rs1);
+
+                            if (firstlast1 < 5) {
+                                this.trentFirst.push(0);
                             } else {
-                                this.trent.push(1);
+                                this.trentFirst.push(1);
                             }
-                        } else if (this.chlists == "Last Digit") {
-                            let rs = element.PT[element.PT.length - 1].toString();
-                            let firstlast = parseInt(rs);
-                            if (firstlast < 5) {
-                                this.trent.push(0);
+                        } else if (this.chlists == "bs-Last Digit") {
+
+                            let rs2 = element.PT[element.PT.length - 1].toString();
+                            let firstlast2 = parseInt(rs2);
+                            if (firstlast2 < 5) {
+                                this.trentFirst.push(0);
                             } else {
-                                this.trent.push(1);
+                                this.trentFirst.push(1);
                             }
-                        } else if (this.chlists == "Both Digit") {
-                            let rs = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
-                            let firstlast = parseInt(rs);
-                            if (firstlast < 9) {
-                                this.trent.push(0);
+                        } else if (this.chlists == "bs-Both Digit") {
+                            let rs3 = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
+                            let firstlast3 = parseInt(rs3);
+                            if (firstlast3 < 9) {
+                                this.trentFirst.push(0);
                             } else {
-                                this.trent.push(1);
+                                this.trentFirst.push(1);
                             }
-                        } else if (this.chlists == "Two Digit") {
-                            let rs = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
-                            let firstlast = parseInt(rs);
-                            if (firstlast < 49) {
-                                this.trent.push(0);
+                        } else if (this.chlists == "bs-Two Digit") {
+                            let rs4 = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
+                            let firstlast4 = parseInt(rs4);
+                            if (firstlast4 < 49) {
+                                this.trentFirst.push(0);
                             } else {
-                                this.trent.push(1);
+                                this.trentFirst.push(1);
                             }
                         }
 
                         if (n == response.data.length) {
-                            this.tablechartBS();
+                            this.tablechartBSFirst();
                             return;
                         }
 
                     } else if (this.chtable == "oe") {
-                        this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
                         // odd even
-                        if (this.chlists == "First Digit") {
-                            let rs = element.PT[element.PT.length - 2].toString();
-                            let firstlast = parseInt(rs);
-
-                            this.trentOE.push(firstlast % 2);
-                        } else if (this.chlists == "Last Digit") {
-                            let rs = element.PT[element.PT.length - 1].toString();
-                            let firstlast = parseInt(rs);
-                            this.trentOE.push(firstlast % 2);
-                        } else if (this.chlists == "Both Digit") {
-                            let rs = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
-                            let firstlast = parseInt(rs);
-                            this.trentOE.push(firstlast % 2);
-                        } else if (this.chlists == "Two Digit") {
-                            let rs = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
-                            let firstlast = parseInt(rs);
-                            this.trentOE.push(firstlast % 2);
+                        if (this.chlists == "oe-First Digit") {
+                            let rs1 = element.PT[element.PT.length - 2].toString();
+                            let firstlast1 = parseInt(rs1);
+                            this.trentOEFirst.push(firstlast1 % 2);
+                        } else if (this.chlists == "oe-Last Digit") {
+                            let rs2 = element.PT[element.PT.length - 1].toString();
+                            let firstlast2 = parseInt(rs2);
+                            this.trentOEFirst.push(firstlast2 % 2);
+                        } else if (this.chlists == "oe-Both Digit") {
+                            let rs3 = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
+                            let firstlast3 = parseInt(rs3);
+                            this.trentOEFirst.push(firstlast3 % 2);
+                        } else if (this.chlists == "oe-Two Digit") {
+                            let rs4 = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
+                            let firstlast4 = parseInt(rs4);
+                            this.trentOEFirst.push(firstlast4 % 2);
                         }
 
                         if (n == response.data.length) {
-                            this.tablechartOE();
+                            this.tablechartOEFirst();
                             return;
                         }
 
                     } else if (this.chtable == "hml") {
-                        this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
                         // hml
-                        if (this.chlists == "First Digit") {
-                            let rs = element.PT[element.PT.length - 2].toString();
-                            let firstlast = parseInt(rs);
+                        if (this.chlists == "hml-First Digit") {
+                            let rs1 = element.PT[element.PT.length - 2].toString();
+                            let firstlast1 = parseInt(rs1);
 
-                            if (firstlast >= 0 && firstlast <= 3) {
-                                this.trentUML.push(0);
-                            } else if (firstlast >= 4 && firstlast <= 6) {
-                                this.trentUML.push(1);
-                            } else if (firstlast >= 7 && firstlast <= 9) {
-                                this.trentUML.push(2);
+                            if (firstlast1 >= 0 && firstlast1 <= 3) {
+                                this.trentUMLFirst.push(0);
+                            } else if (firstlast1 >= 4 && firstlast1 <= 6) {
+                                this.trentUMLFirst.push(1);
+                            } else if (firstlast1 >= 7 && firstlast1 <= 9) {
+                                this.trentUMLFirst.push(2);
                             }
-                        } else if (this.chlists == "Last Digit") {
-                            let rs = element.PT[element.PT.length - 1].toString();
-                            let firstlast = parseInt(rs);
-                            if (firstlast >= 0 && firstlast <= 3) {
-                                this.trentUML.push(0);
-                            } else if (firstlast >= 4 && firstlast <= 6) {
-                                this.trentUML.push(1);
-                            } else if (firstlast >= 7 && firstlast <= 9) {
-                                this.trentUML.push(2);
+                        } else if (this.chlists == "hml-Last Digit") {
+                            let rs2 = element.PT[element.PT.length - 1].toString();
+                            let firstlast2 = parseInt(rs2);
+                            if (firstlast2 >= 0 && firstlast2 <= 3) {
+                                this.trentUMLFirst.push(0);
+                            } else if (firstlast2 >= 4 && firstlast2 <= 6) {
+                                this.trentUMLFirst.push(1);
+                            } else if (firstlast2 >= 7 && firstlast2 <= 9) {
+                                this.trentUMLFirst.push(2);
                             }
-                        } else if (this.chlists == "Both Digit") {
-                            let rs = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
-                            let firstlast = parseInt(rs);
-                            if (firstlast >= 0 && firstlast <= 6) {
-                                this.trentUML.push(0);
-                            } else if (firstlast >= 7 && firstlast <= 12) {
-                                this.trentUML.push(1);
-                            } else if (firstlast >= 13 && firstlast <= 18) {
-                                this.trentUML.push(2);
+                        } else if (this.chlists == "hml-Both Digit") {
+                            let rs3 = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
+                            let firstlast3 = parseInt(rs3);
+                            if (firstlast3 >= 0 && firstlast3 <= 6) {
+                                this.trentUMLFirst.push(0);
+                            } else if (firstlast3 >= 7 && firstlast3 <= 12) {
+                                this.trentUMLFirst.push(1);
+                            } else if (firstlast3 >= 13 && firstlast3 <= 18) {
+                                this.trentUMLFirst.push(2);
                             }
-                        } else if (this.chlists == "Two Digit") {
-                            let rs = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
-                            let firstlast = parseInt(rs);
-                            if (firstlast >= 0 && firstlast <= 33) {
-                                this.trentUML.push(0);
-                            } else if (firstlast >= 34 && firstlast <= 66) {
-                                this.trentUML.push(1);
-                            } else if (firstlast >= 67 && firstlast <= 99) {
-                                this.trentUML.push(2);
+                        } else if (this.chlists == "hml-Two Digit") {
+                            let rs4 = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
+                            let firstlast4 = parseInt(rs4);
+                            if (firstlast4 >= 0 && firstlast4 <= 33) {
+                                this.trentUMLFirst.push(0);
+                            } else if (firstlast4 >= 34 && firstlast4 <= 66) {
+                                this.trentUMLFirst.push(1);
+                            } else if (firstlast4 >= 67 && firstlast4 <= 99) {
+                                this.trentUMLFirst.push(2);
                             }
                         }
 
                         if (n == response.data.length) {
-                            this.tablechartUML();
+                            this.tablechartUMLFirst();
                             return;
                         }
                     } else if (this.chtable == "sn") {
-                        this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
                         // sn
-                        if (this.chlists == "First Digit") {
-                            let rs = element.PT[element.PT.length - 2].toString();
-                            let firstlast = parseInt(rs);
+                        if (this.chlists == "sn-First Digit") {
+                            let rs1 = element.PT[element.PT.length - 2].toString();
+                            let firstlast1 = parseInt(rs1);
 
-                            this.trentNumber.push(firstlast);
-                        } else if (this.chlists == "Last Digit") {
-                            let rs = element.PT[element.PT.length - 1].toString();
-                            let firstlast = parseInt(rs);
-                            this.trentNumber.push(firstlast);
-                        } else if (this.chlists == "Both Digit") {
-                            let rs = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
-                            let firstlast = parseInt(rs);
-                            this.trentNumber.push(firstlast);
-                        } else if (this.chlists == "Two Digit") {
-                            let rs = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
-                            let firstlast = parseInt(rs);
-                            this.trentNumber.push(firstlast);
+                            this.trentNumberFirst.push(firstlast1);
+                        } else if (this.chlists == "sn-Last Digit") {
+                            let rs2 = element.PT[element.PT.length - 1].toString();
+                            let firstlast2 = parseInt(rs2);
+                            this.trentNumberFirst.push(firstlast2);
+                        } else if (this.chlists == "sn-Both Digit") {
+                            let rs3 = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
+                            let firstlast3 = parseInt(rs3);
+                            this.trentNumberFirst.push(firstlast3);
+                        } else if (this.chlists == "sn-Two Digit") {
+                            let rs4 = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
+                            let firstlast4 = parseInt(rs4);
+                            this.trentNumberFirst.push(firstlast4);
                         }
 
                         if (n == response.data.length) {
-                            this.tablechartnumber();
+                            this.tablechartnumberFirst();
                             return;
                         }
                     }
@@ -357,69 +334,69 @@ export default {
                 });
             });
         },
-        tablechartBS() {
+        tablechartBSFirst() {
             let countBig = 0;
             let countSmall = 0;
-            console.log(this.$refs);
+            // console.log(this.$refs);
             // loop table[][]
             var s = -1;
             loop1: for (
-                let j = 0; j < this.$refs.tablebsTwo.children[0].children.length; j++
+                let j = 0; j < this.$refs.tablebsFirst.children[0].children.length; j++
             ) {
                 // j = td tag
                 loop2: for (
-                    let i = 0; i < this.$refs.tablebsTwo.childElementCount; i++
+                    let i = 0; i < this.$refs.tablebsFirst.childElementCount; i++
                 ) {
                     // auto scroll
                     //set classs to ref the last one
-                    if (this.trent.length == s) {
-                        this.$refs.tablebsTwo.children[i].children[j].classList.add(
+                    if (this.trentFirst.length == s) {
+                        this.$refs.tablebsFirst.children[i].children[j].classList.add(
                             "mystylelast"
                         );
                         let lop =
                             $(".my-coltabledivlast")
                             .first()
                             .width() - 130;
-                        let valuebs = $(this.$refs.tablebsTwo).find(".mystylelast")[0]
+                        let valuebs = $(this.$refs.tablebsFirst).find(".mystylelast")[0]
                             .offsetLeft;
-                        $(this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
+                        $(this.$refs.tablebsFirst).scrollLeft(valuebs - lop);
 
-                        // $(this.$refs.tablebsTwo)
+                        // $(this.$refs.tablebsFirst)
                         //   .find(".mystylelast")[0]
                         //   .scrollIntoView({ inline: "end" });
                     }
                     // if loop all s it will render B&S and exit all loop
-                    if (s == this.trent.length) {
+                    if (s == this.trentFirst.length) {
                         for (let i = 0; i < this.rowTable; i++) {
-                            // tablebsTwo.children[i].children[""0""]
-                            //console.log(this.$refs.tablebsTwo.children[i]);
+                            // tablebsFirst.children[i].children[""0""]
+                            //console.log(this.$refs.tablebsFirst.children[i]);
                             for (let j = 0; j < 300; j++) {
                                 if (
-                                    this.$refs.tablebsTwo.children[i].children[j].textContent ===
+                                    this.$refs.tablebsFirst.children[i].children[j].textContent ===
                                     "1"
                                 ) {
                                     countBig++;
                                     $(".countBig").text("Big" + " = " + countBig);
-                                    this.$refs.tablebsTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "";
-                                    this.$refs.tablebsTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "B";
-                                    this.$refs.tablebsTwo.children[i].children[j].classList.add(
+                                    this.$refs.tablebsFirst.children[i].children[j].classList.add(
                                         "rs1"
                                     );
                                 } else if (
-                                    this.$refs.tablebsTwo.children[i].children[j].textContent ===
+                                    this.$refs.tablebsFirst.children[i].children[j].textContent ===
                                     "0"
                                 ) {
                                     countSmall++;
                                     $(".countSmall").text("Small" + " = " + countSmall);
-                                    this.$refs.tablebsTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "";
-                                    this.$refs.tablebsTwo.children[i].children[j].classList.add(
+                                    this.$refs.tablebsFirst.children[i].children[j].classList.add(
                                         "rs0"
                                     );
 
-                                    this.$refs.tablebsTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "S";
                                 }
                             }
@@ -431,24 +408,24 @@ export default {
 
                     if (i == 0) {
                         // if its a first row it add not check
-                        if (this.trent.length !== s) {
-                            this.$refs.tablebsTwo.children[i].cells[
+                        if (this.trentFirst.length !== s) {
+                            this.$refs.tablebsFirst.children[i].cells[
                                 j
-                            ].textContent = this.trent[s];
+                            ].textContent = this.trentFirst[s];
 
-                            this.$refs.tablebsTwo.children[i].cells[j].title = this.gameID[s];
+                            this.$refs.tablebsFirst.children[i].cells[j].title = this.gameID[s];
                             //gogogo
                         }
-                    } else if (this.trent[s] == this.trent[s - 1]) {
+                    } else if (this.trentFirst[s] == this.trentFirst[s - 1]) {
                         // check is equal or not
 
                         //check the row it emtry or not if it emtry add
-                        if (this.$refs.tablebsTwo.children[i].cells[j].textContent == "") {
-                            this.$refs.tablebsTwo.children[i].cells[
+                        if (this.$refs.tablebsFirst.children[i].cells[j].textContent == "") {
+                            this.$refs.tablebsFirst.children[i].cells[
                                 j
-                            ].textContent = this.trent[s];
+                            ].textContent = this.trentFirst[s];
 
-                            this.$refs.tablebsTwo.children[i].cells[j].title = this.gameID[s];
+                            this.$refs.tablebsFirst.children[i].cells[j].title = this.gameID[s];
 
                             //gogogo
                         } else {
@@ -460,29 +437,29 @@ export default {
                             // turn right if have other one in td tag
                             for (let ok = 1; ok < 20; ok++) {
                                 if (
-                                    this.trent[s] ==
-                                    this.$refs.tablebsTwo.children[i - 1].cells[j].textContent
+                                    this.trentFirst[s] ==
+                                    this.$refs.tablebsFirst.children[i - 1].cells[j].textContent
                                 ) {
                                     // add Line
                                     let index = i;
                                     while (index >= 0) {
                                         if (index >= 2) {
-                                            this.$refs.tablebsTwo.children[i - index].cells[
+                                            this.$refs.tablebsFirst.children[i - index].cells[
                                                 j
                                             ].className = "line-t";
                                         }
                                         index--;
                                     }
-                                    this.$refs.tablebsTwo.children[i - 1].cells[j].className =
+                                    this.$refs.tablebsFirst.children[i - 1].cells[j].className =
                                         "line-l";
-                                    this.$refs.tablebsTwo.children[i - 1].cells[
+                                    this.$refs.tablebsFirst.children[i - 1].cells[
                                         j + ok
                                     ].className = "line-through";
                                     // end add Line
-                                    this.$refs.tablebsTwo.children[i - 1].cells[
+                                    this.$refs.tablebsFirst.children[i - 1].cells[
                                         j + ok
-                                    ].textContent = this.trent[s];
-                                    this.$refs.tablebsTwo.children[i - 1].cells[
+                                    ].textContent = this.trentFirst[s];
+                                    this.$refs.tablebsFirst.children[i - 1].cells[
                                         j + ok
                                     ].title = this.gameID[s];
 
@@ -498,25 +475,25 @@ export default {
                         // turn right *-*
                         if (i == this.rowTable - 1) {
                             for (let k = 1; k < 50; k++) {
-                                if (this.trent[s] == this.trent[s + 1]) {
+                                if (this.trentFirst[s] == this.trentFirst[s + 1]) {
                                     // add Line
                                     let index = i;
                                     while (index >= 0) {
-                                        this.$refs.tablebsTwo.children[i - index].cells[
+                                        this.$refs.tablebsFirst.children[i - index].cells[
                                             j
                                         ].className = "line-t";
                                         index--;
                                     }
-                                    this.$refs.tablebsTwo.children[i].cells[j].className =
+                                    this.$refs.tablebsFirst.children[i].cells[j].className =
                                         "line-l";
-                                    this.$refs.tablebsTwo.children[i].cells[j + k].className =
+                                    this.$refs.tablebsFirst.children[i].cells[j + k].className =
                                         "line-through";
                                     // end add Line
-                                    this.$refs.tablebsTwo.children[i].cells[
+                                    this.$refs.tablebsFirst.children[i].cells[
                                         j + k
-                                    ].textContent = this.trent[s + 1];
+                                    ].textContent = this.trentFirst[s + 1];
 
-                                    this.$refs.tablebsTwo.children[i].cells[
+                                    this.$refs.tablebsFirst.children[i].cells[
                                         j + k
                                     ].title = this.gameID[s + 1];
                                     //gogogo
@@ -534,68 +511,68 @@ export default {
         },
 
         //odd even............................................................
-        tablechartOE() {
+        tablechartOEFirst() {
             let countOdd = 0;
             let countEven = 0;
             // loop table[][]
             var s = -1;
             loop1: for (
-                let j = 0; j < this.$refs.tableOETwo.children[0].children.length; j++
+                let j = 0; j < this.$refs.tableOEFirst.children[0].children.length; j++
             ) {
                 // j = td tag
                 loop2: for (
-                    let i = 0; i < this.$refs.tableOETwo.childElementCount; i++
+                    let i = 0; i < this.$refs.tableOEFirst.childElementCount; i++
                 ) {
                     // auto scroll
-                    if (this.trentOE.length == s) {
-                        this.$refs.tableOETwo.children[i].children[j].classList.add(
+                    if (this.trentOEFirst.length == s) {
+                        this.$refs.tableOEFirst.children[i].children[j].classList.add(
                             "oestylelast"
                         );
                         let lop =
                             $(".my-coltabledivlast")
                             .first()
                             .width() - 130;
-                        let valueoe = $(this.$refs.tableOETwo).find(".oestylelast")[0]
+                        let valueoe = $(this.$refs.tableOEFirst).find(".oestylelast")[0]
                             .offsetLeft;
-                        $(this.$refs.tableOETwo).scrollLeft(valueoe - lop);
+                        $(this.$refs.tableOEFirst).scrollLeft(valueoe - lop);
 
-                        // $(this.$refs.tableOETwo)
+                        // $(this.$refs.tableOEFirst)
                         //   .find(".oestylelast")[0]
                         //   .scrollIntoView({ inline: "end" });
                     }
                     // if loop all s it will render B&S and exit all loop
-                    if (s == this.trentOE.length) {
+                    if (s == this.trentOEFirst.length) {
                         for (let i = 0; i < this.rowTable; i++) {
                             // tablebsTwo.children[i].children[""0""]
                             //console.log(this.$refs.tablebsTwo.children[i]);
                             for (let j = 0; j < 200; j++) {
                                 if (
-                                    this.$refs.tableOETwo.children[i].children[j].textContent ===
+                                    this.$refs.tableOEFirst.children[i].children[j].textContent ===
                                     "1"
                                 ) {
                                     countOdd++;
                                     $(".countOdd").text("Odd" + " = " + countOdd);
-                                    this.$refs.tableOETwo.children[i].children[j].textContent =
+                                    this.$refs.tableOEFirst.children[i].children[j].textContent =
                                         "";
-                                    this.$refs.tableOETwo.children[i].children[j].classList.add(
+                                    this.$refs.tableOEFirst.children[i].children[j].classList.add(
                                         "rs-o"
                                     );
 
-                                    this.$refs.tableOETwo.children[i].children[j].textContent =
+                                    this.$refs.tableOEFirst.children[i].children[j].textContent =
                                         "O";
                                 } else if (
-                                    this.$refs.tableOETwo.children[i].children[j].textContent ===
+                                    this.$refs.tableOEFirst.children[i].children[j].textContent ===
                                     "0"
                                 ) {
                                     countEven++;
                                     $(".countEven").text("Even" + " = " + countEven);
-                                    this.$refs.tableOETwo.children[i].children[j].textContent =
+                                    this.$refs.tableOEFirst.children[i].children[j].textContent =
                                         "";
-                                    this.$refs.tableOETwo.children[i].children[j].classList.add(
+                                    this.$refs.tableOEFirst.children[i].children[j].classList.add(
                                         "rs-e"
                                     );
 
-                                    this.$refs.tableOETwo.children[i].children[j].textContent =
+                                    this.$refs.tableOEFirst.children[i].children[j].textContent =
                                         "E";
                                 }
                             }
@@ -610,23 +587,23 @@ export default {
 
                     if (i == 0) {
                         // if its a first row it add not check
-                        if (this.trentOE.length !== s) {
-                            this.$refs.tableOETwo.children[i].cells[
+                        if (this.trentOEFirst.length !== s) {
+                            this.$refs.tableOEFirst.children[i].cells[
                                 j
-                            ].textContent = this.trentOE[s];
+                            ].textContent = this.trentOEFirst[s];
 
-                            this.$refs.tableOETwo.children[i].cells[j].title = this.gameID[s];
+                            this.$refs.tableOEFirst.children[i].cells[j].title = this.gameID[s];
                             //gogogo
                         }
-                    } else if (this.trentOE[s] == this.trentOE[s - 1]) {
+                    } else if (this.trentOEFirst[s] == this.trentOEFirst[s - 1]) {
                         // check is equal or not
 
                         //check the row it emtry or not if it emtry add
-                        if (this.$refs.tableOETwo.children[i].cells[j].textContent == "") {
-                            this.$refs.tableOETwo.children[i].cells[
+                        if (this.$refs.tableOEFirst.children[i].cells[j].textContent == "") {
+                            this.$refs.tableOEFirst.children[i].cells[
                                 j
-                            ].textContent = this.trentOE[s];
-                            this.$refs.tableOETwo.children[i].cells[j].title = this.gameID[s];
+                            ].textContent = this.trentOEFirst[s];
+                            this.$refs.tableOEFirst.children[i].cells[j].title = this.gameID[s];
                             //gogogo
                         } else {
                             if (i - 1 == 0) {
@@ -637,29 +614,29 @@ export default {
                             // turn right if have other one in td tag
                             for (let ok = 1; ok < 20; ok++) {
                                 if (
-                                    this.trentOE[s] ==
-                                    this.$refs.tableOETwo.children[i - 1].cells[j].textContent
+                                    this.trentOEFirst[s] ==
+                                    this.$refs.tableOEFirst.children[i - 1].cells[j].textContent
                                 ) {
                                     // add Line
                                     let index = i;
                                     while (index >= 0) {
                                         if (index >= 2) {
-                                            this.$refs.tableOETwo.children[i - index].cells[
+                                            this.$refs.tableOEFirst.children[i - index].cells[
                                                 j
                                             ].className = "line-t";
                                         }
                                         index--;
                                     }
-                                    this.$refs.tableOETwo.children[i - 1].cells[j].className =
+                                    this.$refs.tableOEFirst.children[i - 1].cells[j].className =
                                         "line-l";
-                                    this.$refs.tableOETwo.children[i - 1].cells[
+                                    this.$refs.tableOEFirst.children[i - 1].cells[
                                         j + ok
                                     ].className = "line-through";
                                     // end add Line
-                                    this.$refs.tableOETwo.children[i - 1].cells[
+                                    this.$refs.tableOEFirst.children[i - 1].cells[
                                         j + ok
-                                    ].textContent = this.trentOE[s];
-                                    this.$refs.tableOETwo.children[i - 1].cells[
+                                    ].textContent = this.trentOEFirst[s];
+                                    this.$refs.tableOEFirst.children[i - 1].cells[
                                         j + ok
                                     ].title = this.gameID[s];
 
@@ -675,25 +652,25 @@ export default {
                         // turn right *-*
                         if (i == this.rowTable - 1) {
                             for (let k = 1; k < 50; k++) {
-                                if (this.trentOE[s] == this.trentOE[s + 1]) {
+                                if (this.trentOEFirst[s] == this.trentOEFirst[s + 1]) {
                                     // add Line
                                     let index = i;
                                     while (index >= 0) {
-                                        this.$refs.tableOETwo.children[i - index].cells[
+                                        this.$refs.tableOEFirst.children[i - index].cells[
                                             j
                                         ].className = "line-t";
                                         index--;
                                     }
-                                    this.$refs.tableOETwo.children[i].cells[j].className =
+                                    this.$refs.tableOEFirst.children[i].cells[j].className =
                                         "line-l";
-                                    this.$refs.tableOETwo.children[i].cells[j + k].className =
+                                    this.$refs.tableOEFirst.children[i].cells[j + k].className =
                                         "line-through";
                                     // end add Line
-                                    this.$refs.tableOETwo.children[i].cells[
+                                    this.$refs.tableOEFirst.children[i].cells[
                                         j + k
-                                    ].textContent = this.trentOE[s + 1];
+                                    ].textContent = this.trentOEFirst[s + 1];
 
-                                    this.$refs.tableOETwo.children[i].cells[
+                                    this.$refs.tableOEFirst.children[i].cells[
                                         j + k
                                     ].title = this.gameID[s + 1];
 
@@ -712,80 +689,80 @@ export default {
         },
 
         //high middle low............................................................
-        tablechartUML() {
+        tablechartUMLFirst() {
             let countUpper = 0;
             let countMiddle = 0;
             let countLower = 0;
             var s = -1;
             loop1: for (
-                let j = 0; j < this.$refs.tablebUMLTwo.children[0].children.length; j++
+                let j = 0; j < this.$refs.tablebUMLFirst.children[0].children.length; j++
             ) {
                 // j = td tag
                 loop2: for (
-                    let i = 0; i < this.$refs.tablebUMLTwo.childElementCount; i++
+                    let i = 0; i < this.$refs.tablebUMLFirst.childElementCount; i++
                 ) {
                     // auto scroll
-                    if (this.trentUML.length == s) {
-                        this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
+                    if (this.trentUMLFirst.length == s) {
+                        this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
                             "umlstylelast"
                         );
                         let lop =
                             $(".my-coltabledivlast")
                             .first()
                             .width() - 130;
-                        let valueuml = $(this.$refs.tablebUMLTwo).find(".umlstylelast")[0]
+                        let valueuml = $(this.$refs.tablebUMLFirst).find(".umlstylelast")[0]
                             .offsetLeft;
-                        $(this.$refs.tablebUMLTwo).scrollLeft(valueuml - lop);
+                        $(this.$refs.tablebUMLFirst).scrollLeft(valueuml - lop);
 
-                        // $(this.$refs.tablebUMLTwo)
+                        // $(this.$refs.tablebUMLFirst)
                         //   .find(".umlstylelast")[0]
                         //   .scrollIntoView({ inline: "end" });
                     }
                     // if loop all s it will render B&S and exit all loop
-                    if (s == this.trentUML.length) {
+                    if (s == this.trentUMLFirst.length) {
                         for (let i = 0; i < this.rowTable; i++) {
                             for (let j = 0; j < 900; j++) {
                                 if (
-                                    this.$refs.tablebUMLTwo.children[i].children[j]
+                                    this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "2"
                                 ) {
                                     countUpper++;
                                     $(".countUpper").text("Upper" + " = " + countUpper);
-                                    this.$refs.tablebUMLTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "";
-                                    this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
+                                    this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
                                         "rs-u"
                                     );
 
-                                    this.$refs.tablebUMLTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "U";
                                 } else if (
-                                    this.$refs.tablebUMLTwo.children[i].children[j]
+                                    this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "1"
                                 ) {
                                     countMiddle++;
                                     $(".countMiddle").text("middle" + " = " + countMiddle);
-                                    this.$refs.tablebUMLTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "";
-                                    this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
+                                    this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
                                         "rs-m"
                                     );
 
-                                    this.$refs.tablebUMLTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "M";
                                 } else if (
-                                    this.$refs.tablebUMLTwo.children[i].children[j]
+                                    this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "0"
                                 ) {
                                     countLower++;
                                     $(".countLower").text("lower" + " = " + countLower);
-                                    this.$refs.tablebUMLTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "";
-                                    this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
+                                    this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
                                         "rs-l"
                                     );
 
-                                    this.$refs.tablebUMLTwo.children[i].children[j].textContent =
+                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "L";
                                 }
                             }
@@ -799,27 +776,27 @@ export default {
 
                     if (i == 0) {
                         // if its a first row it add not check
-                        if (this.trentUML.length !== s) {
-                            this.$refs.tablebUMLTwo.children[i].cells[
+                        if (this.trentUMLFirst.length !== s) {
+                            this.$refs.tablebUMLFirst.children[i].cells[
                                 j
-                            ].textContent = this.trentUML[s];
+                            ].textContent = this.trentUMLFirst[s];
 
-                            this.$refs.tablebUMLTwo.children[i].cells[j].title = this.gameID[
+                            this.$refs.tablebUMLFirst.children[i].cells[j].title = this.gameID[
                                 s
                             ];
                         }
-                    } else if (this.trentUML[s] == this.trentUML[s - 1]) {
+                    } else if (this.trentUMLFirst[s] == this.trentUMLFirst[s - 1]) {
                         // check is equal or not
 
                         //check the row it emtry or not if it emtry add
                         if (
-                            this.$refs.tablebUMLTwo.children[i].cells[j].textContent == ""
+                            this.$refs.tablebUMLFirst.children[i].cells[j].textContent == ""
                         ) {
-                            this.$refs.tablebUMLTwo.children[i].cells[
+                            this.$refs.tablebUMLFirst.children[i].cells[
                                 j
-                            ].textContent = this.trentUML[s];
+                            ].textContent = this.trentUMLFirst[s];
 
-                            this.$refs.tablebUMLTwo.children[i].cells[j].title = this.gameID[
+                            this.$refs.tablebUMLFirst.children[i].cells[j].title = this.gameID[
                                 s
                             ];
                             //gogogo
@@ -831,30 +808,30 @@ export default {
                             // turn right if have other one in td tag
                             for (let ok = 1; ok < 20; ok++) {
                                 if (
-                                    this.trentUML[s] ==
-                                    this.$refs.tablebUMLTwo.children[i - 1].cells[j].textContent
+                                    this.trentUMLFirst[s] ==
+                                    this.$refs.tablebUMLFirst.children[i - 1].cells[j].textContent
                                 ) {
                                     // add Line
                                     let index = i;
                                     while (index >= 0) {
                                         if (index >= 2) {
-                                            this.$refs.tablebUMLTwo.children[i - index].cells[
+                                            this.$refs.tablebUMLFirst.children[i - index].cells[
                                                 j
                                             ].className = "line-t";
                                         }
                                         index--;
                                     }
-                                    this.$refs.tablebUMLTwo.children[i - 1].cells[j].className =
+                                    this.$refs.tablebUMLFirst.children[i - 1].cells[j].className =
                                         "line-l";
-                                    this.$refs.tablebUMLTwo.children[i - 1].cells[
+                                    this.$refs.tablebUMLFirst.children[i - 1].cells[
                                         j + ok
                                     ].className = "line-through";
                                     // end add Line
-                                    this.$refs.tablebUMLTwo.children[i - 1].cells[
+                                    this.$refs.tablebUMLFirst.children[i - 1].cells[
                                         j + ok
-                                    ].textContent = this.trentUML[s];
+                                    ].textContent = this.trentUMLFirst[s];
 
-                                    this.$refs.tablebUMLTwo.children[i - 1].cells[
+                                    this.$refs.tablebUMLFirst.children[i - 1].cells[
                                         j + ok
                                     ].title = this.gameID[s];
 
@@ -870,25 +847,25 @@ export default {
                         // turn right *-*
                         if (i == this.rowTable - 1) {
                             for (let k = 1; k < 50; k++) {
-                                if (this.trentUML[s] == this.trentUML[s + 1]) {
+                                if (this.trentUMLFirst[s] == this.trentUMLFirst[s + 1]) {
                                     // add Line
                                     let index = i;
                                     while (index >= 0) {
-                                        this.$refs.tablebUMLTwo.children[i - index].cells[
+                                        this.$refs.tablebUMLFirst.children[i - index].cells[
                                             j
                                         ].className = "line-t";
                                         index--;
                                     }
-                                    this.$refs.tablebUMLTwo.children[i].cells[j].className =
+                                    this.$refs.tablebUMLFirst.children[i].cells[j].className =
                                         "line-l";
-                                    this.$refs.tablebUMLTwo.children[i].cells[j + k].className =
+                                    this.$refs.tablebUMLFirst.children[i].cells[j + k].className =
                                         "line-through";
                                     // end add Line
-                                    this.$refs.tablebUMLTwo.children[i].cells[
+                                    this.$refs.tablebUMLFirst.children[i].cells[
                                         j + k
-                                    ].textContent = this.trentUML[s + 1];
+                                    ].textContent = this.trentUMLFirst[s + 1];
 
-                                    this.$refs.tablebUMLTwo.children[i].cells[
+                                    this.$refs.tablebUMLFirst.children[i].cells[
                                         j + k
                                     ].title = this.gameID[s + 1];
                                     //gogogo
@@ -905,32 +882,32 @@ export default {
             }
         },
         //number............................................................
-        tablechartnumber() {
+        tablechartnumberFirst() {
             //   console.log("let go");
             let s = -1;
             for (let j = 0; j < 100; j++) {
                 for (let k = 0; k < this.rowTable; k++) {
                     s++;
-                    if (s == this.trentNumber.length) {
+                    if (s == this.trentNumberFirst.length) {
                         // auto scroll
-                        this.$refs.tableNumberTwo.children[k].children[j].classList.add(
+                        this.$refs.tableNumberFirst.children[k].children[j].classList.add(
                             "numScroll"
                         );
                         let lop =
                             $(".my-coltabledivlast")
                             .first()
                             .width() - 130;
-                        let valuenum = $(this.$refs.tableNumberTwo).find(".numScroll")[0]
+                        let valuenum = $(this.$refs.tableNumberFirst).find(".numScroll")[0]
                             .offsetLeft;
-                        $(this.$refs.tableNumberTwo).scrollLeft(valuenum - lop);
+                        $(this.$refs.tableNumberFirst).scrollLeft(valuenum - lop);
 
-                        // $(this.$refs.tableNumberTwo)
+                        // $(this.$refs.tableNumberFirst)
                         //   .find(".numScroll")[0]
                         //   .scrollIntoView(false, { inline: "end" });
                         if (this.isFullscreen) {
                             let counts = {};
-                            for (let i = 0; i < this.trentNumber.length; i++) {
-                                let num = this.trentNumber[i];
+                            for (let i = 0; i < this.trentNumberFirst.length; i++) {
+                                let num = this.trentNumberFirst[i];
                                 counts[num] = counts[num] ? counts[num] + 1 : 1;
                             }
                             console.log(counts);
@@ -955,43 +932,43 @@ export default {
                     }
                     let big = 0;
                     switch (this.chlist) {
-                        case "First Digit":
+                        case "sn-First Digit":
                             big = 5;
                             break;
-                        case "Last Digit":
+                        case "sn-Last Digit":
                             big = 5;
                             break;
-                        case "Both Digit":
+                        case "sn-Both Digit":
                             big = 9;
                             break;
-                        case "Two Digit":
+                        case "sn-Two Digit":
                             big = 50;
                             break;
                     }
-                    if (this.trentNumber[s] < big) {
-                        this.$refs.tableNumberTwo.children[k].children[j].className =
+                    if (this.trentNumberFirst[s] < big) {
+                        this.$refs.tableNumberFirst.children[k].children[j].className =
                             "small-number";
                     } else {
-                        this.$refs.tableNumberTwo.children[k].children[j].className =
+                        this.$refs.tableNumberFirst.children[k].children[j].className =
                             "big-number";
                     }
-                    if (this.chlist === "Both Digit" || this.chlist === "Two Digit") {
-                        this.$refs.tableNumberTwo.children[k].children[j].textContent =
-                            this.trentNumber[s] < 10 ?
-                            "0" + this.trentNumber[s] :
-                            this.trentNumber[s];
+                    if (this.chlist === "sn-Both Digit" || this.chlist === "sn-Two Digit") {
+                        this.$refs.tableNumberFirst.children[k].children[j].textContent =
+                            this.trentNumberFirst[s] < 10 ?
+                            "0" + this.trentNumberFirst[s] :
+                            this.trentNumberFirst[s];
                     } else {
-                        this.$refs.tableNumberTwo.children[k].children[
+                        this.$refs.tableNumberFirst.children[k].children[
                             j
-                        ].textContent = this.trentNumber[s];
+                        ].textContent = this.trentNumberFirst[s];
                     }
 
-                    this.$refs.tableNumberTwo.children[k].children[j].title = this.gameID[
+                    this.$refs.tableNumberFirst.children[k].children[j].title = this.gameID[
                         s
                     ];
                 }
             }
-        }
+        },
     }
 };
 </script>
