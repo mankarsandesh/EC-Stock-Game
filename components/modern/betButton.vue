@@ -1,11 +1,13 @@
 <template>
   <div class="p-relative">
-    <!-- <div
+    <!-- for show bet close -->
+    <div
       class="bet-close"
       v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
     >
       <p>bet close</p>
-    </div>-->
+    </div>
+     <!-- end for show bet close -->
     <v-layout row>
       <popper
         v-for="data in firstDigit"
@@ -18,6 +20,7 @@
                 }"
       >
         <div class="popper">
+          <!-- this component display the modal,the modal let users choose amount they want to bet -->
           <betModal
             :stockName="$route.params.id"
             :loop="getLoop($route.params.id)"
@@ -29,6 +32,7 @@
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">First Digit</span>
+          <!-- show payout if in fullscreen mode -->
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
@@ -42,6 +46,7 @@
                 }"
         >
           <div class="popper">
+          <!-- this component display the modal,the modal let users choose amount they want to bet -->
             <betModal
               :stockName="$route.params.id"
               :loop="getLoop($route.params.id)"
@@ -59,6 +64,7 @@
                 }"
         >
           <div class="popper">
+          <!-- this component display the modal,the modal let users choose amount they want to bet -->
             <betModal
               :stockName="$route.params.id"
               :loop="getLoop($route.params.id)"
@@ -111,6 +117,7 @@
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Last Digit</span>
+           <!-- show payout if in fullscreen mode -->
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
@@ -193,6 +200,7 @@
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Both Digit</span>
+           <!-- show payout if in fullscreen mode -->
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
@@ -276,6 +284,7 @@
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Two Digit</span>
+           <!-- show payout if in fullscreen mode -->
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
@@ -336,35 +345,39 @@
     <!-- Row betting button5 -->
     <v-layout row>
       <span class="w20">
-        <v-btn class="align_button4" @click="btnnumber('first')">
+        <v-btn class="align_button4" @click="btnNumber('first')">
           <span class="big-digit">0 - 9</span>
           <br />
           <span class="small-digit">First Digit</span>
+           <!-- show payout if in fullscreen mode -->
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
         </v-btn>
       </span>
       <span class="w20">
-        <v-btn class="align_button4" @click="btnnumber('last')">
+        <v-btn class="align_button4" @click="btnNumber('last')">
           <span class="big-digit">0 - 9</span>
           <br />
           <span class="small-digit">Last Digit</span>
+           <!-- show payout if in fullscreen mode -->
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
         </v-btn>
       </span>
       <span class="w20">
-        <v-btn class="align_button4" @click="btnnumber('both')">
+        <v-btn class="align_button4" @click="btnNumber('both')">
           <span class="big-digit">0 - 18</span>
           <br />
           <span class="small-digit">Both Digit</span>
+           <!-- show payout if in fullscreen mode -->
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_18}}</span>
 
         </v-btn>
       </span>
       <span class="w20">
-        <v-btn class="align_button4" @click="btnnumber('two')">
+        <v-btn class="align_button4" @click="btnNumber('two')">
           <span class="big-digit">00 - 99</span>
           <br />
           <span class="small-digit">Two Digit</span>
+           <!-- show payout if in fullscreen mode -->
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_99}}</span>
         </v-btn>
       </span>
@@ -601,7 +614,9 @@ export default {
     };
   },
   components: {
+    // popper is the third party package 
     popper,
+    // this component display the modal,the modal let users choose amount they want to bet
     betModal
   },
   computed: {
@@ -611,7 +626,7 @@ export default {
       "getLotteryDraw",
       "getLoop"
     ]),
-
+// return true if bet close
     checkBetClose() {
       if (this.getStockLoop(this.$route.params.id) == 1) {
         return this.getLotteryDraw(this.$route.params.id) > 40;
@@ -621,10 +636,8 @@ export default {
     }
   },
   methods: {
-    payoutBigSmall() {
-      return this.payout.big_small;
-    },
-    btnnumber(value) {
+    // the btnNumber methods use to switch specific number first,last,both and two
+    btnNumber(value) {
       value == this.number ? (this.number = null) : (this.number = value);
     }
   }
