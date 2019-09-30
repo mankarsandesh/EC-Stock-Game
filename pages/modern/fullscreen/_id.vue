@@ -112,7 +112,7 @@
           </v-layout>
         </v-flex>
         <v-flex>
-          <betButton></betButton>
+          <betButton :isFullscreen="true"></betButton>
         </v-flex>
       </v-flex>
       <v-flex xs12 class="text-xs-center pt-5">
