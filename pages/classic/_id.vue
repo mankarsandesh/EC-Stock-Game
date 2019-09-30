@@ -13,7 +13,7 @@
 
         <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
             <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                <span :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
             </v-img>
         </v-avatar>
     </v-card>
@@ -108,7 +108,7 @@
         <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
         <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
             <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                <span :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
             </v-img>
         </v-avatar>
     </v-card>
@@ -146,7 +146,7 @@
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                            <span :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                            <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
                 </v-card>
@@ -185,7 +185,7 @@
             <v-card-text>
                 <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                     <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                        <span :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                        <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                     </v-img>
                 </v-avatar>
                 <table>
@@ -495,6 +495,11 @@ export default {
 </script>
 
 <style>
+.btn-chips{
+        top: 31%;
+    position: relative;
+    margin-left: -4%;
+}
 .cancel {
     width: 2%;
 }
