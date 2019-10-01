@@ -43,86 +43,92 @@
         </v-flex>
       </v-layout>
     </v-toolbar>
-    <v-layout pa-1 wrap>
-      <v-flex xs6 style="padding-top:14px">
-        <v-layout column>
-          <v-flex>
-            <v-layout>
-              <v-flex xs6 class="text-xs-center" style="align-self: center;">
-                <span class="text-uppercase text-white pr-5">{{$route.params.id}}</span>
-                <span class="text-yellow">010620190923140800</span>
-              </v-flex>
+    <v-container fluid class="bg-fullscreen">
+      <v-layout pa-1 wrap>
+        <v-flex xs6 style="padding-top:14px">
+          <v-layout column>
+            <v-flex>
+              <v-layout>
+                <v-flex xs4 class="text-xs-center" style="align-self: center;">
+                  <span class="text-uppercase text-white pr-5">{{$route.params.id}}</span>
+                  <span class="text-yellow">010620190923140800</span>
+                </v-flex>
 
-              <v-flex xs6 class="text-xs-right">
-                <v-btn dark color="#003e70" class="px-5 py-2">1 minute loop</v-btn>
+                <v-flex xs8 class="text-xs-right">
+                  <v-btn dark color="#003e70" class="px-5 py-2">1 minute loop</v-btn>
 
-                <v-btn
-                  dark
-                  color="#003e70"
-                  class="px-5 py-2"
-                  @click="dialogOtherstock=true"
-                >other stock</v-btn>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-          <v-flex class="pt-2">
-            <chartApp
-              :data="getStockById($route.params.id).stockPrice"
-              :time="getStockById($route.params.id).stockTime"
-              :key="getStockById($route.params.id).stockPrice[0]"
-              height="550px"
-            ></chartApp>
-          </v-flex>
-          <v-flex>
-            <v-btn dark color="#003e70" :to="'/modern/desktop/' +$route.params.id">
-              <v-icon left dark class="ma-0">exit_to_app</v-icon>exit
-            </v-btn>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex xs6>
-        <v-flex>
-          <v-layout>
-            <v-flex class="text-xs-center" px-2>
-              <span class="text-gray">Last draw:</span>
-              <v-flex flex-style>
-                <h4 v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></h4>
-              </v-flex>
+                  <v-btn
+                    dark
+                    color="#003e70"
+                    class="px-5 py-2"
+                    @click="dialogOtherstock=true"
+                  >other stock</v-btn>
+                </v-flex>
+              </v-layout>
             </v-flex>
-            <v-flex class="text-xs-center" px-2>
-              <span class="text-gray">Bet Close in:</span>
-              <v-flex flex-style>
-                <span
-                  class="text-yellow"
-                >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
-              </v-flex>
+            <v-flex class="pt-2">
+              <chartApp
+                :data="getStockById($route.params.id).stockPrice"
+                :time="getStockById($route.params.id).stockTime"
+                :key="getStockById($route.params.id).stockPrice[0]"
+                height="550px"
+              ></chartApp>
             </v-flex>
-            <v-flex class="text-xs-center" px-2>
-              <span class="text-gray">lottery draw:</span>
-              <v-flex flex-style>
-                <span
-                  class="text-yellow"
-                >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
-              </v-flex>
-            </v-flex>
-            <v-flex xs4 class="text-xs-right" style="align-self: flex-end;">
-              <!-- <v-btn fab dark small color="#003e70">
-                <v-icon dark size="25">fa-question</v-icon>
-              </v-btn>-->
+            <v-flex>
+              <v-btn dark color="#003e70" :to="'/modern/desktop/' +$route.params.id">
+                <v-icon left dark class="ma-0">exit_to_app</v-icon>exit
+              </v-btn>
             </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex>
-          <betButton :isFullscreen="true"></betButton>
+        <v-flex xs6>
+          <v-flex>
+            <v-layout>
+              <v-flex class="text-xs-center" px-2>
+                <span class="text-gray">Last draw:</span>
+                <v-flex flex-style>
+                  <h4 v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></h4>
+                </v-flex>
+              </v-flex>
+              <v-flex class="text-xs-center" px-2>
+                <span class="text-gray">Bet Close in:</span>
+                <v-flex flex-style>
+                  <span
+                    class="text-yellow"
+                  >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
+                </v-flex>
+              </v-flex>
+              <v-flex class="text-xs-center" px-2>
+                <span class="text-gray">lottery draw:</span>
+                <v-flex flex-style>
+                  <span
+                    class="text-yellow"
+                  >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
+                </v-flex>
+              </v-flex>
+              <v-flex xs4 class="text-xs-right" style="align-self: flex-end;">
+                <!-- <v-btn fab dark small color="#003e70">
+                <v-icon dark size="25">fa-question</v-icon>
+                </v-btn>-->
+              </v-flex>
+            </v-layout>
+          </v-flex>
+          <v-flex>
+            <betButton :isFullscreen="true"></betButton>
+          </v-flex>
         </v-flex>
-      </v-flex>
-      <v-flex xs12 class="text-xs-center">
-        <footerBet v-if="getStockCrawlerData($route.params.id) !== ''"></footerBet>
-        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''" style="background-color:#003f70">
-          <tableTrendMap isFullscreen ></tableTrendMap>
+        <v-flex xs12 class="text-xs-center">
+          <footerBet v-if="getStockCrawlerData($route.params.id) !== ''"></footerBet>
+          <v-flex
+            xs12
+            v-if="getStockCrawlerData($route.params.id) !== ''"
+            style="background-color:#003f70"
+          >
+            <tableTrendMap isFullscreen></tableTrendMap>
+          </v-flex>
         </v-flex>
-      </v-flex>
-    </v-layout>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 <script>
