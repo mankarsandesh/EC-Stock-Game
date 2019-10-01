@@ -141,7 +141,7 @@ import footerBet from "~/components/modern/footerBet";
 import tableTrendMap from "~/components/modern/tableTrendMap";
 
 export default {
-  layout: "desktopModern",
+  layout: "fullscreen",
   data() {
     return {
       dialogOtherstock: false,

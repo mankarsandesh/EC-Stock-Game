@@ -1,9 +1,5 @@
 <template>
   <v-app>
-    <div v-if="isFullscreen" style="background-color:#002038;height:100%">
-       <nuxt />
-    </div>
-    <div v-else>
     <v-container
       fluid
       pa-0
@@ -56,7 +52,6 @@
         </v-container>
       </v-content>
     </v-container>
-    </div>
   </v-app>
 </template>
 <script>
