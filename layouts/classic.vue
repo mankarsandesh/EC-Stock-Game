@@ -212,7 +212,7 @@ export default {
                 this.tab = 1
             } else if (this.checkStockList == "st-btc1" || this.checkStockList == "st-btc5") {
                 this.tab = 2
-            } else {
+            } else {  
                 this.tab = 3
             }
         }

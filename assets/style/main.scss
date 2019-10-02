@@ -69,18 +69,49 @@ span.text-red {
         float: left;
         background-color: $mainbg;
       }
-    }
-  }
-}
-.v-content__wrap {
-  .container {
-    .layout {
       button.main-btn {
         @extend %notactive;
+      }
+      .flex {
+        .layout {
+          .flex {
+            .p-relative {
+              .layout {
+                .w20 {
+                  span {
+                    .popper {
+                      .layout {
+                        .flex {
+                          .layout {
+                            .flex {
+                              .v-avatar {
+                                .v-responsive {
+                                  .v-responsive__content {
+                                    top: 18px;
+                                    position: relative;
+                                    display: inline-block;
+                                    font-size: 0.7rem;
+                                    text-align: center;
+                                    align-items: center;
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
 }
+
 .d-between {
   display: flex;
   justify-content: space-between;
@@ -453,7 +484,7 @@ nav {
               width: 100%;
               position: relative;
               display: inline-block;
-              span .btn-small{
+              span .btn-small {
                 height: 50px;
               }
             }
