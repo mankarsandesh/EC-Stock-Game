@@ -1,13 +1,13 @@
 <template>
 <div>
-    {{chtable}} ==>> {{chlists}}
+    <!-- {{chtable}} ==>> {{chlists}} -->
     <v-layout wrap>
         <v-flex v-show="chtable=='bs'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
-                <!-- <div v-show="isFullscreen">
-                    <span class="countBig text-white"></span>
-                    <span class="countSmall text-white"></span>
-                </div> -->
+                <div>
+                    <span class="countBig "></span>
+                    <span class="countSmall "></span>
+                </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebsFirst">
                         <tr v-for="tr in rowTable" :key="tr">
@@ -19,10 +19,10 @@
         </v-flex>
         <v-flex v-show="chtable=='oe'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
-                <!-- <div v-show="isFullscreen">
-                    <span class="countOdd text-white"></span>
-                    <span class="countEven text-white"></span>
-                </div> -->
+                <div>
+                    <span class="countOdd "></span>
+                    <span class="countEven "></span>
+                </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableOEFirst">
                         <tr v-for="tr in rowTable" :key="tr">
@@ -34,10 +34,10 @@
         </v-flex>
         <v-flex v-show="chtable=='hml'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
-                <!-- <div v-show="isFullscreen">
-                    <span class="countUpper text-white"></span>
-                    <span class="countMiddle text-white"></span>
-                    <span class="countLower text-white"></span>
+                <!-- <div >
+                    <span class="countUpper "></span>
+                    <span class="countMiddle "></span>
+                    <span class="countLower "></span>
                 </div> -->
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebUMLFirst">
@@ -50,13 +50,13 @@
         </v-flex>
         <v-flex v-show="chtable=='sn'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
-                <!-- <div v-show="isFullscreen" ref="sortNumber">
-                    <span class="text-white"></span>
-                    <span class="text-white"></span>
-                    <span class="text-white"></span>
-                    <span class="text-white"></span>
-                    <span class="text-white"></span>
-                    <span class="text-white"></span>
+                <!-- <div  ref="sortNumber">
+                    <span class=""></span>
+                    <span class=""></span>
+                    <span class=""></span>
+                    <span class=""></span>
+                    <span class=""></span>
+                    <span class=""></span>
                 </div> -->
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableNumberFirst">
@@ -72,16 +72,9 @@
 </template>
 
 <script>
+import openSocket from 'socket.io-client'
 export default {
-    props: {
-        rowTable: {
-            type: Number,
-            default: 6
-        },
-        chtable: String,
-        chlists: String,
-        isFullscreen: Boolean
-    },
+    props: ["dataArray", "chtable", "chlists", "isFullscreen", "stocks"],
     data() {
         return {
             url: "",
@@ -93,18 +86,22 @@ export default {
             is_show_bs: true,
             is_show_oe: true,
             is_show_hml: true,
-            is_show_num: true
+            is_show_num: true,
+            rowTable: 6
         };
     },
     mounted() {
-        this.getTableChartBS();
+        setTimeout(() => {
+            this.getTableChartBS();
+        }, 1000)
         // this.autoScroll();
+        this.Timeout()
 
     },
     watch: {
-        chlist() {
+        chlists() {
             this.getTableChartBS();
-        },
+        }
         // tbdatachart() {
         //   this.number =
         //     this.tbdatachart[this.tbdatachart.length - 2] +
@@ -116,6 +113,29 @@ export default {
         // }
     },
     methods: {
+        Timeout() {
+            const socket = openSocket('https://websocket-timer.herokuapp.com')
+            socket.on('time', data => {
+                let times;
+                let calculat;
+                if (this.stocks == 'btc1') {
+                    times = data.btc1.timer
+                    calculat = 41
+                } else if (this.stocks == 'btc5') {
+                    times = data.btc5.timer
+                    calculat = 241
+                } else if (this.stocks == 'usindex') {
+                    times = data.usindex.timer
+                    calculat = 241
+                } else {
+                    times = data.SH000001.timer
+                    calculat = 241
+                }
+                if (times == calculat) {
+                    this.getTableChartBS()
+                }
+            })
+        },
         clearTrendMap() {
             this.trentFirst = [];
             this.trentOEFirst = [];
@@ -178,160 +198,130 @@ export default {
         //   return new Promise(resolve => setTimeout(resolve, milliseconds));
         // },
         getTableChartBS() {
+            if (this.dataArray === "") return;
             this.clearTrendMap();
-            this.apis = "http://159.138.54.214/api/datahistory/BTCUSDT1";
-            this.$axios(this.apis).then(response => {
+            let n = 0;
+            let firstlast = "";
+            this.dataArray.forEach(element => {
+                n++;
+                this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
 
-                let n = 0;
-                response.data.forEach(element => {
-                    n++;
-                    this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
+                let no_firsts = element.PT[element.PT.length - 2].toString();
+                let no_lasts = element.PT[element.PT.length - 1].toString();
 
-                    if (this.chtable == "bs") {
-                        //bigsmall
-                        if (this.chlists == "bs-First Digit") {
-                            let rs1 = element.PT[element.PT.length - 2].toString();
-                            let firstlast1 = parseInt(rs1);
+                let no_first = parseInt(no_firsts);
+                let no_last = parseInt(no_lasts);
+                let no_both = no_first + no_last;
+                let no_two = parseInt(no_first + '' + no_last);
 
-                            if (firstlast1 < 5) {
-                                this.trentFirst.push(0);
-                            } else {
-                                this.trentFirst.push(1);
-                            }
-                        } else if (this.chlists == "bs-Last Digit") {
+                if (this.chtable == "oe") {
+                    // odd even
+                    if (this.chlists == "oe-First Digit") {
+                        this.trentOEFirst.push(no_first % 2);
+                    } else if (this.chlists == "oe-Last Digit") {
+                        this.trentOEFirst.push(no_last % 2);
+                    } else if (this.chlists == "oe-Both Digit") {
+                        this.trentOEFirst.push(no_both % 2);
+                    } else if (this.chlists == "oe-Two Digit") {
+                        this.trentOEFirst.push(no_two % 2);
+                    }
 
-                            let rs2 = element.PT[element.PT.length - 1].toString();
-                            let firstlast2 = parseInt(rs2);
-                            if (firstlast2 < 5) {
-                                this.trentFirst.push(0);
-                            } else {
-                                this.trentFirst.push(1);
-                            }
-                        } else if (this.chlists == "bs-Both Digit") {
-                            let rs3 = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
-                            let firstlast3 = parseInt(rs3);
-                            if (firstlast3 < 9) {
-                                this.trentFirst.push(0);
-                            } else {
-                                this.trentFirst.push(1);
-                            }
-                        } else if (this.chlists == "bs-Two Digit") {
-                            let rs4 = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
-                            let firstlast4 = parseInt(rs4);
-                            if (firstlast4 < 49) {
-                                this.trentFirst.push(0);
-                            } else {
-                                this.trentFirst.push(1);
-                            }
+                    if (n == this.dataArray.length) {
+                        this.tablechartOEFirst();
+                        return;
+                    }
+
+                } else if (this.chtable == "hml") {
+                    // hml
+                    if (this.chlists == "hml-First Digit") {
+                        if (no_first >= 0 && no_first <= 3) {
+                            this.trentUMLFirst.push(0);
+                        } else if (no_first >= 4 && no_first <= 6) {
+                            this.trentUMLFirst.push(1);
+                        } else if (no_first >= 7 && no_first <= 9) {
+                            this.trentUMLFirst.push(2);
                         }
-
-                        if (n == response.data.length) {
-                            this.tablechartBSFirst();
-                            return;
+                    } else if (this.chlists == "hml-Last Digit") {
+                        if (no_last >= 0 && no_last <= 3) {
+                            this.trentUMLFirst.push(0);
+                        } else if (no_last >= 4 && no_last <= 6) {
+                            this.trentUMLFirst.push(1);
+                        } else if (no_last >= 7 && no_last <= 9) {
+                            this.trentUMLFirst.push(2);
                         }
-
-                    } else if (this.chtable == "oe") {
-                        // odd even
-                        if (this.chlists == "oe-First Digit") {
-                            let rs1 = element.PT[element.PT.length - 2].toString();
-                            let firstlast1 = parseInt(rs1);
-                            this.trentOEFirst.push(firstlast1 % 2);
-                        } else if (this.chlists == "oe-Last Digit") {
-                            let rs2 = element.PT[element.PT.length - 1].toString();
-                            let firstlast2 = parseInt(rs2);
-                            this.trentOEFirst.push(firstlast2 % 2);
-                        } else if (this.chlists == "oe-Both Digit") {
-                            let rs3 = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
-                            let firstlast3 = parseInt(rs3);
-                            this.trentOEFirst.push(firstlast3 % 2);
-                        } else if (this.chlists == "oe-Two Digit") {
-                            let rs4 = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
-                            let firstlast4 = parseInt(rs4);
-                            this.trentOEFirst.push(firstlast4 % 2);
+                    } else if (this.chlists == "hml-Both Digit") {
+                        if (no_both >= 0 && no_both <= 6) {
+                            this.trentUMLFirst.push(0);
+                        } else if (no_both >= 7 && no_both <= 12) {
+                            this.trentUMLFirst.push(1);
+                        } else if (no_both >= 13 && no_both <= 18) {
+                            this.trentUMLFirst.push(2);
                         }
-
-                        if (n == response.data.length) {
-                            this.tablechartOEFirst();
-                            return;
-                        }
-
-                    } else if (this.chtable == "hml") {
-                        // hml
-                        if (this.chlists == "hml-First Digit") {
-                            let rs1 = element.PT[element.PT.length - 2].toString();
-                            let firstlast1 = parseInt(rs1);
-
-                            if (firstlast1 >= 0 && firstlast1 <= 3) {
-                                this.trentUMLFirst.push(0);
-                            } else if (firstlast1 >= 4 && firstlast1 <= 6) {
-                                this.trentUMLFirst.push(1);
-                            } else if (firstlast1 >= 7 && firstlast1 <= 9) {
-                                this.trentUMLFirst.push(2);
-                            }
-                        } else if (this.chlists == "hml-Last Digit") {
-                            let rs2 = element.PT[element.PT.length - 1].toString();
-                            let firstlast2 = parseInt(rs2);
-                            if (firstlast2 >= 0 && firstlast2 <= 3) {
-                                this.trentUMLFirst.push(0);
-                            } else if (firstlast2 >= 4 && firstlast2 <= 6) {
-                                this.trentUMLFirst.push(1);
-                            } else if (firstlast2 >= 7 && firstlast2 <= 9) {
-                                this.trentUMLFirst.push(2);
-                            }
-                        } else if (this.chlists == "hml-Both Digit") {
-                            let rs3 = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
-                            let firstlast3 = parseInt(rs3);
-                            if (firstlast3 >= 0 && firstlast3 <= 6) {
-                                this.trentUMLFirst.push(0);
-                            } else if (firstlast3 >= 7 && firstlast3 <= 12) {
-                                this.trentUMLFirst.push(1);
-                            } else if (firstlast3 >= 13 && firstlast3 <= 18) {
-                                this.trentUMLFirst.push(2);
-                            }
-                        } else if (this.chlists == "hml-Two Digit") {
-                            let rs4 = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
-                            let firstlast4 = parseInt(rs4);
-                            if (firstlast4 >= 0 && firstlast4 <= 33) {
-                                this.trentUMLFirst.push(0);
-                            } else if (firstlast4 >= 34 && firstlast4 <= 66) {
-                                this.trentUMLFirst.push(1);
-                            } else if (firstlast4 >= 67 && firstlast4 <= 99) {
-                                this.trentUMLFirst.push(2);
-                            }
-                        }
-
-                        if (n == response.data.length) {
-                            this.tablechartUMLFirst();
-                            return;
-                        }
-                    } else if (this.chtable == "sn") {
-                        // sn
-                        if (this.chlists == "sn-First Digit") {
-                            let rs1 = element.PT[element.PT.length - 2].toString();
-                            let firstlast1 = parseInt(rs1);
-
-                            this.trentNumberFirst.push(firstlast1);
-                        } else if (this.chlists == "sn-Last Digit") {
-                            let rs2 = element.PT[element.PT.length - 1].toString();
-                            let firstlast2 = parseInt(rs2);
-                            this.trentNumberFirst.push(firstlast2);
-                        } else if (this.chlists == "sn-Both Digit") {
-                            let rs3 = parseInt(element.PT[element.PT.length - 2]) + parseInt(element.PT[element.PT.length - 1]);
-                            let firstlast3 = parseInt(rs3);
-                            this.trentNumberFirst.push(firstlast3);
-                        } else if (this.chlists == "sn-Two Digit") {
-                            let rs4 = element.PT[element.PT.length - 2].toString() + element.PT[element.PT.length - 1].toString();
-                            let firstlast4 = parseInt(rs4);
-                            this.trentNumberFirst.push(firstlast4);
-                        }
-
-                        if (n == response.data.length) {
-                            this.tablechartnumberFirst();
-                            return;
+                    } else if (this.chlists == "hml-Two Digit") {
+                        if (no_two >= 0 && no_two <= 33) {
+                            this.trentUMLFirst.push(0);
+                        } else if (no_two >= 34 && no_two <= 66) {
+                            this.trentUMLFirst.push(1);
+                        } else if (no_two >= 67 && no_two <= 99) {
+                            this.trentUMLFirst.push(2);
                         }
                     }
 
-                });
+                    if (n == this.dataArray.length) {
+                        this.tablechartUMLFirst();
+                        return;
+                    }
+
+                } else if (this.chtable == "sn") {
+                    // sn
+                    if (this.chlists == "sn-First Digit") {
+                        this.trentNumberFirst.push(no_first);
+                    } else if (this.chlists == "sn-Last Digit") {
+                        this.trentNumberFirst.push(no_last);
+                    } else if (this.chlists == "sn-Both Digit") {
+                        this.trentNumberFirst.push(no_both);
+                    } else if (this.chlists == "sn-Two Digit") {
+                        this.trentNumberFirst.push(no_two);
+                    }
+
+                    if (n == this.dataArray.length) {
+                        this.tablechartnumberFirst();
+                        return;
+                    }
+                } else {
+                    if (this.chlists == "bs-Last Digit") {
+                        if (no_last < 5) {
+                            this.trentFirst.push(0);
+                        } else {
+                            this.trentFirst.push(1);
+                        }
+                    } else if (this.chlists == "bs-Both Digit") {
+                        if (no_both < 9) {
+                            this.trentFirst.push(0);
+                        } else {
+                            this.trentFirst.push(1);
+                        }
+                    } else if (this.chlists == "bs-Two Digit") {
+                        if (no_two < 50) {
+                            this.trentFirst.push(0);
+                        } else {
+                            this.trentFirst.push(1);
+                        }
+                    } else {
+                        if (no_first < 5) {
+                            this.trentFirst.push(0);
+                        } else {
+                            this.trentFirst.push(1);
+                        }
+                    }
+
+                    if (n == this.dataArray.length) {
+                        this.tablechartBSFirst();
+                        return;
+                    }
+
+                }
+
             });
         },
         tablechartBSFirst() {
@@ -353,17 +343,12 @@ export default {
                         this.$refs.tablebsFirst.children[i].children[j].classList.add(
                             "mystylelast"
                         );
-                        let lop =
-                            $(".my-coltabledivlast")
-                            .first()
-                            .width() - 130;
-                        let valuebs = $(this.$refs.tablebsFirst).find(".mystylelast")[0]
-                            .offsetLeft;
-                        $(this.$refs.tablebsFirst).scrollLeft(valuebs - lop);
-
-                        // $(this.$refs.tablebsFirst)
-                        //   .find(".mystylelast")[0]
-                        //   .scrollIntoView({ inline: "end" });
+                        $(this.$refs.tablebsFirst)
+                            .find(".mystylelast")[0]
+                            .scrollIntoView({
+                                block: "nearest",
+                                inline: "center"
+                            });
                     }
                     // if loop all s it will render B&S and exit all loop
                     if (s == this.trentFirst.length) {
@@ -528,17 +513,13 @@ export default {
                         this.$refs.tableOEFirst.children[i].children[j].classList.add(
                             "oestylelast"
                         );
-                        let lop =
-                            $(".my-coltabledivlast")
-                            .first()
-                            .width() - 130;
-                        let valueoe = $(this.$refs.tableOEFirst).find(".oestylelast")[0]
-                            .offsetLeft;
-                        $(this.$refs.tableOEFirst).scrollLeft(valueoe - lop);
 
-                        // $(this.$refs.tableOEFirst)
-                        //   .find(".oestylelast")[0]
-                        //   .scrollIntoView({ inline: "end" });
+                        $(this.$refs.tableOEFirst)
+                            .find(".oestylelast")[0]
+                            .scrollIntoView({
+                                block: "nearest",
+                                inline: "center"
+                            });
                     }
                     // if loop all s it will render B&S and exit all loop
                     if (s == this.trentOEFirst.length) {
@@ -706,17 +687,12 @@ export default {
                         this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
                             "umlstylelast"
                         );
-                        let lop =
-                            $(".my-coltabledivlast")
-                            .first()
-                            .width() - 130;
-                        let valueuml = $(this.$refs.tablebUMLFirst).find(".umlstylelast")[0]
-                            .offsetLeft;
-                        $(this.$refs.tablebUMLFirst).scrollLeft(valueuml - lop);
-
-                        // $(this.$refs.tablebUMLFirst)
-                        //   .find(".umlstylelast")[0]
-                        //   .scrollIntoView({ inline: "end" });
+                        $(this.$refs.tablebUMLFirst)
+                            .find(".umlstylelast")[0]
+                            .scrollIntoView({
+                                block: "nearest",
+                                inline: "center"
+                            });
                     }
                     // if loop all s it will render B&S and exit all loop
                     if (s == this.trentUMLFirst.length) {
@@ -883,7 +859,7 @@ export default {
         },
         //number............................................................
         tablechartnumberFirst() {
-            //   console.log("let go");
+            // console.log("let go");
             let s = -1;
             for (let j = 0; j < 100; j++) {
                 for (let k = 0; k < this.rowTable; k++) {
@@ -893,17 +869,12 @@ export default {
                         this.$refs.tableNumberFirst.children[k].children[j].classList.add(
                             "numScroll"
                         );
-                        let lop =
-                            $(".my-coltabledivlast")
-                            .first()
-                            .width() - 130;
-                        let valuenum = $(this.$refs.tableNumberFirst).find(".numScroll")[0]
-                            .offsetLeft;
-                        $(this.$refs.tableNumberFirst).scrollLeft(valuenum - lop);
-
-                        // $(this.$refs.tableNumberFirst)
-                        //   .find(".numScroll")[0]
-                        //   .scrollIntoView(false, { inline: "end" });
+                        $(this.$refs.tableNumberFirst)
+                            .find(".numScroll")[0]
+                            .scrollIntoView({
+                                block: "nearest",
+                                inline: "center"
+                            });
                         if (this.isFullscreen) {
                             let counts = {};
                             for (let i = 0; i < this.trentNumberFirst.length; i++) {
@@ -931,7 +902,7 @@ export default {
                         return;
                     }
                     let big = 0;
-                    switch (this.chlist) {
+                    switch (this.chlists) {
                         case "sn-First Digit":
                             big = 5;
                             break;
@@ -952,7 +923,7 @@ export default {
                         this.$refs.tableNumberFirst.children[k].children[j].className =
                             "big-number";
                     }
-                    if (this.chlist === "sn-Both Digit" || this.chlist === "sn-Two Digit") {
+                    if (this.chlists === "sn-Both Digit" || this.chlists === "sn-Two Digit") {
                         this.$refs.tableNumberFirst.children[k].children[j].textContent =
                             this.trentNumberFirst[s] < 10 ?
                             "0" + this.trentNumberFirst[s] :
@@ -1071,37 +1042,47 @@ p {
 
 .big-number {
     font-size: 16px;
-    font-weight: bolder;
-    color: #003f70;
+    /* font-weight: bolder; */
+    color: #fff;
     outline: none;
+    background-color: #003f70;
+    border-radius: 5rem;
 }
 
 .small-number {
     font-size: 16px;
-    font-weight: bolder;
-    color: #ff0000;
+    /* font-weight: bolder; */
+    color: #fff;
     outline: none;
+    background-color: #ff0000;
+    border-radius: 5rem;
 }
 
 .rs1,
 .rs-e,
 .rs-u {
-    color: #003f70;
+    color: #fff;
     font-size: 16px;
-    font-weight: bolder;
+    /* font-weight: bolder; */
+    background-color: #003f70;
+    border-radius: 5rem;
 }
 
 .rs0,
 .rs-o,
 .rs-l {
-    color: red;
+    color: #fff;
     font-size: 16px;
-    font-weight: bolder;
+    /* font-weight: bolder; */
+    background-color: red;
+    border-radius: 5rem;
 }
 
 .rs-m {
-    color: rgb(8, 214, 77);
+    color: #fff;
     font-size: 16px;
-    font-weight: bolder;
+    /* font-weight: bolder; */
+    background-color: rgb(8, 214, 77);
+    border-radius: 5rem;
 }
 </style>

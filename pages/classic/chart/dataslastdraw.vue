@@ -1,7 +1,7 @@
 <template>
 <div>
-    <span class="timer">2019-09-25 10:45 {{$t('msg.gameid')}}: 20190925094602</span>
-    <span><a :href="linkreference" class="Reference" target="_blank">{{$t('msg.reference')}}</a></span>
+    <span class="timer">{{DateNow}} {{TimeNow}} {{$t('msg.gameid')}}: {{gameid}}</span>
+    <span><a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a></span>
     <span class="timer total_classic" v-if="load">{{dataslastdraw}}</span>
     <v-progress-circular :size="15" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
     <span class="timer">{{time}}</span>
@@ -10,22 +10,25 @@
 
 <script>
 import openSocket from 'socket.io-client';
-import {
-    urlapi
-} from "./urlapi.js";
 export default {
     layout: "classic",
-    mixins: [urlapi],
-    props: ['checkStock', 'stocks'],
+    props: ["checkStock", "stocks", "StockData", "Reference"],
     data() {
         return {
             dataslastdraw: null,
             load: false,
-            time: null
+            time: null,
+            gameid: null,
+            TimeNow: "00:00",
+            DateNow: "0000-00-00",
+            week: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
         }
     },
     mounted() {
         this.getdata()
+        setInterval(() => {
+            this.getTimeNow()
+        }, 1000);
         const socket = openSocket('https://websocket-timer.herokuapp.com')
         socket.on('time', data => {
             let times;
@@ -49,7 +52,7 @@ export default {
             } else if (times == 'close') {
                 this.time = "Market Closed!"
             } else {
-                this.time = this.$t('msg.betnow') + ': ' + this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
+                this.time = 'betnow: ' + this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
             }
 
             if (times == calculat) {
@@ -60,6 +63,13 @@ export default {
 
     },
     methods: {
+        getTimeNow() {
+            let now = new Date().toLocaleString("china", {timeZone: "Asia/Shanghai"});
+            var cd = new Date(now);
+            this.TimeNow = this.setZero(cd.getHours(), 2) + ':' + this.setZero(cd.getMinutes(), 2) + ':' + this.setZero(cd.getSeconds(), 2);
+            this.DateNow = this.setZero(cd.getFullYear(), 4) + '-' + this.setZero(cd.getMonth() + 1, 2) + '-' + this.setZero(cd.getDate(), 2); // + ' ' + this.week[cd.getDay()];
+
+        },
         setZero(num, digit) {
             var zero = '';
             for (var i = 0; i < digit; i++) {
@@ -68,41 +78,46 @@ export default {
             return (zero + num).slice(-digit);
         },
         getdata() {
-            this.url(this.stocks);
-            // this.api = "http://159.138.54.214/api/btc1";
-            this.$axios(this.api).then(response => {
-                this.load = true
-                let items = [];
-                let value_no;
-                response.data.data.forEach(element => {
-                    items.push({
-                        no1: element.no1,
-                        no2: element.no2
-                    });
-                })
-                let elements = items[items.length - 1]
+            if (this.StockData == "") return;
 
-                if (this.checkStock == 'bsf') {
-                    value_no = elements.no1
-                } else if (this.checkStock == 'bsl') {
-                    value_no = elements.no2
-                } else if (this.checkStock == 'bsb') {
-                    value_no = parseInt(elements.no1 + elements.no2)
-                } else if (this.checkStock == 'bst') {
-                    value_no = this.setZero(parseInt(elements.no1 + '' + elements.no2), 2)
-                } else if (this.checkStock == 'oef') {
-                    value_no = elements.no1
-                } else if (this.checkStock == 'oel') {
-                    value_no = elements.no2
-                } else if (this.checkStock == 'oeb') {
-                    value_no = parseInt(elements.no1 + elements.no2)
-                } else if (this.checkStock == 'oet') {
-                    value_no = this.setZero(parseInt(elements.no1 + '' + elements.no2), 2)
-                } else {
-                    value_no = elements.no1 + ' + ' + elements.no2 + ' = ' + parseInt(elements.no1 + elements.no2)
-                }
-                this.dataslastdraw = value_no
+            // this.api = "http://159.138.54.214/api/btc1";
+            // this.$axios(this.api).then(response => {
+            this.load = true
+            let items = [];
+            let value_no;
+            this.StockData.forEach(element => {
+                items.push({
+                    PT: element.PT,
+                    gameid: element.gameid,
+                });
             })
+            let elements = items[items.length - 1]
+            console.log(elements.gameid)
+            this.gameid = elements.gameid
+            let no1 = elements.PT[elements.PT.length - 2]
+            let no2 = elements.PT[elements.PT.length - 1]
+
+            if (this.checkStock == 'bsf') {
+                value_no = no1
+            } else if (this.checkStock == 'bsl') {
+                value_no = no2
+            } else if (this.checkStock == 'bsb') {
+                value_no = parseInt(no1) + parseInt(no2)
+            } else if (this.checkStock == 'bst') {
+                value_no = this.setZero(parseInt(no1) + '' + parseInt(no2), 2)
+            } else if (this.checkStock == 'oef') {
+                value_no = no1
+            } else if (this.checkStock == 'oel') {
+                value_no = no2
+            } else if (this.checkStock == 'oeb') {
+                value_no = parseInt(no1) + parseInt(no2)
+            } else if (this.checkStock == 'oet') {
+                value_no = this.setZero(parseInt(no1) + '' + parseInt(no2), 2)
+            } else {
+                value_no = no1 + ' + ' + no2 + ' = ' + parseInt(parseInt(no1) + parseInt(no2))
+            }
+            this.dataslastdraw = value_no
+            // })
         }
 
     },
@@ -136,7 +151,7 @@ export default {
     border: 1px solid #ffc107;
     padding: 4px 6px;
     border-radius: 10px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
 }
 
