@@ -5,7 +5,7 @@
         <v-flex xs6 md3 lg2 v-for="(item,key) in imgChip" :key="key">
           <div class="d-block">
             <v-img width="100" :src="item.img">
-              <v-text-field outlined v-model="item.price" :class="item.color"></v-text-field>
+              <v-text-field outlined v-model="getCoins_modern[key]" :class="item.color"></v-text-field>
             </v-img>
             <v-card-actions>
               <v-btn text>confirm</v-btn>
@@ -26,34 +26,34 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+
 export default {
+  computed: {
+    ...mapGetters(["getCoins_modern"])
+  },
   data() {
     return {
       imgChip: [
         {
           title: "Danger",
-          img: "/chip/danger.png",
-          price: "200"
+          img: "/chip/danger.png"
         },
         {
           title: "Primary",
-          img: "/chip/primary.png",
-          price: "500"
+          img: "/chip/primary.png"
         },
         {
           title: "success",
-          img: "/chip/success.png",
-          price: "1000"
+          img: "/chip/success.png"
         },
         {
           title: "warning",
-          img: "/chip/warning.png",
-          price: "5000"
+          img: "/chip/warning.png"
         },
         {
           title: "black",
           img: "/chip/black.png",
-          price: "10000",
           color: "text-white"
         }
       ]

@@ -318,7 +318,7 @@ export default {
             element.gameid + "\n" + element.PT + "\n" + element.created_at
           );
           //bigsmall
-          if (firstlast < 49) {
+          if (firstlast <= 49) {
             this.trent.push(0);
           } else {
             this.trent.push(1);
