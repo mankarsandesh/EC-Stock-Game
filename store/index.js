@@ -164,13 +164,13 @@ const createStore = () => {
             },
             SET_TIME(state, payload) {
                 state.time = payload
-                console.log(state.time)
+                    // console.log(state.time)
             },
             setLivePrice(state, payload) {
                 state.liveprice = payload
-                console.log("liveprice......")
-                console.log(state.liveprice)
-                console.log("liveprice.....")
+                    // console.log("liveprice......")
+                    // console.log(state.liveprice)
+                    // console.log("liveprice.....")
             }
         },
         getters: {
@@ -269,14 +269,13 @@ const createStore = () => {
                 return result
             },
 
-            // classic getStockName
+            // start classic .................................................................
             getStockName: (state) => (id) => {
                 // console.log("getStockName")
                 if (id == "") return
                 let names = id
                 let stock = id.split('-')[1]
                 let loop = state.stocks[stock].loop
-
 
                 let result = {
                     names,
@@ -287,7 +286,7 @@ const createStore = () => {
                 return result
             },
             getStockNewData: (state) => (id) => {
-                console.log("getStockNewData")
+                // console.log("getStockNewData")
                 if (id == "") return
                 let stock = id.split('-')[1]
                 let result = [null]
@@ -297,6 +296,17 @@ const createStore = () => {
                 result = state.stocks[stock].crawlerData
                 return result
             },
+            getReference: (state) => (id) => {
+                if (id == "") return
+                let stock = id.split('-')[1]
+                let result = [null]
+                if (state.stocks[stock].crawlerData.length < 0) {
+                    return result
+                }
+                result = state.stocks[stock].livePrice.refLink
+                return result
+            },
+            // end classic .............................................................
 
             // get data for display in "/" route
             getStockChart(state, getters) {

@@ -1,7 +1,7 @@
 <template>
 <div>
-    {{getStockName($route.params.id)}}
-     <!-- <br/> -->
+    <!-- {{getStockName($route.params.id)}} -->
+    <!-- <br/> -->
     <!-- {{getStockNewData($route.params.id)}} -->
     <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
         <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
@@ -126,12 +126,9 @@
                 <v-tabs class="bg-colors" v-model="currentItemss" color="transparent" fixed-tabs slider-color="yellow" grow>
                     <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ baccarat2.name }}</v-tab>
                 </v-tabs>
-                {{baccarat1.namech}}
-                <br>
-                {{currentItemss}}
-                <!-- <baccarats :which_one="baccarat1.namech" :trendType="currentItemss" :dataArray="getStockNewData($route.params.id)" /> -->
-                <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" />
-
+                
+                <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" :dataArray="getStockNewData($route.params.id)" :stocks="stockname"/>
+              
             </v-card>
         </v-tab-item>
     </v-tabs-items>
@@ -227,7 +224,8 @@
 </template>
 
 <script>
-import baccarats from "./chart/baccarat";
+import baccarats from "./chart/baccarats";
+
 import table from "./json/table.json";
 import chips from "./json/chips.json";
 import baccarat from "./json/baccarat.json";
@@ -243,12 +241,8 @@ export default {
         baccarats
     },
 
-    async validate({
-        params,
-        store
-    }) {
+    async validate({params,store}) {
         return store.getters.getStockName(params.id)
-
     },
 
     data() {
@@ -280,11 +274,11 @@ export default {
 
     mounted() {
         // console.log(this.getStockName(this.$route.params.id).loop)
-        this.getTime()
+        // this.getTime()
         // console.log(this.baccarat)
     },
     computed: {
-        ...mapGetters(["getStockName","getStockNewData"]),
+        ...mapGetters(["getStockName", "getStockNewData"]),
         sumTotalAll() {
             let total = 0;
             if (this.betData.betdetails.length >= 0) {
