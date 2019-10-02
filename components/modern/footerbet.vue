@@ -142,7 +142,7 @@
                   <circle class="st3" cx="508.11" cy="49.52" r="19.68" />
                 </g>
               </g>
-              <text x="494" y="55" fill="black">{{100}}</text>
+              <text x="494" y="55" fill="black">{{getCoins_modern[0]}}</text>
             </g>
 
             <g style="cursor:pointer" @click="setFooterPrice(coin2)">
@@ -232,7 +232,7 @@
                 />
               </g>
               <circle class="st3" cx="582.38" cy="49.52" r="19.68" />
-              <text x="568" y="55" fill="black">{{500}}</text>
+              <text x="568" y="55" fill="black">{{getCoins_modern[1]}}</text>
             </g>
             <g style="cursor:pointer" @click="setFooterPrice(coin3)">
               <circle class="st6" cx="656.65" cy="49.52" r="28.81" />
@@ -321,7 +321,7 @@
                 />
               </g>
               <circle class="st3" cx="656.65" cy="49.52" r="19.68" />
-              <text x="639" y="55" fill="black">{{1000}}</text>
+              <text x="639" y="55" fill="black">{{getCoins_modern[2]}}</text>
             </g>
             <g style="cursor:pointer" @click="setFooterPrice(coin4)">
               <circle class="st7" cx="730.92" cy="49.52" r="28.81" />
@@ -410,7 +410,7 @@
                 />
               </g>
               <circle class="st3" cx="730.92" cy="49.52" r="19.68" />
-              <text x="714" y="55" fill="black">{{5000}}</text>
+              <text x="714" y="55" fill="black">{{getCoins_modern[3]}}</text>
             </g>
             <g style="cursor:pointer" @click="setFooterPrice(coin5)">
               <circle class="st4" cx="805.19" cy="49.52" r="28.81" />
@@ -499,7 +499,7 @@
                 />
               </g>
               <circle class="st4" cx="805.19" cy="49.52" r="19.68" />
-              <text x="785" y="55" fill="white" style="font-size:14px">{{10000}}</text>
+              <text x="785" y="55" fill="white" style="font-size:14px">{{getCoins_modern[4]}}</text>
             </g>
             <g style="cursor:pointer" @click="showSetting()">
               <path
@@ -559,6 +559,16 @@
           </svg>
     </div>
 </template>
+<script>
+import { mapGetters } from 'vuex';
+export default {
+  computed:{
+    ...mapGetters([
+      "getCoins_modern"
+    ])
+  }
+}
+</script>
 <style scoped>
 .st0 {
   fill: #003f70;
