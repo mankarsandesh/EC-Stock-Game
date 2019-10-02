@@ -14,9 +14,13 @@
         <v-layout row>
           <v-flex class="py-3 text-center">
             <v-avatar size="50" v-for="(item,key) in imgChip" :key="key">
-              <v-img :src="item.img" width="50" :alt="item.title" :class="item.color">
-                 {{getCoins_modern[key]}}
-              </v-img>
+              <v-img
+                @click="coinClick(getCoins_modern[key])"
+                :src="item.img"
+                width="50"
+                :alt="item.title"
+                :class="item.color"
+              >{{getCoins_modern[key]}}</v-img>
             </v-avatar>
           </v-flex>
         </v-layout>
@@ -46,7 +50,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   props: {
     stockName: {
@@ -58,9 +62,9 @@ export default {
     betId: {
       type: String
     },
-    payout:{
-      type:Number,
-      required:true
+    payout: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -69,19 +73,19 @@ export default {
       imgChip: [
         {
           title: "Danger",
-          img: "/chip/danger.png",
+          img: "/chip/danger.png"
         },
         {
           title: "Primary",
-          img: "/chip/primary.png",
+          img: "/chip/primary.png"
         },
         {
           title: "success",
-          img: "/chip/success.png",
+          img: "/chip/success.png"
         },
         {
           title: "warning",
-          img: "/chip/warning.png",
+          img: "/chip/warning.png"
         },
         {
           title: "black",
@@ -91,14 +95,17 @@ export default {
       ]
     };
   },
-  computed:{
-    ...mapGetters([
-      "getCoins_modern"
-    ])
+  computed: {
+    ...mapGetters(["getCoins_modern"])
   },
   methods: {
-    closePopper(){
-      $('.closepopper').click()
+    coinClick(value) {
+      let amount = parseInt(value);
+      this.betValue = this.betValue + amount;
+    },
+    closePopper() {
+      $(".closepopper").click();
+      this.clear()
     },
     clear() {
       this.betValue = 0;
