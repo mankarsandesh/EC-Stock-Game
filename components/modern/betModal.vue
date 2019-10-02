@@ -14,7 +14,9 @@
         <v-layout row>
           <v-flex class="py-3 text-center">
             <v-avatar size="50" v-for="(item,key) in imgChip" :key="key">
-              <img :src="item.img" :alt="item.title" />
+              <v-img :src="item.img" width="50" :alt="item.title" :class="item.color">
+                 {{getCoins_modern[key]}}
+              </v-img>
             </v-avatar>
           </v-flex>
         </v-layout>
@@ -38,12 +40,13 @@
       <v-divider></v-divider>
       <v-flex xs-12 class="pt-2 text-uppercase">
         <v-btn color="#003e70" dark>confirm</v-btn>
-        <v-btn color="#003e70" dark>close</v-btn>
+        <v-btn color="#003e70" dark @click="closePopper">close</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   props: {
     stockName: {
@@ -67,32 +70,36 @@ export default {
         {
           title: "Danger",
           img: "/chip/danger.png",
-          price: "200"
         },
         {
           title: "Primary",
           img: "/chip/primary.png",
-          price: "500"
         },
         {
           title: "success",
           img: "/chip/success.png",
-          price: "1000"
         },
         {
           title: "warning",
           img: "/chip/warning.png",
-          price: "5000"
         },
         {
           title: "black",
           img: "/chip/black.png",
-          price: "10000"
+          color: "text-white"
         }
       ]
     };
   },
+  computed:{
+    ...mapGetters([
+      "getCoins_modern"
+    ])
+  },
   methods: {
+    closePopper(){
+      $('.closepopper').click()
+    },
     clear() {
       this.betValue = 0;
     }

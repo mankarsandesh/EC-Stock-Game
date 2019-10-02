@@ -429,3 +429,37 @@ nav {
     }
   }
 }
+// Full screen SCSS
+.application--wrap {
+  .container.bg-fullscreen.fluid {
+    background-color: rgb(0, 32, 56) !important;
+    .layout {
+      .flex {
+        .flex {
+          .p-relative {
+            .layout {
+              .w20,
+              .w16 {
+                .align_button4,
+                .align_button5 {
+                  height: 110px;
+                }
+                .betting-small {
+                  height: 33px;
+                }
+              }
+            }
+            .container-btn-small {
+              width: 100%;
+              position: relative;
+              display: inline-block;
+              span .btn-small{
+                height: 50px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

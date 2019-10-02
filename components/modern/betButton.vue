@@ -1,5 +1,6 @@
 <template>
   <div class="p-relative">
+    <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <!-- <div
       class="bet-close"
@@ -196,7 +197,7 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn class="align_button4" slot="reference">
+        <v-btn class="align_button5" slot="reference">
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Both Digit</span>
@@ -205,7 +206,7 @@
         </v-btn>
       </popper>
 
-      <div class="d-block w18">
+      <div class="d-block w16">
         <popper
           trigger="click"
           :options="{
@@ -280,7 +281,7 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn class="align_button4" slot="reference">
+        <v-btn class="align_button5" slot="reference">
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Two Digit</span>
@@ -288,7 +289,7 @@
           <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
-      <div class="d-block w18">
+      <div class="d-block w16">
         <popper
           trigger="click"
           :options="{

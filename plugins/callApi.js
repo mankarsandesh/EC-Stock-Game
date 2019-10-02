@@ -5,7 +5,9 @@ export default ({
     // call Api to show in chart and store it in Vuex
     store.dispatch('asynInitCallApi')
 
-    // set language
+    //coin modern set and get from localStorage
+    initLocalStorageCoin(store)
+        // set language
     setLanguage(store)
         // websocket broadcast live time aand timer
     const socket = openSocket("https://websocket-timer.herokuapp.com");
@@ -29,4 +31,14 @@ function setLanguage(store) {
         store.commit('SET_LANG', "cn")
         localStorage.setItem("lang", store.getters.getlocale);
     }
+}
+
+function initLocalStorageCoin(store) {
+    let coins = localStorage.getItem("coinModern");
+    // alert(coins)
+    if (coins == null) {
+        let defaultCoin = '["100", "500", "1000", "5000", "10000"]'
+        localStorage.setItem("coinModern", defaultCoin);
+    }
+    store.commit('setCoins_modern', localStorage.getItem("coinModern"))
 }

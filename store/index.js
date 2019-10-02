@@ -6,7 +6,7 @@ const createStore = () => {
             locales: ['us', 'cn'],
             locale: localStorage.getItem('lang'),
             balance: 895000,
-
+            coins_modern: [],
             // all stocks data
             // if we have new stock available we can add it here with same object format
             liveprice: {
@@ -153,12 +153,18 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            // store coin in localStorage payload must be "String array" '["100", "500", "1000", "5000", "10000"]'
+            setCoins_modern(state, payload) {
+                state.coins_modern = JSON.parse(payload)
+            },
+            // set language
             SET_LANG(state, locale) {
                 if (state.locales.includes(locale)) {
                     state.locale = locale
                 }
                 localStorage.setItem('lang', locale)
             },
+            // set user balance
             setBalance(state, payload) {
                 state.balance = payload
             },
@@ -166,6 +172,7 @@ const createStore = () => {
                 state.time = payload
                     // console.log(state.time)
             },
+            // set Live price for stocks
             setLivePrice(state, payload) {
                 state.liveprice = payload
                     // console.log("liveprice......")
@@ -174,10 +181,17 @@ const createStore = () => {
             }
         },
         getters: {
+            // get coin amount 
+            getCoins_modern(state) {
+                return state.coins_modern
+            },
+
+            // check stock name is exists or not 
             getCheckStock: (state) => (id) => {
                 return state.stocks[id]
             },
 
+            // get current language 
             getlocale(state) {
                 return state.locale
             },
@@ -190,6 +204,7 @@ const createStore = () => {
                 const livePrice = state.liveprice[id].currentPrice
                 return livePrice
             },
+            // get previouse price to compare with current price to know to ti's down or up
             getPreviousPrice: (state) => (id) => {
                 console.log("getPreviousPrice")
                 if (id == "") {
@@ -198,6 +213,7 @@ const createStore = () => {
                 const previousPrice = state.liveprice[id].previousPrice
                 return previousPrice
             },
+            // get loop by stock id becuase in url be like these "btc1,btc5..."
             getLoop: (state) => (id) => {
                 console.log("getLoop")
                 if (id == "") {
@@ -206,6 +222,7 @@ const createStore = () => {
                 const loop = state.stocks[id].loop
                 return loop
             },
+            // get live time
             getLiveTime: (state) => (id) => {
                 // alert(Object.keys(state.time).length)
                 console.log("getLiveTime")
@@ -215,6 +232,7 @@ const createStore = () => {
                 const liveTime = state.time[id].now
                 return liveTime
             },
+            // get countdown timer
             getLotteryDraw: (state) => (id) => {
                 // alert(Object.keys(state.time).length)
                 console.log("getLotteryDraw")
@@ -229,6 +247,7 @@ const createStore = () => {
                 if (id == "") return
                 return state.stocks[id].loop
             },
+            // get last draw
             getStockLastDraw: (state) => (id) => {
                 console.log("getStockLastDraw")
                 if (id == "") return
