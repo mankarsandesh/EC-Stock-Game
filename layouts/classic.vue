@@ -60,7 +60,7 @@
         <!-- charts -->
         <v-tabs-items v-model="tab">
             <v-container pa-0 v-if="show1">
-                <livechart :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live'" />
+                <livechart :stocks="StockName" :checkStock="checkStock" v-if="checkStock == 'live'" />
                 <liveevens :stocks="StockName" :checkStock="checkStock" v-if="checkStock !== 'live'" />
             </v-container>
         </v-tabs-items>
@@ -69,7 +69,7 @@
         <!-- Datas Lastdraw and Timer -->
         <v-container pt-1>
             <div class="float-right">
-                <dataslastdraw :stocks="StockName" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
+                <dataslastdraw :stocks="StockName" :checkStock="checkStock" v-if="show1" />
             </div>
         </v-container>
         <!-- Datas Lastdraw and Timer -->
@@ -114,6 +114,10 @@ export default {
     },
     data() {
         return {
+            items: [
+                'web', 'shopping', 'videos', 'images', 'news'
+            ],
+            text: 'Lorem i',
             navList: navList,
             checkStockList: null,
             StockName: null,
@@ -174,7 +178,7 @@ export default {
     },
     mounted() {
         this.loadchart()
-        // this.asynInitCallApi();
+        this.asynInitCallApi();
 
         // websocket broadcast live time aand timer
         const socket = openSocket('https://websocket-timer.herokuapp.com')
@@ -214,7 +218,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["getBalance", "getStockLength", "getlocale","getStockNewData","getReference"]),
+        ...mapGetters(["getBalance", "getStockLength", "getlocale"]),
         countryflag() {
             return this.getlocale;
         }
@@ -280,3 +284,4 @@ export default {
     cursor: pointer;
 }
 </style>
+
