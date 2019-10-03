@@ -12,6 +12,7 @@ import {
     urlapi
 } from "./urlapi.js";
 export default {
+    layout:'classic',
     mixins: [urlapi],
     components: {
         LineChart
