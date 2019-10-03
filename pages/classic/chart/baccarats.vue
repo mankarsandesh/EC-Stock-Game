@@ -74,6 +74,7 @@
 <script>
 import openSocket from 'socket.io-client'
 export default {
+    layout:'classic',
     props: ["dataArray", "chtable", "chlists", "isFullscreen", "stocks"],
     data() {
         return {

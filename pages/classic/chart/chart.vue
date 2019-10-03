@@ -13,26 +13,27 @@ import {
     urlapi
 } from "./urlapi.js";
 export default {
+    layout:'classic',
     mixins: [urlapi],
     components: {
         LineChart
     },
-    props:["stocks","checkStock","StockData"],
-    // props: {
-    //     stocks: {
-    //         type: String,
-    //         default: true
-    //     },
-    //     checkStock: {
-    //         type: String,
-    //         default: true
-    //     },
-    //     StockData: {
-    //         type: Array,
-    //         required: true
+    // props:["stocks","checkStock","StockData"],
+    props: {
+        stocks: {
+            type: String,
+            default: 'btc1'
+        },
+        checkStock: {
+            type: String,
+            default: 'live'
+        },
+        StockData: {
+            type: Array,
+            required: true
 
-    //     }
-    // },
+        }
+    },
     data() {
         return {
             datacollection: null,

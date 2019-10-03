@@ -1,5 +1,6 @@
 <template>
 <v-app>
+    {{addtest}}
     <v-toolbar class="pa-1 text-primary light-toobar">
         <v-tabs icons-and-text>
             <v-flex pt-3>
@@ -21,7 +22,7 @@
         </v-tabs>
     </v-toolbar>
 
-    <v-toolbar>
+    <v-toolbar align-center justify-center>
         <v-tabs v-model="tab" color="cyan" grow>
             <v-tabs-slider color="yellow"></v-tabs-slider>
             <v-tab v-for="(items1,idx1) in navList" :key="idx1">
@@ -66,13 +67,13 @@
         </v-tabs-items>
         <!-- end charts -->
 
-        <!-- Datas Lastdraw and Timer -->
+        <!-- Data Lastdraw and Timer -->
         <v-container pt-1>
             <div class="float-right">
                 <dataslastdraw :stocks="StockName" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
             </div>
         </v-container>
-        <!-- Datas Lastdraw and Timer -->
+        <!-- Data Lastdraw and Timer -->
 
         <v-container pa-1>
             <v-layout row>
@@ -102,7 +103,7 @@ import livechart from "~/pages/classic/chart/chart";
 import liveevens from "~/pages/classic/chart/charts";
 import dataslastdraw from "~/pages/classic/chart/dataslastdraw";
 import listleft from "~/pages/classic/list-left";
-import navList from "~/pages/classic/json/menuold.json";
+import navList from "~/pages/classic/json/menu.json";
 export default {
     components: {
         countryFlag,
@@ -116,8 +117,8 @@ export default {
         return {
             navList: navList,
             checkStockList: null,
-            StockName: null,
-            checkStock: null,
+            StockName: 'btc1',
+            checkStock: 'live',
             tab: null,
             tab1: null,
             tab2: null,
@@ -125,42 +126,7 @@ export default {
             clipped: false,
             drawer: false,
             fixed: false,
-            menu: [{
-                    icon: "apps",
-                    title: "home",
-                    to: "/classic/l-btc1-live"
-                },
-                {
-                    icon: "bubble_chart",
-                    title: "current bet",
-                    to: "/classic/current-bet"
-                },
-                {
-                    icon: "bubble_chart",
-                    title: "history",
-                    to: "/classic/history"
-                },
-                {
-                    icon: "bubble_chart",
-                    title: "stock list",
-                    to: "/classic/game-result"
-                },
-                {
-                    icon: "bubble_chart",
-                    title: "announcement",
-                    to: "/classic/announcement"
-                },
-                {
-                    icon: "bubble_chart",
-                    title: "rule",
-                    to: "/classic/rule"
-                },
-                {
-                    icon: "bubble_chart",
-                    title: "setting",
-                    to: "/classic/setting"
-                }
-            ],
+            menu: [],
             miniVariant: false,
             right: true,
             rightDrawer: false,
@@ -170,10 +136,10 @@ export default {
 
     created() {
         this.setLanguage();
-
     },
     mounted() {
         this.loadchart()
+        this.getMenu()
         // this.asynInitCallApi();
 
         // websocket broadcast live time aand timer
@@ -181,6 +147,7 @@ export default {
         socket.on('time', data => {
             this.getAtivetab();
         })
+
     },
     methods: {
         ...mapActions(["asynInitCallApi"]),
@@ -192,13 +159,55 @@ export default {
                 localStorage.setItem("lang", this.getlocale);
             }
         },
+        getMenu() {
+            let mn = this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1] + '-' + this.$route.params.id.split('-')[2] + '-'
+            this.menu = [{
+                    icon: "apps",
+                    title: "home",
+                    to: "/classic/l-btc1-live"
+                },
+                {
+                    icon: "bubble_chart",
+                    title: "current bet",
+                    to: "/classic/"+mn+"currentbet"
+                },
+                {
+                    icon: "bubble_chart",
+                    title: "history",
+                    to: "/classic/"+mn+"history"
+                },
+                {
+                    icon: "bubble_chart",
+                    title: "stock list",
+                    to: "/classic/"+mn+"gameresult"
+                },
+                {
+                    icon: "bubble_chart",
+                    title: "announcement",
+                    to: "/classic/"+mn+"announcement"
+                },
+                {
+                    icon: "bubble_chart",
+                    title: "rule",
+                    to: "/classic/"+mn+"rule"
+                },
+                {
+                    icon: "bubble_chart",
+                    title: "setting",
+                    to: "/classic/"+mn+"setting"
+                }
+            ]
+        },
         loadchart() {
             this.show1 = false
+            this.getMenu()
             setTimeout(() => {
                 this.show1 = true
                 this.StockName = this.$route.params.id.split('-')[1]
                 this.checkStock = this.$route.params.id.split('-')[2]
+                this.getMenu()
             }, 50);
+
         },
         getAtivetab() {
             this.checkStockList = this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1]
@@ -214,7 +223,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["getBalance", "getStockLength", "getlocale","getStockNewData","getReference"]),
+        ...mapGetters(["getBalance", "getStockLength", "getlocale", "getStockNewData", "getReference", "getStockName"]),
         countryflag() {
             return this.getlocale;
         }
@@ -234,6 +243,7 @@ export default {
     float: right;
 
 }
+
 /* GHELLEOEEO */
 .Reference {
     border: 1px solid #ffc107;

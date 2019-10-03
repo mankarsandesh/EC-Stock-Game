@@ -26,11 +26,9 @@ export default {
     },
     mounted() {
         this.getdata()
-        setInterval(() => {
-            this.getTimeNow()
-        }, 1000);
         const socket = openSocket('https://websocket-timer.herokuapp.com')
-        socket.on('time', data => {
+        socket.on('time', data => { 
+            this.getTimeNow()
             let times;
             let calculat;
             if (this.stocks == 'btc1') {
@@ -92,7 +90,7 @@ export default {
                 });
             })
             let elements = items[items.length - 1]
-            console.log(elements.gameid)
+            // console.log(elements.gameid)
             this.gameid = elements.gameid
             let no1 = elements.PT[elements.PT.length - 2]
             let no2 = elements.PT[elements.PT.length - 1]
