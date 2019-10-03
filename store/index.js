@@ -154,8 +154,8 @@ const createStore = () => {
         }),
         mutations: {
             // store coin in localStorage payload must be "String array" '["100", "500", "1000", "5000", "10000"]'
-            setCoins_modern(state, payload) {
-                state.coins_modern = JSON.parse(payload)
+            setCoins_modern(state) {
+                state.coins_modern = JSON.parse(localStorage.getItem("coinModern"))
             },
             // set language
             SET_LANG(state, locale) {

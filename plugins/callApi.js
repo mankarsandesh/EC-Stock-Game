@@ -40,5 +40,5 @@ function initLocalStorageCoin(store) {
         let defaultCoin = '["100", "500", "1000", "5000", "10000"]'
         localStorage.setItem("coinModern", defaultCoin);
     }
-    store.commit('setCoins_modern', localStorage.getItem("coinModern"))
+    store.commit('setCoins_modern')
 }

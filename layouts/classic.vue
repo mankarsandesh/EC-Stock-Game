@@ -61,7 +61,7 @@
         <!-- charts -->
         <v-tabs-items v-model="tab">
             <v-container pa-0 v-if="show1">
-                <livechart :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live'" />
+                <livechart :stocks="StockName" :checkStock="checkStock" v-if="checkStock == 'live'" />
                 <liveevens :stocks="StockName" :checkStock="checkStock" v-if="checkStock !== 'live'" />
             </v-container>
         </v-tabs-items>
@@ -70,7 +70,7 @@
         <!-- Data Lastdraw and Timer -->
         <v-container pt-1>
             <div class="float-right">
-                <dataslastdraw :stocks="StockName" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
+                <dataslastdraw :stocks="StockName" :checkStock="checkStock" v-if="show1" />
             </div>
         </v-container>
         <!-- Data Lastdraw and Timer -->
@@ -115,6 +115,10 @@ export default {
     },
     data() {
         return {
+            items: [
+                'web', 'shopping', 'videos', 'images', 'news'
+            ],
+            text: 'Lorem i',
             navList: navList,
             checkStockList: null,
             StockName: 'btc1',
@@ -217,7 +221,7 @@ export default {
                 this.tab = 1
             } else if (this.checkStockList == "st-btc1" || this.checkStockList == "st-btc5") {
                 this.tab = 2
-            } else {
+            } else {  
                 this.tab = 3
             }
         }
@@ -290,3 +294,4 @@ export default {
     cursor: pointer;
 }
 </style>
+
