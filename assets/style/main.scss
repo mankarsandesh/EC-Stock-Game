@@ -494,3 +494,68 @@ nav {
     }
   }
 }
+
+// Classic
+.application--wrap {
+  .v-toolbar {
+    .v-toolbar__content {
+      padding: 0;
+    }
+  }
+  @media (max-width: 600px) {
+    .v-content {
+      .v-content__wrap {
+        .container {
+          .remove-flex {
+            display: block;
+            margin-top: 28px;
+          }
+        }
+      }
+    }
+  }
+}
+.flex {
+  .v-card {
+    .layout {
+      .flex {
+        .v-avatar {
+          .v-responsive {
+            .v-image__image {
+              background-size: 90%;
+            }
+          }
+        }
+      }
+    }
+    .v-expansion-panel {
+      .v-expansion-panel__container {
+        .v-expansion-panel__header {
+          background-color: #384e63;
+          color: #ffffff;
+          text-transform: capitalize;
+          .v-expansion-panel__header__icon {
+            i {
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// For Mobile
+@media (max-width: 600px) {
+  .flex {
+    .v-card {
+      .layout {
+        .flex {
+          .v-avatar {
+            width: 55px !important;
+          }
+        }
+      }
+    }
+  }
+}
