@@ -1,6 +1,5 @@
 <template>
 <v-app>
-    {{addtest}}
     <v-toolbar class="pa-1 text-primary light-toobar">
         <v-tabs icons-and-text>
             <v-flex pt-3>
@@ -61,7 +60,7 @@
         <!-- charts -->
         <v-tabs-items v-model="tab">
             <v-container pa-0 v-if="show1">
-                <livechart :stocks="StockName" :checkStock="checkStock" v-if="checkStock == 'live'" />
+                <livechart :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live'" />
                 <liveevens :stocks="StockName" :checkStock="checkStock" v-if="checkStock !== 'live'" />
             </v-container>
         </v-tabs-items>
@@ -70,7 +69,7 @@
         <!-- Data Lastdraw and Timer -->
         <v-container pt-1>
             <div class="float-right">
-                <dataslastdraw :stocks="StockName" :checkStock="checkStock" v-if="show1" />
+                  <dataslastdraw :stocks="StockName" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
             </div>
         </v-container>
         <!-- Data Lastdraw and Timer -->
