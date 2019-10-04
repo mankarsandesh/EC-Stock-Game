@@ -2,38 +2,17 @@
 <div class="text-xs-center">
     <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-else></v-progress-linear>
-    <!-- <button @click="clear()">add data</button> -->
 </div>
 </template>
 
 <script>
-import LineChart from '../../plugins/LineChart'
+import LineChart from '~/plugins/LineChart'
 import openSocket from 'socket.io-client'
-import {
-    urlapi
-} from "../../data/urlapi";
 export default {
-    layout:'classic',
-    mixins: [urlapi],
     components: {
         LineChart
     },
-    // props:["stocks","checkStock","StockData"],
-    props: {
-        stocks: {
-            type: String,
-            default: 'btc1'
-        },
-        checkStock: {
-            type: String,
-            default: 'live'
-        },
-        StockData: {
-            type: Array,
-            required: true
-
-        }
-    },
+    props: ["stocks", "checkStock", "StockData"],
     data() {
         return {
             datacollection: null,
@@ -59,18 +38,14 @@ export default {
             return (zero + num).slice(-digit);
         },
         getChart() {
-            this.url(this.stocks);
-            let datas = this.data;
-            let labelss = this.labels;
-            let self = this;
             if (this.StockData === "") {
                 return
             } else {
                 this.load = true
             }
-
-            // this.api = "http://159.138.54.214/api/btc1";
-            // this.$axios(this.api).then(response => {
+            let datas = this.data;
+            let labelss = this.labels;
+            let self = this;
 
             this.StockData.forEach(element => {
                 let date = new Date(element.created_at.replace(/-/g, "/"));
@@ -255,9 +230,6 @@ export default {
             //     });
             // }
 
-            // }).catch(function (error) {
-            //     console.warn(error);
-            // });
         }
     }
 }

@@ -15,7 +15,6 @@
 <script>
 import openSocket from "socket.io-client";
 export default {
-  layout: "classic",
   props: ["checkStock", "stocks", "StockData", "Reference"],
   data() {
     return {

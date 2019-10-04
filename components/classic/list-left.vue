@@ -66,7 +66,6 @@
 <script>
 import AnimatedNumber from "animated-number-vue";
 export default {
-    layout: "classic",
     components: {
         AnimatedNumber
     },
