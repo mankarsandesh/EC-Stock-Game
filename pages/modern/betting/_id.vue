@@ -95,7 +95,7 @@
 
           <v-tab-item>
             <v-layout row align-center justify-center>
-              <v-card class="box-click" @click="dialog1 = true">
+              <v-card class="box-click" @click="showBetDialog('firstdigit-small')">
                 <v-card-title class="d-block">
                   <h5>small</h5>
                   <span>0 TO 4</span>
@@ -335,7 +335,7 @@
     </v-layout>
 
     <v-dialog
-      v-model="dialog1"
+      v-model="bettingDialog"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
@@ -346,11 +346,11 @@
         <v-toolbar flat color="white">
           <v-layout row mt-4>
             <div class="d-block">
-              <h3>ALPHABET INC.(GOOLE)</h3>
-              <p>5 MINUTE GAME | FIRST DIGT - NUMBER</p>
+              <h3>{{$route.params.id}}</h3>
+              <p class="text-uppercase">{{getStockLoop($route.params.id)}} MINUTE GAME | {{gameRule}}</p>
             </div>
             <v-spacer></v-spacer>
-            <v-btn class="close" flat @click="dialog1 =false">
+            <v-btn class="close" flat @click="bettingDialog =false">
               <v-icon size="30">close</v-icon>
             </v-btn>
           </v-layout>
@@ -358,7 +358,7 @@
 
         <v-card class="mx-auto round-1 mt-3" color="#003e70" raised>
           <h3>Betting on</h3>
-          <h1>First Digit - SMALL</h1>
+          <h1 class="text-uppercase">{{gameRule}}</h1>
         </v-card>
         <p class="text-dest my-0">odd 1.95</p>
 
@@ -375,7 +375,7 @@
         <v-layout row mb-5 mt-3 justify-center>
           <v-flex xs4 class="px-4 text-center">
             <h5>Amount</h5>
-            <v-text-field solo label="200$" clearable></v-text-field>
+            <v-text-field solo label="200$" clearable v-model="amount"></v-text-field>
           </v-flex>
         </v-layout>
       </v-card>
@@ -605,7 +605,7 @@ export default {
   data() {
     return {
       stockID: "",
-      dialog1: false,
+      bettingDialog: false,
       reviewbetDialog: false,
       dialog: false,
       notifications: false,
@@ -636,7 +636,9 @@ export default {
           title: "black",
           img: "/chip/black.png",
         }
-      ]
+      ],
+      gameRule:"null",
+      amount:0
     };
   },
   mounted() {
@@ -653,7 +655,8 @@ export default {
       "getLotteryDraw",
       "getCheckStock",
       "getStockLoop",
-      "getCoins_modern"
+      "getCoins_modern",
+      "getStockLoop"
     ]),
     checkBetClose() {
       if (this.getStockLoop(this.$route.params.id) == 1) {
@@ -664,6 +667,10 @@ export default {
     }
   },
   methods: {
+    showBetDialog(rule){
+      this.gameRule = rule
+      this.bettingDialog = true
+    },
     reviewbet() {
       this.reviewbetDialog = true;
     },
