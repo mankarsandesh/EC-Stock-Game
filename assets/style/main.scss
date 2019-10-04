@@ -173,6 +173,11 @@ span.text-white {
 }
 nav {
   .v-toolbar__content {
+    .container {
+      .layout {
+        align-items: center;
+      }
+    }
     .v-toolbar__items {
       a.v-btn--active {
         color: #ffc107;
@@ -496,6 +501,33 @@ nav {
 }
 
 // Classic
+nav {
+  .container {
+    .layout {
+      .v-btn--active {
+        color: #ffc107;
+      }
+      .v-btn--active:before,
+      .v-btn:hover:before,
+      .v-btn:focus:before {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.application {
+  .application--wrap {
+    nav.nav-tab {
+      .v-toolbar__content {
+        background-color: #fafafa;
+      }
+    }
+    main {
+      padding: 0 !important;
+    }
+  }
+}
 .application--wrap {
   .v-toolbar {
     .v-toolbar__content {
