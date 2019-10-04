@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import chips from "./json/chips.json";
+import chips from "~/data/json/chips.json";
 export default {
   data() {
     return {

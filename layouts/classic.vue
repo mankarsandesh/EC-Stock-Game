@@ -98,7 +98,7 @@ import livechart from "~/components/classic/chart";
 import liveevens from "~/components/classic/charts";
 import dataslastdraw from "~/components/classic/dataslastdraw";
 import listleft from "~/components/classic/list-left";
-import navList from "~/pages/classic/json/menu.json";
+import navList from "~/data/json/menu.json";
 export default {
     components: {
         countryFlag,

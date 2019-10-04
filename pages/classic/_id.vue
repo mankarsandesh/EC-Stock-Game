@@ -276,9 +276,9 @@ import rule from "./rule";
 import setting from "./setting";
 
 import baccarats from "~/components/classic/baccarats";
-import table from "./json/table.json";
-import chips from "./json/chips.json";
-import baccarat from "./json/baccarat.json";
+import table from "~/data/json/table.json";
+import chips from "~/data/json/chips.json";
+import baccarat from "~/data/json/baccarat.json";
 import openSocket from "socket.io-client";
 import AnimatedNumber from "animated-number-vue";
 import {
