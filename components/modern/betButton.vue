@@ -474,13 +474,7 @@ import { mapGetters } from "vuex";
 import betModal from "~/components/modern/betModal";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-let payout = {
-  big_small: 1.92,
-  high_mid_low: 2.92,
-  _09: 9.82,
-  _18: 19.92,
-  _99: 98.82
-};
+import payout from "~/data/payout";
 export default {
   props:{
     isFullscreen:{
