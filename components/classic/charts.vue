@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import LineChart from './LineChart.js'
+import LineChart from '../../plugins/LineChart'
 import openSocket from 'socket.io-client'
 import {
     urlapi
-} from "./urlapi.js";
+} from "../../data/urlapi";
 export default {
     layout:'classic',
     mixins: [urlapi],

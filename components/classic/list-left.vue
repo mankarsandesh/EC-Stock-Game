@@ -75,9 +75,9 @@ export default {
             items1: 1,
             items2: 1,
             items3: 1,
-            panel1: [1],
-            panel2: [1],
-            panel3: [1],
+            panel1: [0],
+            panel2: [0],
+            panel3: [0],
             balance: this.$store.state.balance,
         }
     },
