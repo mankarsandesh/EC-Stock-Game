@@ -142,7 +142,7 @@ export default {
     // }
   },
   computed: {
-    ...mapGetters(["getBalance", "getStockLength", "getlocale"]),
+    ...mapGetters(["getBalance", "getlocale"]),
     countryflag() {
       return this.getlocale;
     }

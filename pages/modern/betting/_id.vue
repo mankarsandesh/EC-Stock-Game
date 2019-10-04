@@ -366,7 +366,9 @@
         <v-layout row justify-center>
           <v-flex xs10 class="px-4 text-center">
             <v-avatar size="80" v-for="(item,key) in imgChip" :key="key">
-              <img class="ma-5" :src="item.img" :alt="item.title" />
+              <v-img class="ma-5" :src="item.img" :alt="item.title">
+                {{getCoins_modern[key]}}
+              </v-img>
             </v-avatar>
           </v-flex>
         </v-layout>
@@ -617,27 +619,22 @@ export default {
         {
           title: "Danger",
           img: "/chip/danger.png",
-          price: "200"
         },
         {
           title: "Primary",
           img: "/chip/primary.png",
-          price: "500"
         },
         {
           title: "success",
           img: "/chip/success.png",
-          price: "1000"
         },
         {
           title: "warning",
           img: "/chip/warning.png",
-          price: "5000"
         },
         {
           title: "black",
           img: "/chip/black.png",
-          price: "10000"
         }
       ]
     };
@@ -655,7 +652,8 @@ export default {
       "getLiveTime", 
       "getLotteryDraw",
       "getCheckStock",
-      "getStockLoop"
+      "getStockLoop",
+      "getCoins_modern"
     ]),
     checkBetClose() {
       if (this.getStockLoop(this.$route.params.id) == 1) {
