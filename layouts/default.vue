@@ -96,7 +96,7 @@ export default {
   methods: {
   },
   computed: {
-    ...mapGetters(["getBalance", "getStockLength", "getlocale"]),
+    ...mapGetters(["getBalance", "getlocale"]),
     countryflag() {
       return this.getlocale;
     }

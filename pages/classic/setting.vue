@@ -1,15 +1,7 @@
 <template>
   <div>
-    <div style="
-    padding:2%;
-    text-align: center;
-    background-color: #384e63;
-"></div>
-    <div style="
-    margin-top: 3%;
-    text-align: center;
-">
-      <v-avatar size="80" v-for="(chip,index) in chips" :key="index">
+    <div style=" margin-top: 3%; text-align: center;">
+      <v-avatar size="100" v-for="(chip,index) in chips" :key="index">
         <v-img :src="chip.img">
           <input
             type="number"
@@ -21,20 +13,26 @@
             v-model="chip.price"
           />
         </v-img>
-        <button class="btn-edit" @click="EditChip('Edit', index)" v-show="!isShow ">Edit {{index}}</button>
-        <button
+
+        <v-btn
+          small
+          color="warning"
+          class="btn-edit"
+          @click="EditChip('Edit', index)"
+          v-show="!isShow "
+        >Edit</v-btn>
+
+        <v-btn
+          small
+          color="error"
           class="btn-saves"
           @click="EditChip('Save', index), changeChip(title, img, price)"
           v-show="isShow && index == isOpen"
-        >Save</button>
+        >Save</v-btn>
       </v-avatar>
     </div>
-    <div style="
-    margin-top: 3%;
-    text-align: center;
-">
-      <button @click="reserDefault()">resetDateChip</button>
-      <button @click="changeChip()">upDateChip</button>
+    <div style="margin-top: 5%; text-align: center;">
+      <v-btn color="warning" @click="resetDefault()">reset Default</v-btn>
     </div>
   </div>
 </template>
@@ -54,9 +52,7 @@ export default {
     if (localStorage.chips == null) {
       localStorage.chips = JSON.stringify(this.chipsReset);
       this.chips = JSON.parse(localStorage.chips);
-    } else {
-      this.chips = JSON.parse(localStorage.chips);
-    }
+    } else this.chips = JSON.parse(localStorage.chips);
   },
   methods: {
     EditChip(val, index) {
@@ -67,7 +63,7 @@ export default {
     },
     changeChip(title, img, price) {
       if (price < 10 || price > 10000 || price == null) {
-        this.reserDefault();
+        this.resetDefault();
         return;
       }
       this.chips = JSON.parse(localStorage.chips);
@@ -78,12 +74,11 @@ export default {
           img: img,
           price: price
         });
-      } else {
-        this.chips[index].price = price;
-      }
+      } else this.chips[index].price = price;
+
       localStorage.chips = JSON.stringify(this.chips);
     },
-    reserDefault() {
+    resetDefault() {
       this.chips = localStorage.chips = JSON.stringify(this.chipsReset);
       this.chips = JSON.parse(localStorage.chips);
     }
@@ -119,24 +114,20 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .btn-saves {
-  top: 120%;
+  top: 110%;
   position: absolute;
   text-align: center;
   width: 64%;
   margin-left: 0%;
-  background-color: #ff0000;
-  border-radius: 1rem;
-  /* background-color: yellowgreen; */
+  /* border-radius: 1rem; */
 }
 
 .btn-edit {
-  top: 120%;
+  top: 110%;
   position: absolute;
   text-align: center;
   width: 64%;
   margin-left: 0%;
-  background-color: #ff8f00;
-  border-radius: 1rem;
-  /* background-color: yellowgreen; */
+  /* border-radius: 1rem; */
 }
 </style>
