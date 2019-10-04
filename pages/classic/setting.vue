@@ -30,7 +30,6 @@
     </v-tab-item>
 </v-tabs-items>
 </template>
-
 <script>
 import chips from "~/data/json/chips.json";
 export default {
@@ -76,7 +75,6 @@ export default {
     }
 };
 </script>
-
 <style scoped>
 input[type="number"] {
     -moz-appearance: textfield;

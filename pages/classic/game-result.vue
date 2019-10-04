@@ -1,5 +1,4 @@
 <template>
-<div>
     <v-tabs-items>
         <v-tab-item>
             <v-card flat>
@@ -45,10 +44,7 @@
             </v-card>
         </v-tab-item>
     </v-tabs-items>
-
-</div>
 </template>
-
 <script>
 export default {
     layout: 'classic',
