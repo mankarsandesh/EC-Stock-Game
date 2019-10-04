@@ -12,7 +12,8 @@
         "stock list": "股票信息",
         "announcement": "公告",
         "rule": "游戏规则",
-        "setting": "設置"
+        "setting": "設置",
+        "game result": "遊戲結果"
     },
     "stock-list": {
         "live price": "实时报价",
@@ -47,7 +48,21 @@
         "amount": "下注金额",
         "preset": "預置",
         "betnow": "距离关盘",
-        "gameid": "游戏期号"
+        "gameid": "游戏期号",
+        "BetId": "下注单号",
+        "Betdetail": "投注细节",
+        "Time": "下注时间",
+        "Amount": "下注金额",
+        "Payout": "赔率",
+        "Bet Status": "投注状态",
+        "Total": "總",
+        "Total This Page": "總計 (本頁",
+        "Stock Name": "股票名称",
+        "Game Mode": "遊戲模式",
+        "Result": "結果",
+        "result out time": "結果出來了"
+
+
     },
     "navlist": {
         "live Stock": "正开放股票",

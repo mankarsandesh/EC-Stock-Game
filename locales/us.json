@@ -12,7 +12,8 @@
         "stock list": "stock list",
         "announcement": "announcement",
         "rule": "rule",
-        "setting": "setting"
+        "setting": "setting",
+        "game result": "Game Result"
     },
     "stock-list": {
         "live price": "Live Price",
@@ -48,7 +49,19 @@
         "amount": "Amount",
         "preset": "Preset",
         "betnow": "Bet Now",
-        "gameid": "GameID"
+        "gameid": "Game ID",
+        "BetId": "Bet Id",
+        "Betdetail": "Bet detail",
+        "Time": "Time",
+        "Amount": "Amount",
+        "Payout": "Payout",
+        "Bet Status": "Bet Status",
+        "Total": "Total",
+        "Total This Page": "Total (This Page)",
+        "Stock Name": "Stock Name",
+        "Game Mode": "Game Mode",
+        "Result": "Result",
+        "result out time": "result out time"
     },
     "navlist": {
         "live Stock": "live Stock",

@@ -5,8 +5,9 @@
         <v-flex v-show="chtable=='bs'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span>{{countBig}}</span>
-                    <span>{{countSmall}}</span>
+                    <span class="text-blue">B</span> = <span class="text-blue">{{countBig}}</span>, 
+                    <span class="text-red">S</span> = <span class="text-red">{{countSmall}}</span>, 
+                    <span class="text-success">Total</span>  = <span class="text-success">{{countBig + countSmall}}</span> 
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebsFirst">
@@ -20,8 +21,10 @@
         <v-flex v-show="chtable=='oe'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span>{{countOdd}}</span>
-                    <span>{{countEven}}</span>
+                     <span class="text-blue">O</span> = <span class="text-blue">{{countOdd}}</span>,
+                    <span class="text-red">E</span> = <span class="text-red">{{countEven}}</span>, 
+                    <span class="text-success">Total</span>  = <span class="text-success">{{countOdd+countEven}}</span> 
+               
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableOEFirst">
@@ -35,9 +38,11 @@
         <v-flex v-show="chtable=='hml'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span>{{countUpper}}</span>
-                    <span>{{countMiddle}}</span>
-                    <span>{{countLower}}</span>
+                    <span class="text-blue">U</span> = <span class="text-blue">{{countUpper}}</span>, 
+                    <span class="text-red">M</span> = <span class="text-red">{{countMiddle}}</span>, 
+                    <span class="text-success">L</span> = <span class="text-success">{{countLower}}</span>, 
+                    <span class="text-primary">Total</span>  = <span class="text-primary">{{countUpper+countMiddle+countLower}}</span> 
+               
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebUMLFirst">
@@ -46,17 +51,17 @@
                         </tr>
                     </table>
                 </div>
-            </div>
+            </div> 
         </v-flex>
         <v-flex v-show="chtable=='sn'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div ref="sortNumber">
-                    <span class=""></span>
-                    <span class=""></span>
-                    <span class=""></span>
-                    <span class=""></span>
-                    <span class=""></span>
-                    <span class=""></span>
+                    <span class></span>
+                    <span class></span>
+                    <span class></span>
+                    <span class></span>
+                    <span class></span>
+                    <span class></span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableNumberFirst">
@@ -72,9 +77,9 @@
 </template>
 
 <script>
-import openSocket from 'socket.io-client'
+import openSocket from "socket.io-client";
 export default {
-    layout: 'classic',
+    layout: "classic",
     props: ["dataArray", "chtable", "chlists", "isFullscreen", "stocks"],
     data() {
         return {
@@ -95,16 +100,15 @@ export default {
             countEven: 0,
             countUpper: 0,
             countMiddle: 0,
-            countLower: 0,
+            countLower: 0
         };
     },
     mounted() {
         setTimeout(() => {
             this.getTableChartBS();
-        }, 1000)
+        }, 1000);
         // this.autoScroll();
-        this.Timeout()
-
+        this.Timeout();
     },
     watch: {
         chlists() {
@@ -122,27 +126,27 @@ export default {
     },
     methods: {
         Timeout() {
-            const socket = openSocket('https://websocket-timer.herokuapp.com')
-            socket.on('time', data => {
+            const socket = openSocket("https://websocket-timer.herokuapp.com");
+            socket.on("time", data => {
                 let times;
                 let calculat;
-                if (this.stocks == 'btc1') {
-                    times = data.btc1.timer
-                    calculat = 41
-                } else if (this.stocks == 'btc5') {
-                    times = data.btc5.timer
-                    calculat = 241
-                } else if (this.stocks == 'usindex') {
-                    times = data.usindex.timer
-                    calculat = 241
+                if (this.stocks == "btc1") {
+                    times = data.btc1.timer;
+                    calculat = 41;
+                } else if (this.stocks == "btc5") {
+                    times = data.btc5.timer;
+                    calculat = 241;
+                } else if (this.stocks == "usindex") {
+                    times = data.usindex.timer;
+                    calculat = 241;
                 } else {
-                    times = data.SH000001.timer
-                    calculat = 241
+                    times = data.SH000001.timer;
+                    calculat = 241;
                 }
                 if (times == calculat) {
-                    this.getTableChartBS()
+                    this.getTableChartBS();
                 }
-            })
+            });
         },
         clearTrendMap() {
             this.trentFirst = [];
@@ -192,10 +196,14 @@ export default {
                     $(".my-coltabledivlast")
                     .first()
                     .width() - 30;
-                let valuebs = $(_this.$refs.tablebsFirst).find(".mystylelast")[0].offsetLeft;
-                let valueoe = $(_this.$refs.tableOEFirst).find(".oestylelast")[0].offsetLeft;
-                let valueuml = $(_this.$refs.tablebUMLFirst).find(".umlstylelast")[0].offsetLeft;
-                let valuenum = $(_this.$refs.tableNumberFirst).find(".numScroll")[0].offsetLeft;
+                let valuebs = $(_this.$refs.tablebsFirst).find(".mystylelast")[0]
+                    .offsetLeft;
+                let valueoe = $(_this.$refs.tableOEFirst).find(".oestylelast")[0]
+                    .offsetLeft;
+                let valueuml = $(_this.$refs.tablebUMLFirst).find(".umlstylelast")[0]
+                    .offsetLeft;
+                let valuenum = $(_this.$refs.tableNumberFirst).find(".numScroll")[0]
+                    .offsetLeft;
                 $(_this.$refs.tablebsFirst).scrollLeft(valuebs - lop);
                 $(_this.$refs.tableOEFirst).scrollLeft(valueoe - lop);
                 $(_this.$refs.tablebUMLFirst).scrollLeft(valueuml - lop);
@@ -212,7 +220,9 @@ export default {
             let firstlast = "";
             this.dataArray.forEach(element => {
                 n++;
-                this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
+                this.gameID.push(
+                    element.gameid + "\n" + element.PT + "\n" + element.created_at
+                );
 
                 let no_firsts = element.PT[element.PT.length - 2].toString();
                 let no_lasts = element.PT[element.PT.length - 1].toString();
@@ -220,7 +230,7 @@ export default {
                 let no_first = parseInt(no_firsts);
                 let no_last = parseInt(no_lasts);
                 let no_both = no_first + no_last;
-                let no_two = parseInt(no_first + '' + no_last);
+                let no_two = parseInt(no_first + "" + no_last);
 
                 if (this.chtable == "oe") {
                     // odd even
@@ -238,7 +248,6 @@ export default {
                         this.tablechartOEFirst();
                         return;
                     }
-
                 } else if (this.chtable == "hml") {
                     // hml
                     if (this.chlists == "hml-First Digit") {
@@ -279,7 +288,6 @@ export default {
                         this.tablechartUMLFirst();
                         return;
                     }
-
                 } else if (this.chtable == "sn") {
                     // sn
                     if (this.chlists == "sn-First Digit") {
@@ -327,9 +335,7 @@ export default {
                         this.tablechartBSFirst();
                         return;
                     }
-
                 }
-
             });
         },
         tablechartBSFirst() {
@@ -365,8 +371,8 @@ export default {
                             //console.log(this.$refs.tablebsFirst.children[i]);
                             for (let j = 0; j < 300; j++) {
                                 if (
-                                    this.$refs.tablebsFirst.children[i].children[j].textContent ===
-                                    "1"
+                                    this.$refs.tablebsFirst.children[i].children[j]
+                                    .textContent === "1"
                                 ) {
                                     countBig++;
                                     this.countBig = countBig;
@@ -378,8 +384,8 @@ export default {
                                         "rs1"
                                     );
                                 } else if (
-                                    this.$refs.tablebsFirst.children[i].children[j].textContent ===
-                                    "0"
+                                    this.$refs.tablebsFirst.children[i].children[j]
+                                    .textContent === "0"
                                 ) {
                                     countSmall++;
                                     this.countSmall = countSmall;
@@ -406,19 +412,25 @@ export default {
                                 j
                             ].textContent = this.trentFirst[s];
 
-                            this.$refs.tablebsFirst.children[i].cells[j].title = this.gameID[s];
+                            this.$refs.tablebsFirst.children[i].cells[j].title = this.gameID[
+                                s
+                            ];
                             //gogogo
                         }
                     } else if (this.trentFirst[s] == this.trentFirst[s - 1]) {
                         // check is equal or not
 
                         //check the row it emtry or not if it emtry add
-                        if (this.$refs.tablebsFirst.children[i].cells[j].textContent == "") {
+                        if (
+                            this.$refs.tablebsFirst.children[i].cells[j].textContent == ""
+                        ) {
                             this.$refs.tablebsFirst.children[i].cells[
                                 j
                             ].textContent = this.trentFirst[s];
 
-                            this.$refs.tablebsFirst.children[i].cells[j].title = this.gameID[s];
+                            this.$refs.tablebsFirst.children[i].cells[j].title = this.gameID[
+                                s
+                            ];
 
                             //gogogo
                         } else {
@@ -536,8 +548,8 @@ export default {
                             //console.log(this.$refs.tablebsTwo.children[i]);
                             for (let j = 0; j < 200; j++) {
                                 if (
-                                    this.$refs.tableOEFirst.children[i].children[j].textContent ===
-                                    "1"
+                                    this.$refs.tableOEFirst.children[i].children[j]
+                                    .textContent === "1"
                                 ) {
                                     countOdd++;
                                     this.countOdd = countOdd;
@@ -550,8 +562,8 @@ export default {
                                     this.$refs.tableOEFirst.children[i].children[j].textContent =
                                         "O";
                                 } else if (
-                                    this.$refs.tableOEFirst.children[i].children[j].textContent ===
-                                    "0"
+                                    this.$refs.tableOEFirst.children[i].children[j]
+                                    .textContent === "0"
                                 ) {
                                     countEven++;
                                     this.countEven = countEven;
@@ -581,18 +593,24 @@ export default {
                                 j
                             ].textContent = this.trentOEFirst[s];
 
-                            this.$refs.tableOEFirst.children[i].cells[j].title = this.gameID[s];
+                            this.$refs.tableOEFirst.children[i].cells[j].title = this.gameID[
+                                s
+                            ];
                             //gogogo
                         }
                     } else if (this.trentOEFirst[s] == this.trentOEFirst[s - 1]) {
                         // check is equal or not
 
                         //check the row it emtry or not if it emtry add
-                        if (this.$refs.tableOEFirst.children[i].cells[j].textContent == "") {
+                        if (
+                            this.$refs.tableOEFirst.children[i].cells[j].textContent == ""
+                        ) {
                             this.$refs.tableOEFirst.children[i].cells[
                                 j
                             ].textContent = this.trentOEFirst[s];
-                            this.$refs.tableOEFirst.children[i].cells[j].title = this.gameID[s];
+                            this.$refs.tableOEFirst.children[i].cells[j].title = this.gameID[
+                                s
+                            ];
                             //gogogo
                         } else {
                             if (i - 1 == 0) {
@@ -712,42 +730,48 @@ export default {
                                 ) {
                                     countUpper++;
                                     this.countUpper = countUpper;
-                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
-                                        "";
-                                    this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
-                                        "rs-u"
-                                    );
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].textContent = "";
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].classList.add("rs-u");
 
-                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
-                                        "U";
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].textContent = "U";
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "1"
                                 ) {
                                     countMiddle++;
                                     this.countMiddle = countMiddle;
-                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
-                                        "";
-                                    this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
-                                        "rs-m"
-                                    );
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].textContent = "";
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].classList.add("rs-m");
 
-                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
-                                        "M";
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].textContent = "M";
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "0"
                                 ) {
                                     countLower++;
                                     this.countLower = countLower;
-                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
-                                        "";
-                                    this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
-                                        "rs-l"
-                                    );
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].textContent = "";
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].classList.add("rs-l");
 
-                                    this.$refs.tablebUMLFirst.children[i].children[j].textContent =
-                                        "L";
+                                    this.$refs.tablebUMLFirst.children[i].children[
+                                        j
+                                    ].textContent = "L";
                                 }
                             }
                         }
@@ -765,9 +789,9 @@ export default {
                                 j
                             ].textContent = this.trentUMLFirst[s];
 
-                            this.$refs.tablebUMLFirst.children[i].cells[j].title = this.gameID[
-                                s
-                            ];
+                            this.$refs.tablebUMLFirst.children[i].cells[
+                                j
+                            ].title = this.gameID[s];
                         }
                     } else if (this.trentUMLFirst[s] == this.trentUMLFirst[s - 1]) {
                         // check is equal or not
@@ -780,9 +804,9 @@ export default {
                                 j
                             ].textContent = this.trentUMLFirst[s];
 
-                            this.$refs.tablebUMLFirst.children[i].cells[j].title = this.gameID[
-                                s
-                            ];
+                            this.$refs.tablebUMLFirst.children[i].cells[
+                                j
+                            ].title = this.gameID[s];
                             //gogogo
                         } else {
                             if (i - 1 == 0) {
@@ -931,7 +955,10 @@ export default {
                         this.$refs.tableNumberFirst.children[k].children[j].className =
                             "big-number";
                     }
-                    if (this.chlists === "sn-Both Digit" || this.chlists === "sn-Two Digit") {
+                    if (
+                        this.chlists === "sn-Both Digit" ||
+                        this.chlists === "sn-Two Digit"
+                    ) {
                         this.$refs.tableNumberFirst.children[k].children[j].textContent =
                             this.trentNumberFirst[s] < 10 ?
                             "0" + this.trentNumberFirst[s] :
@@ -942,12 +969,12 @@ export default {
                         ].textContent = this.trentNumberFirst[s];
                     }
 
-                    this.$refs.tableNumberFirst.children[k].children[j].title = this.gameID[
-                        s
-                    ];
+                    this.$refs.tableNumberFirst.children[k].children[
+                        j
+                    ].title = this.gameID[s];
                 }
             }
-        },
+        }
     }
 };
 </script>
@@ -1028,7 +1055,7 @@ p {
     /* font-weight: bold; */
     height: 24px;
     width: 24px;
-    background-color: #003f70;
+    background-color: #003f70 !important;
     border-radius: 5rem !important;
     display: inline-block;
     font-size: 14px;
