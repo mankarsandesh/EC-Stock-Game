@@ -275,7 +275,7 @@ import announcement from "./announcement";
 import rule from "./rule";
 import setting from "./setting";
 
-import baccarats from "./chart/baccarats";
+import baccarats from "~/components/classic/baccarats";
 import table from "./json/table.json";
 import chips from "./json/chips.json";
 import baccarat from "./json/baccarat.json";
@@ -309,7 +309,8 @@ export default {
             currentItems: "tab-Big Small",
             currentItemss: null,
             baccarat: baccarat,
-            chips: chips,
+            chipsReset: chips,
+            chips: [],
             panel: [false, false, false, false],
             currentItem: "tab-All games",
             header: ["firstdigit", "lastdigit", "bothdigit", "twodigit"],
@@ -334,6 +335,7 @@ export default {
     mounted() {
         // console.log(this.getStockName(this.$route.params.id).loop)
         this.getTime();
+        this.getchips();
         // console.log(this.baccarat)
     },
     computed: {
@@ -358,6 +360,14 @@ export default {
         }
     },
     methods: {
+        getchips() {
+            if (localStorage.chips == null) {
+                localStorage.chips = JSON.stringify(this.chipsReset)
+                this.chips = JSON.parse(localStorage.chips)
+            } else {
+                this.chips = JSON.parse(localStorage.chips)
+            }
+        },
         loadchart() {
             this.show1 = false;
             setTimeout(() => {
@@ -663,6 +673,7 @@ export default {
 .width-15 {
     width: 15% !important;
 }
+
 .width-30 {
     width: 30% !important;
 }

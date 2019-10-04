@@ -94,10 +94,10 @@ import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
-import livechart from "~/pages/classic/chart/chart";
-import liveevens from "~/pages/classic/chart/charts";
-import dataslastdraw from "~/pages/classic/chart/dataslastdraw";
-import listleft from "~/pages/classic/list-left";
+import livechart from "~/components/classic/chart";
+import liveevens from "~/components/classic/charts";
+import dataslastdraw from "~/components/classic/dataslastdraw";
+import listleft from "~/components/classic/list-left";
 import navList from "~/pages/classic/json/menu.json";
 export default {
     components: {
