@@ -63,10 +63,10 @@
               </span>
             </span>
             <v-flex pa-2 xs12 class="border-chart">
-               <chartMobile
-                    :data="getStockById($route.params.id).stockPrice"
-                    :key="getStockById($route.params.id).stockPrice[0]"
-                  ></chartMobile>
+              <chartMobile
+                :data="getStockById($route.params.id).stockPrice"
+                :key="getStockById($route.params.id).stockPrice[0]"
+              ></chartMobile>
             </v-flex>
           </v-flex>
           <v-flex xs1 align-self-center>
@@ -79,12 +79,12 @@
       </v-flex>
 
       <v-flex xs6>
-        <div
+        <!-- <div
           class="betClose"
           v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
         >
           <p>bet close</p>
-        </div>
+        </div>-->
         <v-tabs slider-color="#003e70" grow centered>
           <v-tab>first digit</v-tab>
           <v-tab>last digit</v-tab>
@@ -101,7 +101,7 @@
                   <span>0 TO 4</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('firstdigit-big')">
                 <v-card-title class="d-block">
                   <h5>big</h5>
                   <span>5 TO 9</span>
@@ -109,12 +109,12 @@
               </v-card>
             </v-layout>
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('firstdigit-odd')">
                 <v-card-title class="o-even">
                   <h5>odd</h5>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('firstdigit-even')">
                 <v-card-title class="o-even">
                   <h5>even</h5>
                 </v-card-title>
@@ -127,19 +127,19 @@
             </v-layout>
 
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('firstdigit-low')">
                 <v-card-title class="d-block">
                   <h5>low</h5>
                   <span>0 TO 3</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('firstdigit-mid')">
                 <v-card-title class="d-block">
                   <h5>mid</h5>
                   <span>4 TO 6</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('firstdigit-high')">
                 <v-card-title class="d-block">
                   <h5>high</h5>
                   <span>7 TO 9</span>
@@ -346,8 +346,10 @@
         <v-toolbar flat color="white">
           <v-layout row mt-4>
             <div class="d-block">
-              <h3>{{$route.params.id}}</h3>
-              <p class="text-uppercase">{{getStockLoop($route.params.id)}} MINUTE GAME | {{gameRule}}</p>
+              <h3 class="text-uppercase">{{$route.params.id}}</h3>
+              <p
+                class="text-uppercase"
+              >{{getStockLoop($route.params.id)}} MINUTE GAME | {{gameRule}}</p>
             </div>
             <v-spacer></v-spacer>
             <v-btn class="close" flat @click="bettingDialog =false">
@@ -360,15 +362,18 @@
           <h3>Betting on</h3>
           <h1 class="text-uppercase">{{gameRule}}</h1>
         </v-card>
-        <p class="text-dest my-0">odd 1.95</p>
+        <p class="text-dest my-0">odd {{odd}}</p>
 
         <!-- Chip -->
         <v-layout row justify-center>
           <v-flex xs10 class="px-4 text-center">
-            <v-avatar size="80" v-for="(item,key) in imgChip" :key="key">
-              <v-img class="ma-5" :src="item.img" :alt="item.title">
-                {{getCoins_modern[key]}}
-              </v-img>
+            <v-avatar
+              size="80"
+              v-for="(item,key) in imgChip"
+              :key="key"
+              @click="shipClick(getCoins_modern[key])"
+            >
+              <v-img class="ma-5" :src="item.img" :alt="item.title">{{getCoins_modern[key]}}</v-img>
             </v-avatar>
           </v-flex>
         </v-layout>
@@ -412,7 +417,7 @@
         <v-container class="w80 mb-5">
           <div class="row d-flex justify-space-between hr">
             <p class="stockName">Stock name</p>
-            <p class="stockDetail">Alphabet Inc(GOOGLE)</p>
+            <p class="stockDetail text-uppercase">{{$route.params.id}}</p>
           </div>
           <div class="row d-flex justify-space-between hr">
             <p class="stockName">Game ID</p>
@@ -420,11 +425,11 @@
           </div>
           <div class="row d-flex justify-space-between hr">
             <p class="stockName">Game Type</p>
-            <p class="stockDetail">5 Minute game</p>
+            <p class="stockDetail">{{getStockLoop($route.params.id)}} Minute game</p>
           </div>
           <div class="row d-flex justify-space-between hr">
             <p class="stockName">Betting on</p>
-            <p class="stockDetail">First Digit - SMALL</p>
+            <p class="stockDetail text-uppercase">{{gameRule}}</p>
           </div>
           <div class="row d-flex justify-space-between hr">
             <p class="stockName">Odd</p>
@@ -432,7 +437,7 @@
           </div>
           <div class="row d-flex justify-space-between hr">
             <p class="stockName">Amount</p>
-            <p class="stockDetail">$800.00</p>
+            <p class="stockDetail text-uppercase">{{amount}}</p>
           </div>
         </v-container>
       </v-card>
@@ -457,9 +462,14 @@
       <hr class="head-jumbothron" />
       <v-container>
         <v-layout row wrap>
-          <v-flex xs3 v-for="item in 9" :key="item">
+          <v-flex
+            xs3
+            v-for="(item,index) in 10"
+            :key="item"
+            @click="showBetDialog(`firstdigit-${index}`)"
+          >
             <v-card-title class="box-click-modal o-even">
-              <h5>0{{item}}</h5>
+              <h5>{{index}}</h5>
             </v-card-title>
           </v-flex>
         </v-layout>
@@ -597,6 +607,7 @@
 <script>
 import { mapGetters } from "vuex";
 import chartMobile from "~/components/chartMobile";
+import payout from "~/data/payout";
 
 export default {
   async validate({ params, store }) {
@@ -604,6 +615,12 @@ export default {
   },
   data() {
     return {
+      payout_high_mid_low: payout.high_mid_low,
+      payout_big_small: payout.big_small,
+      payout_09: payout._09,
+      payout_18: payout._18,
+      payout_99: payout._99,
+
       stockID: "",
       bettingDialog: false,
       reviewbetDialog: false,
@@ -618,27 +635,28 @@ export default {
       imgChip: [
         {
           title: "Danger",
-          img: "/chip/danger.png",
+          img: "/chip/danger.png"
         },
         {
           title: "Primary",
-          img: "/chip/primary.png",
+          img: "/chip/primary.png"
         },
         {
           title: "success",
-          img: "/chip/success.png",
+          img: "/chip/success.png"
         },
         {
           title: "warning",
-          img: "/chip/warning.png",
+          img: "/chip/warning.png"
         },
         {
           title: "black",
-          img: "/chip/black.png",
+          img: "/chip/black.png"
         }
       ],
-      gameRule:"null",
-      amount:0
+      odd: null,
+      gameRule: "null",
+      amount: 0
     };
   },
   mounted() {
@@ -651,7 +669,7 @@ export default {
     ...mapGetters([
       "getStockById",
       "getLivePrice",
-      "getLiveTime", 
+      "getLiveTime",
       "getLotteryDraw",
       "getCheckStock",
       "getStockLoop",
@@ -667,15 +685,58 @@ export default {
     }
   },
   methods: {
-    showBetDialog(rule){
-      this.gameRule = rule
-      this.bettingDialog = true
+    showBetDialog(rule) {
+      this.gameRule = rule;
+      this.bettingDialog = true;
+    },
+    shipClick(value) {
+      this.amount = this.amount + parseInt(value);
     },
     reviewbet() {
       this.reviewbetDialog = true;
     },
     placeBet() {
       alert("This is the placeBet");
+    }
+  },
+  watch: {
+    // set payout
+    gameRule() {
+      let payoutArray1 = ["small", "big", "odd", "even"];
+      let payoutArray2 = ["high", "mid", "low"];
+      let payoutArray3 = ["firstdigit", "lastdigit", "bothdigit", "twodigit"];
+      let array = this.gameRule.split("-");
+
+      // check the last one is string or not
+      // alert(parseInt(array[1]).isNaN)
+      let firstArray = array[0];
+      let lastArray = array[1];
+      if (Number.isNaN(parseInt(lastArray))) {
+        if (payoutArray1.includes(lastArray)) {
+          this.odd = this.payout_big_small;
+        } else if (payoutArray2.includes(lastArray)) {
+          this.odd = this.payout_high_mid_low;
+        } else {
+          this.odd = "error";
+        }
+      } else {
+        switch (firstArray) {
+          case "firstdigit":
+            this.odd = this.payout_09;
+            break;
+          case "lastdigit":
+            this.odd = this.payout_09;
+            break;
+          case "bothdigit":
+            this.odd = this.payout_18;
+            break;
+          case "twodigit":
+            this.odd = this.payout_99;
+            break;
+          default:
+            this.odd = "error";
+        }
+      }
     }
   }
 };
