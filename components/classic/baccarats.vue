@@ -5,8 +5,8 @@
         <v-flex v-show="chtable=='bs'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="countBig "></span>
-                    <span class="countSmall "></span>
+                    <span>{{countBig}}</span>
+                    <span>{{countSmall}}</span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebsFirst">
@@ -20,8 +20,8 @@
         <v-flex v-show="chtable=='oe'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="countOdd "></span>
-                    <span class="countEven "></span>
+                    <span>{{countOdd}}</span>
+                    <span>{{countEven}}</span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableOEFirst">
@@ -34,11 +34,11 @@
         </v-flex>
         <v-flex v-show="chtable=='hml'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
-                <!-- <div >
-                    <span class="countUpper "></span>
-                    <span class="countMiddle "></span>
-                    <span class="countLower "></span>
-                </div> -->
+                <div>
+                    <span>{{countUpper}}</span>
+                    <span>{{countMiddle}}</span>
+                    <span>{{countLower}}</span>
+                </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebUMLFirst">
                         <tr v-for="tr in rowTable" :key="tr">
@@ -50,14 +50,14 @@
         </v-flex>
         <v-flex v-show="chtable=='sn'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
-                <!-- <div  ref="sortNumber">
+                <div ref="sortNumber">
                     <span class=""></span>
                     <span class=""></span>
                     <span class=""></span>
                     <span class=""></span>
                     <span class=""></span>
                     <span class=""></span>
-                </div> -->
+                </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableNumberFirst">
                         <tr v-for="tr in rowTable" :key="tr">
@@ -74,7 +74,7 @@
 <script>
 import openSocket from 'socket.io-client'
 export default {
-    layout:'classic',
+    layout: 'classic',
     props: ["dataArray", "chtable", "chlists", "isFullscreen", "stocks"],
     data() {
         return {
@@ -88,7 +88,14 @@ export default {
             is_show_oe: true,
             is_show_hml: true,
             is_show_num: true,
-            rowTable: 6
+            rowTable: 6,
+            countBig: 0,
+            countSmall: 0,
+            countOdd: 0,
+            countEven: 0,
+            countUpper: 0,
+            countMiddle: 0,
+            countLower: 0,
         };
     },
     mounted() {
@@ -362,7 +369,7 @@ export default {
                                     "1"
                                 ) {
                                     countBig++;
-                                    $(".countBig").text("Big" + " = " + countBig);
+                                    this.countBig = countBig;
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
@@ -375,7 +382,7 @@ export default {
                                     "0"
                                 ) {
                                     countSmall++;
-                                    $(".countSmall").text("Small" + " = " + countSmall);
+                                    this.countSmall = countSmall;
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tablebsFirst.children[i].children[j].classList.add(
@@ -533,7 +540,7 @@ export default {
                                     "1"
                                 ) {
                                     countOdd++;
-                                    $(".countOdd").text("Odd" + " = " + countOdd);
+                                    this.countOdd = countOdd;
                                     this.$refs.tableOEFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tableOEFirst.children[i].children[j].classList.add(
@@ -547,7 +554,7 @@ export default {
                                     "0"
                                 ) {
                                     countEven++;
-                                    $(".countEven").text("Even" + " = " + countEven);
+                                    this.countEven = countEven;
                                     this.$refs.tableOEFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tableOEFirst.children[i].children[j].classList.add(
@@ -704,7 +711,7 @@ export default {
                                     .textContent === "2"
                                 ) {
                                     countUpper++;
-                                    $(".countUpper").text("Upper" + " = " + countUpper);
+                                    this.countUpper = countUpper;
                                     this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
@@ -718,7 +725,7 @@ export default {
                                     .textContent === "1"
                                 ) {
                                     countMiddle++;
-                                    $(".countMiddle").text("middle" + " = " + countMiddle);
+                                    this.countMiddle = countMiddle;
                                     this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tablebUMLFirst.children[i].children[j].classList.add(
@@ -732,7 +739,7 @@ export default {
                                     .textContent === "0"
                                 ) {
                                     countLower++;
-                                    $(".countLower").text("lower" + " = " + countLower);
+                                    this.countLower = countLower;
                                     this.$refs.tablebUMLFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tablebUMLFirst.children[i].children[j].classList.add(

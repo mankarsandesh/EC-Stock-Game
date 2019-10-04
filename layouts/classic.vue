@@ -57,7 +57,7 @@
         <v-tabs-items v-model="tab">
             <v-container pa-0 v-if="show1">
                 <livechart :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live'" />
-                <liveevens :stocks="StockName" :checkStock="checkStock" v-if="checkStock !== 'live'" />
+                <liveevens :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock !== 'live'" />
             </v-container>
         </v-tabs-items>
         <!-- end charts -->
