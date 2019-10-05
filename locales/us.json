@@ -61,7 +61,10 @@
         "Stock Name": "Stock Name",
         "Game Mode": "Game Mode",
         "Result": "Result",
-        "result out time": "result out time"
+        "result out time": "result out time",
+        "Win Bet": "Win Bet",
+        "Lose Bet": "Lose Bet"
+
     },
     "navlist": {
         "live Stock": "live Stock",

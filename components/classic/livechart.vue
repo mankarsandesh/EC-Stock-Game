@@ -2,6 +2,7 @@
 <div class="text-xs-center">
     <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-else></v-progress-linear>
+    <v-btn @click="getChart()">Update Chart</v-btn>
 </div>
 </template>
 
@@ -43,9 +44,57 @@ export default {
             } else {
                 this.load = true
             }
+
             let datas = this.data;
             let labelss = this.labels;
             let self = this;
+            ///////////////////////////////////////////
+            const socket = openSocket('https://websocket-timer.herokuapp.com')
+            socket.on('time', data => {
+                let times, calculating;
+                if (this.$route.params.id.split('-')[1] == 'btc1') {
+                    times = data.btc1.timer
+                    calculating = 41
+                } else if (this.$route.params.id.split('-')[1] == 'btc5') {
+                    times = data.btc5.timer
+                    calculating = 241
+                } else if (this.$route.params.id.split('-')[1] == 'usindex') {
+                    times = data.usindex.timer
+                    calculating = 241
+                } else {
+                    times = data.SH000001.timer
+                    calculating = 241
+                }
+
+                if (times == calculating) {
+                    startInterval()
+                }
+            })
+
+            function startInterval() {
+                console.log("add new data")
+                let items = [];
+                self.StockData.forEach(elements => {
+                    items.push({
+                        date: elements.created_at.replace(/-/g, "/"),
+                        value: elements.PT,
+                    });
+                });
+
+                let dataItems = items[items.length - 1];
+
+                let date = new Date(dataItems.date);
+                let labelss = self.setZero(date.getMonth() + 1, 2) + "/" + self.setZero(date.getDate(), 2) + " " + self.setZero(date.getHours(), 2) + ':' + self.setZero(date.getMinutes(), 2);
+                // labelss.push(labelss);
+                // datas.push(dataItems.value);
+                // new data to chart
+                // self.datacollection.labels.push(labelss);
+                // self.datacollection.datasets[0].data.push(dataItems.value);
+                // self.datacollection.update();
+                console.log(labelss)
+                console.log(dataItems.value)
+            }
+            ///////////////////////////////////////////
 
             this.StockData.forEach(element => {
                 let date = new Date(element.created_at.replace(/-/g, "/"));
@@ -178,57 +227,6 @@ export default {
                         }
                     }
                 }
-
-            // const socket = openSocket('https://websocket-timer.herokuapp.com')
-            // socket.on('time', data => {
-            //     let times, calculating;
-            //     if (this.$route.params.id.split('-')[1] == 'btc1') {
-            //         times = data.btc1.timer
-            //         calculating = 41
-            //     } else if (this.$route.params.id.split('-')[1] == 'btc5') {
-            //         times = data.btc5.timer
-            //         calculating = 241
-            //     } else if (this.$route.params.id.split('-')[1] == 'usindex') {
-            //         times = data.usindex.timer
-            //         calculating = 241
-            //     } else {
-            //         times = data.SH000001.timer
-            //         calculating = 241
-            //     }
-
-            //     if (times == calculating) {
-            //         startInterval()
-            //     }
-            // })
-
-            // function startInterval() {
-            //     console.log("add new data")
-            //     datas = []
-            //     labelss = []
-            //     let items = [];
-            //     self.$axios.get(self.api).then(function (response) {
-            //         self.StockData.forEach(elements => {
-            //             items.push({
-            //                 date: elements.created_at.replace(/-/g, "/"),
-            //                 value: elements.PT,
-            //             });
-            //         });
-
-            //         let dataItems = items[items.length - 1];
-
-            //         let date = new Date(dataItems.date);
-            //         let labelss = self.setZero(date.getMonth() + 1, 2) + "/" + self.setZero(date.getDate(), 2) + " " + self.setZero(date.getHours(), 2) + ':' + self.setZero(date.getMinutes(), 2);
-            //         labelss.push(labelss);
-            //         datas.push(dataItems.value);
-            //         // new data to chart
-            //         // self.datacollection.labels.push(labelss);
-            //         // self.datacollection.datasets[0].data.push(dataItems.value);
-            //         // self.datacollection.update();
-            //         // self.renderChart(self.data, self.options)
-            //         // console.log(labelss)
-            //         // console.log(dataItems.value)
-            //     });
-            // }
 
         }
     }

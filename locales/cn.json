@@ -60,7 +60,9 @@
         "Stock Name": "股票名称",
         "Game Mode": "遊戲模式",
         "Result": "結果",
-        "result out time": "結果出來了"
+        "result out time": "結果出來了",
+        "Win Bet": "贏得賭注",
+        "Lose Bet": "輸掉賭注"
 
 
     },
