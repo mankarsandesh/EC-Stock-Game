@@ -2,10 +2,10 @@
   <div>
     <v-layout class="mx-5 my-3" column>
       <v-flex>
-        <h3>betting on {{betId}}</h3>
+        <h3>betting on <span class="text-uppercase">{{betId}}</span></h3>
       </v-flex>
       <v-flex class="pt-1">
-        <span>Stock Name: {{stockName}}-{{loop}}</span>
+        <span>Stock Name:   {{ $t(`stockname.${stockName}`) }} -{{loop}}</span>
       </v-flex>
       <v-flex class="pt-1">
         <span>odd: {{payout}}</span>

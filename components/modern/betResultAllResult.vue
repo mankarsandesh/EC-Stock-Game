@@ -30,7 +30,7 @@
           </tr>
           <tr v-for="(data,index) in getStockList" :key="index">
             <td>
-              <nuxt-link :to="'/modern/desktop/'+data.id">{{ data.stockname }}</nuxt-link>
+              <nuxt-link :to="'/modern/desktop/'+data.id"> {{ $t(`stockname.${data.stockname}`) }}</nuxt-link>
             </td>
             <td class="text-xs-right">{{ onlyTime(getStockById(data.id).timeLastDraw)}}</td>
             <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
@@ -48,7 +48,7 @@
           </tr>
           <tr v-for="(data,index) in getStockList" :key="index">
             <td></td>
-            <td class="text-xs-right">{{ data.stockname }}</td>
+            <td class="text-xs-right"> {{ $t(`stockname.${data.stockname}`) }}</td>
             <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
             <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
           </tr>

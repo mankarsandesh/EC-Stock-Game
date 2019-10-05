@@ -347,7 +347,7 @@
         <v-toolbar flat color="white">
           <v-layout row mt-4>
             <div class="d-block">
-              <h3 class="text-uppercase">{{$route.params.id}}</h3>
+              <h3 class="text-uppercase">{{ $t(`stockname.${$route.params.id}`) }}</h3>
               <p
                 class="text-uppercase"
               >{{getStockLoop($route.params.id)}} MINUTE GAME | {{gameRule}}</p>
@@ -418,7 +418,7 @@
         <v-container class="w80 mb-5">
           <div class="row d-flex justify-space-between hr">
             <p class="stockName">Stock name</p>
-            <p class="stockDetail text-uppercase">{{$route.params.id}}</p>
+            <p class="stockDetail text-uppercase">{{ $t(`stockname.${$route.params.id}`) }}</p>
           </div>
           <div class="row d-flex justify-space-between hr">
             <p class="stockName">Game ID</p>
@@ -453,7 +453,9 @@
     <v-navigation-drawer class="drawer-asidebar" right v-model="drawerderfirst" fixed temporary>
       <v-layout row mt-4>
         <div class="d-block">
-          <h3 class="text-uppercase">{{getStockById($route.params.id).stockname}}</h3>
+          <h3 class="text-uppercase">
+                {{ $t(`stockname.${$route.params.id}`) }}
+             </h3>
           <p>{{getStockById($route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p>
         </div>
         <v-btn class="close" flat @click="drawerderfirst =! drawerderfirst">

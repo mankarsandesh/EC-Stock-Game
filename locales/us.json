@@ -89,5 +89,14 @@
         "mid": "mid",
         "low": "low",
         "tie": "tie"
+    },
+    "stockname": {
+        "btc1": "BTC/USDT",
+        "usindex": "US dollar Index",
+        "btc5": "BTC/USDT",
+        "SH000001": "SH000001",
+        "SZ399001": "SZ399001",
+        "SZ399415": "SZ399415",
+        "SH00300": "SH00300"
     }
 }

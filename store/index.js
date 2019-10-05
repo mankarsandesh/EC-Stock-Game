@@ -45,7 +45,7 @@ const createStore = () => {
                         crawler: "/api/datahistory/BTCUSDT1",
                         livePrice: "/api/newlivedata/btc"
                     },
-                    stockname: "btc/usdt",
+                    stockname: "btc1",
                     loop: 1,
                     type: "cypto",
                     crawlerData: "",
@@ -60,7 +60,7 @@ const createStore = () => {
                         crawler: "/api/datahistory/US dollar Index",
                         livePrice: "/api/newlivedata/usindex"
                     },
-                    stockname: "us dollar index",
+                    stockname: "usindex",
                     loop: 5,
                     type: "usa",
                     crawlerData: "",
@@ -78,7 +78,7 @@ const createStore = () => {
                         //  // it must has loop 1 above  or other loop above
                         livePrice: "/api/newlivedata/btc"
                     },
-                    stockname: "btc/usdt",
+                    stockname: "btc5",
                     loop: 5,
                     type: "cypto",
                     crawlerData: "",

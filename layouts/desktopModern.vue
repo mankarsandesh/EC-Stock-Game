@@ -36,7 +36,9 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">{{ item.title }}</v-btn>
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
+            {{ $t(`menu.${item.title}`) }}
+            </v-btn>
           <v-btn text flat @click="$refs.language.showDialog()">
             <countryFlag :country="countryflag" size="normal" />
           </v-btn>

@@ -12,7 +12,9 @@
       </tr>
       <tr v-for="(data,index) in getStockList" :key="index">
         <td>
-          <nuxt-link :to="'/modern/desktop/'+data.id">{{ data.stockname }}</nuxt-link>
+          <nuxt-link :to="'/modern/desktop/'+data.id">
+          {{ $t(`stockname.${data.stockname}`) }}
+          </nuxt-link>
         </td>
         <td v-html="$options.filters.livePriceColor(getLivePrice(data.id),getPreviousPrice(data.id) )"></td>
         <td>{{getLotteryDraw(data.id) | betstatus(getStockById(data.id).loop)}}</td>
