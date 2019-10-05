@@ -4,6 +4,7 @@
     <!-- {{$route.params.id}} -->
     <!-- <br/> -->
     <!-- {{getStockNewData($route.params.id)}} -->
+
     <div v-if="$route.params.id ==this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1] + '-' + this.$route.params.id.split('-')[2] +'-currentbet'">
         <currentbet />
     </div>
@@ -47,7 +48,7 @@
                 </v-flex>
             </v-layout>
         </v-card>
-
+        <!-- form type bet -->
         <v-tabs-items v-model="currentItem">
             <v-tab-item v-for="(item, idx3) in items" :key="idx3" :value="'tab-' + item.name">
                 <v-card flat>
@@ -129,7 +130,7 @@
                 </v-card>
             </v-tab-item>
         </v-tabs-items>
-
+        <!-- end form typy bet -->
         <v-card>
             <v-layout row wrap>
                 <v-flex xs12 md6>
@@ -264,6 +265,14 @@
             </v-card>
         </v-dialog>
     </div>
+    <!-- alertOutCome -->
+    <v-snackbar class="tops" v-model="snackbar" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
+        <span class="text-center">
+            <h2>{{text}}</h2>
+            <h2>$ {{betPrice}}</h2>
+        </span>
+    </v-snackbar>
+    <!-- end alertOutCome -->
 </div>
 </template>
 
@@ -286,6 +295,12 @@ import {
 } from "vuex";
 export default {
     layout: "classic",
+    async validate({
+        params,
+        store
+    }) {
+        return store.getters.getStockName(params.id);
+    },
     components: {
         AnimatedNumber,
         baccarats,
@@ -295,13 +310,6 @@ export default {
         announcement,
         rule,
         setting
-    },
-
-    async validate({
-        params,
-        store
-    }) {
-        return store.getters.getStockName(params.id);
     },
 
     data() {
@@ -328,7 +336,17 @@ export default {
             sntwoloopend: null,
             stockname: this.$route.params.id.split("-")[1],
             twodigit_payout: 98.82,
-            show1: true
+            show1: true,
+            // alertOutCome
+            snackbar: false,
+            y: "top",
+            x: null,
+            mode: "vertical",
+            timeout: 3000,
+            text: "",
+            color: "",
+            betPrice: "1,000,000"
+            // end alertOutCome
         };
     },
 
@@ -336,7 +354,6 @@ export default {
         // console.log(this.getStockName(this.$route.params.id).loop)
         this.getTime();
         this.getchips();
-        // console.log(this.baccarat)
     },
     computed: {
         ...mapGetters(["getStockName", "getStockNewData"]),
@@ -360,6 +377,17 @@ export default {
         }
     },
     methods: {
+
+        getConfirmBet() {
+            console.log(this.formData);
+            console.log("send to api server");
+            this.$store.state.balance = this.balance =
+                this.balance - this.sumTotalAll;
+            setTimeout(() => {
+                this.setPrice("reset");
+            }, 3000);
+        },
+
         getchips() {
             if (localStorage.chips == null) {
                 localStorage.chips = JSON.stringify(this.chipsReset)
@@ -368,25 +396,18 @@ export default {
                 this.chips = JSON.parse(localStorage.chips)
             }
         },
+
         loadchart() {
             this.show1 = false;
             setTimeout(() => {
                 this.show1 = true;
             }, 0);
         },
+
         formatToPrice(value) {
             return `$ ${Number(value)
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
-        },
-
-        getConfirmBet() {
-            console.log(this.formData);
-            this.$store.state.balance = this.balance =
-                this.balance - this.sumTotalAll;
-            setTimeout(() => {
-                this.setPrice("reset");
-            }, 3000);
         },
 
         getsnTwo(val) {
@@ -550,6 +571,11 @@ export default {
                     this.getBetClosed();
                 } else {
                     this.getBetOpen();
+
+                }
+                if (times == calculating - 4) {
+                    this.alertOutCome('win')
+                    // this.alertOutCome('lose')
                 }
             });
         },
@@ -561,6 +587,17 @@ export default {
 
         getBetOpen() {
             this.panel = [true, true, true, true];
+        },
+
+        alertOutCome(val) {
+            this.snackbar = true;
+            if (val == "win") {
+                this.text = this.$t("msg.Win Bet");
+                this.color = "#2962FF";
+            } else {
+                this.text = this.$t("msg.Lose Bet");
+                this.color = "#D50000";
+            }
         }
     }
 };
@@ -807,5 +844,9 @@ tr:nth-child(even) {
     display: inline-block;
     margin-top: 3px;
     margin-bottom: 5px;
+}
+
+.tops {
+    top: 11%;
 }
 </style>
