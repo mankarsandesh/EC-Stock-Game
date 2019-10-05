@@ -455,7 +455,7 @@
           <betModal
             :stockName="$route.params.id"
             :loop="getLoop($route.params.id)"
-            :betId="'twodigit-'+ index"
+            :betId="index < 10 ? 'twodigit-0' + index :'twodigit-'+index"
             :payout="payout_99"
           ></betModal>
         </div>

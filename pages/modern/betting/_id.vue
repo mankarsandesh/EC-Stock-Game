@@ -147,15 +147,16 @@
               </v-card>
             </v-layout>
           </v-tab-item>
+          <!-- last digit -->
           <v-tab-item>
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('lastdigit-small')">
                 <v-card-title class="d-block">
                   <h5>small</h5>
                   <span>0 TO 4</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('lastdigit-big')">
                 <v-card-title class="d-block">
                   <h5>big</h5>
                   <span>5 TO 9</span>
@@ -163,12 +164,12 @@
               </v-card>
             </v-layout>
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('lastdigit-odd')">
                 <v-card-title class="o-even">
                   <h5>odd</h5>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('lastdigit-even')">
                 <v-card-title class="o-even">
                   <h5>even</h5>
                 </v-card-title>
@@ -181,19 +182,19 @@
             </v-layout>
 
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('lastdigit-low')">
                 <v-card-title class="d-block">
                   <h5>low</h5>
                   <span>0 TO 3</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('lastdigit-mid')">
                 <v-card-title class="d-block">
                   <h5>mid</h5>
                   <span>4 TO 6</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('lastdigit-high')">
                 <v-card-title class="d-block">
                   <h5>high</h5>
                   <span>7 TO 9</span>
@@ -205,20 +206,20 @@
           <!-- Both Digit -->
           <v-tab-item>
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
-                <v-card-title class="d-block">
+              <v-card class="box-click" @click="showBetDialog('bothdigit-small')">
+                <v-card-title class="d-block" >
                   <h5>small</h5>
                   <span>0 TO 9</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('bothdigit-tie')">
                 <v-card-title class="d-block">
                   <h5>tie</h5>
                   <span>0</span>
                 </v-card-title>
               </v-card>
 
-              <v-card class="box-click" @click.stop="drawerder018 = !drawerder018">
+              <v-card class="box-click" @click="showBetDialog('bothdigit-big')">
                 <v-card-title class="d-block">
                   <h5>big</h5>
                   <span>9 TO 18</span>
@@ -227,36 +228,36 @@
             </v-layout>
 
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('bothdigit-even')">
                 <v-card-title class="o-even">
                   <h5>odd</h5>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('bothdigit-even')">
                 <v-card-title class="o-even">
                   <h5>even</h5>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click.stop="drawerder018 = !drawerder018">
                 <v-card-title class="o-even">
-                  <h5>0-8</h5>
+                  <h5>0-18</h5>
                 </v-card-title>
               </v-card>
             </v-layout>
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('bothdigit-low')">
                 <v-card-title class="d-block">
                   <h5>low</h5>
                   <span>0 TO 5</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('bothdigit-mid')">
                 <v-card-title class="d-block">
                   <h5>mid</h5>
                   <span>6 to 11</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('bothdigit-high')">
                 <v-card-title class="d-block">
                   <h5>high</h5>
                   <span>12 to 18</span>
@@ -270,19 +271,19 @@
           <!-- TWO Digit -->
           <v-tab-item>
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('twodigit-small')">
                 <v-card-title class="d-block">
                   <h5>small</h5>
-                  <span>1 TO 49</span>
+                  <span>00 TO 49</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('twodigit-tie')">
                 <v-card-title class="d-block">
                   <h5>tie</h5>
                   <span>0</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('twodigit-big')">
                 <v-card-title class="d-block">
                   <h5>big</h5>
                   <span>50 TO 99</span>
@@ -290,37 +291,37 @@
               </v-card>
             </v-layout>
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('twodigit-odd')">
                 <v-card-title class="o-even">
                   <h5>odd</h5>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('twodigit-even')">
                 <v-card-title class="o-even">
                   <h5>even</h5>
                 </v-card-title>
               </v-card>
               <v-card class="box-click" @click.stop="drawerder099 = !drawerder099">
                 <v-card-title class="o-even">
-                  <h5>0-99</h5>
+                  <h5>00-99</h5>
                 </v-card-title>
               </v-card>
             </v-layout>
 
             <v-layout row align-center justify-center>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('twodigit-low')">
                 <v-card-title class="d-block">
                   <h5>low</h5>
                   <span>0 TO 33</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('twodigit-mid')">
                 <v-card-title class="d-block">
                   <h5>mid</h5>
                   <span>34 to 66</span>
                 </v-card-title>
               </v-card>
-              <v-card class="box-click">
+              <v-card class="box-click" @click="showBetDialog('twodigit-high')">
                 <v-card-title class="d-block">
                   <h5>high</h5>
                   <span>66 to 99</span>
@@ -489,9 +490,9 @@
       <hr class="head-jumbothron" />
       <v-container>
         <v-layout row wrap>
-          <v-flex xs3 v-for="item in 9" :key="item">
+          <v-flex xs3 v-for="(item,index) in 10" :key="item" @click="showBetDialog(`lastdigit-${index}`)">
             <v-card-title class="box-click-modal o-even">
-              <h5>0{{item}}</h5>
+              <h5>{{index}}</h5>
             </v-card-title>
           </v-flex>
         </v-layout>
@@ -511,9 +512,9 @@
       <hr class="head-jumbothron" />
       <v-container>
         <v-layout row wrap>
-          <v-flex xs3 v-for="item in 18" :key="item">
+          <v-flex xs3 v-for="(item,index) in 19" :key="item"  @click="showBetDialog(`bothdigit-${index}`)">
             <v-card-title class="box-click-modal o-even">
-              <h5>{{item}}</h5>
+              <h5>{{index}}</h5>
             </v-card-title>
           </v-flex>
         </v-layout>
@@ -534,9 +535,9 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="item in 19" :key="item">
+                <v-flex xs3 v-for="(item,index) in 20" :key="item"  @click="showBetDialog(`twodigit-${index < 10 ? '0' + index :index}`)">
                   <v-card-title class="box-click-modal o-even">
-                    <h5>{{item}}</h5>
+                    <h5>{{ index < 10 ? "0" + index :index}}</h5>
                   </v-card-title>
                 </v-flex>
               </v-layout>
@@ -547,9 +548,9 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="item in 39" :key="item" v-show="item > 19">
+                <v-flex xs3 v-for="(item,index) in 40" :key="item" v-show="item > 20" @click="showBetDialog(`twodigit-${index}`)">
                   <v-card-title class="box-click-modal o-even">
-                    <h5>{{item}}</h5>
+                    <h5>{{index}}</h5>
                   </v-card-title>
                 </v-flex>
               </v-layout>
@@ -561,9 +562,9 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="item in 59" :key="item" v-show="item > 39">
+                <v-flex xs3 v-for="(item,index) in 60" :key="item" v-show="item > 40" @click="showBetDialog(`twodigit-${index}`)">
                   <v-card-title class="box-click-modal o-even">
-                    <h5>{{item}}</h5>
+                    <h5>{{index}}</h5>
                   </v-card-title>
                 </v-flex>
               </v-layout>
@@ -575,9 +576,9 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="item in 79" :key="item" v-show="item > 59">
+                <v-flex xs3 v-for="(item,index) in 80" :key="item" v-show="item > 60" @click="showBetDialog(`twodigit-${index}`)">
                   <v-card-title class="box-click-modal o-even">
-                    <h5>{{item}}</h5>
+                    <h5>{{index}}</h5>
                   </v-card-title>
                 </v-flex>
               </v-layout>
@@ -589,9 +590,9 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="item in 99" :key="item" v-show="item > 79">
+                <v-flex xs3 v-for="(item,index) in 100" :key="item" v-show="item > 80" @click="showBetDialog(`twodigit-${index}`)">
                   <v-card-title class="box-click-modal o-even">
-                    <h5>{{item}}</h5>
+                    <h5>{{index}}</h5>
                   </v-card-title>
                 </v-flex>
               </v-layout>
