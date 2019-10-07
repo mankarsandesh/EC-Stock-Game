@@ -2,7 +2,7 @@
   <div>
     <ul class="main-navigation">
       <li>
-        <a href="#">Select Stock > Cypo > BTC/USDT > 1 Minute loop > 010620191007094101</a>
+        <a href="#">Select Stock > {{getStockType(stockId)}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} Minute loop > 010620191007094101</a>
         <ul>
           <li>
             <a href="#">CYPTO</a>
@@ -75,6 +75,28 @@
     </ul>
   </div>
 </template>
+<script>
+import {mapGetters} from 'vuex'
+export default {
+    props:{
+        stockId:{
+            type:String,
+            required:true
+        }
+    },
+    data(){
+        return{
+
+        }
+    },
+    computed:{
+        ...mapGetters([
+            "getLoop",
+            "getStockType"
+        ])
+    }
+}
+</script>
 <style scoped>
 ul {
   list-style: none;

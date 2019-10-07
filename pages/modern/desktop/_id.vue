@@ -19,7 +19,7 @@
           <v-flex xs6 style="padding-top:21px">
             <v-layout column>
              <v-flex xs12 >
-                <selectStock></selectStock>
+                <selectStock :stockId="$route.params.id"></selectStock>
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
                 <v-flex style="height:421px">
