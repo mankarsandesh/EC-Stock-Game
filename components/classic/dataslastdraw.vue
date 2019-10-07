@@ -6,7 +6,11 @@
             <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
             <span class="timer total_classic" v-if="load">{{dataslastdraw}}</span>
             <v-progress-circular :size="15" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
-            <span class="timer">{{time}}</span>
+            
+            <span class="timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
+            <span class="timer" v-else-if="time == 0">{{$t('msg.marketclosed')}}</span>
+            <span class="timer" v-else>{{ time != $t('msg.loading') ? $t('msg.betnow')+' : ':''}}{{time}}</span>
+
         </v-flex>
     </v-layout>
 </div>
@@ -20,7 +24,7 @@ export default {
         return {
             dataslastdraw: null,
             load: false,
-            time: null,
+            time: this.$t('msg.loading'),
             gameid: null,
             TimeNow: "00:00",
             DateNow: "0000-00-00",
@@ -49,16 +53,11 @@ export default {
             }
 
             if (times > calculat) {
-                this.time = this.$t("msg.calculating");
+                this.time = 1;
             } else if (times == "close") {
-                this.time = this.$t("msg.marketclosed");
+                this.time = 0;
             } else {
-                this.time =
-                    this.$t("msg.betnow") +
-                    ":" +
-                    this.setZero(Math.floor(times / 60), 2) +
-                    ":" +
-                    this.setZero((times % 60) % 60, 2);
+                this.time = this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
             }
 
             if (times == calculat) {

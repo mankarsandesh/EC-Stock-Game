@@ -53,7 +53,7 @@
                                         <v-menu open-on-hover offset-x transition="slide-x-transition">
                                             <template v-slot:activator="{on}">
                                                 <nuxt-link :to="'/classic/'+items2.url">
-                                                    <v-btn flat dark color="black" v-on="on" @click="loadchart()">{{ items2.name }}</v-btn>
+                                                    <v-btn flat dark color="black" v-on="on" @click="loadchart()">{{ $t('stockname.'+items2.name) }}{{ items2.name == 'btc1' ? ' 1 '+$t('msg.minute'):items2.name == 'btc5' ? ' 5 '+$t('msg.minute'):'' }}</v-btn>
                                                 </nuxt-link>
                                             </template>
                                             <v-list v-if="items2.childrens">
@@ -82,7 +82,7 @@
                 </v-container>
             </v-tabs-items>
             <!-- end charts -->
-
+            
             <!-- Data Lastdraw and Timer -->
             <v-container>
                 <div class="float-right">
@@ -161,6 +161,25 @@ export default {
         const socket = openSocket("https://websocket-timer.herokuapp.com");
         socket.on("time", data => {
             this.getAtivetab();
+            let times;
+            let calculat;
+            if (this.$route.params.id.split("-")[1] == "btc1") {
+                times = data.btc1.timer;
+                calculat = 41;
+            } else if (this.$route.params.id.split("-")[1] == "btc5") {
+                times = data.btc5.timer;
+                calculat = 241;
+            } else if (this.$route.params.id.split("-")[1] == "usindex") {
+                times = data.usindex.timer;
+                calculat = 241;
+            } else {
+                times = data.SH000001.timer;
+                calculat = 241;
+            }
+            if (times == calculat) {
+                this.loadchart()
+            }
+
         });
     },
     methods: {

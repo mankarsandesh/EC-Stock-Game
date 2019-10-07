@@ -62,7 +62,16 @@
         "Result": "結果",
         "result out time": "結果出來了",
         "Win Bet": "贏得賭注",
-        "Lose Bet": "輸掉賭注"
+        "Lose Bet": "輸掉賭注",
+        "minute": "分鐘",
+        "loading": "裝載...",
+        "Stock": "股票",
+        "User Info": "用戶信息",
+        "Bet Result": "下注结果",
+        "All Results": "所有结果",
+        "Player": "玩家",
+        "Balance": "余额",
+        "msinfo": "总盈利（僅提供1天的日期)"
 
 
     },

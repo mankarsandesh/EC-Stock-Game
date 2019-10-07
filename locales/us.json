@@ -63,7 +63,16 @@
         "Result": "Result",
         "result out time": "result out time",
         "Win Bet": "Win Bet",
-        "Lose Bet": "Lose Bet"
+        "Lose Bet": "Lose Bet",
+        "minute": "Minute",
+        "loading": "loading...",
+        "Stock": "Stock",
+        "User Info": "User Info",
+        "Bet Result": "Bet Result",
+        "All Results": "All Results",
+        "Player": "Player",
+        "Balance": "Balance",
+        "msinfo": "Total profit (only one day's date is provided)"
 
     },
     "navlist": {
