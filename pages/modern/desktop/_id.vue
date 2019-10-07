@@ -18,10 +18,9 @@
         <v-layout>
           <v-flex xs6 style="padding-top:21px">
             <v-layout column>
-              <v-flex
-                xs12
-                class="flex-style"
-              >Select Stock > Cypto > BTC/USDT > 1 Minute Loop > 010620190910134701</v-flex>
+             <v-flex xs12 >
+                <selectStock></selectStock>
+              </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
                 <v-flex style="height:421px">
                   <chartApp
@@ -32,7 +31,7 @@
                 </v-flex>
                 <v-layout>
                   <v-flex>
-                    <v-btn dark color="#003e70"  :to="'/modern/fullscreen/' +$route.params.id">
+                    <v-btn dark color="#003e70" :to="'/modern/fullscreen/' +$route.params.id">
                       <v-icon left dark class="ma-0">fullscreen</v-icon>full screen mode
                     </v-btn>
                     <v-btn dark color="#003e70">Multiple gaming</v-btn>
@@ -42,7 +41,6 @@
             </v-layout>
           </v-flex>
           <v-flex xs6 class="mx-2">
-       
             <v-layout>
               <v-flex class="text-xs-center" px-2>
                 <span>Last draw:</span>
@@ -99,6 +97,7 @@ import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
+import selectStock from "~/components/modern/selectStock";
 
 export default {
   async validate({ params, store }) {
@@ -111,10 +110,17 @@ export default {
     onBetting,
     chartApp,
     betButton,
-    tableTrendMap
+    tableTrendMap,
+    selectStock
   },
   data() {
     return {
+      items: [
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me" },
+        { title: "Click Me 2" }
+      ],
       trendTypes: ["firstDigit"]
     };
   },
@@ -148,6 +154,5 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 
