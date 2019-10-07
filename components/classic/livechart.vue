@@ -2,7 +2,7 @@
 <div class="text-xs-center">
     <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-else></v-progress-linear>
-    <v-btn @click="getChart()">Update Chart</v-btn>
+    
 </div>
 </template>
 

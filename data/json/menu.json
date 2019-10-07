@@ -3,7 +3,7 @@
         "name": "live Stock",
         "children": [{
                 "url": "l-btc1-live",
-                "name": "BTC/USDT 1",
+                "name": "btc1",
                 "childrens": [{
                         "url": "l-btc1-live",
                         "name": "live"
@@ -44,7 +44,7 @@
             },
             {
                 "url": "l-btc5-live",
-                "name": "BTC/USDT 5",
+                "name": "btc5",
                 "childrens": [{
                         "url": "l-btc5-live",
                         "name": "live"
@@ -85,7 +85,7 @@
             },
             {
                 "url": "l-usindex-live",
-                "name": "US dollar Index",
+                "name": "usindex",
                 "childrens": [{
                         "url": "l-usindex-live",
                         "name": "live"
@@ -133,7 +133,7 @@
         "name": "Us Stock",
         "children": [{
             "url": "st-usindex-live",
-            "name": "US dollar Index",
+            "name": "usindex",
             "childrens": [{
                     "url": "st-usindex-live",
                     "name": "live"
@@ -178,7 +178,7 @@
         "name": "Cypto Currency",
         "children": [{
                 "url": "st-btc1-live",
-                "name": "BTC/USDT 1",
+                "name": "btc1",
                 "childrens": [{
                         "url": "st-btc1-live",
                         "name": "live"
@@ -219,7 +219,7 @@
             },
             {
                 "url": "st-btc5-live",
-                "name": "BTC/USDT 5",
+                "name": "btc5",
                 "childrens": [{
                         "url": "st-btc5-live",
                         "name": "live"
