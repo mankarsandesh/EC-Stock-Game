@@ -1,23 +1,18 @@
 <template>
 <div class="text-xs-center">
-    <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart>
-    <v-progress-linear :indeterminate="true" color="blue darken-3" v-else></v-progress-linear>
+
+    <canvas ref="planetchart" class="set-height"></canvas>
+
 </div>
 </template>
 
 <script>
-import LineChart from '~/plugins/LineChart'
+import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
 export default {
-    components: {
-        LineChart
-    },
     props: ["stocks", "checkStock", "StockData"],
     data() {
         return {
-            datacollection: null,
-            defaultOptions: null,
-            setval: null,
             load: false,
         }
     },
@@ -41,17 +36,14 @@ export default {
                 this.load = true
             }
 
-            // this.url(this.stocks);
-            let self = this;
             let datas = [];
             let labelss = [];
-
+            let lastdraw= [];
             let pointBackgroundColor = [];
             let value_no;
             let num;
 
             this.StockData.forEach(element => {
-
                 let no_firsts = element.PT[element.PT.length - 2].toString();
                 let no_lasts = element.PT[element.PT.length - 1].toString();
 
@@ -90,8 +82,12 @@ export default {
                 labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + " " + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
                 datas.push(value_no);
                 pointBackgroundColor.push(num ? "blue" : "red");
-            })
+                lastdraw.push({
+                    id: element.id
+                });
 
+            })
+            let datalastdraw = lastdraw[lastdraw.length - 1];
             let mindate = labelss[labelss.length - 20];
             let max = datas[0];
             let min = datas[0];
@@ -107,7 +103,9 @@ export default {
                 }
             }
 
-            this.datacollection = {
+            const config = {
+                type: 'line',
+                data: {
                     labels: labelss,
                     datasets: [{
                         data: datas,
@@ -121,8 +119,7 @@ export default {
                         pointRadius: 10
                     }]
                 },
-
-                this.defaultOptions = {
+                options: {
                     responsive: true,
                     barPercentage: 1.6,
                     maintainAspectRatio: false,
@@ -195,23 +192,6 @@ export default {
                             }
                         }]
                     },
-                    // tooltips: {
-                    //     bodySpacing: 4,
-                    //     xPadding: 12,
-                    //     intersect: false,
-                    //     mode: "index",
-
-                    //     callbacks: {
-                    //         label: function (tooltipItem, data) {
-                    //             if (self.stocks === "usindex") {
-                    //                 return ("value: " + tooltipItem.yLabel.toFixed(4));
-                    //             } else {
-                    //                 return ("value: " + tooltipItem.yLabel.toFixed(2));
-                    //             }
-
-                    //         }
-                    //     }
-                    // },
                     animation: {
                         duration: 1,
                         onComplete: function () {
@@ -236,83 +216,103 @@ export default {
                         }
                     }
                 }
+            }
 
-            // const socket = openSocket('https://websocket-timer.herokuapp.com')
-            // socket.on('time', data => {
-            //     let times, calculating;
-            //     if (this.$route.params.id.split('-')[1] == 'btc1') {
-            //         times = data.btc1.timer
-            //         calculating = 41
-            //     } else if (this.$route.params.id.split('-')[1] == 'btc5') {
-            //         times = data.btc5.timer
-            //         calculating = 241
-            //     } else if (this.$route.params.id.split('-')[1] == 'usindex') {
-            //         times = data.usindex.timer
-            //         calculating = 241
-            //     } else {
-            //         times = data.SH000001.timer
-            //         calculating = 241
-            //     }
+            const ctx = this.$refs.planetchart;
+            const mychart = new Chart(ctx, config);
 
-            //     if (times == calculating) {
-            //         startInterval()
+            ///////////////////////////////////////////
+            const socket = openSocket('https://websocket-timer.herokuapp.com')
+            socket.on('time', data => {
+                let times, calculating;
+                if (this.$route.params.id.split('-')[1] == 'btc1') {
+                    times = data.btc1.timer
+                    calculating = 41
+                } else if (this.$route.params.id.split('-')[1] == 'btc5') {
+                    times = data.btc5.timer
+                    calculating = 241
+                } else if (this.$route.params.id.split('-')[1] == 'usindex') {
+                    times = data.usindex.timer
+                    calculating = 241
+                } else {
+                    times = data.SH000001.timer
+                    calculating = 241
+                }
 
-            //     }
+                if (times == calculating) {
+                    startInterval()
+                }
+            })
+            let _this = this;
+            function startInterval() {
+                let items = [];
+                let value_no;
+                let num;
+                _this.StockData.forEach(elements => {
+                    let no_firsts = elements.PT[elements.PT.length - 2].toString();
+                    let no_lasts = elements.PT[elements.PT.length - 1].toString();
 
-            // })
+                    let no_first = parseInt(no_firsts);
+                    let no_last = parseInt(no_lasts);
+                    let no_both = no_first + no_last;
+                    let no_two = parseInt(no_first + '' + no_last);
 
-            // function startInterval() {
-            //     let items = [];
-            //     self.$axios.get(self.api).then(function (response) {
-            //         response.data.data.forEach(element => {
-            //             if (self.checkStock == 'bsf') {
-            //                 value_no = parseFloat(element.no1)
-            //                 num = value_no >= 5
-            //             } else if (self.checkStock == 'bsl') {
-            //                 value_no = parseFloat(element.no2)
-            //                 num = value_no >= 5
-            //             } else if (self.checkStock == 'bsb') {
-            //                 value_no = parseFloat(element.no2 + element.no2)
-            //                 num = value_no >= 8
-            //             } else if (self.checkStock == 'bst') {
-            //                 value_no = parseFloat(element.no2 + '' + element.no2)
-            //                 num = value_no >= 50
-            //             } else if (self.checkStock == 'oef') {
-            //                 value_no = parseFloat(element.no1)
-            //                 num = value_no % 2 == 0
-            //             } else if (self.checkStock == 'oel') {
-            //                 value_no = parseFloat(element.no2)
-            //                 num = value_no % 2 == 0
-            //             } else if (self.checkStock == 'oeb') {
-            //                 value_no = parseFloat(element.no2 + element.no2)
-            //                 num = value_no % 2 == 0
-            //             } else if (self.checkStock == 'oet') {
-            //                 value_no = parseFloat(element.no2 + '' + element.no2)
-            //                 num = value_no % 2 == 0
-            //             }
+                    if (_this.checkStock == 'bsf') {
+                        value_no = no_first
+                        num = value_no >= 5
+                    } else if (_this.checkStock == 'bsl') {
+                        value_no = no_last
+                        num = value_no >= 5
+                    } else if (_this.checkStock == 'bsb') {
+                        value_no = no_both
+                        num = value_no >= 8
+                    } else if (_this.checkStock == 'bst') {
+                        value_no = no_two
+                        num = value_no >= 50
+                    } else if (_this.checkStock == 'oef') {
+                        value_no = no_first
+                        num = value_no % 2 == 0
+                    } else if (_this.checkStock == 'oel') {
+                        value_no = no_last
+                        num = value_no % 2 == 0
+                    } else if (_this.checkStock == 'oeb') {
+                        value_no = no_both
+                        num = value_no % 2 == 0
+                    } else if (_this.checkStock == 'oet') {
+                        value_no = no_two
+                        num = value_no % 2 == 0
+                    }
+                    items.push({
+                        id: elements.id,
+                        date: elements.created_at.replace(/-/g, "/"),
+                        value: value_no,
+                        color: num
+                    });
+                });
+                let dataItems = items[items.length - 1];
+                if (datalastdraw.id != dataItems.id) {
+                    let date = new Date(dataItems.date);
+                    let dd1 = date.getDate();
+                    let dd = dd1 < 10 ? "0" + dd1 : dd1;
+                    let mm1 = date.getMonth() + 1;
+                    let mm = mm1 < 10 ? "0" + mm1 : mm1;
+                    let Hourss = date.getHours();
+                    let Hours = Hourss < 10 ? "0" + Hourss : Hourss;
+                    let Minutess = date.getMinutes();
+                    let Minutes = Minutess < 10 ? "0" + Minutess : Minutess;
+                    date = dd + "/" + mm + " " + Hours + ":" + Minutes;
 
-            //             items.push({
-            //                 date: element.writetime.replace(/-/g, "/"),
-            //                 value: value_no,
-            //                 num: num
-            //             });
-            //         });
+                    // console.log("add New Data")
+                    // console.log(date)
+                    // console.log(dataItems.value)
 
-            //         let dataItems = items[items.length - 1];
-            //         let date = new Date(dataItems.date);
-            //         let labelss = self.setZero(date.getMonth() + 1, 2) + "/" + self.setZero(date.getDate(), 2) + " " + self.setZero(date.getHours(), 2) + ':' + self.setZero(date.getMinutes(), 2);
+                    config.data.labels.push(date);
+                    config.data.datasets[0].data.push(dataItems.value);
+                    config.data.datasets[0].pointBackgroundColor.push(dataItems.color ? "blue" : "red");
+                    mychart.update();
+                }
 
-            //         // new data lastdraw
-            //         // new data to chart 
-            //         // self.datacollection.labels.push(labelss);
-            //         // self.datacollection.datasets[0].data.push(dataItems.value);
-            //         // self.datacollection.datasets[0].pointBackgroundColor.push(dataItems.num ? "blue" : "red");
-
-            //         // console.log(labelss)
-            //         // console.log(dataItems.value)
-            //         // console.log(dataItems.num)
-            //     });
-            // }
+            }
 
         }
     }

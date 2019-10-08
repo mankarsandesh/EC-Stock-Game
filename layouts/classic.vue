@@ -79,7 +79,7 @@
                 <v-container pa-0 v-if="show1">
                     <livechart :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live'" />
                     <liveevens :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock !== 'live'" />
-                </v-container>
+                 </v-container>
             </v-tabs-items>
             <!-- end charts -->
             
@@ -176,9 +176,9 @@ export default {
                 times = data.SH000001.timer;
                 calculat = 241;
             }
-            if (times == calculat) {
-                this.loadchart()
-            }
+            // if (times == calculat) {
+            //     this.loadchart()
+            // }
 
         });
     },

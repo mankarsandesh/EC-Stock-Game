@@ -234,13 +234,13 @@ export default {
 
                 if (this.chtable == "oe") {
                     // odd even
-                    if (this.chlists == "oe-First Digit") {
+                    if (this.chlists == "oe-firstdigit") {
                         this.trentOEFirst.push(no_first % 2);
-                    } else if (this.chlists == "oe-Last Digit") {
+                    } else if (this.chlists == "oe-lastdigit") {
                         this.trentOEFirst.push(no_last % 2);
-                    } else if (this.chlists == "oe-Both Digit") {
+                    } else if (this.chlists == "oe-bothdigit") {
                         this.trentOEFirst.push(no_both % 2);
-                    } else if (this.chlists == "oe-Two Digit") {
+                    } else if (this.chlists == "oe-twodigit") {
                         this.trentOEFirst.push(no_two % 2);
                     }
 
@@ -250,7 +250,7 @@ export default {
                     }
                 } else if (this.chtable == "hml") {
                     // hml
-                    if (this.chlists == "hml-First Digit") {
+                    if (this.chlists == "hml-firstdigit") {
                         if (no_first >= 0 && no_first <= 3) {
                             this.trentUMLFirst.push(0);
                         } else if (no_first >= 4 && no_first <= 6) {
@@ -258,7 +258,7 @@ export default {
                         } else if (no_first >= 7 && no_first <= 9) {
                             this.trentUMLFirst.push(2);
                         }
-                    } else if (this.chlists == "hml-Last Digit") {
+                    } else if (this.chlists == "hml-lastdigit") {
                         if (no_last >= 0 && no_last <= 3) {
                             this.trentUMLFirst.push(0);
                         } else if (no_last >= 4 && no_last <= 6) {
@@ -266,7 +266,7 @@ export default {
                         } else if (no_last >= 7 && no_last <= 9) {
                             this.trentUMLFirst.push(2);
                         }
-                    } else if (this.chlists == "hml-Both Digit") {
+                    } else if (this.chlists == "hml-bothdigit") {
                         if (no_both >= 0 && no_both <= 6) {
                             this.trentUMLFirst.push(0);
                         } else if (no_both >= 7 && no_both <= 12) {
@@ -274,7 +274,7 @@ export default {
                         } else if (no_both >= 13 && no_both <= 18) {
                             this.trentUMLFirst.push(2);
                         }
-                    } else if (this.chlists == "hml-Two Digit") {
+                    } else if (this.chlists == "hml-twodigit") {
                         if (no_two >= 0 && no_two <= 33) {
                             this.trentUMLFirst.push(0);
                         } else if (no_two >= 34 && no_two <= 66) {
@@ -290,13 +290,13 @@ export default {
                     }
                 } else if (this.chtable == "sn") {
                     // sn
-                    if (this.chlists == "sn-First Digit") {
+                    if (this.chlists == "sn-firstdigit") {
                         this.trentNumberFirst.push(no_first);
-                    } else if (this.chlists == "sn-Last Digit") {
+                    } else if (this.chlists == "sn-lastdigit") {
                         this.trentNumberFirst.push(no_last);
-                    } else if (this.chlists == "sn-Both Digit") {
+                    } else if (this.chlists == "sn-bothdigit") {
                         this.trentNumberFirst.push(no_both);
-                    } else if (this.chlists == "sn-Two Digit") {
+                    } else if (this.chlists == "sn-twodigit") {
                         this.trentNumberFirst.push(no_two);
                     }
 
@@ -305,19 +305,19 @@ export default {
                         return;
                     }
                 } else {
-                    if (this.chlists == "bs-Last Digit") {
+                    if (this.chlists == "bs-lastdigit") {
                         if (no_last < 5) {
                             this.trentFirst.push(0);
                         } else {
                             this.trentFirst.push(1);
                         }
-                    } else if (this.chlists == "bs-Both Digit") {
+                    } else if (this.chlists == "bs-bothdigit") {
                         if (no_both < 9) {
                             this.trentFirst.push(0);
                         } else {
                             this.trentFirst.push(1);
                         }
-                    } else if (this.chlists == "bs-Two Digit") {
+                    } else if (this.chlists == "bs-twodigit") {
                         if (no_two < 50) {
                             this.trentFirst.push(0);
                         } else {
@@ -935,16 +935,16 @@ export default {
                     }
                     let big = 0;
                     switch (this.chlists) {
-                        case "sn-First Digit":
+                        case "sn-firstdigit":
                             big = 5;
                             break;
-                        case "sn-Last Digit":
+                        case "sn-lastdigit":
                             big = 5;
                             break;
-                        case "sn-Both Digit":
+                        case "sn-bothdigit":
                             big = 9;
                             break;
-                        case "sn-Two Digit":
+                        case "sn-twodigit":
                             big = 50;
                             break;
                     }
@@ -956,8 +956,8 @@ export default {
                             "big-number";
                     }
                     if (
-                        this.chlists === "sn-Both Digit" ||
-                        this.chlists === "sn-Two Digit"
+                        this.chlists === "sn-bothdigit" ||
+                        this.chlists === "sn-twodigit"
                     ) {
                         this.$refs.tableNumberFirst.children[k].children[j].textContent =
                             this.trentNumberFirst[s] < 10 ?

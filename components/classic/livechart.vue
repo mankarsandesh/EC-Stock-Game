@@ -1,26 +1,19 @@
 <template>
-<div class="text-xs-center">
-    <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart>
-    <v-progress-linear :indeterminate="true" color="blue darken-3" v-else></v-progress-linear>
-    
+<div class="text-xs-center"> 
+    <canvas ref="planetchart" class="set-height" ></canvas>
+    <!-- <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart> -->
+    <!-- <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear> -->
+
 </div>
 </template>
 
 <script>
-import LineChart from '~/plugins/LineChart'
+import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
 export default {
-    components: {
-        LineChart
-    },
     props: ["stocks", "checkStock", "StockData"],
     data() {
         return {
-            datacollection: null,
-            defaultOptions: null,
-            labels: [],
-            data: [],
-            setval: null,
             load: false,
         }
     },
@@ -28,7 +21,6 @@ export default {
         setTimeout(() => {
             this.getChart()
         }, 1000)
-
     },
     methods: {
         setZero(num, digit) {
@@ -45,63 +37,19 @@ export default {
                 this.load = true
             }
 
-            let datas = this.data;
-            let labelss = this.labels;
-            let self = this;
-            ///////////////////////////////////////////
-            const socket = openSocket('https://websocket-timer.herokuapp.com')
-            socket.on('time', data => {
-                let times, calculating;
-                if (this.$route.params.id.split('-')[1] == 'btc1') {
-                    times = data.btc1.timer
-                    calculating = 41
-                } else if (this.$route.params.id.split('-')[1] == 'btc5') {
-                    times = data.btc5.timer
-                    calculating = 241
-                } else if (this.$route.params.id.split('-')[1] == 'usindex') {
-                    times = data.usindex.timer
-                    calculating = 241
-                } else {
-                    times = data.SH000001.timer
-                    calculating = 241
-                }
-
-                if (times == calculating) {
-                    startInterval()
-                }
-            })
-
-            function startInterval() {
-                console.log("add new data")
-                let items = [];
-                self.StockData.forEach(elements => {
-                    items.push({
-                        date: elements.created_at.replace(/-/g, "/"),
-                        value: elements.PT,
-                    });
-                });
-
-                let dataItems = items[items.length - 1];
-
-                let date = new Date(dataItems.date);
-                let labelss = self.setZero(date.getMonth() + 1, 2) + "/" + self.setZero(date.getDate(), 2) + " " + self.setZero(date.getHours(), 2) + ':' + self.setZero(date.getMinutes(), 2);
-                // labelss.push(labelss);
-                // datas.push(dataItems.value);
-                // new data to chart
-                // self.datacollection.labels.push(labelss);
-                // self.datacollection.datasets[0].data.push(dataItems.value);
-                // self.datacollection.update();
-                console.log(labelss)
-                console.log(dataItems.value)
-            }
-            ///////////////////////////////////////////
-
+            let labelss = [];
+            let datas = [];
+            let lastdraw = [];
             this.StockData.forEach(element => {
                 let date = new Date(element.created_at.replace(/-/g, "/"));
                 labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + " " + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
                 datas.push(parseFloat(element.PT));
+                lastdraw.push({
+                    id: element.id
+                });
             })
 
+            let datalastdraw = lastdraw[lastdraw.length - 1];
             let mindate = labelss[labelss.length - 299];
             let max = datas[0];
             let min = datas[0];
@@ -117,9 +65,12 @@ export default {
                 }
             }
 
-            this.datacollection = {
+            const config = {
+                type: 'line',
+                data: {
                     labels: labelss,
                     datasets: [{
+                        label: 'Number of Moons',
                         data: datas,
                         label: "value",
                         fill: true,
@@ -132,11 +83,10 @@ export default {
                         pointBorderWidth: 0,
                         pointHoverRadius: 0,
                         pointHoverBorderWidth: 0,
-                        pointRadius: 1
+                        pointRadius: 0.5
                     }]
                 },
-
-                this.defaultOptions = {
+                options: {
                     responsive: true,
                     barPercentage: 1.6,
                     maintainAspectRatio: false,
@@ -227,6 +177,67 @@ export default {
                         }
                     }
                 }
+            }
+
+            const ctx = this.$refs.planetchart;
+            const mychart = new Chart(ctx, config);
+
+            ///////////////////////////////////////////
+            const socket = openSocket('https://websocket-timer.herokuapp.com')
+            socket.on('time', data => {
+                let times, calculating;
+                if (this.$route.params.id.split('-')[1] == 'btc1') {
+                    times = data.btc1.timer
+                    calculating = 41
+                } else if (this.$route.params.id.split('-')[1] == 'btc5') {
+                    times = data.btc5.timer
+                    calculating = 241
+                } else if (this.$route.params.id.split('-')[1] == 'usindex') {
+                    times = data.usindex.timer
+                    calculating = 241
+                } else {
+                    times = data.SH000001.timer
+                    calculating = 241
+                }
+
+                if (times == calculating) {
+                    startInterval()
+                }
+            })
+            let _this = this;
+
+            function startInterval() {
+                let items = [];
+                _this.StockData.forEach(elements => {
+                    items.push({
+                        id: elements.id,
+                        date: elements.created_at.replace(/-/g, "/"),
+                        value: elements.PT,
+                    });
+                });
+                let dataItems = items[items.length - 1];
+                if (datalastdraw.id != dataItems.id) {
+                    let date = new Date(dataItems.date);
+                    let dd1 = date.getDate();
+                    let dd = dd1 < 10 ? "0" + dd1 : dd1;
+                    let mm1 = date.getMonth() + 1;
+                    let mm = mm1 < 10 ? "0" + mm1 : mm1;
+                    let Hourss = date.getHours();
+                    let Hours = Hourss < 10 ? "0" + Hourss : Hourss;
+                    let Minutess = date.getMinutes();
+                    let Minutes = Minutess < 10 ? "0" + Minutess : Minutess;
+                    date = dd + "/" + mm + " " + Hours + ":" + Minutes;
+
+                    // console.log("add New Data")
+                    // console.log(date)
+                    // console.log(dataItems.value)
+
+                    config.data.labels.push(date);
+                    config.data.datasets[0].data.push(dataItems.value);
+                    mychart.update();
+                }
+
+            }
 
         }
     }

@@ -7,7 +7,11 @@
                     <template v-slot:header>
                         <div> {{$t('menu.current bet')}}</div>
                     </template>
+                    <v-flex xs6 sm2 class="float-right">
+                        <v-select :items="items" label="Sort by:" solo></v-select>
+                    </v-flex>
                     <v-card>
+
                         <table>
                             <tr>
                                 <th>{{$t('msg.BetId')}}</th>
@@ -50,13 +54,21 @@
     </v-tab-item>
 </v-tabs-items>
 </template>
+
 <script>
 export default {
     layout: 'classic',
     data() {
         return {
-            panel: [true]
+            panel: [true],
+            items: ["day", "weeks", "months", "years"]
         }
     }
 }
 </script>
+
+<style scoped>
+.position-unset {
+    position: unset;
+}
+</style>
