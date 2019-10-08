@@ -1,6 +1,6 @@
 <template>
 <div>
-    {{getStockName($route.params.id)}}
+    <!-- {{getStockName($route.params.id)}} -->
     <!-- {{$route.params.id}} -->
     <!-- <br/> -->
     <!-- {{getStockNewData($route.params.id)}} -->
@@ -161,7 +161,6 @@
                     <v-tabs class="bg-colors" v-model="currentItemss" color="transparent" fixed-tabs slider-color="yellow" grow>
                         <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ $t('gamemsg.'+baccarat2.name) }}</v-tab>
                     </v-tabs>
-
                     <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" :dataArray="getStockNewData($route.params.id)" :stocks="stockname" />
                 </v-card>
             </v-tab-item>

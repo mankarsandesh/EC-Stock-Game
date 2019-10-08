@@ -74,15 +74,48 @@
         </v-toolbar>
 
         <v-content pa-0>
+            <div>
+                <ul>
+                    <li :hidden="!ischangechartview">
+                        <button class="btn-chart-change" @click="ischangechartview = !ischangechartview">
+                            <span class="text-orientation">{{$t('msg.changechartview')}}</span>
+                        </button>
+                    </li>
+
+                    <li :hidden="ischangechartview">
+                        <button class="btn-chart-change" @click="ischangechartview = !ischangechartview">
+                            <span class="text-orientation">{{$t('msg.changechartview')}}</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
             <!-- charts -->
             <v-tabs-items v-model="tab">
                 <v-container pa-0 v-if="show1">
-                    <livechart :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live'" />
-                    <liveevens :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock !== 'live'" />
-                 </v-container>
+                    <livechart :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live' && ischangechartview" />
+                    <liveevens :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-else-if="checkStock !== 'live' && ischangechartview" />
+
+                    <div v-else>
+                        <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
+                            <v-tab class="text-sm-left text-whites" @click="loadtable()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ $t('gamemsg.'+baccarat1.name) }}</v-tab>
+                        </v-tabs>
+
+                        <v-tabs-items v-model="currentItems">
+                            <v-tab-item v-for="(baccarat1, idx3) in baccarat" :key="idx3" :value="'tab-' + baccarat1.name">
+                                <v-card flat>
+                                    <v-tabs class="bg-colors" v-model="currentItemss" color="transparent" fixed-tabs slider-color="yellow" grow>
+                                        <v-tab class="text-sm-left text-whites" @click="loadtable()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ $t('gamemsg.'+baccarat2.name) }}</v-tab>
+                                    </v-tabs>
+                                    <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" :dataArray="getStockNewData($route.params.id)" :stocks="stockname" v-if="showtable" />
+                                </v-card>
+                            </v-tab-item>
+                        </v-tabs-items>
+                    </div>
+                </v-container>
             </v-tabs-items>
+
             <!-- end charts -->
-            
+
             <!-- Data Lastdraw and Timer -->
             <v-container>
                 <div class="float-right">
@@ -121,6 +154,8 @@ import liveevens from "~/components/classic/evenchart";
 import dataslastdraw from "~/components/classic/dataslastdraw";
 import listleft from "~/components/classic/list-left";
 import navList from "~/data/json/menu.json";
+import baccarat from "~/data/json/baccarat.json";
+import baccarats from "~/components/classic/baccarats";
 export default {
     components: {
         countryFlag,
@@ -128,10 +163,12 @@ export default {
         livechart,
         liveevens,
         listleft,
-        dataslastdraw
+        dataslastdraw,
+        baccarats,
     },
     data() {
         return {
+            currentItems: "tab-Big-Small",
             menu: [],
             navList: navList,
             checkStockList: null,
@@ -145,7 +182,10 @@ export default {
             drawer: false,
             right: true,
             rightDrawer: false,
-            title: "EC gaming"
+            title: "EC gaming",
+            ischangechartview: true,
+            baccarat: baccarat,
+            showtable: true
         };
     },
 
@@ -248,6 +288,14 @@ export default {
                 this.getMenu();
             }, 50);
         },
+        loadtable() {
+            this.showtable = false;
+            setTimeout(() => {
+                this.showtable = true;
+                this.StockName = this.$route.params.id.split("-")[1];
+                this.checkStock = this.$route.params.id.split("-")[2];
+            }, 50);
+        },
         getAtivetab() {
             this.checkStockList =
                 this.$route.params.id.split("-")[0] +
@@ -265,6 +313,12 @@ export default {
             } else {
                 this.tab = 3;
             }
+        },
+        changechartviewon() {
+            this.ischangechartview = false;
+        },
+        changechartviewoff() {
+            this.ischangechartview = true;
         }
     },
     computed: {
@@ -284,6 +338,44 @@ export default {
 </script>
 
 <style scoped>
+@media only screen and (min-width: 1920px) {
+    .btn-chart-change {
+        width: 1.5% !important;
+        position: absolute;
+        top: 4%;
+        left: 4.7%;
+        z-index: 1;
+        background: #ec008c;
+        background: linear-gradient(to right, #384e63, #5b80a4);
+        color: #fff;
+        border-radius: 10px;
+        border: none;
+        text-transform: capitalize;
+        padding: 3px 7px;
+    }
+}
+@media only screen and (min-width: 2560px) {
+    .btn-chart-change {
+        width: 1.5% !important;
+        position: absolute;
+        top: 4%;
+        left: 12.9%;
+        z-index: 1;
+        background: #ec008c;
+        background: linear-gradient(to right, #384e63, #5b80a4);
+        color: #fff;
+        border-radius: 10px;
+        border: none;
+        text-transform: capitalize;
+        padding: 3px 7px;
+    }
+}
+
+.text-orientation {
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+}
+
 .total_classic {
     background: linear-gradient(to right, #e91e63, #ff5722);
     color: #fff;
