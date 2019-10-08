@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout wrap>
-      <v-flex xs6 pb-5 pr-3>
+      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass('pb-5 pr-3')">
         <div
           class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
           v-show="which_one=='B/S' || which_one==true "
@@ -20,7 +20,7 @@
         </div>
       </v-flex>
 
-      <v-flex xs6 pl-3 pb-5>
+      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass(' pl-3 pb-5')">
         <div
           class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
           v-show="which_one=='O/E' || which_one==true "
@@ -38,7 +38,7 @@
           </div>
         </div>
       </v-flex>
-      <v-flex xs6 pb-5 pr-3>
+      <v-flex xs12 sm12 md6 lg6 xl6  :class="setClass('pb-5 pr-3')">
         <div
           class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
           v-show="which_one=='U/L' || which_one==true "
@@ -57,7 +57,7 @@
           </div>
         </div>
       </v-flex>
-      <v-flex xs6 pl-3 pb-5>
+      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass('pl-3 pb-5')" >
         <div
           class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
           v-show="which_one=='NUM' || which_one==true "
@@ -102,7 +102,14 @@ export default {
     which_one: {
       default: true
     },
-    isFullscreen: Boolean
+    isFullscreen:{
+      type:Boolean,
+      default:false
+    } ,
+    lop:{
+      type:Number,
+      default:130
+    }
   },
   data() {
     return {
@@ -123,6 +130,13 @@ export default {
 
     // this.autoScroll();
   },
+  computed:{
+    // setClass(value){
+    //   if(this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl){
+    //     return value
+    //   }
+    // }
+  },
   watch: {
     trendType() {
       this.getTableChartBS();
@@ -138,6 +152,11 @@ export default {
     // }
   },
   methods: {
+     setClass(value){
+      if(this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl){
+        return value
+      }
+    },
     clearTrendMap() {
       this.trent = [];
       this.trentNumber = [];
@@ -373,7 +392,7 @@ export default {
             let lop =
               $(".my-coltabledivlast")
                 .first()
-                .width() - 130;
+                .width() - this.lop;
             let valuebs = $(this.$refs.tablebsTwo).find(".mystylelast")[0]
               .offsetLeft;
             $(this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
@@ -552,7 +571,7 @@ export default {
             let lop =
               $(".my-coltabledivlast")
                 .first()
-                .width() - 130;
+                .width() - this.lop;
             let valueoe = $(this.$refs.tableOETwo).find(".oestylelast")[0]
               .offsetLeft;
             $(this.$refs.tableOETwo).scrollLeft(valueoe - lop);
@@ -734,7 +753,7 @@ export default {
             let lop =
               $(".my-coltabledivlast")
                 .first()
-                .width() - 130;
+                .width() - this.lop;
             let valueuml = $(this.$refs.tablebUMLTwo).find(".umlstylelast")[0]
               .offsetLeft;
             $(this.$refs.tablebUMLTwo).scrollLeft(valueuml - lop);
@@ -921,7 +940,7 @@ export default {
             let lop =
               $(".my-coltabledivlast")
                 .first()
-                .width() - 130;
+                .width() - this.lop;
             let valuenum = $(this.$refs.tableNumberTwo).find(".numScroll")[0]
               .offsetLeft;
             $(this.$refs.tableNumberTwo).scrollLeft(valuenum - lop);

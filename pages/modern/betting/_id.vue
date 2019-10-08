@@ -52,9 +52,23 @@
       <v-flex xs6 class="border-color-primary">
         <v-layout wrap>
           <v-flex xs1 align-self-center class="text-xs-right">
-            <v-icon color="#003e70">keyboard_arrow_left</v-icon>
+            <v-icon
+              color="#003e70"
+              v-show="isShowTrendMap"
+              @click="changeShowTrendMap()"
+            >keyboard_arrow_left</v-icon>
           </v-flex>
-          <v-flex xs10 class="text-xs-center">
+          <v-flex v-if="isShowTrendMap" xs10 class="text-xs-center py-2">
+            <trendMap
+              :dataArray="getStockCrawlerData($route.params.id)"
+              :trendType="trendType"
+              :key="getStockCrawlerData($route.params.id)[0].created_at"
+              :isFullscreen="isFullscreen"
+              :rowTable="4"
+              :lop="30"
+            ></trendMap>
+          </v-flex>
+          <v-flex v-else xs10 class="text-xs-center">
             <span>
               <h3 class="text-uppercase">{{getStockById($route.params.id).stockname}}</h3>
               <span class="text-primary">
@@ -70,7 +84,11 @@
             </v-flex>
           </v-flex>
           <v-flex xs1 align-self-center>
-            <v-icon color="#003e70">keyboard_arrow_right</v-icon>
+            <v-icon
+              v-show="!isShowTrendMap"
+              @click="changeShowTrendMap()"
+              color="#003e70"
+            >keyboard_arrow_right</v-icon>
           </v-flex>
         </v-layout>
         <v-toolbar bottom class="total-bet">
@@ -85,7 +103,7 @@
         >
           <p>bet close</p>
         </div>-->
-        <v-tabs slider-color="#003e70" grow centered>
+        <v-tabs slider-color="#003e70" grow centered @change="tabChanged($event)">
           <v-tab>first digit</v-tab>
           <v-tab>last digit</v-tab>
           <v-tab>both digit</v-tab>
@@ -207,7 +225,7 @@
           <v-tab-item>
             <v-layout row align-center justify-center>
               <v-card class="box-click" @click="showBetDialog('bothdigit-small')">
-                <v-card-title class="d-block" >
+                <v-card-title class="d-block">
                   <h5>small</h5>
                   <span>0 TO 9</span>
                 </v-card-title>
@@ -453,9 +471,7 @@
     <v-navigation-drawer class="drawer-asidebar" right v-model="drawerderfirst" fixed temporary>
       <v-layout row mt-4>
         <div class="d-block">
-          <h3 class="text-uppercase">
-                {{ $t(`stockname.${$route.params.id}`) }}
-             </h3>
+          <h3 class="text-uppercase">{{ $t(`stockname.${$route.params.id}`) }}</h3>
           <p>{{getStockById($route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p>
         </div>
         <v-btn class="close" flat @click="drawerderfirst =! drawerderfirst">
@@ -492,7 +508,12 @@
       <hr class="head-jumbothron" />
       <v-container>
         <v-layout row wrap>
-          <v-flex xs3 v-for="(item,index) in 10" :key="item" @click="showBetDialog(`lastdigit-${index}`)">
+          <v-flex
+            xs3
+            v-for="(item,index) in 10"
+            :key="item"
+            @click="showBetDialog(`lastdigit-${index}`)"
+          >
             <v-card-title class="box-click-modal o-even">
               <h5>{{index}}</h5>
             </v-card-title>
@@ -514,7 +535,12 @@
       <hr class="head-jumbothron" />
       <v-container>
         <v-layout row wrap>
-          <v-flex xs3 v-for="(item,index) in 19" :key="item"  @click="showBetDialog(`bothdigit-${index}`)">
+          <v-flex
+            xs3
+            v-for="(item,index) in 19"
+            :key="item"
+            @click="showBetDialog(`bothdigit-${index}`)"
+          >
             <v-card-title class="box-click-modal o-even">
               <h5>{{index}}</h5>
             </v-card-title>
@@ -537,7 +563,12 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="(item,index) in 20" :key="item"  @click="showBetDialog(`twodigit-${index < 10 ? '0' + index :index}`)">
+                <v-flex
+                  xs3
+                  v-for="(item,index) in 20"
+                  :key="item"
+                  @click="showBetDialog(`twodigit-${index < 10 ? '0' + index :index}`)"
+                >
                   <v-card-title class="box-click-modal o-even">
                     <h5>{{ index < 10 ? "0" + index :index}}</h5>
                   </v-card-title>
@@ -550,7 +581,13 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="(item,index) in 40" :key="item" v-show="item > 20" @click="showBetDialog(`twodigit-${index}`)">
+                <v-flex
+                  xs3
+                  v-for="(item,index) in 40"
+                  :key="item"
+                  v-show="item > 20"
+                  @click="showBetDialog(`twodigit-${index}`)"
+                >
                   <v-card-title class="box-click-modal o-even">
                     <h5>{{index}}</h5>
                   </v-card-title>
@@ -564,7 +601,13 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="(item,index) in 60" :key="item" v-show="item > 40" @click="showBetDialog(`twodigit-${index}`)">
+                <v-flex
+                  xs3
+                  v-for="(item,index) in 60"
+                  :key="item"
+                  v-show="item > 40"
+                  @click="showBetDialog(`twodigit-${index}`)"
+                >
                   <v-card-title class="box-click-modal o-even">
                     <h5>{{index}}</h5>
                   </v-card-title>
@@ -578,7 +621,13 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="(item,index) in 80" :key="item" v-show="item > 60" @click="showBetDialog(`twodigit-${index}`)">
+                <v-flex
+                  xs3
+                  v-for="(item,index) in 80"
+                  :key="item"
+                  v-show="item > 60"
+                  @click="showBetDialog(`twodigit-${index}`)"
+                >
                   <v-card-title class="box-click-modal o-even">
                     <h5>{{index}}</h5>
                   </v-card-title>
@@ -592,7 +641,13 @@
           <v-tab-item>
             <v-container>
               <v-layout row wrap>
-                <v-flex xs3 v-for="(item,index) in 100" :key="item" v-show="item > 80" @click="showBetDialog(`twodigit-${index}`)">
+                <v-flex
+                  xs3
+                  v-for="(item,index) in 100"
+                  :key="item"
+                  v-show="item > 80"
+                  @click="showBetDialog(`twodigit-${index}`)"
+                >
                   <v-card-title class="box-click-modal o-even">
                     <h5>{{index}}</h5>
                   </v-card-title>
@@ -612,12 +667,16 @@ import { mapGetters } from "vuex";
 import chartMobile from "~/components/chartMobile";
 import payout from "~/data/payout";
 
+import trendMap from "~/components/modern/trendMap";
+
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
   data() {
     return {
+      trendType: "firstdigit",
+      isShowTrendMap: false,
       payout_high_mid_low: payout.high_mid_low,
       payout_big_small: payout.big_small,
       payout_09: payout._09,
@@ -666,7 +725,8 @@ export default {
     this.stockID = this.$route.params.id;
   },
   components: {
-    chartMobile
+    chartMobile,
+    trendMap
   },
   computed: {
     ...mapGetters([
@@ -677,7 +737,8 @@ export default {
       "getCheckStock",
       "getStockLoop",
       "getCoins_modern",
-      "getStockLoop"
+      "getStockLoop",
+      "getStockCrawlerData"
     ]),
     checkBetClose() {
       if (this.getStockLoop(this.$route.params.id) == 1) {
@@ -688,6 +749,30 @@ export default {
     }
   },
   methods: {
+    tabChanged(e) {
+      switch (e) {
+        case 0:
+          this.trendType = "firstDigit";
+          break;
+        case 1:
+          this.trendType = "lastDigit";
+
+          break;
+        case 2:
+          this.trendType = "bothDigit";
+
+          break;
+        case 3:
+          this.trendType = "twoDigit";
+
+          break;
+        default:
+          alert("error");
+      }
+    },
+    changeShowTrendMap() {
+      this.isShowTrendMap = !this.isShowTrendMap;
+    },
     showBetDialog(rule) {
       this.gameRule = rule;
       this.bettingDialog = true;

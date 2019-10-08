@@ -11,10 +11,10 @@
                 <a href="#">BTC/USDT</a>
                 <ul>
                   <li>
-                    <a href="#">1 Minute loop</a>
+                     <nuxt-link to="/modern/desktop/btc1">1 Minute loop</nuxt-link>
                   </li>
                   <li>
-                    <a href="#">5 Minute loop</a>
+                    <nuxt-link to="/modern/desktop/btc5">5 Minute loop</nuxt-link>
                   </li>
                 </ul>
               </li>
@@ -27,7 +27,7 @@
                 <a href="#">SH000001</a>
                 <ul>
                   <li>
-                    <a href="#">5 Minute loop</a>
+                    <nuxt-link to="/modern/desktop/SH000001">5 Minute loop</nuxt-link>
                   </li>
                 </ul>
               </li>
@@ -35,7 +35,7 @@
                 <a href="#">SZ399001</a>
                 <ul>
                   <li>
-                    <a href="#">5 Minute loop</a>
+                    <nuxt-link to="/modern/desktop/SZ399001">5 Minute loop</nuxt-link>
                   </li>
                 </ul>
               </li>
@@ -43,7 +43,7 @@
                 <a href="#">SZ399415</a>
                 <ul>
                   <li>
-                    <a href="#">5 Minute loop</a>
+                    <nuxt-link to="/modern/desktop/SZ399415">5 Minute loop</nuxt-link>
                   </li>
                 </ul>
               </li>
@@ -51,7 +51,7 @@
                 <a href="#">SH00300</a>
                 <ul>
                   <li>
-                    <a href="#">5 Minute loop</a>
+                    <nuxt-link to="/modern/desktop/SH00300">5 Minute loop</nuxt-link>
                   </li>
                 </ul>
               </li>
@@ -64,7 +64,7 @@
                 <a href="#">US Dollar Index</a>
                 <ul>
                   <li>
-                    <a href="#">5 Minute loop</a>
+                    <nuxt-link to="/modern/desktop/usindex">5 Minute loop</nuxt-link>
                   </li>
                 </ul>
               </li>
