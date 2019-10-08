@@ -94,7 +94,6 @@ export default {
         },
         getdata() {
             if (this.StockData == "") return;
-
             this.load = true;
             let items = [];
             let value_no;

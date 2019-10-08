@@ -40,6 +40,8 @@
         "totalamount": "總金額",
         "ok": "好",
         "cancel": "取消",
+        "edit": "修改",
+        "resettodefault": "恢复出厂设置",
         "changechartview": "转换走势图",
         "reference": "开奖验证",
         "totals": "總",

@@ -41,6 +41,8 @@
         "totalamount": "Total Amount",
         "ok": "Ok",
         "cancel": "Cancel",
+        "edit": "Edit",
+        "resettodefault": "Reset To Default",
         "changechartview": "Change Chart View",
         "reference": "Reference",
         "totals": "Totals",
