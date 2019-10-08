@@ -222,14 +222,6 @@ const createStore = () => {
                 const loop = state.stocks[id].loop
                 return loop
             },
-            getStockType: (state) => (id) => {
-                console.log("getStockType")
-                if (id == "") {
-                    return
-                }
-                const type = state.stocks[id].type
-                return type
-            },
             // get live time
             getLiveTime: (state) => (id) => {
                 // alert(Object.keys(state.time).length)

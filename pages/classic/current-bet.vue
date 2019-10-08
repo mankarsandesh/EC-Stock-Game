@@ -7,7 +7,7 @@
                     <template v-slot:header>
                         <div> {{$t('menu.current bet')}}</div>
                     </template>
-                    <v-flex xs6 sm2 class="float-right">
+                    <v-flex xs6 sm2>
                         <v-select :items="items" label="Sort by:" solo></v-select>
                     </v-flex>
                     <v-card>

@@ -90,9 +90,9 @@
                                         </td>
 
                                         <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'" @click="betRow($event)" v-if="datas.childrenss" v-for="(datass, idx9) in datas.childrenss" :key="idx9">
-                                            <div class="text-bet">{{datass.name2}}</div>
-                                            <div class="text-stock">{{items.payoutb}}</div>
-                                            <div class="bet-box">
+                                            <div class="text-bet" v-if="datass.name2 != 19">{{datass.name2}}</div>
+                                            <div class="text-stock" v-if="datass.name2 != 19">{{items.payoutb}}</div>
+                                            <div class="bet-box" v-if="datass.name2 != 19">
                                                 <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name2" />
                                             </div>
                                         </td>
@@ -376,7 +376,6 @@ export default {
         }
     },
     methods: {
-
         getConfirmBet() {
             console.log(this.formData);
             console.log("send to api server");
@@ -389,10 +388,10 @@ export default {
 
         getchips() {
             if (localStorage.chips == null) {
-                localStorage.chips = JSON.stringify(this.chipsReset)
-                this.chips = JSON.parse(localStorage.chips)
+                localStorage.chips = JSON.stringify(this.chipsReset);
+                this.chips = JSON.parse(localStorage.chips);
             } else {
-                this.chips = JSON.parse(localStorage.chips)
+                this.chips = JSON.parse(localStorage.chips);
             }
         },
 
@@ -516,6 +515,7 @@ export default {
             } else {
                 this.betData.betdetails[this.index].amount = this.amount;
             }
+            // console.log(this.betData.betdetails)
             // End data send to server
 
             // Data Show
@@ -545,7 +545,7 @@ export default {
                 this.betDataShows[this.index].amount = this.amount;
             }
             // End  data Show
-            console.log(this.betDataShows);
+            // console.log(this.betDataShows);
         },
 
         getTime() {
@@ -571,11 +571,10 @@ export default {
                     this.getBetClosed();
                 } else {
                     this.getBetOpen();
-
                 }
                 if (times == calculating - 4) {
-                    this.alertOutCome('win')
-                    // this.alertOutCome('lose')
+                    // this.alertOutCome('win')
+                    this.alertOutCome("lose");
                 }
             });
         },
