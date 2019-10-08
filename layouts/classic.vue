@@ -59,7 +59,7 @@
                                             <v-list v-if="items2.childrens">
                                                 <v-list-tile v-for="(items3, idx3 ) in items2.childrens" :key="idx3">
                                                     <v-list-tile-title>
-                                                        <span router @click="$router.push('/classic/'+items3.url), loadchart()">{{ items3.name }}</span>
+                                                        <span router @click="$router.push('/classic/'+items3.url), loadchart()">{{ $t('listCS.'+items3.name) }}</span>
                                                     </v-list-tile-title>
                                                 </v-list-tile>
                                             </v-list>

@@ -38,7 +38,7 @@ export default {
 
             let datas = [];
             let labelss = [];
-            let lastdraw= [];
+            let lastdraw = [];
             let pointBackgroundColor = [];
             let value_no;
             let num;
@@ -62,7 +62,7 @@ export default {
                     value_no = no_both
                     num = value_no >= 8
                 } else if (this.checkStock == 'bst') {
-                    value_no = no_two
+                    value_no = this.setZero(no_two, 2)
                     num = value_no >= 50
                 } else if (this.checkStock == 'oef') {
                     value_no = no_first
@@ -74,7 +74,7 @@ export default {
                     value_no = no_both
                     num = value_no % 2 == 0
                 } else if (this.checkStock == 'oet') {
-                    value_no = no_two
+                    value_no = this.setZero(no_two, 2)
                     num = value_no % 2 == 0
                 }
 
@@ -244,6 +244,7 @@ export default {
                 }
             })
             let _this = this;
+
             function startInterval() {
                 let items = [];
                 let value_no;
@@ -267,7 +268,7 @@ export default {
                         value_no = no_both
                         num = value_no >= 8
                     } else if (_this.checkStock == 'bst') {
-                        value_no = no_two
+                        value_no = _this.setZero(no_two, 2)
                         num = value_no >= 50
                     } else if (_this.checkStock == 'oef') {
                         value_no = no_first
@@ -279,7 +280,7 @@ export default {
                         value_no = no_both
                         num = value_no % 2 == 0
                     } else if (_this.checkStock == 'oet') {
-                        value_no = no_two
+                        value_no = _this.setZero(no_two, 2)
                         num = value_no % 2 == 0
                     }
                     items.push({

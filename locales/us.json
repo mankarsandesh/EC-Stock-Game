@@ -72,7 +72,8 @@
         "All Results": "All Results",
         "Player": "Player",
         "Balance": "Balance",
-        "msinfo": "Total profit (only one day's date is provided)"
+        "msinfo": "Total profit (only one day's date is provided)",
+        "price": "price : "
 
     },
     "navlist": {
@@ -80,6 +81,17 @@
         "Us Stock": "Us Stock",
         "Cypto Currency": "Cypto Currency",
         "China Stocck": "China Stocck"
+    },
+    "listCS": {
+        "live": "Live",
+        "Big-Small First Digit": "Big-Small First Digit",
+        "Big-Small Last Digit": "Big-Small Last Digit",
+        "Big-Small Both Digit": "Big-Small Both Digit",
+        "Big-Small Two Digit": "Big-Small Two Digit",
+        "Odd-Even First Digit": "Odd-Even First Digit",
+        "Odd-Even Last Digit": "Odd-Even Last Digit",
+        "Odd-Even Both Digit": "Odd-Even Both Digit",
+        "Odd-Even Two Digit": "Odd-Even Two Digit"
     },
     "gamemsg": {
         "All games": "All games",
@@ -100,7 +112,15 @@
         "high": "high",
         "mid": "mid",
         "low": "low",
-        "tie": "tie"
+        "tie": "tie",
+
+        "B": "B",
+        "S": "S",
+        "E": "E",
+        "O": "O",
+        "U": "U",
+        "L": "L",
+        "M": "M"
     },
     "stockname": {
         "btc1": "BTC/USDT",

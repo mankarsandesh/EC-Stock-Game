@@ -1,6 +1,6 @@
 <template>
-<div class="text-xs-center"> 
-    <canvas ref="planetchart" class="set-height" ></canvas>
+<div class="text-xs-center">
+    <canvas ref="planetchart" class="set-height"></canvas>
     <!-- <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart> -->
     <!-- <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear> -->
 
@@ -36,7 +36,7 @@ export default {
             } else {
                 this.load = true
             }
-
+            let _this = this;
             let labelss = [];
             let datas = [];
             let lastdraw = [];
@@ -168,9 +168,9 @@ export default {
                         callbacks: {
                             label: function (tooltipItem, data) {
                                 if (self.stocks === "usindex") {
-                                    return ("value: " + tooltipItem.yLabel.toFixed(4));
+                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
                                 } else {
-                                    return ("value: " + tooltipItem.yLabel.toFixed(2));
+                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(2));
                                 }
 
                             }
@@ -204,7 +204,6 @@ export default {
                     startInterval()
                 }
             })
-            let _this = this;
 
             function startInterval() {
                 let items = [];
