@@ -7,10 +7,11 @@
       v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
     >
       <p>bet close</p>
-    </div> -->
-     <!-- end for show bet close -->
+    </div>-->
+    <!-- end for show bet close -->
     <v-layout row>
       <popper
+        :disabled="checkFooterBet"
         v-for="data in firstDigit"
         :key="data.rule"
         class="w20"
@@ -29,17 +30,19 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn class="align_button4" slot="reference">
+        <v-btn class="align_button4" slot="reference" @click="betButtonClick()">
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">First Digit</span>
           <!-- show payout if in fullscreen mode -->
-          <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+          <br />
+          <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
 
       <div class="d-block w20">
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -47,7 +50,7 @@
                 }"
         >
           <div class="popper">
-          <!-- this component display the modal,the modal let users choose amount they want to bet -->
+            <!-- this component display the modal,the modal let users choose amount they want to bet -->
             <betModal
               :stockName="$route.params.id"
               :loop="getLoop($route.params.id)"
@@ -55,9 +58,13 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">HIGH  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -65,7 +72,7 @@
                 }"
         >
           <div class="popper">
-          <!-- this component display the modal,the modal let users choose amount they want to bet -->
+            <!-- this component display the modal,the modal let users choose amount they want to bet -->
             <betModal
               :stockName="$route.params.id"
               :loop="getLoop($route.params.id)"
@@ -73,9 +80,13 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">MID  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >MID {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -90,13 +101,17 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">LOW  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
     </v-layout>
     <!-- Row betting button2 -->
     <v-layout row>
       <popper
+        :disabled="checkFooterBet"
         v-for="data in lastDigit"
         :key="data.rule"
         class="w20"
@@ -118,12 +133,14 @@
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Last Digit</span>
-           <!-- show payout if in fullscreen mode -->
-          <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+          <!-- show payout if in fullscreen mode -->
+          <br />
+          <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
       <div class="d-block w20">
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -138,9 +155,13 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">HIGH  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -155,9 +176,13 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">MID  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >MID {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -172,7 +197,10 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">LOW  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
     </v-layout>
@@ -180,6 +208,7 @@
     <!-- Row betting button3 -->
     <v-layout row>
       <popper
+        :disabled="checkFooterBet"
         v-for="data in bothDigit"
         :key="data.rule"
         class="w16"
@@ -201,13 +230,15 @@
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Both Digit</span>
-           <!-- show payout if in fullscreen mode -->
-          <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+          <!-- show payout if in fullscreen mode -->
+          <br />
+          <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
 
       <div class="d-block w16">
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -222,9 +253,13 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">HIGH  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -239,9 +274,13 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">MID  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >MID {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -256,7 +295,10 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">LOW  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
     </v-layout>
@@ -264,6 +306,7 @@
     <!-- Row betting button3 -->
     <v-layout row>
       <popper
+        :disabled="checkFooterBet"
         v-for="data in twoDigit"
         :key="data.rule"
         class="w16"
@@ -285,12 +328,14 @@
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Two Digit</span>
-           <!-- show payout if in fullscreen mode -->
-          <br/><span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+          <!-- show payout if in fullscreen mode -->
+          <br />
+          <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
       <div class="d-block w16">
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -305,9 +350,13 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">HIGH  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -322,9 +371,13 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">MID  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >MID {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
+          :disabled="checkFooterBet"
           trigger="click"
           :options="{
                       placement: 'bottom-end',
@@ -339,7 +392,10 @@
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
-          <v-btn class="betting-small" slot="reference">LOW  {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+          <v-btn
+            class="betting-small"
+            slot="reference"
+          >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
     </v-layout>
@@ -350,8 +406,9 @@
           <span class="big-digit">0 - 9</span>
           <br />
           <span class="small-digit">First Digit</span>
-           <!-- show payout if in fullscreen mode -->
-          <br/><span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
+          <!-- show payout if in fullscreen mode -->
+          <br />
+          <span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
         </v-btn>
       </span>
       <span class="w20">
@@ -359,8 +416,9 @@
           <span class="big-digit">0 - 9</span>
           <br />
           <span class="small-digit">Last Digit</span>
-           <!-- show payout if in fullscreen mode -->
-          <br/><span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
+          <!-- show payout if in fullscreen mode -->
+          <br />
+          <span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
         </v-btn>
       </span>
       <span class="w20">
@@ -368,9 +426,9 @@
           <span class="big-digit">0 - 18</span>
           <br />
           <span class="small-digit">Both Digit</span>
-           <!-- show payout if in fullscreen mode -->
-          <br/><span class="small-digit" v-show="isFullscreen">{{payout_18}}</span>
-
+          <!-- show payout if in fullscreen mode -->
+          <br />
+          <span class="small-digit" v-show="isFullscreen">{{payout_18}}</span>
         </v-btn>
       </span>
       <span class="w20">
@@ -378,14 +436,16 @@
           <span class="big-digit">00 - 99</span>
           <br />
           <span class="small-digit">Two Digit</span>
-           <!-- show payout if in fullscreen mode -->
-          <br/><span class="small-digit" v-show="isFullscreen">{{payout_99}}</span>
+          <!-- show payout if in fullscreen mode -->
+          <br />
+          <span class="small-digit" v-show="isFullscreen">{{payout_99}}</span>
         </v-btn>
       </span>
     </v-layout>
     <!-- Row betting button5 -->
     <v-layout row class="container-btn-small">
       <popper
+        :disabled="checkFooterBet"
         v-for="(n,index) in 10"
         :key="index"
         trigger="click"
@@ -405,6 +465,7 @@
         <v-btn slot="reference" v-show="number == 'first'" class="btn-small">{{index}}</v-btn>
       </popper>
       <popper
+        :disabled="checkFooterBet"
         v-for="(n,index) in 10"
         :key="index"
         trigger="click"
@@ -424,6 +485,7 @@
         <v-btn slot="reference" v-show="number == 'last' " class="btn-small">{{index}}</v-btn>
       </popper>
       <popper
+        :disabled="checkFooterBet"
         v-for="(n,index) in 19"
         :key="index"
         trigger="click"
@@ -443,6 +505,7 @@
         <v-btn slot="reference" v-show="number == 'both' " class="btn-small">{{index}}</v-btn>
       </popper>
       <popper
+        :disabled="checkFooterBet"
         v-for="(n,index) in 100"
         :key="index"
         trigger="click"
@@ -476,10 +539,10 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
 export default {
-  props:{
-    isFullscreen:{
-      type:Boolean,
-      default:false
+  props: {
+    isFullscreen: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -487,7 +550,7 @@ export default {
       number: null,
       // rules payout
       payout_high_mid_low: payout.high_mid_low,
-      payout_big_small:payout.big_small,
+      payout_big_small: payout.big_small,
       payout_09: payout._09,
       payout_18: payout._18,
       payout_99: payout._99,
@@ -611,7 +674,7 @@ export default {
     };
   },
   components: {
-    // popper is the third party package 
+    // popper is the third party package
     popper,
     // this component display the modal,the modal let users choose amount they want to bet
     betModal
@@ -623,7 +686,7 @@ export default {
       "getLotteryDraw",
       "getLoop"
     ]),
-// return true if bet close
+    // return true if bet close
     checkBetClose() {
       if (this.getStockLoop(this.$route.params.id) == 1) {
         return this.getLotteryDraw(this.$route.params.id) > 40;
@@ -633,6 +696,13 @@ export default {
     }
   },
   methods: {
+    ...mapGetters(["checkFooterBet"]),
+    betButtonClick() {
+      // if (this.checkFooterBet()) {
+      //   alert(this.checkFooterBet());
+      //   alert("Wow amazing..!");
+      // }
+    },
     // the btnNumber methods use to switch specific number first,last,both and two
     btnNumber(value) {
       value == this.number ? (this.number = null) : (this.number = value);

@@ -102,7 +102,7 @@
           v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
         >
           <p>bet close</p>
-        </div>-->
+        </div> -->
         <v-tabs slider-color="#003e70" grow centered @change="tabChanged($event)">
           <v-tab>first digit</v-tab>
           <v-tab>last digit</v-tab>

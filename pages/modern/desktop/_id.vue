@@ -124,6 +124,9 @@ export default {
       trendTypes: ["firstDigit"]
     };
   },
+  mounted(){
+
+  },
   methods: {
     addTrendMap() {
       let trendCount = this.trendTypes.length;

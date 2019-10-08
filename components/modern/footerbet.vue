@@ -49,7 +49,7 @@
                 />
               </g>
             </g>
-            <g style="cursor:pointer" @click="setFooterPrice(coin1)">
+            <g style="cursor:pointer" @click="setFooterBetAmount(getCoins_modern[0])">
               <g>
                 <g>
                   <circle class="st2" cx="508.11" cy="49.52" r="28.81" />
@@ -145,7 +145,7 @@
               <text x="494" y="55" fill="black">{{getCoins_modern[0]}}</text>
             </g>
 
-            <g style="cursor:pointer" @click="setFooterPrice(coin2)">
+            <g style="cursor:pointer" @click="setFooterBetAmount(getCoins_modern[1])">
               <circle class="st5" cx="582.38" cy="49.52" r="28.81" />
               <g>
                 <path
@@ -234,7 +234,7 @@
               <circle class="st3" cx="582.38" cy="49.52" r="19.68" />
               <text x="568" y="55" fill="black">{{getCoins_modern[1]}}</text>
             </g>
-            <g style="cursor:pointer" @click="setFooterPrice(coin3)">
+            <g style="cursor:pointer" @click="setFooterBetAmount(getCoins_modern[2])">
               <circle class="st6" cx="656.65" cy="49.52" r="28.81" />
               <g>
                 <path
@@ -323,7 +323,7 @@
               <circle class="st3" cx="656.65" cy="49.52" r="19.68" />
               <text x="639" y="55" fill="black">{{getCoins_modern[2]}}</text>
             </g>
-            <g style="cursor:pointer" @click="setFooterPrice(coin4)">
+            <g style="cursor:pointer" @click="setFooterBetAmount(getCoins_modern[3])">
               <circle class="st7" cx="730.92" cy="49.52" r="28.81" />
               <g>
                 <path
@@ -412,7 +412,7 @@
               <circle class="st3" cx="730.92" cy="49.52" r="19.68" />
               <text x="714" y="55" fill="black">{{getCoins_modern[3]}}</text>
             </g>
-            <g style="cursor:pointer" @click="setFooterPrice(coin5)">
+            <g style="cursor:pointer" @click="setFooterBetAmount(getCoins_modern[4])">
               <circle class="st4" cx="805.19" cy="49.52" r="28.81" />
               <g>
                 <path
@@ -547,7 +547,7 @@
                 style="text-transform: uppercase; cursor:pointer"
               >confirm</text>
             </g>
-            <g @click="clearFooterBet()">
+            <g @click="setFooterBetAmount('0')">
               <text
                 x="1115"
                 y="82"
@@ -560,11 +560,17 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters,mapMutations } from 'vuex';
 export default {
+  methods:{
+    ...mapMutations([
+      "setFooterBetAmount"
+    ]),
+  },
   computed:{
     ...mapGetters([
-      "getCoins_modern"
+      "getCoins_modern",
+      "checkFooterBet"
     ])
   }
 }

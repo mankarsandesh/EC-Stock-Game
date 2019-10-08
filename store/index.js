@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            footerBetAmount: 0,
             locales: ['us', 'cn'],
             locale: localStorage.getItem('lang'),
             balance: 895000,
@@ -178,9 +179,22 @@ const createStore = () => {
                     // console.log("liveprice......")
                     // console.log(state.liveprice)
                     // console.log("liveprice.....")
+            },
+            setFooterBetAmount(state, payload) {
+                state.footerBetAmount = parseInt(payload)
             }
         },
         getters: {
+            checkFooterBet(state) {
+                if (state.footerBetAmount == 0) {
+                    return false
+                } else {
+                    return true
+                }
+            },
+            getFooterBetAmount(state) {
+                return state.footerBetAmount
+            },
             // get coin amount 
             getCoins_modern(state) {
                 return state.coins_modern
