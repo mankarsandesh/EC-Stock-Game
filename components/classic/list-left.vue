@@ -3,20 +3,18 @@
     <v-expansion-panel v-model="panel1" expand>
         <v-expansion-panel-content v-for="(item,idx1) in items1" :key="idx1">
             <template class="bgtaps" v-slot:header>
-                <div><i class="fa fa-info-circle"></i>{{$t('msg.User Info')}}</div>
+                <div><i class="fa fa-info-circle font-size15"></i> {{$t('msg.User Info')}}</div>
             </template>
             <v-card>
-
                 <table>
                     <tr>
-                        <td class="text-left"><i class="fa fa-user fa-2x"></i> {{$t('msg.Player')}} : test</td>
+                        <td class="text-left"><i class="fa fa-user fa-2x font-size15"></i> {{$t('msg.Player')}} : test</td>
                     </tr>
                     <tr>
-                        <td class="text-left"><i class="fa fa-balance-scale fa-2x"></i> {{$t('msg.Balance')}} :
+                        <td class="text-left"><i class="fa fa-balance-scale fa-2x font-size15"></i> {{$t('msg.Balance')}} :
                             <animated-number :value="balance" :formatValue="formatToPrice" />
                         </td>
                     </tr>
-
                     <tr>
                         <td class="text-left"><i class="fa fa-thumbs-up fa-2x"></i>
                             {{$t('msg.msinfo')}}
@@ -55,36 +53,27 @@
             <v-card>
                 <table>
                     <tr>
-                        <td class="text-left"> <b>{{$t('msg.Time')}}</b>: 2019-10-07 11:20:01<br>
-
+                        <td class="text-left">
+                            <b>{{$t('msg.Time')}}</b>: 2019-10-07 11:20:01<br>
                             <b>{{$t('msg.BetId')}}</b>: 0010106201910071020002<br>
-
                             <b>{{$t('msg.Amount')}}</b>: 100 ( FirstDigit-Big )<br>
-
                             <b>{{$t('msg.Stock')}}</b>: BTC/USDT ( 1 )<br>
-
                             <b>{{$t('msg.gameid')}}</b>: 01062019100710200</td>
                     </tr>
                     <tr>
-                        <td class="text-left"> <b>Time</b> 2019-10-07 11:20:24<br>
-
+                        <td class="text-left">
+                            <b>Time</b> 2019-10-07 11:20:24<br>
                             <b>BetId</b>: 0010106201910071021005<br>
-
                             <b>Amount</b>: 100 ( FirstDigit-Small )<br>
-
                             <b>Stock</b>: BTC/USDT ( 1 )<br>
-
                             <b>gameid</b>: 01062019100710210</td>
                     </tr>
                     <tr>
-                        <td class="text-left"><b>Time</b> 2019-10-07 11:21:19<br>
-
+                        <td class="text-left">
+                            <b>Time</b> 2019-10-07 11:21:19<br>
                             <b>BetId</b>: 0010106201910071025002<br>
-
                             <b>Amount</b>: 100 ( FirstDigit-Big )<br>
-
                             <b>Stock</b>: BTC/USDT ( 5 )<br>
-
                             <b>gameid</b>: 01062019100710250</td>
                     </tr>
                 </table>
@@ -123,6 +112,10 @@ export default {
 </script>
 
 <style scoped>
+.font-size15 {
+    font-size: 1.5rem;
+}
+
 .text-left {
     text-align: left;
 }

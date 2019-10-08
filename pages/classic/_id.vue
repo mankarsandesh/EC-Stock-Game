@@ -152,16 +152,15 @@
         </v-card>
 
         <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
-            <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ baccarat1.name }}</v-tab>
+            <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ $t('gamemsg.'+baccarat1.name) }}</v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="currentItems">
             <v-tab-item v-for="(baccarat1, idx3) in baccarat" :key="idx3" :value="'tab-' + baccarat1.name">
                 <v-card flat>
                     <v-tabs class="bg-colors" v-model="currentItemss" color="transparent" fixed-tabs slider-color="yellow" grow>
-                        <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ baccarat2.name }}</v-tab>
+                        <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ $t('gamemsg.'+baccarat2.name) }}</v-tab>
                     </v-tabs>
-
                     <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" :dataArray="getStockNewData($route.params.id)" :stocks="stockname" />
                 </v-card>
             </v-tab-item>
@@ -314,7 +313,7 @@ export default {
 
     data() {
         return {
-            currentItems: "tab-Big Small",
+            currentItems: "tab-Big-Small",
             currentItemss: null,
             baccarat: baccarat,
             chipsReset: chips,
@@ -430,7 +429,8 @@ export default {
                 this.betDataShows = [];
                 this.betData.betName = [];
                 this.price = null;
-                $("input:text").val("");
+                $(".form-input").val("");
+                $(".form-inputadd").val("");
                 $(".form-inputadd").attr("class", "form-input");
                 $(".top-betadd").attr("class", "top-bet");
             } else if (e == "confirm") {

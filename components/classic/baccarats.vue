@@ -5,9 +5,9 @@
         <v-flex v-show="chtable=='bs'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="text-blue">B</span> = <span class="text-blue">{{countBig}}</span>, 
-                    <span class="text-red">S</span> = <span class="text-red">{{countSmall}}</span>, 
-                    <span class="text-success">Total</span>  = <span class="text-success">{{countBig + countSmall}}</span> 
+                    <span class="text-blue">{{$t('gamemsg.B')}}</span> = <span class="text-blue">{{countBig}}</span>, 
+                    <span class="text-red">{{$t('gamemsg.S')}}</span> = <span class="text-red">{{countSmall}}</span>, 
+                    <span class="text-success">{{this.$t('msg.Total')}}</span>  = <span class="text-success">{{countBig + countSmall}}</span> 
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebsFirst">
@@ -21,9 +21,9 @@
         <v-flex v-show="chtable=='oe'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                     <span class="text-blue">O</span> = <span class="text-blue">{{countOdd}}</span>,
-                    <span class="text-red">E</span> = <span class="text-red">{{countEven}}</span>, 
-                    <span class="text-success">Total</span>  = <span class="text-success">{{countOdd+countEven}}</span> 
+                     <span class="text-blue">{{$t('gamemsg.O')}}</span> = <span class="text-blue">{{countOdd}}</span>,
+                    <span class="text-red">{{$t('gamemsg.E')}}</span> = <span class="text-red">{{countEven}}</span>, 
+                    <span class="text-success">{{this.$t('msg.Total')}}</span>  = <span class="text-success">{{countOdd+countEven}}</span> 
                
                 </div>
                 <div class="my-coltabledivlast">
@@ -38,10 +38,10 @@
         <v-flex v-show="chtable=='hml'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="text-blue">U</span> = <span class="text-blue">{{countUpper}}</span>, 
-                    <span class="text-red">M</span> = <span class="text-red">{{countMiddle}}</span>, 
-                    <span class="text-success">L</span> = <span class="text-success">{{countLower}}</span>, 
-                    <span class="text-primary">Total</span>  = <span class="text-primary">{{countUpper+countMiddle+countLower}}</span> 
+                    <span class="text-blue">{{$t('gamemsg.U')}}</span> = <span class="text-blue">{{countUpper}}</span>, 
+                    <span class="text-red">{{$t('gamemsg.M')}}</span> = <span class="text-red">{{countMiddle}}</span>, 
+                    <span class="text-success">{{$t('gamemsg.L')}}</span> = <span class="text-success">{{countLower}}</span>, 
+                    <span class="text-primary">{{this.$t('msg.Total')}}</span>  = <span class="text-primary">{{countUpper+countMiddle+countLower}}</span> 
                
                 </div>
                 <div class="my-coltabledivlast">
@@ -234,13 +234,13 @@ export default {
 
                 if (this.chtable == "oe") {
                     // odd even
-                    if (this.chlists == "oe-First Digit") {
+                    if (this.chlists == "oe-firstdigit") {
                         this.trentOEFirst.push(no_first % 2);
-                    } else if (this.chlists == "oe-Last Digit") {
+                    } else if (this.chlists == "oe-lastdigit") {
                         this.trentOEFirst.push(no_last % 2);
-                    } else if (this.chlists == "oe-Both Digit") {
+                    } else if (this.chlists == "oe-bothdigit") {
                         this.trentOEFirst.push(no_both % 2);
-                    } else if (this.chlists == "oe-Two Digit") {
+                    } else if (this.chlists == "oe-twodigit") {
                         this.trentOEFirst.push(no_two % 2);
                     }
 
@@ -250,7 +250,7 @@ export default {
                     }
                 } else if (this.chtable == "hml") {
                     // hml
-                    if (this.chlists == "hml-First Digit") {
+                    if (this.chlists == "hml-firstdigit") {
                         if (no_first >= 0 && no_first <= 3) {
                             this.trentUMLFirst.push(0);
                         } else if (no_first >= 4 && no_first <= 6) {
@@ -258,7 +258,7 @@ export default {
                         } else if (no_first >= 7 && no_first <= 9) {
                             this.trentUMLFirst.push(2);
                         }
-                    } else if (this.chlists == "hml-Last Digit") {
+                    } else if (this.chlists == "hml-lastdigit") {
                         if (no_last >= 0 && no_last <= 3) {
                             this.trentUMLFirst.push(0);
                         } else if (no_last >= 4 && no_last <= 6) {
@@ -266,7 +266,7 @@ export default {
                         } else if (no_last >= 7 && no_last <= 9) {
                             this.trentUMLFirst.push(2);
                         }
-                    } else if (this.chlists == "hml-Both Digit") {
+                    } else if (this.chlists == "hml-bothdigit") {
                         if (no_both >= 0 && no_both <= 6) {
                             this.trentUMLFirst.push(0);
                         } else if (no_both >= 7 && no_both <= 12) {
@@ -274,7 +274,7 @@ export default {
                         } else if (no_both >= 13 && no_both <= 18) {
                             this.trentUMLFirst.push(2);
                         }
-                    } else if (this.chlists == "hml-Two Digit") {
+                    } else if (this.chlists == "hml-twodigit") {
                         if (no_two >= 0 && no_two <= 33) {
                             this.trentUMLFirst.push(0);
                         } else if (no_two >= 34 && no_two <= 66) {
@@ -290,13 +290,13 @@ export default {
                     }
                 } else if (this.chtable == "sn") {
                     // sn
-                    if (this.chlists == "sn-First Digit") {
+                    if (this.chlists == "sn-firstdigit") {
                         this.trentNumberFirst.push(no_first);
-                    } else if (this.chlists == "sn-Last Digit") {
+                    } else if (this.chlists == "sn-lastdigit") {
                         this.trentNumberFirst.push(no_last);
-                    } else if (this.chlists == "sn-Both Digit") {
+                    } else if (this.chlists == "sn-bothdigit") {
                         this.trentNumberFirst.push(no_both);
-                    } else if (this.chlists == "sn-Two Digit") {
+                    } else if (this.chlists == "sn-twodigit") {
                         this.trentNumberFirst.push(no_two);
                     }
 
@@ -305,19 +305,19 @@ export default {
                         return;
                     }
                 } else {
-                    if (this.chlists == "bs-Last Digit") {
+                    if (this.chlists == "bs-lastdigit") {
                         if (no_last < 5) {
                             this.trentFirst.push(0);
                         } else {
                             this.trentFirst.push(1);
                         }
-                    } else if (this.chlists == "bs-Both Digit") {
+                    } else if (this.chlists == "bs-bothdigit") {
                         if (no_both < 9) {
                             this.trentFirst.push(0);
                         } else {
                             this.trentFirst.push(1);
                         }
-                    } else if (this.chlists == "bs-Two Digit") {
+                    } else if (this.chlists == "bs-twodigit") {
                         if (no_two < 50) {
                             this.trentFirst.push(0);
                         } else {
@@ -379,7 +379,7 @@ export default {
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
-                                        "B";
+                                        this.$t('gamemsg.B');
                                     this.$refs.tablebsFirst.children[i].children[j].classList.add(
                                         "rs1"
                                     );
@@ -396,7 +396,7 @@ export default {
                                     );
 
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
-                                        "S";
+                                        this.$t('gamemsg.S');
                                 }
                             }
                         }
@@ -560,7 +560,7 @@ export default {
                                     );
 
                                     this.$refs.tableOEFirst.children[i].children[j].textContent =
-                                        "O";
+                                        this.$t('gamemsg.O');
                                 } else if (
                                     this.$refs.tableOEFirst.children[i].children[j]
                                     .textContent === "0"
@@ -574,7 +574,7 @@ export default {
                                     );
 
                                     this.$refs.tableOEFirst.children[i].children[j].textContent =
-                                        "E";
+                                        this.$t('gamemsg.E');
                                 }
                             }
                         }
@@ -739,7 +739,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = "U";
+                                    ].textContent = this.$t('gamemsg.U');
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "1"
@@ -755,7 +755,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = "M";
+                                    ].textContent = this.$t('gamemsg.M');
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "0"
@@ -771,7 +771,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = "L";
+                                    ].textContent = this.$t('gamemsg.L');
                                 }
                             }
                         }
@@ -935,16 +935,16 @@ export default {
                     }
                     let big = 0;
                     switch (this.chlists) {
-                        case "sn-First Digit":
+                        case "sn-firstdigit":
                             big = 5;
                             break;
-                        case "sn-Last Digit":
+                        case "sn-lastdigit":
                             big = 5;
                             break;
-                        case "sn-Both Digit":
+                        case "sn-bothdigit":
                             big = 9;
                             break;
-                        case "sn-Two Digit":
+                        case "sn-twodigit":
                             big = 50;
                             break;
                     }
@@ -956,8 +956,8 @@ export default {
                             "big-number";
                     }
                     if (
-                        this.chlists === "sn-Both Digit" ||
-                        this.chlists === "sn-Two Digit"
+                        this.chlists === "sn-bothdigit" ||
+                        this.chlists === "sn-twodigit"
                     ) {
                         this.$refs.tableNumberFirst.children[k].children[j].textContent =
                             this.trentNumberFirst[s] < 10 ?

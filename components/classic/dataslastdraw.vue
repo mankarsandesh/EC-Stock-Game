@@ -4,12 +4,12 @@
         <v-flex>
             <span class="timer">{{DateNow}} {{TimeNow}} {{$t('msg.gameid')}}: {{gameid}}</span>
             <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
-            <span class="timer total_classic" v-if="load">{{dataslastdraw}}</span>
-            <v-progress-circular :size="15" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
+            <span class="timer total_classic" :title="datelastdraw" v-if="load">{{dataslastdraw}}</span>
+            <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
             
             <span class="timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
             <span class="timer" v-else-if="time == 0">{{$t('msg.marketclosed')}}</span>
-            <span class="timer" v-else>{{ time != $t('msg.loading') ? $t('msg.betnow')+' : ':''}}{{time}}</span>
+            <span class="timer" v-else>{{ time != $t('msg.loading') ? $t('msg.betnow')+':':''}}{{time}}</span>
 
         </v-flex>
     </v-layout>
@@ -22,7 +22,8 @@ export default {
     props: ["checkStock", "stocks", "StockData", "Reference"],
     data() {
         return {
-            dataslastdraw: null,
+            dataslastdraw: "0000",
+            datelastdraw:"0000-00-00 00:00",
             load: false,
             time: this.$t('msg.loading'),
             gameid: null,
@@ -32,7 +33,7 @@ export default {
         };
     },
     mounted() {
-        this.getdata();
+        setTimeout(()=>{this.getdata()},1000)
         const socket = openSocket("https://websocket-timer.herokuapp.com");
         socket.on("time", data => {
             this.getTimeNow();
@@ -82,7 +83,7 @@ export default {
                 "-" +
                 this.setZero(cd.getMonth() + 1, 2) +
                 "-" +
-                this.setZero(cd.getDate(), 2); // + ' ' + this.week[cd.getDay()];
+                this.setZero(cd.getDate(), 2) //+ ' ' + this.week[cd.getDay()];
         },
         setZero(num, digit) {
             var zero = "";
@@ -94,19 +95,18 @@ export default {
         getdata() {
             if (this.StockData == "") return;
 
-            // this.api = "http://159.138.54.214/api/btc1";
-            // this.$axios(this.api).then(response => {
             this.load = true;
             let items = [];
             let value_no;
             this.StockData.forEach(element => {
                 items.push({
                     PT: element.PT,
-                    gameid: element.gameid
+                    gameid: element.gameid,
+                    date: element.created_at
                 });
             });
             let elements = items[items.length - 1];
-            // console.log(elements.gameid)
+            this.datelastdraw = elements.date;
             this.gameid = elements.gameid;
             let no1 = elements.PT[elements.PT.length - 2];
             let no2 = elements.PT[elements.PT.length - 1];
@@ -132,7 +132,6 @@ export default {
                     no1 + " + " + no2 + " = " + parseInt(parseInt(no1) + parseInt(no2));
             }
             this.dataslastdraw = value_no;
-            // })
         }
     }
 };
@@ -163,7 +162,7 @@ export default {
     border: 1px solid #ffc107;
     padding: 4px 6px;
     border-radius: 10px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
 }
 

@@ -1,84 +1,84 @@
 [{
         "namech": "bs",
-        "name": "Big Small",
+        "name": "Big-Small",
         "children": [{
                 "namech": "bsf",
-                "name": "First Digit"
+                "name": "firstdigit"
             },
             {
                 "namech": "bsl",
-                "name": "Last Digit"
+                "name": "lastdigit"
             },
             {
                 "namech": "bsb",
-                "name": "Both Digit"
+                "name": "bothdigit"
             },
             {
                 "namech": "bst",
-                "name": "Two Digit"
+                "name": "twodigit"
             }
         ]
     },
     {
         "namech": "oe",
-        "name": "Odd Even",
+        "name": "Odd-Even",
         "children": [{
                 "namech": "oef",
-                "name": "First Digit"
+                "name": "firstdigit"
             },
             {
                 "namech": "oel",
-                "name": "Last Digit"
+                "name": "lastdigit"
             },
             {
                 "namech": "oeb",
-                "name": "Both Digit"
+                "name": "bothdigit"
             },
             {
                 "namech": "oet",
-                "name": "Two Digit"
+                "name": "twodigit"
             }
         ]
     },
     {
         "namech": "hml",
-        "name": "High Mid Low",
+        "name": "High-Mid-Low",
         "children": [{
                 "namech": "hmlf",
-                "name": "First Digit"
+                "name": "firstdigit"
             },
             {
                 "namech": "hmll",
-                "name": "Last Digit"
+                "name": "lastdigit"
             },
             {
                 "namech": "hmlb",
-                "name": "Both Digit"
+                "name": "bothdigit"
             },
             {
                 "namech": "hmlt",
-                "name": "Two Digit"
+                "name": "twodigit"
             }
         ]
     },
     {
         "namech": "sn",
-        "name": "Specific Number",
+        "name": "Specific-Number",
         "children": [{
                 "namech": "snf",
-                "name": "First Digit"
+                "name": "firstdigit"
             },
             {
                 "namech": "snl",
-                "name": "Last Digit"
+                "name": "lastdigit"
             },
             {
                 "namech": "snb",
-                "name": "Both Digit"
+                "name": "bothdigit"
             },
             {
                 "namech": "snt",
-                "name": "Two Digit"
+                "name": "twodigit"
             }
         ]
     }
