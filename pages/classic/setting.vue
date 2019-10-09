@@ -56,15 +56,8 @@ export default {
         changeChip(title, img, price) {
             if (price < 10 || price > 10000 || price == null)
                 return this.resetDefault();
-            this.chips = JSON.parse(localStorage.chips);
             let index = this.chips.findIndex(x => x.title === title);
-            if (index == -1) {
-                this.chips.push({
-                    title: title,
-                    img: img,
-                    price: price
-                });
-            } else this.chips[index].price = price;
+            this.chips[index].price = price;
             localStorage.chips = JSON.stringify(this.chips);
         },
         resetDefault() {

@@ -92,8 +92,8 @@
             <!-- charts -->
             <v-tabs-items v-model="tab">
                 <v-container pa-0 v-if="show1">
-                    <livechart :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live' && ischangechartview" />
-                    <liveevens :stocks="StockName" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-else-if="checkStock !== 'live' && ischangechartview" />
+                    <livechart :stocks="stockname" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live' && ischangechartview" />
+                    <liveevens :stocks="stockname" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-else-if="checkStock !== 'live' && ischangechartview" />
 
                     <div v-else>
                         <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
@@ -119,7 +119,7 @@
             <!-- Data Lastdraw and Timer -->
             <v-container>
                 <div class="float-right">
-                    <dataslastdraw :stocks="StockName" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
+                    <dataslastdraw :stocks="stockname" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
                 </div>
             </v-container>
             <!-- Data Lastdraw and Timer -->
@@ -168,11 +168,12 @@ export default {
     },
     data() {
         return {
+            urrentItemss:null,
             currentItems: "tab-Big-Small",
             menu: [],
             navList: navList,
             checkStockList: null,
-            StockName: "btc1",
+            stockname: "btc1",
             checkStock: "live",
             tab: null,
             tab1: null,
@@ -283,7 +284,7 @@ export default {
             this.getMenu();
             setTimeout(() => {
                 this.show1 = true;
-                this.StockName = this.$route.params.id.split("-")[1];
+                this.stockname = this.$route.params.id.split("-")[1];
                 this.checkStock = this.$route.params.id.split("-")[2];
                 this.getMenu();
             }, 50);
@@ -292,7 +293,7 @@ export default {
             this.showtable = false;
             setTimeout(() => {
                 this.showtable = true;
-                this.StockName = this.$route.params.id.split("-")[1];
+                this.stockname = this.$route.params.id.split("-")[1];
                 this.checkStock = this.$route.params.id.split("-")[2];
             }, 50);
         },
@@ -328,7 +329,7 @@ export default {
             "getlocale",
             "getStockNewData",
             "getReference",
-            "getStockName"
+            "getstockname"
         ]),
         countryflag() {
             return this.getlocale;
