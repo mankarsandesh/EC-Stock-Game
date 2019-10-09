@@ -354,6 +354,7 @@ export default {
         padding: 3px 7px;
     }
 }
+
 @media only screen and (min-width: 2560px) {
     .btn-chart-change {
         width: 1.5% !important;

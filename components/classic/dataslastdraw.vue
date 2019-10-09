@@ -94,6 +94,7 @@ export default {
         },
         getdata() {
             if (this.StockData == "") return;
+
             this.load = true;
             let items = [];
             let value_no;
@@ -127,8 +128,7 @@ export default {
             } else if (this.checkStock == "oet") {
                 value_no = this.setZero(parseInt(no1) + "" + parseInt(no2), 2);
             } else {
-                value_no =
-                    no1 + " + " + no2 + " = " + parseInt(parseInt(no1) + parseInt(no2));
+                value_no = no1 + " + " + no2 + " = " + parseInt(parseInt(no1) + parseInt(no2));
             }
             this.dataslastdraw = value_no;
         }
