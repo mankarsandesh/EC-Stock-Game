@@ -50,7 +50,7 @@
             <v-flex>
               <v-layout>
                 <v-flex xs4 class="text-xs-center" style="align-self: center;">
-                  <span class="text-uppercase text-white pr-5">{{$route.params.id}}</span>
+                  <span class="text-uppercase text-white pr-5"> {{ $t(`stockname.${$route.params.id}`) }}</span>
                   <span class="text-yellow">010620190923140800</span>
                 </v-flex>
 
