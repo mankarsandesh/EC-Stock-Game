@@ -90,7 +90,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import stockList from "~/components/modern/stockList";
 import betResultAllResult from "~/components/modern/betResultAllResult";
 import onBetting from "~/components/modern/onBetting";
@@ -125,9 +125,13 @@ export default {
     };
   },
   mounted(){
-
+    // set footerBet to zero because on this page cant use bet footer 
+    this.setFooterBetAmount(0)
   },
   methods: {
+    ...mapMutations([
+      "setFooterBetAmount"
+    ]),
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {

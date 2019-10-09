@@ -30,7 +30,12 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn class="align_button4" slot="reference" @click="betButtonClick()">
+        <v-btn
+          class="align_button4"
+          slot="reference"
+          @click="betButtonClick('firstdigit-'+data.rule)"
+        >
+          <showChipAmount size="70px" :amount="getAmountMultiGameBet('firstdigit-'+data.rule)"></showChipAmount>
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">First Digit</span>
@@ -61,7 +66,11 @@
           <v-btn
             class="betting-small"
             slot="reference"
-          >HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+            
+            @click="betButtonClick('firstdigit-high')"
+          >
+          
+          HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
           :disabled="checkFooterBet"
@@ -83,6 +92,7 @@
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('firstdigit-mid')"
           >MID {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
@@ -104,6 +114,7 @@
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('firstdigit-low')"
           >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
@@ -129,7 +140,13 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn class="align_button4" slot="reference">
+        <v-btn
+          class="align_button4"
+          @click="betButtonClick('lastdigit-'+data.rule)"
+          slot="reference"
+        >
+          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Last Digit</span>
@@ -151,13 +168,14 @@
             <betModal
               :stockName="$route.params.id"
               :loop="getLoop($route.params.id)"
-              betId="twodigit-high"
+              betId="lastdigit-high"
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('lastdigit-high')"
           >HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
@@ -172,13 +190,14 @@
             <betModal
               :stockName="$route.params.id"
               :loop="getLoop($route.params.id)"
-              betId="twodigit-mid"
+              betId="lastdigit-mid"
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('lastdigit-mid')"
           >MID {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
@@ -193,13 +212,14 @@
             <betModal
               :stockName="$route.params.id"
               :loop="getLoop($route.params.id)"
-              betId="twodigit-low"
+              betId="lastdigit-low"
               :payout="payout_high_mid_low"
             ></betModal>
           </div>
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('lastdigit-low')"
           >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
@@ -226,7 +246,13 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn class="align_button5" slot="reference">
+        <v-btn
+          class="align_button5"
+          @click="betButtonClick('bothdigit-'+data.rule)"
+          slot="reference"
+        >
+          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Both Digit</span>
@@ -256,6 +282,7 @@
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('bothdigit-high')"
           >HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
@@ -277,6 +304,7 @@
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('bothdigit-mid')"
           >MID {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
@@ -298,6 +326,7 @@
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('bothdigit-low')"
           >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
@@ -324,7 +353,13 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn class="align_button5" slot="reference">
+        <v-btn
+          class="align_button5"
+          @click="betButtonClick('twodigit-'+data.rule)"
+          slot="reference"
+        >
+          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">Two Digit</span>
@@ -353,6 +388,7 @@
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('twodigit-high')"
           >HIGH {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
@@ -374,6 +410,7 @@
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('twodigit-mid')"
           >MID {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
         <popper
@@ -395,6 +432,7 @@
           <v-btn
             class="betting-small"
             slot="reference"
+            @click="betButtonClick('twodigit-low')"
           >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
@@ -403,6 +441,8 @@
     <v-layout row>
       <span class="w20">
         <v-btn class="align_button4" @click="btnNumber('first')">
+          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+
           <span class="big-digit">0 - 9</span>
           <br />
           <span class="small-digit">First Digit</span>
@@ -413,6 +453,8 @@
       </span>
       <span class="w20">
         <v-btn class="align_button4" @click="btnNumber('last')">
+          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+
           <span class="big-digit">0 - 9</span>
           <br />
           <span class="small-digit">Last Digit</span>
@@ -423,6 +465,8 @@
       </span>
       <span class="w20">
         <v-btn class="align_button4" @click="btnNumber('both')">
+          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+
           <span class="big-digit">0 - 18</span>
           <br />
           <span class="small-digit">Both Digit</span>
@@ -433,6 +477,8 @@
       </span>
       <span class="w20">
         <v-btn class="align_button4" @click="btnNumber('two')">
+          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+
           <span class="big-digit">00 - 99</span>
           <br />
           <span class="small-digit">Two Digit</span>
@@ -462,7 +508,12 @@
             :payout="payout_09"
           ></betModal>
         </div>
-        <v-btn slot="reference" v-show="number == 'first'" class="btn-small">{{index}}</v-btn>
+        <v-btn
+          slot="reference"
+          @click="betButtonClick('firstdigit-'+index)"
+          v-show="number == 'first'"
+          class="btn-small"
+        >{{index}}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBet"
@@ -482,7 +533,12 @@
             :payout="payout_09"
           ></betModal>
         </div>
-        <v-btn slot="reference" v-show="number == 'last' " class="btn-small">{{index}}</v-btn>
+        <v-btn
+          slot="reference"
+          @click="betButtonClick('lastdigit-'+index)"
+          v-show="number == 'last' "
+          class="btn-small"
+        >{{index}}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBet"
@@ -502,7 +558,12 @@
             :payout="payout_18"
           ></betModal>
         </div>
-        <v-btn slot="reference" v-show="number == 'both' " class="btn-small">{{index}}</v-btn>
+        <v-btn
+          slot="reference"
+          @click="betButtonClick('bothdigit-'+index)"
+          v-show="number == 'both' "
+          class="btn-small"
+        >{{index}}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBet"
@@ -524,6 +585,7 @@
         </div>
         <v-btn
           slot="reference"
+          @click="betButtonClick('twodigit-'+index)"
           v-show="number == 'two' "
           class="btn-small"
         >{{ index < 10 ? "0" + index :index}}</v-btn>
@@ -532,9 +594,10 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 import betModal from "~/components/modern/betModal";
+import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
@@ -543,6 +606,13 @@ export default {
     isFullscreen: {
       type: Boolean,
       default: false
+    },
+    //  for multi game
+    stockName: {
+      type: String
+    },
+    loop: {
+      type: Number
     }
   },
   data() {
@@ -677,7 +747,8 @@ export default {
     // popper is the third party package
     popper,
     // this component display the modal,the modal let users choose amount they want to bet
-    betModal
+    betModal,
+    showChipAmount
   },
   computed: {
     ...mapGetters([
@@ -685,7 +756,10 @@ export default {
       "getStockLoop",
       "getLotteryDraw",
       "getLoop",
-      "checkFooterBet"
+      "checkFooterBet",
+      "getFooterBetAmount",
+      "getMultiGameBet",
+      "getAmountMultiGameBet"
     ]),
     // return true if bet close
     checkBetClose() {
@@ -697,9 +771,17 @@ export default {
     }
   },
   methods: {
-    betButtonClick() {
+    ...mapMutations(["pushDataMultiGameBet"]),
+    betButtonClick(betId) {
       if (this.checkFooterBet) {
-        alert("Wow amazing..!");
+        let data = {
+          stockName: this.stockName,
+          loop: this.loop,
+          betId: betId,
+          betValue: this.getFooterBetAmount
+        };
+        this.pushDataMultiGameBet(data);
+        console.warn(this.getMultiGameBet);
       }
     },
     // the btnNumber methods use to switch specific number first,last,both and two

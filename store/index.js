@@ -4,6 +4,8 @@ const createStore = () => {
     return new Vuex.Store({
         state: () => ({
             footerBetAmount: 0,
+            onGoingBet: [],
+            multiGameBet: [],
             locales: ['us', 'cn'],
             locale: localStorage.getItem('lang'),
             balance: 895000,
@@ -154,6 +156,19 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            // push data to on going bet
+            pushDataOnGoingBet(state, payload) {
+                state.onGoingBet.push(payload)
+            },
+            // push data to on going bet
+            pushDataMultiGameBet(state, payload) {
+                state.multiGameBet.push(payload)
+            },
+            clearDataMultiGameBet(state) {
+                state.multiGameBet = []
+                state.footerBetAmount = 0
+                console.warn(state.multiGameBet)
+            },
             // store coin in localStorage payload must be "String array" '["100", "500", "1000", "5000", "10000"]'
             setCoins_modern(state) {
                 state.coins_modern = JSON.parse(localStorage.getItem("coinModern"))
@@ -185,6 +200,20 @@ const createStore = () => {
             }
         },
         getters: {
+            // to show ship and amount on bet button
+            getAmountMultiGameBet: (state) => (betId) => {
+
+                if (state.multiGameBet.length == 0) return 0
+                let bet1 = state.multiGameBet.find(x => x.betId === "firstdigit-big").betValue
+                return bet1
+
+            },
+            getOnBetting(state) {
+                return state.onGoingBet
+            },
+            getMultiGameBet(state) {
+                return state.multiGameBet
+            },
             checkFooterBet(state) {
                 if (state.footerBetAmount == 0) {
                     return false
