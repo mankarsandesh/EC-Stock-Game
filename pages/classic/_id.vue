@@ -5,22 +5,22 @@
     <!-- <br/> -->
     <!-- {{getStockNewData($route.params.id)}} -->
 
-    <div v-if="$route.params.id ==this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1] + '-' + this.$route.params.id.split('-')[2] +'-currentbet'">
+    <div v-if="$route.params.id.split('-')[3] == 'currentbet'">
         <currentbet />
     </div>
-    <div v-else-if="$route.params.id ==this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1] + '-' + this.$route.params.id.split('-')[2] +'-history'">
+    <div v-else-if="$route.params.id.split('-')[3] == 'history'">
         <history />
     </div>
-    <div v-else-if="$route.params.id ==this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1] + '-' + this.$route.params.id.split('-')[2] +'-gameresult'">
+    <div v-else-if="$route.params.id.split('-')[3] == 'gameresult'">
         <gameresult />
     </div>
-    <div v-else-if="$route.params.id ==this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1] + '-' + this.$route.params.id.split('-')[2] +'-announcement'">
+    <div v-else-if="$route.params.id.split('-')[3] == 'announcement'">
         <announcement />
     </div>
-    <div v-else-if="$route.params.id ==this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1] + '-' + this.$route.params.id.split('-')[2] +'-rule'">
+    <div v-else-if="$route.params.id.split('-')[3] == 'rule'">
         <rule />
     </div>
-    <div v-else-if="$route.params.id ==this.$route.params.id.split('-')[0] + '-' + this.$route.params.id.split('-')[1] + '-' + this.$route.params.id.split('-')[2] +'-setting'">
+    <div v-else-if="$route.params.id.split('-')[3] == 'setting'">
         <setting />
     </div>
 
@@ -112,6 +112,7 @@
                                                 <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
                                             </div>
                                         </td>
+
                                         <td class="top-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'">
                                             <div class="text-bet">{{datas.name4}}</div>
                                             <div class="text-stock"></div>
@@ -272,6 +273,14 @@
         </span>
     </v-snackbar>
     <!-- end alertOutCome -->
+
+    <!-- alertOutCome -->
+    <v-snackbar class="tops" v-model="alertSS" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
+        <span class="text-center set-text-alert">
+            {{alertext}}
+        </span>
+    </v-snackbar>
+    <!-- end alertOutCome -->
 </div>
 </template>
 
@@ -337,14 +346,16 @@ export default {
             twodigit_payout: 98.82,
             show1: true,
             // alertOutCome
+            alertSS: false,
             snackbar: false,
             y: "top",
             x: null,
             mode: "vertical",
-            timeout: 3000,
+            timeout: 2500,
             text: "",
             color: "",
-            betPrice: "1,000,000"
+            betPrice: "1,000,000",
+            alertext: ""
             // end alertOutCome
         };
     },
@@ -565,6 +576,7 @@ export default {
                     times = data.SH000001.timer;
                     calculating = 241;
                 }
+
                 if (times > calculating) {
                     this.getBetClosed();
                 } else if (times == "close") {
@@ -572,9 +584,17 @@ export default {
                 } else {
                     this.getBetOpen();
                 }
-                if (times == calculating - 4) {
+
+                if (times == 60) {
+                    this.getalertstartstop("stop")
+                } else if (times == calculating) {
+                    this.getalertstartstop("start")
+                }
+
+                if (times == calculating - 3) {
                     // this.alertOutCome('win')
                     this.alertOutCome("lose");
+                    this.scrollToTop()
                 }
             });
         },
@@ -588,13 +608,29 @@ export default {
             this.panel = [true, true, true, true];
         },
 
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
+
         alertOutCome(val) {
             this.snackbar = true;
+            this.mode = "vertical";
             if (val == "win") {
                 this.text = this.$t("msg.Win Bet");
                 this.color = "#2962FF";
             } else {
                 this.text = this.$t("msg.Lose Bet");
+                this.color = "#D50000";
+            }
+        },
+        getalertstartstop(val) {
+            this.alertSS = true;
+            this.mode = "multi-line";
+            if (val == "start") {
+                this.alertext = "Start Bet"
+                this.color = "success";
+            } else {
+                this.alertext = "Stop Bet"
                 this.color = "#D50000";
             }
         }
@@ -603,6 +639,13 @@ export default {
 </script>
 
 <style>
+.set-text-alert {
+    margin-top: 2%;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-left: 22%;
+}
+
 .btn-chips {
     top: 31%;
     position: relative;

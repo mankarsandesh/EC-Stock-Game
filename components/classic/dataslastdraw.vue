@@ -39,18 +39,23 @@ export default {
             this.getTimeNow();
             let times;
             let calculat;
+            let lasttime;
             if (this.stocks == "btc1") {
                 times = data.btc1.timer;
-                calculat = 41;
+                calculat = 40;
+                lasttime =  38
             } else if (this.stocks == "btc5") {
                 times = data.btc5.timer;
-                calculat = 241;
+                calculat = 240;
+                lasttime = 238;
             } else if (this.stocks == "usindex") {
                 times = data.usindex.timer;
-                calculat = 241;
+                calculat = 240;
+                lasttime = 238;
             } else {
                 times = data.SH000001.timer;
-                calculat = 241;
+                calculat = 240;
+                lasttime = 238;
             }
 
             if (times > calculat) {
@@ -61,7 +66,7 @@ export default {
                 this.time = this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
             }
 
-            if (times == calculat) {
+            if (times == lasttime) {
                 this.getdata();
             }
         });

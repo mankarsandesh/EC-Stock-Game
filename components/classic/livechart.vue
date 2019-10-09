@@ -191,16 +191,16 @@ export default {
                 let times, calculating;
                 if (this.$route.params.id.split('-')[1] == 'btc1') {
                     times = data.btc1.timer
-                    calculating = 41
+                    calculating = 38
                 } else if (this.$route.params.id.split('-')[1] == 'btc5') {
                     times = data.btc5.timer
-                    calculating = 241
+                    calculating = 238
                 } else if (this.$route.params.id.split('-')[1] == 'usindex') {
                     times = data.usindex.timer
-                    calculating = 241
+                    calculating = 238
                 } else {
                     times = data.SH000001.timer
-                    calculating = 241
+                    calculating = 238
                 }
 
                 if (times == calculating) {
