@@ -547,7 +547,7 @@
                 style="text-transform: uppercase; cursor:pointer"
               >confirm</text>
             </g>
-            <g @click="setFooterBetAmount('0')">
+            <g @click="clearDataMultiGameBet()">
               <text
                 x="1115"
                 y="82"
@@ -564,7 +564,8 @@ import { mapGetters,mapMutations } from 'vuex';
 export default {
   methods:{
     ...mapMutations([
-      "setFooterBetAmount"
+      "setFooterBetAmount",
+      "clearDataMultiGameBet"
     ]),
   },
   computed:{

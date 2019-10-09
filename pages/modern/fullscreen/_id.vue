@@ -50,7 +50,9 @@
             <v-flex>
               <v-layout>
                 <v-flex xs4 class="text-xs-center" style="align-self: center;">
-                  <span class="text-uppercase text-white pr-5"> {{ $t(`stockname.${$route.params.id}`) }}</span>
+                  <span
+                    class="text-uppercase text-white pr-5"
+                  >{{ $t(`stockname.${$route.params.id}`) }}</span>
                   <span class="text-yellow">010620190923140800</span>
                 </v-flex>
 
@@ -114,7 +116,11 @@
             </v-layout>
           </v-flex>
           <v-flex>
-            <betButton :isFullscreen="true"></betButton>
+            <betButton
+              :isFullscreen="true"
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+            ></betButton>
           </v-flex>
         </v-flex>
         <v-flex xs12 class="text-xs-center">
@@ -177,7 +183,8 @@ export default {
       "lotterydraw",
       "getStockLoop",
       "getStockLastDraw",
-      "getStockCrawlerData"
+      "getStockCrawlerData",
+      "getLoop"
     ])
   }
 };

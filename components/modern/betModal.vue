@@ -43,14 +43,14 @@
       </v-flex>
       <v-divider></v-divider>
       <v-flex xs-12 class="pt-2 text-uppercase">
-        <v-btn color="#003e70" dark>confirm</v-btn>
+        <v-btn color="#003e70" dark @click="confirmBet()">confirm</v-btn>
         <v-btn color="#003e70" dark @click="closePopper">close</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters,mapMutations } from "vuex";
 export default {
   props: {
     stockName: {
@@ -96,12 +96,26 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getCoins_modern"])
+    ...mapGetters(["getCoins_modern","getOnBetting"])
   },
   methods: {
+    ...mapMutations([
+      "pushDataOnGoingBet"
+    ]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
+    },
+    confirmBet(){
+      let data={
+        stockName:this.stockName,
+        loop:this.loop,
+        betId:this.betId,
+        betValue:this.betValue,
+      }
+      this.pushDataOnGoingBet(data)
+      console.warn(this.getOnBetting)
+
     },
     closePopper() {
       $(".closepopper").click();
