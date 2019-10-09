@@ -447,7 +447,7 @@
       <popper
         :disabled="checkFooterBet"
         v-for="(n,index) in 10"
-        :key="index"
+        :key="'firstdigit-'+index"
         trigger="click"
         :options="{
                       placement: 'bottom-end',
@@ -467,7 +467,7 @@
       <popper
         :disabled="checkFooterBet"
         v-for="(n,index) in 10"
-        :key="index"
+        :key="'lastdigit-'+index"
         trigger="click"
         :options="{
                       placement: 'bottom-end',
@@ -487,7 +487,7 @@
       <popper
         :disabled="checkFooterBet"
         v-for="(n,index) in 19"
-        :key="index"
+        :key="'bothdigit-'+index"
         trigger="click"
         :options="{
                       placement: 'bottom-end',
@@ -507,7 +507,7 @@
       <popper
         :disabled="checkFooterBet"
         v-for="(n,index) in 100"
-        :key="index"
+        :key="index < 10 ? 'twodigit-0' + index :'twodigit-'+index"
         trigger="click"
         :options="{
                       placement: 'bottom-end',
@@ -684,7 +684,8 @@ export default {
       "getLotteryDraw",
       "getStockLoop",
       "getLotteryDraw",
-      "getLoop"
+      "getLoop",
+      "checkFooterBet"
     ]),
     // return true if bet close
     checkBetClose() {
@@ -696,12 +697,10 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["checkFooterBet"]),
     betButtonClick() {
-      // if (this.checkFooterBet()) {
-      //   alert(this.checkFooterBet());
-      //   alert("Wow amazing..!");
-      // }
+      if (this.checkFooterBet) {
+        alert("Wow amazing..!");
+      }
     },
     // the btnNumber methods use to switch specific number first,last,both and two
     btnNumber(value) {
