@@ -112,7 +112,6 @@
                                                 <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
                                             </div>
                                         </td>
-
                                         <td class="top-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'">
                                             <div class="text-bet">{{datas.name4}}</div>
                                             <div class="text-stock"></div>
@@ -269,7 +268,7 @@
     <v-snackbar class="tops" v-model="snackbar" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
         <span class="text-center">
             <h2>{{text}}</h2>
-            <h2>$ {{betPrice}}</h2>
+            <h2>{{formatToPrice(betPrice)}}</h2>
         </span>
     </v-snackbar>
     <!-- end alertOutCome -->
@@ -351,10 +350,10 @@ export default {
             y: "top",
             x: null,
             mode: "vertical",
-            timeout: 2500,
+            timeout: 3000,
             text: "",
             color: "",
-            betPrice: "1,000,000",
+            betPrice: 1000000,
             alertext: ""
             // end alertOutCome
         };
@@ -394,6 +393,8 @@ export default {
                 this.balance - this.sumTotalAll;
             setTimeout(() => {
                 this.setPrice("reset");
+                this.getalertstartstop('success')
+                // this.getalertstartstop('error')
             }, 3000);
         },
 
@@ -591,7 +592,7 @@ export default {
                     this.getalertstartstop("start")
                 }
 
-                if (times == calculating - 3) {
+                if (times == calculating - 4) {
                     // this.alertOutCome('win')
                     this.alertOutCome("lose");
                     this.scrollToTop()
@@ -623,15 +624,26 @@ export default {
                 this.color = "#D50000";
             }
         },
+
         getalertstartstop(val) {
             this.alertSS = true;
             this.mode = "multi-line";
             if (val == "start") {
                 this.alertext = "Start Bet"
-                this.color = "success";
-            } else {
+                this.color = "#2962FF";
+
+            } else if (val == "stop") {
                 this.alertext = "Stop Bet"
                 this.color = "#D50000";
+
+            } else if (val == "success") {
+                this.alertext = "success"
+                this.color = "success";
+
+            } else if (val == "error") {
+                this.alertext = "money not enough..!"
+                this.color = "error";
+
             }
         }
     }
