@@ -35,7 +35,7 @@
           slot="reference"
           @click="betButtonClick('firstdigit-'+data.rule)"
         >
-          <showChipAmount size="70px" :amount="getAmountMultiGameBet('firstdigit-'+data.rule)"></showChipAmount>
+          <showChipAmount size="70px" :amount="getAmountMultiGameBet({stockName:stockName ,betId:'firstdigit-'+data.rule})"></showChipAmount>
           <span class="big-digit">{{data.rule}}</span>
           <br />
           <span class="small-digit">First Digit</span>
@@ -145,7 +145,7 @@
           @click="betButtonClick('lastdigit-'+data.rule)"
           slot="reference"
         >
-          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+          <showChipAmount size="70px" :amount="getAmountMultiGameBet({stockName:stockName ,betId:'lastdigit-'+data.rule})"></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
           <br />
@@ -251,7 +251,7 @@
           @click="betButtonClick('bothdigit-'+data.rule)"
           slot="reference"
         >
-          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+          <showChipAmount size="70px" :amount="getAmountMultiGameBet({stockName:stockName ,betId:'bothdigit-'+data.rule})"></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
           <br />
@@ -358,7 +358,7 @@
           @click="betButtonClick('twodigit-'+data.rule)"
           slot="reference"
         >
-          <showChipAmount size="70px" :amount="1000"></showChipAmount>
+          <showChipAmount size="70px" :amount="getAmountMultiGameBet({stockName:stockName ,betId:'twodigit-'+data.rule})"></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
           <br />

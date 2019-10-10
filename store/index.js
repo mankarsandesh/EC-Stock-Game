@@ -201,12 +201,14 @@ const createStore = () => {
         },
         getters: {
             // to show ship and amount on bet button
-            getAmountMultiGameBet: (state) => (betId) => {
-
+            getAmountMultiGameBet: (state) => (data) => {
                 if (state.multiGameBet.length == 0) return 0
-                let bet1 = state.multiGameBet.find(x => x.betId === "firstdigit-big").betValue
-                return bet1
+                if (state.multiGameBet.findIndex(x => x.stockName === data.stockName) == -1) return 0
 
+                let stockIdObject = state.multiGameBet.filter(x => x.stockName === data.stockName)
+                if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
+                let result = stockIdObject.filter(x => x.betId === data.betId).map(x => x.betValue).reduce((a, b) => a + b, 0)
+                return result
             },
             getOnBetting(state) {
                 return state.onGoingBet
