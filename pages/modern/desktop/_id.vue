@@ -71,7 +71,10 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-            <betButton></betButton>
+            <betButton
+              :stockName="$route.params.id"
+              :loop="getLoop($route.params.id)"
+            ></betButton>
           </v-flex>
         </v-layout>
         <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
@@ -127,10 +130,12 @@ export default {
   mounted(){
     // set footerBet to zero because on this page cant use bet footer 
     this.setFooterBetAmount(0)
+    this.removeAllFooterBet()
   },
   methods: {
     ...mapMutations([
-      "setFooterBetAmount"
+      "setFooterBetAmount",
+      "removeAllFooterBet"
     ]),
     addTrendMap() {
       let trendCount = this.trendTypes.length;
@@ -154,7 +159,8 @@ export default {
       "lotterydraw",
       "getStockLoop",
       "getStockLastDraw",
-      "getStockCrawlerData"
+      "getStockCrawlerData",
+      "getLoop"
     ])
   }
 };

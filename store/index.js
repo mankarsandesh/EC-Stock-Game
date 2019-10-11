@@ -158,7 +158,7 @@ const createStore = () => {
         mutations: {
             // push data to on going bet
             pushDataOnGoingBet(state, payload) {
-                state.onGoingBet.push(payload)
+                state.onGoingBet.splice(0, 0, payload)
             },
             // push data to on going bet
             pushDataMultiGameBet(state, payload) {
@@ -168,6 +168,9 @@ const createStore = () => {
                 state.multiGameBet = []
                 state.footerBetAmount = 0
                 console.warn(state.multiGameBet)
+            },
+            removeAllFooterBet(state) {
+                state.multiGameBet = []
             },
             // store coin in localStorage payload must be "String array" '["100", "500", "1000", "5000", "10000"]'
             setCoins_modern(state) {
@@ -200,15 +203,20 @@ const createStore = () => {
             }
         },
         getters: {
+            // get on going bet
+            getOnGoingBet(state) {
+                return state.onGoingBet
+            },
             // to show ship and amount on bet button
             getAmountMultiGameBet: (state) => (data) => {
-                if (state.multiGameBet.length == 0) return 0
-                if (state.multiGameBet.findIndex(x => x.stockName === data.stockName) == -1) return 0
-
-                let stockIdObject = state.multiGameBet.filter(x => x.stockName === data.stockName)
-                if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
-                let result = stockIdObject.filter(x => x.betId === data.betId).map(x => x.betValue).reduce((a, b) => a + b, 0)
-                return result
+                function getAmount(object) {
+                    if (object.findIndex(x => x.stockName === data.stockName) == -1) return 0
+                    let stockIdObject = object.filter(x => x.stockName === data.stockName)
+                    if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
+                    let result = stockIdObject.filter(x => x.betId === data.betId).map(x => x.betValue).reduce((a, b) => a + b, 0)
+                    return parseInt(result)
+                }
+                return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
             },
             getOnBetting(state) {
                 return state.onGoingBet

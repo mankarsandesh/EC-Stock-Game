@@ -19,8 +19,14 @@ export default {
   }
 };
 </script>
-<style  scoped>
+<style  >
 .show-chip {
   position: absolute;
+
+
 }
+.v-responsive__content {
+    align-self: center !important;
+}
+
 </style>
