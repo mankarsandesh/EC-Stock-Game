@@ -8,10 +8,14 @@
             <v-card>
                 <table>
                     <tr>
-                        <td class="text-left"><i class="fa fa-user fa-2x font-size15"></i> {{$t('msg.Player')}} : test</td>
+                        <td class="text-left">
+                            <i class="fa fa-user fa-2x font-size15"></i> 
+                            {{$t('msg.Player')}} : test</td>
                     </tr>
                     <tr>
-                        <td class="text-left"><i class="fa fa-balance-scale fa-2x font-size15"></i> {{$t('msg.Balance')}} :
+                        <td class="text-left">
+                            <i class="fa fa-balance-scale fa-2x font-size15"></i> 
+                            {{$t('msg.Balance')}} :
                             <animated-number :value="balance" :formatValue="formatToPrice" />
                         </td>
                     </tr>
@@ -103,9 +107,7 @@ export default {
     },
     methods: {
         formatToPrice(value) {
-            return `$ ${Number(value)
-        .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+            return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
     },
 }

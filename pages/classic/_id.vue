@@ -25,6 +25,7 @@
     </div>
 
     <div v-else>
+
         <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>
@@ -48,9 +49,18 @@
                 </v-flex>
             </v-layout>
         </v-card>
+
+        <v-card v-if="disabled">
+            <v-layout row>
+                <v-flex xs12 md12 :class="currentItem == 'tab-All games'? 'bet-closed set-closed' : ' bet-closed set-closeds'">
+                    <span class="bet-closed-text text-closed">{{$t('msg.betclosed')}}</span>
+                </v-flex>
+            </v-layout>
+        </v-card>
+
         <!-- form type bet -->
         <v-tabs-items v-model="currentItem">
-            <v-tab-item v-for="(item, idx3) in items" :key="idx3" :value="'tab-' + item.name">
+            <v-tab-item v-for="(item, idx3) in items" :disabled="disabled" :key="idx3" :value="'tab-' + item.name">
                 <v-card flat>
                     <v-expansion-panel v-model="panel" expand>
                         <v-expansion-panel-content class="bg-color" v-for="(items, idx4) in item.children" :key="idx4">
@@ -239,7 +249,7 @@
                         <tr v-if="sntwoloopstart == 0">
                             <td class="top-bet" @click="betRow($event)">
                                 <div class="text-bet">00</div>
-                                <div class="text-stock">{{twodigit_payout}}</div>
+                                <div class="text-stock">98.82</div>
                                 <div class="bet-box">
                                     <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-00'" />
                                 </div>
@@ -248,7 +258,7 @@
                         <tr v-for=" (data, idx12) in sntwoloopend" v-if="data >= sntwoloopstart" :key="idx12">
                             <td class="top-bet" @click="betRow($event)">
                                 <div class="text-bet">{{ 10 > sntwoloopstart ? '0'+data : data}}</div>
-                                <div class="text-stock">{{twodigit_payout}}</div>
+                                <div class="text-stock">98.82</div>
                                 <div class="bet-box">
                                     <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="10 > sntwoloopstart ? header[3]+'-0'+data : header[3]+'-'+data" />
                                 </div>
@@ -321,15 +331,15 @@ export default {
 
     data() {
         return {
+            currentItem: "tab-All games",
             currentItems: "tab-Big-Small",
             currentItemss: null,
+            header: ["firstdigit", "lastdigit", "bothdigit", "twodigit"],
+            panel: [true, true, true, true],
+            chips: [],
+            items: table,
             baccarat: baccarat,
             chipsReset: chips,
-            chips: [],
-            panel: [false, false, false, false],
-            currentItem: "tab-All games",
-            header: ["firstdigit", "lastdigit", "bothdigit", "twodigit"],
-            items: table,
             price: null,
             betData: {
                 betdetails: [],
@@ -342,8 +352,8 @@ export default {
             sntwoloopstart: null,
             sntwoloopend: null,
             stockname: this.$route.params.id.split("-")[1],
-            twodigit_payout: 98.82,
             show1: true,
+
             // alertOutCome
             alertSS: false,
             snackbar: false,
@@ -354,7 +364,8 @@ export default {
             text: "",
             color: "",
             betPrice: 1000000,
-            alertext: ""
+            alertext: "",
+            disabled: false,
             // end alertOutCome
         };
     },
@@ -389,8 +400,7 @@ export default {
         getConfirmBet() {
             console.log(this.formData);
             console.log("send to api server");
-            this.$store.state.balance = this.balance =
-                this.balance - this.sumTotalAll;
+            this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
             setTimeout(() => {
                 this.setPrice("reset");
                 this.getalertstartstop('success')
@@ -444,8 +454,10 @@ export default {
                 $(".form-inputadd").val("");
                 $(".form-inputadd").attr("class", "form-input");
                 $(".top-betadd").attr("class", "top-bet");
+
             } else if (e == "confirm") {
                 this.dialog = true;
+                
             } else {
                 this.price += parseInt(e.target.textContent);
                 $(".form-inputadd").val(this.price);
@@ -586,11 +598,11 @@ export default {
                     this.getBetOpen();
                 }
 
-                if (times == 60) {
-                    this.getalertstartstop("stop")
-                } else if (times == calculating) {
-                    this.getalertstartstop("start")
-                }
+                // if (times == 60) {
+                //     this.getalertstartstop("stop")
+                // } else if (times == calculating) {
+                //     this.getalertstartstop("start")
+                // }
 
                 if (times == calculating - 4) {
                     // this.alertOutCome('win')
@@ -603,10 +615,12 @@ export default {
         getBetClosed() {
             this.panel = [false, false, false, false];
             this.setPrice("reset");
+            this.disabled = true
         },
 
         getBetOpen() {
             this.panel = [true, true, true, true];
+            this.disabled = false
         },
 
         scrollToTop() {
@@ -629,21 +643,17 @@ export default {
             this.alertSS = true;
             this.mode = "multi-line";
             if (val == "start") {
-                this.alertext = "Start Bet"
+                this.alertext = this.$t('msg.startbetting')
                 this.color = "#2962FF";
-
             } else if (val == "stop") {
-                this.alertext = "Stop Bet"
+                this.alertext = this.$t('msg.stopbetting')
                 this.color = "#D50000";
-
             } else if (val == "success") {
-                this.alertext = "success"
+                this.alertext = this.$t('msg.confirmed')
                 this.color = "success";
-
             } else if (val == "error") {
-                this.alertext = "money not enough..!"
+                this.alertext = this.$t('msg.moneynotenough')
                 this.color = "error";
-
             }
         }
     }
@@ -651,6 +661,32 @@ export default {
 </script>
 
 <style>
+.bet-closed {
+    position: absolute;
+    text-align: center;
+    background-color: white;
+    z-index: 20;
+    opacity: 0.7;
+    width: 100%;
+}
+
+.bet-closed-text {
+    font-size: 3.3rem;
+    color: red;
+    top: 5%;
+    text-transform: capitalize;
+}
+
+.set-closed {
+    height: calc(20vh - 62px);
+    padding-top: 5%;
+}
+
+.set-closeds {
+    height: calc(20vh - 215px);
+    padding-top: 0%;
+}
+
 .set-text-alert {
     margin-top: 2%;
     font-size: 2rem;
