@@ -74,21 +74,12 @@
         </v-toolbar>
 
         <v-content pa-0>
-            <div>
-                <ul>
-                    <li :hidden="!ischangechartview">
-                        <button class="btn-chart-change" @click="ischangechartview = !ischangechartview">
-                            <span class="text-orientation">{{$t('msg.changechartview')}}</span>
-                        </button>
-                    </li>
-
-                    <li :hidden="ischangechartview">
-                        <button class="btn-chart-change" @click="ischangechartview = !ischangechartview">
-                            <span class="text-orientation">{{$t('msg.changechartview')}}</span>
-                        </button>
-                    </li>
-                </ul>
+            <div class="btn-chart-change set-chart-change">
+                <button @click="ischangechartview = !ischangechartview">
+                    <span class="text-orientation">{{$t('msg.changechartview')}}</span>
+                </button>
             </div>
+
             <!-- charts -->
             <v-tabs-items v-model="tab">
                 <v-container pa-0 v-if="show1">
@@ -168,7 +159,7 @@ export default {
     },
     data() {
         return {
-            urrentItemss:null,
+            urrentItemss: null,
             currentItems: "tab-Big-Small",
             menu: [],
             navList: navList,
@@ -194,6 +185,10 @@ export default {
         this.setLanguage();
     },
     mounted() {
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 1000)
+
         this.loadchart();
         this.getMenu();
         // this.asynInitCallApi();
@@ -314,12 +309,6 @@ export default {
                 this.tab = 3;
             }
         },
-        changechartviewon() {
-            this.ischangechartview = false;
-        },
-        changechartviewoff() {
-            this.ischangechartview = true;
-        }
     },
     computed: {
         ...mapGetters([
@@ -338,37 +327,29 @@ export default {
 </script>
 
 <style scoped>
+.btn-chart-change {
+    width: 1.5% !important;
+    position: absolute;
+    top: 4%;
+    z-index: 1;
+    background: #ec008c;
+    background: linear-gradient(to right, #384e63, #5b80a4);
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+    text-transform: capitalize;
+    padding: 3px 7px;
+}
+
 @media only screen and (min-width: 1920px) {
-    .btn-chart-change {
-        width: 1.5% !important;
-        position: absolute;
-        top: 4%;
+    .set-chart-change {
         left: 4.7%;
-        z-index: 1;
-        background: #ec008c;
-        background: linear-gradient(to right, #384e63, #5b80a4);
-        color: #fff;
-        border-radius: 10px;
-        border: none;
-        text-transform: capitalize;
-        padding: 3px 7px;
     }
 }
 
-@media only screen and (min-width: 2560px) {
-    .btn-chart-change {
-        width: 1.5% !important;
-        position: absolute;
-        top: 4%;
+@media only screen and (min-width: 2260px) {
+    .set-chart-change {
         left: 12.9%;
-        z-index: 1;
-        background: #ec008c;
-        background: linear-gradient(to right, #384e63, #5b80a4);
-        color: #fff;
-        border-radius: 10px;
-        border: none;
-        text-transform: capitalize;
-        padding: 3px 7px;
     }
 }
 
@@ -388,7 +369,6 @@ export default {
     float: right;
 }
 
-/* GHELLEOEEO */
 .Reference {
     border: 1px solid #ffc107;
     padding: 4px 10px;

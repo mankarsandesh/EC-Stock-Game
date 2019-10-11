@@ -5,9 +5,9 @@
         <v-flex v-show="chtable=='bs'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="text-blue">{{$t('gamemsg.B')}}</span> = <span class="text-blue">{{countBig}}</span>, 
-                    <span class="text-red">{{$t('gamemsg.S')}}</span> = <span class="text-red">{{countSmall}}</span>, 
-                    <span class="text-success">{{this.$t('msg.Total')}}</span>  = <span class="text-success">{{countBig + countSmall}}</span> 
+                    <span class="text-blue">{{$t('gamemsg.B')}}</span> = <span class="text-blue">{{countBig}}</span>,
+                    <span class="text-red">{{$t('gamemsg.S')}}</span> = <span class="text-red">{{countSmall}}</span>,
+                    <span class="text-success">{{this.$t('msg.Total')}}</span> = <span class="text-success">{{countBig + countSmall}}</span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebsFirst">
@@ -21,10 +21,10 @@
         <v-flex v-show="chtable=='oe'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                     <span class="text-blue">{{$t('gamemsg.O')}}</span> = <span class="text-blue">{{countOdd}}</span>,
-                    <span class="text-red">{{$t('gamemsg.E')}}</span> = <span class="text-red">{{countEven}}</span>, 
-                    <span class="text-success">{{this.$t('msg.Total')}}</span>  = <span class="text-success">{{countOdd+countEven}}</span> 
-               
+                    <span class="text-blue">{{$t('gamemsg.O')}}</span> = <span class="text-blue">{{countOdd}}</span>,
+                    <span class="text-red">{{$t('gamemsg.E')}}</span> = <span class="text-red">{{countEven}}</span>,
+                    <span class="text-success">{{this.$t('msg.Total')}}</span> = <span class="text-success">{{countOdd+countEven}}</span>
+
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableOEFirst">
@@ -38,11 +38,11 @@
         <v-flex v-show="chtable=='hml'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="text-blue">{{$t('gamemsg.U')}}</span> = <span class="text-blue">{{countUpper}}</span>, 
-                    <span class="text-red">{{$t('gamemsg.M')}}</span> = <span class="text-red">{{countMiddle}}</span>, 
-                    <span class="text-success">{{$t('gamemsg.L')}}</span> = <span class="text-success">{{countLower}}</span>, 
-                    <span class="text-primary">{{this.$t('msg.Total')}}</span>  = <span class="text-primary">{{countUpper+countMiddle+countLower}}</span> 
-               
+                    <span class="text-blue">{{$t('gamemsg.U')}}</span> = <span class="text-blue">{{countUpper}}</span>,
+                    <span class="text-red">{{$t('gamemsg.M')}}</span> = <span class="text-red">{{countMiddle}}</span>,
+                    <span class="text-success">{{$t('gamemsg.L')}}</span> = <span class="text-success">{{countLower}}</span>,
+                    <span class="text-primary">{{this.$t('msg.Total')}}</span> = <span class="text-primary">{{countUpper+countMiddle+countLower}}</span>
+
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebUMLFirst">
@@ -51,7 +51,7 @@
                         </tr>
                     </table>
                 </div>
-            </div> 
+            </div>
         </v-flex>
         <v-flex v-show="chtable=='sn'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
@@ -145,6 +145,7 @@ export default {
                 }
                 if (times == calculat) {
                     this.getTableChartBS();
+                    window.scrollTo(0, 0);
                 }
             });
         },

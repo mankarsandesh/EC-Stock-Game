@@ -43,19 +43,19 @@ export default {
             if (this.stocks == "btc1") {
                 times = data.btc1.timer;
                 calculat = 40;
-                lasttime =  38
+                lasttime =  39
             } else if (this.stocks == "btc5") {
                 times = data.btc5.timer;
                 calculat = 240;
-                lasttime = 238;
+                lasttime = 239;
             } else if (this.stocks == "usindex") {
                 times = data.usindex.timer;
                 calculat = 240;
-                lasttime = 238;
+                lasttime = 239;
             } else {
                 times = data.SH000001.timer;
                 calculat = 240;
-                lasttime = 238;
+                lasttime = 239;
             }
 
             if (times > calculat) {

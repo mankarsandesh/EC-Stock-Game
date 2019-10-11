@@ -4,6 +4,7 @@
     <!-- {{$route.params.id}} -->
     <!-- <br/> -->
     <!-- {{getStockNewData($route.params.id)}} -->
+    <!-- tag ldialog -->
 
     <div v-if="$route.params.id.split('-')[3] == 'currentbet'">
         <currentbet />
@@ -176,7 +177,6 @@
             </v-tab-item>
         </v-tabs-items>
 
-        <!-- tag ldialog -->
         <v-dialog v-model="dialog" persistent max-width="1240px">
             <v-card>
                 <v-card-actions>
@@ -457,7 +457,7 @@ export default {
 
             } else if (e == "confirm") {
                 this.dialog = true;
-                
+
             } else {
                 this.price += parseInt(e.target.textContent);
                 $(".form-inputadd").val(this.price);
@@ -598,16 +598,16 @@ export default {
                     this.getBetOpen();
                 }
 
-                // if (times == 60) {
-                //     this.getalertstartstop("stop")
-                // } else if (times == calculating) {
-                //     this.getalertstartstop("start")
-                // }
+                if (times == 60) {
+                    this.getalertstartstop("stop")
+                } else if (times == calculating) {
+                    this.getalertstartstop("start")
+
+                }
 
                 if (times == calculating - 4) {
-                    // this.alertOutCome('win')
-                    this.alertOutCome("lose");
-                    this.scrollToTop()
+                    this.alertOutCome('win')
+                    // this.alertOutCome("lose");
                 }
             });
         },
@@ -621,10 +621,6 @@ export default {
         getBetOpen() {
             this.panel = [true, true, true, true];
             this.disabled = false
-        },
-
-        scrollToTop() {
-            window.scrollTo(0, 0);
         },
 
         alertOutCome(val) {
