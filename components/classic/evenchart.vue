@@ -1,8 +1,7 @@
 <template>
 <div class="text-xs-center">
-
     <canvas ref="planetchart" class="set-height"></canvas>
-
+    <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 </div>
 </template>
 

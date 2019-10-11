@@ -2,7 +2,7 @@
 <div class="text-xs-center">
     <canvas ref="planetchart" class="set-height"></canvas>
     <!-- <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart> -->
-    <!-- <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear> -->
+    <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 
 </div>
 </template>
