@@ -1,12 +1,13 @@
 <template>
-  <v-layout column wrap>
+  <v-layout column wrap >
     <v-flex
       pa-2
       class="text-xs-center text-uppercase text-white flex-cursor pa-0"
       style=" background-color: #003e70"
     >betting</v-flex>
-    <v-flex class="text-xs-center" style="overflow:auto; height:350px;">
-      <v-list three-line class="pa-0">
+    <v-flex class="text-xs-center" style="overflow:auto; max-height:350px;">
+      <h3 v-show="getOnGoingBet.length<=0" class="pa-5">no betting</h3>
+      <v-list three-line class="pa-0" v-show="getOnGoingBet.length>0">
         <template v-for="(item, index) in getOnGoingBet" class="pa-0">
           <v-divider :key="index" v-if="index>0"></v-divider>
 
@@ -25,7 +26,7 @@
       pa-2
       class="text-xs-center text-uppercase text-white flex-cursor pa-0"
       style=" background-color: #003e70"
-    >$ 0</v-flex>
+    >$ {{getBettingAmount}}</v-flex>
   </v-layout>
 </template>
 
@@ -38,7 +39,8 @@ export default {
   },
   computed:{
     ...mapGetters([
-      "getOnGoingBet"
+      "getOnGoingBet",
+      "getBettingAmount"
     ])
   }
 };

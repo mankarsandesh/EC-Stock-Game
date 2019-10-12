@@ -203,6 +203,9 @@ const createStore = () => {
             }
         },
         getters: {
+            getBettingAmount(state) {
+                return state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
+            },
             // get on going bet
             getOnGoingBet(state) {
                 return state.onGoingBet

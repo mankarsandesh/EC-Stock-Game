@@ -1,5 +1,6 @@
 export default function({ isHMR, app, store, route, params, error, redirect }) {
     console.log("middleware...")
+    store.commit('clearDataMultiGameBet')
     const defaultLocale = app.i18n.fallbackLocale
         // If middleware is called from hot module replacement, ignore it
     if (isHMR) { return }
