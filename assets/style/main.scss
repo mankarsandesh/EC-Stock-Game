@@ -600,4 +600,15 @@ nav {
             }
         }
     }
+    .v-expansion-panel {
+        .v-expansion-panel__container {
+            .v-expansion-panel__body {
+                .v-card {
+                    .layout.row {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
 }

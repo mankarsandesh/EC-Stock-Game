@@ -1,19 +1,17 @@
 <template>
-<div>
-    <v-layout>
-        <v-flex>
-            <span class="timer">{{DateNow}} {{TimeNow}} {{$t('msg.gameid')}}: {{gameid}}</span>
-            <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
-            <span class="timer total_classic" :title="datelastdraw" v-if="load">{{dataslastdraw}}</span>
-            <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
-            
-            <span class="timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
-            <span class="timer" v-else-if="time == 0">{{$t('msg.marketclosed')}}</span>
-            <span class="timer" v-else>{{ time != $t('msg.loading') ? $t('msg.betnow')+':':''}}{{time}}</span>
+<v-layout>
+    <v-flex>
+        <span class="timer">{{DateNow}} {{TimeNow}} {{$t('msg.gameid')}}: {{gameid}}</span>
+        <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
+        <span class="timer total_classic" :title="datelastdraw" v-if="load">{{dataslastdraw}}</span>
+        <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
 
-        </v-flex>
-    </v-layout>
-</div>
+        <span class="timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
+        <span class="timer" v-else-if="time == 0">{{$t('msg.marketclosed')}}</span>
+        <span class="timer" v-else>{{ time != $t('msg.loading') ? $t('msg.betnow')+':':''}}{{time}}</span>
+
+    </v-flex>
+</v-layout>
 </template>
 
 <script>
@@ -23,7 +21,7 @@ export default {
     data() {
         return {
             dataslastdraw: "0000",
-            datelastdraw:"0000-00-00 00:00",
+            datelastdraw: "0000-00-00 00:00",
             load: false,
             time: this.$t('msg.loading'),
             gameid: null,
@@ -33,7 +31,9 @@ export default {
         };
     },
     mounted() {
-        setTimeout(()=>{this.getdata()},1000)
+        setTimeout(() => {
+            this.getdata()
+        }, 1000)
         const socket = openSocket("https://websocket-timer.herokuapp.com");
         socket.on("time", data => {
             this.getTimeNow();
@@ -43,19 +43,19 @@ export default {
             if (this.stocks == "btc1") {
                 times = data.btc1.timer;
                 calculat = 40;
-                lasttime =  38
+                lasttime = 39
             } else if (this.stocks == "btc5") {
                 times = data.btc5.timer;
                 calculat = 240;
-                lasttime = 238;
+                lasttime = 239;
             } else if (this.stocks == "usindex") {
                 times = data.usindex.timer;
                 calculat = 240;
-                lasttime = 238;
+                lasttime = 239;
             } else {
                 times = data.SH000001.timer;
                 calculat = 240;
-                lasttime = 238;
+                lasttime = 239;
             }
 
             if (times > calculat) {
@@ -80,9 +80,8 @@ export default {
             this.TimeNow =
                 this.setZero(cd.getHours(), 2) +
                 ":" +
-                this.setZero(cd.getMinutes(), 2) +
-                ":" +
-                this.setZero(cd.getSeconds(), 2);
+                this.setZero(cd.getMinutes(), 2)
+            //+":" +this.setZero(cd.getSeconds(), 2);
             this.DateNow =
                 this.setZero(cd.getFullYear(), 4) +
                 "-" +

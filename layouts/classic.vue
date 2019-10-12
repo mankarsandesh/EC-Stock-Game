@@ -74,21 +74,12 @@
         </v-toolbar>
 
         <v-content pa-0>
-            <div>
-                <ul>
-                    <li :hidden="!ischangechartview">
-                        <button class="btn-chart-change" @click="ischangechartview = !ischangechartview">
-                            <span class="text-orientation">{{$t('msg.changechartview')}}</span>
-                        </button>
-                    </li>
-
-                    <li :hidden="ischangechartview">
-                        <button class="btn-chart-change" @click="ischangechartview = !ischangechartview">
-                            <span class="text-orientation">{{$t('msg.changechartview')}}</span>
-                        </button>
-                    </li>
-                </ul>
+            <div class="btn-chart-change set-chart-change">
+                <button @click="ischangechartview = !ischangechartview">
+                    <span class="text-orientation">{{$t('msg.changechartview')}}</span>
+                </button>
             </div>
+
             <!-- charts -->
             <v-tabs-items v-model="tab">
                 <v-container pa-0 v-if="show1">
@@ -99,7 +90,6 @@
                         <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
                             <v-tab class="text-sm-left text-whites" @click="loadtable()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ $t('gamemsg.'+baccarat1.name) }}</v-tab>
                         </v-tabs>
-
                         <v-tabs-items v-model="currentItems">
                             <v-tab-item v-for="(baccarat1, idx3) in baccarat" :key="idx3" :value="'tab-' + baccarat1.name">
                                 <v-card flat>
@@ -113,20 +103,23 @@
                     </div>
                 </v-container>
             </v-tabs-items>
-
             <!-- end charts -->
 
             <!-- Data Lastdraw and Timer -->
-            <v-container>
-                <div class="float-right">
-                    <dataslastdraw :stocks="stockname" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
-                </div>
+            <v-container pa-2>
+                <v-layout>
+                    <v-flex xs12 sm12>
+                        <div class="float-right">
+                            <dataslastdraw :stocks="stockname" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
+                        </div>
+                    </v-flex>
+                </v-layout>
             </v-container>
             <!-- Data Lastdraw and Timer -->
 
-            <v-container>
+            <v-container pa-0>
                 <v-layout class="remove-flex">
-                    <v-flex xs12 sm3 pr-2>
+                    <v-flex xs12 sm3 pl-1 pr-1>
                         <listleft />
                     </v-flex>
                     <v-flex xs12 sm9>
@@ -164,11 +157,11 @@ export default {
         liveevens,
         listleft,
         dataslastdraw,
-        baccarats,
+        baccarats
     },
     data() {
         return {
-            urrentItemss:null,
+            urrentItemss: null,
             currentItems: "tab-Big-Small",
             menu: [],
             navList: navList,
@@ -194,6 +187,10 @@ export default {
         this.setLanguage();
     },
     mounted() {
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 1000);
+
         this.loadchart();
         this.getMenu();
         // this.asynInitCallApi();
@@ -219,7 +216,6 @@ export default {
             // if (times == calculat) {
             //     this.loadchart()
             // }
-
         });
     },
     methods: {
@@ -313,12 +309,6 @@ export default {
             } else {
                 this.tab = 3;
             }
-        },
-        changechartviewon() {
-            this.ischangechartview = false;
-        },
-        changechartviewoff() {
-            this.ischangechartview = true;
         }
     },
     computed: {
@@ -338,37 +328,29 @@ export default {
 </script>
 
 <style scoped>
+.btn-chart-change {
+    width: 1.5% !important;
+    position: absolute;
+    top: 4%;
+    z-index: 1;
+    background: #ec008c;
+    background: linear-gradient(to right, #384e63, #5b80a4);
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+    text-transform: capitalize;
+    padding: 3px 7px;
+}
+
 @media only screen and (min-width: 1920px) {
-    .btn-chart-change {
-        width: 1.5% !important;
-        position: absolute;
-        top: 4%;
+    .set-chart-change {
         left: 4.7%;
-        z-index: 1;
-        background: #ec008c;
-        background: linear-gradient(to right, #384e63, #5b80a4);
-        color: #fff;
-        border-radius: 10px;
-        border: none;
-        text-transform: capitalize;
-        padding: 3px 7px;
     }
 }
 
-@media only screen and (min-width: 2560px) {
-    .btn-chart-change {
-        width: 1.5% !important;
-        position: absolute;
-        top: 4%;
+@media only screen and (min-width: 2260px) {
+    .set-chart-change {
         left: 12.9%;
-        z-index: 1;
-        background: #ec008c;
-        background: linear-gradient(to right, #384e63, #5b80a4);
-        color: #fff;
-        border-radius: 10px;
-        border: none;
-        text-transform: capitalize;
-        padding: 3px 7px;
     }
 }
 
@@ -388,7 +370,6 @@ export default {
     float: right;
 }
 
-/* GHELLEOEEO */
 .Reference {
     border: 1px solid #ffc107;
     padding: 4px 10px;
