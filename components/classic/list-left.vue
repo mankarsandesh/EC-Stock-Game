@@ -1,5 +1,5 @@
 <template>
-<v-card tile flat color="red lighten-2">
+<v-card >
     <v-expansion-panel v-model="panel1" expand>
         <v-expansion-panel-content v-for="(item,idx1) in items1" :key="idx1">
             <template class="bgtaps" v-slot:header>

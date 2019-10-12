@@ -90,7 +90,6 @@
                         <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
                             <v-tab class="text-sm-left text-whites" @click="loadtable()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ $t('gamemsg.'+baccarat1.name) }}</v-tab>
                         </v-tabs>
-
                         <v-tabs-items v-model="currentItems">
                             <v-tab-item v-for="(baccarat1, idx3) in baccarat" :key="idx3" :value="'tab-' + baccarat1.name">
                                 <v-card flat>
@@ -104,20 +103,23 @@
                     </div>
                 </v-container>
             </v-tabs-items>
-
             <!-- end charts -->
 
             <!-- Data Lastdraw and Timer -->
-            <v-container>
-                <div class="float-right">
-                    <dataslastdraw :stocks="stockname" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
-                </div>
+            <v-container pa-2>
+                <v-layout>
+                    <v-flex xs12 sm12>
+                        <div class="float-right">
+                            <dataslastdraw :stocks="stockname" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
+                        </div>
+                    </v-flex>
+                </v-layout>
             </v-container>
             <!-- Data Lastdraw and Timer -->
 
-            <v-container>
+            <v-container pa-0>
                 <v-layout class="remove-flex">
-                    <v-flex xs12 sm3 pr-2>
+                    <v-flex xs12 sm3 pl-1 pr-1>
                         <listleft />
                     </v-flex>
                     <v-flex xs12 sm9>
@@ -155,7 +157,7 @@ export default {
         liveevens,
         listleft,
         dataslastdraw,
-        baccarats,
+        baccarats
     },
     data() {
         return {
@@ -187,7 +189,7 @@ export default {
     mounted() {
         setTimeout(() => {
             window.scrollTo(0, 0);
-        }, 1000)
+        }, 1000);
 
         this.loadchart();
         this.getMenu();
@@ -214,7 +216,6 @@ export default {
             // if (times == calculat) {
             //     this.loadchart()
             // }
-
         });
     },
     methods: {
@@ -308,7 +309,7 @@ export default {
             } else {
                 this.tab = 3;
             }
-        },
+        }
     },
     computed: {
         ...mapGetters([

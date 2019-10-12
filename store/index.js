@@ -391,7 +391,7 @@ const createStore = () => {
 
             // get data for display in "/" route
             getStockChart(state, getters) {
-                console.log("getStockChart")
+                // console.log("getStockChart")
 
                 let result = []
                 for (let i = 0; i < getters.getStockLength; i++) {
@@ -420,7 +420,7 @@ const createStore = () => {
                     result.push(data)
                 }
 
-                console.log(result)
+                // console.log(result)
                 return result
             },
             // get some stock poproty to show in stock list page

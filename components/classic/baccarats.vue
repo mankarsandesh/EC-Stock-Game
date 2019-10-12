@@ -221,10 +221,7 @@ export default {
             let firstlast = "";
             this.dataArray.forEach(element => {
                 n++;
-                this.gameID.push(
-                    element.gameid + "\n" + element.PT + "\n" + element.created_at
-                );
-
+                this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
                 let no_firsts = element.PT[element.PT.length - 2].toString();
                 let no_lasts = element.PT[element.PT.length - 1].toString();
 

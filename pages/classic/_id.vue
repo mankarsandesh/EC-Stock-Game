@@ -69,72 +69,89 @@
                                 <div>{{$t('gamemsg.'+items.name)}}</div>
                             </template>
                             <v-card>
-                                <table>
-                                    <tr>
-                                        <th class="header-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' && data=='bothdigit' ? 'width:40%':'width:20%'" v-for="(data, idx6) in header" :key="idx6">{{$t('gamemsg.'+data)}}</th>
-                                        <th class="header-bet" v-if="items.name !== 'Specific-Number'" :style="items.name == 'Specific-Number' && data=='bothdigit' ? 'width:20%':'width:25%'" v-for="(data, idx7) in header" :key="idx7">{{$t('gamemsg.'+data)}}</th>
-                                    </tr>
+                                <v-layout row>
+                                    <v-flex xs12 md6>
+                                        <table>
+                                            <tr>
+                                                <th class="header-bet" v-if="items.name == 'Specific-Number' && data !=='bothdigit'  && data !=='twodigit'" :style="items.name == 'Specific-Number'  ? 'width:50%':'width:50%'" v-for="(data, idx6) in header" :key="idx6">{{$t('gamemsg.'+data)}}</th>
+                                                <th class="header-bet" v-if="items.name !== 'Specific-Number' && data !=='bothdigit' && data !=='twodigit'" :style="items.name == 'Specific-Number'  ? 'width:50%':'width:50%'" v-for="(data, idx7) in header" :key="idx7">{{$t('gamemsg.'+data)}}</th>
+                                            </tr>
 
-                                    <tr v-for="(datas, idx5) in items.childrens" :key="idx5">
-                                        <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'" @click="betRow($event)">
-                                            <div class="text-bet">{{datas.name >= 0 ? datas.name: $t('gamemsg.'+datas.name)}}</div>
-                                            <div class="text-stock">{{items.payout}}</div>
-                                            <div class="bet-box">
-                                                <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[0]+'-'+datas.name" />
-                                            </div>
-                                        </td>
+                                            <tr v-for="(datas, idx5) in items.childrens" :key="idx5">
+                                                <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
+                                                    <div class="text-bet">{{datas.name >= 0 ? datas.name: $t('gamemsg.'+datas.name)}}</div>
+                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="bet-box">
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[0]+'-'+datas.name" />
+                                                    </div>
+                                                </td>
 
-                                        <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'" @click="betRow($event)">
-                                            <div class="text-bet">{{datas.name2 >= 0 ? datas.name2: $t('gamemsg.'+datas.name2)}}</div>
-                                            <div class="text-stock">{{items.payout}}</div>
-                                            <div class="bet-box">
-                                                <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[1]+'-'+datas.name2" />
-                                            </div>
-                                        </td>
+                                                <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
+                                                    <div class="text-bet">{{datas.name2 >= 0 ? datas.name2: $t('gamemsg.'+datas.name2)}}</div>
+                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="bet-box">
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[1]+'-'+datas.name2" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </v-flex>
+                                    <v-flex xs12 md6>
+                                        <table>
+                                            <tr>
+                                                <th class="header-bet" v-if="items.name == 'Specific-Number' && data !=='firstdigit'  && data !=='lastdigit'" :style="items.name == 'Specific-Number' && data=='bothdigit' ? 'width:70%':'width:30%'" v-for="(data, idx6) in header" :key="idx6">{{$t('gamemsg.'+data)}}</th>
+                                                <th class="header-bet" v-if="items.name !== 'Specific-Number' && data !=='firstdigit' && data !=='lastdigit'" :style="items.name == 'Specific-Number' && data=='bothdigit' ? 'width:30%':'width:50%'" v-for="(data, idx7) in header" :key="idx7">{{$t('gamemsg.'+data)}}</th>
+                                            </tr>
 
-                                        <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'" @click="betRow($event)" v-if="datas.childrenss" v-for="(datass, idx8) in datas.childrenss">
-                                            <div class="text-bet">{{datass.name}}</div>
-                                            <div class="text-stock">{{items.payoutb}}</div>
-                                            <div class="bet-box">
-                                                <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name" />
-                                            </div>
-                                        </td>
+                                            <tr v-for="(datas, idx5) in items.childrens" :key="idx5">
+                                                <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)" v-if="datas.childrenss" v-for="(datass) in datas.childrenss">
+                                                    <div class="text-bet">{{datass.name}}</div>
+                                                    <div class="text-stock">{{items.payoutb}}</div>
+                                                    <div class="bet-box">
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name" />
+                                                    </div>
+                                                </td>
 
-                                        <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'" @click="betRow($event)" v-if="datas.childrenss" v-for="(datass, idx9) in datas.childrenss" :key="idx9">
-                                            <div class="text-bet" v-if="datass.name2 != 19">{{datass.name2}}</div>
-                                            <div class="text-stock" v-if="datass.name2 != 19">{{items.payoutb}}</div>
-                                            <div class="bet-box" v-if="datass.name2 != 19">
-                                                <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name2" />
-                                            </div>
-                                        </td>
+                                                <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)" v-if="datas.childrenss" v-for="(datass, idx9) in datas.childrenss" :key="idx9">
+                                                    <div class="text-bet" v-if="datass.name2 != 19">{{datass.name2}}</div>
+                                                    <div class="text-stock" v-if="datass.name2 != 19">{{items.payoutb}}</div>
+                                                    <div class="bet-box" v-if="datass.name2 != 19">
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name2" />
+                                                    </div>
+                                                </td>
 
-                                        <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'" v-if="!datas.childrenss" @click="betRow($event)">
-                                            <div class="text-bet">{{$t('gamemsg.'+datas.name3)}}</div>
-                                            <div class="text-stock">{{items.payout}}</div>
-                                            <div class="bet-box">
-                                                <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3" />
-                                            </div>
-                                        </td>
+                                                <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" v-if="!datas.childrenss" @click="betRow($event)">
+                                                    <div class="text-bet">{{$t('gamemsg.'+datas.name3)}}</div>
+                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="bet-box">
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3" />
+                                                    </div>
+                                                </td>
 
-                                        <td class="top-bet" v-if="items.name !== 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'" @click="betRow($event)">
-                                            <div class="text-bet">{{$t('gamemsg.'+datas.name4)}}</div>
-                                            <div class="text-stock">{{items.payout}}</div>
-                                            <div class="bet-box">
-                                                <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
-                                            </div>
-                                        </td>
-                                        <td class="top-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:20%':'width:25%'">
-                                            <div class="text-bet">{{datas.name4}}</div>
-                                            <div class="text-stock"></div>
-                                            <div class="bet-box">
-                                                <button class="form-btn" @click="getsnTwo(datas.name4)" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                </table>
+                                                <td class="top-bet" v-if="items.name !== 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)">
+                                                    <div class="text-bet">{{$t('gamemsg.'+datas.name4)}}</div>
+                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="bet-box">
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
+                                                    </div>
+                                                </td>
+
+                                                <td class="top-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:30%':'width:40%'">
+                                                    <div class="text-bet">{{datas.name4}}</div>
+                                                    <div class="bet-box">
+                                                        <button class="form-btn" @click="getsnTwo(datas.name4)" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </v-flex>
+                                </v-layout>
                             </v-card>
                         </v-expansion-panel-content>
                     </v-expansion-panel>
@@ -733,7 +750,8 @@ export default {
 .form-btn {
     width: 100%;
     /* padding: 0.4rem; */
-    height: 30px;
+    margin-left: 11%;
+    height: 120%;
     font-size: 1.01rem;
     text-align: center;
     line-height: 1;
@@ -904,7 +922,7 @@ tr:nth-child(even) {
 }
 
 .text-bet {
-    width: 15%;
+    min-width: 15%;
     /* border-right: 1px solid #ddd; */
     margin-top: 10px;
     font-size: 12.45px;
@@ -914,7 +932,7 @@ tr:nth-child(even) {
 .text-stock {
     color: #ff9b39;
     /* border-right: 1px solid #ddd; */
-    width: 13%;
+    min-width: 13%;
     margin-top: 11px;
     font-size: 11px;
     display: inline-block;
@@ -925,11 +943,11 @@ tr:nth-child(even) {
 }
 
 .bet-box {
-    width: 68%;
+    min-width: 68%;
     margin-left: 1%;
     display: inline-block;
-    margin-top: 3px;
-    margin-bottom: 5px;
+    margin-top: 2px;
+    margin-bottom: 3px;
 }
 
 .tops {
