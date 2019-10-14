@@ -125,8 +125,11 @@
         </v-flex>
         <v-flex xs12 class="text-xs-center">
           <footerBet v-if="getStockCrawlerData($route.params.id) !== ''"></footerBet>
+          <v-flex xs2>
+            <v-select :items="items" label="Solo field" solo></v-select>
+          </v-flex>
           <v-flex
-            xs12
+            xs10
             v-if="getStockCrawlerData($route.params.id) !== ''"
             style="background-color:#003f70"
           >
