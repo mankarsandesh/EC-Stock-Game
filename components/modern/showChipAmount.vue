@@ -27,6 +27,7 @@ export default {
 }
 .v-responsive__content {
     align-self: center !important;
+    font-size: 12px;
 }
 
 </style>
