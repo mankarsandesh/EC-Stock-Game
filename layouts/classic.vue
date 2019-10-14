@@ -283,6 +283,9 @@ export default {
                 this.checkStock = this.$route.params.id.split("-")[2];
                 this.getMenu();
             }, 50);
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 1500);
         },
         loadtable() {
             this.showtable = false;

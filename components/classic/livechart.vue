@@ -10,7 +10,6 @@
 <script>
 import { Line, mixins } from 'vue-chartjs'
 import VueCharts from "vue-chartjs";
-// import zoom from "chartjs-plugin-zoom";
 import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
 export default {

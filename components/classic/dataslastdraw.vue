@@ -1,9 +1,9 @@
 <template>
 <v-layout>
     <v-flex>
-        <span class="timer">{{DateNow}} {{TimeNow}} {{$t('msg.gameid')}}: {{gameid}}</span>
+        <span class="timer">{{datelastdraw}} {{$t('msg.gameid')}}: {{gameid}}</span>
         <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
-        <span class="timer total_classic" :title="datelastdraw" v-if="load">{{dataslastdraw}}</span>
+        <span class="timer total_classic" :title="datalastdraw" v-if="load">{{dataslastdraw}}</span>
         <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
 
         <span class="timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
@@ -20,7 +20,7 @@ export default {
     props: ["checkStock", "stocks", "StockData", "Reference"],
     data() {
         return {
-            dataslastdraw: "0000",
+            datalastdraw: "0000.00",
             datelastdraw: "0000-00-00 00:00",
             load: false,
             time: this.$t('msg.loading'),
@@ -73,21 +73,19 @@ export default {
     },
     methods: {
         getTimeNow() {
-            let now = new Date().toLocaleString("china", {
+            let Zone = new Date().toLocaleString("china", {
                 timeZone: "Asia/Shanghai"
             });
-            var cd = new Date(now);
+            var cd = new Date(Zone);
             this.TimeNow =
-                this.setZero(cd.getHours(), 2) +
-                ":" +
-                this.setZero(cd.getMinutes(), 2)
-            //+":" +this.setZero(cd.getSeconds(), 2);
+                this.setZero(cd.getHours(), 2) + ":" +
+                this.setZero(cd.getMinutes(), 2) + ":" +
+                this.setZero(cd.getSeconds(), 2);
             this.DateNow =
-                this.setZero(cd.getFullYear(), 4) +
-                "-" +
-                this.setZero(cd.getMonth() + 1, 2) +
-                "-" +
-                this.setZero(cd.getDate(), 2) //+ ' ' + this.week[cd.getDay()];
+                this.setZero(cd.getFullYear(), 4) + "-" +
+                this.setZero(cd.getMonth() + 1, 2) + "-" +
+                this.setZero(cd.getDate(), 2) //+ " " + 
+                //this.week[cd.getDay()];
         },
         setZero(num, digit) {
             var zero = "";
@@ -110,7 +108,14 @@ export default {
                 });
             });
             let elements = items[items.length - 1];
-            this.datelastdraw = elements.date;
+            this.datalastdraw = elements.PT;
+            let cd = new Date(elements.date)
+            this.datelastdraw =
+                this.setZero(cd.getFullYear(), 4) + "-" +
+                this.setZero(cd.getMonth() + 1, 2) + "-" +
+                this.setZero(cd.getDate(), 2) + " " +
+                this.setZero(cd.getHours(), 2) + ":" +
+                this.setZero(cd.getMinutes(), 2);
             this.gameid = elements.gameid;
             let no1 = elements.PT[elements.PT.length - 2];
             let no2 = elements.PT[elements.PT.length - 1];

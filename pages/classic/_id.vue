@@ -43,7 +43,7 @@
                 </v-flex>
                 <v-flex xs12 md6>
                     <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -171,7 +171,7 @@
                 </v-flex>
                 <v-flex xs12 md6>
                     <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -206,7 +206,7 @@
                         <input readonly type="text" class="form-input width-15" v-model="price" />
                         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                         <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                            <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                                 <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                             </v-img>
                         </v-avatar>
@@ -255,7 +255,7 @@
             <v-card>
                 <v-card-text>
                     <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -365,7 +365,7 @@ export default {
             betDataShows: [],
             dialog: false,
             dialogtwo: false,
-            balance: this.$store.state.balance,
+            balance: 1000,
             sntwoloopstart: null,
             sntwoloopend: null,
             stockname: this.$route.params.id.split("-")[1],
@@ -608,19 +608,19 @@ export default {
                 }
 
                 if (times > calculating) {
-                    this.getBetClosed();
+                    this.getBetClosedopen('closed');
                 } else if (times == "close") {
-                    this.getBetClosed();
-                } else {
-                    this.getBetOpen();
+                    this.getBetClosedopen('closed');
+                } else if (times == 40) {
+                    this.getBetClosedopen('open');
                 }
 
-                if (times == 60) {
-                    this.getalertstartstop("stop")
-                } else if (times == calculating) {
-                    this.getalertstartstop("start")
+                // if (times == 60) {
+                //     this.getalertstartstop("stop")
+                // } else if (times == calculating) {
+                //     this.getalertstartstop("start")
 
-                }
+                // }
 
                 if (times == calculating - 4) {
                     this.alertOutCome('win')
@@ -629,25 +629,26 @@ export default {
             });
         },
 
-        getBetClosed() {
-            this.panel = [false, false, false, false];
-            this.setPrice("reset");
-            this.disabled = true
-        },
+        getBetClosedopen(val) {
+            if (val == 'closed') {
+                this.panel = [false, false, false, false];
+                this.setPrice("reset");
+                this.disabled = true
+            } else {
+                this.panel = [true, true, true, true];
+                this.disabled = false
+            }
 
-        getBetOpen() {
-            this.panel = [true, true, true, true];
-            this.disabled = false
         },
 
         alertOutCome(val) {
             this.snackbar = true;
             this.mode = "vertical";
             if (val == "win") {
-                this.text = this.$t("msg.Win Bet");
+                this.text = this.$t('msg.Win Bet');
                 this.color = "#2962FF";
             } else {
-                this.text = this.$t("msg.Lose Bet");
+                this.text = this.$t('msg.Lose Bet');
                 this.color = "#D50000";
             }
         },
@@ -674,6 +675,10 @@ export default {
 </script>
 
 <style>
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .bet-closed {
     position: absolute;
     text-align: center;
@@ -711,6 +716,7 @@ export default {
     top: 31%;
     position: relative;
     margin-left: -4%;
+    cursor: pointer;
 }
 
 .cancel {

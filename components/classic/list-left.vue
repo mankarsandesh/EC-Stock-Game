@@ -1,5 +1,5 @@
 <template>
-<v-card >
+<v-card>
     <v-expansion-panel v-model="panel1" expand>
         <v-expansion-panel-content v-for="(item,idx1) in items1" :key="idx1">
             <template class="bgtaps" v-slot:header>
@@ -9,12 +9,12 @@
                 <table>
                     <tr>
                         <td class="text-left">
-                            <i class="fa fa-user fa-2x font-size15"></i> 
+                            <i class="fa fa-user fa-2x font-size15"></i>
                             {{$t('msg.Player')}} : test</td>
                     </tr>
                     <tr>
                         <td class="text-left">
-                            <i class="fa fa-balance-scale fa-2x font-size15"></i> 
+                            <i class="fa fa-balance-scale fa-2x font-size15"></i>
                             {{$t('msg.Balance')}} :
                             <animated-number :value="balance" :formatValue="formatToPrice" />
                         </td>
@@ -36,13 +36,23 @@
             <v-card>
                 <table>
                     <tr>
-                        <td class="text-left"> <i class="fa fa-circle-o text-danger"></i> <b>{{$t('msg.Stock')}}</b>: US dollar Index <b>{{$t('msg.Time')}}</b>: 5 minute <b>{{$t('msg.Result')}}</b> 98.8156</td>
+                        <td class="text-left">
+                            <i class="fa fa-circle-o text-danger"></i>
+                            <b>{{$t('msg.Stock')}}</b>: US dollar Index <b>{{$t('msg.Time')}}</b>: 5 minute <b>{{$t('msg.Result')}}</b> 98.8156
+                        </td>
                     </tr>
                     <tr>
-                        <td class="text-left"> <i class="fa fa-circle-o text-danger"></i> <b>Stock</b>: BTC/USDT <b>Time</b>: 5 minute <b>Result</b> 7835.60</td>
+                        <td class="text-left">
+                            <i class="fa fa-circle-o text-danger"></i>
+                            <b>Stock</b>: BTC/USDT <b>Time</b>: 5 minute <b>Result</b> 7835.60
+                        </td>
+
                     </tr>
                     <tr>
-                        <td class="text-left"><i class="fa fa-circle-o text-danger"></i> <b>Stock</b>: BTC/USDT <b>Time</b>: 1 minute <b>Result</b> 7838.22</td>
+                        <td class="text-left">
+                            <i class="fa fa-circle-o text-danger"></i>
+                            <b>Stock</b>: BTC/USDT <b>Time</b>: 1 minute <b>Result</b> 7838.22
+                        </td>
                     </tr>
                 </table>
 
