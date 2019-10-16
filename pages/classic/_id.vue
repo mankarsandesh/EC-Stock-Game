@@ -42,8 +42,8 @@
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
                 <v-flex xs12 md6>
-                    <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar :class="balance < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.price" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -170,7 +170,7 @@
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
                 <v-flex xs12 md6>
-                    <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                    <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                         </v-img>
@@ -205,7 +205,7 @@
                         <button class="btn-preset">{{$t('msg.amount')}}</button>
                         <input readonly type="text" class="form-input width-15" v-model="price" />
                         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
-                        <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                             <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                                 <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                             </v-img>
@@ -254,7 +254,7 @@
         <v-dialog v-model="dialogtwo" persistent max-width="440px">
             <v-card>
                 <v-card-text>
-                    <v-avatar size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                    <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
                         </v-img>
@@ -365,7 +365,7 @@ export default {
             betDataShows: [],
             dialog: false,
             dialogtwo: false,
-            balance: 1000,
+            balance: this.$store.state.balance,
             sntwoloopstart: null,
             sntwoloopend: null,
             stockname: this.$route.params.id.split("-")[1],
@@ -415,14 +415,17 @@ export default {
     },
     methods: {
         getConfirmBet() {
-            console.log(this.formData);
-            console.log("send to api server");
-            this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
-            setTimeout(() => {
-                this.setPrice("reset");
-                this.getalertstartstop('success')
-                // this.getalertstartstop('error')
-            }, 3000);
+            if (this.formData.total > this.balance || this.formData.total == '') {
+                this.getalertstartstop('error')
+            } else {
+                this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
+                console.log(this.formData);
+                console.log("send to api server");
+                setTimeout(() => {
+                    this.setPrice("reset");
+                    this.getalertstartstop('success')
+                }, 3000);
+            }
         },
 
         getchips() {
@@ -677,6 +680,11 @@ export default {
 <style>
 .cursor-pointer {
     cursor: pointer;
+}
+
+.pointer-events-none {
+    pointer-events: none;
+    background-color: rgba(179, 183, 183, 0.49);
 }
 
 .bet-closed {
