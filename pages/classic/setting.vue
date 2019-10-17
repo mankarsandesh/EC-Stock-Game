@@ -14,7 +14,7 @@
                                     <input type="number" min="10" max="10000" :style="chip.title !== 'black' ? 'color :black': 'color :white'" :readonly="isShow != false && index == isOpen ? false:true" :class="isShow && index == isOpen ? 'btn-setchipsedit':'btn-setchips'" v-model="chip.price" />
                                 </v-img>
                                 <v-btn small color="warning" class="btn-edit" @click="EditChip('Edit', index)" v-show="!isShow ">{{$t('msg.edit')}}</v-btn>
-                                <v-btn small color="error" class="btn-saves" @click="EditChip('Save', index), changeChip(chip.title, chip.img, chip.price)" v-show="isShow && index == isOpen">{{$t('msg.confirm')}}</v-btn>
+                                <v-btn small color="error" class="btn-saves" @click="EditChip('Save', index), changeChip(chip.title, chip.price)" v-show="isShow && index == isOpen">{{$t('msg.confirm')}}</v-btn>
                             </v-avatar>
                         </div>
                         <div style="margin-top: 5%; margin-bottom: 5%; text-align: center;">
@@ -53,9 +53,8 @@ export default {
                 this.isOpen = index;
             } else this.isShow = false;
         },
-        changeChip(title, img, price) {
-            if (price < 10 || price > 10000 || price == null)
-                return this.resetDefault();
+        changeChip(title, price) {
+            if (price < 10 || price > 10000 || price == null) return this.resetDefault();
             let index = this.chips.findIndex(x => x.title === title);
             this.chips[index].price = price;
             localStorage.chips = JSON.stringify(this.chips);

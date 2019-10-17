@@ -34,8 +34,7 @@
         <v-card>
             <v-layout row wrap>
                 <v-flex xs12 md6>
-                    <input type="checkbox" />
-                    {{$t('msg.preset')}}
+                    <input type="checkbox" /> {{$t('msg.preset')}}
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
@@ -370,6 +369,7 @@ export default {
             sntwoloopend: null,
             stockname: this.$route.params.id.split("-")[1],
             show1: true,
+            checkbox1: false,
 
             // alertOutCome
             alertSS: false,
@@ -391,6 +391,7 @@ export default {
         // console.log(this.getStockName(this.$route.params.id).loop)
         this.getTime();
         this.getchips();
+        this.settabs()
     },
     computed: {
         ...mapGetters(["getStockName", "getStockNewData"]),
@@ -414,6 +415,24 @@ export default {
         }
     },
     methods: {
+        settabs() {
+            let t = this.$route.params.id.split("-")[2]
+            let s;
+            if (t == 'bsf' || t == 'oef' || t == 'live') s = "firstdigit"
+            else if (t == 'bsl' || t == 'oel') s = "lastdigit"
+            else if (t == 'bsb' || t == 'oeb') s = "bothdigit"
+            else if (t == 'bst' || t == 'oet') s = "twodigit"
+
+            t = t.split("")[0] + '' + t.split("")[1]
+            if (t == 'oe') t = "tab-Odd-Even"
+            else if (t == 'bs') t = "tab-Big-Small"
+            else t = "tab-All games"
+
+            this.currentItem = t
+            this.currentItems = t
+            this.currentItemss = s
+            return;
+        },
         getConfirmBet() {
             if (this.formData.total > this.balance || this.formData.total == '') {
                 this.getalertstartstop('error')

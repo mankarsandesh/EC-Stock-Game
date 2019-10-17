@@ -115,12 +115,12 @@ export default {
                         borderDashOffset: 0.5,
                         pointBackgroundColor: pointBackgroundColor,
                         pointHoverRadius: 10,
-                        pointRadius: 10
+                        pointRadius: 10,
+                        lineTension: 0.15
                     }]
                 },
                 options: {
                     responsive: true,
-                    barPercentage: 1.6,
                     maintainAspectRatio: false,
                     barPercentage: 1.6,
                     layout: {
