@@ -20,7 +20,7 @@
         </div>
       </v-flex>
 
-      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass(' pl-3 pb-5')">
+      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass(' pl-3 pb-5')" v-show="false">
         <div
           class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
           v-show="which_one=='O/E' || which_one==true "
@@ -38,7 +38,7 @@
           </div>
         </div>
       </v-flex>
-      <v-flex xs12 sm12 md6 lg6 xl6  :class="setClass('pb-5 pr-3')">
+      <v-flex xs12 sm12 md6 lg6 xl6  :class="setClass('pb-5 pr-3')" v-show="false">
         <div
           class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
           v-show="which_one=='U/L' || which_one==true "
@@ -57,7 +57,7 @@
           </div>
         </div>
       </v-flex>
-      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass('pl-3 pb-5')" >
+      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass('pl-3 pb-5')" v-show="false">
         <div
           class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
           v-show="which_one=='NUM' || which_one==true "

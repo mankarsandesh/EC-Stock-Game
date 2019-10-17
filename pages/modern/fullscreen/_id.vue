@@ -129,7 +129,7 @@
             <!-- <v-select :items="items" label="Solo field" solo></v-select> -->
           </v-flex>
           <v-flex
-            xs10
+            xs12
             v-if="getStockCrawlerData($route.params.id) !== ''"
             style="background-color:#003f70"
           >
