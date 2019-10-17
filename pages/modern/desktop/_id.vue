@@ -34,7 +34,7 @@
                     <v-btn dark color="#003e70" :to="'/modern/fullscreen/' +$route.params.id">
                       <v-icon left dark class="ma-0">fullscreen</v-icon>full screen mode
                     </v-btn>
-                    <v-btn dark color="#003e70">Multiple gaming</v-btn>
+                    <v-btn dark :to="'/modern/multigame/' +$route.params.id" color="#003e70">Multiple gaming</v-btn>
                   </v-flex>
                 </v-layout>
               </v-flex>
