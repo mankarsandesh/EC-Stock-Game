@@ -2,13 +2,18 @@
 <v-layout>
     <v-flex>
         <span class="timer">{{datelastdraw}} {{$t('msg.gameid')}}: {{gameid}}</span>
+
         <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
         <span class="timer total_classic" :title="datalastdraw" v-if="load">{{dataslastdraw}}</span>
         <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
-
         <span class="timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
         <span class="timer" v-else-if="time == 0">{{$t('msg.marketclosed')}}</span>
         <span class="timer" v-else>{{ time != $t('msg.loading') ? $t('msg.betnow')+':':''}}{{time}}</span>
+
+        <button class="timer" @click="ischangechartview = !ischangechartview" v-if="$vuetify.breakpoint.smAndDown">
+            <i class="fa fa-table" aria-hidden="true" v-show="!ischangechartview" @click="getonview()"></i>
+            <i class="fa fa-area-chart" aria-hidden="true" v-show="ischangechartview" @click="getoffview()"></i>
+        </button>
 
     </v-flex>
 </v-layout>
@@ -20,6 +25,7 @@ export default {
     props: ["checkStock", "stocks", "StockData", "Reference"],
     data() {
         return {
+            ischangechartview: false,
             datalastdraw: "0000.00",
             datelastdraw: "0000-00-00 00:00",
             load: false,
@@ -31,6 +37,7 @@ export default {
         };
     },
     mounted() {
+
         setTimeout(() => {
             this.getdata()
         }, 1000)
@@ -72,6 +79,12 @@ export default {
         });
     },
     methods: {
+        getonview() {
+            $(".open")[0].click()
+        },
+        getoffview() {
+            $(".off")[0].click()
+        },
         getTimeNow() {
             let Zone = new Date().toLocaleString("china", {
                 timeZone: "Asia/Shanghai"
@@ -85,7 +98,7 @@ export default {
                 this.setZero(cd.getFullYear(), 4) + "-" +
                 this.setZero(cd.getMonth() + 1, 2) + "-" +
                 this.setZero(cd.getDate(), 2) //+ " " + 
-                //this.week[cd.getDay()];
+            //this.week[cd.getDay()];
         },
         setZero(num, digit) {
             var zero = "";
@@ -104,7 +117,7 @@ export default {
                 items.push({
                     PT: element.PT,
                     gameid: element.gameid,
-                    date: element.created_at
+                    date: element.created_at.replace(/-/g, "/")
                 });
             });
             let elements = items[items.length - 1];
@@ -172,6 +185,7 @@ export default {
     border-radius: 10px;
     font-size: 1.1rem;
     cursor: pointer;
+    display: inline-table;
 }
 
 .round-number {

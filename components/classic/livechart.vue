@@ -1,14 +1,16 @@
 <template>
 <div class="text-xs-center">
     <canvas ref="planetchart" class="set-height"></canvas>
-    <!-- <line-chart :chart-data="datacollection" :options="defaultOptions" class="set-height" v-if="load"></line-chart> -->
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 
 </div>
 </template>
 
 <script>
-import { Line, mixins } from 'vue-chartjs'
+import {
+    Line,
+    mixins
+} from 'vue-chartjs'
 import VueCharts from "vue-chartjs";
 import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
@@ -72,7 +74,6 @@ export default {
                 data: {
                     labels: labelss,
                     datasets: [{
-                        label: 'Number of Moons',
                         data: datas,
                         label: "value",
                         fill: true,
@@ -85,7 +86,7 @@ export default {
                         pointBorderWidth: 0,
                         pointHoverRadius: 0,
                         pointHoverBorderWidth: 0,
-                        pointRadius: 0.5
+                        pointRadius: 0.5,
                     }]
                 },
                 options: {
@@ -166,13 +167,12 @@ export default {
                         xPadding: 12,
                         intersect: false,
                         mode: "index",
-
                         callbacks: {
                             label: function (tooltipItem, data) {
-                                if (self.stocks === "usindex") {
-                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
+                                if (_this.stocks === "usindex") {
+                                    return (_this.$tc('msg.price') + tooltipItem.yLabel.toFixed(4));
                                 } else {
-                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(2));
+                                    return (_this.$tc('msg.price') + tooltipItem.yLabel.toFixed(2));
                                 }
 
                             }
@@ -247,7 +247,7 @@ export default {
 
 <style scoped>
 .set-height {
-    height: 350px;
+    height: 300px;
 }
 
 .v-progress-circular {

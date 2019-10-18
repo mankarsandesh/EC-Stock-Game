@@ -30,6 +30,7 @@
                                 <v-select hide-details :items="items" label="Sort By :" solo></v-select>
                             </v-flex>
                         </v-layout>
+                        <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
                         <table>
                             <tr>
                                 <th>{{$t('msg.BetId')}}</th>
@@ -40,12 +41,103 @@
                                 <th>{{$t('msg.Payout')}}</th>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>001201910171203003</td>
+                                <td>2019101712030</td>
+                                <td>第二位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-17 13:02:44</td>
+                                <td>10</td>
+
+                                <td><span style="color: green;">19.2</span></td>
+                            </tr>
+                            <tr>
+                                <td>001201910171203002</td>
+                                <td>2019101712030</td>
+                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-17 13:02:55</td>
+                                <td>10000</td>
+                                <td><span style="color: red;">-10000</span></td>
+
+                            </tr>
+                            <tr>
+                                <td>001201910141630003</td>
+                                <td>2019101416300</td>
+                                <td>第二位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-14 17:29:39</td>
+                                <td>5000</td>
+
+                                <td><span style="color: green;">9600</span></td>
+                            </tr>
+                            <tr>
+                                <td>001201910141629002</td>
+                                <td>2019101416290</td>
+                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-14 17:28:52</td>
+                                <td>10</td>
+
+                                <td><span style="color: green;">19.2</span></td>
+                            </tr>
+                            <tr>
+                                <td>001201910141629003</td>
+                                <td>2019101416290</td>
+                                <td>第二位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-14 17:28:52</td>
+                                <td>10</td>
+                                <td><span style="color: red;">-10</span></td>
+
+                            </tr>
+                            <tr>
+                                <td>001201910141629001</td>
+                                <td>2019101416290</td>
+                                <td>合数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-14 17:28:52</td>
+                                <td>10</td>
+                                <td><span style="color: red;">-10</span></td>
+
+                            </tr>
+                            <tr>
+                                <td>001201910071342032</td>
+                                <td>01062019100713420</td>
+                                <td>=两位数-00 (98.82) 比特币 (1 分鐘)</td>
+                                <td>2019-10-07 14:41:39</td>
+                                <td>10</td>
+                                <td><span style="color: red;">-10</span></td>
+
+                            </tr>
+                            <tr>
+                                <td>0010106201910071020002</td>
+                                <td>01062019100710200</td>
+                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-07 11:20:01</td>
+                                <td>100</td>
+                                <td><span style="color: red;">-100</span></td>
+
+                            </tr>
+                            <tr>
+                                <td>0010106201910071021005</td>
+                                <td>01062019100710210</td>
+                                <td>第一位数-小 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-07 11:20:24</td>
+                                <td>100</td>
+
+                                <td><span style="color: green;">192</span></td>
+                            </tr>
+                            <tr>
+                                <td>0010106201910101035002</td>
+                                <td>01062019101010350</td>
+                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-10 11:34:52</td>
+                                <td>10000</td>
+                                <td><span style="color: red;">-10000</span></td>
+
+                            </tr>
+                            <tr>
+                                <td>0010106201910101035005</td>
+                                <td>01062019101010350</td>
+                                <td>第一位数-小 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-10 11:34:56</td>
+                                <td data-v-3798e4a8="">10000</td>
+
+                                <td data-v-3798e4a8=""><span data-v-3798e4a8="" style="color: green;">19200</span></td>
                             </tr>
 
                             <tr>
@@ -79,8 +171,14 @@ export default {
             datefrom: new Date().toISOString().substr(0, 10),
             from: false,
             to: false,
-            items: ["day", "weeks", "months", "years"]
+            items: ["day", "weeks", "months", "years"],
+            load: false
         };
+    },
+    mounted() {
+        setTimeout(() => {
+            this.load = true
+        }, 2000)
     }
 };
 </script>
