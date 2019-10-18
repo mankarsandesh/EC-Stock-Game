@@ -52,13 +52,41 @@
           <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs10>
-        <trendMap
-          :dataArray="getStockCrawlerData($route.params.id)"
-          :trendType="trendType"
-          :key="getStockCrawlerData($route.params.id)[0].created_at"
-          :isFullscreen="isFullscreen"
-        ></trendMap>
+      <v-flex class="xs10">
+        <v-layout row wrap>
+           <v-flex xs12>
+            <trendMap
+              :dataArray="getStockCrawlerData($route.params.id)"
+              :trendType="trendType"
+              :key="getStockCrawlerData($route.params.id)[0].created_at"
+              :isFullscreen="isFullscreen"
+            ></trendMap>
+          </v-flex>
+           <!-- <v-flex xs6>
+            <trendMap
+              :dataArray="getStockCrawlerData($route.params.id)"
+              :trendType="trendType"
+              :key="getStockCrawlerData($route.params.id)[0].created_at"
+              :isFullscreen="isFullscreen"
+            ></trendMap>
+          </v-flex>
+           <v-flex xs6>
+            <trendMap
+              :dataArray="getStockCrawlerData($route.params.id)"
+              :trendType="trendType"
+              :key="getStockCrawlerData($route.params.id)[0].created_at"
+              :isFullscreen="isFullscreen"
+            ></trendMap>
+          </v-flex>
+           <v-flex xs6>
+            <trendMap
+              :dataArray="getStockCrawlerData($route.params.id)"
+              :trendType="trendType"
+              :key="getStockCrawlerData($route.params.id)[0].created_at"
+              :isFullscreen="isFullscreen"
+            ></trendMap> 
+          </v-flex>-->
+        </v-layout>
       </v-flex>
     </v-layout>
   </div>
@@ -73,15 +101,15 @@ export default {
       // trendType: "firstDigit"
     };
   },
-  props:{
-    trendType:{
-      type:String,
-      default:"firstDigit"
+  props: {
+    trendType: {
+      type: String,
+      default: "firstDigit"
     },
-    isFullscreen:{
-      type:Boolean,
-      default:false
-      }
+    isFullscreen: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     trendMap

@@ -213,11 +213,39 @@ const createStore = () => {
             // to show ship and amount on bet button
             getAmountMultiGameBet: (state) => (data) => {
                 function getAmount(object) {
+                    // find stockname 
                     if (object.findIndex(x => x.stockName === data.stockName) == -1) return 0
+                        // get data by stockname
                     let stockIdObject = object.filter(x => x.stockName === data.stockName)
+                        // check rule in stockname
                     if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
+                        // get amount by rule
                     let result = stockIdObject.filter(x => x.betId === data.betId).map(x => x.betValue).reduce((a, b) => a + b, 0)
                     return parseInt(result)
+                }
+                return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
+            },
+            getAmountBetSpecificNumber: (state) => (data) => {
+                function getAmount(object) {
+                    let count = 9
+                        // find stockname 
+                    if (object.findIndex(x => x.stockName === data.stockName) == -1) return 0
+                        // get data by stockname
+                    let stockIdObject = object.filter(x => x.stockName === data.stockName)
+                        // check rule in stockname
+                        // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
+
+                    // get amount by rule
+                    let result = 0
+                    for (let i = 0; i <= count; i++) {
+                        result = result + stockIdObject.filter(x => x.betId.toLowerCase()
+                                .includes(`${data.betId}-${i}`))
+                            .map(x => x.betValue).reduce((a, b) => a + b, 0)
+
+                    }
+
+                    // .map(x => x.betValue).reduce((a, b) => a + b, 0)
+                    return result
                 }
                 return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
             },
@@ -237,7 +265,7 @@ const createStore = () => {
             getFooterBetAmount(state) {
                 return state.footerBetAmount
             },
-            // get coin amount 
+            // get chip amount 
             getCoins_modern(state) {
                 return state.coins_modern
             },
