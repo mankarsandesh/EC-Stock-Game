@@ -1,82 +1,94 @@
 <template>
   <div>
     <v-layout wrap>
-      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass('pb-5 pr-3')">
-        <div
-          class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-          v-show="which_one=='B/S' || which_one==true "
-        >
-          <div v-show="isFullscreen">
-            <span class="countBig text-white"></span>
-            <span class="countSmall text-white"></span>
-          </div>
-          <div class="my-coltabledivlast">
-            <table class="table-responsive" ref="tablebsTwo">
-              <tr v-for="tr in rowTable">
-                <td v-for="td in 500" style="border:1px solid #000000;"></td>
-              </tr>
-            </table>
-          </div>
+      <v-flex
+        xs12
+        sm12
+        md6
+        lg6
+        xl12
+        :class="setClass('pb-5 pr-3')"
+        v-show="which_one=='B/S' || which_one== !isFullscreen "
+      >
+        <div v-show="isFullscreen">
+          <span class="countBig text-white"></span>
+          <span class="countSmall text-white"></span>
+        </div>
+        <div class="my-coltabledivlast">
+          <table class="table-responsive" ref="tablebsTwo">
+            <tr v-for="tr in rowTable">
+              <td v-for="td in 500" style="border:1px solid #000000;"></td>
+            </tr>
+          </table>
         </div>
       </v-flex>
 
-      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass(' pl-3 pb-5')" v-show="false">
-        <div
-          class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-          v-show="which_one=='O/E' || which_one==true "
-        >
-          <div v-show="isFullscreen">
-            <span class="countOdd text-white"></span>
-            <span class="countEven text-white"></span>
-          </div>
-          <div class="my-coltabledivlast">
-            <table class="table-responsive" ref="tableOETwo">
-              <tr v-for="tr in rowTable">
-                <td v-for="td in 300" style="border:1px solid #000000;"></td>
-              </tr>
-            </table>
-          </div>
+      <v-flex
+        xs12
+        sm12
+        md6
+        lg6
+        xl12
+        :class="setClass(' pl-3 pb-5')"
+        v-show="which_one=='O/E' || which_one== !isFullscreen "
+      >
+        <div v-show="isFullscreen">
+          <span class="countOdd text-white"></span>
+          <span class="countEven text-white"></span>
+        </div>
+        <div class="my-coltabledivlast">
+          <table class="table-responsive" ref="tableOETwo">
+            <tr v-for="tr in rowTable">
+              <td v-for="td in 300" style="border:1px solid #000000;"></td>
+            </tr>
+          </table>
         </div>
       </v-flex>
-      <v-flex xs12 sm12 md6 lg6 xl6  :class="setClass('pb-5 pr-3')" v-show="false">
-        <div
-          class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-          v-show="which_one=='U/L' || which_one==true "
-        >
-          <div v-show="isFullscreen">
-            <span class="countUpper text-white"></span>
-            <span class="countMiddle text-white"></span>
-            <span class="countLower text-white"></span>
-          </div>
-          <div class="my-coltabledivlast">
-            <table class="table-responsive" ref="tablebUMLTwo">
-              <tr v-for="tr in rowTable">
-                <td v-for="td in 900" style="border:1px solid #000000;"></td>
-              </tr>
-            </table>
-          </div>
+      <v-flex
+        xs12
+        sm12
+        md6
+        lg6
+        xl12
+        :class="setClass('pb-5 pr-3')"
+        v-show="which_one=='U/L' || which_one== !isFullscreen "
+      >
+        <div v-show="isFullscreen">
+          <span class="countUpper text-white"></span>
+          <span class="countMiddle text-white"></span>
+          <span class="countLower text-white"></span>
+        </div>
+        <div class="my-coltabledivlast">
+          <table class="table-responsive" ref="tablebUMLTwo">
+            <tr v-for="tr in rowTable">
+              <td v-for="td in 900" style="border:1px solid #000000;"></td>
+            </tr>
+          </table>
         </div>
       </v-flex>
-      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass('pl-3 pb-5')" v-show="false">
-        <div
-          class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-          v-show="which_one=='NUM' || which_one==true "
-        >
-          <div v-show="isFullscreen" ref="sortNumber">
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-          </div>
-          <div class="my-coltabledivlast">
-            <table class="table-responsive" ref="tableNumberTwo">
-              <tr v-for="tr in rowTable">
-                <td v-for="td in 100" style="border:1px solid #000000;"></td>
-              </tr>
-            </table>
-          </div>
+      <v-flex
+        xs12
+        sm12
+        md6
+        lg6
+        xl12
+        :class="setClass('pl-3 pb-5')"
+        v-show="which_one=='NUM' || which_one== !isFullscreen "
+      >
+        <div v-show="isFullscreen" ref="sortNumber">
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+        </div>
+        <div class="my-coltabledivlast">
+          <table class="table-responsive" ref="tableNumberTwo">
+            <tr v-for="tr in rowTable">
+              <td v-for="td in 100" style="border:1px solid #000000;"></td>
+            </tr>
+          </table>
         </div>
       </v-flex>
     </v-layout>
@@ -92,7 +104,7 @@ export default {
     //first,last,both,two
     trendType: {
       type: String,
-      required: true
+      default: "firstDigit"
     },
     rowTable: {
       type: Number,
@@ -100,15 +112,15 @@ export default {
     },
     // tbdatachart: String,
     which_one: {
-      default: true
+      default:true
     },
-    isFullscreen:{
-      type:Boolean,
-      default:false
-    } ,
-    lop:{
-      type:Number,
-      default:130
+    isFullscreen: {
+      type: Boolean,
+      default: false
+    },
+    lop: {
+      type: Number,
+      default: 130
     }
   },
   data() {
@@ -130,7 +142,7 @@ export default {
 
     // this.autoScroll();
   },
-  computed:{
+  computed: {
     // setClass(value){
     //   if(this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl){
     //     return value
@@ -152,9 +164,13 @@ export default {
     // }
   },
   methods: {
-     setClass(value){
-      if(this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl){
-        return value
+    setClass(value) {
+      if (
+        this.$vuetify.breakpoint.md ||
+        this.$vuetify.breakpoint.lg ||
+        this.$vuetify.breakpoint.xl
+      ) {
+        return value;
       }
     },
     clearTrendMap() {
@@ -799,7 +815,7 @@ export default {
                     .textContent === "0"
                 ) {
                   countLower++;
-                  $(".countLower").text("lower"+ " = " + countLower);
+                  $(".countLower").text("lower" + " = " + countLower);
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tablebUMLTwo.children[i].children[j].classList.add(

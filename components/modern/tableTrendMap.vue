@@ -62,30 +62,6 @@
               :isFullscreen="isFullscreen"
             ></trendMap>
           </v-flex>
-           <!-- <v-flex xs6>
-            <trendMap
-              :dataArray="getStockCrawlerData($route.params.id)"
-              :trendType="trendType"
-              :key="getStockCrawlerData($route.params.id)[0].created_at"
-              :isFullscreen="isFullscreen"
-            ></trendMap>
-          </v-flex>
-           <v-flex xs6>
-            <trendMap
-              :dataArray="getStockCrawlerData($route.params.id)"
-              :trendType="trendType"
-              :key="getStockCrawlerData($route.params.id)[0].created_at"
-              :isFullscreen="isFullscreen"
-            ></trendMap>
-          </v-flex>
-           <v-flex xs6>
-            <trendMap
-              :dataArray="getStockCrawlerData($route.params.id)"
-              :trendType="trendType"
-              :key="getStockCrawlerData($route.params.id)[0].created_at"
-              :isFullscreen="isFullscreen"
-            ></trendMap> 
-          </v-flex>-->
         </v-layout>
       </v-flex>
     </v-layout>
