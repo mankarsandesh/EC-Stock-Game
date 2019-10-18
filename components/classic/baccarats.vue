@@ -7,7 +7,7 @@
                 <div>
                     <span class="text-blue">{{$t('gamemsg.B')}}</span> = <span class="text-blue">{{countBig}}</span>,
                     <span class="text-red">{{$t('gamemsg.S')}}</span> = <span class="text-red">{{countSmall}}</span>,
-                    <span class="text-success">{{this.$t('msg.Total')}}</span> = <span class="text-success">{{countBig + countSmall}}</span>
+                    <span class="text-success">{{this.$tc('msg.Total')}}</span> = <span class="text-success">{{countBig + countSmall}}</span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebsFirst">
@@ -23,7 +23,7 @@
                 <div>
                     <span class="text-blue">{{$t('gamemsg.O')}}</span> = <span class="text-blue">{{countOdd}}</span>,
                     <span class="text-red">{{$t('gamemsg.E')}}</span> = <span class="text-red">{{countEven}}</span>,
-                    <span class="text-success">{{this.$t('msg.Total')}}</span> = <span class="text-success">{{countOdd+countEven}}</span>
+                    <span class="text-success">{{this.$tc('msg.Total')}}</span> = <span class="text-success">{{countOdd+countEven}}</span>
 
                 </div>
                 <div class="my-coltabledivlast">
@@ -41,7 +41,7 @@
                     <span class="text-blue">{{$t('gamemsg.U')}}</span> = <span class="text-blue">{{countUpper}}</span>,
                     <span class="text-red">{{$t('gamemsg.M')}}</span> = <span class="text-red">{{countMiddle}}</span>,
                     <span class="text-success">{{$t('gamemsg.L')}}</span> = <span class="text-success">{{countLower}}</span>,
-                    <span class="text-primary">{{this.$t('msg.Total')}}</span> = <span class="text-primary">{{countUpper+countMiddle+countLower}}</span>
+                    <span class="text-primary">{{this.$tc('msg.Total')}}</span> = <span class="text-primary">{{countUpper+countMiddle+countLower}}</span>
 
                 </div>
                 <div class="my-coltabledivlast">
@@ -377,7 +377,7 @@ export default {
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "";
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
-                                        this.$t('gamemsg.B');
+                                        this.$tc('gamemsg.B');
                                     this.$refs.tablebsFirst.children[i].children[j].classList.add(
                                         "rs1"
                                     );
@@ -394,7 +394,7 @@ export default {
                                     );
 
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
-                                        this.$t('gamemsg.S');
+                                        this.$tc('gamemsg.S');
                                 }
                             }
                         }
@@ -558,7 +558,7 @@ export default {
                                     );
 
                                     this.$refs.tableOEFirst.children[i].children[j].textContent =
-                                        this.$t('gamemsg.O');
+                                        this.$tc('gamemsg.O');
                                 } else if (
                                     this.$refs.tableOEFirst.children[i].children[j]
                                     .textContent === "0"
@@ -572,7 +572,7 @@ export default {
                                     );
 
                                     this.$refs.tableOEFirst.children[i].children[j].textContent =
-                                        this.$t('gamemsg.E');
+                                        this.$tc('gamemsg.E');
                                 }
                             }
                         }
@@ -737,7 +737,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t('gamemsg.U');
+                                    ].textContent = this.$tc('gamemsg.U');
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "1"
@@ -753,7 +753,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t('gamemsg.M');
+                                    ].textContent = this.$tc('gamemsg.M');
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "0"
@@ -769,7 +769,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t('gamemsg.L');
+                                    ].textContent = this.$tc('gamemsg.L');
                                 }
                             }
                         }

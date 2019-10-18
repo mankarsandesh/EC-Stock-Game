@@ -10,11 +10,13 @@
                 </v-toolbar-title>
                 <v-spacer />
                 <v-toolbar-items v-if="$vuetify.breakpoint.smAndDown">
-                    <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
+                    <v-btn text flat @click="$refs.language.showDialog()">
+                        <countryFlag :country="countryflag" size="normal" />
+                    </v-btn>
+                    <v-toolbar-side-icon @click="dialog = !dialog" :elevation="0" />
                 </v-toolbar-items>
                 <template v-else>
                     <v-btn flat text v-for="(item, i) in menu" :key="i" :to="item.to" router exact>{{ $t(`menu.${item.title}`) }}</v-btn>
-
                     <v-btn text flat @click="$refs.language.showDialog()">
                         <countryFlag :country="countryflag" size="normal" />
                     </v-btn>
@@ -70,15 +72,34 @@
                         </v-tab>
                     </v-tabs>
                 </v-layout>
+                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+                    <v-card>
+                        <v-toolbar dark color="primary">
+                            <v-toolbar-title>Menu</v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <v-toolbar-items>
+                                <v-btn icon dark @click="dialog = false">
+                                    <v-icon>close</v-icon>
+                                </v-btn>
+                            </v-toolbar-items>
+                        </v-toolbar>
+                        <v-list>
+                            <v-list-tile v-for="(item, i) in menu" :key="i" :to="item.to" @click="dialog = false">
+                                <v-list-tile-title>{{ $t(`menu.${item.title}`) }}</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
+                    </v-card>
+                </v-dialog>
             </v-container>
         </v-toolbar>
 
-        <v-content pa-0>
-            <div class="btn-chart-change set-chart-change">
+        <v-content pa-0 sx-0>
+            <div class="btn-chart-change set-chart-change" v-if="!$vuetify.breakpoint.smAndDown">
                 <button @click="ischangechartview = !ischangechartview">
                     <span class="text-orientation">{{$t('msg.changechartview')}}</span>
                 </button>
             </div>
+            <button class="open off"  @click="ischangechartview = !ischangechartview" hidden></button>
 
             <!-- charts -->
             <v-tabs-items v-model="tab">
@@ -117,7 +138,7 @@
             </v-container>
             <!-- Data Lastdraw and Timer -->
 
-            <v-container pa-0>
+            <v-container pa-0 pb-1>
                 <v-layout class="remove-flex">
                     <v-flex xs12 sm3 pl-1 pr-1>
                         <listleft />
@@ -126,6 +147,13 @@
                         <nuxt />
                     </v-flex>
                 </v-layout>
+            </v-container>
+            <v-container pa-0 pb-2>
+                <v-footer>
+                    <v-flex text-xs-center xs12>
+                        &copy; Copyright {{ new Date().getFullYear() }} TNK - All Rights Reserved
+                    </v-flex>
+                </v-footer>
             </v-container>
         </v-content>
     </v-app>
@@ -179,7 +207,12 @@ export default {
             title: "EC gaming",
             ischangechartview: true,
             baccarat: baccarat,
-            showtable: true
+            showtable: true,
+
+            dialog: false,
+            notifications: false,
+            sound: true,
+            widgets: false
         };
     },
 

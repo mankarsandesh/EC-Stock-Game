@@ -443,7 +443,9 @@ export default {
                 setTimeout(() => {
                     this.setPrice("reset");
                     this.getalertstartstop('success')
-                }, 3000);
+                    $(".getupdatebalance")[0].click()
+                }, 2500);
+
             }
         },
 
@@ -581,7 +583,7 @@ export default {
             // console.log(this.betData.betdetails)
             // End data send to server
 
-            // Data Show
+            // Data Show clients
             if (specialName !== "none") {
                 this.rule = specialName.rule;
                 this.stock = specialName.stock;
@@ -607,7 +609,7 @@ export default {
             } else {
                 this.betDataShows[this.index].amount = this.amount;
             }
-            // End  data Show
+            // End  data Show clients
             // console.log(this.betDataShows);
         },
 
@@ -637,12 +639,11 @@ export default {
                     this.getBetClosedopen('open');
                 }
 
-                // if (times == 60) {
-                //     this.getalertstartstop("stop")
-                // } else if (times == calculating) {
-                //     this.getalertstartstop("start")
-
-                // }
+                if (times == 60) {
+                    this.getalertstartstop("stop")
+                } else if (times == calculating) {
+                    this.getalertstartstop("start")
+                }
 
                 if (times == calculating - 4) {
                     this.alertOutCome('win')
@@ -666,11 +667,13 @@ export default {
         alertOutCome(val) {
             this.snackbar = true;
             this.mode = "vertical";
+
             if (val == "win") {
-                this.text = this.$t('msg.Win Bet');
+                this.text = this.$tc('msg.Win Bet');
                 this.color = "#2962FF";
+                $(".getupdatebalance")[0].click()
             } else {
-                this.text = this.$t('msg.Lose Bet');
+                this.text = this.$tc('msg.Lose Bet');
                 this.color = "#D50000";
             }
         },
@@ -679,16 +682,16 @@ export default {
             this.alertSS = true;
             this.mode = "multi-line";
             if (val == "start") {
-                this.alertext = this.$t('msg.startbetting')
+                this.alertext = this.$tc('msg.startbetting')
                 this.color = "#2962FF";
             } else if (val == "stop") {
-                this.alertext = this.$t('msg.stopbetting')
+                this.alertext = this.$tc('msg.stopbetting')
                 this.color = "#D50000";
             } else if (val == "success") {
-                this.alertext = this.$t('msg.confirmed')
+                this.alertext = this.$tc('msg.confirmed')
                 this.color = "success";
             } else if (val == "error") {
-                this.alertext = this.$t('msg.moneynotenough')
+                this.alertext = this.$tc('msg.moneynotenough')
                 this.color = "error";
             }
         }

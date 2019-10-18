@@ -35,23 +35,10 @@
             </template>
             <v-card>
                 <table>
-                    <tr>
+                    <tr v-for="(data, index) in getBetresult()">
                         <td class="text-left">
                             <i class="fa fa-circle-o text-danger"></i>
-                            <b>{{$t('msg.Stock')}}</b>: US dollar Index <b>{{$t('msg.Time')}}</b>: 5 minute <b>{{$t('msg.Result')}}</b> 98.8156
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">
-                            <i class="fa fa-circle-o text-danger"></i>
-                            <b>Stock</b>: BTC/USDT <b>Time</b>: 5 minute <b>Result</b> 7835.60
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="text-left">
-                            <i class="fa fa-circle-o text-danger"></i>
-                            <b>Stock</b>: BTC/USDT <b>Time</b>: 1 minute <b>Result</b> 7838.22
+                            <b>{{$t('msg.Stock')}}</b>: {{data.Stock}} <b>{{$t('msg.Time')}}</b>: {{data.Time}} <b>{{$t('msg.Result')}}</b> {{data.Result}}
                         </td>
                     </tr>
                 </table>
@@ -66,35 +53,21 @@
             </template>
             <v-card>
                 <table>
-                    <tr>
+                    <tr v-for="(data,index) in getAllresults()">
                         <td class="text-left">
-                            <b>{{$t('msg.Time')}}</b>: 2019-10-07 11:20:01<br>
-                            <b>{{$t('msg.BetId')}}</b>: 0010106201910071020002<br>
-                            <b>{{$t('msg.Amount')}}</b>: 100 ( FirstDigit-Big )<br>
-                            <b>{{$t('msg.Stock')}}</b>: BTC/USDT ( 1 )<br>
-                            <b>{{$t('msg.gameid')}}</b>: 01062019100710200</td>
+                            <b>{{$t('msg.Time')}}</b>: {{data.Time}} <br>
+                            <b>{{$t('msg.BetId')}}</b>: {{data.BetId}} <br>
+                            <b>{{$t('msg.Amount')}}</b>: {{data.Amount}} <br>
+                            <b>{{$t('msg.Stock')}}</b>: {{data.Stock}} <br>
+                            <b>{{$t('msg.gameid')}}</b>: {{data.gameid}} </td>
                     </tr>
-                    <tr>
-                        <td class="text-left">
-                            <b>Time</b> 2019-10-07 11:20:24<br>
-                            <b>BetId</b>: 0010106201910071021005<br>
-                            <b>Amount</b>: 100 ( FirstDigit-Small )<br>
-                            <b>Stock</b>: BTC/USDT ( 1 )<br>
-                            <b>gameid</b>: 01062019100710210</td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">
-                            <b>Time</b> 2019-10-07 11:21:19<br>
-                            <b>BetId</b>: 0010106201910071025002<br>
-                            <b>Amount</b>: 100 ( FirstDigit-Big )<br>
-                            <b>Stock</b>: BTC/USDT ( 5 )<br>
-                            <b>gameid</b>: 01062019100710250</td>
-                    </tr>
+
                 </table>
 
             </v-card>
         </v-expansion-panel-content>
     </v-expansion-panel>
+    <button class="getupdatebalance" @click="getupdatebalance(), getAllresults(), getBetresult()" hidden></button>
 </v-card>
 </template>
 
@@ -119,6 +92,49 @@ export default {
         formatToPrice(value) {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
+        getupdatebalance() {
+            this.balance = this.$store.state.balance
+        },
+        getBetresult() {
+            let result = [{
+                Stock: "US dollar Index",
+                Time: "5 minute",
+                Result: "98.8156",
+            }, {
+                Stock: "BTC/USDT",
+                Time: "5 minute",
+                Result: "7835.60",
+            }, {
+                Stock: "BTC/USDT",
+                Time: "1 minute",
+                Result: "7838.22",
+            }]
+            return result;
+        },
+        getAllresults() {
+            let Response = [{
+                    Time: '2019-10-07 11:20:01',
+                    BetId: '0010106201910071020002',
+                    Amount: '100 ( FirstDigit-Big )',
+                    Stock: 'BTC/USDT ( 1 )',
+                    gameid: '01062019100710200'
+                }, {
+                    Time: '2019-10-07 11:20:24',
+                    BetId: '0010106201910071021005',
+                    Amount: '100 ( FirstDigit-Small )',
+                    Stock: 'BTC/USDT ( 1 )',
+                    gameid: '01062019100710210'
+                },
+                {
+                    Time: '2019-10-07 11:21:19',
+                    BetId: '0010106201910071025002',
+                    Amount: '100 ( FirstDigit-Big )',
+                    Stock: 'BTC/USDT ( 5 )',
+                    gameid: '01062019100710250'
+                }
+            ]
+            return Response;
+        }
     },
 }
 </script>

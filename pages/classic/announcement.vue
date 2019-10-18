@@ -8,6 +8,7 @@
                         <div> {{$t('menu.announcement')}}</div>
                     </template>
                     <v-card>
+                        <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
                         <table>
                             <tr>
                                 <th>{{$t('msg.Stock Name')}}</th>
@@ -45,13 +46,20 @@
     </v-tab-item>
 </v-tabs-items>
 </template>
+
 <script>
 export default {
     layout: 'classic',
     data() {
         return {
-            panel: [true]
+            panel: [true],
+            load: false
         }
+    },
+    mounted() {
+        setTimeout(() => {
+            this.load = true
+        }, 2000)
     }
 }
 </script>

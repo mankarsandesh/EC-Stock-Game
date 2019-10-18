@@ -11,7 +11,7 @@
                         <v-select :items="items" label="Sort by:" solo></v-select>
                     </v-flex>
                     <v-card>
-
+                        <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
                         <table>
                             <tr>
                                 <th>{{$t('msg.BetId')}}</th>
@@ -23,13 +23,49 @@
                                 <th>{{$t('msg.Bet Status')}}</th>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>001201910171416002</td>
+                                <td>2019101714160</td>
+                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-17 15:15:52</td>
+                                <td>10</td>
+                                <td>1.92</td>
+                                <td>结算中</td>
+                            </tr>
+                            <tr>
+                                <td>001201910171416003</td>
+                                <td>2019101714160</td>
+                                <td>第二位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-17 15:15:52</td>
+                                <td>10</td>
+                                <td>1.92</td>
+                                <td>结算中</td>
+                            </tr>
+                            <tr>
+                                <td>001201910171416001</td>
+                                <td>2019101714160</td>
+                                <td>合数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-17 15:15:52</td>
+                                <td>110</td>
+                                <td>1.92</td>
+                                <td>结算中</td>
+                            </tr>
+                            <tr>
+                                <td>001201910171416007</td>
+                                <td>2019101714160</td>
+                                <td>=两位数-大 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-17 15:15:52</td>
+                                <td>610</td>
+                                <td>1.92</td>
+                                <td>结算中</td>
+                            </tr>
+                            <tr>
+                                <td>001201910171416010</td>
+                                <td>2019101714160</td>
+                                <td>第一位数-单 (1.92) 比特币 (1 分鐘)</td>
+                                <td>2019-10-17 15:15:52</td>
+                                <td>5610</td>
+                                <td>1.92</td>
+                                <td>结算中</td>
                             </tr>
 
                             <tr>
@@ -61,8 +97,14 @@ export default {
     data() {
         return {
             panel: [true],
-            items: ["day", "weeks", "months", "years"]
+            items: ["day", "weeks", "months", "years"],
+            load:false
         }
+    },
+    mounted(){
+        setTimeout(()=>{
+            this.load =  true
+        },2000)
     }
 }
 </script>
