@@ -150,9 +150,9 @@ export default {
     // }
   },
   watch: {
-    trendType() {
-      this.getTableChartBS();
-    }
+    // trendType() {
+    //   this.getTableChartBS();
+    // },
     // tbdatachart() {
     //   this.number =
     //     this.tbdatachart[this.tbdatachart.length - 2] +

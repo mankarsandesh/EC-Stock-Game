@@ -22,24 +22,31 @@ import { mapGetters } from "vuex";
 import trendMap from "~/components/modern/trendMap";
 
 export default {
-  props: {
-    which_one: {
-      type: String,
-      required: true
-    },
-    trendType: {
-      type: String,
-      default: "firstDigit"
-    }
-  },
+  // props: {
+  //   which_one: {
+  //     type: String,
+  //     required: true
+  //   },
+  //   trendType: {
+  //     type: String,
+  //     default: "firstDigit"
+  //   }
+  // },
   data() {
     return {
       typeItem: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
-      which_oneItem: ["B/S", "O/E", "U/L", "NUM"]
+      which_oneItem: ["B/S", "O/E", "U/L", "NUM"],
+      which_one: "O/E",
+      trendType: "firstDigit"
     };
   },
   components: {
     trendMap
+  },
+  watch: {
+    // which_one() {
+    //   alert(this.which_one);
+    // }
   },
   computed: {
     ...mapGetters(["getStockCrawlerData"])

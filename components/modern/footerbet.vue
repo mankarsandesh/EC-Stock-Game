@@ -562,6 +562,11 @@
 <script>
 import { mapGetters,mapMutations } from 'vuex';
 export default {
+  data(){
+    return{
+      isSending:true
+    }
+  },
   methods:{
     ...mapMutations([
       "setFooterBetAmount",

@@ -290,7 +290,7 @@ const createStore = () => {
             },
             // get previouse price to compare with current price to know to ti's down or up
             getPreviousPrice: (state) => (id) => {
-                console.log("getPreviousPrice")
+                // console.log("getPreviousPrice")
                 if (id == "") {
                     return
                 }
@@ -299,7 +299,7 @@ const createStore = () => {
             },
             // get loop by stock id becuase in url be like these "btc1,btc5..."
             getLoop: (state) => (id) => {
-                console.log("getLoop")
+                // console.log("getLoop")
                 if (id == "") {
                     return
                 }
@@ -308,7 +308,7 @@ const createStore = () => {
             },
             // get stock type
             getStockType: (state) => (id) => {
-                console.log("getStockType")
+                // console.log("getStockType")
                 if (id == "") {
                     return
                 }
@@ -318,7 +318,7 @@ const createStore = () => {
             // get live time
             getLiveTime: (state) => (id) => {
                 // alert(Object.keys(state.time).length)
-                console.log("getLiveTime")
+                // console.log("getLiveTime")
                 if ((id == "") || (Object.keys(state.time).length == 0)) {
                     return
                 }
@@ -328,7 +328,7 @@ const createStore = () => {
             // get countdown timer
             getLotteryDraw: (state) => (id) => {
                 // alert(Object.keys(state.time).length)
-                console.log("getLotteryDraw")
+                // console.log("getLotteryDraw")
                 if ((id == "") || (Object.keys(state.time).length == 0)) {
                     return
                 }
@@ -336,13 +336,13 @@ const createStore = () => {
                 return lotteryDraw
             },
             getStockLoop: (state) => (id) => {
-                console.log("getStockLoop")
+                // console.log("getStockLoop")
                 if (id == "") return
                 return state.stocks[id].loop
             },
             // get last draw
             getStockLastDraw: (state) => (id) => {
-                console.log("getStockLastDraw")
+                // console.log("getStockLastDraw")
                 if (id == "") return
                 return state.stocks[id].lastDraw
             },
@@ -352,7 +352,7 @@ const createStore = () => {
             },
             // to show in betting
             getStockById: (state) => (id) => {
-                console.log("getStockById")
+                // console.log("getStockById")
                 if (id == "") return
                 const stockname = state.stocks[id].stockname
                 const loop = state.stocks[id].loop
@@ -456,7 +456,7 @@ const createStore = () => {
             },
             // get some stock poproty to show in stock list page
             getStockList(state, getters) {
-                console.log("getStockList")
+                // console.log("getStockList")
                 let result = []
                 for (let i = 0; i < getters.getStockLength; i++) {
                     const id = getters.getStockKeys[i]
@@ -481,7 +481,7 @@ const createStore = () => {
                 return result
             },
             getStockCrawlerData: (state) => (id) => {
-                console.log("getStockCrawlerData")
+                // console.log("getStockCrawlerData")
                 let result = [null]
                 if (state.stocks[id].crawlerData.length < 0) {
                     return result

@@ -129,18 +129,18 @@
             <v-flex xs12 wrap>
               <v-layout>
                 <v-flex xs6>
-                  <trendMapFullScreen :which_one="B/S" ></trendMapFullScreen>
+                  <trendMapFullScreen which_one="O/E" ></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs6>
-                  <trendMapFullScreen :which_one="O/E"></trendMapFullScreen>
+                  <trendMapFullScreen which_one="O/E"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
                 <v-flex xs6>
-                  <trendMapFullScreen :which_one="U/L"></trendMapFullScreen>
+                  <trendMapFullScreen which_one="U/L"></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs6>
-                  <trendMapFullScreen :which_one="NUM"></trendMapFullScreen>
+                  <trendMapFullScreen which_one="NUM"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
             </v-flex>
