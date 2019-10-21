@@ -2,11 +2,6 @@
   <div>
     <v-layout wrap>
       <v-flex
-        xs12
-        sm12
-        md6
-        lg6
-        xl12
         :class="setClass('pb-5 pr-3')"
         v-show="which_one=='B/S' || which_one== !isFullscreen "
       >
@@ -24,11 +19,6 @@
       </v-flex>
 
       <v-flex
-        xs12
-        sm12
-        md6
-        lg6
-        xl12
         :class="setClass(' pl-3 pb-5')"
         v-show="which_one=='O/E' || which_one== !isFullscreen "
       >
@@ -45,11 +35,6 @@
         </div>
       </v-flex>
       <v-flex
-        xs12
-        sm12
-        md6
-        lg6
-        xl12
         :class="setClass('pb-5 pr-3')"
         v-show="which_one=='U/L' || which_one== !isFullscreen "
       >
@@ -67,11 +52,6 @@
         </div>
       </v-flex>
       <v-flex
-        xs12
-        sm12
-        md6
-        lg6
-        xl12
         :class="setClass('pl-3 pb-5')"
         v-show="which_one=='NUM' || which_one== !isFullscreen "
       >
@@ -143,6 +123,14 @@ export default {
     // this.autoScroll();
   },
   computed: {
+    trendMapGrid(){
+      if(this.isFullscreen){
+      return "xs12 sm12 md6 lg6 xl12"
+      }else{
+      return "xs12 sm12 md6 lg6 xl6"
+
+      }
+    }
     // setClass(value){
     //   if(this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl){
     //     return value
@@ -169,7 +157,9 @@ export default {
         this.$vuetify.breakpoint.lg ||
         this.$vuetify.breakpoint.xl
       ) {
-        return value;
+        return value +  this.trendMapGrid;
+      }else{
+        return this.trendMapGrid
       }
     },
     clearTrendMap() {
