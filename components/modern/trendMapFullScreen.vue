@@ -36,7 +36,7 @@ export default {
     return {
       typeItem: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
       which_oneItem: ["B/S", "O/E", "U/L", "NUM"],
-      which_one: "O/E",
+      which_one: "B/S",
       trendType: "firstDigit"
     };
   },
