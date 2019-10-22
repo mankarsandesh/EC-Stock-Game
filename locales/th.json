@@ -1,0 +1,148 @@
+{
+    "filter": "filter",
+    "sort": "sort",
+    "search": "search",
+    "stock": "stock",
+    "default": "default",
+    "menu": {
+        "home": "home",
+        "profile": "profile",
+        "current bet": "เดิมพันปัจจุบัน",
+        "history": "ประวัติศาสตร์",
+        "stock list": "stock list",
+        "announcement": "การประกาศ",
+        "rule": "rule",
+        "setting": "การตั้งค่า",
+        "game result": "ผลลัพธ์ของเกม"
+    },
+    "stock-list": {
+        "live price": "Live Price",
+        "reference": "reference",
+        "load more": "load more",
+        "search stock": "SEARCH STOCK"
+    },
+    "home": {
+        "welcome": "Welcome",
+        "goodluck": "GoodLuck"
+    },
+    "about": {
+        "title": "About",
+        "introduction": "This page is made to give you more informations."
+    },
+    "msg": {
+        "calculating": "Calculating...",
+        "marketclosed": "Market Closed!",
+        "reset": "Reset",
+        "confirm": "Confirm",
+        "gamerule": "Game Rule",
+        "payout": "Payout",
+        "deleteall": "Delete All",
+        "totalbet": "Total Bet",
+        "totalamount": "Total Amount",
+        "ok": "Ok",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "resettodefault": "Reset To Default",
+        "changechartview": "Change Chart View",
+        "reference": "Reference",
+        "totals": "Totals",
+        "winbet": "Win Bet",
+        "losebet": "Lose Bet",
+        "amount": "Amount",
+        "preset": "Preset",
+        "betnow": "Bet Now",
+        "gameid": "Game ID",
+        "BetId": "Bet Id",
+        "Betdetail": "Bet detail",
+        "Time": "Time",
+        "Amount": "Amount",
+        "Payout": "Payout",
+        "Bet Status": "Bet Status",
+        "Total": "Total",
+        "Total This Page": "Total (This Page)",
+        "Stock Name": "Stock Name",
+        "Game Mode": "Game Mode",
+        "Result": "Result",
+        "result out time": "result out time",
+        "Win Bet": "Win Bet",
+        "Lose Bet": "Lose Bet",
+        "minute": "Minute",
+        "loading": "loading...",
+        "Stock": "Stock",
+        "User Info": "User Info",
+        "Bet Result": "Bet Result",
+        "All Results": "All Results",
+        "Player": "Player",
+        "Balance": "Balance",
+        "msinfo": "Total profit (only one day's date is provided)",
+        "price": "price : ",
+        "stopbetting": "Stop Betting",
+        "startbetting": "Start Betting",
+        "moneynotenough": "Money Not Enough",
+        "confirmed": "Confirmed",
+        "betclosed": "Bet Closed",
+
+
+        "resultintroduction": "result introduction",
+        "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
+        "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;"
+
+
+    },
+    "navlist": {
+        "live Stock": "live Stock",
+        "Us Stock": "Us Stock",
+        "Cypto Currency": "Cypto Currency",
+        "China Stocck": "China Stocck"
+    },
+    "listCS": {
+        "live": "Live",
+        "Big-Small First Digit": "Big-Small First Digit",
+        "Big-Small Last Digit": "Big-Small Last Digit",
+        "Big-Small Both Digit": "Big-Small Both Digit",
+        "Big-Small Two Digit": "Big-Small Two Digit",
+        "Odd-Even First Digit": "Odd-Even First Digit",
+        "Odd-Even Last Digit": "Odd-Even Last Digit",
+        "Odd-Even Both Digit": "Odd-Even Both Digit",
+        "Odd-Even Two Digit": "Odd-Even Two Digit"
+    },
+    "gamemsg": {
+        "All games": "เกมส์ทั้งหมด",
+        "Big-Small": "ใหญ่-เล็ก",
+        "Odd-Even": "คลิก-คู่",
+        "High-Mid-Low": "สูง-กลาง-ต่ำ",
+        "Specific-Number": "เฉพาะจำนวน",
+
+        "firstdigit": "ตัวเลขตัวแรก",
+        "lastdigit": "ตัวเลขสุดท้าย",
+        "bothdigit": "ทั้งหลัก",
+        "twodigit": "ตัวเลขสองหลัก",
+
+        "big": "ใหญ่",
+        "small": "เล็ก",
+        "odd": "คลิก",
+        "even": "คู่",
+        "high": "สูง",
+        "mid": "กลาง",
+        "low": "ต่ำ",
+        "tie": "tie",
+        "number": "number",
+
+        "B": "B",
+        "S": "S",
+        "E": "E",
+        "O": "O",
+        "U": "U",
+        "L": "L",
+        "M": "M"
+    },
+    "stockname": {
+        "btc1": "BTC/USDT",
+        "usindex": "US dollar Index",
+        "btc5": "BTC/USDT",
+        "SH000001": "SH000001",
+        "SZ399001": "SZ399001",
+        "SZ399415": "SZ399415",
+        "SH00300": "SH00300"
+    }
+}

@@ -244,7 +244,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="success" @click="dialog = false, getConfirmBet()" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.ok')}}</v-btn>
-                    <v-btn color="error" @click="dialog = false , setPrice('reset')">{{$t('msg.cancel')}}</v-btn>
+                    <v-btn color="error" @click="dialog = false ">{{$t('msg.cancel')}}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -306,6 +306,7 @@
         </span>
     </v-snackbar>
     <!-- end alertOutCome -->
+     <button hidden id="playwin" @click.prevent="playSound('/voice/winbet.mp3')"></button>
 </div>
 </template>
 
@@ -657,6 +658,7 @@ export default {
                 this.panel = [false, false, false, false];
                 this.setPrice("reset");
                 this.disabled = true
+                this.dialog = false
             } else {
                 this.panel = [true, true, true, true];
                 this.disabled = false
@@ -672,6 +674,8 @@ export default {
                 this.text = this.$tc('msg.Win Bet');
                 this.color = "#2962FF";
                 $(".getupdatebalance")[0].click()
+                $("#playwin")[0].click()
+                
             } else {
                 this.text = this.$tc('msg.Lose Bet');
                 this.color = "#D50000";
@@ -694,7 +698,13 @@ export default {
                 this.alertext = this.$tc('msg.moneynotenough')
                 this.color = "error";
             }
-        }
+        },
+        playSound(sound) {
+            if (sound) {
+                let audio = new Audio(sound);
+                audio.play();
+            }
+        },
     }
 };
 </script>

@@ -72,6 +72,46 @@
                         </v-tab>
                     </v-tabs>
                 </v-layout>
+
+                <!-- <v-layout>
+                    <v-tabs color="cyan" grow>
+                        <v-tabs-slider color="yellow" grow></v-tabs-slider>
+                        <v-tab v-for="(item,i) in navList" :key="i" :href="'#' + item.name" >
+                            {{ $t('navlist.'+item.name) }}
+                        </v-tab>
+
+                        <v-tabs-items>
+                            <v-tab-item v-for="(item,i) in navList" :key="i" v-model="item.name">
+                                <v-card flat>
+                                    <v-tabs color="cyan" grow>
+                                        <v-tabs-slider color="yellow" grow></v-tabs-slider>
+                                        <v-tab v-for="(item2,i) in item.children" :key="i" :href="'#' + item2.name" @click="$router.push('/classic/'+item2.url), loadchart()">
+                                            {{$t('stockname.'+item2.name)}}{{ item2.name == 'btc1' ? ' 1 '+$t('msg.minute'):item2.name == 'btc5' ? ' 5 '+$t('msg.minute'):'' }}
+                                        </v-tab>
+
+                                        <v-tabs-items>
+                                            <v-tab-item v-for="(item2,i) in item.children" :key="i" v-model="item2.name">
+                                                <v-card flat>
+
+                                                    <v-tabs color="cyan" grow>
+                                                        <v-tabs-slider color="yellow" grow></v-tabs-slider>
+                                                        <v-tab v-for="(item3,i) in item2.childrens" :key="i" @click="$router.push('/classic/'+item3.url), loadchart()">
+                                                            {{$t('listCS.'+item3.name)}}
+                                                        </v-tab>
+
+                                                    </v-tabs>
+
+                                                </v-card>
+                                            </v-tab-item>
+                                        </v-tabs-items>
+                                    </v-tabs>
+
+                                </v-card>
+                            </v-tab-item>
+                        </v-tabs-items>
+                    </v-tabs>
+                </v-layout> -->
+
                 <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
                     <v-card>
                         <v-toolbar dark color="primary">
@@ -99,7 +139,7 @@
                     <span class="text-orientation">{{$t('msg.changechartview')}}</span>
                 </button>
             </div>
-            <button class="open off"  @click="ischangechartview = !ischangechartview" hidden></button>
+            <button class="open off" @click="ischangechartview = !ischangechartview" hidden></button>
 
             <!-- charts -->
             <v-tabs-items v-model="tab">
