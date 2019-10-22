@@ -6,7 +6,7 @@ const createStore = () => {
             footerBetAmount: 0,
             onGoingBet: [],
             multiGameBet: [],
-            locales: ['us', 'cn'],
+            locales: ['cn', 'us', 'th', 'la'],
             locale: localStorage.getItem('lang'),
             balance: 895000,
             coins_modern: [],

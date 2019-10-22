@@ -178,7 +178,7 @@ export default {
     mounted() {
         setTimeout(() => {
             this.load = true
-        }, 2000)
+        }, 1000)
     }
 };
 </script>
