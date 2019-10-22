@@ -123,18 +123,28 @@
             ></betButton>
           </v-flex>
         </v-flex>
-        <v-flex xs12 class="text-xs-center">
-          <footerBet v-if="getStockCrawlerData($route.params.id) !== ''"></footerBet>
-          <v-flex xs2>
-            <!-- <v-select :items="items" label="Solo field" solo></v-select> -->
-          </v-flex>
-          <v-flex
-            xs12
-            v-if="getStockCrawlerData($route.params.id) !== ''"
-            style="background-color:#003f70"
-          >
-            <tableTrendMap isFullscreen></tableTrendMap>
-          </v-flex>
+        <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
+          <footerBet></footerBet>
+          <v-layout style="background-color:#003f70">
+            <v-flex xs12 wrap>
+              <v-layout>
+                <v-flex xs6>
+                  <trendMapFullScreen which_one="O/E" ></trendMapFullScreen>
+                </v-flex>
+                <v-flex xs6>
+                  <trendMapFullScreen which_one="O/E"></trendMapFullScreen>
+                </v-flex>
+              </v-layout>
+              <v-layout>
+                <v-flex xs6>
+                  <trendMapFullScreen which_one="U/L"></trendMapFullScreen>
+                </v-flex>
+                <v-flex xs6>
+                  <trendMapFullScreen which_one="NUM"></trendMapFullScreen>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
         </v-flex>
       </v-layout>
     </v-container>
@@ -147,12 +157,14 @@ import welcomeUser from "~/components/welcomeUser";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerBet";
-import tableTrendMap from "~/components/modern/tableTrendMap";
+import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 
 export default {
   layout: "fullscreen",
   data() {
     return {
+      which_one: "B/S",
+      trendType: "twoDigit",
       dialogOtherstock: false,
       //winner mqrquee
       winner: [
@@ -177,7 +189,7 @@ export default {
     betButton,
     chartApp,
     footerBet,
-    tableTrendMap
+    trendMapFullScreen
   },
   computed: {
     ...mapGetters([

@@ -1,82 +1,74 @@
 <template>
   <div>
     <v-layout wrap>
-      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass('pb-5 pr-3')">
-        <div
-          class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-          v-show="which_one=='B/S' || which_one==true "
-        >
-          <div v-show="isFullscreen">
-            <span class="countBig text-white"></span>
-            <span class="countSmall text-white"></span>
-          </div>
-          <div class="my-coltabledivlast">
-            <table class="table-responsive" ref="tablebsTwo">
-              <tr v-for="tr in rowTable">
-                <td v-for="td in 500" style="border:1px solid #000000;"></td>
-              </tr>
-            </table>
-          </div>
+      <v-flex
+        :class="setClass('pb-5 pr-3')"
+        v-show="which_one=='B/S' || which_one== !isFullscreen "
+      >
+        <div v-show="isFullscreen">
+          <span class="countBig text-white"></span>
+          <span class="countSmall text-white"></span>
+        </div>
+        <div class="bs-coltabledivlast">
+          <table class="table-responsive" ref="tablebsTwo">
+            <tr v-for="tr in rowTable">
+              <td v-for="td in 500" style="border:1px solid #000000;"></td>
+            </tr>
+          </table>
         </div>
       </v-flex>
 
-      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass(' pl-3 pb-5')" v-show="false">
-        <div
-          class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-          v-show="which_one=='O/E' || which_one==true "
-        >
-          <div v-show="isFullscreen">
-            <span class="countOdd text-white"></span>
-            <span class="countEven text-white"></span>
-          </div>
-          <div class="my-coltabledivlast">
-            <table class="table-responsive" ref="tableOETwo">
-              <tr v-for="tr in rowTable">
-                <td v-for="td in 300" style="border:1px solid #000000;"></td>
-              </tr>
-            </table>
-          </div>
+      <v-flex
+        :class="setClass(' pl-3 pb-5')"
+        v-show="which_one=='O/E' || which_one== !isFullscreen "
+      >
+        <div v-show="isFullscreen">
+          <span class="countOdd text-white"></span>
+          <span class="countEven text-white"></span>
+        </div>
+        <div class="oe-coltabledivlast">
+          <table class="table-responsive" ref="tableOETwo">
+            <tr v-for="tr in rowTable">
+              <td v-for="td in 300" style="border:1px solid #000000;"></td>
+            </tr>
+          </table>
         </div>
       </v-flex>
-      <v-flex xs12 sm12 md6 lg6 xl6  :class="setClass('pb-5 pr-3')" v-show="false">
-        <div
-          class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-          v-show="which_one=='U/L' || which_one==true "
-        >
-          <div v-show="isFullscreen">
-            <span class="countUpper text-white"></span>
-            <span class="countMiddle text-white"></span>
-            <span class="countLower text-white"></span>
-          </div>
-          <div class="my-coltabledivlast">
-            <table class="table-responsive" ref="tablebUMLTwo">
-              <tr v-for="tr in rowTable">
-                <td v-for="td in 900" style="border:1px solid #000000;"></td>
-              </tr>
-            </table>
-          </div>
+      <v-flex
+        :class="setClass('pb-5 pr-3')"
+        v-show="which_one=='U/L' || which_one== !isFullscreen "
+      >
+        <div v-show="isFullscreen">
+          <span class="countUpper text-white"></span>
+          <span class="countMiddle text-white"></span>
+          <span class="countLower text-white"></span>
+        </div>
+        <div class="ul-coltabledivlast">
+          <table class="table-responsive" ref="tablebUMLTwo">
+            <tr v-for="tr in rowTable">
+              <td v-for="td in 900" style="border:1px solid #000000;"></td>
+            </tr>
+          </table>
         </div>
       </v-flex>
-      <v-flex xs12 sm12 md6 lg6 xl6 :class="setClass('pl-3 pb-5')" v-show="false">
-        <div
-          class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-          v-show="which_one=='NUM' || which_one==true "
-        >
-          <div v-show="isFullscreen" ref="sortNumber">
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-            <span class="text-white"></span>
-          </div>
-          <div class="my-coltabledivlast">
-            <table class="table-responsive" ref="tableNumberTwo">
-              <tr v-for="tr in rowTable">
-                <td v-for="td in 100" style="border:1px solid #000000;"></td>
-              </tr>
-            </table>
-          </div>
+      <v-flex
+        :class="setClass('pl-3 pb-5')"
+        v-show="which_one=='NUM' || which_one== !isFullscreen "
+      >
+        <div v-show="isFullscreen" ref="sortNumber">
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+          <span class="text-white"></span>
+        </div>
+        <div class="num-coltabledivlast">
+          <table class="table-responsive" ref="tableNumberTwo">
+            <tr v-for="tr in rowTable">
+              <td v-for="td in 100" style="border:1px solid #000000;"></td>
+            </tr>
+          </table>
         </div>
       </v-flex>
     </v-layout>
@@ -92,7 +84,7 @@ export default {
     //first,last,both,two
     trendType: {
       type: String,
-      required: true
+      default: "firstDigit"
     },
     rowTable: {
       type: Number,
@@ -102,13 +94,13 @@ export default {
     which_one: {
       default: true
     },
-    isFullscreen:{
-      type:Boolean,
-      default:false
-    } ,
-    lop:{
-      type:Number,
-      default:130
+    isFullscreen: {
+      type: Boolean,
+      default: false
+    },
+    lop: {
+      type: Number,
+      default: 130
     }
   },
   data() {
@@ -130,7 +122,15 @@ export default {
 
     // this.autoScroll();
   },
-  computed:{
+  computed: {
+    trendMapGrid(){
+      if(this.isFullscreen){
+      return "xs12 sm12 md6 lg6 xl12"
+      }else{
+      return "xs12 sm12 md6 lg6 xl6"
+
+      }
+    }
     // setClass(value){
     //   if(this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl){
     //     return value
@@ -138,23 +138,28 @@ export default {
     // }
   },
   watch: {
-    trendType() {
-      this.getTableChartBS();
-    }
+    // trendType() {
+    //   this.getTableChartBS();
+    // },
     // tbdatachart() {
     //   this.number =
     //     this.tbdatachart[this.tbdatachart.length - 2] +
     //     "" +
     //     this.tbdatachart[this.tbdatachart.length - 1];
-
     //   let d = this.lastGameID + "\n" + this.tbdatachart + "\n" + this.timeGame;
     //   this.addNew(this.number, d);
     // }
   },
   methods: {
-     setClass(value){
-      if(this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.lg || this.$vuetify.breakpoint.xl){
-        return value
+    setClass(value) {
+      if (
+        this.$vuetify.breakpoint.md ||
+        this.$vuetify.breakpoint.lg ||
+        this.$vuetify.breakpoint.xl
+      ) {
+        return value +  this.trendMapGrid;
+      }else{
+        return this.trendMapGrid
       }
     },
     clearTrendMap() {
@@ -196,27 +201,27 @@ export default {
     //   this.clearTrendMap();
     //   this.getTableChartBS();
     // },
-    autoScroll() {
-      let _this = this;
-      // setTimeout(function() {
-      let lop =
-        $(".my-coltabledivlast")
-          .first()
-          .width() - 30;
-      let valuebs = $(_this.$refs.tablebsTwo).find(".mystylelast")[0]
-        .offsetLeft;
-      let valueoe = $(_this.$refs.tableOETwo).find(".oestylelast")[0]
-        .offsetLeft;
-      let valueuml = $(_this.$refs.tablebUMLTwo).find(".umlstylelast")[0]
-        .offsetLeft;
-      let valuenum = $(_this.$refs.tableNumberTwo).find(".numScroll")[0]
-        .offsetLeft;
-      $(_this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
-      $(_this.$refs.tableOETwo).scrollLeft(valueoe - lop);
-      $(_this.$refs.tablebUMLTwo).scrollLeft(valueuml - lop);
-      $(_this.$refs.tableNumberTwo).scrollLeft(valuenum - lop);
-      // }, 1000);
-    },
+    // autoScroll() {
+    //   let _this = this;
+    //   // setTimeout(function() {
+    //   let lop =
+    //     $(".my-coltabledivlast")
+    //       .first()
+    //       .width() - 30;
+    //   let valuebs = $(_this.$refs.tablebsTwo).find(".mystylelast")[0]
+    //     .offsetLeft;
+    //   let valueoe = $(_this.$refs.tableOETwo).find(".oestylelast")[0]
+    //     .offsetLeft;
+    //   let valueuml = $(_this.$refs.tablebUMLTwo).find(".umlstylelast")[0]
+    //     .offsetLeft;
+    //   let valuenum = $(_this.$refs.tableNumberTwo).find(".numScroll")[0]
+    //     .offsetLeft;
+    //   $(_this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
+    //   $(_this.$refs.tableOETwo).scrollLeft(valueoe - lop);
+    //   $(_this.$refs.tablebUMLTwo).scrollLeft(valueuml - lop);
+    //   $(_this.$refs.tableNumberTwo).scrollLeft(valuenum - lop);
+    //   // }, 1000);
+    // },
     // sleep(milliseconds) {
     //   return new Promise(resolve => setTimeout(resolve, milliseconds));
     // },
@@ -389,12 +394,11 @@ export default {
             this.$refs.tablebsTwo.children[i].children[j].classList.add(
               "mystylelast"
             );
-            let lop =
-              $(".my-coltabledivlast")
-                .first()
-                .width() - this.lop;
+            let lop = this.getClassWidth("bs-coltabledivlast")- this.lop;
             let valuebs = $(this.$refs.tablebsTwo).find(".mystylelast")[0]
               .offsetLeft;
+            //  alert(valuebs + "valuebs")
+
             $(this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
 
             // $(this.$refs.tablebsTwo)
@@ -545,6 +549,16 @@ export default {
         }
       }
     },
+    getClassWidth(className) {
+      let result = 0
+      for (let i = 0; i <= 4; i++) {
+         result = $(`.${className}:eq(${i})`).width()
+        if(result>0){
+          break
+        }
+      }
+      return result
+    },
 
     //odd even............................................................
     tablechartOE() {
@@ -568,12 +582,10 @@ export default {
             this.$refs.tableOETwo.children[i].children[j].classList.add(
               "oestylelast"
             );
-            let lop =
-              $(".my-coltabledivlast")
-                .first()
-                .width() - this.lop;
+            let lop = this.getClassWidth("oe-coltabledivlast") - this.lop;
             let valueoe = $(this.$refs.tableOETwo).find(".oestylelast")[0]
               .offsetLeft;
+            // alert("OE "+ lop);
             $(this.$refs.tableOETwo).scrollLeft(valueoe - lop);
 
             // $(this.$refs.tableOETwo)
@@ -750,10 +762,7 @@ export default {
             this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
               "umlstylelast"
             );
-            let lop =
-              $(".my-coltabledivlast")
-                .first()
-                .width() - this.lop;
+            let lop =this.getClassWidth("ul-coltabledivlast")- this.lop;
             let valueuml = $(this.$refs.tablebUMLTwo).find(".umlstylelast")[0]
               .offsetLeft;
             $(this.$refs.tablebUMLTwo).scrollLeft(valueuml - lop);
@@ -799,7 +808,7 @@ export default {
                     .textContent === "0"
                 ) {
                   countLower++;
-                  $(".countLower").text("lower"+ " = " + countLower);
+                  $(".countLower").text("lower" + " = " + countLower);
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
@@ -937,10 +946,7 @@ export default {
             this.$refs.tableNumberTwo.children[k].children[j].classList.add(
               "numScroll"
             );
-            let lop =
-              $(".my-coltabledivlast")
-                .first()
-                .width() - this.lop;
+            let lop = this.getClassWidth("num-coltabledivlast")- this.lop;
             let valuenum = $(this.$refs.tableNumberTwo).find(".numScroll")[0]
               .offsetLeft;
             $(this.$refs.tableNumberTwo).scrollLeft(valuenum - lop);
