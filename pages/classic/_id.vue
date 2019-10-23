@@ -671,13 +671,13 @@ export default {
             this.mode = "vertical";
 
             if (val == "win") {
-                this.text = this.$tc('msg.Win Bet');
+                this.text = this.$tc('msg.winbet');
                 this.color = "#2962FF";
                 $(".getupdatebalance")[0].click()
-                $("#playwin")[0].click()
+                // $("#playwin")[0].click()
                 
             } else {
-                this.text = this.$tc('msg.Lose Bet');
+                this.text = this.$tc('msg.losebet');
                 this.color = "#D50000";
             }
         },

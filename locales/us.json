@@ -55,8 +55,6 @@
         "BetId": "Bet Id",
         "Betdetail": "Bet detail",
         "Time": "Time",
-        "Amount": "Amount",
-        "Payout": "Payout",
         "Bet Status": "Bet Status",
         "Total": "Total",
         "Total This Page": "Total (This Page)",
@@ -64,8 +62,6 @@
         "Game Mode": "Game Mode",
         "Result": "Result",
         "result out time": "result out time",
-        "Win Bet": "Win Bet",
-        "Lose Bet": "Lose Bet",
         "minute": "Minute",
         "loading": "loading...",
         "Stock": "Stock",
@@ -81,6 +77,7 @@
         "moneynotenough": "Money Not Enough",
         "confirmed": "Confirmed",
         "betclosed": "Bet Closed",
+        "chooselanguage": "Choose Language",
 
 
         "resultintroduction": "result introduction",

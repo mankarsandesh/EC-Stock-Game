@@ -54,8 +54,6 @@
         "BetId": "下注单号",
         "Betdetail": "投注细节",
         "Time": "下注时间",
-        "Amount": "下注金额",
-        "Payout": "赔率",
         "Bet Status": "投注状态",
         "Total": "總",
         "Total This Page": "總計 (本頁",
@@ -63,8 +61,6 @@
         "Game Mode": "遊戲模式",
         "Result": "結果",
         "result out time": "結果出來了",
-        "Win Bet": "贏得賭注",
-        "Lose Bet": "輸掉賭注",
         "minute": "分鐘",
         "loading": "裝載...",
         "Stock": "股票",
@@ -80,6 +76,7 @@
         "moneynotenough": "余额不足",
         "confirmed": "下注成功",
         "betclosed": "下注已关盘",
+        "chooselanguage": "選擇語言",
 
 
 

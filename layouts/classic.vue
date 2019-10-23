@@ -42,7 +42,8 @@
 
         <v-toolbar align-center justify-center class="nav-tab">
             <v-container mx-auto py-0 px-0>
-                <v-layout>
+
+                <v-layout v-if="ischangechartview">
                     <v-tabs v-model="tab" color="cyan" grow>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="(items1,idx1) in navList" :key="idx1">
@@ -73,10 +74,10 @@
                     </v-tabs>
                 </v-layout>
 
-                <!-- <v-layout>
+                <!-- <v-layout v-if="ischangechartview">
                     <v-tabs color="cyan" grow>
                         <v-tabs-slider color="yellow" grow></v-tabs-slider>
-                        <v-tab v-for="(item,i) in navList" :key="i" :href="'#' + item.name" >
+                        <v-tab v-for="(item,i) in navList" :key="i" :href="'#' + item.name">
                             {{ $t('navlist.'+item.name) }}
                         </v-tab>
 
@@ -229,6 +230,7 @@ export default {
     },
     data() {
         return {
+            currentItemss: null,
             urrentItemss: null,
             currentItems: "tab-Big-Small",
             menu: [],

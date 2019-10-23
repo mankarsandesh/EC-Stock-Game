@@ -37,8 +37,8 @@
                                 <th>{{$t('msg.gameid')}}</th>
                                 <th>{{$t('msg.Betdetail')}}</th>
                                 <th>{{$t('msg.Time')}}</th>
-                                <th>{{$t('msg.Amount')}}</th>
-                                <th>{{$t('msg.Payout')}}</th>
+                                <th>{{$t('msg.amount')}}</th>
+                                <th>{{$t('msg.payout')}}</th>
                             </tr>
                             <tr>
                                 <td>001201910171203003</td>
