@@ -6,9 +6,12 @@
         <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
         <span class="timer total_classic" :title="datalastdraw" v-if="load">{{dataslastdraw}}</span>
         <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
-        <span class="timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
-        <span class="timer" v-else-if="time == 0">{{$t('msg.marketclosed')}}</span>
-        <span class="timer" v-else>{{ time != $t('msg.loading') ? $t('msg.betnow')+':':''}}{{time}}</span>
+
+        <span class="timer color-timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
+        <span class="timer color-timer" v-else-if="time == 0">{{$t('msg.marketclosed')}}</span>
+        <span :class="time == '00:05' || time == '00:03' || time == '00:01' ? 'timer color-timer':'timer'" v-else>
+            {{ time != $t('msg.loading') ? $t('msg.betnow')+':':''}}{{time}}
+        </span>
 
         <button class="timer" @click="ischangechartview = !ischangechartview" v-if="$vuetify.breakpoint.smAndDown">
             <i class="fa fa-table" aria-hidden="true" v-show="!ischangechartview" @click="getonview()"></i>
@@ -43,7 +46,7 @@ export default {
         }, 1000)
         const socket = openSocket("https://websocket-timer.herokuapp.com");
         socket.on("time", data => {
-            this.getTimeNow();
+            // this.getTimeNow();
             let times;
             let calculat;
             let lasttime;
@@ -89,7 +92,7 @@ export default {
             let Zone = new Date().toLocaleString("china", {
                 timeZone: "Asia/Shanghai"
             });
-            var cd = new Date(Zone);
+            var cd = new Date(Zone)
             this.TimeNow =
                 this.setZero(cd.getHours(), 2) + ":" +
                 this.setZero(cd.getMinutes(), 2) + ":" +
@@ -172,8 +175,9 @@ export default {
 
 .Reference {
     border: 1px solid #ffc107;
-    padding: 4px 10px;
+    padding: 5px 6px;
     border-radius: 10px;
+    font-size: 1.1rem;
     cursor: pointer;
     background-color: #384e63;
     color: #fff;
@@ -181,11 +185,16 @@ export default {
 
 .timer {
     border: 1px solid #ffc107;
-    padding: 4px 6px;
+    padding: 3px 6px;
     border-radius: 10px;
     font-size: 1.1rem;
     cursor: pointer;
     display: inline-table;
+}
+
+.color-timer {
+    background-color: red;
+    color: white;
 }
 
 .round-number {

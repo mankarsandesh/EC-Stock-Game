@@ -190,10 +190,11 @@
                 </v-layout>
             </v-container>
             <v-container pa-0 pb-2>
-                <v-footer>
-                    <v-flex text-xs-center xs12>
+                <v-footer  color="#384e63" height="80">
+                    <v-flex text-xs-center xs12 white--text>
                         &copy; Copyright {{ new Date().getFullYear() }} TNK - All Rights Reserved
                     </v-flex>
+                    
                 </v-footer>
             </v-container>
         </v-content>
