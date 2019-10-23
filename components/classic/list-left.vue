@@ -38,7 +38,7 @@
                     <tr v-for="(data, index) in getBetresult()">
                         <td class="text-left">
                             <i class="fa fa-circle-o text-danger"></i>
-                            <b>{{$t('msg.Stock')}}</b>: {{data.Stock}} <b>{{$t('msg.Time')}}</b>: {{data.Time}} <b>{{$t('msg.Result')}}</b> {{data.Result}}
+                            <b>{{$t('msg.Stock')}}</b>: {{data.Stock}} <b>{{$t('msg.Time')}}</b>: {{data.Time}} {{$t('msg.minute')}} <b>{{$t('msg.Result')}}</b> {{data.Result}}
                         </td>
                     </tr>
                 </table>
@@ -57,7 +57,7 @@
                         <td class="text-left">
                             <b>{{$t('msg.Time')}}</b>: {{data.Time}} <br>
                             <b>{{$t('msg.BetId')}}</b>: {{data.BetId}} <br>
-                            <b>{{$t('msg.Amount')}}</b>: {{data.Amount}} <br>
+                            <b>{{$t('msg.amount')}}</b>: {{data.Amount}} <br>
                             <b>{{$t('msg.Stock')}}</b>: {{data.Stock}} <br>
                             <b>{{$t('msg.gameid')}}</b>: {{data.gameid}} </td>
                     </tr>
@@ -98,15 +98,15 @@ export default {
         getBetresult() {
             let result = [{
                 Stock: "US dollar Index",
-                Time: "5 minute",
+                Time: "5",
                 Result: "98.8156",
             }, {
                 Stock: "BTC/USDT",
-                Time: "5 minute",
+                Time: "5",
                 Result: "7835.60",
             }, {
                 Stock: "BTC/USDT",
-                Time: "1 minute",
+                Time: "1",
                 Result: "7838.22",
             }]
             return result;

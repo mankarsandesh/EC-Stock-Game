@@ -31,7 +31,7 @@
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>
 
-        <v-card>
+        <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <input type="checkbox" /> {{$t('msg.preset')}}
@@ -158,7 +158,7 @@
             </v-tab-item>
         </v-tabs-items>
         <!-- end form typy bet -->
-        <v-card>
+        <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
                 <v-flex xs12 md6>
                     <input type="checkbox" />
@@ -177,6 +177,24 @@
                 </v-flex>
             </v-layout>
         </v-card>
+
+        <!-- <v-card v-if="!$vuetify.breakpoint.smAndDown">
+            <v-layout row wrap>
+                <v-flex xs12 md12>
+
+                    <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                            <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                        </v-img>
+                    </v-avatar>
+
+                    {{price}}
+                    <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
+                    <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
+
+                </v-flex>
+            </v-layout>
+        </v-card> -->
 
         <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ $t('gamemsg.'+baccarat1.name) }}</v-tab>
@@ -216,7 +234,9 @@
                             <th>{{$t('msg.payout')}}</th>
                             <th>{{$t('msg.amount')}}</th>
                             <th>
-                                <span @click="setPrice('reset')">{{$t('msg.deleteall')}}</span>
+                                <span class="cursor-pointer" flat @click="setPrice('reset')">{{$t('msg.deleteall')}}
+                                    <v-icon>delete</v-icon>
+                                </span>
                             </th>
                         </tr>
                         <tr v-for="(data ,idx11) in betDataShows" :key="idx11">
@@ -226,7 +246,9 @@
                                 <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :name="data.rule" :value="data.amount" />
                             </td>
                             <td>
-                                <button @click="deleteTodo(idx11)">Delete</button>
+                                <v-btn flat icon color="red" @click="deleteTodo(idx11)">
+                                    <v-icon>delete</v-icon>
+                                </v-btn>
                             </td>
                         </tr>
                         <tr>
@@ -260,7 +282,7 @@
                     </v-avatar>
                     <table>
                         <tr>
-                            <th>TWO DIGIT</th>
+                            <th>{{$t('gamemsg.twodigit')}}</th>
                         </tr>
                         <tr v-if="sntwoloopstart == 0">
                             <td class="top-bet" @click="betRow($event)">
@@ -306,7 +328,7 @@
         </span>
     </v-snackbar>
     <!-- end alertOutCome -->
-     <button hidden id="playwin" @click.prevent="playSound('/voice/winbet.mp3')"></button>
+    <button hidden id="playwin" @click.prevent="playSound('/voice/winbet.mp3')"></button>
 </div>
 </template>
 
@@ -480,6 +502,7 @@ export default {
 
         deleteTodo(index) {
             this.betData.betdetails.splice(index, 1);
+            this.betDataShows.splice(index, 1);
         },
 
         setPricetop(e) {
@@ -617,38 +640,42 @@ export default {
         getTime() {
             const socket = openSocket("https://websocket-timer.herokuapp.com");
             socket.on("time", data => {
-                let times, calculating;
+                let times, calculating, alert;
                 if (this.$route.params.id.split("-")[1] == "btc1") {
                     times = data.btc1.timer;
                     calculating = 41;
+                    alert = 60;
                 } else if (this.$route.params.id.split("-")[1] == "btc5") {
                     times = data.btc5.timer;
                     calculating = 241;
+                    alert = 300;
                 } else if (this.$route.params.id.split("-")[1] == "usindex") {
                     times = data.usindex.timer;
                     calculating = 241;
+                    alert = 300;
                 } else {
                     times = data.SH000001.timer;
                     calculating = 241;
+                    alert = 300;
                 }
 
                 if (times > calculating) {
                     this.getBetClosedopen('closed');
                 } else if (times == "close") {
                     this.getBetClosedopen('closed');
-                } else if (times == 40) {
+                } else if (times == calculating) {
                     this.getBetClosedopen('open');
                 }
 
-                if (times == 60) {
+                if (times == alert) {
                     this.getalertstartstop("stop")
                 } else if (times == calculating) {
                     this.getalertstartstop("start")
                 }
 
                 if (times == calculating - 4) {
-                    this.alertOutCome('win')
-                    // this.alertOutCome("lose");
+                    // this.alertOutCome('win')
+                    this.alertOutCome("lose");
                 }
             });
         },
@@ -671,13 +698,13 @@ export default {
             this.mode = "vertical";
 
             if (val == "win") {
-                this.text = this.$tc('msg.Win Bet');
+                this.text = this.$tc('msg.winbet');
                 this.color = "#2962FF";
                 $(".getupdatebalance")[0].click()
                 $("#playwin")[0].click()
-                
+
             } else {
-                this.text = this.$tc('msg.Lose Bet');
+                this.text = this.$tc('msg.losebet');
                 this.color = "#D50000";
             }
         },
@@ -747,7 +774,7 @@ export default {
 
 .set-text-alert {
     margin-top: 2%;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-left: 22%;
 }

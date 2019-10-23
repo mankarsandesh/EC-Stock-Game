@@ -170,9 +170,9 @@ export default {
                         callbacks: {
                             label: function (tooltipItem, data) {
                                 if (_this.stocks === "usindex") {
-                                    return (_this.$tc('msg.price') + tooltipItem.yLabel.toFixed(4));
+                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
                                 } else {
-                                    return (_this.$tc('msg.price') + tooltipItem.yLabel.toFixed(2));
+                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(2));
                                 }
 
                             }

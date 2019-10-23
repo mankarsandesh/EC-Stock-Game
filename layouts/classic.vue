@@ -42,7 +42,8 @@
 
         <v-toolbar align-center justify-center class="nav-tab">
             <v-container mx-auto py-0 px-0>
-                <v-layout>
+
+                <v-layout v-if="ischangechartview">
                     <v-tabs v-model="tab" color="cyan" grow>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="(items1,idx1) in navList" :key="idx1">
@@ -73,10 +74,10 @@
                     </v-tabs>
                 </v-layout>
 
-                <!-- <v-layout>
+                <!-- <v-layout v-if="ischangechartview">
                     <v-tabs color="cyan" grow>
                         <v-tabs-slider color="yellow" grow></v-tabs-slider>
-                        <v-tab v-for="(item,i) in navList" :key="i" :href="'#' + item.name" >
+                        <v-tab v-for="(item,i) in navList" :key="i" :href="'#' + item.name">
                             {{ $t('navlist.'+item.name) }}
                         </v-tab>
 
@@ -189,10 +190,11 @@
                 </v-layout>
             </v-container>
             <v-container pa-0 pb-2>
-                <v-footer>
-                    <v-flex text-xs-center xs12>
+                <v-footer  color="#384e63" height="80">
+                    <v-flex text-xs-center xs12 white--text>
                         &copy; Copyright {{ new Date().getFullYear() }} TNK - All Rights Reserved
                     </v-flex>
+                    
                 </v-footer>
             </v-container>
         </v-content>
@@ -229,6 +231,7 @@ export default {
     },
     data() {
         return {
+            currentItemss: null,
             urrentItemss: null,
             currentItems: "tab-Big-Small",
             menu: [],

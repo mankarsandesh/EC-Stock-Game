@@ -1,7 +1,7 @@
 <template>
 <v-dialog v-model="dialog" max-width="400">
     <v-card class="pa-3">
-        <v-card-title class="headline">Choose Language</v-card-title>
+        <v-card-title class="headline">{{$t('msg.chooselanguage')}}</v-card-title>
         <v-layout class="card-flag">
             <v-flex xs6 class="d-block card-flag" v-for="(item,index) in lang" :key="index">
                 <country-flag :country="item.country" size="big" />
