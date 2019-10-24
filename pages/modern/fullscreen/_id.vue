@@ -77,7 +77,7 @@
               ></chartApp>
             </v-flex>
             <v-flex>
-              <v-btn dark color="#003e70" :to="'/modern/desktop/' +$route.params.id">
+              <v-btn dark color="#003e70" @click="test()">
                 <v-icon left dark class="ma-0">exit_to_app</v-icon>exit
               </v-btn>
             </v-flex>
@@ -201,6 +201,11 @@ export default {
       "getStockCrawlerData",
       "getLoop"
     ])
+  },
+  methods:{
+    test(){
+      console.warn(this.$router.history)
+    }
   }
 };
 </script>
