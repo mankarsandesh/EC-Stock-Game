@@ -47,13 +47,13 @@
                     <v-tabs v-model="tab" color="cyan" grow>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="(items1,idx1) in navList" :key="idx1">
-                            <v-menu open-on-click offset-y transition="slide-x-transition">
+                            <v-menu open-on-hover offset-y transition="slide-y-transition">
                                 <template v-slot:activator="{ on }">
                                     <v-btn flat dark color="white" v-on="on">{{ $t('navlist.'+items1.name )}}</v-btn>
                                 </template>
                                 <v-list v-if="items1.children">
                                     <v-list-tile v-for="(items2, idx2 ) in items1.children" :key="idx2">
-                                        <v-menu open-on-hover offset-x transition="slide-x-transition">
+                                        <v-menu open-on-hover  offset-x transition="slide-x-transition">
                                             <template v-slot:activator="{on}">
                                                 <nuxt-link :to="'/classic/'+items2.url">
                                                     <v-btn flat dark color="black" v-on="on" @click="loadchart()">{{ $t('stockname.'+items2.name) }}{{ items2.name == 'btc1' ? ' 1 '+$t('msg.minute'):items2.name == 'btc5' ? ' 5 '+$t('msg.minute'):'' }}</v-btn>
@@ -190,11 +190,11 @@
                 </v-layout>
             </v-container>
             <v-container pa-0 pb-2>
-                <v-footer  color="#384e63" height="80">
+                <v-footer color="#384e63" height="80">
                     <v-flex text-xs-center xs12 white--text>
                         &copy; Copyright {{ new Date().getFullYear() }} TNK - All Rights Reserved
                     </v-flex>
-                    
+
                 </v-footer>
             </v-container>
         </v-content>
@@ -216,7 +216,11 @@ import livechart from "~/components/classic/livechart";
 import liveevens from "~/components/classic/evenchart";
 import dataslastdraw from "~/components/classic/dataslastdraw";
 import listleft from "~/components/classic/list-left";
-import navList from "~/data/json/menu.json";
+
+import stockbtc from "~/data/json/menustockbtc.json";
+import stockusindex from "~/data/json/menustockusindex.json";
+import stockchina from "~/data/json/menustockchina.json";
+
 import baccarat from "~/data/json/baccarat.json";
 import baccarats from "~/components/classic/baccarats";
 export default {
@@ -235,13 +239,14 @@ export default {
             urrentItemss: null,
             currentItems: "tab-Big-Small",
             menu: [],
-            navList: navList,
+            stockbtc: stockbtc,
+            stockusindex: stockusindex,
+            stockchina: stockchina,
+            navList: null,
             checkStockList: null,
             stockname: "btc1",
             checkStock: "live",
             tab: null,
-            tab1: null,
-            tab2: null,
             show1: true,
             clipped: false,
             drawer: false,
@@ -258,41 +263,35 @@ export default {
             widgets: false
         };
     },
-
     created() {
         this.setLanguage();
     },
     mounted() {
         setTimeout(() => {
-            window.scrollTo(0, 0);
+            window.scrollTo(0, 0)
         }, 1000);
-
         this.loadchart();
         this.getMenu();
         // this.asynInitCallApi();
         // websocket broadcast live time and timer
         const socket = openSocket("https://websocket-timer.herokuapp.com");
         socket.on("time", data => {
+            this.getNavbar(data);
             this.getAtivetab();
-            let times;
-            let calculat;
-            if (this.$route.params.id.split("-")[1] == "btc1") {
-                times = data.btc1.timer;
-                calculat = 41;
-            } else if (this.$route.params.id.split("-")[1] == "btc5") {
-                times = data.btc5.timer;
-                calculat = 241;
-            } else if (this.$route.params.id.split("-")[1] == "usindex") {
-                times = data.usindex.timer;
-                calculat = 241;
-            } else {
-                times = data.SH000001.timer;
-                calculat = 241;
-            }
-            // if (times == calculat) {
-            //     this.loadchart()
-            // }
         });
+    },
+    computed: {
+        ...mapGetters([
+            "getBalance",
+            "getStockLength",
+            "getlocale",
+            "getStockNewData",
+            "getReference",
+            "getstockname"
+        ]),
+        countryflag() {
+            return this.getlocale;
+        }
     },
     methods: {
         ...mapActions(["asynInitCallApi"]),
@@ -302,6 +301,15 @@ export default {
             if (lang == null) {
                 this.SET_LANG("cn");
                 localStorage.setItem("lang", this.getlocale);
+            }
+        },
+        getNavbar(data) {
+            if (data.usindex.timer != 'close' && data.SH000001.timer == 'close') {
+                this.navList = this.stockusindex
+            } else if (data.usindex.timer != 'close' && data.SH000001.timer != 'close') {
+                this.navList = this.stockchina
+            } else {
+                this.navList = this.stockbtc
             }
         },
         getMenu() {
@@ -342,7 +350,6 @@ export default {
                     title: "announcement",
                     to: "/classic/" + mn + "announcement"
                 },
-
                 {
                     icon: "bubble_chart",
                     title: "setting",
@@ -361,7 +368,7 @@ export default {
             }, 50);
             setTimeout(() => {
                 window.scrollTo(0, 0);
-            }, 1500);
+            }, 1200);
         },
         loadtable() {
             this.showtable = false;
@@ -389,20 +396,8 @@ export default {
                 this.tab = 3;
             }
         }
-    },
-    computed: {
-        ...mapGetters([
-            "getBalance",
-            "getStockLength",
-            "getlocale",
-            "getStockNewData",
-            "getReference",
-            "getstockname"
-        ]),
-        countryflag() {
-            return this.getlocale;
-        }
     }
+
 };
 </script>
 

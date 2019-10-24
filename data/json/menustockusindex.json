@@ -10,7 +10,7 @@
                     },
                     {
                         "url": "l-btc1-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "l-btc1-bsl",
@@ -51,7 +51,7 @@
                     },
                     {
                         "url": "l-btc5-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "l-btc5-bsl",
@@ -92,7 +92,7 @@
                     },
                     {
                         "url": "l-usindex-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "l-usindex-bsl",
@@ -123,171 +123,6 @@
                         "name": "Odd-Even Two Digit"
                     }
                 ]
-            },
-            {
-                "url": "l-SH000001-live",
-                "name": "SH000001",
-                "childrens": [{
-                        "url": "l-SH000001-live",
-                        "name": "live"
-                    },
-                    {
-                        "url": "l-SH000001-bsf",
-                        "name": "Big-Small First digit"
-                    },
-                    {
-                        "url": "l-SH000001-bsl",
-                        "name": "Big-Small Last Digit"
-                    },
-                    {
-                        "url": "l-SH000001-bsb",
-                        "name": "Big-Small Both Digit"
-                    },
-                    {
-                        "url": "l-SH000001-bst",
-                        "name": "Big-Small Two Digit"
-                    },
-                    {
-                        "url": "l-SH000001-oef",
-                        "name": "Odd-Even First Digit"
-                    },
-                    {
-                        "url": "l-SH000001-oel",
-                        "name": "Odd-Even Last Digit"
-                    },
-                    {
-                        "url": "l-SH000001-oeb",
-                        "name": "Odd-Even Both Digit"
-                    },
-                    {
-                        "url": "l-SH000001-oet",
-                        "name": "Odd-Even Two Digit"
-                    }
-                ]
-            },
-            {
-                "url": "l-SZ399001-live",
-                "name": "SZ399001",
-                "childrens": [{
-                        "url": "l-SZ399001-live",
-                        "name": "live"
-                    },
-                    {
-                        "url": "l-SZ399001-bsf",
-                        "name": "Big-Small First digit"
-                    },
-                    {
-                        "url": "l-SZ399001-bsl",
-                        "name": "Big-Small Last Digit"
-                    },
-                    {
-                        "url": "l-SZ399001-bsb",
-                        "name": "Big-Small Both Digit"
-                    },
-                    {
-                        "url": "l-SZ399001-bst",
-                        "name": "Big-Small Two Digit"
-                    },
-                    {
-                        "url": "l-SZ399001-oef",
-                        "name": "Odd-Even First Digit"
-                    },
-                    {
-                        "url": "l-SZ399001-oel",
-                        "name": "Odd-Even Last Digit"
-                    },
-                    {
-                        "url": "l-SZ399001-oeb",
-                        "name": "Odd-Even Both Digit"
-                    },
-                    {
-                        "url": "l-SZ399001-oet",
-                        "name": "Odd-Even Two Digit"
-                    }
-                ]
-            },
-            {
-                "url": "l-SH00300-live",
-                "name": "SH00300",
-                "childrens": [{
-                        "url": "l-SH00300-live",
-                        "name": "live"
-                    },
-                    {
-                        "url": "l-SH00300-bsf",
-                        "name": "Big-Small First digit"
-                    },
-                    {
-                        "url": "l-SH00300-bsl",
-                        "name": "Big-Small Last Digit"
-                    },
-                    {
-                        "url": "l-SH00300-bsb",
-                        "name": "Big-Small Both Digit"
-                    },
-                    {
-                        "url": "l-SH00300-bst",
-                        "name": "Big-Small Two Digit"
-                    },
-                    {
-                        "url": "l-SH00300-oef",
-                        "name": "Odd-Even First Digit"
-                    },
-                    {
-                        "url": "l-SH00300-oel",
-                        "name": "Odd-Even Last Digit"
-                    },
-                    {
-                        "url": "l-SH00300-oeb",
-                        "name": "Odd-Even Both Digit"
-                    },
-                    {
-                        "url": "l-SH00300-oet",
-                        "name": "Odd-Even Two Digit"
-                    }
-                ]
-            },
-            {
-                "url": "l-SZ399415-live",
-                "name": "SZ399415",
-                "childrens": [{
-                        "url": "l-SZ399415-live",
-                        "name": "live"
-                    },
-                    {
-                        "url": "l-SZ399415-bsf",
-                        "name": "Big-Small First digit"
-                    },
-                    {
-                        "url": "l-SZ399415-bsl",
-                        "name": "Big-Small Last Digit"
-                    },
-                    {
-                        "url": "l-SZ399415-bsb",
-                        "name": "Big-Small Both Digit"
-                    },
-                    {
-                        "url": "l-SZ399415-bst",
-                        "name": "Big-Small Two Digit"
-                    },
-                    {
-                        "url": "l-SZ399415-oef",
-                        "name": "Odd-Even First Digit"
-                    },
-                    {
-                        "url": "l-SZ399415-oel",
-                        "name": "Odd-Even Last Digit"
-                    },
-                    {
-                        "url": "l-SZ399415-oeb",
-                        "name": "Odd-Even Both Digit"
-                    },
-                    {
-                        "url": "l-SZ399415-oet",
-                        "name": "Odd-Even Two Digit"
-                    }
-
-                ]
             }
 
         ]
@@ -304,7 +139,7 @@
                 },
                 {
                     "url": "st-usindex-bsf",
-                    "name": "Big-Small First digit"
+                    "name": "Big-Small First Digit"
                 },
                 {
                     "url": "st-usindex-bsl",
@@ -349,7 +184,7 @@
                     },
                     {
                         "url": "st-btc1-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "st-btc1-bsl",
@@ -390,7 +225,7 @@
                     },
                     {
                         "url": "st-btc5-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "st-btc5-bsl",
@@ -436,7 +271,7 @@
                     },
                     {
                         "url": "st-SH000001-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "st-SH000001-bsl",
@@ -477,7 +312,7 @@
                     },
                     {
                         "url": "st-SZ399001-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "st-SZ399001-bsl",
@@ -518,7 +353,7 @@
                     },
                     {
                         "url": "st-SH00300-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "st-SH00300-bsl",
@@ -559,7 +394,7 @@
                     },
                     {
                         "url": "st-SZ399415-bsf",
-                        "name": "Big-Small First digit"
+                        "name": "Big-Small First Digit"
                     },
                     {
                         "url": "st-SZ399415-bsl",

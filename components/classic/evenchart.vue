@@ -41,7 +41,12 @@ export default {
             let pointBackgroundColor = [];
             let value_no;
             let num;
-
+            let title;
+            if (this.StockData[0].stockname == 'BTC/USDT') {
+                title = "BTC/USDT 5"
+            } else {
+                title = this.StockData[0].stockname
+            }
             this.StockData.forEach(element => {
                 let no_firsts = element.PT[element.PT.length - 2].toString();
                 let no_lasts = element.PT[element.PT.length - 1].toString();
@@ -143,7 +148,7 @@ export default {
                     },
                     title: {
                         display: true,
-                        // text: 'LOADS'
+                        text: this.$t('msg.Stock') + ': ' + title
                     },
                     pan: {
                         enabled: true,
