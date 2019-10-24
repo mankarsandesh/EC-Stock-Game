@@ -82,7 +82,7 @@ E7TvW271kTDd+sTvAwAfDt/yEQDo298CDADyzEaQTwSfWQAAAABJRU5ErkJggg=="
                   d="M416.7,80c-4.9-9.9-12.5-14.9-22.5-14.9H63c-10,0-17.6,5-22.5,14.8l-43.9,83.1h3.7h456.6h3.7L416.7,80z"
                 />
               </g>
-              <text x="59" y="91" fill="#003E70" style="font-size: 14px;">total bet : $</text>
+              <text x="59" y="91" fill="#003E70" style="font-size: 14px;">total bet : $ {{getAllBettingAmount}}</text>
               <text
                 id="footerPriceMultiGames"
                 x="133"
@@ -223,7 +223,7 @@ U4ABANvrviGthntUAAAAAElFTkSuQmCC"
                 />
               </g>
               <text x="269" y="87" fill="#003E70">$</text>
-              <text x="300" y="87" fill="#003E70" id="good">{{alltotals}}</text>
+              <text x="300" y="87" fill="#003E70" id="good">{{getAllBettingAmount}}</text>
             </g>
             <g clip-path="url(#SVGID_2_)">
               <image
@@ -957,7 +957,7 @@ export default {
     ...mapMutations(["setFooterBetAmount", "clearDataMultiGameBet"])
   },
   computed: {
-    ...mapGetters(["getCoins_modern", "checkFooterBet"])
+    ...mapGetters(["getCoins_modern", "checkFooterBet","getAllBettingAmount"])
   }
 };
 </script>

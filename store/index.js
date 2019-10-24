@@ -204,10 +204,17 @@ const createStore = () => {
             }
         },
         getters: {
+            // get amount of betting that already confirm
             getBettingAmount(state) {
                 return state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
             },
-            // get on going bet
+            // get amount of betting already confirm and not confirm
+            getAllBettingAmount(state) {
+                let amount1 = state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
+                let amount2 = state.multiGameBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
+                return amount1 + amount2
+            },
+            // get data betting
             getOnGoingBet(state) {
                 return state.onGoingBet
             },
@@ -250,9 +257,11 @@ const createStore = () => {
                 }
                 return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
             },
+            //get betting data
             getOnBetting(state) {
                 return state.onGoingBet
             },
+            // get data betting that not confirn=m yet "available on fullscreen mode and multi game"
             getMultiGameBet(state) {
                 return state.multiGameBet
             },
