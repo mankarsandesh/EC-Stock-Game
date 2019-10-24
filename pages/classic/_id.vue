@@ -230,12 +230,12 @@
                     </v-card>
                     <table>
                         <tr>
-                            <th>{{$t('msg.gamerule')}}</th>
-                            <th>{{$t('msg.payout')}}</th>
-                            <th>{{$t('msg.amount')}}</th>
-                            <th>
+                            <th class="header">{{$t('msg.gamerule')}}</th>
+                            <th class="header">{{$t('msg.payout')}}</th>
+                            <th class="header">{{$t('msg.amount')}}</th>
+                            <th class="header">
                                 <span class="cursor-pointer" flat @click="setPrice('reset')">{{$t('msg.deleteall')}}
-                                    <v-icon>delete</v-icon>
+                                    <v-icon size="18" color="white">delete</v-icon>
                                 </span>
                             </th>
                         </tr>
@@ -247,7 +247,7 @@
                             </td>
                             <td>
                                 <v-btn flat icon color="red" @click="deleteTodo(idx11)">
-                                    <v-icon>delete</v-icon>
+                                    <v-icon size="20">delete</v-icon>
                                 </v-btn>
                             </td>
                         </tr>
@@ -323,9 +323,12 @@
 
     <!-- alertOutCome -->
     <v-snackbar class="tops" v-model="alertSS" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
-        <span class="text-center set-text-alert">
+        <!-- <span class="text-center set-text-alert" v-if="color == 'success'">
+            <v-icon size="40" white--text>check</v-icon>
+            <br>
             {{alertext}}
-        </span>
+        </span> -->
+        <span class="text-center set-text-alert">{{alertext}}</span>
     </v-snackbar>
     <!-- end alertOutCome -->
     <button hidden id="playwin" @click.prevent="playSound('/voice/winbet.mp3')"></button>
@@ -922,7 +925,7 @@ th {
 th,
 td {
     text-align: center;
-    padding: 8px;
+    padding: 3px;
     border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
 }
@@ -962,6 +965,11 @@ tr:nth-child(even) {
     box-shadow: inset 0 0 0 transparent;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     pointer-events: none;
+}
+
+.header {
+    color: white;
+    background-color: #2d3945;
 }
 
 .v-tabs__wrapper .v-tabs__container .text-whites a {

@@ -1,8 +1,8 @@
 <template>
 <div class="text-xs-center">
+
     <canvas ref="planetchart" class="set-height"></canvas>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
-
 </div>
 </template>
 
@@ -44,6 +44,12 @@ export default {
             let labelss = [];
             let datas = [];
             let lastdraw = [];
+            let title;
+            if (this.StockData[0].stockname == 'BTC/USDT') {
+                title = this.StockData[0].stockname+" 5"
+            } else {
+                title = this.StockData[0].stockname
+            }
             this.StockData.forEach(element => {
                 let date = new Date(element.created_at.replace(/-/g, "/"));
                 labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + " " + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
@@ -114,7 +120,7 @@ export default {
                     },
                     title: {
                         display: true,
-                        // text: 'LOADS'
+                        text: this.$t('msg.Stock') + ': ' + title
                     },
                     pan: {
                         enabled: true,
