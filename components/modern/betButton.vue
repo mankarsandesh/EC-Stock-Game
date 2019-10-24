@@ -2,12 +2,12 @@
   <div class="p-relative">
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
-    <!-- <div
+    <div
       class="bet-close"
-      v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
+      v-if="checkBetClose  || getLotteryDraw(stockName) ==='close' || getLotteryDraw(stockName) == null "
     >
       <p>bet close</p>
-    </div>-->
+    </div>
     <!-- end for show bet close -->
     <v-layout row>
       <popper
@@ -764,10 +764,10 @@ export default {
     ]),
     // return true if bet close
     checkBetClose() {
-      if (this.getStockLoop(this.$route.params.id) == 1) {
-        return this.getLotteryDraw(this.$route.params.id) > 40;
+      if (this.getStockLoop(this.stockName) == 1) {
+        return this.getLotteryDraw(this.stockName) > 40;
       } else {
-        return this.getLotteryDraw(this.$route.params.id) > 240;
+        return this.getLotteryDraw(this.stockName) > 240;
       }
     }
   },
@@ -793,4 +793,23 @@ export default {
 };
 </script>
 <style scoped>
+.bet-close {
+  width: 100%;
+  z-index: 10;
+  height: 100%;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  opacity: 0.5;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.bet-close p {
+  position: absolute;
+  font-size: 10rem;
+  z-index: 50;
+  text-transform: capitalize;
+}
 </style>
