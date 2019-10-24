@@ -24,7 +24,7 @@
         <div class="popper">
           <!-- this component display the modal,the modal let users choose amount they want to bet -->
           <betModal
-            :stockName="$route.params.id"
+            :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="'firstdigit-'+data.rule"
             :payout="data.payout"
@@ -57,7 +57,7 @@
           <div class="popper">
             <!-- this component display the modal,the modal let users choose amount they want to bet -->
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="firstdigit-high"
               :payout="payout_high_mid_low"
@@ -83,7 +83,7 @@
           <div class="popper">
             <!-- this component display the modal,the modal let users choose amount they want to bet -->
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="firstdigit-mid"
               :payout="payout_high_mid_low"
@@ -105,7 +105,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="firstdigit-low"
               :payout="payout_high_mid_low"
@@ -134,7 +134,7 @@
       >
         <div class="popper">
           <betModal
-            :stockName="$route.params.id"
+            :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="'lastdigit-'+data.rule"
             :payout="data.payout"
@@ -166,7 +166,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="lastdigit-high"
               :payout="payout_high_mid_low"
@@ -188,7 +188,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="lastdigit-mid"
               :payout="payout_high_mid_low"
@@ -210,7 +210,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="lastdigit-low"
               :payout="payout_high_mid_low"
@@ -240,7 +240,7 @@
       >
         <div class="popper">
           <betModal
-            :stockName="$route.params.id"
+            :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="'bothdigit-'+data.rule"
             :payout="data.payout"
@@ -273,7 +273,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="bothdigit-high"
               :payout="payout_high_mid_low"
@@ -295,7 +295,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="bothdigit-mid"
               :payout="payout_high_mid_low"
@@ -317,7 +317,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="bothdigit-low"
               :payout="payout_high_mid_low"
@@ -347,7 +347,7 @@
       >
         <div class="popper">
           <betModal
-            :stockName="$route.params.id"
+            :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="'twodigit-'+data.rule"
             :payout="data.payout"
@@ -379,7 +379,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="twodigit-high"
               :payout="payout_high_mid_low"
@@ -401,7 +401,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="twodigit-mid"
               :payout="payout_high_mid_low"
@@ -423,7 +423,7 @@
         >
           <div class="popper">
             <betModal
-              :stockName="$route.params.id"
+              :stockName="stockName"
               :loop="getLoop($route.params.id)"
               betId="twodigit-low"
               :payout="payout_high_mid_low"
@@ -502,7 +502,7 @@
       >
         <div class="popper">
           <betModal
-            :stockName="$route.params.id"
+            :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="'firstdigit-'+index"
             :payout="payout_09"
@@ -527,7 +527,7 @@
       >
         <div class="popper">
           <betModal
-            :stockName="$route.params.id"
+            :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="'lastdigit-'+index"
             :payout="payout_09"
@@ -552,7 +552,7 @@
       >
         <div class="popper">
           <betModal
-            :stockName="$route.params.id"
+            :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="'bothdigit-'+index"
             :payout="payout_18"
@@ -577,7 +577,7 @@
       >
         <div class="popper">
           <betModal
-            :stockName="$route.params.id"
+            :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="index < 10 ? 'twodigit-0' + index :'twodigit-'+index"
             :payout="payout_99"
