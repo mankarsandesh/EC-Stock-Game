@@ -1,6 +1,6 @@
 <template>
-  <v-flex xs6>
-    <div class="border-flex">
+  <!-- <v-flex xs6>
+    <div class="border-flex"> -->
       <v-layout>
         <v-flex xs12 class="pt-2">
           <h2 class="text-uppercase">{{stockid}} {{getStockLoop(stockid)}} minute loop</h2>
@@ -8,6 +8,7 @@
             :data="getStockById(stockid).stockPrice"
             :time="getStockById(stockid).stockTime"
             :key="getStockById(stockid).stockPrice[0]"
+            :stockid="stockid"
             height="400px"
           ></chartApp>
           <v-layout align-center justify-end>
@@ -59,8 +60,8 @@
           </v-flex>
         </v-flex>
       </v-layout>
-    </div>
-  </v-flex>
+    <!-- </div>
+  </v-flex> -->
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -89,11 +90,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.border-flex{
-   border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    padding: 15px
-}
-</style>

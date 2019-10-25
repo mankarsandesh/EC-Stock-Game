@@ -7,6 +7,7 @@ const createStore = () => {
             footerBetAmount: 0,
             onGoingBet: [],
             multiGameBet: [],
+            stockMultigame: ["usindex", "SH000001"],
             locales: ['cn', 'us', 'th', 'la'],
             locale: localStorage.getItem('lang'),
             balance: 895000,
@@ -204,6 +205,10 @@ const createStore = () => {
             }
         },
         getters: {
+            // get stock id to show in multi game
+            getStockMultigame(state) {
+                return state.stockMultigame
+            },
             // get amount of betting that already confirm
             getBettingAmount(state) {
                 return state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
