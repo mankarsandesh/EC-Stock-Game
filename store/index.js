@@ -208,7 +208,7 @@ const createStore = () => {
             getBettingAmount(state) {
                 return state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
             },
-            // get amount of betting already confirm and not confirm
+            // get amount of betting already confirmed and not confirm
             getAllBettingAmount(state) {
                 let amount1 = state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
                 let amount2 = state.multiGameBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
@@ -217,6 +217,15 @@ const createStore = () => {
             // get data betting
             getOnGoingBet(state) {
                 return state.onGoingBet
+            },
+            getAmountBettingByStockId: (state) => (stockId) => {
+                function getAmount(object) {
+                    // find stockname 
+                    if (object.findIndex(x => x.stockName === stockId) == -1) return 0
+                    let result = object.filter(x => x.stockName === stockId).map(x => x.betValue).reduce((a, b) => a + b, 0)
+                    return parseInt(result)
+                }
+                return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
             },
             // to show ship and amount on bet button
             getAmountMultiGameBet: (state) => (data) => {

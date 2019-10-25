@@ -12,7 +12,7 @@
           ></chartApp>
           <v-layout align-center justify-end>
             <v-flex >
-              <h4>$ 1500</h4>
+              <h4>$ {{getAmountBettingByStockId(stockid)}}</h4>
             </v-flex>
             <v-spacer></v-spacer>
             <v-flex >
@@ -82,7 +82,8 @@ export default {
       "getStockLastDraw",
       "getLotteryDraw",
       "lotterydraw",
-      "getStockById"
+      "getStockById",
+      "getAmountBettingByStockId"
     ])
   }
 };

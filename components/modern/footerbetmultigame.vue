@@ -361,7 +361,7 @@ TNe+8/cAwPXhW34EAPr2hwADAH8CSPUXISPpAAAAAElFTkSuQmCC"
                 @click="confirmAlert()"
                 v-if="isSending == false"
               >
-                <text x="904" y="87" fill="#003E70">{{confirm}}</text>
+                <text x="904" y="87" fill="#003E70">confirm</text>
                 <text
                   x="972"
                   y="71"
@@ -438,7 +438,7 @@ rkJggg=="
 				L836.9,19.2z"
                 />
               </g>
-              <g style="cursor:pointer;text-transform: uppercase;" @click="superclear()">
+              <g style="cursor:pointer;text-transform: uppercase;" @click="clearDataMultiGameBet()">
                 <text x="1044" y="87" fill="white">clear</text>
               </g>
             </g>
@@ -950,7 +950,7 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      isSending: true
+      isSending: false
     };
   },
   methods: {
