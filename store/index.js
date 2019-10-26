@@ -158,6 +158,7 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            // add mpre stock to multi game
             addStockMultigame(state, stockId) {
                 state.stockMultigame.push(stockId)
             },
@@ -208,6 +209,9 @@ const createStore = () => {
             }
         },
         getters: {
+            checkMultigameExist: (state) => (stockId) => {
+                return state.stockMultigame.includes(stockId)
+            },
             // get stock id to show in multi game
             getStockMultigame(state) {
                 return state.stockMultigame

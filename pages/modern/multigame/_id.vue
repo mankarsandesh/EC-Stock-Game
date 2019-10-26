@@ -1,11 +1,6 @@
 <template>
   <div style="margin-bottom:250px">
-    <v-layout wrap  class="pt-5">
-      <v-flex xs6>
-        <div class="border-flex">
-          <multigame :stockid="$route.params.id" class="pr-0"></multigame>
-        </div>
-      </v-flex>
+    <v-layout wrap class="pt-5">
       <v-flex xs6 v-for="(stockid,index) in getStockMultigame" :key="stockid">
         <div class="border-flex">
           <multigame :class="index%2==0 ?'pl-0':'pr-0'" :stockid="stockid"></multigame>
@@ -21,11 +16,11 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import multigame from "~/components/modern/multigame";
 
 import footerBetMultigame from "~/components/modern/footerBetMultigame";
-import selectStock from "~/components/modern/selectStock"
+import selectStock from "~/components/modern/selectStock";
 
 export default {
   layout: "desktopModern",
@@ -38,6 +33,12 @@ export default {
     return {
       stockSelect: []
     };
+  },
+  mounted() {
+    this.addStockMultigame(this.$route.params.id);
+  },
+  methods: {
+    ...mapMutations(["addStockMultigame"])
   },
   computed: {
     ...mapGetters(["getStockMultigame"])

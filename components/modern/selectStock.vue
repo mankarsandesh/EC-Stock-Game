@@ -20,7 +20,8 @@
                 <a href="#">{{stockName.name}}</a>
                 <ul>
                   <li v-for="stockLoop in stockName.loop" :key="stockLoop">
-                    <a href="#" @click="selectedtockID(stockLoop.stockId)">{{stockLoop.loop}} Minute loop</a>
+                    <a href="#" @click="selectedtockID(stockLoop.stockId)" >{{stockLoop.loop}} Minute loop</a>
+                    <!-- style="pointer-events: none" -->
                     <!-- <nuxt-link to="/modern/desktop/btc1">{{stockLoop.loop}} Minute loop</nuxt-link> -->
                   </li>
                 </ul>
@@ -128,7 +129,7 @@ export default {
     // alert(this.stockData[0]);
   },
   computed: {
-    ...mapGetters(["getLoop", "getStockType"])
+    ...mapGetters(["getLoop", "getStockType","checkMultigameExist"])
   },
   methods:{
     ...mapMutations([
