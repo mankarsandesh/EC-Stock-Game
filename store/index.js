@@ -7,7 +7,7 @@ const createStore = () => {
             footerBetAmount: 0,
             onGoingBet: [],
             multiGameBet: [],
-            stockMultigame: ["usindex", "SH000001"],
+            stockMultigame: [],
             locales: ['cn', 'us', 'th', 'la'],
             locale: localStorage.getItem('lang'),
             balance: 895000,
@@ -158,6 +158,9 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            addStockMultigame(state, stockId) {
+                state.stockMultigame.push(stockId)
+            },
             // push data to on going bet
             pushDataOnGoingBet(state, payload) {
                 state.onGoingBet.splice(0, 0, payload)

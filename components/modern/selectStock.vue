@@ -20,7 +20,8 @@
                 <a href="#">{{stockName.name}}</a>
                 <ul>
                   <li v-for="stockLoop in stockName.loop" :key="stockLoop">
-                    <nuxt-link to="/modern/desktop/btc1">{{stockLoop.loop}} Minute loop</nuxt-link>
+                    <a href="#" @click="selectedtockID(stockLoop.stockId)">{{stockLoop.loop}} Minute loop</a>
+                    <!-- <nuxt-link to="/modern/desktop/btc1">{{stockLoop.loop}} Minute loop</nuxt-link> -->
                   </li>
                 </ul>
               </li>
@@ -32,7 +33,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters,mapMutations } from "vuex";
 export default {
   props: {
     isMultigame:{
@@ -54,10 +55,12 @@ export default {
               name: "btc",
               loop: [
                 {
-                  loop: 1
+                  loop: 1,
+                   stockId:"btc1",
                 },
                 {
-                  loop: 5
+                  loop: 5,
+                   stockId:"btc5",
                 }
               ]
             }
@@ -70,7 +73,8 @@ export default {
               name: "usindex",
               loop: [
                 {
-                  loop: 5
+                  loop: 5,
+                   stockId:"usindex",
                 }
               ]
             }
@@ -83,7 +87,8 @@ export default {
               name: "SH000001",
               loop: [
                 {
-                  loop: 5
+                  loop: 5,
+                   stockId:"SH000001",
                 }
               ]
             },
@@ -91,7 +96,8 @@ export default {
               name: "SZ399001",
               loop: [
                 {
-                  loop: 5
+                  loop: 5,
+                   stockId:"SZ399001",
                 }
               ]
             },
@@ -99,7 +105,8 @@ export default {
               name: "SZ399415",
               loop: [
                 {
-                  loop: 5
+                  loop: 5,
+                   stockId:"SZ399415",
                 }
               ]
             },
@@ -107,7 +114,8 @@ export default {
               name: "SH00300",
               loop: [
                 {
-                  loop: 5
+                  loop: 5,
+                   stockId:"SH00300",
                 }
               ]
             }
@@ -121,6 +129,19 @@ export default {
   },
   computed: {
     ...mapGetters(["getLoop", "getStockType"])
+  },
+  methods:{
+    ...mapMutations([
+      "addStockMultigame"
+    ]),
+    selectedtockID(stockId){
+      if(this.isMultigame){
+        this.addStockMultigame(stockId)
+      }else{
+        this.$router.push(`/modern/desktop/${stockId}`)
+      }
+    },
+
   }
 };
 </script>
