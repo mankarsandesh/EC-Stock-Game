@@ -1,12 +1,12 @@
 <template>
   <div style="margin-bottom:250px">
     <v-layout wrap class="pt-5">
-      <v-flex xs6 v-for="(stockid,index) in getStockMultigame" :key="stockid">
+      <v-flex height="100%" xs6  v-for="(stockid,index) in getStockMultigame" :key="stockid">
         <div class="border-flex">
           <multigame :class="index%2==0 ?'pl-0':'pr-0'" :stockid="stockid"></multigame>
         </div>
       </v-flex>
-      <v-flex xs6 flex>
+      <v-flex xs6 flex height="100%">
         <div class="border-flex">
           <selectStock :isMultigame="true" :stockId="$route.params.id"></selectStock>
         </div>

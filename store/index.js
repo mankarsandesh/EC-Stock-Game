@@ -210,7 +210,12 @@ const createStore = () => {
         },
         getters: {
             checkMultigameExist: (state) => (stockId) => {
-                return state.stockMultigame.includes(stockId)
+
+                const result = state.stockMultigame.includes(stockId)
+                if (result)
+                    return "pointer-events: none"
+                else
+                    return ""
             },
             // get stock id to show in multi game
             getStockMultigame(state) {

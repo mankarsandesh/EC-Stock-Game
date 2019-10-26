@@ -6,7 +6,7 @@
           href="#"
         >
         <span v-if="isMultigame" class="text-uppercase">
-          select a stock here to add more  
+          select a stock here to add more
         </span>
         <span v-else >
           Select Stock > {{getStockType(stockId)}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} Minute loop > 010620191007094101
@@ -20,7 +20,7 @@
                 <a href="#">{{stockName.name}}</a>
                 <ul>
                   <li v-for="stockLoop in stockName.loop" :key="stockLoop">
-                    <a href="#" @click="selectedtockID(stockLoop.stockId)" >{{stockLoop.loop}} Minute loop</a>
+                    <a href="#" :style="checkMultigameExist(stockLoop.stockId)" @click="selectedtockID(stockLoop.stockId)" >{{stockLoop.loop}} Minute loop</a>
                     <!-- style="pointer-events: none" -->
                     <!-- <nuxt-link to="/modern/desktop/btc1">{{stockLoop.loop}} Minute loop</nuxt-link> -->
                   </li>
@@ -129,7 +129,8 @@ export default {
     // alert(this.stockData[0]);
   },
   computed: {
-    ...mapGetters(["getLoop", "getStockType","checkMultigameExist"])
+    ...mapGetters(["getLoop", "getStockType","checkMultigameExist"]),
+
   },
   methods:{
     ...mapMutations([
