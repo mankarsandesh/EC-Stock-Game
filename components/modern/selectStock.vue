@@ -2,27 +2,50 @@
   <div>
     <ul class="main-navigation">
       <li>
-        <a
-          href="#"
-        >
-        <span v-if="isMultigame" class="text-uppercase">
-          select a stock here to add more
-        </span>
-        <span v-else >
-          Select Stock > {{getStockType(stockId)}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} Minute loop > 010620191007094101
-        </span>
+        <a href="#">
+          <span v-if="isMultigame" class="text-uppercase">select a stock here to add more</span>
+          <span v-else>
+            Select Stock > {{getStockType(stockId)}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} Minute loop > 010620191007094101
+            <span
+              style="margin-left: 100px;"
+            >
+              <i class="fa fa-caret-down"></i>
+            </span>
+          </span>
         </a>
         <ul>
           <li v-for="(stockType,index) in stockData" :key="index">
-            <a href="#">{{stockType.type}}</a>
+            <a href="#">
+              <span>{{stockType.type}}</span>
+              <span style="margin-left: 34px;">
+                <i class="fa fa-caret-right"></i>
+              </span>
+            </a>
             <ul>
               <li v-for="stockName in stockType.stockName" :key="stockName">
-                <a href="#">{{stockName.name}}</a>
+                <a href="#">
+                  <span>{{stockName.name}}</span>
+                  <span style="margin-left: 34px;">
+                    <i class="fa fa-caret-right"></i>
+                  </span>
+                </a>
                 <ul>
                   <li v-for="stockLoop in stockName.loop" :key="stockLoop">
-                    <a href="#" :style="checkMultigameExist(stockLoop.stockId)" @click="selectedtockID(stockLoop.stockId)" >{{stockLoop.loop}} Minute loop</a>
-                    <!-- style="pointer-events: none" -->
-                    <!-- <nuxt-link to="/modern/desktop/btc1">{{stockLoop.loop}} Minute loop</nuxt-link> -->
+                    <span>
+                      <a
+                        href="#"
+                        :style="checkMultigameExistAndDisable(stockLoop.stockId)"
+                        @click="selectedtockID(stockLoop.stockId)"
+                      >
+                        <span>{{stockLoop.loop}} Minute loop</span>
+                        <span
+                          style="margin-left: 31px;"
+                          v-show="checkMultigameExistAndShowIcon(stockLoop.stockId)"
+                        >
+                          <i class="fa fa-check"></i>
+                        </span>
+                      </a>
+                    </span>
                   </li>
                 </ul>
               </li>
@@ -34,12 +57,12 @@
   </div>
 </template>
 <script>
-import { mapGetters,mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   props: {
-    isMultigame:{
-      type:Boolean,
-      default:false
+    isMultigame: {
+      type: Boolean,
+      default: false
     },
     stockId: {
       type: String,
@@ -57,11 +80,11 @@ export default {
               loop: [
                 {
                   loop: 1,
-                   stockId:"btc1",
+                  stockId: "btc1"
                 },
                 {
                   loop: 5,
-                   stockId:"btc5",
+                  stockId: "btc5"
                 }
               ]
             }
@@ -75,7 +98,7 @@ export default {
               loop: [
                 {
                   loop: 5,
-                   stockId:"usindex",
+                  stockId: "usindex"
                 }
               ]
             }
@@ -89,7 +112,7 @@ export default {
               loop: [
                 {
                   loop: 5,
-                   stockId:"SH000001",
+                  stockId: "SH000001"
                 }
               ]
             },
@@ -98,7 +121,7 @@ export default {
               loop: [
                 {
                   loop: 5,
-                   stockId:"SZ399001",
+                  stockId: "SZ399001"
                 }
               ]
             },
@@ -107,7 +130,7 @@ export default {
               loop: [
                 {
                   loop: 5,
-                   stockId:"SZ399415",
+                  stockId: "SZ399415"
                 }
               ]
             },
@@ -116,7 +139,7 @@ export default {
               loop: [
                 {
                   loop: 5,
-                   stockId:"SH00300",
+                  stockId: "SH00300"
                 }
               ]
             }
@@ -128,22 +151,24 @@ export default {
   mounted() {
     // alert(this.stockData[0]);
   },
+
   computed: {
-    ...mapGetters(["getLoop", "getStockType","checkMultigameExist"]),
-
+    ...mapGetters([
+      "getLoop",
+      "getStockType",
+      "checkMultigameExistAndDisable",
+      "checkMultigameExistAndShowIcon"
+    ])
   },
-  methods:{
-    ...mapMutations([
-      "addStockMultigame"
-    ]),
-    selectedtockID(stockId){
-      if(this.isMultigame){
-        this.addStockMultigame(stockId)
-      }else{
-        this.$router.push(`/modern/desktop/${stockId}`)
+  methods: {
+    ...mapMutations(["addStockMultigame"]),
+    selectedtockID(stockId) {
+      if (this.isMultigame) {
+        this.addStockMultigame(stockId);
+      } else {
+        this.$router.push(`/modern/desktop/${stockId}`);
       }
-    },
-
+    }
   }
 };
 </script>

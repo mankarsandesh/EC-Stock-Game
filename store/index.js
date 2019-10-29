@@ -209,13 +209,23 @@ const createStore = () => {
             }
         },
         getters: {
-            checkMultigameExist: (state) => (stockId) => {
+            // check stock in multi game if exits disable button
+            checkMultigameExistAndDisable: (state) => (stockId) => {
 
                 const result = state.stockMultigame.includes(stockId)
                 if (result)
                     return "pointer-events: none"
                 else
                     return ""
+            },
+            // check stock in multi game if exits show icon "check"
+            checkMultigameExistAndShowIcon: (state) => (stockId) => {
+
+                const result = state.stockMultigame.includes(stockId)
+                if (result)
+                    return true
+                else
+                    return false
             },
             // get stock id to show in multi game
             getStockMultigame(state) {
