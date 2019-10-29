@@ -25,9 +25,9 @@
                                     <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-btn class="my-btn go">go</v-btn>
+                            <v-btn class="my-btn go" @click="dateSearch()">go</v-btn>
                             <v-flex xs6 md2 class="float-right">
-                                <v-select hide-details :items="items" label="Sort By :" solo></v-select>
+                                <v-select hide-details :items="items" label="Sort By :" v-model="itemss" solo></v-select>
                             </v-flex>
                         </v-layout>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
@@ -40,117 +40,32 @@
                                 <th>{{$t('msg.amount')}}</th>
                                 <th>{{$t('msg.payout')}}</th>
                             </tr>
-                            <tr>
-                                <td>001201910171203003</td>
-                                <td>2019101712030</td>
-                                <td>第二位数-大 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-17 13:02:44</td>
-                                <td>10</td>
-
-                                <td><span style="color: green;">19.2</span></td>
-                            </tr>
-                            <tr>
-                                <td>001201910171203002</td>
-                                <td>2019101712030</td>
-                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-17 13:02:55</td>
-                                <td>10000</td>
-                                <td><span style="color: red;">-10000</span></td>
-
-                            </tr>
-                            <tr>
-                                <td>001201910141630003</td>
-                                <td>2019101416300</td>
-                                <td>第二位数-大 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-14 17:29:39</td>
-                                <td>5000</td>
-
-                                <td><span style="color: green;">9600</span></td>
-                            </tr>
-                            <tr>
-                                <td>001201910141629002</td>
-                                <td>2019101416290</td>
-                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-14 17:28:52</td>
-                                <td>10</td>
-
-                                <td><span style="color: green;">19.2</span></td>
-                            </tr>
-                            <tr>
-                                <td>001201910141629003</td>
-                                <td>2019101416290</td>
-                                <td>第二位数-大 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-14 17:28:52</td>
-                                <td>10</td>
-                                <td><span style="color: red;">-10</span></td>
-
-                            </tr>
-                            <tr>
-                                <td>001201910141629001</td>
-                                <td>2019101416290</td>
-                                <td>合数-大 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-14 17:28:52</td>
-                                <td>10</td>
-                                <td><span style="color: red;">-10</span></td>
-
-                            </tr>
-                            <tr>
-                                <td>001201910071342032</td>
-                                <td>01062019100713420</td>
-                                <td>=两位数-00 (98.82) 比特币 (1 分鐘)</td>
-                                <td>2019-10-07 14:41:39</td>
-                                <td>10</td>
-                                <td><span style="color: red;">-10</span></td>
-
-                            </tr>
-                            <tr>
-                                <td>0010106201910071020002</td>
-                                <td>01062019100710200</td>
-                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-07 11:20:01</td>
-                                <td>100</td>
-                                <td><span style="color: red;">-100</span></td>
-
-                            </tr>
-                            <tr>
-                                <td>0010106201910071021005</td>
-                                <td>01062019100710210</td>
-                                <td>第一位数-小 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-07 11:20:24</td>
-                                <td>100</td>
-
-                                <td><span style="color: green;">192</span></td>
-                            </tr>
-                            <tr>
-                                <td>0010106201910101035002</td>
-                                <td>01062019101010350</td>
-                                <td>第一位数-大 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-10 11:34:52</td>
-                                <td>10000</td>
-                                <td><span style="color: red;">-10000</span></td>
-
-                            </tr>
-                            <tr>
-                                <td>0010106201910101035005</td>
-                                <td>01062019101010350</td>
-                                <td>第一位数-小 (1.92) 比特币 (1 分鐘)</td>
-                                <td>2019-10-10 11:34:56</td>
-                                <td data-v-3798e4a8="">10000</td>
-
-                                <td data-v-3798e4a8=""><span data-v-3798e4a8="" style="color: green;">19200</span></td>
+                            <tr v-for="(data ,index) in history" :key="index">
+                                <td>{{data.betId}}</td>
+                                <td>{{data.gameId}}</td>
+                                <td>
+                                    {{data.rule.split("-")[1] >= 0 ? $t('gamemsg.'+data.rule.split("-")[0])+' - '+data.rule.split("-")[1]: $t('gamemsg.'+data.rule.split("-")[0])+' - '+$t('gamemsg.'+data.rule.split("-")[1])}}
+                                    ({{data.payoutAmount}})
+                                    <span v-for="(datas,index) in stockName" v-if="data.stock == datas.stockId">
+                                        {{$t('stockname.'+datas.stockName)}}
+                                    </span>
+                                    {{data.loops}} {{$t('msg.minute')}}</td>
+                                <td>{{data.betTime}}</td>
+                                <td>{{data.betAmount}}</td>
+                                <td><span :style=" data.rollingAmount < 0 ? 'color: red;':'color: green;'">{{data.rollingAmount}}</span></td>
                             </tr>
 
                             <tr>
                                 <td>{{$t('msg.Total This Page')}}</td>
                                 <td colspan="3">0</td>
-                                <td>$ 0.00</td>
-                                <td></td>
+                                <td>{{formatToPrice(0)}}</td>
+                                <td>{{formatToPrice(0)}}</td>
                             </tr>
                             <tr>
                                 <td>{{$t('msg.Total')}}</td>
-                                <td colspan="3">0</td>
-                                <td>$ 0.00</td>
-                                <td></td>
+                                <td colspan="3">{{colspan}}</td>
+                                <td>{{formatToPrice(sumTotalbetAmount)}}</td>
+                                <td>{{formatToPrice(sumTotalrollingAmount)}}</td>
                             </tr>
                         </table>
                     </v-card>
@@ -172,13 +87,54 @@ export default {
             from: false,
             to: false,
             items: ["day", "weeks", "months", "years"],
-            load: false
+            itemss: "day",
+            load: false,
+            history: null,
+            stockName: null,
+            stockId: null,
+            sumTotalbetAmount: 0,
+            colspan: 0,
+            sumTotalrollingAmount: 0
+
         };
     },
     mounted() {
         setTimeout(() => {
             this.load = true
         }, 1000)
+        this.gethistory(null)
+        this.getSotckId()
+    },
+
+    methods: {
+        dateSearch() {
+            let date = {
+                start: this.datefrom,
+                end: this.dateto
+            }
+            return this.gethistory(date)
+        },
+        async gethistory(val) {
+            console.log(val)
+            let history = await this.$axios.$get(this.$store.state.urltest + '/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+            // console.log(history.data)
+            for (let i = 0; i < history.data.length; i++) {
+                this.sumTotalbetAmount += history.data[i].betAmount
+                this.sumTotalrollingAmount += history.data[i].rollingAmount
+            }
+            this.colspan = history.data.length;
+            return this.history = history.data
+        },
+        formatToPrice(value) {
+            return `$ ${Number(value)
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        },
+        async getSotckId() {
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            return this.stockName = stcokId.data
+
+        },
     }
-};
+}
 </script>
