@@ -27,6 +27,7 @@
                     :data="getStockById($route.params.id).stockPrice"
                     :time="getStockById($route.params.id).stockTime"
                     :key="getStockById($route.params.id).stockPrice[0]"
+                    :stockid="$route.params.id"
                   ></chartApp>
                 </v-flex>
                 <v-layout>

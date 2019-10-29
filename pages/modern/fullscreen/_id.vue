@@ -74,10 +74,11 @@
                 :time="getStockById($route.params.id).stockTime"
                 :key="getStockById($route.params.id).stockPrice[0]"
                 height="550px"
+                :stockid="$route.params.id"
               ></chartApp>
             </v-flex>
             <v-flex>
-              <v-btn dark color="#003e70" @click="test()">
+              <v-btn dark color="#003e70" @click="$router.go(-1)">
                 <v-icon left dark class="ma-0">exit_to_app</v-icon>exit
               </v-btn>
             </v-flex>

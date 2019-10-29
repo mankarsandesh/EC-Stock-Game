@@ -7,6 +7,7 @@ const createStore = () => {
             footerBetAmount: 0,
             onGoingBet: [],
             multiGameBet: [],
+            stockMultigame: [],
             locales: ['cn', 'us', 'th', 'la'],
             locale: localStorage.getItem('lang'),
             balance: 895000,
@@ -158,6 +159,10 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            // add mpre stock to multi game
+            addStockMultigame(state, stockId) {
+                state.stockMultigame.push(stockId)
+            },
             // push data to on going bet
             pushDataOnGoingBet(state, payload) {
                 state.onGoingBet.splice(0, 0, payload)
@@ -205,12 +210,40 @@ const createStore = () => {
             }
         },
         getters: {
+            checkMultigameExist: (state) => (stockId) => {
+
+                const result = state.stockMultigame.includes(stockId)
+                if (result)
+                    return "pointer-events: none"
+                else
+                    return ""
+            },
+            // get stock id to show in multi game
+            getStockMultigame(state) {
+                return state.stockMultigame
+            },
+            // get amount of betting that already confirm
             getBettingAmount(state) {
                 return state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
             },
-            // get on going bet
+            // get amount of betting already confirmed and not confirm
+            getAllBettingAmount(state) {
+                let amount1 = state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
+                let amount2 = state.multiGameBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
+                return amount1 + amount2
+            },
+            // get data betting
             getOnGoingBet(state) {
                 return state.onGoingBet
+            },
+            getAmountBettingByStockId: (state) => (stockId) => {
+                function getAmount(object) {
+                    // find stockname 
+                    if (object.findIndex(x => x.stockName === stockId) == -1) return 0
+                    let result = object.filter(x => x.stockName === stockId).map(x => x.betValue).reduce((a, b) => a + b, 0)
+                    return parseInt(result)
+                }
+                return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
             },
             // to show ship and amount on bet button
             getAmountMultiGameBet: (state) => (data) => {
@@ -251,9 +284,11 @@ const createStore = () => {
                 }
                 return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
             },
+            //get betting data
             getOnBetting(state) {
                 return state.onGoingBet
             },
+            // get data betting that not confirn=m yet "available on fullscreen mode and multi game"
             getMultiGameBet(state) {
                 return state.multiGameBet
             },

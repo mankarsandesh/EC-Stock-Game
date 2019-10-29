@@ -1,13 +1,13 @@
 <template>
-  <div class="v-card-style">
-    <v-layout px-1 style="background-color:#fff">
+  <div class="v-card-style" v-if="stockid !== null ">
+    <v-layout px-1 style="background-color:#fff" >
       <v-flex xs6 class="text-xs-left">
         live TIME
-        <span class="text-primary">{{getLiveTime($route.params.id)}}</span>
+        <span class="text-primary">{{getLiveTime(stockid)}}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right"  v-if="getLotteryDraw($route.params.id) >0" >
+      <v-flex xs6 class="text-xs-right"  v-if="getLotteryDraw(stockid) >0" >
         live PRICE
-        <span class="text-second">{{getLivePrice($route.params.id)}}</span>
+        <span class="text-second">{{getLivePrice(stockid)}}</span>
       </v-flex>
     </v-layout>
     <apexchart type="area" width="100%" :height="height" :options="chartOptions" :series="series" />
@@ -18,6 +18,10 @@ import VueApexCharts from "vue-apexcharts";
 import {mapGetters} from "vuex"
 export default {
   props: {
+    stockid:{
+      type:String,
+      default:null
+    },
     height:{
       type:String,
       default:"400px"

@@ -2,69 +2,27 @@
   <div>
     <ul class="main-navigation">
       <li>
-        <a href="#">Select Stock > {{getStockType(stockId)}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} Minute loop > 010620191007094101</a>
+        <a
+          href="#"
+        >
+        <span v-if="isMultigame" class="text-uppercase">
+          select a stock here to add more
+        </span>
+        <span v-else >
+          Select Stock > {{getStockType(stockId)}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} Minute loop > 010620191007094101
+        </span>
+        </a>
         <ul>
-          <li>
-            <a href="#">CYPTO</a>
+          <li v-for="(stockType,index) in stockData" :key="index">
+            <a href="#">{{stockType.type}}</a>
             <ul>
-              <li>
-                <a href="#">BTC/USDT</a>
+              <li v-for="stockName in stockType.stockName" :key="stockName">
+                <a href="#">{{stockName.name}}</a>
                 <ul>
-                  <li>
-                     <nuxt-link to="/modern/desktop/btc1">1 Minute loop</nuxt-link>
-                  </li>
-                  <li>
-                    <nuxt-link to="/modern/desktop/btc5">5 Minute loop</nuxt-link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">CHINA</a>
-            <ul>
-              <li>
-                <a href="#">SH000001</a>
-                <ul>
-                  <li>
-                    <nuxt-link to="/modern/desktop/SH000001">5 Minute loop</nuxt-link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">SZ399001</a>
-                <ul>
-                  <li>
-                    <nuxt-link to="/modern/desktop/SZ399001">5 Minute loop</nuxt-link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">SZ399415</a>
-                <ul>
-                  <li>
-                    <nuxt-link to="/modern/desktop/SZ399415">5 Minute loop</nuxt-link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">SH00300</a>
-                <ul>
-                  <li>
-                    <nuxt-link to="/modern/desktop/SH00300">5 Minute loop</nuxt-link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">USA</a>
-            <ul>
-              <li>
-                <a href="#">US Dollar Index</a>
-                <ul>
-                  <li>
-                    <nuxt-link to="/modern/desktop/usindex">5 Minute loop</nuxt-link>
+                  <li v-for="stockLoop in stockName.loop" :key="stockLoop">
+                    <a href="#" :style="checkMultigameExist(stockLoop.stockId)" @click="selectedtockID(stockLoop.stockId)" >{{stockLoop.loop}} Minute loop</a>
+                    <!-- style="pointer-events: none" -->
+                    <!-- <nuxt-link to="/modern/desktop/btc1">{{stockLoop.loop}} Minute loop</nuxt-link> -->
                   </li>
                 </ul>
               </li>
@@ -76,26 +34,118 @@
   </div>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters,mapMutations } from "vuex";
 export default {
-    props:{
-        stockId:{
-            type:String,
-            required:true
-        }
+  props: {
+    isMultigame:{
+      type:Boolean,
+      default:false
     },
-    data(){
-        return{
-
-        }
-    },
-    computed:{
-        ...mapGetters([
-            "getLoop",
-            "getStockType"
-        ])
+    stockId: {
+      type: String,
+      required: true
     }
-}
+  },
+  data() {
+    return {
+      stockData: [
+        {
+          type: "crypto",
+          stockName: [
+            {
+              name: "btc",
+              loop: [
+                {
+                  loop: 1,
+                   stockId:"btc1",
+                },
+                {
+                  loop: 5,
+                   stockId:"btc5",
+                }
+              ]
+            }
+          ]
+        },
+        {
+          type: "usa",
+          stockName: [
+            {
+              name: "usindex",
+              loop: [
+                {
+                  loop: 5,
+                   stockId:"usindex",
+                }
+              ]
+            }
+          ]
+        },
+        {
+          type: "china",
+          stockName: [
+            {
+              name: "SH000001",
+              loop: [
+                {
+                  loop: 5,
+                   stockId:"SH000001",
+                }
+              ]
+            },
+            {
+              name: "SZ399001",
+              loop: [
+                {
+                  loop: 5,
+                   stockId:"SZ399001",
+                }
+              ]
+            },
+            {
+              name: "SZ399415",
+              loop: [
+                {
+                  loop: 5,
+                   stockId:"SZ399415",
+                }
+              ]
+            },
+            {
+              name: "SH00300",
+              loop: [
+                {
+                  loop: 5,
+                   stockId:"SH00300",
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+  },
+  mounted() {
+    // alert(this.stockData[0]);
+  },
+  computed: {
+    ...mapGetters(["getLoop", "getStockType","checkMultigameExist"]),
+
+  },
+  methods:{
+    ...mapMutations([
+      "addStockMultigame"
+    ]),
+    selectedtockID(stockId){
+      if(this.isMultigame){
+        this.addStockMultigame(stockId)
+      }else{
+        this.$router.push(`/modern/desktop/${stockId}`)
+      }
+    },
+
+  }
+};
 </script>
 <style scoped>
 ul {
