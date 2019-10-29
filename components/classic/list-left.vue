@@ -10,7 +10,7 @@
                     <tr>
                         <td class="text-left">
                             <i class="fa fa-user fa-2x font-size15"></i>
-                            {{$t('msg.Player')}} : test</td>
+                            {{$t('msg.Player')}} : {{name}}</td>
                     </tr>
                     <tr>
                         <td class="text-left">
@@ -85,15 +85,23 @@ export default {
             panel1: [1],
             panel2: [1],
             panel3: [1],
-            balance: this.$store.state.balance,
+            balance: 0,
+            name: ""
         }
+    },
+    mounted() {
+        this.getupdatebalance()
     },
     methods: {
         formatToPrice(value) {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
-        getupdatebalance() {
-            this.balance = this.$store.state.balance
+        async getupdatebalance() {
+            let balance = await this.$axios.$get('http://192.168.1.134:8003/api/me?apikey=' + localStorage.apikey)
+            this.name = balance[0].name
+            this.balance = balance[0].userBalance
+            // balance[0].totalOnlineTime
+            return
         },
         getBetresult() {
             let result = [{

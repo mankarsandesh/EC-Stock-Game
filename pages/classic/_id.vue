@@ -240,10 +240,10 @@
                             </th>
                         </tr>
                         <tr v-for="(data ,idx11) in betDataShows" :key="idx11">
-                            <td>{{data.rule.split("-")[1] >= 0 ? $t('gamemsg.'+data.rule.split("-")[0])+' - '+data.rule.split("-")[1]: $t('gamemsg.'+data.rule.split("-")[0])+' - '+$t('gamemsg.'+data.rule.split("-")[1])}}</td>
+                            <td>{{data.gameRule.split("-")[1] >= 0 ? $t('gamemsg.'+data.gameRule.split("-")[0])+' - '+data.gameRule.split("-")[1]: $t('gamemsg.'+data.gameRule.split("-")[0])+' - '+$t('gamemsg.'+data.gameRule.split("-")[1])}}</td>
                             <td>{{data.payout}}</td>
                             <td>
-                                <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :name="data.rule" :value="data.amount" />
+                                <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :name="data.gameRule" :value="data.amount" />
                             </td>
                             <td>
                                 <v-btn flat icon color="red" @click="deleteTodo(idx11)">
@@ -328,7 +328,7 @@
             <br>
             {{alertext}}
         </span> -->
-        <span class="text-center set-text-alert">{{alertext}}</span>
+        <span class="set-text-alert">{{alertext}}</span>
     </v-snackbar>
     <!-- end alertOutCome -->
     <button hidden id="playwin" @click.prevent="playSound('/voice/winbet.mp3')"></button>
@@ -360,6 +360,7 @@ export default {
     }) {
         return store.getters.getStockName(params.id);
     },
+
     components: {
         AnimatedNumber,
         baccarats,
@@ -393,7 +394,7 @@ export default {
             balance: this.$store.state.balance,
             sntwoloopstart: null,
             sntwoloopend: null,
-            stockname: this.$route.params.id.split("-")[1],
+            stockname: "",
             show1: true,
             checkbox1: false,
 
@@ -418,6 +419,11 @@ export default {
         this.getTime();
         this.getchips();
         this.settabs()
+        this.getSotckId()
+
+    },
+    created() {
+        this.getbalance()
     },
     computed: {
         ...mapGetters(["getStockName", "getStockNewData"]),
@@ -434,11 +440,10 @@ export default {
         },
         formData() {
             return {
-                total: this.sumTotalAll,
                 data: this.betData.betdetails,
-                webid: "001"
             };
-        }
+        },
+
     },
     methods: {
         settabs() {
@@ -459,19 +464,37 @@ export default {
             this.currentItemss = s
             return;
         },
-        getConfirmBet() {
-            if (this.formData.total > this.balance || this.formData.total == '') {
+
+        async getbalance() {
+            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
+            this.$store.state.balance = balance[0].userBalance
+        },
+        async getSotckId() {
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            stcokId.data.forEach(element => {
+                // console.log(element.stockName)
+                if (element.stockName.toUpperCase() == this.$route.params.id.split("-")[1] || element.stockName == this.$route.params.id.split("-")[1]) {
+                    this.stockname = element.stockId
+                    // console.log(element.stockName)
+                    // console.log(element.stockId)
+                }
+            })
+
+        },
+        async getConfirmBet() {
+            if (this.sumTotalAll > this.balance || this.sumTotalAll == '') {
                 this.getalertstartstop('error')
             } else {
                 this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
-                console.log(this.formData);
-                console.log("send to api server");
+                // console.log(this.formData);
+                // console.log("send to api server");
+                const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + localStorage.apikey, this.formData)
+                console.log(res)
                 setTimeout(() => {
                     this.setPrice("reset");
-                    this.getalertstartstop('success')
+                    this.getalertstartstop(res.data.status)
                     $(".getupdatebalance")[0].click()
-                }, 2500);
-
+                }, 2000);
             }
         },
 
@@ -546,8 +569,8 @@ export default {
                     "form-inputadd";
 
                 this.betData.betName.push({
-                    rule: e.target.parentElement.children[2].children[0].name,
-                    stock: e.target.parentElement.children[2].children[0].dataset.stock,
+                    gameRule: e.target.parentElement.children[2].children[0].name,
+                    stockId: e.target.parentElement.children[2].children[0].dataset.stock,
                     payout: e.target.parentElement.children[1].innerText
                 });
 
@@ -585,22 +608,22 @@ export default {
 
             // Data send to server
             if (specialName !== "none") {
-                this.rule = specialName.rule;
-                this.stock = specialName.stock;
+                this.gameRule = specialName.gameRule;
+                this.stockId = specialName.stockId;
                 this.amount = this.price;
             } else {
-                this.rule = e.target.name;
-                this.stock = e.target.dataset.stock;
+                this.gameRule = e.target.name;
+                this.stockId = e.target.dataset.stock;
                 this.payout =
                     e.target.parentElement.parentElement.children[1].innerText;
                 this.amount = parseInt(e.target.value);
             }
 
-            this.index = this.betData.betdetails.findIndex(x => x.rule === this.rule);
+            this.index = this.betData.betdetails.findIndex(x => x.gameRule === this.gameRule);
             if (this.index == -1) {
                 this.betData.betdetails.push({
-                    rule: this.rule,
-                    stock: this.stock,
+                    gameRule: this.gameRule,
+                    stockId: this.stockId,
                     amount: this.amount,
                     loop: this.loop
                 });
@@ -612,23 +635,23 @@ export default {
 
             // Data Show clients
             if (specialName !== "none") {
-                this.rule = specialName.rule;
-                this.stock = specialName.stock;
+                this.gameRule = specialName.gameRule;
+                this.stockId = specialName.stockId;
                 this.payout = specialName.payout;
                 this.amount = this.price;
             } else {
-                this.rule = e.target.name;
-                this.stock = e.target.dataset.stock;
+                this.gameRule = e.target.name;
+                this.stockId = e.target.dataset.stockId;
                 this.payout =
                     e.target.parentElement.parentElement.children[1].innerText;
                 this.amount = parseInt(e.target.value);
             }
 
-            this.index = this.betDataShows.findIndex(x => x.rule === this.rule);
+            this.index = this.betDataShows.findIndex(x => x.gameRule === this.gameRule);
             if (this.index == -1) {
                 this.betDataShows.push({
-                    rule: this.rule,
-                    stock: this.stock,
+                    gameRule: this.gameRule,
+                    stockId: this.stockId,
                     payout: this.payout,
                     amount: this.amount,
                     loop: this.loop
@@ -677,6 +700,7 @@ export default {
                 }
 
                 if (times == calculating - 4) {
+                    api / fetchGamingBy
                     // this.alertOutCome('win')
                     this.alertOutCome("lose");
                 }
@@ -721,10 +745,10 @@ export default {
             } else if (val == "stop") {
                 this.alertext = this.$tc('msg.stopbetting')
                 this.color = "#D50000";
-            } else if (val == "success") {
+            } else if (val == true) {
                 this.alertext = this.$tc('msg.confirmed')
                 this.color = "success";
-            } else if (val == "error") {
+            } else if (val == false) {
                 this.alertext = this.$tc('msg.moneynotenough')
                 this.color = "error";
             }
@@ -779,7 +803,8 @@ export default {
     margin-top: 2%;
     font-size: 1.5rem;
     font-weight: bold;
-    margin-left: 22%;
+    margin-left: calc(20vh - 215px);
+    text-align: center !important;
 }
 
 .btn-chips {
