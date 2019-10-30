@@ -8,6 +8,15 @@
       </v-flex>
       <v-flex xs6 d-flex >
         <div class="border-flex">
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
           <selectStock :isMultigame="true" :stockId="$route.params.id"></selectStock>
         </div>
       </v-flex>
@@ -52,5 +61,6 @@ export default {
   border-right: 1px solid black;
   border-bottom: 1px solid black;
   padding: 15px;
+  min-height: 550px;
 }
 </style>

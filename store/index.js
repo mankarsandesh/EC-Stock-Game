@@ -161,6 +161,7 @@ const createStore = () => {
         mutations: {
             // add mpre stock to multi game
             addStockMultigame(state, stockId) {
+                if (state.stockMultigame.includes(stockId)) return
                 state.stockMultigame.push(stockId)
             },
             // push data to on going bet
@@ -211,18 +212,19 @@ const createStore = () => {
         },
         getters: {
             // check stock in multi game if exits disable button
-            checkMultigameExistAndDisable: (state) => (stockId) => {
+            checkMultigameExistAndDisable: (state) => (data) => {
+                if (!data.isMultigame) return ""
 
-                const result = state.stockMultigame.includes(stockId)
+                const result = state.stockMultigame.includes(data.stockId)
                 if (result)
                     return "pointer-events: none"
                 else
                     return ""
             },
             // check stock in multi game if exits show icon "check"
-            checkMultigameExistAndShowIcon: (state) => (stockId) => {
-
-                const result = state.stockMultigame.includes(stockId)
+            checkMultigameExistAndShowIcon: (state) => (data) => {
+                if (!data.isMultigame) return false
+                const result = state.stockMultigame.includes(data.stockId)
                 if (result)
                     return true
                 else
