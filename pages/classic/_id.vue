@@ -700,7 +700,6 @@ export default {
                 }
 
                 if (times == calculating - 4) {
-                    api / fetchGamingBy
                     // this.alertOutCome('win')
                     this.alertOutCome("lose");
                 }
@@ -725,13 +724,13 @@ export default {
             this.mode = "vertical";
 
             if (val == "win") {
-                this.text = this.$tc('msg.winbet');
+                this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
                 $(".getupdatebalance")[0].click()
                 $("#playwin")[0].click()
 
             } else {
-                this.text = this.$tc('msg.losebet');
+                this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
             }
         },
@@ -740,16 +739,16 @@ export default {
             this.alertSS = true;
             this.mode = "multi-line";
             if (val == "start") {
-                this.alertext = this.$tc('msg.startbetting')
+                this.alertext = this.$root.$t('msg.startbetting')
                 this.color = "#2962FF";
             } else if (val == "stop") {
-                this.alertext = this.$tc('msg.stopbetting')
+                this.alertext = this.$root.$t('msg.stopbetting')
                 this.color = "#D50000";
             } else if (val == true) {
-                this.alertext = this.$tc('msg.confirmed')
+                this.alertext = this.$root.$t('msg.confirmed')
                 this.color = "success";
             } else if (val == false) {
-                this.alertext = this.$tc('msg.moneynotenough')
+                this.alertext = this.$root.$t('msg.moneynotenough')
                 this.color = "error";
             }
         },
