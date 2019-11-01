@@ -4,7 +4,7 @@
       <li>
         <a href="#">
           <span v-show="isMultigame" class="text-uppercase">
-            <span>select a stock here to add more</span>
+            <span>select  here to add more stock</span>
             <span class="show-icon">
               <i class="fa fa-plus"></i>
             </span>
@@ -19,7 +19,7 @@
           </span>
         </a>
         <ul>
-          <li v-for="(stockType,index) in stockData" :key="index">
+          <li v-for="(stockType,index) in getAllStockByType" :key="index">
             <a href="#">
               <span>{{stockType.type}}</span>
               <span class="show-icon">
@@ -44,7 +44,7 @@
                       >
                         <span>{{stockLoop.loop}} Minute loop</span>
                         <span
-                          style="margin-left: 31px;"
+                          class="show-icon"
                           v-show="checkMultigameExistAndShowIcon({stockId:stockLoop.stockId,isMultigame:isMultigame})"
                         >
                           <i class="fa fa-check"></i>
@@ -155,6 +155,7 @@ export default {
   },
   mounted() {
     // alert(this.stockData[0]);
+    console.warn(this.getAllStockByType)
   },
 
   computed: {
@@ -162,7 +163,8 @@ export default {
       "getLoop",
       "getStockType",
       "checkMultigameExistAndDisable",
-      "checkMultigameExistAndShowIcon"
+      "checkMultigameExistAndShowIcon",
+      "getAllStockByType"
     ])
   },
   methods: {

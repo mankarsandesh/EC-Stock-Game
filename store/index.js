@@ -52,6 +52,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/btc"
                     },
                     stockname: "btc1",
+                    name: "btc",
                     loop: 1,
                     type: "cypto",
                     crawlerData: "",
@@ -67,6 +68,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/usindex"
                     },
                     stockname: "usindex",
+                    name: "usindex",
                     loop: 5,
                     type: "usa",
                     crawlerData: "",
@@ -85,6 +87,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/btc"
                     },
                     stockname: "btc5",
+                    name: "btc",
                     loop: 5,
                     type: "cypto",
                     crawlerData: "",
@@ -100,6 +103,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/sh01"
                     },
                     stockname: "SH000001",
+                    name: "SH000001",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -115,6 +119,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/sz01"
                     },
                     stockname: "SZ399001",
+                    name: "SZ399001",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -130,6 +135,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/sz15"
                     },
                     stockname: "SZ399415",
+                    name: "SZ399415",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -145,6 +151,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/sz300"
                     },
                     stockname: "SH00300",
+                    name: "SH00300",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -211,6 +218,73 @@ const createStore = () => {
             }
         },
         getters: {
+            getAllStockByType(state, getters) {
+                let stockData = []
+                let stockType = []
+                    // get type for all stocks
+                for (let i = 0; i < getters.getStockLength; i++) {
+                    const id = getters.getStockKeys[i]
+                    const type = state.stocks[id].type
+
+                    const data = {
+                        type: type,
+                        stockName: []
+                    }
+                    if (!stockType.includes(type)) {
+                        stockType.push(type)
+                        stockData.push(data)
+                    }
+                }
+                // get stock name for all stocks
+                let stockName = []
+                for (let i = 0; i < stockType.length; i++) {
+                    for (let j = 0; j < getters.getStockLength; j++) {
+                        const id = getters.getStockKeys[j]
+                        const type = state.stocks[id].type
+                        if (type === stockType[i]) {
+
+                            const name = state.stocks[id].name
+                            const data = {
+                                name: name,
+                                loop: []
+                            }
+                            if (!stockName.includes(name)) {
+                                stockName.push(name)
+                                stockData[i].stockName.push(data)
+                            }
+                        }
+                    }
+                }
+                // get loop 
+                let loop = []
+                for (let i = 0; i < stockType.length; i++) {
+                    for (let j = 0; j < getters.getStockLength; j++) {
+                        const id = getters.getStockKeys[j]
+                        const type = state.stocks[id].type
+                        if (type === stockType[i]) {
+
+                            const loop = state.stocks[id].loop
+                            const stockId = state.stocks[id].stockname
+                            const data = {
+                                loop: loop,
+                                stockId: stockId
+                            }
+
+                            console.warn(data)
+                            console.warn(type)
+
+                            for (let ok = 0; ok < stockData[i].stockName.length; ok++) {
+                                const name = stockData[i].stockName[ok].name
+                                stockData[i].stockName[ok].loop.push(data)
+
+                            }
+                            // alert(type)
+                        }
+                    }
+                }
+                console.warn(stockData.stockName)
+                return stockData
+            },
             // check stock in multi game if exits disable button
             checkMultigameExistAndDisable: (state) => (data) => {
                 if (!data.isMultigame) return ""
@@ -260,7 +334,7 @@ const createStore = () => {
             // to show ship and amount on bet button
             getAmountMultiGameBet: (state) => (data) => {
                 function getAmount(object) {
-                    // find stockname 
+                    // find stockname
                     if (object.findIndex(x => x.stockName === data.stockName) == -1) return 0
                         // get data by stockname
                     let stockIdObject = object.filter(x => x.stockName === data.stockName)
@@ -442,7 +516,6 @@ const createStore = () => {
                     names,
                     stock,
                     loop,
-
                 }
                 return result
             },
