@@ -22,6 +22,7 @@ export default {
         }
     },
     mounted() {
+        this.getChart()
         setTimeout(() => {
             this.getChart()
         }, 1000)

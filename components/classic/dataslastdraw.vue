@@ -6,12 +6,7 @@
         <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
         <span class="timer total_classic" :title="datalastdraw" v-if="load">{{dataslastdraw}}</span>
         <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
-
-        <span class="timer color-timer" v-if="time == 1">{{$t('msg.calculating')}}</span>
-        <span class="timer color-timer" v-else-if="time == 0">{{$t('msg.marketclosed')}}</span>
-        <span :class="time == '00:05' || time == '00:03' || time == '00:01' ? 'timer color-timer':'timer'" v-else>
-            {{ time != $t('msg.loading') ? $t('msg.betnow')+':':''}}{{time}}
-        </span>
+        <span :class="time == '00:05' || time == '00:03' || time == '00:01' || time == $t('msg.calculating') || time == $t('msg.marketclosed') ? 'timer color-timer':'timer'">{{time}}</span>
 
         <button class="timer" @click="ischangechartview = !ischangechartview" v-if="$vuetify.breakpoint.smAndDown">
             <i class="fa fa-table" aria-hidden="true" v-show="!ischangechartview" @click="getonview()"></i>
@@ -32,18 +27,18 @@ export default {
             datalastdraw: "0000.00",
             datelastdraw: "0000-00-00 00:00",
             load: false,
-            time: this.$t('msg.loading'),
+            time: this.$root.$t('msg.loading'),
             gameid: null,
             TimeNow: "00:00",
             DateNow: "0000-00-00",
             week: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
         };
     },
+    created(){
+        this.getdata()
+    },
     mounted() {
-
-        setTimeout(() => {
-            this.getdata()
-        }, 1000)
+        setTimeout(()=>{this.getdata();},1000)
         const socket = openSocket("https://websocket-timer.herokuapp.com");
         socket.on("time", data => {
             // this.getTimeNow();
@@ -69,11 +64,11 @@ export default {
             }
 
             if (times > calculat) {
-                this.time = 1;
+                this.time = this.$root.$t('msg.calculating');
             } else if (times == "close") {
-                this.time = 0;
+                this.time = this.$root.$t('msg.marketclosed');
             } else {
-                this.time = this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
+                this.time = this.$root.$t('msg.betnow')+':'+ this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
             }
 
             if (times == lasttime) {

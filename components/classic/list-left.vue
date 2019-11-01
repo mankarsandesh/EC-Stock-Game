@@ -35,12 +35,20 @@
             </template>
             <v-card>
                 <table>
-                    <tr v-for="(data, index) in getBetresult()">
+                    <tr v-for="(data,index) in getStockList" :key="index">
                         <td class="text-left">
                             <i class="fa fa-circle-o text-danger"></i>
-                            <b>{{$t('msg.Stock')}}</b>: {{data.Stock}} <b>{{$t('msg.Time')}}</b>: {{data.Time}} {{$t('msg.minute')}} <b>{{$t('msg.Result')}}</b> {{data.Result}}
+                            <b>{{$t('msg.Stock')}}</b>: {{ $t(`stockname.${data.stockname}`) }} <b>{{$t('msg.Time')}}</b>: {{ onlyTime(getStockById(data.id).timeLastDraw)}} <b>{{$t('msg.Result')}}</b> {{getStockById(data.id).lastDraw}}
                         </td>
                     </tr>
+
+                    <!-- <tr v-for="(data,index) in getStockList" :key="index">
+            <td>
+              <nuxt-link :to="'/modern/desktop/'+data.id"> {{ $t(`stockname.${data.stockname}`) }}</nuxt-link>
+            </td>
+            <td class="text-xs-right">{{ onlyTime(getStockById(data.id).timeLastDraw)}}</td>
+            <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
+          </tr> -->
                 </table>
 
             </v-card>
@@ -53,13 +61,19 @@
             </template>
             <v-card>
                 <table>
-                    <tr v-for="(data,index) in getAllresults()">
+                    <tr v-for="(data,index) in Allresults" :key="index">
                         <td class="text-left">
-                            <b>{{$t('msg.Time')}}</b>: {{data.Time}} <br>
-                            <b>{{$t('msg.BetId')}}</b>: {{data.BetId}} <br>
-                            <b>{{$t('msg.amount')}}</b>: {{data.Amount}} <br>
-                            <b>{{$t('msg.Stock')}}</b>: {{data.Stock}} <br>
-                            <b>{{$t('msg.gameid')}}</b>: {{data.gameid}} </td>
+                            <b>{{$t('msg.Time')}}</b>: {{data.betTime}} <br>
+                            <b>{{$t('msg.BetId')}}</b>: {{data.betId}} <br>
+                            <b>{{$t('msg.amount')}}</b>:
+                            {{data.betAmount}}
+                            ({{data.rule.split("-")[1] >= 0 ? $t('gamemsg.'+data.rule.split("-")[0])+' - '+data.rule.split("-")[1]: $t('gamemsg.'+data.rule.split("-")[0])+' - '+$t('gamemsg.'+data.rule.split("-")[1])}})
+
+                            <br>
+                            <b>{{$t('msg.Stock')}}</b>: <span v-for="(datas,index) in stockName" :key="index" v-if="data.stock == datas.stockId">
+                                {{$t('stockname.'+datas.stockName)}}
+                            </span> {{data.loops}}<br>
+                            <b>{{$t('msg.gameid')}}</b>: {{data.gameId}} </td>
                     </tr>
 
                 </table>
@@ -67,12 +81,15 @@
             </v-card>
         </v-expansion-panel-content>
     </v-expansion-panel>
-    <button class="getupdatebalance" @click="getupdatebalance(), getAllresults(), getBetresult()" hidden></button>
+    <button class="getupdatebalance" @click="getupdatebalance(), getAllresults()" hidden></button>
 </v-card>
 </template>
 
 <script>
 import AnimatedNumber from "animated-number-vue";
+import {
+    mapGetters
+} from "vuex";
 export default {
     components: {
         AnimatedNumber
@@ -84,64 +101,51 @@ export default {
             items3: 1,
             panel1: [1],
             panel2: [1],
-            panel3: [1],
+            panel3: [0],
             balance: 0,
-            name: ""
+            name: "",
+            stockName: null,
+            Allresults: []
         }
     },
     mounted() {
         this.getupdatebalance()
+        this.getAllresults()
+        this.getSotckId()
+    },
+    computed: {
+        ...mapGetters(["getStockList", "getLotteryDraw", "getStockById"])
     },
     methods: {
+        onlyTime(value) {
+            let cd = new Date(value)
+            return this.setZero(cd.getHours(), 2) + ":" + this.setZero(cd.getMinutes(), 2);
+        },
         formatToPrice(value) {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
+        setZero(num, digit) {
+            var zero = "";
+            for (var i = 0; i < digit; i++) {
+                zero += "0";
+            }
+            return (zero + num).slice(-digit);
+        },
+
         async getupdatebalance() {
-            let balance = await this.$axios.$get('http://192.168.1.134:8003/api/me?apikey=' + localStorage.apikey)
+            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
             this.name = balance[0].name
             this.balance = balance[0].userBalance
             // balance[0].totalOnlineTime
             return
         },
-        getBetresult() {
-            let result = [{
-                Stock: "US dollar Index",
-                Time: "5",
-                Result: "98.8156",
-            }, {
-                Stock: "BTC/USDT",
-                Time: "5",
-                Result: "7835.60",
-            }, {
-                Stock: "BTC/USDT",
-                Time: "1",
-                Result: "7838.22",
-            }]
-            return result;
+        async getSotckId() {
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            return this.stockName = stcokId.data
         },
-        getAllresults() {
-            let Response = [{
-                    Time: '2019-10-07 11:20:01',
-                    BetId: '0010106201910071020002',
-                    Amount: '100 ( FirstDigit-Big )',
-                    Stock: 'BTC/USDT ( 1 )',
-                    gameid: '01062019100710200'
-                }, {
-                    Time: '2019-10-07 11:20:24',
-                    BetId: '0010106201910071021005',
-                    Amount: '100 ( FirstDigit-Small )',
-                    Stock: 'BTC/USDT ( 1 )',
-                    gameid: '01062019100710210'
-                },
-                {
-                    Time: '2019-10-07 11:21:19',
-                    BetId: '0010106201910071025002',
-                    Amount: '100 ( FirstDigit-Big )',
-                    Stock: 'BTC/USDT ( 5 )',
-                    gameid: '01062019100710250'
-                }
-            ]
-            return Response;
+        async getAllresults() {
+            let CurrentBet = await this.$axios.$get(this.$store.state.urltest + '/api/fetchCurrentBet?apikey=' + localStorage.apikey)
+            return this.Allresults = CurrentBet.data
         }
     },
 }
