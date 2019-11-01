@@ -2,10 +2,13 @@
   <div>
     <v-layout class="mx-5 my-3" column>
       <v-flex>
-        <h3>betting on <span class="text-uppercase">{{betId}}</span></h3>
+        <h3>
+          betting on
+          <span class="text-uppercase">{{betId}}</span>
+        </h3>
       </v-flex>
       <v-flex class="pt-1">
-        <span>Stock Name:   {{ $t(`stockname.${stockName}`) }} -{{loop}}</span>
+        <span>Stock Name: {{ $t(`stockname.${stockName}`) }} -{{loop}}</span>
       </v-flex>
       <v-flex class="pt-1">
         <span>odd: {{payout}}</span>
@@ -50,7 +53,7 @@
   </div>
 </template>
 <script>
-import { mapGetters,mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   props: {
     stockName: {
@@ -96,30 +99,56 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getCoins_modern","getOnBetting"])
+    ...mapGetters(["getCoins_modern", "getOnBetting", "getAuth_token"])
   },
   methods: {
-    ...mapMutations([
-      "pushDataOnGoingBet"
-    ]),
+    ...mapMutations(["pushDataOnGoingBet"]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
     },
-    confirmBet(){
-      let data={
-        stockName:this.stockName,
-        loop:this.loop,
-        betId:this.betId,
-        betValue:this.betValue,
+    async sendBetting(betData) {
+      let data = {
+        data: [betData]
+      };
+      try {
+        const res = await this.$axios.$post(
+          `http://192.168.1.134:8003/api/storebet?apikey=${this.getAuth_token}`,
+          data
+        );
+        if (res.status) {
+          this.$swal({
+            type: "success",
+            title: "Confirm!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          this.$swal({
+            type: "error",
+            title: "Error!",
+            showConfirmButton: true,
+          });
+        }
+      } catch (ex) {
+        console.error(ex);
       }
-      this.pushDataOnGoingBet(data)
-      console.warn(this.getOnBetting)
+    },
+    confirmBet() {
+      let data = {
+        stockId: this.stockName,
+        loop: this.loop,
+        gameRule: this.betId,
+        amount: this.betValue
+      };
+      this.sendBetting(data);
+      this.pushDataOnGoingBet(data);
 
+      console.warn(this.getOnBetting);
     },
     closePopper() {
       $(".closepopper").click();
-      this.clear()
+      this.clear();
     },
     clear() {
       this.betValue = 0;

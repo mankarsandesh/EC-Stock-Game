@@ -50,7 +50,8 @@ module.exports = {
         "@/plugins/callApi",
         "@/plugins/i18n",
         "@/plugins/chart",
-        "@/plugins/coinLocalStorage"
+        "@/plugins/coinLocalStorage",
+        "@/plugins/sweetAlert"
     ],
     router: {
         // middleware: 'i18n'

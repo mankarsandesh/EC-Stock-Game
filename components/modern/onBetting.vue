@@ -15,8 +15,8 @@
             <span class="pr-1">{{ index+1}}.</span>
 
             <v-list-tile-content >
-              <v-list-tile-title >Amount:{{item.betValue}}<span class="text-uppercase">({{item.betId}})</span></v-list-tile-title>
-              <v-list-tile-sub-title>Stock:{{item.stockName}}</v-list-tile-sub-title>
+              <v-list-tile-title >Amount:{{item.amount}}<span class="text-uppercase">({{item.gameRule}})</span></v-list-tile-title>
+              <v-list-tile-sub-title>Stock:{{item.stockId}}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
         </template>
