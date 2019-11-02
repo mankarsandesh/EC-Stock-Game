@@ -94,7 +94,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions ,  mapGetters, mapMutations } from "vuex";
 import stockList from "~/components/modern/stockList";
 import betResultAllResult from "~/components/modern/betResultAllResult";
 import onBetting from "~/components/modern/onBetting";
@@ -129,11 +129,31 @@ export default {
     };
   },
   mounted(){
+    this.makeAuth()
+    // this.test()
+    
     // set footerBet to zero because on this page cant use bet footer 
     this.setFooterBetAmount(0)
     this.removeAllFooterBet()
   },
   methods: {
+    //  async test(){
+    //    const body = {
+    //                 client_id: 8,
+    //                 webToken: "IJZSsfMjXCSxt7X27luJAoiUYNmx13RXqWY6H2ba",
+    //                 name: "macky",
+    //                 userId: "11223344",
+    //                 balance: "800000",
+    //                 webId: "0001"
+    //             }
+    //             const token = await this.$axios.$post('http://192.168.1.134:8003/api/redirect', body)
+    //             console.warn("token")
+    //             console.warn(token)
+    //             console.warn("token")
+    // },
+    ... mapActions([
+      "makeAuth"
+    ]),
     ...mapMutations([
       "setFooterBetAmount",
       "removeAllFooterBet"

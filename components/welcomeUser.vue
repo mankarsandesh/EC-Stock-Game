@@ -2,7 +2,7 @@
   <div>
     <h4>
       {{$t('home.welcome')}}
-      <span class="warning--text">tester,</span>
+      <span class="warning--text">{{getUserName}},</span>
       <span class="warning--text">${{getBalance}}</span>
       {{$t('home.goodluck')}}！！
     </h4>
@@ -13,7 +13,8 @@ import { mapGetters } from 'vuex';
 export default {
     computed:{
         ...mapGetters([
-            "getBalance"
+            "getBalance",
+            "getUserName"
         ])
     }
 }

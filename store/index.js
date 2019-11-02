@@ -4,13 +4,14 @@ import Vuex from 'vuex'
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            auth_token: "",
+            userData: {},
             footerBetAmount: 0,
             onGoingBet: [],
             multiGameBet: [],
             stockMultigame: [],
             locales: ['cn', 'us', 'th', 'la'],
             locale: localStorage.getItem('lang'),
-            balance: 895000,
             coins_modern: [],
             urltest: "http://159.138.54.214",
             // all stocks data
@@ -52,6 +53,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/btc"
                     },
                     stockname: "btc1",
+                    name: "btc",
                     loop: 1,
                     type: "cypto",
                     crawlerData: "",
@@ -67,6 +69,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/usindex"
                     },
                     stockname: "usindex",
+                    name: "usindex",
                     loop: 5,
                     type: "usa",
                     crawlerData: "",
@@ -85,6 +88,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/btc"
                     },
                     stockname: "btc5",
+                    name: "btc",
                     loop: 5,
                     type: "cypto",
                     crawlerData: "",
@@ -100,6 +104,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/sh01"
                     },
                     stockname: "SH000001",
+                    name: "SH000001",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -115,6 +120,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/sz01"
                     },
                     stockname: "SZ399001",
+                    name: "SZ399001",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -130,6 +136,7 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/sz15"
                     },
                     stockname: "SZ399415",
+                    name: "SZ399415",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -145,9 +152,11 @@ const createStore = () => {
                         livePrice: "/api/newlivedata/sz300"
                     },
                     stockname: "SH00300",
+                    name: "SH00300",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
+
                     lastDraw: "",
                     timeLastDraw: "",
                     livePrice: {
@@ -159,6 +168,14 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            setUserData(state, payload) {
+                state.userData = payload
+            },
+
+            // store api_token in vuex auth_token
+            setAuth_token(state, token) {
+                state.auth_token = token
+            },
             // add mpre stock to multi game
             addStockMultigame(state, stockId) {
                 if (state.stockMultigame.includes(stockId)) return
@@ -210,7 +227,188 @@ const createStore = () => {
                 state.footerBetAmount = parseInt(payload)
             }
         },
+        actions: {
+            async makeAuth(context) {
+                const body = {
+                    client_id: 8,
+                    webToken: "IJZSsfMjXCSxt7X27luJAoiUYNmx13RXqWY6H2ba",
+                    name: "macky",
+                    userId: "11223344",
+                    balance: "800000",
+                    webId: "0001"
+                }
+                try {
+                    const res = await this.$axios.$post('http://192.168.1.134:8003/api/redirect', body)
+                    const token = res.data.token
+                    const userRes = await this.$axios.$get(`http://192.168.1.134:8003/api/me?apikey=${token}`)
+                    const userData = {
+                        name: userRes[0].name,
+                        balance: userRes[0].userBalance,
+                    }
+                    context.commit("setAuth_token", token)
+                    context.commit("setUserData", userData)
+                    console.log("userRes")
+                    console.log(userData)
+                    console.log(token)
+                    console.log("userRes")
+                } catch (ex) {
+                    console.error(ex)
+                }
+
+            },
+            asynInitCallApi(context) {
+                // call crawler api
+                for (let i = 0; i < context.getters.getStockLength; i++) {
+                    let name = context.getters.getStockKeys[i]
+                    let url = context.state.stocks[context.getters.getStockKeys[i]].url.crawler
+                    let payload = {
+                        url,
+                        name
+                    }
+                    context.dispatch("asynCrawlerStock", payload)
+                }
+                context.getters.getStockChart
+                    // call live price api
+                setInterval(function() {
+                    for (let i = 0; i < context.getters.getStockLength; i++) {
+                        let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
+                            // check if one stock has multi loop it will use the same live price
+                            // and in states.stocks url live price is setten to "null"
+                            // disable first by macky 11:35 02/09/2019
+                            // if (url == null) {    
+                            //     continue
+                            // }
+                        let name = context.getters.getStockKeys[i]
+                        let payload = {
+                            url,
+                            name
+                        }
+                        context.dispatch("asynLivePrice", payload)
+                    }
+                }, 10000);
+
+            },
+            async asynBalance(context) {
+                try {
+
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            // to get crawler
+            async asynCrawlerStock(context, payload) {
+                try {
+                    const url = payload.url
+                    const name = payload.name
+                    const result = await this.$axios.$get(url)
+                    if (result) {
+                        context.state.stocks[name].crawlerData = result
+                        context.state.stocks[name].lastDraw = result[result.length - 1].PT
+                        context.state.stocks[name].timeLastDraw = result[result.length - 1].created_at
+                            // console.log(context.state.stocks[name].crawlerData)
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+            // to get live price
+            async asynLivePrice(context, payload) {
+                try {
+                    const url = payload.url
+                    const name = payload.name
+                    const res = await this.$axios.$get(url)
+                    if (res) {
+                        context.state.stocks[name].livePrice.currentPrice = res.data.currentPrice
+                        context.state.stocks[name].livePrice.previousPrice = res.data.previousPrice
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+
+        },
         getters: {
+            // get user name
+            getUserName(state) {
+                return state.userData.name
+
+            },
+            // get user balance 
+            getBalance(state) {
+                return state.userData.balance
+            },
+
+            // get auth_token
+            getAuth_token(state) {
+                return state.auth_token
+            },
+            getAllStockByType(state, getters) {
+                let stockData = []
+                let stockType = []
+                    // get type for all stocks
+                for (let i = 0; i < getters.getStockLength; i++) {
+                    const id = getters.getStockKeys[i]
+                    const type = state.stocks[id].type
+
+                    const data = {
+                        type: type,
+                        stockName: []
+                    }
+                    if (!stockType.includes(type)) {
+                        stockType.push(type)
+                        stockData.push(data)
+                    }
+                }
+                // get stock name for all stocks
+                let stockName = []
+                for (let i = 0; i < stockType.length; i++) {
+                    for (let j = 0; j < getters.getStockLength; j++) {
+                        const id = getters.getStockKeys[j]
+                        const type = state.stocks[id].type
+                        if (type === stockType[i]) {
+
+                            const name = state.stocks[id].name
+                            const data = {
+                                name: name,
+                                loop: []
+                            }
+                            if (!stockName.includes(name)) {
+                                stockName.push(name)
+                                stockData[i].stockName.push(data)
+                            }
+                        }
+                    }
+                }
+                // get loop 
+                let loop = []
+                for (let i = 0; i < stockType.length; i++) {
+                    for (let j = 0; j < getters.getStockLength; j++) {
+                        const id = getters.getStockKeys[j]
+                        const type = state.stocks[id].type
+                        if (type === stockType[i]) {
+
+                            const loop = state.stocks[id].loop
+                            const stockId = state.stocks[id].stockname
+                            const data = {
+                                loop: loop,
+                                stockId: stockId
+                            }
+
+                            console.warn(data)
+                            console.warn(type)
+
+                            for (let ok = 0; ok < stockData[i].stockName.length; ok++) {
+                                const name = stockData[i].stockName[ok].name
+                                stockData[i].stockName[ok].loop.push(data)
+
+                            }
+                            // alert(type)
+                        }
+                    }
+                }
+                console.warn(stockData.stockName)
+                return stockData
+            },
             // check stock in multi game if exits disable button
             checkMultigameExistAndDisable: (state) => (data) => {
                 if (!data.isMultigame) return ""
@@ -236,12 +434,12 @@ const createStore = () => {
             },
             // get amount of betting that already confirm
             getBettingAmount(state) {
-                return state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
+                return state.onGoingBet.map(x => x.amount).reduce((a, b) => a + b, 0)
             },
             // get amount of betting already confirmed and not confirm
             getAllBettingAmount(state) {
-                let amount1 = state.onGoingBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
-                let amount2 = state.multiGameBet.map(x => x.betValue).reduce((a, b) => a + b, 0)
+                let amount1 = state.onGoingBet.map(x => x.amount).reduce((a, b) => a + b, 0)
+                let amount2 = state.multiGameBet.map(x => x.amount).reduce((a, b) => a + b, 0)
                 return amount1 + amount2
             },
             // get data betting
@@ -251,8 +449,8 @@ const createStore = () => {
             getAmountBettingByStockId: (state) => (stockId) => {
                 function getAmount(object) {
                     // find stockname 
-                    if (object.findIndex(x => x.stockName === stockId) == -1) return 0
-                    let result = object.filter(x => x.stockName === stockId).map(x => x.betValue).reduce((a, b) => a + b, 0)
+                    if (object.findIndex(x => x.stockId === stockId) == -1) return 0
+                    let result = object.filter(x => x.stockId === stockId).map(x => x.amount).reduce((a, b) => a + b, 0)
                     return parseInt(result)
                 }
                 return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
@@ -260,14 +458,14 @@ const createStore = () => {
             // to show ship and amount on bet button
             getAmountMultiGameBet: (state) => (data) => {
                 function getAmount(object) {
-                    // find stockname 
-                    if (object.findIndex(x => x.stockName === data.stockName) == -1) return 0
-                        // get data by stockname
-                    let stockIdObject = object.filter(x => x.stockName === data.stockName)
-                        // check rule in stockname
+                    // find stockId
+                    if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0
+                        // get data by stockId
+                    let stockIdObject = object.filter(x => x.stockId === data.stockId)
+                        // check rule in stockId
                     if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
                         // get amount by rule
-                    let result = stockIdObject.filter(x => x.betId === data.betId).map(x => x.betValue).reduce((a, b) => a + b, 0)
+                    let result = stockIdObject.filter(x => x.betId === data.betId).map(x => x.amount).reduce((a, b) => a + b, 0)
                     return parseInt(result)
                 }
                 return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
@@ -275,11 +473,11 @@ const createStore = () => {
             getAmountBetSpecificNumber: (state) => (data) => {
                 function getAmount(object) {
                     let count = 9
-                        // find stockname 
-                    if (object.findIndex(x => x.stockName === data.stockName) == -1) return 0
-                        // get data by stockname
-                    let stockIdObject = object.filter(x => x.stockName === data.stockName)
-                        // check rule in stockname
+                        // find stockId 
+                    if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0
+                        // get data by stockId
+                    let stockIdObject = object.filter(x => x.stockId === data.stockId)
+                        // check rule in stockId
                         // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
 
                     // get amount by rule
@@ -287,11 +485,11 @@ const createStore = () => {
                     for (let i = 0; i <= count; i++) {
                         result = result + stockIdObject.filter(x => x.betId.toLowerCase()
                                 .includes(`${data.betId}-${i}`))
-                            .map(x => x.betValue).reduce((a, b) => a + b, 0)
+                            .map(x => x.amount).reduce((a, b) => a + b, 0)
 
                     }
 
-                    // .map(x => x.betValue).reduce((a, b) => a + b, 0)
+                    // .map(x => x.amount).reduce((a, b) => a + b, 0)
                     return result
                 }
                 return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
@@ -395,10 +593,7 @@ const createStore = () => {
                 if (id == "") return
                 return state.stocks[id].lastDraw
             },
-            // get user balance 
-            getBalance(state) {
-                return state.balance
-            },
+
             // to show in betting
             getStockById: (state) => (id) => {
                 // console.log("getStockById")
@@ -442,7 +637,6 @@ const createStore = () => {
                     names,
                     stock,
                     loop,
-
                 }
                 return result
             },
@@ -546,79 +740,8 @@ const createStore = () => {
             getStockLength(state) {
                 return Object.keys(state.stocks).length
             }
-        },
-        actions: {
-            asynInitCallApi(context) {
-                // call crawler api
-                for (let i = 0; i < context.getters.getStockLength; i++) {
-                    let name = context.getters.getStockKeys[i]
-                    let url = context.state.stocks[context.getters.getStockKeys[i]].url.crawler
-                    let payload = {
-                        url,
-                        name
-                    }
-                    context.dispatch("asynCrawlerStock", payload)
-                }
-                context.getters.getStockChart
-                    // call live price api
-                setInterval(function() {
-                    for (let i = 0; i < context.getters.getStockLength; i++) {
-                        let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
-                            // check if one stock has multi loop it will use the same live price
-                            // and in states.stocks url live price is setten to "null"
-                            // disable first by macky 11:35 02/09/2019
-                            // if (url == null) {    
-                            //     continue
-                            // }
-                        let name = context.getters.getStockKeys[i]
-                        let payload = {
-                            url,
-                            name
-                        }
-                        context.dispatch("asynLivePrice", payload)
-                    }
-                }, 10000);
-
-            },
-            async asynBalance(context) {
-                try {
-
-                } catch (error) {
-                    console.log(error)
-                }
-            },
-            // to get crawler
-            async asynCrawlerStock(context, payload) {
-                try {
-                    const url = payload.url
-                    const name = payload.name
-                    const result = await this.$axios.$get(url)
-                    if (result) {
-                        context.state.stocks[name].crawlerData = result
-                        context.state.stocks[name].lastDraw = result[result.length - 1].PT
-                        context.state.stocks[name].timeLastDraw = result[result.length - 1].created_at
-                            // console.log(context.state.stocks[name].crawlerData)
-                    }
-                } catch (error) {
-                    console.log(error)
-                }
-            },
-            // to get live price
-            async asynLivePrice(context, payload) {
-                try {
-                    const url = payload.url
-                    const name = payload.name
-                    const res = await this.$axios.$get(url)
-                    if (res) {
-                        context.state.stocks[name].livePrice.currentPrice = res.data.currentPrice
-                        context.state.stocks[name].livePrice.previousPrice = res.data.previousPrice
-                    }
-                } catch (error) {
-                    console.log(error)
-                }
-            },
-
         }
+
     })
 }
 
