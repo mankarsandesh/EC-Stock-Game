@@ -1,6 +1,5 @@
 <template>
 <div class="text-xs-center">
-
     <canvas ref="planetchart" class="set-height"></canvas>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 </div>
@@ -23,8 +22,8 @@ export default {
     },
     mounted() {
         this.getChart()
-        setTimeout(() => {
-            this.getChart()
+        setInterval(() => {
+            if (this.load == false) this.getChart()
         }, 1000)
     },
     methods: {
@@ -47,7 +46,7 @@ export default {
             let lastdraw = [];
             let title;
             if (this.StockData[0].stockname == 'BTC/USDT') {
-                title = this.StockData[0].stockname+" 5"
+                title = this.StockData[0].stockname + " 5"
             } else {
                 title = this.StockData[0].stockname
             }

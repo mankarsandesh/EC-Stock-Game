@@ -132,16 +132,16 @@ export default {
                 let calculat;
                 if (this.stocks == "btc1") {
                     times = data.btc1.timer;
-                    calculat = 38;
+                    calculat = 39;
                 } else if (this.stocks == "btc5") {
                     times = data.btc5.timer;
-                    calculat = 238;
+                    calculat = 239;
                 } else if (this.stocks == "usindex") {
                     times = data.usindex.timer;
-                    calculat = 238;
+                    calculat = 239;
                 } else {
                     times = data.SH000001.timer;
-                    calculat = 238;
+                    calculat = 239;
                 }
                 if (times == calculat) {
                     this.getTableChartBS();

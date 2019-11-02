@@ -16,8 +16,9 @@ export default {
         }
     },
     mounted() {
-        setTimeout(() => {
-            this.getChart()
+        this.getChart()
+        setInterval(() => {
+            if (this.load == false) this.getChart()
         }, 1000)
     },
     methods: {

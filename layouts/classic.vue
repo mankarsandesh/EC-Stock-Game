@@ -40,11 +40,42 @@
             </v-container>
         </v-toolbar>
 
-        <v-toolbar align-center justify-center class="nav-tab">
-            <v-container mx-auto py-0 px-0>
+        <div class="navbar container" v-if="ischangechartview">
+            <ul class="main-navigation">
+                <li v-for="(stock,index) in navList" :key="index" :class="stock.name == tab ? 'active':''">
+                    <a href="#">
+                        <span>
+                            {{$t('navlist.'+stock.name)}}
+                            <span class="show-icon">
+                                <i class="fa fa-caret-down"></i>
+                            </span>
+                        </span>
+                    </a>
+                    <ul>
+                        <li v-for="(stockType,index) in stock.children" :key="index" :class="stockType.url.split('-')[0]+stockType.url.split('-')[1] == $route.params.id.split('-')[0]+$route.params.id.split('-')[1] ? 'active':''">
+                            <a router @click="$router.push('/classic/'+stockType.url), loadchart()">
+                                <span>{{ $t('stockname.'+stockType.name) }}{{ stockType.name == 'btc1' ? ' 1 '+$t('msg.minute'):stockType.name == 'btc5' ? ' 5 '+$t('msg.minute'):'' }}</span>
+                                <span class="show-icon">
+                                    <i class="fa fa-caret-right"></i>
+                                </span>
+                            </a>
+                            <ul>
+                                <li v-for="(stockName,index) in stockType.childrens" :key="index" :class="stockName.url == $route.params.id ? 'active':''">
+                                    <a router @click="$router.push('/classic/'+stockName.url), loadchart()">
+                                        <span>{{ $t('listCS.'+stockName.name) }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
-                <v-layout v-if="ischangechartview">
-                    <v-tabs v-model="tab" color="cyan" grow>
+        <!-- <v-toolbar align-center justify-center class="nav-tab"> -->
+        <!-- <v-container mx-auto py-0 px-0> -->
+        <!-- <v-layout v-if="ischangechartview">
+                    <v-tabs v-model="tab" color="#384e63" grow>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="(items1,idx1) in navList" :key="idx1">
                             <v-menu open-on-hover offset-y transition="slide-y-transition">
@@ -53,7 +84,7 @@
                                 </template>
                                 <v-list v-if="items1.children">
                                     <v-list-tile v-for="(items2, idx2 ) in items1.children" :key="idx2">
-                                        <v-menu open-on-hover  offset-x transition="slide-x-transition">
+                                        <v-menu open-on-hover offset-x transition="slide-x-transition">
                                             <template v-slot:activator="{on}">
                                                 <nuxt-link :to="'/classic/'+items2.url">
                                                     <v-btn flat dark color="black" v-on="on" @click="loadchart()">{{ $t('stockname.'+items2.name) }}{{ items2.name == 'btc1' ? ' 1 '+$t('msg.minute'):items2.name == 'btc5' ? ' 5 '+$t('msg.minute'):'' }}</v-btn>
@@ -72,68 +103,28 @@
                             </v-menu>
                         </v-tab>
                     </v-tabs>
-                </v-layout>
-                <!-- test -->
-
-                <!-- <v-layout v-if="ischangechartview">
-                    <v-tabs color="cyan" grow>
-                        <v-tabs-slider color="yellow" grow></v-tabs-slider>
-                        <v-tab v-for="(item,i) in navList" :key="i" :href="'#' + item.name">
-                            {{ $t('navlist.'+item.name) }}
-                        </v-tab>
-
-                        <v-tabs-items>
-                            <v-tab-item v-for="(item,i) in navList" :key="i" v-model="item.name">
-                                <v-card flat>
-                                    <v-tabs color="cyan" grow>
-                                        <v-tabs-slider color="yellow" grow></v-tabs-slider>
-                                        <v-tab v-for="(item2,i) in item.children" :key="i" :href="'#' + item2.name" @click="$router.push('/classic/'+item2.url), loadchart()">
-                                            {{$t('stockname.'+item2.name)}}{{ item2.name == 'btc1' ? ' 1 '+$t('msg.minute'):item2.name == 'btc5' ? ' 5 '+$t('msg.minute'):'' }}
-                                        </v-tab>
-
-                                        <v-tabs-items>
-                                            <v-tab-item v-for="(item2,i) in item.children" :key="i" v-model="item2.name">
-                                                <v-card flat>
-
-                                                    <v-tabs color="cyan" grow>
-                                                        <v-tabs-slider color="yellow" grow></v-tabs-slider>
-                                                        <v-tab v-for="(item3,i) in item2.childrens" :key="i" @click="$router.push('/classic/'+item3.url), loadchart()">
-                                                            {{$t('listCS.'+item3.name)}}
-                                                        </v-tab>
-
-                                                    </v-tabs>
-
-                                                </v-card>
-                                            </v-tab-item>
-                                        </v-tabs-items>
-                                    </v-tabs>
-
-                                </v-card>
-                            </v-tab-item>
-                        </v-tabs-items>
-                    </v-tabs>
                 </v-layout> -->
-
-                <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-                    <v-card>
-                        <v-toolbar dark color="primary">
-                            <v-toolbar-title>Menu</v-toolbar-title>
-                            <v-spacer></v-spacer>
-                            <v-toolbar-items>
-                                <v-btn icon dark @click="dialog = false">
-                                    <v-icon>close</v-icon>
-                                </v-btn>
-                            </v-toolbar-items>
-                        </v-toolbar>
-                        <v-list>
-                            <v-list-tile v-for="(item, i) in menu" :key="i" :to="item.to" @click="dialog = false">
-                                <v-list-tile-title>{{ $t(`menu.${item.title}`) }}</v-list-tile-title>
-                            </v-list-tile>
-                        </v-list>
-                    </v-card>
-                </v-dialog>
-            </v-container>
-        </v-toolbar>
+        <!-- test -->
+        <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <v-card>
+                <v-toolbar dark color="primary">
+                    <v-toolbar-title>Menu</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn icon dark @click="dialog = false">
+                            <v-icon>close</v-icon>
+                        </v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                <v-list>
+                    <v-list-tile v-for="(item, i) in menu" :key="i" :to="item.to" @click="dialog = false">
+                        <v-list-tile-title>{{ $t(`menu.${item.title}`) }}</v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-card>
+        </v-dialog>
+        <!-- </v-container> -->
+        <!-- </v-toolbar> -->
 
         <v-content pa-0 sx-0>
             <div class="btn-chart-change set-chart-change" v-if="!$vuetify.breakpoint.smAndDown">
@@ -224,6 +215,7 @@ import stockchina from "~/data/json/menustockchina.json";
 
 import baccarat from "~/data/json/baccarat.json";
 import baccarats from "~/components/classic/baccarats";
+import navbar from "~/components/classic/navbar";
 export default {
     components: {
         countryFlag,
@@ -232,7 +224,8 @@ export default {
         liveevens,
         listleft,
         dataslastdraw,
-        baccarats
+        baccarats,
+        navbar
     },
     data() {
         return {
@@ -266,10 +259,12 @@ export default {
     },
     created() {
         this.setLanguage();
+       
     },
     mounted() {
         setTimeout(() => {
             window.scrollTo(0, 0)
+             this.getToken()
         }, 1000);
         this.loadchart();
         this.getMenu();
@@ -280,6 +275,7 @@ export default {
             this.getNavbar(data);
             this.getAtivetab();
         });
+        
     },
     computed: {
         ...mapGetters([
@@ -293,8 +289,25 @@ export default {
         countryflag() {
             return this.getlocale;
         }
+
     },
     methods: {
+        async getToken() {
+            if (localStorage.apikey !== null) {
+                let data = {
+                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
+                    "name": "tay",
+                    "userId": "1234567889",
+                    "balance": 800000,
+                    "webId": "0001"
+                }
+                let redirect = await this.$axios.$post('http://159.138.54.214/api/redirect', data)
+                console.log(redirect.data.token)
+                console.log("token")
+                localStorage.apikey = redirect.data.token
+            }
+
+        },
         ...mapActions(["asynInitCallApi"]),
         ...mapMutations(["SET_LANG", "SET_TIME"]),
         setLanguage() {
@@ -324,7 +337,7 @@ export default {
             this.menu = [{
                     icon: "apps",
                     title: "home",
-                    to: "/classic/l-btc1-live"
+                    to: "/classic/" + mn
                 },
                 {
                     icon: "bubble_chart",
@@ -369,7 +382,7 @@ export default {
             }, 50);
             setTimeout(() => {
                 window.scrollTo(0, 0);
-            }, 1200);
+            }, 2000);
         },
         loadtable() {
             this.showtable = false;
@@ -380,21 +393,18 @@ export default {
             }, 50);
         },
         getAtivetab() {
-            this.checkStockList =
-                this.$route.params.id.split("-")[0] +
-                "-" +
-                this.$route.params.id.split("-")[1];
-            if (this.$route.params.id.split("-")[0] == "l") {
-                this.tab = 0;
+            this.checkStockList = this.$route.params.id.split("-")[0] + "-" + this.$route.params.id.split("-")[1];
+            if (this.checkStockList == "l-" + this.$route.params.id.split("-")[1]) {
+                this.tab = "live Stock";
             } else if (this.checkStockList == "st-usindex") {
-                this.tab = 1;
+                this.tab = "Us Stock";
             } else if (
                 this.checkStockList == "st-btc1" ||
                 this.checkStockList == "st-btc5"
             ) {
-                this.tab = 2;
+                this.tab = "Cypto Currency";
             } else {
-                this.tab = 3;
+                this.tab = "China Stocck";
             }
         }
     }
@@ -489,5 +499,100 @@ export default {
 
 .btn:not(:disabled):not(.disabled) {
     cursor: pointer;
+}
+
+/* ////////////////////////////////////////////// */
+
+.active {
+    border-bottom-style: inset;
+    border-bottom-color: #ffd332;
+}
+
+.navbar {
+    padding: 0 !important;
+    flex: 0 1 4% !important;
+}
+
+.show-icon {
+    position: absolute;
+    right: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #384e63;
+}
+
+ul li {
+    display: block;
+    width: 100%;
+    position: relative;
+    float: left;
+    background: #384e63;
+}
+
+li ul {
+    display: none;
+    min-width: 61%;
+}
+
+ul li a {
+    display: block;
+    width: 100%;
+    padding: 0.6em;
+    text-decoration: none;
+    white-space: nowrap;
+    color: #fff;
+}
+
+ul li a:hover {
+    background: #384e63;
+}
+
+li:hover>ul {
+    display: block;
+    position: absolute;
+}
+
+li:hover li {
+    float: none;
+}
+
+li:hover a {
+    background: #384e63;
+}
+
+li:hover li a:hover {
+    background: #1b405f;
+}
+
+.main-navigation {
+    display: -webkit-box;
+    width: 25%;
+    /* text-align: center; */
+}
+
+.main-navigation li ul li {
+    border-top: 0;
+    z-index: 1000;
+}
+
+ul ul ul {
+    left: 100%;
+    top: 0;
+}
+
+ul:before,
+ul:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
+}
+
+ul:after {
+    clear: both;
 }
 </style>

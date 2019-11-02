@@ -38,7 +38,7 @@
                     <tr v-for="(data,index) in getStockList" :key="index">
                         <td class="text-left">
                             <i class="fa fa-circle-o text-danger"></i>
-                            <b>{{$t('msg.Stock')}}</b>: {{ $t(`stockname.${data.stockname}`) }} <b>{{$t('msg.Time')}}</b>: {{ onlyTime(getStockById(data.id).timeLastDraw)}} <b>{{$t('msg.Result')}}</b> {{getStockById(data.id).lastDraw}}
+                            <b>{{$t('msg.Stock')}}</b>: {{ $t('stockname.'+data.stockname) }}{{ data.stockname == 'btc1' ? ' 1 ':data.stockname == 'btc5' ? ' 5 ':'' }} <b>{{$t('msg.Time')}}</b>: {{ onlyTime(getStockById(data.id).timeLastDraw)}} <b>{{$t('msg.Result')}}</b> {{getStockById(data.id).lastDraw}}
                         </td>
                     </tr>
 
@@ -112,6 +112,11 @@ export default {
         this.getupdatebalance()
         this.getAllresults()
         this.getSotckId()
+        // setInterval(() => {
+        //     if (this.Allresults.length != 0) {
+        //         this.getAllresults()
+        //     }
+        // }, 1000)
     },
     computed: {
         ...mapGetters(["getStockList", "getLotteryDraw", "getStockById"])
@@ -145,7 +150,9 @@ export default {
         },
         async getAllresults() {
             let CurrentBet = await this.$axios.$get(this.$store.state.urltest + '/api/fetchCurrentBet?apikey=' + localStorage.apikey)
+            // console.log("kkkkkk")
             return this.Allresults = CurrentBet.data
+
         }
     },
 }

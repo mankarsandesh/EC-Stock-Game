@@ -26,7 +26,6 @@
     </div>
 
     <div v-else>
-
         <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>
@@ -69,6 +68,7 @@
                             </template>
                             <v-card>
                                 <v-layout row>
+
                                     <v-flex xs12 md6>
                                         <table>
                                             <tr>
@@ -98,6 +98,7 @@
                                             </tr>
                                         </table>
                                     </v-flex>
+
                                     <v-flex xs12 md6>
                                         <table>
                                             <tr>
@@ -150,6 +151,7 @@
                                             </tr>
                                         </table>
                                     </v-flex>
+
                                 </v-layout>
                             </v-card>
                         </v-expansion-panel-content>
@@ -206,7 +208,7 @@
                     <v-tabs class="bg-colors" v-model="currentItemss" color="transparent" fixed-tabs slider-color="yellow" grow>
                         <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ $t('gamemsg.'+baccarat2.name) }}</v-tab>
                     </v-tabs>
-                    <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" :dataArray="getStockNewData($route.params.id)" :stocks="stockname" />
+                    <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" :dataArray="getStockNewData($route.params.id)" :stocks="stocks" />
                 </v-card>
             </v-tab-item>
         </v-tabs-items>
@@ -323,12 +325,9 @@
 
     <!-- alertOutCome -->
     <v-snackbar class="tops" v-model="alertSS" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
-        <!-- <span class="text-center set-text-alert" v-if="color == 'success'">
-            <v-icon size="40" white--text>check</v-icon>
-            <br>
-            {{alertext}}
-        </span> -->
-        <span class="set-text-alert">{{alertext}}</span>
+        <span class="text-center">
+            <h2>{{alertext}}</h2>
+        </span>
     </v-snackbar>
     <!-- end alertOutCome -->
     <button hidden id="playwin" @click.prevent="playSound('/voice/winbet.mp3')"></button>
@@ -395,6 +394,7 @@ export default {
             sntwoloopstart: null,
             sntwoloopend: null,
             stockname: "",
+            stocks: this.$route.params.id.split("-")[1],
             show1: true,
             checkbox1: false,
 
@@ -494,7 +494,7 @@ export default {
                     this.setPrice("reset");
                     this.getalertstartstop(res.data.status)
                     $(".getupdatebalance")[0].click()
-                }, 2000);
+                }, 1600);
             }
         },
 
@@ -511,7 +511,7 @@ export default {
             this.show1 = false;
             setTimeout(() => {
                 this.show1 = true;
-            }, 0);
+            }, 10);
         },
 
         formatToPrice(value) {
@@ -721,14 +721,11 @@ export default {
 
         alertOutCome(val) {
             this.snackbar = true;
-            this.mode = "vertical";
-
+            $(".getupdatebalance")[0].click()
             if (val == "win") {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
-                $(".getupdatebalance")[0].click()
                 $("#playwin")[0].click()
-
             } else {
                 this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
@@ -737,10 +734,10 @@ export default {
 
         getalertstartstop(val) {
             this.alertSS = true;
-            this.mode = "multi-line";
             if (val == "start") {
                 this.alertext = this.$root.$t('msg.startbetting')
                 this.color = "#2962FF";
+                window.scrollTo(0, 0);
             } else if (val == "stop") {
                 this.alertext = this.$root.$t('msg.stopbetting')
                 this.color = "#D50000";
@@ -796,14 +793,6 @@ export default {
 .set-closeds {
     height: calc(20vh - 215px);
     padding-top: 0%;
-}
-
-.set-text-alert {
-    margin-top: 2%;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-left: calc(20vh - 215px);
-    text-align: center !important;
 }
 
 .btn-chips {

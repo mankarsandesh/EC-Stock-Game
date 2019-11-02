@@ -34,11 +34,11 @@ export default {
             week: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
         };
     },
-    created(){
-        this.getdata()
-    },
     mounted() {
-        setTimeout(()=>{this.getdata();},1000)
+        this.getdata()
+        setInterval(() => {
+            if (this.load == false) this.getdata()
+        }, 1000)
         const socket = openSocket("https://websocket-timer.herokuapp.com");
         socket.on("time", data => {
             // this.getTimeNow();
@@ -68,7 +68,7 @@ export default {
             } else if (times == "close") {
                 this.time = this.$root.$t('msg.marketclosed');
             } else {
-                this.time = this.$root.$t('msg.betnow')+':'+ this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
+                this.time = this.$root.$t('msg.betnow') + ':' + this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
             }
 
             if (times == lasttime) {

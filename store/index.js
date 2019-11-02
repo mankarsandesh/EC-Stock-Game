@@ -12,7 +12,7 @@ const createStore = () => {
             locale: localStorage.getItem('lang'),
             balance: 895000,
             coins_modern: [],
-            urltest: "http://192.168.1.134:8003",
+            urltest: "http://159.138.54.214",
             // all stocks data
             // if we have new stock available we can add it here with same object format
             liveprice: {
