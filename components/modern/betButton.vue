@@ -2,12 +2,12 @@
   <div class="p-relative">
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
-    <div
+    <!-- <div
       class="bet-close"
       v-if="checkBetClose  || getLotteryDraw(stockName) ==='close' || getLotteryDraw(stockName) == null "
     >
       <p>bet close</p>
-    </div>
+    </div> -->
     <!-- end for show bet close -->
     <v-layout row>
       <popper
@@ -37,7 +37,7 @@
         >
           <showChipAmount
             size="50px"
-            :amount="getAmountMultiGameBet({stockName:stockName ,betId:'firstdigit-'+data.rule})"
+            :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'firstdigit-'+data.rule})"
           ></showChipAmount>
           <span class="big-digit">{{data.rule}}</span>
           <br />
@@ -147,7 +147,7 @@
         >
           <showChipAmount
             size="50px"
-            :amount="getAmountMultiGameBet({stockName:stockName ,betId:'lastdigit-'+data.rule})"
+            :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'lastdigit-'+data.rule})"
           ></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
@@ -256,7 +256,7 @@
         >
           <showChipAmount
             size="50px"
-            :amount="getAmountMultiGameBet({stockName:stockName ,betId:'bothdigit-'+data.rule})"
+            :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'bothdigit-'+data.rule})"
           ></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
@@ -366,7 +366,7 @@
         >
           <showChipAmount
             size="50px"
-            :amount="getAmountMultiGameBet({stockName:stockName ,betId:'twodigit-'+data.rule})"
+            :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'twodigit-'+data.rule})"
           ></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
@@ -452,7 +452,7 @@
         <v-btn class="align_button4" @click="btnNumber('first')">
           <showChipAmount
             size="50px"
-            :amount="getAmountBetSpecificNumber({stockName:stockName ,betId:'firstdigit'})"
+            :amount="getAmountBetSpecificNumber({stockId:stockName ,gameRule:'firstdigit'})"
           ></showChipAmount>
 
           <span class="big-digit">0 - 9</span>
@@ -467,7 +467,7 @@
         <v-btn class="align_button4" @click="btnNumber('last')">
           <showChipAmount
             size="50px"
-            :amount="getAmountBetSpecificNumber({stockName:stockName ,betId:'lastdigit'})"
+            :amount="getAmountBetSpecificNumber({stockId:stockName ,gameRule:'lastdigit'})"
           ></showChipAmount>
 
           <span class="big-digit">0 - 9</span>
@@ -482,7 +482,7 @@
         <v-btn class="align_button4" @click="btnNumber('both')">
           <showChipAmount
             size="50px"
-            :amount="getAmountBetSpecificNumber({stockName:stockName ,betId:'bothdigit'})"
+            :amount="getAmountBetSpecificNumber({stockId:stockName ,gameRule:'bothdigit'})"
           ></showChipAmount>
 
           <span class="big-digit">0 - 18</span>
@@ -497,7 +497,7 @@
         <v-btn class="align_button4" @click="btnNumber('two')">
           <showChipAmount
             size="50px"
-            :amount="getAmountBetSpecificNumber({stockName:stockName ,betId:'twodigit'})"
+            :amount="getAmountBetSpecificNumber({stockId:stockName ,gameRule:'twodigit'})"
           ></showChipAmount>
 
           <span class="big-digit">00 - 99</span>

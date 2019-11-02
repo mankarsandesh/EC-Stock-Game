@@ -27,7 +27,7 @@
               </span>
             </a>
             <ul>
-              <li v-for="stockName in stockType.stockName" :key="stockName">
+              <li v-for="(stockName,index) in stockType.stockName" :key="index">
                 <a href="#">
                   <span>{{stockName.name}}</span>
                   <span class="show-icon">
@@ -35,7 +35,7 @@
                   </span>
                 </a>
                 <ul>
-                  <li v-for="stockLoop in stockName.loop" :key="stockLoop">
+                  <li v-for="(stockLoop,index) in stockName.loop" :key="index">
                     <span>
                       <a
                         href="#"

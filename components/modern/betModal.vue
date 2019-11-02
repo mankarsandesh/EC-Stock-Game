@@ -116,6 +116,7 @@ export default {
           `http://192.168.1.134:8003/api/storebet?apikey=${this.getAuth_token}`,
           data
         );
+        console.log(res)
         if (res.status) {
           this.$swal({
             type: "success",
@@ -126,7 +127,7 @@ export default {
         } else {
           this.$swal({
             type: "error",
-            title: "Error!",
+            title: `Error ${res.message}`,
             showConfirmButton: true,
           });
         }
