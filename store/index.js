@@ -463,9 +463,9 @@ const createStore = () => {
                         // get data by stockId
                     let stockIdObject = object.filter(x => x.stockId === data.stockId)
                         // check rule in stockId
-                    if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
+                    if (stockIdObject.findIndex(x => x.gameRule === data.gameRule) == -1) return 0
                         // get amount by rule
-                    let result = stockIdObject.filter(x => x.betId === data.betId).map(x => x.amount).reduce((a, b) => a + b, 0)
+                    let result = stockIdObject.filter(x => x.gameRule === data.gameRule).map(x => x.amount).reduce((a, b) => a + b, 0)
                     return parseInt(result)
                 }
                 return getAmount(state.multiGameBet) + getAmount(state.onGoingBet)
@@ -483,12 +483,10 @@ const createStore = () => {
                     // get amount by rule
                     let result = 0
                     for (let i = 0; i <= count; i++) {
-                        result = result + stockIdObject.filter(x => x.betId.toLowerCase()
-                                .includes(`${data.betId}-${i}`))
+                        result = result + stockIdObject.filter(x => x.gameRule.toLowerCase()
+                                .includes(`${data.gameRule}-${i}`))
                             .map(x => x.amount).reduce((a, b) => a + b, 0)
-
                     }
-
                     // .map(x => x.amount).reduce((a, b) => a + b, 0)
                     return result
                 }
