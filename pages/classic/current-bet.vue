@@ -46,8 +46,8 @@
                                 </td>
                                 <td>{{props.item.betTime}}</td>
                                 <td>{{props.item.betAmount}}</td>
-                                <td><span :style="props.item.rollingAmount < 0 ? 'color: red;':'color: green;'">{{props.item.rollingAmount}}</span></td>
-
+                                <td>{{props.item.payoutAmount}}</td>
+                                <td>{{props.item.betStatus == 0 ? 'Pending':'Done'}}</td>
                             </template>
                             <template slot="footer">
                                 <tr>
@@ -77,6 +77,7 @@
                         <div class="text-xs-center pt-2">
                             <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
                         </div>
+                        {{pagination}}
                     </v-card>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -148,7 +149,7 @@ export default {
                     text: this.$t('msg.payout'),
                     sortable: false,
                     align: "center",
-                    value: "rollingAmount",
+                    value: "payoutAmount",
                     totals: true,
                 }, {
                     text: this.$t('msg.Bet Status'),
@@ -190,39 +191,67 @@ export default {
                 start: this.datefrom,
                 end: this.dateto
             }
-            // return this.gethistory(date)
+            console.log(date)
+            return this.gethistory(date)
         },
         async gethistory(val) {
             let history = await this.$axios.$get(this.$store.state.urltest + '/api/fetchCurrentBet?apikey=' + localStorage.apikey)
-
             if (history.data == null) return
-
             // console.log(history.data)
-            for (let i = 0; i < history.data.length; i++) {
-                this.sumTotalbetAmount += history.data[i].betAmount
-                this.sumTotalrollingAmount += history.data[i].rollingAmount
-            }
 
             this.load = true;
-            this.colspan = history.data.length;
 
-            history.data.forEach(element => {
-                return this.history.push({
-                    page: 1,
-                    betId: element.betId,
-                    gameId: element.gameId,
-                    rule: element.rule,
-                    payoutAmount: element.payoutAmount,
-                    stock: element.stock,
-                    loops: element.loops,
-                    betTime: element.betTime,
-                    betAmount: element.betAmount,
-                    rollingAmount: element.rollingAmount,
-                    betStatus: element.betStatus
-                });
-            });
+            for (let i = 0; i < history.data.length; i++) {
+                console.log(history.data[i].betTime)
+                if (val != null) {
+                    this.history = []
+                    this.sumTotalbetAmount = 0
+                    this.sumTotalrollingAmount = 0
+                    if (history.data[i].betTime.split(" ")[0] == val.start || history.data[i].betTime.split(" ")[0] == val.end) {
+                        setTimeout(() => {
+                            this.history.push({
+                                page: 1,
+                                betId: history.data[i].betId,
+                                gameId: history.data[i].gameId,
+                                rule: history.data[i].rule,
+                                payoutAmount: history.data[i].payoutAmount,
+                                stock: history.data[i].stock,
+                                loops: history.data[i].loops,
+                                betTime: history.data[i].betTime,
+                                betAmount: history.data[i].betAmount,
+                                payoutAmount: history.data[i].payoutAmount,
+                                betStatus: history.data[i].betStatus
+                            });
 
-            // return this.history = history.data
+                            this.sumTotalbetAmount += history.data[i].betAmount
+                            this.sumTotalrollingAmount += history.data[i].rollingAmount
+                            this.colspan = history.data.length;
+                        }, 100)
+
+                    } else if (history.data[i].betTime.split(" ")[0] !== val.start && history.data[i].betTime.split(" ")[0] !== val.end) {
+                        this.history = []
+                    }
+                } else {
+                    this.history.push({
+                        page: 1,
+                        betId: history.data[i].betId,
+                        gameId: history.data[i].gameId,
+                        rule: history.data[i].rule,
+                        payoutAmount: history.data[i].payoutAmount,
+                        stock: history.data[i].stock,
+                        loops: history.data[i].loops,
+                        betTime: history.data[i].betTime,
+                        betAmount: history.data[i].betAmount,
+                        payoutAmount: history.data[i].payoutAmount,
+                        betStatus: history.data[i].betStatus
+                    });
+
+                    this.sumTotalbetAmount += history.data[i].betAmount
+                    this.sumTotalrollingAmount += history.data[i].rollingAmount
+                    this.colspan = history.data.length;
+                }
+            }
+
         },
         formatToPrice(value) {
             return `$ ${Number(value)
