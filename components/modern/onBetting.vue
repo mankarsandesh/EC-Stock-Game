@@ -7,16 +7,29 @@
     >betting</v-flex>
     <v-flex class="text-xs-center" style="overflow:auto; max-height:350px;">
       <h3 v-show="getOnGoingBet.length<=0" class="pa-5">no betting</h3>
-      <v-list three-line class="pa-0" v-show="getOnGoingBet.length>0">
-        <template v-for="(item, index) in getOnGoingBet" class="pa-0">
+      <!-- v-show="getOnGoingBet.length>0" -->
+
+      <v-list three-line class="pa-0"  v-show="getOnGoingBet.length>0">
+        <template v-for="(data, index) in getOnGoingBet" class="pa-0">
           <v-divider :key="index" v-if="index>0"></v-divider>
 
-          <v-list-tile :key="item.index" avatar >
+          <v-list-tile :key="data.index" avatar >
             <span class="pr-1">{{ index+1}}.</span>
 
             <v-list-tile-content >
-              <v-list-tile-title >Amount:{{item.amount}}<span class="text-uppercase">({{item.gameRule}})</span></v-list-tile-title>
-              <v-list-tile-sub-title>Stock:{{item.stockId}}</v-list-tile-sub-title>
+              <span class="current-bet">
+                <ul>
+                  <li>
+                    <span><i>ID</i></span>
+                    <span style="color:blue">{{ data.betId }}</span>
+                    <span>-  {{data.betTime}}</span>
+                  </li>
+                  <li><span>Bet </span><span style="color:darkblue">${{data.betAmount}}</span> on<span class="text-uppercase"> {{data.rule}}</span></li>
+                  <li>Stock name: <span> {{data.stock}}</span> - {{data.loops}} minute loop</li>
+                </ul>
+              </span>
+              <!-- <v-list-tile-title >Amount:{{5000}}<span class="text-uppercase">(firstdigit-mid)</span></v-list-tile-title>
+              <v-list-tile-sub-title>Stock:btc1</v-list-tile-sub-title> -->
             </v-list-tile-content>
           </v-list-tile>
         </template>
@@ -71,6 +84,13 @@ td {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+.current-bet{
+  font-size: 12px;
+  color: #000
+}
+ul{
+  padding:0
 }
 
 </style>

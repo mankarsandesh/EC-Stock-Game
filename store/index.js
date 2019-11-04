@@ -229,9 +229,10 @@ const createStore = () => {
         },
         actions: {
             async makeAuth(context) {
+                console.warn("auth working...")
                 const body = {
                     client_id: 8,
-                    webToken: "IJZSsfMjXCSxt7X27luJAoiUYNmx13RXqWY6H2ba",
+                    webToken: "FfOG2rjQT0JijXIem8unoycQ7Sn4pm1p2J1bvgwJ",
                     name: "macky",
                     userId: "11223344",
                     balance: "800000",
@@ -242,13 +243,13 @@ const createStore = () => {
                     const token = res.data.token
                     const userRes = await this.$axios.$get(`http://192.168.1.134:8003/api/me?apikey=${token}`)
                     const userData = {
-                        name: userRes[0].name,
-                        balance: userRes[0].userBalance,
+                        name: userRes.name,
+                        balance: userRes.userBalance,
                     }
                     context.commit("setAuth_token", token)
                     context.commit("setUserData", userData)
                     console.log("userRes")
-                    console.log(userData)
+
                     console.log(token)
                     console.log("userRes")
                 } catch (ex) {
@@ -434,7 +435,7 @@ const createStore = () => {
             },
             // get amount of betting that already confirm
             getBettingAmount(state) {
-                return state.onGoingBet.map(x => x.amount).reduce((a, b) => a + b, 0)
+                return state.onGoingBet.map(x => x.betAmount).reduce((a, b) => a + b, 0)
             },
             // get amount of betting already confirmed and not confirm
             getAllBettingAmount(state) {

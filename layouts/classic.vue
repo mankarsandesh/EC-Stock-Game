@@ -301,7 +301,7 @@ export default {
                     "balance": 800000,
                     "webId": "0001"
                 }
-                let redirect = await this.$axios.$post('http://159.138.54.214/api/redirect', data)
+                let redirect = await this.$axios.$post('http://192.168.1.134:8003/api/redirect', data)
                 console.log(redirect.data.token)
                 console.log("token")
                 localStorage.apikey = redirect.data.token
