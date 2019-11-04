@@ -27,7 +27,7 @@
                             </v-flex>
                             <v-btn class="my-btn go" @click="dateSearch()">go</v-btn>
                             <v-flex xs6 md2 class="float-right">
-                                <v-select hide-details :items="items" label="Sort By :" v-model="pagination.sortBy" solo></v-select>
+                                <v-select hide-details :items="items" label="Sort By :" v-model="itemss" solo></v-select>
                             </v-flex>
                         </v-layout>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
@@ -97,6 +97,7 @@ export default {
             from: false,
             to: false,
             items: ["day", "weeks", "months", "years"],
+            itemss: 'day',
             load: false,
             history: [],
             StockName: null,
@@ -163,6 +164,28 @@ export default {
     },
     watch: {
         itemss(val) {
+            // console.log(val)
+            let date = new Date();
+            let yl = date.getFullYear() - 1;
+            let yf = date.getFullYear();
+            let ml = date.getMonth();
+            let mf = date.getMonth() + 1;
+            let w = date.getDay();
+            let d = date.getDate();
+            let dates;
+
+            if (val == 'day') {
+                dates = yf + '-' + mf + '-' + d
+            } else if (val == 'weeks') {
+                dates = yf + '-' + mf + '-' + d
+            } else if (val == 'months') {
+                dates = yf + '-' + ml + '-' + d
+            } else {
+                dates = yl + '-' + mf + '-' + d
+            }
+            
+            console.log(dates)
+
             // return this.gethistory(val)
         }
     },
@@ -185,41 +208,67 @@ export default {
                 start: this.datefrom,
                 end: this.dateto
             }
+            console.log(date)
             // return this.gethistory(date)
         },
         async gethistory(val) {
             let history = await this.$axios.$get(this.$store.state.urltest + '/api/fetchHistoryBet?apikey=' + localStorage.apikey)
             if (history.data == null) return
             // console.log(history.data)
-            for (let i = 0; i < history.data.length; i++) {
-                this.sumTotalbetAmount += history.data[i].betAmount
-                this.sumTotalrollingAmount += history.data[i].rollingAmount
-            }
 
             this.load = true;
-            this.colspan = history.data.length;
 
-            history.data.forEach(element => {
-                return this.history.push({
-                    page: 1,
-                    betId: element.betId,
-                    gameId: element.gameId,
-                    rule: element.rule,
-                    payoutAmount: element.payoutAmount,
-                    stock: element.stock,
-                    loops: element.loops,
-                    betTime: element.betTime,
-                    betAmount: element.betAmount,
-                    rollingAmount: element.rollingAmount
-                });
-            });
-
+            for (let i = 0; i < history.data.length; i++) {
+                // console.log(history.data[i].betTime)
+                // console.log(i)
+                if (val != null) {
+                    this.history = []
+                    this.sumTotalbetAmount = 0
+                    this.sumTotalrollingAmount = 0
+                    this.colspan = 0
+                    if (history.data[i].betTime.split(" ")[0] == val.start || history.data[i].betTime.split(" ")[0] == val.end) {
+                        setTimeout(() => {
+                            this.history.push({
+                                page: 1,
+                                betId: history.data[i].betId,
+                                gameId: history.data[i].gameId,
+                                rule: history.data[i].rule,
+                                payoutAmount: history.data[i].payoutAmount,
+                                stock: history.data[i].stock,
+                                loops: history.data[i].loops,
+                                betTime: history.data[i].betTime,
+                                betAmount: history.data[i].betAmount,
+                                rollingAmount: history.data[i].rollingAmount
+                            });
+                            this.colspan = this.history.length;
+                            this.sumTotalbetAmount += history.data[i].betAmount
+                            this.sumTotalrollingAmount += history.data[i].rollingAmount
+                        }, 100)
+                    } else if (history.data[i].betTime.split(" ")[0] !== val.start && history.data[i].betTime.split(" ")[0] !== val.end) {
+                        this.history = []
+                    }
+                } else {
+                    this.history.push({
+                        page: 1,
+                        betId: history.data[i].betId,
+                        gameId: history.data[i].gameId,
+                        rule: history.data[i].rule,
+                        payoutAmount: history.data[i].payoutAmount,
+                        stock: history.data[i].stock,
+                        loops: history.data[i].loops,
+                        betTime: history.data[i].betTime,
+                        betAmount: history.data[i].betAmount,
+                        rollingAmount: history.data[i].rollingAmount
+                    });
+                    this.colspan = this.history.length;
+                    this.sumTotalbetAmount += history.data[i].betAmount
+                    this.sumTotalrollingAmount += history.data[i].rollingAmount
+                }
+            }
             // return this.history = history.data
         },
         formatToPrice(value) {
-            return `$ ${Number(value)
-        .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+            return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
             let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)

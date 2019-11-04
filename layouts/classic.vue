@@ -293,11 +293,11 @@ export default {
     },
     methods: {
         async getToken() {
-            if (localStorage.apikey !== null) {
+            if (localStorage.apikey == null) {
                 let data = {
                     "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
                     "name": "tay",
-                    "userId": "1234567889",
+                    "userId": "222333",
                     "balance": 800000,
                     "webId": "0001"
                 }
