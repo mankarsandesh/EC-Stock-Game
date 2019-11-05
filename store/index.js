@@ -7,8 +7,11 @@ const createStore = () => {
             auth_token: "",
             userData: {},
             footerBetAmount: 0,
+            // store data betting
             onGoingBet: [],
+            // store data betting that not confirm yet (multi game and fullscreen mode)
             multiGameBet: [],
+            // store staock id to display on multi game
             stockMultigame: [],
             locales: ['cn', 'us', 'th', 'la'],
             locale: localStorage.getItem('lang'),
@@ -239,9 +242,9 @@ const createStore = () => {
                     webId: "0001"
                 }
                 try {
-                    const res = await this.$axios.$post('http://192.168.1.134:8003/api/redirect', body)
+                    const res = await this.$axios.$post('http://192.168.100.8:8003/api/redirect', body)
                     const token = res.data.token
-                    const userRes = await this.$axios.$get(`http://192.168.1.134:8003/api/me?apikey=${token}`)
+                    const userRes = await this.$axios.$get(`http://192.168.100.8:8003/api/me?apikey=${token}`)
                     const userData = {
                         name: userRes.name,
                         balance: userRes.userBalance,
@@ -252,6 +255,19 @@ const createStore = () => {
 
                     console.log(token)
                     console.log("userRes")
+                } catch (ex) {
+                    console.error(ex)
+                }
+
+            },
+            async sendBetting(context) {
+                console.warn("sendBetting...")
+                const betData = context.state.multiGameBet
+                try {
+                    const res = await this.$axios.$post(`http://192.168.100.8:8003/api/storebet?apikey=${token}`, betData)
+                    console.log("res./.......")
+                    console.log(res)
+                    console.log("res...........")
                 } catch (ex) {
                     console.error(ex)
                 }
