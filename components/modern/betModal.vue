@@ -46,7 +46,7 @@
       </v-flex>
       <v-divider></v-divider>
       <v-flex xs-12 class="pt-2 text-uppercase">
-        <v-btn color="#003e70" dark @click="confirmBet()">confirm</v-btn>
+        <v-btn color="#003e70" dark @click="confirmBet()" :disabled="confirmDisabled">confirm</v-btn>
         <v-btn color="#003e70" dark @click="closePopper">close</v-btn>
       </v-flex>
     </v-layout>
@@ -72,6 +72,7 @@ export default {
   },
   data() {
     return {
+      confirmDisabled: false,
       betValue: 0,
       imgChip: [
         {
@@ -116,8 +117,12 @@ export default {
           `http://192.168.1.134:8003/api/storebet?apikey=${this.getAuth_token}`,
           data
         );
-        console.log(res)
+        console.log(res);
         if (res.status) {
+          this.closePopper();
+          console.warn(res.data[0]);
+          this.pushDataOnGoingBet(res.data[0]);
+          console.warn(this.getOnBetting);
           this.$swal({
             type: "success",
             title: "Confirm!",
@@ -125,26 +130,28 @@ export default {
             timer: 1500
           });
         } else {
+          this.confirmDisabled = false;
           this.$swal({
             type: "error",
             title: `Error ${res.message}`,
-            showConfirmButton: true,
+            showConfirmButton: true
           });
         }
       } catch (ex) {
+        this.confirmDisabled = false;
         console.error(ex);
+        alert(ex.message);
       }
     },
     confirmBet() {
       let data = {
-        stockId: this.stockName,
+        stockId: 7,
         loop: this.loop,
         gameRule: this.betId,
         amount: this.betValue
       };
+      this.confirmDisabled = true;
       this.sendBetting(data);
-      this.pushDataOnGoingBet(data);
-
       console.warn(this.getOnBetting);
     },
     closePopper() {
@@ -153,6 +160,7 @@ export default {
     },
     clear() {
       this.betValue = 0;
+      this.confirmDisabled = false;
     }
   }
 };
