@@ -9,10 +9,10 @@
                     </template>
                     <v-card>
                         <v-layout row wrap>
-                            <v-flex xs6 md2 pa>
+                            <v-flex xs6 md2>
                                 <v-menu v-model="from" :close-on-content-click="false" :nudge-right="0" lazy transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
-                                        <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on"></v-text-field>
+                                        <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
                                     </template>
                                     <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
                                 </v-menu>
@@ -20,14 +20,22 @@
                             <v-flex xs6 md2>
                                 <v-menu v-model="to" :close-on-content-click="false" :nudge-right="0" transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
-                                        <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on"></v-text-field>
+                                        <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
                                     </template>
                                     <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-btn class="my-btn go" @click="dateSearch()">go</v-btn>
-                            <v-flex xs6 md2 class="float-right">
-                                <v-select hide-details :items="items" label="Sort By :" v-model="itemss" solo></v-select>
+                            <v-flex xs3 md1>
+                                <v-btn @click="dateSearch()" class="my-btn go" single-line hide-details>go</v-btn>
+                            </v-flex>
+                            <v-flex xs3 md1>
+                                <v-select hide-details :items="itemspage" v-model="itemspages"></v-select>
+                            </v-flex>
+                            <v-flex xs3 md3>
+                                <v-text-field v-model="search" append-icon="search" single-line hide-details></v-text-field>
+                            </v-flex>
+                            <v-flex xs6 md2>
+                                <v-select hide-details single-line :items="items" label="Sort By :" v-model="itemss"></v-select>
                             </v-flex>
                         </v-layout>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
@@ -75,7 +83,7 @@
 
                             </template>
                         </v-data-table>
-                        <div class="text-xs-center pt-2">
+                        <div class="text-xs-center pt-2" v-if="pages != 0 ">
                             <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
                         </div>
                     </v-card>
@@ -98,6 +106,8 @@ export default {
             to: false,
             items: ["day", "weeks", "months", "years"],
             itemss: 'day',
+            itemspage: [5, 10, 25, 50, 100],
+            itemspages: 10,
             load: false,
             history: [],
             StockName: null,
@@ -172,21 +182,28 @@ export default {
             let mf = date.getMonth() + 1;
             let w = date.getDay();
             let d = date.getDate();
-            let dates;
+            let datefrom;
 
             if (val == 'day') {
-                dates = yf + '-' + mf + '-' + d
+                datefrom = yf + '-' + mf + '-' + d
             } else if (val == 'weeks') {
-                dates = yf + '-' + mf + '-' + d
+                datefrom = yf + '-' + mf + '-' + d
             } else if (val == 'months') {
-                dates = yf + '-' + ml + '-' + d
+                datefrom = yf + '-' + ml + '-' + d
             } else {
-                dates = yl + '-' + mf + '-' + d
+                datefrom = yl + '-' + mf + '-' + d
             }
-            
-            console.log(dates)
 
-            // return this.gethistory(val)
+            let dates = {
+                start: this.dateto,
+                end: datefrom,
+                week: w
+            }
+            console.log(dates)
+            return this.gethistory(dates)
+        },
+        itemspages(val) {
+            this.pagination.rowsPerPage = val
         }
     },
     computed: {
@@ -206,13 +223,14 @@ export default {
         dateSearch() {
             let date = {
                 start: this.datefrom,
-                end: this.dateto
+                end: this.dateto,
+                week: ''
             }
             console.log(date)
-            // return this.gethistory(date)
+            return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get(this.$store.state.urltest + '/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+            let history = await this.$axios.$get(this.$store.state.urltest + '/api/fetchHistoryBet?apikey=' + sessionStorage.apikey)
             if (history.data == null) return
             // console.log(history.data)
 
@@ -226,7 +244,7 @@ export default {
                     this.sumTotalbetAmount = 0
                     this.sumTotalrollingAmount = 0
                     this.colspan = 0
-                    if (history.data[i].betTime.split(" ")[0] == val.start || history.data[i].betTime.split(" ")[0] == val.end) {
+                    if (history.data[i].betTime.split(" ")[0] == val.start || history.data[i].betTime.split(" ")[0] == val.end || new Date(history.data[i].betTime).getDay() == val.week) {
                         setTimeout(() => {
                             this.history.push({
                                 page: 1,
@@ -271,10 +289,22 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + sessionStorage.apikey)
             return this.StockName = stcokId.data
 
         },
     }
 }
 </script>
+
+<style scoped>
+.toolbar-bg {
+    background-color: rgb(22, 83, 136);
+}
+
+.toolbar-text {
+    background-color: white;
+    color: black;
+    border-bottom: outset;
+}
+</style>

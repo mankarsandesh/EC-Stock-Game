@@ -259,12 +259,12 @@ export default {
     },
     created() {
         this.setLanguage();
-       
+
     },
     mounted() {
         setTimeout(() => {
             window.scrollTo(0, 0)
-             this.getToken()
+            this.getToken()
         }, 1000);
         this.loadchart();
         this.getMenu();
@@ -275,7 +275,6 @@ export default {
             this.getNavbar(data);
             this.getAtivetab();
         });
-        
     },
     computed: {
         ...mapGetters([
@@ -293,7 +292,7 @@ export default {
     },
     methods: {
         async getToken() {
-            if (localStorage.apikey == null) {
+            if (sessionStorage.apikey == null) {
                 let data = {
                     "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
                     "name": "tay",
@@ -302,11 +301,10 @@ export default {
                     "webId": "0001"
                 }
                 let redirect = await this.$axios.$post('http://159.138.54.214/api/redirect', data)
-                console.log(redirect.data.token)
-                console.log("token")
-                localStorage.apikey = redirect.data.token
+                sessionStorage.apikey = redirect.data.token
+                // console.log(redirect.data.token)
+                // console.log("token")
             }
-
         },
         ...mapActions(["asynInitCallApi"]),
         ...mapMutations(["SET_LANG", "SET_TIME"]),

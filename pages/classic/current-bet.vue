@@ -8,28 +8,11 @@
                         <div>{{$t('menu.history')}}</div>
                     </template>
                     <v-card>
-                        <v-layout row wrap>
-                            <v-flex xs6 md2 pa>
-                                <v-menu v-model="from" :close-on-content-click="false" :nudge-right="0" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                                    <template v-slot:activator="{ on }">
-                                        <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on"></v-text-field>
-                                    </template>
-                                    <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
-                                </v-menu>
-                            </v-flex>
-                            <v-flex xs6 md2>
-                                <v-menu v-model="to" :close-on-content-click="false" :nudge-right="0" transition="scale-transition" offset-y full-width min-width="290px">
-                                    <template v-slot:activator="{ on }">
-                                        <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on"></v-text-field>
-                                    </template>
-                                    <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
-                                </v-menu>
-                            </v-flex>
-                            <v-btn class="my-btn go" @click="dateSearch()">go</v-btn>
-                            <v-flex xs6 md2 class="float-right">
+                        <!-- <v-layout row wrap>
+                            <v-flex xs6 md2 >
                                 <v-select hide-details :items="items" label="Sort By :" v-model="pagination.sortBy" solo></v-select>
                             </v-flex>
-                        </v-layout>
+                        </v-layout> -->
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 
                         <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
@@ -74,10 +57,10 @@
                                 </tr>
                             </template>
                         </v-data-table>
-                        <div class="text-xs-center pt-2">
+                        <div class="text-xs-center pt-2" v-if="pages != 0 ">
                             <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
                         </div>
-                        {{pagination}}
+                        <!-- {{pagination}} -->
                     </v-card>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -195,7 +178,7 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get(this.$store.state.urltest + '/api/fetchCurrentBet?apikey=' + localStorage.apikey)
+            let history = await this.$axios.$get(this.$store.state.urltest + '/api/currenctChipBetUser?apikey=' + sessionStorage.apikey)
             if (history.data == null) return
             // console.log(history.data)
 
@@ -259,7 +242,7 @@ export default {
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + sessionStorage.apikey)
             return this.StockName = stcokId.data
 
         },
