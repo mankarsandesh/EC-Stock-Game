@@ -247,9 +247,9 @@ const createStore = () => {
                     webId: "0001"
                 }
                 try {
-                    const res = await this.$axios.$post('http://192.168.1.134:8003/api/redirect', body)
+                    const res = await this.$axios.$post('http://192.168.137.108:8003/api/redirect', body)
                     const token = res.data.token
-                    const userRes = await this.$axios.$get(`http://192.168.1.134:8003/api/me?apikey=${token}`)
+                    const userRes = await this.$axios.$get(`http://192.168.137.108:8003/api/me?apikey=${token}`)
                     const userData = {
                         name: userRes.name,
                         balance: userRes.userBalance,
@@ -274,7 +274,7 @@ const createStore = () => {
                     }
                     // console.log(betData)
                 try {
-                    const res = await this.$axios.$post(`http://192.168.1.134:8003/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$post(`http://192.168.137.108:8003/api/storebet?apikey=${context.state.auth_token}`, betData)
 
                     console.log("res./.......")
                     console.log(res)
