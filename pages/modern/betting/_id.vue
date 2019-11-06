@@ -3,9 +3,9 @@
     <v-layout>
       <v-flex>
         <v-toolbar color="#003e70" class="white--text v-toolbar__content-remove-r">
-          <v-layout row wrap class="pa-0">
-            <v-flex xs7>
-              <v-layout>
+          <v-layout row wrap class="pa-3">
+            <v-flex xs8>
+              <v-layout >
                 <v-flex>
                   <span class="uppercase-text white--text">Last draw</span>
                   <h4 v-html="$options.filters.lastDraw(getStockById($route.params.id).lastDraw)"></h4>
@@ -24,8 +24,9 @@
                 </v-flex>
               </v-layout>
             </v-flex>
-            <v-spacer></v-spacer>
-            <v-flex xs1 class="border-left text-xs-center">
+            <!-- <v-spacer></v-spacer> -->
+            <v-flex ></v-flex>
+            <v-flex xs2 class="border-left text-xs-center">
               <span class="text-uppercase white--text">
                 <small>
                   game
@@ -33,7 +34,7 @@
                 </small>
               </span>
             </v-flex>
-            <v-flex xs1 class="border-left text-xs-center">
+            <v-flex xs2 class="border-left text-xs-center">
               <nuxt-link to="/modern">
                 <span class="text-uppercase white--text">
                   <small>
@@ -43,22 +44,24 @@
                 </span>
               </nuxt-link>
             </v-flex>
+
           </v-layout>
         </v-toolbar>
       </v-flex>
     </v-layout>
     <!-- betting zone -->
-    <v-layout row wrap class="container-bet">
-      <v-flex xs6 class="border-color-primary">
-        <v-layout wrap>
-          <v-flex xs1 align-self-center class="text-xs-right">
+    <v-layout row wrap class="container-bet" >
+      <v-flex xs12 sm6 class="border-color-primary"  >
+
+        <v-layout wrap xs6  >
+          <v-flex xs1 align-self-center class="text-xs-right" >
             <v-icon
               color="#003e70"
               v-show="isShowTrendMap"
               @click="changeShowTrendMap()"
             >keyboard_arrow_left</v-icon>
           </v-flex>
-          <v-flex v-if="isShowTrendMap" xs10 class="text-xs-center py-2">
+          <v-flex v-if="isShowTrendMap" xs10 class="text-xs-center py-2"  >
             <trendMap
               :dataArray="getStockCrawlerData($route.params.id)"
               :trendType="trendType"
@@ -68,7 +71,7 @@
               :lop="30"
             ></trendMap>
           </v-flex>
-          <v-flex v-else xs10 class="text-xs-center">
+          <v-flex v-else xs10 class="text-xs-center" >
             <span>
               <h3 class="text-uppercase">{{getStockById($route.params.id).stockname}}</h3>
               <span class="text-primary">
@@ -91,27 +94,29 @@
             >keyboard_arrow_right</v-icon>
           </v-flex>
         </v-layout>
-        <v-toolbar bottom class="total-bet">
-          <p>Total bet : $200.00</p>
-        </v-toolbar>
+        
+
       </v-flex>
 
-      <v-flex xs6>
+      <v-flex  >
         <!-- <div
           class="betClose"
           v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
         >
           <p>bet close</p>
         </div> -->
-        <v-tabs slider-color="#003e70" grow centered @change="tabChanged($event)">
-          <v-tab>first digit</v-tab>
+        <v-layout wrap  sm6 >
+
+        <v-tabs slider-color="#003e70"  grow centered style="width:100%;" @change="tabChanged($event)">
+          
+          <v-tab >first digit</v-tab>
           <v-tab>last digit</v-tab>
           <v-tab>both digit</v-tab>
           <v-tab>two digit</v-tab>
 
           <!-- First Digit -->
 
-          <v-tab-item>
+          <v-tab-item xs4>
             <v-layout row align-center justify-center>
               <v-card class="box-click" @click="showBetDialog('firstdigit-small')">
                 <v-card-title class="d-block">
@@ -350,6 +355,13 @@
 
           <!-- TWO Digit -->
         </v-tabs>
+         </v-layout>
+
+         <v-toolbar bottom class="total-bet  bettingFooter"  >
+          <span>Total bet : $200.00</span>
+        </v-toolbar>
+
+
       </v-flex>
     </v-layout>
 
@@ -837,5 +849,10 @@ export default {
   padding: 0px;
   width: 50%;
   max-height: 100% !important;
+}
+.bettingFooter{
+ margin-top:10px;
+ color:#FFF; 
+ 
 }
 </style>

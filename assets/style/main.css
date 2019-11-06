@@ -142,8 +142,8 @@ nav.total-bet.v-toolbar.theme--light {
     display: flex;
     justify-content: center;
     bottom: auto;
-    position: absolute;
-    width: 50%;
+    /* position: absolute; */
+   
 }
 
 nav.total-bet.v-toolbar.theme--light p {
@@ -548,13 +548,15 @@ table.result-table {
 
 @media only screen and (max-height: 350px) {
     nav.total-bet.v-toolbar.theme--light {
-        bottom: auto;
+        bottom: 0;
+        position: fixed;
     }
 }
 
 @media only screen and (min-width: 568px) {
     .container .bg-primary h1 {
         padding: 10px;
+        
     }
 }
 
