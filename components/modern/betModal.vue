@@ -114,7 +114,7 @@ export default {
       };
       try {
         const res = await this.$axios.$post(
-          `http://192.168.100.8:8003/api/storebet?apikey=${this.getAuth_token}`,
+          `http://192.168.1.134:8003/api/storebet?apikey=${this.getAuth_token}`,
           data
         );
         console.log(res);

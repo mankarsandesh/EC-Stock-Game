@@ -16,6 +16,8 @@ const createStore = () => {
             locales: ['cn', 'us', 'th', 'la'],
             locale: localStorage.getItem('lang'),
             coins_modern: [],
+            // multi game
+            isSendBetting: false,
             urltest: "http://159.138.54.214",
             // all stocks data
             // if we have new stock available we can add it here with same object format
@@ -171,6 +173,9 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            setIsSendBetting(state, value) {
+                state.isSendBetting = value
+            },
             setUserData(state, payload) {
                 state.userData = payload
             },
@@ -242,9 +247,9 @@ const createStore = () => {
                     webId: "0001"
                 }
                 try {
-                    const res = await this.$axios.$post('http://192.168.100.8:8003/api/redirect', body)
+                    const res = await this.$axios.$post('http://192.168.1.134:8003/api/redirect', body)
                     const token = res.data.token
-                    const userRes = await this.$axios.$get(`http://192.168.100.8:8003/api/me?apikey=${token}`)
+                    const userRes = await this.$axios.$get(`http://192.168.1.134:8003/api/me?apikey=${token}`)
                     const userData = {
                         name: userRes.name,
                         balance: userRes.userBalance,
@@ -257,19 +262,46 @@ const createStore = () => {
                     console.log("userRes")
                 } catch (ex) {
                     console.error(ex)
+                    alert(ex)
                 }
 
             },
             async sendBetting(context) {
+                context.commit("setIsSendBetting", true)
                 console.warn("sendBetting...")
-                const betData = context.state.multiGameBet
+                const betData = {
+                        "data": [...context.state.multiGameBet]
+                    }
+                    // console.log(betData)
                 try {
-                    const res = await this.$axios.$post(`http://192.168.100.8:8003/api/storebet?apikey=${token}`, betData)
+                    const res = await this.$axios.$post(`http://192.168.1.134:8003/api/storebet?apikey=${context.state.auth_token}`, betData)
+
                     console.log("res./.......")
                     console.log(res)
                     console.log("res...........")
+                    if (res.status) {
+                        context.commit("setIsSendBetting", false)
+                        context.commit("clearDataMultiGameBet")
+                        this._vm.$swal({
+                            type: "success",
+                            title: "Confirm!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        context.commit("setIsSendBetting", false)
+                        this._vm.$swal({
+                            type: "error",
+                            title: `error ${res.message}`,
+                            showConfirmButton: true
+                        });
+
+                    }
                 } catch (ex) {
                     console.error(ex)
+                    context.commit("setIsSendBetting", false)
+
+
                 }
 
             },
@@ -345,6 +377,9 @@ const createStore = () => {
 
         },
         getters: {
+            getIsSendBetting(state) {
+                return state.isSendbetting
+            },
             // get user name
             getUserName(state) {
                 return state.userData.name
@@ -458,6 +493,10 @@ const createStore = () => {
                 let amount1 = state.onGoingBet.map(x => x.amount).reduce((a, b) => a + b, 0)
                 let amount2 = state.multiGameBet.map(x => x.amount).reduce((a, b) => a + b, 0)
                 return amount1 + amount2
+            },
+            // get multiGameBet length
+            getMultiGameBetLength(state) {
+                return state.multiGameBet.length
             },
             // get data betting
             getOnGoingBet(state) {
