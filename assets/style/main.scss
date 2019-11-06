@@ -15,6 +15,12 @@ $mainbg: #003e70;
     margin: 20px 0px;
 }
 
+.bettingFooter{
+    margin-top:5px;
+    color:#FFF; 
+}
+
+
 span.text-blue {
     @extend %rules;
     color: blue !important;

@@ -118,7 +118,7 @@
     </v-toolbar>
 
     <v-layout row wrap px-2 pt-2>
-      <v-flex pa-2 v-for="(data,index) in getStockChart " :key="index" xs4 sm4 md4>
+      <v-flex pa-2 v-for="(data,index) in getStockChart " :key="index" xs6 sm4 md4>
         <nuxt-link :to="'/modern/betting/' +data.id">
           <v-card class="v-card-style">
             <!-- bet close -->

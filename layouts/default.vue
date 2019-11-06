@@ -27,14 +27,14 @@
     </v-navigation-drawer>
     <v-toolbar height="30" color="#003e70" class="white--text" style="z-index: 100;">
       <v-layout row wrap>
-        <v-flex xs12>
+        <v-flex xs12 class="pa-3">
           <welcome-user></welcome-user>
         </v-flex>
       </v-layout>
     </v-toolbar>
 
     <v-toolbar :clipped-left="clipped" class="pa-1 text-primary light-toobar">
-      <v-flex>
+      <v-flex class="pa-2">
         <nuxt-link to="/modern">
           <v-toolbar-title>
             <v-img width="100" src="/logo.png"></v-img>
@@ -50,7 +50,7 @@
       <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
     </v-toolbar>
     <v-content>
-      <v-container pa-0>
+      <v-container fluid pa-0>
         <nuxt />
       </v-container>
     </v-content>
