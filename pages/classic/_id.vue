@@ -330,7 +330,6 @@
         </span>
     </v-snackbar>
     <!-- end alertOutCome -->
-    <button hidden id="playwin" @click.prevent="playSound('/voice/winbet.mp3')"></button>
 </div>
 </template>
 
@@ -377,7 +376,8 @@ export default {
             currentItems: "tab-Big-Small",
             currentItemss: null,
             header: ["firstdigit", "lastdigit", "bothdigit", "twodigit"],
-            panel: [true, true, true, true],
+            panel: [false, false, false, false],
+            // panel: [true, true, true, true],
             chips: [],
             items: table,
             baccarat: baccarat,
@@ -449,15 +449,15 @@ export default {
         settabs() {
             let t = this.$route.params.id.split("-")[2]
             let s;
-            if (t == 'bsf' || t == 'oef' || t == 'live') s = "firstdigit"
-            else if (t == 'bsl' || t == 'oel') s = "lastdigit"
-            else if (t == 'bsb' || t == 'oeb') s = "bothdigit"
-            else if (t == 'bst' || t == 'oet') s = "twodigit"
+            if (t == 'bsf' || t == 'oef' || t == 'live') s = "firstdigit";
+            else if (t == 'bsl' || t == 'oel') s = "lastdigit";
+            else if (t == 'bsb' || t == 'oeb') s = "bothdigit";
+            else if (t == 'bst' || t == 'oet') s = "twodigit";
 
             t = t.split("")[0] + '' + t.split("")[1]
-            if (t == 'oe') t = "tab-Odd-Even"
-            else if (t == 'bs') t = "tab-Big-Small"
-            else t = "tab-All games"
+            if (t == 'oe') t = "tab-Odd-Even";
+            else if (t == 'bs') t = "tab-Big-Small";
+            else t = "tab-All games";
 
             this.currentItem = t
             this.currentItems = t
@@ -466,11 +466,11 @@ export default {
         },
 
         async getbalance() {
-            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
+            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + sessionStorage.apikey)
             this.$store.state.balance = balance[0].userBalance
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + sessionStorage.apikey)
             stcokId.data.forEach(element => {
                 // console.log(element.stockName)
                 if (element.stockName.toUpperCase() == this.$route.params.id.split("-")[1] || element.stockName == this.$route.params.id.split("-")[1]) {
@@ -488,7 +488,7 @@ export default {
                 this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
                 // console.log(this.formData);
                 // console.log("send to api server");
-                const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + localStorage.apikey, this.formData)
+                const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + sessionStorage.apikey, this.formData)
                 console.log(res)
                 setTimeout(() => {
                     this.setPrice("reset");
@@ -725,7 +725,7 @@ export default {
             if (val == "win") {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
-                $("#playwin")[0].click()
+                this.playSound('/voice/winbet.mp3')
             } else {
                 this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
