@@ -4,7 +4,7 @@
       <v-flex>
         <v-toolbar color="#003e70" class="white--text v-toolbar__content-remove-r">
           <v-layout row wrap class="pa-3">
-            <v-flex xs8>
+            <v-flex xs8 sm6>
               <v-layout >
                 <v-flex>
                   <span class="uppercase-text white--text">Last draw</span>
@@ -51,7 +51,7 @@
     </v-layout>
     <!-- betting zone -->
     <v-layout row wrap class="container-bet" >
-      <v-flex xs12 sm6 class="border-color-primary"  >
+      <v-flex xs12 sm6 md12 class="border-color-primary"  >
 
         <v-layout wrap xs6  >
           <v-flex xs1 align-self-center class="text-xs-right" >

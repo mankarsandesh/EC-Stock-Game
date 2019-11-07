@@ -52,8 +52,8 @@
     </SlideMenu>
     <!-- end sort -->
     <v-divider></v-divider>
-    <v-toolbar class="light-toobar">
-      <h1 class="text-primary text-uppercase">current bet</h1>
+    <v-toolbar class="light-toobar pa-1+">
+      <h1 class="text-primary text-uppercase" >current bet</h1>
       <v-spacer></v-spacer>
 
       <v-btn icon class="hidden-xs-only" @click="$router.go(-1)">
@@ -135,6 +135,7 @@
 import SlideMenu from "~/components/SlideMenu.vue";
 
 export default {
+  
   components: {
     SlideMenu
   },
