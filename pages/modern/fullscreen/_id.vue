@@ -23,7 +23,7 @@
     </v-dialog>
 
     <v-toolbar color="#003e70" class="white--text">
-      <v-layout row wrap>
+      <v-layout row wrap class="pa-2"> 
         <v-flex xs4>
           <welcome-user></welcome-user>
         </v-flex>
@@ -43,12 +43,12 @@
         </v-flex>
       </v-layout>
     </v-toolbar>
-    <v-container fluid class="bg-fullscreen">
+    <v-container  fluid class="bg-fullscreen" style="padding:0;">
       <v-layout pa-1 wrap>
-        <v-flex xs6 style="padding-top:14px">
+        <v-flex xs6 >
           <v-layout column>
             <v-flex>
-              <v-layout>
+              <v-layout >
                 <v-flex xs4 class="text-xs-center" style="align-self: center;">
                   <span
                     class="text-uppercase text-white pr-5"
@@ -125,7 +125,7 @@
           </v-flex>
         </v-flex>
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
-          <footerBet></footerBet>
+          <footerBet style=""></footerBet>
           <v-layout style="background-color:#003f70">
             <v-flex xs12 wrap>
               <v-layout>
