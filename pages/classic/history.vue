@@ -86,6 +86,7 @@
                         <div class="text-xs-center pt-2" v-if="pages != 0 ">
                             <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
                         </div>
+
                     </v-card>
                 </v-expansion-panel-content>
             </v-expansion-panel>

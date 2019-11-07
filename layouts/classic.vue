@@ -200,6 +200,7 @@ import {
     mapActions,
     mapMutations
 } from "vuex";
+
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import openSocket from "socket.io-client";
@@ -259,12 +260,15 @@ export default {
     },
     created() {
         this.setLanguage();
-
+        this.makeAuth()
     },
     mounted() {
+        if (sessionStorage.apikey == null) {
+            window.location.href = "http://localhost:8000/"
+        }
+
         setTimeout(() => {
             window.scrollTo(0, 0)
-            this.getToken()
         }, 1000);
         this.loadchart();
         this.getMenu();
@@ -291,22 +295,7 @@ export default {
 
     },
     methods: {
-        async getToken() {
-            if (sessionStorage.apikey == null) {
-                let data = {
-                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "tay",
-                    "userId": "222333",
-                    "balance": 800000,
-                    "webId": "0001"
-                }
-                let redirect = await this.$axios.$post('http://159.138.54.214/api/redirect', data)
-                sessionStorage.apikey = redirect.data.token
-                // console.log(redirect.data.token)
-                // console.log("token")
-            }
-        },
-        ...mapActions(["asynInitCallApi"]),
+        ...mapActions(["asynInitCallApi", "makeAuth"]),
         ...mapMutations(["SET_LANG", "SET_TIME"]),
         setLanguage() {
             let lang = localStorage.getItem("lang");

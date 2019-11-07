@@ -240,26 +240,30 @@ const createStore = () => {
                 console.warn("auth working...")
                 const body = {
                     client_id: 8,
-                    webToken: "FfOG2rjQT0JijXIem8unoycQ7Sn4pm1p2J1bvgwJ",
-                    name: "macky",
-                    userId: "11223344",
-                    balance: "800000",
-                    webId: "0001"
+                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
+                    "name": "tay",
+                    "userId": "222333",
+                    "balance": 800000,
+                    "webId": "0001"
                 }
                 try {
-                    const res = await this.$axios.$post('http://192.168.137.108:8003/api/redirect', body)
-                    const token = res.data.token
-                    const userRes = await this.$axios.$get(`http://192.168.137.108:8003/api/me?apikey=${token}`)
-                    const userData = {
-                        name: userRes.name,
-                        balance: userRes.userBalance,
-                    }
-                    context.commit("setAuth_token", token)
-                    context.commit("setUserData", userData)
-                    console.log("userRes")
+                    if (sessionStorage.apikey == null) {
 
-                    console.log(token)
-                    console.log("userRes")
+                        const res = await this.$axios.$post('http://159.138.54.214/api/redirect', body)
+                        const token = res.data.token
+                        const userRes = await this.$axios.$get(`http://159.138.54.214/api/me?apikey=${token}`)
+                        const userData = {
+                            name: userRes.name,
+                            balance: userRes.userBalance,
+                        }
+                        context.commit("setAuth_token", token)
+                        context.commit("setUserData", userData)
+                        console.log("userRes")
+
+                        console.log(token)
+                        sessionStorage.apikey = token
+                        console.log("userRes")
+                    }
                 } catch (ex) {
                     console.error(ex)
                     alert(ex)
@@ -274,7 +278,7 @@ const createStore = () => {
                     }
                     // console.log(betData)
                 try {
-                    const res = await this.$axios.$post(`http://192.168.137.108:8003/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$post(`http://159.138.54.214/api/storebet?apikey=${context.state.auth_token}`, betData)
 
                     console.log("res./.......")
                     console.log(res)

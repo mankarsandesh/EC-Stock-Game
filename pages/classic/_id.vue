@@ -348,7 +348,9 @@ import baccarat from "~/data/json/baccarat.json";
 import openSocket from "socket.io-client";
 import AnimatedNumber from "animated-number-vue";
 import {
-    mapGetters
+    mapActions,
+    mapGetters,
+    mapMutations
 } from "vuex";
 export default {
     layout: "classic",
@@ -376,8 +378,8 @@ export default {
             currentItems: "tab-Big-Small",
             currentItemss: null,
             header: ["firstdigit", "lastdigit", "bothdigit", "twodigit"],
-            panel: [false, false, false, false],
-            // panel: [true, true, true, true],
+            // panel: [false, false, false, false],
+            panel: [true, true, true, true],
             chips: [],
             items: table,
             baccarat: baccarat,
@@ -390,7 +392,7 @@ export default {
             betDataShows: [],
             dialog: false,
             dialogtwo: false,
-            balance: this.$store.state.balance,
+            balance: 0,
             sntwoloopstart: null,
             sntwoloopend: null,
             stockname: "",
@@ -467,7 +469,7 @@ export default {
 
         async getbalance() {
             let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + sessionStorage.apikey)
-            this.$store.state.balance = balance[0].userBalance
+            this.balance = balance.userBalance
         },
         async getSotckId() {
             let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + sessionStorage.apikey)
