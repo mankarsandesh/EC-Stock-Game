@@ -72,7 +72,7 @@
                             <br>
                             <b>{{$t('msg.Stock')}}</b>: <span v-for="(datas,index) in stockName" :key="index" v-if="data.stock == datas.stockId">
                                 {{$t('stockname.'+datas.stockName)}}
-                            </span> {{data.loops}}<br>
+                            </span> ({{data.loops}})<br>
                             <b>{{$t('msg.gameid')}}</b>: {{data.gameId}} </td>
                     </tr>
 
@@ -118,6 +118,17 @@ export default {
         //     }
         // }, 1000)
     },
+    created() {
+        if (this.$vuetify.breakpoint.smAndDown) {
+            this.panel1 = [0]
+            this.panel2 = [0]
+            this.panel3 = [0]
+        } else {
+            this.panel1 = [1]
+            this.panel2 = [1]
+            this.panel3 = [0]
+        }
+    },
     computed: {
         ...mapGetters(["getStockList", "getLotteryDraw", "getStockById"])
     },
@@ -139,9 +150,9 @@ export default {
 
         async getupdatebalance() {
             let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + sessionStorage.apikey)
-            this.name = balance[0].name
-            this.balance = balance[0].userBalance
-            // balance[0].totalOnlineTime
+            this.name = balance.name
+            this.balance = balance.userBalance
+            // console.log(balance)
             return
         },
         async getSotckId() {
