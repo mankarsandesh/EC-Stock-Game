@@ -1,5 +1,5 @@
 {
-    "engines": { "node": "12.13.0" },
+    "engines": { "node": "10.15.0" },
     "name": "modern-mobile",
     "version": "1.0.0",
     "description": "modern mobile version",
