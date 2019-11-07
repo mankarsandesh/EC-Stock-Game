@@ -797,7 +797,8 @@ export default {
     betButtonClick(betId) {
       if (this.checkFooterBet) {
         let data = {
-          stockId: this.stockName,
+          // stockId: this.stockName,
+          stockId: 7,
           loop: this.loop,
           gameRule: betId,
           amount: this.getFooterBetAmount
