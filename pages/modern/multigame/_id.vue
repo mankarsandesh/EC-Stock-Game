@@ -21,21 +21,21 @@
         </div>
       </v-flex>
     </v-layout>
-    <footerBetMultigame></footerBetMultigame>
+    <bottomBetMultigame></bottomBetMultigame>
   </div>
 </template>
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import multigame from "~/components/modern/multigame";
 
-import footerBetMultigame from "~/components/modern/footerbetMultigame";
+import bottomBetMultigame from "~/components/modern/bottomBetMultigame";
 import selectStock from "~/components/modern/selectStock";
 
 export default {
   layout: "desktopModern",
   components: {
     multigame,
-    footerBetMultigame,
+    bottomBetMultigame,
     selectStock
   },
   data() {
