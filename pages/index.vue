@@ -15,7 +15,7 @@
                     </nuxt-link>
                 </v-flex>
                 <v-flex xs6 px-2>
-                    <nuxt-link to="/modern/desktop/btc1">
+                    <nuxt-link to="/modern">
                         <v-card class="card-mode">
                             <h2>Modern</h2>
                         </v-card>
