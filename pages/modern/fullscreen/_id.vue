@@ -157,7 +157,7 @@ import winnerMarquee from "~/components/modern/winnerMarquee";
 import welcomeUser from "~/components/welcomeUser";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
-import footerBet from "~/components/modern/footerBet";
+import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 
 export default {

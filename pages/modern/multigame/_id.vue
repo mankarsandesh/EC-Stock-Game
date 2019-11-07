@@ -28,7 +28,7 @@
 import { mapGetters, mapMutations } from "vuex";
 import multigame from "~/components/modern/multigame";
 
-import footerBetMultigame from "~/components/modern/footerBetMultigame";
+import footerBetMultigame from "~/components/modern/footerbetMultigame";
 import selectStock from "~/components/modern/selectStock";
 
 export default {
