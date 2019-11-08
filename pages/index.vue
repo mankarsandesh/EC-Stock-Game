@@ -15,7 +15,7 @@
                     </nuxt-link>
                 </v-flex>
                 <v-flex xs6 px-2>
-                    <nuxt-link to="/modern">
+                    <nuxt-link :to="linkto">
                         <v-card class="card-mode">
                             <h2>Modern</h2>
                         </v-card>
@@ -54,11 +54,17 @@ import {
     mapGetters,
     mapMutations
 } from "vuex";
+import { isMobile } from 'mobile-device-detect';
 export default {
     layout: "nolayout",
     mounted() {
         this.getProgress()
         this.makeAuth()
+    },
+    data(){
+        return{
+            linkto:isMobile ?'/modern':'/modern/desktop/btc1'
+        }
     },
     methods: {
         ...mapActions([
