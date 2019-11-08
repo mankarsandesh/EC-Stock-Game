@@ -268,7 +268,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="success" @click="dialog = false, getConfirmBet()" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.ok')}}</v-btn>
-                    <v-btn color="error" @click="dialog = false ">{{$t('msg.cancel')}}</v-btn>
+                    <v-btn color="error" @click="dialog = false , isfooter = true">{{$t('msg.cancel')}}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -330,6 +330,10 @@
         </span>
     </v-snackbar>
     <!-- end alertOutCome -->
+    <div class="mb-footer" v-show="$vuetify.breakpoint.smAndDown && $route.params.id.split('-')[3] == null || $route.params.id.split('-')[3] == ''">
+        <chipfooter v-show="isfooter" />
+    </div>
+
 </div>
 </template>
 
@@ -342,6 +346,7 @@ import rule from "./rule";
 import setting from "./setting";
 
 import baccarats from "~/components/classic/baccarats";
+import chipfooter from "~/components/classic/chipfooter";
 import table from "~/data/json/table.json";
 import chips from "~/data/json/chips.json";
 import baccarat from "~/data/json/baccarat.json";
@@ -369,11 +374,13 @@ export default {
         gameresult,
         announcement,
         rule,
-        setting
+        setting,
+        chipfooter
     },
 
     data() {
         return {
+            isfooter: true,
             currentItem: "tab-All games",
             currentItems: "tab-Big-Small",
             currentItemss: null,
@@ -384,7 +391,7 @@ export default {
             items: table,
             baccarat: baccarat,
             chipsReset: chips,
-            price: null,
+            price: 0,
             betData: {
                 betdetails: [],
                 betName: []
@@ -422,7 +429,7 @@ export default {
         this.getchips();
         this.settabs()
         this.getSotckId()
-
+        this.getMbFooter()
     },
     created() {
         this.getbalance()
@@ -439,6 +446,7 @@ export default {
             } else {
                 return 0;
             }
+
         },
         formData() {
             return {
@@ -470,6 +478,7 @@ export default {
         async getbalance() {
             let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + sessionStorage.apikey)
             this.balance = balance.userBalance
+            $("#txtbalance").text(this.formatToPrice(this.balance))
         },
         async getSotckId() {
             let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + sessionStorage.apikey)
@@ -488,6 +497,7 @@ export default {
                 this.getalertstartstop('error')
             } else {
                 this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
+                $("#txtbalance").text(this.formatToPrice(this.balance))
                 // console.log(this.formData);
                 // console.log("send to api server");
                 const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + sessionStorage.apikey, this.formData)
@@ -521,6 +531,11 @@ export default {
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
+        formatTotal(value) {
+            return `$ ${Number(value)
+        .toFixed(0)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        },
 
         getsnTwo(val) {
             this.dialogtwo = true;
@@ -543,16 +558,20 @@ export default {
                 this.betDataShows = [];
                 this.betData.betName = [];
                 this.price = null;
+                $("#txttotal").text(this.formatTotal(this.price))
                 $(".form-input").val("");
                 $(".form-inputadd").val("");
                 $(".form-inputadd").attr("class", "form-input");
                 $(".top-betadd").attr("class", "top-bet");
-
+                this.isfooter = true;
             } else if (e == "confirm") {
                 this.dialog = true;
+                this.isfooter = false;
 
             } else {
-                this.price += parseInt(e.target.textContent);
+                if (e > 0) this.price += parseInt(e);
+                else this.price += parseInt(e.target.textContent);
+                $("#txttotal").text(this.formatTotal(this.price))
                 $(".form-inputadd").val(this.price);
                 if (this.betData.betName.length > 0) {
                     for (let i = 0; i < this.betData.betName.length; i++) {
@@ -724,6 +743,7 @@ export default {
         alertOutCome(val) {
             this.snackbar = true;
             $(".getupdatebalance")[0].click()
+            this.getbalance()
             if (val == "win") {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
@@ -757,11 +777,81 @@ export default {
                 audio.play();
             }
         },
+        getMbFooter() {
+            // chips 10
+            // OS93GB1we-copy 50
+            // OS93GB2 100
+            // OS93GB1-copy 500
+            // OS93GB5-copy 1000
+            // OS93GB3a-copy-copy 5000
+            // txtbalance
+            // txttotal
+            // btnCONFIRM
+            // btnCANCEL
+
+            // $("#txtbalance").text(this.balance)
+            // $("#txttotal").text("$ "+this.price) 
+
+            $("#txttotal").text(this.formatTotal(this.price))
+            $("#btnCONFIRM").text("CONFIRM")
+
+            $("#btnCANCEL").text("CANCEL")
+
+            $("#ch10").text(this.chips[0].price)
+            $("#ch50").text(this.chips[1].price)
+            $("#ch100").text(this.chips[2].price)
+            $("#ch500").text(this.chips[3].price)
+            $("#ch1000").text(this.chips[4].price)
+            $("#ch5000").text(this.chips[5].price)
+
+            $("#path-3,#btnCONFIRM").click(() => {
+                if (this.betData.betdetails.length == '0') return
+                this.setPrice('confirm')
+            });
+            $("#Rectangle,#btnCANCEL").click(() => {
+                this.setPrice("reset");
+            });
+
+            $("#chips, #ch10").click(() => {
+                if (this.balance >= parseInt(this.chips[0].price))
+                    this.setPrice(this.chips[0].price)
+            });
+            $("#OS93GB1we-copy, #ch50").click(() => {
+                if (this.balance >= parseInt(this.chips[1].price))
+                this.setPrice(this.chips[1].price)
+            });
+            $("#OS93GB2, #ch100").click(() => {
+                if (this.balance >= parseInt(this.chips[2].price))
+                this.setPrice(this.chips[2].price)
+            });
+            $("#OS93GB1-copy, #ch500").click(() => {
+                if (this.balance >= parseInt(this.chips[3].price))
+                this.setPrice(this.chips[3].price)
+            });
+            $("#OS93GB5-copy, #ch1000").click(() => {
+                if (this.balance >= parseInt(this.chips[4].price))
+                this.setPrice(this.chips[4].price)
+            });
+            $("#OS93GB3a-copy-copy, #ch5000").click(() => {
+                if (this.balance >= parseInt(this.chips[5].price))
+                this.setPrice(this.chips[5].price)
+            });
+        }
     }
 };
 </script>
 
 <style>
+.mb-footer {
+    margin-left: -1.5%;
+    position: fixed;
+    left: 0;
+    bottom: -13px;
+    width: 102%;
+    text-align: center;
+    z-index: 1030;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

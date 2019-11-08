@@ -241,29 +241,27 @@ const createStore = () => {
                 const body = {
                     client_id: 8,
                     "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "tay",
-                    "userId": "222333",
-                    "balance": 800000,
+                    "name": "tays",
+                    "userId": "222334",
+                    // "balance": 800000,
                     "webId": "0001"
                 }
                 try {
                     if (sessionStorage.apikey == null) {
-
                         const res = await this.$axios.$post('http://159.138.54.214/api/redirect', body)
                         const token = res.data.token
-                        const userRes = await this.$axios.$get(`http://159.138.54.214/api/me?apikey=${token}`)
-                        const userData = {
-                            name: userRes.name,
-                            balance: userRes.userBalance,
-                        }
-                        context.commit("setAuth_token", token)
-                        context.commit("setUserData", userData)
-                        console.log("userRes")
-
                         console.log(token)
                         sessionStorage.apikey = token
-                        console.log("userRes")
                     }
+                    const userRes = await this.$axios.$get(`http://159.138.54.214/api/me?apikey=${sessionStorage.apikey}`)
+                    const userData = {
+                        name: userRes.name,
+                        balance: userRes.userBalance,
+                    }
+                    context.commit("setAuth_token", sessionStorage.apikey)
+                    context.commit("setUserData", userData)
+                    console.log("userRes")
+
                 } catch (ex) {
                     console.error(ex)
                     alert(ex)
