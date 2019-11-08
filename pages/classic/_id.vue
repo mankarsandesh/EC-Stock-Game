@@ -330,7 +330,7 @@
         </span>
     </v-snackbar>
     <!-- end alertOutCome -->
-    <div class="mb-footer" v-show="$vuetify.breakpoint.smAndDown && $route.params.id.split('-')[3] == null || $route.params.id.split('-')[3] == ''">
+    <div class="mb-footer" v-show="$vuetify.breakpoint.smAndDown && ($route.params.id.split('-')[3] == null || $route.params.id.split('-')[3] == '')">
         <chipfooter v-show="isfooter" />
     </div>
 
@@ -793,9 +793,9 @@ export default {
             // $("#txttotal").text("$ "+this.price) 
 
             $("#txttotal").text(this.formatTotal(this.price))
-            $("#btnCONFIRM").text("CONFIRM")
+            // $("#btnCONFIRM").text("CONFIRM")
 
-            $("#btnCANCEL").text("CANCEL")
+            // $("#btnCANCEL").text("CANCEL")
 
             $("#ch10").text(this.chips[0].price)
             $("#ch50").text(this.chips[1].price)

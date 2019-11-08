@@ -171,7 +171,7 @@
             </v-container>
             <!-- Data Lastdraw and Timer -->
 
-            <v-container pa-0 pb-1>
+            <v-container pa-0 pb-1 :style="$vuetify.breakpoint.smAndDown ? 'margin-top: -8.5%;':''">
                 <v-layout class="remove-flex">
                     <v-flex xs12 sm3 pl-1 pr-1>
                         <listleft />
@@ -181,8 +181,7 @@
                     </v-flex>
                 </v-layout>
             </v-container>
-       
-                       
+
             <v-container pa-0 pb-2>
                 <v-footer color="#384e63" height="80">
                     <v-flex text-xs-center xs12 white--text>
@@ -202,7 +201,6 @@ import {
     mapActions,
     mapMutations
 } from "vuex";
-
 
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
@@ -230,7 +228,7 @@ export default {
         dataslastdraw,
         baccarats,
         navbar,
-        
+
     },
     data() {
         return {
