@@ -181,6 +181,8 @@
                     </v-flex>
                 </v-layout>
             </v-container>
+       
+                       
             <v-container pa-0 pb-2>
                 <v-footer color="#384e63" height="80">
                     <v-flex text-xs-center xs12 white--text>
@@ -200,6 +202,7 @@ import {
     mapActions,
     mapMutations
 } from "vuex";
+
 
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
@@ -226,7 +229,8 @@ export default {
         listleft,
         dataslastdraw,
         baccarats,
-        navbar
+        navbar,
+        
     },
     data() {
         return {
@@ -263,10 +267,9 @@ export default {
         this.makeAuth()
     },
     mounted() {
-        if (sessionStorage.apikey == null) {
-            window.location.href = "http://localhost:8000/"
-        }
-
+        // if (sessionStorage.apikey == null) {
+        //     window.location.href = "http://localhost:8000/"
+        // }
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);

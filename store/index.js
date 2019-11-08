@@ -248,22 +248,20 @@ const createStore = () => {
                 }
                 try {
                     if (sessionStorage.apikey == null) {
-
-                        const res = await this.$axios.$post(`${context.getters.getUrltest}/api/redirect`, body)
+                        const res = await this.$axios.$post('http://159.138.54.214/api/redirect', body)
                         const token = res.data.token
-                        const userRes = await this.$axios.$get(`${context.getters.getUrltest}/api/me?apikey=${token}`)
-                        const userData = {
-                            name: userRes.name,
-                            balance: userRes.userBalance,
-                        }
-                        context.commit("setAuth_token", token)
-                        context.commit("setUserData", userData)
-                        console.log("userRes")
-
                         console.log(token)
                         sessionStorage.apikey = token
-                        console.log("userRes")
                     }
+                    const userRes = await this.$axios.$get(`http://159.138.54.214/api/me?apikey=${sessionStorage.apikey}`)
+                    const userData = {
+                        name: userRes.name,
+                        balance: userRes.userBalance,
+                    }
+                    context.commit("setAuth_token", sessionStorage.apikey)
+                    context.commit("setUserData", userData)
+                    console.log("userRes")
+
                 } catch (ex) {
                     console.error(ex)
                     alert(ex)
