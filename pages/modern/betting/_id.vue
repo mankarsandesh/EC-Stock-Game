@@ -99,12 +99,12 @@
       </v-flex>
 
       <v-flex  >
-        <!-- <div
+        <div
           class="betClose"
           v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
         >
           <p>bet close</p>
-        </div> -->
+        </div>
         <v-layout wrap  sm6 >
 
         <v-tabs slider-color="#003e70"  grow centered style="width:100%;" @change="tabChanged($event)">

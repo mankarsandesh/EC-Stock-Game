@@ -114,7 +114,7 @@ export default {
       };
       try {
         const res = await this.$axios.$post(
-          `${getUrltest}/api/storebet?apikey=${this.getAuth_token}`,
+          `${this.getUrltest}/api/storebet?apikey=${this.getAuth_token}`,
           data
         );
         console.log(res);
