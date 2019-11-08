@@ -241,9 +241,9 @@ const createStore = () => {
                 const body = {
                     client_id: 8,
                     "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "tays",
-                    "userId": "222334",
-                    // "balance": 800000,
+                    "name": "Macky",
+                    "userId": "222333",
+                    "balance": 800000,
                     "webId": "0001"
                 }
                 try {
@@ -276,7 +276,7 @@ const createStore = () => {
                     }
                     // console.log(betData)
                 try {
-                    const res = await this.$axios.$post(`http://159.138.54.214/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$post(`${context.getters.getUrltest}/api/storebet?apikey=${context.state.auth_token}`, betData)
 
                     console.log("res./.......")
                     console.log(res)
@@ -379,6 +379,9 @@ const createStore = () => {
 
         },
         getters: {
+            getUrltest(state) {
+                return state.urltest
+            },
             getIsSendBetting(state) {
                 return state.isSendbetting
             },

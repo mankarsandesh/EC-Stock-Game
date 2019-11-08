@@ -22,8 +22,9 @@
       </v-card>
     </v-dialog>
 
-    <v-toolbar color="#003e70" class="white--text">
-      <v-layout row wrap>
+    <v-toolbar fluid color="#003e70" class="white--text" style="height:40px !important; ">
+      
+      <v-layout row wrap style="padding:5px 10px;"> 
         <v-flex xs4>
           <welcome-user></welcome-user>
         </v-flex>
@@ -35,20 +36,22 @@
             :pauseOnHover="pauseOnHover"
             :pauseTime="pauseTime"
             :marqueeList="winner"
-            height="36px"
+            height="30px"
             width="100%"
             color="#f76a24"
-            fontSize="14px"
+            fontSize="12px"
           ></winnerMarquee>
         </v-flex>
       </v-layout>
+     
     </v-toolbar>
-    <v-container fluid class="bg-fullscreen">
+
+    <v-container  fluid class="bg-fullscreen" style="padding:0;">
       <v-layout pa-1 wrap>
-        <v-flex xs6 style="padding-top:14px">
+        <v-flex xs6 >
           <v-layout column>
             <v-flex>
-              <v-layout>
+              <v-layout >
                 <v-flex xs4 class="text-xs-center" style="align-self: center;">
                   <span
                     class="text-uppercase text-white pr-5"
@@ -125,7 +128,7 @@
           </v-flex>
         </v-flex>
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
-          <footerBet></footerBet>
+          <footerBet style=""></footerBet>
           <v-layout style="background-color:#003f70">
             <v-flex xs12 wrap>
               <v-layout>
@@ -157,7 +160,7 @@ import winnerMarquee from "~/components/modern/winnerMarquee";
 import welcomeUser from "~/components/welcomeUser";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
-import footerBet from "~/components/modern/footerBet";
+import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 
 export default {
@@ -210,3 +213,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+layout{
+color:red;
+}
+</style>
