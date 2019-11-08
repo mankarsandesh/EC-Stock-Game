@@ -21,7 +21,7 @@
                        modifiers: { offset: { offset: '25px' } }
                 }"
       >
-        <div class="popper">
+        <div class="popper" >
           <!-- this component display the modal,the modal let users choose amount they want to bet -->
           <betModal
             :stockName="stockName"
@@ -31,20 +31,17 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          class="align_button4 btnp"
           slot="reference"
           @click="betButtonClick('firstdigit-'+data.rule)"
         >
-          <showChipAmount
-            size="50px"
+          <showChipAmount  
+             size="50px"
             :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'firstdigit-'+data.rule})"
           ></showChipAmount>
-          <span class="big-digit">{{data.rule}}</span>
-          <br />
-          <span class="small-digit">First Digit</span>
-          <!-- show payout if in fullscreen mode -->
-          <br />
-          <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+          <p class="big-digit">{{data.rule}}</p>          
+          <p class="small-digit">First Digit</p>
+          <p class="small-digit" v-show="isFullscreen">{{payout_big_small}}</p>
         </v-btn>
       </popper>
 
@@ -141,7 +138,7 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          class="align_button5"
           @click="betButtonClick('lastdigit-'+data.rule)"
           slot="reference"
         >
@@ -250,7 +247,7 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button5"
+          class="align_button4"
           @click="betButtonClick('bothdigit-'+data.rule)"
           slot="reference"
         >
@@ -834,4 +831,8 @@ export default {
   z-index: 50;
   text-transform: capitalize;
 }
+.btnp p{
+  font-size: 16px;
+  margin:0;
+} 
 </style>

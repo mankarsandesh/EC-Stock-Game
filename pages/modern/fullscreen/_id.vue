@@ -22,8 +22,9 @@
       </v-card>
     </v-dialog>
 
-    <v-toolbar color="#003e70" class="white--text">
-      <v-layout row wrap class="pa-2"> 
+    <v-toolbar fluid color="#003e70" class="white--text" style="height:40px !important; ">
+      
+      <v-layout row wrap style="padding:5px 10px;"> 
         <v-flex xs4>
           <welcome-user></welcome-user>
         </v-flex>
@@ -35,14 +36,16 @@
             :pauseOnHover="pauseOnHover"
             :pauseTime="pauseTime"
             :marqueeList="winner"
-            height="36px"
+            height="30px"
             width="100%"
             color="#f76a24"
-            fontSize="14px"
+            fontSize="12px"
           ></winnerMarquee>
         </v-flex>
       </v-layout>
+     
     </v-toolbar>
+
     <v-container  fluid class="bg-fullscreen" style="padding:0;">
       <v-layout pa-1 wrap>
         <v-flex xs6 >
@@ -210,3 +213,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+layout{
+color:red;
+}
+</style>
