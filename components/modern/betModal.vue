@@ -100,7 +100,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getCoins_modern", "getOnBetting", "getAuth_token"])
+    ...mapGetters(["getCoins_modern", "getOnBetting", "getAuth_token","getUrltest"])
   },
   methods: {
     ...mapMutations(["pushDataOnGoingBet"]),
@@ -114,7 +114,7 @@ export default {
       };
       try {
         const res = await this.$axios.$post(
-          `http://192.168.137.108:8003/api/storebet?apikey=${this.getAuth_token}`,
+          `${this.getUrltest}/api/storebet?apikey=${this.getAuth_token}`,
           data
         );
         console.log(res);

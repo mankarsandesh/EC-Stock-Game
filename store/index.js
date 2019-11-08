@@ -18,7 +18,7 @@ const createStore = () => {
             coins_modern: [],
             // multi game
             isSendBetting: false,
-            urltest: "http://159.138.54.214",
+            urltest: "https://159.138.54.214",
             // all stocks data
             // if we have new stock available we can add it here with same object format
             liveprice: {
@@ -241,7 +241,7 @@ const createStore = () => {
                 const body = {
                     client_id: 8,
                     "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "tay",
+                    "name": "Macky",
                     "userId": "222333",
                     "balance": 800000,
                     "webId": "0001"
@@ -249,9 +249,9 @@ const createStore = () => {
                 try {
                     if (sessionStorage.apikey == null) {
 
-                        const res = await this.$axios.$post('http://159.138.54.214/api/redirect', body)
+                        const res = await this.$axios.$post(`${context.getters.getUrltest}/api/redirect`, body)
                         const token = res.data.token
-                        const userRes = await this.$axios.$get(`http://159.138.54.214/api/me?apikey=${token}`)
+                        const userRes = await this.$axios.$get(`${context.getters.getUrltest}/api/me?apikey=${token}`)
                         const userData = {
                             name: userRes.name,
                             balance: userRes.userBalance,
@@ -278,7 +278,7 @@ const createStore = () => {
                     }
                     // console.log(betData)
                 try {
-                    const res = await this.$axios.$post(`http://159.138.54.214/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$post(`${context.getters.getUrltest}/api/storebet?apikey=${context.state.auth_token}`, betData)
 
                     console.log("res./.......")
                     console.log(res)
@@ -381,6 +381,9 @@ const createStore = () => {
 
         },
         getters: {
+            getUrltest(state) {
+                return state.urltest
+            },
             getIsSendBetting(state) {
                 return state.isSendbetting
             },
