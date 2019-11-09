@@ -318,7 +318,9 @@
     <v-snackbar class="tops" v-model="snackbar" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
         <span class="text-center">
             <h2>{{text}}</h2>
-            <h2>{{formatToPrice(betPrice)}}</h2>
+            <h2>
+                <animated-number :value="betPrice" :formatValue="formatToPrice" />
+            </h2>
         </span>
     </v-snackbar>
     <!-- end alertOutCome -->
@@ -332,6 +334,7 @@
     <!-- end alertOutCome -->
     <div class="mb-footer" v-show="$vuetify.breakpoint.smAndDown && ($route.params.id.split('-')[3] == null || $route.params.id.split('-')[3] == '')">
         <chipfooter v-show="isfooter" />
+
     </div>
 
 </div>
@@ -416,7 +419,7 @@ export default {
             timeout: 3000,
             text: "",
             color: "",
-            betPrice: 1000000,
+            betPrice: 0,
             alertext: "",
             disabled: false,
             // end alertOutCome
@@ -714,16 +717,16 @@ export default {
                     this.getBetClosedopen('open');
                 }
 
-                if (times == alert) {
-                    this.getalertstartstop("stop")
-                } else if (times == calculating) {
-                    this.getalertstartstop("start")
-                }
+                // if (times == alert) {
+                //     this.getalertstartstop("stop")
+                // } else if (times == calculating) {
+                //     this.getalertstartstop("start")
+                // }
 
-                if (times == calculating - 4) {
-                    // this.alertOutCome('win')
-                    this.alertOutCome("lose");
-                }
+                // if (times == calculating - 4) {
+                //     this.alertOutCome('win')
+                //     // this.alertOutCome("lose");
+                // }
             });
         },
 
@@ -744,10 +747,11 @@ export default {
             this.snackbar = true;
             $(".getupdatebalance")[0].click()
             this.getbalance()
+            this.betPrice = 10000
             if (val == "win") {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
-                this.playSound('/voice/winbet.mp3')
+                // this.playSound('/voice/winbet.mp3')
             } else {
                 this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
@@ -818,23 +822,23 @@ export default {
             });
             $("#OS93GB1we-copy, #ch50").click(() => {
                 if (this.balance >= parseInt(this.chips[1].price))
-                this.setPrice(this.chips[1].price)
+                    this.setPrice(this.chips[1].price)
             });
             $("#OS93GB2, #ch100").click(() => {
                 if (this.balance >= parseInt(this.chips[2].price))
-                this.setPrice(this.chips[2].price)
+                    this.setPrice(this.chips[2].price)
             });
             $("#OS93GB1-copy, #ch500").click(() => {
                 if (this.balance >= parseInt(this.chips[3].price))
-                this.setPrice(this.chips[3].price)
+                    this.setPrice(this.chips[3].price)
             });
             $("#OS93GB5-copy, #ch1000").click(() => {
                 if (this.balance >= parseInt(this.chips[4].price))
-                this.setPrice(this.chips[4].price)
+                    this.setPrice(this.chips[4].price)
             });
             $("#OS93GB3a-copy-copy, #ch5000").click(() => {
                 if (this.balance >= parseInt(this.chips[5].price))
-                this.setPrice(this.chips[5].price)
+                    this.setPrice(this.chips[5].price)
             });
         }
     }
@@ -846,10 +850,10 @@ export default {
     margin-left: -1.5%;
     position: fixed;
     left: 0;
-    bottom: -13px;
+    bottom: -2%;
     width: 102%;
     text-align: center;
-    z-index: 1030;
+    z-index: 150;
 }
 
 .cursor-pointer {

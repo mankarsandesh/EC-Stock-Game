@@ -117,9 +117,44 @@
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-list>
-                    <v-list-tile v-for="(item, i) in menu" :key="i" :to="item.to" @click="dialog = false">
+                    <v-list-tile v-for="(item, i) in menu" :key="i" @click="dialog = false, item.title == 'home' ? '' : mbdialog = true, switch1 = item.to">
                         <v-list-tile-title>{{ $t(`menu.${item.title}`) }}</v-list-tile-title>
                     </v-list-tile>
+                </v-list>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="mbdialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <v-card>
+
+                <v-toolbar>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn icon flat color="error" dark @click="mbdialog = false">
+                            <v-icon>close</v-icon>
+                        </v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                <v-list v-if="switch1.split('-')[3] == 'currentbet'">
+                    <currentbet />
+                </v-list>
+                <v-list v-else-if="switch1.split('-')[3] == 'history'">
+                    <history />
+                </v-list>
+                <v-list v-else-if="switch1.split('-')[3] == 'gameresult'">
+                    <gameresult />
+                </v-list>
+                <v-list v-else-if="switch1.split('-')[3] == 'announcement'">
+                    <announcement />
+                </v-list>
+                <v-list v-else-if="switch1.split('-')[3] == 'rule'">
+                    <rule />
+                </v-list>
+                <v-list v-else-if="switch1.split('-')[3] == 'setting'">
+                    <setting />
+                </v-list>
+                <v-list v-else>
+
                 </v-list>
             </v-card>
         </v-dialog>
@@ -218,6 +253,13 @@ import stockchina from "~/data/json/menustockchina.json";
 import baccarat from "~/data/json/baccarat.json";
 import baccarats from "~/components/classic/baccarats";
 import navbar from "~/components/classic/navbar";
+
+import currentbet from "~/pages/classic/current-bet";
+import history from "~/pages/classic/history";
+import gameresult from "~/pages/classic/game-result";
+import announcement from "~/pages/classic/announcement";
+import rule from "~/pages/classic/rule";
+import setting from "~/pages/classic/setting";
 export default {
     components: {
         countryFlag,
@@ -229,9 +271,17 @@ export default {
         baccarats,
         navbar,
 
+        currentbet,
+        history,
+        gameresult,
+        announcement,
+        rule,
+        setting,
     },
     data() {
         return {
+            mbdialog: false,
+            switch1: "",
             currentItemss: null,
             urrentItemss: null,
             currentItems: "tab-Big-Small",
@@ -265,6 +315,7 @@ export default {
         this.makeAuth()
     },
     mounted() {
+        $("#switch").text(this.switch1)
         // if (sessionStorage.apikey == null) {
         //     window.location.href = "http://localhost:8000/"
         // }
@@ -320,8 +371,7 @@ export default {
                 "-" +
                 this.$route.params.id.split("-")[1] +
                 "-" +
-                this.$route.params.id.split("-")[2] +
-                "-";
+                this.$route.params.id.split("-")[2];
             this.menu = [{
                     icon: "apps",
                     title: "home",
@@ -330,32 +380,32 @@ export default {
                 {
                     icon: "bubble_chart",
                     title: "current bet",
-                    to: "/classic/" + mn + "currentbet"
+                    to: "/classic/" + mn + "-currentbet"
                 },
                 {
                     icon: "bubble_chart",
                     title: "history",
-                    to: "/classic/" + mn + "history"
+                    to: "/classic/" + mn + "-history"
                 },
                 {
                     icon: "bubble_chart",
                     title: "game result",
-                    to: "/classic/" + mn + "gameresult"
+                    to: "/classic/" + mn + "-gameresult"
                 },
                 {
                     icon: "bubble_chart",
                     title: "rule",
-                    to: "/classic/" + mn + "rule"
+                    to: "/classic/" + mn + "-rule"
                 },
                 {
                     icon: "bubble_chart",
                     title: "announcement",
-                    to: "/classic/" + mn + "announcement"
+                    to: "/classic/" + mn + "-announcement"
                 },
                 {
                     icon: "bubble_chart",
                     title: "setting",
-                    to: "/classic/" + mn + "setting"
+                    to: "/classic/" + mn + "-setting"
                 }
             ];
         },
@@ -499,6 +549,7 @@ export default {
 .navbar {
     padding: 0 !important;
     flex: 0 1 4% !important;
+    text-transform: uppercase;
 }
 
 .show-icon {

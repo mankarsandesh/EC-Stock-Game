@@ -7,9 +7,9 @@
                     <template v-slot:header>
                         <div>{{$t('menu.history')}}</div>
                     </template>
-                    <v-card>
+                    <v-card flat>
                         <v-layout row wrap>
-                            <v-flex xs6 md2>
+                            <v-flex xs5 md2>
                                 <v-menu v-model="from" :close-on-content-click="false" :nudge-right="0" lazy transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
                                         <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -17,7 +17,7 @@
                                     <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-flex xs6 md2>
+                            <v-flex xs5 md2>
                                 <v-menu v-model="to" :close-on-content-click="false" :nudge-right="0" transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
                                         <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -26,16 +26,16 @@
                                 </v-menu>
                             </v-flex>
                             <v-flex xs3 md1>
-                                <v-btn @click="dateSearch()" class="my-btn go" single-line hide-details>go</v-btn>
+                                <v-btn @click="dateSearch()" single-line hide-details>go</v-btn>
                             </v-flex>
-                            <v-flex xs3 md1>
+                            <v-flex xs3 md1 mr-1>
                                 <v-select hide-details :items="itemspage" v-model="itemspages"></v-select>
                             </v-flex>
-                            <v-flex xs3 md3>
+                            <v-flex xs3 md3 mr-1>
                                 <v-text-field v-model="search" append-icon="search" single-line hide-details></v-text-field>
                             </v-flex>
-                            <v-flex xs6 md2>
-                                <v-select hide-details single-line :items="items" label="Sort By :" v-model="itemss"></v-select>
+                            <v-flex xs6 md2 mr-1>
+                                <v-select hide-details single-line  :items="items" label="Sort By :" v-model="itemss"></v-select>
                             </v-flex>
                         </v-layout>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
@@ -307,5 +307,20 @@ export default {
     background-color: white;
     color: black;
     border-bottom: outset;
+}
+
+.v-window__container .v-window-item .layout .flex .v-input {
+    margin: 0px;
+}
+
+.v-window__container .v-window-item .layout .flex .v-input .v-input__control .bg-colors {
+    background-color: #9b2121 !important;
+    border-radius: 2px;
+}
+
+.v-window__container .v-window-item .layout .flex .v-input .v-input__control .v-input__slot .v-text-field__slot input {
+    color: #000000 !important;
+    font-size: 1.2rem;
+    padding: 11px;
 }
 </style>
