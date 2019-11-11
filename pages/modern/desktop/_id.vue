@@ -104,6 +104,8 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 
 export default {
+
+
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
@@ -125,10 +127,18 @@ export default {
         { title: "Click Me" },
         { title: "Click Me 2" }
       ],
-      trendTypes: ["firstDigit"]
-    };
+      trendTypes: ["firstDigit"],
+      isloading:false
+    }
+  },
+  created(){
+    console.warn("created....")
+    this.isloading = true
   },
   mounted(){
+    console.warn("mounted...")
+    this.isloading = false
+
     this.makeAuth()
     // this.test()
     
