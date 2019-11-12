@@ -1,5 +1,7 @@
 <template>
   <v-app>
+    <div v-if="getIsLoadingStockGame" class="loading">loading.....</div>
+
     <v-container
       fluid
       pa-0
@@ -144,7 +146,7 @@ export default {
     // }
   },
   computed: {
-    ...mapGetters(["getBalance", "getlocale"]),
+    ...mapGetters(["getBalance", "getlocale","getIsLoadingStockGame"]),
     countryflag() {
       return this.getlocale;
     }
@@ -155,5 +157,13 @@ export default {
 .v-toolbar__content {
   padding: 0 !important;
   justify-content: center !important;
+}
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 5000;
 }
 </style>

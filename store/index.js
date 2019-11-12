@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            isLoadingStockGame: true,
             auth_token: "",
             userData: {},
             balance: '',
@@ -174,6 +175,9 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            setIsLoadingStockGame(state, value) {
+                state.isLoadingStockGame = value
+            },
             setIsSendBetting(state, value) {
                 state.isSendBetting = value
             },
@@ -320,6 +324,7 @@ const createStore = () => {
 
                 }
 
+
             },
             asynInitCallApi(context) {
                 // call crawler api
@@ -393,6 +398,9 @@ const createStore = () => {
 
         },
         getters: {
+            getIsLoadingStockGame(state) {
+                return state.isLoadingStockGame
+            },
             getUrltest(state) {
                 return state.urltest
             },

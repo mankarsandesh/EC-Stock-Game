@@ -18,7 +18,7 @@
         <v-layout>
           <v-flex xs6 style="padding-top:21px">
             <v-layout column>
-             <v-flex xs12 >
+              <v-flex xs12>
                 <selectStock :stockId="$route.params.id"></selectStock>
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
@@ -35,7 +35,11 @@
                     <v-btn dark color="#003e70" :to="'/modern/fullscreen/' +$route.params.id">
                       <v-icon left dark class="ma-0">fullscreen</v-icon>full screen mode
                     </v-btn>
-                    <v-btn dark :to="'/modern/multigame/' +$route.params.id" color="#003e70">Multiple gaming</v-btn>
+                    <v-btn
+                      dark
+                      :to="'/modern/multigame/' +$route.params.id"
+                      color="#003e70"
+                    >Multiple gaming</v-btn>
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -72,10 +76,7 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-            <betButton
-              :stockName="$route.params.id"
-              :loop="getLoop($route.params.id)"
-            ></betButton>
+            <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
           </v-flex>
         </v-layout>
         <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
@@ -94,7 +95,7 @@
   </div>
 </template>
 <script>
-import { mapActions ,  mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import stockList from "~/components/modern/stockList";
 import betResultAllResult from "~/components/modern/betResultAllResult";
 import onBetting from "~/components/modern/onBetting";
@@ -104,8 +105,6 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 
 export default {
-
-
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
@@ -128,23 +127,23 @@ export default {
         { title: "Click Me 2" }
       ],
       trendTypes: ["firstDigit"],
-      isloading:false
-    }
+      isloading: false
+    };
   },
-  created(){
-    console.warn("created....")
-    this.isloading = true
+  destroyed() {
+        this.setIsLoadingStockGame(true)
   },
-  mounted(){
-    console.warn("mounted...")
-    this.isloading = false
+  mounted() {
+    this.setIsLoadingStockGame(false)
+    console.warn("mounted...");
 
-    this.makeAuth()
+
+    this.makeAuth();
     // this.test()
-    
-    // set footerBet to zero because on this page cant use bet footer 
-    this.setFooterBetAmount(0)
-    this.removeAllFooterBet()
+
+    // set footerBet to zero because on this page cant use bet footer
+    this.setFooterBetAmount(0);
+    this.removeAllFooterBet();
   },
   methods: {
     //  async test(){
@@ -161,13 +160,8 @@ export default {
     //             console.warn(token)
     //             console.warn("token")
     // },
-    ... mapActions([
-      "makeAuth"
-    ]),
-    ...mapMutations([
-      "setFooterBetAmount",
-      "removeAllFooterBet"
-    ]),
+    ...mapActions(["makeAuth"]),
+    ...mapMutations(["setFooterBetAmount", "removeAllFooterBet","setIsLoadingStockGame"]),
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -198,5 +192,6 @@ export default {
 </script>
 
 <style scoped>
+
 </style>
 
