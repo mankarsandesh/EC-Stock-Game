@@ -42,7 +42,7 @@
                 <v-flex xs12 md6>
                     <v-avatar :class="balance < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.price" @click="setPrice($event)" :name="chip.name">
-                            <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                            <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
                 </v-flex>
@@ -173,7 +173,7 @@
                 <v-flex xs12 md6>
                     <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                            <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                            <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
                 </v-flex>
@@ -186,7 +186,7 @@
 
                     <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                            <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                            <span class="btn-chips" >{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
 
@@ -226,7 +226,7 @@
                         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                         <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                             <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                                <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                                <span class="btn-chips">{{chip.price}}</span>
                             </v-img>
                         </v-avatar>
                     </v-card>
@@ -277,9 +277,9 @@
         <v-dialog v-model="dialogtwo" persistent max-width="440px">
             <v-card>
                 <v-card-text>
-                    <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                    <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                            <span class="btn-chips" :style="chip.title !== 'black' ? 'color :black': 'color :white'">{{chip.price}}</span>
+                            <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
                     <table>
@@ -479,18 +479,16 @@ export default {
         },
 
         async getbalance() {
-            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + sessionStorage.apikey)
+            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
             this.balance = balance.userBalance
-            $("#txtbalance").text(this.formatToPrice(this.balance))
+
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + sessionStorage.apikey)
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
             stcokId.data.forEach(element => {
-                // console.log(element.stockName)
-                if (element.stockName.toUpperCase() == this.$route.params.id.split("-")[1] || element.stockName == this.$route.params.id.split("-")[1]) {
+                if ((element.stockName.toUpperCase() == this.$route.params.id.split("-")[1]) ||
+                    (element.stockName == this.$route.params.id.split("-")[1])) {
                     this.stockname = element.stockId
-                    // console.log(element.stockName)
-                    // console.log(element.stockId)
                 }
             })
 
@@ -502,12 +500,12 @@ export default {
                 this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
                 $("#txtbalance").text(this.formatToPrice(this.balance))
                 // console.log(this.formData);
-                // console.log("send to api server");
-                const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + sessionStorage.apikey, this.formData)
+                console.log("send to api server");
+                const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + localStorage.apikey, this.formData)
                 console.log(res)
                 setTimeout(() => {
                     this.setPrice("reset");
-                    this.getalertstartstop(res.data.status)
+                    this.getalertstartstop(res.data)
                     $(".getupdatebalance")[0].click()
                 }, 1600);
             }
@@ -723,10 +721,9 @@ export default {
                 //     this.getalertstartstop("start")
                 // }
 
-                // if (times == calculating - 4) {
-                //     this.alertOutCome('win')
-                //     // this.alertOutCome("lose");
-                // }
+                if (times == calculating - 3) {
+                    this.alertOutCome()
+                }
             });
         },
 
@@ -743,15 +740,18 @@ export default {
 
         },
 
-        alertOutCome(val) {
+        async alertOutCome() {
+            let totalPayout = await this.$axios.$get(this.$store.state.urltest + '/api/me/totalPayout?apikey=' + localStorage.apikey)
+            // console.log(totalPayout)
+            if (totalPayout.status == false) return;
             this.snackbar = true;
             $(".getupdatebalance")[0].click()
             this.getbalance()
-            this.betPrice = 10000
-            if (val == "win") {
+            this.betPrice = totalPayout.data
+            if (totalPayout.data > 0) {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
-                // this.playSound('/voice/winbet.mp3')
+                this.playSound('/voice/winbet.mp3')
             } else {
                 this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
@@ -759,6 +759,7 @@ export default {
         },
 
         getalertstartstop(val) {
+
             this.alertSS = true;
             if (val == "start") {
                 this.alertext = this.$root.$t('msg.startbetting')
@@ -767,11 +768,11 @@ export default {
             } else if (val == "stop") {
                 this.alertext = this.$root.$t('msg.stopbetting')
                 this.color = "#D50000";
-            } else if (val == true) {
+            } else if (val.status == true) {
                 this.alertext = this.$root.$t('msg.confirmed')
                 this.color = "success";
-            } else if (val == false) {
-                this.alertext = this.$root.$t('msg.moneynotenough')
+            } else if (val.status == false) {
+                this.alertext = this.$root.$t('msg.moneynotenough') + "\n" + val.message;
                 this.color = "error";
             }
         },
@@ -860,7 +861,12 @@ export default {
     cursor: pointer;
 }
 
-.pointer-events-none {
+.cursor-pointer:hover {
+    cursor: pointer;
+    background-color: #cccccc;
+}
+
+. .pointer-events-none {
     pointer-events: none;
     background-color: rgba(179, 183, 183, 0.49);
 }
@@ -892,10 +898,10 @@ export default {
 }
 
 .btn-chips {
-    top: 31%;
+    top: 32%;
     position: relative;
-    margin-left: -4%;
     cursor: pointer;
+    font-size: 0.9rem;
 }
 
 .cancel {

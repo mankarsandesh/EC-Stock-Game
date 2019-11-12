@@ -29,6 +29,13 @@ export default {
             }
             return (zero + num).slice(-digit);
         },
+        formatToPrice(value) {
+            if (this.$route.params.id.split('-')[1] == 'usindex') {
+                return `${Number(value).toFixed(4)}`;
+            } else {
+                return `${Number(value).toFixed(2)}`;
+            }
+        },
         getChart() {
             if (this.StockData === "") {
                 return
@@ -49,8 +56,9 @@ export default {
                 title = this.StockData[0].stockname
             }
             this.StockData.forEach(element => {
-                let no_firsts = element.PT[element.PT.length - 2].toString();
-                let no_lasts = element.PT[element.PT.length - 1].toString();
+
+                let no_firsts = this.formatToPrice(element.PT)[this.formatToPrice(element.PT).length - 2].toString();
+                let no_lasts = this.formatToPrice(element.PT)[this.formatToPrice(element.PT).length - 1].toString();
 
                 let no_first = parseInt(no_firsts);
                 let no_last = parseInt(no_lasts);
@@ -232,16 +240,16 @@ export default {
                 let times, calculating;
                 if (this.$route.params.id.split('-')[1] == 'btc1') {
                     times = data.btc1.timer
-                    calculating = 39
+                    calculating = 38
                 } else if (this.$route.params.id.split('-')[1] == 'btc5') {
                     times = data.btc5.timer
-                    calculating = 239
+                    calculating = 238
                 } else if (this.$route.params.id.split('-')[1] == 'usindex') {
                     times = data.usindex.timer
-                    calculating = 239
+                    calculating = 238
                 } else {
                     times = data.SH000001.timer
-                    calculating = 239
+                    calculating = 238
                 }
 
                 if (times == calculating) {

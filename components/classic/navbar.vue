@@ -1,31 +1,40 @@
 <template>
-<div class="navbar container mx-auto">
+<div class="navbar">
     <ul class="main-navigation">
-        <li v-for="(stock,index) in navList" :key="index" class="active">
-            <a href="#">
+        <li> <a href="#">
                 <span>
-                    {{stock.name}}
+                    select stock
                     <span class="show-icon">
                         <i class="fa fa-caret-down"></i>
                     </span>
                 </span>
             </a>
             <ul>
-                <li v-for="(stockType,index) in stock.children" :key="index" class="active">
+                <li v-for="(stock,index) in navList" :key="index">
                     <a href="#">
-                        <span>{{stockType.name}}</span>
-                        <span class="show-icon">
-                            <i class="fa fa-caret-right"></i>
+                        <span>
+                            {{stock.name}}
+                            <span class="show-icon">
+                                <i class="fa fa-caret-right"></i>
+                            </span>
                         </span>
                     </a>
-                    <ul>
-                        <li v-for="stockName in stockType.childrens" :key="stockName">
+                    <ul class="ul-left">
+                        <li v-for="(stockType,index) in stock.children" :key="index">
                             <a href="#">
-                                <span>{{stockName.name}}</span>
+                                <span>{{stockType.name}}</span>
                                 <span class="show-icon">
                                     <i class="fa fa-caret-right"></i>
                                 </span>
                             </a>
+                            <ul class="ul-left">
+                                <li v-for="(stockName,index) in stockType.childrens" :key="index">
+                                    <a href="#">
+                                        <span>{{stockName.name}}</span>
+
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
@@ -66,9 +75,10 @@ export default {
 }
 
 .navbar {
-    /* align-content: center;
-    width: 88.5%;
-    align-self: center; */
+    padding: 0 !important;
+    flex: 0 1 4% !important;
+    text-transform: uppercase;
+    max-width: 40%;
 }
 
 .show-icon {
@@ -80,7 +90,7 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    background: #003e70;
+    background: #384e63;
 }
 
 ul li {
@@ -88,12 +98,12 @@ ul li {
     width: 100%;
     position: relative;
     float: left;
-    background: #003e70;
+    background: #384e63;
 }
 
 li ul {
     display: none;
-    min-width: 50%;
+    min-width: 60%;
 }
 
 ul li a {
@@ -106,7 +116,7 @@ ul li a {
 }
 
 ul li a:hover {
-    background: #003e70;
+    background: #384e63;
 }
 
 li:hover>ul {
@@ -119,7 +129,7 @@ li:hover li {
 }
 
 li:hover a {
-    background: #003e70;
+    background: #384e63;
 }
 
 li:hover li a:hover {
@@ -127,16 +137,22 @@ li:hover li a:hover {
 }
 
 .main-navigation {
-    display: -webkit-box;
+    display: flex;
     width: 25%;
+    /* text-align: center; */
 }
 
 .main-navigation li ul li {
     border-top: 0;
-    z-index: 2000;
+    z-index: 1000;
 }
 
 ul ul ul {
+    left: 0%;
+    top: 100%;
+}
+
+.ul-left {
     left: 100%;
     top: 0;
 }

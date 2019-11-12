@@ -48,19 +48,19 @@ export default {
             if (this.stocks == "btc1") {
                 times = data.btc1.timer;
                 calculat = 40;
-                lasttime = 39
+                lasttime = 38
             } else if (this.stocks == "btc5") {
                 times = data.btc5.timer;
                 calculat = 240;
-                lasttime = 239;
+                lasttime = 238;
             } else if (this.stocks == "usindex") {
                 times = data.usindex.timer;
                 calculat = 240;
-                lasttime = 239;
+                lasttime = 238;
             } else {
                 times = data.SH000001.timer;
                 calculat = 240;
-                lasttime = 239;
+                lasttime = 238;
             }
 
             if (times > calculat) {
@@ -105,6 +105,13 @@ export default {
             }
             return (zero + num).slice(-digit);
         },
+        formatToPrice(value) {
+            if (this.$route.params.id.split('-')[1] == 'usindex') {
+                return `${Number(value).toFixed(4)}`;
+            } else {
+                return `${Number(value).toFixed(2)}`;
+            }
+        },
         getdata() {
             if (this.StockData == "") return;
 
@@ -113,7 +120,7 @@ export default {
             let value_no;
             this.StockData.forEach(element => {
                 items.push({
-                    PT: element.PT,
+                    PT: this.formatToPrice(element.PT),
                     gameid: element.gameid,
                     date: element.created_at.replace(/-/g, "/")
                 });

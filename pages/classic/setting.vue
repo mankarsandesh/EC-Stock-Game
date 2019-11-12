@@ -9,15 +9,15 @@
                     </template>
                     <v-card>
                         <div style="margin-top: 3%; text-align: center;">
-                            <v-avatar size="100" v-for="(chip,index) in chips" :key="index">
+                            <v-avatar size="100" v-for="(chip,index) in chips" :key="index" :class="$vuetify.breakpoint.smAndDown ? 'layout-chip':''">
                                 <v-img :src="chip.img">
-                                    <input type="number" min="10" max="10000" :style="chip.title !== 'black' ? 'color :black': 'color :white'" :readonly="isShow != false && index == isOpen ? false:true" :class="isShow && index == isOpen ? 'btn-setchipsedit':'btn-setchips'" v-model="chip.price" />
+                                    <input type="number" min="10" max="10000" :readonly="isShow != false && index == isOpen ? false:true" :class="isShow && index == isOpen ? 'btn-setchipsedit':'btn-setchips'" v-model="chip.price" />
                                 </v-img>
                                 <v-btn small color="warning" class="btn-edit" @click="EditChip('Edit', index)" v-show="!isShow ">{{$t('msg.edit')}}</v-btn>
                                 <v-btn small color="error" class="btn-saves" @click="EditChip('Save', index), changeChip(chip.title, chip.price)" v-show="isShow && index == isOpen">{{$t('msg.confirm')}}</v-btn>
                             </v-avatar>
                         </div>
-                        <div style="margin-top: 5%; margin-bottom: 5%; text-align: center;">
+                        <div :style="$vuetify.breakpoint.smAndDown ? 'margin-top: 12%; margin-bottom: 5%; text-align: center;' :'margin-top: 5%; margin-bottom: 5%; text-align: center;'">
                             <v-btn color="warning" @click="resetDefault()">{{$t('msg.resettodefault')}}</v-btn>
                         </div>
                     </v-card>
@@ -68,6 +68,10 @@ export default {
 </script>
 
 <style scoped>
+.layout-chip {
+    padding: 110px 0px 30px 0px;
+}
+
 input[type="number"] {
     -moz-appearance: textfield;
 }
@@ -83,6 +87,7 @@ input[type="number"]::-webkit-outer-spin-button {
     position: relative;
     text-align: center;
     width: 64%;
+    font-size: 1.2rem;
 }
 
 .btn-setchipsedit {
@@ -92,6 +97,7 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 64%;
     background-color: silver;
     border-radius: 6px;
+    font-size: 1.2rem;
 }
 
 .btn-saves {
@@ -100,6 +106,7 @@ input[type="number"]::-webkit-outer-spin-button {
     text-align: center;
     width: 64%;
     margin-left: 0%;
+    z-index: 100;
     /* border-radius: 1rem; */
 }
 
@@ -109,6 +116,7 @@ input[type="number"]::-webkit-outer-spin-button {
     text-align: center;
     width: 64%;
     margin-left: 0%;
+    z-index: 100;
     /* border-radius: 1rem; */
 }
 </style>

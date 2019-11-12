@@ -38,7 +38,7 @@
                     <tr v-for="(data,index) in getStockList" :key="index">
                         <td class="text-left">
                             <i class="fa fa-circle-o text-danger"></i>
-                            <b>{{$t('msg.Stock')}}</b>: {{ $t('stockname.'+data.stockname) }}{{ data.stockname == 'btc1' ? ' 1 ':data.stockname == 'btc5' ? ' 5 ':'' }} <b>{{$t('msg.Time')}}</b>: {{ onlyTime(getStockById(data.id).timeLastDraw)}} <b>{{$t('msg.Result')}}</b> {{getStockById(data.id).lastDraw}}
+                            <b>{{$t('msg.Stock')}}</b>: {{ $t('stockname.'+data.stockname) }}{{ data.stockname == 'btc1' ? ' 1 ':data.stockname == 'btc5' ? ' 5 ':'' }} <b>{{$t('msg.Time')}}</b>: {{ onlyTime(getStockById(data.id).timeLastDraw)}} <b>{{$t('msg.Result')}}</b> {{ formatToNumber(getStockById(data.id).lastDraw, data.stockname)}}
                         </td>
                     </tr>
 
@@ -140,6 +140,13 @@ export default {
         formatToPrice(value) {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
+        formatToNumber(value, s) {
+            if (s == 'usindex') {
+                return Number(value).toFixed(4);
+            } else {
+                return Number(value).toFixed(2);
+            }
+        },
         setZero(num, digit) {
             var zero = "";
             for (var i = 0; i < digit; i++) {
@@ -149,18 +156,19 @@ export default {
         },
 
         async getupdatebalance() {
-            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + sessionStorage.apikey)
+            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
             this.name = balance.name
             this.balance = balance.userBalance
             // console.log(balance)
+            $("#txtbalance").text(this.formatToPrice(this.balance))
             return
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + sessionStorage.apikey)
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
             return this.stockName = stcokId.data
         },
         async getAllresults() {
-            let CurrentBet = await this.$axios.$get(this.$store.state.urltest + '/api/fetchCurrentBet?apikey=' + sessionStorage.apikey)
+            let CurrentBet = await this.$axios.$get(this.$store.state.urltest + '/api/fetchCurrentBet?apikey=' + localStorage.apikey)
             // console.log("kkkkkk")
             return this.Allresults = CurrentBet.data
 

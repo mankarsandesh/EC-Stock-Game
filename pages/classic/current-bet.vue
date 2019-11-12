@@ -178,7 +178,7 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get(this.$store.state.urltest + '/api/currenctChipBetUser?apikey=' + sessionStorage.apikey)
+            let history = await this.$axios.$get(this.$store.state.urltest + '/api/currenctChipBetUser?apikey=' + localStorage.apikey)
             if (history.data == null) return
             // console.log(history.data)
 
@@ -242,7 +242,7 @@ export default {
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + sessionStorage.apikey)
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
             return this.StockName = stcokId.data
 
         },

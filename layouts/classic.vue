@@ -227,6 +227,9 @@
             </v-container>
         </v-content>
     </v-app>
+    <v-btn v-scroll="onScroll" :class="$vuetify.breakpoint.smAndDown ? 'scrolltop':''" v-show="fab" small fab dark fixed bottom right color="blue" @click="toTop">
+        <v-icon>keyboard_arrow_up</v-icon>
+    </v-btn>
 </div>
 </template>
 
@@ -307,7 +310,8 @@ export default {
             dialog: false,
             notifications: false,
             sound: true,
-            widgets: false
+            widgets: false,
+            fab: false
         };
     },
     created() {
@@ -316,7 +320,7 @@ export default {
     },
     mounted() {
         $("#switch").text(this.switch1)
-        // if (sessionStorage.apikey == null) {
+        // if (localStorage.apikey == null) {
         //     window.location.href = "http://localhost:8000/"
         // }
         setTimeout(() => {
@@ -444,6 +448,14 @@ export default {
             } else {
                 this.tab = "China Stocck";
             }
+        },
+        onScroll(e) {
+            if (typeof window === 'undefined') return
+            const top = window.pageYOffset || e.target.scrollTop || 0
+            this.fab = top > 20
+        },
+        toTop() {
+            this.$vuetify.goTo(0)
         }
     }
 
@@ -451,6 +463,10 @@ export default {
 </script>
 
 <style scoped>
+.scrolltop {
+    bottom: 15%;
+}
+
 .btn-chart-change {
     width: 1.5% !important;
     position: absolute;

@@ -9,6 +9,8 @@
                     </template>
                     <v-card>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
+
+                        <navbar />
                         <table>
                             <tr>
                                 <th>{{$t('msg.Stock Name')}}</th>
@@ -174,8 +176,12 @@
 </template>
 
 <script>
+import navbar from "../../components/classic/navbar"
 export default {
     layout: 'classic',
+    components: {
+        navbar
+    },
     data() {
         return {
             panel: [true],

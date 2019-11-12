@@ -5,9 +5,12 @@
         <v-flex v-show="chtable=='bs'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="text-blue">{{$t('gamemsg.B')}}</span> = <span class="text-blue">{{countBig}}</span>,
-                    <span class="text-red">{{$t('gamemsg.S')}}</span> = <span class="text-red">{{countSmall}}</span>,
-                    <span class="text-success">{{this.$t('msg.Total')}}</span> = <span class="text-success">{{countBig + countSmall}}</span>
+                    <span class="text-blue">{{$t('gamemsg.B')}}</span> =
+                    <span class="text-blue">{{countBig}}</span>,
+                    <span class="text-red">{{$t('gamemsg.S')}}</span> =
+                    <span class="text-red">{{countSmall}}</span>,
+                    <span class="text-success">{{this.$t('msg.Total')}}</span> =
+                    <span class="text-success">{{countBig + countSmall}}</span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebsFirst">
@@ -21,10 +24,12 @@
         <v-flex v-show="chtable=='oe'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="text-blue">{{$t('gamemsg.O')}}</span> = <span class="text-blue">{{countOdd}}</span>,
-                    <span class="text-red">{{$t('gamemsg.E')}}</span> = <span class="text-red">{{countEven}}</span>,
-                    <span class="text-success">{{this.$t('msg.Total')}}</span> = <span class="text-success">{{countOdd+countEven}}</span>
-
+                    <span class="text-blue">{{$t('gamemsg.O')}}</span> =
+                    <span class="text-blue">{{countOdd}}</span>,
+                    <span class="text-red">{{$t('gamemsg.E')}}</span> =
+                    <span class="text-red">{{countEven}}</span>,
+                    <span class="text-success">{{this.$t('msg.Total')}}</span> =
+                    <span class="text-success">{{countOdd+countEven}}</span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableOEFirst">
@@ -38,11 +43,14 @@
         <v-flex v-show="chtable=='hml'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div>
-                    <span class="text-blue">{{$t('gamemsg.U')}}</span> = <span class="text-blue">{{countUpper}}</span>,
-                    <span class="text-red">{{$t('gamemsg.M')}}</span> = <span class="text-red">{{countMiddle}}</span>,
-                    <span class="text-success">{{$t('gamemsg.L')}}</span> = <span class="text-success">{{countLower}}</span>,
-                    <span class="text-primary">{{this.$t('msg.Total')}}</span> = <span class="text-primary">{{countUpper+countMiddle+countLower}}</span>
-
+                    <span class="text-blue">{{$t('gamemsg.U')}}</span> =
+                    <span class="text-blue">{{countUpper}}</span>,
+                    <span class="text-red">{{$t('gamemsg.M')}}</span> =
+                    <span class="text-red">{{countMiddle}}</span>,
+                    <span class="text-success">{{$t('gamemsg.L')}}</span> =
+                    <span class="text-success">{{countLower}}</span>,
+                    <span class="text-primary">{{this.$t('msg.Total')}}</span> =
+                    <span class="text-primary">{{countUpper+countMiddle+countLower}}</span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebUMLFirst">
@@ -150,6 +158,7 @@ export default {
             });
         },
         clearTrendMap() {
+            this.gameID = []
             this.trentFirst = [];
             this.trentOEFirst = [];
             this.trentUMLFirst = [];
@@ -214,6 +223,13 @@ export default {
         // sleep(milliseconds) {
         //   return new Promise(resolve => setTimeout(resolve, milliseconds));
         // },
+        formatToPrice(value) {
+            if (this.$route.params.id.split("-")[1] == "usindex") {
+                return `${Number(value).toFixed(4)}`;
+            } else {
+                return `${Number(value).toFixed(2)}`;
+            }
+        },
         getTableChartBS() {
             if (this.dataArray === "") return;
             this.clearTrendMap();
@@ -221,9 +237,19 @@ export default {
             let firstlast = "";
             this.dataArray.forEach(element => {
                 n++;
-                this.gameID.push(element.gameid + "\n" + element.PT + "\n" + element.created_at);
-                let no_firsts = element.PT[element.PT.length - 2].toString();
-                let no_lasts = element.PT[element.PT.length - 1].toString();
+                this.gameID.push(
+                    element.gameid +
+                    "\n" +
+                    this.formatToPrice(element.PT) +
+                    "\n" +
+                    element.created_at
+                );
+                let no_firsts = this.formatToPrice(element.PT)[
+                    this.formatToPrice(element.PT).length - 2
+                ].toString();
+                let no_lasts = this.formatToPrice(element.PT)[
+                    this.formatToPrice(element.PT).length - 1
+                ].toString();
 
                 let no_first = parseInt(no_firsts);
                 let no_last = parseInt(no_lasts);
@@ -376,8 +402,9 @@ export default {
                                     this.countBig = countBig;
                                     this.$refs.tablebsFirst.children[i].children[j].textContent =
                                         "";
-                                    this.$refs.tablebsFirst.children[i].children[j].textContent =
-                                        this.$t('gamemsg.B');
+                                    this.$refs.tablebsFirst.children[i].children[
+                                        j
+                                    ].textContent = this.$t("gamemsg.B");
                                     this.$refs.tablebsFirst.children[i].children[j].classList.add(
                                         "rs1"
                                     );
@@ -393,8 +420,9 @@ export default {
                                         "rs0"
                                     );
 
-                                    this.$refs.tablebsFirst.children[i].children[j].textContent =
-                                        this.$t('gamemsg.S');
+                                    this.$refs.tablebsFirst.children[i].children[
+                                        j
+                                    ].textContent = this.$t("gamemsg.S");
                                 }
                             }
                         }
@@ -557,8 +585,9 @@ export default {
                                         "rs-o"
                                     );
 
-                                    this.$refs.tableOEFirst.children[i].children[j].textContent =
-                                        this.$t('gamemsg.O');
+                                    this.$refs.tableOEFirst.children[i].children[
+                                        j
+                                    ].textContent = this.$t("gamemsg.O");
                                 } else if (
                                     this.$refs.tableOEFirst.children[i].children[j]
                                     .textContent === "0"
@@ -571,8 +600,9 @@ export default {
                                         "rs-e"
                                     );
 
-                                    this.$refs.tableOEFirst.children[i].children[j].textContent =
-                                        this.$t('gamemsg.E');
+                                    this.$refs.tableOEFirst.children[i].children[
+                                        j
+                                    ].textContent = this.$t("gamemsg.E");
                                 }
                             }
                         }
@@ -737,7 +767,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t('gamemsg.U');
+                                    ].textContent = this.$t("gamemsg.U");
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "1"
@@ -753,7 +783,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t('gamemsg.M');
+                                    ].textContent = this.$t("gamemsg.M");
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "0"
@@ -769,7 +799,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t('gamemsg.L');
+                                    ].textContent = this.$t("gamemsg.L");
                                 }
                             }
                         }
@@ -953,10 +983,7 @@ export default {
                         this.$refs.tableNumberFirst.children[k].children[j].className =
                             "big-number";
                     }
-                    if (
-                        this.chlists === "sn-bothdigit" ||
-                        this.chlists === "sn-twodigit"
-                    ) {
+                    if (this.chlists === "sn-twodigit") {
                         this.$refs.tableNumberFirst.children[k].children[j].textContent =
                             this.trentNumberFirst[s] < 10 ?
                             "0" + this.trentNumberFirst[s] :
