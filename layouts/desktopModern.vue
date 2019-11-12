@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <div v-if="getIsLoadingStockGame" class="loading">loading.....</div>
+    <div v-if="getIsLoadingStockGame" class="loading">
+    </div>
 
     <v-container
       fluid
@@ -38,9 +39,12 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
-            {{ $t(`menu.${item.title}`) }}
-            </v-btn>
+          <v-btn
+            flat
+            v-for="item in menu"
+            :key="item.title"
+            :to="item.to"
+          >{{ $t(`menu.${item.title}`) }}</v-btn>
           <v-btn text flat @click="$refs.language.showDialog()">
             <countryFlag :country="countryflag" size="normal" />
           </v-btn>
@@ -118,12 +122,9 @@ export default {
     }
     //  this.getwinuser()
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     //  getwinuser() {
-
     //    this.$axios.$get("api/getwinuser").then(response => {
     //      console.log("response.....................")
     //      alert(response.data)
@@ -146,7 +147,7 @@ export default {
     // }
   },
   computed: {
-    ...mapGetters(["getBalance", "getlocale","getIsLoadingStockGame"]),
+    ...mapGetters(["getBalance", "getlocale", "getIsLoadingStockGame"]),
     countryflag() {
       return this.getlocale;
     }
