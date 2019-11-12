@@ -6,6 +6,7 @@ const createStore = () => {
         state: () => ({
             auth_token: "",
             userData: {},
+            balance: '',
             footerBetAmount: 0,
             // store data betting
             onGoingBet: [],
@@ -18,7 +19,7 @@ const createStore = () => {
             coins_modern: [],
             // multi game
             isSendBetting: false,
-            urltest: "http://159.138.54.214",
+            urltest: "http://192.168.100.9:8003",
             // all stocks data
             // if we have new stock available we can add it here with same object format
             liveprice: {
@@ -236,28 +237,41 @@ const createStore = () => {
             }
         },
         actions: {
+            async balance(context) {
+                try {
+                    const res = await this.$axios.$get(`${context.getters.getUrltest}/api/me/balance?apikey=${sessionStorage.apikey}`)
+                    if (res.status) {
+                        let balance = res.data
+                        context.commit("setBalance", balance)
+                    }
+                } catch (ex) {
+                    console.error(ex)
+                    alert(ex)
+                }
+            },
             async makeAuth(context) {
                 console.warn("auth working...")
                 const body = {
                     client_id: 8,
-                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "Macky",
-                    "userId": "2223335",
+                    "webToken": "FfOG2rjQT0JijXIem8unoycQ7Sn4pm1p2J1bvgwJ",
+                    "name": "macky",
+                    "userId": "11223344",
                     "balance": 800000,
                     "webId": "0001"
                 }
                 try {
                     if (sessionStorage.apikey == null) {
-                        const res = await this.$axios.$post('http://159.138.54.214/api/redirect', body)
+                        const res = await this.$axios.$post(`${context.getters.getUrltest}/api/redirect`, body)
                         const token = res.data.token
                         console.log(token)
                         sessionStorage.apikey = token
                     }
-                    const userRes = await this.$axios.$get(`http://159.138.54.214/api/me?apikey=${sessionStorage.apikey}`)
+                    const userRes = await this.$axios.$get(`${context.getters.getUrltest}/api/me?apikey=${sessionStorage.apikey}`)
                     const userData = {
                         name: userRes.name,
                         balance: userRes.userBalance,
                     }
+                    context.dispatch("balance")
                     context.commit("setAuth_token", sessionStorage.apikey)
                     context.commit("setUserData", userData)
                     console.log("userRes")
@@ -392,7 +406,7 @@ const createStore = () => {
             },
             // get user balance 
             getBalance(state) {
-                return state.userData.balance
+                return state.balance
             },
 
             // get auth_token

@@ -32,7 +32,7 @@
     <v-container class="pa-0">
       <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
         <v-toolbar-title>
-          <!-- <v-img width="158" src="/logo.png"></v-img> -->
+          <v-img width="158" src="/logo.png"></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
