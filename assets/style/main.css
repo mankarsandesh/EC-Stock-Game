@@ -392,7 +392,7 @@ table.result-table tr {
 }
 
 .w20 {
-    width: 19.488888888%;
+    width: 19.2%;
     margin: 0 4px;
 }
 
@@ -421,7 +421,7 @@ table.result-table tr {
     height: 83px;
     font-size: 16px;
     font-weight: 400;
-    background-color: #5192c3 !important;
+    background-color: #093e70 !important;
     color: #ffffff !important;
     min-width: 100%;
     border-radius: 6px;
