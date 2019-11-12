@@ -31,7 +31,7 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4 btnp"
+          class="align_button4"
           slot="reference"
           @click="betButtonClick('firstdigit-'+data.rule)"
         >
@@ -138,7 +138,7 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button5"
+          class="align_button4"
           @click="betButtonClick('lastdigit-'+data.rule)"
           slot="reference"
         >
@@ -247,7 +247,7 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          class="align_button5"
           @click="betButtonClick('bothdigit-'+data.rule)"
           slot="reference"
         >
@@ -813,7 +813,7 @@ export default {
 </script>
 <style scoped>
 .bet-close {
-  width: 100%;
+  width: 103%;
   z-index: 10;
   height: 100%;
   position: absolute;
@@ -831,8 +831,8 @@ export default {
   z-index: 50;
   text-transform: capitalize;
 }
-.btnp p{
+/* .btnp p{
   font-size: 16px;
   margin:0;
-} 
+}  */
 </style>
