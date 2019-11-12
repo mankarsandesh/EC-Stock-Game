@@ -20,7 +20,7 @@ const createStore = () => {
             coins_modern: [],
             // multi game
             isSendBetting: false,
-            urltest: "http://192.168.100.9:8003",
+            urltest: "http://159.138.54.214",
             // all stocks data
             // if we have new stock available we can add it here with same object format
             liveprice: {
@@ -257,7 +257,7 @@ const createStore = () => {
                 console.warn("auth working...")
                 const body = {
                     client_id: 8,
-                    "webToken": "FfOG2rjQT0JijXIem8unoycQ7Sn4pm1p2J1bvgwJ",
+                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
                     "name": "macky",
                     "userId": "11223344",
                     "balance": 800000,
