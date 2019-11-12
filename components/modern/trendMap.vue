@@ -163,6 +163,7 @@ export default {
       }
     },
     clearTrendMap() {
+       this.gameID=[]
       this.trent = [];
       this.trentNumber = [];
       this.trentOE = [];

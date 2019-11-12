@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   props: {
     stockName: {
@@ -100,9 +100,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getCoins_modern", "getOnBetting", "getAuth_token","getUrltest"])
+    ...mapGetters([
+      "getCoins_modern",
+      "getOnBetting",
+      "getAuth_token",
+      "getUrltest"
+    ])
   },
   methods: {
+    ...mapActions(["balance"]),
     ...mapMutations(["pushDataOnGoingBet"]),
     coinClick(value) {
       let amount = parseInt(value);
@@ -119,6 +125,7 @@ export default {
         );
         console.log(res);
         if (res.status) {
+          this.balance()
           this.closePopper();
           console.warn(res.data[0]);
           this.pushDataOnGoingBet(res.data[0]);

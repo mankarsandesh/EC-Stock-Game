@@ -4,8 +4,10 @@ import Vuex from 'vuex'
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            isLoadingStockGame: true,
             auth_token: "",
             userData: {},
+            balance: '',
             footerBetAmount: 0,
             // store data betting
             onGoingBet: [],
@@ -173,6 +175,9 @@ const createStore = () => {
             time: {},
         }),
         mutations: {
+            setIsLoadingStockGame(state, value) {
+                state.isLoadingStockGame = value
+            },
             setIsSendBetting(state, value) {
                 state.isSendBetting = value
             },
@@ -236,29 +241,42 @@ const createStore = () => {
             }
         },
         actions: {
+            async balance(context) {
+                try {
+                    const res = await this.$axios.$get(`${context.getters.getUrltest}/api/me/balance?apikey=${sessionStorage.apikey}`)
+                    if (res.status) {
+                        let balance = res.data
+                        context.commit("setBalance", balance)
+                    }
+                } catch (ex) {
+                    console.error(ex)
+                    alert(ex)
+                }
+            },
             async makeAuth(context) {
                 console.warn("auth working...")
                 const body = {
                     client_id: 8,
                     "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "tnk1",
-                    "userId": "111111",
+                    "name": "macky",
+                    "userId": "11223344",
                     "balance": 800000,
                     "webId": "0001"
                 }
                 try {
-                    if (localStorage.apikey == null) {
-                        const res = await this.$axios.$post('http://159.138.54.214/api/redirect', body)
+                    if (sessionStorage.apikey == null) {
+                        const res = await this.$axios.$post(`${context.getters.getUrltest}/api/redirect`, body)
                         const token = res.data.token
                         console.log(token)
                         localStorage.apikey = token
                     }
-                    const userRes = await this.$axios.$get(`http://159.138.54.214/api/me?apikey=${localStorage.apikey}`)
+                    const userRes = await this.$axios.$get(`${context.getters.getUrltest}/api/me?apikey=${sessionStorage.apikey}`)
                     const userData = {
                         name: userRes.name,
                         balance: userRes.userBalance,
                     }
-                    context.commit("setAuth_token", localStorage.apikey)
+                    context.dispatch("balance")
+                    context.commit("setAuth_token", sessionStorage.apikey)
                     context.commit("setUserData", userData)
                     console.log("userRes")
 
@@ -305,6 +323,7 @@ const createStore = () => {
 
 
                 }
+
 
             },
             asynInitCallApi(context) {
@@ -379,6 +398,9 @@ const createStore = () => {
 
         },
         getters: {
+            getIsLoadingStockGame(state) {
+                return state.isLoadingStockGame
+            },
             getUrltest(state) {
                 return state.urltest
             },
@@ -392,7 +414,7 @@ const createStore = () => {
             },
             // get user balance 
             getBalance(state) {
-                return state.userData.balance
+                return state.balance
             },
 
             // get auth_token
