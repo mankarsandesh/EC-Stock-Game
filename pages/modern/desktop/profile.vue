@@ -35,6 +35,7 @@
   </div>
 </template>
 <script>
+import {mapMutations, mapActions} from 'vuex'
 import basicInfo from "~/components/modern/profile/baicInfo";
 import onlineHistoy from "~/components/modern/profile/onlineHistory";
 import stockAnalysis from "~/components/modern/profile/stockAnalysis";
@@ -51,6 +52,14 @@ export default {
       tabs: ["basic info", "online history", "stock analysis"],
       active: null
     };
+  },
+  mounted(){
+     this.setIsLoadingStockGame(false)
+  },
+  methods:{
+    ...mapActions([
+      "setIsLoadingStockGame"
+    ])
   }
 };
 </script>
