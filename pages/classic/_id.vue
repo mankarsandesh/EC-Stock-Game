@@ -32,7 +32,7 @@
 
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
-                <v-flex xs12 md6>
+                <v-flex xs12 md6 mt-1>
                     <input type="checkbox" /> {{$t('msg.preset')}}
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
@@ -162,7 +162,7 @@
         <!-- end form typy bet -->
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
-                <v-flex xs12 md6>
+                <v-flex xs12 md6 mt-1>
                     <input type="checkbox" />
                     {{$t('msg.preset')}}
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
@@ -764,7 +764,7 @@ export default {
             if (val == "start") {
                 this.alertext = this.$root.$t('msg.startbetting')
                 this.color = "#2962FF";
-                window.scrollTo(0, 0);
+                this.$vuetify.goTo(0)
             } else if (val == "stop") {
                 this.alertext = this.$root.$t('msg.stopbetting')
                 this.color = "#D50000";
@@ -862,11 +862,14 @@ export default {
 }
 
 .cursor-pointer:hover {
+    transition-delay: 0.1s;
+    transition-duration: 0.1s;
     cursor: pointer;
-    background-color: #cccccc;
+    background-color: #00ddfff2;
+    transform-origin: center;
 }
 
-. .pointer-events-none {
+.pointer-events-none {
     pointer-events: none;
     background-color: rgba(179, 183, 183, 0.49);
 }
