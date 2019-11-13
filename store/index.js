@@ -243,7 +243,7 @@ const createStore = () => {
         actions: {
             async balance(context) {
                 try {
-                    const res = await this.$axios.$get(`${context.getters.getUrltest}/api/me/balance?apikey=${sessionStorage.apikey}`)
+                    const res = await this.$axios.$get(`${context.getters.getUrltest}/api/me/balance?apikey=${localStorage.apikey}`)
                     if (res.status) {
                         let balance = res.data
                         context.commit("setBalance", balance)
@@ -264,19 +264,19 @@ const createStore = () => {
                     "webId": "0001"
                 }
                 try {
-                    if (sessionStorage.apikey == null) {
+                    if (localStorage.apikey == null) {
                         const res = await this.$axios.$post(`${context.getters.getUrltest}/api/redirect`, body)
                         const token = res.data.token
                         console.log(token)
                         localStorage.apikey = token
                     }
-                    const userRes = await this.$axios.$get(`${context.getters.getUrltest}/api/me?apikey=${sessionStorage.apikey}`)
+                    const userRes = await this.$axios.$get(`${context.getters.getUrltest}/api/me?apikey=${localStorage.apikey}`)
                     const userData = {
                         name: userRes.name,
                         balance: userRes.userBalance,
                     }
                     context.dispatch("balance")
-                    context.commit("setAuth_token", sessionStorage.apikey)
+                    context.commit("setAuth_token", localStorage.apikey)
                     context.commit("setUserData", userData)
                     console.log("userRes")
 

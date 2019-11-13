@@ -153,7 +153,7 @@ export default {
                 }
                 if (times == calculat) {
                     this.getTableChartBS();
-                    window.scrollTo(0, 0);
+                    this.$vuetify.goTo(0)
                 }
             });
         },
