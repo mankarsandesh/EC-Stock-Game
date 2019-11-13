@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <div v-if="getIsLoadingStockGame" class="loading">
+    <div v-show="getIsLoadingStockGame" class="container-loading">
+      <div class="loading"></div>
+      <div ref="svgContainer"></div>
     </div>
 
     <v-container
@@ -33,18 +35,19 @@
       </v-container>
     </v-container>
     <v-container class="pa-0">
-      <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
+      <v-toolbar
+        height="69"
+        color="#fff"
+        style="justify-content: center !importan;"
+      >
         <v-toolbar-title>
           <v-img width="158" src="/logo.png"></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-          <v-btn
-            flat
-            v-for="item in menu"
-            :key="item.title"
-            :to="item.to"
-          >{{ $t(`menu.${item.title}`) }}</v-btn>
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">{{
+            $t(`menu.${item.title}`)
+          }}</v-btn>
           <v-btn text flat @click="$refs.language.showDialog()">
             <countryFlag :country="countryflag" size="normal" />
           </v-btn>
@@ -71,10 +74,12 @@ import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import winnerMarquee from "~/components/modern/winnerMarquee";
 import welcomeUser from "~/components/welcomeUser";
-
 import openSocket from "socket.io-client";
 
 import i18n from "vue-i18n";
+
+import lottie from "lottie-web";
+
 export default {
   components: {
     countryFlag,
@@ -112,6 +117,9 @@ export default {
   },
 
   created() {
+    console.warn("lottie");
+    console.warn(lottie);
+    console.warn("lottie");
     let path = this.$nuxt.$route.name.split("-");
     let isFullscreen = path[1];
     // alert(isFullscreen[1])
@@ -122,7 +130,15 @@ export default {
     }
     //  this.getwinuser()
   },
-  mounted() {},
+  mounted() {
+    lottie.loadAnimation({
+      container: this.$refs.svgContainer, // the dom element that will contain the animation
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
+    });
+  },
   methods: {
     //  getwinuser() {
     //    this.$axios.$get("api/getwinuser").then(response => {
@@ -159,12 +175,16 @@ export default {
   padding: 0 !important;
   justify-content: center !important;
 }
+.container-loading {
+  position: absolute;
+  z-index: 5000;
+  width: 100%;
+}
 .loading {
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: black;
-  opacity: 0.5;
-  z-index: 5000;
+  opacity: 0.7;
 }
 </style>
