@@ -5,7 +5,7 @@ import { hostname } from 'os'
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
-            isLoadingStockGame: true,
+            isLoadingStockGame: false,
             auth_token: "",
             userData: {},
             balance: '',
