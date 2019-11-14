@@ -614,6 +614,7 @@ export default {
 
         bet(e, specialName = "none") {
             // console.log(e)
+            // this.playSound('/voice/bet-chips.mp3')
             if (this.price == 0 || this.price == null) {
                 // console.log("Null-0");
                 return;

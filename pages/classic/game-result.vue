@@ -134,7 +134,7 @@ export default {
         },
         async getAllCrawler(val) {
             let DataCrawler = await this.$axios.$get(this.$store.state.urltest + '/api/getAllCrawler?limit=300&apikey=' + localStorage.apikey)
-            console.log(DataCrawler)
+            // console.log(DataCrawler)
             if (DataCrawler.data == null) return
             for (let i = 0; i < DataCrawler.data.length; i++) {
                 if (val == null || val.target.innerText == 'allstock') {
