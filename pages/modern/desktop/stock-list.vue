@@ -34,6 +34,7 @@
   </div>
 </template>
 <script>
+import {mapMutations} from 'vuex'
 import sotkclist from "~/components/modern/stocklist/stocklist";
 import annoucement from "~/components/modern/stocklist/annoucement";
 import rules from "~/components/modern/stocklist/rules";
@@ -51,6 +52,15 @@ export default {
       tabs: ["stock list", "annoucement", "rules"],
       active: null
     };
+  },
+   mounted(){
+    // call this every page that used "dekstopModern" layout to hide loading
+     this.setIsLoadingStockGame(false)
+  },
+  methods:{
+    ...mapMutations([
+      "setIsLoadingStockGame"
+    ])
   }
 };
 </script>

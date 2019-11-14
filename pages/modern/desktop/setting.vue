@@ -28,6 +28,7 @@
   </div>
 </template>
 <script>
+import {mapMutations} from 'vuex'
 import chipamount from "~/components/modern/setting/chipamout";
 import soundcontrol from "~/components/modern/setting/soundcontrol";
 
@@ -43,6 +44,15 @@ export default {
       tabs: ["Chip amount", "sound control"],
       active: null
     };
+  },
+   mounted(){
+    // call this every page that used "dekstopModern" layout to hide loading
+     this.setIsLoadingStockGame(false)
+  },
+  methods:{
+    ...mapMutations([
+      "setIsLoadingStockGame"
+    ])
   }
 };
 </script>

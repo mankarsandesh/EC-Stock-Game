@@ -43,11 +43,14 @@ export default {
       stockSelect: []
     };
   },
+  
   mounted() {
+    // call this every page that used "dekstopModern" layout to hide loading
+      this.setIsLoadingStockGame(false)
     this.addStockMultigame(this.$route.params.id);
   },
   methods: {
-    ...mapMutations(["addStockMultigame"])
+    ...mapMutations(["addStockMultigame","setIsLoadingStockGame"])
   },
   computed: {
     ...mapGetters(["getStockMultigame"])
