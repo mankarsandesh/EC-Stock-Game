@@ -12,6 +12,8 @@
             <i class="fa fa-table" aria-hidden="true" v-show="!ischangechartview" @click="getonview()"></i>
             <i class="fa fa-area-chart" aria-hidden="true" v-show="ischangechartview" @click="getoffview()"></i>
         </button>
+        <!-- {{onlyTime(getStockById($route.params.id.split("-")[1]).timeLastDraw)}} -->
+        <!-- {{formatToNumber(getStockById($route.params.id.split("-")[1]).lastDraw,$route.params.id.split("-")[1])}} -->
 
     </v-flex>
 </v-layout>
@@ -19,8 +21,11 @@
 
 <script>
 import openSocket from "socket.io-client";
+import {
+    mapGetters
+} from "vuex";
 export default {
-    props: ["checkStock", "stocks", "StockData", "Reference"],
+    props: ["checkStock", "StockData", "Reference"],
     data() {
         return {
             ischangechartview: false,
@@ -34,6 +39,9 @@ export default {
             week: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
         };
     },
+    computed: {
+        ...mapGetters(["getStockById"])
+    },
     mounted() {
         this.getdata()
         setInterval(() => {
@@ -45,15 +53,15 @@ export default {
             let times;
             let calculat;
             let lasttime;
-            if (this.stocks == "btc1") {
+            if (this.$route.params.id.split("-")[1] == "btc1") {
                 times = data.btc1.timer;
                 calculat = 40;
                 lasttime = 38
-            } else if (this.stocks == "btc5") {
+            } else if (this.$route.params.id.split("-")[1] == "btc5") {
                 times = data.btc5.timer;
                 calculat = 240;
                 lasttime = 238;
-            } else if (this.stocks == "usindex") {
+            } else if (this.$route.params.id.split("-")[1] == "usindex") {
                 times = data.usindex.timer;
                 calculat = 240;
                 lasttime = 238;
@@ -77,6 +85,21 @@ export default {
         });
     },
     methods: {
+        onlyTime(value) {
+            let cd = new Date(value)
+            return this.setZero(cd.getFullYear(), 4) + "-" +
+                this.setZero(cd.getMonth() + 1, 2) + "-" +
+                this.setZero(cd.getDate(), 2) + " " +
+                this.setZero(cd.getHours(), 2) + ":" +
+                this.setZero(cd.getMinutes(), 2);
+        },
+        formatToNumber(value, s) {
+            if (s == 'usindex') {
+                return Number(value).toFixed(4);
+            } else {
+                return Number(value).toFixed(2);
+            }
+        },
         getonview() {
             $(".open")[0].click()
         },

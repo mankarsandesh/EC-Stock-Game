@@ -113,38 +113,38 @@ export default {
           type: "china",
           stockName: [
             {
-              name: "SH000001",
+              name: "sh000001",
               loop: [
                 {
                   loop: 5,
-                  stockId: "SH000001"
+                  stockId: "sh000001"
                 }
               ]
             },
             {
-              name: "SZ399001",
+              name: "sz399001",
               loop: [
                 {
                   loop: 5,
-                  stockId: "SZ399001"
+                  stockId: "sz399001"
                 }
               ]
             },
             {
-              name: "SZ399415",
+              name: "sz399415",
               loop: [
                 {
                   loop: 5,
-                  stockId: "SZ399415"
+                  stockId: "sz399415"
                 }
               ]
             },
             {
-              name: "SH00300",
+              name: "sh000300",
               loop: [
                 {
                   loop: 5,
-                  stockId: "SH00300"
+                  stockId: "sh000300"
                 }
               ]
             }

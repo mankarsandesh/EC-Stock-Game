@@ -88,7 +88,7 @@
 import openSocket from "socket.io-client";
 export default {
     layout: "classic",
-    props: ["dataArray", "chtable", "chlists", "isFullscreen", "stocks"],
+    props: ["dataArray", "chtable", "chlists", "isFullscreen"],
     data() {
         return {
             url: "",
@@ -138,13 +138,13 @@ export default {
             socket.on("time", data => {
                 let times;
                 let calculat;
-                if (this.stocks == "btc1") {
+                if (this.$route.params.id.split('-')[1] == "btc1") {
                     times = data.btc1.timer;
                     calculat = 39;
-                } else if (this.stocks == "btc5") {
+                } else if (this.$route.params.id.split('-')[1] == "btc5") {
                     times = data.btc5.timer;
                     calculat = 239;
-                } else if (this.stocks == "usindex") {
+                } else if (this.$route.params.id.split('-')[1] == "usindex") {
                     times = data.usindex.timer;
                     calculat = 239;
                 } else {
@@ -178,7 +178,6 @@ export default {
                     this.$refs.tableOEFirst.children[i].children[j].className = "";
                 }
             }
-
             //uml
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 900; j++) {

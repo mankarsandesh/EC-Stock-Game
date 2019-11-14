@@ -14,7 +14,7 @@ import VueCharts from "vue-chartjs";
 import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
 export default {
-    props: ["stocks", "checkStock", "StockData"],
+    props: ["checkStock", "StockData"],
     data() {
         return {
             load: false,
@@ -180,7 +180,7 @@ export default {
                         mode: "index",
                         callbacks: {
                             label: function (tooltipItem, data) {
-                                if (_this.stocks === "usindex") {
+                                if (_this.$route.params.id.split('-')[1] === "usindex") {
                                     return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
                                 } else {
                                     return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(2));

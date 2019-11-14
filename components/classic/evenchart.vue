@@ -9,7 +9,7 @@
 import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
 export default {
-    props: ["stocks", "checkStock", "StockData"],
+    props: ["checkStock", "StockData"],
     data() {
         return {
             load: false,

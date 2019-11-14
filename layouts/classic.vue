@@ -172,8 +172,8 @@
             <!-- charts -->
             <v-tabs-items v-model="tab">
                 <v-container pa-0 v-if="show1">
-                    <livechart :stocks="stockname" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live' && ischangechartview" />
-                    <liveevens :stocks="stockname" :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-else-if="checkStock !== 'live' && ischangechartview" />
+                    <livechart :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live' && ischangechartview" />
+                    <liveevens :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-else-if="checkStock !== 'live' && ischangechartview" />
 
                     <div v-else>
                         <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
@@ -185,7 +185,7 @@
                                     <v-tabs class="bg-colors" v-model="currentItemss" color="transparent" fixed-tabs slider-color="yellow" grow>
                                         <v-tab class="text-sm-left text-whites" @click="loadtable()" v-for="(baccarat2, idx11) in baccarat1.children" :key="idx11" :href="'#' + baccarat2.name">{{ $t('gamemsg.'+baccarat2.name) }}</v-tab>
                                     </v-tabs>
-                                    <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" :dataArray="getStockNewData($route.params.id)" :stocks="stockname" v-if="showtable" />
+                                    <baccarats :chtable="baccarat1.namech" :chlists="baccarat1.namech+'-'+currentItemss" :dataArray="getStockNewData($route.params.id)" v-if="showtable" />
                                 </v-card>
                             </v-tab-item>
                         </v-tabs-items>
@@ -199,7 +199,7 @@
                 <v-layout>
                     <v-flex xs12 sm12>
                         <div class="float-right">
-                            <dataslastdraw :stocks="stockname" :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
+                            <dataslastdraw :StockData="getStockNewData($route.params.id)" :Reference="getReference($route.params.id)" :checkStock="checkStock" v-if="show1" />
                         </div>
                     </v-flex>
                 </v-layout>
@@ -320,9 +320,9 @@ export default {
     },
     mounted() {
         $("#switch").text(this.switch1)
-        // if (localStorage.apikey == null) {
-        //     window.location.href = "http://localhost:8000/"
-        // }
+        if (localStorage.apikey == null) {
+            location.href = "http://"+location.host
+        }
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);

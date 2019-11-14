@@ -126,7 +126,7 @@ export default {
         } else {
             this.panel1 = [1]
             this.panel2 = [1]
-            this.panel3 = [0]
+            this.panel3 = [1]
         }
     },
     computed: {
