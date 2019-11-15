@@ -157,7 +157,7 @@ export default {
                     },
                     title: {
                         display: true,
-                        text: this.$t('msg.Stock') + ': ' + title
+                        text: this.$root.$t('msg.Stock') + ': ' + title
                     },
                     pan: {
                         enabled: true,

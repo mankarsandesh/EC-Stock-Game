@@ -125,7 +125,7 @@ export default {
                     },
                     title: {
                         display: true,
-                        text: this.$t('msg.Stock') + ': ' + title
+                        text: this.$root.$t('msg.Stock') + ': ' + title
                     },
                     pan: {
                         enabled: true,
@@ -181,9 +181,9 @@ export default {
                         callbacks: {
                             label: function (tooltipItem, data) {
                                 if (_this.$route.params.id.split('-')[1] === "usindex") {
-                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
+                                    return (_this.$root.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
                                 } else {
-                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(2));
+                                    return (_this.$root.$t('msg.price') + tooltipItem.yLabel.toFixed(2));
                                 }
 
                             }

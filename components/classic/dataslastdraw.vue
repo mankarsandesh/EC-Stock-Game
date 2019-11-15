@@ -6,7 +6,7 @@
         <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
         <span class="timer total_classic" :title="datalastdraw" v-if="load">{{dataslastdraw}}</span>
         <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
-        <span :class="time == '00:05' || time == '00:03' || time == '00:01' || time == $t('msg.calculating') || time == $t('msg.marketclosed') ? 'timer color-timer':'timer'">{{time}}</span>
+        <span :class="time == $t('msg.betnow') + ':' +'00:05' || time == $t('msg.betnow') + ':' +'00:03' || time == $t('msg.betnow') + ':' +'00:01' || time == $t('msg.calculating') || time == $t('msg.marketclosed') ? 'timer color-timer':'timer'">{{time}}</span>
 
         <button class="timer" @click="ischangechartview = !ischangechartview" v-if="$vuetify.breakpoint.smAndDown">
             <i class="fa fa-table" aria-hidden="true" v-show="!ischangechartview" @click="getonview()"></i>
@@ -30,7 +30,7 @@ export default {
         return {
             ischangechartview: false,
             datalastdraw: "0000.00",
-            datelastdraw: "0000-00-00 00:00",
+            datelastdraw: "00/00 00:00",
             load: false,
             time: this.$root.$t('msg.loading'),
             gameid: null,
@@ -117,7 +117,7 @@ export default {
                 this.setZero(cd.getSeconds(), 2);
             this.DateNow =
                 this.setZero(cd.getFullYear(), 4) + "-" +
-                this.setZero(cd.getMonth() + 1, 2) + "-" +
+                this.setZero(cd.getMonth() + 1, 2) + "/" +
                 this.setZero(cd.getDate(), 2) //+ " " + 
             //this.week[cd.getDay()];
         },
@@ -152,8 +152,8 @@ export default {
             this.datalastdraw = elements.PT;
             let cd = new Date(elements.date)
             this.datelastdraw =
-                this.setZero(cd.getFullYear(), 4) + "-" +
-                this.setZero(cd.getMonth() + 1, 2) + "-" +
+                // this.setZero(cd.getFullYear(), 4) + "-" +
+                this.setZero(cd.getMonth() + 1, 2) + "/" +
                 this.setZero(cd.getDate(), 2) + " " +
                 this.setZero(cd.getHours(), 2) + ":" +
                 this.setZero(cd.getMinutes(), 2);
@@ -202,7 +202,7 @@ export default {
     border: 1px solid #ffc107;
     padding: 5px 6px;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
     background-color: #384e63;
     color: #fff;
@@ -212,7 +212,7 @@ export default {
     border: 1px solid #ffc107;
     padding: 3px 6px;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
     display: inline-table;
 }

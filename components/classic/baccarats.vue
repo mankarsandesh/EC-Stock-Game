@@ -9,7 +9,7 @@
                     <span class="text-blue">{{countBig}}</span>,
                     <span class="text-red">{{$t('gamemsg.S')}}</span> =
                     <span class="text-red">{{countSmall}}</span>,
-                    <span class="text-success">{{this.$t('msg.Total')}}</span> =
+                    <span class="text-success">{{$t('msg.Total')}}</span> =
                     <span class="text-success">{{countBig + countSmall}}</span>
                 </div>
                 <div class="my-coltabledivlast">
@@ -28,7 +28,7 @@
                     <span class="text-blue">{{countOdd}}</span>,
                     <span class="text-red">{{$t('gamemsg.E')}}</span> =
                     <span class="text-red">{{countEven}}</span>,
-                    <span class="text-success">{{this.$t('msg.Total')}}</span> =
+                    <span class="text-success">{{$t('msg.Total')}}</span> =
                     <span class="text-success">{{countOdd+countEven}}</span>
                 </div>
                 <div class="my-coltabledivlast">
@@ -49,7 +49,7 @@
                     <span class="text-red">{{countMiddle}}</span>,
                     <span class="text-success">{{$t('gamemsg.L')}}</span> =
                     <span class="text-success">{{countLower}}</span>,
-                    <span class="text-primary">{{this.$t('msg.Total')}}</span> =
+                    <span class="text-primary">{{$t('msg.Total')}}</span> =
                     <span class="text-primary">{{countUpper+countMiddle+countLower}}</span>
                 </div>
                 <div class="my-coltabledivlast">
@@ -403,7 +403,7 @@ export default {
                                         "";
                                     this.$refs.tablebsFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t("gamemsg.B");
+                                    ].textContent = this.$root.$t("gamemsg.B");
                                     this.$refs.tablebsFirst.children[i].children[j].classList.add(
                                         "rs1"
                                     );
@@ -421,7 +421,7 @@ export default {
 
                                     this.$refs.tablebsFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t("gamemsg.S");
+                                    ].textContent = this.$root.$t("gamemsg.S");
                                 }
                             }
                         }
@@ -586,7 +586,7 @@ export default {
 
                                     this.$refs.tableOEFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t("gamemsg.O");
+                                    ].textContent = this.$root.$t("gamemsg.O");
                                 } else if (
                                     this.$refs.tableOEFirst.children[i].children[j]
                                     .textContent === "0"
@@ -601,7 +601,7 @@ export default {
 
                                     this.$refs.tableOEFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t("gamemsg.E");
+                                    ].textContent = this.$root.$t("gamemsg.E");
                                 }
                             }
                         }
@@ -766,7 +766,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t("gamemsg.U");
+                                    ].textContent = this.$root.$t("gamemsg.U");
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "1"
@@ -782,7 +782,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t("gamemsg.M");
+                                    ].textContent = this.$root.$t("gamemsg.M");
                                 } else if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "0"
@@ -798,7 +798,7 @@ export default {
 
                                     this.$refs.tablebUMLFirst.children[i].children[
                                         j
-                                    ].textContent = this.$t("gamemsg.L");
+                                    ].textContent = this.$root.$t("gamemsg.L");
                                 }
                             }
                         }
