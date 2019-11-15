@@ -257,11 +257,11 @@ const createStore = () => {
                 console.warn("auth working...")
                 const body = {
                     client_id: 8,
-                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "macky",
-                    "userId": "11223344",
+                    "webToken": "ljFdk8P0MZu2Vuy2Fns95aNqNop4R43jS3V4p5dV",
+                    "name": "Bankonly",
+                    "userId": "0001_0001_0001_15646",
                     "balance": 800000,
-                    "webId": "0001"
+                    "webId": "0002"
                 }
                 try {
                     if (localStorage.apikey == null) {

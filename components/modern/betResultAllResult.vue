@@ -22,37 +22,41 @@
     <v-layout>
       <!-- bet result -->
       <v-flex xs12 v-if="isShowBet">
-        <table class="table table-responsive bet-result">
-          <tr>
-            <th>Stock name</th>
-            <th>Time</th>
-            <th>Result</th>
-          </tr>
-          <tr v-for="(data,index) in getStockList" :key="index">
-            <td>
-              <nuxt-link :to="'/modern/desktop/'+data.id"> {{ $t(`stockname.${data.stockname}`) }}</nuxt-link>
-            </td>
-            <td class="text-xs-right">{{ onlyTime(getStockById(data.id).timeLastDraw)}}</td>
-            <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
-          </tr>
-        </table>
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th>Stock name</th>
+              <th>Time</th>
+              <th>Result</th>
+            </tr>
+            <tr v-for="(data,index) in getStockList" :key="index">
+              <td>
+                <nuxt-link :to="'/modern/desktop/'+data.id">{{ $t(`stockname.${data.stockname}`) }}</nuxt-link>
+              </td>
+              <td class="text-xs-right">{{ onlyTime(getStockById(data.id).timeLastDraw)}}</td>
+              <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
+            </tr>
+          </table>
+        </div>
       </v-flex>
       <!-- all result -->
       <v-flex xs12 v-else>
-        <table class="table table-responsive all-result">
-          <tr>
-            <th>ID</th>
-            <th>Stock</th>
-            <th>Result</th>
-            <th>Gold amount</th>
-          </tr>
-          <tr v-for="(data,index) in getStockList" :key="index">
-            <td></td>
-            <td class="text-xs-right"> {{ $t(`stockname.${data.stockname}`) }}</td>
-            <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
-            <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
-          </tr>
-        </table>
+        <div class="table-responsive">
+          <table class="table">
+            <tr>
+              <th>ID</th>
+              <th>Stock</th>
+              <th>Result</th>
+              <th>Gold amount</th>
+            </tr>
+            <tr v-for="(data,index) in getStockList" :key="index">
+              <td></td>
+              <td class="text-xs-right">{{ $t(`stockname.${data.stockname}`) }}</td>
+              <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
+              <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
+            </tr>
+          </table>
+        </div>
       </v-flex>
     </v-layout>
   </div>

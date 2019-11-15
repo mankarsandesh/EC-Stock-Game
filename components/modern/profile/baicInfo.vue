@@ -2,7 +2,7 @@
   <div>
     <div class="d-between">
       <v-avatar size="170">
-        <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt />
+        <img src="/v.png" alt />
       </v-avatar>
 
       <p>
@@ -27,15 +27,23 @@
                 <v-icon>edit</v-icon>
               </v-btn>
             </td>
-            <v-select v-model="nick" :items="nickselects" label="EVERYONE CAN SEE"></v-select>
+            <td>
+              <v-select hide-details v-model="nick" :items="nickselects" label="EVERYONE CAN SEE"></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="row" class="row">gender</th>
-
             <td>
-              <v-select v-model="gen" :items="gendselects" label="Male"></v-select>
+              <v-select hide-details v-model="gen" :items="gendselects" label="Male"></v-select>
             </td>
-            <v-select v-model="gender" :items="genderselects" label="EVERYONE CAN SEE"></v-select>
+            <td>
+              <v-select
+                hide-details
+                v-model="gender"
+                :items="genderselects"
+                label="EVERYONE CAN SEE"
+              ></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="row" class="row">email</th>
@@ -46,27 +54,43 @@
                 <v-icon>edit</v-icon>
               </v-btn>
             </td>
-            <v-select v-model="email" :items="emails" label="EVERYONE CAN SEE"></v-select>
+            <td>
+              <v-select hide-details v-model="email" :items="emails" label="EVERYONE CAN SEE"></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="row" class="row">membership</th>
 
             <td>Stock God</td>
-            <v-select v-model="membership" :items="membershipselects" label="EVERYONE CAN SEE"></v-select>
+            <td>
+              <v-select
+                hide-details
+                v-model="membership"
+                :items="membershipselects"
+                label="EVERYONE CAN SEE"
+              ></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="row" class="row">country</th>
-
             <td>
-              <v-select v-model="count" :items="countselects" label="China"></v-select>
+              <v-select hide-details v-model="count" :items="countselects" label="China"></v-select>
             </td>
-            <v-select v-model="country" :items="countryselects" label="EVERYONE CAN SEE"></v-select>
+            <td>
+              <v-select
+                hide-details
+                v-model="country"
+                :items="countryselects"
+                label="EVERYONE CAN SEE"
+              ></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="row" class="row">balance</th>
-
             <td>$865.00</td>
-            <v-select hide-details v-model="balance" :items="balancesselect" label="China"></v-select>
+            <td>
+              <v-select hide-details v-model="balance" :items="balancesselect" label="China"></v-select>
+            </td>
           </tr>
           <tr>
             <th scope="row" class="row">rolling</th>
@@ -75,6 +99,8 @@
           </tr>
         </tbody>
       </table>
+
+      <p>{{project}}</p>
       <v-flex>
         <v-btn class="my-btn">save</v-btn>
         <v-btn class="my-btn cancel">cancel</v-btn>
@@ -83,6 +109,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -103,8 +130,20 @@ export default {
       membershipselects: [],
       countselects: [],
       countryselects: [],
-      balancesselect: []
+      balancesselect: [],
+      project: ""
     };
+  },
+  created() {
+    this.fetchAll();
+  },
+  methods: {
+    async fetchAll() {
+      const res = await this.$axios.$get(
+        "http://localhost:8003/api/me?apikey={{api_token}}"
+      );
+      console.log(res);
+    }
   }
 };
 </script>
