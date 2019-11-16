@@ -16,6 +16,8 @@
         "game result": "遊戲結果"
     },
     "stock-list": {
+        "stock lists":"库存清单",
+        "stock name":"股票名称",
         "live price": "实时报价",
         "reference": "参考网址",
         "load more": "更多"

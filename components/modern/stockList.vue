@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-layout>
-      <v-flex pa-2 class="head-result-stock">stock lists</v-flex>
+      <v-flex pa-2 class="head-result-stock">{{$t('stock-list.stock lists')}}</v-flex>
     </v-layout>
     <div class="table-responsive">
       <table class="table">
         <tr>
-          <th>Stock name</th>
-          <th>Live Price</th>
+          <th>{{$t('stock-list.stock name')}}</th>
+          <th>{{$t("stock-list.live price")}}</th>
           <th>Status</th>
           <th>Countdown</th>
         </tr>
