@@ -702,7 +702,7 @@ export default {
                     calculating = 241;
                     alert = 300;
                 } else {
-                    times = data.SH000001.timer;
+                    times = data.sh000001.timer;
                     calculating = 241;
                     alert = 300;
                 }

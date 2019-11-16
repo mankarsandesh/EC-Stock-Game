@@ -361,9 +361,9 @@ export default {
             }
         },
         getNavbar(data) {
-            if (data.usindex.timer != 'close' && data.SH000001.timer == 'close') {
+            if (data.usindex.timer != 'close' && data.sh000001.timer == 'close') {
                 this.navList = this.stockusindex
-            } else if (data.usindex.timer != 'close' && data.SH000001.timer != 'close') {
+            } else if (data.usindex.timer != 'close' && data.sh000001.timer != 'close') {
                 this.navList = this.stockchina
             } else {
                 this.navList = this.stockbtc

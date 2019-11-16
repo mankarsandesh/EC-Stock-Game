@@ -66,7 +66,7 @@ export default {
                 calculat = 240;
                 lasttime = 238;
             } else {
-                times = data.SH000001.timer;
+                times = data.sh000001.timer;
                 calculat = 240;
                 lasttime = 238;
             }
