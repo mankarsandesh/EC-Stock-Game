@@ -29,6 +29,7 @@
   </div>
 </template>
 <script>
+import {mapMutations} from 'vuex'
 import currentbet from "~/components/modern/currentBet/currentBet";
 import Histoy from "~/components/modern/currentBet/history";
 export default {
@@ -43,6 +44,15 @@ export default {
       tabs: ["current bet", "history"],
       active: null
     };
+  },
+  mounted(){
+    // call this every page that used "dekstopModern" layout to hide loading
+     this.setIsLoadingStockGame(false)
+  },
+  methods:{
+    ...mapMutations([
+      "setIsLoadingStockGame"
+    ])
   }
 };
 </script>

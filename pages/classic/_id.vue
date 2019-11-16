@@ -486,8 +486,7 @@ export default {
         async getSotckId() {
             let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
             stcokId.data.forEach(element => {
-                if ((element.stockName.toUpperCase() == this.$route.params.id.split("-")[1]) ||
-                    (element.stockName == this.$route.params.id.split("-")[1])) {
+                if (element.stockName == this.$route.params.id.split("-")[1]) {
                     this.stockname = element.stockId
                 }
             })
@@ -498,16 +497,16 @@ export default {
                 this.getalertstartstop('error')
             } else {
                 this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
-                $("#txtbalance").text(this.formatToPrice(this.balance))
                 // console.log(this.formData);
                 console.log("send to api server");
                 const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + localStorage.apikey, this.formData)
                 console.log(res)
                 setTimeout(() => {
-                    this.setPrice("reset");
                     this.getalertstartstop(res.data)
+                    this.setPrice("reset");
                     $(".getupdatebalance")[0].click()
-                }, 1600);
+                    $("#txtbalance").text(this.formatToPrice(this.balance))
+                }, 1000);
             }
         },
 
@@ -615,6 +614,7 @@ export default {
 
         bet(e, specialName = "none") {
             // console.log(e)
+            // this.playSound('/voice/bet-chips.mp3')
             if (this.price == 0 || this.price == null) {
                 // console.log("Null-0");
                 return;
@@ -702,7 +702,7 @@ export default {
                     calculating = 241;
                     alert = 300;
                 } else {
-                    times = data.SH000001.timer;
+                    times = data.sh000001.timer;
                     calculating = 241;
                     alert = 300;
                 }
@@ -715,11 +715,11 @@ export default {
                     this.getBetClosedopen('open');
                 }
 
-                // if (times == alert) {
-                //     this.getalertstartstop("stop")
-                // } else if (times == calculating) {
-                //     this.getalertstartstop("start")
-                // }
+                if (times == alert) {
+                    this.getalertstartstop("stop")
+                } else if (times == calculating) {
+                    this.getalertstartstop("start")
+                }
 
                 if (times == calculating - 3) {
                     this.alertOutCome()
@@ -783,25 +783,7 @@ export default {
             }
         },
         getMbFooter() {
-            // chips 10
-            // OS93GB1we-copy 50
-            // OS93GB2 100
-            // OS93GB1-copy 500
-            // OS93GB5-copy 1000
-            // OS93GB3a-copy-copy 5000
-            // txtbalance
-            // txttotal
-            // btnCONFIRM
-            // btnCANCEL
-
-            // $("#txtbalance").text(this.balance)
-            // $("#txttotal").text("$ "+this.price) 
-
             $("#txttotal").text(this.formatTotal(this.price))
-            // $("#btnCONFIRM").text("CONFIRM")
-
-            // $("#btnCANCEL").text("CANCEL")
-
             $("#ch10").text(this.chips[0].price)
             $("#ch50").text(this.chips[1].price)
             $("#ch100").text(this.chips[2].price)
@@ -816,7 +798,6 @@ export default {
             $("#Rectangle,#btnCANCEL").click(() => {
                 this.setPrice("reset");
             });
-
             $("#chips, #ch10").click(() => {
                 if (this.balance >= parseInt(this.chips[0].price))
                     this.setPrice(this.chips[0].price)

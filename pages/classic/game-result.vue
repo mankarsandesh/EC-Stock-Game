@@ -11,162 +11,27 @@
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 
                         <navbar />
-                        <table>
-                            <tr>
-                                <th>{{$t('msg.Stock Name')}}</th>
-                                <th>{{$t('msg.Game Mode')}}</th>
-                                <th>{{$t('msg.Result')}}</th>
-                                <th>{{$t('msg.result out time')}}</th>
-                                <th>{{$t('msg.gameid')}}</th>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7977.29</td>
-                                <td>2019-10-17 15:17:12</td>
-                                <td>01062019101714190</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7977.74</td>
-                                <td>2019-10-17 15:16:12</td>
-                                <td>01062019101714190</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>5</td>
-                                <td>7977.21</td>
-                                <td>2019-10-17 15:15:23</td>
-                                <td>01062019101714150</td>
-                            </tr>
-                            <tr>
-                                <td>US dollar Index</td>
-                                <td>5</td>
-                                <td>98.0680</td>
-                                <td>2019-10-17 15:15:23</td>
-                                <td>00052019101714150</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7977.21</td>
-                                <td>2019-10-17 15:15:12</td>
-                                <td>01062019101714190</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7973.01</td>
-                                <td>2019-10-17 15:14:11</td>
-                                <td>01062019101714140</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7973.00</td>
-                                <td>2019-10-17 15:13:11</td>
-                                <td>01062019101714140</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7968.95</td>
-                                <td>2019-10-17 15:12:12</td>
-                                <td>01062019101714140</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7967.27</td>
-                                <td>2019-10-17 15:11:12</td>
-                                <td>01062019101714140</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>5</td>
-                                <td>7967.98</td>
-                                <td>2019-10-17 15:10:23</td>
-                                <td>01062019101714100</td>
-                            </tr>
-                            <tr>
-                                <td>US dollar Index</td>
-                                <td>5</td>
-                                <td>98.0882</td>
-                                <td>2019-10-17 15:10:23</td>
-                                <td>00052019101714100</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7967.98</td>
-                                <td>2019-10-17 15:10:12</td>
-                                <td>01062019101714140</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7967.00</td>
-                                <td>2019-10-17 15:09:11</td>
-                                <td>01062019101714090</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7967.16</td>
-                                <td>2019-10-17 15:08:11</td>
-                                <td>01062019101714090</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7969.51</td>
-                                <td>2019-10-17 15:07:12</td>
-                                <td>01062019101714090</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7969.52</td>
-                                <td>2019-10-17 15:06:21</td>
-                                <td>01062019101714090</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>5</td>
-                                <td>7967.02</td>
-                                <td>2019-10-17 15:05:22</td>
-                                <td>01062019101714050</td>
-                            </tr>
-                            <tr>
-                                <td>US dollar Index</td>
-                                <td>5</td>
-                                <td>98.0974</td>
-                                <td>2019-10-17 15:05:22</td>
-                                <td>00052019101714050</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7967.02</td>
-                                <td>2019-10-17 15:05:12</td>
-                                <td>01062019101714090</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7967.00</td>
-                                <td>2019-10-17 15:02:12</td>
-                                <td>01062019101714040</td>
-                            </tr>
-                            <tr>
-                                <td> BTC/USDT</td>
-                                <td>1</td>
-                                <td>7965.00</td>
-                                <td>2019-10-17 15:01:12</td>
-                                <td>01062019101714040</td>
-                            </tr>
-                        </table>
+                        <v-flex xs3 md2 mr-1>
+                            <v-select hide-details :items="itemspage" v-model="itemspages"></v-select>
+                        </v-flex>
+                        <v-flex xs3 md3 mr-1>
+                            <v-text-field v-model="search" append-icon="search" single-line hide-details></v-text-field>
+                        </v-flex>
+                        <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
+                            <template v-slot:items="props">
+                                <td>{{$t('stockname.'+ props.item.stockName)}}</td>
+                                <td>{{props.item.stockType}}</td>
+                                <td> {{formatToNumber(props.item.PT,props.item.stockName) }} </td>
+                                <td>{{props.item.writetime}}</td>
+                                <td>{{props.item.gameId}}</td>
+                            </template>
+
+                        </v-data-table>
+                        <div class="text-xs-center pt-2" v-if="pages != 0 ">
+                            <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
+                        </div>
+                        <span class="stockName" id="stockName" @click="getAllCrawler($event)" hidden></span>
+
                     </v-card>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -185,13 +50,124 @@ export default {
     data() {
         return {
             panel: [true],
-            load: false
+            load: false,
+            pagination: {},
+            itemspage: [5, 10, 25, 50, 100],
+            itemspages: 10,
+            search: "",
+            selected: [],
+            history: [],
+            headers: [{
+                    text: this.$root.$t('msg.Stock Name'),
+                    align: "center",
+                    sortable: false,
+                    value: "stockName",
+                    total: false,
+                },
+                {
+                    text: this.$root.$t('msg.Game Mode'),
+                    sortable: false,
+                    align: "center",
+                    value: "stockType",
+                    total: false,
+                },
+                {
+                    text: this.$root.$t('msg.Result'),
+                    sortable: false,
+                    align: "center",
+                    value: "PT",
+                    page: false,
+                },
+                {
+                    text: this.$root.$t('msg.result out time'),
+                    sortable: false,
+                    align: "center",
+                    value: "writetime",
+                    total: false,
+                },
+                {
+                    text: this.$root.$t('msg.gameid'),
+                    sortable: false,
+                    align: "center",
+                    value: "gameId",
+                    total: true,
+                }
+            ],
         }
     },
     mounted() {
+
         setTimeout(() => {
             this.load = true
         }, 1000)
+        this.getAllCrawler(null)
+        this.pagination.rowsPerPage = 10
+    },
+    watch: {
+        itemspages(val) {
+            this.pagination.rowsPerPage = val
+        }
+    },
+    computed: {
+        pages() {
+            if (this.pagination.totalItems == null || this.pagination.rowsPerPage == null) return 0
+            return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+        }
+    },
+    methods: {
+        formatToNumber(value, s) {
+            if (s == 'usindex') {
+                return Number(value).toFixed(4);
+            } else {
+                return Number(value).toFixed(2);
+            }
+        },
+        formatToPrice(value) {
+            return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        },
+        total1(column) {
+            const table = this.$refs.table
+            //console.log('table',table);
+            return table ? table.filteredItems.reduce((s, i) => {
+                return s + parseInt(i[column.value], 10)
+            }, 0) : 0
+        },
+        async getAllCrawler(val) {
+            let DataCrawler = await this.$axios.$get(this.$store.state.urltest + '/api/getAllCrawler?limit=300&apikey=' + localStorage.apikey)
+            // console.log(DataCrawler)
+            if (DataCrawler.data == null) return
+            for (let i = 0; i < DataCrawler.data.length; i++) {
+                if (val == null || val.target.innerText == 'allstock') {
+                    this.history.push({
+                        stockName: DataCrawler.data[i].stockName,
+                        stockType: DataCrawler.data[i].stockType,
+                        PT: DataCrawler.data[i].PT,
+                        writetime: DataCrawler.data[i].writetime,
+                        gameId: DataCrawler.data[i].gameId
+                    });
+                    this.pagination.totalItems = this.history.length;
+                } else {
+                    if (DataCrawler.data[i].stockName == val.target.innerText) {
+                        this.history = []
+                        this.pagination.totalItems = 0
+                        setTimeout(() => {
+                            this.history.push({
+                                stockName: DataCrawler.data[i].stockName,
+                                stockType: DataCrawler.data[i].stockType,
+                                PT: DataCrawler.data[i].PT,
+                                writetime: DataCrawler.data[i].writetime,
+                                gameId: DataCrawler.data[i].gameId
+                            });
+                            this.pagination.totalItems = this.history.length;
+                        }, 100)
+                    } else {
+                        this.history = []
+                        this.pagination.totalItems = 0
+                    }
+
+                }
+            }
+        }
     }
 }
 </script>

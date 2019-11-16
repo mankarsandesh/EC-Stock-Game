@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import { hostname } from 'os'
 
 
 const createStore = () => {
@@ -36,19 +37,19 @@ const createStore = () => {
                     currentPrice: 0,
                     previousPrice: 0
                 },
-                SH000001: {
+                sh000001: {
                     currentPrice: 0,
                     previousPrice: 0
                 },
-                SZ399001: {
+                sz399001: {
                     currentPrice: 0,
                     previousPrice: 0
                 },
-                SZ399415: {
+                sz399415: {
                     currentPrice: 0,
                     previousPrice: 0
                 },
-                SH00300: {
+                sh000300: {
                     currentPrice: 0,
                     previousPrice: 0
                 }
@@ -105,13 +106,13 @@ const createStore = () => {
                         refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
                     }
                 },
-                SH000001: {
+                sh000001: {
                     url: {
                         crawler: "/api/datahistory/SH000001",
                         livePrice: "/api/newlivedata/sh01"
                     },
-                    stockname: "SH000001",
-                    name: "SH000001",
+                    stockname: "sh000001",
+                    name: "sh000001",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -121,13 +122,13 @@ const createStore = () => {
                         refLink: "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml"
                     }
                 },
-                SZ399001: {
+                sz399001: {
                     url: {
                         crawler: "/api/datahistory/SZ399001",
                         livePrice: "/api/newlivedata/sz01"
                     },
-                    stockname: "SZ399001",
-                    name: "SZ399001",
+                    stockname: "sz399001",
+                    name: "sz399001",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -137,13 +138,13 @@ const createStore = () => {
                         refLink: "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml"
                     }
                 },
-                SZ399415: {
+                sz399415: {
                     url: {
                         crawler: "/api/datahistory/SZ399415",
                         livePrice: "/api/newlivedata/sz15"
                     },
-                    stockname: "SZ399415",
-                    name: "SZ399415",
+                    stockname: "sz399415",
+                    name: "sz399415",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -153,13 +154,13 @@ const createStore = () => {
                         refLink: "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml"
                     }
                 },
-                SH00300: {
+                sh000300: {
                     url: {
                         crawler: "/api/datahistory/SH00300",
                         livePrice: "/api/newlivedata/sz300"
                     },
-                    stockname: "SH00300",
-                    name: "SH00300",
+                    stockname: "sh000300",
+                    name: "sh000300",
                     loop: 5,
                     type: "china",
                     crawlerData: "",
@@ -266,11 +267,21 @@ const createStore = () => {
                 try {
                     if (localStorage.apikey == null) {
                         const res = await this.$axios.$post(`${context.getters.getUrltest}/api/redirect`, body)
-                        const token = res.data.token
-                        console.log(token)
-                        localStorage.apikey = token
+                        localStorage.apikey = res.data.token;
+                        console.log(localStorage.apikey)
                     }
+
                     const userRes = await this.$axios.$get(`${context.getters.getUrltest}/api/me?apikey=${localStorage.apikey}`)
+                        // console.log(userRes)
+                    setTimeout(() => {
+                        // console.log(userRes.status)
+                        if (userRes.status == false && userRes.status !== undefined) {
+                            localStorage.removeItem('apikey');
+                            location.href = "http://" + location.host
+                        }
+                    }, 2500)
+
+
                     const userData = {
                         name: userRes.name,
                         balance: userRes.userBalance,

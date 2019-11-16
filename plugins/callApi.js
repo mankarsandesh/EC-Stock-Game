@@ -15,7 +15,7 @@ export default ({
         store.commit('setLivePrice', data)
     });
     socket.on("time", data => {
-        let time5 = data.SH000001.timer;
+        let time5 = data.sh000001.timer;
         let time1 = data.btc1.timer;
         // get new data
         if (time5 == 241 || time1 == 41) {
