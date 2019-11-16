@@ -13,7 +13,6 @@ import {
 import VueCharts from "vue-chartjs";
 import Chart from 'chart.js';
 export default {
-    props: ["checkStock", "StockData"],
     data() {
         return {
             load: false,

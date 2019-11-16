@@ -39,8 +39,6 @@
                                 <td></td>
                             </tr>
                         </table>
-                        <onlinechart/>
-                        <Analysischart/>
                     </v-card>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -52,13 +50,9 @@
 <script>
 
 
-import Analysischart from "~/components/classic/Analysischart"
-import onlinechart from "~/components/classic/onlinechart"
 export default {
     layout: 'classic',
     components:{
-        onlinechart,
-        Analysischart
     },
     data() {
         return {

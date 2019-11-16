@@ -13,7 +13,6 @@ import {
 import VueCharts from "vue-chartjs";
 import Chart from 'chart.js';
 export default {
-    props: ["checkStock", "StockData"],
     data() {
         return {
             load: false,
@@ -59,12 +58,12 @@ export default {
                 data: {
                     labels: this.stockname,
                     datasets: [{
-                            label: 'winbet',
+                            label: this.$root.$t('msg.winbet'),
                             data: this.betwon,
                             backgroundColor: "blue"
                         },
                         {
-                            label: 'losebet',
+                            label: this.$root.$t('msg.losebet'),
                             data: this.betlose,
                             backgroundColor: "red"
                         }
