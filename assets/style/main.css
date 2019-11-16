@@ -1,3 +1,16 @@
+.button{
+    background-color: #003e70;
+    font-size: 14px;
+    color: #FFF;
+    padding: 9px 12px;
+    border-radius: 2px;
+    margin: 0px 5px;
+    text-transform: capitalize;
+}
+.topHeader {
+    padding: 12px 3px;
+}
+
 .v-card-style {
     box-shadow: none !important;
     border: 1px solid #003e70;
@@ -405,10 +418,15 @@ table.result-table tr {
     width: 18.55555%;
     margin: 0 4px;
 }
+.align_button4 span, .align_button5 span {
+    
+    width:100%;
+    float: left;
+}
 
 .align_button4.v-btn {
-    height: 83px;
-    font-size: 16px;
+    height: 80px;
+    font-size: 18px;
     font-weight: 400;
     background-color: #003e70 !important;
     color: #ffffff !important;
@@ -447,9 +465,9 @@ table.result-table tr {
 .betting-small.v-btn.theme--light {
     height: 25px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 9x;
     padding: 0px;
-    margin: 3px 0px 2px 0;
+    margin: 2px 0px 2px 0;
     background-color: #003e70 !important;
     color: #fff !important;
     width: 100%;
@@ -464,7 +482,7 @@ table.result-table tr {
 button.btn-small.v-btn.theme--light {
     background-color: #003e70 !important;
     color: #fff !important;
-    padding: 0;
+    padding: 5px;
     margin: 5px;
     border-radius: 5px;
     min-width: 7.15%;
@@ -550,6 +568,9 @@ table.result-table {
     nav.total-bet.v-toolbar.theme--light {
         bottom: 0;
         position: fixed;
+    }
+    .topHeader{
+        padding:0px;
     }
 }
 

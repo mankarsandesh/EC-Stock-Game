@@ -16,20 +16,20 @@
           Semper praesent integer fusce, tortor suspendisse, augue ligula orci ante asperiores ullamcorper. In sit per mi sed sed, mi vestibulum mus nam, morbi mauris neque vitae aliquam proin senectus. Ac amet arcu mollis ante congue elementum, inceptos eget optio quam pellentesque quis lobortis, sollicitudin sed vestibulum sollicitudin, lectus parturient nullam, leo orci ligula ultrices. At tincidunt enim, suspendisse est sit sem ac. Amet tellus molestie est purus magna augue, non etiam et in wisi id. Non commodo, metus lorem facilisi lobortis ac velit, montes neque sed risus consectetuer fringilla dolor. Quam justo et integer aliquam, cursus nulla enim orci, nam cursus adipiscing, integer torquent non, fringilla per maecenas. Libero ipsum sed tellus purus et. Duis molestie placerat erat donec ut. Dolor enim erat massa faucibus ultrices in, ante ultricies orci lacus, libero consectetuer mauris magna feugiat neque dapibus, donec pretium et. Aptent dui, aliquam et et amet nostra ligula.
           Augue curabitur duis dui volutpat, tempus sed ut pede donec. Interdum luctus, lectus nulla aenean elit, id sit magna, vulputate ultrices pellentesque vel id fermentum morbi. Tortor et. Adipiscing augue lorem cum non lacus, rutrum sodales laoreet duis tortor, modi placerat facilisis et malesuada eros ipsum, vehicula tempus. Ac vivamus amet non aliquam venenatis lectus, sociosqu adipiscing consequat nec arcu odio. Blandit orci nec nec, posuere in pretium, enim ut, consectetuer nullam urna, risus vel. Nullam odio vehicula massa sed, etiam sociis mauris, lacus ullamcorper, libero imperdiet non sodales placerat justo vehicula. Nec morbi imperdiet. Fermentum sem libero iaculis bibendum et eros, eget maecenas non nunc, ad pellentesque. Ut nec diam elementum interdum. Elementum vitae tellus lacus vitae, ipsum phasellus, corporis vehicula in ac sed massa vivamus, rutrum elit, ultricies metus volutpat.
           Semper wisi et, sollicitudin nunc vestibulum, cursus accumsan nunc pede tempus mi ipsum, ligula sed. Non condimentum ac dolor sit. Mollis eu aliquam, vel mattis mollis massa ut dolor ante, tempus lacinia arcu. Urna vestibulum lorem, nulla fermentum, iaculis ut congue ac vivamus. Nam libero orci, pulvinar nulla, enim pellentesque consectetuer leo, feugiat rhoncus rhoncus vel. Magna sociosqu donec, dictum cursus ullamcorper viverra. Ultricies quis orci lorem, suspendisse ut vestibulum integer, purus sed lorem pulvinar habitasse turpis.
-          +
+          
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio mollitia, inventore dolore ut dolor, tenetur odit, minus repellat excepturi possimus provident quibusdam et nisi cumque. Distinctio ipsa quae maiores et. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex fugit enim aut eaque, recusandae similique soluta beatae ratione laudantium, quas, excepturi eligendi illum dolorum consectetur necessitatibus voluptas? Quas, praesentium error. Lorem ipsum dolor sit amet consectetur adipisicing elit. In, maiores magni. Voluptate eos placeat numquam nisi optio dicta asperiores tempore, odio veritatis facere. Iure suscipit eligendi, accusamus placeat possimus hic.
         </v-card-text>
       </v-card>
     </v-dialog>
 
-    <v-toolbar fluid color="#003e70" class="white--text" style="height:40px !important; ">
+    <v-toolbar  color="#003e70" class="white--text" style="height:40px !important; ">
       
       <v-layout row wrap style="padding:5px 10px;"> 
-        <v-flex xs4>
+        <v-flex xs6 sm6 md6 lg6>
           <welcome-user></welcome-user>
         </v-flex>
-        <v-spacer></v-spacer>
-        <v-flex xs5 class="text-xs-right">
+        <!-- <v-spacer></v-spacer> -->
+        <v-flex xs6 sm6 md6 lg6 class="text-xs-right">
           <winnerMarquee
             :scrollSpeed="scrollSpeed"
             :showSpeed="showSpeed"
@@ -46,57 +46,59 @@
      
     </v-toolbar>
 
-    <v-container  fluid class="bg-fullscreen" style="padding:0;">
+    <v-container   class="bg-fullscreen" style="padding:0;">
       <v-layout pa-1 wrap>
-        <v-flex xs6 >
+        <v-flex xs12 sm12 md6 lg6>
           <v-layout column>
             <v-flex>
-              <v-layout >
-                <v-flex xs4 class="text-xs-center" style="align-self: center;">
+              <v-layout xs12 >
+                <v-flex xs12 class="text-xs-center1" style="width:100%;align-self: center;">
                   <span
-                    class="text-uppercase text-white pr-5"
+                    class="text-uppercase text-white1" 
                   >{{ $t(`stockname.${$route.params.id}`) }}</span>
                   <span class="text-yellow">010620190923140800</span>
                 </v-flex>
 
-                <v-flex xs8 class="text-xs-right">
-                  <v-btn dark color="#003e70" class="px-5 py-2">1 minute loop</v-btn>
-
-                  <v-btn
+                <v-flex xs12  class="text-xs-right topHeader" >
+                  
+                   <span class="button" >1 minute loop</span>
+                   <span
+                   class="button"
                     dark
                     color="#003e70"
-                    class="px-5 py-2"
                     @click="dialogOtherstock=true"
-                  >other stock</v-btn>
+                  >Other Stock</span>
+
                 </v-flex>
+
               </v-layout>
             </v-flex>
-            <v-flex class="pt-2">
+            <v-flex xs12 sm12 md8 lg8 class="pt-2">
               <chartApp
                 :data="getStockById($route.params.id).stockPrice"
                 :time="getStockById($route.params.id).stockTime"
                 :key="getStockById($route.params.id).stockPrice[0]"
-                height="550px"
                 :stockid="$route.params.id"
               ></chartApp>
             </v-flex>
-            <v-flex>
+            <!-- <v-flex>
               <v-btn dark color="#003e70" @click="$router.go(-1)">
                 <v-icon left dark class="ma-0">exit_to_app</v-icon>exit
               </v-btn>
-            </v-flex>
+            </v-flex> -->
           </v-layout>
+          
         </v-flex>
-        <v-flex xs6>
+        <v-flex xs12 sm12 md6 lg6>
           <v-flex>
             <v-layout>
-              <v-flex class="text-xs-center" px-2>
+              <v-flex class="text-xs-center" xs3 px-2>
                 <span class="text-gray">Last draw:</span>
                 <v-flex flex-style>
                   <h4 v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></h4>
                 </v-flex>
               </v-flex>
-              <v-flex class="text-xs-center" px-2>
+              <v-flex class="text-xs-center" xs3 px-2>
                 <span class="text-gray">Bet Close in:</span>
                 <v-flex flex-style>
                   <span
@@ -104,7 +106,7 @@
                   >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
                 </v-flex>
               </v-flex>
-              <v-flex class="text-xs-center" px-2>
+              <v-flex class="text-xs-center" xs3 px-2>
                 <span class="text-gray">lottery draw:</span>
                 <v-flex flex-style>
                   <span
@@ -112,7 +114,7 @@
                   >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
                 </v-flex>
               </v-flex>
-              <v-flex xs4 class="text-xs-right" style="align-self: flex-end;">
+              <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
                 <!-- <v-btn fab dark small color="#003e70">
                 <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>-->
@@ -130,20 +132,20 @@
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
           <footerBet style=""></footerBet>
           <v-layout style="background-color:#003f70">
-            <v-flex xs12 wrap>
-              <v-layout>
-                <v-flex xs6>
+            <v-flex xs6 md12  wrap>
+              <v-layout >
+                <v-flex xs12 sm12 md6 >
                   <trendMapFullScreen which_one="O/E" ></trendMapFullScreen>
                 </v-flex>
-                <v-flex xs6>
+                <v-flex xs12 sm12 md6>
                   <trendMapFullScreen which_one="O/E"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
-                <v-flex xs6>
+                <v-flex xs12 sm12 md6>
                   <trendMapFullScreen which_one="U/L"></trendMapFullScreen>
                 </v-flex>
-                <v-flex xs6>
+                <v-flex xs12 sm12 md6>
                   <trendMapFullScreen which_one="NUM"></trendMapFullScreen>
                 </v-flex>
               </v-layout>

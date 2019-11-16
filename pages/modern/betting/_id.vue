@@ -99,7 +99,7 @@
       </v-flex>
 
       <v-flex  >
-        <div
+        <div sm12 xs12
           class="betClose"
           v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
         >
