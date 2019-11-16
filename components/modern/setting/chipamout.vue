@@ -23,7 +23,7 @@
         </v-flex>
       </v-layout>
       <v-layout row wrap justify-center>
-        <v-btn text @click="reset()">reset to default</v-btn>
+        <v-btn text @click="reset">reset to default</v-btn>
       </v-layout>
       <v-layout row wrap justify-center>
         <v-btn class="my-btn" @click="saveClick()">save</v-btn>
@@ -65,7 +65,7 @@ export default {
           id: "ship5",
           title: "black",
           img: "/chip/black.png",
-          color: "text-white"
+          color: "text-dark"
         }
       ]
     };

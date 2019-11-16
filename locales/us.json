@@ -16,6 +16,8 @@
         "game result": "Game Result"
     },
     "stock-list": {
+        "stock lists":"stock lists",
+        "stock name":"stock name",
         "live price": "Live Price",
         "reference": "reference",
         "load more": "load more",
@@ -79,6 +81,8 @@
         "betclosed": "Bet Closed",
         "chooselanguage": "Choose Language",
         "Clear": "Clear",
+        "Total Bet": "Total Bet",
+        "Win Rate": "Win Rate",
 
 
         "resultintroduction": "result introduction",
@@ -138,9 +142,9 @@
         "btc1": "BTC/USDT",
         "usindex": "US dollar Index",
         "btc5": "BTC/USDT",
-        "SH000001": "SH000001",
-        "SZ399001": "SZ399001",
-        "SZ399415": "SZ399415",
-        "SH00300": "SH00300"
+        "sh000001": "sh000001",
+        "sz399001": "sz399001",
+        "sz399415": "sz399415",
+        "sh000300": "sh000300"
     }
 }

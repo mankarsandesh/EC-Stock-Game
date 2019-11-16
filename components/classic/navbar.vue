@@ -13,7 +13,7 @@
                 <li v-for="(stock,index) in navList" :key="index">
                     <a href="#">
                         <span>
-                            {{stock.name}}
+                            {{$t('navlist.'+stock.name)}}
                             <span class="show-icon">
                                 <i class="fa fa-caret-right"></i>
                             </span>
@@ -22,21 +22,25 @@
                     <ul class="ul-left">
                         <li v-for="(stockType,index) in stock.children" :key="index">
                             <a href="#">
-                                <span>{{stockType.name}}</span>
+                                <span>{{$t('stockname.'+stockType.name)}}</span>
                                 <span class="show-icon">
                                     <i class="fa fa-caret-right"></i>
                                 </span>
                             </a>
                             <ul class="ul-left">
                                 <li v-for="(stockName,index) in stockType.childrens" :key="index">
-                                    <a href="#">
-                                        <span>{{stockName.name}}</span>
-
+                                    <a @click="stockNames(stockName.url)">
+                                        <span>{{stockName.name}} {{$t('msg.minute')}}</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a @click="stockNames('allstock')">
+                        <span>all stock</span>
+                    </a>
                 </li>
             </ul>
         </li>
@@ -53,7 +57,7 @@
 // children
 // childrens
 
-import navList from "~/data/json/menustockchina.json";
+import navList from "~/data/json/menugameresult.json";
 export default {
     data() {
         return {
@@ -61,8 +65,9 @@ export default {
         }
     },
     methods: {
-        loadchart() {
-            $(".loadchart")[0].click()
+        stockNames(value) {
+            $(".stockName").text(value)
+            $("#stockName")[0].click()
         }
     }
 }
@@ -103,7 +108,7 @@ ul li {
 
 li ul {
     display: none;
-    min-width: 60%;
+    min-width: 65%;
 }
 
 ul li a {

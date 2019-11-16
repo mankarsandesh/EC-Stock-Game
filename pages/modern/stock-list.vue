@@ -134,8 +134,7 @@
     </back-to-top> -->
   </div>
 </template>
-<script>desh11
-
+<script>
 import { mapGetters } from "vuex";
 import SlideMenu from "~/components/SlideMenu.vue";
 export default {

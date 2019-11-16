@@ -220,168 +220,168 @@
         ]
     },
     {
-        "url": "st-SH000001-live",
+        "url": "st-sh000001-live",
         "name": "China Stocck",
         "children": [{
-                "url": "st-SH000001-live",
-                "name": "SH000001",
+                "url": "st-sh000001-live",
+                "name": "sh000001",
                 "childrens": [{
-                        "url": "st-SH000001-live",
+                        "url": "st-sh000001-live",
                         "name": "live"
                     },
                     {
-                        "url": "st-SH000001-bsf",
+                        "url": "st-sh000001-bsf",
                         "name": "Big-Small First Digit"
                     },
                     {
-                        "url": "st-SH000001-bsl",
+                        "url": "st-sh000001-bsl",
                         "name": "Big-Small Last Digit"
                     },
                     {
-                        "url": "st-SH000001-bsb",
+                        "url": "st-sh000001-bsb",
                         "name": "Big-Small Both Digit"
                     },
                     {
-                        "url": "st-SH000001-bst",
+                        "url": "st-sh000001-bst",
                         "name": "Big-Small Two Digit"
                     },
                     {
-                        "url": "st-SH000001-oef",
+                        "url": "st-sh000001-oef",
                         "name": "Odd-Even First Digit"
                     },
                     {
-                        "url": "st-SH000001-oel",
+                        "url": "st-sh000001-oel",
                         "name": "Odd-Even Last Digit"
                     },
                     {
-                        "url": "st-SH000001-oeb",
+                        "url": "st-sh000001-oeb",
                         "name": "Odd-Even Both Digit"
                     },
                     {
-                        "url": "st-SH000001-oet",
+                        "url": "st-sh000001-oet",
                         "name": "Odd-Even Two Digit"
                     }
                 ]
             },
             {
-                "url": "st-SZ399001-live",
-                "name": "SZ399001",
+                "url": "st-sz399001-live",
+                "name": "sz399001",
                 "childrens": [{
-                        "url": "st-SZ399001-live",
+                        "url": "st-sz399001-live",
                         "name": "live"
                     },
                     {
-                        "url": "st-SZ399001-bsf",
+                        "url": "st-sz399001-bsf",
                         "name": "Big-Small First Digit"
                     },
                     {
-                        "url": "st-SZ399001-bsl",
+                        "url": "st-sz399001-bsl",
                         "name": "Big-Small Last Digit"
                     },
                     {
-                        "url": "st-SZ399001-bsb",
+                        "url": "st-sz399001-bsb",
                         "name": "Big-Small Both Digit"
                     },
                     {
-                        "url": "st-SZ399001-bst",
+                        "url": "st-sz399001-bst",
                         "name": "Big-Small Two Digit"
                     },
                     {
-                        "url": "st-SZ399001-oef",
+                        "url": "st-sz399001-oef",
                         "name": "Odd-Even First Digit"
                     },
                     {
-                        "url": "st-SZ399001-oel",
+                        "url": "st-sz399001-oel",
                         "name": "Odd-Even Last Digit"
                     },
                     {
-                        "url": "st-SZ399001-oeb",
+                        "url": "st-sz399001-oeb",
                         "name": "Odd-Even Both Digit"
                     },
                     {
-                        "url": "st-SZ399001-oet",
+                        "url": "st-sz399001-oet",
                         "name": "Odd-Even Two Digit"
                     }
                 ]
             },
             {
-                "url": "st-SH00300-live",
-                "name": "SH00300",
+                "url": "st-sh000300-live",
+                "name": "sh000300",
                 "childrens": [{
-                        "url": "st-SH00300-live",
+                        "url": "st-sh000300-live",
                         "name": "live"
                     },
                     {
-                        "url": "st-SH00300-bsf",
+                        "url": "st-sh000300-bsf",
                         "name": "Big-Small First Digit"
                     },
                     {
-                        "url": "st-SH00300-bsl",
+                        "url": "st-sh000300-bsl",
                         "name": "Big-Small Last Digit"
                     },
                     {
-                        "url": "st-SH00300-bsb",
+                        "url": "st-sh000300-bsb",
                         "name": "Big-Small Both Digit"
                     },
                     {
-                        "url": "st-SH00300-bst",
+                        "url": "st-sh000300-bst",
                         "name": "Big-Small Two Digit"
                     },
                     {
-                        "url": "st-SH00300-oef",
+                        "url": "st-sh000300-oef",
                         "name": "Odd-Even First Digit"
                     },
                     {
-                        "url": "st-SH00300-oel",
+                        "url": "st-sh000300-oel",
                         "name": "Odd-Even Last Digit"
                     },
                     {
-                        "url": "st-SH00300-oeb",
+                        "url": "st-sh000300-oeb",
                         "name": "Odd-Even Both Digit"
                     },
                     {
-                        "url": "st-SH00300-oet",
+                        "url": "st-sh000300-oet",
                         "name": "Odd-Even Two Digit"
                     }
                 ]
             },
             {
-                "url": "st-SZ399415-live",
-                "name": "SZ399415",
+                "url": "st-sz399415-live",
+                "name": "sz399415",
                 "childrens": [{
-                        "url": "st-SZ399415-live",
+                        "url": "st-sz399415-live",
                         "name": "live"
                     },
                     {
-                        "url": "st-SZ399415-bsf",
+                        "url": "st-sz399415-bsf",
                         "name": "Big-Small First Digit"
                     },
                     {
-                        "url": "st-SZ399415-bsl",
+                        "url": "st-sz399415-bsl",
                         "name": "Big-Small Last Digit"
                     },
                     {
-                        "url": "st-SZ399415-bsb",
+                        "url": "st-sz399415-bsb",
                         "name": "Big-Small Both Digit"
                     },
                     {
-                        "url": "st-SZ399415-bst",
+                        "url": "st-sz399415-bst",
                         "name": "Big-Small Two Digit"
                     },
                     {
-                        "url": "st-SZ399415-oef",
+                        "url": "st-sz399415-oef",
                         "name": "Odd-Even First Digit"
                     },
                     {
-                        "url": "st-SZ399415-oel",
+                        "url": "st-sz399415-oel",
                         "name": "Odd-Even Last Digit"
                     },
                     {
-                        "url": "st-SZ399415-oeb",
+                        "url": "st-sz399415-oeb",
                         "name": "Odd-Even Both Digit"
                     },
                     {
-                        "url": "st-SZ399415-oet",
+                        "url": "st-sz399415-oet",
                         "name": "Odd-Even Two Digit"
                     }
 

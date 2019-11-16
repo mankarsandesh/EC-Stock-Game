@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <div v-show="getIsLoadingStockGame" class="container-loading">
+    <!-- <div v-show="getIsLoadingStockGame" class="container-loading">
       <div class="loading"></div>
       <div ref="svgContainer"></div>
-    </div>
+    </div> -->
 
     <v-container
       fluid
@@ -66,7 +66,7 @@
   </v-app>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters,mapMutations } from "vuex";
 
 import menu from "~/data/menudesktop";
 
@@ -117,9 +117,6 @@ export default {
   },
 
   created() {
-    console.warn("lottie");
-    console.warn(lottie);
-    console.warn("lottie");
     let path = this.$nuxt.$route.name.split("-");
     let isFullscreen = path[1];
     // alert(isFullscreen[1])
@@ -138,8 +135,12 @@ export default {
       autoplay: true,
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
+     this.setIsLoadingStockGame(false)
   },
   methods: {
+    ...mapMutations([
+      "setIsLoadingStockGame"
+    ])
     //  getwinuser() {
     //    this.$axios.$get("api/getwinuser").then(response => {
     //      console.log("response.....................")

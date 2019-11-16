@@ -9,7 +9,7 @@
 import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
 export default {
-    props: ["stocks", "checkStock", "StockData"],
+    props: ["checkStock", "StockData"],
     data() {
         return {
             load: false,
@@ -157,7 +157,7 @@ export default {
                     },
                     title: {
                         display: true,
-                        text: this.$t('msg.Stock') + ': ' + title
+                        text: this.$root.$t('msg.Stock') + ': ' + title
                     },
                     pan: {
                         enabled: true,
@@ -248,7 +248,7 @@ export default {
                     times = data.usindex.timer
                     calculating = 238
                 } else {
-                    times = data.SH000001.timer
+                    times = data.sh000001.timer
                     calculating = 238
                 }
 

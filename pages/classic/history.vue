@@ -76,7 +76,7 @@
                                 </tr>
                                 <tr>
                                     <td>{{$t('msg.Total')}}</td>
-                                    <td colspan="3">{{colspan}}</td>
+                                    <td colspan="3">{{pagination.totalItems}}</td>
                                     <td><strong>{{formatToPrice(sumTotalbetAmount)}}</strong></td>
                                     <td><strong :style="sumTotalrollingAmount < 0 ? 'color: red;':'color: green;'">{{formatToPrice(sumTotalrollingAmount)}}</strong></td>
                                 </tr>
@@ -114,7 +114,6 @@ export default {
             StockName: null,
             stockId: null,
             sumTotalbetAmount: 0,
-            colspan: 0,
             sumTotalrollingAmount: 0,
             page: 1,
             search: "",
@@ -123,42 +122,42 @@ export default {
             },
             selected: [],
             headers: [{
-                    text: this.$t('msg.BetId'),
+                    text: this.$root.$t('msg.BetId'),
                     align: "center",
                     sortable: false,
                     value: "betId",
                     total: false,
                 },
                 {
-                    text: this.$t('msg.gameid'),
+                    text: this.$root.$t('msg.gameid'),
                     sortable: false,
                     align: "center",
                     value: "gameId",
                     total: false,
                 },
                 {
-                    text: this.$t('msg.Betdetail'),
+                    text: this.$root.$t('msg.Betdetail'),
                     sortable: false,
                     align: "center",
                     value: "page",
                     page: true,
                 },
                 {
-                    text: this.$t('msg.Time'),
+                    text: this.$root.$t('msg.Time'),
                     sortable: false,
                     align: "center",
                     value: "betTime",
                     total: false,
                 },
                 {
-                    text: this.$t('msg.amount'),
+                    text: this.$root.$t('msg.amount'),
                     sortable: false,
                     align: "center",
                     value: "betAmount",
                     total: true,
                 },
                 {
-                    text: this.$t('msg.payout'),
+                    text: this.$root.$t('msg.payout'),
                     sortable: false,
                     align: "center",
                     value: "rollingAmount",
@@ -209,8 +208,8 @@ export default {
     },
     computed: {
         pages() {
-            if (this.colspan == null || this.pagination.rowsPerPage == null) return 0
-            return Math.ceil(this.colspan / this.pagination.rowsPerPage)
+            if (this.pagination.totalItems == null || this.pagination.rowsPerPage == null) return 0
+            return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
         }
     },
     methods: {
@@ -244,7 +243,7 @@ export default {
                     this.history = []
                     this.sumTotalbetAmount = 0
                     this.sumTotalrollingAmount = 0
-                    this.colspan = 0
+                    this.pagination.totalItems = 0
                     if (history.data[i].betTime.split(" ")[0] == val.start || history.data[i].betTime.split(" ")[0] == val.end || new Date(history.data[i].betTime).getDay() == val.week) {
                         setTimeout(() => {
                             this.history.push({
@@ -259,7 +258,7 @@ export default {
                                 betAmount: history.data[i].betAmount,
                                 rollingAmount: history.data[i].rollingAmount
                             });
-                            this.colspan = this.history.length;
+                            this.pagination.totalItems = this.history.length;
                             this.sumTotalbetAmount += history.data[i].betAmount
                             this.sumTotalrollingAmount += history.data[i].rollingAmount
                         }, 100)
@@ -279,7 +278,7 @@ export default {
                         betAmount: history.data[i].betAmount,
                         rollingAmount: history.data[i].rollingAmount
                     });
-                    this.colspan = this.history.length;
+                    this.pagination.totalItems = this.history.length;
                     this.sumTotalbetAmount += history.data[i].betAmount
                     this.sumTotalrollingAmount += history.data[i].rollingAmount
                 }

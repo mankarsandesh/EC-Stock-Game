@@ -14,7 +14,7 @@ import VueCharts from "vue-chartjs";
 import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
 export default {
-    props: ["stocks", "checkStock", "StockData"],
+    props: ["checkStock", "StockData"],
     data() {
         return {
             load: false,
@@ -125,7 +125,7 @@ export default {
                     },
                     title: {
                         display: true,
-                        text: this.$t('msg.Stock') + ': ' + title
+                        text: this.$root.$t('msg.Stock') + ': ' + title
                     },
                     pan: {
                         enabled: true,
@@ -180,10 +180,10 @@ export default {
                         mode: "index",
                         callbacks: {
                             label: function (tooltipItem, data) {
-                                if (_this.stocks === "usindex") {
-                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
+                                if (_this.$route.params.id.split('-')[1] === "usindex") {
+                                    return (_this.$root.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
                                 } else {
-                                    return (_this.$t('msg.price') + tooltipItem.yLabel.toFixed(2));
+                                    return (_this.$root.$t('msg.price') + tooltipItem.yLabel.toFixed(2));
                                 }
 
                             }
@@ -209,7 +209,7 @@ export default {
                     times = data.usindex.timer
                     calculating = 238
                 } else {
-                    times = data.SH000001.timer
+                    times = data.sh000001.timer
                     calculating = 238
                 }
 

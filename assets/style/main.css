@@ -547,7 +547,9 @@ table.result-table {
     color: #fff;
     min-height: 36px;
 }
-
+.table-responsive{
+    overflow: overlay;
+}
 
 /* Iphone 5 */
 

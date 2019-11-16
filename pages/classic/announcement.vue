@@ -48,8 +48,12 @@
 </template>
 
 <script>
+
+
 export default {
     layout: 'classic',
+    components:{
+    },
     data() {
         return {
             panel: [true],

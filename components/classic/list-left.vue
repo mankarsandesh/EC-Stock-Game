@@ -126,7 +126,7 @@ export default {
         } else {
             this.panel1 = [1]
             this.panel2 = [1]
-            this.panel3 = [0]
+            this.panel3 = [1]
         }
     },
     computed: {
@@ -135,7 +135,10 @@ export default {
     methods: {
         onlyTime(value) {
             let cd = new Date(value)
-            return this.setZero(cd.getHours(), 2) + ":" + this.setZero(cd.getMinutes(), 2);
+            return this.setZero(cd.getMonth() + 1, 2) + "/" +
+                this.setZero(cd.getDate(), 2) + " " +
+                this.setZero(cd.getHours(), 2) + ":" +
+                this.setZero(cd.getMinutes(), 2);
         },
         formatToPrice(value) {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
