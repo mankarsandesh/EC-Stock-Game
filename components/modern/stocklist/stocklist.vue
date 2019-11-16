@@ -11,16 +11,22 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">stock name</th>
-            <th scope="col">live price</th>
-            <th scope="col">reference</th>
+            <th scope="col">{{$t('stock-list.stock name')}}</th>
+            <th scope="col">{{$t("stock-list.live price")}}</th>
+            <th scope="col">{{$t("stock-list.reference")}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="n in 10" :key="n">
-            <td>stockname aaabb</td>
-            <td>90.00</td>
-            <td>www.facebook.com/tnk</td>
+          <tr v-for="(item,index) in getStockList" :key="index">
+            <td>{{item.stockname}}</td>
+            <td
+              v-html="$options.filters.livePriceColor(getLivePrice(item.id),getPreviousPrice(item.id))"
+            ></td>
+            <td>
+              <a :href="item.urlRef" target="_blank" style="overflow-y: auto; white-space: nowrap;">
+                <b>{{item.urlRef}}</b>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -31,11 +37,15 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       items: ["day", "weeks", "months", "years"]
     };
+  },
+  computed: {
+    ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
   }
 };
 </script>
