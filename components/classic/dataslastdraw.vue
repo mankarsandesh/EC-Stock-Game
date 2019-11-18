@@ -145,7 +145,7 @@ export default {
                 items.push({
                     PT: this.formatToPrice(element.PT),
                     gameid: element.gameid,
-                    date: element.created_at.replace(/-/g, "/")
+                    date: element.writetime.replace(/-/g, "/")
                 });
             });
             let elements = items[items.length - 1];

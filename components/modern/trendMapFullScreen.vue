@@ -8,7 +8,7 @@
       <trendMap
         v-if="which_one !==''"
         :dataArray="getStockCrawlerData($route.params.id)"
-        :key="getStockCrawlerData($route.params.id)[0].created_at + '-' + trendType + '-' + which_one"
+        :key="getStockCrawlerData($route.params.id)[0].writetime + '-' + trendType + '-' + which_one"
         :isFullscreen="true"
         :which_one="which_one"
         :trendType="trendType"

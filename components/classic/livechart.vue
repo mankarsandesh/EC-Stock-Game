@@ -56,7 +56,7 @@ export default {
                 title = this.StockData[0].stockname
             }
             this.StockData.forEach(element => {
-                let date = new Date(element.created_at.replace(/-/g, "/"));
+                let date = new Date(element.writetime.replace(/-/g, "/"));
                 labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + " " + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
                 datas.push(parseFloat(element.PT));
                 lastdraw.push({
@@ -223,7 +223,7 @@ export default {
                 _this.StockData.forEach(elements => {
                     items.push({
                         id: elements.id,
-                        date: elements.created_at.replace(/-/g, "/"),
+                        date: elements.writetime.replace(/-/g, "/"),
                         value: elements.PT,
                     });
                 });
