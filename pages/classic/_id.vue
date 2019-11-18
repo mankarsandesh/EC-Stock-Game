@@ -506,7 +506,7 @@ export default {
                     this.setPrice("reset");
                     $(".getupdatebalance")[0].click()
                     $("#txtbalance").text(this.formatToPrice(this.balance))
-                }, 1000);
+                }, 700);
             }
         },
 

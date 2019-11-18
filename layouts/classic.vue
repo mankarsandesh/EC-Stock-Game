@@ -22,6 +22,25 @@
                     </v-btn>
                     <languageDialog ref="language"></languageDialog>
                 </template>
+
+                <v-menu offset-y :close-on-content-click="false" :nudge-width="150">
+                    <template v-slot:activator="{ on }">
+                        <v-btn color="primary" flat icon v-on="on">
+                            <v-icon size="30">account_circle</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-tile>
+                            <v-list-tile-title>Tnk1</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-title>Profile</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-title>Sing Out</v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-menu>
             </v-layout>
         </v-container>
     </v-toolbar>
@@ -321,7 +340,7 @@ export default {
     mounted() {
         $("#switch").text(this.switch1)
         if (localStorage.apikey == null) {
-            location.href = "http://"+location.host
+            location.href = "http://" + location.host
         }
         setTimeout(() => {
             window.scrollTo(0, 0)
