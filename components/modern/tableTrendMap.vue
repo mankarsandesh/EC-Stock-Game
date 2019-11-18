@@ -58,7 +58,7 @@
             <trendMap
               :dataArray="getStockCrawlerData($route.params.id)"
               :trendType="trendType"
-              :key="getStockCrawlerData($route.params.id)[0].created_at + trendType"
+              :key="getStockCrawlerData($route.params.id)[0].writetime + trendType"
               :isFullscreen="isFullscreen"
             ></trendMap>
           </v-flex>
