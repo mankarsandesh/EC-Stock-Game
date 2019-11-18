@@ -51,7 +51,8 @@ module.exports = {
         "@/plugins/i18n",
         "@/plugins/chart",
         "@/plugins/coinLocalStorage",
-        "@/plugins/sweetAlert"
+        "@/plugins/sweetAlert",
+        "@/plugins/vueScreen"
     ],
     router: {
         // middleware: 'i18n'

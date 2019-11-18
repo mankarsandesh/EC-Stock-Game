@@ -131,13 +131,12 @@ export default {
     };
   },
   destroyed() {
-        this.setIsLoadingStockGame(true)
+    this.setIsLoadingStockGame(true);
   },
   mounted() {
     // call this every page that used "dekstopModern" layout to hide loading
-    this.setIsLoadingStockGame(false)
+    this.setIsLoadingStockGame(false);
     console.warn("mounted...");
-
 
     this.makeAuth();
     // this.test()
@@ -145,6 +144,14 @@ export default {
     // set footerBet to zero because on this page cant use bet footer
     this.setFooterBetAmount(0);
     this.removeAllFooterBet();
+  },
+  watch: {
+    "$screen.width"() {
+      if (this.$screen.width <= 1204) {
+        let linkto = `/modern/betting/${this.$route.params.id}`;
+        this.$router.push(linkto)
+      }
+    }
   },
   methods: {
     //  async test(){
@@ -162,7 +169,11 @@ export default {
     //             console.warn("token")
     // },
     ...mapActions(["makeAuth"]),
-    ...mapMutations(["setFooterBetAmount", "removeAllFooterBet","setIsLoadingStockGame"]),
+    ...mapMutations([
+      "setFooterBetAmount",
+      "removeAllFooterBet",
+      "setIsLoadingStockGame"
+    ]),
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -193,6 +204,5 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 

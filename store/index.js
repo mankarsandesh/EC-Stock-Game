@@ -350,23 +350,23 @@ const createStore = () => {
                 }
                 context.getters.getStockChart
                 // call live price api
-                setInterval(function () {
-                    for (let i = 0; i < context.getters.getStockLength; i++) {
-                        let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
-                        // check if one stock has multi loop it will use the same live price
-                        // and in states.stocks url live price is setten to "null"
-                        // disable first by macky 11:35 02/09/2019
-                        // if (url == null) {    
-                        //     continue
-                        // }
-                        let name = context.getters.getStockKeys[i]
-                        let payload = {
-                            url,
-                            name
-                        }
-                        context.dispatch("asynLivePrice", payload)
-                    }
-                }, 10000);
+                // setInterval(function () {
+                //     for (let i = 0; i < context.getters.getStockLength; i++) {
+                //         let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
+                //         // check if one stock has multi loop it will use the same live price
+                //         // and in states.stocks url live price is setten to "null"
+                //         // disable first by macky 11:35 02/09/2019
+                //         // if (url == null) {    
+                //         //     continue
+                //         // }
+                //         let name = context.getters.getStockKeys[i]
+                //         let payload = {
+                //             url,
+                //             name
+                //         }
+                //         context.dispatch("asynLivePrice", payload)
+                //     }
+                // }, 10000);
 
             },
             // to get crawler
