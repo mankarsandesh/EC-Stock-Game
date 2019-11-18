@@ -40,7 +40,7 @@
       </v-flex>
       <v-flex xs12>
         <v-card class="mx-auto">
-          <h1>Chart here</h1>
+          <Online-Chart></Online-Chart>
         </v-card>
       </v-flex>
       <v-card>
@@ -52,7 +52,11 @@
   </div>
 </template>
 <script>
+import OnlineChart from "./onlinechart";
 export default {
+  components: {
+    OnlineChart
+  },
   data() {
     return {
       dateto: new Date().toISOString().substr(0, 10),
