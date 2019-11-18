@@ -54,12 +54,12 @@ export default {
     },
     methods: {
         async fetchAll() {
-            let res = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
+            let res = await this.$axios.$get( '/api/me?apikey=' + localStorage.apikey)
             // console.log(res);
             this.playerId = res.userApiId
         },
         async getOnlineTime() {
-            let dataGet = await this.$axios.$get(this.$store.state.urltest + '/api/me/online?method=profile&apikey=' + localStorage.apikey)
+            let dataGet = await this.$axios.$get( '/api/me/online?method=profile&apikey=' + localStorage.apikey)
             this.time = dataGet.data
         },
         setTime(seconds, val) {

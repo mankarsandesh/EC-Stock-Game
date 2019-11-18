@@ -65,7 +65,7 @@ export default {
     },
     methods: {
         async getChart() {
-            let dataGet = await this.$axios.$post(this.$store.state.urltest + '/api/me/betAnalysis?apikey=' + localStorage.apikey)
+            let dataGet = await this.$axios.$post( '/api/me/betAnalysis?apikey=' + localStorage.apikey)
             // console.log(dataGet.data)
 
             dataGet.data.forEach(element => {

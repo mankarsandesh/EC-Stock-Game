@@ -57,7 +57,7 @@ const createStore = () => {
             stocks: {
                 btc1: {
                     url: {
-                        crawler: "/api/getCrawlerData?stockId=7&limit=300&apikey=AwEj3xNWOG3IHoqlER8uWDWAOsMQXCs7EsddCqJoX9qR0VUsY1W5KK7Akd3ddSd0jxTE0g6OCRp3GwB5",
+                        crawler: `/api/getCrawlerData?stockId=7&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/btc"
                     },
                     stockname: "btc1",
@@ -73,7 +73,7 @@ const createStore = () => {
                 },
                 usindex: {
                     url: {
-                        crawler: "/api/getCrawlerData?stockId=6&limit=300&apikey=AwEj3xNWOG3IHoqlER8uWDWAOsMQXCs7EsddCqJoX9qR0VUsY1W5KK7Akd3ddSd0jxTE0g6OCRp3GwB5",
+                        crawler: `/api/getCrawlerData?stockId=5&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/usindex"
                     },
                     stockname: "usindex",
@@ -89,7 +89,7 @@ const createStore = () => {
                 },
                 btc5: {
                     url: {
-                        crawler: "/api/getCrawlerData?stockId=5&limit=300&apikey=AwEj3xNWOG3IHoqlER8uWDWAOsMQXCs7EsddCqJoX9qR0VUsY1W5KK7Akd3ddSd0jxTE0g6OCRp3GwB5",
+                        crawler: `/api/getCrawlerData?stockId=6&limit=300&apikey=${localStorage.apikey}`,
                         //  // set liveprice to null for use the same liveprice in  loop 1 above
                         //  // it will not call api
                         //  // it must has loop 1 above  or other loop above
@@ -108,7 +108,7 @@ const createStore = () => {
                 },
                 sh000001: {
                     url: {
-                        crawler: "/api/getCrawlerData?stockId=4&limit=300&apikey=AwEj3xNWOG3IHoqlER8uWDWAOsMQXCs7EsddCqJoX9qR0VUsY1W5KK7Akd3ddSd0jxTE0g6OCRp3GwB5",
+                        crawler: `/api/getCrawlerData?stockId=4&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/sh01"
                     },
                     stockname: "sh000001",
@@ -124,7 +124,7 @@ const createStore = () => {
                 },
                 sz399001: {
                     url: {
-                        crawler: "/api/getCrawlerData?stockId=3&limit=300&apikey=AwEj3xNWOG3IHoqlER8uWDWAOsMQXCs7EsddCqJoX9qR0VUsY1W5KK7Akd3ddSd0jxTE0g6OCRp3GwB5",
+                        crawler: `/api/getCrawlerData?stockId=3&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/sz01"
                     },
                     stockname: "sz399001",
@@ -140,7 +140,7 @@ const createStore = () => {
                 },
                 sz399415: {
                     url: {
-                        crawler: "/api/getCrawlerData?stockId=2&limit=300&apikey=AwEj3xNWOG3IHoqlER8uWDWAOsMQXCs7EsddCqJoX9qR0VUsY1W5KK7Akd3ddSd0jxTE0g6OCRp3GwB5",
+                        crawler: `/api/getCrawlerData?stockId=2&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/sz15"
                     },
                     stockname: "sz399415",
@@ -156,7 +156,7 @@ const createStore = () => {
                 },
                 sh000300: {
                     url: {
-                        crawler: "/api/getCrawlerData?stockId=1&limit=300&apikey=AwEj3xNWOG3IHoqlER8uWDWAOsMQXCs7EsddCqJoX9qR0VUsY1W5KK7Akd3ddSd0jxTE0g6OCRp3GwB5",
+                        crawler: `/api/getCrawlerData?stockId=1&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/sz300"
                     },
                     stockname: "sh000300",
@@ -228,14 +228,14 @@ const createStore = () => {
             },
             SET_TIME(state, payload) {
                 state.time = payload
-                // console.log(state.time)
+                    // console.log(state.time)
             },
             // set Live price for stocks
             setLivePrice(state, payload) {
                 state.liveprice = payload
-                // console.log("liveprice......")
-                // console.log(state.liveprice)
-                // console.log("liveprice.....")
+                    // console.log("liveprice......")
+                    // console.log(state.liveprice)
+                    // console.log("liveprice.....")
             },
             setFooterBetAmount(state, payload) {
                 state.footerBetAmount = parseInt(payload)
@@ -272,7 +272,7 @@ const createStore = () => {
                     }
 
                     const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
-                    // console.log(userRes)
+                        // console.log(userRes)
                     setTimeout(() => {
                         // console.log(userRes.status)
                         if (userRes.status == false && userRes.status !== undefined) {
@@ -301,9 +301,9 @@ const createStore = () => {
                 context.commit("setIsSendBetting", true)
                 console.warn("sendBetting...")
                 const betData = {
-                    "data": [...context.state.multiGameBet]
-                }
-                // console.log(betData)
+                        "data": [...context.state.multiGameBet]
+                    }
+                    // console.log(betData)
                 try {
                     const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
 
@@ -349,16 +349,16 @@ const createStore = () => {
                     context.dispatch("asynCrawlerStock", payload)
                 }
                 context.getters.getStockChart
-                // call live price api
-                setInterval(function () {
+                    // call live price api
+                setInterval(function() {
                     for (let i = 0; i < context.getters.getStockLength; i++) {
                         let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
-                        // check if one stock has multi loop it will use the same live price
-                        // and in states.stocks url live price is setten to "null"
-                        // disable first by macky 11:35 02/09/2019
-                        // if (url == null) {    
-                        //     continue
-                        // }
+                            // check if one stock has multi loop it will use the same live price
+                            // and in states.stocks url live price is setten to "null"
+                            // disable first by macky 11:35 02/09/2019
+                            // if (url == null) {    
+                            //     continue
+                            // }
                         let name = context.getters.getStockKeys[i]
                         let payload = {
                             url,
@@ -379,7 +379,7 @@ const createStore = () => {
                         context.state.stocks[name].crawlerData = result.data
                         context.state.stocks[name].lastDraw = result.data[result.data.length - 1].PT
                         context.state.stocks[name].timeLastDraw = result.data[result.data.length - 1].writetime
-                        // console.warn(context.state.stocks[name].crawlerData)
+                            // console.warn(context.state.stocks[name].crawlerData)
                         console.log(result.data)
                     }
                 } catch (error) {
@@ -432,7 +432,7 @@ const createStore = () => {
             getAllStockByType(state, getters) {
                 let stockData = []
                 let stockType = []
-                // get type for all stocks
+                    // get type for all stocks
                 for (let i = 0; i < getters.getStockLength; i++) {
                     const id = getters.getStockKeys[i]
                     const type = state.stocks[id].type
@@ -551,11 +551,11 @@ const createStore = () => {
                 function getAmount(object) {
                     // find stockId
                     if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0
-                    // get data by stockId
+                        // get data by stockId
                     let stockIdObject = object.filter(x => x.stockId === data.stockId)
-                    // check rule in stockId
+                        // check rule in stockId
                     if (stockIdObject.findIndex(x => x.gameRule === data.gameRule) == -1) return 0
-                    // get amount by rule
+                        // get amount by rule
                     let result = stockIdObject.filter(x => x.gameRule === data.gameRule).map(x => x.amount).reduce((a, b) => a + b, 0)
                     return parseInt(result)
                 }
@@ -564,18 +564,18 @@ const createStore = () => {
             getAmountBetSpecificNumber: (state) => (data) => {
                 function getAmount(object) {
                     let count = 9
-                    // find stockId 
+                        // find stockId 
                     if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0
-                    // get data by stockId
+                        // get data by stockId
                     let stockIdObject = object.filter(x => x.stockId === data.stockId)
-                    // check rule in stockId
-                    // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
+                        // check rule in stockId
+                        // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
 
                     // get amount by rule
                     let result = 0
                     for (let i = 0; i <= count; i++) {
                         result = result + stockIdObject.filter(x => x.gameRule.toLowerCase()
-                            .includes(`${data.gameRule}-${i}`))
+                                .includes(`${data.gameRule}-${i}`))
                             .map(x => x.amount).reduce((a, b) => a + b, 0)
                     }
                     // .map(x => x.amount).reduce((a, b) => a + b, 0)
@@ -793,7 +793,7 @@ const createStore = () => {
                 for (let i = 0; i < getters.getStockLength; i++) {
                     const id = getters.getStockKeys[i]
                     const urlLivePrice = state.stocks[id].url.livePrice
-                    // do not get stock if url live is null
+                        // do not get stock if url live is null
                     if (urlLivePrice == null) {
                         continue
                     }
