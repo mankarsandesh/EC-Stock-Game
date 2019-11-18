@@ -4,7 +4,12 @@
         <span class="timer">{{datelastdraw}} {{$t('msg.gameid')}}: {{gameid}}</span>
 
         <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
-        <span class="timer total_classic" :title="datalastdraw" v-if="load">{{dataslastdraw}}</span>
+        <v-tooltip top v-if="load">
+            <template #activator="{ on: tooltip }">
+                <span v-on="{ ...tooltip }" class="timer total_classic">{{dataslastdraw}}</span>
+            </template>
+            <span>{{datalastdraw}}</span>
+        </v-tooltip>
         <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
         <span :class="time == $t('msg.betnow') + ':' +'00:05' || time == $t('msg.betnow') + ':' +'00:03' || time == $t('msg.betnow') + ':' +'00:01' || time == $t('msg.calculating') || time == $t('msg.marketclosed') ? 'timer color-timer':'timer'">{{time}}</span>
 
@@ -25,7 +30,7 @@ import {
     mapGetters
 } from "vuex";
 export default {
-    props: ["checkStock", "StockData", "Reference"],
+    props: ["checkStock", "Reference"],
     data() {
         return {
             ischangechartview: false,
@@ -135,7 +140,15 @@ export default {
                 return `${Number(value).toFixed(2)}`;
             }
         },
-        getdata() {
+        async getdata() {
+            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            stcokId.data.forEach(element => {
+                if (element.stockName == this.$route.params.id.split("-")[1]) {
+                    this.stockname = element.stockId
+                }
+            })
+            let StockData = await this.$axios.$get(this.$store.state.urltest + '/api/getCrawlerData?stockId=' + this.stockname + '&limit=300&apikey=' + localStorage.apikey)
+            this.StockData = StockData.data;
             if (this.StockData == "") return;
 
             this.load = true;
@@ -144,8 +157,8 @@ export default {
             this.StockData.forEach(element => {
                 items.push({
                     PT: this.formatToPrice(element.PT),
-                    gameid: element.gameid,
-                    date: element.created_at.replace(/-/g, "/")
+                    gameid: element.gameId,
+                    date: element.writetime.replace(/-/g, "/")
                 });
             });
             let elements = items[items.length - 1];
