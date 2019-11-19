@@ -133,12 +133,12 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async fetchAll() {
-            let res = await this.$axios.$get( '/api/me?apikey=' + localStorage.apikey)
+            let res = await this.$axios.$get( '/api/me?apikey=' + this.$store.state.auth_token)
             this.userBalance = res.userBalance
             console.log(res);
         },
         async getOnlineTime() {
-            let dataGet = await this.$axios.$get( '/api/me/online?method=profile&apikey=' + localStorage.apikey)
+            let dataGet = await this.$axios.$get( '/api/me/online?method=profile&apikey=' + this.$store.state.auth_token)
             this.time = dataGet.data
         },
         setTime(seconds, val) {
