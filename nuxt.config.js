@@ -50,7 +50,6 @@ module.exports = {
         "@/plugins/callApi",
         "@/plugins/i18n",
         "@/plugins/chart",
-        "@/plugins/coinLocalStorage",
         "@/plugins/sweetAlert",
         "@/plugins/vueScreen"
     ],

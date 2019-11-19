@@ -335,7 +335,7 @@ export default {
     },
     created() {
         this.setLanguage();
-        this.makeAuth()
+        
     },
     mounted() {
         $("#switch").text(this.switch1)
@@ -370,7 +370,7 @@ export default {
 
     },
     methods: {
-        ...mapActions(["asynInitCallApi", "makeAuth"]),
+        ...mapActions(["asynInitCallApi"]),
         ...mapMutations(["SET_LANG", "SET_TIME"]),
         setLanguage() {
             let lang = localStorage.getItem("lang");
