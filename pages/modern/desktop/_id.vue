@@ -104,6 +104,7 @@ import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 
+
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);

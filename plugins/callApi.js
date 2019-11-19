@@ -18,7 +18,7 @@ export default ({
         let time1 = data.btc1.timer;
         // get new data
         if (time5 == 241 || time1 == 41) {
-            store.dispatch('asynInitCallApi')
+            // store.dispatch('asynInitCallApi')
         }
         store.commit('SET_TIME', data)
     });
