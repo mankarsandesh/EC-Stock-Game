@@ -479,12 +479,12 @@ export default {
         },
 
         async getbalance() {
-            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
+            let balance = await this.$axios.$get('/api/me?apikey=' + localStorage.apikey)
             this.balance = balance.userBalance
 
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
             stcokId.data.forEach(element => {
                 if (element.stockName == this.$route.params.id.split("-")[1]) {
                     this.stockname = element.stockId
@@ -499,7 +499,7 @@ export default {
                 this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
                 // console.log(this.formData);
                 console.log("send to api server");
-                const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + localStorage.apikey, this.formData)
+                const res = await this.$axios.post("/api/storebet?apikey=" + localStorage.apikey, this.formData)
                 console.log(res)
                 setTimeout(() => {
                     this.getalertstartstop(res.data)
@@ -741,7 +741,7 @@ export default {
         },
 
         async alertOutCome() {
-            let totalPayout = await this.$axios.$get(this.$store.state.urltest + '/api/me/totalPayout?apikey=' + localStorage.apikey)
+            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + localStorage.apikey)
             // console.log(totalPayout)
             if (totalPayout.status == false) return;
             this.snackbar = true;

@@ -37,11 +37,8 @@ export default {
             }
         },
         getChart() {
-            if (this.StockData === "") {
-                return
-            } else {
-                this.load = true
-            }
+            if (this.StockData === "") return
+            else this.load = true
 
             let datas = [];
             let labelss = [];
@@ -49,12 +46,9 @@ export default {
             let pointBackgroundColor = [];
             let value_no;
             let num;
-            let title;
-            if (this.StockData[0].stockname == 'BTC/USDT') {
-                title = "BTC/USDT 5"
-            } else {
-                title = this.StockData[0].stockname
-            }
+            let s = this.$root.$t('stockname.' + this.$route.params.id.split('-')[1]);
+            let l = this.$route.params.id.split('-')[1] == 'btc1' ? ' 1 ' : this.$route.params.id.split('-')[1] == 'btc5' ? ' 5 ' : '';
+            let title = s + l
             this.StockData.forEach(element => {
 
                 let no_firsts = this.formatToPrice(element.PT)[this.formatToPrice(element.PT).length - 2].toString();

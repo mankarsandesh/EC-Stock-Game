@@ -237,7 +237,7 @@ export default {
             this.dataArray.forEach(element => {
                 n++;
                 this.gameID.push(
-                    element.gameid +
+                    element.gameId +
                     "\n" +
                     this.formatToPrice(element.PT) +
                     "\n" +
