@@ -8,7 +8,7 @@ export default function ({ isHMR, app, store, route, error, redirect }) {
 
     if (store.getters.getAuth_token == "") {
         // call Api to show in chart and store it in Vuex
-        // store.dispatch('makeAuth')
+        store.dispatch('makeAuth')
     }
 
     //     // Get locale from params

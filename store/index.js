@@ -372,7 +372,7 @@ const createStore = () => {
                 // }, 10000);
 
             },
-            // to get crawler
+            // to get crawler data
             async asynCrawlerStock(context, payload) {
                 try {
                     const url = payload.url

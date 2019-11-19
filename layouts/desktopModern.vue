@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div v-show="getIsLoadingStockGame" class="container-loading">
+    <div  class="container-loading">
       <div class="loading"></div>
       <div ref="svgContainer"></div>
     </div>
@@ -133,6 +133,10 @@ export default {
       autoplay: true,
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
+    setInterval(function() {
+      lottie.play();
+    }, 1000);
+
     this.setIsLoadingStockGame(false);
   },
   methods: {

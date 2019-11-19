@@ -108,6 +108,7 @@ export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
+  middleware:'showLoading',
   layout: "desktopModern",
   components: {
     stockList,
