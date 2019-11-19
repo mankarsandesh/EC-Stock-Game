@@ -16,8 +16,8 @@
         "game result": "遊戲結果"
     },
     "stock-list": {
-        "stock lists":"库存清单",
-        "stock name":"股票名称",
+        "stock lists": "库存清单",
+        "stock name": "股票名称",
         "live price": "实时报价",
         "reference": "参考网址",
         "load more": "更多"
@@ -63,6 +63,8 @@
         "Game Mode": "遊戲模式",
         "Result": "結果",
         "result out time": "結果出來了",
+        "days": "天",
+        "hours": "小时",
         "minute": "分鐘",
         "loading": "裝載...",
         "Stock": "股票",

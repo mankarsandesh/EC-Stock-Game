@@ -237,11 +237,11 @@ export default {
             this.dataArray.forEach(element => {
                 n++;
                 this.gameID.push(
-                    element.gameid +
+                    element.gameId +
                     "\n" +
                     this.formatToPrice(element.PT) +
                     "\n" +
-                    element.created_at
+                    element.writetime
                 );
                 let no_firsts = this.formatToPrice(element.PT)[
                     this.formatToPrice(element.PT).length - 2

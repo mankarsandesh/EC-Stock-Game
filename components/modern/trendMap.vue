@@ -236,7 +236,7 @@ export default {
           let rs = element.PT[element.PT.length - 2].toString();
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameid + "\n" + element.PT + "\n" + element.created_at
+            element.gameid + "\n" + element.PT + "\n" + element.writetime
           );
           //bigsmall
           if (firstlast < 5) {
@@ -269,7 +269,7 @@ export default {
           let rs = element.PT[element.PT.length - 1].toString();
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameid + "\n" + element.PT + "\n" + element.created_at
+            element.gameid + "\n" + element.PT + "\n" + element.writetime
           );
           //bigsmall
           if (firstlast < 5) {
@@ -304,7 +304,7 @@ export default {
             parseInt(element.PT[element.PT.length - 1]);
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameid + "\n" + element.PT + "\n" + element.created_at
+            element.gameid + "\n" + element.PT + "\n" + element.writetime
           );
           //bigsmall
           if (firstlast < 9) {
@@ -339,7 +339,7 @@ export default {
             element.PT[element.PT.length - 1].toString();
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameid + "\n" + element.PT + "\n" + element.created_at
+            element.gameid + "\n" + element.PT + "\n" + element.writetime
           );
           //bigsmall
           if (firstlast <= 49) {

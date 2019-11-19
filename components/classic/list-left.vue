@@ -159,7 +159,7 @@ export default {
         },
 
         async getupdatebalance() {
-            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
+            let balance = await this.$axios.$get('/api/me?apikey=' + localStorage.apikey)
             this.name = balance.name
             this.balance = balance.userBalance
             // console.log(balance)
@@ -167,11 +167,11 @@ export default {
             return
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
             return this.stockName = stcokId.data
         },
         async getAllresults() {
-            let CurrentBet = await this.$axios.$get(this.$store.state.urltest + '/api/fetchCurrentBet?apikey=' + localStorage.apikey)
+            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + localStorage.apikey)
             // console.log("kkkkkk")
             return this.Allresults = CurrentBet.data
 

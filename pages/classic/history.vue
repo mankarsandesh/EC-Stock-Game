@@ -35,7 +35,7 @@
                                 <v-text-field v-model="search" append-icon="search" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs6 md2 mr-1>
-                                <v-select hide-details single-line  :items="items" label="Sort By :" v-model="itemss"></v-select>
+                                <v-select hide-details single-line :items="items" label="Sort By :" v-model="itemss"></v-select>
                             </v-flex>
                         </v-layout>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
@@ -230,7 +230,7 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get(this.$store.state.urltest + '/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
             if (history.data == null) return
             // console.log(history.data)
 
@@ -289,7 +289,7 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
             return this.StockName = stcokId.data
 
         },

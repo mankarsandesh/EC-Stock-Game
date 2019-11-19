@@ -66,6 +66,15 @@ export default {
             linkto:isMobile ?'/modern':'/modern/desktop/btc1'
         }
     },
+      watch: {
+        '$screen.width'() {
+            if(this.$screen.width <= 1204){
+                this.linkto = "modern"
+            }else{
+                this.linkto = "/modern/desktop/btc1"
+            }
+        }
+    },
     methods: {
         ...mapActions([
             "makeAuth"
