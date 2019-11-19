@@ -2,7 +2,6 @@
   <div>
     <v-layout wrap>
       <v-flex
-        :class="setClass('pb-5 pr-3')"
         v-show="which_one=='B/S' || which_one== !isFullscreen "
       >
         <div v-show="isFullscreen">

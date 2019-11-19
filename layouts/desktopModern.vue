@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <!-- <div v-show="getIsLoadingStockGame" class="container-loading">
+    <div v-show="getIsLoadingStockGame" class="container-loading">
       <div class="loading"></div>
       <div ref="svgContainer"></div>
-    </div> -->
+    </div>
 
     <v-container
       fluid
@@ -35,19 +35,17 @@
       </v-container>
     </v-container>
     <v-container class="pa-0">
-      <v-toolbar
-        height="69"
-        color="#fff"
-        style="justify-content: center !importan;"
-      >
+      <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
         <v-toolbar-title>
           <v-img width="158" src="/logo.png"></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">{{
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
+            {{
             $t(`menu.${item.title}`)
-          }}</v-btn>
+            }}
+          </v-btn>
           <v-btn text flat @click="$refs.language.showDialog()">
             <countryFlag :country="countryflag" size="normal" />
           </v-btn>
@@ -66,7 +64,7 @@
   </v-app>
 </template>
 <script>
-import { mapGetters,mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 import menu from "~/data/menudesktop";
 
@@ -135,12 +133,10 @@ export default {
       autoplay: true,
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
-     this.setIsLoadingStockGame(false)
+    this.setIsLoadingStockGame(false);
   },
   methods: {
-    ...mapMutations([
-      "setIsLoadingStockGame"
-    ])
+    ...mapMutations(["setIsLoadingStockGame"])
     //  getwinuser() {
     //    this.$axios.$get("api/getwinuser").then(response => {
     //      console.log("response.....................")
