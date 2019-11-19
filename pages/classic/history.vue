@@ -217,7 +217,7 @@ export default {
             const table = this.$refs.table
             //console.log('table',table);
             return table ? table.filteredItems.reduce((s, i) => {
-                return s + parseInt(i[column.value], 10)
+                return s + parseFloat(i[column.value], 10)
             }, 0) : 0
         },
         dateSearch() {
@@ -230,7 +230,7 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
             if (history.data == null) return
             // console.log(history.data)
 
@@ -289,7 +289,7 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             return this.StockName = stcokId.data
 
         },
