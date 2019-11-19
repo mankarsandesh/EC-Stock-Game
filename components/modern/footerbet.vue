@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <svg
       style="enable-background:new 0 0 1366 100;width:60%;margin-bottom:-6;"
       version="1.1"

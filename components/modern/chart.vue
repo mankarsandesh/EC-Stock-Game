@@ -24,7 +24,7 @@ export default {
     },
     height:{
       type:String,
-      default:"400px"
+      default:"auto"
     },
     data: {
       type: Array,
@@ -79,7 +79,7 @@ export default {
         chart: {
           background: '#fff',
           parentHeightOffset: 0,
-          height: 600,
+          height: 400,
           zoom: {
             enabled: false
           },

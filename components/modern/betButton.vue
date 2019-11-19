@@ -2,18 +2,20 @@
   <div class="p-relative">
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
-    <div
+    <!-- <div
       class="bet-close"
       v-if="checkBetClose  || getLotteryDraw(stockName) ==='close' || getLotteryDraw(stockName) == null "
     >
       <p>bet close</p>
-    </div>
+    </div> -->
     <!-- end for show bet close -->
-    <v-layout row>
-      <popper
+    <v-layout  row  >
+
+      <popper     
         :disabled="checkFooterBet"
         v-for="data in firstDigit"
         :key="data.rule"
+        md3
         class="w20"
         trigger="click"
         :options="{
@@ -21,7 +23,7 @@
                        modifiers: { offset: { offset: '25px' } }
                 }"
       >
-        <div class="popper" >
+        <div class="popper">
           <!-- this component display the modal,the modal let users choose amount they want to bet -->
           <betModal
             :stockName="stockName"
@@ -31,20 +33,22 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
-          slot="reference"
-          @click="betButtonClick('firstdigit-'+data.rule)"
-        >
+            class="align_button4"
+            slot="reference"
+            @click="betButtonClick('firstdigit-'+data.rule)"
+          >
           <showChipAmount  
              size="50px"
             :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'firstdigit-'+data.rule})"
           ></showChipAmount>
-          <p class="big-digit">{{data.rule}}</p>          
-          <p class="small-digit">First Digit</p>
-          <p class="small-digit" v-show="isFullscreen">{{payout_big_small}}</p>
+          
+          <span class="big-digit">{{data.rule}}</span>          
+          <span class="small-digit">First Digit</span>
+          <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+        
         </v-btn>
       </popper>
-
+     
       <div class="d-block w20">
         <popper
           :disabled="checkFooterBet"
@@ -115,7 +119,10 @@
           >LOW {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
         </popper>
       </div>
+      
     </v-layout>
+
+
     <!-- Row betting button2 -->
     <v-layout row>
       <popper
@@ -148,13 +155,12 @@
           ></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
-          <br />
           <span class="small-digit">Last Digit</span>
           <!-- show payout if in fullscreen mode -->
-          <br />
           <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
+
       <div class="d-block w20">
         <popper
           :disabled="checkFooterBet"
@@ -257,10 +263,8 @@
           ></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
-          <br />
           <span class="small-digit">Both Digit</span>
           <!-- show payout if in fullscreen mode -->
-          <br />
           <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
@@ -367,10 +371,8 @@
           ></showChipAmount>
 
           <span class="big-digit">{{data.rule}}</span>
-          <br />
           <span class="small-digit">Two Digit</span>
           <!-- show payout if in fullscreen mode -->
-          <br />
           <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
         </v-btn>
       </popper>
@@ -453,10 +455,8 @@
           ></showChipAmount>
 
           <span class="big-digit">0 - 9</span>
-          <br />
           <span class="small-digit">First Digit</span>
           <!-- show payout if in fullscreen mode -->
-          <br />
           <span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
         </v-btn>
       </span>
@@ -468,10 +468,8 @@
           ></showChipAmount>
 
           <span class="big-digit">0 - 9</span>
-          <br />
           <span class="small-digit">Last Digit</span>
           <!-- show payout if in fullscreen mode -->
-          <br />
           <span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
         </v-btn>
       </span>
@@ -483,10 +481,8 @@
           ></showChipAmount>
 
           <span class="big-digit">0 - 18</span>
-          <br />
           <span class="small-digit">Both Digit</span>
           <!-- show payout if in fullscreen mode -->
-          <br />
           <span class="small-digit" v-show="isFullscreen">{{payout_18}}</span>
         </v-btn>
       </span>
@@ -498,16 +494,14 @@
           ></showChipAmount>
 
           <span class="big-digit">00 - 99</span>
-          <br />
           <span class="small-digit">Two Digit</span>
           <!-- show payout if in fullscreen mode -->
-          <br />
           <span class="small-digit" v-show="isFullscreen">{{payout_99}}</span>
         </v-btn>
       </span>
     </v-layout>
     <!-- Row betting button5 -->
-    <v-layout row class="container-btn-small">
+    <v-layout row class="container-btn-small" >
       <popper
         :disabled="checkFooterBet"
         v-for="(n,index) in 10"
@@ -608,6 +602,7 @@
           class="btn-small"
         >{{ index < 10 ? "0" + index :index}}</v-btn>
       </popper>
+      
     </v-layout>
   </div>
 </template>
