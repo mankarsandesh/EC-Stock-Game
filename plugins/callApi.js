@@ -2,8 +2,7 @@ import openSocket from "socket.io-client";
 export default ({
     store
 }) => {
-    // call Api to show in chart and store it in Vuex
-    store.dispatch('makeAuth')
+   
 
     //coin modern set and get from localStorage
     initLocalStorageCoin(store)
