@@ -22,7 +22,7 @@
       </v-card>
     </v-dialog>
 
-    <v-toolbar  color="#003e70" class="white--text" style="height:40px !important; ">
+    <v-toolbar    color="#003e70" class="white--text" style="height:40px !important; ">
       
       <v-layout row wrap style="padding:5px 10px;"> 
         <v-flex xs6 sm6 md6 lg6>
@@ -52,14 +52,14 @@
           <v-layout column>
             <v-flex>
               <v-layout xs12 >
-                <v-flex xs12 class="text-xs-center1" style="width:100%;align-self: center;">
+                <v-flex xs12 lg4 class="text-xs-center1" style="width:100%;align-self: center;">
                   <span
                     class="text-uppercase text-white1" 
                   >{{ $t(`stockname.${$route.params.id}`) }}</span>
                   <span class="text-yellow">010620190923140800</span>
                 </v-flex>
 
-                <v-flex xs12  class="text-xs-right topHeader" >
+                <v-flex xs12 lg8 class="text-xs-right topHeader" >
                   
                    <span class="button" >1 minute loop</span>
                    <span
@@ -89,7 +89,7 @@
           </v-layout>
           
         </v-flex>
-        <v-flex xs12 sm12 md6 lg6>
+        <v-flex xs12 sm12 md5 lg6>
           <v-flex>
             <v-layout>
               <v-flex class="text-xs-center" xs3 px-2>
@@ -129,6 +129,10 @@
             ></betButton>
           </v-flex>
         </v-flex>
+        <!-- live Chart -->
+       
+
+
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
           <footerBet style=""></footerBet>
           <v-layout style="background-color:#003f70">
@@ -164,6 +168,9 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
+import io from 'socket.io-client';
+const socket = io('https://node-liveprice.herokuapp.com');
+
 
 export default {
   layout: "fullscreen",
@@ -185,7 +192,18 @@ export default {
       pauseTime: 2000,
       pauseOnHover: false,
       scrollSpeed: 30,
-      showSpeed: 20
+      showSpeed: 20,
+      chartData: {
+       chartType: 'barChart',
+        selector: 'chart',
+        title: 'Stock Live Data',
+        subtitle: '2018 - 2019',
+        width: 600,
+        height: 500,
+        metric: ['totalAmount','totalUsers'],
+        dim: 'rule', 
+        data: []
+      }
     };
   },
 
@@ -207,6 +225,22 @@ export default {
       "getStockCrawlerData",
       "getLoop"
     ])
+  },mounted(){
+    socket.on("liveprice1", data=>{
+     console.log(data.data.length);
+      if(data.data.length != 0){
+        this.chartData.data = data.data;
+        this.msg = "Stock Open";
+        console.log(this.chartData.data);
+        console.log("sandesh");
+      }
+      else
+      {
+        this.chartData.data = data.data;
+        this.msg = "Stock Close";
+      }
+
+    })
   },
   methods:{
     test(){

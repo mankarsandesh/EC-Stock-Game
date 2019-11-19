@@ -36,7 +36,7 @@
             </v-flex>
             <v-flex xs2 class="border-left text-xs-center">
               <nuxt-link to="/modern">
-                <span class="text-uppercase white--text">
+                <span class="text-uppercase white--text cursor">
                   <small>
                     other
                     <br />stock
@@ -86,8 +86,8 @@
               ></chartMobile>
             </v-flex>
           </v-flex>
-          <v-flex xs1 align-self-center>
-            <v-icon
+          <v-flex xs1 align-self-center arrow>
+            <v-icon style="font-size:40px;"
               v-show="!isShowTrendMap"
               @click="changeShowTrendMap()"
               color="#003e70"
@@ -383,9 +383,9 @@
               >{{getStockLoop($route.params.id)}} MINUTE GAME | {{gameRule}}</p>
             </div>
             <v-spacer></v-spacer>
-            <v-btn class="close" flat @click="bettingDialog =false">
-              <v-icon size="30">close</v-icon>
-            </v-btn>
+            <!-- <v-btn class="close" flat @click="bettingDialog=false"> -->
+              <v-icon size="30" @click="bettingDialog=false" >close</v-icon>
+            <!-- </v-btn> -->
           </v-layout>
         </v-toolbar>
 
@@ -437,7 +437,7 @@
               <p>Please confirm your bet below</p>
             </div>
             <v-spacer></v-spacer>
-            <v-btn class="close" flat @click="reviewbetDialog =false">
+            <v-btn class="close" flat text-xs-right @click="reviewbetDialog =false">
               <v-icon size="30">close</v-icon>
             </v-btn>
           </v-layout>

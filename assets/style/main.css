@@ -7,6 +7,12 @@
     margin: 0px 5px;
     text-transform: capitalize;
 }
+.cursor{
+    cursor: pointer;
+}
+.arrow{
+    font-size:40px;
+}
 .topHeader {
     padding: 12px 3px;
 }
@@ -264,8 +270,8 @@ nav.modal-bet.v-toolbar.theme--light p {
     opacity: 0.5;
     color: red;
     text-transform: uppercase;
-    height: calc(64vh + 46px);
-    width: 50%;
+    height: calc(32vh + 42px);
+    width: 100%;
 }
 
 .betClose p {
