@@ -50,10 +50,10 @@
               <v-flex class="text-xs-center" px-2>
                 <span>Last draw:</span>
                 <v-flex flex-style>
-                  <h4 v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></h4>
+                  <span v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></span>
                 </v-flex>
               </v-flex>
-              <v-spacer></v-spacer>
+              <!-- <v-spacer></v-spacer> -->
               <v-flex class="text-xs-center" px-2>
                 <span>Bet Close in:</span>
                 <v-flex flex-style>
@@ -79,7 +79,7 @@
             <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
+        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''" >
           <div v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <tableTrendMap></tableTrendMap>
@@ -90,8 +90,13 @@
             <v-icon left dark>add</v-icon>add trend chart
           </v-btn>
         </v-flex>
+
+
       </v-flex>
     </v-layout>
+    
+
+
   </div>
 </template>
 <script>
@@ -104,12 +109,10 @@ import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 
-
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
-  middleware:'showLoading',
   layout: "desktopModern",
   components: {
     stockList,
@@ -121,6 +124,7 @@ export default {
     selectStock
   },
   data() {
+     
     return {
       items: [
         { title: "Click Me" },
@@ -132,9 +136,19 @@ export default {
       isloading: false
     };
   },
+  destroyed() {
+    this.setIsLoadingStockGame(true);
+  },
   mounted() {
+    
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
+<<<<<<< HEAD
+=======
+    console.warn("mounted...");
+
+    this.makeAuth();
+>>>>>>> 94821049858474d140dec623143cc8663b5d78a5
     // this.test()
 
     // set footerBet to zero because on this page cant use bet footer
@@ -164,6 +178,7 @@ export default {
     //             console.warn(token)
     //             console.warn("token")
     // },
+    ...mapActions(["makeAuth"]),
     ...mapMutations([
       "setFooterBetAmount",
       "removeAllFooterBet",
@@ -182,7 +197,10 @@ export default {
           this.trendTypes.push("twoDigit");
           break;
       }
-    }
+    },loaded() {
+        this.isLoad = true
+        console.log(isLoad);
+      }
   },
   computed: {
     ...mapGetters([

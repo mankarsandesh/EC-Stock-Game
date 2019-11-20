@@ -52,7 +52,7 @@
           <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs10">
+      <v-flex class="xs10" > 
         <v-layout row wrap>
            <v-flex xs12>
             <trendMap

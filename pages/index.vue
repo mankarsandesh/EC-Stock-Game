@@ -33,7 +33,7 @@
         </v-layout>
     </div>
 
-    <div class="preloader-wrap">
+    <div class="preloader-wrap" >
         <div class="imgsload">
             <img src="/logoder.png" alt="" class="setsize">
         </div>
@@ -61,6 +61,7 @@ export default {
         this.getProgress()
     },
     data(){
+       
         return{
             linkto:isMobile ?'/modern':'/modern/desktop/btc1'
         }
