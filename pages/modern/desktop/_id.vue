@@ -50,10 +50,10 @@
               <v-flex class="text-xs-center" px-2>
                 <span>Last draw:</span>
                 <v-flex flex-style>
-                  <h4 v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></h4>
+                  <span v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></span>
                 </v-flex>
               </v-flex>
-              <v-spacer></v-spacer>
+              <!-- <v-spacer></v-spacer> -->
               <v-flex class="text-xs-center" px-2>
                 <span>Bet Close in:</span>
                 <v-flex flex-style>
@@ -79,7 +79,7 @@
             <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
+        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''" >
           <div v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <tableTrendMap></tableTrendMap>
@@ -90,8 +90,13 @@
             <v-icon left dark>add</v-icon>add trend chart
           </v-btn>
         </v-flex>
+
+
       </v-flex>
     </v-layout>
+    
+
+
   </div>
 </template>
 <script>
@@ -119,6 +124,7 @@ export default {
     selectStock
   },
   data() {
+     
     return {
       items: [
         { title: "Click Me" },
@@ -134,6 +140,7 @@ export default {
     this.setIsLoadingStockGame(true);
   },
   mounted() {
+    
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
     console.warn("mounted...");
@@ -187,7 +194,10 @@ export default {
           this.trendTypes.push("twoDigit");
           break;
       }
-    }
+    },loaded() {
+        this.isLoad = true
+        console.log(isLoad);
+      }
   },
   computed: {
     ...mapGetters([

@@ -18,11 +18,11 @@
                                 <th>{{$t('msg.gameid')}}</th>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>dsds</td>
+                                <td>dsd</td>
+                                <td>dsds</td>
+                                <td>dsds</td>
+                                <td>dsds</td>
                             </tr>
                             <tr>
                                 <td></td>
