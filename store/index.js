@@ -8,6 +8,8 @@ const createStore = () => {
             loader: false,
             isLoadingStockGame: false,
             auth_token: "",
+            isLoadingAnnoucement:[],
+            isLoadingHistory : [],
             userData: {},
             balance: '',
             footerBetAmount: 0,
@@ -240,7 +242,15 @@ const createStore = () => {
             },
             setFooterBetAmount(state, payload) {
                 state.footerBetAmount = parseInt(payload)
+            },
+            setAnouncement(state,payload){
+                state.isLoadingAnnoucement = payload
+            },
+            setHistory(state,payload){
+                state.isLoadingHistory = payload
             }
+            
+            
         },
         actions: {
             async balance(context) {
@@ -406,10 +416,39 @@ const createStore = () => {
                 } catch (error) {
                     console.log(error)
                 }
+            },
+            // to get Annoucement
+            async asyannoucement(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/announcement?apikey=${context.state.auth_token}`)
+                    console.log(res);
+                    context.commit("setAnouncement",res.data);                   
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            // to get User bet History
+            async asyhistory(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/fetchHistoryBet?apikey=${context.state.auth_token}`)
+                    console.log(res);
+                    console.log("Hello");
+                    context.commit("setHistory",res.data);                   
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
         },
         getters: {
+            getHistory(state){
+                return state.isLoadingHistory
+            },
+            getAnnoucement(state){
+                return state.isLoadingAnnoucement
+            },
             getIsLoadingStockGame(state) {
                 return state.isLoadingStockGame
             },
