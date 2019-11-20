@@ -43,7 +43,7 @@ export default {
             }
         },
         async getChart() {
-            let dataGet = await this.$axios.$get( '/api/me/online?method=chart&apikey=' + localStorage.apikey)
+            let dataGet = await this.$axios.$get( '/api/me/online?method=chart&apikey=' + this.$store.state.auth_token)
             // console.log(dataGet)
 
             dataGet.data.forEach(element => {

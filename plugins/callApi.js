@@ -2,8 +2,7 @@ import openSocket from "socket.io-client";
 export default ({
     store
 }) => {
-    // call Api to show in chart and store it in Vuex
-    store.dispatch('asynInitCallApi')
+   
 
     //coin modern set and get from localStorage
     initLocalStorageCoin(store)
@@ -19,7 +18,7 @@ export default ({
         let time1 = data.btc1.timer;
         // get new data
         if (time5 == 241 || time1 == 41) {
-            store.dispatch('asynInitCallApi')
+            // store.dispatch('asynInitCallApi')
         }
         store.commit('SET_TIME', data)
     });

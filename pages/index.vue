@@ -59,7 +59,6 @@ export default {
     layout: "nolayout",
     mounted() {
         this.getProgress()
-        this.makeAuth()
     },
     data(){
        
@@ -77,9 +76,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions([
-            "makeAuth"
-        ]),
+
         getProgress() {
             let width = 100,
                 perfData = window.performance

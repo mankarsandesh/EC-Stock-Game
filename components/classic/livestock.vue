@@ -17,8 +17,7 @@ export default {
         return {
             load: false,
             stockname: [],
-            betlose: [],
-            betwon: [],
+            betwon: []
         }
     },
     mounted() {
@@ -29,48 +28,49 @@ export default {
         }, 1000)
     },
     methods: {
-        setZero(num, digit) {
-            var zero = '';
-            for (var i = 0; i < digit; i++) {
-                zero += '0';
-            }
-            return (zero + num).slice(-digit);
-        },
-        formatToPrice(value) {
-            if (this.$route.params.id.split('-')[1] == 'usindex') {
-                return `${Number(value).toFixed(4)}`;
-            } else {
-                return `${Number(value).toFixed(2)}`;
-            }
-        },
         async getChart() {
-            let dataGet = await this.$axios.$post( '/api/me/betAnalysis?apikey=' + this.$store.state.auth_token)
-            console.log(dataGet)
+            let dataGet = await this.$axios.$get('/api/me/online?method=chart&apikey=' + this.$store.state.auth_token)
+            // console.log(dataGet)
 
             dataGet.data.forEach(element => {
                 this.load = true
-                this.stockname.push(element.stockName == 'btc1' ? this.$root.$t('stockname.'+element.stockName) +' '+ '1' : element.stockName == 'btc5' ? this.$root.$t('stockname.'+element.stockName) +' '+'5':'' );
-                this.betlose.push(element.loseBet);
-                this.betwon.push(element.winBet);
+                this.stockname.push(element.da_te);
+                let totalSeconds = parseInt(element.timeOnline);
+                let hours = Math.floor(totalSeconds / 3600);
+                totalSeconds %= 3600;
+                let minutes = Math.floor(totalSeconds / 60);
+                let minutes2 = minutes < 10 ? "0" + minutes : minutes;
+                let seconds = totalSeconds % 60;
+
+                this.betwon.push(hours + "." + minutes2);
             });
-            let config = {
-                type: "bar",
+
+            var config = {
+                type: "horizontalBar",
                 data: {
                     labels: this.stockname,
                     datasets: [{
-                            label: this.$root.$t('msg.winbet'),
-                            data: this.betwon,
-                            backgroundColor: "blue"
-                        },
-                        {
-                            label: this.$root.$t('msg.losebet'),
-                            data: this.betlose,
-                            backgroundColor: "red"
-                        }
-                    ]
+                        data: this.betwon,
+                        label: 'Proficiency',
+                        // fill: false,
+                        backgroundColor: "blue",
+                        borderWidth: 3
+                    }]
                 },
                 options: {
                     responsive: true,
+
+                    legend: {
+                        display: false,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chartjs Horizontal Bar Chart Playground'
+                    },
+                    tooltips: {
+                        enabled: false
+                    },
                     scales: {
                         xAxes: [{
                             stacked: true
@@ -88,7 +88,7 @@ export default {
                         intersect: true
                     }
                 }
-            }
+            };
 
             const ctx = this.$refs.planetchart;
             const mychart = new Chart(ctx, config);

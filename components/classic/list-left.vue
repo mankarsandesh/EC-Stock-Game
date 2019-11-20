@@ -21,7 +21,13 @@
                     </tr>
                     <tr>
                         <td class="text-left"><i class="fa fa-thumbs-up fa-2x"></i>
-                            {{$t('msg.msinfo')}}
+                            <v-tooltip top>
+                                <template #activator="{ on: tooltip }">
+                                    <span v-on="{ ...tooltip }">{{$t('msg.Totalprofit')}} :
+                                        <animated-number :style="rollingAmounts - betAmounts < 0 ? 'color: red;':'color: green;'" :value="rollingAmounts - betAmounts" :formatValue="formatToPrice" /></span>
+                                </template>
+                                <span>{{$t('msg.msinfo')}}</span>
+                            </v-tooltip>
                         </td>
                     </tr>
                 </table>
@@ -105,7 +111,9 @@ export default {
             balance: 0,
             name: "",
             stockName: null,
-            Allresults: []
+            Allresults: [],
+            betAmounts: 0,
+            rollingAmounts: 0
         }
     },
     mounted() {
@@ -159,7 +167,17 @@ export default {
         },
 
         async getupdatebalance() {
-            let balance = await this.$axios.$get('/api/me?apikey=' + localStorage.apikey)
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+            this.betAmounts = 0;
+            this.rollingAmounts = 0;
+            for (let i = 0; i < history.data.length; i++) {
+                if (history.data[i].betTime.split(" ")[0] == new Date().toISOString().substr(0, 10)) {
+                    this.betAmounts += history.data[i].betAmount;
+                    this.rollingAmounts += history.data[i].rollingAmount;
+                }
+            }
+
+            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
             this.name = balance.name
             this.balance = balance.userBalance
             // console.log(balance)
@@ -167,11 +185,11 @@ export default {
             return
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             return this.stockName = stcokId.data
         },
         async getAllresults() {
-            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + localStorage.apikey)
+            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + this.$store.state.auth_token)
             // console.log("kkkkkk")
             return this.Allresults = CurrentBet.data
 
