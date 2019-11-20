@@ -136,17 +136,11 @@ export default {
       isloading: false
     };
   },
-  destroyed() {
-    this.setIsLoadingStockGame(true);
-  },
   mounted() {
     
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
     console.warn("mounted...");
-
-    this.makeAuth();
-    // this.test()
 
     // set footerBet to zero because on this page cant use bet footer
     this.setFooterBetAmount(0);
@@ -175,7 +169,6 @@ export default {
     //             console.warn(token)
     //             console.warn("token")
     // },
-    ...mapActions(["makeAuth"]),
     ...mapMutations([
       "setFooterBetAmount",
       "removeAllFooterBet",
