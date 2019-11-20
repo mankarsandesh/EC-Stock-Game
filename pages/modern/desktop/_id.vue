@@ -143,12 +143,9 @@ export default {
     
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
-<<<<<<< HEAD
-=======
     console.warn("mounted...");
 
     this.makeAuth();
->>>>>>> 94821049858474d140dec623143cc8663b5d78a5
     // this.test()
 
     // set footerBet to zero because on this page cant use bet footer
