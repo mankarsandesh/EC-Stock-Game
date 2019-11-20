@@ -1,10 +1,6 @@
 export default function ({ isHMR, app, store, route, error, redirect }) {
     // If middleware is called from hot module replacement, ignore it
     if (isHMR) { return }
-    if (route.params.id !== undefined) {
-        console.log("good")
-        store.commit("setIsLoadingStockGame",true)
-    }
 
     if (store.getters.getAuth_token == "") {
         // call Api to show in chart and store it in Vuex

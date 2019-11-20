@@ -310,11 +310,11 @@ const createStore = () => {
                         const res = await this.$axios.$post("/api/redirect", userForm)
                         localStorage.apikey = res.data.token;
                         console.log(localStorage.apikey)
-                    } else {
+                    } 
                         // check user's apikey by use apikey to get user informtion
                         const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
                         // if user api key is invalidate it will be redirect to main page
-                        if (userRes.status == false && userRes.status !== undefined) {
+                        if (userRes.status == false || userRes.status !== undefined) {
                             localStorage.removeItem('apikey');
                             location.href = "http://" + location.host
                             return
@@ -331,10 +331,10 @@ const createStore = () => {
                          // get data stock crawler
                          context.dispatch("asynInitCallApi")
 
-                    }
+                    
                 } catch (ex) {
                     console.error(ex)
-                    alert(ex)
+                    alert(`error in makeAuth middleware ${ex}`)
                 }
 
 
@@ -378,12 +378,14 @@ const createStore = () => {
                     const url = payload.url
                     const name = payload.name
                     const result = await this.$axios.$get(url)
-                    if (result) {
+                    if (result.data.length >0) {
                         context.state.stocks[name].crawlerData = result.data
                         context.state.stocks[name].lastDraw = result.data[result.data.length - 1].PT
                         context.state.stocks[name].timeLastDraw = result.data[result.data.length - 1].writetime
                         // console.warn(context.state.stocks[name].crawlerData)
                         console.log(result.data)
+                    }else{
+                        console.error(`can not fetch ${payload.url} error ${result.message}`)
                     }
                 } catch (error) {
                     console.log(error)

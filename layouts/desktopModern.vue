@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <div v-show="getIsLoadingStockGame" class="container-loading">
+    <div
+      :class="getIsLoadingStockGame? 'container-loading  container-loading-zindex' : 'container-loading'"
+    >
       <div class="loading"></div>
       <div ref="svgContainer"></div>
     </div>
@@ -10,10 +12,8 @@
       pa-0
       style="background-color: #003e70 !important;max-height: 69px; !important"
     >
-    
       <v-container pa-0>
         <v-toolbar color="#003e70" class="white--text">
-      
           <v-layout row wrap>
             <v-flex xs4>
               <welcome-user></welcome-user>
@@ -79,7 +79,6 @@ import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
 
-
 export default {
   components: {
     countryFlag,
@@ -136,7 +135,7 @@ export default {
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
     // setInterval(function() {
-     
+
     // }, 1000);
 
     this.setIsLoadingStockGame(false);
@@ -180,8 +179,11 @@ export default {
 }
 .container-loading {
   position: absolute;
-  z-index: 5000;
+  z-index: -1;
   width: 100%;
+}
+.container-loading-zindex {
+  z-index: 5000 !important;
 }
 .loading {
   position: absolute;
