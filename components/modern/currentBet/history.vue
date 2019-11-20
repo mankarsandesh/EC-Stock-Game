@@ -67,15 +67,18 @@
 
           </tr>
 
+          <tr >
+              <td>Total</td>
+              <td>{{item.betId}}</td>
+              <td>{{item.rule}} ({{item.payoutAmount}}) {{item.stockName}} {{item.loops}} MINUTE</td>
+                <td>{{item.betTime}}</td>
+              <td>{{item.betAmount}}</td>
+            
+          
+               <td><span :style="item.rollingAmount < 0 ? 'color: red;':'color: green;'">{{item.rollingAmount}}</span></td>
 
-          <!-- <tr v-for="n in 10" :key="n">
-            <th scope="row">0104239720185520</th>
-            <td>1654231567489421321</td>
-            <td>stockname aaabb</td>
-            <td>$90.00</td>
-            <td>pending</td>
-            <td>pending</td>
-          </tr> -->
+          </tr>
+
         </tbody>
       </table>
     </v-flex>

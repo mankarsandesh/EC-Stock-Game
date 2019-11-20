@@ -8,7 +8,7 @@
     <v-container
       fluid
       pa-0
-      style="background-color: #003e70 !important;max-height: 49px; !important"
+      style="background-color: #003e70 !important;max-height: 69px; !important"
     >
     
       <v-container pa-0>

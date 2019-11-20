@@ -434,7 +434,7 @@ const createStore = () => {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
                     const res = await this.$axios.$get(`/api/fetchHistoryBet?apikey=${context.state.auth_token}`)
                     console.log(res);
-                    console.log("Hello");
+                    
                     context.commit("setHistory",res.data);                   
                 } catch (error) {
                     console.log(error);

@@ -1,16 +1,19 @@
 export default function ({ isHMR, app, store, route, error, redirect }) {
     // If middleware is called from hot module replacement, ignore it
     if (isHMR) { return }
-    if (route.params.id !== undefined) {
-        console.log("good")
-        store.commit("setIsLoadingStockGame",true)
+    
+    // If middleware is called from hot module replacement, ignore it
+    if (route.path ==="/") {
+       return
     }
 
-    if (store.getters.getAuth_token == "") {
+    if (!store.getters.checkAuth) {
         // call Api to show in chart and store it in Vuex
-        store.dispatch('makeAuth')
-    }
+        // store.dispatch('makeAuth')
 
+        // redirect to whitelabel
+        location.href = "http://localhost:3000/" 
+    }
     //     // Get locale from params
     //     const locale = store.state.locale || defaultLocale
     //     if (!store.state.locales.includes(locale)) {
