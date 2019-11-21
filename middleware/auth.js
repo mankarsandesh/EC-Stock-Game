@@ -9,25 +9,8 @@ export default function ({ isHMR, app, store, route, error, redirect }) {
 
     if (!store.getters.checkAuth) {
         // call Api to show in chart and store it in Vuex
-        // store.dispatch('makeAuth')
 
         // redirect to whitelabel
-        location.href = "http://localhost:3000/" 
+        app.router.push('/')
     }
-    //     // Get locale from params
-    //     const locale = store.state.locale || defaultLocale
-    //     if (!store.state.locales.includes(locale)) {
-    //         return error({ message: 'This page could not be found.', statusCode: 404 })
-    //     }
-    //     // Set locale
-    //     store.commit('SET_LANG', locale)
-    //         // app.i18n.locale = store.state.locale
-    //         // If route is /<defaultLocale>/... -> redirect to /...
-    //     if (locale === defaultLocale && route.fullPath.indexOf('/' + defaultLocale) === 0) {
-    //         const toReplace = '^/' + defaultLocale + (route.fullPath.indexOf('/' + defaultLocale + '/') === 0 ? '/' : '')
-    //         const re = new RegExp(toReplace)
-    //         return redirect(
-    //             route.fullPath.replace(re, '/')
-    //         )
-    //     }
 }

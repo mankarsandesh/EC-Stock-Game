@@ -4,9 +4,9 @@ export default function ({ isHMR, app, store, route, error, redirect }) {
 
     const apiKey = route.query.apiKey
     if(!apiKey){
-        location.href = "http://localhost:3000/" 
+        location.href = "http://192.168.1.151:8001/" 
         return
     }
     store.commit("setAuth_token",apiKey)
-   
+    store.dispatch("asynInitCallApi")
 }

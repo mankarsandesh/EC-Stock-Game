@@ -58,7 +58,7 @@ const createStore = () => {
             stocks: {
                 btc1: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=7&limit=300&apikey=${localStorage.apikey}`,
+                        crawler: `/api/getCrawlerData?stockId=7&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/btc"
                     },
                     stockname: "btc1",
@@ -74,7 +74,7 @@ const createStore = () => {
                 },
                 usindex: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=5&limit=300&apikey=${localStorage.apikey}`,
+                        crawler: `/api/getCrawlerData?stockId=5&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/usindex"
                     },
                     stockname: "usindex",
@@ -90,7 +90,7 @@ const createStore = () => {
                 },
                 btc5: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=6&limit=300&apikey=${localStorage.apikey}`,
+                        crawler: `/api/getCrawlerData?stockId=6&limit=300&apikey=`,
                         //  // set liveprice to null for use the same liveprice in  loop 1 above
                         //  // it will not call api
                         //  // it must has loop 1 above  or other loop above
@@ -109,7 +109,7 @@ const createStore = () => {
                 },
                 sh000001: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=4&limit=300&apikey=${localStorage.apikey}`,
+                        crawler: `/api/getCrawlerData?stockId=4&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/sh01"
                     },
                     stockname: "sh000001",
@@ -125,7 +125,7 @@ const createStore = () => {
                 },
                 sz399001: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=3&limit=300&apikey=${localStorage.apikey}`,
+                        crawler: `/api/getCrawlerData?stockId=3&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/sz01"
                     },
                     stockname: "sz399001",
@@ -141,7 +141,7 @@ const createStore = () => {
                 },
                 sz399415: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=2&limit=300&apikey=${localStorage.apikey}`,
+                        crawler: `/api/getCrawlerData?stockId=2&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/sz15"
                     },
                     stockname: "sz399415",
@@ -157,7 +157,7 @@ const createStore = () => {
                 },
                 sh000300: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=1&limit=300&apikey=${localStorage.apikey}`,
+                        crawler: `/api/getCrawlerData?stockId=1&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/sz300"
                     },
                     stockname: "sh000300",
@@ -297,49 +297,49 @@ const createStore = () => {
 
             },
 
-            async makeAuth(context) {
-                console.warn("auth working...")
-                const userForm = {
-                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "macky",
-                    "userId": "11223344",
-                    "balance": 800000,
-                    "webId": "0001"
-                }
-                try {
-                    if (localStorage.apikey == null) {
-                        const res = await this.$axios.$post("/api/redirect", userForm)
-                        localStorage.apikey = res.data.token;
-                        console.log(localStorage.apikey)
-                    }
-                    // check user's apikey by use apikey to get user informtion
-                    const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
-                    // if user api key is invalidate it will be redirect to main page
-                    if (userRes.status == false || userRes.status !== undefined) {
-                        localStorage.removeItem('apikey');
-                        location.href = "http://" + location.host
-                        return
-                    }
-                    // store token
-                    context.commit("setAuth_token", localStorage.apikey)
-                    const userData = {
-                        name: userRes.name,
-                        balance: userRes.userBalance,
-                    }
-                    context.commit("setUserData", userData)
-                    //get user balance
-                    context.dispatch("balance")
-                    // get data stock crawler
-                    context.dispatch("asynInitCallApi")
+            // async makeAuth(context) {
+            //     console.warn("auth working...")
+            //     const userForm = {
+            //         "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
+            //         "name": "macky",
+            //         "userId": "11223344",
+            //         "balance": 800000,
+            //         "webId": "0001"
+            //     }
+            //     try {
+            //         if (localStorage.apikey == null) {
+            //             const res = await this.$axios.$post("/api/redirect", userForm)
+            //             localStorage.apikey = res.data.token;
+            //             console.log(localStorage.apikey)
+            //         }
+            //         // check user's apikey by use apikey to get user informtion
+            //         const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
+            //         // if user api key is invalidate it will be redirect to main page
+            //         if (userRes.status == false || userRes.status !== undefined) {
+            //             localStorage.removeItem('apikey');
+            //             location.href = "http://" + location.host
+            //             return
+            //         }
+            //         // store token
+            //         context.commit("setAuth_token", localStorage.apikey)
+            //         const userData = {
+            //             name: userRes.name,
+            //             balance: userRes.userBalance,
+            //         }
+            //         context.commit("setUserData", userData)
+            //         //get user balance
+            //         context.dispatch("balance")
+            //         // get data stock crawler
+            //         context.dispatch("asynInitCallApi")
 
 
-                } catch (ex) {
-                    console.error(ex)
-                    alert(`error in makeAuth middleware ${ex}`)
-                }
+            //     } catch (ex) {
+            //         console.error(ex)
+            //         alert(`error in makeAuth middleware ${ex}`)
+            //     }
 
 
-            },
+            // },
 
             asynInitCallApi(context) {
                 // call crawler api
@@ -376,7 +376,7 @@ const createStore = () => {
             // to get crawler data
             async asynCrawlerStock(context, payload) {
                 try {
-                    const url = payload.url
+                    const url = payload.url + context.state.auth_token
                     const name = payload.name
                     const result = await this.$axios.$get(url)
                     if (result.data.length > 0) {
