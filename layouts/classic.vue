@@ -335,18 +335,18 @@ export default {
     },
     created() {
         this.setLanguage();
-        
     },
     mounted() {
         $("#switch").text(this.switch1)
-        if (localStorage.apikey == null) {
-            location.href = "http://" + location.host
-        }
+        
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
         this.loadchart();
         this.getMenu();
+        $(".isLoadChart").click(() => {
+            this.loadchart();
+        });
         // this.asynInitCallApi();
         // websocket broadcast live time and timer
         const socket = openSocket("https://websocket-timer.herokuapp.com");

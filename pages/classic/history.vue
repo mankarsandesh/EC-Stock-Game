@@ -70,7 +70,7 @@
                                         </span></td>
                                     <td>
                                         <span class="text-xs-right" v-for="(column, key) in headers" :key="key">
-                                            <strong v-if="column.totals" :style="total1(column) < 0 ? 'color: red;':'color: green;'">{{ formatToPrice(total1(column)) }}</strong>
+                                            <strong v-if="column.totals" :style="total1(column) < 0 ? 'color: red;':''">{{ formatToPrice(total1(column)) }}</strong>
                                         </span>
                                     </td>
                                 </tr>
@@ -78,7 +78,7 @@
                                     <td>{{$t('msg.Total')}}</td>
                                     <td colspan="3">{{pagination.totalItems}}</td>
                                     <td><strong>{{formatToPrice(sumTotalbetAmount)}}</strong></td>
-                                    <td><strong :style="sumTotalrollingAmount < 0 ? 'color: red;':'color: green;'">{{formatToPrice(sumTotalrollingAmount)}}</strong></td>
+                                    <td><strong :style="sumTotalrollingAmount < 0 ? 'color: red;':''">{{formatToPrice(sumTotalrollingAmount)}}</strong></td>
                                 </tr>
 
                             </template>
@@ -230,7 +230,7 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
             if (history.data == null) return
             // console.log(history.data)
 
@@ -289,7 +289,7 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
             return this.StockName = stcokId.data
 
         },

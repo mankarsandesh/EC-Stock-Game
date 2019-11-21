@@ -133,7 +133,7 @@ export default {
             }, 0) : 0
         },
         async getAllCrawler(val) {
-            let DataCrawler = await this.$axios.$get('/api/getAllCrawler?limit=300&apikey=' + this.$store.state.auth_token)
+            let DataCrawler = await this.$axios.$get('/api/getAllCrawler?limit=300&apikey=' + localStorage.apikey)
             // console.log(DataCrawler)
             if (DataCrawler.data == null) return
             for (let i = 0; i < DataCrawler.data.length; i++) {
