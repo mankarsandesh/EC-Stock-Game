@@ -8,6 +8,8 @@ const createStore = () => {
             loader: false,
             isLoadingStockGame: false,
             auth_token: "",
+            isLoadingAnnoucement:[],
+            isLoadingHistory : [],
             userData: {},
             balance: '',
             footerBetAmount: 0,
@@ -240,7 +242,15 @@ const createStore = () => {
             },
             setFooterBetAmount(state, payload) {
                 state.footerBetAmount = parseInt(payload)
+            },
+            setAnouncement(state,payload){
+                state.isLoadingAnnoucement = payload
+            },
+            setHistory(state,payload){
+                state.isLoadingHistory = payload
             }
+            
+            
         },
         actions: {
             async balance(context) {
@@ -379,18 +389,16 @@ const createStore = () => {
                     const url = payload.url + context.state.auth_token
                     const name = payload.name
                     const result = await this.$axios.$get(url)
-                    if (result.data.length > 0) {
+                    if (result) {
                         context.state.stocks[name].crawlerData = result.data
                         context.state.stocks[name].lastDraw = result.data[result.data.length - 1].PT
                         context.state.stocks[name].timeLastDraw = result.data[result.data.length - 1].writetime
                         // console.warn(context.state.stocks[name].crawlerData)
                         console.log(result.data)
-                    } else {
-                        console.error(`can not fetch ${payload.url} error ${result.message}`)
                     }
                 } catch (error) {
                     console.log(error)
-
+                   
                 }
             },
 
@@ -408,16 +416,38 @@ const createStore = () => {
                 } catch (error) {
                     console.log(error)
                 }
+            },
+            // to get Annoucement
+            async asyannoucement(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/announcement?apikey=${context.state.auth_token}`)
+                    console.log(res);
+                    context.commit("setAnouncement",res.data);                   
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            // to get User bet History
+            async asyhistory(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/fetchHistoryBet?apikey=${context.state.auth_token}`)
+                    console.log(res);
+                    
+                    context.commit("setHistory",res.data);                   
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
         },
         getters: {
-            checkAuth(state) {
-                if (state.auth_token === "" || state.auth_token == null || state.auth_token == undefined) {
-                    return false
-                } else {
-                    return true
-                }
+            getHistory(state){
+                return state.isLoadingHistory
+            },
+            getAnnoucement(state){
+                return state.isLoadingAnnoucement
             },
             getIsLoadingStockGame(state) {
                 return state.isLoadingStockGame
