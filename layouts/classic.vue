@@ -22,6 +22,25 @@
                     </v-btn>
                     <languageDialog ref="language"></languageDialog>
                 </template>
+
+                <v-menu offset-y :close-on-content-click="false" :nudge-width="150">
+                    <template v-slot:activator="{ on }">
+                        <v-btn color="primary" flat icon v-on="on">
+                            <v-icon size="30">account_circle</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-tile>
+                            <v-list-tile-title>Tnk1</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-title>Profile</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile>
+                            <v-list-tile-title>Sing Out</v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-menu>
             </v-layout>
         </v-container>
     </v-toolbar>
@@ -316,18 +335,18 @@ export default {
     },
     created() {
         this.setLanguage();
-        this.makeAuth()
     },
     mounted() {
         $("#switch").text(this.switch1)
-        if (localStorage.apikey == null) {
-            location.href = "http://"+location.host
-        }
+        
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
         this.loadchart();
         this.getMenu();
+        $(".isLoadChart").click(() => {
+            this.loadchart();
+        });
         // this.asynInitCallApi();
         // websocket broadcast live time and timer
         const socket = openSocket("https://websocket-timer.herokuapp.com");
@@ -351,7 +370,7 @@ export default {
 
     },
     methods: {
-        ...mapActions(["asynInitCallApi", "makeAuth"]),
+        ...mapActions(["asynInitCallApi"]),
         ...mapMutations(["SET_LANG", "SET_TIME"]),
         setLanguage() {
             let lang = localStorage.getItem("lang");

@@ -35,7 +35,7 @@
                                 <v-text-field v-model="search" append-icon="search" single-line hide-details></v-text-field>
                             </v-flex>
                             <v-flex xs6 md2 mr-1>
-                                <v-select hide-details single-line  :items="items" label="Sort By :" v-model="itemss"></v-select>
+                                <v-select hide-details single-line :items="items" label="Sort By :" v-model="itemss"></v-select>
                             </v-flex>
                         </v-layout>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
@@ -70,7 +70,7 @@
                                         </span></td>
                                     <td>
                                         <span class="text-xs-right" v-for="(column, key) in headers" :key="key">
-                                            <strong v-if="column.totals" :style="total1(column) < 0 ? 'color: red;':'color: green;'">{{ formatToPrice(total1(column)) }}</strong>
+                                            <strong v-if="column.totals" :style="total1(column) < 0 ? 'color: red;':''">{{ formatToPrice(total1(column)) }}</strong>
                                         </span>
                                     </td>
                                 </tr>
@@ -78,7 +78,7 @@
                                     <td>{{$t('msg.Total')}}</td>
                                     <td colspan="3">{{pagination.totalItems}}</td>
                                     <td><strong>{{formatToPrice(sumTotalbetAmount)}}</strong></td>
-                                    <td><strong :style="sumTotalrollingAmount < 0 ? 'color: red;':'color: green;'">{{formatToPrice(sumTotalrollingAmount)}}</strong></td>
+                                    <td><strong :style="sumTotalrollingAmount < 0 ? 'color: red;':''">{{formatToPrice(sumTotalrollingAmount)}}</strong></td>
                                 </tr>
 
                             </template>
@@ -217,7 +217,7 @@ export default {
             const table = this.$refs.table
             //console.log('table',table);
             return table ? table.filteredItems.reduce((s, i) => {
-                return s + parseInt(i[column.value], 10)
+                return s + parseFloat(i[column.value], 10)
             }, 0) : 0
         },
         dateSearch() {
@@ -230,7 +230,7 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get(this.$store.state.urltest + '/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
             if (history.data == null) return
             // console.log(history.data)
 
@@ -289,7 +289,7 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             return this.StockName = stcokId.data
 
         },

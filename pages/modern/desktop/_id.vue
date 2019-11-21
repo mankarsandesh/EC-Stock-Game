@@ -50,10 +50,10 @@
               <v-flex class="text-xs-center" px-2>
                 <span>Last draw:</span>
                 <v-flex flex-style>
-                  <h4 v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></h4>
+                  <span v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></span>
                 </v-flex>
               </v-flex>
-              <v-spacer></v-spacer>
+              <!-- <v-spacer></v-spacer> -->
               <v-flex class="text-xs-center" px-2>
                 <span>Bet Close in:</span>
                 <v-flex flex-style>
@@ -79,7 +79,7 @@
             <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
+        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''" >
           <div v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <tableTrendMap></tableTrendMap>
@@ -90,8 +90,13 @@
             <v-icon left dark>add</v-icon>add trend chart
           </v-btn>
         </v-flex>
+
+
       </v-flex>
     </v-layout>
+    
+
+
   </div>
 </template>
 <script>
@@ -119,6 +124,7 @@ export default {
     selectStock
   },
   data() {
+     
     return {
       items: [
         { title: "Click Me" },
@@ -130,21 +136,23 @@ export default {
       isloading: false
     };
   },
-  destroyed() {
-        this.setIsLoadingStockGame(true)
-  },
   mounted() {
+    
     // call this every page that used "dekstopModern" layout to hide loading
-    this.setIsLoadingStockGame(false)
+    this.setIsLoadingStockGame(false);
     console.warn("mounted...");
-
-
-    this.makeAuth();
-    // this.test()
 
     // set footerBet to zero because on this page cant use bet footer
     this.setFooterBetAmount(0);
     this.removeAllFooterBet();
+  },
+  watch: {
+    "$screen.width"() {
+      if (this.$screen.width <= 1204) {
+        let linkto = `/modern/betting/${this.$route.params.id}`;
+        this.$router.push(linkto)
+      }
+    }
   },
   methods: {
     //  async test(){
@@ -161,8 +169,11 @@ export default {
     //             console.warn(token)
     //             console.warn("token")
     // },
-    ...mapActions(["makeAuth"]),
-    ...mapMutations(["setFooterBetAmount", "removeAllFooterBet","setIsLoadingStockGame"]),
+    ...mapMutations([
+      "setFooterBetAmount",
+      "removeAllFooterBet",
+      "setIsLoadingStockGame"
+    ]),
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -176,7 +187,10 @@ export default {
           this.trendTypes.push("twoDigit");
           break;
       }
-    }
+    },loaded() {
+        this.isLoad = true
+        console.log(isLoad);
+      }
   },
   computed: {
     ...mapGetters([
@@ -193,6 +207,5 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 

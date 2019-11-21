@@ -58,9 +58,8 @@ export default {
       active: null
     };
   },
-  mounted() {
-    // call this every page that used "dekstopModern" layout to hide loading
-    this.setIsLoadingStockGame(false);
+  mounted(){
+
   },
   methods: {
     ...mapMutations(["setIsLoadingStockGame"])

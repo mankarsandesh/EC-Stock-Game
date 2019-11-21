@@ -1,11 +1,5 @@
 <template>
 <div>
-    <!-- {{getStockName($route.params.id)}} -->
-    <!-- {{$route.params.id}} -->
-    <!-- <br/> -->
-    <!-- {{getStockNewData($route.params.id)}} -->
-    <!-- tag ldialog -->
-
     <div v-if="$route.params.id.split('-')[3] == 'currentbet'">
         <currentbet />
     </div>
@@ -159,6 +153,7 @@
                 </v-card>
             </v-tab-item>
         </v-tabs-items>
+        
         <!-- end form typy bet -->
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
@@ -179,24 +174,6 @@
                 </v-flex>
             </v-layout>
         </v-card>
-
-        <!-- <v-card v-if="!$vuetify.breakpoint.smAndDown">
-            <v-layout row wrap>
-                <v-flex xs12 md12>
-
-                    <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                            <span class="btn-chips" >{{chip.price}}</span>
-                        </v-img>
-                    </v-avatar>
-
-                    {{price}}
-                    <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
-                    <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
-
-                </v-flex>
-            </v-layout>
-        </v-card> -->
 
         <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ $t('gamemsg.'+baccarat1.name) }}</v-tab>
@@ -479,12 +456,12 @@ export default {
         },
 
         async getbalance() {
-            let balance = await this.$axios.$get(this.$store.state.urltest + '/api/me?apikey=' + localStorage.apikey)
+            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
             this.balance = balance.userBalance
 
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(this.$store.state.urltest + '/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             stcokId.data.forEach(element => {
                 if (element.stockName == this.$route.params.id.split("-")[1]) {
                     this.stockname = element.stockId
@@ -499,14 +476,14 @@ export default {
                 this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
                 // console.log(this.formData);
                 console.log("send to api server");
-                const res = await this.$axios.post(this.$store.state.urltest + "/api/storebet?apikey=" + localStorage.apikey, this.formData)
+                const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
                 console.log(res)
                 setTimeout(() => {
                     this.getalertstartstop(res.data)
                     this.setPrice("reset");
                     $(".getupdatebalance")[0].click()
                     $("#txtbalance").text(this.formatToPrice(this.balance))
-                }, 1000);
+                }, 700);
             }
         },
 
@@ -741,7 +718,7 @@ export default {
         },
 
         async alertOutCome() {
-            let totalPayout = await this.$axios.$get(this.$store.state.urltest + '/api/me/totalPayout?apikey=' + localStorage.apikey)
+            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.auth_token)
             // console.log(totalPayout)
             if (totalPayout.status == false) return;
             this.snackbar = true;

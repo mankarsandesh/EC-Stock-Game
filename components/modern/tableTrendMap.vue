@@ -52,13 +52,13 @@
           <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs10">
+      <v-flex class="xs10" > 
         <v-layout row wrap>
            <v-flex xs12>
             <trendMap
               :dataArray="getStockCrawlerData($route.params.id)"
               :trendType="trendType"
-              :key="getStockCrawlerData($route.params.id)[0].created_at + trendType"
+              :key="getStockCrawlerData($route.params.id)[0].writetime + trendType"
               :isFullscreen="isFullscreen"
             ></trendMap>
           </v-flex>

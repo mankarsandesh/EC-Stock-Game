@@ -50,11 +50,11 @@ module.exports = {
         "@/plugins/callApi",
         "@/plugins/i18n",
         "@/plugins/chart",
-        "@/plugins/coinLocalStorage",
-        "@/plugins/sweetAlert"
+        "@/plugins/sweetAlert",
+        "@/plugins/vueScreen"
     ],
     router: {
-        // middleware: 'i18n'
+        middleware:[ "auth","showLoading"]
     },
 
     /*
@@ -70,7 +70,7 @@ module.exports = {
      */
     axios: {
         // See https://github.com/nuxt-community/axios-module#options
-        baseURL: "http://159.138.45.25"
+        baseURL: "http://159.138.54.214/"
     },
 
     /*

@@ -8,8 +8,8 @@
         </v-avatar>
 
         <p>
-          Online status : {{profile.totalOnlineTime}}
-          <span>current balance : {{profile.userBalance}}</span>
+          Online status : {{setTime(time.todayOnline, 0)}}
+          <span>current balance : {{formatToPrice(userBalance)}}</span>
         </p>
       </div>
 
@@ -143,6 +143,7 @@
     </v-form>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 export default {
@@ -182,23 +183,61 @@ export default {
         countrySelect: "",
         balanceSelect: "",
         rollingSelect: ""
-      }
+      },
+      time: "",
+      userBalance: ""
     };
   },
   created() {
     this.fetchAll();
   },
+  mounted() {
+    this.getOnlineTime();
+  },
   methods: {
-    async updateProfile() {
-      return this.profile;
-      const req = this.$axios.$post("");
+    formatToPrice(value) {
+      return `$ ${Number(value)
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     },
     async fetchAll() {
-      const res = await this.$axios.$get(
-        this.$store.state.urltest + "/api/me?apikey=" + localStorage.apikey
+      let res = await this.$axios.$get(
+        "/api/me?apikey=" + this.$store.state.auth_token
       );
+      this.userBalance = res.userBalance;
       console.log(res);
-      this.profile = res;
+    },
+    async getOnlineTime() {
+      let dataGet = await this.$axios.$get(
+        "/api/me/online?method=profile&apikey=" + this.$store.state.auth_token
+      );
+      this.time = dataGet.data;
+    },
+    setTime(seconds, val) {
+      let days = Math.floor(seconds / (24 * 60 * 60));
+      seconds -= days * (24 * 60 * 60);
+      let hours = Math.floor(seconds / (60 * 60));
+      seconds -= hours * (60 * 60);
+      let minutes = Math.floor(seconds / 60);
+      seconds -= minutes * 60;
+      if (val == 1) {
+        return (
+          (0 < days ? days + this.$root.$t("msg.days") + ", " : "") +
+          hours +
+          this.$root.$t("msg.hours") +
+          ", " +
+          minutes +
+          this.$root.$t("msg.minute")
+        );
+      } else {
+        return (
+          hours +
+          this.$root.$t("msg.hours") +
+          ", " +
+          minutes +
+          this.$root.$t("msg.minute")
+        );
+      }
     }
   }
 };

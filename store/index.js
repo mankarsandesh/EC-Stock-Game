@@ -5,8 +5,11 @@ import { hostname } from 'os'
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            loader: false,
             isLoadingStockGame: false,
             auth_token: "",
+            isLoadingAnnoucement: [],
+            isLoadingHistory: [],
             userData: {},
             balance: '',
             footerBetAmount: 0,
@@ -57,7 +60,7 @@ const createStore = () => {
             stocks: {
                 btc1: {
                     url: {
-                        crawler: "/api/datahistory/BTCUSDT1",
+                        crawler: `/api/getCrawlerData?stockId=7&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/btc"
                     },
                     stockname: "btc1",
@@ -73,7 +76,7 @@ const createStore = () => {
                 },
                 usindex: {
                     url: {
-                        crawler: "/api/datahistory/US dollar Index",
+                        crawler: `/api/getCrawlerData?stockId=5&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/usindex"
                     },
                     stockname: "usindex",
@@ -89,7 +92,7 @@ const createStore = () => {
                 },
                 btc5: {
                     url: {
-                        crawler: "/api/datahistory/BTCUSDT",
+                        crawler: `/api/getCrawlerData?stockId=6&limit=300&apikey=`,
                         //  // set liveprice to null for use the same liveprice in  loop 1 above
                         //  // it will not call api
                         //  // it must has loop 1 above  or other loop above
@@ -108,7 +111,7 @@ const createStore = () => {
                 },
                 sh000001: {
                     url: {
-                        crawler: "/api/datahistory/SH000001",
+                        crawler: `/api/getCrawlerData?stockId=4&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/sh01"
                     },
                     stockname: "sh000001",
@@ -124,7 +127,7 @@ const createStore = () => {
                 },
                 sz399001: {
                     url: {
-                        crawler: "/api/datahistory/SZ399001",
+                        crawler: `/api/getCrawlerData?stockId=3&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/sz01"
                     },
                     stockname: "sz399001",
@@ -140,7 +143,7 @@ const createStore = () => {
                 },
                 sz399415: {
                     url: {
-                        crawler: "/api/datahistory/SZ399415",
+                        crawler: `/api/getCrawlerData?stockId=2&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/sz15"
                     },
                     stockname: "sz399415",
@@ -156,7 +159,7 @@ const createStore = () => {
                 },
                 sh000300: {
                     url: {
-                        crawler: "/api/datahistory/SH00300",
+                        crawler: `/api/getCrawlerData?stockId=1&limit=300&apikey=`,
                         livePrice: "/api/newlivedata/sz300"
                     },
                     stockname: "sh000300",
@@ -239,12 +242,20 @@ const createStore = () => {
             },
             setFooterBetAmount(state, payload) {
                 state.footerBetAmount = parseInt(payload)
+            },
+            setAnouncement(state, payload) {
+                state.isLoadingAnnoucement = payload
+            },
+            setHistory(state, payload) {
+                state.isLoadingHistory = payload
             }
+
+
         },
         actions: {
             async balance(context) {
                 try {
-                    const res = await this.$axios.$get(`${context.getters.getUrltest}/api/me/balance?apikey=${localStorage.apikey}`)
+                    const res = await this.$axios.$get(`/api/me/balance?apikey=${localStorage.apikey}`)
                     if (res.status) {
                         let balance = res.data
                         context.commit("setBalance", balance)
@@ -254,49 +265,7 @@ const createStore = () => {
                     alert(ex)
                 }
             },
-            async makeAuth(context) {
-                console.warn("auth working...")
-                const body = {
-                    client_id: 8,
-                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "TestingUser",
-                    "userId": "8595412",
-                    "balance": 800000,
-                    "webId": "0001"
-                }
-                try {
-                    if (localStorage.apikey == null) {
-                        const res = await this.$axios.$post(`${context.getters.getUrltest}/api/redirect`, body)
-                        localStorage.apikey = res.data.token;
-                        console.log(localStorage.apikey)
-                    }
 
-                    const userRes = await this.$axios.$get(`${context.getters.getUrltest}/api/me?apikey=${localStorage.apikey}`)
-                        // console.log(userRes)
-                    setTimeout(() => {
-                        // console.log(userRes.status)
-                        if (userRes.status == false && userRes.status !== undefined) {
-                            localStorage.removeItem('apikey');
-                            location.href = "http://" + location.host
-                        }
-                    }, 2500)
-
-
-                    const userData = {
-                        name: userRes.name,
-                        balance: userRes.userBalance,
-                    }
-                    context.dispatch("balance")
-                    context.commit("setAuth_token", localStorage.apikey)
-                    context.commit("setUserData", userData)
-                    console.log("userRes")
-
-                } catch (ex) {
-                    console.error(ex)
-                    alert(ex)
-                }
-
-            },
             async sendBetting(context) {
                 context.commit("setIsSendBetting", true)
                 console.warn("sendBetting...")
@@ -305,7 +274,7 @@ const createStore = () => {
                     }
                     // console.log(betData)
                 try {
-                    const res = await this.$axios.$post(`${context.getters.getUrltest}/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
 
                     console.log("res./.......")
                     console.log(res)
@@ -337,6 +306,51 @@ const createStore = () => {
 
 
             },
+
+            // async makeAuth(context) {
+            //     console.warn("auth working...")
+            //     const userForm = {
+            //         "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
+            //         "name": "macky",
+            //         "userId": "11223344",
+            //         "balance": 800000,
+            //         "webId": "0001"
+            //     }
+            //     try {
+            //         if (localStorage.apikey == null) {
+            //             const res = await this.$axios.$post("/api/redirect", userForm)
+            //             localStorage.apikey = res.data.token;
+            //             console.log(localStorage.apikey)
+            //         }
+            //         // check user's apikey by use apikey to get user informtion
+            //         const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
+            //         // if user api key is invalidate it will be redirect to main page
+            //         if (userRes.status == false || userRes.status !== undefined) {
+            //             localStorage.removeItem('apikey');
+            //             location.href = "http://" + location.host
+            //             return
+            //         }
+            //         // store token
+            //         context.commit("setAuth_token", localStorage.apikey)
+            //         const userData = {
+            //             name: userRes.name,
+            //             balance: userRes.userBalance,
+            //         }
+            //         context.commit("setUserData", userData)
+            //         //get user balance
+            //         context.dispatch("balance")
+            //         // get data stock crawler
+            //         context.dispatch("asynInitCallApi")
+
+
+            //     } catch (ex) {
+            //         console.error(ex)
+            //         alert(`error in makeAuth middleware ${ex}`)
+            //     }
+
+
+            // },
+
             asynInitCallApi(context) {
                 // call crawler api
                 for (let i = 0; i < context.getters.getStockLength; i++) {
@@ -350,48 +364,45 @@ const createStore = () => {
                 }
                 context.getters.getStockChart
                     // call live price api
-                setInterval(function() {
-                    for (let i = 0; i < context.getters.getStockLength; i++) {
-                        let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
-                            // check if one stock has multi loop it will use the same live price
-                            // and in states.stocks url live price is setten to "null"
-                            // disable first by macky 11:35 02/09/2019
-                            // if (url == null) {    
-                            //     continue
-                            // }
-                        let name = context.getters.getStockKeys[i]
-                        let payload = {
-                            url,
-                            name
-                        }
-                        context.dispatch("asynLivePrice", payload)
-                    }
-                }, 10000);
+                    // setInterval(function () {
+                    //     for (let i = 0; i < context.getters.getStockLength; i++) {
+                    //         let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
+                    //         // check if one stock has multi loop it will use the same live price
+                    //         // and in states.stocks url live price is setten to "null"
+                    //         // disable first by macky 11:35 02/09/2019
+                    //         // if (url == null) {    
+                    //         //     continue
+                    //         // }
+                    //         let name = context.getters.getStockKeys[i]
+                    //         let payload = {
+                    //             url,
+                    //             name
+                    //         }
+                    //         context.dispatch("asynLivePrice", payload)
+                    //     }
+                    // }, 10000);
 
             },
-            async asynBalance(context) {
-                try {
-
-                } catch (error) {
-                    console.log(error)
-                }
-            },
-            // to get crawler
+            // to get crawler data
             async asynCrawlerStock(context, payload) {
                 try {
-                    const url = payload.url
+                    const url = payload.url + context.state.auth_token
                     const name = payload.name
                     const result = await this.$axios.$get(url)
                     if (result) {
-                        context.state.stocks[name].crawlerData = result
-                        context.state.stocks[name].lastDraw = result[result.length - 1].PT
-                        context.state.stocks[name].timeLastDraw = result[result.length - 1].created_at
-                            // console.log(context.state.stocks[name].crawlerData)
+                        context.state.stocks[name].crawlerData = result.data
+                        context.state.stocks[name].lastDraw = result.data[result.data.length - 1].PT
+                        context.state.stocks[name].timeLastDraw = result.data[result.data.length - 1].writetime
+                            // console.warn(context.state.stocks[name].crawlerData)
+                        console.log(result.data)
                     }
                 } catch (error) {
                     console.log(error)
+
                 }
             },
+
+
             // to get live price
             async asynLivePrice(context, payload) {
                 try {
@@ -406,9 +417,45 @@ const createStore = () => {
                     console.log(error)
                 }
             },
+            // to get Annoucement
+            async asyannoucement(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/announcement?apikey=${context.state.auth_token}`)
+                    console.log(res);
+                    context.commit("setAnouncement", res.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            // to get User bet History
+            async asyhistory(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/fetchHistoryBet?apikey=${context.state.auth_token}`)
+                    console.log(res);
+
+                    context.commit("setHistory", res.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
 
         },
         getters: {
+            checkAuth(state) {
+                if (state.auth_token === "" || state.auth_token == null || state.auth_token == undefined) {
+                    return false
+                } else {
+                    return true
+                }
+            },
+            getHistory(state) {
+                return state.isLoadingHistory
+            },
+            getAnnoucement(state) {
+                return state.isLoadingAnnoucement
+            },
             getIsLoadingStockGame(state) {
                 return state.isLoadingStockGame
             },
@@ -700,7 +747,7 @@ const createStore = () => {
                 let stockTime = []
                 for (let j = 0; j < prices.length; j++) {
                     let data = prices[j].PT
-                    let resTime = prices[j].created_at
+                    let resTime = prices[j].writetime
                     stockPrice.push(data)
                     stockTime.push(resTime)
                 }

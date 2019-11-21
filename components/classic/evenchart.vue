@@ -37,11 +37,8 @@ export default {
             }
         },
         getChart() {
-            if (this.StockData === "") {
-                return
-            } else {
-                this.load = true
-            }
+            if (this.StockData === "") return
+            else this.load = true
 
             let datas = [];
             let labelss = [];
@@ -49,12 +46,9 @@ export default {
             let pointBackgroundColor = [];
             let value_no;
             let num;
-            let title;
-            if (this.StockData[0].stockname == 'BTC/USDT') {
-                title = "BTC/USDT 5"
-            } else {
-                title = this.StockData[0].stockname
-            }
+            let s = this.$root.$t('stockname.' + this.$route.params.id.split('-')[1]);
+            let l = this.$route.params.id.split('-')[1] == 'btc1' ? ' 1 ' : this.$route.params.id.split('-')[1] == 'btc5' ? ' 5 ' : '';
+            let title = s + l
             this.StockData.forEach(element => {
 
                 let no_firsts = this.formatToPrice(element.PT)[this.formatToPrice(element.PT).length - 2].toString();
@@ -91,7 +85,7 @@ export default {
                     num = value_no % 2 == 0
                 }
 
-                let date = new Date(element.created_at.replace(/-/g, "/"));
+                let date = new Date(element.writetime.replace(/-/g, "/"));
                 labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + " " + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
                 datas.push(value_no);
                 pointBackgroundColor.push(num ? "blue" : "red");
@@ -298,7 +292,7 @@ export default {
                     }
                     items.push({
                         id: elements.id,
-                        date: elements.created_at.replace(/-/g, "/"),
+                        date: elements.writetime.replace(/-/g, "/"),
                         value: value_no,
                         color: num
                     });

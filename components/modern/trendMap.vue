@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-layout wrap>
-      <v-flex
-        :class="setClass('pb-5 pr-3')"
+      <v-flex  xs12 sm12 md6 lg6 
         v-show="which_one=='B/S' || which_one== !isFullscreen "
       >
         <div v-show="isFullscreen">
@@ -19,6 +18,7 @@
       </v-flex>
 
       <v-flex
+        xs12 sm12 md6 lg6 
         :class="setClass(' pl-3 pb-5')"
         v-show="which_one=='O/E' || which_one== !isFullscreen "
       >
@@ -35,6 +35,7 @@
         </div>
       </v-flex>
       <v-flex
+      xs12 sm12 md6 lg6 
         :class="setClass('pb-5 pr-3')"
         v-show="which_one=='U/L' || which_one== !isFullscreen "
       >
@@ -52,6 +53,7 @@
         </div>
       </v-flex>
       <v-flex
+      xs12 sm12 md6 lg6 
         :class="setClass('pl-3 pb-5')"
         v-show="which_one=='NUM' || which_one== !isFullscreen "
       >
@@ -237,7 +239,7 @@ export default {
           let rs = element.PT[element.PT.length - 2].toString();
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameid + "\n" + element.PT + "\n" + element.created_at
+            element.gameid + "\n" + element.PT + "\n" + element.writetime
           );
           //bigsmall
           if (firstlast < 5) {
@@ -270,7 +272,7 @@ export default {
           let rs = element.PT[element.PT.length - 1].toString();
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameid + "\n" + element.PT + "\n" + element.created_at
+            element.gameid + "\n" + element.PT + "\n" + element.writetime
           );
           //bigsmall
           if (firstlast < 5) {
@@ -305,7 +307,7 @@ export default {
             parseInt(element.PT[element.PT.length - 1]);
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameid + "\n" + element.PT + "\n" + element.created_at
+            element.gameid + "\n" + element.PT + "\n" + element.writetime
           );
           //bigsmall
           if (firstlast < 9) {
@@ -340,7 +342,7 @@ export default {
             element.PT[element.PT.length - 1].toString();
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameid + "\n" + element.PT + "\n" + element.created_at
+            element.gameid + "\n" + element.PT + "\n" + element.writetime
           );
           //bigsmall
           if (firstlast <= 49) {

@@ -16,8 +16,8 @@
         "game result": "遊戲結果"
     },
     "stock-list": {
-        "stock lists":"库存清单",
-        "stock name":"股票名称",
+        "stock lists": "库存清单",
+        "stock name": "股票名称",
         "live price": "实时报价",
         "reference": "参考网址",
         "load more": "更多"
@@ -63,6 +63,8 @@
         "Game Mode": "遊戲模式",
         "Result": "結果",
         "result out time": "結果出來了",
+        "days": "天",
+        "hours": "小时",
         "minute": "分鐘",
         "loading": "裝載...",
         "Stock": "股票",
@@ -71,7 +73,8 @@
         "All Results": "所有结果",
         "Player": "玩家",
         "Balance": "余额",
-        "msinfo": "总盈利（僅提供1天的日期)",
+        "Totalprofit": "总盈利",
+        "msinfo": "（僅提供1天的日期)",
         "price": "报价 : ",
         "stopbetting": "停止投注",
         "startbetting": "開始投注",

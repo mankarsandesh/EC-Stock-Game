@@ -1,14 +1,14 @@
 <template>
-  <v-layout wrap>
-    <v-flex xs2 px-2 py-3>
+  <v-layout wrap style="padding:10px;" >
+    <v-flex  lg2 >
       <v-select v-model="trendType" :items="typeItem" :height="10" solo></v-select>
       <v-select v-model="which_one" :items="which_oneItem" solo></v-select>
     </v-flex>
-    <v-flex xs10>
+    <v-flex lg10 >
       <trendMap
         v-if="which_one !==''"
         :dataArray="getStockCrawlerData($route.params.id)"
-        :key="getStockCrawlerData($route.params.id)[0].created_at + '-' + trendType + '-' + which_one"
+        :key="getStockCrawlerData($route.params.id)[0].writetime + '-' + trendType + '-' + which_one"
         :isFullscreen="true"
         :which_one="which_one"
         :trendType="trendType"

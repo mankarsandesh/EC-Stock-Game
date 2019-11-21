@@ -10,8 +10,10 @@
       pa-0
       style="background-color: #003e70 !important;max-height: 69px; !important"
     >
+    
       <v-container pa-0>
         <v-toolbar color="#003e70" class="white--text">
+      
           <v-layout row wrap>
             <v-flex xs4>
               <welcome-user></welcome-user>
@@ -35,19 +37,17 @@
       </v-container>
     </v-container>
     <v-container class="pa-0">
-      <v-toolbar
-        height="69"
-        color="#fff"
-        style="justify-content: center !importan;"
-      >
+      <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
         <v-toolbar-title>
           <v-img width="158" src="/logo.png"></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">{{
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
+            {{
             $t(`menu.${item.title}`)
-          }}</v-btn>
+            }}
+          </v-btn>
           <v-btn text flat @click="$refs.language.showDialog()">
             <countryFlag :country="countryflag" size="normal" />
           </v-btn>
@@ -66,7 +66,7 @@
   </v-app>
 </template>
 <script>
-import { mapGetters,mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 import menu from "~/data/menudesktop";
 
@@ -77,8 +77,8 @@ import welcomeUser from "~/components/welcomeUser";
 import openSocket from "socket.io-client";
 
 import i18n from "vue-i18n";
-
 import lottie from "lottie-web";
+
 
 export default {
   components: {
@@ -117,9 +117,9 @@ export default {
   },
 
   created() {
+    // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
     let isFullscreen = path[1];
-    // alert(isFullscreen[1])
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
@@ -135,12 +135,14 @@ export default {
       autoplay: true,
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
-     this.setIsLoadingStockGame(false)
+    // setInterval(function() {
+     
+    // }, 1000);
+
+    this.setIsLoadingStockGame(false);
   },
   methods: {
-    ...mapMutations([
-      "setIsLoadingStockGame"
-    ])
+    ...mapMutations(["setIsLoadingStockGame"])
     //  getwinuser() {
     //    this.$axios.$get("api/getwinuser").then(response => {
     //      console.log("response.....................")
