@@ -16,9 +16,9 @@ export default ({
     socket.on("time", data => {
         let time5 = data.sh000001.timer;
         let time1 = data.btc1.timer;
-        // get new data
+        // get new data crawler
         if (time5 == 241 || time1 == 41) {
-            // store.dispatch('asynInitCallApi')
+            store.dispatch('asynInitCallApi')
         }
         store.commit('SET_TIME', data)
     });
