@@ -8,6 +8,8 @@ const createStore = () => {
             loader: false,
             isLoadingStockGame: false,
             auth_token: "",
+            isLoadingAnnoucement:[],
+            isLoadingHistory : [],
             userData: {},
             balance: '',
             footerBetAmount: 0,
@@ -240,7 +242,15 @@ const createStore = () => {
             },
             setFooterBetAmount(state, payload) {
                 state.footerBetAmount = parseInt(payload)
+            },
+            setAnouncement(state,payload){
+                state.isLoadingAnnoucement = payload
+            },
+            setHistory(state,payload){
+                state.isLoadingHistory = payload
             }
+            
+            
         },
         actions: {
             async balance(context) {
@@ -311,11 +321,11 @@ const createStore = () => {
                         const res = await this.$axios.$post("/api/redirect", userForm)
                         localStorage.apikey = res.data.token;
                         console.log(localStorage.apikey)
-                    } 
+                    } else {
                         // check user's apikey by use apikey to get user informtion
                         const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
                         // if user api key is invalidate it will be redirect to main page
-                        if (userRes.status == false || userRes.status !== undefined) {
+                        if (userRes.status == false && userRes.status !== undefined) {
                             localStorage.removeItem('apikey');
                             location.href = "http://" + location.host
                             return
@@ -332,10 +342,10 @@ const createStore = () => {
                          // get data stock crawler
                          context.dispatch("asynInitCallApi")
 
-                    
+                    }
                 } catch (ex) {
                     console.error(ex)
-                    alert(`error in makeAuth middleware ${ex}`)
+                    alert(ex)
                 }
 
 
@@ -379,14 +389,12 @@ const createStore = () => {
                     const url = payload.url
                     const name = payload.name
                     const result = await this.$axios.$get(url)
-                    if (result.data.length >0) {
+                    if (result) {
                         context.state.stocks[name].crawlerData = result.data
                         context.state.stocks[name].lastDraw = result.data[result.data.length - 1].PT
                         context.state.stocks[name].timeLastDraw = result.data[result.data.length - 1].writetime
                         // console.warn(context.state.stocks[name].crawlerData)
                         console.log(result.data)
-                    }else{
-                        console.error(`can not fetch ${payload.url} error ${result.message}`)
                     }
                 } catch (error) {
                     console.log(error)
@@ -408,10 +416,39 @@ const createStore = () => {
                 } catch (error) {
                     console.log(error)
                 }
+            },
+            // to get Annoucement
+            async asyannoucement(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/announcement?apikey=${context.state.auth_token}`)
+                    console.log(res);
+                    context.commit("setAnouncement",res.data);                   
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            // to get User bet History
+            async asyhistory(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/fetchHistoryBet?apikey=${context.state.auth_token}`)
+                    console.log(res);
+                    
+                    context.commit("setHistory",res.data);                   
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
         },
         getters: {
+            getHistory(state){
+                return state.isLoadingHistory
+            },
+            getAnnoucement(state){
+                return state.isLoadingAnnoucement
+            },
             getIsLoadingStockGame(state) {
                 return state.isLoadingStockGame
             },

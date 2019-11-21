@@ -54,7 +54,7 @@ module.exports = {
         "@/plugins/vueScreen"
     ],
     router: {
-        middleware: 'auth'
+        middleware:[ "auth","showLoading"]
     },
 
     /*
