@@ -24,7 +24,7 @@
                             <v-tooltip top>
                                 <template #activator="{ on: tooltip }">
                                     <span v-on="{ ...tooltip }">{{$t('msg.Totalprofit')}} :
-                                        <animated-number :style="rollingAmounts - betAmounts < 0 ? 'color: red;':'color: green;'" :value="rollingAmounts - betAmounts" :formatValue="formatToPrice" /></span>
+                                        <animated-number :style="rollingAmounts < 0 ? 'color: red;':''" :value="rollingAmounts > 0 ? rollingAmounts - betAmounts : rollingAmounts  " :formatValue="formatToPrice" /></span>
                                 </template>
                                 <span>{{$t('msg.msinfo')}}</span>
                             </v-tooltip>
@@ -42,21 +42,12 @@
             <v-card>
                 <table>
                     <tr v-for="(data,index) in getStockList" :key="index">
-                        <td class="text-left">
+                        <td class="text-left isLoadChart"  router @click="$router.push('/classic/l-'+data.stockname +'-live')">
                             <i class="fa fa-circle-o text-danger"></i>
                             <b>{{$t('msg.Stock')}}</b>: {{ $t('stockname.'+data.stockname) }}{{ data.stockname == 'btc1' ? ' 1 ':data.stockname == 'btc5' ? ' 5 ':'' }} <b>{{$t('msg.Time')}}</b>: {{ onlyTime(getStockById(data.id).timeLastDraw)}} <b>{{$t('msg.Result')}}</b> {{ formatToNumber(getStockById(data.id).lastDraw, data.stockname)}}
                         </td>
                     </tr>
-
-                    <!-- <tr v-for="(data,index) in getStockList" :key="index">
-            <td>
-              <nuxt-link :to="'/modern/desktop/'+data.id"> {{ $t(`stockname.${data.stockname}`) }}</nuxt-link>
-            </td>
-            <td class="text-xs-right">{{ onlyTime(getStockById(data.id).timeLastDraw)}}</td>
-            <td class="text-xs-right">{{getStockById(data.id).lastDraw}}</td>
-          </tr> -->
                 </table>
-
             </v-card>
         </v-expansion-panel-content>
     </v-expansion-panel>
@@ -167,7 +158,7 @@ export default {
         },
 
         async getupdatebalance() {
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
             this.betAmounts = 0;
             this.rollingAmounts = 0;
             for (let i = 0; i < history.data.length; i++) {
@@ -177,7 +168,7 @@ export default {
                 }
             }
 
-            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
+            let balance = await this.$axios.$get('/api/me?apikey=' + localStorage.apikey)
             this.name = balance.name
             this.balance = balance.userBalance
             // console.log(balance)
@@ -185,11 +176,11 @@ export default {
             return
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
             return this.stockName = stcokId.data
         },
         async getAllresults() {
-            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + this.$store.state.auth_token)
+            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + localStorage.apikey)
             // console.log("kkkkkk")
             return this.Allresults = CurrentBet.data
 
