@@ -8,8 +8,8 @@ const createStore = () => {
             loader: false,
             isLoadingStockGame: false,
             auth_token: "",
-            isLoadingAnnoucement:[],
-            isLoadingHistory : [],
+            isLoadingAnnoucement: [],
+            isLoadingHistory: [],
             userData: {},
             balance: '',
             footerBetAmount: 0,
@@ -231,26 +231,26 @@ const createStore = () => {
             },
             SET_TIME(state, payload) {
                 state.time = payload
-                // console.log(state.time)
+                    // console.log(state.time)
             },
             // set Live price for stocks
             setLivePrice(state, payload) {
                 state.liveprice = payload
-                // console.log("liveprice......")
-                // console.log(state.liveprice)
-                // console.log("liveprice.....")
+                    // console.log("liveprice......")
+                    // console.log(state.liveprice)
+                    // console.log("liveprice.....")
             },
             setFooterBetAmount(state, payload) {
                 state.footerBetAmount = parseInt(payload)
             },
-            setAnouncement(state,payload){
+            setAnouncement(state, payload) {
                 state.isLoadingAnnoucement = payload
             },
-            setHistory(state,payload){
+            setHistory(state, payload) {
                 state.isLoadingHistory = payload
             }
-            
-            
+
+
         },
         actions: {
             async balance(context) {
@@ -270,9 +270,9 @@ const createStore = () => {
                 context.commit("setIsSendBetting", true)
                 console.warn("sendBetting...")
                 const betData = {
-                    "data": [...context.state.multiGameBet]
-                }
-                // console.log(betData)
+                        "data": [...context.state.multiGameBet]
+                    }
+                    // console.log(betData)
                 try {
                     const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
 
@@ -363,24 +363,24 @@ const createStore = () => {
                     context.dispatch("asynCrawlerStock", payload)
                 }
                 context.getters.getStockChart
-                // call live price api
-                // setInterval(function () {
-                //     for (let i = 0; i < context.getters.getStockLength; i++) {
-                //         let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
-                //         // check if one stock has multi loop it will use the same live price
-                //         // and in states.stocks url live price is setten to "null"
-                //         // disable first by macky 11:35 02/09/2019
-                //         // if (url == null) {    
-                //         //     continue
-                //         // }
-                //         let name = context.getters.getStockKeys[i]
-                //         let payload = {
-                //             url,
-                //             name
-                //         }
-                //         context.dispatch("asynLivePrice", payload)
-                //     }
-                // }, 10000);
+                    // call live price api
+                    // setInterval(function () {
+                    //     for (let i = 0; i < context.getters.getStockLength; i++) {
+                    //         let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
+                    //         // check if one stock has multi loop it will use the same live price
+                    //         // and in states.stocks url live price is setten to "null"
+                    //         // disable first by macky 11:35 02/09/2019
+                    //         // if (url == null) {    
+                    //         //     continue
+                    //         // }
+                    //         let name = context.getters.getStockKeys[i]
+                    //         let payload = {
+                    //             url,
+                    //             name
+                    //         }
+                    //         context.dispatch("asynLivePrice", payload)
+                    //     }
+                    // }, 10000);
 
             },
             // to get crawler data
@@ -393,12 +393,12 @@ const createStore = () => {
                         context.state.stocks[name].crawlerData = result.data
                         context.state.stocks[name].lastDraw = result.data[result.data.length - 1].PT
                         context.state.stocks[name].timeLastDraw = result.data[result.data.length - 1].writetime
-                        // console.warn(context.state.stocks[name].crawlerData)
+                            // console.warn(context.state.stocks[name].crawlerData)
                         console.log(result.data)
                     }
                 } catch (error) {
                     console.log(error)
-                   
+
                 }
             },
 
@@ -423,7 +423,7 @@ const createStore = () => {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
                     const res = await this.$axios.$get(`/api/announcement?apikey=${context.state.auth_token}`)
                     console.log(res);
-                    context.commit("setAnouncement",res.data);                   
+                    context.commit("setAnouncement", res.data);
                 } catch (error) {
                     console.log(error);
                 }
@@ -434,8 +434,8 @@ const createStore = () => {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
                     const res = await this.$axios.$get(`/api/fetchHistoryBet?apikey=${context.state.auth_token}`)
                     console.log(res);
-                    
-                    context.commit("setHistory",res.data);                   
+
+                    context.commit("setHistory", res.data);
                 } catch (error) {
                     console.log(error);
                 }
@@ -443,10 +443,17 @@ const createStore = () => {
 
         },
         getters: {
-            getHistory(state){
+            checkAuth(state) {
+                if (state.auth_token === "" || state.auth_token == null || state.auth_token == undefined) {
+                    return false
+                } else {
+                    return true
+                }
+            },
+            getHistory(state) {
                 return state.isLoadingHistory
             },
-            getAnnoucement(state){
+            getAnnoucement(state) {
                 return state.isLoadingAnnoucement
             },
             getIsLoadingStockGame(state) {
@@ -475,7 +482,7 @@ const createStore = () => {
             getAllStockByType(state, getters) {
                 let stockData = []
                 let stockType = []
-                // get type for all stocks
+                    // get type for all stocks
                 for (let i = 0; i < getters.getStockLength; i++) {
                     const id = getters.getStockKeys[i]
                     const type = state.stocks[id].type
@@ -594,11 +601,11 @@ const createStore = () => {
                 function getAmount(object) {
                     // find stockId
                     if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0
-                    // get data by stockId
+                        // get data by stockId
                     let stockIdObject = object.filter(x => x.stockId === data.stockId)
-                    // check rule in stockId
+                        // check rule in stockId
                     if (stockIdObject.findIndex(x => x.gameRule === data.gameRule) == -1) return 0
-                    // get amount by rule
+                        // get amount by rule
                     let result = stockIdObject.filter(x => x.gameRule === data.gameRule).map(x => x.amount).reduce((a, b) => a + b, 0)
                     return parseInt(result)
                 }
@@ -607,18 +614,18 @@ const createStore = () => {
             getAmountBetSpecificNumber: (state) => (data) => {
                 function getAmount(object) {
                     let count = 9
-                    // find stockId 
+                        // find stockId 
                     if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0
-                    // get data by stockId
+                        // get data by stockId
                     let stockIdObject = object.filter(x => x.stockId === data.stockId)
-                    // check rule in stockId
-                    // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
+                        // check rule in stockId
+                        // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
 
                     // get amount by rule
                     let result = 0
                     for (let i = 0; i <= count; i++) {
                         result = result + stockIdObject.filter(x => x.gameRule.toLowerCase()
-                            .includes(`${data.gameRule}-${i}`))
+                                .includes(`${data.gameRule}-${i}`))
                             .map(x => x.amount).reduce((a, b) => a + b, 0)
                     }
                     // .map(x => x.amount).reduce((a, b) => a + b, 0)
@@ -836,7 +843,7 @@ const createStore = () => {
                 for (let i = 0; i < getters.getStockLength; i++) {
                     const id = getters.getStockKeys[i]
                     const urlLivePrice = state.stocks[id].url.livePrice
-                    // do not get stock if url live is null
+                        // do not get stock if url live is null
                     if (urlLivePrice == null) {
                         continue
                     }

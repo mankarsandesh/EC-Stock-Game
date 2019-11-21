@@ -72,7 +72,7 @@ export default {
     },
     methods: {
         async getAnnouncement(val) {
-            let announcement = await this.$axios.$get('/api/announcement?apikey=' + localStorage.apikey)
+            let announcement = await this.$axios.$get('/api/announcement?apikey=' + this.$store.state.auth_token)
             if (announcement.data !== null) {
                 this.load = true
             }
