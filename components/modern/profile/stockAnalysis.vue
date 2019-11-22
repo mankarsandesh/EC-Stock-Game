@@ -54,7 +54,7 @@
             </v-card>
           </v-flex>
         </v-layout>
-        <v-layout row wrap class="action">
+        <!-- <v-layout row wrap class="action">
           <v-flex xs12 sm3 class="py-2 d-flex">
             <v-checkbox
               v-model="won"
@@ -73,7 +73,7 @@
               hide-details
             ></v-checkbox>
           </v-flex>
-        </v-layout>
+        </v-layout> -->
       </v-window-item>
       <!-- Baic Information -->
 

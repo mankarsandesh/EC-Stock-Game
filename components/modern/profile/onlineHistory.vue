@@ -38,6 +38,9 @@
 <script>
 import OnlineChart from "./onlinechart";
 export default {
+    components:{
+        OnlineChart
+    },
     data() {
         return {
             dateto: new Date().toISOString().substr(0, 10),

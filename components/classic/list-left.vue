@@ -24,7 +24,7 @@
                             <v-tooltip top>
                                 <template #activator="{ on: tooltip }">
                                     <span v-on="{ ...tooltip }">{{$t('msg.Totalprofit')}} :
-                                        <animated-number :style="rollingAmounts < 0 ? 'color: red;':''" :value="rollingAmounts > 0 ? rollingAmounts - betAmounts : rollingAmounts  " :formatValue="formatToPrice" /></span>
+                                        <animated-number :style="rollingAmounts < 0 ? 'color: red;': rollingAmounts - betAmounts < 0 ? 'color: red;':''" :value="rollingAmounts > 0 ? rollingAmounts - betAmounts : rollingAmounts  " :formatValue="formatToPrice" /></span>
                                 </template>
                                 <span>{{$t('msg.msinfo')}}</span>
                             </v-tooltip>
