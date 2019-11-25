@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <!-- <div v-show="getIsLoadingStockGame" class="container-loading">
+    <div v-show="getIsLoadingStockGame" class="container-loading">
       <div class="loading"></div>
       <div ref="svgContainer"></div>
-    </div> -->
+    </div>
 
     <v-container
       fluid

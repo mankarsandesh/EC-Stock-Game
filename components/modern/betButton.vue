@@ -2,12 +2,12 @@
   <div class="p-relative">
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
-    <!-- <div
+    <div
       class="bet-close"
       v-if="checkBetClose  || getLotteryDraw(stockName) ==='close' || getLotteryDraw(stockName) == null "
     >
       <p>bet close</p>
-    </div> -->
+    </div>
     <!-- end for show bet close -->
     <v-layout  row  >
 

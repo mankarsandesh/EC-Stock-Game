@@ -253,11 +253,24 @@ const createStore = () => {
 
         },
         actions: {
+            async asynUserInfo(context) {
+                try {
+                    const res = await this.$axios.$get(`/api/me?apikey=${context.state.auth_token}`)
+                    // if (res.status) {
+                        let userInfo = res.name
+                        context.commit("setUserData", {name:userInfo})
+                    // }
+                } catch (ex) {
+                    console.error(ex)
+                    alert(ex)
+                }
+            },
             async balance(context) {
                 try {
-                    const res = await this.$axios.$get(`/api/me/balance?apikey=${localStorage.apikey}`)
+                    const res = await this.$axios.$get(`/api/me/balance?apikey=${context.state.auth_token}`)
                     if (res.status) {
                         let balance = res.data
+                        context.commit("setBalance", balance)
                         context.commit("setBalance", balance)
                     }
                 } catch (ex) {
@@ -317,7 +330,7 @@ const createStore = () => {
             //         "webId": "0001"
             //     }
             //     try {
-            //         if (localStorage.apikey == null) {
+            //         if (context.state.auth_token == null) {
             //             const res = await this.$axios.$post("/api/redirect", userForm)
             //             localStorage.apikey = res.data.token;
             //             console.log(localStorage.apikey)
@@ -398,7 +411,6 @@ const createStore = () => {
                     }
                 } catch (error) {
                     console.log(error)
-
                 }
             },
 

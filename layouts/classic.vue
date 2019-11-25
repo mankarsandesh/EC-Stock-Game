@@ -338,7 +338,7 @@ export default {
     },
     mounted() {
         $("#switch").text(this.switch1)
-        
+
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
@@ -439,11 +439,10 @@ export default {
                 this.show1 = true;
                 this.stockname = this.$route.params.id.split("-")[1];
                 this.checkStock = this.$route.params.id.split("-")[2];
-                this.getMenu();
-            }, 50);
+            }, 100);
             setTimeout(() => {
-                window.scrollTo(0, 0);
-            }, 2000);
+                this.$vuetify.goTo(0)
+            }, 1500);
         },
         loadtable() {
             this.showtable = false;
@@ -451,22 +450,14 @@ export default {
                 this.showtable = true;
                 this.stockname = this.$route.params.id.split("-")[1];
                 this.checkStock = this.$route.params.id.split("-")[2];
-            }, 50);
+            }, 100);
         },
         getAtivetab() {
             this.checkStockList = this.$route.params.id.split("-")[0] + "-" + this.$route.params.id.split("-")[1];
-            if (this.checkStockList == "l-" + this.$route.params.id.split("-")[1]) {
-                this.tab = "live Stock";
-            } else if (this.checkStockList == "st-usindex") {
-                this.tab = "Us Stock";
-            } else if (
-                this.checkStockList == "st-btc1" ||
-                this.checkStockList == "st-btc5"
-            ) {
-                this.tab = "Cypto Currency";
-            } else {
-                this.tab = "China Stocck";
-            }
+            if (this.checkStockList == "l-" + this.$route.params.id.split("-")[1]) this.tab = "live Stock";
+            else if (this.checkStockList == "st-usindex") this.tab = "Us Stock";
+            else if (this.checkStockList == "st-btc1" || this.checkStockList == "st-btc5") this.tab = "Cypto Currency";
+            else this.tab = "China Stocck";
         },
         onScroll(e) {
             if (typeof window === 'undefined') return

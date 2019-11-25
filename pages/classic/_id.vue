@@ -20,6 +20,7 @@
     </div>
 
     <div v-else>
+        <!-- {{balance - sumTotalAll}} -->
         <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>
@@ -34,9 +35,15 @@
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
+<<<<<<< HEAD
                 <v-flex xs12 md5>
                     <v-avatar :class="balance < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.price" @click="setPrice($event)" :name="chip.name">
+=======
+                <v-flex xs12 md6>
+                    <v-avatar :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.price" @click="setPrice($event)" :name="chip.name">
+>>>>>>> 1e4c279a0d9f279f8f140f3ff5c614b2816f8d6a
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -64,6 +71,7 @@
                             <v-card>
                                 <v-layout row>
 
+                                    <!-- FIRST DIGIT & LAST DIGIT -->
                                     <v-flex xs12 md6>
                                         <table>
                                             <tr>
@@ -74,7 +82,7 @@
                                             <tr v-for="(datas, idx5) in items.childrens" :key="idx5">
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{datas.name >= 0 ? datas.name: $t('gamemsg.'+datas.name)}}</div>
-                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="text-stock">{{items.payout}} </div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[0]+'-'+datas.name" />
                                                     </div>
@@ -94,6 +102,7 @@
                                         </table>
                                     </v-flex>
 
+                                    <!-- BOTH DIGIT & TWO DIGIT -->
                                     <v-flex xs12 md6>
                                         <table>
                                             <tr>
@@ -154,7 +163,7 @@
                 </v-card>
             </v-tab-item>
         </v-tabs-items>
-        
+
         <!-- end form typy bet -->
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
@@ -167,9 +176,15 @@
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
+<<<<<<< HEAD
                 <v-flex xs12 md5 >
                     <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+=======
+                <v-flex xs12 md6>
+                    <v-avatar size="60" :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+>>>>>>> 1e4c279a0d9f279f8f140f3ff5c614b2816f8d6a
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -203,8 +218,8 @@
                         <button class="btn-preset">{{$t('msg.amount')}}</button>
                         <input readonly type="text" class="form-input width-15" v-model="price" />
                         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
-                        <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <v-avatar size="60" :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                                 <span class="btn-chips">{{chip.price}}</span>
                             </v-img>
                         </v-avatar>
@@ -256,8 +271,8 @@
         <v-dialog v-model="dialogtwo" persistent max-width="440px">
             <v-card>
                 <v-card-text>
-                    <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -401,7 +416,7 @@ export default {
             betPrice: 0,
             alertext: "",
             disabled: false,
-            // end alertOutCome
+            // end alertOutCome,
         };
     },
 
@@ -434,7 +449,7 @@ export default {
             return {
                 data: this.betData.betdetails,
             };
-        },
+        }
 
     },
     methods: {
@@ -545,8 +560,9 @@ export default {
                 this.isfooter = false;
 
             } else {
+                // console.log(e.target.textContent)
                 if (e > 0) this.price += parseInt(e);
-                else this.price += parseInt(e.target.textContent);
+                else this.price += parseInt(e.target.parentElement.innerText);
                 $("#txttotal").text(this.formatTotal(this.price))
                 $(".form-inputadd").val(this.price);
                 if (this.betData.betName.length > 0) {
@@ -589,19 +605,19 @@ export default {
         },
 
         bet(e, specialName = "none") {
-            // console.log(e)
-            // this.playSound('/voice/bet-chips.mp3')
-            if (this.price == 0 || this.price == null) {
+            // this.playSound('/voice/bet-chips.mp3') 
+            if (this.price == 0 || this.price == null || this.price > this.balance - this.sumTotalAll) {
                 // console.log("Null-0");
+                this.price = 0
+                this.getalertstartstop("notenough")
                 return;
             }
-
+            
             if (e.target.value !== "") {
                 e.target.value = parseInt(e.target.value) + parseInt(this.price);
             } else {
                 e.target.value = this.price;
             }
-
             this.loop = this.getStockName(this.$route.params.id).loop;
 
             // Data send to server
@@ -691,11 +707,11 @@ export default {
                     this.getBetClosedopen('open');
                 }
 
-                if (times == alert) {
-                    this.getalertstartstop("stop")
-                } else if (times == calculating) {
-                    this.getalertstartstop("start")
-                }
+                // if (times == alert) {
+                //     this.getalertstartstop("stop")
+                // } else if (times == calculating) {
+                //     this.getalertstartstop("start")
+                // }
 
                 if (times == calculating - 3) {
                     this.alertOutCome()
@@ -705,8 +721,7 @@ export default {
 
         getBetClosedopen(val) {
             if (val == 'closed') {
-                // this.panel = [false, false, false, false];
-                 this.panel = [true, true, true, true]; 
+                this.panel = [false, false, false, false];
                 this.setPrice("reset");
                 this.disabled = true
                 this.dialog = false
@@ -750,6 +765,9 @@ export default {
                 this.color = "success";
             } else if (val.status == false) {
                 this.alertext = this.$root.$t('msg.moneynotenough') + "\n" + val.message;
+                this.color = "error";
+            } else if (val == "notenough") {
+                this.alertext = this.$root.$t('msg.moneynotenough');
                 this.color = "error";
             }
         },
@@ -831,7 +849,7 @@ export default {
     text-align: center;
     margin-bottom: 10px;
     pointer-events: none;
-    background-color: rgba(179, 183, 183, 0.49);
+    background-color: rgb(88, 88, 88);
 }
 
 .bet-closed {

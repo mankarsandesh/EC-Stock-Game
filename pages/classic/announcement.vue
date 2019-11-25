@@ -13,7 +13,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>TITLE</th>
-                                <th>PREVIEW</th>
+                                <th style=" width: 55%;">PREVIEW</th>
                                 <th>DATE</th>
                             </tr>
                             <tr v-for="(data,index) in announcement" :key="index" @click="getAnnouncement(data.messgageId)">
@@ -22,7 +22,6 @@
                                 <td> {{data.messageContent}}</td>
                                 <td>{{data.created_at}}</td>
                             </tr>
-
                         </table>
                         <div v-show="!isOptions">
                             <v-layout>
@@ -35,13 +34,20 @@
                                         </v-card-actions>
                                         <v-card-title>
                                             <div>
+                                                <h4 class="headline mb-3">Dear user</h4>
                                                 <span> {{announcement.messageContent}}</span>
+                                                <div class="mb-3">
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae imperdiet risus. In rutrum dolor et nisi ultricies, sed condimentum mi luctus. Aenean
+                                                    lorem ligula, faucibus quis justo et, accumsan luctus nisi. Aenean egestas, neque sit amet dictum tincidunt, risus eros laoreet est, consequat rutrum
+                                                    urna dolor a libero. Vivamus erat odio, onibus nec ipsum aliquam, vulputate molestie nibh. Nam scelerisque euismod lobortis. Sed velit sapien, condimentum
+                                                    et condimentum ac, blandit in justo. Nullam bibendum sodales diam eget dignissim.
+                                                </div>
+                                                Regards,<br>
+                                                EC Gaming Team
                                             </div>
                                         </v-card-title>
                                         <v-card-actions>
-
                                             <v-btn @click="isOptions = true, getAnnouncement(null)" color="#818f9c"> BACK</v-btn>
-
                                         </v-card-actions>
                                     </v-card>
                                 </v-flex>
@@ -105,4 +111,33 @@ export default {
     color: white;
     font-weight: bold;
 }
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border-right: #ddd;
+    text-transform: uppercase;
+}
+
+td a {
+    color: #003e70 !important;
+}
+
+th {
+    background-color: #cccccc;
+}
+
+th,
+td {
+    text-align: center;
+    padding: 6px;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
 </style>
