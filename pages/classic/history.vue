@@ -8,8 +8,8 @@
                         <div>{{$t('menu.history')}}</div>
                     </template>
                     <v-card flat>
-                        <v-layout row wrap>
-                            <v-flex xs5 md2>
+                        <v-layout row wrap id="history">
+                            <v-flex xs4 sm4 md2 lg2>
                                 <v-menu v-model="from" :close-on-content-click="false" :nudge-right="0" lazy transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
                                         <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -17,7 +17,7 @@
                                     <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-flex xs5 md2>
+                            <v-flex xs4 sm4 md2 lg2>
                                 <v-menu v-model="to" :close-on-content-click="false" :nudge-right="0" transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
                                         <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -25,17 +25,17 @@
                                     <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-flex xs3 md1>
-                                <v-btn @click="dateSearch()" single-line hide-details>go</v-btn>
+                            <v-flex xs4 sm4 md2 lg2>
+                                <v-btn @click="dateSearch()" class="goButton">go</v-btn>
                             </v-flex>
-                            <v-flex xs3 md1 mr-1>
-                                <v-select hide-details :items="itemspage" v-model="itemspages"></v-select>
+                            <v-flex xs4 sm4 md2 lg2>
+                                <v-select  single-line hide-details :items="itemspage" v-model="itemspages" class="selectHistory"></v-select>
                             </v-flex>
-                            <v-flex xs3 md3 mr-1>
-                                <v-text-field v-model="search" append-icon="search" single-line hide-details></v-text-field>
+                            <v-flex xs4 sm4 md2 lg2>
+                                <v-text-field single-line hide-details v-model="search" append-icon="search" class="selectHistory"  style="padding:4px;"></v-text-field>
                             </v-flex>
-                            <v-flex xs6 md2 mr-1>
-                                <v-select hide-details single-line :items="items" label="Sort By :" v-model="itemss"></v-select>
+                            <v-flex xs4 sm4 md2 lg2>
+                                <v-select  single-line hide-details :items="items" label="Sort By :" v-model="itemss" class="selectHistory"></v-select>
                             </v-flex>
                         </v-layout>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
@@ -323,9 +323,39 @@ export default {
 }
 
 .v-window__container .v-window-item .layout .flex .v-input .v-input__control .v-input__slot .v-text-field__slot input {
-    color: #000000 !important;
+    color:#FFF !important;
     font-size: 1.2rem;
     padding: 11px;
+    
+}
+#history{
+    margin-top:10px;
+}
+.goButton{
+    padding:6px 4px;
+   background-color:  #003e70 !important;
+    color:#FFF;
+    height:auto;
+    margin-top: 12px;
+}
+.selectHistory {
+    /* border:1px solid red !important; */
+    margin-top: 8px !important;
+    padding:4px 6px;
+    color:#FFF !important;
+}
+.v-text-field .v-label{
+    border:1px solid red !important;
+}
+.theme--light.v-select .v-select__selections{
+    padding: 2px 10px !important;
+     color:#FFF !important;
+}
+.theme--light.v-select .v-select__selections{
+    color: #FFF !important;
+}
+.v-select__selection--comma{
+    color:#FFF !important;
 }
 </style>
 1

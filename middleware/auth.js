@@ -11,6 +11,6 @@ export default function ({ isHMR, app, store, route, error, redirect }) {
         // call Api to show in chart and store it in Vuex
 
         // redirect to whitelabel
-        app.router.push('/')
+        // app.router.push('/')
     }
 }

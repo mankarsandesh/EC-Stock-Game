@@ -26,17 +26,17 @@
         </v-tabs>
 
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
-            <v-layout row wrap>
-                <v-flex xs12 md6 mt-1>
-                    <input type="checkbox" v-model="preset" /> {{$t('msg.preset')}}
+            <v-layout row wrap style="padding: 12px 0px 0px;">
+                <v-flex xs12 sm12 lg7 md7 mt-1>
+                    <v-checkbox style="float:left;margin:5px 10px;" v-model="preset" :label="$t('msg.preset')" ></v-checkbox>
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
-                <v-flex xs12 md6>
-                    <v-avatar :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.price" @click="setPrice($event)" :name="chip.name">
+                <v-flex xs12 md5>
+                    <v-avatar :class="balance < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.price" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -108,7 +108,7 @@
                                                     <div class="text-bet">{{datass.name}}</div>
                                                     <div class="text-stock">{{items.payoutb}}</div>
                                                     <div class="bet-box">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name" />
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name" style="width:80%;" />
                                                     </div>
                                                 </td>
 
@@ -116,7 +116,7 @@
                                                     <div class="text-bet" v-if="datass.name2 != 19">{{datass.name2}}</div>
                                                     <div class="text-stock" v-if="datass.name2 != 19">{{items.payoutb}}</div>
                                                     <div class="bet-box" v-if="datass.name2 != 19">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name2" />
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name2" style="width:80%;" />
                                                     </div>
                                                 </td>
 
@@ -124,22 +124,22 @@
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name3)}}</div>
                                                     <div class="text-stock">{{items.payout}}</div>
                                                     <div class="bet-box">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3" />
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3"  />
                                                     </div>
                                                 </td>
 
                                                 <td class="top-bet" v-if="items.name !== 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name4)}}</div>
                                                     <div class="text-stock">{{items.payout}}</div>
-                                                    <div class="bet-box">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
+                                                    <div class="bet-box" >
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4"     />
                                                     </div>
                                                 </td>
 
                                                 <td class="top-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:30%':'width:40%'">
-                                                    <div class="text-bet">{{datas.name4}}</div>
+                                                    <div class="text-bet" >{{datas.name4}} </div>
                                                     <div class="bet-box">
-                                                        <button class="form-btn" @click="getsnTwo(datas.name4)" />
+                                                        <button class="form-btn" @click="getsnTwo(datas.name4)"  />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -160,17 +160,16 @@
         <!-- end form typy bet -->
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
-                <v-flex xs12 md6 mt-1>
-                    <input type="checkbox" v-model="preset" />
-                    {{$t('msg.preset')}}
+                <v-flex xs12 md7 mt-1>
+                    <v-checkbox style="float:left;margin:5px 10px;" v-model="preset" :label="$t('msg.preset')" ></v-checkbox>
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
-                <v-flex xs12 md6>
-                    <v-avatar size="60" :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+                <v-flex xs12 md5 >
+                    <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -264,7 +263,7 @@
                     </v-avatar>
                     <table>
                         <tr>
-                            <th>{{$t('gamemsg.twodigit')}}</th>
+                            <th>{{$t('gamemsg.twodigit')}} </th>
                         </tr>
                         <tr v-if="sntwoloopstart == 0">
                             <td class="top-bet" @click="betRow($event)">
@@ -459,7 +458,6 @@ export default {
             this.currentItemss = s
             return;
         },
-
         async getbalance() {
             let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
             this.balance = balance.userBalance
@@ -471,7 +469,6 @@ export default {
                     this.stockname = element.stockId
                 }
             })
-
         },
         async getConfirmBet() {
             if (this.sumTotalAll > this.balance || this.sumTotalAll == '') {
@@ -836,6 +833,8 @@ export default {
 }
 
 .pointer-events-none {
+    text-align: center;
+    margin-bottom: 10px;
     pointer-events: none;
     background-color: rgb(88, 88, 88);
 }
@@ -925,8 +924,7 @@ export default {
 }
 
 .btn-preset {
-    width: 10%;
-    /* padding: 0.4rem; */
+   padding:10px 15px;
     height: 35px;
     font-size: 1.01rem;
     text-align: center;
@@ -1074,7 +1072,7 @@ tr:nth-child(even) {
 }
 
 .top-bet {
-    padding: 0px 0px 0px 0px !important;
+    padding: 0px 4px !important;
     display: inline-flex;
     width: 100%;
 }
@@ -1117,5 +1115,9 @@ tr:nth-child(even) {
 
 .tops {
     top: 11%;
+}
+v-avatar{
+    text-align: center;
+    margin-top: 10px;
 }
 </style>

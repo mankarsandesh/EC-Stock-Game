@@ -16,7 +16,7 @@
                                 <th style=" width: 55%;">PREVIEW</th>
                                 <th>DATE</th>
                             </tr>
-                            <tr v-for="(data,index) in announcement" :key="index" @click="getAnnouncement(data.messgageId)">
+                            <tr v-for="(data,index) in announcement" :key="index" @click="getAnnouncement(data.messgageId)" class="annselect">
                                 <td>{{index+1}}</td>
                                 <td>{{data.title}}</td>
                                 <td> {{data.messageContent}}</td>
@@ -112,7 +112,7 @@ export default {
     font-weight: bold;
 }
 
-
+.annselect{ cursor: pointer;}
 table {
     border-collapse: collapse;
     width: 100%;

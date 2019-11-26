@@ -633,7 +633,7 @@ export default {
       number: null,
       // rules payout
       payout_high_mid_low: payout.high_mid_low,
-      payout_big_small: payout.big_small,
+      payout_big_small: 21,
       payout_09: payout._09,
       payout_18: payout._18,
       payout_99: payout._99,
@@ -643,7 +643,7 @@ export default {
           rule: "big",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
-          payout: payout.big_small
+          payout: 2
         },
         {
           rule: "small",
