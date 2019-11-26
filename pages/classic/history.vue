@@ -105,8 +105,8 @@ export default {
             datefrom: new Date().toISOString().substr(0, 10),
             from: false,
             to: false,
-            items: ["day", "weeks", "months", "years"],
-            itemss: 'day',
+            items: ["day", "weeks", "months", "years", "all"],
+            itemss: '',
             itemspage: [5, 10, 25, 50, 100],
             itemspages: 10,
             load: false,
@@ -185,22 +185,22 @@ export default {
             let datefrom;
 
             if (val == 'day') {
-                datefrom = yf + '-' + mf + '-' + d
+                datefrom = {start: this.dateto,end: this.dateto}
             } else if (val == 'weeks') {
-                datefrom = yf + '-' + mf + '-' + d
+                datefrom = {week: w}
             } else if (val == 'months') {
-                datefrom = yf + '-' + ml + '-' + d
-            } else {
-                datefrom = yl + '-' + mf + '-' + d
+                datefrom = {month: mf}
+            } else if (val == 'years') {
+                datefrom = {year: yf}
+            } else if (val == 'all') {
+                datefrom = "all"
+                this.history = []
+                this.sumTotalbetAmount = 0
+                this.sumTotalrollingAmount = 0
+                this.pagination.totalItems = 0
             }
-
-            let dates = {
-                start: this.dateto,
-                end: datefrom,
-                week: w
-            }
-            console.log(dates)
-            return this.gethistory(dates)
+            console.log(datefrom)
+            return this.gethistory(datefrom)
         },
         itemspages(val) {
             this.pagination.rowsPerPage = val
@@ -230,6 +230,7 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
+
             let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
             if (history.data == null) return
             // console.log(history.data)
@@ -239,12 +240,16 @@ export default {
             for (let i = 0; i < history.data.length; i++) {
                 // console.log(history.data[i].betTime)
                 // console.log(i)
-                if (val != null) {
+                if (val != null && val != 'all') {
                     this.history = []
                     this.sumTotalbetAmount = 0
                     this.sumTotalrollingAmount = 0
                     this.pagination.totalItems = 0
-                    if (history.data[i].betTime.split(" ")[0] == val.start || history.data[i].betTime.split(" ")[0] == val.end || new Date(history.data[i].betTime).getDay() == val.week) {
+                    if (history.data[i].betTime.split(" ")[0] == val.start ||
+                        history.data[i].betTime.split(" ")[0] == val.end ||
+                        new Date(history.data[i].betTime).getDay() == val.week ||
+                        new Date(history.data[i].betTime).getMonth() + 1 == val.month ||
+                        new Date(history.data[i].betTime).getFullYear() == val.year) {
                         setTimeout(() => {
                             this.history.push({
                                 page: 1,
@@ -261,7 +266,7 @@ export default {
                             this.pagination.totalItems = this.history.length;
                             this.sumTotalbetAmount += history.data[i].betAmount
                             this.sumTotalrollingAmount += history.data[i].rollingAmount
-                        }, 100)
+                        }, 0)
                     } else if (history.data[i].betTime.split(" ")[0] !== val.start && history.data[i].betTime.split(" ")[0] !== val.end) {
                         this.history = []
                     }
@@ -323,3 +328,4 @@ export default {
     padding: 11px;
 }
 </style>
+1

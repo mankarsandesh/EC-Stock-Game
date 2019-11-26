@@ -47,7 +47,7 @@
                                             </div>
                                         </v-card-title>
                                         <v-card-actions>
-                                            <v-btn @click="isOptions = true, getAnnouncement(null)" color="#818f9c"> BACK</v-btn>
+                                            <v-btn @click="isOptions = true, getAnnouncement(null)" color="#818f9c"> <v-icon dark left>arrow_back</v-icon>BACK</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-flex>

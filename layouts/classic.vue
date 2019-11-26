@@ -1,5 +1,7 @@
 <template>
 <div>
+    <div ref="svgContainer" class="isLoading" v-if="getStockNewData($route.params.id).length == ''"></div>
+
     <v-toolbar fixed app light class="light-toobar">
         <v-container mx-auto py-0 px-0>
             <v-layout>
@@ -282,6 +284,7 @@ import gameresult from "~/pages/classic/game-result";
 import announcement from "~/pages/classic/announcement";
 import rule from "~/pages/classic/rule";
 import setting from "~/pages/classic/setting";
+import lottie from "lottie-web";
 export default {
     components: {
         countryFlag,
@@ -330,18 +333,25 @@ export default {
             notifications: false,
             sound: true,
             widgets: false,
-            fab: false
+            fab: false,
+            isLoad: true
         };
     },
     created() {
         this.setLanguage();
     },
     mounted() {
+        lottie.loadAnimation({
+            container: this.$refs.svgContainer, // the dom element that will contain the animation
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            path: "https://assets7.lottiefiles.com/packages/lf20_JbdOay.json" // the path to the animation json
+        });
         $("#switch").text(this.switch1)
-
         setTimeout(() => {
             window.scrollTo(0, 0)
-        }, 1000);
+        }, 2000);
         this.loadchart();
         this.getMenu();
         $(".isLoadChart").click(() => {
@@ -475,6 +485,14 @@ export default {
 <style scoped>
 .scrolltop {
     bottom: 15%;
+}
+.isLoading{
+    z-index: 10000;
+    position: absolute;
+    background-color: #374c60ed;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
 }
 
 .btn-chart-change {

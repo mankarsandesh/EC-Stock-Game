@@ -28,7 +28,7 @@
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
                 <v-flex xs12 md6 mt-1>
-                    <input type="checkbox" /> {{$t('msg.preset')}}
+                    <input type="checkbox" v-model="preset" /> {{$t('msg.preset')}}
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
@@ -161,7 +161,7 @@
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
                 <v-flex xs12 md6 mt-1>
-                    <input type="checkbox" />
+                    <input type="checkbox" v-model="preset" />
                     {{$t('msg.preset')}}
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
@@ -296,7 +296,7 @@
     </div>
     <!-- alertOutCome -->
     <v-snackbar class="tops" v-model="snackbar" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
-        <span class="text-center">
+        <span style="margin: 0 auto;">
             <h2>{{text}}</h2>
             <h2>
                 <animated-number :value="betPrice" :formatValue="formatToPrice" />
@@ -307,7 +307,7 @@
 
     <!-- alertOutCome -->
     <v-snackbar class="tops" v-model="alertSS" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
-        <span class="text-center">
+        <span style="margin: 0 auto;">
             <h2>{{alertext}}</h2>
         </span>
     </v-snackbar>
@@ -389,6 +389,7 @@ export default {
             stocks: this.$route.params.id.split("-")[1],
             show1: true,
             checkbox1: false,
+            preset: false,
 
             // alertOutCome
             alertSS: false,
@@ -429,14 +430,15 @@ export default {
             } else {
                 return 0;
             }
-
         },
         formData() {
-            return {
-                data: this.betData.betdetails,
-            };
+            return { data: this.betData.betdetails }
         }
-
+    },
+    watch:{
+        preset(e){
+            return this.preset = e
+        }
     },
     methods: {
         settabs() {
@@ -533,20 +535,21 @@ export default {
 
         setPrice(e) {
             if (e == "reset") {
-                this.betData.betdetails = [];
-                this.betDataShows = [];
-                this.betData.betName = [];
-                this.price = null;
                 $("#txttotal").text(this.formatTotal(this.price))
-                $(".form-input").val("");
-                $(".form-inputadd").val("");
-                $(".form-inputadd").attr("class", "form-input");
-                $(".top-betadd").attr("class", "top-bet");
                 this.isfooter = true;
+                if (this.preset == false) {
+                    this.betData.betdetails = [];
+                    this.betDataShows = [];
+                    this.betData.betName = [];
+                    this.price = null;
+                    $(".form-input").val("");
+                    $(".form-inputadd").val("");
+                    $(".form-inputadd").attr("class", "form-input");
+                    $(".top-betadd").attr("class", "top-bet");
+                }
             } else if (e == "confirm") {
                 this.dialog = true;
                 this.isfooter = false;
-
             } else {
                 // console.log(e.target.textContent)
                 if (e > 0) this.price += parseInt(e);
@@ -600,7 +603,7 @@ export default {
                 this.getalertstartstop("notenough")
                 return;
             }
-            
+
             if (e.target.value !== "") {
                 e.target.value = parseInt(e.target.value) + parseInt(this.price);
             } else {
@@ -695,11 +698,11 @@ export default {
                     this.getBetClosedopen('open');
                 }
 
-                // if (times == alert) {
-                //     this.getalertstartstop("stop")
-                // } else if (times == calculating) {
-                //     this.getalertstartstop("start")
-                // }
+                if (times == alert) {
+                    this.getalertstartstop("stop")
+                } else if (times == calculating) {
+                    this.getalertstartstop("start")
+                }
 
                 if (times == calculating - 3) {
                     this.alertOutCome()
@@ -709,15 +712,14 @@ export default {
 
         getBetClosedopen(val) {
             if (val == 'closed') {
-                this.panel = [false, false, false, false];
                 this.setPrice("reset");
+                this.panel = [false, false, false, false];
                 this.disabled = true
                 this.dialog = false
             } else {
                 this.panel = [true, true, true, true];
                 this.disabled = false
             }
-
         },
 
         async alertOutCome() {
@@ -782,27 +784,27 @@ export default {
                 this.setPrice("reset");
             });
             $("#chips, #ch10").click(() => {
-                if (this.balance >= parseInt(this.chips[0].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[0].price))
                     this.setPrice(this.chips[0].price)
             });
             $("#OS93GB1we-copy, #ch50").click(() => {
-                if (this.balance >= parseInt(this.chips[1].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[1].price))
                     this.setPrice(this.chips[1].price)
             });
             $("#OS93GB2, #ch100").click(() => {
-                if (this.balance >= parseInt(this.chips[2].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[2].price))
                     this.setPrice(this.chips[2].price)
             });
             $("#OS93GB1-copy, #ch500").click(() => {
-                if (this.balance >= parseInt(this.chips[3].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[3].price))
                     this.setPrice(this.chips[3].price)
             });
             $("#OS93GB5-copy, #ch1000").click(() => {
-                if (this.balance >= parseInt(this.chips[4].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[4].price))
                     this.setPrice(this.chips[4].price)
             });
             $("#OS93GB3a-copy-copy, #ch5000").click(() => {
-                if (this.balance >= parseInt(this.chips[5].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[5].price))
                     this.setPrice(this.chips[5].price)
             });
         }
