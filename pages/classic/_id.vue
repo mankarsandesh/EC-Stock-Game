@@ -27,23 +27,16 @@
 
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap style="padding: 12px 0px 0px;">
-                <v-flex xs12 md7 mt-1>
+                <v-flex xs12 sm12 lg7 md7 mt-1>
                     <v-checkbox style="float:left;margin:5px 10px;" :label="$t('msg.preset')" ></v-checkbox>
-                    <!-- <input type="checkbox" /> <label> {{$t('msg.preset')}} </label> -->
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
-<<<<<<< HEAD
                 <v-flex xs12 md5>
                     <v-avatar :class="balance < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.price" @click="setPrice($event)" :name="chip.name">
-=======
-                <v-flex xs12 md6>
-                    <v-avatar :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.price" @click="setPrice($event)" :name="chip.name">
->>>>>>> 1e4c279a0d9f279f8f140f3ff5c614b2816f8d6a
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -169,8 +162,6 @@
             <v-layout row wrap>
                 <v-flex xs12 md7 mt-1>
                     <v-checkbox style="float:left;margin:5px 10px;" :label="$t('msg.preset')" ></v-checkbox>
-                    <!-- <input type="checkbox" />
-                    {{$t('msg.preset')}} -->
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
@@ -715,7 +706,8 @@ export default {
 
         getBetClosedopen(val) {
             if (val == 'closed') {
-                this.panel = [false, false, false, false];
+                // this.panel = [false, false, false, false];
+                this.panel = [true, true, true, true];
                 this.setPrice("reset");
                 this.disabled = true
                 this.dialog = false

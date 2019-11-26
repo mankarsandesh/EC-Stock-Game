@@ -83,7 +83,7 @@ export default {
     padding: 0 !important;
     flex: 0 1 4% !important;
     text-transform: uppercase;
-    max-width: 40%;
+    max-width: 100%;
 }
 
 .show-icon {
@@ -114,7 +114,7 @@ li ul {
 ul li a {
     display: block;
     width: 100%;
-    padding: 0.6em;
+    padding: 10px 30px;
     text-decoration: none;
     white-space: nowrap;
     color: #fff;
@@ -143,7 +143,7 @@ li:hover li a:hover {
 
 .main-navigation {
     display: flex;
-    width: 25%;
+    /* width: 25%; */
     /* text-align: center; */
 }
 
