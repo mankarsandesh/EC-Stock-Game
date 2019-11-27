@@ -29,7 +29,7 @@
             :stockName="stockName"
             :loop="getLoop($route.params.id)"
             :betId="'firstdigit-'+data.rule"
-            :payout="data.payout"
+            :payout="getPayout(data.payout)"
           ></betModal>
         </div>
         <v-btn
@@ -44,7 +44,8 @@
           
           <span class="big-digit">{{data.rule}}</span>          
           <span class="small-digit">First Digit</span>
-          <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+          <!-- show payout on button if is fullscreen -->
+          <span class="small-digit" v-show="isFullscreen">{{getPayout(data.payout)}}</span>
         
         </v-btn>
       </popper>
@@ -643,13 +644,14 @@ export default {
           rule: "big",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
-          payout: payout.big_small
+          payout: "bigGame"
         },
         {
           rule: "small",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
-          payout: payout.big_small
+          payout: "smallGame"
+
         },
         {
           rule: "odd",
@@ -773,7 +775,8 @@ export default {
       "getFooterBetAmount",
       "getMultiGameBet",
       "getAmountMultiGameBet",
-      "getAmountBetSpecificNumber"
+      "getAmountBetSpecificNumber",
+      "getPayout"
     ]),
     // return true if bet close
     checkBetClose() {

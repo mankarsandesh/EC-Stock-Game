@@ -7,10 +7,10 @@ export default function ({ isHMR, app, store, route, error, redirect }) {
        return
     }
 
-    if (!store.getters.checkAuth) {
-        // call Api to show in chart and store it in Vuex
+    // if (!store.getters.checkAuth) {
+    //     // call Api to show in chart and store it in Vuex
 
-        // redirect to whitelabel
-        app.router.push('/')
-    }
+    //     // redirect to whitelabel
+    //     app.router.push('/')
+    // }
 }
