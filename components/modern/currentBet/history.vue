@@ -67,17 +67,7 @@
 
           </tr>
 
-          <tr >
-              <td>Total</td>
-              <td>{{item.betId}}</td>
-              <td>{{item.rule}} ({{item.payoutAmount}}) {{item.stockName}} {{item.loops}} MINUTE</td>
-                <td>{{item.betTime}}</td>
-              <td>{{item.betAmount}}</td>
-            
           
-               <td><span :style="item.rollingAmount < 0 ? 'color: red;':'color: green;'">{{item.rollingAmount}}</span></td>
-
-          </tr>
 
         </tbody>
       </table>

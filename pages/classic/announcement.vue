@@ -16,7 +16,7 @@
                                 <th style=" width: 55%;">PREVIEW</th>
                                 <th>DATE</th>
                             </tr>
-                            <tr v-for="(data,index) in announcement" :key="index" @click="getAnnouncement(data.messgageId)">
+                            <tr v-for="(data,index) in announcement" :key="index" @click="getAnnouncement(data.messgageId)" class="annselect">
                                 <td>{{index+1}}</td>
                                 <td>{{data.title}}</td>
                                 <td> {{data.messageContent}}</td>
@@ -47,7 +47,7 @@
                                             </div>
                                         </v-card-title>
                                         <v-card-actions>
-                                            <v-btn @click="isOptions = true, getAnnouncement(null)" color="#818f9c"> BACK</v-btn>
+                                            <v-btn @click="isOptions = true, getAnnouncement(null)" color="#818f9c"> <v-icon dark left>arrow_back</v-icon>BACK</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-flex>
@@ -112,7 +112,7 @@ export default {
     font-weight: bold;
 }
 
-
+.annselect{ cursor: pointer;}
 table {
     border-collapse: collapse;
     width: 100%;

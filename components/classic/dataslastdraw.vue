@@ -6,7 +6,12 @@
             <i class="fa fa-table" aria-hidden="true" v-show="!ischangechartview" @click="getonview()"></i>
             <i class="fa fa-area-chart" aria-hidden="true" v-show="ischangechartview" @click="getoffview()"></i>
         </button>
-        <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
+        <v-tooltip top>
+            <template #activator="{ on: tooltip }">
+                <a :href="Reference" v-on="{ ...tooltip }" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
+            </template>
+            <span>{{Reference}}</span>
+        </v-tooltip>
         <v-tooltip top v-if="load">
             <template #activator="{ on: tooltip }">
                 <span v-on="{ ...tooltip }" class="timer total_classic">{{dataslastdraw}}</span>
