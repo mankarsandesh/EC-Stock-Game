@@ -52,10 +52,10 @@ module.exports = {
         "@/plugins/chart",
         "@/plugins/sweetAlert",
         "@/plugins/vueScreen",
-        {src:"@/plugins/vChart", mode: 'client'}
+        { src: "@/plugins/vChart", mode: 'client' }
     ],
     router: {
-        middleware:[ "auth","showLoading"]
+        middleware: ["auth", "showLoading"]
     },
 
     /*
@@ -91,8 +91,8 @@ module.exports = {
          */
         extend(config, ctx) {}
     },
-    server: {
-        port: 8000, // default: 3000
-        host: "0.0.0.0" // default: localhost
-    } // other configs
+    // server: {
+    //     port: 8000, // default: 3000
+    //     host: "0.0.0.0" // default: localhost
+    // } // other configs
 };
