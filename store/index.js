@@ -379,12 +379,12 @@ const createStore = () => {
                         }
                     }, 2500)
                     const userData = {
-                        name: userRes.name,
-                        balance: userRes.userBalance,
-                    }
-                    context.dispatch("balance")
+                            name: userRes.name,
+                            balance: userRes.userBalance,
+                        }
+                        // context.dispatch("balance")
                     context.commit("setAuth_token", localStorage.apikey)
-                    context.commit("setUserData", userData)
+                        // context.commit("setUserData", userData)
                     console.log("userRes")
 
                 } catch (ex) {
