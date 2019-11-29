@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-layout wrap>
-      <v-flex
+    <v-layout wrap >
+      <v-flex  xs12 sm12 md12 lg12 
         v-show="which_one=='B/S' || which_one== !isFullscreen "
       >
         <div v-show="isFullscreen">
@@ -18,6 +18,7 @@
       </v-flex>
 
       <v-flex
+        xs12 sm12 md6 lg6 
         :class="setClass(' pl-3 pb-5')"
         v-show="which_one=='O/E' || which_one== !isFullscreen "
       >
@@ -34,6 +35,7 @@
         </div>
       </v-flex>
       <v-flex
+      xs12 sm12 md6 lg6 
         :class="setClass('pb-5 pr-3')"
         v-show="which_one=='U/L' || which_one== !isFullscreen "
       >
@@ -51,6 +53,7 @@
         </div>
       </v-flex>
       <v-flex
+      xs12 sm12 md6 lg6 
         :class="setClass('pl-3 pb-5')"
         v-show="which_one=='NUM' || which_one== !isFullscreen "
       >

@@ -1,11 +1,5 @@
 <template>
 <div>
-    <!-- {{getStockName($route.params.id)}} -->
-    <!-- {{$route.params.id}} -->
-    <!-- <br/> -->
-    <!-- {{getStockNewData($route.params.id)}} -->
-    <!-- tag ldialog -->
-
     <div v-if="$route.params.id.split('-')[3] == 'currentbet'">
         <currentbet />
     </div>
@@ -26,20 +20,21 @@
     </div>
 
     <div v-else>
+        <!-- {{balance - sumTotalAll}} -->
         <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>
 
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
-            <v-layout row wrap>
-                <v-flex xs12 md6 mt-1>
-                    <input type="checkbox" /> {{$t('msg.preset')}}
+            <v-layout row wrap style="padding: 12px 0px 0px;">
+                <v-flex xs12 sm12 lg7 md7 mt-1>
+                    <v-checkbox style="float:left;margin:5px 10px;" v-model="preset" :label="$t('msg.preset')" ></v-checkbox>
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
-                <v-flex xs12 md6>
+                <v-flex xs12 md5>
                     <v-avatar :class="balance < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.price" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
@@ -69,6 +64,7 @@
                             <v-card>
                                 <v-layout row>
 
+                                    <!-- FIRST DIGIT & LAST DIGIT -->
                                     <v-flex xs12 md6>
                                         <table>
                                             <tr>
@@ -79,7 +75,7 @@
                                             <tr v-for="(datas, idx5) in items.childrens" :key="idx5">
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{datas.name >= 0 ? datas.name: $t('gamemsg.'+datas.name)}}</div>
-                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="text-stock">{{items.payout}} </div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[0]+'-'+datas.name" />
                                                     </div>
@@ -99,6 +95,7 @@
                                         </table>
                                     </v-flex>
 
+                                    <!-- BOTH DIGIT & TWO DIGIT -->
                                     <v-flex xs12 md6>
                                         <table>
                                             <tr>
@@ -111,7 +108,7 @@
                                                     <div class="text-bet">{{datass.name}}</div>
                                                     <div class="text-stock">{{items.payoutb}}</div>
                                                     <div class="bet-box">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name" />
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name" style="width:80%;" />
                                                     </div>
                                                 </td>
 
@@ -119,7 +116,7 @@
                                                     <div class="text-bet" v-if="datass.name2 != 19">{{datass.name2}}</div>
                                                     <div class="text-stock" v-if="datass.name2 != 19">{{items.payoutb}}</div>
                                                     <div class="bet-box" v-if="datass.name2 != 19">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name2" />
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name2" style="width:80%;" />
                                                     </div>
                                                 </td>
 
@@ -127,22 +124,22 @@
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name3)}}</div>
                                                     <div class="text-stock">{{items.payout}}</div>
                                                     <div class="bet-box">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3" />
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3"  />
                                                     </div>
                                                 </td>
 
                                                 <td class="top-bet" v-if="items.name !== 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name4)}}</div>
                                                     <div class="text-stock">{{items.payout}}</div>
-                                                    <div class="bet-box">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
+                                                    <div class="bet-box" >
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4"     />
                                                     </div>
                                                 </td>
 
                                                 <td class="top-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:30%':'width:40%'">
-                                                    <div class="text-bet">{{datas.name4}}</div>
+                                                    <div class="text-bet" >{{datas.name4}} </div>
                                                     <div class="bet-box">
-                                                        <button class="form-btn" @click="getsnTwo(datas.name4)" />
+                                                        <button class="form-btn" @click="getsnTwo(datas.name4)"  />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -159,18 +156,18 @@
                 </v-card>
             </v-tab-item>
         </v-tabs-items>
+
         <!-- end form typy bet -->
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
-                <v-flex xs12 md6 mt-1>
-                    <input type="checkbox" />
-                    {{$t('msg.preset')}}
+                <v-flex xs12 md7 mt-1>
+                    <v-checkbox style="float:left;margin:5px 10px;" v-model="preset" :label="$t('msg.preset')" ></v-checkbox>
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
-                <v-flex xs12 md6>
+                <v-flex xs12 md5 >
                     <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
@@ -179,24 +176,6 @@
                 </v-flex>
             </v-layout>
         </v-card>
-
-        <!-- <v-card v-if="!$vuetify.breakpoint.smAndDown">
-            <v-layout row wrap>
-                <v-flex xs12 md12>
-
-                    <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
-                            <span class="btn-chips" >{{chip.price}}</span>
-                        </v-img>
-                    </v-avatar>
-
-                    {{price}}
-                    <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
-                    <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
-
-                </v-flex>
-            </v-layout>
-        </v-card> -->
 
         <v-tabs class="bg-colors" v-model="currentItems" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" @click="loadchart()" v-for="(baccarat1, idx1) in baccarat" :key="idx1" :href="'#tab-' + baccarat1.name">{{ $t('gamemsg.'+baccarat1.name) }}</v-tab>
@@ -224,8 +203,8 @@
                         <button class="btn-preset">{{$t('msg.amount')}}</button>
                         <input readonly type="text" class="form-input width-15" v-model="price" />
                         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
-                        <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <v-avatar size="60" :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                                 <span class="btn-chips">{{chip.price}}</span>
                             </v-img>
                         </v-avatar>
@@ -277,14 +256,14 @@
         <v-dialog v-model="dialogtwo" persistent max-width="440px">
             <v-card>
                 <v-card-text>
-                    <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
                     <table>
                         <tr>
-                            <th>{{$t('gamemsg.twodigit')}}</th>
+                            <th>{{$t('gamemsg.twodigit')}} </th>
                         </tr>
                         <tr v-if="sntwoloopstart == 0">
                             <td class="top-bet" @click="betRow($event)">
@@ -316,7 +295,7 @@
     </div>
     <!-- alertOutCome -->
     <v-snackbar class="tops" v-model="snackbar" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
-        <span class="text-center">
+        <span style="margin: 0 auto;">
             <h2>{{text}}</h2>
             <h2>
                 <animated-number :value="betPrice" :formatValue="formatToPrice" />
@@ -327,7 +306,7 @@
 
     <!-- alertOutCome -->
     <v-snackbar class="tops" v-model="alertSS" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
-        <span class="text-center">
+        <span style="margin: 0 auto;">
             <h2>{{alertext}}</h2>
         </span>
     </v-snackbar>
@@ -409,6 +388,7 @@ export default {
             stocks: this.$route.params.id.split("-")[1],
             show1: true,
             checkbox1: false,
+            preset: false,
 
             // alertOutCome
             alertSS: false,
@@ -422,7 +402,7 @@ export default {
             betPrice: 0,
             alertext: "",
             disabled: false,
-            // end alertOutCome
+            // end alertOutCome,
         };
     },
 
@@ -449,14 +429,15 @@ export default {
             } else {
                 return 0;
             }
-
         },
         formData() {
-            return {
-                data: this.betData.betdetails,
-            };
-        },
-
+            return { data: this.betData.betdetails }
+        }
+    },
+    watch:{
+        preset(e){
+            return this.preset = e
+        }
     },
     methods: {
         settabs() {
@@ -477,20 +458,17 @@ export default {
             this.currentItemss = s
             return;
         },
-
         async getbalance() {
-            let balance = await this.$axios.$get('/api/me?apikey=' + localStorage.apikey)
+            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
             this.balance = balance.userBalance
-
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             stcokId.data.forEach(element => {
                 if (element.stockName == this.$route.params.id.split("-")[1]) {
                     this.stockname = element.stockId
                 }
             })
-
         },
         async getConfirmBet() {
             if (this.sumTotalAll > this.balance || this.sumTotalAll == '') {
@@ -499,7 +477,7 @@ export default {
                 this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
                 // console.log(this.formData);
                 console.log("send to api server");
-                const res = await this.$axios.post("/api/storebet?apikey=" + localStorage.apikey, this.formData)
+                const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
                 console.log(res)
                 setTimeout(() => {
                     this.getalertstartstop(res.data)
@@ -554,23 +532,25 @@ export default {
 
         setPrice(e) {
             if (e == "reset") {
-                this.betData.betdetails = [];
-                this.betDataShows = [];
-                this.betData.betName = [];
-                this.price = null;
                 $("#txttotal").text(this.formatTotal(this.price))
-                $(".form-input").val("");
-                $(".form-inputadd").val("");
-                $(".form-inputadd").attr("class", "form-input");
-                $(".top-betadd").attr("class", "top-bet");
                 this.isfooter = true;
+                if (this.preset == false) {
+                    this.betData.betdetails = [];
+                    this.betDataShows = [];
+                    this.betData.betName = [];
+                    this.price = null;
+                    $(".form-input").val("");
+                    $(".form-inputadd").val("");
+                    $(".form-inputadd").attr("class", "form-input");
+                    $(".top-betadd").attr("class", "top-bet");
+                }
             } else if (e == "confirm") {
                 this.dialog = true;
                 this.isfooter = false;
-
             } else {
+                // console.log(e.target.textContent)
                 if (e > 0) this.price += parseInt(e);
-                else this.price += parseInt(e.target.textContent);
+                else this.price += parseInt(e.target.parentElement.innerText);
                 $("#txttotal").text(this.formatTotal(this.price))
                 $(".form-inputadd").val(this.price);
                 if (this.betData.betName.length > 0) {
@@ -613,10 +593,11 @@ export default {
         },
 
         bet(e, specialName = "none") {
-            // console.log(e)
-            // this.playSound('/voice/bet-chips.mp3')
-            if (this.price == 0 || this.price == null) {
+            // this.playSound('/voice/bet-chips.mp3') 
+            if (this.price == 0 || this.price == null || this.price > this.balance - this.sumTotalAll) {
                 // console.log("Null-0");
+                this.price = 0
+                this.getalertstartstop("notenough")
                 return;
             }
 
@@ -625,7 +606,6 @@ export default {
             } else {
                 e.target.value = this.price;
             }
-
             this.loop = this.getStockName(this.$route.params.id).loop;
 
             // Data send to server
@@ -729,19 +709,18 @@ export default {
 
         getBetClosedopen(val) {
             if (val == 'closed') {
-                this.panel = [false, false, false, false];
                 this.setPrice("reset");
+                this.panel = [false, false, false, false];
                 this.disabled = true
                 this.dialog = false
             } else {
                 this.panel = [true, true, true, true];
                 this.disabled = false
             }
-
         },
 
         async alertOutCome() {
-            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + localStorage.apikey)
+            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.auth_token)
             // console.log(totalPayout)
             if (totalPayout.status == false) return;
             this.snackbar = true;
@@ -774,6 +753,9 @@ export default {
             } else if (val.status == false) {
                 this.alertext = this.$root.$t('msg.moneynotenough') + "\n" + val.message;
                 this.color = "error";
+            } else if (val == "notenough") {
+                this.alertext = this.$root.$t('msg.moneynotenough');
+                this.color = "error";
             }
         },
         playSound(sound) {
@@ -799,27 +781,27 @@ export default {
                 this.setPrice("reset");
             });
             $("#chips, #ch10").click(() => {
-                if (this.balance >= parseInt(this.chips[0].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[0].price))
                     this.setPrice(this.chips[0].price)
             });
             $("#OS93GB1we-copy, #ch50").click(() => {
-                if (this.balance >= parseInt(this.chips[1].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[1].price))
                     this.setPrice(this.chips[1].price)
             });
             $("#OS93GB2, #ch100").click(() => {
-                if (this.balance >= parseInt(this.chips[2].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[2].price))
                     this.setPrice(this.chips[2].price)
             });
             $("#OS93GB1-copy, #ch500").click(() => {
-                if (this.balance >= parseInt(this.chips[3].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[3].price))
                     this.setPrice(this.chips[3].price)
             });
             $("#OS93GB5-copy, #ch1000").click(() => {
-                if (this.balance >= parseInt(this.chips[4].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[4].price))
                     this.setPrice(this.chips[4].price)
             });
             $("#OS93GB3a-copy-copy, #ch5000").click(() => {
-                if (this.balance >= parseInt(this.chips[5].price))
+                if (this.balance - this.sumTotalAll >= parseInt(this.chips[5].price))
                     this.setPrice(this.chips[5].price)
             });
         }
@@ -851,8 +833,10 @@ export default {
 }
 
 .pointer-events-none {
+    text-align: center;
+    margin-bottom: 10px;
     pointer-events: none;
-    background-color: rgba(179, 183, 183, 0.49);
+    background-color: rgb(88, 88, 88);
 }
 
 .bet-closed {
@@ -940,8 +924,7 @@ export default {
 }
 
 .btn-preset {
-    width: 10%;
-    /* padding: 0.4rem; */
+   padding:10px 15px;
     height: 35px;
     font-size: 1.01rem;
     text-align: center;
@@ -1089,7 +1072,7 @@ tr:nth-child(even) {
 }
 
 .top-bet {
-    padding: 0px 0px 0px 0px !important;
+    padding: 0px 4px !important;
     display: inline-flex;
     width: 100%;
 }
@@ -1132,5 +1115,9 @@ tr:nth-child(even) {
 
 .tops {
     top: 11%;
+}
+v-avatar{
+    text-align: center;
+    margin-top: 10px;
 }
 </style>

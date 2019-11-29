@@ -5,7 +5,12 @@
         <v-item-group v-model="window" class="shrink mr-4" mandatory tag="v-flex">
           <v-item v-for="n in tabs" :key="n">
             <div slot-scope="{ active, toggle }">
-              <v-btn :input-value="active" block class="main-btn" @click="toggle">{{n}}</v-btn>
+              <v-btn
+                :input-value="active"
+                block
+                class="main-btn"
+                @click="toggle"
+              >{{$t('profile.' + n)}}</v-btn>
             </div>
           </v-item>
         </v-item-group>
@@ -35,7 +40,7 @@
   </div>
 </template>
 <script>
-import {mapMutations, mapActions} from 'vuex'
+import { mapMutations, mapActions } from "vuex";
 import basicInfo from "~/components/modern/profile/baicInfo";
 import onlineHistoy from "~/components/modern/profile/onlineHistory";
 import stockAnalysis from "~/components/modern/profile/stockAnalysis";
@@ -54,13 +59,10 @@ export default {
     };
   },
   mounted(){
-    // call this every page that used "dekstopModern" layout to hide loading
-     this.setIsLoadingStockGame(false)
+
   },
-  methods:{
-    ...mapMutations([
-      "setIsLoadingStockGame"
-    ])
+  methods: {
+    ...mapMutations(["setIsLoadingStockGame"])
   }
 };
 </script>

@@ -74,7 +74,8 @@
         "All Results": "All Results",
         "Player": "Player",
         "Balance": "Balance",
-        "msinfo": "Total profit (only one day's date is provided)",
+        "Totalprofit": "Total profit",
+        "msinfo": "(only one day's date is provided)",
         "price": "price : ",
         "stopbetting": "Stop Betting",
         "startbetting": "Start Betting",
@@ -85,13 +86,9 @@
         "Clear": "Clear",
         "Total Bet": "Total Bet",
         "Win Rate": "Win Rate",
-
-
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
         "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;"
-
-
     },
     "navlist": {
         "live Stock": "live Stock",
@@ -116,12 +113,10 @@
         "Odd-Even": "Odd-Even",
         "High-Mid-Low": "High-Mid-Low",
         "Specific-Number": "Specific-Number",
-
         "firstdigit": "first digit",
         "lastdigit": "last digit",
         "bothdigit": "both digit",
         "twodigit": "two digit",
-
         "big": "big",
         "small": "small",
         "odd": "odd",
@@ -131,7 +126,6 @@
         "low": "low",
         "tie": "tie",
         "number": "number",
-
         "B": "B",
         "S": "S",
         "E": "E",
@@ -144,9 +138,14 @@
         "btc1": "BTC/USDT",
         "usindex": "US dollar Index",
         "btc5": "BTC/USDT",
-        "sh000001": "sh000001",
-        "sz399001": "sz399001",
-        "sz399415": "sz399415",
-        "sh000300": "sh000300"
+        "sh000001": "SH000001",
+        "sz399001": "SZ399001",
+        "sz399415": "SZ399415",
+        "sh000300": "SH000300"
+    },
+    "profile": {
+        "basic info": "basic infor",
+        "online history": "online history",
+        "stock analysis": "stock analysis"
     }
 }

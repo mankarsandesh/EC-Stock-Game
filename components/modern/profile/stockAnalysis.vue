@@ -50,11 +50,11 @@
           </v-flex>
           <v-flex xs12>
             <v-card class="mx-auto">
-              <h1>Chart here</h1>
+              <Stock-Analysis />
             </v-card>
           </v-flex>
         </v-layout>
-        <v-layout row wrap class="action">
+        <!-- <v-layout row wrap class="action">
           <v-flex xs12 sm3 class="py-2 d-flex">
             <v-checkbox
               v-model="won"
@@ -73,7 +73,7 @@
               hide-details
             ></v-checkbox>
           </v-flex>
-        </v-layout>
+        </v-layout> -->
       </v-window-item>
       <!-- Baic Information -->
 
@@ -87,7 +87,7 @@
         </v-layout>
 
         <v-flex xs12>
-          <table class="table">
+          <!-- <table class="table">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">stock name</th>
@@ -106,7 +106,8 @@
                 <td>66.3%</td>
               </tr>
             </tbody>
-          </table>
+          </table>-->
+          <StockAnalysisDetil />
         </v-flex>
       </v-window-item>
       <!-- stock analysis -->
@@ -131,7 +132,13 @@
   </div>
 </template>
 <script>
+import StockAnalysis from "./Analysischart";
+import StockAnalysisDetil from "./Analysis-Details";
 export default {
+  components: {
+    StockAnalysis,
+    StockAnalysisDetil
+  },
   data() {
     return {
       view: false,

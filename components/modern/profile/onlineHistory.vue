@@ -23,7 +23,7 @@
         </v-flex>
         <v-flex xs12>
             <v-card class="mx-auto">
-                <h1>Chart here</h1>
+                <Online-Chart></Online-Chart>
             </v-card>
         </v-flex>
         <v-card>
@@ -36,7 +36,11 @@
 </template>
 
 <script>
+import OnlineChart from "./onlinechart";
 export default {
+    components:{
+        OnlineChart
+    },
     data() {
         return {
             dateto: new Date().toISOString().substr(0, 10),
@@ -54,12 +58,12 @@ export default {
     },
     methods: {
         async fetchAll() {
-            let res = await this.$axios.$get( '/api/me?apikey=' + localStorage.apikey)
+            let res = await this.$axios.$get( '/api/me?apikey=' + this.$store.state.auth_token)
             // console.log(res);
             this.playerId = res.userApiId
         },
         async getOnlineTime() {
-            let dataGet = await this.$axios.$get( '/api/me/online?method=profile&apikey=' + localStorage.apikey)
+            let dataGet = await this.$axios.$get( '/api/me/online?method=profile&apikey=' + this.$store.state.auth_token)
             this.time = dataGet.data
         },
         setTime(seconds, val) {

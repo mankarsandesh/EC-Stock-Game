@@ -2,8 +2,7 @@ import openSocket from "socket.io-client";
 export default ({
     store
 }) => {
-    // call Api to show in chart and store it in Vuex
-    store.dispatch('makeAuth')
+   
 
     //coin modern set and get from localStorage
     initLocalStorageCoin(store)
@@ -17,12 +16,17 @@ export default ({
     socket.on("time", data => {
         let time5 = data.sh000001.timer;
         let time1 = data.btc1.timer;
-        // get new data
+        // get new data crawler
         if (time5 == 241 || time1 == 41) {
-            store.dispatch('asynInitCallApi')
+            // store.dispatch('asynInitCallApi')
         }
         store.commit('SET_TIME', data)
     });
+
+
+    setInterval(()=>{
+        store.dispatch("asyncPayout")
+    },3000)
 }
 
 function setLanguage(store) {

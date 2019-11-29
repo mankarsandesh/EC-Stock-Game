@@ -8,8 +8,8 @@
                         <div>{{$t('menu.history')}}</div>
                     </template>
                     <v-card flat>
-                        <v-layout row wrap>
-                            <v-flex xs5 md2>
+                        <v-layout row wrap id="history">
+                            <v-flex xs4 sm4 md2 lg2>
                                 <v-menu v-model="from" :close-on-content-click="false" :nudge-right="0" lazy transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
                                         <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -17,7 +17,7 @@
                                     <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-flex xs5 md2>
+                            <v-flex xs4 sm4 md2 lg2>
                                 <v-menu v-model="to" :close-on-content-click="false" :nudge-right="0" transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
                                         <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -25,17 +25,17 @@
                                     <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-flex xs3 md1>
-                                <v-btn @click="dateSearch()" single-line hide-details>go</v-btn>
+                            <v-flex xs4 sm4 md2 lg2>
+                                <v-btn @click="dateSearch()" class="goButton">go</v-btn>
                             </v-flex>
-                            <v-flex xs3 md1 mr-1>
-                                <v-select hide-details :items="itemspage" v-model="itemspages"></v-select>
+                            <v-flex xs4 sm4 md2 lg2>
+                                <v-select  single-line hide-details :items="itemspage" v-model="itemspages" class="selectHistory"></v-select>
                             </v-flex>
-                            <v-flex xs3 md3 mr-1>
-                                <v-text-field v-model="search" append-icon="search" single-line hide-details></v-text-field>
+                            <v-flex xs4 sm4 md2 lg2>
+                                <v-text-field single-line hide-details v-model="search" append-icon="search" class="selectHistory"  style="padding:4px;"></v-text-field>
                             </v-flex>
-                            <v-flex xs6 md2 mr-1>
-                                <v-select hide-details single-line :items="items" label="Sort By :" v-model="itemss"></v-select>
+                            <v-flex xs4 sm4 md2 lg2>
+                                <v-select  single-line hide-details :items="items" label="Sort By :" v-model="itemss" class="selectHistory"></v-select>
                             </v-flex>
                         </v-layout>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
@@ -70,7 +70,7 @@
                                         </span></td>
                                     <td>
                                         <span class="text-xs-right" v-for="(column, key) in headers" :key="key">
-                                            <strong v-if="column.totals" :style="total1(column) < 0 ? 'color: red;':'color: green;'">{{ formatToPrice(total1(column)) }}</strong>
+                                            <strong v-if="column.totals" :style="total1(column) < 0 ? 'color: red;':''">{{ formatToPrice(total1(column)) }}</strong>
                                         </span>
                                     </td>
                                 </tr>
@@ -78,7 +78,7 @@
                                     <td>{{$t('msg.Total')}}</td>
                                     <td colspan="3">{{pagination.totalItems}}</td>
                                     <td><strong>{{formatToPrice(sumTotalbetAmount)}}</strong></td>
-                                    <td><strong :style="sumTotalrollingAmount < 0 ? 'color: red;':'color: green;'">{{formatToPrice(sumTotalrollingAmount)}}</strong></td>
+                                    <td><strong :style="sumTotalrollingAmount < 0 ? 'color: red;':''">{{formatToPrice(sumTotalrollingAmount)}}</strong></td>
                                 </tr>
 
                             </template>
@@ -105,8 +105,8 @@ export default {
             datefrom: new Date().toISOString().substr(0, 10),
             from: false,
             to: false,
-            items: ["day", "weeks", "months", "years"],
-            itemss: 'day',
+            items: ["day", "weeks", "months", "years", "all"],
+            itemss: '',
             itemspage: [5, 10, 25, 50, 100],
             itemspages: 10,
             load: false,
@@ -185,22 +185,22 @@ export default {
             let datefrom;
 
             if (val == 'day') {
-                datefrom = yf + '-' + mf + '-' + d
+                datefrom = {start: this.dateto,end: this.dateto}
             } else if (val == 'weeks') {
-                datefrom = yf + '-' + mf + '-' + d
+                datefrom = {week: w}
             } else if (val == 'months') {
-                datefrom = yf + '-' + ml + '-' + d
-            } else {
-                datefrom = yl + '-' + mf + '-' + d
+                datefrom = {month: mf}
+            } else if (val == 'years') {
+                datefrom = {year: yf}
+            } else if (val == 'all') {
+                datefrom = "all"
+                this.history = []
+                this.sumTotalbetAmount = 0
+                this.sumTotalrollingAmount = 0
+                this.pagination.totalItems = 0
             }
-
-            let dates = {
-                start: this.dateto,
-                end: datefrom,
-                week: w
-            }
-            console.log(dates)
-            return this.gethistory(dates)
+            console.log(datefrom)
+            return this.gethistory(datefrom)
         },
         itemspages(val) {
             this.pagination.rowsPerPage = val
@@ -217,7 +217,7 @@ export default {
             const table = this.$refs.table
             //console.log('table',table);
             return table ? table.filteredItems.reduce((s, i) => {
-                return s + parseInt(i[column.value], 10)
+                return s + parseFloat(i[column.value], 10)
             }, 0) : 0
         },
         dateSearch() {
@@ -230,7 +230,8 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
             if (history.data == null) return
             // console.log(history.data)
 
@@ -239,12 +240,16 @@ export default {
             for (let i = 0; i < history.data.length; i++) {
                 // console.log(history.data[i].betTime)
                 // console.log(i)
-                if (val != null) {
+                if (val != null && val != 'all') {
                     this.history = []
                     this.sumTotalbetAmount = 0
                     this.sumTotalrollingAmount = 0
                     this.pagination.totalItems = 0
-                    if (history.data[i].betTime.split(" ")[0] == val.start || history.data[i].betTime.split(" ")[0] == val.end || new Date(history.data[i].betTime).getDay() == val.week) {
+                    if (history.data[i].betTime.split(" ")[0] == val.start ||
+                        history.data[i].betTime.split(" ")[0] == val.end ||
+                        new Date(history.data[i].betTime).getDay() == val.week ||
+                        new Date(history.data[i].betTime).getMonth() + 1 == val.month ||
+                        new Date(history.data[i].betTime).getFullYear() == val.year) {
                         setTimeout(() => {
                             this.history.push({
                                 page: 1,
@@ -261,7 +266,7 @@ export default {
                             this.pagination.totalItems = this.history.length;
                             this.sumTotalbetAmount += history.data[i].betAmount
                             this.sumTotalrollingAmount += history.data[i].rollingAmount
-                        }, 100)
+                        }, 0)
                     } else if (history.data[i].betTime.split(" ")[0] !== val.start && history.data[i].betTime.split(" ")[0] !== val.end) {
                         this.history = []
                     }
@@ -289,7 +294,7 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             return this.StockName = stcokId.data
 
         },
@@ -318,8 +323,39 @@ export default {
 }
 
 .v-window__container .v-window-item .layout .flex .v-input .v-input__control .v-input__slot .v-text-field__slot input {
-    color: #000000 !important;
+    color:#FFF !important;
     font-size: 1.2rem;
     padding: 11px;
+    
+}
+#history{
+    margin-top:10px;
+}
+.goButton{
+    padding:6px 4px;
+   background-color:  #003e70 !important;
+    color:#FFF;
+    height:auto;
+    margin-top: 12px;
+}
+.selectHistory {
+    /* border:1px solid red !important; */
+    margin-top: 8px !important;
+    padding:4px 6px;
+    color:#FFF !important;
+}
+.v-text-field .v-label{
+    border:1px solid red !important;
+}
+.theme--light.v-select .v-select__selections{
+    padding: 2px 10px !important;
+     color:#FFF !important;
+}
+.theme--light.v-select .v-select__selections{
+    color: #FFF !important;
+}
+.v-select__selection--comma{
+    color:#FFF !important;
 }
 </style>
+1

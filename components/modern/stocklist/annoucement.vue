@@ -10,10 +10,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="n in 10" :key="n">
-            <td>new stock name</td>
-            <td>vfjlskdfjalsjflksdafjsadljflds</td>
-            <td>22/02/19</td>
+           <tr v-for="(item,index) in getAnnoucement" :key="index">
+              <td>{{item.title}}</td>
+              <td>{{item.messageContent}}</td>
+              <td>{{item.created_at}}</td>
           </tr>
         </tbody>
       </table>
@@ -24,11 +24,21 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
       items: ["day", "weeks", "months", "years"]
     };
+  },
+  mounted() {
+    this.asyannoucement();
+  },
+  methods: {
+    ...mapActions(["asyannoucement"])
+  },
+  computed: {
+    ...mapGetters(["getAnnoucement"])
   }
 };
 </script>

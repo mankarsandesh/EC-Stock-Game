@@ -73,7 +73,8 @@
         "All Results": "所有结果",
         "Player": "玩家",
         "Balance": "余额",
-        "msinfo": "总盈利（僅提供1天的日期)",
+        "Totalprofit": "总盈利",
+        "msinfo": "（僅提供1天的日期)",
         "price": "报价 : ",
         "stopbetting": "停止投注",
         "startbetting": "開始投注",
@@ -145,5 +146,10 @@
         "sz399001": "深圳成份指数",
         "sz399415": "大数据100指数",
         "sh000300": "沪深300指数"
+    },
+    "profile": {
+        "basic info": "基础信息",
+        "online history": "在线历史",
+        "stock analysis": "库存分析"
     }
 }

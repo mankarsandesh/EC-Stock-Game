@@ -41,7 +41,7 @@ export default {
 
     height: {
       type: String,
-      default: "38px"
+      default: "20px"
     },
 
     color: {

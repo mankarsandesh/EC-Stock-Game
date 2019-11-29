@@ -47,21 +47,28 @@
           <tr>
             <th scope="col">game id</th>
             <th scope="col">bet id</th>
-            <th scope="col">stock name</th>
+            <th scope="col">Bet Details</th>
+             <th scope="col">Bet Time</th>
             <th scope="col">amount</th>
-            <th scope="col">status</th>
+           
             <th scope="col">payout</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="n in 10" :key="n">
-            <th scope="row">0104239720185520</th>
-            <td>1654231567489421321</td>
-            <td>stockname aaabb</td>
-            <td>$90.00</td>
-            <td>pending</td>
-            <td>pending</td>
+           <tr v-for="(item,index) in getHistory" :key="index">
+              <td>{{item.gameId}}</td>
+              <td>{{item.betId}}</td>
+              <td>{{item.rule}} ({{item.payoutAmount}}) {{item.stockName}} {{item.loops}} MINUTE</td>
+                <td>{{item.betTime}}</td>
+              <td>{{item.betAmount}}</td>
+            
+          
+               <td><span :style="item.rollingAmount < 0 ? 'color: red;':'color: green;'">{{item.rollingAmount}}</span></td>
+
           </tr>
+
+          
+
         </tbody>
       </table>
     </v-flex>
@@ -71,6 +78,7 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -80,6 +88,16 @@ export default {
       to: false,
       items: ["day", "weeks", "months", "years"]
     };
+  },
+  mounted() {
+    this.asyhistory();
+  },
+  methods: {
+    ...mapActions(["asyhistory"])
+  },
+  computed: {
+    ...mapGetters(["getHistory"])
   }
+ 
 };
 </script>

@@ -5,9 +5,13 @@ import { hostname } from 'os'
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            loader: false,
             isLoadingStockGame: false,
             auth_token: "",
+            isLoadingAnnoucement: [],
+            isLoadingHistory: [],
             userData: {},
+            payout: {},
             balance: '',
             footerBetAmount: 0,
             // store data betting
@@ -54,125 +58,9 @@ const createStore = () => {
                     previousPrice: 0
                 }
             },
-            stocks: {
-                btc1: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=7&limit=300&apikey=${localStorage.apikey}`,
-                        livePrice: "/api/newlivedata/btc"
-                    },
-                    stockname: "btc1",
-                    name: "btc",
-                    loop: 1,
-                    type: "cypto",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-                    }
-                },
-                usindex: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=5&limit=300&apikey=${localStorage.apikey}`,
-                        livePrice: "/api/newlivedata/usindex"
-                    },
-                    stockname: "usindex",
-                    name: "usindex",
-                    loop: 5,
-                    type: "usa",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml"
-                    }
-                },
-                btc5: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=6&limit=300&apikey=${localStorage.apikey}`,
-                        //  // set liveprice to null for use the same liveprice in  loop 1 above
-                        //  // it will not call api
-                        //  // it must has loop 1 above  or other loop above
-                        livePrice: "/api/newlivedata/btc"
-                    },
-                    stockname: "btc5",
-                    name: "btc",
-                    loop: 5,
-                    type: "cypto",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-                    }
-                },
-                sh000001: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=4&limit=300&apikey=${localStorage.apikey}`,
-                        livePrice: "/api/newlivedata/sh01"
-                    },
-                    stockname: "sh000001",
-                    name: "sh000001",
-                    loop: 5,
-                    type: "china",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml"
-                    }
-                },
-                sz399001: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=3&limit=300&apikey=${localStorage.apikey}`,
-                        livePrice: "/api/newlivedata/sz01"
-                    },
-                    stockname: "sz399001",
-                    name: "sz399001",
-                    loop: 5,
-                    type: "china",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml"
-                    }
-                },
-                sz399415: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=2&limit=300&apikey=${localStorage.apikey}`,
-                        livePrice: "/api/newlivedata/sz15"
-                    },
-                    stockname: "sz399415",
-                    name: "sz399415",
-                    loop: 5,
-                    type: "china",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml"
-                    }
-                },
-                sh000300: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=1&limit=300&apikey=${localStorage.apikey}`,
-                        livePrice: "/api/newlivedata/sz300"
-                    },
-                    stockname: "sh000300",
-                    name: "sh000300",
-                    loop: 5,
-                    type: "china",
-                    crawlerData: "",
 
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml"
-                    }
-                }
-
-            },
+           
+            stocks: {},
             time: {},
         }),
         mutations: {
@@ -239,14 +127,47 @@ const createStore = () => {
             },
             setFooterBetAmount(state, payload) {
                 state.footerBetAmount = parseInt(payload)
+            },
+            setAnouncement(state, payload) {
+                state.isLoadingAnnoucement = payload
+            },
+            setHistory(state, payload) {
+                state.isLoadingHistory = payload
             }
+
+
         },
         actions: {
+            async asyncPayout(context) {
+                try {
+                    const res = await this.$axios.$get("http://192.168.1.141/TNK/StockAdmin/public/api/payout?apikey=iDm6oevcOoHaUZHsi7PG64x0UmgcNPaAUFJXo1OzahRofTskOhDkQL4bcHe2mOlalkXKG7csKi5iv3rI")
+                    let payoutObject = res.data
+                    context.state.payout = payoutObject
+                    console.log(context.state.payout)
+                    // context.commit("setUserData", {name:userInfo})
+                } catch (ex) {
+                    console.error(ex)
+                    alert(ex)
+                }
+            },
+            async asynUserInfo(context) {
+                try {
+                    const res = await this.$axios.$get(`/api/me?apikey=${context.getters.getAuth_token}`)
+                    // if (res.status) {
+                    let userInfo = res.name
+                    context.commit("setUserData", { name: userInfo })
+                    // }
+                } catch (ex) {
+                    console.error(ex)
+                    alert(ex)
+                }
+            },
             async balance(context) {
                 try {
-                    const res = await this.$axios.$get(`/api/me/balance?apikey=${localStorage.apikey}`)
+                    const res = await this.$axios.$get(`/api/me/balance?apikey=${context.getters.getAuth_token}`)
                     if (res.status) {
                         let balance = res.data
+                        context.commit("setBalance", balance)
                         context.commit("setBalance", balance)
                     }
                 } catch (ex) {
@@ -263,7 +184,7 @@ const createStore = () => {
                 }
                 // console.log(betData)
                 try {
-                    const res = await this.$axios.$post(`/api/storebet?apikey=${context.state.auth_token}`, betData)
+                    const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
 
                     console.log("res./.......")
                     console.log(res)
@@ -296,48 +217,22 @@ const createStore = () => {
 
             },
 
-            async makeAuth(context) {
-                console.warn("auth working...")
-                const userForm = {
-                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "macky",
-                    "userId": "11223344",
-                    "balance": 800000,
-                    "webId": "0001"
-                }
-                try {
-                    if (localStorage.apikey == null) {
-                        const res = await this.$axios.$post("/api/redirect", userForm)
-                        localStorage.apikey = res.data.token;
-                        console.log(localStorage.apikey)
-                    } else {
-                        // check user's apikey by use apikey to get user informtion
-                        const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
-                        // if user api key is invalidate it will be redirect to main page
-                        if (userRes.status == false && userRes.status !== undefined) {
-                            localStorage.removeItem('apikey');
-                            location.href = "http://" + location.host
-                            return
-                        }
-                        // store token
-                        context.commit("setAuth_token", localStorage.apikey)
-                        const userData = {
-                            name: userRes.name,
-                            balance: userRes.userBalance,
-                        }
-                        context.commit("setUserData", userData)
-                         //get user balance
-                         context.dispatch("balance")
-                         // get data stock crawler
-                         context.dispatch("asynInitCallApi")
+            async asynGetAllStock(context){
+                console.log("working...")
+                console.log(context.getters.getAuth_token)
+                try{
+                    const stocks = await this.$axios.$post(`http://159.138.54.214/api/allStockInfo?apikey=${context.getters.getAuth_token}`)
+                    const data = stocks.data
+                    console.log(data)
+                    context.state.stocks = Object.assign({}, data)
+                    console.log(context.state.stocks)
+                    context.dispatch("asynInitCallApi")
 
-                    }
-                } catch (ex) {
+
+                }catch(ex){
                     console.error(ex)
                     alert(ex)
                 }
-
-
             },
 
             asynInitCallApi(context) {
@@ -352,42 +247,25 @@ const createStore = () => {
                     context.dispatch("asynCrawlerStock", payload)
                 }
                 context.getters.getStockChart
-                // call live price api
-                // setInterval(function () {
-                //     for (let i = 0; i < context.getters.getStockLength; i++) {
-                //         let url = context.state.stocks[context.getters.getStockKeys[i]].url.livePrice
-                //         // check if one stock has multi loop it will use the same live price
-                //         // and in states.stocks url live price is setten to "null"
-                //         // disable first by macky 11:35 02/09/2019
-                //         // if (url == null) {    
-                //         //     continue
-                //         // }
-                //         let name = context.getters.getStockKeys[i]
-                //         let payload = {
-                //             url,
-                //             name
-                //         }
-                //         context.dispatch("asynLivePrice", payload)
-                //     }
-                // }, 10000);
-
             },
-            // to get crawler
+            // to get crawler data
             async asynCrawlerStock(context, payload) {
                 try {
-                    const url = payload.url
+                    const url = `${payload.url}&apikey=${context.getters.getAuth_token}`
+                    console.log(url)
                     const name = payload.name
                     const result = await this.$axios.$get(url)
-                    if (result) {
+                    if (result.data.length > 0) {
                         context.state.stocks[name].crawlerData = result.data
                         context.state.stocks[name].lastDraw = result.data[result.data.length - 1].PT
                         context.state.stocks[name].timeLastDraw = result.data[result.data.length - 1].writetime
                         // console.warn(context.state.stocks[name].crawlerData)
                         console.log(result.data)
+                    } else {
+                        console.log(result.code)
                     }
                 } catch (error) {
                     console.log(error)
-                    alert(error)
                 }
             },
 
@@ -405,10 +283,53 @@ const createStore = () => {
                 } catch (error) {
                     console.log(error)
                 }
+            },
+            // to get Annoucement
+            async asyannoucement(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/announcement?apikey=${context.getters.getAuth_token}`)
+                    console.log(res);
+                    context.commit("setAnouncement", res.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            // to get User bet History
+            async asyhistory(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
+                    const res = await this.$axios.$get(`/api/fetchHistoryBet?apikey=${context.getters.getAuth_token}`)
+                    console.log(res);
+                    console.log("SANDESH");
+                    context.commit("setHistory", res.data);
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
         },
         getters: {
+            getPayout: (state) => (gameRule) => {
+                {
+                    console.log(state.payout[gameRule])
+                    return state.payout[gameRule]
+                }
+            },
+
+            checkAuth(state) {
+                if (state.auth_token === "" || state.auth_token == null || state.auth_token == undefined) {
+                    return false
+                } else {
+                    return true
+                }
+            },
+            getHistory(state) {
+                return state.isLoadingHistory
+            },
+            getAnnoucement(state) {
+                return state.isLoadingAnnoucement
+            },
             getIsLoadingStockGame(state) {
                 return state.isLoadingStockGame
             },
@@ -609,7 +530,7 @@ const createStore = () => {
                 return state.coins_modern
             },
 
-            // check stock name is exists or not 
+            // check stockId in state "stocks" is exist or not 
             getCheckStock: (state) => (id) => {
                 return state.stocks[id]
             },
@@ -685,8 +606,12 @@ const createStore = () => {
                 if (id == "") return
                 return state.stocks[id].lastDraw
             },
+            // get stock ID return number
+            getStockId: (state) => (id) => {
+                
+            },
 
-            // to show in betting
+            // get stock info by stock id  to show in betting 
             getStockById: (state) => (id) => {
                 // console.log("getStockById")
                 if (id == "") return

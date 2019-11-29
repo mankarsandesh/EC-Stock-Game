@@ -22,7 +22,11 @@
       </v-card>
     </v-dialog>
 
-    <v-toolbar    color="#003e70" class="white--text" style="height:40px !important; ">
+    
+
+    <v-container   class="bg-fullscreen" style="padding:0;">
+    
+    <v-toolbar color="#003e70" class="white--text" >
       
       <v-layout row wrap style="padding:5px 10px;"> 
         <v-flex xs6 sm6 md6 lg6>
@@ -46,7 +50,7 @@
      
     </v-toolbar>
 
-    <v-container  class="bg-fullscreen" style="padding:0;">
+    <!-- <v-container  class="bg-fullscreen" style="padding:0;"> -->
       <v-layout pa-1 wrap>
         <v-flex xs4 sm12 md6 lg4>
           <v-layout column>
@@ -80,11 +84,11 @@
                 :stockid="$route.params.id"
               ></chartApp>
             </v-flex>
-            <!-- <v-flex>
+            <v-flex>
               <v-btn dark color="#003e70" @click="$router.go(-1)">
                 <v-icon left dark class="ma-0">exit_to_app</v-icon>exit
               </v-btn>
-            </v-flex> -->
+            </v-flex>
           </v-layout>
           
         </v-flex>
@@ -138,20 +142,20 @@
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
           <footerBet style=""></footerBet>
           <v-layout style="background-color:#003f70">
-            <v-flex xs6 md12  wrap>
+            <v-flex xs12 sm12 md12 lg12  wrap >
               <v-layout >
-                <v-flex xs12 sm12 md6 >
+                <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="O/E" ></trendMapFullScreen>
                 </v-flex>
-                <v-flex xs12 sm12 md6>
+                <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="O/E"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
-                <v-flex xs12 sm12 md6>
+                <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="U/L"></trendMapFullScreen>
                 </v-flex>
-                <v-flex xs12 sm12 md6>
+                <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="NUM"></trendMapFullScreen>
                 </v-flex>
               </v-layout>

@@ -10,8 +10,10 @@
       pa-0
       style="background-color: #003e70 !important;max-height: 69px; !important"
     >
+    
       <v-container pa-0>
         <v-toolbar color="#003e70" class="white--text">
+      
           <v-layout row wrap>
             <v-flex xs4>
               <welcome-user></welcome-user>
@@ -75,8 +77,8 @@ import welcomeUser from "~/components/welcomeUser";
 import openSocket from "socket.io-client";
 
 import i18n from "vue-i18n";
-
 import lottie from "lottie-web";
+
 
 export default {
   components: {
@@ -115,9 +117,9 @@ export default {
   },
 
   created() {
+    // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
     let isFullscreen = path[1];
-    // alert(isFullscreen[1])
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
@@ -133,6 +135,10 @@ export default {
       autoplay: true,
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
+    // setInterval(function() {
+     
+    // }, 1000);
+
     this.setIsLoadingStockGame(false);
   },
   methods: {

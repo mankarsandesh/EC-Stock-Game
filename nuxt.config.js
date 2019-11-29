@@ -55,7 +55,7 @@ module.exports = {
         {src:"@/plugins/vChart", mode: 'client'}
     ],
     router: {
-        // middleware: 'i18n'
+        middleware:[ "auth","showLoading"]
     },
 
     /*

@@ -1,5 +1,7 @@
 <template>
 <div>
+    <div ref="svgContainer" class="isLoading" v-if="getStockNewData($route.params.id).length == ''"></div>
+
     <v-toolbar fixed app light class="light-toobar">
         <v-container mx-auto py-0 px-0>
             <v-layout>
@@ -282,6 +284,7 @@ import gameresult from "~/pages/classic/game-result";
 import announcement from "~/pages/classic/announcement";
 import rule from "~/pages/classic/rule";
 import setting from "~/pages/classic/setting";
+import lottie from "lottie-web";
 export default {
     components: {
         countryFlag,
@@ -330,23 +333,30 @@ export default {
             notifications: false,
             sound: true,
             widgets: false,
-            fab: false
+            fab: false,
+            isLoad: true
         };
     },
     created() {
         this.setLanguage();
-        
     },
     mounted() {
+        lottie.loadAnimation({
+            container: this.$refs.svgContainer, // the dom element that will contain the animation
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            path: "https://assets7.lottiefiles.com/packages/lf20_JbdOay.json" // the path to the animation json
+        });
         $("#switch").text(this.switch1)
-        if (localStorage.apikey == null) {
-            location.href = "http://" + location.host
-        }
         setTimeout(() => {
             window.scrollTo(0, 0)
-        }, 1000);
+        }, 2000);
         this.loadchart();
         this.getMenu();
+        $(".isLoadChart").click(() => {
+            this.loadchart();
+        });
         // this.asynInitCallApi();
         // websocket broadcast live time and timer
         const socket = openSocket("https://websocket-timer.herokuapp.com");
@@ -439,11 +449,10 @@ export default {
                 this.show1 = true;
                 this.stockname = this.$route.params.id.split("-")[1];
                 this.checkStock = this.$route.params.id.split("-")[2];
-                this.getMenu();
-            }, 50);
+            }, 100);
             setTimeout(() => {
-                window.scrollTo(0, 0);
-            }, 2000);
+                this.$vuetify.goTo(0)
+            }, 1500);
         },
         loadtable() {
             this.showtable = false;
@@ -451,22 +460,14 @@ export default {
                 this.showtable = true;
                 this.stockname = this.$route.params.id.split("-")[1];
                 this.checkStock = this.$route.params.id.split("-")[2];
-            }, 50);
+            }, 100);
         },
         getAtivetab() {
             this.checkStockList = this.$route.params.id.split("-")[0] + "-" + this.$route.params.id.split("-")[1];
-            if (this.checkStockList == "l-" + this.$route.params.id.split("-")[1]) {
-                this.tab = "live Stock";
-            } else if (this.checkStockList == "st-usindex") {
-                this.tab = "Us Stock";
-            } else if (
-                this.checkStockList == "st-btc1" ||
-                this.checkStockList == "st-btc5"
-            ) {
-                this.tab = "Cypto Currency";
-            } else {
-                this.tab = "China Stocck";
-            }
+            if (this.checkStockList == "l-" + this.$route.params.id.split("-")[1]) this.tab = "live Stock";
+            else if (this.checkStockList == "st-usindex") this.tab = "Us Stock";
+            else if (this.checkStockList == "st-btc1" || this.checkStockList == "st-btc5") this.tab = "Cypto Currency";
+            else this.tab = "China Stocck";
         },
         onScroll(e) {
             if (typeof window === 'undefined') return
@@ -484,6 +485,14 @@ export default {
 <style scoped>
 .scrolltop {
     bottom: 15%;
+}
+.isLoading{
+    z-index: 10000;
+    position: absolute;
+    background-color: #374c60ed;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
 }
 
 .btn-chart-change {

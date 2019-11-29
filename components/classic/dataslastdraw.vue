@@ -1,9 +1,17 @@
 <template>
 <v-layout>
     <v-flex>
-        <span class="timer">{{datelastdraw}} {{$t('msg.gameid')}}: {{gameid}}</span>
-
-        <a :href="Reference" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
+        <span class="timer" v-if="!$vuetify.breakpoint.smAndDown">{{datelastdraw}} {{$t('msg.gameid')}}: {{gameid}}</span>
+        <button class="timer" @click="ischangechartview = !ischangechartview" v-if="$vuetify.breakpoint.smAndDown">
+            <i class="fa fa-table" aria-hidden="true" v-show="!ischangechartview" @click="getonview()"></i>
+            <i class="fa fa-area-chart" aria-hidden="true" v-show="ischangechartview" @click="getoffview()"></i>
+        </button>
+        <v-tooltip top>
+            <template #activator="{ on: tooltip }">
+                <a :href="Reference" v-on="{ ...tooltip }" class="Reference" target="_blank">{{$t('msg.reference')}}</a>
+            </template>
+            <span>{{Reference}}</span>
+        </v-tooltip>
         <v-tooltip top v-if="load">
             <template #activator="{ on: tooltip }">
                 <span v-on="{ ...tooltip }" class="timer total_classic">{{dataslastdraw}}</span>
@@ -13,10 +21,6 @@
         <v-progress-circular :size="16" :width="1" color="blue darken-3" indeterminate v-else></v-progress-circular>
         <span :class="time == $t('msg.betnow') + ':' +'00:05' || time == $t('msg.betnow') + ':' +'00:03' || time == $t('msg.betnow') + ':' +'00:01' || time == $t('msg.calculating') || time == $t('msg.marketclosed') ? 'timer color-timer':'timer'">{{time}}</span>
 
-        <button class="timer" @click="ischangechartview = !ischangechartview" v-if="$vuetify.breakpoint.smAndDown">
-            <i class="fa fa-table" aria-hidden="true" v-show="!ischangechartview" @click="getonview()"></i>
-            <i class="fa fa-area-chart" aria-hidden="true" v-show="ischangechartview" @click="getoffview()"></i>
-        </button>
         <!-- {{onlyTime(getStockById($route.params.id.split("-")[1]).timeLastDraw)}} -->
         <!-- {{formatToNumber(getStockById($route.params.id.split("-")[1]).lastDraw,$route.params.id.split("-")[1])}} -->
 
@@ -30,7 +34,7 @@ import {
     mapGetters
 } from "vuex";
 export default {
-    props: ["checkStock", "Reference","StockData"],
+    props: ["checkStock", "Reference", "StockData"],
     data() {
         return {
             ischangechartview: false,
@@ -141,13 +145,13 @@ export default {
             }
         },
         async getdata() {
-            // let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            // let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             // stcokId.data.forEach(element => {
             //     if (element.stockName == this.$route.params.id.split("-")[1]) {
             //         this.stockname = element.stockId
             //     }
             // })
-            // let StockData = await this.$axios.$get('/api/getCrawlerData?stockId=' + this.stockname + '&limit=300&apikey=' + localStorage.apikey)
+            // let StockData = await this.$axios.$get('/api/getCrawlerData?stockId=' + this.stockname + '&limit=300&apikey=' + this.$store.state.auth_token)
             // this.StockData = StockData.data;
             if (this.StockData == "") return;
 
