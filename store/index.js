@@ -63,7 +63,7 @@ const createStore = () => {
             stocks: {
                 btc1: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=7&limit=300&apikey=`,
+                        crawler: `/api/getCrawlerData?stockId=7&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/btc"
                     },
                     stockname: "btc1",
@@ -79,7 +79,7 @@ const createStore = () => {
                 },
                 usindex: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=5&limit=300&apikey=`,
+                        crawler: `/api/getCrawlerData?stockId=5&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/usindex"
                     },
                     stockname: "usindex",
@@ -95,7 +95,7 @@ const createStore = () => {
                 },
                 btc5: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=6&limit=300&apikey=`,
+                        crawler: `/api/getCrawlerData?stockId=6&limit=300&apikey=${localStorage.apikey}`,
                         //  // set liveprice to null for use the same liveprice in  loop 1 above
                         //  // it will not call api
                         //  // it must has loop 1 above  or other loop above
@@ -114,7 +114,7 @@ const createStore = () => {
                 },
                 sh000001: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=4&limit=300&apikey=`,
+                        crawler: `/api/getCrawlerData?stockId=4&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/sh01"
                     },
                     stockname: "sh000001",
@@ -130,7 +130,7 @@ const createStore = () => {
                 },
                 sz399001: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=3&limit=300&apikey=`,
+                        crawler: `/api/getCrawlerData?stockId=3&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/sz01"
                     },
                     stockname: "sz399001",
@@ -146,7 +146,7 @@ const createStore = () => {
                 },
                 sz399415: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=2&limit=300&apikey=`,
+                        crawler: `/api/getCrawlerData?stockId=2&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/sz15"
                     },
                     stockname: "sz399415",
@@ -162,7 +162,7 @@ const createStore = () => {
                 },
                 sh000300: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=1&limit=300&apikey=`,
+                        crawler: `/api/getCrawlerData?stockId=1&limit=300&apikey=${localStorage.apikey}`,
                         livePrice: "/api/newlivedata/sz300"
                     },
                     stockname: "sh000300",
@@ -383,9 +383,9 @@ const createStore = () => {
                 //             balance: userRes.userBalance,
                 //         }
                 //         // context.dispatch("balance")
-                //     context.commit("setAuth_token", localStorage.apikey)
-                //         // context.commit("setUserData", userData)
-                //     console.log("userRes")
+                context.commit("setAuth_token", localStorage.apikey)
+                    //         // context.commit("setUserData", userData)
+                    //     console.log("userRes")
 
                 // } catch (ex) {
                 //     console.error(ex)
@@ -409,7 +409,7 @@ const createStore = () => {
             // to get crawler data
             async asynCrawlerStock(context, payload) {
                 try {
-                    const url = `${payload.url}${localStorage.apikey}`
+                    const url = payload.url
                         // console.log(url)
                     const name = payload.name
                     const result = await this.$axios.$get(url)

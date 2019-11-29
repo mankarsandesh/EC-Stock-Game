@@ -27,9 +27,7 @@ export default ({
         // store.dispatch('asynGetAllStock')
         store.dispatch('makeAuth')
         store.dispatch('asynInitCallApi')
-
-
-    }, 30000)
+    }, 3000)
 
     setInterval(() => {
         store.dispatch("asyncPayout")
