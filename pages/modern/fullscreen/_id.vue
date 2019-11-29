@@ -139,7 +139,7 @@
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
           <footerBet style=""></footerBet>
           <v-layout style="background-color:#003f70">
-            <v-flex xs6 md12  wrap>
+            <v-flex xs6 md12  wrap >
               <v-layout >
                 <v-flex xs12 sm12 md6 >
                   <trendMapFullScreen which_one="O/E" ></trendMapFullScreen>

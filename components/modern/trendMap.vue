@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-layout wrap>
-      <v-flex  xs12 sm12 md6 lg6 
+    <v-layout wrap >
+      <v-flex  xs12 sm12 md12 lg12 
         v-show="which_one=='B/S' || which_one== !isFullscreen "
       >
         <div v-show="isFullscreen">
