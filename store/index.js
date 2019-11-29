@@ -7,7 +7,7 @@ const createStore = () => {
         state: () => ({
             loader: false,
             isLoadingStockGame: false,
-            auth_token: localStorage.apikey,
+            auth_token: localStorage.apikey = "gSadvECjTQMfMLk2kedouh3iQfwqPHs1rL5LEwaPlFOOQqZwckokYNtW2VRqKx4zY92CbDtwqdGsOUNu",
             isLoadingAnnoucement: [],
             isLoadingHistory: [],
             userData: {},
@@ -277,7 +277,7 @@ const createStore = () => {
                         // }
                 } catch (ex) {
                     console.error(ex)
-                    alert(ex)
+                        // alert(ex)
                 }
             },
             async balance(context) {
@@ -290,7 +290,7 @@ const createStore = () => {
                     }
                 } catch (ex) {
                     console.error(ex)
-                    alert(ex)
+                        // alert(ex)
                 }
             },
 
@@ -353,44 +353,44 @@ const createStore = () => {
                 // }
             },
             async makeAuth(context) {
-                console.warn("auth working...")
-                const body = {
-                    client_id: 8,
-                    "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
-                    "name": "TnkServer",
-                    "userId": "10000",
-                    "balance": 800000,
-                    "webId": "0001"
-                }
-                try {
-                    if (localStorage.apikey == null) {
-                        const res = await this.$axios.$post(`/api/redirect`, body)
-                        localStorage.apikey = res.data.token;
-                        console.log(localStorage.apikey)
-                    }
+                // console.warn("auth working...")
+                // const body = {
+                //     client_id: 8,
+                //     "webToken": "QQcZ3viwlJw9jKbiFI7J5dqqSz8bNFRRSclxM34H",
+                //     "name": "TnkServer",
+                //     "userId": "10000",
+                //     "balance": 800000,
+                //     "webId": "0001"
+                // }
+                // try {
+                //     if (localStorage.apikey == null) {
+                //         const res = await this.$axios.$post(`/api/redirect`, body)
+                //         localStorage.apikey = res.data.token;
+                //         console.log(localStorage.apikey)
+                //     }
 
-                    const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
-                        // console.log(userRes)
-                    setTimeout(() => {
-                        // console.log(userRes.status)
-                        if (userRes.status == false && userRes.status !== undefined) {
-                            localStorage.removeItem('apikey');
-                            // location.href = "http://" + location.host
-                        }
-                    }, 2500)
-                    const userData = {
-                            name: userRes.name,
-                            balance: userRes.userBalance,
-                        }
-                        // context.dispatch("balance")
-                    context.commit("setAuth_token", localStorage.apikey)
-                        // context.commit("setUserData", userData)
-                    console.log("userRes")
+                //     const userRes = await this.$axios.$get(`/api/me?apikey=${localStorage.apikey}`)
+                //         // console.log(userRes)
+                //     setTimeout(() => {
+                //         // console.log(userRes.status)
+                //         if (userRes.status == false && userRes.status !== undefined) {
+                //             localStorage.removeItem('apikey');
+                //             // location.href = "http://" + location.host
+                //         }
+                //     }, 2500)
+                //     const userData = {
+                //             name: userRes.name,
+                //             balance: userRes.userBalance,
+                //         }
+                //         // context.dispatch("balance")
+                //     context.commit("setAuth_token", localStorage.apikey)
+                //         // context.commit("setUserData", userData)
+                //     console.log("userRes")
 
-                } catch (ex) {
-                    console.error(ex)
-                    alert(ex)
-                }
+                // } catch (ex) {
+                //     console.error(ex)
+                //         // alert(ex)
+                // }
 
             },
             asynInitCallApi(context) {
@@ -409,7 +409,7 @@ const createStore = () => {
             // to get crawler data
             async asynCrawlerStock(context, payload) {
                 try {
-                    const url = `${payload.url}&apikey=${localStorage.apikey}`
+                    const url = `${payload.url}${localStorage.apikey}`
                         // console.log(url)
                     const name = payload.name
                     const result = await this.$axios.$get(url)
