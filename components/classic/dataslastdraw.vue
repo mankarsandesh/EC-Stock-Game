@@ -145,13 +145,13 @@ export default {
             }
         },
         async getdata() {
-            // let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
+            // let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
             // stcokId.data.forEach(element => {
             //     if (element.stockName == this.$route.params.id.split("-")[1]) {
             //         this.stockname = element.stockId
             //     }
             // })
-            // let StockData = await this.$axios.$get('/api/getCrawlerData?stockId=' + this.stockname + '&limit=300&apikey=' + this.$store.state.auth_token)
+            // let StockData = await this.$axios.$get('/api/getCrawlerData?stockId=' + this.stockname + '&limit=300&apikey=' + localStorage.apikey)
             // this.StockData = StockData.data;
             if (this.StockData == "") return;
 

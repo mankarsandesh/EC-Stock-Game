@@ -2,7 +2,7 @@ import openSocket from "socket.io-client";
 export default ({
     store
 }) => {
-   
+
 
     //coin modern set and get from localStorage
     initLocalStorageCoin(store)
@@ -18,15 +18,22 @@ export default ({
         let time1 = data.btc1.timer;
         // get new data crawler
         if (time5 == 241 || time1 == 41) {
-            // store.dispatch('asynInitCallApi')
+            store.dispatch('asynInitCallApi')
         }
+
         store.commit('SET_TIME', data)
     });
+    setTimeout(() => {
+        // store.dispatch('asynGetAllStock')
+        store.dispatch('makeAuth')
+        store.dispatch('asynInitCallApi')
 
 
-    setInterval(()=>{
+    }, 30000)
+
+    setInterval(() => {
         store.dispatch("asyncPayout")
-    },3000)
+    }, 3000)
 }
 
 function setLanguage(store) {

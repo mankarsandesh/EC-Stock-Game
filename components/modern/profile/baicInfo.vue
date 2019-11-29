@@ -202,14 +202,14 @@ export default {
     },
     async fetchAll() {
       let res = await this.$axios.$get(
-        "/api/me?apikey=" + this.$store.state.auth_token
+        "/api/me?apikey=" + localStorage.apikey
       );
       this.userBalance = res.userBalance;
       console.log(res);
     },
     async getOnlineTime() {
       let dataGet = await this.$axios.$get(
-        "/api/me/online?method=profile&apikey=" + this.$store.state.auth_token
+        "/api/me/online?method=profile&apikey=" + localStorage.apikey
       );
       this.time = dataGet.data;
     },

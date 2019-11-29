@@ -9,7 +9,7 @@
                     </template>
                     <v-card flat>
                         <v-layout row wrap id="history">
-                            <v-flex xs4 sm4 md2 lg2>
+                            <v-flex xs5 sm4 md2 lg2 style="float:left;">
                                 <v-menu v-model="from" :close-on-content-click="false" :nudge-right="0" lazy transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
                                         <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -17,7 +17,7 @@
                                     <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-flex xs4 sm4 md2 lg2>
+                            <v-flex xs5 sm4 md2 lg2 style="float:left;">
                                 <v-menu v-model="to" :close-on-content-click="false" :nudge-right="0" transition="scale-transition" offset-y full-width min-width="290px">
                                     <template v-slot:activator="{ on }">
                                         <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -25,10 +25,10 @@
                                     <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
                                 </v-menu>
                             </v-flex>
-                            <v-flex xs4 sm4 md2 lg2>
+                            <v-flex xs6 sm4 md2 lg2>
                                 <v-btn @click="dateSearch()" class="goButton">go</v-btn>
                             </v-flex>
-                            <v-flex xs4 sm4 md2 lg2>
+                            <v-flex xs6 sm4 md2 lg2>
                                 <v-select  single-line hide-details :items="itemspage" v-model="itemspages" class="selectHistory"></v-select>
                             </v-flex>
                             <v-flex xs4 sm4 md2 lg2>
@@ -231,8 +231,10 @@ export default {
         },
         async gethistory(val) {
 
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
-            if (history.data == null) return
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+
+        //    console.log(history)
+           if (history.data == null) return
             // console.log(history.data)
 
             this.load = true;
@@ -294,7 +296,7 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
             return this.StockName = stcokId.data
 
         },

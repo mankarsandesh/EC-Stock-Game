@@ -47,12 +47,15 @@
                                             </div>
                                         </v-card-title>
                                         <v-card-actions>
-                                            <v-btn @click="isOptions = true, getAnnouncement(null)" color="#818f9c"> <v-icon dark left>arrow_back</v-icon>BACK</v-btn>
+                                            <v-btn @click="isOptions = true, getAnnouncement(null)" color="#818f9c">
+                                                <v-icon dark left>arrow_back</v-icon>BACK
+                                            </v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-flex>
                             </v-layout>
                         </div>
+                        <livestock v-if="isShow" :dataGet="chartData" />
                     </v-card>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -62,23 +65,60 @@
 </template>
 
 <script>
+import livestock from "../../components/classic/livestock"
+import openSocket from "socket.io-client";
+const socket = openSocket("https://node-liveprice.herokuapp.com");
 export default {
     layout: 'classic',
-    components: {},
+    components: {
+        livestock
+    },
     data() {
         return {
             panel: [true],
             load: false,
             announcement: [],
-            isOptions: true
+            isOptions: true,
+            isShow: false,
+            chartData: [],
+            rule: [],
+            rulenew: [],
+            ruleold: [],
         }
     },
     mounted() {
         this.getAnnouncement(null)
+
+        socket.on("liveprice1", data => {
+            // console.log(data.data);
+            for (let i = 0; i < data.data.length; i++) {
+                this.rulenew = data.data[i].totalUsers
+            }
+
+            if (data.data.length != 0 || data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+                // console.log("Okkk");
+                if (this.rulenew == undefined) return
+
+                if (this.isShow == true && data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+                    this.chartData = data.data;
+                    this.isShow = false
+                    for (let i = 0; i < data.data.length; i++) {
+                        this.ruleold = data.data[i].totalUsers
+                    }
+                } else {
+                    this.chartData = data.data;
+                    this.isShow = true
+                }
+            } else {
+                // console.log("Nooo");
+                this.chartData = []
+                this.isShow = false
+            }
+        });
     },
     methods: {
         async getAnnouncement(val) {
-            let announcement = await this.$axios.$get('/api/announcement?apikey=' + this.$store.state.auth_token)
+            let announcement = await this.$axios.$get('/api/announcement?apikey=' + localStorage.apikey)
             if (announcement.data !== null) {
                 this.load = true
             }
@@ -112,7 +152,10 @@ export default {
     font-weight: bold;
 }
 
-.annselect{ cursor: pointer;}
+.annselect {
+    cursor: pointer;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -139,5 +182,4 @@ td {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
-
 </style>

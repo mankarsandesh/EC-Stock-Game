@@ -21,9 +21,7 @@
                             <v-select hide-details :items="itemspage" v-model="itemspages" class="Historyinput"  ></v-select>
                         </v-flex>
 
-                        <div class="text-xs-center pt-2" v-if="pages != 0 " >
-                            <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
-                        </div>
+                       
 
                         <span class="stockName" id="stockName" @click="getAllCrawler($event)" hidden></span>
                         <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
@@ -35,7 +33,9 @@
                                 <td>{{props.item.gameId}}</td>
                             </template>
                         </v-data-table>
-                        
+                         <div class="text-xs-center pt-2" v-if="pages != 0 " >
+                            <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
+                        </div>
 
                     </v-card>
                 </v-expansion-panel-content>
@@ -138,7 +138,7 @@ export default {
             }, 0) : 0
         },
         async getAllCrawler(val) {
-            let DataCrawler = await this.$axios.$get('/api/getAllCrawler?limit=300&apikey=' + this.$store.state.auth_token)
+            let DataCrawler = await this.$axios.$get('/api/getAllCrawler?limit=300&apikey=' + localStorage.apikey)
             // console.log(DataCrawler)
             if (DataCrawler.data == null) return
             for (let i = 0; i < DataCrawler.data.length; i++) {

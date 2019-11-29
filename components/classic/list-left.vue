@@ -42,7 +42,7 @@
             <v-card>
                 <table>
                     <tr v-for="(data,index) in getStockList" :key="index">
-                        <td class="text-left isLoadChart"  router @click="$router.push('/classic/l-'+data.stockname +'-live')">
+                        <td class="text-left isLoadChart" router @click="$router.push('/classic/l-'+data.stockname +'-live')">
                             <i class="fa fa-circle-o text-danger"></i>
                             <b>{{$t('msg.Stock')}}</b>: {{ $t('stockname.'+data.stockname) }}{{ data.stockname == 'btc1' ? ' 1 ':data.stockname == 'btc5' ? ' 5 ':'' }} <b>{{$t('msg.Time')}}</b>: {{ onlyTime(getStockById(data.id).timeLastDraw)}} <b>{{$t('msg.Result')}}</b> {{ formatToNumber(getStockById(data.id).lastDraw, data.stockname)}}
                         </td>
@@ -78,7 +78,7 @@
             </v-card>
         </v-expansion-panel-content>
     </v-expansion-panel>
-    <button class="getupdatebalance" @click="getupdatebalance(), getAllresults()" hidden></button>
+    <button class="getupdatebalance" @click="getupdatebalance(), getAllresults(), gethistoryTotal()" hidden></button>
 </v-card>
 </template>
 
@@ -111,6 +111,7 @@ export default {
         this.getupdatebalance()
         this.getAllresults()
         this.getSotckId()
+        this.gethistoryTotal()
         // setInterval(() => {
         //     if (this.Allresults.length != 0) {
         //         this.getAllresults()
@@ -156,9 +157,8 @@ export default {
             }
             return (zero + num).slice(-digit);
         },
-
-        async getupdatebalance() {
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+        async gethistoryTotal() {
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
             this.betAmounts = 0;
             this.rollingAmounts = 0;
             for (let i = 0; i < history.data.length; i++) {
@@ -167,20 +167,24 @@ export default {
                     this.rollingAmounts += history.data[i].rollingAmount;
                 }
             }
+        },
 
-            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
+        async getupdatebalance() {
+            let balance = await this.$axios.$get('/api/me?apikey=' + localStorage.apikey)
             this.name = balance.name
             this.balance = balance.userBalance
-            // console.log(balance)
+            console.log("============================")
+            console.log(balance)
+
             $("#txtbalance").text(this.formatToPrice(this.balance))
             return
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
             return this.stockName = stcokId.data
         },
         async getAllresults() {
-            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + this.$store.state.auth_token)
+            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + localStorage.apikey)
             // console.log("kkkkkk")
             return this.Allresults = CurrentBet.data
 
