@@ -231,7 +231,7 @@ export default {
         },
         async gethistory(val) {
 
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
 
         //    console.log(history)
            if (history.data == null) return
@@ -296,7 +296,7 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             return this.StockName = stcokId.data
 
         },

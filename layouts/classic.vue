@@ -1,6 +1,6 @@
 <template>
 <div>
-    <!-- <div ref="svgContainer" class="isLoading" v-if="getStockNewData($route.params.id).length == ''"></div> -->
+    <div ref="svgContainer" class="isLoading" v-if="getStockNewData($route.params.id).length == ''"></div>
 
     <v-toolbar fixed app light class="light-toobar">
         <v-container mx-auto py-0 px-0>

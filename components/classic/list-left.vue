@@ -158,7 +158,7 @@ export default {
             return (zero + num).slice(-digit);
         },
         async gethistoryTotal() {
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + localStorage.apikey)
+            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
             this.betAmounts = 0;
             this.rollingAmounts = 0;
             for (let i = 0; i < history.data.length; i++) {
@@ -170,7 +170,7 @@ export default {
         },
 
         async getupdatebalance() {
-            let balance = await this.$axios.$get('/api/me?apikey=' + localStorage.apikey)
+            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
             this.name = balance.name
             this.balance = balance.userBalance
             console.log("============================")
@@ -180,11 +180,11 @@ export default {
             return
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + localStorage.apikey)
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             return this.stockName = stcokId.data
         },
         async getAllresults() {
-            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + localStorage.apikey)
+            let CurrentBet = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + this.$store.state.auth_token)
             // console.log("kkkkkk")
             return this.Allresults = CurrentBet.data
 
