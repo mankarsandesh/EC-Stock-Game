@@ -1,10 +1,10 @@
 <template>
   <v-layout wrap style="padding:10px;" >
-    <v-flex  lg2 md2  >
+    <v-flex lg2 md2  >
       <v-select v-model="trendType" :items="typeItem" :height="10" solo></v-select>
       <v-select v-model="which_one" :items="which_oneItem" solo></v-select>
     </v-flex>
-    <v-flex lg10 md10 >
+    <v-flex  lg10 md10 >
       <trendMap
         v-if="which_one !==''"
         :dataArray="getStockCrawlerData($route.params.id)"

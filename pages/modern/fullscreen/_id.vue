@@ -139,20 +139,20 @@
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
           <footerBet style=""></footerBet>
           <v-layout style="background-color:#003f70">
-            <v-flex xs6 md12  wrap >
+            <v-flex xs12 sm12 md12 lg12  wrap >
               <v-layout >
-                <v-flex xs12 sm12 md6 >
+                <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="O/E" ></trendMapFullScreen>
                 </v-flex>
-                <v-flex xs12 sm12 md6>
+                <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="O/E"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
-                <v-flex xs12 sm12 md6>
+                <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="U/L"></trendMapFullScreen>
                 </v-flex>
-                <v-flex xs12 sm12 md6>
+                <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="NUM"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
