@@ -193,7 +193,7 @@ const createStore = () => {
             setAuth_token(state, token) {
                 state.auth_token = token
             },
-            // add mpre stock to multi game
+            // add more stock to multi game
             addStockMultigame(state, stockId) {
                 if (state.stockMultigame.includes(stockId)) return
                 state.stockMultigame.push(stockId)
@@ -427,7 +427,7 @@ const createStore = () => {
         getters: {
             getPayout: (state) => (gameRule) => {
                 {
-                    console.log(state.payout[gameRule])
+                    // console.log(state.payout[gameRule])
                     return state.payout[gameRule]
                 }
             },
@@ -672,14 +672,21 @@ const createStore = () => {
                 const previousPrice = state.liveprice[id].previousPrice
                 return previousPrice
             },
-            // get loop by stock id becuase in url be like these "btc1,btc5..."
+            // get loop by stock id "btc1,btc5..."
             getLoop: (state) => (id) => {
-                // console.log("getLoop")
                 if (id == "") {
                     return
                 }
                 const loop = state.stocks[id].loop
                 return loop
+            },
+             // get stockID by id "btc1,btc5,usindex..." must return number
+             getStockId: (state) => (id) => {
+                if (id == "") {
+                    return
+                }
+                const StockId = state.stocks[id].stockId
+                return StockId
             },
             // get stock type
             getStockType: (state) => (id) => {
@@ -721,10 +728,7 @@ const createStore = () => {
                 if (id == "") return
                 return state.stocks[id].lastDraw
             },
-            // get stock ID return number
-            getStockId: (state) => (id) => {
-
-            },
+           
 
             // get stock info by stock id  to show in betting 
             getStockById: (state) => (id) => {
