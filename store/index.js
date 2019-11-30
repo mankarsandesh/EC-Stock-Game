@@ -258,7 +258,7 @@ const createStore = () => {
                     const res = await this.$axios.$get("http://192.168.1.141/TNK/StockAdmin/public/api/payout?apikey=iDm6oevcOoHaUZHsi7PG64x0UmgcNPaAUFJXo1OzahRofTskOhDkQL4bcHe2mOlalkXKG7csKi5iv3rI")
                     let payoutObject = res.data
                     context.state.payout = payoutObject
-                    console.log(context.state.payout)
+                        // console.log(context.state.payout)
                         // context.commit("setUserData", {name:userInfo})
                 } catch (ex) {
                     console.error(ex)
@@ -680,8 +680,8 @@ const createStore = () => {
                 const loop = state.stocks[id].loop
                 return loop
             },
-             // get stockID by id "btc1,btc5,usindex..." must return number
-             getStockId: (state) => (id) => {
+            // get stockID by id "btc1,btc5,usindex..." must return number
+            getStockId: (state) => (id) => {
                 if (id == "") {
                     return
                 }
@@ -728,7 +728,7 @@ const createStore = () => {
                 if (id == "") return
                 return state.stocks[id].lastDraw
             },
-           
+
 
             // get stock info by stock id  to show in betting 
             getStockById: (state) => (id) => {

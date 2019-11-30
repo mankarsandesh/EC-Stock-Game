@@ -46,8 +46,8 @@ export default {
                     position: 'top'
                 },
                 title: {
-                    display: false,
-                    text: 'Chartjs Horizontal Bar Chart Playground'
+                    display: true,
+                    text: 'Stock Live Data'
                 },
                 tooltips: {
                     enabled: false

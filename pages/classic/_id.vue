@@ -27,7 +27,7 @@
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap style="padding: 12px 0px 0px;">
                 <v-flex xs12 sm12 lg7 md7 mt-1>
-                    <v-checkbox style="float:left;margin:5px 10px;" v-model="preset" :label="$t('msg.preset')" ></v-checkbox>
+                    <v-checkbox style="float:left;margin:5px 10px;" v-model="preset" :label="$t('msg.preset')"></v-checkbox>
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
@@ -123,22 +123,22 @@
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name3)}}</div>
                                                     <div class="text-stock">{{items.payout}}</div>
                                                     <div class="bet-box">
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3"  />
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3" />
                                                     </div>
                                                 </td>
 
                                                 <td class="top-bet" v-if="items.name !== 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name4)}}</div>
                                                     <div class="text-stock">{{items.payout}}</div>
-                                                    <div class="bet-box" >
-                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4"     />
+                                                    <div class="bet-box">
+                                                        <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
                                                     </div>
                                                 </td>
 
                                                 <td class="top-bet" v-if="items.name == 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:30%':'width:40%'">
-                                                    <div class="text-bet" >{{datas.name4}} </div>
+                                                    <div class="text-bet">{{datas.name4}} </div>
                                                     <div class="bet-box">
-                                                        <button class="form-btn" @click="getsnTwo(datas.name4)"  />
+                                                        <button class="form-btn" @click="getsnTwo(datas.name4)" />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -160,13 +160,13 @@
         <v-card v-if="!$vuetify.breakpoint.smAndDown">
             <v-layout row wrap>
                 <v-flex xs12 md7 mt-1>
-                    <v-checkbox style="float:left;margin:5px 10px;" v-model="preset" :label="$t('msg.preset')" ></v-checkbox>
+                    <v-checkbox style="float:left;margin:5px 10px;" v-model="preset" :label="$t('msg.preset')"></v-checkbox>
                     <button class="btn-preset">{{$t('msg.amount')}}</button>
                     <input readonly type="text" class="form-input width-30" v-model="price" />
                     <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
-                <v-flex xs12 md5 >
+                <v-flex xs12 md5>
                     <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
                         <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
@@ -430,11 +430,13 @@ export default {
             }
         },
         formData() {
-            return { data: this.betData.betdetails }
+            return {
+                data: this.betData.betdetails
+            }
         }
     },
-    watch:{
-        preset(e){
+    watch: {
+        preset(e) {
             return this.preset = e
         }
     },
@@ -458,32 +460,44 @@ export default {
             return;
         },
         async getbalance() {
-            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-            this.balance = balance.userBalance
+            try {
+                let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
+                this.balance = balance.userBalance
+            } catch (ex) {
+                console.error(ex)
+            }
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
-            stcokId.data.forEach(element => {
-                if (element.stockName == this.$route.params.id.split("-")[1]) {
-                    this.stockname = element.stockId
-                }
-            })
+            try {
+                let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
+                stcokId.data.forEach(element => {
+                    if (element.stockName == this.$route.params.id.split("-")[1]) {
+                        this.stockname = element.stockId
+                    }
+                })
+            } catch (ex) {
+                console.error(ex)
+            }
         },
         async getConfirmBet() {
-            if (this.sumTotalAll > this.balance || this.sumTotalAll == '') {
-                this.getalertstartstop('error')
-            } else {
-                this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
-                // console.log(this.formData);
-                console.log("send to api server");
-                const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
-                console.log(res)
-                setTimeout(() => {
-                    this.getalertstartstop(res.data)
-                    this.setPrice("reset");
-                    $(".getupdatebalance")[0].click()
-                    $("#txtbalance").text(this.formatToPrice(this.balance))
-                }, 700);
+            try {
+                if (this.sumTotalAll > this.balance || this.sumTotalAll == '') {
+                    this.getalertstartstop('error')
+                } else {
+                    this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
+                    // console.log(this.formData);
+                    console.log("send to api server");
+                    const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
+                    console.log(res)
+                    setTimeout(() => {
+                        this.getalertstartstop(res.data)
+                        this.setPrice("reset");
+                        $(".getupdatebalance")[0].click()
+                        $("#txtbalance").text(this.formatToPrice(this.balance))
+                    }, 700);
+                }
+            } catch (ex) {
+                console.error(ex)
             }
         },
 
@@ -607,19 +621,19 @@ export default {
             }
             this.loop = this.getStockName(this.$route.params.id).loop;
 
-            // Data send to server
             if (specialName !== "none") {
                 this.gameRule = specialName.gameRule;
                 this.stockId = specialName.stockId;
+                this.payout = specialName.payout;
                 this.amount = this.price;
             } else {
                 this.gameRule = e.target.name;
                 this.stockId = e.target.dataset.stock;
-                this.payout =
-                    e.target.parentElement.parentElement.children[1].innerText;
+                this.payout = e.target.parentElement.parentElement.children[1].innerText;
                 this.amount = parseInt(e.target.value);
             }
 
+            // Data send to server
             this.index = this.betData.betdetails.findIndex(x => x.gameRule === this.gameRule);
             if (this.index == -1) {
                 this.betData.betdetails.push({
@@ -635,19 +649,6 @@ export default {
             // End data send to server
 
             // Data Show clients
-            if (specialName !== "none") {
-                this.gameRule = specialName.gameRule;
-                this.stockId = specialName.stockId;
-                this.payout = specialName.payout;
-                this.amount = this.price;
-            } else {
-                this.gameRule = e.target.name;
-                this.stockId = e.target.dataset.stockId;
-                this.payout =
-                    e.target.parentElement.parentElement.children[1].innerText;
-                this.amount = parseInt(e.target.value);
-            }
-
             this.index = this.betDataShows.findIndex(x => x.gameRule === this.gameRule);
             if (this.index == -1) {
                 this.betDataShows.push({
@@ -659,9 +660,9 @@ export default {
                 });
             } else {
                 this.betDataShows[this.index].amount = this.amount;
-            }
-            // End  data Show clients
+            } 
             // console.log(this.betDataShows);
+            // End  data Show clients
         },
 
         getTime() {
@@ -719,25 +720,28 @@ export default {
         },
 
         async alertOutCome() {
-            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.auth_token)
-            // console.log(totalPayout)
-            if (totalPayout.status == false) return;
-            this.snackbar = true;
-            $(".getupdatebalance")[0].click()
-            this.getbalance()
-            this.betPrice = totalPayout.data
-            if (totalPayout.data > 0) {
-                this.text = this.$root.$t('msg.winbet');
-                this.color = "#2962FF";
-                this.playSound('/voice/winbet.mp3')
-            } else {
-                this.text = this.$root.$t('msg.losebet');
-                this.color = "#D50000";
+            try {
+                let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.auth_token)
+                // console.log(totalPayout)
+                if (totalPayout.status == false) return;
+                this.snackbar = true;
+                $(".getupdatebalance")[0].click()
+                this.getbalance()
+                this.betPrice = totalPayout.data
+                if (totalPayout.data > 0) {
+                    this.text = this.$root.$t('msg.winbet');
+                    this.color = "#2962FF";
+                    this.playSound('/voice/winbet.mp3')
+                } else {
+                    this.text = this.$root.$t('msg.losebet');
+                    this.color = "#D50000";
+                }
+            } catch (ex) {
+                console.error(ex)
             }
         },
 
         getalertstartstop(val) {
-
             this.alertSS = true;
             if (val == "start") {
                 this.alertext = this.$root.$t('msg.startbetting')
@@ -763,6 +767,7 @@ export default {
                 audio.play();
             }
         },
+        // use in mb
         getMbFooter() {
             $("#txttotal").text(this.formatTotal(this.price))
             $("#ch10").text(this.chips[0].price)
@@ -923,7 +928,7 @@ export default {
 }
 
 .btn-preset {
-   padding:10px 15px;
+    padding: 10px 15px;
     height: 35px;
     font-size: 1.01rem;
     text-align: center;
@@ -1115,7 +1120,8 @@ tr:nth-child(even) {
 .tops {
     top: 11%;
 }
-v-avatar{
+
+v-avatar {
     text-align: center;
     margin-top: 10px;
 }
