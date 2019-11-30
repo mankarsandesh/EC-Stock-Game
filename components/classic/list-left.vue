@@ -173,8 +173,7 @@ export default {
             let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
             this.name = balance.name
             this.balance = balance.userBalance
-            console.log("============================")
-            console.log(balance)
+            // console.log(balance)
 
             $("#txtbalance").text(this.formatToPrice(this.balance))
             return

@@ -7,7 +7,7 @@ const createStore = () => {
         state: () => ({
             loader: false,
             isLoadingStockGame: false,
-            auth_token: "",
+            auth_token: localStorage.apikey,
             isLoadingAnnoucement: [],
             isLoadingHistory: [],
             userData: {},
@@ -60,7 +60,122 @@ const createStore = () => {
             },
 
 
-            stocks: {},
+            stocks: {
+                btc1: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=7&limit=300`,
+                        livePrice: "/api/newlivedata/btc"
+                    },
+                    stockname: "btc1",
+                    name: "btc",
+                    loop: 1,
+                    type: "cypto",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
+                    }
+                },
+                usindex: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=5&limit=300`,
+                        livePrice: "/api/newlivedata/usindex"
+                    },
+                    stockname: "usindex",
+                    name: "usindex",
+                    loop: 5,
+                    type: "usa",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml"
+                    }
+                },
+                btc5: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=6&limit=300`,
+                        livePrice: "/api/newlivedata/btc"
+                    },
+                    stockname: "btc5",
+                    name: "btc",
+                    loop: 5,
+                    type: "cypto",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
+                    }
+                },
+                sh000001: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=4&limit=300`,
+                        livePrice: "/api/newlivedata/sh01"
+                    },
+                    stockname: "sh000001",
+                    name: "sh000001",
+                    loop: 5,
+                    type: "china",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml"
+                    }
+                },
+                sz399001: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=3&limit=300`,
+                        livePrice: "/api/newlivedata/sz01"
+                    },
+                    stockname: "sz399001",
+                    name: "sz399001",
+                    loop: 5,
+                    type: "china",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml"
+                    }
+                },
+                sz399415: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=2&limit=300`,
+                        livePrice: "/api/newlivedata/sz15"
+                    },
+                    stockname: "sz399415",
+                    name: "sz399415",
+                    loop: 5,
+                    type: "china",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml"
+                    }
+                },
+                sh000300: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=1&limit=300`,
+                        livePrice: "/api/newlivedata/sz300"
+                    },
+                    stockname: "sh000300",
+                    name: "sh000300",
+                    loop: 5,
+                    type: "china",
+                    crawlerData: "",
+
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml"
+                    }
+                }
+
+            },
             time: {},
         }),
         mutations: {
@@ -143,7 +258,7 @@ const createStore = () => {
                     const res = await this.$axios.$get("http://192.168.1.141/TNK/StockAdmin/public/api/payout?apikey=iDm6oevcOoHaUZHsi7PG64x0UmgcNPaAUFJXo1OzahRofTskOhDkQL4bcHe2mOlalkXKG7csKi5iv3rI")
                     let payoutObject = res.data
                     context.state.payout = payoutObject
-                        // console.log(context.state.payout)
+                    console.log(context.state.payout)
                         // context.commit("setUserData", {name:userInfo})
                 } catch (ex) {
                     console.error(ex)

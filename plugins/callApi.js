@@ -26,7 +26,7 @@ export default ({
     setTimeout(() => {
         // store.dispatch('asynGetAllStock')
         store.dispatch('asynInitCallApi')
-    }, 3000)
+    }, 1000)
 
 
     setInterval(() => {
