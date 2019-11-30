@@ -56,7 +56,6 @@
         <v-layout row wrap >
            <v-flex xs12 lg12 md12 ≈>
             <trendMap 
-            style="border:1px solid red;"
               :dataArray="getStockCrawlerData($route.params.id)"
               :trendType="trendType"
               :key="getStockCrawlerData($route.params.id)[0].writetime + trendType"

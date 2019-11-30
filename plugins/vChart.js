@@ -1,4 +1,5 @@
 import Vue from "vue";
-import Chart from 'v-chart-plugin'
+import vChart from 'v-chart-plugin'
 
-Vue.use(Chart);
+Vue.use(vChart);
+Vue.component("vChart", vChart)

@@ -21,6 +21,7 @@
         "animated-number-vue": "^1.0.0",
         "apexcharts": "^3.8.5",
         "chart.js": "^2.9.3",
+        "chartjs": "^0.3.24",
         "chartjs-plugin-zoom": "^0.7.3",
         "cross-env": "^5.2.0",
         "express": "^4.17.1",

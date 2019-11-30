@@ -50,8 +50,9 @@
      
     </v-toolbar>
 
+    <!-- <v-container  class="bg-fullscreen" style="padding:0;"> -->
       <v-layout pa-1 wrap>
-        <v-flex xs12 sm12 md6 lg6>
+        <v-flex xs4 sm12 md6 lg4>
           <v-layout column>
             <v-flex>
               <v-layout xs12 >
@@ -69,8 +70,7 @@
                    class="button"
                     dark
                     color="#003e70"
-                    @click="dialogOtherstock=true"
-                  >Other Stock</span>
+                    @click="dialogOtherstock=true">Other Stock</span>
 
                 </v-flex>
 
@@ -92,7 +92,7 @@
           </v-layout>
           
         </v-flex>
-        <v-flex xs12 sm12 md5 lg6>
+        <v-flex xs12 sm12 md5 lg5>
           <v-flex>
             <v-layout>
               <v-flex class="text-xs-center" xs3 px-2>
@@ -132,6 +132,9 @@
             ></betButton>
           </v-flex>
         </v-flex>
+        <v-flex xs12 lg3 >
+          <livestock  v-if="isShow" :dataGet="chartData" ></livestock>
+        </v-flex>
         <!-- live Chart -->
        
 
@@ -163,6 +166,8 @@
     </v-container>
   </div>
 </template>
+
+
 <script>
 import { mapGetters } from "vuex";
 import winnerMarquee from "~/components/modern/winnerMarquee";
@@ -171,10 +176,11 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
-import io from 'socket.io-client';
-const socket = io('https://node-liveprice.herokuapp.com');
+import livestock from "~/components/modern/livestock";
 
-
+import io from "socket.io-client";
+const socket = io("https://node-liveprice.herokuapp.com");
+ 
 export default {
   layout: "fullscreen",
   data() {
@@ -201,13 +207,50 @@ export default {
         selector: 'chart',
         title: 'Stock Live Data',
         subtitle: '2018 - 2019',
-        width: 600,
+        width: 300,
         height: 500,
         metric: ['totalAmount','totalUsers'],
         dim: 'rule', 
-        data: []
+        data: [],
+        isCheck:false,
+        isShow: false,
+        chartData: [],
+        rule: [],
+        rulenew: [],         
+        
+        ruleold: [],
       }
     };
+  },
+  mounted(){
+
+socket.on("liveprice1", data => {
+            // console.log(data.data);
+            for (let i = 0; i < data.data.length; i++) {
+                this.rulenew = data.data[i].totalUsers
+            }
+
+            if (data.data.length != 0  || data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+                // console.log("Okkk");
+                if (this.rulenew == undefined) return
+
+                if (this.isShow == true && data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+                    this.chartData = data.data;
+                    this.isShow = false
+                    for (let i = 0; i < data.data.length; i++) {
+                        this.ruleold = data.data[i].totalUsers
+                    }
+                } else {
+                    this.chartData = data.data;
+                    this.isShow = true
+                }
+            } else {
+                // console.log("Nooo");
+                this.chartData = []
+                this.isShow = false
+            }
+        });
+     
   },
 
   components: {
@@ -216,7 +259,8 @@ export default {
     betButton,
     chartApp,
     footerBet,
-    trendMapFullScreen
+    trendMapFullScreen,
+    livestock
   },
   computed: {
     ...mapGetters([
@@ -228,22 +272,6 @@ export default {
       "getStockCrawlerData",
       "getLoop"
     ])
-  },mounted(){
-    socket.on("liveprice1", data=>{
-     console.log(data.data.length);
-      if(data.data.length != 0){
-        this.chartData.data = data.data;
-        this.msg = "Stock Open";
-        console.log(this.chartData.data);
-        console.log("sandesh");
-      }
-      else
-      {
-        this.chartData.data = data.data;
-        this.msg = "Stock Close";
-      }
-
-    })
   },
   methods:{
     test(){
@@ -253,7 +281,5 @@ export default {
 };
 </script>
 <style scoped>
-layout{
-color:red;
-}
+
 </style>

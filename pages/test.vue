@@ -1,213 +1,120 @@
 <template>
-  <div>
-    <h1>test</h1>
-  </div>
+<div class="text-xs-center">
+    {{msg}}
+    <canvas ref="planetchart" class="set-height" v-show="isShow"></canvas>
+    <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!isShow"></v-progress-linear>
+</div>
 </template>
 
 <script>
+import {
+    Line,
+    mixins
+} from 'vue-chartjs'
+import VueCharts from "vue-chartjs";
+import io from "socket.io-client";
+import Chart from 'chart.js';
+const socket = io("https://node-liveprice.herokuapp.com");
 export default {
-  data() {
-    return {
-      obj: {},
-      stocks:{
-          "btc1": {
-                "url": {
-                    "crawlUrl": "api/getCrawlerData?stockId=7&limit=300&apikey=aZJk8bn4di35MAm3norKLBAzski1jH86tqYJ0cgOh8ODel3GNTsY4iFePPJOozj9nqR5VMsdiTaG0KCm",
-                    "livePrice": "000.55"
-                },
-                "stockId": 7,
-                "stockName": "btc1",
-                "loop": 1,
-                "type": "crypto",
-                "name": "btc",
-                "crawlerData": 0,
-                "lastDraw": 0,
-                "timeLastDraw": 0,
-                "livePrice": {
-                    "refLink": "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-                }
-            },
-           "sh000001": {
-                "url": {
-                    "crawlUrl": "api/getCrawlerData?stockId=1&limit=300&apikey=",
-                    "livePrice": "000.55"
-                },
-                "stockId": 1,
-                "stockName": "sh000001",
-                "loop": 5,
-                "type": "china",
-                "name": "sh000001",
-                "crawlerData": 0,
-                "lastDraw": 0,
-                "timeLastDraw": 0,
-                "livePrice": {
-                    "refLink": "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml"
-                }
-            },
-            "sh000300": {
-                "url": {
-                    "crawlUrl": "api/getCrawlerData?stockId=2&limit=300&apikey=",
-                    "livePrice": "000.55"
-                },
-                "stockId": 2,
-                "stockName": "sh000300",
-                "loop": 5,
-                "type": "china",
-                "name": "sh000300",
-                "crawlerData": 0,
-                "lastDraw": 0,
-                "timeLastDraw": 0,
-                "livePrice": {
-                    "refLink": "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml"
-                }
-            },
-             "sz399415": {
-                "url": {
-                    "crawlUrl": "api/getCrawlerData?stockId=3&limit=300&apikey=",
-                    "livePrice": "000.55"
-                },
-                "stockId": 3,
-                "stockName": "sz399415",
-                "loop": 5,
-                "type": "china",
-                "name": "sz399415",
-                "crawlerData": 0,
-                "lastDraw": 0,
-                "timeLastDraw": 0,
-                "livePrice": {
-                    "refLink": "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml"
-                }
+    data() {
+        return {
+            load: false,
+            stockname: [],
+            betamount: [],
+            chartData: [],
+            isShow: true,
+            msg:""
+        }
+    },
+    mounted() {
+        socket.on("liveprice1", data => {
+            console.log(data.data);
+            if (data.data.length != 0) {
+                this.chartData = data.data;
+                this.msg = "Stock Open";
+                console.log("ritesh");
+                if(this.isShow == false)
+                this.getChart()
+            } else {
+                this.chartData = " ";
+                this.msg = "Stock Close";
+                 if(this.isShow == false)
+                this.getChart()
             }
-      },
-      data: {
-                btc1: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=7&limit=300&apikey=`,
-                        livePrice: "/api/newlivedata/btc"
-                    },
-                    stockname: "btc1",
-                    name: "btc",
-                    loop: 1,
-                    type: "cypto",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-                    }
-                },
-                usindex: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=5&limit=300&apikey=`,
-                        livePrice: "/api/newlivedata/usindex"
-                    },
-                    stockname: "usindex",
-                    name: "usindex",
-                    loop: 5,
-                    type: "usa",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml"
-                    }
-                },
-                btc5: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=6&limit=300&apikey=`,
-                        //  // set liveprice to null for use the same liveprice in  loop 1 above
-                        //  // it will not call api
-                        //  // it must has loop 1 above  or other loop above
-                        livePrice: "/api/newlivedata/btc"
-                    },
-                    stockname: "btc5",
-                    name: "btc",
-                    loop: 5,
-                    type: "cypto",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-                    }
-                },
-                sh000001: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=4&limit=300&apikey=`,
-                        livePrice: "/api/newlivedata/sh01"
-                    },
-                    stockname: "sh000001",
-                    name: "sh000001",
-                    loop: 5,
-                    type: "china",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml"
-                    }
-                },
-                sz399001: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=3&limit=300&apikey=`,
-                        livePrice: "/api/newlivedata/sz01"
-                    },
-                    stockname: "sz399001",
-                    name: "sz399001",
-                    loop: 5,
-                    type: "china",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml"
-                    }
-                },
-                sz399415: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=2&limit=300&apikey=`,
-                        livePrice: "/api/newlivedata/sz15"
-                    },
-                    stockname: "sz399415",
-                    name: "sz399415",
-                    loop: 5,
-                    type: "china",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml"
-                    }
-                },
-                sh000300: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=1&limit=300&apikey=`,
-                        livePrice: "/api/newlivedata/sz300"
-                    },
-                    stockname: "sh000300",
-                    name: "sh000300",
-                    loop: 5,
-                    type: "china",
-                    crawlerData: "",
+        });
+        this.getChart()
+    },
+    methods: {
+        getChart() {
+            console.log(this.chartData)
+            if (this.chartData == '') return this.isShow = false;
 
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml"
+            this.chartData.forEach(element => {
+                this.isShow = true
+                this.stockname.push(element.rule);
+
+                this.betamount.push(element.totalAmount);
+            });
+
+            var config = {
+                type: "horizontalBar",
+                data: {
+                    labels: this.stockname,
+                    datasets: [{
+                        data: this.betamount,
+                        label: 'Amount',
+                        // fill: false,
+                        backgroundColor: "blue",
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+
+                    legend: {
+                        display: false,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chartjs Horizontal Bar Chart Playground'
+                    },
+                    tooltips: {
+                        enabled: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    },
+                    tooltips: {
+                        mode: "index",
+                        intersect: false
+                    },
+                    hover: {
+                        mode: "nearest",
+                        intersect: true
                     }
                 }
+            };
 
-            },
+            const ctx = this.$refs.planetchart;
+            const mychart = new Chart(ctx, config);
+
+        }
     }
-  },
-  mounted() {
-    console.log(this.stocks)
-    // this.obj =  Object.assign({}, this.stocks);
-    console.log(JSON.parse( this.stocks));
-    console.log(this.data);
-  }
-};
+}
 </script>
 
-<style>
+<style scoped>
+.set-height {
+    height: 900px;
+}
+
+.v-progress-circular {
+    margin: 1rem
+}
 </style>

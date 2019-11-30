@@ -21,9 +21,7 @@
                             <v-select hide-details :items="itemspage" v-model="itemspages" class="Historyinput"  ></v-select>
                         </v-flex>
 
-                        <div class="text-xs-center pt-2" v-if="pages != 0 " >
-                            <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
-                        </div>
+                       
 
                         <span class="stockName" id="stockName" @click="getAllCrawler($event)" hidden></span>
                         <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
@@ -35,7 +33,9 @@
                                 <td>{{props.item.gameId}}</td>
                             </template>
                         </v-data-table>
-                        
+                         <div class="text-xs-center pt-2" v-if="pages != 0 " >
+                            <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
+                        </div>
 
                     </v-card>
                 </v-expansion-panel-content>

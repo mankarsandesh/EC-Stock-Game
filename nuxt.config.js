@@ -51,10 +51,11 @@ module.exports = {
         "@/plugins/i18n",
         "@/plugins/chart",
         "@/plugins/sweetAlert",
-        "@/plugins/vueScreen"
+        "@/plugins/vueScreen",
+        { src: "@/plugins/vChart", mode: 'client' }
     ],
     router: {
-        middleware:[ "auth","showLoading"]
+        middleware: ["auth", "showLoading"]
     },
 
     /*

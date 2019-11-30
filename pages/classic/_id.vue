@@ -20,7 +20,6 @@
     </div>
 
     <div v-else>
-        <!-- {{balance - sumTotalAll}} -->
         <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>

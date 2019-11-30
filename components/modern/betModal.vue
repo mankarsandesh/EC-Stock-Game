@@ -104,7 +104,8 @@ export default {
       "getCoins_modern",
       "getOnBetting",
       "getAuth_token",
-      "getUrltest"
+      "getUrltest",
+      "getStockId"
     ])
   },
   methods: {
@@ -152,13 +153,14 @@ export default {
     },
     confirmBet() {
       let data = {
-        stockId: 7,
+        stockId: this.getStockId(this.stockName),
         loop: this.loop,
         gameRule: this.betId,
         amount: this.betValue
       };
       this.confirmDisabled = true;
-      this.sendBetting(data);
+      console.log(data)
+      // this.sendBetting(data);
       console.warn(this.getOnBetting);
     },
     closePopper() {
