@@ -5,7 +5,7 @@
     <div
       class="bet-close"
       v-if="checkBetClose  || getLotteryDraw(stockName) ==='close' || getLotteryDraw(stockName) == null "
-    >
+>
       <p>bet close</p>
     </div>
     <!-- end for show bet close -->
@@ -657,13 +657,13 @@ export default {
           rule: "odd",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
-          payout: payout.big_small
+          payout:"bigGame"
         },
         {
           rule: "even",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
-          payout: payout.big_small
+          payout: "bigGame"
         }
       ],
       lastDigit: [
@@ -776,7 +776,8 @@ export default {
       "getMultiGameBet",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "getPayout"
+      "getPayout",
+      "getStockId"
     ]),
     // return true if bet close
     checkBetClose() {
@@ -793,7 +794,7 @@ export default {
       if (this.checkFooterBet) {
         let data = {
           // stockId: this.stockName,
-          stockId: 7,
+          stockId: this.getStockId(this.stockName),
           loop: this.loop,
           gameRule: betId,
           amount: this.getFooterBetAmount
