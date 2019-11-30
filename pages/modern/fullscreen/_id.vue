@@ -141,7 +141,7 @@
           <v-layout style="background-color:#003f70">
             <v-flex xs12 sm12 md12 lg12  wrap >
               <v-layout >
-                <v-flex xs12 sm12 md6 lg6>
+                <v-flex xs12 sm12 md6 lg6  >
                   <trendMapFullScreen which_one="O/E" ></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>

@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-layout wrap pa-4 row style="padding-bottom:0 !important;padding-top:48px !important">
-      <v-flex xs2 v-if="!isFullscreen">
+      <v-flex xs2 lg2 v-if="!isFullscreen" > 
         <v-layout>
-          <v-flex xs9>
+          <v-flex xs9 >
             <v-btn
               block
               class="text-white"
@@ -53,9 +53,10 @@
         </v-layout>
       </v-flex>
       <v-flex class="xs10" > 
-        <v-layout row wrap>
-           <v-flex xs12>
-            <trendMap
+        <v-layout row wrap >
+           <v-flex xs12 lg12 md12 ≈>
+            <trendMap 
+            style="border:1px solid red;"
               :dataArray="getStockCrawlerData($route.params.id)"
               :trendType="trendType"
               :key="getStockCrawlerData($route.params.id)[0].writetime + trendType"

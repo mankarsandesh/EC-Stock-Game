@@ -79,10 +79,10 @@
             <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''" >
-          <div v-for="(trendType, index) in trendTypes" :key="index">
+        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''"  >
+          <div v-for="(trendType, index) in trendTypes" :key="index" >
             <hr v-if="index > 0" />
-            <tableTrendMap></tableTrendMap>
+            <tableTrendMap ></tableTrendMap>
           </div>
         </v-flex>
         <v-flex xs12 class="text-xs-center" v-if="trendTypes.length<4">
