@@ -60,8 +60,8 @@
                 </v-tabs>
             </v-container>
         </v-toolbar>
-
-        <div class="navbar container" v-if="ischangechartview">
+         
+        <div class="navbar container grow" v-if="ischangechartview">
             <ul class="main-navigation">
                 <li v-for="(stock,index) in navList" :key="index" :class="stock.name == tab ? 'active':''">
                     <a href="#">
@@ -93,9 +93,9 @@
             </ul>
         </div>
 
-        <!-- <v-toolbar align-center justify-center class="nav-tab"> -->
-        <!-- <v-container mx-auto py-0 px-0> -->
-        <!-- <v-layout v-if="ischangechartview">
+        <!-- <v-toolbar align-center justify-center class="nav-tab">
+            <v-container mx-auto py-0 px-0>
+                <v-layout v-if="ischangechartview">
                     <v-tabs v-model="tab" color="#384e63" grow>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="(items1,idx1) in navList" :key="idx1">
@@ -124,7 +124,9 @@
                             </v-menu>
                         </v-tab>
                     </v-tabs>
-                </v-layout> -->
+                </v-layout>
+            </v-container>
+        </v-toolbar> -->
         <!-- test -->
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card>
@@ -179,8 +181,6 @@
                 </v-list>
             </v-card>
         </v-dialog>
-        <!-- </v-container> -->
-        <!-- </v-toolbar> -->
 
         <v-content pa-0 sx-0>
             <div class="btn-chart-change set-chart-change" v-if="!$vuetify.breakpoint.smAndDown">
@@ -227,7 +227,7 @@
             </v-container>
             <!-- Data Lastdraw and Timer -->
 
-            <v-container pa-0 pb-1 :style="$vuetify.breakpoint.smAndDown ? 'margin-top: -8.5%;':''">
+            <v-container pa-0 pb-1>
                 <v-layout class="remove-flex">
                     <v-flex xs12 sm3 pl-1 pr-1>
                         <listleft />
@@ -486,7 +486,8 @@ export default {
 .scrolltop {
     bottom: 15%;
 }
-.isLoading{
+
+.isLoading {
     z-index: 10000;
     position: absolute;
     background-color: #374c60ed;

@@ -861,11 +861,12 @@ const createStore = () => {
             },
             getStockCrawlerData: (state) => (id) => {
                 // console.log("getStockCrawlerData")
+                let ids = id != 'undefined' ? 'btc1' : id
                 let result = [null]
-                if (state.stocks[id].crawlerData.length < 0) {
+                if (state.stocks[ids].crawlerData.length < 0) {
                     return result
                 }
-                result = state.stocks[id].crawlerData
+                result = state.stocks[ids].crawlerData
                 return result
             },
             // get stocks key like 'btc1','btc5','btc1',usindex

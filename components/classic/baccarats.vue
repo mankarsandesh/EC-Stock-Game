@@ -64,12 +64,12 @@
         <v-flex v-show="chtable=='sn'">
             <div class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile">
                 <div ref="sortNumber">
-                    <span class></span>
-                    <span class></span>
-                    <span class></span>
-                    <span class></span>
-                    <span class></span>
-                    <span class></span>
+                    <span class="text-blue"></span>,
+                    <span class="text-blue"></span>,
+                    <span class="text-blue"></span>,
+                    <span class="text-blue"></span>,
+                    <span class="text-blue"></span>,
+                    <span class="text-blue"></span>
                 </div>
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableNumberFirst">
@@ -88,7 +88,7 @@
 import openSocket from "socket.io-client";
 export default {
     layout: "classic",
-    props: ["dataArray", "chtable", "chlists", "isFullscreen"],
+    props: ["dataArray", "chtable", "chlists"],
     data() {
         return {
             url: "",
@@ -934,30 +934,26 @@ export default {
                                 block: "nearest",
                                 inline: "center"
                             });
-                        if (this.isFullscreen) {
-                            let counts = {};
-                            for (let i = 0; i < this.trentNumberFirst.length; i++) {
-                                let num = this.trentNumberFirst[i];
-                                counts[num] = counts[num] ? counts[num] + 1 : 1;
-                            }
-                            console.log(counts);
-                            let sortable = [];
-                            for (let maxSpeed in counts) {
-                                sortable.push([maxSpeed, counts[maxSpeed]]);
-                            }
 
-                            sortable.sort(function (a, b) {
-                                return b[1] - a[1];
-                            });
-                            console.log(sortable);
-                            for (let k = 0; k < 6; k++) {
-                                console.log(
-                                    (this.$refs.sortNumber.children[k].textContent = `${
-                    sortable[k][0]
-                  } = ${sortable[k][1]}`)
-                                );
-                            }
+                        let counts = {};
+                        for (let i = 0; i < this.trentNumberFirst.length; i++) {
+                            let num = this.trentNumberFirst[i];
+                            counts[num] = counts[num] ? counts[num] + 1 : 1;
                         }
+                        // console.log(counts);
+                        let sortable = [];
+                        for (let maxSpeed in counts) {
+                            sortable.push([maxSpeed, counts[maxSpeed]]);
+                        }
+
+                        sortable.sort(function (a, b) {
+                            return b[1] - a[1];
+                        });
+                        // console.log(sortable);
+                        for (let k = 0; k < 6; k++) {
+                                (this.$refs.sortNumber.children[k].textContent = `${ sortable[k][0]} = ${sortable[k][1]}`)
+                        }
+
                         return;
                     }
                     let big = 0;
