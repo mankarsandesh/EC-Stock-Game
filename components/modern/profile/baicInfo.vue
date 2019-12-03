@@ -9,7 +9,7 @@
 
         <p>
           Online status : {{setTime(time.todayOnline, 0)}}
-          <span>current balance : {{formatToPrice(userBalance)}}</span>
+          <span>current balance : {{formatToPrice(profile.userBalance)}}</span>
         </p>
       </div>
 
@@ -18,7 +18,7 @@
           <tbody>
             <tr>
               <th scope="row" class="row">player id</th>
-              <td>{{profile.userId}}</td>
+              <td>{{profile.userApiId}}</td>
               <td>
                 <v-select
                   hide-details
@@ -111,7 +111,7 @@
             </tr>
             <tr>
               <th scope="row" class="row">balance</th>
-              <td>{{profile.userBalance}}</td>
+              <td>{{formatToPrice(profile.userBalance)}}</td>
               <td>
                 <v-select
                   hide-details
@@ -185,7 +185,6 @@ export default {
         rollingSelect: ""
       },
       time: "",
-      userBalance: ""
     };
   },
   created() {
@@ -201,11 +200,10 @@ export default {
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     },
     async fetchAll() {
-      let res = await this.$axios.$get(
-        "/api/me?apikey=" + this.$store.state.auth_token
-      );
-      this.userBalance = res.userBalance;
-      console.log(res);
+      let res = await this.$axios.$get("/api/me?apikey=" + this.$store.state.auth_token);
+      // console.log(res);
+      this.profile = res;
+      
     },
     async getOnlineTime() {
       let dataGet = await this.$axios.$get(

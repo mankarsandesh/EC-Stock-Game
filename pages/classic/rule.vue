@@ -69,7 +69,7 @@ export default {
         return {
             item: 5,
             panel: [true],
-            panels: [true, true, true, true],
+            panels: [true, false, false, false],
             rules: rules,
             dialog: false,
         }

@@ -30,8 +30,8 @@
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import currentbet from "~/components/modern/currentBet/currentBet";
-import Histoy from "~/components/modern/currentBet/history";
+import currentbet from "~/components/classic/currentbetinfo";
+import Histoy from "~/components/classic/historyinfo";
 export default {
   layout: "desktopModern",
   components: {

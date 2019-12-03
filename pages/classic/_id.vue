@@ -309,10 +309,10 @@
             <h2>{{alertext}}</h2>
         </span>
     </v-snackbar>
+    <button @click="switchs()" id="switch" hidden></button>
     <!-- end alertOutCome -->
     <div class="mb-footer" v-show="$vuetify.breakpoint.smAndDown && ($route.params.id.split('-')[3] == null || $route.params.id.split('-')[3] == '')">
-        <chipfooter v-show="isfooter" />
-
+        <chipfooter v-show="isfooter == 'true' || isfooter == true" />
     </div>
 
 </div>
@@ -361,7 +361,7 @@ export default {
 
     data() {
         return {
-            isfooter: true,
+            isfooter: localStorage.switchfooter,
             currentItem: "tab-All games",
             currentItems: "tab-Big-Small",
             currentItemss: null,
@@ -412,6 +412,7 @@ export default {
         this.settabs()
         this.getSotckId()
         this.getMbFooter()
+
     },
     created() {
         this.getbalance()
@@ -438,7 +439,7 @@ export default {
     watch: {
         preset(e) {
             return this.preset = e
-        }
+        },
     },
     methods: {
         settabs() {
@@ -460,44 +461,33 @@ export default {
             return;
         },
         async getbalance() {
-            try {
-                let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-                this.balance = balance.userBalance
-            } catch (ex) {
-                console.error(ex)
-            }
+            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
+            this.balance = balance.userBalance
         },
         async getSotckId() {
-            try {
-                let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
-                stcokId.data.forEach(element => {
-                    if (element.stockName == this.$route.params.id.split("-")[1]) {
-                        this.stockname = element.stockId
-                    }
-                })
-            } catch (ex) {
-                console.error(ex)
-            }
+            let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
+            stcokId.data.forEach(element => {
+                if (element.stockName == this.$route.params.id.split("-")[1]) {
+                    this.stockname = element.stockId
+                }
+            })
         },
         async getConfirmBet() {
-            try {
-                if (this.sumTotalAll > this.balance || this.sumTotalAll == '') {
-                    this.getalertstartstop('error')
-                } else {
-                    this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
-                    // console.log(this.formData);
-                    console.log("send to api server");
-                    const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
-                    console.log(res)
-                    setTimeout(() => {
-                        this.getalertstartstop(res.data)
-                        this.setPrice("reset");
-                        $(".getupdatebalance")[0].click()
-                        $("#txtbalance").text(this.formatToPrice(this.balance))
-                    }, 700);
-                }
-            } catch (ex) {
-                console.error(ex)
+            if (this.sumTotalAll > this.balance || this.sumTotalAll == '') {
+                this.getalertstartstop('error')
+            } else {
+                this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
+                // console.log(this.formData);
+                console.log("send to api server");
+                const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
+                console.log(res)
+                setTimeout(() => {
+                    this.isfooter = true;
+                    this.getalertstartstop(res.data)
+                    this.setPrice("reset");
+                    $(".getupdatebalance")[0].click()
+                    $("#txtbalance").text(this.formatToPrice(this.balance))
+                }, 700);
             }
         },
 
@@ -546,7 +536,7 @@ export default {
         setPrice(e) {
             if (e == "reset") {
                 $("#txttotal").text(this.formatTotal(this.price))
-                this.isfooter = true;
+                
                 if (this.preset == false) {
                     this.betData.betdetails = [];
                     this.betDataShows = [];
@@ -621,19 +611,19 @@ export default {
             }
             this.loop = this.getStockName(this.$route.params.id).loop;
 
+            // Data send to server
             if (specialName !== "none") {
                 this.gameRule = specialName.gameRule;
                 this.stockId = specialName.stockId;
-                this.payout = specialName.payout;
                 this.amount = this.price;
             } else {
                 this.gameRule = e.target.name;
                 this.stockId = e.target.dataset.stock;
-                this.payout = e.target.parentElement.parentElement.children[1].innerText;
+                this.payout =
+                    e.target.parentElement.parentElement.children[1].innerText;
                 this.amount = parseInt(e.target.value);
             }
 
-            // Data send to server
             this.index = this.betData.betdetails.findIndex(x => x.gameRule === this.gameRule);
             if (this.index == -1) {
                 this.betData.betdetails.push({
@@ -649,6 +639,19 @@ export default {
             // End data send to server
 
             // Data Show clients
+            if (specialName !== "none") {
+                this.gameRule = specialName.gameRule;
+                this.stockId = specialName.stockId;
+                this.payout = specialName.payout;
+                this.amount = this.price;
+            } else {
+                this.gameRule = e.target.name;
+                this.stockId = e.target.dataset.stockId;
+                this.payout =
+                    e.target.parentElement.parentElement.children[1].innerText;
+                this.amount = parseInt(e.target.value);
+            }
+
             this.index = this.betDataShows.findIndex(x => x.gameRule === this.gameRule);
             if (this.index == -1) {
                 this.betDataShows.push({
@@ -660,9 +663,9 @@ export default {
                 });
             } else {
                 this.betDataShows[this.index].amount = this.amount;
-            } 
-            // console.log(this.betDataShows);
+            }
             // End  data Show clients
+            // console.log(this.betDataShows);
         },
 
         getTime() {
@@ -720,28 +723,25 @@ export default {
         },
 
         async alertOutCome() {
-            try {
-                let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.auth_token)
-                // console.log(totalPayout)
-                if (totalPayout.status == false) return;
-                this.snackbar = true;
-                $(".getupdatebalance")[0].click()
-                this.getbalance()
-                this.betPrice = totalPayout.data
-                if (totalPayout.data > 0) {
-                    this.text = this.$root.$t('msg.winbet');
-                    this.color = "#2962FF";
-                    this.playSound('/voice/winbet.mp3')
-                } else {
-                    this.text = this.$root.$t('msg.losebet');
-                    this.color = "#D50000";
-                }
-            } catch (ex) {
-                console.error(ex)
+            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.auth_token)
+            // console.log(totalPayout)
+            if (totalPayout.status == false) return;
+            this.snackbar = true;
+            $(".getupdatebalance")[0].click()
+            this.getbalance()
+            this.betPrice = totalPayout.data
+            if (totalPayout.data > 0) {
+                this.text = this.$root.$t('msg.winbet');
+                this.color = "#2962FF";
+                this.playSound('/voice/winbet.mp3')
+            } else {
+                this.text = this.$root.$t('msg.losebet');
+                this.color = "#D50000";
             }
         },
 
         getalertstartstop(val) {
+
             this.alertSS = true;
             if (val == "start") {
                 this.alertext = this.$root.$t('msg.startbetting')
@@ -767,7 +767,6 @@ export default {
                 audio.play();
             }
         },
-        // use in mb
         getMbFooter() {
             $("#txttotal").text(this.formatTotal(this.price))
             $("#ch10").text(this.chips[0].price)
@@ -808,7 +807,16 @@ export default {
                 if (this.balance - this.sumTotalAll >= parseInt(this.chips[5].price))
                     this.setPrice(this.chips[5].price)
             });
-        }
+
+        },
+        switchs() {
+            if (localStorage.switchfooter == "true") {
+                this.isfooter = true
+            } else {
+                this.isfooter = false
+            }
+        },
+
     }
 };
 </script>

@@ -49,7 +49,7 @@
 
     <v-app>
         <v-toolbar class="pa-1 text-primary light-toobar">
-            <v-container>
+            <!-- <v-container>
                 <v-tabs icons-and-text>
                     <v-spacer></v-spacer>
                     <v-btn text flat @click="$refs.language.showDialog()">
@@ -58,10 +58,10 @@
                     <languageDialog ref="language"></languageDialog>
                     <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
                 </v-tabs>
-            </v-container>
+            </v-container> -->
         </v-toolbar>
-         
-        <div class="navbar container grow" v-if="ischangechartview">
+
+        <div class="navbar container grow" v-show="ischangechartview && !$vuetify.breakpoint.smAndDown">
             <ul class="main-navigation">
                 <li v-for="(stock,index) in navList" :key="index" :class="stock.name == tab ? 'active':''">
                     <a href="#">
@@ -93,9 +93,9 @@
             </ul>
         </div>
 
-        <!-- <v-toolbar align-center justify-center class="nav-tab">
+        <v-toolbar align-center justify-center class="nav-tab" v-show="ischangechartview && $vuetify.breakpoint.smAndDown">
             <v-container mx-auto py-0 px-0>
-                <v-layout v-if="ischangechartview">
+                <v-layout>
                     <v-tabs v-model="tab" color="#384e63" grow>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="(items1,idx1) in navList" :key="idx1">
@@ -126,7 +126,7 @@
                     </v-tabs>
                 </v-layout>
             </v-container>
-        </v-toolbar> -->
+        </v-toolbar>
         <!-- test -->
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card>
@@ -248,9 +248,17 @@
             </v-container>
         </v-content>
     </v-app>
-    <v-btn v-scroll="onScroll" :class="$vuetify.breakpoint.smAndDown ? 'scrolltop':''" v-show="fab" small fab dark fixed bottom right color="blue" @click="toTop">
+    <v-btn v-scroll="onScroll" :class="$vuetify.breakpoint.smAndDown ? 'scrolltop z-index':'z-index'" v-show="fab" small fab dark fixed bottom right color="blue" @click="toTop">
         <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>
+    <div v-show="$vuetify.breakpoint.smAndDown">
+        <v-btn class="z-index" small fab dark fixed bottom left color="red" v-if="Switchfooters" @click="getSwitchfooter(false)">
+            <v-icon>{{Switchfooters ? 'visibility_off' : 'visibility'}}</v-icon>
+        </v-btn>
+        <v-btn class="z-index" small fab dark fixed bottom left color="green" v-if="!Switchfooters" @click="getSwitchfooter(true)">
+            <v-icon>{{Switchfooters ? 'visibility_off' : 'visibility'}}</v-icon>
+        </v-btn>
+    </div>
 </div>
 </template>
 
@@ -305,6 +313,7 @@ export default {
     },
     data() {
         return {
+            switchonoff: true,
             mbdialog: false,
             switch1: "",
             currentItemss: null,
@@ -334,13 +343,20 @@ export default {
             sound: true,
             widgets: false,
             fab: false,
-            isLoad: true
+            isLoad: true,
+            Switchfooters: localStorage.switchfooter
+
         };
     },
     created() {
         this.setLanguage();
     },
+
     mounted() {
+        if (localStorage.switchfooter == '') {
+            this.Switchfooters = localStorage.switchfooter = true
+        }
+
         lottie.loadAnimation({
             container: this.$refs.svgContainer, // the dom element that will contain the animation
             renderer: "svg",
@@ -380,6 +396,10 @@ export default {
 
     },
     methods: {
+        getSwitchfooter(value) {
+            this.Switchfooters = localStorage.switchfooter = value
+            $("#switch").click()[0]
+        },
         ...mapActions(["asynInitCallApi"]),
         ...mapMutations(["SET_LANG", "SET_TIME"]),
         setLanguage() {
@@ -485,6 +505,10 @@ export default {
 <style scoped>
 .scrolltop {
     bottom: 15%;
+}
+
+.z-index {
+    z-index: 100000
 }
 
 .isLoading {
