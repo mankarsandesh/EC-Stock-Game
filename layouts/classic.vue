@@ -33,9 +33,9 @@
                     </template>
                     <v-list>
                         <v-list-tile>
-                            <v-list-tile-title>Tnk1</v-list-tile-title>
+                            <v-list-tile-title>{{getUserName}}</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile>
+                        <v-list-tile @click="dialogprofile = true">
                             <v-list-tile-title>Profile</v-list-tile-title>
                         </v-list-tile>
                         <v-list-tile>
@@ -48,8 +48,8 @@
     </v-toolbar>
 
     <v-app>
-        <v-toolbar class="pa-1 text-primary light-toobar">
-            <!-- <v-container>
+        <v-toolbar class="pa-0 text-primary light-toobar">
+            <v-container>
                 <v-tabs icons-and-text>
                     <v-spacer></v-spacer>
                     <v-btn text flat @click="$refs.language.showDialog()">
@@ -58,7 +58,7 @@
                     <languageDialog ref="language"></languageDialog>
                     <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
                 </v-tabs>
-            </v-container> -->
+            </v-container>
         </v-toolbar>
 
         <div class="navbar container grow" v-show="ischangechartview && !$vuetify.breakpoint.smAndDown">
@@ -259,6 +259,18 @@
             <v-icon>{{Switchfooters ? 'visibility_off' : 'visibility'}}</v-icon>
         </v-btn>
     </div>
+    <v-dialog v-model="dialogprofile" persistent max-width="1240px">
+        <v-card>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <button class="cancel" @click="dialogprofile = false">X</button>
+            </v-card-actions>
+            <v-card-text>
+                <profile v-if="dialogprofile" />
+            </v-card-text>
+        </v-card>
+    </v-dialog>
+
 </div>
 </template>
 
@@ -292,6 +304,7 @@ import gameresult from "~/pages/classic/game-result";
 import announcement from "~/pages/classic/announcement";
 import rule from "~/pages/classic/rule";
 import setting from "~/pages/classic/setting";
+import profile from "~/pages/modern/desktop/profile";
 import lottie from "lottie-web";
 export default {
     components: {
@@ -310,9 +323,11 @@ export default {
         announcement,
         rule,
         setting,
+        profile
     },
     data() {
         return {
+            dialogprofile: false,
             switchonoff: true,
             mbdialog: false,
             switch1: "",
@@ -388,7 +403,9 @@ export default {
             "getlocale",
             "getStockNewData",
             "getReference",
-            "getstockname"
+            "getstockname",
+            "getBalance", 
+            "getUserName"
         ]),
         countryflag() {
             return this.getlocale;

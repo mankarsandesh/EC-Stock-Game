@@ -42,7 +42,7 @@
             <v-card>
                 <table>
                     <tr v-for="(data,index) in getStockList" :key="index">
-                        <td class="text-left isLoadChart" router @click="$router.push('/classic/l-'+data.stockname +'-live')">
+                        <td class="text-left isLoadChart pointer" router @click="$router.push('/classic/l-'+data.stockname +'-live')">
                             <i class="fa fa-circle-o text-danger"></i>
                             <b>{{$t('msg.Stock')}}</b>: {{ $t('stockname.'+data.stockname) }}{{ data.stockname == 'btc1' ? ' 1 ':data.stockname == 'btc5' ? ' 5 ':'' }} <b>{{$t('msg.Time')}}</b>: {{ onlyTime(getStockById(data.id).timeLastDraw)}} <b>{{$t('msg.Result')}}</b> {{ formatToNumber(getStockById(data.id).lastDraw, data.stockname)}}
                         </td>
@@ -111,12 +111,9 @@ export default {
         this.getupdatebalance()
         this.getAllresults()
         this.getSotckId()
-        this.gethistoryTotal()
-        // setInterval(() => {
-        //     if (this.Allresults.length != 0) {
-        //         this.getAllresults()
-        //     }
-        // }, 1000)
+        setTimeout(() => {
+            this.gethistoryTotal()
+        }, 3000)
     },
     created() {
         if (this.$vuetify.breakpoint.smAndDown) {
@@ -158,24 +155,29 @@ export default {
             return (zero + num).slice(-digit);
         },
         async gethistoryTotal() {
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
-            this.betAmounts = 0;
-            this.rollingAmounts = 0;
-            for (let i = 0; i < history.data.length; i++) {
-                if (history.data[i].betTime.split(" ")[0] == new Date().toISOString().substr(0, 10)) {
-                    this.betAmounts += history.data[i].betAmount;
-                    this.rollingAmounts += history.data[i].rollingAmount;
+            try {
+                let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+                this.betAmounts = 0;
+                this.rollingAmounts = 0;
+                for (let i = 0; i < history.data.length; i++) {
+                    if (history.data[i].betTime.split(" ")[0] == new Date().toISOString().substr(0, 10)) {
+                        this.betAmounts += history.data[i].betAmount;
+                        this.rollingAmounts += history.data[i].rollingAmount;
+                    }
                 }
+            } catch (error) {
+                console.log(error)
             }
+
         },
 
         async getupdatebalance() {
             let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-            this.name = balance.name
-            this.balance = balance.userBalance
-            // console.log(balance)
+            this.name = balance.data.name
+            this.balance = balance.data.userBalance
+            console.log(balance)
 
-            $("#txtbalance").text(this.formatToPrice(this.balance))
+            $("#txtbalance").text(this.formatToPrice(balance.data.userBalance))
             return
         },
         async getSotckId() {
@@ -193,6 +195,10 @@ export default {
 </script>
 
 <style scoped>
+.pointer {
+    cursor: pointer;
+}
+
 .font-size15 {
     font-size: 1.5rem;
 }

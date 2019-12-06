@@ -1109,6 +1109,8 @@ tr:nth-child(even) {
     /* border-right: 1px solid #ddd; */
     min-width: 13%;
     margin-top: 11px;
+     text-align: center;
+    font-size: 10px;
     font-size: 11px;
     display: inline-block;
 }

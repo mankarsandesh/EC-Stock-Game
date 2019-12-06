@@ -1,7 +1,6 @@
 import Vuex from 'vuex'
 import { hostname } from 'os'
 
-
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
@@ -59,56 +58,7 @@ const createStore = () => {
                 }
             },
 
-
             stocks: {
-                btc1: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=7&limit=300`,
-                        livePrice: "/api/newlivedata/btc"
-                    },
-                    stockname: "btc1",
-                    name: "btc",
-                    loop: 1,
-                    type: "cypto",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-                    }
-                },
-                usindex: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=5&limit=300`,
-                        livePrice: "/api/newlivedata/usindex"
-                    },
-                    stockname: "usindex",
-                    name: "usindex",
-                    loop: 5,
-                    type: "usa",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml"
-                    }
-                },
-                btc5: {
-                    url: {
-                        crawler: `/api/getCrawlerData?stockId=6&limit=300`,
-                        livePrice: "/api/newlivedata/btc"
-                    },
-                    stockname: "btc5",
-                    name: "btc",
-                    loop: 5,
-                    type: "cypto",
-                    crawlerData: "",
-                    lastDraw: "",
-                    timeLastDraw: "",
-                    livePrice: {
-                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-                    }
-                },
                 sh000001: {
                     url: {
                         crawler: `/api/getCrawlerData?stockId=4&limit=300`,
@@ -173,8 +123,55 @@ const createStore = () => {
                     livePrice: {
                         refLink: "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml"
                     }
+                },
+                usindex: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=5&limit=300`,
+                        livePrice: "/api/newlivedata/usindex"
+                    },
+                    stockname: "usindex",
+                    name: "usindex",
+                    loop: 5,
+                    type: "usa",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml"
+                    }
+                },
+                btc5: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=6&limit=300`,
+                        livePrice: "/api/newlivedata/btc"
+                    },
+                    stockname: "btc5",
+                    name: "btc",
+                    loop: 5,
+                    type: "cypto",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
+                    }
+                },
+                btc1: {
+                    url: {
+                        crawler: `/api/getCrawlerData?stockId=7&limit=300`,
+                        livePrice: "/api/newlivedata/btc"
+                    },
+                    stockname: "btc1",
+                    name: "btc",
+                    loop: 1,
+                    type: "cypto",
+                    crawlerData: "",
+                    lastDraw: "",
+                    timeLastDraw: "",
+                    livePrice: {
+                        refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
+                    }
                 }
-
             },
             time: {},
         }),
@@ -269,7 +266,7 @@ const createStore = () => {
                 try {
                     const res = await this.$axios.$get(`/api/me?apikey=${context.getters.getAuth_token}`)
                         // if (res.status) {
-                    let userInfo = res.name
+                    let userInfo = res.data.name
                     context.commit("setUserData", { name: userInfo })
                         // }
                 } catch (ex) {
@@ -281,9 +278,7 @@ const createStore = () => {
                 try {
                     const res = await this.$axios.$get(`/api/me/balance?apikey=${context.getters.getAuth_token}`)
                     if (res.status) {
-                        let balance = res.data
-                        context.commit("setBalance", balance)
-                        context.commit("setBalance", balance)
+                        context.commit("setBalance", res.data.balance)
                     }
                 } catch (ex) {
                     console.error(ex)

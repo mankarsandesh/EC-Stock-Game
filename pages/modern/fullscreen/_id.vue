@@ -183,32 +183,36 @@ export default {
     mounted() {
 
         socket.on("liveprice1", data => {
-            // console.log(data.data);
-            for (let i = 0; i < data.data.length; i++) {
-                this.rulenew = data.data[i].totalUsers
+            
+            if (data.data == ""){
+                console.log(data.data);
             }
 
-            if (data.data.length != 0 || data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
-                // console.log("Okkk");
-                this.msg = "Rule Beting";
-                if (this.rulenew == undefined) return
+            // for (let i = 0; i < data.data.length; i++) {
+            //     this.rulenew = data.data[i].totalUsers
+            // }
 
-                if (this.isShow == true && data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
-                    this.chartData = data.data;
-                    this.isShow = false
-                    for (let i = 0; i < data.data.length; i++) {
-                        this.ruleold = data.data[i].totalUsers
-                    }
-                } else {
-                    this.chartData = data.data;
-                    this.isShow = true
-                }
-            } else {
-                // console.log("Nooo");
-                this.msg = "Rule Not Beting";
-                this.chartData = []
-                this.isShow = false
-            }
+            // if (data.data.length != 0 || data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+            //     // console.log("Okkk");
+            //     this.msg = "Rule Beting";
+            //     if (this.rulenew == undefined) return
+
+            //     if (this.isShow == true && data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+            //         this.chartData = data.data;
+            //         this.isShow = false
+            //         for (let i = 0; i < data.data.length; i++) {
+            //             this.ruleold = data.data[i].totalUsers
+            //         }
+            //     } else {
+            //         this.chartData = data.data;
+            //         this.isShow = true
+            //     }
+            // } else {
+            //     // console.log("Nooo");
+            //     this.msg = "Rule Not Beting";
+            //     this.chartData = []
+            //     this.isShow = false
+            // }
         });
 
     },
