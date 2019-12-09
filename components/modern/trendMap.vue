@@ -420,11 +420,11 @@ export default {
                   "1"
                 ) {
                   countBig++;
-                  $(".countBig").text("Big" + " = " + countBig);
+                  $(".countBig").text(this.$root.$t('gamemsg.big') + " = " + countBig);
                   this.$refs.tablebsTwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tablebsTwo.children[i].children[j].textContent =
-                    "B";
+                    this.$root.$t('gamemsg.B');
                   this.$refs.tablebsTwo.children[i].children[j].classList.add(
                     "rs1"
                   );
@@ -433,7 +433,7 @@ export default {
                   "0"
                 ) {
                   countSmall++;
-                  $(".countSmall").text("Small" + " = " + countSmall);
+                  $(".countSmall").text(this.$root.$t('gamemsg.small') + " = " + countSmall);
                   this.$refs.tablebsTwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tablebsTwo.children[i].children[j].classList.add(
@@ -441,7 +441,7 @@ export default {
                   );
 
                   this.$refs.tablebsTwo.children[i].children[j].textContent =
-                    "S";
+                    this.$root.$t('gamemsg.S');
                 }
               }
             }
@@ -607,7 +607,7 @@ export default {
                   "1"
                 ) {
                   countOdd++;
-                  $(".countOdd").text("Odd" + " = " + countOdd);
+                  $(".countOdd").text(this.$root.$t('gamemsg.odd') + " = " + countOdd);
                   this.$refs.tableOETwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tableOETwo.children[i].children[j].classList.add(
@@ -615,13 +615,13 @@ export default {
                   );
 
                   this.$refs.tableOETwo.children[i].children[j].textContent =
-                    "O";
+                    this.$root.$t('gamemsg.O');
                 } else if (
                   this.$refs.tableOETwo.children[i].children[j].textContent ===
                   "0"
                 ) {
                   countEven++;
-                  $(".countEven").text("Even" + " = " + countEven);
+                  $(".countEven").text(this.$root.$t('gamemsg.even') + " = " + countEven);
                   this.$refs.tableOETwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tableOETwo.children[i].children[j].classList.add(
@@ -629,7 +629,7 @@ export default {
                   );
 
                   this.$refs.tableOETwo.children[i].children[j].textContent =
-                    "E";
+                    this.$root.$t('gamemsg.E');
                 }
               }
             }
@@ -784,7 +784,7 @@ export default {
                     .textContent === "2"
                 ) {
                   countUpper++;
-                  $(".countUpper").text("Upper" + " = " + countUpper);
+                  $(".countUpper").text(this.$root.$t('gamemsg.high') + " = " + countUpper);
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
@@ -792,13 +792,13 @@ export default {
                   );
 
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
-                    "U";
+                    this.$root.$t('gamemsg.U');
                 } else if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
                     .textContent === "1"
                 ) {
                   countMiddle++;
-                  $(".countMiddle").text("middle" + " = " + countMiddle);
+                  $(".countMiddle").text(this.$root.$t('gamemsg.mid') + " = " + countMiddle);
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
@@ -806,13 +806,13 @@ export default {
                   );
 
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
-                    "M";
+                    this.$root.$t('gamemsg.M');
                 } else if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
                     .textContent === "0"
                 ) {
                   countLower++;
-                  $(".countLower").text("lower" + " = " + countLower);
+                  $(".countLower").text(this.$root.$t('gamemsg.low') + " = " + countLower);
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
                     "";
                   this.$refs.tablebUMLTwo.children[i].children[j].classList.add(
@@ -820,7 +820,7 @@ export default {
                   );
 
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
-                    "L";
+                    this.$root.$t('gamemsg.L');
                 }
               }
             }

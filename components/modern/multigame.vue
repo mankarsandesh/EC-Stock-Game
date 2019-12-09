@@ -18,7 +18,7 @@
             <v-spacer></v-spacer>
             <v-flex >
               <v-btn dark color="#003e70" :to="'/modern/fullscreen/' +stockid">
-                <v-icon left dark class="ma-0">fullscreen</v-icon>full screen mode
+                <v-icon left dark class="ma-0">fullscreen</v-icon>{{$t('msg.fullscreenmode')}}
               </v-btn>
             </v-flex>
           </v-layout>
@@ -27,13 +27,13 @@
           <v-flex>
             <v-layout>
               <v-flex class="text-xs-center" px-2>
-                <span class="text-gray">Last draw:</span>
+                <span class="text-gray">{{$t('msg.Lastdraw')}}:</span>
                 <v-flex flex-style>
                   <h4 v-html="$options.filters.lastDraw(getStockLastDraw(stockid))"></h4>
                 </v-flex>
               </v-flex>
               <v-flex class="text-xs-center" px-2>
-                <span class="text-gray">Bet Close in:</span>
+                <span class="text-gray">{{$t('msg.BetClosein')}}:</span>
                 <v-flex flex-style>
                   <span
                     class="text-yellow"
@@ -41,7 +41,7 @@
                 </v-flex>
               </v-flex>
               <v-flex class="text-xs-center" px-2>
-                <span class="text-gray">lottery draw:</span>
+                <span class="text-gray">{{$t('msg.lotterydraw')}}:</span>
                 <v-flex flex-style>
                   <span
                     class="text-yellow"

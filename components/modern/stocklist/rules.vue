@@ -63,7 +63,7 @@
       <v-expansion-panel v-model="panel" expand>
         <v-expansion-panel-content>
           <template v-slot:header>
-            <div>FIRST digit (????.??)</div>
+            <div>{{$t('gamemsg.firstdigit')}} (????.??)</div>
           </template>
           <v-card>
             <v-card-text class="grey lighten-3">
@@ -88,7 +88,7 @@
 
         <v-expansion-panel-content>
           <template v-slot:header>
-            <div>LAST digit (????.??)</div>
+            <div>{{$t('gamemsg.lastdigit')}} (????.??)</div>
           </template>
           <v-card>
             <v-card-text class="grey lighten-3">
@@ -113,7 +113,7 @@
 
         <v-expansion-panel-content>
           <template v-slot:header>
-            <div>TWO digit (????.??)</div>
+            <div>{{$t('gamemsg.bothdigit')}} (????.??)</div>
           </template>
           <v-card>
             <v-card-text class="grey lighten-3">
@@ -139,7 +139,7 @@
         </v-expansion-panel-content>
         <v-expansion-panel-content>
           <template v-slot:header>
-            <div>BOTH digit (????.? + ? = ?)</div>
+            <div>{{$t('gamemsg.twodigit')}} (????.? + ? = ?)</div>
           </template>
           <v-card>
             <v-card-text class="grey lighten-3">

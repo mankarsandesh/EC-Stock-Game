@@ -81,7 +81,6 @@ export default {
             isOptions: true,
             isShow: false,
             chartData: [],
-            rule: [],
             rulenew: [],
             ruleold: [],
         }
@@ -92,7 +91,7 @@ export default {
         socket.on("liveprice1", data => {
             console.log(data.data);
             if (data.dat.length == "") return;
-            
+
             // for (let i = 0; i < data.data.length; i++) {
             //     this.rulenew = data.data[i].totalUsers
             // }

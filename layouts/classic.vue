@@ -1,7 +1,6 @@
 <template>
 <div>
     <div ref="svgContainer" class="isLoading" v-if="getStockNewData($route.params.id).length == ''"></div>
-
     <v-toolbar fixed app light class="light-toobar">
         <v-container mx-auto py-0 px-0>
             <v-layout>
@@ -127,7 +126,7 @@
                 </v-layout>
             </v-container>
         </v-toolbar>
-        <!-- test -->
+
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card>
                 <v-toolbar dark color="primary">
@@ -248,9 +247,11 @@
             </v-container>
         </v-content>
     </v-app>
+
     <v-btn v-scroll="onScroll" :class="$vuetify.breakpoint.smAndDown ? 'scrolltop z-index':'z-index'" v-show="fab" small fab dark fixed bottom right color="blue" @click="toTop">
         <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>
+
     <div v-show="$vuetify.breakpoint.smAndDown">
         <v-btn class="z-index" small fab dark fixed bottom left color="red" v-if="Switchfooters" @click="getSwitchfooter(false)">
             <v-icon>{{Switchfooters ? 'visibility_off' : 'visibility'}}</v-icon>
@@ -259,6 +260,7 @@
             <v-icon>{{Switchfooters ? 'visibility_off' : 'visibility'}}</v-icon>
         </v-btn>
     </div>
+
     <v-dialog v-model="dialogprofile" persistent max-width="1240px">
         <v-card>
             <v-card-actions>
@@ -404,7 +406,7 @@ export default {
             "getStockNewData",
             "getReference",
             "getstockname",
-            "getBalance", 
+            "getBalance",
             "getUserName"
         ]),
         countryflag() {

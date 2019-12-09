@@ -7,7 +7,7 @@
         style=" background-color: #003e70"
         @click="switchIsShowBet(true)"
       >
-        <span>bet result</span>
+        <span>{{$t('msg.Bet Result')}}</span>
       </v-flex>
       <v-spacer></v-spacer>
       <v-flex
@@ -16,7 +16,7 @@
         style=" background-color: #33658d"
         @click="switchIsShowBet(false)"
       >
-        <span>all results</span>
+        <span>{{$t('msg.All Results')}}</span>
       </v-flex>
     </v-layout>
     <v-layout>
@@ -25,9 +25,9 @@
         <div class="table-responsive">
           <table class="table">
             <tr>
-              <th>Stock name</th>
-              <th>Time</th>
-              <th>Result</th>
+              <th>{{$t('msg.Stock Name')}}</th>
+              <th>{{$t('msg.Time')}}</th>
+              <th>{{$t('msg.Result')}}</th>
             </tr>
             <tr v-for="(data,index) in getStockList" :key="index">
               <td>
@@ -44,10 +44,10 @@
         <div class="table-responsive">
           <table class="table">
             <tr>
-              <th>ID</th>
-              <th>Stock</th>
-              <th>Result</th>
-              <th>Gold amount</th>
+              <th>{{$t('msg.gameid')}}</th>
+              <th>{{$t('msg.Stock')}}</th>
+              <th>{{$t('msg.Result')}}</th>
+              <th>{{$t('msg.amount')}}</th>
             </tr>
             <tr v-for="(data,index) in getStockList" :key="index">
               <td></td>

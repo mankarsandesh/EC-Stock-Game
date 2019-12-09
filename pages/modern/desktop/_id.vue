@@ -33,13 +33,13 @@
                 <v-layout>
                   <v-flex>
                     <v-btn dark color="#003e70" :to="'/modern/fullscreen/' +$route.params.id">
-                      <v-icon left dark class="ma-0">fullscreen</v-icon>full screen mode
+                      <v-icon left dark class="ma-0">fullscreen</v-icon>{{$t('msg.fullscreenmode')}}
                     </v-btn>
                     <v-btn
                       dark
                       :to="'/modern/multigame/' +$route.params.id"
                       color="#003e70"
-                    >Multiple gaming</v-btn>
+                    >{{$t('msg.Multiplegaming')}}</v-btn>
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -48,14 +48,14 @@
           <v-flex xs6 class="mx-2">
             <v-layout>
               <v-flex class="text-xs-center" px-2>
-                <span>Last draw:</span>
+                <span>{{$t('msg.Lastdraw')}}:</span>
                 <v-flex flex-style>
                   <span v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></span>
                 </v-flex>
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
               <v-flex class="text-xs-center" px-2>
-                <span>Bet Close in:</span>
+                <span>{{$t('msg.BetClosein')}}:</span>
                 <v-flex flex-style>
                   <span
                     class="text-yellow"
@@ -63,7 +63,7 @@
                 </v-flex>
               </v-flex>
               <v-flex class="text-xs-center" px-2>
-                <span>lottery draw:</span>
+                <span>{{$t('msg.lotterydraw')}}:</span>
                 <v-flex flex-style>
                   <span
                     class="text-yellow"
@@ -87,7 +87,7 @@
         </v-flex>
         <v-flex xs12 class="text-xs-center" v-if="trendTypes.length<4">
           <v-btn class="text-white" color="#003e70" @click="addTrendMap()">
-            <v-icon left dark>add</v-icon>add trend chart
+            <v-icon left dark>add</v-icon>{{$t('msg.addtrendchart')}}
           </v-btn>
         </v-flex>
 

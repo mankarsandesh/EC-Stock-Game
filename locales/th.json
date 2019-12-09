@@ -3,7 +3,7 @@
     "sort": "sort",
     "search": "search",
     "stock": "stock",
-    "default": "default",
+    "default": "ค่าเริ่มต้น",
     "menu": {
         "home": "หน้าหลัก",
         "profile": "ข้อมูลส่วนตัว",
@@ -42,6 +42,7 @@
         "ok": "ตกลง",
         "cancel": "ยกเลิก",
         "edit": "แก้ไข",
+        "save": "บันทึก",
         "resettodefault": "รีเซ็ตเป็นค่าเริ่มต้น",
         "changechartview": "Change Chart View",
         "reference": "การอ้างอิง",
@@ -82,14 +83,25 @@
         "betclosed": "เดิมพันปิด",
         "chooselanguage": "เลือกภาษา",
         "Clear": "ล้าง",
-        "Total Bet": "总下注金额",
-        "Win Rate": "赢率",
-
+        "Total Bet": "การเดิมพันทั้งหมด",
+        "Win Rate": "อัตราการชนะ",
 
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
-        "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;"
+        "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
 
+        "Lastdraw": "การจับรางวัลล่าสุด",
+        "BetClosein": "เดิมพันปิด",
+        "lotterydraw": "จับสลาก",
+        "fullscreenmode": "โหมดเต็มหน้าจอ",
+        "Multiplegaming": "เล่นเกมหลายรายการ",
+        "livetime": "เวลาตอนนี้",
+        "liveprice": "ราคาตอนนี้",
+        "betting": "การพนัน",
+        "nobetting": "ไม่มีการเดิมพัน",
+        "exit": "ออกโหมดเต็มจอ",
+        "addtrendchart": "เพิ่มแผนภูมิแนวโน้ม",
+        "bettingon": "เดิมพัน"
 
     },
     "navlist": {
@@ -118,7 +130,7 @@
 
         "firstdigit": "ตัวเลขตัวแรก",
         "lastdigit": "ตัวเลขสุดท้าย",
-        "bothdigit": "ทั้งหลัก",
+        "bothdigit": "ตัวเลขทั้งหลัก",
         "twodigit": "ตัวเลขสองหลัก",
 
         "big": "ใหญ่",
