@@ -4,9 +4,9 @@
       pa-2
       class="text-xs-center text-uppercase text-white flex-cursor pa-0"
       style=" background-color: #003e70"
-    >betting</v-flex>
+    >{{$t('msg.betting')}}</v-flex>
     <v-flex class="text-xs-center" style="overflow:auto; max-height:350px;">
-      <h3 v-show="getOnGoingBet.length<=0" class="pa-5">no betting</h3>
+      <h3 v-show="getOnGoingBet.length<=0" class="pa-5">{{$t('msg.nobetting')}}</h3>
       <!-- v-show="getOnGoingBet.length>0" -->
 
       <v-list three-line class="pa-0"  v-show="getOnGoingBet.length>0">

@@ -42,6 +42,7 @@
         "ok": "Ok",
         "cancel": "Cancel",
         "edit": "Edit",
+        "save": "Save",
         "resettodefault": "Reset To Default",
         "changechartview": "Change Chart View",
         "reference": "Reference",
@@ -87,8 +88,22 @@
 
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
-        "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;"
+        "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
 
+        "Lastdraw": "Last draw",
+        "BetClosein": "Bet Close in",
+        "lotterydraw": "lottery draw",
+        "fullscreenmode": "full screen mode",
+        "Multiplegaming": "Multiple gaming",
+        "livetime": "实时报价",
+        "liveprice": "实时报价",
+        "betting": "Betting",
+        "nobetting": "No Betting",
+        "exit": "exit",
+        "addtrendchart": "เพิ่มแผนภูมิแนวโน้ม",
+        "bettingon": "ພະນັນ",
+        "Status": "狀態",
+        "Countdown": "倒數"
 
     },
     "navlist": {

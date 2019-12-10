@@ -2,11 +2,11 @@
   <div class="v-card-style" v-if="stockid !== null ">
     <v-layout px-1 style="background-color:#fff" >
       <v-flex xs6 class="text-xs-left">
-        live TIME
+         {{$t('msg.livetime')}}:
         <span class="text-primary">{{getLiveTime(stockid)}}</span>
       </v-flex>
       <v-flex xs6 class="text-xs-right"  v-if="getLotteryDraw(stockid) >0" >
-        live PRICE
+         {{$t('msg.liveprice')}}:
         <span class="text-second">{{getLivePrice(stockid)}}</span>
       </v-flex>
     </v-layout>

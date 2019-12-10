@@ -5,12 +5,12 @@
       <v-card-title class="px-1 py-0" style="font-size:13px">
         <v-layout>
           <v-flex xs6 class="text-xs-left">
-            live TIME
+            {{$t('msg.livetime')}}:
             <span class="text-primary">{{getLiveTime($route.params.id)}}</span>
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw($route.params.id) >0">
-            live PRICE
+            {{$t('msg.liveprice')}}:
             <span class="text-second">{{getLivePrice($route.params.id)}}</span>
           </v-flex>
         </v-layout>

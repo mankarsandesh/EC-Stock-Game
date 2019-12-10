@@ -9,7 +9,7 @@
               class="text-white"
               color="#003e70"
               @click="changeChartType('firstDigit')"
-            >first digit</v-btn>
+            >{{$t('gamemsg.firstdigit')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex class="text-xs-center triangle-right" v-show="trendType=='firstDigit'"></v-flex>
@@ -21,7 +21,7 @@
               class="text-white"
               color="#003e70"
               @click="changeChartType('lastDigit')"
-            >last digit</v-btn>
+            >{{$t('gamemsg.lastdigit')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex class="triangle-right" v-show="trendType=='lastDigit'"></v-flex>
@@ -33,7 +33,7 @@
               class="text-white"
               color="#003e70"
               @click="changeChartType('bothDigit')"
-            >both digit</v-btn>
+            >{{$t('gamemsg.bothdigit')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
 
@@ -46,7 +46,7 @@
               class="text-white"
               color="#003e70"
               @click="changeChartType('twoDigit')"
-            >two digit</v-btn>
+            >{{$t('gamemsg.twodigit')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>

@@ -63,7 +63,7 @@
                     </v-flex>
                     <v-flex>
                         <v-btn dark color="#003e70" @click="$router.go(-1)">
-                            <v-icon left dark class="ma-0">exit_to_app</v-icon>exit
+                            <v-icon left dark class="ma-0">exit_to_app</v-icon>{{$t('msg.exit')}}
                         </v-btn>
                     </v-flex>
                 </v-layout>
@@ -73,19 +73,19 @@
                 <v-flex>
                     <v-layout>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">Last draw:</span>
+                            <span class="text-gray">{{$t('msg.Lastdraw')}}:</span>
                             <v-flex flex-style>
                                 <h4 v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></h4>
                             </v-flex>
                         </v-flex>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">Bet Close in:</span>
+                            <span class="text-gray">{{$t('msg.BetClosein')}}:</span>
                             <v-flex flex-style>
                                 <span class="text-yellow">{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
                             </v-flex>
                         </v-flex>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">lottery draw:</span>
+                            <span class="text-gray">{{$t('msg.lotterydraw')}}:</span>
                             <v-flex flex-style>
                                 <span class="text-yellow">{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
                             </v-flex>
@@ -182,11 +182,11 @@ export default {
     },
     mounted() {
 
-        socket.on("liveprice1", data => {
+        // socket.on("liveprice1", data => {
             
-            if (data.data == ""){
-                console.log(data.data);
-            }
+            // if (data.data == ""){
+                // console.log(data.data);
+            // }
 
             // for (let i = 0; i < data.data.length; i++) {
             //     this.rulenew = data.data[i].totalUsers
@@ -213,7 +213,7 @@ export default {
             //     this.chartData = []
             //     this.isShow = false
             // }
-        });
+        // });
 
     },
 

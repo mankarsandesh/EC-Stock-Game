@@ -15,7 +15,7 @@
             <v-card-actions>
               <v-btn text @click="conOrEClick">{{conOrE}}</v-btn>
             </v-card-actions>
-            <div v-show="conOrE=='confirm'">
+            <div v-show="conOrE==$t('msg.confirm')">
               <v-card-text>Min = $200</v-card-text>
               <v-card-text>Max = $20,000</v-card-text>
             </div>
@@ -23,11 +23,11 @@
         </v-flex>
       </v-layout>
       <v-layout row wrap justify-center>
-        <v-btn text @click="reset">reset to default</v-btn>
+        <v-btn text @click="reset">{{$t('msg.resettodefault')}}</v-btn>
       </v-layout>
       <v-layout row wrap justify-center>
-        <v-btn class="my-btn" @click="saveClick()">save</v-btn>
-        <v-btn class="my-btn cancel">cancel</v-btn>
+        <v-btn class="my-btn" @click="saveClick()">{{$t('msg.save')}}</v-btn>
+        <v-btn class="my-btn cancel">{{$t('msg.cancel')}}</v-btn>
       </v-layout>
     </v-card>
   </div>
@@ -39,7 +39,7 @@ export default {
   
   data() {
     return {
-      conOrE: "edit",
+      conOrE: this.$root.$t('msg.edit'),
       imgChip: [
         {
           id: "ship1",
@@ -76,8 +76,8 @@ export default {
   methods: {
     ...mapMutations(["setCoins_modern"]),
     conOrEClick() {
-      if (this.conOrE == "edit") {
-        this.conOrE = "confirm";
+      if (this.conOrE == this.$root.$t('msg.edit')) {
+        this.conOrE = this.$root.$t('msg.confirm');
       }
     },
     reset() {

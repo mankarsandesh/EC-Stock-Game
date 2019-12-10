@@ -7,17 +7,17 @@
             <v-flex xs8 sm6>
               <v-layout>
                 <v-flex>
-                  <span class="uppercase-text white--text">Last draw</span>
+                  <span class="uppercase-text white--text">{{$t('msg.Lastdraw')}}:</span>
                   <h4 v-html="$options.filters.lastDraw(getStockById($route.params.id).lastDraw)"></h4>
                 </v-flex>
                 <v-flex class="text-xs-center">
-                  <span class="uppercase-text white--text">Bet closes in:</span>
+                  <span class="uppercase-text white--text">{{$t('msg.BetClosein')}}:</span>
                   <h4
                     class="uppercase-text text-yellow"
                   >{{getLotteryDraw($route.params.id) | betclosein(getStockById($route.params.id).loop)}}</h4>
                 </v-flex>
                 <v-flex class="text-xs-center">
-                  <span class="uppercase-text white--text">Lottery draw:</span>
+                  <span class="uppercase-text white--text">{{$t('msg.lotterydraw')}}:</span>
                   <h4
                     class="uppercase-text text-yellow"
                   >{{getLotteryDraw($route.params.id) | lotterydraw(getStockById($route.params.id).loop)}}</h4>
@@ -99,7 +99,7 @@
           class="betClose"
           v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null "
         >
-          <p>bet close</p>
+          <p>{{$t('msg.betclosed')}}</p>
         </div>
         <v-layout wrap sm6>
           <v-tabs

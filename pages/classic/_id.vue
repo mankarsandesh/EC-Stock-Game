@@ -1100,7 +1100,7 @@ tr:nth-child(even) {
     min-width: 15%;
     /* border-right: 1px solid #ddd; */
     margin-top: 10px;
-    font-size: 12.45px;
+    font-size: 11px;
     display: inline-block;
 }
 
@@ -1111,7 +1111,7 @@ tr:nth-child(even) {
     margin-top: 11px;
      text-align: center;
     font-size: 10px;
-    font-size: 11px;
+    font-size: 10px;
     display: inline-block;
 }
 
