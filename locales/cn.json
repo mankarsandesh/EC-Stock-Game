@@ -103,7 +103,9 @@
         "nobetting": "沒有下注",
         "exit": "出口",
         "addtrendchart": "添加趨勢圖",
-        "bettingon": "下注"
+        "bettingon": "下注",
+        "Status": "狀態",
+        "Countdown": "倒數"
     },
     "navlist": {
         "live Stock": "正开放股票",

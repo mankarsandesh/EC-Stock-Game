@@ -164,7 +164,7 @@ export default {
             };
             this.confirmDisabled = true;
             console.log(data)
-            // this.sendBetting(data);
+            this.sendBetting(data);
             console.warn(this.getOnBetting);
         },
         closePopper() {

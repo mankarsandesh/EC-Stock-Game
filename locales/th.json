@@ -101,7 +101,9 @@
         "nobetting": "ไม่มีการเดิมพัน",
         "exit": "ออกโหมดเต็มจอ",
         "addtrendchart": "เพิ่มแผนภูมิแนวโน้ม",
-        "bettingon": "เดิมพัน"
+        "bettingon": "เดิมพัน",
+        "Status": "สถานะ",
+        "Countdown": "นับถอยหลัง"
 
     },
     "navlist": {
@@ -140,8 +142,8 @@
         "high": "สูง",
         "mid": "กลาง",
         "low": "ต่ำ",
-        "tie": "tie",
-        "number": "number",
+        "tie": "เสมอ",
+        "number": "ตัวเลข",
 
         "B": "B",
         "S": "S",

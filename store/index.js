@@ -64,6 +64,7 @@ const createStore = () => {
                         crawler: `/api/getCrawlerData?stockId=4&limit=300`,
                         livePrice: "/api/newlivedata/sh01"
                     },
+                    stockId: 4,
                     stockname: "sh000001",
                     name: "sh000001",
                     loop: 5,
@@ -80,6 +81,7 @@ const createStore = () => {
                         crawler: `/api/getCrawlerData?stockId=3&limit=300`,
                         livePrice: "/api/newlivedata/sz01"
                     },
+                    stockId: 3,
                     stockname: "sz399001",
                     name: "sz399001",
                     loop: 5,
@@ -96,6 +98,7 @@ const createStore = () => {
                         crawler: `/api/getCrawlerData?stockId=2&limit=300`,
                         livePrice: "/api/newlivedata/sz15"
                     },
+                    stockId: 2,
                     stockname: "sz399415",
                     name: "sz399415",
                     loop: 5,
@@ -112,6 +115,7 @@ const createStore = () => {
                         crawler: `/api/getCrawlerData?stockId=1&limit=300`,
                         livePrice: "/api/newlivedata/sz300"
                     },
+                    stockId: 1,
                     stockname: "sh000300",
                     name: "sh000300",
                     loop: 5,
@@ -129,6 +133,7 @@ const createStore = () => {
                         crawler: `/api/getCrawlerData?stockId=5&limit=300`,
                         livePrice: "/api/newlivedata/usindex"
                     },
+                    stockId: 5,
                     stockname: "usindex",
                     name: "usindex",
                     loop: 5,
@@ -145,6 +150,7 @@ const createStore = () => {
                         crawler: `/api/getCrawlerData?stockId=6&limit=300`,
                         livePrice: "/api/newlivedata/btc"
                     },
+                    stockId: 6,
                     stockname: "btc5",
                     name: "btc",
                     loop: 5,
@@ -161,6 +167,7 @@ const createStore = () => {
                         crawler: `/api/getCrawlerData?stockId=7&limit=300`,
                         livePrice: "/api/newlivedata/btc"
                     },
+                    stockId: 7,
                     stockname: "btc1",
                     name: "btc",
                     loop: 1,

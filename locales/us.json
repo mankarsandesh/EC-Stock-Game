@@ -103,7 +103,9 @@
         "nobetting": "No Betting",
         "exit": "Exit",
         "addtrendchart": "add trend chart",
-        "bettingon": "betting on"
+        "bettingon": "betting on",
+        "Status": "Status",
+        "Countdown": "Countdown"
 
     },
     "navlist": {

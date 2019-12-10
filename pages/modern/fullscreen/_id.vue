@@ -182,10 +182,10 @@ export default {
     },
     mounted() {
 
-        socket.on("liveprice1", data => {
+        // socket.on("liveprice1", data => {
             
             // if (data.data == ""){
-                console.log(data.data);
+                // console.log(data.data);
             // }
 
             // for (let i = 0; i < data.data.length; i++) {
@@ -213,7 +213,7 @@ export default {
             //     this.chartData = []
             //     this.isShow = false
             // }
-        });
+        // });
 
     },
 

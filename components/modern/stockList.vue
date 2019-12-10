@@ -1,15 +1,15 @@
 <template>
   <div>
     <v-layout>
-      <v-flex pa-2 class="head-result-stock">{{$t('stock-list.stock lists')}}</v-flex>
+      <v-flex pa-2 class="head-result-stock">{{$t('menu.stock list')}}</v-flex>
     </v-layout>
     <div class="table-responsive">
       <table class="table">
         <tr>
-          <th>{{$t('stock-list.stock name')}}</th>
-          <th>{{$t("stock-list.live price")}}</th>
-          <th>Status</th>
-          <th>Countdown</th>
+          <th>{{$t('msg.Stock Name')}}</th>
+          <th>{{$t("msg.liveprice")}}</th>
+          <th>{{$t("msg.Status")}}</th>
+          <th>{{$t("msg.Countdown")}}</th>
         </tr>
         <tr v-for="(data,index) in getStockList" :key="index">
           <td>

@@ -101,7 +101,9 @@
         "nobetting": "No Betting",
         "exit": "exit",
         "addtrendchart": "เพิ่มแผนภูมิแนวโน้ม",
-        "bettingon": "ພະນັນ"
+        "bettingon": "ພະນັນ",
+        "Status": "狀態",
+        "Countdown": "倒數"
 
     },
     "navlist": {

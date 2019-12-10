@@ -11,9 +11,9 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">{{$t('stock-list.stock name')}}</th>
-            <th scope="col">{{$t("stock-list.live price")}}</th>
-            <th scope="col">{{$t("stock-list.reference")}}</th>
+            <th scope="col">{{$t('msg.stock Name')}}</th>
+            <th scope="col">{{$t("msg.liveprice")}}</th>
+            <th scope="col">{{$t("msg.reference")}}</th>
           </tr>
         </thead>
         <tbody>
