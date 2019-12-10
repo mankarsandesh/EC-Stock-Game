@@ -6,8 +6,7 @@
           <v-toolbar-title class="text-uppercase text-primary">
             <h2>nickname</h2>
           </v-toolbar-title>
-          <v-spacer></v-spacer>
-         
+          <v-spacer></v-spacer>         
             <v-btn icon @click="dialog = false">
               <v-icon color="text-primary">clear</v-icon>
             </v-btn>

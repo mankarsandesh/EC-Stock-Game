@@ -1,17 +1,21 @@
 <template>
 <div>
     <v-form @submit.prevent="updateProfile">
-        <div class="d-between">
-            <v-avatar size="170">
-                <img src="/v.png" v-if="profile.avatar == null" alt />
-                <img v-else :src="profile.avatar" alt />
-            </v-avatar>
 
-            <p>
+        <div class="success" v-if="succesFiled == true"> 
+            {{ this.succesMessage }} 
+        </div>           
+        
+        <div class="d-between" >
+            <v-avatar size="170" >
+                <img src="/v.png" v-if="profile.avatar == null" alt  />
+                <img v-else :src="profile.avatar" alt />               
+            </v-avatar>          
+        </div>
+         <p style="float:right;">
                 Online status : {{setTime(time.todayOnline, 0)}}
                 <span>current balance : {{formatToPrice(profile.userBalance)}}</span>
-            </p>
-        </div>
+        </p>
 
         <v-flex lg12>
             <table class="table table-striped">
@@ -38,7 +42,7 @@
                     <tr>
                         <th scope="row" class="row">gender</th>
                         <td>
-                            <v-select hide-details v-model="profile.genderSelect" :items="genders" :label="profile.gender"></v-select>
+                    <v-select class="select" hide-details v-model="profile.genderSelect" :items="genders" :label="profile.gender" ></v-select>
                         </td>
                         <td>
                             <v-select hide-details v-model="profile.gender" :items="selects" label="EVERYONE CAN SEE"></v-select>
@@ -46,7 +50,6 @@
                     </tr>
                     <tr>
                         <th scope="row" class="row">email</th>
-
                         <td>
                             {{profile.email}}
                             <v-btn icon>
@@ -68,17 +71,17 @@
                     <tr>
                         <th scope="row" class="row">country</th>
                         <td>
-                            <v-select hide-details v-model="profile.country" :items="countselects" label="China"></v-select>
+                            <v-select class="select"  hide-details v-model="profile.country" :items="countrySelects" :label="profile.countrySelects" ></v-select>
                         </td>
                         <td>
-                            <v-select hide-details v-model="profile.countrySelect" :items="selects" label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.countrySelects" :items="selects" label="EVERYONE CAN SEE"></v-select>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row" class="row">balance</th>
                         <td>{{formatToPrice(profile.userBalance)}}</td>
                         <td>
-                            <v-select hide-details v-model="profile.balanceSelect" :items="selects" label="China"></v-select>
+                            <v-select hide-details v-model="profile.balanceSelect" :items="selects"  label="EVERYONE CAN SEE"></v-select>
                         </td>
                     </tr>
                     <tr>
@@ -104,7 +107,10 @@ import axios from "axios";
 export default {
     data() {
         return {
+            succesMessage : "User info Successfully Updated",
+            succesFiled : false,
             selects: ["EVERYONE CAN SEE", "ONLY ME"],
+            countrySelects: ['China','Laos'],
             genders: ["male", "female"],
             countselects: [],
             profile: {
@@ -148,35 +154,35 @@ export default {
     mounted() {
         this.getOnlineTime();
     },
-    methods: {
+    methods: {       
+      
         formatToPrice(value) {
             return `$ ${Number(value)
-        .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+            .toFixed(2)
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async fetchAll() {
             let res = await this.$axios.$get("/api/me?apikey=" + this.$store.state.auth_token);
             // console.log(res);
-            this.profile = res;
-
+            this.profile = res.data;
+             
         },
         async updateProfile() {
             this.DataProfile = {
-                // name: this.profile.name,
-                // email: this.profile.email,
-                // gender: this.profile.genderSelect,
-                // country: this.profile.countrySelect,
-                // portalProvider: this.profile.portalProvider,
-                // avatar: this.profile.avatar,
-                "name": this.profile.name,
-                "email": this.profile.email,
-                "gender": this.profile.genderSelect,
-                "country": "Laos"
+                name: this.profile.name,
+                email: this.profile.email,
+                gender: this.profile.gender,
+                country: this.profile.country,
+                portalProvider: this.profile.portalProvider,
+                avatar: this.profile.avatar,
+                memberShip  : this.profile.memberShip          
             }
             console.log(this.DataProfile)
 
             let res = await this.$axios.$post("/api/me/editProfile?apikey=" + this.$store.state.auth_token, this.DataProfile);
             console.log(res);
+            this.succesFiled = true;
+            this.succesMessage = "User info Successfully Updated";
         },
 
         async getOnlineTime() {
@@ -214,3 +220,16 @@ export default {
     }
 };
 </script>
+<style scoped>
+.select{
+    width:100px;
+    margin:0 auto;
+}
+.success{
+ background-color:#4caf50;
+ padding:10px;
+ margin: 5px;
+ font-size: 18px;
+ color:#333;
+}
+</style>
