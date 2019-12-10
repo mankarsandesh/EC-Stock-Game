@@ -155,6 +155,7 @@
     },
     "stockname": {
         "btc1": "BTC/USDT",
+        "btc": "BTC/USDT",
         "usindex": "US dollar Index",
         "btc5": "BTC/USDT",
         "sh000001": "sh000001",

@@ -105,14 +105,19 @@
         "addtrendchart": "add trend chart",
         "bettingon": "betting on",
         "Status": "Status",
-        "Countdown": "Countdown"
+        "Countdown": "Countdown",
+        "loop": "Loop",
+        "SelectStock": "Select Stock"
 
     },
     "navlist": {
         "live Stock": "live Stock",
         "Us Stock": "Us Stock",
         "Cypto Currency": "Cypto Currency",
-        "China Stocck": "China Stocck"
+        "China Stocck": "China Stocck",
+        "usa": "Us Stock",
+        "cypto": "Cypto Currency",
+        "china": "China Stocck"
     },
     "listCS": {
         "live": "Live",
@@ -154,6 +159,7 @@
     },
     "stockname": {
         "btc1": "BTC/USDT",
+        "btc": "BTC/USDT",
         "usindex": "US dollar Index",
         "btc5": "BTC/USDT",
         "sh000001": "SH000001",

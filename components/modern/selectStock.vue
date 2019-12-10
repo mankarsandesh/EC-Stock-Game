@@ -1,255 +1,238 @@
 <template>
-  <div>
+<div>
     <ul class="main-navigation">
-      <li>
-        <a href="#">
-          <span v-show="isMultigame" class="text-uppercase">
-            <span>select  here to add more stock</span>
-            <span class="show-icon">
-              <i class="fa fa-plus"></i>
-            </span>
-          </span>
-          <span v-show="!isMultigame">
-            Select Stock > {{getStockType(stockId)}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} Minute loop > 010620191007094101
-            <span
-              class="show-icon"
-            >
-              <i class="fa fa-caret-down"></i>
-            </span>
-          </span>
-        </a>
-        <ul>
-          <li v-for="(stockType,index) in getAllStockByType" :key="index">
+        <li>
             <a href="#">
-              <span>{{stockType.type}}</span>
-              <span class="show-icon">
-                <i class="fa fa-caret-right"></i>
-              </span>
+                <span v-show="isMultigame" class="text-uppercase">
+                    <span>select here to add more stock</span>
+                    <span class="show-icon">
+                        <i class="fa fa-plus"></i>
+                    </span>
+                </span>
+                <span v-show="!isMultigame">
+                    {{$t('msg.SelectStock')}} > {{$t('navlist.'+getStockType(stockId))}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} > 010620191007094101
+                    <span class="show-icon">
+                        <i class="fa fa-caret-down"></i>
+                    </span>
+                </span>
             </a>
             <ul>
-              <li v-for="(stockName,index) in stockType.stockName" :key="index">
-                <a href="#">
-                  <span>{{stockName.name}}</span>
-                  <span class="show-icon">
-                    <i class="fa fa-caret-right"></i>
-                  </span>
-                </a>
-                <ul>
-                  <li v-for="(stockLoop,index) in stockName.loop" :key="index">
-                    <span>
-                      <a
-                        href="#"
-                        :style="checkMultigameExistAndDisable({stockId:stockLoop.stockId,isMultigame:isMultigame})"
-                        @click="selectedtockID(stockLoop.stockId)"
-                      >
-                        <span>{{stockLoop.loop}} Minute loop</span>
-                        <span
-                          class="show-icon"
-                          v-show="checkMultigameExistAndShowIcon({stockId:stockLoop.stockId,isMultigame:isMultigame})"
-                        >
-                          <i class="fa fa-check"></i>
+                <li v-for="(stockType,index) in getAllStockByType" :key="index">
+                    <a href="#">
+                        <span>{{$t('navlist.'+stockType.type)}}</span>
+                        <span class="show-icon">
+                            <i class="fa fa-caret-right"></i>
                         </span>
-                      </a>
-                    </span>
-                  </li>
-                </ul>
-              </li>
+                    </a>
+                    <ul>
+                        <li v-for="(stockName,index) in stockType.stockName" :key="index">
+                            <a href="#">
+                                <span>{{$t('stockname.'+stockName.name)}}</span>
+                                <span class="show-icon">
+                                    <i class="fa fa-caret-right"></i>
+                                </span>
+                            </a>
+                            <ul>
+                                <li v-for="(stockLoop,index) in stockName.loop" :key="index">
+                                    <span>
+                                        <a href="#" :style="checkMultigameExistAndDisable({stockId:stockLoop.stockId,isMultigame:isMultigame})" @click="selectedtockID(stockLoop.stockId)">
+                                            <span>{{stockLoop.loop}} {{$t('msg.minute')}} {{$t('msg.loop')}}</span>
+                                            <span class="show-icon" v-show="checkMultigameExistAndShowIcon({stockId:stockLoop.stockId,isMultigame:isMultigame})">
+                                                <i class="fa fa-check"></i>
+                                            </span>
+                                        </a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             </ul>
-          </li>
-        </ul>
-      </li>
+        </li>
     </ul>
-  </div>
+</div>
 </template>
+
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import {
+    mapGetters,
+    mapMutations
+} from "vuex";
 export default {
-  props: {
-    isMultigame: {
-      type: Boolean,
-      default: false
+    props: {
+        isMultigame: {
+            type: Boolean,
+            default: false
+        },
+        stockId: {
+            type: String,
+            required: true
+        }
     },
-    stockId: {
-      type: String,
-      required: true
-    }
-  },
-  data() {
-    return {
-      stockData: [
-        {
-          type: "crypto",
-          stockName: [
-            {
-              name: "btc",
-              loop: [
-                {
-                  loop: 1,
-                  stockId: "btc1"
+    data() {
+        return {
+            stockData: [{
+                    type: "crypto",
+                    stockName: [{
+                        name: "btc",
+                        loop: [{
+                                loop: 1,
+                                stockId: "btc1"
+                            },
+                            {
+                                loop: 5,
+                                stockId: "btc5"
+                            }
+                        ]
+                    }]
                 },
                 {
-                  loop: 5,
-                  stockId: "btc5"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          type: "usa",
-          stockName: [
-            {
-              name: "usindex",
-              loop: [
+                    type: "usa",
+                    stockName: [{
+                        name: "usindex",
+                        loop: [{
+                            loop: 5,
+                            stockId: "usindex"
+                        }]
+                    }]
+                },
                 {
-                  loop: 5,
-                  stockId: "usindex"
+                    type: "china",
+                    stockName: [{
+                            name: "sh000001",
+                            loop: [{
+                                loop: 5,
+                                stockId: "sh000001"
+                            }]
+                        },
+                        {
+                            name: "sz399001",
+                            loop: [{
+                                loop: 5,
+                                stockId: "sz399001"
+                            }]
+                        },
+                        {
+                            name: "sz399415",
+                            loop: [{
+                                loop: 5,
+                                stockId: "sz399415"
+                            }]
+                        },
+                        {
+                            name: "sh000300",
+                            loop: [{
+                                loop: 5,
+                                stockId: "sh000300"
+                            }]
+                        }
+                    ]
                 }
-              ]
-            }
-          ]
-        },
-        {
-          type: "china",
-          stockName: [
-            {
-              name: "sh000001",
-              loop: [
-                {
-                  loop: 5,
-                  stockId: "sh000001"
-                }
-              ]
-            },
-            {
-              name: "sz399001",
-              loop: [
-                {
-                  loop: 5,
-                  stockId: "sz399001"
-                }
-              ]
-            },
-            {
-              name: "sz399415",
-              loop: [
-                {
-                  loop: 5,
-                  stockId: "sz399415"
-                }
-              ]
-            },
-            {
-              name: "sh000300",
-              loop: [
-                {
-                  loop: 5,
-                  stockId: "sh000300"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    };
-  },
-  mounted() {
-    // alert(this.stockData[0]);
-    console.warn(this.getAllStockByType)
-  },
+            ]
+        };
+    },
+    mounted() {
+        // alert(this.stockData[0]);
+        console.warn(this.getAllStockByType)
+    },
 
-  computed: {
-    ...mapGetters([
-      "getLoop",
-      "getStockType",
-      "checkMultigameExistAndDisable",
-      "checkMultigameExistAndShowIcon",
-      "getAllStockByType"
-    ])
-  },
-  methods: {
-    ...mapMutations(["addStockMultigame"]),
-    selectedtockID(stockId) {
-      if (this.isMultigame) {
-        this.addStockMultigame(stockId);
-      } else {
-        this.$router.push(`/modern/desktop/${stockId}`);
-      }
+    computed: {
+        ...mapGetters([
+            "getLoop",
+            "getStockType",
+            "checkMultigameExistAndDisable",
+            "checkMultigameExistAndShowIcon",
+            "getAllStockByType"
+        ])
+    },
+    methods: {
+        ...mapMutations(["addStockMultigame"]),
+        selectedtockID(stockId) {
+            if (this.isMultigame) {
+                this.addStockMultigame(stockId);
+            } else {
+                this.$router.push(`/modern/desktop/${stockId}`);
+            }
+        }
     }
-  }
 };
 </script>
+
 <style scoped>
 .show-icon {
-  position: absolute;
-  right: 10px;
+    position: absolute;
+    right: 10px;
 }
+
 ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  background: #003e70;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #003e70;
 }
 
 ul li {
-  display: block;
-  width: 100%;
-  position: relative;
-  float: left;
-  background: #003e70;
+    display: block;
+    width: 100%;
+    position: relative;
+    float: left;
+    background: #003e70;
 }
 
 li ul {
-  display: none;
-  min-width: 150px;
+    display: none;
+    min-width: 150px;
 }
 
 ul li a {
-  display: block;
-  width: 100%;
-  padding: 0.6em;
-  text-decoration: none;
-  white-space: nowrap;
-  color: #fff;
+    display: block;
+    width: 100%;
+    padding: 0.6em;
+    text-decoration: none;
+    white-space: nowrap;
+    color: #fff;
 }
 
 ul li a:hover {
-  background: #003e70;
+    background: #003e70;
 }
 
-li:hover > ul {
-  display: block;
-  position: absolute;
+li:hover>ul {
+    display: block;
+    position: absolute;
 }
 
 li:hover li {
-  float: none;
+    float: none;
 }
 
 li:hover a {
-  background: #003e70;
+    background: #003e70;
 }
 
 li:hover li a:hover {
-  background: #1b405f;
+    background: #1b405f;
 }
 
 .main-navigation li ul li {
-  border-top: 0;
-  z-index: 2000;
+    border-top: 0;
+    z-index: 2000;
 }
 
 ul ul ul {
-  left: 100%;
-  top: 0;
+    left: 100%;
+    top: 0;
 }
+
 ul:before,
 ul:after {
-  content: " "; /* 1 */
-  display: table; /* 2 */
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
 }
 
 ul:after {
-  clear: both;
+    clear: both;
 }
 </style>

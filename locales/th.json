@@ -103,14 +103,18 @@
         "addtrendchart": "เพิ่มแผนภูมิแนวโน้ม",
         "bettingon": "เดิมพัน",
         "Status": "สถานะ",
-        "Countdown": "นับถอยหลัง"
+        "Countdown": "นับถอยหลัง",
+        "SelectStock": "เลือกหุ้น"
 
     },
     "navlist": {
         "live Stock": "หุ้นที่เปิดอยู่",
         "Us Stock": "หุ้นสหรัฐ",
         "Cypto Currency": "หุ้นสกุลเงินดิจิตอล",
-        "China Stocck": "หุ้นจีน"
+        "China Stocck": "หุ้นจีน",
+        "usa": "หุ้นสหรัฐ",
+        "cypto": "หุ้นสกุลเงินดิจิตอล",
+        "china": "หุ้นจีน"
     },
     "listCS": {
         "live": "สด",
@@ -155,6 +159,7 @@
     },
     "stockname": {
         "btc1": "BTC/USDT",
+        "btc": "BTC/USDT",
         "usindex": "US dollar Index",
         "btc5": "BTC/USDT",
         "sh000001": "ดัชนีเซี่ยงไฮ้คอมโพสิต",

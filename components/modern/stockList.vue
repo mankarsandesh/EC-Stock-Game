@@ -52,6 +52,7 @@ table {
 
 td a {
   color: #003e70 !important;
+
 }
 th {
   background-color: #cccccc;
@@ -60,12 +61,15 @@ th {
 th,
 td {
   text-align: center;
-  padding: 8px;
+  padding: 2px;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
 }
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+.table-responsive {
+    overflow: auto;
 }
 </style>
