@@ -4,8 +4,7 @@
 
         <div class="success" v-if="succesFiled == true"> 
             {{ this.succesMessage }} 
-        </div>
-           
+        </div>           
         
         <div class="d-between" >
             <v-avatar size="170" >
@@ -156,15 +155,7 @@ export default {
         this.getOnlineTime();
     },
     methods: {       
-        // onFileChanged (event) {
-        //     this.selectedFile = event.target.files[0]
-        // },
-        // onUpload() {
-        //     const formData = new FormData()
-        //     formData.append('myFile', this.selectedFile, this.selectedFile.name)
-        //     console.log(formData);
-        //     axios.post('my-domain.com/file-upload', formData)
-        // },
+      
         formatToPrice(value) {
             return `$ ${Number(value)
             .toFixed(2)
@@ -184,11 +175,7 @@ export default {
                 country: this.profile.country,
                 portalProvider: this.profile.portalProvider,
                 avatar: this.profile.avatar,
-                memberShip  : this.profile.me
-                // "name": this.profile.name,
-                // "email": this.profile.email,
-                // "gender": this.profile.genderSelect,
-                // "country": "Laos"
+                memberShip  : this.profile.memberShip          
             }
             console.log(this.DataProfile)
 
