@@ -12,6 +12,7 @@
                 @click="toggle"
               >{{$t('profile.' + n)}}</v-btn>
             </div>
+            
           </v-item>
         </v-item-group>
       </v-flex>
