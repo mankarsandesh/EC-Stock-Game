@@ -13,7 +13,9 @@
         "announcement": "announcement",
         "rule": "rule",
         "setting": "setting",
-        "game result": "Game Result"
+        "game result": "Game Result",
+        "chip amount": "Chip Amount",
+        "sound control": "Sound Control"
     },
     "stock-list": {
         "stock lists": "stock lists",
@@ -107,7 +109,30 @@
         "Status": "Status",
         "Countdown": "Countdown",
         "loop": "Loop",
-        "SelectStock": "Select Stock"
+        "SelectStock": "Select Stock",
+        "online": "Online",
+        "email": "Email",
+        "gender": "Gender",
+        "rolling": "Rolling",
+        "currentbalance": "Current Balance",
+        "male": "Male",
+        "female": "Female",
+        "name": "Name",
+        "playerid": "Player Id",
+        "country": "Country",
+        "everyonecansee": "Everyone Can See",
+        "onlyme": "Only Me",
+        "form": "Form",
+        "to": "To:",
+        "go": "Go:",
+        "moredetails": "More Details",
+        "viewchart": "View Chart",
+        "sortby": "Sort By:",
+        "membership": "membership",
+        "min": "Min",
+        "max": "Max",
+        "otherstock": "Other Stock"
+
 
     },
     "navlist": {

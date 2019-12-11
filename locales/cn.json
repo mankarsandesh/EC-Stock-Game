@@ -13,7 +13,9 @@
         "announcement": "公告",
         "rule": "游戏规则",
         "setting": "設置",
-        "game result": "遊戲結果"
+        "game result": "遊戲結果",
+        "chip amount": "籌碼金額",
+        "sound control": "聲音控制"
     },
     "stock-list": {
         "stock lists": "库存清单",
@@ -107,7 +109,30 @@
         "Status": "狀態",
         "Countdown": "倒數",
         "loop": "模式",
-        "SelectStock": "選擇庫存"
+        "SelectStock": "選擇庫存",
+        "online": "線上",
+        "email": "电子邮件",
+        "gender": "性別",
+        "rolling": "余额",
+        "currentbalance": "当前余额",
+        "male": "男",
+        "female": "女",
+        "name": "昵称",
+        "playerid": "玩家ID",
+        "country": "國家",
+        "everyonecansee": "每個人都可以看到",
+        "onlyme": "只有我",
+        "frrm": "从:",
+        "to": "至:",
+        "go": "确认",
+        "moredetails": "赢率细节",
+        "viewchart": " 查看图表",
+        "sortby": "排序方式:",
+        "membership": "會員資格",
+        "min": "最低的",
+        "max": "最高的",
+        "otherstock": "其他股票"
+
     },
     "navlist": {
         "live Stock": "正开放股票",

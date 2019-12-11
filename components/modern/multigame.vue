@@ -3,7 +3,7 @@
     <div class="border-flex"> -->
       <v-layout>
         <v-flex xs12 class="pt-2">
-          <h2 class="text-uppercase">{{stockid}} {{getStockLoop(stockid)}} minute loop</h2>
+          <h2 class="text-uppercase">{{stockid}} {{getStockLoop(stockid)}} {{$t('msg.minute')}} {{$t('msg.loop')}}</h2>
           <chartApp
             :data="getStockById(stockid).stockPrice"
             :time="getStockById(stockid).stockTime"

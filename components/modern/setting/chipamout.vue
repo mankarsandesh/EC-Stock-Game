@@ -13,11 +13,11 @@
               ></v-text-field>
             </v-img>
             <v-card-actions>
-              <v-btn text @click="conOrEClick">{{conOrE}}</v-btn>
+              <v-btn text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
             </v-card-actions>
-            <div v-show="conOrE==$t('msg.confirm')">
-              <v-card-text>Min = $200</v-card-text>
-              <v-card-text>Max = $20,000</v-card-text>
+            <div v-show="conOrE=='confirm'">
+              <v-card-text>{{$t('msg.min')}} = $200</v-card-text>
+              <v-card-text>{{$t('msg.max')}} = $20,000</v-card-text>
             </div>
           </div>
         </v-flex>
@@ -39,7 +39,7 @@ export default {
   
   data() {
     return {
-      conOrE: this.$root.$t('msg.edit'),
+      conOrE: 'edit',
       imgChip: [
         {
           id: "ship1",
@@ -76,8 +76,8 @@ export default {
   methods: {
     ...mapMutations(["setCoins_modern"]),
     conOrEClick() {
-      if (this.conOrE == this.$root.$t('msg.edit')) {
-        this.conOrE = this.$root.$t('msg.confirm');
+      if (this.conOrE == 'edit') {
+        this.conOrE = 'confirm';
       }
     },
     reset() {

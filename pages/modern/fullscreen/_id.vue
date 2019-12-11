@@ -51,8 +51,8 @@
 
                             <v-flex xs12 lg8 class="text-xs-right topHeader">
 
-                                <span class="button">1 minute loop</span>
-                                <span class="button" dark color="#003e70" @click="dialogOtherstock=true">Other Stock</span>
+                                <span class="button">1 {{$t('msg.minute')}} {{$t('msg.loop')}}</span>
+                                <span class="button" dark color="#003e70" @click="dialogOtherstock=true">{{$t('msg.otherstock')}}</span>
 
                             </v-flex>
 
