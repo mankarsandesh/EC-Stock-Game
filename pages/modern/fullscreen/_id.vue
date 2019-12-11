@@ -24,10 +24,10 @@
 
     <v-container class="bg-fullscreen" style="padding:0;">
 
-        <v-toolbar color="#003e70" class="white--text">
+        <v-toolbar color="#003e70" class="white--text" style="height:40px;">
 
-            <v-layout row wrap style="padding:5px 10px;">
-                <v-flex xs6 sm6 md6 lg6>
+            <v-layout row wrap style="padding:0px 10px;margin-top:-10px;">           
+                     <v-flex xs6 sm6 md6 lg6>
                     <welcome-user></welcome-user>
                 </v-flex>
                 <!-- <v-spacer></v-spacer> -->
