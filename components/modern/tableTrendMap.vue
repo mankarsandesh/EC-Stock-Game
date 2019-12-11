@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout wrap pa-4 row style="padding-bottom:0 !important;padding-top:48px !important">
-      <v-flex xs2 lg2 v-if="!isFullscreen" > 
+      <v-flex xs2 lg2 v-if="!isFullscreen"  > 
         <v-layout>
           <v-flex xs9 >
             <v-btn
@@ -52,7 +52,7 @@
           <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs10" > 
+      <v-flex class="xs10"> 
         <v-layout row wrap >
            <v-flex xs12 lg12 md12 ≈>
             <trendMap 
