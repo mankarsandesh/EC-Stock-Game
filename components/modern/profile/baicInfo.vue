@@ -13,22 +13,22 @@
             </v-avatar>          
         </div>
          <p style="float:right;">
-                Online status : {{setTime(time.todayOnline, 0)}}
-                <span>current balance : {{formatToPrice(profile.userBalance)}}</span>
+                {{$t('msg.online')}}  {{$t('msg.Status')}}  : {{setTime(time.todayOnline, 0)}}
+                <span>{{$t('msg.currentbalance')}} : {{formatToPrice(profile.userBalance)}}</span>
         </p>
 
         <v-flex lg12>
             <table class="table table-striped">
                 <tbody>
                     <tr>
-                        <th scope="row" class="row">player id</th>
+                        <th scope="row" class="row">{{$t('msg.playerid')}}</th>
                         <td>{{profile.userApiId}}</td>
                         <td>
-                            <v-select hide-details v-model="profile.idSelect" :items="selects" label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.idSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">nickname</th>
+                        <th scope="row" class="row">{{$t('msg.name')}}</th>
                         <td>
                             {{profile.name}}
                             <v-btn icon>
@@ -36,20 +36,20 @@
                             </v-btn>
                         </td>
                         <td>
-                            <v-select hide-details v-model="profile.nameSelect" :items="selects" label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.nameSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">gender</th>
+                        <th scope="row" class="row">{{$t('msg.gender')}}</th>
                         <td>
-                    <v-select class="select" hide-details v-model="profile.genderSelect" :items="genders" :label="profile.gender" ></v-select>
+                    <v-select class="select" hide-details v-model="profile.genderSelect" :items="genders" :label="$t('msg.'+profile.gender)" ></v-select>
                         </td>
                         <td>
-                            <v-select hide-details v-model="profile.gender" :items="selects" label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.gender" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">email</th>
+                        <th scope="row" class="row">{{$t('msg.email')}}</th>
                         <td>
                             {{profile.email}}
                             <v-btn icon>
@@ -57,45 +57,45 @@
                             </v-btn>
                         </td>
                         <td>
-                            <v-select hide-details v-model="profile.emailSelect" :items="selects" label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.emailSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">membership</th>
+                        <th scope="row" class="row">{{$t('msg.membership')}}</th>
 
                         <td>{{profile.memberShip}}</td>
                         <td>
-                            <v-select hide-details v-model="profile.membershipSelect" :items="selects" label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.membershipSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">country</th>
+                        <th scope="row" class="row">{{$t('msg.country')}}</th>
                         <td>
                             <v-select class="select"  hide-details v-model="profile.country" :items="countrySelects" :label="profile.countrySelects" ></v-select>
                         </td>
                         <td>
-                            <v-select hide-details v-model="profile.countrySelects" :items="selects" label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.countrySelects" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">balance</th>
+                        <th scope="row" class="row">{{$t('msg.Balance')}}</th>
                         <td>{{formatToPrice(profile.userBalance)}}</td>
                         <td>
-                            <v-select hide-details v-model="profile.balanceSelect" :items="selects"  label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.balanceSelect" :items="selects"  :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">rolling</th>
+                        <th scope="row" class="row">{{$t('msg.rolling')}}</th>
                         <td>$1795.00</td>
                         <td>
-                            <v-select hide-details v-model="profile.rollingSelect" :items="selects" label="EVERYONE CAN SEE"></v-select>
+                            <v-select hide-details v-model="profile.rollingSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <v-flex>
-                <v-btn class="my-btn" type="submit">save</v-btn>
-                <v-btn class="my-btn cancel">cancel</v-btn>
+                <v-btn class="my-btn" type="submit">{{$t('msg.save')}}</v-btn>
+                <v-btn class="my-btn cancel">{{$t('msg.cancel')}}</v-btn>
             </v-flex>
         </v-flex>
     </v-form>

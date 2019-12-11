@@ -4,7 +4,7 @@
         <v-flex xs6 md3>
             <v-menu v-model="from" :close-on-content-click="false" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">
                 <template v-slot:activator="{ on }">
-                    <v-text-field v-model="datefrom" label="From" prepend-icon="event" readonly v-on="on"></v-text-field>
+                    <v-text-field v-model="datefrom" :label="$t('msg.from')" prepend-icon="event" readonly v-on="on"></v-text-field>
                 </template>
                 <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
             </v-menu>
@@ -12,14 +12,14 @@
         <v-flex xs6 md3>
             <v-menu v-model="to" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y full-width min-width="290px">
                 <template v-slot:activator="{ on }">
-                    <v-text-field v-model="dateto" label="To" prepend-icon="event" readonly v-on="on"></v-text-field>
+                    <v-text-field v-model="dateto" :label="$t('msg.to')" prepend-icon="event" readonly v-on="on"></v-text-field>
                 </template>
                 <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
             </v-menu>
         </v-flex>
-        <v-btn class="my-btn go">go</v-btn>
+        <v-btn class="my-btn go">{{$t('msg.go')}}</v-btn>
         <v-flex xs6 md3 class="float-right">
-            <v-select hide-details :items="items" label="Sort By :" solo></v-select>
+            <v-select hide-details :items="items" :label="$t('msg.sortby')" solo></v-select>
         </v-flex>
         <v-flex xs12>
             <v-card class="mx-auto">
@@ -27,9 +27,9 @@
             </v-card>
         </v-flex>
         <v-card>
-            <v-card-text>player id : {{playerId}}</v-card-text>
-            <v-card-text>online time : {{setTime(time.todayOnline, 0)}}</v-card-text>
-            <v-card-text>total online : {{setTime(time.totalOnline, 1)}}</v-card-text>
+            <v-card-text>{{$t('msg.playerid')}} : {{playerId}}</v-card-text>
+            <v-card-text>{{$t('msg.online')}} {{$t('msg.Time')}} : {{setTime(time.todayOnline, 0)}}</v-card-text>
+            <v-card-text>{{$t('msg.Total')}} {{$t('msg.online')}} : {{setTime(time.totalOnline, 1)}}</v-card-text>
         </v-card>
     </v-layout>
 </div>
@@ -60,7 +60,7 @@ export default {
         async fetchAll() {
             let res = await this.$axios.$get( '/api/me?apikey=' + this.$store.state.auth_token)
             // console.log(res);
-            this.playerId = res.userApiId
+            this.playerId = res.data.userApiId
         },
         async getOnlineTime() {
             let dataGet = await this.$axios.$get( '/api/me/online?method=profile&apikey=' + this.$store.state.auth_token)

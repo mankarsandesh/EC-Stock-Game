@@ -25,7 +25,7 @@
                     <span>-  {{data.betTime}}</span>
                   </li>
                   <li><span>Bet </span><span style="color:darkblue">${{data.betAmount}}</span> on<span class="text-uppercase"> {{data.rule}}</span></li>
-                  <li>Stock name: <span> {{data.stock}}</span> - {{data.loops}} minute loop</li>
+                  <li>Stock name: <span> {{data.stock}}</span> - {{data.loops}} {{$t('msg.minute')}} {{$t('msg.loop')}}</li>
                 </ul>
               </span>
               <!-- <v-list-tile-title >Amount:{{5000}}<span class="text-uppercase">(firstdigit-mid)</span></v-list-tile-title>

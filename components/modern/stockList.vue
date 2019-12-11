@@ -61,7 +61,7 @@ th {
 th,
 td {
   text-align: center;
-  padding: 2px;
+  padding: 1px 5px 1px 5px;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
 }
