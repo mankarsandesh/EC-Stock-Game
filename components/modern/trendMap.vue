@@ -1,8 +1,9 @@
 <template>
   <div>
     <v-layout wrap >
+
       <v-flex 
-        :class="setClass(' pl-3 pb-5')"
+        :class="setClass(' pl-3 pb-5')" style="margin-top:10px;"
         v-show="which_one=='B/S' || which_one== !isFullscreen "
       >
         <div v-show="isFullscreen">
@@ -18,9 +19,8 @@
         </div>
       </v-flex>
 
-      <v-flex
-        
-        :class="setClass(' pl-3 pb-5')"
+      <v-flex        
+        :class="setClass(' pl-3 pb-5')" style="margin-top:10px;"
         v-show="which_one=='O/E' || which_one== !isFullscreen "
       >
         <div v-show="isFullscreen">
@@ -35,9 +35,9 @@
           </table>
         </div>
       </v-flex>
+
       <v-flex
-         
-        :class="setClass('pb-5 pr-3')"
+        :class="setClass('pl-3 pb-5')" style="margin-top:10px;"
         v-show="which_one=='U/L' || which_one== !isFullscreen "
       >
         <div v-show="isFullscreen">
@@ -53,9 +53,9 @@
           </table>
         </div>
       </v-flex>
-      <v-flex
-   
-        :class="setClass('pl-3 pb-5')"
+
+      <v-flex   
+        :class="setClass('pl-3 pb-5')"  style="margin-top:10px;"
         v-show="which_one=='NUM' || which_one== !isFullscreen "
       >
         <div v-show="isFullscreen" ref="sortNumber">
@@ -74,6 +74,8 @@
           </table>
         </div>
       </v-flex>
+
+
     </v-layout>
   </div>
 </template>
@@ -1155,4 +1157,8 @@ p {
   font-size: 16px;
   font-weight: bolder;
 }
+.padding{
+  padding-top:10px;
+}
+
 </style>

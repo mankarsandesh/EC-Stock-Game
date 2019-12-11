@@ -31,9 +31,9 @@
                         <th scope="row" class="row">{{$t('msg.name')}}</th>
                         <td>
                             {{profile.name}}
-                            <v-btn icon>
+                            <!-- <v-btn icon>
                                 <v-icon>edit</v-icon>
-                            </v-btn>
+                            </v-btn> -->
                         </td>
                         <td>
                             <v-select hide-details v-model="profile.nameSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
@@ -52,9 +52,9 @@
                         <th scope="row" class="row">{{$t('msg.email')}}</th>
                         <td>
                             {{profile.email}}
-                            <v-btn icon>
+                            <!-- <v-btn icon>
                                 <v-icon>edit</v-icon>
-                            </v-btn>
+                            </v-btn> -->
                         </td>
                         <td>
                             <v-select hide-details v-model="profile.emailSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
@@ -221,6 +221,9 @@ export default {
 };
 </script>
 <style scoped>
+table tr td {
+    text-transform: capitalize;
+}
 .select{
     width:100px;
     margin:0 auto;
