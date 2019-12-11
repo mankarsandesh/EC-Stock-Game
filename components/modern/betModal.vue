@@ -4,7 +4,7 @@
         <v-flex>
             <h3>
                 {{$t('msg.bettingon')}}
-                <span class="text-uppercase">{{$t('gamemsg.'+betId.split('-')[0])}}-{{$t('gamemsg.'+betId.split('-')[1])}}</span>
+                <span class="text-uppercase"> {{betId.split("-")[1] >= 0 ? $t('gamemsg.'+betId.split("-")[0])+' - '+betId.split("-")[1]: $t('gamemsg.'+betId.split("-")[0])+' - '+$t('gamemsg.'+betId.split("-")[1])}}</span>
             </h3>
         </v-flex>
         <v-flex class="pt-1">
@@ -16,8 +16,10 @@
         <v-flex>
             <v-layout row>
                 <v-flex class="py-3 text-center">
-                    <v-avatar size="50" v-for="(item,key) in imgChip" :key="key">
-                        <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" width="50" :alt="item.title" :class="item.color">{{getCoins_modern[key]}}</v-img>
+                    <v-avatar size="65" v-for="(item,key) in imgChip" :key="key">
+                        <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" width="65" :alt="item.title" :class="item.color">
+                            <span :class="isFullscreen ? 'setpricechips' : 'setpricechip'"> {{getCoins_modern[key]}}</span>
+                        </v-img>
                     </v-avatar>
                 </v-flex>
             </v-layout>
@@ -112,6 +114,17 @@ export default {
             "getStockId"
         ])
     },
+    created() {
+        // check is full screen or not
+        let path = this.$nuxt.$route.name.split("-");
+        let isFullscreen = path[1];
+        if (isFullscreen === "fullscreen") {
+            this.isFullscreen = true;
+        } else {
+            this.isFullscreen = false;
+        }
+        //  this.getwinuser()
+    },
     methods: {
         ...mapActions(["balance"]),
         ...mapMutations(["pushDataOnGoingBet"]),
@@ -185,5 +198,19 @@ export default {
     font-size: 15px;
     padding: 10px;
     width: 120px;
+}
+
+.setpricechip {
+    position: relative;
+    top: -17px;
+    color: black;
+    font-size: 0.85rem;
+}
+
+.setpricechips {
+    position: relative;
+    top: 0px;
+    color: black;
+    font-size: 0.85rem;
 }
 </style>

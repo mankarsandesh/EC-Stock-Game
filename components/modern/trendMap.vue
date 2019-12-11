@@ -297,7 +297,7 @@ export default {
           //number
           this.trentNumber.push(firstlast);
           if (n == this.dataArray.length) {
-            console.log(this.trentUML);
+            // console.log(this.trentUML);
             this.tablechartBS();
             this.tablechartOE();
             this.tablechartUML();
@@ -332,7 +332,7 @@ export default {
           //number
           this.trentNumber.push(firstlast);
           if (n == this.dataArray.length) {
-            console.log(this.trentUML);
+            // console.log(this.trentUML);
             this.tablechartBS();
             this.tablechartOE();
             this.tablechartUML();
@@ -367,7 +367,7 @@ export default {
           //number
           this.trentNumber.push(firstlast);
           if (n == this.dataArray.length) {
-            console.log(this.trentUML);
+            // console.log(this.trentUML);
             this.tablechartBS();
             this.tablechartOE();
             this.tablechartUML();
@@ -380,7 +380,7 @@ export default {
     tablechartBS() {
       let countBig = 0;
       let countSmall = 0;
-      console.log(this.$refs);
+      // console.log(this.$refs);
       // loop table[][]
       var s = -1;
       loop1: for (
@@ -966,7 +966,7 @@ export default {
                 let num = this.trentNumber[i];
                 counts[num] = counts[num] ? counts[num] + 1 : 1;
               }
-              console.log(counts);
+              // console.log(counts);
               let sortable = [];
               for (let maxSpeed in counts) {
                 sortable.push([maxSpeed, counts[maxSpeed]]);
@@ -975,13 +975,13 @@ export default {
               sortable.sort(function(a, b) {
                 return b[1] - a[1];
               });
-              console.log(sortable);
+              // console.log(sortable);
               for (let k = 0; k < 6; k++) {
-                console.log(
+                // console.log(
                   (this.$refs.sortNumber.children[k].textContent = `${
                     sortable[k][0]
                   } = ${sortable[k][1]}`)
-                );
+                // );
               }
             }
             return;

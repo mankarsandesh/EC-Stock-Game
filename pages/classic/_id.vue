@@ -1,5 +1,6 @@
 <template>
 <div>
+    {{$route.params.id}}
     <div v-if="$route.params.id.split('-')[3] == 'currentbet'">
         <currentbet />
     </div>
