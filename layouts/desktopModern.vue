@@ -9,11 +9,11 @@
         <v-progress-circular class="settop" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
     </div>
     
-    <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 69px; !important">
+    <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
 
         <v-container pa-0>
-            <v-toolbar color="#003e70" class="white--text">
-                <v-layout row wrap>
+            <v-toolbar color="#003e70" class="white--text"  >
+                <v-layout  wrap style="margin-top:-10px;"> 
                     <v-flex xs4>
                         <welcome-user></welcome-user>
                     </v-flex>
