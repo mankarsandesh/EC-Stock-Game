@@ -11,7 +11,7 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">{{$t('msg.stock Name')}}</th>
+            <th scope="col">{{$t('msg.Stock Name')}}</th>
             <th scope="col">{{$t("msg.liveprice")}}</th>
             <th scope="col">{{$t("msg.reference")}}</th>
           </tr>

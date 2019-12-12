@@ -12,9 +12,9 @@
                         <table v-show="isOptions">
                             <tr>
                                 <th>#</th>
-                                <th>TITLE</th>
-                                <th style=" width: 55%;">PREVIEW</th>
-                                <th>DATE</th>
+                                <th>{{$t('msg.titles')}}</th>
+                                <th style=" width: 55%;">{{$t('msg.preview')}}</th>
+                                <th>{{$t('msg.date')}}</th>
                             </tr>
                             <tr v-for="(data,index) in announcement" :key="index" @click="getAnnouncement(data.messgageId)" class="annselect">
                                 <td>{{index+1}}</td>
@@ -88,9 +88,9 @@ export default {
     mounted() {
         this.getAnnouncement(null)
 
-        socket.on("liveprice1", data => {
-            console.log(data.data);
-            if (data.dat.length == "") return;
+        // socket.on("liveprice1", data => {
+            // console.log(data.data);
+            // if (data.dat.length == "") return;
 
             // for (let i = 0; i < data.data.length; i++) {
             //     this.rulenew = data.data[i].totalUsers
@@ -115,7 +115,7 @@ export default {
             //     this.chartData = []
             //     this.isShow = false
             // }
-        });
+        // });
     },
     methods: {
         async getAnnouncement(val) {

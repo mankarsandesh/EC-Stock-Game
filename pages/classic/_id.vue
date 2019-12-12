@@ -1,6 +1,5 @@
 <template>
 <div>
-    {{$route.params.id}}
     <div v-if="$route.params.id.split('-')[3] == 'currentbet'">
         <currentbet />
     </div>
@@ -21,6 +20,7 @@
     </div>
 
     <div v-else>
+        <!-- {{$store.state.payout}} -->
         <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>
@@ -75,7 +75,7 @@
                                             <tr v-for="(datas, idx5) in items.childrens" :key="idx5">
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{datas.name >= 0 ? datas.name: $t('gamemsg.'+datas.name)}}</div>
-                                                    <div class="text-stock">{{items.payout}} </div>
+                                                    <div class="text-stock"> {{datas.name == 'big' ? $store.state.payout[0].bigpayout : datas.name == 'small' ? $store.state.payout[0].smallpayout:items.payout}} </div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[0]+'-'+datas.name" />
                                                     </div>
@@ -83,7 +83,7 @@
 
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{datas.name2 >= 0 ? datas.name2: $t('gamemsg.'+datas.name2)}}</div>
-                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="text-stock">{{datas.name2 == 'big' ? $store.state.payout[0].bigpayout : datas.name2 == 'small' ? $store.state.payout[0].smallpayout:items.payout}}</div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[1]+'-'+datas.name2" />
                                                     </div>
@@ -122,7 +122,7 @@
 
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" v-if="!datas.childrenss" @click="betRow($event)">
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name3)}}</div>
-                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="text-stock">{{datas.name3 == 'big' ? $store.state.payout[0].bigpayout : datas.name3 == 'small' ? $store.state.payout[0].smallpayout:items.payout}}</div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3" />
                                                     </div>
@@ -130,7 +130,7 @@
 
                                                 <td class="top-bet" v-if="items.name !== 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name4)}}</div>
-                                                    <div class="text-stock">{{items.payout}}</div>
+                                                    <div class="text-stock">{{datas.name4 == 'big' ? $store.state.payout[0].bigpayout : datas.name4 == 'small' ? $store.state.payout[0].smallpayout:items.payout}}</div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
                                                     </div>

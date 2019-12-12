@@ -129,7 +129,13 @@
         "membership": "การเป็นสมาชิก",
         "min": "ต่ำสุด",
         "max": "สูงสุด",
-        "otherstock": "หุ้นอื่น"
+        "otherstock": "หุ้นอื่น",
+        "music": "เพลง",
+        "customlength": "ความยาวที่กำหนดเอง",
+        "titles": "หัวข้อ",
+        "preview": "ข้อความ",
+        "date": "วันที่"
+
 
     },
     "navlist": {

@@ -10,7 +10,14 @@ const createStore = () => {
             isLoadingAnnoucement: [],
             isLoadingHistory: [],
             userData: {},
-            payout: {},
+            payout: [{
+                "bigAmount": 0,
+                "tieAmount": 0,
+                "smallAmount": 0,
+                "bigpayout": 1.92,
+                "tiepayout": 1.92,
+                "smallpayout": 1.92
+            }],
             balance: '',
             footerBetAmount: 0,
             // store data betting
@@ -259,11 +266,11 @@ const createStore = () => {
         actions: {
             async asyncPayout(context) {
                 try {
-                    const res = await this.$axios.$get("http://192.168.1.141/TNK/StockAdmin/public/api/payout?apikey=iDm6oevcOoHaUZHsi7PG64x0UmgcNPaAUFJXo1OzahRofTskOhDkQL4bcHe2mOlalkXKG7csKi5iv3rI")
-                    let payoutObject = res.data
-                    context.state.payout = payoutObject
-                        // console.log(context.state.payout)
-                        // context.commit("setUserData", {name:userInfo})
+                    // const res = await this.$axios.$get(`/api/payoutgame3?apikey=${context.getters.getAuth_token}`)
+                    // console.log(res.data)
+                    // context.state.payout = res.data;
+                    // console.log(context.state.payout)
+                    // context.commit("setUserData", {name:userInfo})
                 } catch (ex) {
                     console.error(ex)
                         // alert(ex)

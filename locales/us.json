@@ -122,7 +122,7 @@
         "country": "Country",
         "everyonecansee": "Everyone Can See",
         "onlyme": "Only Me",
-        "form": "Form",
+        "from": "Form",
         "to": "To:",
         "go": "Go:",
         "moredetails": "More Details",
@@ -131,8 +131,12 @@
         "membership": "membership",
         "min": "Min",
         "max": "Max",
-        "otherstock": "Other Stock"
-
+        "otherstock": "Other Stock",
+        "music": "Music",
+        "customlength": "Custom Length",
+        "titles": "Title",
+        "preview": "Preview",
+        "date": "Date"
 
     },
     "navlist": {
