@@ -259,9 +259,9 @@ const createStore = () => {
         actions: {
             async asyncPayout(context) {
                 try {
-                    const res = await this.$axios.$get("http://192.168.1.141/TNK/StockAdmin/public/api/payout?apikey=iDm6oevcOoHaUZHsi7PG64x0UmgcNPaAUFJXo1OzahRofTskOhDkQL4bcHe2mOlalkXKG7csKi5iv3rI")
-                    let payoutObject = res.data
-                    context.state.payout = payoutObject
+                    // const res = await this.$axios.$get("http://192.168.1.141/TNK/StockAdmin/public/api/payout?apikey=iDm6oevcOoHaUZHsi7PG64x0UmgcNPaAUFJXo1OzahRofTskOhDkQL4bcHe2mOlalkXKG7csKi5iv3rI")
+                    // let payoutObject = res.data
+                    context.state.payout = 1.92
                         // console.log(context.state.payout)
                         // context.commit("setUserData", {name:userInfo})
                 } catch (ex) {
