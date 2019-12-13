@@ -427,10 +427,11 @@ const createStore = () => {
         try {
           // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
           const res = await this.$axios.$get(
-            `/api/announcement?apikey=${context.getters.getAuth_token}`
+            `/announcements?apikey=${context.getters.getAuth_token}`
           );
           console.log(res);
           context.commit("setAnouncement", res.data);
+          console.log("Sandesh");
         } catch (error) {
           console.log(error);
         }
@@ -440,7 +441,7 @@ const createStore = () => {
         try {
           // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
           const res = await this.$axios.$get(
-            `/api/fetchHistoryBet?apikey=${context.getters.getAuth_token}`
+            `/fetchHistoryBet?apikey=${context.getters.getAuth_token}`
           );
           console.log(res);
           console.log("SANDESH");
