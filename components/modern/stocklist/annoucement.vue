@@ -4,9 +4,9 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">title</th>
-            <th scope="col">preview</th>
-            <th scope="col">date</th>
+            <th scope="col">{{$t('msg.titles')}}</th>
+            <th scope="col">{{$t('msg.preview')}}</th>
+            <th scope="col">{{$t('msg.date')}}</th>
           </tr>
         </thead>
         <tbody>

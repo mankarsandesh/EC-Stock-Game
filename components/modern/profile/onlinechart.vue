@@ -1,6 +1,6 @@
 <template>
 <div class="text-xs-center">
-    <canvas ref="planetchart" class="set-height"></canvas>
+    <canvas ref="planetchart" class="set-height" v-show="load"></canvas>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 </div>
 </template>
@@ -23,8 +23,8 @@ export default {
     mounted() {
         this.getChart()
         setInterval(() => {
-            if (this.load == false) 
-            this.getChart()
+            if (this.load == false)
+                this.getChart()
         }, 1000)
     },
     methods: {
@@ -43,8 +43,8 @@ export default {
             }
         },
         async getChart() {
-            let dataGet = await this.$axios.$get( '/api/me/online?method=chart&apikey=' + this.$store.state.auth_token)
-            // console.log(dataGet)
+            let dataGet = await this.$axios.$get('/api/me/online?method=chart&apikey=' + this.$store.state.auth_token)
+            if (dataGet.data == "") return this.load = false;
 
             dataGet.data.forEach(element => {
                 this.load = true

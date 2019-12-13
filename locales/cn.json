@@ -122,7 +122,7 @@
         "country": "國家",
         "everyonecansee": "每個人都可以看到",
         "onlyme": "只有我",
-        "frrm": "从:",
+        "from": "从:",
         "to": "至:",
         "go": "确认",
         "moredetails": "赢率细节",
@@ -131,7 +131,12 @@
         "membership": "會員資格",
         "min": "最低的",
         "max": "最高的",
-        "otherstock": "其他股票"
+        "otherstock": "其他股票",
+        "music": "音乐",
+        "customlength": "自定义长度",
+        "titles": "标题",
+        "preview": "预习",
+        "date": "日期"
 
     },
     "navlist": {

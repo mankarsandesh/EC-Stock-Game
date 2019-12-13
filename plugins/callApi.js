@@ -30,7 +30,7 @@ export default ({
         store.dispatch("asynUserInfo")
     }, 1000)
 
-
+    store.dispatch("asyncPayout")
     setInterval(() => {
         store.dispatch("asyncPayout")
     }, 3000)

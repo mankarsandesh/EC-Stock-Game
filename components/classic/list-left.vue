@@ -172,12 +172,12 @@ export default {
         },
 
         async getupdatebalance() {
-            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-            this.name = balance.data.name
-            this.balance = balance.data.userBalance
-            console.log(balance)
+            let Result = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
+            this.name = Result.data.name
+            this.balance = Result.data.userBalance
+            // console.log(balance)
 
-            $("#txtbalance").text(this.formatToPrice(balance.data.userBalance))
+            $("#txtbalance").text(this.formatToPrice(Result.data.userBalance))
             return
         },
         async getSotckId() {
