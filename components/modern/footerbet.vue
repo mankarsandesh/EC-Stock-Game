@@ -525,17 +525,17 @@
         style="font-style: italic;font-size:13px"
       >Max = $5000,Min = $200</text>
       <text x="208" y="82" fill="white">${{ 15000}}</text>
-      <g @click="modalConfirmAll()" v-if="isSending==false">
+      <g @click="modalConfirmAll()" v-if="isSending">
         <text x="950" y="82" fill="white" style="text-transform: uppercase; cursor:pointer">sending...</text>
         <text
           x="1020"
           y="66"
           fill="red"
           style="font-style: oblique;"
-        >{{parseInt(datafooterBet0099.length) + parseInt(datafooterBet.length)}}</text>
+        >15</text>
       </g>
       <g v-else @click="sendBetting">
-        <text x="950" y="82" fill="white" style="text-transform: uppercase; cursor:pointer">good</text>
+        <text x="950" y="82" fill="white" style="text-transform: uppercase; cursor:pointer">Confirm</text>
       </g>
       <g @click="clearDataMultiGameBet()">
         <text x="1115" y="82" fill="white" style="text-transform: uppercase; cursor:pointer">clear</text>
@@ -547,7 +547,9 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      isSending:false
+    };
   },
   methods: {
     ...mapActions(["sendBetting"]),

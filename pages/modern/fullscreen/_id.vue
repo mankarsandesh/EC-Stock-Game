@@ -217,8 +217,6 @@ import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import livestock from "~/components/modern/livestock";
 
-import chartIndex from "~/components/chartIndex";
-
 import io from "socket.io-client";
 const socket = io("https://node-liveprice.herokuapp.com");
 
@@ -290,8 +288,7 @@ export default {
     chartApp,
     footerBet,
     trendMapFullScreen,
-    livestock,
-    chartIndex
+    livestock
   },
   computed: {
     ...mapGetters([
