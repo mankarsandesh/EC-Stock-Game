@@ -266,9 +266,9 @@ const createStore = () => {
         actions: {
             async asyncPayout(context) {
                 try {
-                    // const res = await this.$axios.$get(`/api/payoutgame3?apikey=${context.getters.getAuth_token}`)
-                    // console.log(res.data)
-                    // context.state.payout = res.data;
+                    const res = await this.$axios.$get(`/api/payoutgame3?apikey=${context.getters.getAuth_token}`)
+                        // console.log(res.data)
+                    context.state.payout = res.data;
                     // console.log(context.state.payout)
                     // context.commit("setUserData", {name:userInfo})
                 } catch (ex) {
