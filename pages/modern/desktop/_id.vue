@@ -33,7 +33,8 @@
                 <v-layout>
                   <v-flex>
                     <v-btn dark color="#003e70" :to="'/modern/fullscreen/' +$route.params.id">
-                      <v-icon left dark class="ma-0">fullscreen</v-icon>{{$t('msg.fullscreenmode')}}
+                      <v-icon left dark class="ma-0">fullscreen</v-icon>
+                      {{$t('msg.fullscreenmode')}}
                     </v-btn>
                     <v-btn
                       dark
@@ -79,25 +80,26 @@
             <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''"  >
-          <div v-for="(trendType, index) in trendTypes" :key="index" >
+        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
+          <div v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
-            <tableTrendMap ></tableTrendMap>
+            <tableTrendMap></tableTrendMap>
           </div>
         </v-flex>
         <v-flex xs12 class="text-xs-center" v-if="trendTypes.length<4">
           <v-btn class="text-white" color="#003e70" @click="addTrendMap()">
-            <v-icon left dark>add</v-icon>{{$t('msg.addtrendchart')}}
+            <v-icon left dark>add</v-icon>
+            {{$t('msg.addtrendchart')}}
           </v-btn>
         </v-flex>
-
-
       </v-flex>
     </v-layout>
-    
 
-
+  
+      
   </div>
+
+
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
@@ -124,8 +126,19 @@ export default {
     selectStock
   },
   data() {
-     
     return {
+       bgColor: '#778899',
+          position: 'top-right',
+          fabActions: [
+              {
+                  name: 'cache',
+                  icon: 'cached'
+              },
+              {
+                  name: 'alertMe',
+                  icon: 'add_alert'
+              }
+          ],
       items: [
         { title: "Click Me" },
         { title: "Click Me" },
@@ -137,7 +150,6 @@ export default {
     };
   },
   mounted() {
-    
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
     console.warn("mounted...");
@@ -150,7 +162,7 @@ export default {
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
         let linkto = `/modern/betting/${this.$route.params.id}`;
-        this.$router.push(linkto)
+        this.$router.push(linkto);
       }
     }
   },
@@ -187,10 +199,11 @@ export default {
           this.trendTypes.push("twoDigit");
           break;
       }
-    },loaded() {
-        this.isLoad = true
-        console.log(isLoad);
-      }
+    },
+    loaded() {
+      this.isLoad = true;
+      console.log(isLoad);
+    }
   },
   computed: {
     ...mapGetters([
