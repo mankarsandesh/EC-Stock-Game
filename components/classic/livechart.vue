@@ -55,7 +55,7 @@ export default {
             let title = s + l
             this.StockData.forEach(element => {
                 let date = new Date(element.writetime.replace(/-/g, "/"));
-                labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + " " + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
+                labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + "-" + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
                 datas.push(parseFloat(element.PT));
                 lastdraw.push({
                     id: element.id
@@ -77,6 +77,8 @@ export default {
                     min = datas[i];
                 }
             }
+            // console.log(max)
+            // console.log(min)
 
             const config = {
                 type: 'line',
@@ -150,25 +152,20 @@ export default {
                             }
                         }],
                         yAxes: [{
-                            display: false,
-                            reverse: false,
-                            position: 'right',
-                        }, {
                             gridLines: {
                                 display: true
                             },
                             scaleLabel: {
                                 display: false
                             },
-                            ticks: {
-                                display: true,
-                                reverse: false,
-                                position: 'left',
-                                beginAtZero: true,
-                                suggestedMin: min,
-                                suggestedMax: max,
-                                maxTicksLimit: 6,
-                            }
+                            display: true,
+                            reverse: false,
+                            position: 'left',
+                            beginAtZero: true,
+                            suggestedMin: min,
+                            suggestedMax: max,
+                            maxTicksLimit: 6
+
                         }]
                     },
                     tooltips: {
@@ -178,12 +175,10 @@ export default {
                         mode: "index",
                         callbacks: {
                             label: function (tooltipItem, data) {
-                                if (_this.$route.params.id.split('-')[1] === "usindex") {
+                                if (_this.$route.params.id.split('-')[1] === "usindex")
                                     return (_this.$root.$t('msg.price') + tooltipItem.yLabel.toFixed(4));
-                                } else {
+                                else
                                     return (_this.$root.$t('msg.price') + tooltipItem.yLabel.toFixed(2));
-                                }
-
                             }
                         }
                     }
@@ -236,7 +231,7 @@ export default {
                     let Hours = Hourss < 10 ? "0" + Hourss : Hourss;
                     let Minutess = date.getMinutes();
                     let Minutes = Minutess < 10 ? "0" + Minutess : Minutess;
-                    date = dd + "/" + mm + " " + Hours + ":" + Minutes;
+                    date = dd + "/" + mm + "-" + Hours + ":" + Minutes;
 
                     // console.log("add New Data")
                     // console.log(date)
