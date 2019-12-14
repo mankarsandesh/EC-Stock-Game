@@ -248,7 +248,7 @@
         </v-content>
     </v-app>
 
-    <v-btn v-scroll="onScroll" :class="$vuetify.breakpoint.smAndDown ? 'scrolltop z-index':'z-index'" v-show="fab" small fab dark fixed bottom right color="blue" @click="toTop">
+    <v-btn v-scroll="onScroll" :class="$vuetify.breakpoint.smAndDown ? 'scrolltop z-index':'z-index'" v-show="fab" small fab dark fixed bottom right color="#384e63" @click="toTop">
         <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>
 
@@ -261,7 +261,7 @@
         </v-btn>
     </div>
 
-    <v-dialog v-model="dialogprofile" persistent max-width="1240px">
+    <v-dialog v-model="dialogprofile" max-width="1240px">
         <v-card>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -540,7 +540,7 @@ export default {
 }
 
 .btn-chart-change {
-    width: 1.5% !important;
+    /* width: 1.5% !important; */
     position: absolute;
     top: 4%;
     z-index: 1;
@@ -550,19 +550,11 @@ export default {
     border-radius: 10px;
     border: none;
     text-transform: capitalize;
-    padding: 3px 7px;
+    padding: 3px 5px;
 }
 
-@media only screen and (min-width: 1920px) {
-    .set-chart-change {
-        left: 4.7%;
-    }
-}
-
-@media only screen and (min-width: 2260px) {
-    .set-chart-change {
-        left: 12.9%;
-    }
+.set-chart-change {
+    left: 0.5%;
 }
 
 .text-orientation {

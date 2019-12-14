@@ -34,6 +34,9 @@ export default ({
     setInterval(() => {
         store.dispatch("asyncPayout")
     }, 3000)
+    setInterval(() => {
+        store.dispatch("asynUserInfo")
+    }, 10000)
 }
 
 function setLanguage(store) {

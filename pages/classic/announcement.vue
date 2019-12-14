@@ -55,7 +55,7 @@
                                 </v-flex>
                             </v-layout>
                         </div>
-                        <livestock v-if="isShow" :dataGet="chartData" />
+                        
                     </v-card>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -65,13 +65,10 @@
 </template>
 
 <script>
-import livestock from "../../components/classic/livestock"
-import openSocket from "socket.io-client";
-const socket = openSocket("https://node-liveprice.herokuapp.com");
 export default {
     layout: 'classic',
     components: {
-        livestock
+        // livestock
     },
     data() {
         return {
@@ -79,7 +76,7 @@ export default {
             load: false,
             announcement: [],
             isOptions: true,
-            isShow: false,
+            
             chartData: [],
             rulenew: [],
             ruleold: [],
@@ -87,35 +84,6 @@ export default {
     },
     mounted() {
         this.getAnnouncement(null)
-
-        // socket.on("liveprice1", data => {
-            // console.log(data.data);
-            // if (data.dat.length == "") return;
-
-            // for (let i = 0; i < data.data.length; i++) {
-            //     this.rulenew = data.data[i].totalUsers
-            // }
-
-            // if (data.data.length != 0 || data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
-            //     // console.log("Okkk");
-            //     if (this.rulenew == undefined) return
-
-            //     if (this.isShow == true && data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
-            //         this.chartData = data.data;
-            //         this.isShow = false
-            //         for (let i = 0; i < data.data.length; i++) {
-            //             this.ruleold = data.data[i].totalUsers
-            //         }
-            //     } else {
-            //         this.chartData = data.data;
-            //         this.isShow = true
-            //     }
-            // } else {
-            //     // console.log("Nooo");
-            //     this.chartData = []
-            //     this.isShow = false
-            // }
-        // });
     },
     methods: {
         async getAnnouncement(val) {

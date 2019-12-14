@@ -86,7 +86,7 @@ export default {
                 }
 
                 let date = new Date(element.writetime.replace(/-/g, "/"));
-                labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + " " + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
+                labelss.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + "-" + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
                 datas.push(value_no);
                 pointBackgroundColor.push(num ? "blue" : "red");
                 lastdraw.push({
@@ -308,7 +308,7 @@ export default {
                     let Hours = Hourss < 10 ? "0" + Hourss : Hourss;
                     let Minutess = date.getMinutes();
                     let Minutes = Minutess < 10 ? "0" + Minutess : Minutess;
-                    date = dd + "/" + mm + " " + Hours + ":" + Minutes;
+                    date = dd + "/" + mm + "-" + Hours + ":" + Minutes;
 
                     // console.log("add New Data")
                     // console.log(date)

@@ -35,8 +35,8 @@
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
                 <v-flex xs12 md5>
-                    <v-avatar :class="balance < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.price" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar :class="balance-sumTotalAll < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance-sumTotalAll < chip.price" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -168,8 +168,8 @@
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
                 <v-flex xs12 md5>
-                    <v-avatar size="60" :class="balance < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance < chip.name" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar size="60" :class="balance-sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance-sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -292,6 +292,16 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <!-- <popper trigger="click" :options="{placement: 'top-end',modifiers: { offset: { offset: '25px' }}}">
+            <div class="popper" >
+                <livestock v-if="isShow" :dataGet="chartData"/>
+            </div>
+            <v-btn class="scrolltop" @click="getrulebetting()" slot="reference" small fab dark fixed bottom right color="blue">
+                <i class="fa fa-area-chart"/>
+            </v-btn>
+        </popper> -->
+
     </div>
     <!-- alertOutCome -->
     <v-snackbar class="tops" v-model="snackbar" :bottom="y === 'bottom'" :left="x === 'left'" :multi-line="mode === 'multi-line'" :right="x === 'right'" :timeout="timeout" :top="y === 'top'" :vertical="mode === 'vertical'" :color="color">
@@ -320,6 +330,10 @@
 </template>
 
 <script>
+// import livestock from "~/components/classic/livestock"
+// import popper from "vue-popperjs";
+// import "vue-popperjs/dist/vue-popper.css";
+
 import currentbet from "./current-bet";
 import history from "./history";
 import gameresult from "./game-result";
@@ -357,7 +371,9 @@ export default {
         announcement,
         rule,
         setting,
-        chipfooter
+        chipfooter,
+        // popper,
+        // livestock
     },
 
     data() {
@@ -403,6 +419,7 @@ export default {
             alertext: "",
             disabled: false,
             // end alertOutCome,
+            isShow: false,
         };
     },
 
@@ -443,6 +460,38 @@ export default {
         },
     },
     methods: {
+        // getrulebetting() {
+        //     const socket = openSocket("https://node-liveprice.herokuapp.com");
+        //     socket.on("liveprice1", data => {
+        //         console.log(data.data);
+        //         if (data.dat.length == "") return;
+
+        //         for (let i = 0; i < data.data.length; i++) {
+        //             this.rulenew = data.data[i].totalUsers
+        //         }
+
+        //         if (data.data.length != 0 || data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+        //             // console.log("Okkk");
+        //             if (this.rulenew == undefined) return
+
+        //             if (this.isShow == true && data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+        //                 this.chartData = data.data;
+        //                 this.isShow = false
+        //                 for (let i = 0; i < data.data.length; i++) {
+        //                     this.ruleold = data.data[i].totalUsers
+        //                 }
+        //             } else {
+        //                 this.chartData = data.data;
+        //                 this.isShow = true
+        //             }
+        //         } else {
+        //             // console.log("Nooo");
+        //             this.chartData = []
+        //             this.isShow = false
+        //         }
+        //     });
+        // },
+
         settabs() {
             let t = this.$route.params.id.split("-")[2]
             let s;
@@ -463,7 +512,8 @@ export default {
         },
         async getbalance() {
             let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-            this.balance = balance.userBalance
+             balance.status ? this.balance = balance.data.original.userBalance :  this.balance = 0
+            //  console.log(this.balance)
         },
         async getSotckId() {
             let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
@@ -537,7 +587,7 @@ export default {
         setPrice(e) {
             if (e == "reset") {
                 $("#txttotal").text(this.formatTotal(this.price))
-                
+
                 if (this.preset == false) {
                     this.betData.betdetails = [];
                     this.betDataShows = [];
@@ -599,7 +649,7 @@ export default {
         bet(e, specialName = "none") {
             // this.playSound('/voice/bet-chips.mp3') 
             if (this.price == 0 || this.price == null || this.price > this.balance - this.sumTotalAll) {
-                // console.log("Null-0");
+                console.log("Null-0");
                 this.price = 0
                 this.getalertstartstop("notenough")
                 return;
@@ -823,6 +873,11 @@ export default {
 </script>
 
 <style>
+.scrolltop {
+    bottom: 1% !important;
+    right: 3% !important;
+}
+
 .mb-footer {
     margin-left: -1.5%;
     position: fixed;
@@ -841,15 +896,16 @@ export default {
     transition-delay: 0.1s;
     transition-duration: 0.1s;
     cursor: pointer;
-    background-color: #00ddfff2;
+    background-color: #384e63;
     transform-origin: center;
+    color: #f2f2f2;
 }
 
 .pointer-events-none {
     text-align: center;
     margin-bottom: 10px;
     pointer-events: none;
-    background-color: rgb(88, 88, 88);
+    background-color: rgb(255, 0, 0);
 }
 
 .bet-closed {
@@ -1110,7 +1166,7 @@ tr:nth-child(even) {
     /* border-right: 1px solid #ddd; */
     min-width: 13%;
     margin-top: 11px;
-     text-align: center;
+    text-align: center;
     font-size: 10px;
     font-size: 10px;
     display: inline-block;

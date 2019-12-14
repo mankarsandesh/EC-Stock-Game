@@ -65,7 +65,6 @@
                             <b>{{$t('msg.amount')}}</b>:
                             {{data.betAmount}}
                             ({{data.rule.split("-")[1] >= 0 ? $t('gamemsg.'+data.rule.split("-")[0])+' - '+data.rule.split("-")[1]: $t('gamemsg.'+data.rule.split("-")[0])+' - '+$t('gamemsg.'+data.rule.split("-")[1])}})
-
                             <br>
                             <b>{{$t('msg.Stock')}}</b>: <span v-for="(datas,index) in stockName" :key="index" v-if="data.stock == datas.stockId">
                                 {{$t('stockname.'+datas.stockName)}}
@@ -156,15 +155,15 @@ export default {
         },
         async gethistoryTotal() {
             try {
-                let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
-                this.betAmounts = 0;
-                this.rollingAmounts = 0;
-                for (let i = 0; i < history.data.length; i++) {
-                    if (history.data[i].betTime.split(" ")[0] == new Date().toISOString().substr(0, 10)) {
-                        this.betAmounts += history.data[i].betAmount;
-                        this.rollingAmounts += history.data[i].rollingAmount;
-                    }
-                }
+                // let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+                // this.betAmounts = 0;
+                // this.rollingAmounts = 0;
+                // for (let i = 0; i < history.data.length; i++) {
+                //     if (history.data[i].betTime.split(" ")[0] == new Date().toISOString().substr(0, 10)) {
+                //         this.betAmounts += history.data[i].betAmount;
+                //         this.rollingAmounts += history.data[i].rollingAmount;
+                //     }
+                // }
             } catch (error) {
                 console.log(error)
             }
@@ -173,11 +172,11 @@ export default {
 
         async getupdatebalance() {
             let Result = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-            this.name = Result.data.name
-            this.balance = Result.data.userBalance
-            // console.log(balance)
+            this.name = Result.data.original.name
+            this.balance = Result.data.original.userBalance
+            // console.log(Result)
 
-            $("#txtbalance").text(this.formatToPrice(Result.data.userBalance))
+            $("#txtbalance").text(this.formatToPrice(Result.data.original.userBalance))
             return
         },
         async getSotckId() {

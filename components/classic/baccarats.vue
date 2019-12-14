@@ -236,13 +236,7 @@ export default {
             let firstlast = "";
             this.dataArray.forEach(element => {
                 n++;
-                this.gameID.push(
-                    element.gameId +
-                    "\n" +
-                    this.formatToPrice(element.PT) +
-                    "\n" +
-                    element.writetime
-                );
+                this.gameID.push(element.gameId + "\n" + this.formatToPrice(element.PT) + "\n" + element.writetime);
                 let no_firsts = this.formatToPrice(element.PT)[
                     this.formatToPrice(element.PT).length - 2
                 ].toString();
@@ -951,7 +945,7 @@ export default {
                         });
                         // console.log(sortable);
                         for (let k = 0; k < 6; k++) {
-                                (this.$refs.sortNumber.children[k].textContent = `${ sortable[k][0]} = ${sortable[k][1]}`)
+                            (this.$refs.sortNumber.children[k].textContent = `${ sortable[k][0]} = ${sortable[k][1]}`)
                         }
 
                         return;
