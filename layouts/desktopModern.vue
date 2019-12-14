@@ -68,71 +68,9 @@
   EC
     </v-float>-->
 
-    <popper
-      trigger="click"
-      :options="{
-                      placement: 'top-end',
-                       modifiers: { offset: { offset: '35px' } }
-                }"
-    >
-      <div class="popper" style="width:355px;">
-        <div class="chatRoom">
-          <div id="headerChat">
-            <span class="one active">
-              <a href="#" v-on:click="tab1 = !tab1">Channel</a>
-            </span>
-            <span class="two">
-              <a href="#" v-on:click="tab2 = !tab2">This Game</a>
-            </span>
-          </div>
-
-          <div id="bodyChat">
-            <div class="msguser">
-              <a href="#">Sandesh :</a>
-              <span class="msgbody">Helo Guys</span>
-            </div>
-            <div class="msguser">
-              <a href="#">Ritesh :</a>
-              <span class="msgbody">Hello, When you guys bet on this game.</span>
-            </div>
-            <div class="msguser">
-              <a href="#">Cola :</a>
-              <span class="msgbody">Today Night. we will bet on this Game.</span>
-            </div>
-            <div class="msguser">
-              <a href="#">Sandesh :</a>
-              <span class="msgbody">Helo Guys</span>
-            </div>
-            <div class="msguser">
-              <a href="#">Ritesh :</a>
-              <span class="msgbody">Hello, When you guys bet on this game.</span>
-            </div>
-            <div class="msguser">
-              <a href="#">Cola :</a>
-              <span class="msgbody">Today Night. we will bet on this Game.</span>
-            </div>
-            <div class="msguser">
-              <a href="#">Sandesh :</a>
-              <span class="msgbody">Helo Guys</span>
-            </div>
-            <div class="msguser">
-              <a href="#">Ritesh :</a>
-              <span class="msgbody">Hello, When you guys bet on this game.</span>
-            </div>
-            <div class="msguser">
-              <a href="#">Cola :</a>
-              <span class="msgbody">Today Night. we will bet on this Game.</span>
-            </div>
-          </div>
-          <div id="messageCHat">
-            <input resize="none" v-model="message" placeholder="Type Message" />
-            <btn v-on:click="sendMsg" >Send</btn>
-          </div>
-        </div>
-      </div>
-      <!-- <v-btn slot="reference" class="liveChat">EC</v-btn> -->
-      <v-btn color="#013d70" dark rigth fab slot="reference" class="liveChat">EC</v-btn>
-    </popper>
+    <chatWindow />
+    
+    
   </v-app>
 </template>
 
@@ -148,12 +86,13 @@ import welcomeUser from "~/components/welcomeUser";
 import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
-import popper from "vue-popperjs";
-import "vue-popperjs/dist/vue-popper.css";
+import chatWindow from "~/components/chatWindow";
+// import popper from "vue-popperjs";
+// import "vue-popperjs/dist/vue-popper.css";
 
 export default {
   components: {
-    popper,
+    chatWindow,
     countryFlag,
     languageDialog,
     winnerMarquee,
@@ -161,7 +100,6 @@ export default {
   },
   data() {
     return {
-      message : null,
       direction: "top",
       fab: true,
       fling: true,
@@ -228,12 +166,6 @@ export default {
   },
   created() {},
   methods: {
-      sendMsg: function (event){
-          if(this.message){
-             
-          }
-          
-      },
     ...mapMutations(["setIsLoadingStockGame"])
     //  getwinuser() {
     //    this.$axios.$get("api/getwinuser").then(response => {
@@ -306,85 +238,5 @@ export default {
 
 .v-btn--floating {
   position: relative;
-}
-.liveChat {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-}
-.chatRoom {
-  height: 500px;
-  width: 350px;
-  margin-right: 280px;
-  padding: 0px 5px;
-  border-radius: 5px;
-  background-color: #003e70;
-}
-#headerChat {
-  height: 45px;
-  border: 1px solid #333;
-}
-
-#headerChat span {
-  text-align: center;
-  width: 50%;
-  float: left;
-}
-#headerChat span a {
-  width: 100%;
-  background-color: #003e70;
-  color: #fff;
-  font-size: 20px;
-  float: left;
-  padding: 5px 10px;
-}
-
-#bodyChat {
-  background-color: #fff;
-  height: 400px;
-  text-align: left;
-  overflow: scroll;
-  border: 1px solid #cccccc;
-}
-
-#messageCHat {
-  background-color: #fff;
-  height: 50px;
-}
-
-.msguser {
-  font-size: 15px;
-  border-radius: 4px;
-  border: 1px solid #cccccc;
-  margin: 5px 3px;
-  padding: 5px 10px;
-}
-.msguser a {
-  font-weight: 800;
-  color: #003e70;
-}
-.msgbody {
-  color: #333;
-}
-#messageCHat input {
-  float: left;
-  border: 1px solid #cccccc;
-  width: 80%;
-  padding: 5px;
-  font-size: 15px;
-  height: 50px;
-  resize: none;
-  color: #003e70;
-}
-#messageCHat btn {
-  background-color: #003e70;
-  color: #333;
-  width: 20%;
-  height: 50px;
-  display: table-cell;
-  vertical-align: middle;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
 }
 </style>
