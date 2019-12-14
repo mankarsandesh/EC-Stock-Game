@@ -463,7 +463,8 @@ export default {
         },
         async getbalance() {
             let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-            this.balance = balance.userBalance
+             balance.status ? this.balance = balance.data.original.userBalance :  this.balance = 0
+            //  console.log(this.balance)
         },
         async getSotckId() {
             let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)

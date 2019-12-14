@@ -164,7 +164,7 @@ export default {
         async fetchAll() {
             let res = await this.$axios.$get("/api/me?apikey=" + this.$store.state.auth_token);
             // console.log(res);
-            this.profile = res.data;
+            this.profile = res.data.original;
              
         },
         async updateProfile() {
