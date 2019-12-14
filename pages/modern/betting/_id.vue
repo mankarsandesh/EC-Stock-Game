@@ -402,7 +402,9 @@
               :key="key"
               @click="shipClick(getCoins_modern[key])"
             >
-              <v-img class="ma-5" :src="item.img" :alt="item.title">{{getCoins_modern[key]}}</v-img>
+              <v-img class="ma-5" :src="item.img" :alt="item.title">
+               <span class="setpricechip">{{getCoins_modern[key]}}</span> 
+                </v-img>
             </v-avatar>
           </v-flex>
         </v-layout>
@@ -859,5 +861,11 @@ export default {
 .bettingFooter {
   margin-top: 10px;
   color: #fff;
+}
+.setpricechip {
+    position: relative;
+    top: 30px;
+    color: black;
+    font-size: 0.85rem;
 }
 </style>

@@ -1,7 +1,13 @@
 import Vuex from "vuex";
 import { hostname } from "os";
 
-const createStore = () => {
+const createStore = () => { <<
+    << << < HEAD
+        ===
+        === =
+        // <<<<<<< HEAD
+        >>>
+        >>> > 550 da58b3c3d68c2a9e4895b29b1d356aebc2832
     return new Vuex.Store({
         state: () => ({
             loader: false,
