@@ -52,6 +52,13 @@
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
+
+import io from "socket.io-client";
+const socket = io("localhost:3001", {
+  transports: ["polling"],
+    query: `userId=${userId}&name=bank`
+});
+
 export default {
   components: {
     popper
@@ -75,7 +82,7 @@ export default {
           msg: "Hello Sandesh"
         }
       ],
-       allmessageGame: [
+      allmessageGame: [
         {
           name: "Tanver",
           msg: "Hello Bro"
@@ -100,24 +107,31 @@ export default {
       this.isActivetab2 = true;
       this.isActivetab1 = false;
     },
-    
+
     sendMsg: function(event) {
       if (this.message) {
-        this.Messagedata = { name: "Sandesh", msg: this.message };
+        this.Messagedata = { name: "Sandesh11", msg: this.message };
+        socket.emit("send-message", {
+          message: this.message,
+          userId: "sandesh"
+        });
+
+        console.log("Hello");
         this.allmessage.push(this.Messagedata);
         this.message = "";
       }
     },
 
-    sendMsgGame: function(event) {       
+    sendMsgGame: function(event) {
+      cosnole.log("Hello");
       if (this.messageGame) {
-        this.Messagedata = { name: "Sandesh", msg: this.messageGame };
-        this.allmessageGame.push(this.Messagedata);
+        this.Messagedata = { name: "Sandesh11", msg: this.messageGame };
+        // socket.emit('send-message', this.messageGame);
+        console.log(socket.emit);
+        console.log("Hello");
         this.messageGame = "";
       }
     }
-
-
   }
 };
 </script>
