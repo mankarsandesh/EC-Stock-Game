@@ -112,7 +112,7 @@ export default {
         this.getSotckId()
         setTimeout(() => {
             this.gethistoryTotal()
-        }, 3000)
+        }, 1000)
     },
     created() {
         if (this.$vuetify.breakpoint.smAndDown) {
@@ -155,15 +155,15 @@ export default {
         },
         async gethistoryTotal() {
             try {
-                // let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
-                // this.betAmounts = 0;
-                // this.rollingAmounts = 0;
-                // for (let i = 0; i < history.data.length; i++) {
-                //     if (history.data[i].betTime.split(" ")[0] == new Date().toISOString().substr(0, 10)) {
-                //         this.betAmounts += history.data[i].betAmount;
-                //         this.rollingAmounts += history.data[i].rollingAmount;
-                //     }
-                // }
+                let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+                this.betAmounts = 0;
+                this.rollingAmounts = 0;
+                for (let i = 0; i < history.data.length; i++) {
+                    if (history.data[i].betTime.split(" ")[0] == new Date().toISOString().substr(0, 10)) {
+                        this.betAmounts += history.data[i].betAmount;
+                        this.rollingAmounts += history.data[i].rollingAmount;
+                    }
+                }
             } catch (error) {
                 console.log(error)
             }

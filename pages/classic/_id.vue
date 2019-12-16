@@ -297,7 +297,7 @@
             <div class="popper" >
                 <livestock v-if="isShow" :dataGet="chartData"/>
             </div>
-            <v-btn class="scrolltop" @click="getrulebetting()" slot="reference" small fab dark fixed bottom right color="blue">
+            <v-btn class="scrolltop" @click="getrulebetting()" slot="reference" small fab dark fixed bottom right color="#384e63">
                 <i class="fa fa-area-chart"/>
             </v-btn>
         </popper> -->

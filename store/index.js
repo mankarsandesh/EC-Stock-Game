@@ -24,7 +24,7 @@ const createStore = () => {
             coins_modern: [],
             // multi game
             isSendBetting: false,
-            urltest: "http://159.138.54.214",
+            urltest: "http://159.138.45.25",
             // all stocks data
             // if we have new stock available we can add it here with same object format
             liveprice: {
@@ -351,9 +351,7 @@ const createStore = () => {
                 console.log("working...");
                 console.log(context.getters.getAuth_token);
                 try {
-                    const stocks = await this.$axios.$post(
-                        `http://159.138.54.214/api/allStockInfo?apikey=${context.getters.getAuth_token}`
-                    );
+                    const stocks = await this.$axios.$post(`/api/allStockInfo?apikey=${context.getters.getAuth_token}`);
                     const data = stocks.data;
                     console.log(data);
                     context.state.stocks = Object.assign({}, data);
