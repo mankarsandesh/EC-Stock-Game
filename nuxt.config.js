@@ -71,7 +71,7 @@ module.exports = {
      */
     axios: {
         // See https://github.com/nuxt-community/axios-module#options
-        baseURL: "http://159.138.45.25/"
+        baseURL: "http://159.138.45.25"
     },
 
     /*
