@@ -10,13 +10,13 @@
                     <tr>
                         <td class="text-left">
                             <i class="fa fa-user fa-2x font-size15"></i>
-                            {{$t('msg.Player')}} : {{name}}</td>
+                            {{$t('msg.Player')}} : {{getUserName}}</td>
                     </tr>
                     <tr>
                         <td class="text-left">
                             <i class="fa fa-balance-scale fa-2x font-size15"></i>
                             {{$t('msg.Balance')}} :
-                            <animated-number :value="balance" :formatValue="formatToPrice" />
+                            <animated-number :value="getBalance" :formatValue="formatToPrice" />
                         </td>
                     </tr>
                     <tr>
@@ -77,7 +77,7 @@
             </v-card>
         </v-expansion-panel-content>
     </v-expansion-panel>
-    <button class="getupdatebalance" @click="getupdatebalance(), getAllresults(), gethistoryTotal()" hidden></button>
+    <button class="getupdatebalance" @click="getAllresults(), gethistoryTotal()" hidden></button>
 </v-card>
 </template>
 
@@ -107,12 +107,13 @@ export default {
         }
     },
     mounted() {
-        this.getupdatebalance()
+        
         this.getAllresults()
         this.getSotckId()
         setTimeout(() => {
             this.gethistoryTotal()
         }, 1000)
+         $("#txtbalance").text(this.formatToPrice(this.getBalance))
     },
     created() {
         if (this.$vuetify.breakpoint.smAndDown) {
@@ -126,7 +127,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["getStockList", "getLotteryDraw", "getStockById"])
+        ...mapGetters(["getStockList", "getLotteryDraw", "getStockById","getBalance","getUserName"])
     },
     methods: {
         onlyTime(value) {
@@ -168,16 +169,6 @@ export default {
                 console.log(error)
             }
 
-        },
-
-        async getupdatebalance() {
-            let Result = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-            this.name = Result.data.original.name
-            this.balance = Result.data.original.userBalance
-            // console.log(Result)
-
-            $("#txtbalance").text(this.formatToPrice(Result.data.original.userBalance))
-            return
         },
         async getSotckId() {
             let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)

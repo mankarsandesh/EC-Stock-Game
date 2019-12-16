@@ -20,7 +20,7 @@
     </div>
 
     <div v-else>
-        <!-- {{$store.state.payout}} -->
+        {{$store.state.payout}}
         <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>
@@ -35,8 +35,8 @@
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
                 <v-flex xs12 md5>
-                    <v-avatar :class="balance-sumTotalAll < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance-sumTotalAll < chip.price" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar :class="balanceinfo-sumTotalAll < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo-sumTotalAll < chip.price" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -168,8 +168,8 @@
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
                 <v-flex xs12 md5>
-                    <v-avatar size="60" :class="balance-sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance-sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar size="60" :class="balanceinfo-sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo-sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -203,8 +203,8 @@
                         <button class="btn-preset">{{$t('msg.amount')}}</button>
                         <input readonly type="text" class="form-input width-15" v-model="price" />
                         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
-                        <v-avatar size="60" :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <v-avatar size="60" :class="balanceinfo - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                                 <span class="btn-chips">{{chip.price}}</span>
                             </v-img>
                         </v-avatar>
@@ -256,8 +256,8 @@
         <v-dialog v-model="dialogtwo" persistent max-width="440px">
             <v-card>
                 <v-card-text>
-                    <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balanceinfo - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -397,7 +397,7 @@ export default {
             betDataShows: [],
             dialog: false,
             dialogtwo: false,
-            balance: 0,
+            balanceinfo: this.getBalance,
             sntwoloopstart: null,
             sntwoloopend: null,
             stockname: "",
@@ -432,11 +432,8 @@ export default {
         this.getMbFooter()
 
     },
-    created() {
-        this.getbalance()
-    },
     computed: {
-        ...mapGetters(["getStockName", "getStockNewData"]),
+        ...mapGetters(["getStockName", "getStockNewData", "getBalance"]),
         sumTotalAll() {
             let total = 0;
             if (this.betData.betdetails.length >= 0) {
@@ -460,6 +457,7 @@ export default {
         },
     },
     methods: {
+        ...mapActions(["balance"]),
         // getrulebetting() {
         //     const socket = openSocket("https://node-liveprice.herokuapp.com");
         //     socket.on("liveprice1", data => {
@@ -510,11 +508,6 @@ export default {
             this.currentItemss = s
             return;
         },
-        async getbalance() {
-            let balance = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
-             balance.status ? this.balance = balance.data.original.userBalance :  this.balance = 0
-            //  console.log(this.balance)
-        },
         async getSotckId() {
             let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
             stcokId.data.forEach(element => {
@@ -524,20 +517,22 @@ export default {
             })
         },
         async getConfirmBet() {
-            if (this.sumTotalAll > this.balance || this.sumTotalAll == '') {
+            if (this.sumTotalAll > this.balanceinfo || this.sumTotalAll == '') {
                 this.getalertstartstop('error')
             } else {
-                this.$store.state.balance = this.balance = this.balance - this.sumTotalAll;
+                this.balanceinfo = this.balanceinfo - this.sumTotalAll;
                 // console.log(this.formData);
                 console.log("send to api server");
                 const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
                 console.log(res)
+
                 setTimeout(() => {
+
                     this.isfooter = true;
                     this.getalertstartstop(res.data)
                     this.setPrice("reset");
                     $(".getupdatebalance")[0].click()
-                    $("#txtbalance").text(this.formatToPrice(this.balance))
+                    $("#txtbalance").text(this.formatToPrice(this.balanceinfo))
                 }, 700);
             }
         },
@@ -563,6 +558,7 @@ export default {
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
+
         formatTotal(value) {
             return `$ ${Number(value)
         .toFixed(0)
@@ -648,7 +644,7 @@ export default {
 
         bet(e, specialName = "none") {
             // this.playSound('/voice/bet-chips.mp3') 
-            if (this.price == 0 || this.price == null || this.price > this.balance - this.sumTotalAll) {
+            if (this.price == 0 || this.price == null || this.price > this.balanceinfo - this.sumTotalAll) {
                 console.log("Null-0");
                 this.price = 0
                 this.getalertstartstop("notenough")
@@ -749,11 +745,11 @@ export default {
                     this.getBetClosedopen('open');
                 }
 
-                if (times == alert) {
-                    this.getalertstartstop("stop")
-                } else if (times == calculating) {
-                    this.getalertstartstop("start")
-                }
+                // if (times == alert) {
+                //     this.getalertstartstop("stop")
+                // } else if (times == calculating) {
+                //     this.getalertstartstop("start")
+                // }
 
                 if (times == calculating - 3) {
                     this.alertOutCome()
@@ -779,12 +775,12 @@ export default {
             if (totalPayout.status == false) return;
             this.snackbar = true;
             $(".getupdatebalance")[0].click()
-            this.getbalance()
             this.betPrice = totalPayout.data
             if (totalPayout.data > 0) {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
                 this.playSound('/voice/winbet.mp3')
+                this.balance()
             } else {
                 this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
@@ -804,6 +800,7 @@ export default {
             } else if (val.status == true) {
                 this.alertext = this.$root.$t('msg.confirmed')
                 this.color = "success";
+                this.balance()
             } else if (val.status == false) {
                 this.alertext = this.$root.$t('msg.moneynotenough') + "\n" + val.message;
                 this.color = "error";

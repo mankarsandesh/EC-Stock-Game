@@ -1,8 +1,5 @@
 import openSocket from "socket.io-client";
-export default ({
-    store
-}) => {
-
+export default ({ store }) => {
 
     //coin modern set and get from localStorage
     initLocalStorageCoin(store)
@@ -28,15 +25,12 @@ export default ({
         store.dispatch('asynInitCallApi')
         store.dispatch("balance")
         store.dispatch("asynUserInfo")
-    }, 1000)
+    }, 500);
 
     store.dispatch("asyncPayout")
     setInterval(() => {
         store.dispatch("asyncPayout")
-    }, 3000)
-    setInterval(() => {
-        store.dispatch("asynUserInfo")
-    }, 10000)
+    }, 3000);
 }
 
 function setLanguage(store) {
