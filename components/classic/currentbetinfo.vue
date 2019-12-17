@@ -160,7 +160,7 @@ export default {
             return this.gethistory(date)
         },
         async gethistory(val) {
-            let history = await this.$axios.$get('/api/currenctChipBetUser?apikey=' + this.$store.state.auth_token)
+            let history = await this.$axios.$get('/api/fetchCurrentBet?apikey=' + this.$store.state.auth_token)
             if (history.data == null) return
             // console.log(history.data)
 

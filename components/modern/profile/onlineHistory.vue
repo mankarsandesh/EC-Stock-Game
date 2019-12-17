@@ -27,18 +27,21 @@
             </v-card>
         </v-flex>
         <v-card>
-            <v-card-text>{{$t('msg.playerid')}} : {{playerId}}</v-card-text>
-            <v-card-text>{{$t('msg.online')}} {{$t('msg.Time')}} : {{setTime(time.todayOnline, 0)}}</v-card-text>
-            <v-card-text>{{$t('msg.Total')}} {{$t('msg.online')}} : {{setTime(time.totalOnline, 1)}}</v-card-text>
+            <v-card-text>{{$t('msg.playerid')}} : {{getUserName.userApiId}}</v-card-text>
+            <v-card-text>{{$t('msg.online')}} {{$t('msg.Time')}} : {{setTime(getOnlimeTime.todayOnline, 0)}}</v-card-text>
+            <v-card-text>{{$t('msg.Total')}} {{$t('msg.online')}} : {{setTime(getOnlimeTime.totalOnline, 1)}}</v-card-text>
         </v-card>
     </v-layout>
 </div>
 </template>
 
 <script>
+import {
+    mapGetters
+} from "vuex";
 import OnlineChart from "./onlinechart";
 export default {
-    components:{
+    components: {
         OnlineChart
     },
     data() {
@@ -49,22 +52,20 @@ export default {
             to: false,
             items: ["day", "weeks", "months", "years"],
             time: "00:00",
-            playerId:""
+            playerId: ""
         };
     },
     mounted() {
-        this.getOnlineTime()
         this.fetchAll()
+    },
+    computed: {
+        ...mapGetters(["getBalance", "getUserName", "getOnlimeTime"])
     },
     methods: {
         async fetchAll() {
-            let res = await this.$axios.$get( '/api/me?apikey=' + this.$store.state.auth_token)
+            let res = await this.$axios.$get('/api/me?apikey=' + this.$store.state.auth_token)
             // console.log(res);
             this.playerId = res.data.userApiId
-        },
-        async getOnlineTime() {
-            let dataGet = await this.$axios.$get( '/api/me/online?method=profile&apikey=' + this.$store.state.auth_token)
-            this.time = dataGet.data
         },
         setTime(seconds, val) {
             let days = Math.floor(seconds / (24 * 60 * 60));

@@ -20,7 +20,7 @@
     </div>
 
     <div v-else>
-        {{$store.state.payout}}
+        <!-- {{$store.state.payout}} -->
         <v-tabs class="bg-colors" v-model="currentItem" color="transparent" fixed-tabs slider-color="yellow" grow>
             <v-tab class="text-sm-left text-whites" v-for="(item, idx1) in items" :key="idx1" :href="'#tab-' + item.name">{{ $t('gamemsg.'+item.name )}}</v-tab>
         </v-tabs>
@@ -521,13 +521,13 @@ export default {
                 this.getalertstartstop('error')
             } else {
                 this.balanceinfo = this.balanceinfo - this.sumTotalAll;
-                // console.log(this.formData);
+                console.log("data..........");
+                console.log(this.formData);
                 console.log("send to api server");
                 const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
                 console.log(res)
 
                 setTimeout(() => {
-
                     this.isfooter = true;
                     this.getalertstartstop(res.data)
                     this.setPrice("reset");

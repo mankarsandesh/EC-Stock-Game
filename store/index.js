@@ -12,6 +12,7 @@ const createStore = () => {
             userData: {},
             payout: {},
             balance: "",
+            OnlineTime: "",
             footerBetAmount: 0,
             // store data betting
             onGoingBet: [],
@@ -241,6 +242,9 @@ const createStore = () => {
             setBalance(state, payload) {
                 state.balance = payload;
             },
+            setOnlineTime(state, payload) {
+                state.OnlineTime = payload
+            },
             SET_TIME(state, payload) {
                 state.time = payload;
                 // console.log(state.time)
@@ -286,8 +290,8 @@ const createStore = () => {
                         location.href = "http://" + location.hostname + ":8001/"
                         return
                     }
-                    let userInfo = res.data.original.name;
-                    context.commit("setUserData", { name: userInfo });
+                    let userInfo = res.data.original;
+                    context.commit("setUserData", userInfo);
                     // }
                 } catch (ex) {
                     console.error(ex);
@@ -443,6 +447,14 @@ const createStore = () => {
                 } catch (error) {
                     console.log(error);
                 }
+            },
+            async OnlineTime(context) {
+                try {
+                    let res = await this.$axios.$get(`/api/me/online?method=profile&apikey=${context.getters.getAuth_token}`);
+                    context.commit("setOnlineTime", res.data);
+                } catch (error) {
+                    console.log(error);
+                }
             }
         },
         getters: {
@@ -481,11 +493,14 @@ const createStore = () => {
             },
             // get user name
             getUserName(state) {
-                return state.userData.name;
+                return state.userData;
             },
             // get user balance
             getBalance(state) {
                 return state.balance;
+            },
+            getOnlimeTime(state) {
+                return state.OnlineTime
             },
 
             // get auth_token
@@ -919,4 +934,4 @@ const createStore = () => {
     });
 };
 
-export default createStore;
+export default createStore

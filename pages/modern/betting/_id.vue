@@ -29,8 +29,7 @@
             <v-flex xs2 class="border-left text-xs-center">
               <span class="text-uppercase white--text">
                 <small>
-                  game
-                  <br />type
+                {{$t('msg.Game Mode')}}
                 </small>
               </span>
             </v-flex>
@@ -38,8 +37,7 @@
               <nuxt-link to="/modern">
                 <span class="text-uppercase white--text cursor">
                   <small>
-                    other
-                    <br />stock
+                   {{$t('msg.otherstock')}}
                   </small>
                 </span>
               </nuxt-link>
@@ -109,10 +107,10 @@
             style="width:100%;"
             @change="tabChanged($event)"
           >
-            <v-tab>first digit</v-tab>
-            <v-tab>last digit</v-tab>
-            <v-tab>both digit</v-tab>
-            <v-tab>two digit</v-tab>
+            <v-tab>{{$t('gamemsg.firstdigit')}}</v-tab>
+            <v-tab>{{$t('gamemsg.lastdigit')}}</v-tab>
+            <v-tab>{{$t('gamemsg.bothdigit')}}</v-tab>
+            <v-tab>{{$t('gamemsg.twodigit')}}</v-tab>
 
             <!-- First Digit -->
 
@@ -120,13 +118,13 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('firstdigit-small')">
                   <v-card-title class="d-block">
-                    <h5>small</h5>
+                    <h5>{{$t('gamemsg.small')}}</h5>
                     <span>0 TO 4</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('firstdigit-big')">
                   <v-card-title class="d-block">
-                    <h5>big</h5>
+                    <h5>{{$t('gamemsg.big')}}</h5>
                     <span>5 TO 9</span>
                   </v-card-title>
                 </v-card>
@@ -134,12 +132,12 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('firstdigit-odd')">
                   <v-card-title class="o-even">
-                    <h5>odd</h5>
+                    <h5>{{$t('gamemsg.odd')}}</h5>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('firstdigit-even')">
                   <v-card-title class="o-even">
-                    <h5>even</h5>
+                    <h5>{{$t('gamemsg.even')}}</h5>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click.stop="drawerderfirst = !drawerderfirst">
@@ -152,19 +150,19 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('firstdigit-low')">
                   <v-card-title class="d-block">
-                    <h5>low</h5>
+                    <h5>{{$t('gamemsg.low')}}</h5>
                     <span>0 TO 3</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('firstdigit-mid')">
                   <v-card-title class="d-block">
-                    <h5>mid</h5>
+                    <h5>{{$t('gamemsg.mid')}}</h5>
                     <span>4 TO 6</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('firstdigit-high')">
                   <v-card-title class="d-block">
-                    <h5>high</h5>
+                    <h5>{{$t('gamemsg.high')}}</h5>
                     <span>7 TO 9</span>
                   </v-card-title>
                 </v-card>
@@ -175,13 +173,13 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('lastdigit-small')">
                   <v-card-title class="d-block">
-                    <h5>small</h5>
+                    <h5>{{$t('gamemsg.small')}}</h5>
                     <span>0 TO 4</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('lastdigit-big')">
                   <v-card-title class="d-block">
-                    <h5>big</h5>
+                    <h5>{{$t('gamemsg.big')}}</h5>
                     <span>5 TO 9</span>
                   </v-card-title>
                 </v-card>
@@ -189,12 +187,12 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('lastdigit-odd')">
                   <v-card-title class="o-even">
-                    <h5>odd</h5>
+                    <h5>{{$t('gamemsg.odd')}}</h5>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('lastdigit-even')">
                   <v-card-title class="o-even">
-                    <h5>even</h5>
+                    <h5>{{$t('gamemsg.even')}}</h5>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click.stop="drawerderlast = !drawerderlast">
@@ -207,19 +205,19 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('lastdigit-low')">
                   <v-card-title class="d-block">
-                    <h5>low</h5>
+                    <h5>{{$t('gamemsg.low')}}</h5>
                     <span>0 TO 3</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('lastdigit-mid')">
                   <v-card-title class="d-block">
-                    <h5>mid</h5>
+                    <h5>{{$t('gamemsg.mid')}}</h5>
                     <span>4 TO 6</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('lastdigit-high')">
                   <v-card-title class="d-block">
-                    <h5>high</h5>
+                    <h5>{{$t('gamemsg.high')}}</h5>
                     <span>7 TO 9</span>
                   </v-card-title>
                 </v-card>
@@ -231,20 +229,20 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('bothdigit-small')">
                   <v-card-title class="d-block">
-                    <h5>small</h5>
+                    <h5>{{$t('gamemsg.small')}}</h5>
                     <span>0 TO 9</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('bothdigit-tie')">
                   <v-card-title class="d-block">
-                    <h5>tie</h5>
+                    <h5>{{$t('gamemsg.tie')}}</h5>
                     <span>0</span>
                   </v-card-title>
                 </v-card>
 
                 <v-card class="box-click" @click="showBetDialog('bothdigit-big')">
                   <v-card-title class="d-block">
-                    <h5>big</h5>
+                    <h5>{{$t('gamemsg.big')}}</h5>
                     <span>9 TO 18</span>
                   </v-card-title>
                 </v-card>
@@ -253,12 +251,12 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('bothdigit-even')">
                   <v-card-title class="o-even">
-                    <h5>odd</h5>
+                    <h5>{{$t('gamemsg.odd')}}</h5>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('bothdigit-even')">
                   <v-card-title class="o-even">
-                    <h5>even</h5>
+                    <h5>{{$t('gamemsg.even')}}</h5>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click.stop="drawerder018 = !drawerder018">
@@ -270,19 +268,19 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('bothdigit-low')">
                   <v-card-title class="d-block">
-                    <h5>low</h5>
+                    <h5>{{$t('gamemsg.low')}}</h5>
                     <span>0 TO 5</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('bothdigit-mid')">
                   <v-card-title class="d-block">
-                    <h5>mid</h5>
+                    <h5>{{$t('gamemsg.mid')}}</h5>
                     <span>6 to 11</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('bothdigit-high')">
                   <v-card-title class="d-block">
-                    <h5>high</h5>
+                    <h5>{{$t('gamemsg.high')}}</h5>
                     <span>12 to 18</span>
                   </v-card-title>
                 </v-card>
@@ -296,19 +294,19 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('twodigit-small')">
                   <v-card-title class="d-block">
-                    <h5>small</h5>
+                    <h5>{{$t('gamemsg.small')}}</h5>
                     <span>00 TO 49</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('twodigit-tie')">
                   <v-card-title class="d-block">
-                    <h5>tie</h5>
+                    <h5>{{$t('gamemsg.tie')}}</h5>
                     <span>0</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('twodigit-big')">
                   <v-card-title class="d-block">
-                    <h5>big</h5>
+                    <h5>{{$t('gamemsg.big')}}</h5>
                     <span>50 TO 99</span>
                   </v-card-title>
                 </v-card>
@@ -316,12 +314,12 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('twodigit-odd')">
                   <v-card-title class="o-even">
-                    <h5>odd</h5>
+                    <h5>{{$t('gamemsg.odd')}}</h5>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('twodigit-even')">
                   <v-card-title class="o-even">
-                    <h5>even</h5>
+                    <h5>{{$t('gamemsg.even')}}</h5>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click.stop="drawerder099 = !drawerder099">
@@ -334,19 +332,19 @@
               <v-layout row align-center justify-center>
                 <v-card class="box-click" @click="showBetDialog('twodigit-low')">
                   <v-card-title class="d-block">
-                    <h5>low</h5>
+                    <h5>{{$t('gamemsg.low')}}</h5>
                     <span>0 TO 33</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('twodigit-mid')">
                   <v-card-title class="d-block">
-                    <h5>mid</h5>
+                    <h5>{{$t('gamemsg.mid')}}</h5>
                     <span>34 to 66</span>
                   </v-card-title>
                 </v-card>
                 <v-card class="box-click" @click="showBetDialog('twodigit-high')">
                   <v-card-title class="d-block">
-                    <h5>high</h5>
+                    <h5>{{$t('gamemsg.high')}}</h5>
                     <span>66 to 99</span>
                   </v-card-title>
                 </v-card>
@@ -358,7 +356,7 @@
         </v-layout>
 
         <v-toolbar bottom class="total-bet bettingFooter">
-          <span>Total bet : $200.00</span>
+          <span>{{$t('msg.totalbet')}}: $200.00</span>
         </v-toolbar>
       </v-flex>
     </v-layout>
