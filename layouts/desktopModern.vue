@@ -90,6 +90,8 @@ import chatWindow from "~/components/chatWindow";
 // import popper from "vue-popperjs";
 // import "vue-popperjs/dist/vue-popper.css";
 
+
+
 export default {
   components: {
     chatWindow,
