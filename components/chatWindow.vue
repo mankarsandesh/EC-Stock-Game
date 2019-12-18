@@ -54,10 +54,10 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 
 import io from "socket.io-client";
-const socket = io("localhost:3001", {
-  transports: ["polling"],
-    query: `userId=${userId}&name=bank`
-});
+// const socket = io("localhost:3001", {
+//   transports: ["polling"],
+//     query: `userId=12121212&name=bank`
+// });
 
 export default {
   components: {
@@ -111,10 +111,10 @@ export default {
     sendMsg: function(event) {
       if (this.message) {
         this.Messagedata = { name: "Sandesh11", msg: this.message };
-        socket.emit("send-message", {
-          message: this.message,
-          userId: "sandesh"
-        });
+        // socket.emit("send-message", {
+        //   message: this.message,
+        //   userId: "sandesh"
+        // });
 
         console.log("Hello");
         this.allmessage.push(this.Messagedata);
