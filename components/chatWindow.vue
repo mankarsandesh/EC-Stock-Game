@@ -21,7 +21,7 @@
           <div id="bodyChat">
             <div class="msguser" v-for="data in allmessage" :key="data.index">
               <a href="#">{{data.name}} :</a>
-              <span class="msgbody">{{data.msg}}</span>
+              <span class="msgbody">{{data.message}}</span>
             </div>
           </div>
 
@@ -54,9 +54,9 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 
 import io from "socket.io-client";
-const socket = io("localhost:3001", {
+const socket = io("http://159.138.47.250/chatglobal", {
   transports: ["polling"],
-    query: `userId=${userId}&name=bank`
+    query: `userId=0005_456456&name=bank`
 });
 
 export default {
@@ -72,16 +72,7 @@ export default {
       Messagedata: [],
       message: null,
       messageGame: null,
-      allmessage: [
-        {
-          name: "Sandesh",
-          msg: "Hello Bro"
-        },
-        {
-          name: "Ritesh",
-          msg: "Hello Sandesh"
-        }
-      ],
+      allmessage: [],
       allmessageGame: [
         {
           name: "Tanver",
@@ -93,6 +84,16 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    socket.on('new-message', (data) => {
+      console.log("created");       
+         this.allmessage.push({
+           name : data.name,
+           message : data.message
+         });
+         console.log(this.allmessage);
+    });
   },
   methods: {
     tab1: function(event) {
@@ -109,23 +110,25 @@ export default {
     },
 
     sendMsg: function(event) {
-      if (this.message) {
-        this.Messagedata = { name: "Sandesh11", msg: this.message };
-        socket.emit("send-message", {
+      if (this.message) { 
+      this.Messagedata = { name: "sandesh", message: this.message };
+      // this.allmessage.push(this.Messagedata);
+      socket.emit("send-message", {
           message: this.message,
-          userId: "sandesh"
-        });
+          name: "sandesh"
+      });
 
-        console.log("Hello");
-        this.allmessage.push(this.Messagedata);
-        this.message = "";
+      console.log("Message Send");
+      console.log(this.allmessage);
+      this.message = "";
+      
       }
     },
 
     sendMsgGame: function(event) {
       cosnole.log("Hello");
       if (this.messageGame) {
-        this.Messagedata = { name: "Sandesh11", msg: this.messageGame };
+        this.Messagedata = { name: "sandesh", msg: this.messageGame };
         // socket.emit('send-message', this.messageGame);
         console.log(socket.emit);
         console.log("Hello");
