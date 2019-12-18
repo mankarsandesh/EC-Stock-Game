@@ -10,7 +10,7 @@
       <div class="chatRoom">
         <div id="headerChat">
           <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
-            <a href="#">Channel</a>
+            <a href="#">{{getUserName.name}}, Channel</a>
           </span>
           <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
             <a href="#">This Game</a>
@@ -21,7 +21,7 @@
           <div id="bodyChat">
             <div class="msguser" v-for="data in allmessage" :key="data.index">
               <a href="#">{{data.name}} :</a>
-              <span class="msgbody">{{data.msg}}</span>
+              <span class="msgbody">{{data.message}}</span>
             </div>
           </div>
 
@@ -52,12 +52,12 @@
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-
+import { mapGetters } from "vuex";
 import io from "socket.io-client";
-// const socket = io("localhost:3001", {
-//   transports: ["polling"],
-//     query: `userId=12121212&name=bank`
-// });
+const socket = io("http://localhost:5000/", {
+  transports: ["polling"],
+    query: `userId=0005_456456&name=bank`
+});
 
 export default {
   components: {
@@ -72,16 +72,7 @@ export default {
       Messagedata: [],
       message: null,
       messageGame: null,
-      allmessage: [
-        {
-          name: "Sandesh",
-          msg: "Hello Bro"
-        },
-        {
-          name: "Ritesh",
-          msg: "Hello Sandesh"
-        }
-      ],
+      allmessage: [],
       allmessageGame: [
         {
           name: "Tanver",
@@ -93,6 +84,22 @@ export default {
         }
       ]
     };
+  },
+   computed: {
+    ...mapGetters(["getBalance", "getUserName"])
+  },
+  created() {
+    socket.on('new-message', (data) => {
+      console.log("created");       
+         this.allmessage.push({
+           name : data.name,
+           message : data.message
+         });
+         console.log(this.allmessage);
+    });
+  },
+  mounted(){    
+     console.log(this.getUserName.name);
   },
   methods: {
     tab1: function(event) {
@@ -109,24 +116,22 @@ export default {
     },
 
     sendMsg: function(event) {
-      if (this.message) {
-        this.Messagedata = { name: "Sandesh11", msg: this.message };
-        // socket.emit("send-message", {
-        //   message: this.message,
-        //   userId: "sandesh"
-        // });
-
-        console.log("Hello");
-        this.allmessage.push(this.Messagedata);
-        this.message = "";
+   console.log(this.getUserName.name);
+      if (this.message) { 
+      socket.emit("send-message", {
+          message: this.message,
+          name: this.getUserName.name
+      });
+      console.log("Message Send");
+      console.log(this.allmessage);
+      this.message = "";      
       }
     },
 
     sendMsgGame: function(event) {
       cosnole.log("Hello");
       if (this.messageGame) {
-        this.Messagedata = { name: "Sandesh11", msg: this.messageGame };
-        // socket.emit('send-message', this.messageGame);
+        this.Messagedata = { name: "sandesh", msg: this.messageGame };
         console.log(socket.emit);
         console.log("Hello");
         this.messageGame = "";
