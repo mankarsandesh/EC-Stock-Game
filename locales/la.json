@@ -136,7 +136,8 @@
         "customlength": "ຄວາມຍາວຂອງສຽງ",
         "titles": "ຫົວຂໍ້",
         "preview": "ຂໍ້ຄວາມ",
-        "date": "ວັນທີ່"
+        "date": "ວັນທີ່",
+        "StockLiveData": "ຂໍ້ມູນລົງເກມຕອນນີ"
 
     },
     "navlist": {

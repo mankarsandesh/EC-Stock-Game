@@ -136,7 +136,8 @@
         "customlength": "Custom Length",
         "titles": "Title",
         "preview": "Preview",
-        "date": "Date"
+        "date": "Date",
+        "StockLiveData": "Stock Live Data"
 
     },
     "navlist": {

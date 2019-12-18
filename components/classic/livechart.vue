@@ -79,7 +79,17 @@ export default {
             }
             // console.log(max)
             // console.log(min)
+            const ctx = this.$refs.planetchart;
+            this.gradient = this.$refs.planetchart.getContext("2d").createLinearGradient(0, 0, 0, 450);
+            
+            this.gradient.addColorStop(0, '#88cafb')
+            this.gradient.addColorStop(0.5, '#88cafb');
+            this.gradient.addColorStop(1, '#ffffff');
 
+            // this.gradient.addColorStop(0, 'rgba(0, 231, 255, 0.9)')
+            // this.gradient.addColorStop(0.5, 'rgba(0, 231, 255, 0.25)');
+            // this.gradient.addColorStop(1, 'rgba(0, 231, 255, 0)');
+            
             const config = {
                 type: 'line',
                 data: {
@@ -90,10 +100,10 @@ export default {
                         fill: true,
                         borderColor: "#00c0ef",
                         borderWidth: 1.5,
-                        borderDashOffset: 0.0,
                         pointBackgroundColor: "#00c0ef",
                         pointBorderColor: "rgba(255,255,255,0)",
                         pointHoverBackgroundColor: "#00c0ef",
+                        backgroundColor: this.gradient,
                         pointBorderWidth: 0,
                         pointHoverRadius: 0,
                         pointHoverBorderWidth: 0,
@@ -185,7 +195,6 @@ export default {
                 }
             }
 
-            const ctx = this.$refs.planetchart;
             const mychart = new Chart(ctx, config);
 
             ///////////////////////////////////////////

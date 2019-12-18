@@ -122,6 +122,7 @@
                 <div class="text-center">{{ msg }}</div>
                 <div style="height: 455px;">
                     <livestock v-if="isShow" :dataGet="chartData"></livestock>
+                    <livestock v-else-if="isShows" :dataGet="chartDatas"></livestock>
                 </div>
                 <div class="setborder">
                     <span class="seticon"> <i class="fa fa-money fa-2x iconcolor"></i> : {{ dataliveBetAll.totalAmount ? dataliveBetAll.totalAmount:0}}</span>
@@ -194,7 +195,9 @@ export default {
             showSpeed: 20,
             chartData: [],
             isShow: false,
+            isShows: false,
             chartData: [],
+            chartDatas: [],
             rule: [],
             rulenew: [],
             ruleold: [],
@@ -207,7 +210,7 @@ export default {
         setInterval(() => {
             this.getliveBetCount()
             this.getliveAll()
-        }, 3000);
+        }, 1000);
 
     },
 
@@ -250,7 +253,7 @@ export default {
                 }
                 if (res.data.length != 0 || res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
                     // console.log("Okkk");
-                    this.msg = "Rule Beting";
+                    this.msg = this.$root.$t('msg.betting');
                     if (this.rulenew == undefined) return
                     if (this.isShow == true && res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
                         this.chartData = res.data;
@@ -262,13 +265,15 @@ export default {
                         this.chartData = res.data;
                         this.isShow = true
                     }
+                    this.isShows = false
+
                 } else {
-                    // this.isShow = false
                     // console.log("Nooo");
-                    this.msg = "Rule Not Beting";
+                    this.msg = this.$root.$t('msg.nobetting');
                     // this.chartData = []
-                    this.isShow = true
-                    this.chartData = [{
+                    this.isShow = false
+                    this.isShows = true
+                    this.chartDatas = [{
                             "rule": "bothdigit-big",
                             "totalAmount": "20",
                             "totalUsers": 1
@@ -291,7 +296,7 @@ export default {
                     ]
                 }
             } catch (error) {
-
+                console.log(error)
             }
 
         },

@@ -22,7 +22,7 @@ export default {
     },
     mounted() {
         this.dataGet.forEach(element => {
-            this.stockname.push(element.rule);
+            this.stockname.push(element.rule.split("-")[1] >= 0 ? this.$root.$t('gamemsg.' + element.rule.split("-")[0]) + ' - ' + element.rule.split("-")[1] : this.$root.$t('gamemsg.' + element.rule.split("-")[0]) + ' - ' + this.$root.$t('gamemsg.' + element.rule.split("-")[1]));
             this.betwon.push(element.totalAmount);
         });
         this.gradient = this.$refs.planetchart.getContext("2d").createLinearGradient(255, 0, 0, 0);
@@ -35,7 +35,7 @@ export default {
                 labels: this.stockname,
                 datasets: [{
                     data: this.betwon,
-                    label: 'Proficiency',
+                    label: this.$root.$t('msg.amount'),
                     // fill: false,
                     backgroundColor: this.gradient,
                     borderWidth: 3
@@ -43,14 +43,13 @@ export default {
             },
             options: {
                 responsive: true,
-
                 legend: {
                     display: false,
                     position: 'top'
                 },
                 title: {
                     display: true,
-                    text: 'Stock Live Data'
+                    text: this.$root.$t('msg.StockLiveData')
                 },
                 tooltips: {
                     enabled: false
