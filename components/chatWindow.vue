@@ -10,7 +10,7 @@
       <div class="chatRoom">
         <div id="headerChat">
           <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
-            <a href="#">{{getUserName.name}}, Channel</a>
+            <a href="#">Channel</a>
           </span>
           <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
             <a href="#">This Game</a>
@@ -90,7 +90,8 @@ export default {
   },
   created() {
     socket.on('new-message', (data) => {
-      console.log("created");       
+      console.log("created");  
+      console.log(data);       
          this.allmessage.push({
            name : data.name,
            message : data.message
@@ -99,7 +100,7 @@ export default {
     });
   },
   mounted(){    
-     console.log(this.getUserName.name);
+     console.log(this.getUserName);    
   },
   methods: {
     tab1: function(event) {
@@ -116,10 +117,11 @@ export default {
     },
 
     sendMsg: function(event) {
-   console.log(this.getUserName.name);
+      console.log(this.getUserName);    
       if (this.message) { 
       socket.emit("send-message", {
           message: this.message,
+          userId: this.getUserName.userId,
           name: this.getUserName.name
       });
       console.log("Message Send");
