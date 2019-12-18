@@ -10,7 +10,7 @@
                     <tr>
                         <td class="text-left">
                             <i class="fa fa-user fa-2x font-size15"></i>
-                            {{$t('msg.Player')}} : {{getUserName}}</td>
+                            {{$t('msg.Player')}} : {{getUserName.name}}</td>
                     </tr>
                     <tr>
                         <td class="text-left">

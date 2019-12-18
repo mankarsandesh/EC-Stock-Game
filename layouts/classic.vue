@@ -32,7 +32,7 @@
                     </template>
                     <v-list>
                         <v-list-tile>
-                            <v-list-tile-title>{{getUserName}}</v-list-tile-title>
+                            <v-list-tile-title>{{getUserName.name}}</v-list-tile-title>
                         </v-list-tile>
                         <v-list-tile @click="dialogprofile = true">
                             <v-list-tile-title>Profile</v-list-tile-title>

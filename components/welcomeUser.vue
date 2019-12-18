@@ -1,10 +1,10 @@
 <template>
   <div>
     <h4>
-      {{$t('home.welcome')}}
-      <span class="warning--text">{{getUserName}},</span>
-      <span class="warning--text">{{formatToPrice(getBalance)}}</span>
-      {{$t('home.goodluck')}}！！
+        {{$t('home.welcome')}}
+        <span class="warning--text">{{getUserName.name}},</span>
+        <span class="warning--text">{{formatToPrice(getBalance)}}</span>
+        {{$t('home.goodluck')}}！！
     </h4>
   </div>
 </template>
