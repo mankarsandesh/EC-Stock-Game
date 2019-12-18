@@ -25,6 +25,9 @@ export default {
             this.stockname.push(element.rule);
             this.betwon.push(element.totalAmount);
         });
+        this.gradient = this.$refs.planetchart.getContext("2d").createLinearGradient(255, 0, 0, 0);
+        this.gradient.addColorStop(0, "#003f70");
+        this.gradient.addColorStop(1, "#ffffff");
 
         var config = {
             type: "horizontalBar",
@@ -34,7 +37,7 @@ export default {
                     data: this.betwon,
                     label: 'Proficiency',
                     // fill: false,
-                    backgroundColor: "blue",
+                    backgroundColor: this.gradient,
                     borderWidth: 3
                 }]
             },
@@ -82,5 +85,4 @@ export default {
 .set-height {
     height: 300px;
 }
-
 </style>
