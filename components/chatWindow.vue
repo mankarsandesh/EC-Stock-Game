@@ -10,7 +10,7 @@
       <div class="chatRoom">
         <div id="headerChat">
           <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
-            <a href="#">Channel</a>
+            <a href="#">{{getUserName.name}}, Channel</a>
           </span>
           <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
             <a href="#">This Game</a>
@@ -52,9 +52,9 @@
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-
+import { mapGetters } from "vuex";
 import io from "socket.io-client";
-const socket = io("http://159.138.47.250/chatglobal", {
+const socket = io("http://localhost:5000/", {
   transports: ["polling"],
     query: `userId=0005_456456&name=bank`
 });
@@ -85,6 +85,9 @@ export default {
       ]
     };
   },
+   computed: {
+    ...mapGetters(["getBalance", "getUserName"])
+  },
   created() {
     socket.on('new-message', (data) => {
       console.log("created");       
@@ -94,6 +97,9 @@ export default {
          });
          console.log(this.allmessage);
     });
+  },
+  mounted(){    
+     console.log(this.getUserName.name);
   },
   methods: {
     tab1: function(event) {
@@ -110,18 +116,15 @@ export default {
     },
 
     sendMsg: function(event) {
+   console.log(this.getUserName.name);
       if (this.message) { 
-      this.Messagedata = { name: "sandesh", message: this.message };
-      // this.allmessage.push(this.Messagedata);
       socket.emit("send-message", {
           message: this.message,
-          name: "sandesh"
+          name: this.getUserName.name
       });
-
       console.log("Message Send");
       console.log(this.allmessage);
-      this.message = "";
-      
+      this.message = "";      
       }
     },
 
@@ -129,7 +132,6 @@ export default {
       cosnole.log("Hello");
       if (this.messageGame) {
         this.Messagedata = { name: "sandesh", msg: this.messageGame };
-        // socket.emit('send-message', this.messageGame);
         console.log(socket.emit);
         console.log("Hello");
         this.messageGame = "";
