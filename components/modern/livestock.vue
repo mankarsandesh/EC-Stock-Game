@@ -35,7 +35,7 @@ export default {
                 labels: this.stockname,
                 datasets: [{
                     data: this.betwon,
-                    label: 'Proficiency',
+                    label: this.$root.$t('msg.amount'),
                     // fill: false,
                     backgroundColor: this.gradient,
                     borderWidth: 3

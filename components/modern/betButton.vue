@@ -500,7 +500,7 @@ export default {
 
 <style scoped>
 .bet-close {
-    width: 103%;
+    width: 100%;
     z-index: 10;
     height: 100%;
     position: absolute;
