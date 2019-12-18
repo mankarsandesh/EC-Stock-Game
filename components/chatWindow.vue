@@ -52,11 +52,11 @@
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
-const socket = io("http://localhost:5000/", {
+const socket = io("http://159.138.47.250", {
   transports: ["polling"],
-    query: `userId=0005_456456&name=bank`
+  query: `userId=${this.getUserName.userId}`
 });
 
 export default {
@@ -85,24 +85,25 @@ export default {
       ]
     };
   },
-   computed: {
-    ...mapGetters(["getBalance", "getUserName"])
+  computed: {
+    ...mapGetters(["getMessages", "getUserName"])
+  },
+  mounted() {
+    this.asymessages();
   },
   created() {
-    socket.on('new-message', (data) => {
-      console.log("created");  
-      console.log(data);       
-         this.allmessage.push({
-           name : data.name,
-           message : data.message
-         });
-         console.log(this.allmessage);
+    socket.on("new-message", data => {
+      console.log("created");
+      console.log(data);
+      this.allmessage.push({
+        name: data.name,
+        message: data.message
+      });
+      console.log(this.allmessage);
     });
   },
-  mounted(){    
-     console.log(this.getUserName);    
-  },
   methods: {
+    ...mapActions(["asymessages"]),
     tab1: function(event) {
       this.betChannel = false;
       this.allChannel = true;
@@ -117,16 +118,15 @@ export default {
     },
 
     sendMsg: function(event) {
-      console.log(this.getUserName);    
-      if (this.message) { 
-      socket.emit("send-message", {
+      if (this.message) {
+        socket.emit("send-message", {
           message: this.message,
           userId: this.getUserName.userId,
           name: this.getUserName.name
-      });
-      console.log("Message Send");
-      console.log(this.allmessage);
-      this.message = "";      
+        });
+        console.log("Message Send");
+        console.log(this.allmessage);
+        this.message = "";
       }
     },
 

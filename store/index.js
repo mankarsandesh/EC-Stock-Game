@@ -8,6 +8,7 @@ const createStore = () => {
             isLoadingStockGame: false,
             auth_token: localStorage.apikey,
             isLoadingAnnoucement: [],
+            isLoadingMessage : [],            
             isLoadingHistory: [],
             userData: {},
             payout: {},
@@ -262,6 +263,9 @@ const createStore = () => {
             setAnouncement(state, payload) {
                 state.isLoadingAnnoucement = payload;
             },
+            setMessages(state, payload) {
+                state.isLoadingMessage = payload;
+            },
             setHistory(state, payload) {
                 state.isLoadingHistory = payload;
             }
@@ -434,6 +438,20 @@ const createStore = () => {
                     console.log(error);
                 }
             },
+            async asymessages(context) {
+                console.log("sasasasasasasasasasasasasa");   
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
+                    const res = await this.$axios.$get(
+                        `/api/allchannelChat?apikey=${context.getters.getAuth_token}`
+                    );
+                    console.log(res);
+                    context.commit("setMessages", res.data);  
+                    console.log("Message View");                
+                } catch (error) {
+                    console.log(error);
+                }
+            },
             // to get User bet History
             async asyhistory(context) {
                 try {
@@ -478,6 +496,9 @@ const createStore = () => {
             },
             getHistory(state) {
                 return state.isLoadingHistory;
+            },
+            getMessages(state) {
+                return state.isLoadingMessage;
             },
             getAnnoucement(state) {
                 return state.isLoadingAnnoucement;
