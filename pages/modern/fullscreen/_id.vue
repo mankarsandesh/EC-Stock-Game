@@ -125,9 +125,9 @@
                     <livestock v-else-if="isShows" :dataGet="chartDatas"></livestock>
                 </div>
                 <div class="setborder">
+                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor"></i> : {{dataliveBetAll.totalUsers}}</span>
                     <span class="seticon"> <i class="fa fa-money fa-2x iconcolor"></i> : {{ dataliveBetAll.totalAmount ? dataliveBetAll.totalAmount:0}}</span>
                     <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor"></i> : {{dataliveBetAll.totalBets}}</span>
-                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor"></i> : {{dataliveBetAll.totalUsers}}</span>
                 </div>
             </v-flex>
             <!-- live Chart -->
@@ -251,7 +251,8 @@ export default {
                 for (let i = 0; i < res.data.length; i++) {
                     this.rulenew = res.data[i].totalUsers
                 }
-                if (res.data.length != 0 || res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+                if (res.data.length != 0 || res.data.length > this.chartData.length || this.rulenew > this.ruleold) 
+                {
                     // console.log("Okkk");
                     this.msg = this.$root.$t('msg.betting');
                     if (this.rulenew == undefined) return
