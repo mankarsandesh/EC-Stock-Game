@@ -136,7 +136,8 @@
         "customlength": "自定义长度",
         "titles": "标题",
         "preview": "预习",
-        "date": "日期"
+        "date": "日期",
+        "StockLiveData": "库存实时数据"
 
     },
     "navlist": {
