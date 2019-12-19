@@ -21,18 +21,20 @@ export default ({ store }) => {
         store.commit('SET_TIME', data)
     });
 
-    store.dispatch('OnlineTime')
 
-    // setTimeout(() => {
     // store.dispatch('asynGetAllStock')
     store.dispatch('asynInitCallApi')
     store.dispatch("balance")
-    store.dispatch("asynUserInfo")
-        // }, 500);
+
+    // setTimeout(() => {
+
+    // }, 3000);
 
     store.dispatch("asyncPayout")
     setInterval(() => {
         store.dispatch("asyncPayout")
+        store.dispatch('OnlineTime')
+        store.dispatch("asynUserInfo")
     }, 3000);
 }
 
