@@ -31,7 +31,7 @@
                   ></chartApp>
                 </v-flex>
                 <v-layout>
-                  <v-flex>
+                  <v-flex class="layout-bottom">
                     <v-btn dark color="#003e70" :to="'/modern/fullscreen/' +$route.params.id">
                       <v-icon left dark class="ma-0">fullscreen</v-icon>
                       {{$t('msg.fullscreenmode')}}
@@ -220,5 +220,9 @@ export default {
 </script>
 
 <style scoped>
+.layout-bottom{
+      position: absolute;
+    bottom: calc(100% - 590px);
+}
 </style>
 

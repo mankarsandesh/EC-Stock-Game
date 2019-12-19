@@ -122,7 +122,6 @@
                 <div class="text-center">{{ msg }}</div>
                 <div style="height: 455px;">
                     <livestock v-if="isShow" :dataGet="chartData"></livestock>
-                    <livestock v-else-if="isShows" :dataGet="chartDatas"></livestock>
                 </div>
                 <div class="setborder">
                     <span class="seticon"> <i class="fa fa-user fa-2x iconcolor"></i> : {{dataliveBetAll.totalUsers}}</span>
@@ -195,7 +194,6 @@ export default {
             showSpeed: 20,
             chartData: [],
             isShow: false,
-            isShows: false,
             chartData: [],
             chartDatas: [],
             rule: [],
@@ -251,8 +249,7 @@ export default {
                 for (let i = 0; i < res.data.length; i++) {
                     this.rulenew = res.data[i].totalUsers
                 }
-                if (res.data.length != 0 || res.data.length > this.chartData.length || this.rulenew > this.ruleold) 
-                {
+                if (res.data.length != 0 || res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
                     // console.log("Okkk");
                     this.msg = this.$root.$t('msg.betting');
                     if (this.rulenew == undefined) return
@@ -266,15 +263,18 @@ export default {
                         this.chartData = res.data;
                         this.isShow = true
                     }
-                    this.isShows = false
 
                 } else {
                     // console.log("Nooo");
                     this.msg = this.$root.$t('msg.nobetting');
                     // this.chartData = []
-                    this.isShow = false
-                    this.isShows = true
-                    this.chartDatas = [{
+
+                    if (this.chartData.length != 4) {
+                        this.isShow = false
+                    } else {
+                        this.isShow = true
+                    }
+                    this.chartData = [{
                             "rule": "bothdigit-big",
                             "totalAmount": "20",
                             "totalUsers": 1
@@ -299,14 +299,12 @@ export default {
             } catch (error) {
                 console.log(error)
             }
-
         },
         async getliveAll() {
             try {
                 const res = await this.$axios.$get("/api/liveBetAll?loop=1&apikey=" + this.$store.state.auth_token);
                 this.dataliveBetAll = res.data[0]
-                console.log(res.data)
-
+                // console.log(res.data)
             } catch (error) {
                 console.log(error)
             }

@@ -54,10 +54,10 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
-const socket = io("http://159.138.47.250", {
-  transports: ["polling"],
-  query: `userId=${this.getUserName.userId}`
-});
+// const socket = io("http://159.138.47.250", {
+//   transports: ["polling"],
+//   query: `userId=${this.getUserName.userId}`
+// });
 
 export default {
   components: {
@@ -92,15 +92,15 @@ export default {
     this.asymessages();
   },
   created() {
-    socket.on("new-message", data => {
-      console.log("created");
-      console.log(data);
-      this.allmessage.push({
-        name: data.name,
-        message: data.message
-      });
-      console.log(this.allmessage);
-    });
+    // socket.on("new-message", data => {
+    //   console.log("created");
+    //   console.log(data);
+    //   this.allmessage.push({
+    //     name: data.name,
+    //     message: data.message
+    //   });
+    //   console.log(this.allmessage);
+    // });
   },
   methods: {
     ...mapActions(["asymessages"]),
