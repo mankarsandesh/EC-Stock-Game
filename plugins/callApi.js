@@ -36,6 +36,11 @@ export default ({ store }) => {
         store.dispatch('OnlineTime')
         store.dispatch("asynUserInfo")
     }, 3000);
+    setInterval(() => {
+        store.dispatch("asymessages")
+
+
+    }, 1000)
 }
 
 function setLanguage(store) {

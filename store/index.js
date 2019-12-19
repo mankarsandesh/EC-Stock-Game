@@ -8,7 +8,7 @@ const createStore = () => {
             isLoadingStockGame: false,
             auth_token: localStorage.apikey,
             isLoadingAnnoucement: [],
-            isLoadingMessage : [],            
+            isLoadingMessage: [],
             isLoadingHistory: [],
             userData: {},
             payout: {},
@@ -296,7 +296,7 @@ const createStore = () => {
                     }
                     let userInfo = res.data.original;
                     context.commit("setUserData", userInfo);
-                  
+
                     // }
                 } catch (ex) {
                     console.error(ex);
@@ -308,8 +308,13 @@ const createStore = () => {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
                     const res = await this.$axios.$get("http://159.138.47.250/chatglobal/allmessages");
                     console.log(res);
+<<<<<<< HEAD
                     context.commit("setMessages", res.data);  
                     console.log("Message View");                
+=======
+                    context.commit("setMessages", res.data);
+                    console.log("Message View");
+>>>>>>> 4e932a624b11a141a73c9cbb83dd1ccfdcdd868e
                 } catch (error) {
                     console.log(error);
                 }
@@ -450,7 +455,7 @@ const createStore = () => {
                     console.log(error);
                 }
             },
-            
+
             // to get User bet History
             async asyhistory(context) {
                 try {
@@ -515,7 +520,7 @@ const createStore = () => {
             getIsSendBetting(state) {
                 return state.isSendbetting;
             },
-            
+
             // get user balance
             getBalance(state) {
                 return state.balance;
@@ -955,4 +960,4 @@ const createStore = () => {
     });
 };
 
-export default createStore
+export default createStore;

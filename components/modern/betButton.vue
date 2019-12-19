@@ -14,7 +14,7 @@
                 }">
             <div class="popper">
                 <!-- this component display the modal,the modal let users choose amount they want to bet -->
-                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'firstdigit-'+data.rule" :payout="getPayout(data.payout)"></betModal>
+                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'firstdigit-'+data.rule" :payout="$store.state.payout[0].bigpayout"></betModal>
             </div>
             <v-btn class="align_button4" slot="reference" @click="betButtonClick('firstdigit-'+data.rule)">
                 <showChipAmount size="50px" :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'firstdigit-'+data.rule})"></showChipAmount>
