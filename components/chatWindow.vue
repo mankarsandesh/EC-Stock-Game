@@ -18,8 +18,8 @@
         </div>
 
         <div v-if="allChannel">
-          <div id="bodyChat">
-            <div class="msguser" v-for="data in getMessages" :key="data.index">
+          <div id="bodyChat" class="messages" v-chat-scroll="{always: false, smooth: true}"> 
+            <div id="messagechannel" class="msguser" v-for="data in getMessages" :key="data.index"  >
               <a href="#">{{data.name}} :</a>
               <span class="msgbody">{{data.message}}</span>
             </div>
@@ -35,7 +35,7 @@
           <div id="bodyChat">
             <div class="msguser" v-for="data in allmessageGame" :key="data.index">
               <a href="#">{{data.name}} :</a>
-              <span class="msgbody">{{data.msg}}</span>
+              <span class="msgbody">{{data.message}}</span>
             </div>
           </div>
 
@@ -54,14 +54,20 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
+import VueChatScroll from 'vue-chat-scroll';
+
  const socket = io("http://159.138.47.250", {
   transports: ["polling"],
   query: `userId=123`
 });
+ const socketGame = io("http://159.138.47.250", {
+  transports: ["polling"]
+});
 
 export default {
   components: {
-    popper
+    popper,
+    VueChatScroll
   },
   data() {
     return {      
@@ -73,16 +79,7 @@ export default {
       message: null,
       messageGame: null,
       allmessage: [],
-      allmessageGame: [
-        {
-          name: "Tanver",
-          msg: "Hello Bro"
-        },
-        {
-          name: "Sandesh",
-          msg: "Hello Sandesh"
-        }
-      ]
+      allmessageGame: []
     };
   },
   computed: {
@@ -93,17 +90,32 @@ export default {
     this.asynUserInfo();
    
   },
+  updated() {
+    $("#bodyChat").stop().animate({ scrollTop: $("#bodyChat")[0].scrollHeight}, 1000);
+  },
   created() {
+    // Socket for Channel 
     socket.on("new-message", data => {
       console.log("created");
       console.log(data);
-      this.allmessage.push({
+      this.getMessages.push({
         name: data.name,
         userId: data.userId,
         message: data.message
       });
     });
-  },
+    // Socket for Game 
+    socketGame.on("new-message", data => {
+      console.log("created");
+      console.log(data);
+      this.allmessageGame.push({
+        name: data.name,
+        userId: data.userId,
+        message: data.message
+      });
+    });
+
+},
   methods: {
     ...mapActions(["asymessages","asynUserInfo"]),
     tab1: function(event) {
@@ -118,7 +130,6 @@ export default {
       this.isActivetab2 = true;
       this.isActivetab1 = false;
     },
-
     sendMsg: function(event) {     
       if (this.message) {
         socket.emit("send-message", {
@@ -130,13 +141,17 @@ export default {
         this.message = "";
       }
     },
+    sendMsgGame: function(event) {      
+      if (this.messageGame) {        
+        socketGame.emit("send-message", {
+          message: this.messageGame,
+          userId: this.getUserName.userId,
+          name: this.getUserName.name,
+          gameId : 13213
+        });
+        console.log("Send Game Message");
+        console.log(this.messageGame);
 
-    sendMsgGame: function(event) {
-      cosnole.log("Hello");
-      if (this.messageGame) {
-        this.Messagedata = { name: "sandesh", msg: this.messageGame };
-        console.log(socket.emit);
-        console.log("Hello");
         this.messageGame = "";
       }
     }
@@ -187,6 +202,7 @@ export default {
   height: 500px;
   text-align: left;
   overflow: scroll;
+  overflow-x: hidden;
   border: 1px solid #cccccc;
 }
 
@@ -230,4 +246,27 @@ export default {
   cursor: pointer;
   font-size: 16px;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #003e70; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #003e70; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2c6b9e; 
+}
+
 </style>
