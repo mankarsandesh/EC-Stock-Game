@@ -8,7 +8,7 @@ const createStore = () => {
             isLoadingStockGame: false,
             auth_token: localStorage.apikey,
             isLoadingAnnoucement: [],
-            isLoadingMessage : [],            
+            isLoadingMessage: [],
             isLoadingHistory: [],
             userData: {},
             payout: {},
@@ -439,15 +439,15 @@ const createStore = () => {
                 }
             },
             async asymessages(context) {
-                console.log("sasasasasasasasasasasasasa");   
+                console.log("sasasasasasasasasasasasasa");
                 try {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
                     const res = await this.$axios.$get(
                         `/api/allchannelChat?apikey=${context.getters.getAuth_token}`
                     );
                     console.log(res);
-                    context.commit("setMessages", res.data);  
-                    console.log("Message View");                
+                    context.commit("setMessages", res.data);
+                    console.log("Message View");
                 } catch (error) {
                     console.log(error);
                 }
