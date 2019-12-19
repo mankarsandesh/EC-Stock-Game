@@ -296,10 +296,22 @@ const createStore = () => {
                     }
                     let userInfo = res.data.original;
                     context.commit("setUserData", userInfo);
+
                     // }
                 } catch (ex) {
                     console.error(ex);
                     // alert(ex)
+                }
+            },
+            async asymessages(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
+                    const res = await this.$axios.$get("http://159.138.47.250/chatglobal/allmessages");
+                    console.log(res);
+                    context.commit("setMessages", res);
+                    console.log("Message View");
+                } catch (error) {
+                    console.log(error);
                 }
             },
             async balance(context) {
@@ -438,20 +450,7 @@ const createStore = () => {
                     console.log(error);
                 }
             },
-            async asymessages(context) {
-                console.log("sasasasasasasasasasasasasa");
-                try {
-                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
-                    const res = await this.$axios.$get(
-                        `/api/allchannelChat?apikey=${context.getters.getAuth_token}`
-                    );
-                    console.log(res);
-                    context.commit("setMessages", res.data);
-                    console.log("Message View");
-                } catch (error) {
-                    console.log(error);
-                }
-            },
+
             // to get User bet History
             async asyhistory(context) {
                 try {
@@ -500,6 +499,10 @@ const createStore = () => {
             getMessages(state) {
                 return state.isLoadingMessage;
             },
+            // get user name
+            getUserName(state) {
+                return state.userData;
+            },
             getAnnoucement(state) {
                 return state.isLoadingAnnoucement;
             },
@@ -512,10 +515,7 @@ const createStore = () => {
             getIsSendBetting(state) {
                 return state.isSendbetting;
             },
-            // get user name
-            getUserName(state) {
-                return state.userData;
-            },
+
             // get user balance
             getBalance(state) {
                 return state.balance;

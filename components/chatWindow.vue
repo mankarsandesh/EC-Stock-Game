@@ -19,7 +19,7 @@
 
         <div v-if="allChannel">
           <div id="bodyChat">
-            <div class="msguser" v-for="data in allmessage" :key="data.index">
+            <div class="msguser" v-for="data in getMessages" :key="data.index">
               <a href="#">{{data.name}} :</a>
               <span class="msgbody">{{data.message}}</span>
             </div>
@@ -54,17 +54,17 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
-// const socket = io("http://159.138.47.250", {
-//   transports: ["polling"],
-//   query: `userId=${this.getUserName.userId}`
-// });
+ const socket = io("http://159.138.47.250", {
+  transports: ["polling"],
+  query: `userId=123`
+});
 
 export default {
   components: {
     popper
   },
   data() {
-    return {
+    return {      
       isActivetab1: true,
       isActivetab2: false,
       allChannel: true,
@@ -90,20 +90,22 @@ export default {
   },
   mounted() {
     this.asymessages();
+    this.asynUserInfo();
+   
   },
   created() {
-    // socket.on("new-message", data => {
-    //   console.log("created");
-    //   console.log(data);
-    //   this.allmessage.push({
-    //     name: data.name,
-    //     message: data.message
-    //   });
-    //   console.log(this.allmessage);
-    // });
+    socket.on("new-message", data => {
+      console.log("created");
+      console.log(data);
+      this.allmessage.push({
+        name: data.name,
+        userId: data.userId,
+        message: data.message
+      });
+    });
   },
   methods: {
-    ...mapActions(["asymessages"]),
+    ...mapActions(["asymessages","asynUserInfo"]),
     tab1: function(event) {
       this.betChannel = false;
       this.allChannel = true;
@@ -117,7 +119,7 @@ export default {
       this.isActivetab1 = false;
     },
 
-    sendMsg: function(event) {
+    sendMsg: function(event) {     
       if (this.message) {
         socket.emit("send-message", {
           message: this.message,
@@ -125,7 +127,6 @@ export default {
           name: this.getUserName.name
         });
         console.log("Message Send");
-        console.log(this.allmessage);
         this.message = "";
       }
     },
