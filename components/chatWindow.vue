@@ -33,7 +33,7 @@
 
         <div v-if="betChannel">
           <div id="bodyChat">
-            <div class="msguser" v-for="data in allmessageGame" :key="data.index">
+            <div class="msguser" v-for="data in allmessage" :key="data.index">
               <a href="#">{{data.name}} :</a>
               <span class="msgbody">{{data.msg}}</span>
             </div>
