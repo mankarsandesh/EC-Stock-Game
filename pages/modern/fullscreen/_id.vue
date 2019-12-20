@@ -243,61 +243,61 @@ export default {
         },
         async getliveBetCount() {
             try {
-            const res = await this.$axios.$get("/api/liveBetCount?loop=1&apikey=" + this.$store.state.auth_token);
-            // if (res.data == "") {
-            //     console.log(res.data);
-            //     return
-            // }
-            for (let i = 0; i < res.data.length; i++) {
-                this.rulenew = res.data[i].totalUsers
-            }
-            if (res.data.length != 0 || res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
-                // console.log("Okkk");
-                this.msg = this.$root.$t('msg.betting');
-                if (this.rulenew == undefined) return
-                if (this.isShow == true && res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
-                    this.chartData = res.data;
-                    this.isShow = false
-                    for (let i = 0; i < res.data.length; i++) {
-                        this.ruleold = res.data[i].totalUsers
+                const res = await this.$axios.$get("/api/liveBetCount?loop=1&apikey=" + this.$store.state.auth_token);
+                // if (res.data == "") {
+                //     console.log(res.data);
+                //     return
+                // }
+                for (let i = 0; i < res.data.length; i++) {
+                    this.rulenew = res.data[i].totalUsers
+                }
+                if (res.data.length != 0 || res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+                    // console.log("Okkk");
+                    this.msg = this.$root.$t('msg.betting');
+                    if (this.rulenew == undefined) return
+                    if (this.isShow == true && res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
+                        this.chartData = res.data;
+                        this.isShow = false
+                        for (let i = 0; i < res.data.length; i++) {
+                            this.ruleold = res.data[i].totalUsers
+                        }
+                    } else {
+                        this.chartData = res.data;
+                        this.isShow = true
                     }
-                } else {
-                    this.chartData = res.data;
-                    this.isShow = true
-                }
 
-            } else {
-                // console.log("Nooo");
-                this.msg = this.$root.$t('msg.nobetting');
-                // this.chartData = []
-
-                if (this.chartData.length != 4) {
-                    this.isShow = false
                 } else {
-            this.isShow = true
-            }
-            this.chartData = [{
-                    "rule": "bothdigit-big",
-                    "totalAmount": "1",
-                    "totalUsers": 1
-                },
-                {
-                    "rule": "firstdigit-big",
-                    "totalAmount": "2",
-                    "totalUsers": 1
-                },
-                {
-                    "rule": "lastdigit-big",
-                    "totalAmount": "3",
-                    "totalUsers": 1
-                },
-                {
-                    "rule": "twodigit-big",
-                    "totalAmount": "4",
-                    "totalUsers": 1
+                    // console.log("Nooo");
+                    this.msg = this.$root.$t('msg.nobetting');
+                    // this.chartData = []
+
+                    if (this.chartData.length != 4) {
+                        this.isShow = false
+                    } else {
+                        this.isShow = true
+                    }
+                    this.chartData = [{
+                            "rule": "bothdigit-big",
+                            "totalAmount": "1",
+                            "totalUsers": 1
+                        },
+                        {
+                            "rule": "firstdigit-big",
+                            "totalAmount": "2",
+                            "totalUsers": 1
+                        },
+                        {
+                            "rule": "lastdigit-big",
+                            "totalAmount": "3",
+                            "totalUsers": 1
+                        },
+                        {
+                            "rule": "twodigit-big",
+                            "totalAmount": "4",
+                            "totalUsers": 1
+                        }
+                    ]
                 }
-            ]
-            }
             } catch (error) {
                 console.log(error)
             }

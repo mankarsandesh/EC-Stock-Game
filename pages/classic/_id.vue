@@ -253,17 +253,20 @@
         </v-dialog>
 
         <!-- tag loop two digit -->
-        <v-dialog v-model="dialogtwo" persistent max-width="440px">
+        <!-- persistent -->
+        <v-dialog v-model="dialogtwo" max-width="440px">
             <v-card>
                 <v-card-text>
-                    <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balanceinfo - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
-                            <span class="btn-chips">{{chip.price}}</span>
-                        </v-img>
-                    </v-avatar>
+                    <div style="margin: 10px 0px; text-align: center;">
+                        <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balanceinfo - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+                                <span class="btn-chips">{{chip.price}}</span>
+                            </v-img>
+                        </v-avatar>
+                    </div>
                     <table>
                         <tr>
-                            <th>{{$t('gamemsg.twodigit')}} </th>
+                            <th style="background-color: #555c64; color:#ffffff;">{{$t('gamemsg.twodigit')}} </th>
                         </tr>
                         <tr v-if="sntwoloopstart == 0">
                             <td class="top-bet" @click="betRow($event)">
