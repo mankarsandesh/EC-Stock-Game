@@ -18,8 +18,9 @@
         </div>
 
         <div v-if="allChannel">
-          <div id="bodyChat">
-            <div class="msguser" v-for="data in getMessages" :key="data.index">
+          <div id="bodyChat" class="messages" > 
+            <div id="messagechannel" class="msguser" v-for="data in allmessage" :key="data.index"  >
+              <p v-if="data.name == 'client'">{{data.message}}</p>
               <a href="#">{{data.name}} :</a>
               <span class="msgbody">{{data.message}}</span>
             </div>
@@ -33,9 +34,9 @@
 
         <div v-if="betChannel">
           <div id="bodyChat">
-            <div class="msguser" v-for="data in allmessage" :key="data.index">
+            <div class="msguser" v-for="data in allmessageGame" :key="data.index">
               <a href="#">{{data.name}} :</a>
-              <span class="msgbody">{{data.msg}}</span>
+              <span class="msgbody">{{data.message}}</span>
             </div>
           </div>
 
@@ -54,14 +55,20 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
+import VueChatScroll from 'vue-chat-scroll';
+
  const socket = io("http://159.138.47.250", {
   transports: ["polling"],
   query: `userId=123`
 });
+ const socketGame = io("http://159.138.47.250", {
+  transports: ["polling"],path: "/chatgame/socket.io" 
+});
 
 export default {
   components: {
-    popper
+    popper,
+    VueChatScroll
   },
   data() {
     return {      
@@ -73,28 +80,25 @@ export default {
       message: null,
       messageGame: null,
       allmessage: [],
-      allmessageGame: [
-        {
-          name: "Tanver",
-          msg: "Hello Bro"
-        },
-        {
-          name: "Sandesh",
-          msg: "Hello Sandesh"
-        }
-      ]
+      allmessageGame: []
     };
   },
   computed: {
-    ...mapGetters(["getMessages", "getUserName"])
+    ...mapGetters(["getUserName"])
   },
   mounted() {
-    this.asymessages();
+    //this.asymessages();
     this.asynUserInfo();
    
   },
+  updated() {
+    $("#bodyChat").stop().animate({ scrollTop: $("#bodyChat")[0].scrollHeight}, 1000);
+  },
   created() {
-    socket.on("new-message", data => {
+    // Socket for Channel
+    console.log("created run");
+    
+    socket.on("new-message-global", data => {
       console.log("created");
       console.log(data);
       this.getMessages.push({
@@ -103,9 +107,36 @@ export default {
         message: data.message
       });
     });
-  },
+    // Socket for Game 
+    socketGame.on("new-message-game", data => {
+      console.log("created Game two");
+      console.log(data);
+      this.allmessageGame.push({
+        name: data.name,
+        userId: data.userId,
+        message: data.message
+      });
+    });
+
+    socket.on('chat-global', (data) => {
+      console.log(data);
+      this.allmessage.push({
+        name: "client",
+        userId: "123",
+        message: data
+      });
+
+    });
+    
+
+    socketGame.on('chat-game', data => {
+      console.log(data);
+    });
+    
+
+},
   methods: {
-    ...mapActions(["asymessages","asynUserInfo"]),
+    ...mapActions(["asynUserInfo"]),
     tab1: function(event) {
       this.betChannel = false;
       this.allChannel = true;
@@ -118,10 +149,9 @@ export default {
       this.isActivetab2 = true;
       this.isActivetab1 = false;
     },
-
     sendMsg: function(event) {     
       if (this.message) {
-        socket.emit("send-message", {
+        socket.emit("send-message-global", {
           message: this.message,
           userId: this.getUserName.userId,
           name: this.getUserName.name
@@ -130,13 +160,16 @@ export default {
         this.message = "";
       }
     },
-
-    sendMsgGame: function(event) {
-      cosnole.log("Hello");
-      if (this.messageGame) {
-        this.Messagedata = { name: "sandesh", msg: this.messageGame };
-        console.log(socket.emit);
-        console.log("Hello");
+    sendMsgGame: function(event) {      
+      if (this.messageGame) {        
+        socketGame.emit("send-message-game", {
+          message: this.messageGame,
+          userId: this.getUserName.userId,
+          name: this.getUserName.name,
+          gameId : 13213
+        });
+        console.log("Send Game Message");
+        console.log(this.messageGame);
         this.messageGame = "";
       }
     }
@@ -187,6 +220,7 @@ export default {
   height: 500px;
   text-align: left;
   overflow: scroll;
+  overflow-x: hidden;
   border: 1px solid #cccccc;
 }
 
@@ -230,4 +264,27 @@ export default {
   cursor: pointer;
   font-size: 16px;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #003e70; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #003e70; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2c6b9e; 
+}
+
 </style>
