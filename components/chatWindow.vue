@@ -19,8 +19,9 @@
 
         <div v-if="allChannel">
           <div id="bodyChat" class="messages" > 
-            <div id="messagechannel" class="msguser" v-for="data in allmessage" :key="data.index"  >
-              <p v-if="data.name == 'client'">{{data.message}}</p>
+            <p v-if="connectClient">{{connectClient.data}}</p>
+            <div id="messagechannel" class="msguser" v-for="data in getMessages" :key="data.index"  >
+              
               <a href="#">{{data.name}} :</a>
               <span class="msgbody">{{data.message}}</span>
             </div>
@@ -34,7 +35,7 @@
 
         <div v-if="betChannel">
           <div id="bodyChat">
-            <div class="msguser" v-for="data in allmessageGame" :key="data.index">
+            <div class="msguser" v-for="data in getMessagesGame" :key="data.index">
               <a href="#">{{data.name}} :</a>
               <span class="msgbody">{{data.message}}</span>
             </div>
@@ -80,14 +81,16 @@ export default {
       message: null,
       messageGame: null,
       allmessage: [],
-      allmessageGame: []
+      allmessageGame: [],
+      connectClient : []
     };
   },
   computed: {
-    ...mapGetters(["getUserName"])
+    ...mapGetters(["getMessages","getMessagesGame","getUserName"])
   },
   mounted() {
-    //this.asymessages();
+    this.asymessages();
+    this.asymessagesGame();
     this.asynUserInfo();
    
   },
@@ -120,9 +123,7 @@ export default {
 
     socket.on('chat-global', (data) => {
       console.log(data);
-      this.allmessage.push({
-        name: "client",
-        userId: "123",
+      this.connectClient.push({
         message: data
       });
 
@@ -136,7 +137,7 @@ export default {
 
 },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["asymessages","asymessagesGame","asynUserInfo"]),
     tab1: function(event) {
       this.betChannel = false;
       this.allChannel = true;
