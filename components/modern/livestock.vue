@@ -1,6 +1,6 @@
 <template>
 <div>
-    <canvas ref="planetchart" class="set-height"></canvas>
+    <canvas ref="planetchart" height="500vh" width="100%"></canvas>
 </div>
 </template>
 
@@ -43,6 +43,8 @@ export default {
             },
             options: {
                 responsive: true,
+                barPercentage: 1.6,
+                maintainAspectRatio: false,
                 legend: {
                     display: false,
                     position: 'top'
@@ -79,9 +81,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-.set-height {
-    height: 300px;
-}
-</style>

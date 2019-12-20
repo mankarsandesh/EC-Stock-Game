@@ -10,15 +10,10 @@
         <span class="text-second">{{ getLivePrice(stockid) }}</span>
       </v-flex>
     </v-layout>
-    <apexchart
-      type="area"
-      width="100%"
-      :height="height"
-      :options="chartOptions"
-      :series="series"
-    />
+    <apexchart type="area" height="425vh" width="99.5%" :options="chartOptions" :series="series" />
   </div>
 </template>
+
 <script>
 import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";

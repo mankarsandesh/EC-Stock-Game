@@ -21,26 +21,16 @@ export default ({ store }) => {
         store.commit('SET_TIME', data)
     });
 
-
     // store.dispatch('asynGetAllStock')
     store.dispatch('asynInitCallApi')
     store.dispatch("balance")
-
-    // setTimeout(() => {
-
-    // }, 3000);
-
     store.dispatch("asyncPayout")
+
     setInterval(() => {
         store.dispatch("asyncPayout")
         store.dispatch('OnlineTime')
         store.dispatch("asynUserInfo")
     }, 3000);
-    setInterval(() => {
-        store.dispatch("asymessages")
-
-
-    }, 1000)
 }
 
 function setLanguage(store) {

@@ -104,7 +104,7 @@ export default {
     socket.on("new-message-global", data => {
       console.log("created");
       console.log(data);
-      this.allmessage.push({
+      this.getMessages.push({
         name: data.name,
         userId: data.userId,
         message: data.message

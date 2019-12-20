@@ -7,14 +7,13 @@
     </div>
     <!-- end for show bet close -->
     <v-layout row>
-
         <popper :disabled="checkFooterBet" v-for="data in firstDigit" :key="data.rule" md3 class="w20" trigger="click" :options="{
                       placement: 'bottom-end',
                        modifiers: { offset: { offset: '25px' } }
                 }">
             <div class="popper">
                 <!-- this component display the modal,the modal let users choose amount they want to bet -->
-                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'firstdigit-'+data.rule" :payout="$store.state.payout[0].bigpayout"></betModal>
+                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'firstdigit-'+data.rule" :payout="data.payout"></betModal>
             </div>
             <v-btn class="align_button4" slot="reference" @click="betButtonClick('firstdigit-'+data.rule)">
                 <showChipAmount size="50px" :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'firstdigit-'+data.rule})"></showChipAmount>
@@ -22,8 +21,7 @@
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span>
                 <!-- show payout on button if is fullscreen -->
-                <span class="small-digit" v-show="isFullscreen">{{getPayout(data.payout)}}</span>
-
+                <span class="small-digit" v-show="isFullscreen">{{data.payout}}</span>
             </v-btn>
         </popper>
 
@@ -58,7 +56,6 @@
                 <v-btn class="betting-small" slot="reference" @click="betButtonClick('firstdigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
             </popper>
         </div>
-
     </v-layout>
 
     <!-- Row betting button2 -->
@@ -76,7 +73,7 @@
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span>
                 <!-- show payout if in fullscreen mode -->
-                <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+                <span class="small-digit" v-show="isFullscreen">{{data.payout}}</span>
             </v-btn>
         </popper>
 
@@ -126,7 +123,7 @@
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span>
                 <!-- show payout if in fullscreen mode -->
-                <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+                <span class="small-digit" v-show="isFullscreen">{{data.payout}}</span>
             </v-btn>
         </popper>
 
@@ -176,7 +173,7 @@
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.twodigit')}}</span>
                 <!-- show payout if in fullscreen mode -->
-                <span class="small-digit" v-show="isFullscreen">{{payout_big_small}}</span>
+                <span class="small-digit" v-show="isFullscreen">{{data.payout}}</span>
             </v-btn>
         </popper>
         <div class="d-block w16">
@@ -290,7 +287,6 @@
             </div>
             <v-btn slot="reference" @click="betButtonClick('twodigit-'+index)" v-show="number == 'two' " class="btn-small">{{ index < 10 ? "0" + index :index}}</v-btn>
         </popper>
-
     </v-layout>
 </div>
 </template>
@@ -334,39 +330,38 @@ export default {
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: "bigGame"
+                    payout: this.$store.state.payout[0].bigpayout
                 },
                 {
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: "smallGame"
-
+                    payout: this.$store.state.payout[0].smallpayout
                 },
                 {
                     rule: "odd",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: "bigGame"
+                    payout: 1.92
                 },
                 {
                     rule: "even",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: "bigGame"
+                    payout: 1.92
                 }
             ],
             lastDigit: [{
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: this.$store.state.payout[0].bigpayout
                 },
                 {
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: this.$store.state.payout[0].smallpayout
                 },
                 {
                     rule: "odd",
@@ -385,7 +380,7 @@ export default {
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: this.$store.state.payout[0].bigpayout
                 },
                 {
                     rule: "tie",
@@ -397,7 +392,7 @@ export default {
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: this.$store.state.payout[0].smallpayout
                 },
                 {
                     rule: "odd",
@@ -416,7 +411,7 @@ export default {
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: this.$store.state.payout[0].bigpayout
                 },
                 {
                     rule: "tie",
@@ -428,7 +423,7 @@ export default {
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: this.$store.state.payout[0].smallpayout
                 },
                 {
                     rule: "odd",
