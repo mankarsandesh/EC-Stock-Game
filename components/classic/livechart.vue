@@ -83,7 +83,7 @@ export default {
             this.gradient = this.$refs.planetchart.getContext("2d").createLinearGradient(0, 0, 0, 450);
             
             this.gradient.addColorStop(0, '#88cafb')
-            this.gradient.addColorStop(0.5, '#88cafb');
+            this.gradient.addColorStop(0.95, '#ffffff');
             this.gradient.addColorStop(1, '#ffffff');
 
             // this.gradient.addColorStop(0, 'rgba(0, 231, 255, 0.9)')
@@ -98,7 +98,7 @@ export default {
                         data: datas,
                         label: "value",
                         fill: true,
-                        borderColor: "#00c0ef",
+                        borderColor: "#0072c7",
                         borderWidth: 1.5,
                         pointBackgroundColor: "#00c0ef",
                         pointBorderColor: "rgba(255,255,255,0)",
@@ -114,7 +114,6 @@ export default {
                     responsive: true,
                     barPercentage: 1.6,
                     maintainAspectRatio: false,
-                    barPercentage: 1.6,
                     layout: {
                         // padding: {
                         //     left: 50,
