@@ -307,14 +307,9 @@ const createStore = () => {
                 try {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
                     const res = await this.$axios.$get("http://159.138.47.250/chatglobal/allmessages");
-                    console.log(res);
-<<<<<<< HEAD
-                    context.commit("setMessages", res.data);  
-                    console.log("Message View");                
-=======
+                    //console.log(res);
                     context.commit("setMessages", res.data);
-                    console.log("Message View");
->>>>>>> 4e932a624b11a141a73c9cbb83dd1ccfdcdd868e
+                    //console.log("Message View");
                 } catch (error) {
                     console.log(error);
                 }
