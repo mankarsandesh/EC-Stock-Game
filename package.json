@@ -5,7 +5,7 @@
     "name": "modern-mobile",
     "version": "1.0.0",
     "description": "modern mobile version",
-    "author": "Mekky",
+    "author": "Sandesh",
     "private": true,
     "scripts": {
         "dev": "nuxt",
@@ -48,7 +48,6 @@
         "vuetify-loader": "^1.0.8"
     },
     "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.12.0",
         "node-sass": "^4.12.0",
         "nodemon": "^1.18.9",
         "sass-loader": "^8.0.0",

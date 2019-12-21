@@ -10,7 +10,7 @@
       <div class="chatRoom">
         <div id="headerChat">
           <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
-            <a href="#">All Channel <span class="totalCount">55</span></a>
+            <a href="#">All Channel <span class="totalCount">{{totoalUserCount}}</span></a>
           </span>
           <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
             <a href="#">This Game</a>
@@ -60,11 +60,11 @@ import VueChatScroll from 'vue-chat-scroll';
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 
- const socket = io("http://159.138.47.250", {
+ export const socket = io("http://159.138.47.250", {
   transports: ["polling"],
   query: `userId=123`
 });
- const socketGame = io("http://159.138.47.250", {
+ export const socketGame = io("http://159.138.47.250", {
   transports: ["polling"],path: "/chatgame/socket.io" 
 });
 
@@ -84,22 +84,32 @@ export default {
       messageGame: null,
       allmessage: [],
       allmessageGame: [],
-      connectClient : []
+      connectClient : [],
+      totoalUserCount : 0,
+      userId : 0,
     };
   },
   computed: {
     ...mapGetters(["getMessages","getMessagesGame","getUserName","getStockType"])
   },
   mounted() {
+
+
+
     this.asymessages();
     this.asymessagesGame();
     this.asynUserInfo();
    
   },
   updated() {
+    // this.userId = this.getUserName.userId;
+    // alert(this.userId);
     $("#bodyChat").stop().animate({ scrollTop: $("#bodyChat")[0].scrollHeight}, 1000);
   },
   created() {
+    
+
+  console.log(this.getUserName.userId);
     // Socket for Channel
     console.log("created run");
     
@@ -122,6 +132,14 @@ export default {
         userId: data.userId,
         message: data.message
       });
+    });
+
+
+     socket.on("user-count-global", data => {
+      console.log("Count");
+      console.log(data);
+      this.totoalUserCount  = data;
+      
     });
 
     socket.on('chat-global', (data) => {
