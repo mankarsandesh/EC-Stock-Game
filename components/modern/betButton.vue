@@ -250,7 +250,7 @@
         </span>
     </v-layout>
     <!-- Row betting button5 -->
-    <v-layout row class="container-btn-small">
+    <v-layout row class="setlayuot">
         <popper :disabled="checkFooterBet" v-for="(n,index) in 10" :key="'firstdigit-'+index" trigger="click" :options="{
                       placement: 'bottom-end',
                        modifiers: { offset: { offset: '25px' } }
@@ -518,4 +518,8 @@ export default {
   font-size: 16px;
   margin:0;
 }  */
+.setlayuot{
+    flex-flow: wrap;
+    position: relative;
+}
 </style>

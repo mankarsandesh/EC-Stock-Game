@@ -214,4 +214,5 @@ export default {
     color: black;
     font-size: 0.85rem;
 }
+
 </style>

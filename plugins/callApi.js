@@ -27,10 +27,13 @@ export default ({ store }) => {
     store.dispatch("asyncPayout")
 
     setInterval(() => {
-        store.dispatch("asyncPayout")
         store.dispatch('OnlineTime')
         store.dispatch("asynUserInfo")
     }, 3000);
+
+    setInterval(() => {
+        store.dispatch("asyncPayout")
+    }, 1000);
 }
 
 function setLanguage(store) {

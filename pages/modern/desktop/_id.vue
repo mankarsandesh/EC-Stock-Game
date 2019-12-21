@@ -222,7 +222,7 @@ export default {
 <style scoped>
 .layout-bottom{
       position: absolute;
-    bottom: calc(100% - 590px);
+    bottom: calc(100% - 565px);
 }
 </style>
 
