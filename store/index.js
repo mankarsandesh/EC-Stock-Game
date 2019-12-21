@@ -595,15 +595,14 @@ const createStore = () => {
                                 loop: loop,
                                 stockId: stockId
                             };
-
                             console.warn(data);
                             console.warn(type);
-
                             for (let ok = 0; ok < stockData[i].stockName.length; ok++) {
                                 const name = stockData[i].stockName[ok].name;
                                 stockData[i].stockName[ok].loop.push(data);
                             }
-                            // alert(type)
+                           console.log( state.stocks[id]);
+                           console.log("Select");
                         }
                     }
                 }
@@ -613,7 +612,6 @@ const createStore = () => {
             // check stock in multi game if exits disable button
             checkMultigameExistAndDisable: state => data => {
                 if (!data.isMultigame) return "";
-
                 const result = state.stockMultigame.includes(data.stockId);
                 if (result) return "pointer-events: none";
                 else return "";

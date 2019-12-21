@@ -3,14 +3,14 @@
     trigger="click"
     :options="{
                       placement: 'top-end',
-                       modifiers: { offset: { offset: '55px' } }
+                       modifiers: { offset: { offset: '105px' } }
                 }"
   >
     <div class="popper" style="width:400px;">
       <div class="chatRoom">
         <div id="headerChat">
           <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
-            <a href="#">Channel</a>
+            <a href="#">All Channel {{getStockType.stockId}}</a>
           </span>
           <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
             <a href="#">This Game</a>
@@ -18,10 +18,8 @@
         </div>
 
         <div v-if="allChannel">
-          <div id="bodyChat" class="messages" > 
-            <p v-if="connectClient">{{connectClient.data}}</p>
-            <div id="messagechannel" class="msguser" v-for="data in getMessages" :key="data.index"  >
-              
+          <div id="bodyChat" class="messages" >      
+            <div id="messagechannel"  v-for="data in getMessages" :key="data.index" class="msguser" >
               <a href="#">{{data.name}} :</a>
               <span class="msgbody">{{data.message}}</span>
             </div>
@@ -72,7 +70,7 @@ export default {
     VueChatScroll
   },
   data() {
-    return {      
+    return {     
       isActivetab1: true,
       isActivetab2: false,
       allChannel: true,
@@ -86,7 +84,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getMessages","getMessagesGame","getUserName"])
+    ...mapGetters(["getMessages","getMessagesGame","getUserName","getStockType"])
   },
   mounted() {
     this.asymessages();
@@ -109,12 +107,13 @@ export default {
         userId: data.userId,
         message: data.message
       });
+      console.log(this.getMessages);
     });
     // Socket for Game 
     socketGame.on("new-message-game", data => {
       console.log("created Game two");
       console.log(data);
-      this.allmessageGame.push({
+      this.getMessagesGame.push({
         name: data.name,
         userId: data.userId,
         message: data.message
@@ -123,10 +122,6 @@ export default {
 
     socket.on('chat-global', (data) => {
       console.log(data);
-      this.connectClient.push({
-        message: data
-      });
-
     });
     
 
@@ -137,6 +132,10 @@ export default {
 
 },
   methods: {
+
+    
+
+
     ...mapActions(["asymessages","asymessagesGame","asynUserInfo"]),
     tab1: function(event) {
       this.betChannel = false;
@@ -181,8 +180,8 @@ export default {
 <style scoped>
 .liveChat {
   position: fixed;
-  right: 0;
-  bottom: 0;
+  right: 80px;
+  bottom: 20px;
 }
 .chatRoom {
   height: 600px;
@@ -190,11 +189,11 @@ export default {
   margin-right: 300px;
   padding: 0px 5px;
   border-radius: 5px;
-  background-color: #003e70;
+  background-color: #FFF;
 }
 #headerChat {
   height: 45px;
-  border: 1px solid #333;
+  /* border: 1px solid #333; */
 }
 
 #headerChat span {
@@ -206,39 +205,43 @@ export default {
   width: 100%;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  background-color: #003e70;
-  color: #fff;
+    color: #003e70;
   font-size: 20px;
   float: left;
   padding: 5px 10px;
 }
 #headerChat .active a {
-  color: #003e70;
-  background-color: #fff !important;
+  color: #FFF;
+  background-color: #003e70 !important;
 }
 #bodyChat {
   background-color: #fff;
-  height: 500px;
+  height: 510px;
   text-align: left;
+  padding: 10px 0px;
   overflow: scroll;
   overflow-x: hidden;
+  border-radius:4px;
   border: 1px solid #cccccc;
 }
 
 #messageCHat {
   background-color: #fff;
-  height: 50px;
+  height: 40px;
 }
 
 .msguser {
-  font-size: 15px;
-  border-radius: 4px;
-  border: 1px solid #cccccc;
-  margin: 5px 3px;
-  padding: 5px 10px;
+ background: white;
+   padding: 5px 5px;
+  overflow: auto;
+  border-radius:4px;
+  max-width: 350px;
+  margin: 10px 10px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3)
 }
 .msguser a {
-  font-weight: 800;
+  text-transform: capitalize;
+  font-weight: 600;
   color: #003e70;
 }
 .msgbody {
@@ -250,7 +253,7 @@ export default {
   width: 80%;
   padding: 5px;
   font-size: 15px;
-  height: 50px;
+  height: 40px;
   resize: none;
   color: #003e70;
 }
@@ -258,7 +261,7 @@ export default {
   background-color: #003e70;
   color: #333;
   width: 20%;
-  height: 50px;
+  height: 40px;
   display: table-cell;
   vertical-align: middle;
   color: #fff;
