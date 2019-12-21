@@ -3,14 +3,14 @@
     trigger="click"
     :options="{
                       placement: 'top-end',
-                       modifiers: { offset: { offset: '105px' } }
+                       modifiers: { offset: { offset: '55px' } }
                 }"
   >
     <div class="popper" style="width:400px;">
       <div class="chatRoom">
         <div id="headerChat">
           <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
-            <a href="#">All Channel {{getStockType.stockId}}</a>
+            <a href="#">All Channel <span class="totalCount">55</span></a>
           </span>
           <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
             <a href="#">This Game</a>
@@ -27,7 +27,9 @@
 
           <div id="messageCHat">
             <input resize="none" v-model="message" placeholder="Type Message" />
-            <btn v-on:click="sendMsg">Send</btn>
+            <btn v-on:click="sendMsg">
+              <i class="fas fa-paper-plane"></i>
+            </btn>
           </div>
         </div>
 
@@ -55,6 +57,8 @@ import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
 import VueChatScroll from 'vue-chat-scroll';
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
  const socket = io("http://159.138.47.250", {
   transports: ["polling"],
@@ -195,18 +199,26 @@ export default {
   height: 45px;
   /* border: 1px solid #333; */
 }
-
-#headerChat span {
+#headerChat .tabs span{
+  background-color: #FFF;
+  color:#333;
+  padding:0px 4px;
+  height:40px;
+  width:40px;
+  font-size: 16px;
+  border-radius: 180px;
+}
+#headerChat .tabs {
   text-align: center;
   width: 50%;
   float: left;
 }
-#headerChat span a {
+#headerChat .tabs a {
   width: 100%;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
     color: #003e70;
-  font-size: 20px;
+  font-size: 18px;
   float: left;
   padding: 5px 10px;
 }
@@ -237,6 +249,7 @@ export default {
   border-radius:4px;
   max-width: 350px;
   margin: 10px 10px;
+  /* border:1px solid #333; */
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3)
 }
 .msguser a {
