@@ -57,8 +57,6 @@ import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
 import VueChatScroll from 'vue-chat-scroll';
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
 
  export const socket = io("http://159.138.47.250", {
   transports: ["polling"],
