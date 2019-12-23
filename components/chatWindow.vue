@@ -27,8 +27,8 @@
 
           <div id="messageCHat">
             <input resize="none" v-model="message" placeholder="Type Message" />
-            <btn v-on:click="sendMsg">
-              <i class="fas fa-paper-plane"></i>
+            <btn v-on:click="sendMsg">         
+              <i class="fa fa-paper-plane"></i>
             </btn>
           </div>
         </div>
@@ -43,7 +43,9 @@
 
           <div id="messageCHat">
             <input resize="none" v-model="messageGame" placeholder="Type Message" />
-            <btn v-on:click="sendMsgGame">Send</btn>
+            <btn v-on:click="sendMsgGame">
+             <i class="fa fa-paper-plane"></i>
+             </btn>
           </div>
         </div>
       </div>
@@ -57,8 +59,7 @@ import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
 import VueChatScroll from 'vue-chat-scroll';
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
+
 
  export const socket = io("http://159.138.47.250", {
   transports: ["polling"],
