@@ -1,5 +1,10 @@
 <template>
 <div>
+    
+    <v-window v-model="window" class="elevation-1" vertical > 
+        <!-- Baic Information -->
+        <v-window-item >
+
     <v-layout row wrap>
         <v-flex xs6 md3>
             <v-menu v-model="from" :close-on-content-click="false" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">
@@ -8,6 +13,8 @@
                 </template>
                 <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
             </v-menu>
+
+            
         </v-flex>
         <v-flex xs6 md3>
             <v-menu v-model="to" :close-on-content-click="false" :nudge-right="40" transition="scale-transition" offset-y full-width min-width="290px">
@@ -17,21 +24,34 @@
                 <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
             </v-menu>
         </v-flex>
-        <v-btn class="my-btn go">{{$t('msg.go')}}</v-btn>
-        <v-flex xs6 md3 class="float-right">
-            <v-select hide-details :items="items" :label="$t('msg.sortby')" solo></v-select>
+
+        <v-flex xs6 md3>
+            <v-select style="width:120px;" hide-details :items="items" :label="$t('msg.sortby')" solo ></v-select>
         </v-flex>
+        <v-flex xs6 md3>
+             <v-btn    class="my-btn go" style=""> {{$t('msg.go')}}</v-btn>
+        </v-flex>   
+        
+       
+
         <v-flex xs12>
             <v-card class="mx-auto">
                 <Online-Chart></Online-Chart>
             </v-card>
         </v-flex>
+
         <v-card>
             <v-card-text>{{$t('msg.playerid')}} : {{getUserName.userApiId}}</v-card-text>
             <v-card-text>{{$t('msg.online')}} {{$t('msg.Time')}} : {{setTime(getOnlimeTime.todayOnline, 0)}}</v-card-text>
             <v-card-text>{{$t('msg.Total')}} {{$t('msg.online')}} : {{setTime(getOnlimeTime.totalOnline, 1)}}</v-card-text>
         </v-card>
+
     </v-layout>
+
+
+    </v-window-item>
+   </v-window>
+
 </div>
 </template>
 
