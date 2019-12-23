@@ -59,7 +59,10 @@ import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions } from "vuex";
 import io from "socket.io-client";
 import VueChatScroll from 'vue-chat-scroll';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7ce68b60435d2e8fd6a3efdb3710be18a3ed0d41
 
  export const socket = io("http://159.138.47.250", {
   transports: ["polling"],

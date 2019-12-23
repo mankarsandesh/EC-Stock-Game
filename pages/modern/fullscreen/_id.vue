@@ -210,7 +210,7 @@ export default {
         setInterval(() => {
             this.getliveBetCount()
             this.getliveAll()
-        }, 2000);
+        }, 5000);
 
     },
 
@@ -244,10 +244,10 @@ export default {
         async getliveBetCount() {
             try {
                 const res = await this.$axios.$get("/api/liveBetCount?loop=1&apikey=" + this.$store.state.auth_token);
-                // if (res.data == "") {
-                //     console.log(res.data);
-                //     return
-                // }
+                if (res.status == false) {
+                    console.log(res.data);
+                    return
+                }
                 for (let i = 0; i < res.data.length; i++) {
                     this.rulenew = res.data[i].totalUsers
                 }

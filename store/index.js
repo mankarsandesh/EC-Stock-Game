@@ -331,9 +331,7 @@ const createStore = () => {
             },
             async balance(context) {
                 try {
-                    const res = await this.$axios.$get(
-                        `/api/me/balance?apikey=${context.getters.getAuth_token}`
-                    );
+                    const res = await this.$axios.$get(`/api/me/balance?apikey=${context.getters.getAuth_token}`);
                     if (res.status) {
                         context.commit("setBalance", res.data.balance);
                     }
@@ -595,18 +593,18 @@ const createStore = () => {
                                 loop: loop,
                                 stockId: stockId
                             };
-                            console.warn(data);
-                            console.warn(type);
+                            // console.warn(data);
+                            // console.warn(type);
                             for (let ok = 0; ok < stockData[i].stockName.length; ok++) {
                                 const name = stockData[i].stockName[ok].name;
                                 stockData[i].stockName[ok].loop.push(data);
                             }
-                           console.log( state.stocks[id]);
-                           console.log("Select");
+                            // console.log(state.stocks[id]);
+                            // console.log("Select");
                         }
                     }
                 }
-                console.warn(stockData.stockName);
+                // console.warn(stockData.stockName);
                 return stockData;
             },
             // check stock in multi game if exits disable button
