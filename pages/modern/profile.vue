@@ -89,7 +89,7 @@
         <v-toolbar-title class="text-uppercase text-primary">{{$t('profile.online history')}}</v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn icon @click="getdialog = true,getcomonent('onlinehistory')">
+        <v-btn icon @click="getdialog = true,getcomonent('onlinehistory')" >
             <v-icon color="text-primary">add</v-icon>
         </v-btn>
     </v-toolbar>
@@ -108,8 +108,8 @@
         <v-card>
             <v-toolbar class="pa-1 light-toobar">
                 <v-toolbar-title class="text-uppercase text-primary">
-                    <h2 v-if="iscomonent == 'onlinehistory'">{{$t('profile.online history')}}</h2>
-                    <h2 v-else>{{$t('profile.stock analysis')}}</h2>
+                    <h3 v-if="iscomonent == 'onlinehistory'">{{$t('profile.online history')}}</h3>
+                    <h3 v-else>{{$t('profile.stock analysis')}}</h3>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="getdialog = false">
@@ -117,7 +117,7 @@
                 </v-btn>
             </v-toolbar>
             <v-divider></v-divider>
-            <v-layout column px-5 pt-3>
+            <v-layout column  pt-3>
                 <onlinehistory v-if="iscomonent == 'onlinehistory'" />
                 <stockAnalysis v-else />
             </v-layout>
@@ -153,6 +153,7 @@ export default {
         };
     },
     mounted() {
+    
         setTimeout(() => {
             this.items = [
                 //   { header: 'Today' },
@@ -259,7 +260,12 @@ export default {
     border-top: 1px dashed !important;
     opacity: 0.4 !important;
 }
-
+.v-toolbar__title{
+    font-size: 15px !important;
+}
+.v-list--two-line .v-list__tile {
+    height: 60px;
+}
 /* .v-icon .material-icons theme--light{
     color: rgb(255, 255, 255);
     font-size: 42px;
