@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-card class="my-bg">
-      <v-layout row wrap justify-center>
-        <v-flex xs6 md3 lg2 v-for="(item,key) in imgChip" :key="key">
+      <v-layout row wrap justify-center >
+        <v-flex xs6 md3 lg2 v-for="(item,key) in imgChip" :key="key" class="chipdiv"> 
           <div class="d-block">
             <v-img width="100" :src="item.img">
               <v-text-field
@@ -101,3 +101,9 @@ export default {
   }
 };
 </script>
+<style>
+.chipdiv{
+
+  padding-top:20px;
+}
+</style>

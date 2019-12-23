@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row wrap>
+    <v-layout row wrap > 
       <v-flex xs12 md2>
         <v-item-group v-model="window" class="shrink mr-4" mandatory tag="v-flex">
           <v-item v-for="n in tabs" :key="n">
@@ -13,7 +13,7 @@
       <v-flex xs12 md10>
         <v-window v-model="window" class="elevation-1" vertical>
           <!-- rules -->
-          <v-window-item>
+          <v-window-item >
             <chipamount />
           </v-window-item>
           <!-- rules -->
