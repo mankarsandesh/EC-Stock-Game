@@ -135,4 +135,12 @@ input{
      margin:0 auto;
     text-align: center;
 }
+.v-btn { 
+  font-size: 14px;
+  font-weight: 400;
+  background-color: #093e70 !important;
+  color: #ffffff !important;
+  padding: 4px 10px;
+  margin: 4px;
+}
 </style>
