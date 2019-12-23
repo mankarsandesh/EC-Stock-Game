@@ -5,11 +5,11 @@
         <v-layout row wrap justify-center class="allchips">
             <v-flex class="settingchips" xs4 sm3  md3 lg2 v-for="(item,key) in imgChip" :key="key" justify-center >
                 <div class="d-block">
-                    <v-img width="110" :src="item.img" class="chipImage">
+                    <v-img  :width="item.width"  :src="item.img" class="chipImage">
                         <v-text-field class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
-                    <v-card-actions class="chipamount">
-                        <v-btn text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
+                    <v-card-actions >
+                        <v-btn class="chipamount" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
                     </v-card-actions>
                     <div v-show="conOrE=='confirm'">
                         <v-card-text>{{$t('msg.min')}} = $200</v-card-text>
@@ -46,28 +46,33 @@ export default {
             imgChip: [{
                     id: "ship1",
                     title: "Danger",
-                    img: "/chip/danger.png"
+                    img: "/chip/danger.png",
+                    width: "100"
                 },
                 {
                     id: "ship2",
                     title: "Primary",
-                    img: "/chip/primary.png"
+                    img: "/chip/primary.png",
+                     width: "100"
                 },
                 {
                     id: "ship3",
                     title: "success",
-                    img: "/chip/success.png"
+                    img: "/chip/success.png",
+                     width: "105"
                 },
                 {
                     id: "ship4",
                     title: "warning",
-                    img: "/chip/warning.png"
+                    img: "/chip/warning.png",
+                     width: "110"
                 },
                 {
                     id: "ship5",
                     title: "black",
                     img: "/chip/black.png",
-                    color: "text-dark"
+                    color: "text-dark",
+                     width: "120"
                 }
             ]
         };
@@ -107,7 +112,7 @@ export default {
 <style scoped>
 .setpricechip {
     position: relative;
-    left: 33px;
+    left: 36px;
     top: 20px;
     color: black;
     font-size: 1.2rem;
@@ -126,7 +131,8 @@ input{
 .chipImage{
     margin:0 auto;
 }
-.chipamount{
+.chipamount{  
+     margin:0 auto;
     text-align: center;
 }
 </style>
