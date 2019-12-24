@@ -35,8 +35,8 @@
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
                 <v-flex xs12 md5>
-                    <v-avatar :class="balanceinfo-sumTotalAll < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo-sumTotalAll < chip.price" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar :class="getBalance-sumTotalAll < chip.price ? 'pointer-events-none':''" size="60" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="getBalance-sumTotalAll < chip.price" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -210,8 +210,8 @@
                     <v-btn @click="setPrice('confirm')" color="error" :disabled="this.betData.betdetails.length == '0'">{{$t('msg.confirm')}}</v-btn>
                 </v-flex>
                 <v-flex xs12 md5>
-                    <v-avatar size="60" :class="balanceinfo-sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                        <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo-sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+                    <v-avatar size="60" :class="getBalance-sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                        <v-img class="cursor-pointer" :src="chip.img" :disabled="getBalance-sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                             <span class="btn-chips">{{chip.price}}</span>
                         </v-img>
                     </v-avatar>
@@ -245,8 +245,8 @@
                         <button class="btn-preset">{{$t('msg.amount')}}</button>
                         <input readonly type="text" class="form-input width-15" v-model="price" />
                         <button class="btn-reset" type="reset" @click="setPrice('reset')">{{$t('msg.reset')}}</button>
-                        <v-avatar size="60" :class="balanceinfo - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <v-avatar size="60" :class="getBalance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                            <v-img class="cursor-pointer" :src="chip.img" :disabled="getBalance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                                 <span class="btn-chips">{{chip.price}}</span>
                             </v-img>
                         </v-avatar>
@@ -300,8 +300,8 @@
             <v-card>
                 <v-card-text>
                     <div style="margin: 10px 0px; text-align: center;">
-                        <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="balanceinfo - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
-                            <v-img class="cursor-pointer" :src="chip.img" :disabled="balanceinfo - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
+                        <v-avatar :size="$vuetify.breakpoint.smAndDown ? 45:60" :class="getBalance - sumTotalAll < chip.price ? 'pointer-events-none':''" justify-content-center v-for="(chip,key1) in chips" :key="key1">
+                            <v-img class="cursor-pointer" :src="chip.img" :disabled="getBalance - sumTotalAll < chip.name" @click="setPrice($event)" :name="chip.name">
                                 <span class="btn-chips">{{chip.price}}</span>
                             </v-img>
                         </v-avatar>
@@ -446,7 +446,6 @@ export default {
             betDataShows: [],
             dialog: false,
             dialogtwo: false,
-            balanceinfo: this.getBalance,
             sntwoloopstart: null,
             sntwoloopend: null,
             stockname: "",
@@ -532,10 +531,10 @@ export default {
             })
         },
         async getConfirmBet() {
-            if (this.sumTotalAll > this.balanceinfo || this.sumTotalAll == '') {
+            if (this.sumTotalAll > this.getBalance || this.sumTotalAll == '') {
                 this.getalertstartstop('error')
             } else {
-                this.balanceinfo = this.balanceinfo - this.sumTotalAll;
+                this.getBalance = this.getBalance - this.sumTotalAll;
                 console.log("data..........");
                 console.log(this.formData);
                 console.log("send to api server");
@@ -547,7 +546,7 @@ export default {
                     this.getalertstartstop(res.data)
                     this.setPrice("reset");
                     $(".getupdatebalance")[0].click()
-                    $("#txtbalance").text(this.formatToPrice(this.balanceinfo))
+                    $("#txtbalance").text(this.formatToPrice(this.getBalance))
                 }, 700);
             }
         },
@@ -659,7 +658,7 @@ export default {
 
         bet(e, specialName = "none") {
             this.playSound('/voice/bet-chips.mp3')
-            if (this.price == 0 || this.price == null || this.price > this.balanceinfo - this.sumTotalAll) {
+            if (this.price == 0 || this.price == null || this.price > this.getBalance - this.sumTotalAll) {
                 console.log("Null-0");
                 this.price = 0
                 this.getalertstartstop("notenough")
