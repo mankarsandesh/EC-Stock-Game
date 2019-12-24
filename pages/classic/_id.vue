@@ -657,7 +657,7 @@ export default {
         },
 
         bet(e, specialName = "none") {
-            this.playSound('/voice/bet-chips.mp3')
+            // this.playSound('/voice/bet-chips.mp3')
             if (this.price == 0 || this.price == null || this.price > this.getBalance - this.sumTotalAll) {
                 console.log("Null-0");
                 this.price = 0
