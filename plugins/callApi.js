@@ -17,7 +17,7 @@ export default ({ store }) => {
         if (time5 == 241 || time1 == 41) {
             store.dispatch('asynInitCallApi')
         }
-
+        store.dispatch("asyncPayout")
         store.commit('SET_TIME', data)
     });
 
@@ -31,9 +31,7 @@ export default ({ store }) => {
         store.dispatch("asynUserInfo")
     }, 3000);
 
-    setInterval(() => {
-        store.dispatch("asyncPayout")
-    }, 2000);
+
 }
 
 function setLanguage(store) {

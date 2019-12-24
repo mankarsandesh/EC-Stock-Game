@@ -21,7 +21,7 @@
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span>
                 <!-- show payout on button if is fullscreen -->
-                <span class="small-digit" v-show="isFullscreen">{{data.payout}}</span>
+                <span class="small-digit" v-show="isFullscreen">{{$store.state.payout[parseInt(data.payout)].dynamicOdds}}</span>
             </v-btn>
         </popper>
 
@@ -73,7 +73,7 @@
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span>
                 <!-- show payout if in fullscreen mode -->
-                <span class="small-digit" v-show="isFullscreen">{{data.payout}}</span>
+                <span class="small-digit" v-show="isFullscreen">{{$store.state.payout[parseInt(data.payout)].dynamicOdds}}</span>
             </v-btn>
         </popper>
 
@@ -123,7 +123,7 @@
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span>
                 <!-- show payout if in fullscreen mode -->
-                <span class="small-digit" v-show="isFullscreen">{{data.payout}}</span>
+                <span class="small-digit" v-show="isFullscreen">{{$store.state.payout[parseInt(data.payout)].dynamicOdds}}</span>
             </v-btn>
         </popper>
 
@@ -173,7 +173,7 @@
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.twodigit')}}</span>
                 <!-- show payout if in fullscreen mode -->
-                <span class="small-digit" v-show="isFullscreen">{{data.payout}}</span>
+                <span class="small-digit" v-show="isFullscreen">{{$store.state.payout[parseInt(data.payout)].dynamicOdds}}</span>
             </v-btn>
         </popper>
         <div class="d-block w16">
@@ -256,7 +256,7 @@
                        modifiers: { offset: { offset: '25px' } }
                 }">
             <div class="popper">
-                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'firstdigit-'+index" :payout="payout_09"></betModal>
+                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'firstdigit-'+index" :payout="index+30"></betModal>
             </div>
             <v-btn slot="reference" @click="betButtonClick('firstdigit-'+index)" v-show="number == 'first'" class="btn-small">{{index}}</v-btn>
         </popper>
@@ -265,7 +265,7 @@
                        modifiers: { offset: { offset: '25px' } }
                 }">
             <div class="popper">
-                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'lastdigit-'+index" :payout="payout_09"></betModal>
+                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'lastdigit-'+index" :payout="index+40"></betModal>
             </div>
             <v-btn slot="reference" @click="betButtonClick('lastdigit-'+index)" v-show="number == 'last' " class="btn-small">{{index}}</v-btn>
         </popper>
@@ -274,7 +274,7 @@
                        modifiers: { offset: { offset: '25px' } }
                 }">
             <div class="popper">
-                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'bothdigit-'+index" :payout="payout_18"></betModal>
+                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'bothdigit-'+index" :payout="index+50"></betModal>
             </div>
             <v-btn slot="reference" @click="betButtonClick('bothdigit-'+index)" v-show="number == 'both' " class="btn-small">{{index}}</v-btn>
         </popper>
@@ -283,7 +283,7 @@
                        modifiers: { offset: { offset: '25px' } }
                 }">
             <div class="popper">
-                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="index < 10 ? 'twodigit-0' + index :'twodigit-'+index" :payout="payout_99"></betModal>
+                <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="index < 10 ? 'twodigit-0' + index :'twodigit-'+index" :payout="index+69"></betModal>
             </div>
             <v-btn slot="reference" @click="betButtonClick('twodigit-'+index)" v-show="number == 'two' " class="btn-small">{{ index < 10 ? "0" + index :index}}</v-btn>
         </popper>
@@ -330,112 +330,112 @@ export default {
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: this.$store.state.payout[0].bigpayout
+                    payout: 0
                 },
                 {
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: this.$store.state.payout[0].smallpayout
+                    payout: 1
                 },
                 {
                     rule: "odd",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: 1.92
+                    payout: 2
                 },
                 {
                     rule: "even",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: 1.92
+                    payout: 3
                 }
             ],
             lastDigit: [{
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: this.$store.state.payout[0].bigpayout
+                    payout: 7
                 },
                 {
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: this.$store.state.payout[0].smallpayout
+                    payout:8
                 },
                 {
                     rule: "odd",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: 9
                 },
                 {
                     rule: "even",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: 10
                 }
             ],
             bothDigit: [{
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: this.$store.state.payout[0].bigpayout
+                    payout: 14
                 },
                 {
                     rule: "tie",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: 15
                 },
                 {
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: this.$store.state.payout[0].smallpayout
+                    payout: 16
                 },
                 {
                     rule: "odd",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: 17
                 },
                 {
                     rule: "even",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: 18
                 }
             ],
             twoDigit: [{
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: this.$store.state.payout[0].bigpayout
+                    payout: 22
                 },
                 {
                     rule: "tie",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: 23
                 },
                 {
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: this.$store.state.payout[0].smallpayout
+                    payout: 24
                 },
                 {
                     rule: "odd",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: 25
                 },
                 {
                     rule: "even",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
-                    payout: payout.big_small
+                    payout: 26
                 }
             ]
         };

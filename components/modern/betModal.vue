@@ -11,7 +11,7 @@
             <span>{{$t('msg.Stock Name')}}: {{ $t(`stockname.${stockName}`) }} -{{loop}}</span>
         </v-flex>
         <v-flex class="pt-1">
-            <span>{{$t('msg.payout')}}: {{payout}}</span>
+            <span>{{$t('msg.payout')}}: {{$store.state.payout[parseInt(payout)].dynamicOdds}}</span>
         </v-flex>
         <v-flex>
             <v-layout row>
@@ -101,7 +101,7 @@ export default {
                 {
                     title: "black",
                     img: "/chip/black.png",
-                    color: "text-white"
+                    color: "text-white" 
                 }
             ]
         };
