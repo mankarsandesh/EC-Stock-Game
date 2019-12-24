@@ -295,7 +295,7 @@ const createStore = () => {
                         `/api/me?apikey=${context.getters.getAuth_token}`
                     );
                     if (!res.status) {
-                        location.href = "http://" + location.hostname + ":8001/"
+                        location.href = "http://whitelabelv2.herokuapp.com"
                         return
                     }
                     let userInfo = res.data.original;
