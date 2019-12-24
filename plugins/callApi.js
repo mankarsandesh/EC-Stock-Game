@@ -33,7 +33,7 @@ export default ({ store }) => {
 
     setInterval(() => {
         store.dispatch("asyncPayout")
-    }, 1000);
+    }, 2000);
 }
 
 function setLanguage(store) {

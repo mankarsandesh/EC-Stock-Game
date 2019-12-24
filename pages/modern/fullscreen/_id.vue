@@ -124,9 +124,9 @@
                     <livestock v-if="isShow" :dataGet="chartData"></livestock>
                 </div>
                 <div class="setborder">
-                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor"></i> : {{dataliveBetAll.totalUsers}}</span>
-                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor"></i> : {{dataliveBetAll.totalBets}}</span>
-                    <span class="seticon"> <i class="fa fa-money fa-2x iconcolor"></i> : {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
+                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor" />: {{dataliveBetAll.totalUsers}}</span>
+                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" /> : {{dataliveBetAll.totalBets}}</span>
+                    <span class="seticon"> <i class="fa fa-money fa-2x iconcolor" /> : {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
                 </div>
             </v-flex>
             <!-- live Chart -->
@@ -202,7 +202,7 @@ export default {
             msg: "",
             dataliveBetAll: {},
             stockId: "",
-            loop:""
+            loop: ""
         };
     },
     created() {
@@ -252,12 +252,16 @@ export default {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
         async getSotckId() {
-            let stcokId = await this.$axios.$get(`/api/fetchStockOnly?apikey=${this.$store.state.auth_token}`)
-            stcokId.data.forEach(element => {
-                if (element.stockName == this.$route.params.id) {
-                    this.stockId = element.stockId
-                }
-            })
+            try {
+                let stcokId = await this.$axios.$get(`/api/fetchStockOnly?apikey=${this.$store.state.auth_token}`)
+                stcokId.data.forEach(element => {
+                    if (element.stockName == this.$route.params.id) {
+                        this.stockId = element.stockId
+                    }
+                })
+            } catch (e) {
+                console.log(e)
+            }
         },
         async getliveBetCount() {
             try {
