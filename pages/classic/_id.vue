@@ -794,11 +794,9 @@ export default {
             if (totalPayout.data > 0) {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
-                // this.playSound('/voice/winbet.mp3')
-                this.playSound('/voice/bet-chips.mp3')
+                this.playSound('/voice/winbet.mp3')
                 this.balance()
             } else {
-                this.playSound('/voice/bet-chips.mp3')
                 this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
             }
@@ -827,20 +825,20 @@ export default {
             }
         },
         playSound(sound) {
-            // if (sound) {
-            //     let audio = new Audio(sound);
-            //     audio.play();
-            // }
-            if (localStorage.volume == null || localStorage.volume == "") {
-                Howler.volume(1);
-            } else {
-                Howler.volume(localStorage.volume);
+            if (sound) {
+                let audio = new Audio(sound);
+                audio.play();
             }
+            // if (localStorage.volume == null || localStorage.volume == "") {
+            //     Howler.volume(1);
+            // } else {
+            //     Howler.volume(localStorage.volume);
+            // }
 
-            new Howl({
-                src: sound,
-                autoplay: true,
-            });
+            // new Howl({
+            //     src: sound,
+            //     autoplay: true,
+            // });
 
         },
         getMbFooter() {

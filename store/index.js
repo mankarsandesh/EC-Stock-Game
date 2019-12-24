@@ -1,6 +1,6 @@
 import Vuex from "vuex";
 import { hostname } from "os";
-
+import payouts from "../data/json/payout"
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
@@ -60,14 +60,7 @@ const createStore = () => {
                     previousPrice: 0
                 }
             },
-            payout: [{
-                bigAmount: 0,
-                tieAmount: 0,
-                smallAmount: 0,
-                bigpayout: 1.92,
-                tiepayout: 1.92,
-                smallpayout: 1.92
-            }],
+            payout: payouts,
 
             stocks: {
                 sh000001: {
@@ -277,10 +270,14 @@ const createStore = () => {
         actions: {
             async asyncPayout(context) {
                 try {
+                    // const respayoutinitial = await this.$axios.$get(
+                    //     `/api/payoutinitial2?stockId=7&apikey=${context.getters.getAuth_token}`
+                    // );
                     const res = await this.$axios.$post(
                         `/api/gameRuleStock?stockId=7&apikey=${context.getters.getAuth_token}`
                     );
-                    console.log(res)
+
+                    // console.log(res)
                     context.state.payout = res.data;
                     // console.log(context.state.payout)
                     // context.commit("setUserData", {name:userInfo})
