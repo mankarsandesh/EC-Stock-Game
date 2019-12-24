@@ -277,10 +277,10 @@ const createStore = () => {
         actions: {
             async asyncPayout(context) {
                 try {
-                    const res = await this.$axios.$get(
-                        `/api/payoutinitial2?apikey=${context.getters.getAuth_token}`
+                    const res = await this.$axios.$post(
+                        `/api/gameRuleStock?stockId=7&apikey=${context.getters.getAuth_token}`
                     );
-                    // console.log(res.data)
+                    console.log(res)
                     context.state.payout = res.data;
                     // console.log(context.state.payout)
                     // context.commit("setUserData", {name:userInfo})
@@ -331,9 +331,7 @@ const createStore = () => {
             },
             async balance(context) {
                 try {
-                    const res = await this.$axios.$get(
-                        `/api/me/balance?apikey=${context.getters.getAuth_token}`
-                    );
+                    const res = await this.$axios.$get(`/api/me/balance?apikey=${context.getters.getAuth_token}`);
                     if (res.status) {
                         context.commit("setBalance", res.data.balance);
                     }
@@ -595,18 +593,18 @@ const createStore = () => {
                                 loop: loop,
                                 stockId: stockId
                             };
-                            console.warn(data);
-                            console.warn(type);
+                            // console.warn(data);
+                            // console.warn(type);
                             for (let ok = 0; ok < stockData[i].stockName.length; ok++) {
                                 const name = stockData[i].stockName[ok].name;
                                 stockData[i].stockName[ok].loop.push(data);
                             }
-                           console.log( state.stocks[id]);
-                           console.log("Select");
+                            // console.log(state.stocks[id]);
+                            // console.log("Select");
                         }
                     }
                 }
-                console.warn(stockData.stockName);
+                // console.warn(stockData.stockName);
                 return stockData;
             },
             // check stock in multi game if exits disable button

@@ -124,9 +124,9 @@
                     <livestock v-if="isShow" :dataGet="chartData"></livestock>
                 </div>
                 <div class="setborder">
-                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor"></i> : {{dataliveBetAll.totalUsers}}</span>
-                    <span class="seticon"> <i class="fa fa-money fa-2x iconcolor"></i> : {{ dataliveBetAll.totalAmount ? dataliveBetAll.totalAmount:0}}</span>
-                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor"></i> : {{dataliveBetAll.totalBets}}</span>
+                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor" />: {{dataliveBetAll.totalUsers}}</span>
+                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" /> : {{dataliveBetAll.totalBets}}</span>
+                    <span class="seticon"> <i class="fa fa-money fa-2x iconcolor" /> : {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
                 </div>
             </v-flex>
             <!-- live Chart -->
@@ -200,17 +200,24 @@ export default {
             rulenew: [],
             ruleold: [],
             msg: "",
-            dataliveBetAll: {}
+            dataliveBetAll: {},
+            stockId: "",
+            loop: ""
         };
     },
+    created() {
+        this.getSotckId()
+    },
     mounted() {
-        this.getliveBetCount()
-        this.getliveAll()
+        setTimeout(() => {
+            this.getliveBetCount()
+            this.getliveAll()
+        }, 1000);
 
         setInterval(() => {
             this.getliveBetCount()
             this.getliveAll()
-        }, 2000);
+        }, 1000);
 
     },
 
@@ -241,19 +248,34 @@ export default {
         test() {
             console.warn(this.$router.history);
         },
+        formatToPrice(value) {
+            return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        },
+        async getSotckId() {
+            try {
+                let stcokId = await this.$axios.$get(`/api/fetchStockOnly?apikey=${this.$store.state.auth_token}`)
+                stcokId.data.forEach(element => {
+                    if (element.stockName == this.$route.params.id) {
+                        this.stockId = element.stockId
+                    }
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        },
         async getliveBetCount() {
             try {
-                const res = await this.$axios.$get("/api/liveBetCount?loop=1&apikey=" + this.$store.state.auth_token);
-                // if (res.data == "") {
-                //     console.log(res.data);
-                //     return
-                // }
+                const res = await this.$axios.$get(`/api/liveBetCount?stock=${this.stockId}&loop=${this.getLoop(this.$route.params.id)}&apikey=${this.$store.state.auth_token}`);
+                if (res.status == false) {
+                    console.log("No Data");
+                    return
+                }
                 for (let i = 0; i < res.data.length; i++) {
                     this.rulenew = res.data[i].totalUsers
                 }
                 if (res.data.length != 0 || res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
                     // console.log("Okkk");
-                    this.msg = this.$root.$t('msg.betting');
+                    // this.msg = this.$root.$t('msg.betting');
                     if (this.rulenew == undefined) return
                     if (this.isShow == true && res.data.length > this.chartData.length || this.rulenew > this.ruleold) {
                         this.chartData = res.data;
@@ -268,7 +290,7 @@ export default {
 
                 } else {
                     // console.log("Nooo");
-                    this.msg = this.$root.$t('msg.nobetting');
+                    // this.msg = this.$root.$t('msg.nobetting');
                     // this.chartData = []
 
                     if (this.chartData.length != 4) {
@@ -304,14 +326,13 @@ export default {
         },
         async getliveAll() {
             try {
-                const res = await this.$axios.$get("/api/liveBetAll?loop=1&apikey=" + this.$store.state.auth_token);
+                const res = await this.$axios.$get(`/api/liveBetAll?stock=${this.stockId}&loop=${this.getLoop(this.$route.params.id)}&apikey=${this.$store.state.auth_token}`);
                 this.dataliveBetAll = res.data[0]
                 // console.log(res.data)
             } catch (error) {
                 console.log(error)
             }
-
-        }
+        },
 
     }
 };
@@ -324,14 +345,14 @@ export default {
     position: relative;
     top: calc(100% - 108%);
     width: calc(200% - 100%);
-
 }
 
 .seticon {
     display: inline-block;
-    width: calc(130% - 100%);
+    width: calc(125% - 100%);
     position: relative;
     margin-left: 6px;
+    font-family: fantasy;
 }
 
 .iconcolor {

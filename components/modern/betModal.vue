@@ -16,8 +16,8 @@
         <v-flex>
             <v-layout row>
                 <v-flex class="py-3 text-center">
-                    <v-avatar size="65" v-for="(item,key) in imgChip" :key="key">
-                        <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" width="65" :alt="item.title" :class="item.color">
+                    <v-avatar size="60" v-for="(item,key) in imgChip" :key="key">
+                        <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" width="60" :alt="item.title" :class="item.color">
                             <span :class="isFullscreen ? 'setpricechips' : 'setpricechip'"> {{getCoins_modern[key]}}</span>
                         </v-img>
                     </v-avatar>

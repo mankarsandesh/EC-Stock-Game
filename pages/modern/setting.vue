@@ -1,14 +1,15 @@
 <template>
 <div>
     <v-card class="my-bg">
-        <v-layout row wrap justify-center>
-            <v-flex xs4 md3 lg2 v-for="(item,key) in imgChip" :key="key">
+        
+        <v-layout row wrap justify-center class="allchips">
+            <v-flex class="settingchips" xs4 sm3  md3 lg2 v-for="(item,key) in imgChip" :key="key" justify-center >
                 <div class="d-block">
-                    <v-img width="90" :src="item.img">
+                    <v-img  :width="item.width"  :src="item.img" class="chipImage">
                         <v-text-field class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
-                    <v-card-actions>
-                        <v-btn text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
+                    <v-card-actions >
+                        <v-btn class="chipamount" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
                     </v-card-actions>
                     <div v-show="conOrE=='confirm'">
                         <v-card-text>{{$t('msg.min')}} = $200</v-card-text>
@@ -17,13 +18,16 @@
                 </div>
             </v-flex>
         </v-layout>
+
         <v-layout row wrap justify-center>
             <v-btn text @click="reset">{{$t('msg.resettodefault')}}</v-btn>
         </v-layout>
+
         <v-layout row wrap justify-center>
             <v-btn class="my-btn" @click="saveClick()">{{$t('msg.save')}}</v-btn>
             <v-btn class="my-btn cancel">{{$t('msg.cancel')}}</v-btn>
         </v-layout>
+
     </v-card>
 </div>
 </template>
@@ -42,28 +46,33 @@ export default {
             imgChip: [{
                     id: "ship1",
                     title: "Danger",
-                    img: "/chip/danger.png"
+                    img: "/chip/danger.png",
+                    width: "100"
                 },
                 {
                     id: "ship2",
                     title: "Primary",
-                    img: "/chip/primary.png"
+                    img: "/chip/primary.png",
+                     width: "100"
                 },
                 {
                     id: "ship3",
                     title: "success",
-                    img: "/chip/success.png"
+                    img: "/chip/success.png",
+                     width: "105"
                 },
                 {
                     id: "ship4",
                     title: "warning",
-                    img: "/chip/warning.png"
+                    img: "/chip/warning.png",
+                     width: "110"
                 },
                 {
                     id: "ship5",
                     title: "black",
                     img: "/chip/black.png",
-                    color: "text-dark"
+                    color: "text-dark",
+                     width: "120"
                 }
             ]
         };
@@ -103,12 +112,35 @@ export default {
 <style scoped>
 .setpricechip {
     position: relative;
-    left: 27px;
-    top: 15px;
+    left: 36px;
+    top: 20px;
     color: black;
     font-size: 1.2rem;
 }
 input{
     background-color: brown
+}
+.settingchips{
+    margin:5px 10px;
+    text-align: center;
+    clear:both;
+}
+.allchips{
+    margin-top:30px;
+}
+.chipImage{
+    margin:0 auto;
+}
+.chipamount{  
+     margin:0 auto;
+    text-align: center;
+}
+.v-btn { 
+  font-size: 14px;
+  font-weight: 400;
+  background-color: #093e70 !important;
+  color: #ffffff !important;
+  padding: 4px 10px;
+  margin: 4px;
 }
 </style>

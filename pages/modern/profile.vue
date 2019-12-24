@@ -16,22 +16,26 @@
                 <v-flex xs-12 pt-2>
                     <label class="text-primary">
                         <h3>{{$t('msg.'+title)}}</h3>
+                       
                     </label>
-                    <v-text-field :label="title" single-line outline full-width color="#003e70" v-model="val"></v-text-field>
+                <v-text-field :label="val"   v-model="val" single-line outline full-width color="#003e70" ></v-text-field>
+                    <!-- <v-select v-if="title == 'gender'" :items="gender" v-model="filedName" outline></v-select> -->
                 </v-flex>
                 <v-flex xs-12 pt-2>
                     <label class="text-primary">
-                        <h3>Privacy</h3>
+                        <h3>Privacy </h3>
                     </label>
                     <!-- <v-text-field label="EVERY ONE CAN SEE" single-line outline full-width color="#003e70"></v-text-field> -->
-                    <v-select :items="itemstest" outline></v-select>
+                    <v-select :items="itemstest" v-model= "privacy" outline></v-select>
                 </v-flex>
             </v-layout>
 
             <!-- apply button -->
+
             <v-layout style="bottom: 0;position: fixed;width: 100%; background-color:#003e70">
-                <v-btn block color="#003e70" large class="white--text">save</v-btn>
+                <v-btn block color="#003e70"  @click="saveData"  large class="white--text">save</v-btn>
             </v-layout>
+
         </v-card>
     </v-dialog>
     <!-- profile -->
@@ -75,7 +79,8 @@
 
                     <v-list-tile-sub-title class="pt-2">
                         <v-layout row wrap>
-                            <span>{{item.info}}</span>
+                            <span v-if="item.info != null">{{item.info}}</span>
+                             <span v-if="item.info == null">No Data</span>
                         </v-layout>
                     </v-list-tile-sub-title>
                     <!-- </v-list-tile-content> -->
@@ -89,7 +94,7 @@
         <v-toolbar-title class="text-uppercase text-primary">{{$t('profile.online history')}}</v-toolbar-title>
         <v-spacer></v-spacer>
 
-        <v-btn icon @click="getdialog = true,getcomonent('onlinehistory')">
+        <v-btn icon @click="getdialog = true,getcomonent('onlinehistory')" >
             <v-icon color="text-primary">add</v-icon>
         </v-btn>
     </v-toolbar>
@@ -108,8 +113,8 @@
         <v-card>
             <v-toolbar class="pa-1 light-toobar">
                 <v-toolbar-title class="text-uppercase text-primary">
-                    <h2 v-if="iscomonent == 'onlinehistory'">{{$t('profile.online history')}}</h2>
-                    <h2 v-else>{{$t('profile.stock analysis')}}</h2>
+                    <h3 v-if="iscomonent == 'onlinehistory'">{{$t('profile.online history')}}</h3>
+                    <h3 v-else>{{$t('profile.stock analysis')}}</h3>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="getdialog = false">
@@ -117,7 +122,7 @@
                 </v-btn>
             </v-toolbar>
             <v-divider></v-divider>
-            <v-layout column px-5 pt-3>
+            <v-layout column  pt-3>
                 <onlinehistory v-if="iscomonent == 'onlinehistory'" />
                 <stockAnalysis v-else />
             </v-layout>
@@ -143,7 +148,10 @@ export default {
     },
     data() {
         return {
-            itemstest: ["Foo", "Bar", "Fizz", "Buzz"],
+            privacy : "Only Me",
+            filedName: "Male",
+            gender : ["Male","Female"],
+            itemstest: ["Only Me", "Everyone Can See"],
             dialog: false,
             getdialog: false,
             items: [],
@@ -153,6 +161,8 @@ export default {
         };
     },
     mounted() {
+    console.log("created");
+    console.log(this.getUserName);
         setTimeout(() => {
             this.items = [
                 //   { header: 'Today' },
@@ -212,6 +222,11 @@ export default {
         }, 1000);
     },
     methods: {
+        saveData(){
+          console.log(this.val);
+          console.log(this.privacy);
+          console.log(this.getUserName.userId);  
+            },
         getcomonent(val) {
             this.iscomonent = val;
         },
@@ -259,7 +274,12 @@ export default {
     border-top: 1px dashed !important;
     opacity: 0.4 !important;
 }
-
+.v-toolbar__title{
+    font-size: 15px !important;
+}
+.v-list--two-line .v-list__tile {
+    height: 60px;
+}
 /* .v-icon .material-icons theme--light{
     color: rgb(255, 255, 255);
     font-size: 42px;

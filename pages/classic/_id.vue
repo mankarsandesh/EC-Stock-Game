@@ -75,7 +75,17 @@
                                             <tr v-for="(datas, idx5) in items.childrens" :key="idx5">
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{datas.name >= 0 ? datas.name: $t('gamemsg.'+datas.name)}}</div>
-                                                    <div class="text-stock"> {{datas.name == 'big' ? $store.state.payout[0].bigpayout : datas.name == 'small' ? $store.state.payout[0].smallpayout:items.payout}} </div>
+                                                    <div class="text-stock">
+                                                        {{  datas.name == 'big' ? $store.state.payout[0].dynamicOdds : 
+                                                            datas.name == 'small' ? $store.state.payout[1].dynamicOdds:
+                                                            datas.name == 'odd' ? $store.state.payout[2].dynamicOdds:
+                                                            datas.name == 'even' ? $store.state.payout[3].dynamicOdds:
+                                                            datas.name == 'high' ? $store.state.payout[4].dynamicOdds:
+                                                            datas.name == 'mid' ? $store.state.payout[5].dynamicOdds:
+                                                            datas.name == 'low' ? $store.state.payout[6].dynamicOdds:
+                                                            $store.state.payout[parseFloat(datas.name) + 30].dynamicOdds
+                                                        }} 
+                                                    </div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[0]+'-'+datas.name" />
                                                     </div>
@@ -83,7 +93,18 @@
 
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{datas.name2 >= 0 ? datas.name2: $t('gamemsg.'+datas.name2)}}</div>
-                                                    <div class="text-stock">{{datas.name2 == 'big' ? $store.state.payout[0].bigpayout : datas.name2 == 'small' ? $store.state.payout[0].smallpayout:items.payout}}</div>
+                                                    <div class="text-stock">
+                                                        {{
+                                                            datas.name2 == 'big' ? $store.state.payout[7].dynamicOdds :
+                                                            datas.name2 == 'small' ? $store.state.payout[8].dynamicOdds:
+                                                            datas.name2 == 'odd' ? $store.state.payout[9].dynamicOdds:
+                                                            datas.name2 == 'even' ? $store.state.payout[10].dynamicOdds:
+                                                            datas.name2 == 'high' ? $store.state.payout[11].dynamicOdds:
+                                                            datas.name2 == 'mid' ? $store.state.payout[12].dynamicOdds:
+                                                            datas.name2 == 'low' ? $store.state.payout[13].dynamicOdds:
+                                                            $store.state.payout[parseFloat(datas.name2) + 40].dynamicOdds
+                                                        }}
+                                                    </div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[1]+'-'+datas.name2" />
                                                     </div>
@@ -114,7 +135,7 @@
 
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)" v-if="datas.childrenss" v-for="(datass, idx9) in datas.childrenss" :key="idx9">
                                                     <div class="text-bet" v-if="datass.name2 != 19">{{datass.name2}}</div>
-                                                    <div class="text-stock" v-if="datass.name2 != 19">{{items.payoutb}}</div>
+                                                    <div class="text-stock" v-if="datass.name2 != 19">{{$store.state.payout[parseFloat(datas.name2) + 60].dynamicOdds}}</div>
                                                     <div class="bet-box" v-if="datass.name2 != 19">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datass.name2" style="width:80%;" />
                                                     </div>
@@ -122,7 +143,18 @@
 
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" v-if="!datas.childrenss" @click="betRow($event)">
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name3)}}</div>
-                                                    <div class="text-stock">{{datas.name3 == 'big' ? $store.state.payout[0].bigpayout : datas.name3 == 'small' ? $store.state.payout[0].smallpayout:items.payout}}</div>
+                                                    <div class="text-stock">
+                                                        {{
+                                                            datas.name3 == 'big' ? $store.state.payout[14].dynamicOdds : 
+                                                            datas.name3 == 'small' ? $store.state.payout[16].dynamicOdds:
+                                                            datas.name3 == 'odd' ? $store.state.payout[17].dynamicOdds:
+                                                            datas.name3 == 'even' ? $store.state.payout[18].dynamicOdds:
+                                                            datas.name3 == 'high' ? $store.state.payout[19].dynamicOdds:
+                                                            datas.name3 == 'mid' ? $store.state.payout[20].dynamicOdds:
+                                                            datas.name3 == 'low' ? $store.state.payout[21].dynamicOdds:
+                                                            $store.state.payout[parseFloat(datas.name3) + 50].dynamicOdds
+                                                        }}
+                                                    </div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[2]+'-'+datas.name3" />
                                                     </div>
@@ -130,7 +162,17 @@
 
                                                 <td class="top-bet" v-if="items.name !== 'Specific-Number'" :style="items.name == 'Specific-Number' ? 'width:35%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{$t('gamemsg.'+datas.name4)}}</div>
-                                                    <div class="text-stock">{{datas.name4 == 'big' ? $store.state.payout[0].bigpayout : datas.name4 == 'small' ? $store.state.payout[0].smallpayout:items.payout}}</div>
+                                                    <div class="text-stock">
+                                                        {{
+                                                            datas.name4 == 'big' ? $store.state.payout[22].dynamicOdds : 
+                                                            datas.name4 == 'small' ? $store.state.payout[24].dynamicOdds:
+                                                            datas.name4 == 'odd' ? $store.state.payout[25].dynamicOdds:
+                                                            datas.name4 == 'even' ? $store.state.payout[26].dynamicOdds:
+                                                            datas.name4 == 'high' ? $store.state.payout[27].dynamicOdds:
+                                                            datas.name4 == 'mid' ? $store.state.payout[28].dynamicOdds:
+                                                            datas.name4 == 'low' ? $store.state.payout[27].dynamicOdds:''
+                                                            }}
+                                                    </div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-'+datas.name4" />
                                                     </div>
@@ -271,7 +313,7 @@
                         <tr v-if="sntwoloopstart == 0">
                             <td class="top-bet" @click="betRow($event)">
                                 <div class="text-bet">00</div>
-                                <div class="text-stock">98.82</div>
+                                <div class="text-stock">{{$store.state.payout[69].dynamicOdds}}</div>
                                 <div class="bet-box">
                                     <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[3]+'-00'" />
                                 </div>
@@ -280,7 +322,7 @@
                         <tr v-for=" (data, idx12) in sntwoloopend" v-if="data >= sntwoloopstart" :key="idx12">
                             <td class="top-bet" @click="betRow($event)">
                                 <div class="text-bet">{{ 10 > sntwoloopstart ? '0'+data : data}}</div>
-                                <div class="text-stock">98.82</div>
+                                <div class="text-stock">{{$store.state.payout[parseFloat(data) + 69].dynamicOdds}}</div>
                                 <div class="bet-box">
                                     <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="10 > sntwoloopstart ? header[3]+'-0'+data : header[3]+'-'+data" />
                                 </div>
@@ -351,6 +393,10 @@ import chips from "~/data/json/chips.json";
 import baccarat from "~/data/json/baccarat.json";
 import openSocket from "socket.io-client";
 import AnimatedNumber from "animated-number-vue";
+import {
+    Howl,
+    Howler
+} from 'howler';
 import {
     mapActions,
     mapGetters,
@@ -427,13 +473,11 @@ export default {
     },
 
     mounted() {
-        // console.log(this.getStockName(this.$route.params.id).loop)
         this.getTime();
         this.getchips();
         this.settabs()
         this.getSotckId()
         this.getMbFooter()
-
     },
     computed: {
         ...mapGetters(["getStockName", "getStockNewData", "getBalance"]),
@@ -461,38 +505,6 @@ export default {
     },
     methods: {
         ...mapActions(["balance"]),
-        // getrulebetting() {
-        //     const socket = openSocket("https://node-liveprice.herokuapp.com");
-        //     socket.on("liveprice1", data => {
-        //         console.log(data.data);
-        //         if (data.dat.length == "") return;
-
-        //         for (let i = 0; i < data.data.length; i++) {
-        //             this.rulenew = data.data[i].totalUsers
-        //         }
-
-        //         if (data.data.length != 0 || data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
-        //             // console.log("Okkk");
-        //             if (this.rulenew == undefined) return
-
-        //             if (this.isShow == true && data.data.length > this.chartData.length || this.rulenew > this.ruleold) {
-        //                 this.chartData = data.data;
-        //                 this.isShow = false
-        //                 for (let i = 0; i < data.data.length; i++) {
-        //                     this.ruleold = data.data[i].totalUsers
-        //                 }
-        //             } else {
-        //                 this.chartData = data.data;
-        //                 this.isShow = true
-        //             }
-        //         } else {
-        //             // console.log("Nooo");
-        //             this.chartData = []
-        //             this.isShow = false
-        //         }
-        //     });
-        // },
-
         settabs() {
             let t = this.$route.params.id.split("-")[2]
             let s;
@@ -646,7 +658,7 @@ export default {
         },
 
         bet(e, specialName = "none") {
-            // this.playSound('/voice/bet-chips.mp3') 
+            this.playSound('/voice/bet-chips.mp3')
             if (this.price == 0 || this.price == null || this.price > this.balanceinfo - this.sumTotalAll) {
                 console.log("Null-0");
                 this.price = 0
@@ -782,9 +794,11 @@ export default {
             if (totalPayout.data > 0) {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
-                this.playSound('/voice/winbet.mp3')
+                // this.playSound('/voice/winbet.mp3')
+                this.playSound('/voice/bet-chips.mp3')
                 this.balance()
             } else {
+                this.playSound('/voice/bet-chips.mp3')
                 this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
             }
@@ -813,10 +827,21 @@ export default {
             }
         },
         playSound(sound) {
-            if (sound) {
-                let audio = new Audio(sound);
-                audio.play();
+            // if (sound) {
+            //     let audio = new Audio(sound);
+            //     audio.play();
+            // }
+            if (localStorage.volume == null || localStorage.volume == "") {
+                Howler.volume(1);
+            } else {
+                Howler.volume(localStorage.volume);
             }
+
+            new Howl({
+                src: sound,
+                autoplay: true,
+            });
+
         },
         getMbFooter() {
             $("#txttotal").text(this.formatTotal(this.price))
