@@ -226,7 +226,9 @@ export default {
           console.log(this.val);
           console.log(this.privacy);
           console.log(this.getUserName.userId);  
-            },
+        
+        
+        },
         getcomonent(val) {
             this.iscomonent = val;
         },
