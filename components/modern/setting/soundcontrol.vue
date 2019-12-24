@@ -12,12 +12,19 @@
   </div>
 </template>
 <script>
+import {Howl, Howler} from 'howler';
 export default {
   data() {
     return {
       switch1: true,
       length: 5
     };
+  },
+  watch:{
+    
+  },
+  mounted(){
+    Howler.volume(0.1);
   }
 };
 </script>
