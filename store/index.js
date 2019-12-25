@@ -310,7 +310,8 @@ const createStore = () => {
                     const res = await this.$axios.$get("http://159.138.47.250/chatglobal/allmessages");
                     //console.log(res);
                     context.commit("setMessages", res.data);
-                    //console.log("Message View");
+                    console.log("Message View");
+                    console.log(res.data);
                 } catch (error) {
                     console.log(error);
                 }
