@@ -15,11 +15,10 @@ $mainbg: #003e70;
     margin: 20px 0px;
 }
 
-.bettingFooter{
-    margin-top:5px;
-    color:#FFF; 
+.bettingFooter {
+    margin-top: 5px;
+    color: #FFF;
 }
-
 
 span.text-blue {
     @extend %rules;
@@ -105,9 +104,10 @@ span.text-red {
                                                                 .v-responsive {
                                                                     .v-responsive__content {
                                                                         top: 18px;
-                                                                        position: relative;
+                                                                        // position: relative;
+                                                                        position: initial;
                                                                         display: inline-block;
-                                                                        font-size: 0.7rem;
+                                                                        font-size: 0.8rem;
                                                                         text-align: center;
                                                                         align-items: center;
                                                                     }
@@ -455,7 +455,6 @@ nav {
                     .v-input__control {
                         background-color: $mainbg;
                         border-radius: 4px;
-                      
                         .v-text-field__details {
                             display: none;
                         }

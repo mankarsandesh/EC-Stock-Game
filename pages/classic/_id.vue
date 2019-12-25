@@ -76,7 +76,7 @@
                                                 <td class="top-bet" :style="items.name == 'Specific-Number' ? 'width:50%':'width:50%'" @click="betRow($event)">
                                                     <div class="text-bet">{{datas.name >= 0 ? datas.name: $t('gamemsg.'+datas.name)}}</div>
                                                     <div class="text-stock">
-                                                        {{  datas.name == 'big' ? $store.state.payout[0].dynamicOdds : 
+                                                        {{ datas.name == 'big' ? $store.state.payout[0].dynamicOdds : 
                                                             datas.name == 'small' ? $store.state.payout[1].dynamicOdds:
                                                             datas.name == 'odd' ? $store.state.payout[2].dynamicOdds:
                                                             datas.name == 'even' ? $store.state.payout[3].dynamicOdds:
@@ -84,7 +84,7 @@
                                                             datas.name == 'mid' ? $store.state.payout[5].dynamicOdds:
                                                             datas.name == 'low' ? $store.state.payout[6].dynamicOdds:
                                                             $store.state.payout[parseFloat(datas.name) + 30].dynamicOdds
-                                                        }} 
+                                                        }}
                                                     </div>
                                                     <div class="bet-box">
                                                         <input type="text" class="form-input" readonly="readonly" @click="bet($event)" :data-stock="stockname" :name="header[0]+'-'+datas.name" />

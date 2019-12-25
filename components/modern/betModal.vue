@@ -18,7 +18,7 @@
                 <v-flex class="py-3 text-center">
                     <v-avatar size="60" v-for="(item,key) in imgChip" :key="key">
                         <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" width="60" :alt="item.title" :class="item.color">
-                            <span :class="isFullscreen ? 'setpricechips' : 'setpricechip'"> {{getCoins_modern[key]}}</span>
+                            <span class="setpricechip"> {{getCoins_modern[key]}}</span>
                         </v-img>
                     </v-avatar>
                 </v-flex>
@@ -202,15 +202,6 @@ export default {
 }
 
 .setpricechip {
-    position: relative;
-    top: -17px;
-    color: black;
-    font-size: 0.85rem;
-}
-
-.setpricechips {
-    position: relative;
-    top: 0px;
     color: black;
     font-size: 0.85rem;
 }
