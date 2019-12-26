@@ -840,7 +840,8 @@ const createStore = () => {
                     timeLastDraw,
                     type,
                     stockPrice,
-                    stockTime
+                    stockTime,
+                    prices
                 };
                 // var end = +new Date(); // log end timestamp
                 // var diff = end - start;

@@ -81,7 +81,7 @@
                             </div>
                         </v-flex>
                         <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                            <v-btn fab dark small color="#003e70" @click="setTutorial">
+                            <v-btn fab dark small color="#003e70" @click="setNextstep">
                                 <v-icon dark size="25">fa-question</v-icon>
                             </v-btn>
                         </v-flex>
@@ -113,99 +113,126 @@
         <a class="closebtn" @click="closeGuideline()">&times;</a>
     </div>
     <div hidden ref="guidelineContent" class="overlay-content">
-        <!-- bet rule title -->
-        <div ref="betTitleGuideline" style="position:fixed">
+
+        <!-- stock list 1 -->
+        <div ref="stocklistGuideline" style="position:fixed" v-show="isStep == 1">
             <div class="d-flex">
-                <p class="float-right guideline">Choose which you want to bets</p>
-                <div class="arrow float-left line-my">&#8631;</div>
-            </div>
-        </div>
-        <!-- bet rule -->
-        <div ref="betguideline" style="position:fixed"></div>
-        <!-- fullscreen -->
-        <div ref="fullScreenGuideline" style="position:fixed">
-            <div class="d-flex">
-                <p class="float-right guideline">Click to enter full screen mode</p>
-                <div class="arrow float-left line-my">&#8605;</div>
-            </div>
-        </div>
-        <!-- select stock -->
-        <div ref="selectGuideline" style="position:fixed">
-            <div class="d-flex">
-                <p class="float-right guideline">Select other stock games</p>
+                <p class="float-right guideline" @click="setNextstep">The stock list <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
                 <div class="arrow float-left line-my">&#8628;</div>
             </div>
+
         </div>
-        <!-- chart -->
-        <div ref="chartGuideline" style="position:fixed;">
+        <!-- select stock 2 -->
+        <div ref="selectGuideline" style="position:fixed" v-show="isStep == 2">
             <div class="d-flex">
-                <p class="float-right guideline">This is the chart that show a amount of the stock</p>
-                <div class="arrow float-left line-my">&#8631;</div>
-            </div>
-        </div>
-        <!-- last draw -->
-        <div ref="lastDrawtGuideline" style="position:fixed">
-            <div class="d-flex">
-                <p class="float-right guideline">The lastest result</p>
+                <p class="float-right guideline" @click="setNextstep">Select other stock games <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
                 <div class="arrow float-left line-my">&#8628;</div>
             </div>
-        </div>
-        <!-- stock list -->
-        <div ref="stocklistGuideline" style="position:fixed">
-            <div class="d-flex">
-                <p class="float-right guideline">The stock list</p>
-                <div class="arrow float-left line-my">&#8628;</div>
-            </div>
-        </div>
-        <!-- betresult -->
-        <div ref="betresultGuideline" style="position:fixed">
-            <div class="d-flex">
-                <p class="float-right guideline">The bet result</p>
-                <div class="arrow float-left line-my">&#8628;</div>
-            </div>
-        </div>
-        <!-- betting -->
-        <div ref="bettingGuideline" style="position:fixed">
-            <div class="d-flex">
-                <p class="float-right guideline">The betting</p>
-                <div class="arrow float-left line-my">&#8628;</div>
-            </div>
-        </div>
-        <!-- trendmap -->
-        <div ref="trendmapGuideline" style="position:fixed">
-            <div class="d-flex">
-                <p class="float-left guideline">The bacarats</p>
-                <div class="arrow float-left line-my">&#8628;</div>
-            </div>
-        </div>
-        <!-- multi game -->
-        <div ref="multigameGuideline" style="position:fixed">
-            <div class="d-flex">
-                <div class="arrow float-left line-my">&#8630;</div>
-                <div>
-                    <p class="float-right guideline">Countdown to the result</p>
-                </div>
-            </div>
+
         </div>
 
-        <!-- bet close in -->
-        <div ref="betCloseInGuideline" style="position:fixed">
+        <!-- last draw 3 -->
+        <div ref="lastDrawtGuideline" style="position:fixed" v-show="isStep == 3">
+            <div class="d-flex">
+                <p class="float-right guideline" @click="setNextstep">The lastest result <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
+                <div class="arrow float-left line-my">&#8628;</div>
+            </div>
+
+        </div>
+
+        <!-- bet close in 4 -->
+        <div ref="betCloseInGuideline" style="position:fixed" v-show="isStep == 4">
             <div class="d-block">
                 <div style="position: relative">
-                    <p class="float-right guideline">Countdown to close bet</p>
+                    <p class="float-right guideline" @click="setNextstep">Countdown to close bet <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                    </p>
                 </div>
                 <div class="arrow float-left line-my">&#8601;</div>
             </div>
+
         </div>
-        <!-- lottery draw -->
-        <div ref="lotteryDrawGuideline" style="position:fixed">
+        <!-- lottery draw 5 -->
+        <div ref="lotteryDrawGuideline" style="position:fixed" v-show="isStep == 5">
             <div class="d-flex">
                 <div class="arrow float-left line-my">&#8630;</div>
                 <div>
-                    <p class="float-right guideline">Countdown to the result</p>
+                    <p class="float-right guideline" @click="setNextstep">Countdown to the result <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                    </p>
                 </div>
             </div>
+
         </div>
+        <!-- chart 6 -->
+        <div ref="chartGuideline" style="position:fixed;" v-show="isStep == 6">
+            <div class="d-flex">
+                <p class="float-right guideline" @click="setNextstep">This is the chart that show a amount of the stock <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
+                <div class="arrow float-left line-my">&#8631;</div>
+            </div>
+
+        </div>
+        <!-- bet rule title 7 -->
+        <div ref="betTitleGuideline" style="position:fixed" v-show="isStep == 7">
+            <div ref="betguideline" style="position:fixed"></div>
+            <div class="d-flex">
+                <p class="float-right guideline" @click="setNextstep">Choose which you want to bets <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
+                <div class="arrow float-left line-my">&#8631;</div>
+            </div>
+
+        </div>
+        <!-- betresult 8  -->
+        <div ref="betresultGuideline" style="position:fixed" v-show="isStep == 8">
+            <div class="d-flex">
+                <p class="float-right guideline" @click="setNextstep">The bet result <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
+                <div class="arrow float-left line-my">&#8628;</div>
+            </div>
+
+        </div>
+
+        <!-- fullscreen 9-->
+        <div ref="fullScreenGuideline" style="position:fixed" v-show="isStep == 9">
+            <div class="d-flex">
+                <p class="float-right guideline" @click="setNextstep">Click to enter full screen mode <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
+                <div class="arrow float-left line-my">&#8605;</div>
+            </div>
+
+        </div>
+        <!-- multi game 10-->
+        <div ref="multigameGuideline" style="position:fixed" v-show="isStep == 10">
+            <div class="d-flex">
+                <div class="arrow float-left line-my">&#8630;</div>
+                <div>
+                    <p class="float-right guideline" @click="setNextstep">This is multiple gamig <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- betting 11 -->
+        <div ref="bettingGuideline" style="position:fixed" v-show="isStep == 11">
+            <div class="d-flex">
+                <p class="float-right guideline" @click="setNextstep">The betting <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
+                <div class="arrow float-left line-my">&#8628;</div>
+            </div>
+
+        </div>
+        <!-- trendmap 12 -->
+        <div ref="trendmapGuideline" style="position:fixed" v-show="isStep == 12">
+            <div class="d-flex">
+                <p class="float-left guideline" @click="setNextstep">The Trend Charts <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
+                </p>
+                <div class="arrow float-left line-my">&#8628;</div>
+            </div>
+
+        </div>
+
     </div>
 
 </div>
@@ -269,7 +296,8 @@ export default {
                 }
             ],
             trendTypes: ["firstDigit"],
-            isloading: false
+            isloading: false,
+            isStep: 0
         };
     },
     mounted() {
@@ -284,7 +312,7 @@ export default {
         $(document).ready(function () {
             $(window).resize(function () {
                 if (vm.$refs.guidelineContent.hidden == false) {
-                    vm.setTutorial()
+                    vm.setTutorial(this.isStep)
                 }
             });
         });
@@ -323,98 +351,137 @@ export default {
         loaded() {
             this.isLoad = true;
         },
-        setTutorial() {
+        setNextstep() {
+            if (this.isStep < 12) this.isStep += 1
+            else this.isStep = 1
+
+            this.setTutorial(this.isStep)
+        },
+        setTutorial(isStep) {
             this.$refs.guidelineContent.hidden = false;
             let w = window.innerWidth;
 
-            // bet rule
-            let ruleG = $("#betRuleButton").offset();
-            let width = $("#betRuleButton").width();
-            let height = $("#betRuleButton").height();
-            $(this.$refs.betguideline).css("width", width + 5);
-            $(this.$refs.betguideline).css("height", height + 5);
-            $(this.$refs.betguideline).css("border-style", "solid");
-            $(this.$refs.betguideline).css("border-color", "coral");
-            $(this.$refs.betguideline).css("left", ruleG.left);
-            $(this.$refs.betguideline).css("top", ruleG.top);
-            // bet title
-            $(this.$refs.betTitleGuideline).css("right", (w - ruleG.left) - 25);
-            // $(this.$refs.betTitleGuideline).css("top", ruleG.top + 50);
+            if (isStep == 1) { 
+                // stock list
+                let stockG = $("#stocklistGuidelines").offset();
+                $("#stocklistGuidelines").css("border-style", "solid");
+                $("#stocklistGuidelines").css("border-color", "coral");
+                $(this.$refs.stocklistGuideline).css("right", (w - stockG.left) - 60);
+                $(this.$refs.stocklistGuideline).css("top", stockG.top - 35);
+                $("#trendmapGuidelines").css("border-style", "none");
 
-            // end bet rule
+            } else if (isStep == 2) {
+                // select stock
+                let selectG = $("#selectstockGuideline").offset();
+                $("#selectstockGuideline").css("border-style", "solid");
+                $("#selectstockGuideline").css("border-color", "coral");
+                $(this.$refs.selectGuideline).css("left", selectG.left);
+                $(this.$refs.selectGuideline).css("top", selectG.top - 35);
+                $("#stocklistGuidelines").css("border-style", "none");
 
-            let selectG = $("#selectstockGuideline").offset();
-            $("#selectstockGuideline").css("border-style", "solid");
-            $("#selectstockGuideline").css("border-color", "coral");
-            $(this.$refs.selectGuideline).css("left", selectG.left);
-            $(this.$refs.selectGuideline).css("top", selectG.top - 50);
+            } else if (isStep == 3) {
+                // last Draw
+                let lastG = $("#lastDrawGuideline").offset();
+                $("#lastDrawGuideline").css("border-style", "solid");
+                $("#lastDrawGuideline").css("border-color", "coral");
+                $(this.$refs.lastDrawtGuideline).css("right", (w - lastG.left) - 60);
+                $(this.$refs.lastDrawtGuideline).css("top", lastG.top - 35);
+                $("#selectstockGuideline").css("border-style", "none");
 
-            let chartG = $("#chartGuideline").offset();
-            $("#chartGuideline").css("border-style", "solid");
-            $("#chartGuideline").css("border-color", "coral");
-            $(this.$refs.chartGuideline).css("left", chartG.left - 370);
-            $(this.$refs.chartGuideline).css("top", chartG.top + 20);
+            } else if (isStep == 4) {
+                // bet Close In
+                let betG = $("#betCloseInGuideline").offset();
+                $("#betCloseInGuideline").css("border-style", "solid");
+                $("#betCloseInGuideline").css("border-color", "coral");
+                $(this.$refs.betCloseInGuideline).css("left", betG.left + 70);
+                $(this.$refs.betCloseInGuideline).css("top", betG.top - 85);
+                $("#lastDrawGuideline").css("border-style", "none");
 
-            let lastG = $("#lastDrawGuideline").offset();
-            $("#lastDrawGuideline").css("border-style", "solid");
-            $("#lastDrawGuideline").css("border-color", "coral");
-            $(this.$refs.lastDrawtGuideline).css("right", (w - lastG.left) - 60);
-            $(this.$refs.lastDrawtGuideline).css("top", lastG.top - 50);
+            } else if (isStep == 5) {
+                // lottery Draw
+                let lotteryDrawG = $("#lotteryDrawGuidelines").offset();
+                $("#lotteryDrawGuidelines").css("border-style", "solid");
+                $("#lotteryDrawGuidelines").css("border-color", "coral");
+                $(this.$refs.lotteryDrawGuideline).css("left", lotteryDrawG.left + 100);
+                $(this.$refs.lotteryDrawGuideline).css("top", lotteryDrawG.top - 20);
+                $("#betCloseInGuideline").css("border-style", "none");
 
-            let stockG = $("#stocklistGuidelines").offset();
-            $("#stocklistGuidelines").css("border-style", "solid");
-            $("#stocklistGuidelines").css("border-color", "coral");
-            $(this.$refs.stocklistGuideline).css("right", (w - stockG.left) - 60);
-            $(this.$refs.stocklistGuideline).css("top", stockG.top - 50);
+            } else if (isStep == 6) {
+                // chart
+                let chartG = $("#chartGuideline").offset();
+                $("#chartGuideline").css("border-style", "solid");
+                $("#chartGuideline").css("border-color", "coral");
+                $(this.$refs.chartGuideline).css("left", chartG.left - 370);
+                $(this.$refs.chartGuideline).css("top", chartG.top + 20);
+                $("#lotteryDrawGuidelines").css("border-style", "none");
 
-            let betresultG = $("#betresultGuidelines").offset();
-            $("#betresultGuidelines").css("border-style", "solid");
-            $("#betresultGuidelines").css("border-color", "coral");
-            $(this.$refs.betresultGuideline).css("right", (w - betresultG.left) - 60);
-            $(this.$refs.betresultGuideline).css("top", betresultG.top - 50);
+            } else if (isStep == 7) {
+                // bet rule
+                let ruleG = $("#betRuleButton").offset();
+                let width = $("#betRuleButton").width();
+                let height = $("#betRuleButton").height();
+                $(this.$refs.betguideline).css("width", width + 5);
+                $(this.$refs.betguideline).css("height", height + 5);
+                $(this.$refs.betguideline).css("border-style", "solid");
+                $(this.$refs.betguideline).css("border-color", "coral");
+                $(this.$refs.betguideline).css("left", ruleG.left);
+                $(this.$refs.betguideline).css("top", ruleG.top);
+                // bet title
+                $(this.$refs.betTitleGuideline).css("right", (w - ruleG.left) - 25);
+                // $(this.$refs.betTitleGuideline).css("top", ruleG.top + 50);
+                $("#chartGuideline").css("border-style", "none");
 
-            let bettingG = $("#bettingGuidelines").offset();
-            $("#bettingGuidelines").css("border-style", "solid");
-            $("#bettingGuidelines").css("border-color", "coral");
-            $(this.$refs.bettingGuideline).css("right", (w - bettingG.left) - 60);
-            $(this.$refs.bettingGuideline).css("top", bettingG.top - 50);
+            } else if (isStep == 8) {
+                // betresult
+                let betresultG = $("#betresultGuidelines").offset();
+                $("#betresultGuidelines").css("border-style", "solid");
+                $("#betresultGuidelines").css("border-color", "coral");
+                $(this.$refs.betresultGuideline).css("right", (w - betresultG.left) - 60);
+                $(this.$refs.betresultGuideline).css("top", betresultG.top - 35);
 
-            let trendmapG = $("#trendmapGuidelines").offset();
-            $("#trendmapGuidelines").css("border-style", "solid");
-            $("#trendmapGuidelines").css("border-color", "coral");
-            $(this.$refs.trendmapGuideline).css("right", (trendmapG.left) - 310);
-            $(this.$refs.trendmapGuideline).css("top", trendmapG.top - 10);
+            } else if (isStep == 9) {
+                // fullscreen
+                const fullG = $("#fullscreenGuidelines").offset();
+                $("#fullscreenGuidelines").css("border-style", "solid");
+                $("#fullscreenGuidelines").css("border-color", "coral");
+                $(this.$refs.fullScreenGuideline).css("right", (w - fullG.left) - 30);
+                $(this.$refs.fullScreenGuideline).css("top", fullG.top + 20);
+                $("#betresultGuidelines").css("border-style", "none");
 
-            const fullG = $("#fullscreenGuidelines").offset();
-            $("#fullscreenGuidelines").css("border-style", "solid");
-            $("#fullscreenGuidelines").css("border-color", "coral");
-            $(this.$refs.fullScreenGuideline).css("right", (w - fullG.left) - 30);
-            $(this.$refs.fullScreenGuideline).css("top", fullG.top + 20);
+            } else if (isStep == 10) {
+                // multiple gaming
+                let multiG = $("#multiGuideline").offset();
+                $("#multiGuideline").css("border-style", "solid");
+                $("#multiGuideline").css("border-color", "coral");
+                $(this.$refs.multigameGuideline).css("left", multiG.left + 150);
+                $(this.$refs.multigameGuideline).css("top", multiG.top - 5);
+                $("#fullscreenGuidelines").css("border-style", "none");
 
-            let betG = $("#betCloseInGuideline").offset();
-            $("#betCloseInGuideline").css("border-style", "solid");
-            $("#betCloseInGuideline").css("border-color", "coral");
-            $(this.$refs.betCloseInGuideline).css("left", betG.left + 70);
-            $(this.$refs.betCloseInGuideline).css("top", betG.top - 70);
+            } else if (isStep == 11) {
+                // betting
+                let bettingG = $("#bettingGuidelines").offset();
+                $("#bettingGuidelines").css("border-style", "solid");
+                $("#bettingGuidelines").css("border-color", "coral");
+                $(this.$refs.bettingGuideline).css("right", (w - bettingG.left) - 60);
+                $(this.$refs.bettingGuideline).css("top", bettingG.top - 35);
+                $("#multiGuideline").css("border-style", "none");
 
-            let multiG = $("#multiGuideline").offset();
-            $("#multiGuideline").css("border-style", "solid");
-            $("#multiGuideline").css("border-color", "coral");
-            $(this.$refs.multigameGuideline).css("left", multiG.left + 150);
-            $(this.$refs.multigameGuideline).css("top", multiG.top - 5);
-
-            let lotteryDrawG = $("#lotteryDrawGuidelines").offset();
-            $("#lotteryDrawGuidelines").css("border-style", "solid");
-            $("#lotteryDrawGuidelines").css("border-color", "coral");
-            $(this.$refs.lotteryDrawGuideline).css("left", lotteryDrawG.left + 100);
-            $(this.$refs.lotteryDrawGuideline).css("top", lotteryDrawG.top);
-
+            } else if (isStep == 12) {
+                // trendmap
+                let trendmapG = $("#trendmapGuidelines").offset();
+                $("#trendmapGuidelines").css("border-style", "solid");
+                $("#trendmapGuidelines").css("border-color", "coral");
+                $(this.$refs.trendmapGuideline).css("right", (trendmapG.left) - 310);
+                $(this.$refs.trendmapGuideline).css("top", trendmapG.top - 40);
+                $("#bettingGuidelines").css("border-style", "none");
+            }
             this.$refs.guideline.style.height = "100%";
             document.documentElement.style.overflow = "hidden";
             window.scrollTo(0, 0);
 
         },
         closeGuideline() {
+            this.isStep = 0
             $(".fa-question-circle").show();
             this.$refs.guidelineContent.hidden = true;
             this.$refs.guideline.style.height = "0%";
@@ -505,7 +572,7 @@ export default {
 }
 
 .arrow {
-    font-size: 100px;
+    font-size: 70px;
     color: #f44336 !important;
 }
 
@@ -514,10 +581,15 @@ export default {
 }
 
 p.guideline {
-    background-color: #ddd;
+    background-color: rgb(240, 238, 238);
     color: #000;
     border-radius: 7px;
     padding: 6px;
+    opacity: 0.9;
+
 }
 
+.btn-nextsetp {
+    z-index: 10000;
+}
 </style>
