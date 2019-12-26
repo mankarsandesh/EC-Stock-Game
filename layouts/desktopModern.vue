@@ -183,6 +183,7 @@ export default {
     countryflag() {
       return this.getlocale;
     }
+}
 };
 </script>
 
