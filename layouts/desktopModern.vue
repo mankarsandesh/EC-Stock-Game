@@ -67,13 +67,9 @@
     <!-- <v-float dark color="#003e70" >   
   EC
     </v-float>-->
-
     <chatWindow />
-    
-    
-  </v-app>
+    </v-app>
 </template>
-
 <script>
 import { mapGetters, mapMutations } from "vuex";
 
@@ -89,8 +85,6 @@ import lottie from "lottie-web";
 import chatWindow from "~/components/chatWindow";
 // import popper from "vue-popperjs";
 // import "vue-popperjs/dist/vue-popper.css";
-
-
 
 export default {
   components: {

@@ -207,14 +207,14 @@ export default {
   position: fixed;
   right: 80px;
   bottom: 20px;
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
 }
 .livechatImg{
   text-align: center;
   border-radius:6px;
-  width:40px;  
-  height:40px; 
+  width:30px;  
+  height:30px; 
   margin: 20% auto;
   background-color: #FFF;
   /* border: 1px solid red; */
@@ -222,8 +222,8 @@ export default {
 .liveChatBUtton{
   text-align: center;
   background-color: aliceblue;
-  width: 70px;
-  height:70px;
+  width: 50px;
+  height:50px;
   border-radius: 180px;
 }
 .chatRoom {
@@ -312,7 +312,7 @@ export default {
 }
 #messageCHat input {
   float: left;
-  border: 1px solid #cccccc;
+  border: 1px solid #084e88;
   width: 85%;
   padding: 10px;
   margin-right: 15px;
@@ -320,7 +320,10 @@ export default {
   height: 40px;
   resize: none;
   color: #003e70;
-  border-radius: 6px;
+  border-radius: 4px;
+}
+#messageCHat input:focus{
+ outline: none;
 }
 #messageCHat btn {
   background-color: #003e70;
