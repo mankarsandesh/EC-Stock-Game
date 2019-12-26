@@ -9,7 +9,6 @@ const createStore = () => {
             auth_token: localStorage.apikey,
             isLoadingAnnoucement: [],
             isLoadingMessage: [],
-            isLoadingFetchbet : [],
             isLoadingMessageGame: [],
             isLoadingHistory: [],
             userData: {},
@@ -264,9 +263,6 @@ const createStore = () => {
             setMessagesGame(state, payload) {
                 state.isLoadingMessageGame = payload;
             },
-            setFetchbet(state, payload) {
-                state.isLoadingFetchbet = payload;
-            },
             setHistory(state, payload) {
                 state.isLoadingHistory = payload;
             }
@@ -330,20 +326,7 @@ const createStore = () => {
                 } catch (error) {
                     console.log(error);
                 }
-            },
-            // Fetch Latest Bet
-            async fetLatestbet(context) {
-                try {
-                    const res = await this.$axios.$get(`/api/fetchBet?apikey=${context.getters.getAuth_token}`);
-                    if (res.status) {
-                        context.commit("setFetchbet", res.data);
-                        console.log("Fetch all BET");
-                    }
-                } catch (ex) {
-                    console.error(ex);
-                    // alert(ex)
-                }
-            },
+            },           
             async balance(context) {
                 try {
                     const res = await this.$axios.$get(`/api/me/balance?apikey=${context.getters.getAuth_token}`);
@@ -526,9 +509,6 @@ const createStore = () => {
             },
             getMessages(state) {
                 return state.isLoadingMessage;
-            },
-            getFetchbet(state) {
-                return state.isLoadingFetchbet;
             },
             getMessagesGame(state) {
                 return state.isLoadingMessageGame;
