@@ -29,7 +29,7 @@
           </div>
 
           <div id="messageCHat">
-            <input resize="none" v-model="message" placeholder="Type Message" />
+            <input resize="none" v-model="message" placeholder="Say Somthing..." />
             <btn v-on:click="sendMsg">         
               <i class="fa fa-paper-plane"></i>
             </btn>
@@ -47,7 +47,7 @@
           </div>
 
           <div id="messageCHat">
-            <input resize="none" v-model="messageGame" placeholder="Type Message" />
+            <input resize="none" v-model="messageGame" placeholder="Say Somthing..." />
             <btn v-on:click="sendMsgGame">
              <i class="fa fa-paper-plane"></i>
              </btn>
