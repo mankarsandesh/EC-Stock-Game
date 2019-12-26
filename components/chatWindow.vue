@@ -105,21 +105,15 @@ export default {
     ...mapGetters(["getMessages","getMessagesGame","getUserName","getStockType"])
   },
   mounted() {
-
-
-
     this.asymessages();
     this.asymessagesGame();
     this.asynUserInfo();
    
   },
   updated() {
-    // this.userId = this.getUserName.userId;
-    // alert(this.userId);
-    $("#bodyChat").stop().animate({ scrollTop: $("#bodyChat")[0].scrollHeight}, 1000);
+     $("#bodyChat").stop().animate({ scrollTop: $("#bodyChat")[0].scrollHeight}, 1000);
   },
   created() {
-    
 
   console.log(this.getUserName.userId);
     // Socket for Channel
