@@ -10,23 +10,26 @@
       <div class="chatRoom">
         <div id="headerChat">
           <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
-            <a href="#">All Channel <span class="totalCount">{{totoalUserCount}}</span></a>
+            <a href="#">All Channel </a>
           </span>
           <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
-            <a href="#">This Game</a>
+            <a href="#">Current Bet</a>
           </span>
         </div>
 
         <div v-if="allChannel">
           <div id="bodyChat" class="messages" >      
+            
             <div id="messagechannel"  v-for="data in getMessages" :key="data.index" class="msguser" >
-              <a href="#">{{data.name}} :</a>
-              <span class="msgbody">{{data.message}}</span>
+              <div class="messageChatview">
+                <a href="#">{{data.name}} </a>
+                <p class="msgbody">{{data.message}}</p>
+              </div>               
             </div>
           </div>
 
           <div id="messageCHat">
-            <input resize="none" v-model="message" placeholder="Type Message" />
+            <input resize="none" v-model="message" placeholder="Say Somthing..." />
             <btn v-on:click="sendMsg">         
               <i class="fa fa-paper-plane"></i>
             </btn>
@@ -36,13 +39,15 @@
         <div v-if="betChannel">
           <div id="bodyChat">
             <div class="msguser" v-for="data in getMessagesGame" :key="data.index">
-              <a href="#">{{data.name}} :</a>
-              <span class="msgbody">{{data.message}}</span>
+               <div class="messageChatview">
+                <a href="#">{{data.name}} </a>
+                <p class="msgbody">{{data.message}}</p>
+              </div>  
             </div>
           </div>
 
           <div id="messageCHat">
-            <input resize="none" v-model="messageGame" placeholder="Type Message" />
+            <input resize="none" v-model="messageGame" placeholder="Say Somthing..." />
             <btn v-on:click="sendMsgGame">
              <i class="fa fa-paper-plane"></i>
              </btn>
@@ -50,7 +55,13 @@
         </div>
       </div>
     </div>
-    <v-btn color="#013d70" dark rigth fab slot="reference" class="liveChat">EC</v-btn>
+    <v-btn color="#dddddd
+    " dark rigth fab slot="reference" class="liveChat" >
+        <div class="liveChatBUtton">
+            <v-img  class="livechatImg"  src="/favicon.png" ></v-img>
+        </div>        
+    </v-btn>
+
   </popper>
 </template>
 <script>
@@ -87,27 +98,22 @@ export default {
       connectClient : [],
       totoalUserCount : 0,
       userId : 0,
+      // username : this.getUserName.name
     };
   },
   computed: {
     ...mapGetters(["getMessages","getMessagesGame","getUserName","getStockType"])
   },
   mounted() {
-
-
-
     this.asymessages();
     this.asymessagesGame();
     this.asynUserInfo();
    
   },
   updated() {
-    // this.userId = this.getUserName.userId;
-    // alert(this.userId);
-    $("#bodyChat").stop().animate({ scrollTop: $("#bodyChat")[0].scrollHeight}, 1000);
+     $("#bodyChat").stop().animate({ scrollTop: $("#bodyChat")[0].scrollHeight}, 1000);
   },
   created() {
-    
 
   console.log(this.getUserName.userId);
     // Socket for Channel
@@ -155,10 +161,7 @@ export default {
 },
   methods: {
 
-    
-
-
-    ...mapActions(["asymessages","asymessagesGame","asynUserInfo"]),
+ ...mapActions(["asymessages","asymessagesGame","asynUserInfo"]),
     tab1: function(event) {
       this.betChannel = false;
       this.allChannel = true;
@@ -204,12 +207,30 @@ export default {
   position: fixed;
   right: 80px;
   bottom: 20px;
+  width: 70px;
+  height: 70px;
+}
+.livechatImg{
+  text-align: center;
+  border-radius:6px;
+  width:30px;  
+  height:30px; 
+  margin: 20% auto;
+  background-color: #FFF;
+  /* border: 1px solid red; */
+}
+.liveChatBUtton{
+  text-align: center;
+  background-color: aliceblue;
+  width: 50px;
+  height:50px;
+  border-radius: 180px;
 }
 .chatRoom {
   height: 600px;
   width: 100%;
-  margin-right: 300px;
-  padding: 0px 5px;
+  /* margin-r: 300px; */
+  padding: 10px 10px;
   border-radius: 5px;
   background-color: #FFF;
 }
@@ -228,17 +249,20 @@ export default {
 }
 #headerChat .tabs {
   text-align: center;
-  width: 50%;
+  width: 45%;
+  margin-right: 10px;
   float: left;
+   
 }
 #headerChat .tabs a {
+  margin-left: 10px;
   width: 100%;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-    color: #003e70;
-  font-size: 18px;
+  border-radius: 10px;
+  color: #003e70;
+  font-size: 16px;
   float: left;
   padding: 5px 10px;
+  border:1px solid #003e70;
 }
 #headerChat .active a {
   color: #FFF;
@@ -246,29 +270,37 @@ export default {
 }
 #bodyChat {
   background-color: #fff;
-  height: 510px;
+  height: 480px;
   text-align: left;
   padding: 10px 0px;
   overflow: scroll;
   overflow-x: hidden;
   border-radius:4px;
-  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+  /* border: 1px solid #cccccc; */
 }
 
 #messageCHat {
   background-color: #fff;
-  height: 40px;
+  height: 45px;
+  padding: 0px 10px;
+  /* border:1px solid red; */
 }
 
 .msguser {
- background: white;
-   padding: 5px 5px;
+  background: #dcdfe0;
+  color:#003e70;
+  padding: 3px 15px 0px;
   overflow: auto;
-  border-radius:4px;
+  border-radius:8px;
   max-width: 350px;
   margin: 10px 10px;
-  /* border:1px solid #333; */
-  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3)
+  text-align: justify;
+  /* border:1px solid red; */
+  /* box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2) */
+}
+.msguser p{
+  margin-bottom:5px;
 }
 .msguser a {
   text-transform: capitalize;
@@ -276,28 +308,34 @@ export default {
   color: #003e70;
 }
 .msgbody {
-  color: #333;
+  color: #003e70;
 }
 #messageCHat input {
   float: left;
-  border: 1px solid #cccccc;
-  width: 80%;
-  padding: 5px;
+  border: 1px solid #084e88;
+  width: 85%;
+  padding: 10px;
+  margin-right: 15px;
   font-size: 15px;
   height: 40px;
   resize: none;
   color: #003e70;
+  border-radius: 4px;
+}
+#messageCHat input:focus{
+ outline: none;
 }
 #messageCHat btn {
   background-color: #003e70;
   color: #333;
-  width: 20%;
+  width: 40px;
   height: 40px;
   display: table-cell;
   vertical-align: middle;
   color: #fff;
   cursor: pointer;
   font-size: 16px;
+  border-radius:180px;
 }
 
 /* width */

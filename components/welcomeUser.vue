@@ -24,3 +24,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.warning--text {
+  text-transform: capitalize;
+}
+</style>

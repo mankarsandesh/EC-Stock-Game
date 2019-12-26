@@ -126,7 +126,7 @@
                 <div class="setborder">
                     <span class="seticon"> <i class="fa fa-user fa-2x iconcolor" />: {{dataliveBetAll.totalUsers}}</span>
                     <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" /> : {{dataliveBetAll.totalBets}}</span>
-                    <span class="seticon"> <i class="fa fa-money fa-2x iconcolor" /> : {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
+                    <span class="seticons"> <i class="fa fa-money fa-2x iconcolor" /> : {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
                 </div>
             </v-flex>
             <!-- live Chart -->
@@ -293,7 +293,7 @@ export default {
                     // this.msg = this.$root.$t('msg.nobetting');
                     // this.chartData = []
 
-                    if (this.chartData.length != 4) {
+                    if (this.chartData.length != 4 ||this.chartData.length == null) {
                         this.isShow = false
                     } else {
                         this.isShow = true
@@ -350,6 +350,11 @@ export default {
 .seticon {
     display: inline-block;
     width: calc(125% - 100%);
+    position: relative;
+    margin-left: 6px;
+    font-family: fantasy;
+}
+.seticons {
     position: relative;
     margin-left: 6px;
     font-family: fantasy;
