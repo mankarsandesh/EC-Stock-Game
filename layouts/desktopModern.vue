@@ -54,12 +54,9 @@
     <!-- <v-float dark color="#003e70" >   
   EC
     </v-float>-->
-
     <chatWindow />
-
-</v-app>
+    </v-app>
 </template>
-
 <script>
 import {
     mapGetters,
@@ -80,114 +77,111 @@ import chatWindow from "~/components/chatWindow";
 // import "vue-popperjs/dist/vue-popper.css";
 
 export default {
-    components: {
-        chatWindow,
-        countryFlag,
-        languageDialog,
-        winnerMarquee,
-        welcomeUser
-    },
-    data() {
-        return {
-            direction: "top",
-            fab: true,
-            fling: true,
-            hover: false,
-            tabs: true,
-            top: false,
-            right: true,
-            bottom: true,
-            left: false,
-            transition: "slide-y-reverse-transition",
+  components: {
+    chatWindow,
+    countryFlag,
+    languageDialog,
+    winnerMarquee,
+    welcomeUser
+  },
+  data() {
+    return {
+      direction: "top",
+      fab: true,
+      fling: true,
+      hover: false,
+      tabs: true,
+      top: false,
+      right: true,
+      bottom: true,
+      left: false,
+      transition: "slide-y-reverse-transition",
 
-            //winner mqrquee
-            winner: [
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36  </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>"
-            ],
-            pauseTime: 2000,
-            pauseOnHover: false,
-            scrollSpeed: 30,
-            showSpeed: 20,
+      //winner mqrquee
+      winner:[],
+      pauseTime: 2000,
+      pauseOnHover: false,
+      scrollSpeed: 30,
+      showSpeed: 20,
 
-            clipped: false,
-            drawer: false,
-            fixed: false,
-            menu: menu,
-            miniVariant: false,
-            right: true,
-            rightDrawer: false,
-            title: "EC gaming",
-            isFullscreen: null,
-            timeout: 3000
-        };
-    },
+      clipped: false,
+      drawer: false,
+      fixed: false,
+      menu: menu,
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: "EC gaming",
+      isFullscreen: null,
+      timeout: 3000
+    };
+  },
 
-    created() {
-        // check is full screen or not
-        let path = this.$nuxt.$route.name.split("-");
-        let isFullscreen = path[1];
-        if (isFullscreen === "fullscreen") {
-            this.isFullscreen = true;
-        } else {
-            this.isFullscreen = false;
-        }
-        //  this.getwinuser()
-    },
-    mounted() {
-        lottie.loadAnimation({
-            container: this.$refs.svgContainer, // the dom element that will contain the animation
-            renderer: "svg",
-            loop: true,
-            autoplay: true,
-            path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
-        });
-        // setInterval(function() {
+  created() {
+    // check is full screen or not
+    let path = this.$nuxt.$route.name.split("-");
+    let isFullscreen = path[1];
+    if (isFullscreen === "fullscreen") {
+      this.isFullscreen = true;
+    } else {
+      this.isFullscreen = false;
+    }
+     
+     console.log("crearted");
+  },
+  mounted() {
+    this.getwinuser();
+    lottie.loadAnimation({
+      container: this.$refs.svgContainer, // the dom element that will contain the animation
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
+    });
+    // setInterval(function() {
 
-        // }, 1000);
+    // }, 1000);
 
-        // this.setIsLoadingStockGame(false);
-    },
-    created() {},
-    methods: {
-        ...mapMutations(["setIsLoadingStockGame"])
-        //  getwinuser() {
-        //    this.$axios.$get("api/getwinuser").then(response => {
-        //      console.log("response.....................")
-        //      alert(response.data)
-        //      console.log("response.......................")
-        //       for (let i = 0; i < response.data.length - 1; i++) {
-        //         let betID = response.data[i].betID;
-        //         let result = response.data[i].result;
-        //         let betAmount = response.data[i].betAmount;
-        //         let betTime = response.data[i].betTime;
-        //         let win = `<span class="text-slide text-white"><span class="text-warning">
-        //       <i class="fa fa-bell"></i>
-        //       </span>${this.navwin1} ${betID}<span class="text-warning">${result} ${betAmount},
-        //       </span> ${this.navwin2} SINA  ${betTime}</span>`
-        //         this.winner.push(win);
-        //       }
-        //     })
-        //     .catch(error => {
-        //       alert(error)
-        //     })
-        // }
-    },
-    computed: {
-        ...mapGetters([
-            "getBalance",
-            "getlocale",
-            "getIsLoadingStockGame",
-            "getStockCrawlerData"
-        ]),
-        countryflag() {
-            return this.getlocale;
-        }
+    // this.setIsLoadingStockGame(false);
+  },
+  created() {},
+  methods: {
+    
+     getwinuser() {
+       this.$axios.$get("api/fetchBet").then(response => {
+         console.log("response.....................")
+        console.log(response.data)
+         console.log("response.......................")
+         let resultStatus  = null;
+          for (let i = 0; i < response.data.length - 1; i++) {
+            let betID = response.data[i].betId;
+            let result = response.data[i].result;
+            let name = response.data[i].name;
+            if(result == 0){ resultStatus = "Loss"; console.log("LOSSSSS"); }else{ resultStatus = "Win";}
+             console.log(resultStatus);
+            let betAmount = response.data[i].betAmount;
+            let betTime = response.data[i].betTime;
+            let win = `<span class="text-slide text-white"><span class="text-warning">
+          <i class="fa fa-bell"></i>
+          </span>Player ${betID}, <span class="text-warning">${resultStatus} $${betAmount},
+          </span> ${name}  ${betTime}</span>`
+            this.winner.push(win);
+          }
+        })
+        .catch(error => {
+          alert(error)
+        })
+    }
+  },
+  computed: {
+    ...mapGetters([    
+      "getBalance",
+      "getlocale",
+      "getIsLoadingStockGame",
+      "getStockCrawlerData"
+    ]),
+    countryflag() {
+      return this.getlocale;
     }
 };
 </script>

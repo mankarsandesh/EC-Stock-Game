@@ -4,7 +4,7 @@ export default function({ isHMR, app, store, route, error, redirect }) {
 
     const apiKey = localStorage.apikey = route.query.apiKey
     if (!apiKey) {
-        location.href = "http://" + location.hostname + ":8001/"
+        location.href = "http://whitelabelv2.herokuapp.com"
         return
     }
     store.commit("setAuth_token", apiKey)
