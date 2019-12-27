@@ -209,6 +209,8 @@ export default {
   bottom: 20px;
   width: 70px;
   height: 70px;
+    /* background: radial-gradient(circle at bottom left, transparent 58%, #333 60%); */
+   background-attachment: fixed;
 }
 .livechatImg{
   text-align: center;
@@ -326,16 +328,17 @@ export default {
  outline: none;
 }
 #messageCHat btn {
-  background-color: #003e70;
+  /* background-color: #003e70; */
   color: #333;
   width: 40px;
   height: 40px;
   display: table-cell;
   vertical-align: middle;
-  color: #fff;
+  color: #003e70;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   border-radius:180px;
+  border:1px solid #003e70;
 }
 
 /* width */

@@ -78,7 +78,10 @@ module.exports = {
      ** Build configuration
      */
     build: {
-        transpile: ["vuetify/lib"],
+        transpile: [
+            'vuetify/lib',
+            '@rabota/yandex-metrika'
+        ],
         plugins: [new VuetifyLoaderPlugin()],
         loaders: {
             stylus: {
