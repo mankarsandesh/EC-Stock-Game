@@ -17,7 +17,7 @@ export default ({ store }) => {
         if (time5 == 241 || time1 == 41) {
             store.dispatch('asynInitCallApi')
         }
-        store.dispatch("asyncPayout")
+        // store.dispatch("asyncPayout")
         store.commit('SET_TIME', data)
     });
 

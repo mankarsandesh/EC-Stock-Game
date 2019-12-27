@@ -1,68 +1,55 @@
 <template>
-  <v-app>
-    <div v-show="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
-      <div class="loading"></div>
-      <div ref="svgContainer"></div>
+<v-app>
+    <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
+    <div class="text-xs-center loading" >
+        <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
+    </div>
     </div>
     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
-      <v-progress-circular class="settop" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
+        <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
     </div>
 
-    <v-container
-      fluid
-      pa-0
-      style="background-color: #003e70 !important;max-height: 40px; !important"
-    >
-      <v-container pa-0>
-        <v-toolbar color="#003e70" class="white--text">
-          <v-layout wrap style="margin-top:-10px;">
-            <v-flex xs4>
-              <welcome-user></welcome-user>
-            </v-flex>
-            <v-spacer></v-spacer>
-            <v-flex xs5 class="text-xs-right">
-              <winnerMarquee
-                :scrollSpeed="scrollSpeed"
-                :showSpeed="showSpeed"
-                :pauseOnHover="pauseOnHover"
-                :pauseTime="pauseTime"
-                :marqueeList="winner"
-                height="36px"
-                width="100%"
-                color="#f76a24"
-                fontSize="14px"
-              ></winnerMarquee>
-            </v-flex>
-          </v-layout>
-        </v-toolbar>
-      </v-container>
+    <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
+        <v-container pa-0>
+            <v-toolbar color="#003e70" class="white--text">
+                <v-layout wrap style="margin-top:-10px;">
+                    <v-flex xs4>
+                        <welcome-user></welcome-user>
+                    </v-flex>
+                    <v-spacer></v-spacer>
+                    <v-flex xs5 class="text-xs-right">
+                        <winnerMarquee :scrollSpeed="scrollSpeed" :showSpeed="showSpeed" :pauseOnHover="pauseOnHover" :pauseTime="pauseTime" :marqueeList="winner" height="36px" width="100%" color="#f76a24" fontSize="14px"></winnerMarquee>
+                    </v-flex>
+                </v-layout>
+            </v-toolbar>
+        </v-container>
     </v-container>
     <v-container class="pa-0">
-      <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
-        <v-toolbar-title>
-          <v-img width="158" src="/logo.png"></v-img>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
-            {{
+        <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
+            <v-toolbar-title>
+                <v-img width="158" src="/logo.png"></v-img>
+            </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
+                <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
+                    {{
             $t(`menu.${item.title}`)
             }}
-          </v-btn>
-          <v-btn text flat @click="$refs.language.showDialog()">
-            <countryFlag :country="countryflag" size="normal" />
-          </v-btn>
-        </v-toolbar-items>
-      </v-toolbar>
-      <hr />
+                </v-btn>
+                <v-btn text flat @click="$refs.language.showDialog()">
+                    <countryFlag :country="countryflag" size="normal" />
+                </v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
+        <hr />
 
-      <languageDialog ref="language"></languageDialog>
+        <languageDialog ref="language"></languageDialog>
 
-      <v-content>
-        <v-container pa-0>
-          <nuxt />
-        </v-container>
-      </v-content>
+        <v-content>
+            <v-container pa-0>
+                <nuxt />
+            </v-container>
+        </v-content>
     </v-container>
     <!-- <v-float dark color="#003e70" >   
   EC
@@ -71,7 +58,10 @@
     </v-app>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import {
+    mapGetters,
+    mapMutations
+} from "vuex";
 
 import menu from "~/data/menudesktop";
 
@@ -193,44 +183,51 @@ export default {
     countryflag() {
       return this.getlocale;
     }
-  }
+}
 };
 </script>
 
 <style scoped>
 .v-toolbar__content {
-  padding: 0 !important;
-  justify-content: center !important;
+    padding: 0 !important;
+    justify-content: center !important;
 }
 
 .settop {
-  top: 30%;
+    top: 30%;
 }
+
 .popper {
-  background-color: #333;
-  border-radius: 10px;
+    background-color: #333;
+    border-radius: 10px;
 }
+
 .container-loading {
-  position: absolute;
-  z-index: 5000;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    z-index: 5000;
+    width: 100%;
+    height: 100%;
 }
 
 .loading {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.7;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.7;
+    
 }
 
 /* This is for documentation purposes and will not be needed in your application */
 .v-speed-dial {
-  position: absolute;
+    position: absolute;
 }
 
 .v-btn--floating {
-  position: relative;
+    position: relative;
+}
+
+.v-progress-circular {
+    margin: 1rem
 }
 </style>

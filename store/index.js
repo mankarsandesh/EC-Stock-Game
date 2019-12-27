@@ -292,7 +292,8 @@ const createStore = () => {
                         `/api/me?apikey=${context.getters.getAuth_token}`
                     );
                     if (!res.status) {
-                        location.href = "http://" + location.hostname + ":8001/"
+                        // location.href = "http://whitelabelv2.herokuapp.com"
+                        location.href = "http://" + location.hostname + ":8001"
                         return
                     }
                     let userInfo = res.data.original;
@@ -326,7 +327,7 @@ const createStore = () => {
                 } catch (error) {
                     console.log(error);
                 }
-            },           
+            },
             async balance(context) {
                 try {
                     const res = await this.$axios.$get(`/api/me/balance?apikey=${context.getters.getAuth_token}`);
@@ -840,7 +841,8 @@ const createStore = () => {
                     timeLastDraw,
                     type,
                     stockPrice,
-                    stockTime
+                    stockTime,
+                    prices
                 };
                 // var end = +new Date(); // log end timestamp
                 // var diff = end - start;
