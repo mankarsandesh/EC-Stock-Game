@@ -1076,8 +1076,8 @@ table {
 td,
 tr {
     /* border: 1px solid black; */
-    min-width: 26px;
-    height: 26px;
+    min-width: 24px;
+    height: 24px;
     text-align: center;
 }
 

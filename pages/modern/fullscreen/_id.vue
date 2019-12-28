@@ -80,8 +80,8 @@
                 <v-flex>
                     <v-layout>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">{{ $t("msg.Lastdraw") }}:</span>
-                            <v-flex flex-style>
+                            <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
+                            <v-flex flex-style class="lastDraw">
                                 <h4 v-html="
                       $options.filters.lastDraw(
                         getStockLastDraw($route.params.id)
@@ -90,8 +90,8 @@
                             </v-flex>
                         </v-flex>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">{{ $t("msg.BetClosein") }}:</span>
-                            <v-flex flex-style>
+                            <span class="text-black">{{ $t("msg.BetClosein") }}:</span>
+                            <v-flex flex-style class="lastDraw">
                                 <span class="text-yellow">{{
                     getLotteryDraw($route.params.id)
                       | betclosein(getStockLoop($route.params.id))
@@ -99,8 +99,8 @@
                             </v-flex>
                         </v-flex>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">{{ $t("msg.lotterydraw") }}:</span>
-                            <v-flex flex-style>
+                            <span class="text-black">{{ $t("msg.lotterydraw") }}:</span>
+                            <v-flex flex-style class="lastDraw">
                                 <span class="text-yellow">{{
                     getLotteryDraw($route.params.id)
                       | lotterydraw(getStockLoop($route.params.id))
@@ -124,9 +124,9 @@
                     <livestock v-if="isShow" :dataGet="chartData"></livestock>
                 </div>
                 <div class="setborder">
-                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor" />: {{dataliveBetAll.totalUsers}}</span>
-                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" /> : {{dataliveBetAll.totalBets}}</span>
-                    <span class="seticons"> <i class="fa fa-money fa-2x iconcolor" /> : {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
+                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor" /> {{dataliveBetAll.totalUsers}}</span>
+                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" />  {{dataliveBetAll.totalBets}}</span>
+                    <span class="seticons"> <i class="fa fa-money fa-2x iconcolor" />  {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
                 </div>
             </v-flex>
             <!-- live Chart -->
@@ -339,6 +339,13 @@ export default {
 </script>
 
 <style scoped>
+.lastDraw{
+    font-size: 14px;    
+}
+.setborder span{
+    font-size: 14px;
+    line-height: 10px;
+}
 .setborder {
     border: 1px solid;
     border-radius: 10px;
