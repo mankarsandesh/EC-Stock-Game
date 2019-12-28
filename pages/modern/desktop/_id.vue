@@ -56,7 +56,7 @@
                         <v-flex class="text-xs-center" px-2>
                             <span>{{$t('msg.Lastdraw')}}:</span>
                             <div id="lastDrawGuideline">
-                                <v-flex flex-style>
+                                <v-flex flex-style class="lastDraw">
                                     <span v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></span>
                                 </v-flex>
                             </div>
@@ -66,7 +66,7 @@
 
                             <span>{{$t('msg.BetClosein')}}:</span>
                             <div id="betCloseInGuideline">
-                                <v-flex flex-style>
+                                <v-flex flex-style class="lastDraw"> 
                                     <span class="text-yellow">{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
 
                                 </v-flex>
@@ -75,7 +75,7 @@
                         <v-flex class="text-xs-center" px-2>
                             <span>{{$t('msg.lotterydraw')}}:</span>
                             <div id="lotteryDrawGuidelines">
-                                <v-flex flex-style>
+                                <v-flex flex-style class="lastDraw">
                                     <span class="text-yellow">{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
                                 </v-flex>
                             </div>
@@ -510,6 +510,10 @@ export default {
 </script>
 
 <style scoped>
+.lastDraw{
+    font-size: 14px;
+    
+}
 .layout-bottom {
     position: absolute;
     bottom: calc(100% - 568px);

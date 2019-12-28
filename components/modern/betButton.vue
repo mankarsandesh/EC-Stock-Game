@@ -223,7 +223,7 @@
                 <showChipAmount size="50px" :amount="getAmountBetSpecificNumber({stockId:stockName ,gameRule:'lastdigit'})"></showChipAmount>
 
                 <span class="big-digit">0 - 9</span>
-                <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span>
+                <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span>
                 <!-- show payout if in fullscreen mode -->
                 <span class="small-digit" v-show="isFullscreen">{{payout_09}}</span>
             </v-btn>

@@ -227,6 +227,8 @@ export default {
           console.log(this.privacy);
           console.log(this.getUserName.userId);  
         
+
+        
         
         },
         getcomonent(val) {

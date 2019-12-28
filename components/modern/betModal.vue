@@ -17,7 +17,7 @@
             <v-layout row>
                 <v-flex class="py-3 text-center">
                     <v-avatar size="60" v-for="(item,key) in imgChip" :key="key">
-                        <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" width="60" :alt="item.title" :class="item.color">
+                        <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" :width="item.width" :alt="item.title" :class="item.color" class="chipImg">
                             <span class="setpricechip"> {{getCoins_modern[key]}}</span>
                         </v-img>
                     </v-avatar>
@@ -30,7 +30,7 @@
                     <span>{{$t('msg.amount')}}</span>
                 </v-flex>
                 <v-flex style="align-self:center">
-                    <input type="text" v-model="betValue" class="input-bet" />
+                    <input type="number"  :min="1"  v-model="betValue" class="input-bet" />
                 </v-flex>
                 <v-flex style="align-self:center">
                     <v-btn color="error" @click="clear">{{$t('msg.Clear')}}</v-btn>
@@ -80,27 +80,33 @@ export default {
     ],
     data() {
         return {
+            
             confirmDisabled: false,
             betValue: 0,
             imgChip: [{
                     title: "Danger",
-                    img: "/chip/danger.png"
+                    img: "/chip/danger.png",
+                    width: "55"
                 },
                 {
                     title: "Primary",
-                    img: "/chip/primary.png"
+                    img: "/chip/primary.png",
+                     width: "55"
                 },
                 {
                     title: "success",
-                    img: "/chip/success.png"
+                    img: "/chip/success.png",
+                     width: "60"
                 },
                 {
                     title: "warning",
-                    img: "/chip/warning.png"
+                    img: "/chip/warning.png",
+                     width: "60"
                 },
                 {
                     title: "black",
                     img: "/chip/black.png",
+                     width: "70",
                     color: "text-white" 
                 }
             ]
@@ -177,7 +183,7 @@ export default {
                 amount: this.betValue
             };
             this.confirmDisabled = true;
-            console.log(data)
+            console.log(data);            
             this.sendBetting(data);
             console.warn(this.getOnBetting);
         },
@@ -195,15 +201,28 @@ export default {
 
 <style scoped>
 .input-bet {
-    border: 1px solid black;
+    border: 1px solid rgb(83, 82, 82);
     font-size: 15px;
-    padding: 10px;
-    width: 120px;
+    padding: 5px 10px;
+    width: 90px;
 }
 
 .setpricechip {
     color: black;
     font-size: 0.85rem;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+.chipImg{
+    cursor: pointer;
+}
 </style>

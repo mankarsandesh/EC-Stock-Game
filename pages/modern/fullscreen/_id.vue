@@ -80,8 +80,8 @@
                 <v-flex>
                     <v-layout>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">{{ $t("msg.Lastdraw") }}:</span>
-                            <v-flex flex-style>
+                            <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
+                            <v-flex flex-style class="lastDraw">
                                 <h4 v-html="
                       $options.filters.lastDraw(
                         getStockLastDraw($route.params.id)
@@ -90,8 +90,8 @@
                             </v-flex>
                         </v-flex>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">{{ $t("msg.BetClosein") }}:</span>
-                            <v-flex flex-style>
+                            <span class="text-black">{{ $t("msg.BetClosein") }}:</span>
+                            <v-flex flex-style class="lastDraw">
                                 <span class="text-yellow">{{
                     getLotteryDraw($route.params.id)
                       | betclosein(getStockLoop($route.params.id))
@@ -99,8 +99,8 @@
                             </v-flex>
                         </v-flex>
                         <v-flex class="text-xs-center" xs3 px-2>
-                            <span class="text-gray">{{ $t("msg.lotterydraw") }}:</span>
-                            <v-flex flex-style>
+                            <span class="text-black">{{ $t("msg.lotterydraw") }}:</span>
+                            <v-flex flex-style class="lastDraw">
                                 <span class="text-yellow">{{
                     getLotteryDraw($route.params.id)
                       | lotterydraw(getStockLoop($route.params.id))
@@ -124,9 +124,9 @@
                     <livestock v-if="isShow" :dataGet="chartData"></livestock>
                 </div>
                 <div class="setborder">
-                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor" />: {{dataliveBetAll.totalUsers}}</span>
-                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" /> : {{dataliveBetAll.totalBets}}</span>
-                    <span class="seticons"> <i class="fa fa-money fa-2x iconcolor" /> : {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
+                    <span class="seticon"> <i class="fa fa-user fa-2x iconcolor" /> {{dataliveBetAll.totalUsers}}</span>
+                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" />  {{dataliveBetAll.totalBets}}</span>
+                    <span class="seticons"> <i class="fa fa-money fa-2x iconcolor" />  {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
                 </div>
             </v-flex>
             <!-- live Chart -->
@@ -179,15 +179,7 @@ export default {
             trendType: "twoDigit",
             dialogOtherstock: false,
             //winner mqrquee
-            winner: [
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36  </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>",
-                "<span class='text-white'><i class='fa fa-bell'></i> Player 001201909101330002WIN $10000, WIN SINA 2019-09-10 14:29:36 </span>"
-            ],
+            winner: [],
             pauseTime: 2000,
             pauseOnHover: false,
             scrollSpeed: 30,
@@ -209,6 +201,7 @@ export default {
         this.getSotckId()
     },
     mounted() {
+        this.getwinuser();
         setTimeout(() => {
             this.getliveBetCount()
             this.getliveAll()
@@ -245,6 +238,33 @@ export default {
         ])
     },
     methods: {
+
+    getwinuser() {
+       this.$axios.$get("api/fetchBet").then(response => {
+         console.log("response.....................")
+        console.log(response.data)
+         console.log("response.......................")
+         let resultStatus  = null;
+          for (let i = 0; i < response.data.length - 1; i++) {
+            let betID = response.data[i].betId;
+            let result = response.data[i].result;
+            let name = response.data[i].name;
+            if(result == 0){ resultStatus = "Loss"; console.log("LOSSSSS"); }else{ resultStatus = "Win";}
+             console.log(resultStatus);
+            let betAmount = response.data[i].betAmount;
+            let betTime = response.data[i].betTime;
+            let win = `<span class="text-slide text-white"><span class="text-warning">
+          <i class="fa fa-bell"></i>
+          </span>Player ${betID}, <span class="text-warning">${resultStatus} $${betAmount},
+          </span> ${name}  ${betTime}</span>`
+            this.winner.push(win);
+          }
+        })
+        .catch(error => {
+          alert(error)
+        })
+       },
+
         test() {
             console.warn(this.$router.history);
         },
@@ -339,6 +359,13 @@ export default {
 </script>
 
 <style scoped>
+.lastDraw{
+    font-size: 14px;    
+}
+.setborder span{
+    font-size: 14px;
+    line-height: 10px;
+}
 .setborder {
     border: 1px solid;
     border-radius: 10px;
