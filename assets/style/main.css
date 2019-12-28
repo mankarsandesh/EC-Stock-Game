@@ -488,7 +488,7 @@ table.result-table tr {
 button.btn-small.v-btn.theme--light {
   background-color: #003e70 !important;
   color: #fff !important;
-  padding: 5px;
+  padding: 5px 10px;
   margin: 5px;
   border-radius: 5px;
   min-width: 7.15%;
