@@ -1,22 +1,47 @@
 <template>
 <div>
-    <v-form @submit.prevent="updateProfile">
+    <div :class="colors" v-if="succesFiled">
+        {{ this.succesMessage }}
+    </div>
 
-        <div class="success" v-if="succesFiled == true">
-            {{ this.succesMessage }}
-        </div>
+    <div class="d-between">
+        <v-tooltip right>
+            <template #activator="{ on: tooltip }">
+                <v-avatar size="180" @click="dialog = !dialog">
+                    <img v-on="{ ...tooltip }" :src="profile.avatar ? profile.avatar:'/v.png'" alt />
+                </v-avatar>
+            </template>
+            <span>Click Image For Edit</span>
+        </v-tooltip>
+    </div>
 
-        <div class="d-between">
-            <v-avatar size="170">
-                <img src="/v.png" v-if="profile.avatar == null" alt />
-                <img v-else :src="profile.avatar" alt />
-            </v-avatar>
-        </div>
-        <p style="float:right;">
-            {{$t('msg.online')}} {{$t('msg.Status')}} : {{setTime(getOnlimeTime.todayOnline, 0)}}
-            <span>{{$t('msg.currentbalance')}} : {{formatToPrice(profile.userBalance)}}</span>
-        </p>
+    <v-dialog v-model="dialog" max-width="450" persistent>
+        <v-card>
+            <v-card-title class="headline">Update Image Profile</v-card-title>
+            <v-card-text style="text-align: center;">
+                <v-avatar size="200" v-if="imageUrl">
+                    <img :src="imageUrl" />
+                </v-avatar>
+                <br>
+                <br>
+                <br>
+                <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+                <input type="file" id="fileInput" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="green darken-1" flat="flat" @click.native="dialog = false,UpLoadupdateimage()">UpLoad</v-btn>
+                <v-btn color="green darken-1" flat="flat" @click.native="dialog = false, Closeupdate()">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 
+    <p style="float:right; color: #003e70;">
+        {{$t('msg.online')}} {{$t('msg.Status')}} : {{setTime(getOnlimeTime.todayOnline, 0)}}
+        <span>{{$t('msg.currentbalance')}} : {{formatToPrice(getBalance)}}</span>
+    </p>
+
+    <v-form @submit.prevent="updateProfile" v-show="this.getUserName != ''">
         <v-flex lg12>
             <table class="table table-striped">
                 <tbody>
@@ -150,6 +175,11 @@ export default {
                 rollingSelect: ""
             },
             time: "",
+            dialog: false,
+            colors: "",
+            imageName: '',
+            imageUrl: '',
+            imageFile: '',
         };
     },
 
@@ -157,7 +187,9 @@ export default {
         ...mapGetters(["getBalance", "getUserName", "getOnlimeTime"])
     },
     mounted() {
-        this.profile = this.getUserName;
+        setTimeout(() => {
+            this.profile = this.getUserName;
+        }, 1000);
     },
 
     methods: {
@@ -183,7 +215,11 @@ export default {
             console.log(res);
             res.status ? this.asynUserInfo() : '';
             this.succesFiled = true;
-            this.succesMessage = "User info Successfully Updated";
+            this.succesMessage = res.status ? "User info Successfully Updated" : "User info Update Failed!";
+            this.colors = res.status ? "success" : "error"
+            setTimeout(() => {
+                this.succesFiled = false
+            }, 2000)
         },
 
         setTime(seconds, val) {
@@ -211,6 +247,50 @@ export default {
                     this.$root.$t("msg.minute")
                 );
             }
+        },
+
+        pickFile() {
+            this.$refs.image.click()
+        },
+
+        onFilePicked(e) {
+            const files = e.target.files
+            this.imageNames = e.target.files[0]
+            if (files[0] !== undefined) {
+                this.imageName = files[0].name
+                if (this.imageName.lastIndexOf('.') <= 0) {
+                    return
+                }
+                const fr = new FileReader()
+                fr.readAsDataURL(files[0])
+                fr.addEventListener('load', () => {
+                    this.imageUrl = fr.result
+                    this.imageFile = files[0] // this is an image file that can be sent to server...
+                })
+            } else {
+                this.imageName = ''
+                this.imageFile = ''
+                this.imageUrl = ''
+            }
+            console.log(this.imageName)
+            console.log(this.imageFile)
+            console.log(this.imageUrl)
+        },
+        Closeupdate() {
+            this.imageUrl = '';
+            $("input[type=file]").val("");
+
+        },
+        async UpLoadupdateimage() {
+            if (this.imageUrl == '' || this.imageUrl == null) {
+                alert("No Iamge Update")
+                return;
+            }
+            let res = await this.$axios.$post("/api/me/uploadImage?apikey=" + this.$store.state.auth_token, {
+                userId: this.getUserName.userId,
+                image: this.imageUrl
+            });
+            console.log(res)
         }
     }
 };
@@ -232,5 +312,21 @@ table tr td {
     margin: 5px;
     font-size: 18px;
     color: #333;
+}
+
+.error {
+    background-color: red;
+    padding: 10px;
+    margin: 5px;
+    font-size: 18px;
+    color: #333;
+}
+
+.images {
+    display: -webkit-box !important;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: baseline;
+    align-items: baseline;
 }
 </style>

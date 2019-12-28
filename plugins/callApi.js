@@ -19,6 +19,22 @@ export default ({ store }) => {
         }
         // store.dispatch("asyncPayout")
         store.commit('SET_TIME', data)
+
+        // set time login 
+        var hours = 10; // Reset when storage is more than 20hours
+        var now = new Date().getTime();
+        var setupTime = localStorage.getItem('setupTime');
+        if (setupTime == null) {
+            localStorage.setItem('setupTime', now)
+        } else {
+            if (now - setupTime > hours * 60 * 60 * 1000) {
+                localStorage.removeItem('apikey');
+                localStorage.removeItem('setupTime');
+                // localStorage.setItem('setupTime', now);
+                location.href = "http://" + location.hostname + ":8001"
+            }
+        }
+
     });
 
     // store.dispatch('asynGetAllStock')

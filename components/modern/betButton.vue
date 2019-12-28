@@ -16,7 +16,7 @@
                 <betModal :stockName="stockName" :loop="getLoop($route.params.id)" :betId="'firstdigit-'+data.rule" :payout="data.payout"></betModal>
             </div>
             <v-btn class="align_button4" slot="reference" @click="betButtonClick('firstdigit-'+data.rule)">
-                <showChipAmount size="50px" :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'firstdigit-'+data.rule})"></showChipAmount>
+                <showChipAmount size="20px" :amount="getAmountMultiGameBet({stockId:stockName ,gameRule:'firstdigit-'+data.rule})"></showChipAmount>
 
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span>

@@ -273,12 +273,12 @@ const createStore = () => {
                     // const respayoutinitial = await this.$axios.$get(
                     //     `/api/payoutinitial2?stockId=7&apikey=${context.getters.getAuth_token}`
                     // );
-                    const res = await this.$axios.$post(
-                        `/api/gameRuleStock?stockId=7&apikey=${context.getters.getAuth_token}`
-                    );
+                    // const res = await this.$axios.$post(
+                    //     `/api/gameRuleStock?stockId=7&apikey=${context.getters.getAuth_token}`
+                    // );
 
                     // console.log(res)
-                    context.state.payout = res.data;
+                    // context.state.payout = res.data;
                     // console.log(context.state.payout)
                     // context.commit("setUserData", {name:userInfo})
                 } catch (ex) {
@@ -292,14 +292,13 @@ const createStore = () => {
                         `/api/me?apikey=${context.getters.getAuth_token}`
                     );
                     if (!res.status) {
+                        // localStorage.removeItem('apikey');
                         // location.href = "http://whitelabelv2.herokuapp.com"
                         location.href = "http://" + location.hostname + ":8001"
                         return
                     }
                     let userInfo = res.data.original;
                     context.commit("setUserData", userInfo);
-
-                    // }
                 } catch (ex) {
                     console.error(ex);
                     // alert(ex)
@@ -311,8 +310,8 @@ const createStore = () => {
                     const res = await this.$axios.$get("http://159.138.47.250/chatglobal/allmessages");
                     //console.log(res);
                     context.commit("setMessages", res.data);
-                    console.log("Message View");
-                    console.log(res.data);
+                    // console.log("Message View");
+                    // console.log(res.data);
                 } catch (error) {
                     console.log(error);
                 }
@@ -321,9 +320,9 @@ const createStore = () => {
                 try {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
                     const res = await this.$axios.$get("http://159.138.47.250/chatgame/messages");
-                    console.log(res);
+                    // console.log(res);
                     context.commit("setMessagesGame", res.data);
-                    console.log("Message View Message");
+                    // console.log("Message View Message");
                 } catch (error) {
                     console.log(error);
                 }

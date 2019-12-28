@@ -1,69 +1,73 @@
 <template>
-  <div style="margin-bottom:250px">
+<div style="margin-bottom:250px">
     <v-layout wrap class="pt-5">
-      <v-flex  xs6  d-flex v-for="(stockid,index) in getStockMultigame" :key="stockid">
-        <div class="border-flex">
-          <multigame :class="index%2==0 ?'pl-0':'pr-0'" :stockid="stockid"></multigame>
-        </div>
-      </v-flex>
-      <v-flex xs6 d-flex >
-        <div class="border-flex">
-       <br>
-       <br>
-       <br>
-       <br>
-       <br>
-       <br>
-       <br>
-       <br>
-       <br>
-          <selectStock :isMultigame="true" :stockId="$route.params.id"></selectStock>
-        </div>
-      </v-flex>
+        <v-flex xs6 d-flex v-for="(stockid,index) in getStockMultigame" :key="stockid">
+            <div class="border-flex">
+                <multigame :class="index%2==0 ?'pl-0':'pr-0'" :stockid="stockid"></multigame>
+            </div>
+        </v-flex>
+        <v-flex xs6 d-flex v-if="getStockMultigame.length < 4">
+            <div class="border-flex">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <selectStock :isMultigame="true" :stockId="$route.params.id"></selectStock>
+            </div>
+        </v-flex>
     </v-layout>
     <bottomBetMultigame></bottomBetMultigame>
-  </div>
+</div>
 </template>
+
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import {
+    mapGetters,
+    mapMutations
+} from "vuex";
 import multigame from "~/components/modern/multigame";
 
 import bottomBetMultigame from "~/components/modern/bottomBetMultigame";
 import selectStock from "~/components/modern/selectStock";
 
 export default {
-  layout: "desktopModern",
-  components: {
-    multigame,
-    bottomBetMultigame,
-    selectStock
-  },
-  data() {
-    return {
-      stockSelect: []
-    };
-  },
-  
-  mounted() {
-    // call this every page that used "dekstopModern" layout to hide loading
-      this.setIsLoadingStockGame(false)
-    this.addStockMultigame(this.$route.params.id);
-  },
-  methods: {
-    ...mapMutations(["addStockMultigame","setIsLoadingStockGame"])
-  },
-  computed: {
-    ...mapGetters(["getStockMultigame"])
-  }
+    layout: "desktopModern",
+    components: {
+        multigame,
+        bottomBetMultigame,
+        selectStock
+    },
+    data() {
+        return {
+            stockSelect: [],
+        };
+    },
+
+    mounted() {
+        // call this every page that used "dekstopModern" layout to hide loading
+        this.setIsLoadingStockGame(false)
+        this.addStockMultigame(this.$route.params.id);
+    },
+    methods: {
+        ...mapMutations(["addStockMultigame", "setIsLoadingStockGame"])
+    },
+    computed: {
+        ...mapGetters(["getStockMultigame"])
+    }
 };
 </script>
 
 <style scoped>
 .border-flex {
-  border-top: 1px solid black;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-  padding: 15px;
-  min-height: 550px;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 15px;
+    min-height: 550px;
 }
 </style>

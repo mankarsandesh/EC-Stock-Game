@@ -933,7 +933,7 @@ export default {
 .bet-closed {
     position: absolute;
     text-align: center;
-    background-color: white;
+    /* background-color: white; */
     z-index: 20;
     opacity: 0.7;
     width: 100%;

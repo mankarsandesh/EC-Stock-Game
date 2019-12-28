@@ -316,9 +316,6 @@ export default {
                 }
             });
         });
-        // setTimeout(() => {
-        //     this.setTutorial()
-        // }, 1500)
     },
     watch: {
         "$screen.width"() {
@@ -354,14 +351,13 @@ export default {
         setNextstep() {
             if (this.isStep < 12) this.isStep += 1
             else this.isStep = 1
-
             this.setTutorial(this.isStep)
         },
         setTutorial(isStep) {
             this.$refs.guidelineContent.hidden = false;
             let w = window.innerWidth;
 
-            if (isStep == 1) { 
+            if (isStep == 1) {
                 // stock list
                 let stockG = $("#stocklistGuidelines").offset();
                 $("#stocklistGuidelines").css("border-style", "solid");

@@ -1,5 +1,6 @@
 <template>
 <div class="text-xs-center">
+    <span v-show="!load">NO DATA AVAILABLE</span>
     <canvas ref="planetchart" class="set-height" v-show="load"></canvas>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 </div>

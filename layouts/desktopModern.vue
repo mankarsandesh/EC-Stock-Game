@@ -149,16 +149,18 @@ export default {
     
      getwinuser() {
        this.$axios.$get("api/fetchBet").then(response => {
-         console.log("response.....................")
-        console.log(response.data)
-         console.log("response.......................")
+        //  console.log("response.....................")
+        // console.log(response.data)
+        //  console.log("response.......................")
          let resultStatus  = null;
           for (let i = 0; i < response.data.length - 1; i++) {
             let betID = response.data[i].betId;
             let result = response.data[i].result;
             let name = response.data[i].name;
-            if(result == 0){ resultStatus = "Loss"; console.log("LOSSSSS"); }else{ resultStatus = "Win";}
-             console.log(resultStatus);
+            if(result == 0){ resultStatus = "Loss"; 
+            // console.log("LOSSSSS"); 
+            }else{ resultStatus = "Win";}
+            //  console.log(resultStatus);
             let betAmount = response.data[i].betAmount;
             let betTime = response.data[i].betTime;
             let win = `<span class="text-slide text-white"><span class="text-warning">

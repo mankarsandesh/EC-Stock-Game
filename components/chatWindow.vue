@@ -115,24 +115,24 @@ export default {
   },
   created() {
 
-  console.log(this.getUserName.userId);
+  // console.log(this.getUserName.userId);
     // Socket for Channel
-    console.log("created run");
+    // console.log("created run");
     
     socket.on("new-message-global", data => {
-      console.log("created");
-      console.log(data);
+      // console.log("created");
+      // console.log(data);
       this.getMessages.push({
         name: data.name,
         userId: data.userId,
         message: data.message
       });
-      console.log(this.getMessages);
+      // console.log(this.getMessages);
     });
     // Socket for Game 
     socketGame.on("new-message-game", data => {
-      console.log("created Game two");
-      console.log(data);
+      // console.log("created Game two");
+      // console.log(data);
       this.getMessagesGame.push({
         name: data.name,
         userId: data.userId,
@@ -142,19 +142,19 @@ export default {
 
 
      socket.on("user-count-global", data => {
-      console.log("Count");
-      console.log(data);
+      // console.log("Count");
+      // console.log(data);
       this.totoalUserCount  = data;
       
     });
 
     socket.on('chat-global', (data) => {
-      console.log(data);
+      // console.log(data);
     });
     
 
     socketGame.on('chat-game', data => {
-      console.log(data);
+      // console.log(data);
     });
     
 
