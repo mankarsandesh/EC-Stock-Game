@@ -133,7 +133,7 @@ export default {
     },
     mounted() {
         // alert(this.stockData[0]);
-        console.warn(this.getAllStockByType)
+        // console.warn(this.getAllStockByType)
     },
 
     computed: {

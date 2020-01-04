@@ -41,7 +41,7 @@
         <span>{{$t('msg.currentbalance')}} : {{formatToPrice(getBalance)}}</span>
     </p>
 
-    <v-form @submit.prevent="updateProfile" v-show="this.getUserName != ''">
+    <v-form @submit.prevent="updateProfile" v-show="isShow">
         <v-flex lg12>
             <table class="table table-striped">
                 <tbody>
@@ -56,9 +56,14 @@
                         <th scope="row" class="row">{{$t('msg.name')}}</th>
                         <td>
                             {{profile.name}}
-                            <!-- <v-btn icon>
-                                <v-icon>edit</v-icon>
-                            </v-btn> -->
+                            <popper trigger="click" :options="{placement: 'top-end',modifiers: { offset: { offset: '45px' } }}">
+                                <div class="popper padding-4">
+                                    <v-text-field v-model="profile.name" required></v-text-field>
+                                </div>
+                                <v-btn icon slot="reference">
+                                    <v-icon>edit</v-icon>
+                                </v-btn>
+                            </popper>
                         </td>
                         <td>
                             <v-select hide-details v-model="profile.nameSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
@@ -77,9 +82,14 @@
                         <th scope="row" class="row">{{$t('msg.email')}}</th>
                         <td>
                             {{profile.email}}
-                            <!-- <v-btn icon>
-                                <v-icon>edit</v-icon>
-                            </v-btn> -->
+                            <popper trigger="click" :options="{placement: 'top-end',modifiers: { offset: { offset: '45px' } }}">
+                                <div class="popper padding-4">
+                                    <v-text-field v-model="profile.email" required></v-text-field>
+                                </div>
+                                <v-btn icon slot="reference">
+                                    <v-icon>edit</v-icon>
+                                </v-btn>
+                            </popper>
                         </td>
                         <td>
                             <v-select hide-details v-model="profile.emailSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
@@ -87,7 +97,6 @@
                     </tr>
                     <tr>
                         <th scope="row" class="row">{{$t('msg.membership')}}</th>
-
                         <td>{{profile.memberShip}}</td>
                         <td>
                             <v-select hide-details v-model="profile.membershipSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
@@ -111,7 +120,7 @@
                     </tr>
                     <tr>
                         <th scope="row" class="row">{{$t('msg.rolling')}}</th>
-                        <td>$1795.00</td>
+                        <td>{{formatToPrice(profile.rolling)}}</td>
                         <td>
                             <v-select hide-details v-model="profile.rollingSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
@@ -133,7 +142,12 @@ import {
     mapActions
 } from "vuex";
 import axios from "axios";
+import popper from "vue-popperjs";
+import "vue-popperjs/dist/vue-popper.css";
 export default {
+    components: {
+        popper
+    },
     data() {
         return {
             succesMessage: "User info Successfully Updated",
@@ -180,6 +194,7 @@ export default {
             imageName: '',
             imageUrl: '',
             imageFile: '',
+            isShow: false
         };
     },
 
@@ -189,7 +204,8 @@ export default {
     mounted() {
         setTimeout(() => {
             this.profile = this.getUserName;
-        }, 1000);
+            this.isShow = true
+        }, 1500);
     },
 
     methods: {
@@ -272,25 +288,31 @@ export default {
                 this.imageFile = ''
                 this.imageUrl = ''
             }
-            console.log(this.imageName)
-            console.log(this.imageFile)
-            console.log(this.imageUrl)
+            // console.log(this.imageName)
+            // console.log(this.imageFile)
+            // console.log(this.imageUrl)
         },
         Closeupdate() {
+            this.imageName = '';
+            this.imageFile = '';
             this.imageUrl = '';
             $("input[type=file]").val("");
 
         },
         async UpLoadupdateimage() {
+            console.log(this.imageName)
+            console.log(this.imageFile)
+            console.log(this.imageUrl)
+
             if (this.imageUrl == '' || this.imageUrl == null) {
                 alert("No Iamge Update")
                 return;
             }
-            let res = await this.$axios.$post("/api/me/uploadImage?apikey=" + this.$store.state.auth_token, {
-                userId: this.getUserName.userId,
-                image: this.imageUrl
-            });
-            console.log(res)
+            // let res = await this.$axios.$post("/api/me/uploadImage?apikey=" + this.$store.state.auth_token, {
+            //     userId: this.getUserName.userId,
+            //     image: this.imageUrl
+            // });
+            // console.log(res)
         }
     }
 };
@@ -328,5 +350,9 @@ table tr td {
     justify-content: space-between;
     -webkit-box-align: baseline;
     align-items: baseline;
+}
+
+.padding-4 {
+    padding: 4px;
 }
 </style>

@@ -347,6 +347,10 @@ export default {
         async getliveAll() {
             try {
                 const res = await this.$axios.$get(`/api/liveBetAll?stock=${this.stockId}&loop=${this.getLoop(this.$route.params.id)}&apikey=${this.$store.state.auth_token}`);
+                if (res.status == false) {
+                    console.log("No Data");
+                    return
+                }
                 this.dataliveBetAll = res.data[0]
                 // console.log(res.data)
             } catch (error) {

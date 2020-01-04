@@ -66,7 +66,7 @@
 
                             <span>{{$t('msg.BetClosein')}}:</span>
                             <div id="betCloseInGuideline">
-                                <v-flex flex-style class="lastDraw"> 
+                                <v-flex flex-style class="lastDraw">
                                     <span class="text-yellow">{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
 
                                 </v-flex>
@@ -316,6 +316,20 @@ export default {
                 }
             });
         });
+        if (localStorage.valTutorial != "1") {
+            let i = 0;
+            let setIntervals = setInterval(() => {
+                i++;
+                if (i == 13) {
+                    clearInterval(setIntervals)
+                    this.closeGuideline()
+                    $(".guideline").css("style", "none")
+                    localStorage.valTutorial = 1;
+                    return
+                }
+                this.setNextstep()
+            }, 3000);
+        }
     },
     watch: {
         "$screen.width"() {
@@ -470,6 +484,7 @@ export default {
                 $(this.$refs.trendmapGuideline).css("right", (trendmapG.left) - 310);
                 $(this.$refs.trendmapGuideline).css("top", trendmapG.top - 40);
                 $("#bettingGuidelines").css("border-style", "none");
+
             }
             this.$refs.guideline.style.height = "100%";
             document.documentElement.style.overflow = "hidden";
@@ -510,10 +525,11 @@ export default {
 </script>
 
 <style scoped>
-.lastDraw{
+.lastDraw {
     font-size: 14px;
-    
+
 }
+
 .layout-bottom {
     position: absolute;
     bottom: calc(100% - 568px);

@@ -6,7 +6,7 @@ const createStore = () => {
         state: () => ({
             loader: false,
             isLoadingStockGame: false,
-            auth_token: localStorage.apikey,
+            auth_token: sessionStorage.apikey,
             isLoadingAnnoucement: [],
             isLoadingMessage: [],
             isLoadingMessageGame: [],
