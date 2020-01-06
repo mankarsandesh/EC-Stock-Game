@@ -37,8 +37,8 @@
     </v-dialog>
 
     <p style="float:right; color: #003e70;">
-        {{$t('msg.online')}} {{$t('msg.Status')}} : {{setTime(getOnlimeTime.todayOnline, 0)}}
-        <span>{{$t('msg.currentbalance')}} : {{formatToPrice(getBalance)}}</span>
+        {{$t("msg.online")}} {{$t("msg.Status")}} : {{setTime(getOnlimeTime.todayOnline, 0)}}
+        <span>{{$t("msg.currentbalance")}} : {{formatToPrice(getBalance)}}</span>
     </p>
 
     <v-form @submit.prevent="updateProfile" v-show="isShow">
@@ -46,14 +46,14 @@
             <table class="table table-striped">
                 <tbody>
                     <tr>
-                        <th scope="row" class="row">{{$t('msg.playerid')}}</th>
+                        <th scope="row" class="row">{{$t("msg.playerid")}}</th>
                         <td>{{profile.userApiId}}</td>
                         <td>
                             <v-select hide-details v-model="profile.idSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">{{$t('msg.name')}}</th>
+                        <th scope="row" class="row">{{$t("msg.name")}}</th>
                         <td>
                             {{profile.name}}
                             <popper trigger="click" :options="{placement: 'top-end',modifiers: { offset: { offset: '45px' } }}">
@@ -70,16 +70,17 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">{{$t('msg.gender')}}</th>
+                        <th scope="row" class="row">{{$t("msg.gender")}}</th>
                         <td>
-                            <v-select class="select" hide-details v-model="profile.genderSelect" :items="genders" :label="$t('msg.'+profile.gender)"></v-select>
+                            <v-select class="select" v-if="profile.gender == 'male'" hide-details v-model="profile.genderSelect" :items="genders" :label="$t('msg.male')"></v-select>
+                            <v-select class="select" v-else hide-details v-model="profile.genderSelect" :items="genders" :label="$t('msg.female')"></v-select>
                         </td>
                         <td>
                             <v-select hide-details v-model="profile.gender" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">{{$t('msg.email')}}</th>
+                        <th scope="row" class="row">{{$t("msg.email")}}</th>
                         <td>
                             {{profile.email}}
                             <popper trigger="click" :options="{placement: 'top-end',modifiers: { offset: { offset: '45px' } }}">
@@ -96,30 +97,30 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">{{$t('msg.membership')}}</th>
+                        <th scope="row" class="row">{{$t("msg.membership")}}</th>
                         <td>{{profile.memberShip}}</td>
                         <td>
                             <v-select hide-details v-model="profile.membershipSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">{{$t('msg.country')}}</th>
+                        <th scope="row" class="row">{{$t("msg.country")}}</th>
                         <td>
-                            <v-select class="select" hide-details v-model="profile.country" :items="countrySelects" :label="profile.countrySelects"></v-select>
+                            <v-select class="select" hide-details v-model="profile.country" :items="countrySelects" :label="profile.countrySelect"></v-select>
                         </td>
                         <td>
-                            <v-select hide-details v-model="profile.countrySelects" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
+                            <v-select hide-details v-model="profile.countrySelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">{{$t('msg.Balance')}}</th>
+                        <th scope="row" class="row">{{$t("msg.Balance")}}</th>
                         <td>{{formatToPrice(profile.userBalance)}}</td>
                         <td>
                             <v-select hide-details v-model="profile.balanceSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">{{$t('msg.rolling')}}</th>
+                        <th scope="row" class="row">{{$t("msg.rolling")}}</th>
                         <td>{{formatToPrice(profile.rolling)}}</td>
                         <td>
                             <v-select hide-details v-model="profile.rollingSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
@@ -128,8 +129,8 @@
                 </tbody>
             </table>
             <v-flex>
-                <v-btn class="my-btn" type="submit">{{$t('msg.save')}}</v-btn>
-                <v-btn class="my-btn cancel">{{$t('msg.cancel')}}</v-btn>
+                <v-btn class="my-btn" type="submit">{{$t("msg.save")}}</v-btn>
+                <v-btn class="my-btn cancel">{{$t("msg.cancel")}}</v-btn>
             </v-flex>
         </v-flex>
     </v-form>
@@ -152,9 +153,9 @@ export default {
         return {
             succesMessage: "User info Successfully Updated",
             succesFiled: false,
-            selects: [this.$root.$t('msg.everyonecansee'), this.$root.$t('msg.onlyme')],
+            selects: [this.$root.$t('msg.everyonecansee'), this.$root.$t("msg.onlyme")],
             countrySelects: ['China', 'Laos'],
-            genders: [this.$root.$t('msg.male'),this.$root.$t('msg.female')],
+            genders: [this.$root.$t("msg.male"),this.$root.$t("msg.female")],
             countselects: [],
             profile: {
                 avatar: "",
@@ -219,13 +220,12 @@ export default {
             this.DataProfile = {
                 name: this.profile.name,
                 email: this.profile.email,
-                gender: this.profile.gender,
-                country: this.profile.country,
-                portalProvider: this.profile.portalProvider,
-                avatar: this.profile.avatar,
-                memberShip: this.profile.memberShip
+                gender: this.profile.genderSelect ? this.profile.genderSelect : this.profile.gender,
+                country: this.profile.country
+                // portalProvider: this.profile.portalProvider,
+                // avatar: this.profile.avatar,
+                // memberShip: this.profile.memberShip
             }
-            console.log(this.DataProfile)
 
             let res = await this.$axios.$post("/api/me/editProfile?apikey=" + this.$store.state.auth_token, this.DataProfile);
             console.log(res);

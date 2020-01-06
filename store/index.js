@@ -294,7 +294,7 @@ const createStore = () => {
                     if (!res.status) {
                         // localStorage.removeItem('apikey');
                         // location.href = "http://whitelabelv2.herokuapp.com"
-                        alert("419 Sorry, your session has expired. Please refresh and try again.")
+                        alert("Sorry, your session has expired. Please refresh and try again.")
                             // location.href = "http://" + location.hostname + ":8001"
                         return
                     }

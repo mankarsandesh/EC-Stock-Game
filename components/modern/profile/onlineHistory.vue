@@ -1,7 +1,7 @@
 <template>
 <div>
     
-    <v-window v-model="window" class="elevation-1" vertical > 
+    <v-window class="elevation-1" vertical > 
         <!-- Baic Information -->
         <v-window-item >
 
@@ -72,7 +72,8 @@ export default {
             to: false,
             items: ["day", "weeks", "months", "years"],
             time: "00:00",
-            playerId: ""
+            playerId: "",
+            window:""
         };
     },
     mounted() {

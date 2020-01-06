@@ -17,22 +17,23 @@
         </v-item-group>
       </v-flex>
       <v-flex xs12 md10>
+      
         <v-window v-model="window" class="elevation-1" vertical>
           <!-- Baic Information -->
           <v-window-item>
-            <basicInfo />
+            <basicInfo v-if="window== 0" />
           </v-window-item>
           <!-- Baic Information -->
 
           <!-- stock analysis -->
           <v-window-item>
-            <onlineHistoy />
+            <onlineHistoy v-if="window== 1"/>
           </v-window-item>
           <!-- stock analysis -->
 
           <!-- Online history -->
           <v-window-item>
-            <stockAnalysis />
+            <stockAnalysis v-if="window== 2"/>
           </v-window-item>
           <!-- Online history -->
         </v-window>
