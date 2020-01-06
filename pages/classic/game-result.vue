@@ -7,10 +7,10 @@
                     <template v-slot:header>
                         <div> {{$t('menu.game result')}}</div>
                     </template>
-                    <v-card> 
+                    <v-card>
                         <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
-                        <v-flex md6 style="float:left;margin-top:5px;"> 
-                                 <navbar /> 
+                        <v-flex md6 style="float:left;margin-top:5px;">
+                            <navbar />
                         </v-flex>
 
                         <v-flex xs3 md3 mr-1 style="float:right;">
@@ -18,10 +18,8 @@
                         </v-flex>
 
                         <v-flex xs3 md2 mr-1 style="float:right;">
-                            <v-select hide-details :items="itemspage" v-model="itemspages" class="Historyinput"  ></v-select>
+                            <v-select hide-details :items="itemspage" v-model="itemspages" class="Historyinput"></v-select>
                         </v-flex>
-
-                       
 
                         <span class="stockName" id="stockName" @click="getAllCrawler($event)" hidden></span>
                         <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
@@ -32,8 +30,14 @@
                                 <td>{{props.item.writetime}}</td>
                                 <td>{{props.item.gameId}}</td>
                             </template>
+                            <template v-slot:no-data>
+                                <v-alert :value="true" color="#384e63" icon="priority_high" outline>
+                                    Sorry, No Data to display :(
+                                </v-alert>
+                            </template>
                         </v-data-table>
-                         <div class="text-xs-center pt-2" v-if="pages != 0 " >
+                        
+                        <div class="text-xs-center pt-2" v-if="pages != 0 ">
                             <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
                         </div>
 
@@ -176,14 +180,17 @@ export default {
     }
 }
 </script>
+
 <style scoped>
-.Historyinput{
-    padding:4px 6px;
-    border:1px solid #384e63;
-    border-radius:3px;
-}
-.elevation-1{
-    margin-top:10px;float:left;width:100%;
+.Historyinput {
+    padding: 4px 6px;
+    border: 1px solid #384e63;
+    border-radius: 3px;
 }
 
+.elevation-1 {
+    margin-top: 10px;
+    float: left;
+    width: 100%;
+}
 </style>

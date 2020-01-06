@@ -10,11 +10,16 @@
             <td>{{props.item.winBet}}</td>
             <td>{{props.item.loseBet}}</td>
             <td>{{props.item.winRate}}</td>
-
+        </template>
+        <template v-slot:no-data>
+            <v-alert :value="true" color="#384e63" icon="priority_high" outline>
+                Sorry, No Data to display :(
+            </v-alert>
         </template>
     </v-data-table>
 </div>
 </template>
+
 <script>
 export default {
     data() {
@@ -65,7 +70,7 @@ export default {
     },
     methods: {
         async getChart() {
-            let dataGet = await this.$axios.$post( '/api/me/betAnalysis?apikey=' + this.$store.state.auth_token)
+            let dataGet = await this.$axios.$post('/api/me/betAnalysis?apikey=' + this.$store.state.auth_token)
             // console.log(dataGet.data)
 
             dataGet.data.forEach(element => {

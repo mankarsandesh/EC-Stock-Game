@@ -294,7 +294,8 @@ const createStore = () => {
                     if (!res.status) {
                         // localStorage.removeItem('apikey');
                         // location.href = "http://whitelabelv2.herokuapp.com"
-                        location.href = "http://" + location.hostname + ":8001"
+                        alert("419 Sorry, your session has expired. Please refresh and try again.")
+                            // location.href = "http://" + location.hostname + ":8001"
                         return
                     }
                     let userInfo = res.data.original;
@@ -454,9 +455,9 @@ const createStore = () => {
                     const res = await this.$axios.$get(
                         `/announcements?apikey=${context.getters.getAuth_token}`
                     );
-                    console.log(res);
+                    // console.log(res);
                     context.commit("setAnouncement", res.data);
-                    console.log("Sandesh");
+                    // console.log("Sandesh");
                 } catch (error) {
                     console.log(error);
                 }
@@ -469,8 +470,8 @@ const createStore = () => {
                     const res = await this.$axios.$get(
                         `/fetchHistoryBet?apikey=${context.getters.getAuth_token}`
                     );
-                    console.log(res);
-                    console.log("SANDESH");
+                    // console.log(res);
+                    // console.log("SANDESH");
                     context.commit("setHistory", res.data);
                 } catch (error) {
                     console.log(error);

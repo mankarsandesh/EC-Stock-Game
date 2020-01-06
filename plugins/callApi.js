@@ -25,11 +25,19 @@ export default ({ store }) => {
     store.dispatch('asynInitCallApi')
     store.dispatch("balance")
     store.dispatch("asyncPayout")
+    setTimeout(() => {
+        store.dispatch("asynUserInfo")
+    }, 600)
 
+    // get new data 3 second
     setInterval(() => {
         store.dispatch('OnlineTime')
             // store.dispatch("asynUserInfo")
     }, 3000);
+
+
+
+
 
 
 }

@@ -152,9 +152,9 @@ export default {
         return {
             succesMessage: "User info Successfully Updated",
             succesFiled: false,
-            selects: ["EVERYONE CAN SEE", "ONLY ME"],
+            selects: [this.$root.$t('msg.everyonecansee'), this.$root.$t('msg.onlyme')],
             countrySelects: ['China', 'Laos'],
-            genders: ["male", "female"],
+            genders: [this.$root.$t('msg.male'),this.$root.$t('msg.female')],
             countselects: [],
             profile: {
                 avatar: "",
@@ -288,16 +288,12 @@ export default {
                 this.imageFile = ''
                 this.imageUrl = ''
             }
-            // console.log(this.imageName)
-            // console.log(this.imageFile)
-            // console.log(this.imageUrl)
         },
         Closeupdate() {
             this.imageName = '';
             this.imageFile = '';
             this.imageUrl = '';
             $("input[type=file]").val("");
-
         },
         async UpLoadupdateimage() {
             console.log(this.imageName)

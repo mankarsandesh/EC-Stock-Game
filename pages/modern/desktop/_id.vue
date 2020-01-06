@@ -81,7 +81,7 @@
                             </div>
                         </v-flex>
                         <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                            <v-btn fab dark small color="#003e70" @click="setNextstep">
+                            <v-btn fab dark small color="#003e70" @click="setNextstep(),getopen()">
                                 <v-icon dark size="25">fa-question</v-icon>
                             </v-btn>
                         </v-flex>
@@ -308,6 +308,7 @@ export default {
         // set footerBet to zero because on this page cant use bet footer
         this.setFooterBetAmount(0);
         this.removeAllFooterBet();
+        // function resize Tutorial
         let vm = this;
         $(document).ready(function () {
             $(window).resize(function () {
@@ -316,20 +317,8 @@ export default {
                 }
             });
         });
-        if (localStorage.valTutorial != "1") {
-            let i = 0;
-            let setIntervals = setInterval(() => {
-                i++;
-                if (i == 13) {
-                    clearInterval(setIntervals)
-                    this.closeGuideline()
-                    $(".guideline").css("style", "none")
-                    localStorage.valTutorial = 1;
-                    return
-                }
-                this.setNextstep()
-            }, 3000);
-        }
+        this.setNextstepstart()
+
     },
     watch: {
         "$screen.width"() {
@@ -362,12 +351,38 @@ export default {
         loaded() {
             this.isLoad = true;
         },
+        getopen() {
+            // open Next step start
+            localStorage.valTutorial = 0;
+            this.setNextstepstart()
+        },
+        setNextstepstart() {
+            // Run Timer Next step
+            if (localStorage.valTutorial != "1") {
+                let i = 0;
+                let setIntervals = setInterval(() => {
+                    i++;
+                    if (i == 13) {
+                        clearInterval(setIntervals)
+                        this.closeGuideline()
+                        $(".guideline").css("style", "none")
+                        localStorage.valTutorial = 1;
+                        return
+                    }
+                    if (localStorage.valTutorial != "1") {
+                    this.setNextstep()
+                    }
+                }, 3000);
+            }
+        },
         setNextstep() {
+            // Next one step and stop step 12 
             if (this.isStep < 12) this.isStep += 1
             else this.isStep = 1
             this.setTutorial(this.isStep)
         },
         setTutorial(isStep) {
+            // open Tutorial 
             this.$refs.guidelineContent.hidden = false;
             let w = window.innerWidth;
 
@@ -492,6 +507,7 @@ export default {
 
         },
         closeGuideline() {
+            // close Tutorial
             this.isStep = 0
             $(".fa-question-circle").show();
             this.$refs.guidelineContent.hidden = true;
@@ -508,6 +524,7 @@ export default {
             $("#betCloseInGuideline").css("border-style", "none");
             $("#multiGuideline").css("border-style", "none");
             $("#lotteryDrawGuidelines").css("border-style", "none");
+            localStorage.valTutorial = 1
         },
     },
     computed: {

@@ -4,17 +4,11 @@
 <v-layout>
     <v-flex xs12 class="pt-2">
         <h2 class="text-uppercase">{{stockid}} {{getStockLoop(stockid)}} {{$t('msg.minute')}} {{$t('msg.loop')}}</h2>
-        <chartApp
-            :data="getStockById(stockid).stockPrice"
-            :time="getStockById(stockid).stockTime"
-            :key="getStockById(stockid).stockPrice[0]"
-            :stockid="stockid"
-            height="400px"
-          ></chartApp>
+        <chartApp :data="getStockById(stockid).stockPrice" :time="getStockById(stockid).stockTime" :key="getStockById(stockid).stockPrice[0]" :stockid="stockid" height="400px"></chartApp>
         <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
         <v-layout align-center justify-end>
             <v-flex>
-                <h4>$ {{getAmountBettingByStockId(stockid)}}</h4>
+                <h4>{{formatToPrice(getAmountBettingByStockId(stockid))}}</h4>
             </v-flex>
             <v-spacer></v-spacer>
             <v-flex>
@@ -88,6 +82,13 @@ export default {
             "getStockById",
             "getAmountBettingByStockId"
         ])
-    }
+    },
+    methods: {
+        formatToPrice(value) {
+            return `$ ${Number(value)
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        },
+    },
 };
 </script>

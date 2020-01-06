@@ -74,6 +74,11 @@
             </tr>
 
         </template>
+        <template v-slot:no-data>
+            <v-alert :value="true" color="#384e63" icon="priority_high" outline>
+                Sorry, No Data to display :(
+            </v-alert>
+        </template>
     </v-data-table>
     <div class="text-xs-center pt-2" v-if="pages != 0 ">
         <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
@@ -294,7 +299,6 @@ export default {
 </script>
 
 <style scoped>
-
 .toolbar-bg {
     background-color: rgb(22, 83, 136);
 }
