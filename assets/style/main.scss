@@ -1,3 +1,16 @@
+@font-face {
+    font-family: "NotoSansLaoUI";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/NotoSerifLao-Regular.eot");
+    src: url("../fonts/NotoSerifLao-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/NotoSansLaoUI-Regular.ttf") format("woff2"), url("../fonts/NotoSansLaoUI-Regular.ttf") format("woff"), url("../fonts/NotoSansLaoUI-Regular.ttf") format("truetype");
+}
+
+.application,
+.v-btn__content {
+    font-family: 'NotoSansLaoUI' !important;
+}
+
 $mainColor: #003e70;
 $mainbg: #003e70;
 .theme--light.v-text-field>.v-input__control>.v-input__slot:before {

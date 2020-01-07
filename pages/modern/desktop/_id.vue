@@ -303,7 +303,7 @@ export default {
     mounted() {
         // call this every page that used "dekstopModern" layout to hide loading
         this.setIsLoadingStockGame(false);
-        console.warn("mounted...");
+        // console.warn("mounted...");
 
         // set footerBet to zero because on this page cant use bet footer
         this.setFooterBetAmount(0);

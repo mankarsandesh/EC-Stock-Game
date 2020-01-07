@@ -38,7 +38,7 @@
             </v-layout>
         </v-flex>
         <v-flex class="py-1">
-            <span>{{$t('msg.max')}} = $5000;{{$t('msg.min')}} = $200</span>
+            <span>{{$t('msg.max')}} = $5000;{{$t('msg.min')}} = $100</span>
 
         </v-flex>
         <v-divider></v-divider>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-jumbotron>
+    <div>
       <v-container fill-height>
         <v-layout align-center>
           <v-flex>
@@ -58,7 +58,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </v-jumbotron>
+    </div>
     <v-card class="my-bg">
       <v-expansion-panel v-model="panel" expand>
         <v-expansion-panel-content>
