@@ -140,16 +140,16 @@ export default {
                 let calculat;
                 if (this.$route.params.id.split('-')[1] == "btc1") {
                     times = data.btc1.timer;
-                    calculat = 39;
+                    calculat = 38;
                 } else if (this.$route.params.id.split('-')[1] == "btc5") {
                     times = data.btc5.timer;
-                    calculat = 239;
+                    calculat = 238;
                 } else if (this.$route.params.id.split('-')[1] == "usindex") {
                     times = data.usindex.timer;
-                    calculat = 239;
+                    calculat = 238;
                 } else {
                     times = data.sh000001.timer;
-                    calculat = 239;
+                    calculat = 238;
                 }
                 if (times == calculat) {
                     this.getTableChartBS();

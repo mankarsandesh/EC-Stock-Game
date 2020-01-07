@@ -192,7 +192,7 @@
             <!-- charts -->
             <v-tabs-items v-model="tab">
                 <v-container pa-0 v-if="show1">
-                    <livechart :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-if="checkStock == 'live' && ischangechartview" />
+                    <livechart :StockData="getStockNewData($route.params.id)" v-if="checkStock == 'live' && ischangechartview" />
                     <liveevens :StockData="getStockNewData($route.params.id)" :checkStock="checkStock" v-else-if="checkStock !== 'live' && ischangechartview" />
 
                     <div v-else>

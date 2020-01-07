@@ -534,7 +534,6 @@ export default {
             if (this.sumTotalAll > this.getBalance || this.sumTotalAll == '') {
                 this.getalertstartstop('error')
             } else {
-                this.getBalance = this.getBalance - this.sumTotalAll;
                 console.log("data..........");
                 console.log(this.formData);
                 console.log("send to api server");
@@ -807,7 +806,6 @@ export default {
             if (val == "start") {
                 this.alertext = this.$root.$t('msg.startbetting')
                 this.color = "#2962FF";
-                this.$vuetify.goTo(0)
             } else if (val == "stop") {
                 this.alertext = this.$root.$t('msg.stopbetting')
                 this.color = "#D50000";

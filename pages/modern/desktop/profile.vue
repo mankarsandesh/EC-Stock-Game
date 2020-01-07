@@ -21,19 +21,19 @@
         <v-window v-model="window" class="elevation-1" vertical>
           <!-- Baic Information -->
           <v-window-item>
-            <basicInfo v-if="window== 0" />
+            <basicInfo/>
           </v-window-item>
           <!-- Baic Information -->
 
           <!-- stock analysis -->
           <v-window-item>
-            <onlineHistoy v-if="window== 1"/>
+            <onlineHistoy/>
           </v-window-item>
           <!-- stock analysis -->
 
           <!-- Online history -->
           <v-window-item>
-            <stockAnalysis v-if="window== 2"/>
+            <stockAnalysis/>
           </v-window-item>
           <!-- Online history -->
         </v-window>

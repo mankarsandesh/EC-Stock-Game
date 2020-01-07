@@ -58,26 +58,25 @@ export default {
         }, 1000)
         const socket = openSocket("https://websocket-timer.herokuapp.com");
         socket.on("time", data => {
-            // this.getTimeNow();
             let times;
             let calculat;
-            let lasttime;
+            // let lasttime;
             if (this.$route.params.id.split("-")[1] == "btc1") {
                 times = data.btc1.timer;
                 calculat = 40;
-                lasttime = 38
+                // lasttime = 36
             } else if (this.$route.params.id.split("-")[1] == "btc5") {
                 times = data.btc5.timer;
                 calculat = 240;
-                lasttime = 238;
+                // lasttime = 236;
             } else if (this.$route.params.id.split("-")[1] == "usindex") {
                 times = data.usindex.timer;
                 calculat = 240;
-                lasttime = 238;
+                // lasttime = 236;
             } else {
                 times = data.sh000001.timer;
                 calculat = 240;
-                lasttime = 238;
+                // lasttime = 236;
             }
 
             if (times > calculat) {
@@ -88,9 +87,10 @@ export default {
                 this.time = this.$root.$t('msg.betnow') + ':' + this.setZero(Math.floor(times / 60), 2) + ":" + this.setZero((times % 60) % 60, 2);
             }
 
-            if (times == lasttime) {
-                this.getdata();
-            }
+            // if (times == lasttime) {
+            // get new data 
+            this.getdata();
+            // }
         });
     },
     methods: {
@@ -145,36 +145,19 @@ export default {
             }
         },
         async getdata() {
-            // let stcokId = await this.$axios.$get('/api/fetchStockOnly?apikey=' + this.$store.state.auth_token)
-            // stcokId.data.forEach(element => {
-            //     if (element.stockName == this.$route.params.id.split("-")[1]) {
-            //         this.stockname = element.stockId
-            //     }
-            // })
-            // let StockData = await this.$axios.$get('/api/getCrawlerData?stockId=' + this.stockname + '&limit=300&apikey=' + this.$store.state.auth_token)
-            // this.StockData = StockData.data;
             if (this.StockData == "") return;
-
+            let elements = this.StockData[this.StockData.length - 1]
             this.load = true;
-            let items = [];
             let value_no;
-            this.StockData.forEach(element => {
-                items.push({
-                    PT: this.formatToPrice(element.PT),
-                    gameid: element.gameId,
-                    date: element.writetime.replace(/-/g, "/")
-                });
-            });
-            let elements = items[items.length - 1];
             this.datalastdraw = elements.PT;
-            let cd = new Date(elements.date)
+            let cd = new Date(elements.writetime.replace(/-/g, "/"))
             this.datelastdraw =
-                // this.setZero(cd.getFullYear(), 4) + "-" +
+                // this.setZero(cd.getFullYear(), 4) + "/" +
                 this.setZero(cd.getMonth() + 1, 2) + "/" +
                 this.setZero(cd.getDate(), 2) + " " +
                 this.setZero(cd.getHours(), 2) + ":" +
                 this.setZero(cd.getMinutes(), 2);
-            this.gameid = elements.gameid;
+            this.gameid = elements.gameId;
             let no1 = elements.PT[elements.PT.length - 2];
             let no2 = elements.PT[elements.PT.length - 1];
 

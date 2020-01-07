@@ -14,7 +14,7 @@ import VueCharts from "vue-chartjs";
 import Chart from 'chart.js';
 import openSocket from 'socket.io-client'
 export default {
-    props: ["checkStock", "StockData"],
+    props: ["StockData"],
     data() {
         return {
             load: false,
@@ -33,13 +33,6 @@ export default {
                 zero += '0';
             }
             return (zero + num).slice(-digit);
-        },
-        formatToPrice(value) {
-            if (this.$route.params.id.split('-')[1] == 'usindex') {
-                return `${Number(value).toFixed(4)}`;
-            } else {
-                return `${Number(value).toFixed(2)}`;
-            }
         },
         async getChart() {
             if (this.StockData === "") return
@@ -81,7 +74,7 @@ export default {
             // console.log(min)
             const ctx = this.$refs.planetchart;
             this.gradient = this.$refs.planetchart.getContext("2d").createLinearGradient(0, 0, 0, 450);
-            
+
             this.gradient.addColorStop(0, '#88cafb')
             this.gradient.addColorStop(0.95, '#ffffff');
             this.gradient.addColorStop(1, '#ffffff');
@@ -89,7 +82,7 @@ export default {
             // this.gradient.addColorStop(0, 'rgba(0, 231, 255, 0.9)')
             // this.gradient.addColorStop(0.5, 'rgba(0, 231, 255, 0.25)');
             // this.gradient.addColorStop(1, 'rgba(0, 231, 255, 0)');
-            
+
             const config = {
                 type: 'line',
                 data: {
@@ -174,7 +167,6 @@ export default {
                             suggestedMin: min,
                             suggestedMax: max,
                             maxTicksLimit: 6
-
                         }]
                     },
                     tooltips: {
@@ -196,62 +188,23 @@ export default {
 
             const mychart = new Chart(ctx, config);
 
-            ///////////////////////////////////////////
-            const socket = openSocket('https://websocket-timer.herokuapp.com')
-            socket.on('time', data => {
-                let times, calculating;
-                if (this.$route.params.id.split('-')[1] == 'btc1') {
-                    times = data.btc1.timer
-                    calculating = 38
-                } else if (this.$route.params.id.split('-')[1] == 'btc5') {
-                    times = data.btc5.timer
-                    calculating = 238
-                } else if (this.$route.params.id.split('-')[1] == 'usindex') {
-                    times = data.usindex.timer
-                    calculating = 238
-                } else {
-                    times = data.sh000001.timer
-                    calculating = 238
-                }
-
-                if (times == calculating) {
-                    startInterval()
-                }
-            })
-
-            function startInterval() {
-                let items = [];
-                _this.StockData.forEach(elements => {
-                    items.push({
-                        id: elements.id,
-                        date: elements.writetime.replace(/-/g, "/"),
-                        value: elements.PT,
-                    });
-                });
-                let dataItems = items[items.length - 1];
+            // add new data for chart
+            setInterval(() => {
+                let dataItems = this.StockData[this.StockData.length - 1]
                 if (datalastdraw.id != dataItems.id) {
-                    let date = new Date(dataItems.date);
-                    let dd1 = date.getDate();
-                    let dd = dd1 < 10 ? "0" + dd1 : dd1;
-                    let mm1 = date.getMonth() + 1;
-                    let mm = mm1 < 10 ? "0" + mm1 : mm1;
-                    let Hourss = date.getHours();
-                    let Hours = Hourss < 10 ? "0" + Hourss : Hourss;
-                    let Minutess = date.getMinutes();
-                    let Minutes = Minutess < 10 ? "0" + Minutess : Minutess;
-                    date = dd + "/" + mm + "-" + Hours + ":" + Minutes;
-
-                    // console.log("add New Data")
-                    // console.log(date)
-                    // console.log(dataItems.value)
-
-                    config.data.labels.push(date);
-                    config.data.datasets[0].data.push(dataItems.value);
+                    let date = new Date(dataItems.writetime.replace(/-/g, "/"));
+                    config.data.labels.push(
+                        this.setZero(date.getMonth() + 1, 2) + "/" +
+                        this.setZero(date.getDate(), 2) + "-" +
+                        this.setZero(date.getHours(), 2) + ':' +
+                        this.setZero(date.getMinutes(), 2)
+                    );
+                    // console.log("add new data for chart")
+                    config.data.datasets[0].data.push(dataItems.PT);
                     mychart.update();
+                    datalastdraw.id = dataItems.id
                 }
-
-            }
-
+            }, 1000)
         }
     }
 }

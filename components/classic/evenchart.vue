@@ -234,98 +234,54 @@ export default {
             const mychart = new Chart(ctx, config);
 
             ///////////////////////////////////////////
-            const socket = openSocket('https://websocket-timer.herokuapp.com')
-            socket.on('time', data => {
-                let times, calculating;
-                if (this.$route.params.id.split('-')[1] == 'btc1') {
-                    times = data.btc1.timer
-                    calculating = 38
-                } else if (this.$route.params.id.split('-')[1] == 'btc5') {
-                    times = data.btc5.timer
-                    calculating = 238
-                } else if (this.$route.params.id.split('-')[1] == 'usindex') {
-                    times = data.usindex.timer
-                    calculating = 238
-                } else {
-                    times = data.sh000001.timer
-                    calculating = 238
-                }
-
-                if (times == calculating) {
-                    startInterval()
-                }
-            })
-            let _this = this;
-
-            function startInterval() {
-                let items = [];
-                let value_no;
-                let num;
-                _this.StockData.forEach(elements => {
+            // add new data for chart
+            setInterval(() => {
+                let elements = this.StockData[this.StockData.length - 1]
+                if (datalastdraw.id != elements.id) {
                     let no_firsts = elements.PT[elements.PT.length - 2].toString();
                     let no_lasts = elements.PT[elements.PT.length - 1].toString();
-
+                    let value_no, num;
                     let no_first = parseInt(no_firsts);
                     let no_last = parseInt(no_lasts);
                     let no_both = no_first + no_last;
                     let no_two = parseInt(no_first + '' + no_last);
 
-                    if (_this.checkStock == 'bsf') {
+                    if (this.checkStock == 'bsf') {
                         value_no = no_first
                         num = value_no >= 5
-                    } else if (_this.checkStock == 'bsl') {
+                    } else if (this.checkStock == 'bsl') {
                         value_no = no_last
                         num = value_no >= 5
-                    } else if (_this.checkStock == 'bsb') {
+                    } else if (this.checkStock == 'bsb') {
                         value_no = no_both
                         num = value_no >= 8
-                    } else if (_this.checkStock == 'bst') {
-                        value_no = _this.setZero(no_two, 2)
+                    } else if (this.checkStock == 'bst') {
+                        value_no = this.setZero(no_two, 2)
                         num = value_no >= 50
-                    } else if (_this.checkStock == 'oef') {
+                    } else if (this.checkStock == 'oef') {
                         value_no = no_first
                         num = value_no % 2 == 0
-                    } else if (_this.checkStock == 'oel') {
+                    } else if (this.checkStock == 'oel') {
                         value_no = no_last
                         num = value_no % 2 == 0
-                    } else if (_this.checkStock == 'oeb') {
+                    } else if (this.checkStock == 'oeb') {
                         value_no = no_both
                         num = value_no % 2 == 0
-                    } else if (_this.checkStock == 'oet') {
-                        value_no = _this.setZero(no_two, 2)
+                    } else if (this.checkStock == 'oet') {
+                        value_no = this.setZero(no_two, 2)
                         num = value_no % 2 == 0
                     }
-                    items.push({
-                        id: elements.id,
-                        date: elements.writetime.replace(/-/g, "/"),
-                        value: value_no,
-                        color: num
-                    });
-                });
-                let dataItems = items[items.length - 1];
-                if (datalastdraw.id != dataItems.id) {
-                    let date = new Date(dataItems.date);
-                    let dd1 = date.getDate();
-                    let dd = dd1 < 10 ? "0" + dd1 : dd1;
-                    let mm1 = date.getMonth() + 1;
-                    let mm = mm1 < 10 ? "0" + mm1 : mm1;
-                    let Hourss = date.getHours();
-                    let Hours = Hourss < 10 ? "0" + Hourss : Hourss;
-                    let Minutess = date.getMinutes();
-                    let Minutes = Minutess < 10 ? "0" + Minutess : Minutess;
-                    date = dd + "/" + mm + "-" + Hours + ":" + Minutes;
 
-                    // console.log("add New Data")
-                    // console.log(date)
-                    // console.log(dataItems.value)
+                    let date = new Date(elements.writetime.replace(/-/g, "/"));
+                    // console.log("add New Data even chart")
 
-                    config.data.labels.push(date);
-                    config.data.datasets[0].data.push(dataItems.value);
-                    config.data.datasets[0].pointBackgroundColor.push(dataItems.color ? "blue" : "red");
+                    config.data.labels.push(this.setZero(date.getMonth() + 1, 2) + "/" + this.setZero(date.getDate(), 2) + "-" + this.setZero(date.getHours(), 2) + ':' + this.setZero(date.getMinutes(), 2));
+                    config.data.datasets[0].data.push(value_no);
+                    config.data.datasets[0].pointBackgroundColor.push(num ? "blue" : "red");
                     mychart.update();
+                    datalastdraw.id = elements.id
                 }
-
-            }
+            }, 1000);
 
         }
     }
