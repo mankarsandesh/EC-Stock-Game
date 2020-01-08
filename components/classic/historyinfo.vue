@@ -181,7 +181,7 @@ export default {
                 }
             } else if (val == 'weeks') {
                 datefrom = {
-                    week: w
+                    week: this.getWeekNumber(new Date())
                 }
             } else if (val == 'months') {
                 datefrom = {
@@ -198,7 +198,7 @@ export default {
                 this.sumTotalrollingAmount = 0
                 this.pagination.totalItems = 0
             }
-            console.log(datefrom)
+            // console.log(datefrom)
             return this.gethistory(datefrom)
         },
         itemspages(val) {
@@ -212,6 +212,38 @@ export default {
         }
     },
     methods: {
+        setZero(num, digit) {
+            var zero = '';
+            for (var i = 0; i < digit; i++) {
+                zero += '0';
+            }
+            return (zero + num).slice(-digit);
+        },
+        getDateArray(start, end) {
+            var arr = new Array();
+            var dt = new Date(start);
+            while (dt <= end) {
+                let date = new Date(dt)
+                arr.push(date.getFullYear() + "-" + this.setZero(date.getMonth() + 1, 2) + "-" + this.setZero(date.getDate(), 2));
+                dt.setDate(dt.getDate() + 1);
+            }
+            return arr;
+        },
+        getWeekNumber(d) {
+            // Copy date so don't modify original
+            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            // Set to nearest Thursday: current date + 4 - current day number
+            // Make Sunday's day number 7
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            // Get first day of year
+            var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            // Calculate full weeks to nearest Thursday
+            var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            // Return array of year and week number
+            // return [d.getUTCFullYear(), weekNo];
+            return weekNo + '-' + d.getUTCFullYear();
+        },
+
         total1(column) {
             const table = this.$refs.table
             //console.log('table',table);
@@ -222,10 +254,8 @@ export default {
         dateSearch() {
             let date = {
                 start: this.datefrom,
-                end: this.dateto,
-                week: ''
+                end: this.dateto
             }
-            // console.log(date)
             return this.gethistory(date)
         },
         async gethistory(val) {
@@ -242,9 +272,31 @@ export default {
                     this.sumTotalbetAmount = 0
                     this.sumTotalrollingAmount = 0
                     this.pagination.totalItems = 0
-                    if (history.data[i].betTime.split(" ")[0] == val.start ||
-                        history.data[i].betTime.split(" ")[0] == val.end ||
-                        new Date(history.data[i].betTime).getDay() == val.week ||
+
+                    if (this.getDateArray(new Date(val.start), new Date(val.end)).length > 0) {
+                        let getDate = this.getDateArray(new Date(val.start), new Date(val.end))
+                        for (let n = 0; n < getDate.length; n++) {
+                            if (history.data[i].betTime.split(" ")[0] == getDate[n]) {
+                                setTimeout(() => {
+                                    this.history.push({
+                                        page: 1,
+                                        betId: history.data[i].betId,
+                                        gameId: history.data[i].gameId,
+                                        rule: history.data[i].rule,
+                                        payoutAmount: history.data[i].payoutAmount,
+                                        stock: history.data[i].stock,
+                                        loops: history.data[i].loops,
+                                        betTime: history.data[i].betTime,
+                                        betAmount: history.data[i].betAmount,
+                                        rollingAmount: history.data[i].rollingAmount
+                                    });
+                                    this.pagination.totalItems = this.history.length;
+                                    this.sumTotalbetAmount += history.data[i].betAmount
+                                    this.sumTotalrollingAmount += history.data[i].rollingAmount
+                                }, 0)
+                            }
+                        }
+                    } else if (this.getWeekNumber(new Date(history.data[i].betTime)) == val.week ||
                         new Date(history.data[i].betTime).getMonth() + 1 == val.month ||
                         new Date(history.data[i].betTime).getFullYear() == val.year) {
                         setTimeout(() => {

@@ -1,7 +1,7 @@
 <template>
 <div>
     <div ref="svgContainer" class="isLoading" v-if="getStockNewData($route.params.id).length == ''"></div>
-    <v-toolbar fixed app light class="light-toobar">
+    <v-toolbar fixed app light class="light-toobar" v-show="getStockNewData($route.params.id).length != ''">
         <v-container mx-auto py-0 px-0>
             <v-layout>
                 <v-toolbar-title>
@@ -46,7 +46,7 @@
         </v-container>
     </v-toolbar>
 
-    <v-app>
+    <v-app v-show="getStockNewData($route.params.id).length != ''">
         <v-toolbar class="pa-0 text-primary light-toobar">
             <v-container>
                 <v-tabs icons-and-text>
@@ -318,7 +318,6 @@ export default {
         dataslastdraw,
         baccarats,
         navbar,
-
         currentbet,
         history,
         gameresult,
@@ -327,6 +326,7 @@ export default {
         setting,
         profile
     },
+
     data() {
         return {
             dialogprofile: false,
@@ -365,6 +365,27 @@ export default {
 
         };
     },
+
+    // head() {
+    //     return {
+    //         title: "EC Gamming Classic",
+    //         meta: [{
+    //                 charset: 'utf-8'
+    //             },
+    //             {
+    //                 name: 'viewport',
+    //                 content: 'width=device-width, initial-scale=1'
+    //             },
+    //             // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+    //             {
+    //                 hid: 'description',
+    //                 name: 'description',
+    //                 content: 'Meta description'
+    //             }
+    //         ]
+    //     }
+    // },
+
     created() {
         this.setLanguage();
     },
@@ -398,6 +419,7 @@ export default {
             this.getAtivetab();
         });
     },
+
     computed: {
         ...mapGetters([
             "getBalance",
@@ -414,6 +436,7 @@ export default {
         }
 
     },
+
     methods: {
         getSwitchfooter(value) {
             this.Switchfooters = localStorage.switchfooter = value
