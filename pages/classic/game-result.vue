@@ -23,6 +23,15 @@
 
                         <span class="stockName" id="stockName" @click="getAllCrawler($event)" hidden></span>
                         <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
+                            <template v-slot:headers="headers">
+                                <tr>
+                                    <th class="text-white">{{$t('msg.Stock Name')}}</th>
+                                    <th class="text-white">{{$t('msg.Game Mode')}}</th>
+                                    <th class="text-white">{{$t('msg.Result')}}</th>
+                                    <th class="text-white">{{$t('msg.result out time')}}</th>
+                                    <th class="text-white">{{$t('msg.gameid')}}</th>
+                                </tr>
+                            </template>
                             <template v-slot:items="props">
                                 <td>{{$t('stockname.'+ props.item.stockName)}}</td>
                                 <td>{{props.item.stockType}}</td>
@@ -36,7 +45,7 @@
                                 </v-alert>
                             </template>
                         </v-data-table>
-                        
+
                         <div class="text-xs-center pt-2" v-if="pages != 0 ">
                             <v-pagination v-model="pagination.page" :length="pages" color="blue"></v-pagination>
                         </div>
@@ -192,5 +201,14 @@ export default {
     margin-top: 10px;
     float: left;
     width: 100%;
+}
+
+table thead tr th {
+    background-color: #003e70;
+    font-size: 1rem;
+}
+
+.text-white {
+    color: #FFF;
 }
 </style>

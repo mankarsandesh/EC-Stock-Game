@@ -1,6 +1,15 @@
 <template>
 <div>
     <v-data-table :headers="headers" hide-actions :items="history" class="elevation-1">
+        <template v-slot:headers="headers">
+            <tr>
+                <th class="text-white">{{$t('msg.Stock Name')}}</th>
+                <th class="text-white">{{$t('msg.Total Bet')}}</th>
+                <th class="text-white">{{$t('msg.winbet')}}</th>
+                <th class="text-white">{{$t('msg.losebet')}}</th>
+                <th class="text-white">{{$t('msg.Win Rate')}}</th>
+            </tr>
+        </template>
         <template v-slot:items="props">
             <td>
                 {{ $t('stockname.'+props.item.stockName) }}
@@ -71,7 +80,7 @@ export default {
     methods: {
         async getChart() {
             let dataGet = await this.$axios.$post('/api/me/betAnalysis?apikey=' + this.$store.state.auth_token)
-            // console.log(dataGet.data)
+            console.log(dataGet.data)
 
             dataGet.data.forEach(element => {
                 this.history.push({
@@ -86,3 +95,13 @@ export default {
     }
 }
 </script>
+<style scoped>
+table thead tr th {
+    background-color: #003e70;
+    font-size: 1rem;
+}
+
+.text-white {
+    color: #FFF;
+}
+</style>

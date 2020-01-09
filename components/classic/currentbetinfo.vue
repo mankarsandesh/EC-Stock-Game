@@ -3,6 +3,17 @@
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 
     <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
+        <template v-slot:headers="headers">
+            <tr>
+                <th class="text-white">{{$t('msg.BetId')}}</th>
+                <th class="text-white">{{$t('msg.gameid')}}</th>
+                <th class="text-white">{{$t('msg.Betdetail')}}</th>
+                <th class="text-white">{{$t('msg.Time')}}</th>
+                <th class="text-white">{{$t('msg.amount')}}</th>
+                <th class="text-white">{{$t('msg.payout')}}</th>
+                <th class="text-white">{{$t('msg.Bet Status')}}</th>
+            </tr>
+        </template>
         <template v-slot:items="props">
             <td>{{props.item.betId}}</td>
             <td>{{props.item.gameId}}</td>
@@ -236,3 +247,14 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+table thead tr th {
+    background-color: #003e70;
+    font-size: 1rem;
+}
+
+.text-white {
+    color: #FFF;
+}
+</style>

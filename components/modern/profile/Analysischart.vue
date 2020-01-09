@@ -1,6 +1,8 @@
 <template>
 <div class="text-xs-center">
-    <span v-show="!load">NO DATA AVAILABLE</span>
+    <v-alert :value="true" color="#384e63" icon="priority_high" outline v-show="!load">
+        Sorry, No Data to display :(
+    </v-alert>
     <canvas ref="planetchart" class="set-height" v-show="load"></canvas>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 </div>

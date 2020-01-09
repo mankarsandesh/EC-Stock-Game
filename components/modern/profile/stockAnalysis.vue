@@ -1,9 +1,9 @@
 <template>
 <div>
-    <v-window v-model="window" class="elevation-1" vertical > 
+    <v-window v-model="window" class="elevation-1" vertical>
         <!-- Baic Information -->
-        <v-window-item >
-            <v-layout row wrap >
+        <v-window-item>
+            <v-layout row wrap>
                 <v-flex xs6 md3>
                     <v-menu v-model="from" :close-on-content-click="false" :nudge-right="40" lazy transition="scale-transition" offset-y full-width min-width="290px">
                         <template v-slot:activator="{ on }">
@@ -20,15 +20,14 @@
                         <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
                     </v-menu>
                 </v-flex>
-                 <v-flex xs6 md3 class="sortdiv">
-                       
-                        <v-select class="selectSort" hide-details :items="items" :label="$t('msg.sortby')" solo></v-select>
-                  </v-flex>
 
-                 <v-flex xs6 md3>
-                     <v-btn class="my-btn go">{{$t('msg.go')}}</v-btn>                   
-                 </v-flex>                
+                <v-flex xs6 md3>
+                    <v-btn class="my-btn go" style="margin-left: -60%;">{{$t('msg.go')}}</v-btn>
+                </v-flex>
 
+                <v-flex xs6 md3 class="sortdiv">
+                    <v-select class="selectSort" hide-details :items="items" :label="$t('msg.sortby')" solo></v-select>
+                </v-flex>
 
                 <v-flex xs12>
                     <v-card class="mx-auto">
@@ -160,12 +159,14 @@ export default {
     mounted() {}
 };
 </script>
+
 <style>
-.sortdiv v-label{
-  color:#003e70;
+.sortdiv v-label {
+    color: #003e70;
 }
-.selectSort{
-  background-color:#003e70 !important;
-  color:#FFF;
+
+.selectSort {
+    background-color: #003e70 !important;
+    color: #FFF;
 }
 </style>

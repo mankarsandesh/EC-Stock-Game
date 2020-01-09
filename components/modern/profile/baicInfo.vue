@@ -8,10 +8,10 @@
         <v-tooltip right>
             <template #activator="{ on: tooltip }">
                 <v-avatar size="180" @click="dialog = !dialog">
-                    <img v-on="{ ...tooltip }" :src="profile.avatar ? profile.avatar:'/v.png'" alt />
+                    <img v-on="{ ...tooltip }" :src="profile.avatar ? profile.avatar : imageUrl ? imageUrl : '/user.png'" alt />
                 </v-avatar>
             </template>
-            <span>Click Image For Edit</span>
+            <span>Edit Profile Picture</span>
         </v-tooltip>
     </div>
 
@@ -98,7 +98,7 @@
                     </tr>
                     <tr>
                         <th scope="row" class="row">{{$t("msg.membership")}}</th>
-                        <td>{{profile.memberShip}}</td>
+                        <td>{{profile.memberShip}} Stock God</td>
                         <td>
                             <v-select hide-details v-model="profile.membershipSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
                         </td>
@@ -107,6 +107,15 @@
                         <th scope="row" class="row">{{$t("msg.country")}}</th>
                         <td>
                             <v-select class="select" hide-details v-model="profile.country" :items="countrySelects" :label="profile.countrySelect"></v-select>
+                        </td>
+                        <td>
+                            <v-select hide-details v-model="profile.countrySelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="row">CURRENCY</th>
+                        <td>
+                            USD
                         </td>
                         <td>
                             <v-select hide-details v-model="profile.countrySelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
@@ -155,7 +164,7 @@ export default {
             succesFiled: false,
             selects: [this.$root.$t('msg.everyonecansee'), this.$root.$t("msg.onlyme")],
             countrySelects: ['China', 'Laos'],
-            genders: [this.$root.$t("msg.male"),this.$root.$t("msg.female")],
+            genders: [this.$root.$t("msg.male"), this.$root.$t("msg.female")],
             countselects: [],
             profile: {
                 avatar: "",
@@ -226,16 +235,17 @@ export default {
                 // avatar: this.profile.avatar,
                 // memberShip: this.profile.memberShip
             }
-
-            let res = await this.$axios.$post("/api/me/editProfile?apikey=" + this.$store.state.auth_token, this.DataProfile);
-            console.log(res);
-            res.status ? this.asynUserInfo() : '';
-            this.succesFiled = true;
-            this.succesMessage = res.status ? "User info Successfully Updated" : "User info Update Failed!";
-            this.colors = res.status ? "success" : "error"
-            setTimeout(() => {
-                this.succesFiled = false
-            }, 2000)
+            if (this.getUserName.name !== this.DataProfile.name || this.getUserName.email !== this.DataProfile.email || this.getUserName.gender !== this.DataProfile.gender) {
+                let res = await this.$axios.$post("/api/me/editProfile?apikey=" + this.$store.state.auth_token, this.DataProfile);
+                console.log(res);
+                res.status ? this.asynUserInfo() : '';
+                this.succesFiled = true;
+                this.succesMessage = res.status ? "User info Successfully Updated" : "User info Update Failed!";
+                this.colors = res.status ? "success" : "error"
+                setTimeout(() => {
+                    this.succesFiled = false
+                }, 2000)
+            }
         },
 
         setTime(seconds, val) {
@@ -317,6 +327,10 @@ export default {
 <style scoped>
 table tr td {
     text-transform: capitalize;
+}
+
+.float-left {
+    float: left;
 }
 
 .select {

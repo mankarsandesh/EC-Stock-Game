@@ -55,7 +55,7 @@
                                 </v-flex>
                             </v-layout>
                         </div>
-                        
+
                     </v-card>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -76,7 +76,7 @@ export default {
             load: false,
             announcement: [],
             isOptions: true,
-            
+
             chartData: [],
             rulenew: [],
             ruleold: [],
@@ -137,7 +137,8 @@ td a {
 }
 
 th {
-    background-color: #cccccc;
+    background-color: #003e70;
+    color: white;
 }
 
 th,

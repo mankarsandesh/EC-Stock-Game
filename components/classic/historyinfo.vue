@@ -30,9 +30,19 @@
             <v-select single-line hide-details :items="items" label="Sort By :" v-model="itemss" class="selectHistory"></v-select>
         </v-flex>
     </v-layout>
-    <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
 
+    <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
     <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
+        <template v-slot:headers="headers">
+            <tr>
+                <th class="text-white">{{$t('msg.BetId')}}</th>
+                <th class="text-white">{{$t('msg.gameid')}}</th>
+                <th class="text-white">{{$t('msg.Betdetail')}}</th>
+                <th class="text-white">{{$t('msg.Time')}}</th>
+                <th class="text-white">{{$t('msg.amount')}}</th>
+                <th class="text-white">{{$t('msg.payout')}}</th>
+            </tr>
+        </template>
         <template v-slot:items="props">
             <td>{{props.item.betId}}</td>
             <td>{{props.item.gameId}}</td>
@@ -266,7 +276,6 @@ export default {
             this.load = true;
             for (let i = 0; i < history.data.length; i++) {
                 // console.log(history.data[i].betTime)
-                // console.log(i)
                 if (val != null && val != 'all') {
                     this.history = []
                     this.sumTotalbetAmount = 0
@@ -293,9 +302,10 @@ export default {
                                     this.pagination.totalItems = this.history.length;
                                     this.sumTotalbetAmount += history.data[i].betAmount
                                     this.sumTotalrollingAmount += history.data[i].rollingAmount
-                                }, 0)
+                                })
                             }
                         }
+
                     } else if (this.getWeekNumber(new Date(history.data[i].betTime)) == val.week ||
                         new Date(history.data[i].betTime).getMonth() + 1 == val.month ||
                         new Date(history.data[i].betTime).getFullYear() == val.year) {
@@ -315,10 +325,11 @@ export default {
                             this.pagination.totalItems = this.history.length;
                             this.sumTotalbetAmount += history.data[i].betAmount
                             this.sumTotalrollingAmount += history.data[i].rollingAmount
-                        }, 0)
-                    } else if (history.data[i].betTime.split(" ")[0] !== val.start && history.data[i].betTime.split(" ")[0] !== val.end) {
+                        })
+                    } else {
                         this.history = []
                     }
+
                 } else {
                     this.history.push({
                         page: 1,
@@ -351,6 +362,15 @@ export default {
 </script>
 
 <style scoped>
+table thead tr th {
+    background-color: #003e70;
+    font-size: 1rem;
+}
+
+.text-white {
+    color: #FFF;
+}
+
 .toolbar-bg {
     background-color: rgb(22, 83, 136);
 }
