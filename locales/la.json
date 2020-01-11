@@ -137,7 +137,8 @@
         "titles": "ຫົວຂໍ້",
         "preview": "ຂໍ້ຄວາມ",
         "date": "ວັນທີ່",
-        "StockLiveData": "ຂໍ້ມູນລົງເກມຕອນນີ"
+        "StockLiveData": "ຂໍ້ມູນລົງເກມຕອນນີ",
+        "Currency": "ສະກຸນເງີນ"
 
     },
     "navlist": {

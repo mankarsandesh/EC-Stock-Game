@@ -26,7 +26,7 @@
                 </v-flex>
 
                 <v-flex xs6 md3 class="sortdiv">
-                    <v-select class="selectSort" hide-details :items="items" :label="$t('msg.sortby')" solo></v-select>
+                    <v-select small class="selectSort" hide-details :items="items" :label="$t('msg.sortby')" solo></v-select>
                 </v-flex>
 
                 <v-flex xs12>

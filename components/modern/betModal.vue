@@ -16,7 +16,7 @@
         <v-flex>
             <v-layout row>
                 <v-flex class="py-3 text-center">
-                    <v-avatar size="60" v-for="(item,key) in imgChip" :key="key">
+                    <v-avatar size="70" v-for="(item,key) in imgChip" :key="key">
                         <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" :width="item.width" :alt="item.title" :class="item.color" class="chipImg">
                             <span class="setpricechip"> {{getCoins_modern[key]}}</span>
                         </v-img>

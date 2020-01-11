@@ -20,13 +20,18 @@
         <v-flex xs6 sm4 md2 lg2>
             <v-btn @click="dateSearch()" class="goButton">go</v-btn>
         </v-flex>
+        <!-- <v-flex xs2 sm2 md2 lg1>
+            <v-select label="Limit Total" single-line hide-details :items="itemlimit" v-model="limit" color="#FFF" class="limits text-white"></v-select>
+        </v-flex> -->
+
         <v-flex xs6 sm4 md2 lg2>
-            <v-select single-line hide-details :items="itemspage" v-model="itemspages" color="#FFF" class="selectHistory"></v-select>
+            <v-select label="Limit Page" single-line hide-details :items="itemspage" v-model="itemspages" color="#FFF" class="selectHistory text-white"></v-select>
         </v-flex>
+
         <v-flex xs4 sm4 md2 lg2>
-            <v-text-field single-line hide-details v-model="search" append-icon="search" class="selectHistory" style="padding:4px;"></v-text-field>
+            <v-text-field single-line hide-details v-model="search" append-icon="search" class="selectHistory text-white" style="padding:4px;"></v-text-field>
         </v-flex>
-        <v-flex xs4 sm4 md2 lg2>
+        <v-flex xs4 sm4 md2 lg2 te >
             <v-select single-line hide-details :items="items" label="Sort By :" v-model="itemss" class="selectHistory"></v-select>
         </v-flex>
     </v-layout>
@@ -120,6 +125,9 @@ export default {
             pagination: {
                 sortBy: 'day'
             },
+            itemlimit: [100, 300, 500, "all"],
+            limit: '',
+            limits: -1,
             selected: [],
             headers: [{
                     text: this.$root.$t('msg.BetId'),
@@ -213,7 +221,16 @@ export default {
         },
         itemspages(val) {
             this.pagination.rowsPerPage = val
-        }
+        },
+        limit(text) {
+            if (text == "all") {
+                this.limits = -1
+                return this.gethistory(null)
+            }else{
+                this.limits = text
+                return this.gethistory(null)
+            }
+        },
     },
     computed: {
         pages() {
@@ -268,8 +285,13 @@ export default {
             }
             return this.gethistory(date)
         },
+
         async gethistory(val) {
-            let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+            this.history = []
+            this.sumTotalbetAmount = 0
+            this.sumTotalrollingAmount = 0
+            this.pagination.totalItems = 0
+            let history = await this.$axios.$get('/api/fetchHistoryBet?limits=' + this.limits + '&apikey=' + this.$store.state.auth_token)
             //    console.log(history)
             if (history.data == null) return
             // console.log(history.data)
@@ -277,31 +299,13 @@ export default {
             for (let i = 0; i < history.data.length; i++) {
                 // console.log(history.data[i].betTime)
                 if (val != null && val != 'all') {
-                    this.history = []
-                    this.sumTotalbetAmount = 0
-                    this.sumTotalrollingAmount = 0
-                    this.pagination.totalItems = 0
 
                     if (this.getDateArray(new Date(val.start), new Date(val.end)).length > 0) {
                         let getDate = this.getDateArray(new Date(val.start), new Date(val.end))
                         for (let n = 0; n < getDate.length; n++) {
                             if (history.data[i].betTime.split(" ")[0] == getDate[n]) {
                                 setTimeout(() => {
-                                    this.history.push({
-                                        page: 1,
-                                        betId: history.data[i].betId,
-                                        gameId: history.data[i].gameId,
-                                        rule: history.data[i].rule,
-                                        payoutAmount: history.data[i].payoutAmount,
-                                        stock: history.data[i].stock,
-                                        loops: history.data[i].loops,
-                                        betTime: history.data[i].betTime,
-                                        betAmount: history.data[i].betAmount,
-                                        rollingAmount: history.data[i].rollingAmount
-                                    });
-                                    this.pagination.totalItems = this.history.length;
-                                    this.sumTotalbetAmount += history.data[i].betAmount
-                                    this.sumTotalrollingAmount += history.data[i].rollingAmount
+                                    this.sedDataToTable(history, i)
                                 })
                             }
                         }
@@ -310,45 +314,35 @@ export default {
                         new Date(history.data[i].betTime).getMonth() + 1 == val.month ||
                         new Date(history.data[i].betTime).getFullYear() == val.year) {
                         setTimeout(() => {
-                            this.history.push({
-                                page: 1,
-                                betId: history.data[i].betId,
-                                gameId: history.data[i].gameId,
-                                rule: history.data[i].rule,
-                                payoutAmount: history.data[i].payoutAmount,
-                                stock: history.data[i].stock,
-                                loops: history.data[i].loops,
-                                betTime: history.data[i].betTime,
-                                betAmount: history.data[i].betAmount,
-                                rollingAmount: history.data[i].rollingAmount
-                            });
-                            this.pagination.totalItems = this.history.length;
-                            this.sumTotalbetAmount += history.data[i].betAmount
-                            this.sumTotalrollingAmount += history.data[i].rollingAmount
+                            this.sedDataToTable(history, i)
                         })
                     } else {
                         this.history = []
                     }
 
                 } else {
-                    this.history.push({
-                        page: 1,
-                        betId: history.data[i].betId,
-                        gameId: history.data[i].gameId,
-                        rule: history.data[i].rule,
-                        payoutAmount: history.data[i].payoutAmount,
-                        stock: history.data[i].stock,
-                        loops: history.data[i].loops,
-                        betTime: history.data[i].betTime,
-                        betAmount: history.data[i].betAmount,
-                        rollingAmount: history.data[i].rollingAmount
-                    });
-                    this.pagination.totalItems = this.history.length;
-                    this.sumTotalbetAmount += history.data[i].betAmount
-                    this.sumTotalrollingAmount += history.data[i].rollingAmount
+                    this.sedDataToTable(history, i)
+
                 }
             }
             // return this.history = history.data
+        },
+        sedDataToTable(history, i) {
+            this.history.push({
+                page: 1,
+                betId: history.data[i].betId,
+                gameId: history.data[i].gameId,
+                rule: history.data[i].rule,
+                payoutAmount: history.data[i].payoutAmount,
+                stock: history.data[i].stock,
+                loops: history.data[i].loops,
+                betTime: history.data[i].betTime,
+                betAmount: history.data[i].betAmount,
+                rollingAmount: history.data[i].rollingAmount
+            });
+            this.pagination.totalItems = this.history.length;
+            this.sumTotalbetAmount += history.data[i].betAmount
+            this.sumTotalrollingAmount += history.data[i].rollingAmount
         },
         formatToPrice(value) {
             return `$ ${Number(value).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
@@ -367,8 +361,10 @@ table thead tr th {
     font-size: 1rem;
 }
 
+label,
+.v-select__selection,
 .text-white {
-    color: #FFF;
+    color: white !important;
 }
 
 .toolbar-bg {
@@ -410,6 +406,13 @@ table thead tr th {
 }
 
 .selectHistory {
+    /* border:1px solid red !important; */
+    margin-top: 8px !important;
+    padding: 4px 6px;
+    color: #FFF !important;
+}
+
+.limits {
     /* border:1px solid red !important; */
     margin-top: 8px !important;
     padding: 4px 6px;

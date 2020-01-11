@@ -13,11 +13,12 @@ import {
 import VueCharts from "vue-chartjs";
 import Chart from 'chart.js';
 export default {
+    props:["stockname","betwon"],
     data() {
         return {
             load: false,
-            stockname: [],
-            betwon: []
+            // stockname: [],
+            // betwon: []
         }
     },
     mounted() {
@@ -28,36 +29,36 @@ export default {
         }, 1000)
     },
     methods: {
-        setZero(num, digit) {
-            var zero = '';
-            for (var i = 0; i < digit; i++) {
-                zero += '0';
-            }
-            return (zero + num).slice(-digit);
-        },
-        formatToPrice(value) {
-            if (this.$route.params.id.split('-')[1] == 'usindex') {
-                return `${Number(value).toFixed(4)}`;
-            } else {
-                return `${Number(value).toFixed(2)}`;
-            }
-        },
+        // setZero(num, digit) {
+        //     var zero = '';
+        //     for (var i = 0; i < digit; i++) {
+        //         zero += '0';
+        //     }
+        //     return (zero + num).slice(-digit);
+        // },
+        // formatToPrice(value) {
+        //     if (this.$route.params.id.split('-')[1] == 'usindex') {
+        //         return `${Number(value).toFixed(4)}`;
+        //     } else {
+        //         return `${Number(value).toFixed(2)}`;
+        //     }
+        // },
         async getChart() {
-            let dataGet = await this.$axios.$get('/api/me/online?method=chart&apikey=' + this.$store.state.auth_token)
-            if (dataGet.data == "") return this.load = false;
+            // let dataGet = await this.$axios.$get('/api/me/online?method=chart&apikey=' + this.$store.state.auth_token)
+            // if (dataGet.data == "") return this.load = false;
 
-            dataGet.data.forEach(element => {
+            // dataGet.data.forEach(element => {
                 this.load = true
-                this.stockname.push(element.da_te);
-                let totalSeconds = parseInt(element.timeOnline);
-                let hours = Math.floor(totalSeconds / 3600);
-                totalSeconds %= 3600;
-                let minutes = Math.floor(totalSeconds / 60);
-                let minutes2 = minutes < 10 ? "0" + minutes : minutes;
-                let seconds = totalSeconds % 60;
+            //     this.stockname.push(element.da_te);
+            //     let totalSeconds = parseInt(element.timeOnline);
+            //     let hours = Math.floor(totalSeconds / 3600);
+            //     totalSeconds %= 3600;
+            //     let minutes = Math.floor(totalSeconds / 60);
+            //     let minutes2 = minutes < 10 ? "0" + minutes : minutes;
+            //     let seconds = totalSeconds % 60;
 
-                this.betwon.push(hours + "." + minutes2);
-            });
+            //     this.betwon.push(hours + "." + minutes2);
+            // });
 
             var config = {
                 type: "line",

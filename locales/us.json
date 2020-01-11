@@ -137,7 +137,8 @@
         "titles": "Title",
         "preview": "Preview",
         "date": "Date",
-        "StockLiveData": "Stock Live Data"
+        "StockLiveData": "Stock Live Data",
+        "Currency": "Currency"
 
     },
     "navlist": {

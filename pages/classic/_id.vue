@@ -543,7 +543,9 @@ export default {
                 setTimeout(() => {
                     this.isfooter = true;
                     this.getalertstartstop(res.data)
-                    this.setPrice("reset");
+                    if (this.preset == false) {
+                        this.setPrice("reset");
+                    }
                     $(".getupdatebalance")[0].click()
                     $("#txtbalance").text(this.formatToPrice(this.getBalance))
                 }, 700);
@@ -597,16 +599,16 @@ export default {
             if (e == "reset") {
                 $("#txttotal").text(this.formatTotal(this.price))
 
-                if (this.preset == false) {
-                    this.betData.betdetails = [];
-                    this.betDataShows = [];
-                    this.betData.betName = [];
-                    this.price = null;
-                    $(".form-input").val("");
-                    $(".form-inputadd").val("");
-                    $(".form-inputadd").attr("class", "form-input");
-                    $(".top-betadd").attr("class", "top-bet");
-                }
+                // if (this.preset == false) {
+                this.betData.betdetails = [];
+                this.betDataShows = [];
+                this.betData.betName = [];
+                this.price = null;
+                $(".form-input").val("");
+                $(".form-inputadd").val("");
+                $(".form-inputadd").attr("class", "form-input");
+                $(".top-betadd").attr("class", "top-bet");
+                // }
             } else if (e == "confirm") {
                 this.dialog = true;
                 this.isfooter = false;
@@ -658,7 +660,7 @@ export default {
         bet(e, specialName = "none") {
             // this.playSound('/voice/bet-chips.mp3')
             if (this.price == 0 || this.price == null || this.price > this.getBalance - this.sumTotalAll) {
-                console.log("Null-0");
+                // console.log("Null-0");
                 this.price = 0
                 this.getalertstartstop("notenough")
                 return;
@@ -772,7 +774,9 @@ export default {
 
         getBetClosedopen(val) {
             if (val == 'closed') {
-                this.setPrice("reset");
+                if (this.preset == false) {
+                    this.setPrice("reset");
+                }
                 this.panel = [false, false, false, false];
                 this.disabled = true
                 this.dialog = false

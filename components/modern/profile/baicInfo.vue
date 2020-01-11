@@ -7,7 +7,7 @@
     <div class="d-between">
         <v-tooltip right>
             <template #activator="{ on: tooltip }">
-                <v-avatar size="180" @click="dialog = !dialog">
+                <v-avatar size="150" @click="dialog = !dialog">
                     <img v-on="{ ...tooltip }" :src="profile.avatar ? profile.avatar : imageUrl ? imageUrl : '/user.png'" alt />
                 </v-avatar>
             </template>
@@ -113,7 +113,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="row">CURRENCY</th>
+                        <th scope="row" class="row">{{$t('msg.Currency')}}</th>
                         <td>
                             USD
                         </td>

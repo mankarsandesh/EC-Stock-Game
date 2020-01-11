@@ -137,7 +137,8 @@
         "titles": "标题",
         "preview": "预习",
         "date": "日期",
-        "StockLiveData": "库存实时数据"
+        "StockLiveData": "库存实时数据",
+        "Currency": "貨幣"
 
     },
     "navlist": {

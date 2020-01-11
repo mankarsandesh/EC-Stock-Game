@@ -135,7 +135,8 @@
         "titles": "หัวข้อ",
         "preview": "ข้อความ",
         "date": "วันที่",
-        "StockLiveData": "สต็อกข้อมูลสด"
+        "StockLiveData": "สต็อกข้อมูลสด",
+        "Currency": "สกุลเงิน"
 
 
     },

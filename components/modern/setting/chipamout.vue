@@ -35,7 +35,7 @@ import {
 } from "vuex";
 
 export default {
-
+    props:["value"],
     data() {
         return {
             conOrE: 'edit',

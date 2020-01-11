@@ -3,7 +3,7 @@
     <div class="border-flex"> -->
 <v-layout>
     <v-flex xs12 class="pt-2">
-        <h2 class="text-uppercase">{{stockid}} {{getStockLoop(stockid)}} {{$t('msg.minute')}} {{$t('msg.loop')}}</h2>
+        <h3 class="text-uppercase">{{$t('stockname.'+stockid)}} {{getStockLoop(stockid)}} {{$t('msg.minute')}} {{$t('msg.loop')}}</h3>
         <chartApp :data="getStockById(stockid).stockPrice" :time="getStockById(stockid).stockTime" :key="getStockById(stockid).stockPrice[0]" :stockid="stockid" height="400px"></chartApp>
         <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
         <v-layout align-center justify-end>

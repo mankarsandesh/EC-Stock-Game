@@ -80,7 +80,7 @@ export default {
     methods: {
         async getChart() {
             let dataGet = await this.$axios.$post('/api/me/betAnalysis?apikey=' + this.$store.state.auth_token)
-            console.log(dataGet.data)
+            // console.log(dataGet.data)
 
             dataGet.data.forEach(element => {
                 this.history.push({
