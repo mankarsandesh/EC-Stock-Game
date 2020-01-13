@@ -27,7 +27,6 @@ const createStore = () => {
             coins_modern: [],
             // multi game
             isSendBetting: false,
-            urltest: "http://159.138.45.25",
             // all stocks data
             // if we have new stock available we can add it here with same object format
             liveprice: {
@@ -524,9 +523,7 @@ const createStore = () => {
             getIsLoadingStockGame(state) {
                 return state.isLoadingStockGame;
             },
-            getUrltest(state) {
-                return state.urltest;
-            },
+
             getIsSendBetting(state) {
                 return state.isSendbetting;
             },

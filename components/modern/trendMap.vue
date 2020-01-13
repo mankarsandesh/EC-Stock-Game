@@ -99,7 +99,7 @@ export default {
             BSLength: 100,
             OELength: 100,
             HMLLength: 200,
-            Numlength: 25,
+            Numlength: 100,
 
             url: "",
             trent: [],

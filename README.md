@@ -1,6 +1,6 @@
 # modern-mobile
 
-> modern mobile version
+> EC Gaming version 2
 
 ## Build Setup
 

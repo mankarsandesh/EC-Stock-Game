@@ -137,7 +137,7 @@
                     <v-flex xs12 sm12 md12 lg12 wrap>
                         <v-layout>
                             <v-flex xs12 sm12 md6 lg6>
-                                <trendMapFullScreen which_one="O/E"></trendMapFullScreen>
+                                <trendMapFullScreen which_one="B/S"></trendMapFullScreen>
                             </v-flex>
                             <v-flex xs12 sm12 md6 lg6>
                                 <trendMapFullScreen which_one="O/E"></trendMapFullScreen>

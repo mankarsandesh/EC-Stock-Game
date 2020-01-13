@@ -156,7 +156,7 @@ export default {
         },
         async gethistoryTotal() {
             try {
-                let history = await this.$axios.$get('/api/fetchHistoryBet?apikey=' + this.$store.state.auth_token)
+                let history = await this.$axios.$get('/api/fetchHistoryBet?limits=300&apikey=' + this.$store.state.auth_token)
                 this.betAmounts = 0;
                 this.rollingAmounts = 0;
                 for (let i = 0; i < history.data.length; i++) {

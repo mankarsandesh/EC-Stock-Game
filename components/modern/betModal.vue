@@ -117,7 +117,6 @@ export default {
             "getCoins_modern",
             "getOnBetting",
             "getAuth_token",
-            "getUrltest",
             "getStockId"
         ])
     },
@@ -144,10 +143,7 @@ export default {
                 data: [betData]
             };
             try {
-                const res = await this.$axios.$post(
-                    `${this.getUrltest}/api/storebet?apikey=${this.getAuth_token}`,
-                    data
-                );
+                const res = await this.$axios.$post(`/api/storebet?apikey=${this.getAuth_token}`,data);
                 console.log(res);
                 if (res.status) {
                     this.balance()
