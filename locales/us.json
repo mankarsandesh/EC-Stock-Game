@@ -138,7 +138,8 @@
         "preview": "Preview",
         "date": "Date",
         "StockLiveData": "Stock Live Data",
-        "Currency": "Currency"
+        "Currency": "Currency",
+        "nodata": "SORRY, NO DATA TO DISPLAY"
 
     },
     "navlist": {

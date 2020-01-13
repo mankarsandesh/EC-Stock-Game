@@ -1,9 +1,9 @@
 <template>
 <v-app>
     <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
-    <div class="text-xs-center loading" >
-        <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
-    </div>
+        <div class="text-xs-center loading">
+            <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
+        </div>
     </div>
     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
         <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
@@ -55,8 +55,9 @@
   EC
     </v-float>-->
     <chatWindow />
-    </v-app>
+</v-app>
 </template>
+
 <script>
 import {
     mapGetters,
@@ -77,115 +78,121 @@ import chatWindow from "~/components/chatWindow";
 // import "vue-popperjs/dist/vue-popper.css";
 
 export default {
-  components: {
-    chatWindow,
-    countryFlag,
-    languageDialog,
-    winnerMarquee,
-    welcomeUser
-  },
-  data() {
-    return {
-      direction: "top",
-      fab: true,
-      fling: true,
-      hover: false,
-      tabs: true,
-      top: false,
-      right: true,
-      bottom: true,
-      left: false,
-      transition: "slide-y-reverse-transition",
+    components: {
+        chatWindow,
+        countryFlag,
+        languageDialog,
+        winnerMarquee,
+        welcomeUser
+    },
+    data() {
+        return {
+            direction: "top",
+            fab: true,
+            fling: true,
+            hover: false,
+            tabs: true,
+            top: false,
+            right: true,
+            bottom: true,
+            left: false,
+            transition: "slide-y-reverse-transition",
 
-      //winner mqrquee
-      winner:[],
-      pauseTime: 2000,
-      pauseOnHover: false,
-      scrollSpeed: 30,
-      showSpeed: 20,
+            //winner mqrquee
+            winner: [],
+            pauseTime: 2000,
+            pauseOnHover: false,
+            scrollSpeed: 30,
+            showSpeed: 20,
 
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      menu: menu,
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: "EC gaming",
-      isFullscreen: null,
-      timeout: 3000
-    };
-  },
+            clipped: false,
+            drawer: false,
+            fixed: false,
+            menu: menu,
+            miniVariant: false,
+            right: true,
+            rightDrawer: false,
+            title: "EC gaming",
+            isFullscreen: null,
+            timeout: 3000
+        };
+    },
 
-  created() {
-    // check is full screen or not
-    let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];
-    if (isFullscreen === "fullscreen") {
-      this.isFullscreen = true;
-    } else {
-      this.isFullscreen = false;
-    }
-     
-     console.log("crearted");
-  },
-  mounted() {
-    this.getwinuser();
-    lottie.loadAnimation({
-      container: this.$refs.svgContainer, // the dom element that will contain the animation
-      renderer: "svg",
-      loop: true,
-      autoplay: true,
-      path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
-    });
-    // setInterval(function() {
+    created() {
+        // check is full screen or not
+        let path = this.$nuxt.$route.name.split("-");
+        let isFullscreen = path[1];
+        if (isFullscreen === "fullscreen") {
+            this.isFullscreen = true;
+        } else {
+            this.isFullscreen = false;
+        }
 
-    // }, 1000);
+        console.log("crearted");
+    },
+    mounted() {
+        setInterval(() => {
+            this.getwinuser();
+        }, 10000);
+        this.getwinuser();
+        lottie.loadAnimation({
+            container: this.$refs.svgContainer, // the dom element that will contain the animation
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
+        });
+        // setInterval(function() {
 
-    // this.setIsLoadingStockGame(false);
-  },
-  created() {},
-  methods: {
-    
-     getwinuser() {
-       this.$axios.$get("api/fetchBet").then(response => {
-        //  console.log("response.....................")
-        // console.log(response.data)
-        //  console.log("response.......................")
-         let resultStatus  = null;
-          for (let i = 0; i < response.data.length - 1; i++) {
-            let betID = response.data[i].betId;
-            let result = response.data[i].result;
-            let name = response.data[i].name;
-            if(result == 0){ resultStatus = "Loss"; 
-            // console.log("LOSSSSS"); 
-            }else{ resultStatus = "Win";}
-            //  console.log(resultStatus);
-            let betAmount = response.data[i].betAmount;
-            let betTime = response.data[i].betTime;
-            let win = `<span class="text-slide text-white"><span class="text-warning">
+        // }, 1000);
+
+        // this.setIsLoadingStockGame(false);
+    },
+    created() {},
+    methods: {
+
+        getwinuser() {
+            this.$axios.$get("api/fetchBet").then(response => {
+                    //  console.log("response.....................")
+                    // console.log(response.data)
+                    //  console.log("response.......................")
+                    let resultStatus = null;
+                    for (let i = 0; i < response.data.length - 1; i++) {
+                        let betID = response.data[i].betId;
+                        let result = response.data[i].result;
+                        let name = response.data[i].name;
+                        if (result == "1") {
+                            resultStatus = "Win";
+
+                            //  console.log(resultStatus);
+                            let betAmount = response.data[i].betAmount;
+                            let betTime = response.data[i].betTime;
+                            let win = `
+          <span class="text-slide text-white"><span class="text-warning">
           <i class="fa fa-bell"></i>
           </span>Player ${betID}, <span class="text-warning">${resultStatus} $${betAmount},
           </span> ${name}  ${betTime}</span>`
-            this.winner.push(win);
-          }
-        })
-        .catch(error => {
-          alert(error)
-        })
+                            this.winner.push(win);
+                        }
+
+                    }
+                })
+                .catch(error => {
+                    alert(error)
+                })
+        }
+    },
+    computed: {
+        ...mapGetters([
+            "getBalance",
+            "getlocale",
+            "getIsLoadingStockGame",
+            "getStockCrawlerData"
+        ]),
+        countryflag() {
+            return this.getlocale;
+        }
     }
-  },
-  computed: {
-    ...mapGetters([    
-      "getBalance",
-      "getlocale",
-      "getIsLoadingStockGame",
-      "getStockCrawlerData"
-    ]),
-    countryflag() {
-      return this.getlocale;
-    }
-}
 };
 </script>
 
@@ -217,7 +224,7 @@ export default {
     height: 100%;
     background-color: black;
     opacity: 0.7;
-    
+
 }
 
 /* This is for documentation purposes and will not be needed in your application */

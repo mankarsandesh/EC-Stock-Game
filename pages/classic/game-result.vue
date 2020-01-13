@@ -41,7 +41,7 @@
                             </template>
                             <template v-slot:no-data>
                                 <v-alert :value="true" color="#384e63" icon="priority_high" outline>
-                                    Sorry, No Data to display :(
+                                    {{$t('msg.nodata')}} :(
                                 </v-alert>
                             </template>
                         </v-data-table>
