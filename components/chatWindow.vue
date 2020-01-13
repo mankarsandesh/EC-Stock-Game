@@ -30,9 +30,9 @@
 
           <div id="messageCHat">
             <input resize="none" v-model="message" placeholder="Say Somthing..." />
-            <v-btn v-on:click="sendMsg">         
+            <btn v-on:click="sendMsg" class="btn">         
               <i class="fa fa-paper-plane"></i>
-            </v-btn>
+            </btn>
           </div>
         </div>
 
@@ -48,9 +48,9 @@
 
           <div id="messageCHat">
             <input resize="none" v-model="messageGame" placeholder="Say Somthing..." />
-            <v-btn v-on:click="sendMsgGame">
+            <btn v-on:click="sendMsgGame" class="btn">
              <i class="fa fa-paper-plane"></i>
-             </v-btn>
+             </btn>
           </div>
         </div>
       </div>
@@ -327,7 +327,7 @@ export default {
 #messageCHat input:focus{
  outline: none;
 }
-#messageCHat btn {
+#messageCHat .btn {
   /* background-color: #003e70; */
   color: #333;
   width: 40px;
