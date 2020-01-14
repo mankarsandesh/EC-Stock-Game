@@ -8,6 +8,7 @@ const createStore = () => {
             isLoadingStockGame: false,
             auth_token: sessionStorage.apikey,
             isLoadingAnnoucement: [],
+            isLoadingTopPlayer : [],
             isLoadingMessage: [],
             isLoadingMessageGame: [],
             isLoadingHistory: [],
@@ -265,6 +266,9 @@ const createStore = () => {
             },
             setHistory(state, payload) {
                 state.isLoadingHistory = payload;
+            },
+            setTopPlayer(state,payload){
+                 state.isLoadingTopPlayer = payload;
             }
         },
         actions: {
@@ -477,6 +481,18 @@ const createStore = () => {
                     console.log(error);
                 }
             },
+             // to get User bet History
+             async asyTopPlayer(context) {
+                try {
+                    // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
+                    const res = await this.$axios.$get(
+                        `/fetchTopPlayersList?result=win&days=7`
+                    );
+                    context.commit("setTopPlayer", res.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            },
             async OnlineTime(context) {
                 try {
                     let res = await this.$axios.$get(`/api/me/online?method=profile&apikey=${context.getters.getAuth_token}`);
@@ -507,6 +523,9 @@ const createStore = () => {
             },
             getHistory(state) {
                 return state.isLoadingHistory;
+            },
+            getTopPlayer(state) {
+                return state.isLoadingTopPlayer;
             },
             getMessages(state) {
                 return state.isLoadingMessage;
