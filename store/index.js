@@ -486,7 +486,7 @@ const createStore = () => {
                 try {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
                     const res = await this.$axios.$get(
-                        `/fetchTopPlayersList?result=win&days=7`
+                        `/fetchTopPlayersList?result=win&days=7&apikey=${context.getters.getAuth_token}`
                     );
                     context.commit("setTopPlayer", res.data);
                     console.log(res.data);
@@ -986,13 +986,13 @@ const createStore = () => {
             },
             getStockCrawlerData: state => id => {
                 // console.log("getStockCrawlerData")
-                // console.log(id)
-                // let ids = id != "undefined" ? "btc1" : id;
+                let ids = id == undefined || id == "" ? "btc1" : id;
+
                 let result = [null];
-                if (state.stocks[id].crawlerData.length < 0) {
+                if (state.stocks[ids].crawlerData.length < 0) {
                     return result;
                 }
-                result = state.stocks[id].crawlerData;
+                result = state.stocks[ids].crawlerData;
                 return result;
             },
             // get stocks key like 'btc1','btc5','btc1',usindex
