@@ -7,54 +7,22 @@
           <tr>
             <th scope="col">Player Id</th>
             <th scope="col">Player Name</th>
-            <th scope="col">Win Ammount</th>
-            <th scope="col">Rank</th>  
-            <th scope="col">Date</th>            
+            <th scope="col">Total Bet</th>
+            <th scope="col">Win Rate</th>  
+            <th scope="col">Total ProfitEarned</th>            
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr v-for="(item,index) in getTopPlayer" :key="index">
             <th scope="col">#45646</th>
-            <th scope="col">Sandesh Mankar</th>
-            <th scope="col">$125555</th>
-            <th scope="col">1</th>    
-            <th scope="col">20 Nov 2019</th>        
+            <th scope="col">{{item.userId}}</th>
+            <th scope="col">{{item.totalBet}}</th>
+             <th scope="col">{{item.winRate}}</th>
+              <th scope="col">{{item.totalProfitEarned}}</th>
+                
           </tr>
-          <tr>
-            <th scope="col">#45646</th>
-            <th scope="col">Ritesh Naik</th>
-            <th scope="col">$$1000</th>
-            <th scope="col">2</th>    
-            <th scope="col">20 Nov 2019</th>        
-          </tr>
-          <tr>
-            <th scope="col">#45646</th>
-            <th scope="col">Tany Singh</th>
-            <th scope="col">$4522</th>
-            <th scope="col">3</th>    
-            <th scope="col">20 Nov 2019</th>        
-          </tr>
-          <tr>
-            <th scope="col">#45646</th>
-            <th scope="col">Sandesh Mankar</th>
-            <th scope="col">$45678</th>
-            <th scope="col">4</th>    
-            <th scope="col">20 Nov 2019</th>        
-          </tr>
-          <tr>
-            <th scope="col">#45646</th>
-            <th scope="col">Sandesh Mankar</th>
-            <th scope="col">$7854</th>
-            <th scope="col">5</th>    
-            <th scope="col">20 Nov 2019</th>        
-          </tr>
-          <tr>
-            <th scope="col">#45646</th>
-            <th scope="col">Sandesh Mankar</th>
-            <th scope="col">$4567</th>
-            <th scope="col">6</th>    
-            <th scope="col">20 Nov 2019</th>        
-          </tr>
+         
+
           
           
           
@@ -76,6 +44,7 @@ export default {
   },
   mounted() {
     this.asyTopPlayer();
+    
   },
   methods: {
     ...mapActions(["asyTopPlayer"])

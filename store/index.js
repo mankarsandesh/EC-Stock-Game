@@ -489,6 +489,8 @@ const createStore = () => {
                         `/fetchTopPlayersList?result=win&days=7`
                     );
                     context.commit("setTopPlayer", res.data);
+                    console.log(res.data);
+                    console.log("sandesh here");
                 } catch (error) {
                     console.log(error);
                 }
