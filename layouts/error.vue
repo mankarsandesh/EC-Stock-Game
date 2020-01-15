@@ -1,6 +1,6 @@
 <template>
 <v-app>
-    <div style="text-align: center;">
+    <div style="text-align: center; margin-top: 20%;">
         <h1 v-if="error.statusCode === 404">
             {{ pageNotFound }}
         </h1>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    layout: 'empty',
+    layout: 'nolayout',
     props: {
         error: {
             type: Object,

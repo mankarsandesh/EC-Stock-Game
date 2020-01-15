@@ -8,7 +8,7 @@ const createStore = () => {
             isLoadingStockGame: false,
             auth_token: sessionStorage.apikey,
             isLoadingAnnoucement: [],
-            isLoadingTopPlayer : [],
+            isLoadingTopPlayer: [],
             isLoadingMessage: [],
             isLoadingMessageGame: [],
             isLoadingHistory: [],
@@ -267,8 +267,8 @@ const createStore = () => {
             setHistory(state, payload) {
                 state.isLoadingHistory = payload;
             },
-            setTopPlayer(state,payload){
-                 state.isLoadingTopPlayer = payload;
+            setTopPlayer(state, payload) {
+                state.isLoadingTopPlayer = payload;
             }
         },
         actions: {
@@ -481,8 +481,8 @@ const createStore = () => {
                     console.log(error);
                 }
             },
-             // to get User bet History
-             async asyTopPlayer(context) {
+            // to get User bet History
+            async asyTopPlayer(context) {
                 try {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
                     const res = await this.$axios.$get(
@@ -984,12 +984,13 @@ const createStore = () => {
             },
             getStockCrawlerData: state => id => {
                 // console.log("getStockCrawlerData")
-                let ids = id != "undefined" ? "btc1" : id;
+                // console.log(id)
+                // let ids = id != "undefined" ? "btc1" : id;
                 let result = [null];
-                if (state.stocks[ids].crawlerData.length < 0) {
+                if (state.stocks[id].crawlerData.length < 0) {
                     return result;
                 }
-                result = state.stocks[ids].crawlerData;
+                result = state.stocks[id].crawlerData;
                 return result;
             },
             // get stocks key like 'btc1','btc5','btc1',usindex
