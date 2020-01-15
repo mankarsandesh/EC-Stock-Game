@@ -144,13 +144,13 @@ export default {
             };
             try {
                 const res = await this.$axios.$post(`/api/storebet?apikey=${this.getAuth_token}`,data);
-                console.log(res);
+                // console.log(res);
                 if (res.status) {
                     this.balance()
                     this.closePopper();
-                    console.warn(res.data[0]);
+                    // console.warn(res.data[0]);
                     this.pushDataOnGoingBet(res.data[0]);
-                    console.warn(this.getOnBetting);
+                    // console.warn(this.getOnBetting);
                     this.$swal({
                         type: "success",
                         title: "Confirm!",
@@ -178,10 +178,9 @@ export default {
                 gameRule: this.betId,
                 amount: this.betValue
             };
-            this.confirmDisabled = true;
-            console.log(data);            
+            this.confirmDisabled = true;     
             this.sendBetting(data);
-            console.warn(this.getOnBetting);
+            // console.warn(this.getOnBetting);
         },
         closePopper() {
             $(".closepopper").click();
