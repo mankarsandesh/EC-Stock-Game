@@ -486,7 +486,7 @@ const createStore = () => {
                 try {
                     // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
                     const res = await this.$axios.$get(
-                        `/fetchTopPlayersList?result=win&days=7&apikey=${context.getters.getAuth_token}`
+                        `api/fetchTopPlayersList?result=win&days=7&apikey=${context.getters.getAuth_token}`
                     );
                     context.commit("setTopPlayer", res.data);
                     console.log(res.data);
