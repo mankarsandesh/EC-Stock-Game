@@ -34,7 +34,9 @@
                     <!-- this component display the modal,the modal let users choose amount they want to bet -->
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="firstdigit-high" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('firstdigit-high')">{{$t('gamemsg.high')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('firstdigit-high')">{{$t('gamemsg.high')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'firstdigit-high'})"></showChipAmount>
+                </v-btn>
             </popper>
             <popper :disabled="checkFooterBet" trigger="click" :options="{
                       placement: 'bottom-end',
@@ -44,7 +46,9 @@
                     <!-- this component display the modal,the modal let users choose amount they want to bet -->
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="firstdigit-mid" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('firstdigit-mid')">{{$t('gamemsg.mid')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('firstdigit-mid')">{{$t('gamemsg.mid')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'firstdigit-mid'})"></showChipAmount>
+                </v-btn>
             </popper>
             <popper :disabled="checkFooterBet" trigger="click" :options="{
                       placement: 'bottom-end',
@@ -53,7 +57,9 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="firstdigit-low" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('firstdigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('firstdigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'firstdigit-low'})"></showChipAmount>
+                </v-btn>
             </popper>
         </div>
     </v-layout>
@@ -85,7 +91,10 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="lastdigit-high" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('lastdigit-high')">{{$t('gamemsg.high')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('lastdigit-high')">{{$t('gamemsg.high')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'lastdigit-high'})"></showChipAmount>
+
+                </v-btn>
             </popper>
             <popper :disabled="checkFooterBet" trigger="click" :options="{
                       placement: 'bottom-end',
@@ -94,7 +103,10 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="lastdigit-mid" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('lastdigit-mid')">{{$t('gamemsg.mid')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('lastdigit-mid')">{{$t('gamemsg.mid')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'lastdigit-mid'})"></showChipAmount>
+
+                </v-btn>
             </popper>
             <popper :disabled="checkFooterBet" trigger="click" :options="{
                       placement: 'bottom-end',
@@ -103,7 +115,10 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="lastdigit-low" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('lastdigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('lastdigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'lastdigit-low'})"></showChipAmount>
+
+                </v-btn>
             </popper>
         </div>
     </v-layout>
@@ -135,7 +150,10 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="bothdigit-high" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('bothdigit-high')">{{$t('gamemsg.high')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('bothdigit-high')">{{$t('gamemsg.high')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'bothdigit-high'})"></showChipAmount>
+
+                </v-btn>
             </popper>
             <popper :disabled="checkFooterBet" trigger="click" :options="{
                       placement: 'bottom-end',
@@ -144,7 +162,10 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="bothdigit-mid" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('bothdigit-mid')">{{$t('gamemsg.mid')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('bothdigit-mid')">{{$t('gamemsg.mid')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'bothdigit-mid'})"></showChipAmount>
+
+                </v-btn>
             </popper>
             <popper :disabled="checkFooterBet" trigger="click" :options="{
                       placement: 'bottom-end',
@@ -153,7 +174,10 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="bothdigit-low" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('bothdigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('bothdigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'bothdigit-low'})"></showChipAmount>
+
+                </v-btn>
             </popper>
         </div>
     </v-layout>
@@ -184,7 +208,9 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="twodigit-high" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('twodigit-high')">{{$t('gamemsg.high')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('twodigit-high')">{{$t('gamemsg.high')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'twodigit-high'})"></showChipAmount>
+                </v-btn>
             </popper>
             <popper :disabled="checkFooterBet" trigger="click" :options="{
                       placement: 'bottom-end',
@@ -193,7 +219,9 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="twodigit-mid" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('twodigit-mid')">{{$t('gamemsg.mid')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('twodigit-mid')">{{$t('gamemsg.mid')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'twodigit-mid'})"></showChipAmount>
+                </v-btn>
             </popper>
             <popper :disabled="checkFooterBet" trigger="click" :options="{
                       placement: 'bottom-end',
@@ -202,7 +230,9 @@
                 <div class="popper">
                     <betModal :stockName="stockName" :loop="getLoop($route.params.id)" betId="twodigit-low" :payout="payout_high_mid_low"></betModal>
                 </div>
-                <v-btn class="betting-small" slot="reference" @click="betButtonClick('twodigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}</v-btn>
+                <v-btn class="betting-small" slot="reference" @click="betButtonClick('twodigit-low')">{{$t('gamemsg.low')}} {{ isFullscreen?`(${payout_high_mid_low})`:''}}
+                    <showChipAmount text-center size="30px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'twodigit-low'})"></showChipAmount>
+                </v-btn>
             </popper>
         </div>
     </v-layout>

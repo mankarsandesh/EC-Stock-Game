@@ -139,7 +139,8 @@
         "date": "日期",
         "StockLiveData": "库存实时数据",
         "Currency": "貨幣",
-        "nodata": "對不起，沒有數據可顯示"
+        "nodata": "對不起，沒有數據可顯示",
+        "sending": "發送..."
 
     },
     "navlist": {

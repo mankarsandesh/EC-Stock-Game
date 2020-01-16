@@ -22,8 +22,8 @@
                                 <chartApp :data="data.stockPrice" :time="getStockById(data.id).stockTime" :key="getStockById(data.id).stockPrice[0]" :stockid="data.id"></chartApp>
                             </v-card-text>
                         </v-card>
-                        <div class="text-primary pt-2">
-                            <h3 class="text-uppercase">{{ data.stockname }}</h3>
+                        <div class=" pt-2" style="color: white;">
+                            <h3 class="text-uppercase">{{ $t('stockname.'+data.stockname) }}</h3>
                             <h4 style="line-height: 1">
                                 <em>{{ data.loop }} minute game</em>
                             </h4>
@@ -125,8 +125,8 @@
                 </div>
                 <div class="setborder">
                     <span class="seticon"> <i class="fa fa-user fa-2x iconcolor" /> {{dataliveBetAll.totalUsers}}</span>
-                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" />  {{dataliveBetAll.totalBets}}</span>
-                    <span class="seticons"> <i class="fa fa-money fa-2x iconcolor" />  {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
+                    <span class="seticon"> <i class="fa fa-gamepad fa-2x iconcolor" /> {{dataliveBetAll.totalBets}}</span>
+                    <span class="seticons"> <i class="fa fa-money fa-2x iconcolor" /> {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
                 </div>
             </v-flex>
             <!-- live Chart -->
@@ -239,31 +239,36 @@ export default {
     },
     methods: {
 
-    getwinuser() {
-       this.$axios.$get("api/fetchBet").then(response => {
-         console.log("response.....................")
-        console.log(response.data)
-         console.log("response.......................")
-         let resultStatus  = null;
-          for (let i = 0; i < response.data.length - 1; i++) {
-            let betID = response.data[i].betId;
-            let result = response.data[i].result;
-            let name = response.data[i].name;
-            if(result == 0){ resultStatus = "Loss"; console.log("LOSSSSS"); }else{ resultStatus = "Win";}
-             console.log(resultStatus);
-            let betAmount = response.data[i].betAmount;
-            let betTime = response.data[i].betTime;
-            let win = `<span class="text-slide text-white"><span class="text-warning">
+        getwinuser() {
+            this.$axios.$get("api/fetchBet").then(response => {
+                    console.log("response.....................")
+                    console.log(response.data)
+                    console.log("response.......................")
+                    let resultStatus = null;
+                    for (let i = 0; i < response.data.length - 1; i++) {
+                        let betID = response.data[i].betId;
+                        let result = response.data[i].result;
+                        let name = response.data[i].name;
+                        if (result == 0) {
+                            resultStatus = "Loss";
+                            console.log("LOSSSSS");
+                        } else {
+                            resultStatus = "Win";
+                        }
+                        console.log(resultStatus);
+                        let betAmount = response.data[i].betAmount;
+                        let betTime = response.data[i].betTime;
+                        let win = `<span class="text-slide text-white"><span class="text-warning">
           <i class="fa fa-bell"></i>
-          </span>Player ${betID}, <span class="text-warning">${resultStatus} $${betAmount},
+          </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
           </span> ${name}  ${betTime}</span>`
-            this.winner.push(win);
-          }
-        })
-        .catch(error => {
-          alert(error)
-        })
-       },
+                        this.winner.push(win);
+                    }
+                })
+                .catch(error => {
+                    alert(error)
+                })
+        },
 
         test() {
             console.warn(this.$router.history);
@@ -313,7 +318,7 @@ export default {
                     // this.msg = this.$root.$t('msg.nobetting');
                     // this.chartData = []
 
-                    if (this.chartData.length != 4 ||this.chartData.length == null) {
+                    if (this.chartData.length != 4 || this.chartData.length == null) {
                         this.isShow = false
                     } else {
                         this.isShow = true
@@ -363,13 +368,15 @@ export default {
 </script>
 
 <style scoped>
-.lastDraw{
-    font-size: 14px;    
+.lastDraw {
+    font-size: 14px;
 }
-.setborder span{
+
+.setborder span {
     font-size: 14px;
     line-height: 10px;
 }
+
 .setborder {
     border: 1px solid;
     border-radius: 10px;
@@ -385,6 +392,7 @@ export default {
     margin-left: 6px;
     font-family: fantasy;
 }
+
 .seticons {
     position: relative;
     margin-left: 6px;

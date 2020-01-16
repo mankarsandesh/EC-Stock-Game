@@ -3,7 +3,7 @@
     <v-layout row wrap>
      
       <v-flex xs12 md12 style="margin-top:100px;">
-        <v-window v-model="window"  vertical>
+        <v-window  vertical>
           <v-window-item>
                   <leaderBoard/>        
           </v-window-item>
@@ -22,7 +22,6 @@ export default {
   },
   data() {
       return {
-      window: 0,
       tabs: ["history", "current bet"],
       active: null
     };

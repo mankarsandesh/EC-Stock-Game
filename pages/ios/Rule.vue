@@ -60,6 +60,9 @@ export default {
             rules: rules,
             dialog: false,
         }
+    },
+    mounted(){
+        localStorage.lang = "us"
     }
 }
 </script>

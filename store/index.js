@@ -655,7 +655,7 @@ const createStore = () => {
                     .map(x => x.betAmount)
                     .reduce((a, b) => a + b, 0);
                 let amount2 = state.multiGameBet
-                    .map(x => x.betAmount)
+                    .map(x => x.amount)
                     .reduce((a, b) => a + b, 0);
                 return amount1 + amount2;
             },
