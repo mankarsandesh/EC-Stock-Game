@@ -88,8 +88,8 @@
             }
         ]
     },
-    {        
-        "name": "twodigit",
+    {
+        "name": "bothdigit",
         "type": "(????. ??)",
         "values": [{
                 "name": "small",
@@ -138,7 +138,7 @@
         ]
     },
     {
-        "name": "bothdigit",
+        "name": "twodigit",
         "type": "(????.? ?+?=?)",
         "values": [{
                 "name": "small",
