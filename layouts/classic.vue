@@ -95,7 +95,7 @@
         <v-toolbar align-center justify-center class="nav-tab" v-show="ischangechartview && $vuetify.breakpoint.smAndDown">
             <v-container mx-auto py-0 px-0>
                 <v-layout>
-                    <v-tabs v-model="tab" color="#384e63" grow>
+                    <v-tabs v-model="tab" color="#0e4470" grow>
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab v-for="(items1,idx1) in navList" :key="idx1">
                             <v-menu open-on-hover offset-y transition="slide-y-transition">
@@ -238,7 +238,7 @@
             </v-container>
 
             <v-container pa-0 pb-2>
-                <v-footer color="#384e63" height="80">
+                <v-footer color="#0e4470" height="80">
                     <v-flex text-xs-center xs12 white--text>
                         &copy; Copyright {{ new Date().getFullYear() }} TNK - All Rights Reserved
                     </v-flex>
@@ -248,7 +248,7 @@
         </v-content>
     </v-app>
 
-    <v-btn v-scroll="onScroll" :class="$vuetify.breakpoint.smAndDown ? 'scrolltop z-index':'z-index'" v-show="fab" small fab dark fixed bottom right color="#384e63" @click="toTop">
+    <v-btn v-scroll="onScroll" :class="$vuetify.breakpoint.smAndDown ? 'scrolltop z-index':'z-index'" v-show="fab" small fab dark fixed bottom right color="#0e4470" @click="toTop">
         <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>
 
@@ -568,7 +568,7 @@ export default {
     top: 4%;
     z-index: 1;
     background: #ec008c;
-    background: linear-gradient(to right, #384e63, #5b80a4);
+    background: linear-gradient(to right, #0e4470, #5b80a4);
     color: #fff;
     border-radius: 10px;
     border: none;
@@ -601,7 +601,7 @@ export default {
     padding: 4px 10px;
     border-radius: 10px;
     cursor: pointer;
-    background-color: #384e63;
+    background-color: #0e4470;
     color: #fff;
 }
 
@@ -664,7 +664,7 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    background: #384e63;
+    background: #0e4470;
 }
 
 ul li {
@@ -672,7 +672,7 @@ ul li {
     width: 100%;
     position: relative;
     float: left;
-    background: #384e63;
+    background: #0e4470;
 }
 
 li ul {
@@ -690,7 +690,7 @@ ul li a {
 }
 
 ul li a:hover {
-    background: #384e63;
+    background: #0e4470;
 }
 
 li:hover>ul {
@@ -703,11 +703,12 @@ li:hover li {
 }
 
 li:hover a {
-    background: #384e63;
+    background: #0e4470;
 }
 
 li:hover li a:hover {
-    background: #1b405f;
+    background: rgb(243, 240, 240);
+    color: #000;
 }
 
 .main-navigation {

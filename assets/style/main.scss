@@ -594,7 +594,7 @@ nav {
         .v-expansion-panel {
             .v-expansion-panel__container {
                 .v-expansion-panel__header {
-                    background-color: #384e63;
+                    background-color: #0e4470;
                     color: #ffffff;
                     text-transform: capitalize;
                     .v-expansion-panel__header__icon {
@@ -627,6 +627,34 @@ nav {
                 .v-card {
                     .layout.row {
                         display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.v-content__wrap {
+    .container {
+        .layout {
+            .flex {
+                .v-input {
+                    @media (max-width: 812px) {
+                        .v-input__control .v-input__slot .v-text-field__slot {
+                            border: 1px solid #003e70;
+                            border-radius: 5px;
+                        }
+                        .v-input__control .v-select__selections {
+                            border: 1px solid #003e70;
+                            border-radius: 5px;
+                        }
+                    }
+                }
+                .selectHistory {
+                    @media (min-width: 1280px) {
+                        .v-input__control .v-input__slot .v-select__slot .v-select__selections {
+                            color: rgba(242, 242, 242, 0.87);
+                        }
                     }
                 }
             }

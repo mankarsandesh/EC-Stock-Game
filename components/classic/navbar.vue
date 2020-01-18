@@ -95,7 +95,7 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    background: #384e63;
+    background: #0e4470;
 }
 
 ul li {
@@ -103,7 +103,7 @@ ul li {
     width: 100%;
     position: relative;
     float: left;
-    background: #384e63;
+    background: #0e4470;
 }
 
 li ul {
@@ -121,7 +121,7 @@ ul li a {
 }
 
 ul li a:hover {
-    background: #384e63;
+    background: #0e4470;
 }
 
 li:hover>ul {
@@ -134,11 +134,12 @@ li:hover li {
 }
 
 li:hover a {
-    background: #384e63;
+    background: #0e4470;
 }
 
 li:hover li a:hover {
-    background: #1b405f;
+    background: #e9e8e8;
+    color: #000000;
 }
 
 .main-navigation {

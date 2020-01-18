@@ -1071,14 +1071,14 @@ export default {
 }
 
 ul li.bg-color .v-expansion-panel__header {
-    background-color: #384e63 !important;
+    background-color: #003e70 !important;
     color: rgba(255, 255, 255, 0.87);
     text-align: center;
     font-weight: bold;
 }
 
 .bg-colors .v-tabs__container--fixed-tabs {
-    background-color: #384e63 !important;
+    background-color: #0e4470 !important;
     padding: 0px 0px 4px 0px;
 }
 
