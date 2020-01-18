@@ -1144,7 +1144,8 @@ tr:nth-child(even) {
 
 .header {
     color: white;
-    background-color: #2d3945;
+    background-color: #0e4470;
+    height: 40px;
 }
 
 .v-tabs__wrapper .v-tabs__container .text-whites a {
