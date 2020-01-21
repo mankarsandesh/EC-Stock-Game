@@ -190,49 +190,35 @@ export default {
                     this.sumTotalrollingAmount = 0
                     if (history.data[i].betTime.split(" ")[0] == val.start || history.data[i].betTime.split(" ")[0] == val.end) {
                         setTimeout(() => {
-                            this.history.push({
-                                page: 1,
-                                betId: history.data[i].betId,
-                                gameId: history.data[i].gameId,
-                                rule: history.data[i].rule,
-                                payoutAmount: history.data[i].payoutAmount,
-                                stock: history.data[i].stock,
-                                loops: history.data[i].loops,
-                                betTime: history.data[i].betTime,
-                                betAmount: history.data[i].betAmount,
-                                payoutAmount: history.data[i].payoutAmount,
-                                betStatus: history.data[i].betStatus
-                            });
-
-                            this.sumTotalbetAmount += history.data[i].betAmount
-                            this.sumTotalrollingAmount += history.data[i].rollingAmount
-                            this.colspan = history.data.length;
+                            this.getLender(history, i)
                         }, 100)
 
                     } else if (history.data[i].betTime.split(" ")[0] !== val.start && history.data[i].betTime.split(" ")[0] !== val.end) {
                         this.history = []
                     }
                 } else {
-                    this.history.push({
-                        page: 1,
-                        betId: history.data[i].betId,
-                        gameId: history.data[i].gameId,
-                        rule: history.data[i].rule,
-                        payoutAmount: history.data[i].payoutAmount,
-                        stock: history.data[i].stock,
-                        loops: history.data[i].loops,
-                        betTime: history.data[i].betTime,
-                        betAmount: history.data[i].betAmount,
-                        payoutAmount: history.data[i].payoutAmount,
-                        betStatus: history.data[i].betStatus
-                    });
-
-                    this.sumTotalbetAmount += history.data[i].betAmount
-                    this.sumTotalrollingAmount += history.data[i].rollingAmount
-                    this.colspan = history.data.length;
+                    this.getLender(history, i)
                 }
             }
+        },
+        getLender(history, i) {
+            this.history.push({
+                page: 1,
+                betId: history.data[i].betId,
+                gameId: history.data[i].gameId,
+                rule: history.data[i].rule,
+                payoutAmount: history.data[i].payoutAmount,
+                stock: history.data[i].stock,
+                loops: history.data[i].loops,
+                betTime: history.data[i].betTime,
+                betAmount: history.data[i].betAmount,
+                payoutAmount: history.data[i].payoutAmount,
+                betStatus: history.data[i].betStatus
+            });
 
+            this.sumTotalbetAmount += history.data[i].betAmount
+            this.sumTotalrollingAmount += history.data[i].rollingAmount
+            this.colspan = history.data.length;
         },
         formatToPrice(value) {
             return `$ ${Number(value)

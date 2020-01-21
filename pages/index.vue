@@ -12,13 +12,13 @@
               </v-container>
         <v-container fluid fill-height>
             <v-layout row justify-center align-center>
-                <v-flex xs2 px-2 class="card-mode classic">
+                <v-flex xs6 sm2 px-2 class="card-mode classic">
                     <nuxt-link to="/classic/l-btc1-live">
                         <img src="/bg/classic.png" alt="mode classic">
                         <span class="font-size">Mode Classic</span>
                     </nuxt-link>
                 </v-flex>
-                <v-flex xs2 px-2 class="card-mode modern">
+                <v-flex xs6 sm2 px-2 class="card-mode modern">
                     <nuxt-link :to="linkto">
                         <img src="/bg/modern.png" alt="mode modern">
                         <span class="font-size">Mode Modern</span>

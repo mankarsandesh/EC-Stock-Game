@@ -8,7 +8,7 @@
         <v-tooltip right>
             <template #activator="{ on: tooltip }">
                 <v-avatar size="150" @click="dialog = !dialog">
-                    <img v-on="{ ...tooltip }" :src="profile.avatar ? profile.avatar : imageUrl ? imageUrl : '/user.png'" alt />
+                    <img v-on="{ ...tooltip }" :src="profile.avatar ? profile.avatar : '/user.png'" alt />
                 </v-avatar>
             </template>
             <span>Edit Profile Picture</span>
@@ -19,19 +19,12 @@
         <v-card>
             <v-card-title class="headline">Update Image Profile</v-card-title>
             <v-card-text style="text-align: center;">
-                <v-avatar size="200" v-if="imageUrl">
-                    <img :src="imageUrl" />
-                </v-avatar>
-                <br>
-                <br>
-                <br>
-                <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
-                <input type="file" id="fileInput" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
+                <uploadprofile />
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" flat="flat" @click.native="dialog = false,UpLoadupdateimage()">UpLoad</v-btn>
-                <v-btn color="green darken-1" flat="flat" @click.native="dialog = false, Closeupdate()">Close</v-btn>
+                <v-btn color="green darken-1" flat="flat" @click.native="dialog = false,UpLoadimage('upload')">UpLoad</v-btn>
+                <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -154,9 +147,11 @@ import {
 import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
+import uploadprofile from "./UploadFile"
 export default {
     components: {
-        popper
+        popper,
+        uploadprofile
     },
     data() {
         return {
@@ -201,9 +196,6 @@ export default {
             time: "",
             dialog: false,
             colors: "",
-            imageName: '',
-            imageUrl: '',
-            imageFile: '',
             isShow: false
         };
     },
@@ -274,52 +266,10 @@ export default {
                 );
             }
         },
-
-        pickFile() {
-            this.$refs.image.click()
+        UpLoadimage(val) {
+            $("#Submit").click()[0]
         },
 
-        onFilePicked(e) {
-            const files = e.target.files
-            this.imageNames = e.target.files[0]
-            if (files[0] !== undefined) {
-                this.imageName = files[0].name
-                if (this.imageName.lastIndexOf('.') <= 0) {
-                    return
-                }
-                const fr = new FileReader()
-                fr.readAsDataURL(files[0])
-                fr.addEventListener('load', () => {
-                    this.imageUrl = fr.result
-                    this.imageFile = files[0] // this is an image file that can be sent to server...
-                })
-            } else {
-                this.imageName = ''
-                this.imageFile = ''
-                this.imageUrl = ''
-            }
-        },
-        Closeupdate() {
-            this.imageName = '';
-            this.imageFile = '';
-            this.imageUrl = '';
-            $("input[type=file]").val("");
-        },
-        async UpLoadupdateimage() {
-            console.log(this.imageName)
-            console.log(this.imageFile)
-            console.log(this.imageUrl)
-
-            if (this.imageUrl == '' || this.imageUrl == null) {
-                alert("No Iamge Update")
-                return;
-            }
-            // let res = await this.$axios.$post("/api/me/uploadImage?apikey=" + this.$store.state.auth_token, {
-            //     userId: this.getUserName.userId,
-            //     image: this.imageUrl
-            // });
-            // console.log(res)
-        }
     }
 };
 </script>

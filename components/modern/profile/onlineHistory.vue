@@ -180,13 +180,13 @@ export default {
                     if (this.getDateArray(new Date(val.start), new Date(val.end)).length > 0) {
                         let getDate = this.getDateArray(new Date(val.start), new Date(val.end))
                         for (let n = 0; n < getDate.length; n++) {
-                            if (onlinehistory.data[i].da_te.split(" ")[0] == getDate[n]) {
+                            if (onlinehistory.data[i].date.split(" ")[0] == getDate[n]) {
                                 this.getsenddata(onlinehistory, i)
                             }
                         }
-                    } else if (this.getWeekNumber(new Date(onlinehistory.data[i].da_te)) == val.week ||
-                        new Date(onlinehistory.data[i].da_te).getMonth() + 1 == val.month ||
-                        new Date(onlinehistory.data[i].da_te).getFullYear() == val.year) {
+                    } else if (this.getWeekNumber(new Date(onlinehistory.data[i].date)) == val.week ||
+                        new Date(onlinehistory.data[i].date).getMonth() + 1 == val.month ||
+                        new Date(onlinehistory.data[i].date).getFullYear() == val.year) {
                         this.getsenddata(onlinehistory, i)
                     }
 
@@ -202,7 +202,7 @@ export default {
             setTimeout(() => {
                 this.isShow = true
             }, 500)
-            this.stockname.push(onlinehistory.data[i].da_te);
+            this.stockname.push(onlinehistory.data[i].date);
             let totalSeconds = parseInt(onlinehistory.data[i].timeOnline);
 
             let hours = Math.floor(totalSeconds / 3600);
