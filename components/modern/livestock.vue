@@ -22,7 +22,7 @@ export default {
     },
     mounted() {
         this.dataGet.forEach(element => {
-            this.stockname.push(element.rule.split("-")[1] >= 0 ? this.$root.$t('gamemsg.' + element.rule.split("-")[0]) + ' - ' + element.rule.split("-")[1] : this.$root.$t('gamemsg.' + element.rule.split("-")[0]) + ' - ' + this.$root.$t('gamemsg.' + element.rule.split("-")[1]));
+            this.stockname.push(element.rule.split("-")[1] >= 0 ? this.$root.$t('gamemsg.' + element.rule.split("-")[0]) + '-' + element.rule.split("-")[1] : this.$root.$t('gamemsg.' + element.rule.split("-")[0]) + '-' + this.$root.$t('gamemsg.' + element.rule.split("-")[1]));
             this.betwon.push(element.totalAmount);
         });
         this.gradient = this.$refs.planetchart.getContext("2d").createLinearGradient(255, 0, 0, 0);

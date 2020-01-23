@@ -35,6 +35,7 @@
             <v-select single-line hide-details :items="items" label="Sort By :" v-model="itemss" class="selectHistory"></v-select>
         </v-flex>
     </v-layout>
+    <br>
 
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
     <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">

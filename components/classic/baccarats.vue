@@ -15,7 +15,7 @@
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebsFirst">
                         <tr v-for="tr in rowTable" :key="tr">
-                            <td v-for="td in 500" :key="td" style="border:1px solid #000000;"></td>
+                            <td v-for="td in 400" :key="td" style="border:1px solid #000000;"></td>
                         </tr>
                     </table>
                 </div>
@@ -34,7 +34,7 @@
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableOEFirst">
                         <tr v-for="tr in rowTable" :key="tr">
-                            <td v-for="td in 300" :key="td" style="border:1px solid #000000;"></td>
+                            <td v-for="td in 400" :key="td" style="border:1px solid #000000;"></td>
                         </tr>
                     </table>
                 </div>
@@ -55,7 +55,7 @@
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tablebUMLFirst">
                         <tr v-for="tr in rowTable" :key="tr">
-                            <td v-for="td in 900" :key="td" style="border:1px solid #000000;"></td>
+                            <td v-for="td in 400" :key="td" style="border:1px solid #000000;"></td>
                         </tr>
                     </table>
                 </div>
@@ -74,7 +74,7 @@
                 <div class="my-coltabledivlast">
                     <table class="table-responsive" ref="tableNumberFirst">
                         <tr v-for="tr in rowTable" :key="tr">
-                            <td v-for="td in 100" :key="td" style="border:1px solid #000000;"></td>
+                            <td v-for="td in 150" :key="td" style="border:1px solid #000000;"></td>
                         </tr>
                     </table>
                 </div>
@@ -166,28 +166,28 @@ export default {
 
             //bs
             for (let i = 0; i < this.rowTable; i++) {
-                for (let j = 0; j < 500; j++) {
+                for (let j = 0; j < 400; j++) {
                     this.$refs.tablebsFirst.children[i].children[j].textContent = "";
                     this.$refs.tablebsFirst.children[i].children[j].className = "";
                 }
             }
             //oe
             for (let i = 0; i < this.rowTable; i++) {
-                for (let j = 0; j < 300; j++) {
+                for (let j = 0; j < 400; j++) {
                     this.$refs.tableOEFirst.children[i].children[j].textContent = "";
                     this.$refs.tableOEFirst.children[i].children[j].className = "";
                 }
             }
             //uml
             for (let i = 0; i < this.rowTable; i++) {
-                for (let j = 0; j < 900; j++) {
+                for (let j = 0; j < 400; j++) {
                     this.$refs.tablebUMLFirst.children[i].children[j].textContent = "";
                     this.$refs.tablebUMLFirst.children[i].children[j].className = "";
                 }
             }
             //number
             for (let i = 0; i < this.rowTable; i++) {
-                for (let j = 0; j < 100; j++) {
+                for (let j = 0; j < 150; j++) {
                     this.$refs.tableNumberFirst.children[i].children[j].textContent = "";
                     this.$refs.tableNumberFirst.children[i].children[j].className = "";
                 }
@@ -386,7 +386,7 @@ export default {
                         for (let i = 0; i < this.rowTable; i++) {
                             // tablebsFirst.children[i].children[""0""]
                             //console.log(this.$refs.tablebsFirst.children[i]);
-                            for (let j = 0; j < 300; j++) {
+                            for (let j = 0; j < 400; j++) {
                                 if (
                                     this.$refs.tablebsFirst.children[i].children[j]
                                     .textContent === "1"
@@ -744,7 +744,7 @@ export default {
                     // if loop all s it will render B&S and exit all loop
                     if (s == this.trentUMLFirst.length) {
                         for (let i = 0; i < this.rowTable; i++) {
-                            for (let j = 0; j < 900; j++) {
+                            for (let j = 0; j < 400; j++) {
                                 if (
                                     this.$refs.tablebUMLFirst.children[i].children[j]
                                     .textContent === "2"
@@ -914,7 +914,7 @@ export default {
         tablechartnumberFirst() {
             // console.log("let go");
             let s = -1;
-            for (let j = 0; j < 100; j++) {
+            for (let j = 0; j < 150; j++) {
                 for (let k = 0; k < this.rowTable; k++) {
                     s++;
                     if (s == this.trentNumberFirst.length) {
@@ -1047,7 +1047,7 @@ tr,
 td,
 p {
     color: #003e70;
-    /* font-weight: 500; */
+    /* font-weight: 400; */
 }
 
 .red {

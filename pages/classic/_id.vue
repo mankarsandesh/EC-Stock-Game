@@ -1,23 +1,11 @@
 <template>
 <div>
-    <div v-if="$route.params.id.split('-')[3] == 'currentbet'">
-        <currentbet />
-    </div>
-    <div v-else-if="$route.params.id.split('-')[3] == 'history'">
-        <history />
-    </div>
-    <div v-else-if="$route.params.id.split('-')[3] == 'gameresult'">
-        <gameresult />
-    </div>
-    <div v-else-if="$route.params.id.split('-')[3] == 'announcement'">
-        <announcement />
-    </div>
-    <div v-else-if="$route.params.id.split('-')[3] == 'rule'">
-        <rule />
-    </div>
-    <div v-else-if="$route.params.id.split('-')[3] == 'setting'">
-        <setting />
-    </div>
+    <currentbet v-if="$route.params.id.split('-')[3] == 'currentbet'" />
+    <history v-else-if="$route.params.id.split('-')[3] == 'history'" />
+    <gameresult v-else-if="$route.params.id.split('-')[3] == 'gameresult'" />
+    <announcement v-else-if="$route.params.id.split('-')[3] == 'announcement'" />
+    <rule v-else-if="$route.params.id.split('-')[3] == 'rule'" />
+    <setting v-else-if="$route.params.id.split('-')[3] == 'setting'" />
 
     <div v-else>
         <!-- {{$store.state.payout}} -->

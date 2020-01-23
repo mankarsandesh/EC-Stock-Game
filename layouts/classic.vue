@@ -157,26 +157,13 @@
                         </v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
-                <v-list v-if="switch1.split('-')[3] == 'currentbet'">
-                    <currentbet />
-                </v-list>
-                <v-list v-else-if="switch1.split('-')[3] == 'history'">
-                    <history />
-                </v-list>
-                <v-list v-else-if="switch1.split('-')[3] == 'gameresult'">
-                    <gameresult />
-                </v-list>
-                <v-list v-else-if="switch1.split('-')[3] == 'announcement'">
-                    <announcement />
-                </v-list>
-                <v-list v-else-if="switch1.split('-')[3] == 'rule'">
-                    <rule />
-                </v-list>
-                <v-list v-else-if="switch1.split('-')[3] == 'setting'">
-                    <setting />
-                </v-list>
-                <v-list v-else>
-
+                <v-list>
+                    <currentbet v-if="switch1.split('-')[3] == 'currentbet'" />
+                    <history v-else-if="switch1.split('-')[3] == 'history'" />
+                    <gameresult v-else-if="switch1.split('-')[3] == 'gameresult'" />
+                    <announcement v-else-if="switch1.split('-')[3] == 'announcement'" />
+                    <rule v-else-if="switch1.split('-')[3] == 'rule'" />
+                    <setting v-else-if="switch1.split('-')[3] == 'setting'" />
                 </v-list>
             </v-card>
         </v-dialog>

@@ -217,8 +217,8 @@ const createStore = () => {
             clearDataMultiGameBet(state) {
                 state.multiGameBet = [];
                 state.footerBetAmount = 0;
-                state.onGoingBet = []
-                    // console.warn(state.multiGameBet);
+                // state.onGoingBet = []
+                console.warn(state.multiGameBet);
             },
             removeAllFooterBet(state) {
                 state.multiGameBet = [];
@@ -362,7 +362,7 @@ const createStore = () => {
                     console.log("res...........");
                     if (res.status) {
                         context.commit("setIsSendBetting", false);
-                        // context.commit("clearDataMultiGameBet");
+                        context.commit("clearDataMultiGameBet");
                         this._vm.$swal({
                             type: "success",
                             title: "Confirm!",
