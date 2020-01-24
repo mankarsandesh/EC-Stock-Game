@@ -61,6 +61,9 @@ export default {
             dialog: false,
         }
     },
+    created(){
+        localStorage.lang = "us"
+    },
     mounted(){
         localStorage.lang = "us"
     }

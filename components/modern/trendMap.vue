@@ -172,29 +172,29 @@ export default {
             //bs
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < this.BSLength; j++) {
-                    this.$refs.tablebsTwo.children[i].children[j].textContent = "";
-                    this.$refs.tablebsTwo.children[i].children[j].className = "";
+                    this.$refs.tablebsTwo.children[i].children[j].textContent = null
+                    this.$refs.tablebsTwo.children[i].children[j].className = null
                 }
             }
             //oe
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < this.OELength; j++) {
-                    this.$refs.tableOETwo.children[i].children[j].textContent = "";
-                    this.$refs.tableOETwo.children[i].children[j].className = "";
+                    this.$refs.tableOETwo.children[i].children[j].textContent = null
+                    this.$refs.tableOETwo.children[i].children[j].className = null
                 }
             }
             //uml
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < this.HMLLength; j++) {
-                    this.$refs.tablebUMLTwo.children[i].children[j].textContent = "";
-                    this.$refs.tablebUMLTwo.children[i].children[j].className = "";
+                    this.$refs.tablebUMLTwo.children[i].children[j].textContent = null
+                    this.$refs.tablebUMLTwo.children[i].children[j].className = null
                 }
             }
             //number
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < this.Numlength; j++) {
-                    this.$refs.tableNumberTwo.children[i].children[j].textContent = "";
-                    this.$refs.tableNumberTwo.children[i].children[j].className = "";
+                    this.$refs.tableNumberTwo.children[i].children[j].textContent = null
+                    this.$refs.tableNumberTwo.children[i].children[j].className = null
                 }
             }
         },

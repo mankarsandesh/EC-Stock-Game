@@ -465,6 +465,9 @@ export default {
         this.settabs()
         this.getSotckId()
         this.getMbFooter()
+        setTimeout(() => {
+            this.getMbFooter()
+        }, 3000);
     },
     computed: {
         ...mapGetters(["getStockName", "getStockNewData", "getBalance"]),
@@ -522,11 +525,11 @@ export default {
             if (this.sumTotalAll > this.getBalance || this.sumTotalAll == '') {
                 this.getalertstartstop('error')
             } else {
-                console.log("data..........");
-                console.log(this.formData);
+                // console.log("data..........");
+                // console.log(this.formData);
                 console.log("send to api server");
                 const res = await this.$axios.post("/api/storebet?apikey=" + this.$store.state.auth_token, this.formData)
-                console.log(res)
+                // console.log(res)
 
                 setTimeout(() => {
                     this.isfooter = true;
@@ -793,7 +796,6 @@ export default {
         },
 
         getalertstartstop(val) {
-
             this.alertSS = true;
             if (val == "start") {
                 this.alertext = this.$root.$t('msg.startbetting')
@@ -831,6 +833,7 @@ export default {
 
         },
         getMbFooter() {
+            $("#txtbalance").text(this.formatToPrice(this.getBalance))
             $("#txttotal").text(this.formatTotal(this.price))
             $("#ch10").text(this.chips[0].price)
             $("#ch50").text(this.chips[1].price)
@@ -847,27 +850,27 @@ export default {
                 this.setPrice("reset");
             });
             $("#chips, #ch10").click(() => {
-                if (this.balance - this.sumTotalAll >= parseInt(this.chips[0].price))
+                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[0].price))
                     this.setPrice(this.chips[0].price)
             });
             $("#OS93GB1we-copy, #ch50").click(() => {
-                if (this.balance - this.sumTotalAll >= parseInt(this.chips[1].price))
+                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[1].price))
                     this.setPrice(this.chips[1].price)
             });
             $("#OS93GB2, #ch100").click(() => {
-                if (this.balance - this.sumTotalAll >= parseInt(this.chips[2].price))
+                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[2].price))
                     this.setPrice(this.chips[2].price)
             });
             $("#OS93GB1-copy, #ch500").click(() => {
-                if (this.balance - this.sumTotalAll >= parseInt(this.chips[3].price))
+                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[3].price))
                     this.setPrice(this.chips[3].price)
             });
             $("#OS93GB5-copy, #ch1000").click(() => {
-                if (this.balance - this.sumTotalAll >= parseInt(this.chips[4].price))
+                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[4].price))
                     this.setPrice(this.chips[4].price)
             });
             $("#OS93GB3a-copy-copy, #ch5000").click(() => {
-                if (this.balance - this.sumTotalAll >= parseInt(this.chips[5].price))
+                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[5].price))
                     this.setPrice(this.chips[5].price)
             });
 
@@ -894,7 +897,7 @@ export default {
     margin-left: -1.5%;
     position: fixed;
     left: 0;
-    bottom: -2%;
+    bottom: -1%;
     width: 102%;
     text-align: center;
     z-index: 150;

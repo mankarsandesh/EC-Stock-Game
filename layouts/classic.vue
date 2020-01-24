@@ -240,10 +240,10 @@
     </v-btn>
 
     <div v-show="$vuetify.breakpoint.smAndDown">
-        <v-btn class="z-index" small fab dark fixed bottom left color="red" v-if="Switchfooters" @click="getSwitchfooter(false)">
+        <v-btn class="z-index v-btn-bottoms" small fab dark fixed bottom left color="red" v-if="Switchfooters" @click="getSwitchfooter(false)">
             <v-icon>{{Switchfooters ? 'visibility_off' : 'visibility'}}</v-icon>
         </v-btn>
-        <v-btn class="z-index" small fab dark fixed bottom left color="green" v-if="!Switchfooters" @click="getSwitchfooter(true)">
+        <v-btn class="z-index v-btn-bottoms" small fab dark fixed bottom left color="green" v-if="!Switchfooters" @click="getSwitchfooter(true)">
             <v-icon>{{Switchfooters ? 'visibility_off' : 'visibility'}}</v-icon>
         </v-btn>
     </div>
@@ -390,9 +390,9 @@ export default {
             path: "https://assets7.lottiefiles.com/packages/lf20_JbdOay.json" // the path to the animation json
         });
         $("#switch").text(this.switch1)
-        setTimeout(() => {
-            window.scrollTo(0, 0)
-        }, 2000);
+        // setTimeout(() => {
+        //     window.scrollTo(0, 0)
+        // }, 2000);
         this.loadchart();
         this.getMenu();
         $(".isLoadChart").click(() => {
@@ -532,6 +532,10 @@ export default {
 </script>
 
 <style scoped>
+.v-btn-bottoms {
+    bottom: 3.6%;
+    margin-left: -5.2%;
+}
 .scrolltop {
     bottom: 15%;
 }

@@ -108,55 +108,46 @@ export default {
             countEven: 0,
             countUpper: 0,
             countMiddle: 0,
-            countLower: 0
+            countLower: 0,
         };
     },
     mounted() {
         setTimeout(() => {
             this.getTableChartBS();
-        }, 1000);
-        // this.autoScroll();
-        this.Timeout();
+            this.getRunTable
+        }, 2000);
+        setInterval(() => {
+            this.getRunTable
+        }, 10000);
+   
     },
     watch: {
         chlists() {
             this.getTableChartBS();
         }
-        // tbdatachart() {
-        //   this.number =
-        //     this.tbdatachart[this.tbdatachart.length - 2] +
-        //     "" +
-        //     this.tbdatachart[this.tbdatachart.length - 1];
-
-        //   let d = this.lastGameID + "\n" + this.tbdatachart + "\n" + this.timeGame;
-        //   this.addNew(this.number, d);
-        // }
+    },
+    computed: {
+        getRunTable() {
+            if (this.dataArray === "") return;
+            else {
+                let datalastdraw = this.dataArray[this.dataArray.length - 1]
+                setInterval(() => {
+                    let dataItems = this.dataArray[this.dataArray.length - 1]
+                    // console.log(datalastdraw.id)
+                    if (datalastdraw.id != dataItems.id) {
+                        // console.log(datalastdraw.id)
+                        // console.log(dataItems.id)
+                        datalastdraw.id = dataItems.id
+                        // console.log("llllllllllllllllllll")
+                        // console.log(datalastdraw.id)
+                        this.getTableChartBS();
+                        this.$vuetify.goTo(0)
+                    }
+                }, 1000)
+            }
+        }
     },
     methods: {
-        Timeout() {
-            const socket = openSocket("https://websocket-timer.herokuapp.com");
-            socket.on("time", data => {
-                let times;
-                let calculat;
-                if (this.$route.params.id.split('-')[1] == "btc1") {
-                    times = data.btc1.timer;
-                    calculat = 38;
-                } else if (this.$route.params.id.split('-')[1] == "btc5") {
-                    times = data.btc5.timer;
-                    calculat = 238;
-                } else if (this.$route.params.id.split('-')[1] == "usindex") {
-                    times = data.usindex.timer;
-                    calculat = 238;
-                } else {
-                    times = data.sh000001.timer;
-                    calculat = 238;
-                }
-                if (times == calculat) {
-                    this.getTableChartBS();
-                    this.$vuetify.goTo(0)
-                }
-            });
-        },
         clearTrendMap() {
             this.gameID = []
             this.trentFirst = [];
@@ -167,61 +158,33 @@ export default {
             //bs
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 400; j++) {
-                    this.$refs.tablebsFirst.children[i].children[j].textContent = "";
-                    this.$refs.tablebsFirst.children[i].children[j].className = "";
+                    this.$refs.tablebsFirst.children[i].children[j].textContent = null
+                    this.$refs.tablebsFirst.children[i].children[j].className = null
                 }
             }
             //oe
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 400; j++) {
-                    this.$refs.tableOEFirst.children[i].children[j].textContent = "";
-                    this.$refs.tableOEFirst.children[i].children[j].className = "";
+                    this.$refs.tableOEFirst.children[i].children[j].textContent = null
+                    this.$refs.tableOEFirst.children[i].children[j].className = null
                 }
             }
             //uml
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 400; j++) {
-                    this.$refs.tablebUMLFirst.children[i].children[j].textContent = "";
-                    this.$refs.tablebUMLFirst.children[i].children[j].className = "";
+                    this.$refs.tablebUMLFirst.children[i].children[j].textContent = null
+                    this.$refs.tablebUMLFirst.children[i].children[j].className = null
                 }
             }
             //number
             for (let i = 0; i < this.rowTable; i++) {
                 for (let j = 0; j < 150; j++) {
-                    this.$refs.tableNumberFirst.children[i].children[j].textContent = "";
-                    this.$refs.tableNumberFirst.children[i].children[j].className = "";
+                    this.$refs.tableNumberFirst.children[i].children[j].textContent = null
+                    this.$refs.tableNumberFirst.children[i].children[j].className = null
                 }
             }
         },
-        // changeChartType(value) {
-        //   this.chlist = value;
-        //   this.clearTrendMap();
-        //   this.getTableChartBS();
-        // },
-        autoScroll() {
-            let _this = this;
-            setTimeout(function () {
-                let lop =
-                    $(".my-coltabledivlast")
-                    .first()
-                    .width() - 30;
-                let valuebs = $(_this.$refs.tablebsFirst).find(".mystylelast")[0]
-                    .offsetLeft;
-                let valueoe = $(_this.$refs.tableOEFirst).find(".oestylelast")[0]
-                    .offsetLeft;
-                let valueuml = $(_this.$refs.tablebUMLFirst).find(".umlstylelast")[0]
-                    .offsetLeft;
-                let valuenum = $(_this.$refs.tableNumberFirst).find(".numScroll")[0]
-                    .offsetLeft;
-                $(_this.$refs.tablebsFirst).scrollLeft(valuebs - lop);
-                $(_this.$refs.tableOEFirst).scrollLeft(valueoe - lop);
-                $(_this.$refs.tablebUMLFirst).scrollLeft(valueuml - lop);
-                $(_this.$refs.tableNumberFirst).scrollLeft(valuenum - lop);
-            }, 1000);
-        },
-        // sleep(milliseconds) {
-        //   return new Promise(resolve => setTimeout(resolve, milliseconds));
-        // },
+        
         formatToPrice(value) {
             if (this.$route.params.id.split("-")[1] == "usindex") {
                 return `${Number(value).toFixed(4)}`;

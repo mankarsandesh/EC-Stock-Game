@@ -21,6 +21,7 @@ const createStore = () => {
             onGoingBet: [],
             // store data betting that not confirm yet (multi game and fullscreen mode)
             multiGameBet: [],
+            multiGameBetsend: [],
             // store staock id to display on multi game
             stockMultigame: [],
             locales: ["cn", "us", "th", "la"],
@@ -213,11 +214,15 @@ const createStore = () => {
             // push data to on going bet
             pushDataMultiGameBet(state, payload) {
                 state.multiGameBet.push(payload);
+                state.multiGameBetsend.push(payload);
+            },
+            clearDataMultiGameBetsend(state) {
+                state.multiGameBetsend = [];
             },
             clearDataMultiGameBet(state) {
                 state.multiGameBet = [];
                 state.footerBetAmount = 0;
-                // state.onGoingBet = []
+                state.onGoingBet = []
                 console.warn(state.multiGameBet);
             },
             removeAllFooterBet(state) {
@@ -346,23 +351,32 @@ const createStore = () => {
 
             async sendBetting(context) {
                 context.commit("setIsSendBetting", true);
-                console.warn("sendBetting...");
+                // console.warn("sendBetting...");
                 const betData = {
-                    data: [...context.state.multiGameBet]
+                    data: [...context.state.multiGameBetsend]
                 };
+                if (betData.data.length == 0) {
+                    context.commit("setIsSendBetting", false);
+                    this._vm.$swal({
+                        type: "error",
+                        title: `Sorry, No Betting...!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    return
+                }
                 // console.log(betData)
                 try {
                     const res = await this.$axios.$post(
                         `/api/storebet?apikey=${context.getters.getAuth_token}`,
                         betData
                     );
-
-                    console.log("res./.......");
-                    console.log(res);
-                    console.log("res...........");
+                    // console.log("res./.......");
+                    // console.log(res);
+                    // console.log("res...........");
                     if (res.status) {
                         context.commit("setIsSendBetting", false);
-                        context.commit("clearDataMultiGameBet");
+                        context.commit("clearDataMultiGameBetsend");
                         this._vm.$swal({
                             type: "success",
                             title: "Confirm!",
