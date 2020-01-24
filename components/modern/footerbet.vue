@@ -15,36 +15,32 @@
 <g>
 	<g>
 		
-			<image style="overflow:visible;opacity:0.4;" width="187" height="44" xlink:href="49CCFDDF.png"  transform="matrix(1 0 0 1 375 33)">
-		</image>
+	
 		<g>
-			<path class="st3" d="M547.1,56.2c1.2-2.4,2.4-4.7,3.5-7.1c1.6-3.3,3.3-6.6,4.9-9.9c-44.1,0-88.1,0-132.2,0
+			<path style="cursor:pointer" class="st3" d="M547.1,56.2c1.2-2.4,2.4-4.7,3.5-7.1c1.6-3.3,3.3-6.6,4.9-9.9c-44.1,0-88.1,0-132.2,0
 				c-6.3,0-11.1,1.6-14.2,4.8L381.4,71h2.3c51.9,0,103.8,0,155.6,0c0.9-1.9,1.9-3.8,2.8-5.6C543.8,62.3,545.4,59.2,547.1,56.2z"/>
 		</g>
 	</g>
 	<g>
 		
-			<image style="overflow:visible;opacity:0.4;" width="127" height="45" xlink:href="49CCFDDA.png"  transform="matrix(1 0 0 1 851 32)">
-		</image>
+		
 		<g>
-			<path class="st4"  d="M947.3,43.8c-2.7-3.2-6.9-4.9-12.3-4.9c-25.9,0-51.8,0.1-77.7,0.1c-0.2,0,1.5,0,3.5,1
+			<path @click="clearDataMultiGameBet()" style="cursor:pointer" class="st4"  d="M947.3,43.8c-2.7-3.2-6.9-4.9-12.3-4.9c-25.9,0-51.8,0.1-77.7,0.1c-0.2,0,1.5,0,3.5,1
 				c0.6,0.3,1.3,0.8,2.8,2.1c2.2,2,3.5,3.5,3.5,3.5c2.1,2.4,4.3,4.7,6.3,7.1c3.8,4.4,4.1,4.3,7.8,8.5c1.8,2.1,4.6,5.2,7.8,9.2
 				c26.8,0.2,53.5,0.5,80.3,0.7h2L947.3,43.8z"/>
 		</g>
 	</g>
 	<g>
 		
-			<image  style="overflow:visible; opacity:0.4;" width="127" height="45" xlink:href="49CCFDDB.png"  transform="matrix(1 0 0 1 769 32)">
-		</image>
+		
 		<g>
-			<path style="cursor:pointer" class="st3" d="M865.5,43.4c-2.7-3.2-6.9-4.9-12.3-4.9c-25.9,0-51.8,0.1-77.7,0.1c1.2,2,2.4,4.1,3.5,6.3
+			<path  @click="getSending()" style="cursor:pointer" class="st3" d="M865.5,43.4c-2.7-3.2-6.9-4.9-12.3-4.9c-25.9,0-51.8,0.1-77.7,0.1c1.2,2,2.4,4.1,3.5,6.3
 				c0.5,1,1,1.9,1.4,2.8c1.6,3.1,3.3,6.1,4.9,9.2c2.4,4.7,4.7,9.4,7.1,14.1c31.7-0.1,63.4-0.3,95.1-0.4h2L865.5,43.4z"/>
 		</g>
 	</g>
 	<g>
 		
-			<image style="overflow:visible;opacity:0.4;" width="267" height="67" xlink:href="49CCFDE5.png"  transform="matrix(1 0 0 1 532 10)">
-		</image>
+		
 		<g>
 			<path @click="dialog = true" style="cursor:pointer" class="st3" d="M768.5,24.4c-2.7-5.6-6.9-8.4-12.3-8.4H575c-5.5,0-9.6,2.8-12.3,8.3l-24,46.7h2h249.8h2L768.5,24.4z"/>
 		</g>
