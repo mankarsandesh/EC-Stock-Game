@@ -27,14 +27,14 @@
 			<image style="overflow:visible;opacity:0.4;" width="127" height="45" xlink:href="49CCFDDA.png"  transform="matrix(1 0 0 1 851 32)">
 		</image>
 		<g>
-			<path class="st4" style="cursor:pointer" @click="clearDataMultiGameBet()" d="M947.3,43.8c-2.7-3.2-6.9-4.9-12.3-4.9c-25.9,0-51.8,0.1-77.7,0.1c-0.2,0,1.5,0,3.5,1
+			<path class="st4"  d="M947.3,43.8c-2.7-3.2-6.9-4.9-12.3-4.9c-25.9,0-51.8,0.1-77.7,0.1c-0.2,0,1.5,0,3.5,1
 				c0.6,0.3,1.3,0.8,2.8,2.1c2.2,2,3.5,3.5,3.5,3.5c2.1,2.4,4.3,4.7,6.3,7.1c3.8,4.4,4.1,4.3,7.8,8.5c1.8,2.1,4.6,5.2,7.8,9.2
 				c26.8,0.2,53.5,0.5,80.3,0.7h2L947.3,43.8z"/>
 		</g>
 	</g>
 	<g>
 		
-			<image @click="getSending()" style="cursor:pointer; overflow:visible;opacity:0.4;" width="127" height="45" xlink:href="49CCFDDB.png"  transform="matrix(1 0 0 1 769 32)">
+			<image  style="overflow:visible; opacity:0.4;" width="127" height="45" xlink:href="49CCFDDB.png"  transform="matrix(1 0 0 1 769 32)">
 		</image>
 		<g>
 			<path style="cursor:pointer" class="st3" d="M865.5,43.4c-2.7-3.2-6.9-4.9-12.3-4.9c-25.9,0-51.8,0.1-77.7,0.1c1.2,2,2.4,4.1,3.5,6.3
