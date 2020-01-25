@@ -1,19 +1,19 @@
 <template>
 <div>
     <div class="bg-primary">
-         <v-container fluid style="display: flex; padding: 3%;">
-        <v-layout row justify-center align-center>
-            <v-flex>
-                <div class="row d-flex justify-center align-center">
-                    <h1 class="text-center" style="color: aliceblue;">Choose Game ModeDer</h1>
-                </div>
-            </v-flex>
-        </v-layout>
-              </v-container>
+        <v-container fluid style="display: flex; padding: 3%;">
+            <v-layout row justify-center align-center>
+                <v-flex>
+                    <div class="row d-flex justify-center align-center">
+                        <h1 class="text-center" style="color: aliceblue;">Choose Game ModeDer</h1>
+                    </div>
+                </v-flex>
+            </v-layout>
+        </v-container>
         <v-container fluid fill-height>
             <v-layout row justify-center align-center>
                 <v-flex xs6 sm2 px-2 class="card-mode classic">
-                    <nuxt-link to="/classic/l-btc1-live">
+                    <nuxt-link :to="stockname == '' ? '/classic/l-btc1-live':'/classic/l-'+stockname+'-live'">
                         <img src="/bg/classic.png" alt="mode classic">
                         <span class="font-size">Mode Classic</span>
                     </nuxt-link>
@@ -63,20 +63,28 @@ import {
 export default {
     layout: "nolayout",
     middleware: 'getApiKey',
-    mounted() {
-        this.getProgress();
-    },
+
     data() {
         return {
-            linkto: isMobile ? "/modern" : "/modern/desktop/btc1"
+            stockname: '',
+            linkto: '',
+
         };
+    },
+    mounted() {
+        this.getProgress();
+        this.linkto = isMobile ? "/modern" : "/modern/desktop/" + this.stockname;
+    },
+    created() {
+        this.stockname = window.location.search.split('?')[1].split('=')[1].split('&')[0];
+        console.log(this.stockname)
     },
     watch: {
         "$screen.width"() {
             if (this.$screen.width <= 1204) {
                 this.linkto = "modern";
             } else {
-                this.linkto = "/modern/desktop/btc1";
+                this.linkto = "/modern/desktop/" + stockname;
             }
         }
     },
