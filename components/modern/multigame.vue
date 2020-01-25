@@ -8,7 +8,7 @@
         <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
         <v-layout align-center justify-end>
             <v-flex>
-                <h4>{{formatToPrice(getAmountBettingByStockId(stockid))}}</h4>
+                <h4>{{formatToPrice(getAmountBettingByStockId(getStockId(stockid)))}}</h4>
             </v-flex>
             <v-spacer></v-spacer>
             <v-flex>
@@ -80,7 +80,8 @@ export default {
             "getLotteryDraw",
             "lotterydraw",
             "getStockById",
-            "getAmountBettingByStockId"
+            "getAmountBettingByStockId",
+            "getStockId"
         ])
     },
     methods: {

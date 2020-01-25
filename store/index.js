@@ -223,7 +223,7 @@ const createStore = () => {
                 state.multiGameBet = [];
                 state.footerBetAmount = 0;
                 state.onGoingBet = []
-                console.warn(state.multiGameBet);
+                    // console.warn(state.multiGameBet);
             },
             removeAllFooterBet(state) {
                 state.multiGameBet = [];
@@ -398,14 +398,14 @@ const createStore = () => {
             },
 
             async asynGetAllStock(context) {
-                console.log("working...");
-                console.log(context.getters.getAuth_token);
+                // console.log("working...");
+                // console.log(context.getters.getAuth_token);
                 try {
                     const stocks = await this.$axios.$post(`/api/allStockInfo?apikey=${context.getters.getAuth_token}`);
                     const data = stocks.data;
-                    console.log(data);
+                    // console.log(data);
                     context.state.stocks = Object.assign({}, data);
-                    console.log(context.state.stocks);
+                    // console.log(context.state.stocks);
                     context.dispatch("asynInitCallApi");
                 } catch (ex) {
                     console.error(ex);
@@ -503,7 +503,7 @@ const createStore = () => {
                         `api/fetchTopPlayersList?result=win&days=7&apikey=${context.getters.getAuth_token}`
                     );
                     context.commit("setTopPlayer", res.data);
-                    console.log(res.data);
+                    // console.log(res.data);
                     console.log("sandesh here");
                 } catch (error) {
                     console.log(error);
@@ -684,6 +684,16 @@ const createStore = () => {
             getAmountBettingByStockId: state => stockId => {
                 function getAmount(object) {
                     // find stockname
+                    if (object.findIndex(x => x.stockId === stockId) == -1) return 0;
+                    let result = object
+                        .filter(x => x.stockId === stockId)
+                        .map(x => x.amount)
+                        .reduce((a, b) => a + b, 0);
+                    return parseInt(result);
+                }
+
+                function getAmountbet(object) {
+                    // find stockname
                     if (object.findIndex(x => x.stock === stockId) == -1) return 0;
                     let result = object
                         .filter(x => x.stock === stockId)
@@ -691,7 +701,7 @@ const createStore = () => {
                         .reduce((a, b) => a + b, 0);
                     return parseInt(result);
                 }
-                return getAmount(state.multiGameBet) + getAmount(state.onGoingBet);
+                return getAmount(state.multiGameBet) + getAmountbet(state.onGoingBet);
             },
             // to show ship and amount on bet button
             getAmountMultiGameBet: state => data => {
