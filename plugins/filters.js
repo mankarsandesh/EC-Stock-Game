@@ -119,9 +119,9 @@ Vue.filter('livePriceColor', (current, previous) => {
     if (!current) return ''
     let result = ""
     if (parseFloat(current) > parseFloat(previous)) {
-        result = `<span style="color:red">${parseFloat(current)}</span>`
+        result = `<span style="color:red">${current}</span>`
     } else {
-        result = `<span style="color:green">${parseFloat(current)}</span>`
+        result = `<span style="color:green">${current}</span>`
 
     }
     return result

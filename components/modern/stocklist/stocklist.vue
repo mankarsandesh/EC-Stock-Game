@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <tr v-for="(item,index) in getStockList" :key="index">
-            <td>{{item.stockname}}</td>
+            <td>{{$t(`stockname.${item.stockname}`)}} {{ item.stockname == 'btc1' ? ' 1':item.stockname == 'btc5' ? ' 5':'' }}</td>
             <td
               v-html="$options.filters.livePriceColor(getLivePrice(item.id),getPreviousPrice(item.id))"
             ></td>
