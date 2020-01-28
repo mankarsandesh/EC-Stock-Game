@@ -66,7 +66,7 @@ export default {
 
     data() {
         return {
-            stockname: '',
+            stockname: "btc1",
             linkto: '',
 
         };
@@ -77,7 +77,7 @@ export default {
     },
     created() {
         this.stockname = window.location.search.split('?')[1].split('=')[1].split('&')[0];
-        console.log(this.stockname)
+        // console.log(this.stockname)
     },
     watch: {
         "$screen.width"() {
