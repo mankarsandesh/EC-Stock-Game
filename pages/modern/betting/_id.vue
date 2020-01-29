@@ -364,7 +364,7 @@
     <v-dialog v-model="bettingDialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable light>
         <v-card tile>
             <v-toolbar flat color="white">
-                <v-layout row mt-4>
+                <v-layout row mt-3>
                     <div class="d-block">
                         <h3 class="text-uppercase">{{ $t(`stockname.${$route.params.id}`) }}</h3>
                         <p class="text-uppercase">{{getStockLoop($route.params.id)}} MINUTE GAME | {{gameRule}}</p>
@@ -384,18 +384,18 @@
 
             <!-- Chip -->
             <v-layout row justify-center>
-                <v-flex xs10 class="px-4 text-center">
+                <v-flex xs12 class="text-center">
                     <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" @click="shipClick(getCoins_modern[key])">
-                        <v-img class="ma-5" :src="item.img" :alt="item.title">
+                        <v-img class="ma-4" :src="item.img" :alt="item.title">
                             <span class="setpricechip">{{getCoins_modern[key]}}</span>
                         </v-img>
                     </v-avatar>
                 </v-flex>
             </v-layout>
-            <v-layout row mb-5 mt-3 justify-center>
-                <v-flex xs4 class="px-4 text-center">
-                    <h5>Amount</h5>
-                    <v-text-field solo label="200$" clearable v-model="amount"></v-text-field>
+            <v-layout row mb-3 mt-3 justify-center>
+                <v-flex xs8 class="px-2 text-center">
+                    <h5>Amount:</h5>
+                    <v-text-field type="number" readonly solo label="$0" clearable v-model="amount"></v-text-field>
                 </v-flex>
             </v-layout>
         </v-card>
