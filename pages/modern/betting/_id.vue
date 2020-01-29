@@ -356,7 +356,7 @@
             </v-layout>
 
             <v-toolbar bottom class="total-bet bettingFooter">
-                <span>{{$t('msg.totalbet')}}: ${{getAllBettingAmount}}</span>
+                <span>{{$t('msg.totalbet')}}: {{formatToPrice(getAllBettingAmount)}}</span>
             </v-toolbar>
         </v-flex>
     </v-layout>
@@ -796,6 +796,11 @@ export default {
                 console.error(ex);
                 alert(ex.message);
             }
+        },
+        formatToPrice(value) {
+            return `$ ${Number(value)
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
     },
     watch: {
