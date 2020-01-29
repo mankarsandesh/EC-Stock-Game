@@ -638,18 +638,18 @@ nav {
     .container {
         .layout {
             .flex {
-                .v-input {
-                    @media (max-width: 812px) {
-                        .v-input__control .v-input__slot .v-text-field__slot {
-                            border: 1px solid #003e70;
-                            border-radius: 5px;
-                        }
-                        .v-input__control .v-select__selections {
-                            border: 1px solid #003e70;
-                            border-radius: 5px;
-                        }
-                    }
-                }
+                // .v-input {
+                //     @media (max-width: 812px) {
+                //         .v-input__control .v-input__slot .v-text-field__slot {
+                //             border: 1px solid #003e70;
+                //             border-radius: 5px;
+                //         }
+                //         .v-input__control .v-select__selections {
+                //             border: 1px solid #003e70;
+                //             border-radius: 5px;
+                //         }
+                //     }
+                // }
                 .selectHistory {
                     @media (min-width: 1280px) {
                         .v-input__control .v-input__slot .v-select__slot .v-select__selections {
