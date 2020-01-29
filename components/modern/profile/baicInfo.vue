@@ -8,7 +8,8 @@
         <v-tooltip right>
             <template #activator="{ on: tooltip }">
                 <v-avatar size="150" @click="dialog = !dialog">
-                    <img v-on="{ ...tooltip }" :src="profile.avatar ? profile.avatar : '/user.png'" alt />
+                    <img v-on="{ ...tooltip }" :src="profile.avatar" v-if="profile.avatar != null" alt />
+                    <img v-on="{ ...tooltip }" src="/user.png" v-else alt />
                 </v-avatar>
             </template>
             <span>Edit Profile Picture</span>

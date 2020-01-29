@@ -25,10 +25,11 @@ export default {
         }
     },
     mounted() {
-        this.getChart()
+        // this.getChart()
         setInterval(() => {
-            if (this.load == false)
+            if (this.load == false) {
                 this.getChart()
+            }
         }, 1000)
     },
     methods: {
@@ -47,6 +48,9 @@ export default {
             }
         },
         async getChart() {
+            this.stockname = []
+            this.betlose = []
+            this.betwon = []
             let dataGet = await this.$axios.$post('/api/me/betAnalysis?apikey=' + this.$store.state.auth_token)
             if (dataGet.data == "") return this.load = false;
 

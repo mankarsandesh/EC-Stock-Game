@@ -54,7 +54,7 @@
                 </v-flex>
                 <v-flex v-else xs10 class="text-xs-center">
                     <span>
-                        <h3 class="text-uppercase">{{getStockById($route.params.id).stockname}}</h3>
+                        <h3 class="text-uppercase">{{$t('stockname.'+getStockById($route.params.id).stockname)}}</h3>
                         <span class="text-primary">
                             <span>{{getStockById($route.params.id).loop}}</span> minute game | ID:
                             <span>0909090</span>
@@ -86,15 +86,15 @@
                     <v-tab-item xs4>
                         <v-layout row align-center justify-center>
                             <v-card class="box-click" @click="showBetDialog('firstdigit-small')">
-                               <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:'firstdigit-small'})" />
+                                <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:'firstdigit-small'})" />
                                 <v-card-title class="d-block">
                                     <h5>{{$t('gamemsg.small')}}</h5>
                                     <span>0 TO 4</span>
                                 </v-card-title>
-                                
+
                             </v-card>
                             <v-card class="box-click" @click="showBetDialog('firstdigit-big')">
-                               <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:'firstdigit-big'})" />
+                                <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:'firstdigit-big'})" />
                                 <v-card-title class="d-block">
                                     <h5>{{$t('gamemsg.big')}}</h5>
                                     <span>5 TO 9</span>
@@ -471,6 +471,7 @@
         <v-container>
             <v-layout row wrap>
                 <v-flex xs3 v-for="(item,index) in 10" :key="item" @click="showBetDialog(`firstdigit-${index}`)">
+                    <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:`firstdigit-${index}`})" />
                     <v-card-title class="box-click-modal o-even">
                         <h5>{{index}}</h5>
                     </v-card-title>
@@ -493,6 +494,7 @@
         <v-container>
             <v-layout row wrap>
                 <v-flex xs3 v-for="(item,index) in 10" :key="item" @click="showBetDialog(`lastdigit-${index}`)">
+                    <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:`lastdigit-${index}`})" />
                     <v-card-title class="box-click-modal o-even">
                         <h5>{{index}}</h5>
                     </v-card-title>
@@ -515,6 +517,7 @@
         <v-container>
             <v-layout row wrap>
                 <v-flex xs3 v-for="(item,index) in 19" :key="item" @click="showBetDialog(`bothdigit-${index}`)">
+                    <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:`bothdigit-${index}`})" />
                     <v-card-title class="box-click-modal o-even">
                         <h5>{{index}}</h5>
                     </v-card-title>
@@ -538,6 +541,7 @@
                     <v-container>
                         <v-layout row wrap>
                             <v-flex xs3 v-for="(item,index) in 20" :key="item" @click="showBetDialog(`twodigit-${index < 10 ? '0' + index :index}`)">
+                                <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:`twodigit-${index < 10 ? '0' + index :index}`})" />
                                 <v-card-title class="box-click-modal o-even">
                                     <h5>{{ index < 10 ? "0" + index :index}}</h5>
                                 </v-card-title>
@@ -551,6 +555,7 @@
                     <v-container>
                         <v-layout row wrap>
                             <v-flex xs3 v-for="(item,index) in 40" :key="item" v-show="item > 20" @click="showBetDialog(`twodigit-${index}`)">
+                                <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:`twodigit-${index}`})" />
                                 <v-card-title class="box-click-modal o-even">
                                     <h5>{{index}}</h5>
                                 </v-card-title>
@@ -565,6 +570,7 @@
                     <v-container>
                         <v-layout row wrap>
                             <v-flex xs3 v-for="(item,index) in 60" :key="item" v-show="item > 40" @click="showBetDialog(`twodigit-${index}`)">
+                                <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:`twodigit-${index}`})" />
                                 <v-card-title class="box-click-modal o-even">
                                     <h5>{{index}}</h5>
                                 </v-card-title>
@@ -579,6 +585,7 @@
                     <v-container>
                         <v-layout row wrap>
                             <v-flex xs3 v-for="(item,index) in 80" :key="item" v-show="item > 60" @click="showBetDialog(`twodigit-${index}`)">
+                                <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:`twodigit-${index}`})" />
                                 <v-card-title class="box-click-modal o-even">
                                     <h5>{{index}}</h5>
                                 </v-card-title>
@@ -593,6 +600,7 @@
                     <v-container>
                         <v-layout row wrap>
                             <v-flex xs3 v-for="(item,index) in 100" :key="item" v-show="item > 80" @click="showBetDialog(`twodigit-${index}`)">
+                                <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:`twodigit-${index}`})" />
                                 <v-card-title class="box-click-modal o-even">
                                     <h5>{{index}}</h5>
                                 </v-card-title>
@@ -716,7 +724,7 @@ export default {
     },
     methods: {
         ...mapActions(["balance"]),
-        ...mapMutations(["setFooterBetAmount", "pushDataOnGoingBet","clearDataMultiGameBet"]),
+        ...mapMutations(["setFooterBetAmount", "pushDataOnGoingBet", "clearDataMultiGameBet"]),
         tabChanged(e) {
             switch (e) {
                 case 0:
@@ -874,5 +882,4 @@ export default {
     color: black;
     font-size: 0.85rem;
 }
-
 </style>
