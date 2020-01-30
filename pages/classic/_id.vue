@@ -722,7 +722,7 @@ export default {
         },
 
         getTime() {
-            const socket = openSocket("https://websocket-timer.herokuapp.com");
+            const socket = openSocket("https://apitimer.herokuapp.com");
             socket.on("time", data => {
                 let times, calculating, alert;
                 if (this.$route.params.id.split("-")[1] == "btc1") {

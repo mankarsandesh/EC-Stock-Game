@@ -56,7 +56,7 @@ export default {
         setInterval(() => {
             if (this.load == false) this.getdata()
         }, 1000)
-        const socket = openSocket("https://websocket-timer.herokuapp.com");
+        const socket = openSocket("https://apitimer.herokuapp.com");
         socket.on("time", data => {
             let times;
             let calculat;

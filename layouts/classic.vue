@@ -400,7 +400,7 @@ export default {
         });
         // this.asynInitCallApi();
         // websocket broadcast live time and timer
-        const socket = openSocket("https://websocket-timer.herokuapp.com");
+        const socket = openSocket("https://apitimer.herokuapp.com");
         socket.on("time", data => {
             this.getNavbar(data);
             this.getAtivetab();

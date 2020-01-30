@@ -189,7 +189,7 @@ export default {
             const mychart = new Chart(ctx, config);
 
             ///////////////////////////////////////////
-            const socket = openSocket('https://websocket-timer.herokuapp.com')
+            const socket = openSocket('https://apitimer.herokuapp.com')
             socket.on('time', data => {
                 let times, calculating;
                 if (this.$route.params.id == 'btc1') {

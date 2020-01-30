@@ -17,21 +17,21 @@
                 <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
             </v-menu>
         </v-flex>
-        <v-flex xs6 sm4 md2 lg2>
+        <v-flex xs6 sm4 md2 lg2 style="float:left;">
             <v-btn @click="dateSearch()" class="goButton">go</v-btn>
         </v-flex>
         <!-- <v-flex xs2 sm2 md2 lg1>
             <v-select label="Limit Total" single-line hide-details :items="itemlimit" v-model="limit" color="#FFF" class="limits text-white"></v-select>
         </v-flex> -->
 
-        <v-flex xs6 sm4 md2 lg2>
+        <v-flex xs4 sm4 md2 lg2 style="float:left;">
             <v-select label="Limit Page" single-line hide-details :items="itemspage" v-model="itemspages" color="#FFF" class="selectHistory text-white"></v-select>
         </v-flex>
 
-        <v-flex xs4 sm4 md2 lg2>
+        <v-flex xs4 sm4 md2 lg2 style="float:left;">
             <v-text-field single-line hide-details v-model="search" append-icon="search" class="selectHistory text-white" style="padding:4px;"></v-text-field>
         </v-flex>
-        <v-flex xs4 sm4 md2 lg2 te >
+        <v-flex xs4 sm4 md2 lg2 style="float:left;" >
             <v-select single-line hide-details :items="items" label="Sort By :" v-model="itemss" class="selectHistory"></v-select>
         </v-flex>
     </v-layout>
