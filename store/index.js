@@ -301,11 +301,15 @@ const createStore = () => {
                         `/api/me?apikey=${context.getters.getAuth_token}`
                     );
                     if (!res.status) {
-                        // localStorage.removeItem('apikey');
-                        // location.href = "http://whitelabelv2.herokuapp.com"
-                        alert("Sorry, your session has expired. Please refresh and try again.")
-                            // location.href = "http://" + location.hostname + ":8001"
-                        return
+                        setTimeout(() => {
+                            if (res.status) return;
+
+                            sessionStorage.removeItem('apikey');
+                            console.log("Sorry, your session has expired. Please refresh and try again.")
+                            location.href = "http://159.138.130.64"
+                                // location.href = "http://" + location.hostname + ":8001"
+                            return
+                        }, 10000)
                     }
                     let userInfo = res.data.original;
                     context.commit("setUserData", userInfo);

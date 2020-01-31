@@ -32,8 +32,8 @@ export default ({ store }) => {
     // get new data 3 second
     setInterval(() => {
         store.dispatch('OnlineTime')
-            // store.dispatch("asynUserInfo")
-    }, 3000);
+        store.dispatch("asynUserInfo")
+    }, 4500);
 
 
 
