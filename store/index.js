@@ -66,7 +66,7 @@ const createStore = () => {
             stocks: {
                 sh000001: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=4&limit=100`,
+                        crawler: `/api/getCrawlerData?stockId=1&limit=100`,
                         livePrice: "/api/newlivedata/sh01"
                     },
                     stockId: 4,
@@ -83,7 +83,7 @@ const createStore = () => {
                 },
                 sz399001: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=3&limit=100`,
+                        crawler: `/api/getCrawlerData?stockId=4&limit=100`,
                         livePrice: "/api/newlivedata/sz01"
                     },
                     stockId: 3,
@@ -100,7 +100,7 @@ const createStore = () => {
                 },
                 sz399415: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=2&limit=100`,
+                        crawler: `/api/getCrawlerData?stockId=3&limit=100`,
                         livePrice: "/api/newlivedata/sz15"
                     },
                     stockId: 2,
@@ -117,7 +117,7 @@ const createStore = () => {
                 },
                 sh000300: {
                     url: {
-                        crawler: `/api/getCrawlerData?stockId=1&limit=100`,
+                        crawler: `/api/getCrawlerData?stockId=2&limit=100`,
                         livePrice: "/api/newlivedata/sz300"
                     },
                     stockId: 1,
@@ -306,8 +306,8 @@ const createStore = () => {
 
                             sessionStorage.removeItem('apikey');
                             console.log("Sorry, your session has expired. Please refresh and try again.")
-                            location.href = "http://159.138.130.64"
-                                // location.href = "http://" + location.hostname + ":8001"
+                                // location.href = "http://159.138.130.64"
+                            location.href = "http://" + location.hostname + ":8001"
                             return
                         }, 10000)
                     }
