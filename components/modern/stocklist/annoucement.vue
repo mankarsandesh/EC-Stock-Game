@@ -4,9 +4,9 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">{{$t('msg.titles')}}</th>
-            <th scope="col">{{$t('msg.preview')}}</th>
-            <th scope="col">{{$t('msg.date')}}</th>
+            <th scope="col" class="bg-colors">{{$t('msg.titles')}}</th>
+            <th scope="col" class="bg-colors">{{$t('msg.preview')}}</th>
+            <th scope="col" class="bg-colors">{{$t('msg.date')}}</th>
           </tr>
         </thead>
         <tbody>
@@ -42,3 +42,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.bg-colors{
+  background-color: #003e70 !important;
+}
+</style>

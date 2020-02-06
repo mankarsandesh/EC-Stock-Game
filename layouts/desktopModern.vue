@@ -39,6 +39,7 @@
                 <v-btn text flat @click="$refs.language.showDialog()">
                     <countryFlag :country="countryflag" size="normal" />
                 </v-btn>
+                <Logout style="margin-top: 1%;" />
             </v-toolbar-items>
         </v-toolbar>
         <hr />
@@ -77,13 +78,15 @@ import chatWindow from "~/components/chatWindow";
 // import popper from "vue-popperjs";
 // import "vue-popperjs/dist/vue-popper.css";
 
+import Logout from "../components/Logout";
 export default {
     components: {
         chatWindow,
         countryFlag,
         languageDialog,
         winnerMarquee,
-        welcomeUser
+        welcomeUser,
+        Logout
     },
     data() {
         return {
@@ -170,7 +173,7 @@ export default {
                             let win = `
           <span class="text-slide text-white"><span class="text-warning">
           <i class="fa fa-bell"></i>
-          </span>Player ${betID}, <span class="text-warning">${resultStatus} $${betAmount},
+          </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
           </span> ${name}  ${betTime}</span>`
                             this.winner.push(win);
                         }

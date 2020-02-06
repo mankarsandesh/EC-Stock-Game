@@ -11,9 +11,9 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">{{$t('msg.Stock Name')}}</th>
-            <th scope="col">{{$t("msg.liveprice")}}</th>
-            <th scope="col">{{$t("msg.reference")}}</th>
+            <th scope="col" class="bg-colors">{{$t('msg.Stock Name')}}</th>
+            <th scope="col" class="bg-colors">{{$t("msg.liveprice")}}</th>
+            <th scope="col" class="bg-colors">{{$t("msg.reference")}}</th>
           </tr>
         </thead>
         <tbody>
@@ -49,3 +49,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.bg-colors{
+  background-color: #003e70 !important;
+}
+</style>

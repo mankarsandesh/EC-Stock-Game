@@ -56,7 +56,7 @@ export default {
 
             dataGet.data.forEach(element => {
                 this.load = true
-                this.stockname.push(element.stockName == 'btc1' ? this.$root.$t('stockname.' + element.stockName) + ' ' + '1' : element.stockName == 'btc5' ? this.$root.$t('stockname.' + element.stockName) + ' ' + '5' : '');
+                this.stockname.push(element.stockName == 'btc1' ? this.$root.$t('stockname.' + element.stockName) + ' ' + '1' : element.stockName == 'btc5' ? this.$root.$t('stockname.' + element.stockName) + ' ' + '5' : this.$root.$t('stockname.' + element.stockName));
                 this.betlose.push(element.loseBet);
                 this.betwon.push(element.winBet);
             });

@@ -23,25 +23,8 @@
                     </v-btn>
                     <languageDialog ref="language"></languageDialog>
                 </template>
-
-                <v-menu offset-y :close-on-content-click="false" :nudge-width="150">
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="primary" flat icon v-on="on">
-                            <v-icon size="30">account_circle</v-icon>
-                        </v-btn>
-                    </template>
-                    <v-list>
-                        <v-list-tile>
-                            <v-list-tile-title>{{getUserName.name}}</v-list-tile-title>
-                        </v-list-tile>
-                        <v-list-tile @click="dialogprofile = true">
-                            <v-list-tile-title>Profile</v-list-tile-title>
-                        </v-list-tile>
-                        <v-list-tile>
-                            <v-list-tile-title>Sing Out</v-list-tile-title>
-                        </v-list-tile>
-                    </v-list>
-                </v-menu>
+               <!-- Logout -->
+               <Logout/>
             </v-layout>
         </v-container>
     </v-toolbar>
@@ -248,17 +231,7 @@
         </v-btn>
     </div>
 
-    <v-dialog v-model="dialogprofile" max-width="1240px">
-        <v-card>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <button class="cancel" @click="dialogprofile = false">X</button>
-            </v-card-actions>
-            <v-card-text>
-                <profile v-if="dialogprofile" />
-            </v-card-text>
-        </v-card>
-    </v-dialog>
+  
 
 </div>
 </template>
@@ -293,7 +266,7 @@ import gameresult from "~/pages/classic/game-result";
 import announcement from "~/pages/classic/announcement";
 import rule from "~/pages/classic/rule";
 import setting from "~/pages/classic/setting";
-import profile from "~/pages/modern/desktop/profile";
+import Logout from "../components/Logout";
 import lottie from "lottie-web";
 export default {
     components: {
@@ -311,12 +284,12 @@ export default {
         announcement,
         rule,
         setting,
-        profile
+        Logout
     },
 
     data() {
         return {
-            dialogprofile: false,
+            
             switchonoff: true,
             mbdialog: false,
             switch1: "",
@@ -352,26 +325,6 @@ export default {
 
         };
     },
-
-    // head() {
-    //     return {
-    //         title: "EC Gamming Classic",
-    //         meta: [{
-    //                 charset: 'utf-8'
-    //             },
-    //             {
-    //                 name: 'viewport',
-    //                 content: 'width=device-width, initial-scale=1'
-    //             },
-    //             // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-    //             {
-    //                 hid: 'description',
-    //                 name: 'description',
-    //                 content: 'Meta description'
-    //             }
-    //         ]
-    //     }
-    // },
 
     created() {
         this.setLanguage();
@@ -421,7 +374,6 @@ export default {
         countryflag() {
             return this.getlocale;
         }
-
     },
 
     methods: {
@@ -536,6 +488,7 @@ export default {
     bottom: 3.6%;
     margin-left: -5.2%;
 }
+
 .scrolltop {
     bottom: 15%;
 }

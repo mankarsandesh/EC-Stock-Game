@@ -6,7 +6,7 @@ const createStore = () => {
         state: () => ({
             loader: false,
             isLoadingStockGame: false,
-            auth_token: sessionStorage.apikey,
+            auth_token: localStorage.apikey,
             isLoadingAnnoucement: [],
             isLoadingTopPlayer: [],
             isLoadingMessage: [],
@@ -304,7 +304,7 @@ const createStore = () => {
                         setTimeout(() => {
                             if (res.status) return;
 
-                            sessionStorage.removeItem('apikey');
+                            localStorage.removeItem('apikey');
                             console.log("Sorry, your session has expired. Please refresh and try again.")
                                 // location.href = "http://159.138.130.64"
                             location.href = "http://" + location.hostname + ":8001"
