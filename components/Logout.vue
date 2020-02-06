@@ -21,7 +21,7 @@
                 <v-list-tile-title>Profile</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="getLogout()">
-                <v-list-tile-title>Sing Out</v-list-tile-title>
+                <v-list-tile-title>Sign Out</v-list-tile-title>
             </v-list-tile>
         </v-list>
     </v-menu>
