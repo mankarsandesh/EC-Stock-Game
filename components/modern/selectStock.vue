@@ -13,8 +13,7 @@
                     {{$t('msg.SelectStock')}} > 
                     {{$t('navlist.'+getStockType(stockId))}} > 
                     {{ $t(`stockname.${stockId}`) }} > 
-                    {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} >
-                     {{getStockCrawlerData($route.params.id)[99].gameId}}
+                    {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} > {{GameId}}
                     <span class="show-icon">
                         <i class="fa fa-caret-down"></i>
                     </span>
@@ -75,6 +74,7 @@ export default {
     },
     data() {
         return {
+            GameId:"00000000000",
             stockData: [{
                     type: "crypto",
                     stockName: [{
@@ -138,6 +138,13 @@ export default {
     mounted() {
         // alert(this.stockData[0]);
         // console.warn(this.getAllStockByType)
+        setInterval(() => {
+           if (this.getStockCrawlerData(this.$route.params.id) != "") {
+             this.GameId = this.getStockCrawlerData(this.$route.params.id)[this.getStockCrawlerData(this.$route.params.id).length - 1].gameId
+        } 
+        }, 5000);
+        
+       
     },
 
     computed: {
