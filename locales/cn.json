@@ -140,7 +140,10 @@
         "StockLiveData": "库存实时数据",
         "Currency": "貨幣",
         "nodata": "對不起，沒有數據可顯示",
-        "sending": "發送..."
+        "sending": "發送...",
+        "ClassicVersion": "经典版",
+        "ModernVersion": "现代版",
+        "ChooseTheVersionToPlay": "選擇要播放的版本"
 
     },
     "navlist": {

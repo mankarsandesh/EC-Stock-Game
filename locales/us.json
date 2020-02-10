@@ -140,7 +140,10 @@
         "StockLiveData": "Stock Live Data",
         "Currency": "Currency",
         "nodata": "SORRY, NO DATA TO DISPLAY",
-        "sending": "Sending..."
+        "sending": "Sending...",
+        "ClassicVersion": "Classic Version",
+        "ModernVersion": "Modern Version",
+        "ChooseTheVersionToPlay": "Choose The Version To Play"
 
     },
     "navlist": {

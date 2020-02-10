@@ -1017,7 +1017,7 @@ export default {
                         this.$refs.tableNumberTwo.children[k].children[j].className =
                             "big-number";
                     }
-                    if (this.trendType === "bothDigit" || this.trendType === "twoDigit") {
+                    if (this.trendType === "twoDigit") {
                         this.$refs.tableNumberTwo.children[k].children[j].textContent =
                             this.trentNumber[s] < 10 ?
                             "0" + this.trentNumber[s] :

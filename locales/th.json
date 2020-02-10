@@ -138,7 +138,10 @@
         "StockLiveData": "สต็อกข้อมูลสด",
         "Currency": "สกุลเงิน",
         "nodata": "ขออภัยไม่มีข้อมูลที่จะแสดง",
-        "sending": "การส่ง..."
+        "sending": "การส่ง...",
+        "ClassicVersion": "รุ่นคลาสสิก",
+        "ModernVersion": "รุ่นทันสมัย",
+        "ChooseTheVersionToPlay": "เลือกรุ่นที่จะเล่น"
 
 
     },

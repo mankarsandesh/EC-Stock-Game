@@ -140,7 +140,10 @@
         "StockLiveData": "ຂໍ້ມູນລົງເກມຕອນນີ",
         "Currency": "ສະກຸນເງີນ",
         "nodata": "ຂໍອະໄພ, ບໍ່ມີຂໍ້ມູນທີ່ຈະສະແດງ",
-        "sending": "ການສົ່ງ..."
+        "sending": "ການສົ່ງ...",
+        "ClassicVersion": "ລຸ້ນຄຼາສສິກ",
+        "ModernVersion": "ລຸ້ນທັນສະໃໝ",
+        "ChooseTheVersionToPlay": "ເລືອກລຸ້ນທີ່ຈະຫລິ້ນ"
 
     },
     "navlist": {

@@ -1,11 +1,51 @@
 <template>
 <div>
+    <v-container class="pa-0">
+        <v-toolbar height="60" color="#fff" style="justify-content: center !importan;">
+            <v-toolbar-title>
+                <v-img width="158" src="/logo.png"></v-img>
+            </v-toolbar-title>
+            <v-spacer />
+            <v-toolbar-items class="hidden-xs-only text-s1 macky-color" v-if="!$vuetify.breakpoint.smAndDown">
+                <v-btn text flat @click="$refs.language.showDialog()">
+                    <countryFlag :country="countryflag" size="normal" />
+                </v-btn>
+                <v-list class="pa-0">
+                    <v-list-tile avatar>
+                        <v-list-tile-avatar>
+                            <img src="https://randomuser.me/api/portraits/men/85.jpg">
+                        </v-list-tile-avatar>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{getUserName.name}}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
+                <v-btn color="primary" @click="getLogout()" flat text icon>
+                    <v-icon size="30">logout</v-icon>
+                </v-btn>
+            </v-toolbar-items>
+
+            <v-btn text flat @click="$refs.language.showDialog()" v-if="$vuetify.breakpoint.smAndDown">
+                <countryFlag :country="countryflag" size="normal" />
+            </v-btn>
+            <v-btn color="primary" @click="getLogout()" flat text icon v-if="$vuetify.breakpoint.smAndDown">
+                <v-icon size="30">logout</v-icon>
+            </v-btn>
+        </v-toolbar>
+        <languageDialog ref="language"></languageDialog>
+    </v-container>
+
     <div class="bg-primary">
-        <v-container fluid style="display: flex; padding: 3%;">
+        <v-container fluid style="display: flex; padding-top: 2%;">
             <v-layout row justify-center align-center>
                 <v-flex>
+                    <div class="row justify-center align-center" style="display: flex;">
+                        <img src="/logoder.png" style=" width: 30%; height: 30%;" v-if="!$vuetify.breakpoint.smAndDown">
+                        <img src="/logoder.png" style=" width: 40%; height: 40%;" v-if="$vuetify.breakpoint.smAndDown">
+                    </div>
                     <div class="row d-flex justify-center align-center">
-                        <h1 class="text-center" style="color: aliceblue;">Choose Game ModeDer</h1>
+                        <h1 class="text-center dashboard" style="color: aliceblue;">{{$t('msg.ChooseTheVersionToPlay')}}</h1>
                     </div>
                 </v-flex>
             </v-layout>
@@ -15,13 +55,13 @@
                 <v-flex xs6 sm3 px-2 class="card-mode classic">
                     <nuxt-link :to="stockname == '' ? '/classic/l-btc1-live':'/classic/l-'+stockname+'-live'">
                         <img src="/bg/classic.png" alt="mode classic">
-                        <span class="font-size">Mode Classic</span>
+                        <span class="font-size dashboard">{{$t('msg.ClassicVersion')}}</span>
                     </nuxt-link>
                 </v-flex>
                 <v-flex xs6 sm3 px-2 class="card-mode modern">
                     <nuxt-link :to="linkto">
                         <img src="/bg/modern.png" alt="mode modern">
-                        <span class="font-size">Mode Modern</span>
+                        <span class="font-size dashboard">{{$t('msg.ModernVersion')}}</span>
                     </nuxt-link>
                 </v-flex>
             </v-layout>
@@ -53,17 +93,27 @@
 
 <script>
 import {
+    mapGetters,
+    mapMutations
+} from "vuex";
+import {
     isMobile
 } from "mobile-device-detect";
+import countryFlag from "vue-country-flag";
+import languageDialog from "~/components/LanguageDialog";
+import Logout from "~/components/Logout";
 export default {
     layout: "nolayout",
     // middleware: 'getApiKey',
-
+    components: {
+        countryFlag,
+        languageDialog,
+        Logout
+    },
     data() {
         return {
             stockname: "btc1",
-            linkto: '',
-
+            linkto: ''
         };
     },
     mounted() {
@@ -81,6 +131,14 @@ export default {
             } else {
                 this.linkto = "/modern/desktop/" + stockname;
             }
+        }
+    },
+    computed: {
+        ...mapGetters([
+            "getlocale", "getUserName"
+        ]),
+        countryflag() {
+            return this.getlocale;
         }
     },
     methods: {
@@ -132,6 +190,39 @@ export default {
             setTimeout(function () {
                 $(".preloader-wrap").fadeOut(100);
             }, time);
+        },
+        getLogout() {
+            this.$swal({
+                title: "Are you sure?",
+                text: "Did you leave the EC Gaming page?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, Logout!",
+                cancelButtonText: "No, Cancel Logout!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }).then(isConfirm => {
+                if (isConfirm.value) {
+                    this.$swal({
+                        title: "Good Bye EC Gaming!",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(Confirm => {
+                        this.$store.state.auth_token = []
+                        localStorage.apikey = []
+                        window.close()
+                    })
+                } else {
+                    this.$swal({
+                        title: "Cancelled Logout",
+                        type: "error",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
         }
     }
 };
