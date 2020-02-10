@@ -10,7 +10,11 @@
                     </span>
                 </span>
                 <span v-show="!isMultigame" style="font-size:0.89rem;">
-                    {{$t('msg.SelectStock')}} > {{$t('navlist.'+getStockType(stockId))}} > {{ $t(`stockname.${stockId}`) }} > {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} > 010620191007094101
+                    {{$t('msg.SelectStock')}} > 
+                    {{$t('navlist.'+getStockType(stockId))}} > 
+                    {{ $t(`stockname.${stockId}`) }} > 
+                    {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} >
+                     {{getStockCrawlerData($route.params.id)[99].gameId}}
                     <span class="show-icon">
                         <i class="fa fa-caret-down"></i>
                     </span>
@@ -142,7 +146,8 @@ export default {
             "getStockType",
             "checkMultigameExistAndDisable",
             "checkMultigameExistAndShowIcon",
-            "getAllStockByType"
+            "getAllStockByType",
+            "getStockCrawlerData"
         ])
     },
     methods: {

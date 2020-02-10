@@ -211,6 +211,11 @@ export default {
             this.getliveBetCount()
             this.getliveAll()
         }, 1000);
+        console.log(
+            // this.getLotteryDraw(this.$route.params.id)
+                    //   | 
+                    this.getStockLoop(this.$route.params.id)
+        )
 
     },
 

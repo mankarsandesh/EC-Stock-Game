@@ -26,7 +26,8 @@
     },
     "home": {
         "welcome": "欢迎",
-        "goodluck": "祝好运"
+        "goodluck": "祝好运",
+        "yourcurrentbalanceis": "您當前的餘額是"
     },
     "about": {
         "title": "About",

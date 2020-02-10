@@ -25,7 +25,8 @@
     },
     "home": {
         "welcome": "ยินดีต้อนรับ",
-        "goodluck": "โชคดี"
+        "goodluck": "โชคดี",
+        "yourcurrentbalanceis": "ยอดเงินปัจจุบันของคุณคือ"
     },
     "about": {
         "title": "เกี่ยวกับ",

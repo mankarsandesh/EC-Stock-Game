@@ -27,7 +27,9 @@
     },
     "home": {
         "welcome": "Welcome",
-        "goodluck": "GoodLuck"
+        "goodluck": "Good Luck!",
+        "yourcurrentbalanceis": "your current balance is"
+
     },
     "about": {
         "title": "About",
