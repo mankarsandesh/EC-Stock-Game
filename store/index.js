@@ -837,6 +837,29 @@ const createStore = () => {
                 const StockId = state.stocks[id].stockId;
                 return StockId;
             },
+            getStockIdtoStockName: state => id => {
+                if (id == "") {
+                    return;
+                }
+                let stockname;
+                if (id == 7) {
+                    stockname = "btc1"
+                } else if (id == 5) {
+                    stockname = "usindex"
+                } else if (id == 6) {
+                    stockname = "btc5"
+                } else if (id == 1) {
+                    stockname = "sh000001"
+                } else if (id == 4) {
+                    stockname = "sz399001"
+                } else if (id == 3) {
+                    stockname = "sz399415"
+                } else if (id == 2) {
+                    stockname = "sh000300"
+                }
+                const data = state.stocks[stockname].stockname;
+                return data;
+            },
             // get stock type
             getStockType: state => id => {
                 // console.log("getStockType")
