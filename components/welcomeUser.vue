@@ -3,20 +3,29 @@
     <h4>
         {{$t('home.welcome')}}
         <span class="warning--text">{{getUserName.name}},</span> {{$t('home.yourcurrentbalanceis')}}
-        <span class="warning--text">{{formatToPrice(getBalance)}}</span>
+        <span class="warning--text">
+            <animated-number :value="getBalance" :formatValue="formatToPrice" />
+        </span>
         {{$t('home.goodluck')}}！
-        <span :style="'padding: 0% 2%;color:'+color" v-if="snackbar"><i class="fa fa-bell" style="color: yellow;" v-if="betPrice>0"/> {{text}} {{formatToPrice(betPrice)}}</span>
-     
+        <span class="slideInLeft" :style="' color:'+color" v-if="snackbar"><i class="fa fa-bell" style="color: yellow;" v-if="betPrice>0" />
+            {{text}}
+            <animated-number :value="betPrice" :formatValue="formatToPrice" />
+        </span>
     </h4>
 </div>
 </template>
 
 <script>
+import AnimatedNumber from "animated-number-vue";
 import openSocket from "socket.io-client";
 import {
-    mapGetters
+    mapGetters,
+    mapActions
 } from "vuex";
 export default {
+    components: {
+        AnimatedNumber
+    },
     computed: {
         ...mapGetters(["getBalance", "getUserName"])
     },
@@ -28,10 +37,11 @@ export default {
             snackbar: false
         }
     },
-    mounted(){
-      this.getTime()
+    mounted() {
+        this.getTime()
     },
     methods: {
+        ...mapActions(["balance"]),
         formatToPrice(value) {
             return `$ ${Number(value)
         .toFixed(2)
@@ -54,12 +64,13 @@ export default {
                     times = data.sh000001.timer;
                     calculating = 241;
                 }
-                
+
                 if (times == calculating - 3) {
                     this.alertOutCome()
-                    setTimeout(()=>{
-                      this.snackbar = false
-                    },10000)
+                    setTimeout(() => {
+                        this.snackbar = false
+                        this.balance()
+                    }, 3500)
                 }
             });
         },
@@ -71,7 +82,7 @@ export default {
             this.betPrice = totalPayout.data
             if (totalPayout.data > 0) {
                 this.text = this.$root.$t('msg.winbet');
-                this.color = "#FFFFFF";
+                this.color = "#17da14";
                 this.playSound('/voice/winbet.mp3')
             } else {
                 this.text = this.$root.$t('msg.losebet');
@@ -91,5 +102,26 @@ export default {
 <style scoped>
 .warning--text {
     text-transform: capitalize;
+}
+
+.slideInLeft {
+    padding: 0.6% 2%;
+    /* background: #17da14; */
+    position: relative;
+    animation-name: mymove;
+    animation-duration: 3s;
+    left: -100px;
+    /* border-radius: 3px; */
+    /* border: 1px solid; */
+}
+
+@keyframes mymove {
+    from {
+        left: 200px;
+    }
+
+    to {
+        left: -120px;
+    }
 }
 </style>
