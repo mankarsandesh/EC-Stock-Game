@@ -1,12 +1,24 @@
 <template>
-<v-app>
+  <v-app>
     <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
-        <div class="text-xs-center loading">
-            <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
-        </div>
+      <div class="text-xs-center loading">
+        <v-progress-circular
+          style="top: calc(100% - 68%);"
+          :size="100"
+          :width="10"
+          color="#ffffff"
+          indeterminate
+        ></v-progress-circular>
+      </div>
     </div>
     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
-        <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
+      <v-progress-circular
+        style="top: calc(100% - 68%);"
+        :size="100"
+        :width="10"
+        color="#ffffff"
+        indeterminate
+      ></v-progress-circular>
     </div>
 
     <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
@@ -52,26 +64,25 @@
         </v-toolbar>
         <hr />
 
-        <languageDialog ref="language"></languageDialog>
+      <languageDialog ref="language"></languageDialog>
 
-        <v-content>
-            <v-container pa-0>
-                <nuxt />
-            </v-container>
-        </v-content>
+      <v-content>
+        <v-container pa-0>
+          <nuxt />
+        </v-container>
+      </v-content>
     </v-container>
     <!-- <v-float dark color="#003e70" >   
   EC
     </v-float>-->
+
+    <!-- chat Window -->
     <chatWindow />
-</v-app>
+  </v-app>
 </template>
 
 <script>
-import {
-    mapGetters,
-    mapMutations
-} from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 import menu from "~/data/menudesktop";
 
@@ -88,199 +99,198 @@ import chatWindow from "~/components/chatWindow";
 
 import Logout from "../components/Logout";
 export default {
-    components: {
-        chatWindow,
-        countryFlag,
-        languageDialog,
-        winnerMarquee,
-        welcomeUser,
-        Logout
-    },
-    data() {
-        return {
-            direction: "top",
-            fab: true,
-            fling: true,
-            hover: false,
-            tabs: true,
-            top: false,
-            right: true,
-            bottom: true,
-            left: false,
-            transition: "slide-y-reverse-transition",
+  components: {
+    chatWindow,
+    countryFlag,
+    languageDialog,
+    winnerMarquee,
+    welcomeUser,
+    Logout
+  },
+  data() {
+    return {
+      direction: "top",
+      fab: true,
+      fling: true,
+      hover: false,
+      tabs: true,
+      top: false,
+      right: true,
+      bottom: true,
+      left: false,
+      transition: "slide-y-reverse-transition",
 
-            //winner mqrquee
-            winner: [],
-            pauseTime: 2000,
-            pauseOnHover: false,
-            scrollSpeed: 30,
-            showSpeed: 20,
+      //winner mqrquee
+      winner: [],
+      pauseTime: 2000,
+      pauseOnHover: false,
+      scrollSpeed: 30,
+      showSpeed: 20,
 
-            clipped: false,
-            drawer: false,
-            fixed: false,
-            menu: menu,
-            miniVariant: false,
-            right: true,
-            rightDrawer: false,
-            title: "EC gaming",
-            isFullscreen: null,
-            timeout: 3000
-        };
-    },
+      clipped: false,
+      drawer: false,
+      fixed: false,
+      menu: menu,
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: "EC gaming",
+      isFullscreen: null,
+      timeout: 3000
+    };
+  },
 
-    created() {
-        // check is full screen or not
-        let path = this.$nuxt.$route.name.split("-");
-        let isFullscreen = path[1];
-        if (isFullscreen === "fullscreen") {
-            this.isFullscreen = true;
-        } else {
-            this.isFullscreen = false;
-        }
+  created() {
+    // check is full screen or not
+    let path = this.$nuxt.$route.name.split("-");
+    let isFullscreen = path[1];
+    if (isFullscreen === "fullscreen") {
+      this.isFullscreen = true;
+    } else {
+      this.isFullscreen = false;
+    }
 
-        console.log("crearted");
-    },
-    mounted() {
-        setInterval(() => {
-            this.getwinuser();
-        }, 10000);
-        this.getwinuser();
-        lottie.loadAnimation({
-            container: this.$refs.svgContainer, // the dom element that will contain the animation
-            renderer: "svg",
-            loop: true,
-            autoplay: true,
-            path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
-        });
-        // setInterval(function() {
+    console.log("crearted");
+  },
+  mounted() {
+    setInterval(() => {
+      this.getwinuser();
+    }, 10000);
+    this.getwinuser();
+    lottie.loadAnimation({
+      container: this.$refs.svgContainer, // the dom element that will contain the animation
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
+    });
+    // setInterval(function() {
 
-        // }, 1000);
+    // }, 1000);
 
-        // this.setIsLoadingStockGame(false);
-    },
-    created() {},
-    methods: {
+    // this.setIsLoadingStockGame(false);
+  },
+  created() {},
+  methods: {
+    getwinuser() {
+      this.$axios
+        .$get("api/fetchBet")
+        .then(response => {
+          //  console.log("response.....................")
+          // console.log(response.data)
+          //  console.log("response.......................")
+          let resultStatus = null;
+          for (let i = 0; i < response.data.length - 1; i++) {
+            let betID = response.data[i].betId;
+            let result = response.data[i].result;
+            let name = response.data[i].name;
+            if (result == "1") {
+              resultStatus = "Win";
 
-        getwinuser() {
-            this.$axios.$get("api/fetchBet").then(response => {
-                    //  console.log("response.....................")
-                    // console.log(response.data)
-                    //  console.log("response.......................")
-                    let resultStatus = null;
-                    for (let i = 0; i < response.data.length - 1; i++) {
-                        let betID = response.data[i].betId;
-                        let result = response.data[i].result;
-                        let name = response.data[i].name;
-                        if (result == "1") {
-                            resultStatus = "Win";
-
-                            //  console.log(resultStatus);
-                            let betAmount = response.data[i].betAmount;
-                            let betTime = response.data[i].betTime;
-                            let win = `
+              //  console.log(resultStatus);
+              let betAmount = response.data[i].betAmount;
+              let betTime = response.data[i].betTime;
+              let win = `
           <span class="text-slide text-white"><span class="text-warning">
           <i class="fa fa-bell"></i>
           </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
-          </span> ${name}  ${betTime}</span>`
-                            this.winner.push(win);
-                        }
-
-                    }
-                })
-                .catch(error => {
-                    alert(error)
-                })
-        }
-    },
-    computed: {
-        ...mapGetters([
-            "getBalance",
-            "getlocale",
-            "getIsLoadingStockGame",
-            "getStockCrawlerData"
-        ]),
-        countryflag() {
-            return this.getlocale;
-        }
+          </span> ${name}  ${betTime}</span>`;
+              this.winner.push(win);
+            }
+          }
+        })
+        .catch(error => {
+          alert(error);
+        });
     }
+  },
+  computed: {
+    ...mapGetters([
+      "getBalance",
+      "getlocale",
+      "getIsLoadingStockGame",
+      "getStockCrawlerData"
+    ]),
+    countryflag() {
+      return this.getlocale;
+    }
+  }
 };
 </script>
 
 <style scoped>
 .v-toolbar__content {
-    padding: 0 !important;
-    justify-content: center !important;
+  padding: 0 !important;
+  justify-content: center !important;
 }
 
 .settop {
-    top: 30%;
+  top: 30%;
 }
 
 .popper {
-    background-color: #333;
-    border-radius: 10px;
+  background-color: #333;
+  border-radius: 10px;
 }
 
 .container-loading {
-    position: absolute;
-    z-index: 5000;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  z-index: 5000;
+  width: 100%;
+  height: 100%;
 }
 
 .loading {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 0.7;
-
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.7;
 }
 
 /* This is for documentation purposes and will not be needed in your application */
 .v-speed-dial {
-    position: absolute;
+  position: absolute;
 }
 
 .v-btn--floating {
-    position: relative;
+  position: relative;
 }
 
 .v-progress-circular {
-    margin: 1rem
+  margin: 1rem;
 }
 
 .layout-btn {
-    padding: 0 5px;
-    display: flex;
+  padding: 0 5px;
+  display: flex;
 }
 
 .v-btn {
-    /* padding: 0 5px !important; */
-    border: 1px solid #ccc;
-    border-bottom: none;
-    border-top: none;
+  /* padding: 0 5px !important; */
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-top: none;
 }
 
 .btn-langage {
-    border: 1px solid #ccc;
-    height: 48% !important;
-    border-radius: 1em;
-    display: flow-root;
+  border: 1px solid #ccc;
+  height: 48% !important;
+  border-radius: 1em;
+  display: flow-root;
 }
 
 .icon-dollar {
-    color: white;
-    background: green;
-    padding: 6px;
-    border-radius: 10em;
-    width: 27px;
+  color: white;
+  background: green;
+  padding: 6px;
+  border-radius: 10em;
+  width: 27px;
 }
 
 nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
-    color: #ffffff;
-    background: rgba(7, 207, 7, 0.932);
+  color: #ffffff;
+  background: rgba(7, 207, 7, 0.932);
 }
 
 .layout-logout {

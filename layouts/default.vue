@@ -87,14 +87,9 @@ export default {
     };
   },
 
-  created() {
-
-  },
-  mounted() {
-
-  },
-  methods: {
-  },
+  created() {},
+  mounted() {},
+  methods: {},
   computed: {
     ...mapGetters(["getBalance", "getlocale"]),
     countryflag() {
