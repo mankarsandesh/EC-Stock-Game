@@ -37,15 +37,12 @@
                             </div>
                             <v-layout>
                                 <v-flex class="layout-bottom">
-                                    <div id="fullscreenGuidelines">
-                                        <v-btn dark color="#003e70" :to="'/modern/fullscreen/' +$route.params.id">
-                                            <v-icon left dark class="ma-0">fullscreen</v-icon>
-                                            {{$t('msg.fullscreenmode')}}
-                                        </v-btn>
+                                    <div id="fullscreenGuidelines">       
+                                            <v-btn rigth fab  class="fullscreen" :to="'/modern/fullscreen/' +$route.params.id" >
+                                            <v-icon>fullscreen</v-icon> 
+                                            </v-btn>
                                     </div>
-                                    <!-- <div id="multiGuideline">
-                                        <v-btn dark :to="'/modern/multigame/' +$route.params.id" color="#003e70">{{$t('msg.Multiplegaming')}}</v-btn>
-                                    </div> -->
+                                   
                                 </v-flex>
                             </v-layout>
                         </v-flex>
@@ -541,6 +538,18 @@ export default {
 </script>
 
 <style scoped>
+.fullscreen{
+    position: fixed !important;
+    bottom: 18px;
+    right: 150px;
+    width: 60px;
+    height: 60px;
+    color:#FFF;
+    background-color: #8d31cd !important;
+}
+.fullscreen .v-icon{
+ font-size:30px;
+}
 .lastDraw {
     font-size: 14px;
 }

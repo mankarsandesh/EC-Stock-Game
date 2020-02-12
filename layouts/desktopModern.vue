@@ -70,12 +70,9 @@
 
     
 
-
+    <!-- chat Window -->
     <chatWindow />
-    
-    <v-btn rigth fab  class="fullscreen">
-       <v-icon>fullscreen</v-icon> 
-    </v-btn>
+
        
 
 </v-app>
@@ -222,16 +219,7 @@ export default {
 </script>
 
 <style scoped>
-.fullscreen{
-    position: fixed;
-    bottom: 18px;
-    right: 10px;
-    color:#FFF;
-    background-color: #8d31cd !important;
-}
-.fullscreen .v-icon{
- font-size:25px;
-}
+
 .v-toolbar__content {
     padding: 0 !important;
     justify-content: center !important;
