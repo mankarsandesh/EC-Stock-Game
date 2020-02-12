@@ -43,9 +43,9 @@
                                             {{$t('msg.fullscreenmode')}}
                                         </v-btn>
                                     </div>
-                                    <div id="multiGuideline">
+                                    <!-- <div id="multiGuideline">
                                         <v-btn dark :to="'/modern/multigame/' +$route.params.id" color="#003e70">{{$t('msg.Multiplegaming')}}</v-btn>
-                                    </div>
+                                    </div> -->
                                 </v-flex>
                             </v-layout>
                         </v-flex>
@@ -102,15 +102,10 @@
             </v-flex>
 
             
-                <v-span   class="addChart " @click="addTrendMap()">
-                    <v-icon  >add</v-icon>                    
+                <v-span class="addChart" @click="addTrendMap()">
+                    <v-icon>add</v-icon>                    
                 </v-span>
-            
-
-            
-                <!-- <v-btn class="text-white " color="#003e70" @click="addTrendMap()" style="border:1px solid red;">
-                    <v-icon left dark>add</v-icon>                    
-                </v-btn> -->
+           
            
 
         </v-flex>
@@ -564,8 +559,8 @@ export default {
   padding: 10px !important;
   background-color: #4464ff !important;
   position: absolute;
-  left: 64%;
-  margin-top: -12%;
+  left: 54%;
+  margin-top: -13%;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 .layout-bottom {
@@ -639,7 +634,6 @@ p.guideline {
     border-radius: 7px;
     padding: 6px;
     opacity: 0.9;
-
 }
 
 .btn-nextsetp {

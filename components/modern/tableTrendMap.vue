@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-layout wrap pa-4 row style="padding-bottom:0 !important;padding-top:48px !important;">
-      <v-flex xs2 lg2 v-if="!isFullscreen" style="padding-top:50px;" >
+    <v-layout wrap pa-4 row>
+      <v-flex xs1 lg1 v-if="!isFullscreen" style="padding-top:50px;" >
         <v-layout >
  
           <v-flex xs9>
@@ -53,7 +53,7 @@
           <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs10">
+      <v-flex class="xs9">
         <v-layout row wrap>
           <v-flex xs12 lg12 md12 ≈>
             <trendMap
@@ -65,6 +65,16 @@
           </v-flex>
         </v-layout>
       </v-flex>
+
+      <v-flex class="xs2">
+        <v-layout row wrap>
+          <v-flex xs12 lg12 md12 ≈>              
+              <v-btn class="multiGuideline" :to="'/modern/multigame/' +$route.params.id" color="#003e70">{{$t('msg.Multiplegaming')}}</v-btn>
+         </v-flex>
+        </v-layout>
+      </v-flex>
+
+
     </v-layout>
   </div>
 </template>
@@ -102,6 +112,11 @@ export default {
 };
 </script>
 <style scoped>
+.multiGuideline{
+  color:#FFF;
+  margin:50px;
+  background-color: #2bb13a !important;
+}
 .triangle-right {
   width: 0;
   height: 0;
@@ -115,7 +130,7 @@ export default {
   border-radius: 10px;
   white-space:pre-wrap !important;   
   height: 60px;
-font-size: 18px;
+  font-size: 15px;
   background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
 }
 .lastDigit { 
@@ -124,7 +139,7 @@ font-size: 18px;
   font-weight: bolder;  
   white-space:pre-wrap;   
   height: 60px;
- font-size: 18px;
+  font-size: 15px;
   background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
 }
 .bothDigit { 
@@ -133,7 +148,7 @@ font-size: 18px;
   white-space:pre-wrap; 
   height: 60px;
   /* word-spacing: 80px; */
-  font-size: 18px;
+  font-size: 15px;
   background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
 }
 .twoDigit {  
@@ -141,7 +156,7 @@ font-size: 18px;
   border-radius: 10px;
   white-space:pre-wrap;  
   height: 60px;
-  font-size: 18px;
+  font-size: 15px;
   background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
 }
 </style>

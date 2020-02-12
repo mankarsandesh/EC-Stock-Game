@@ -48,7 +48,7 @@
                     </v-btn>
                 </div>
                 <Logout style="display: flex;
- border: 1px solid #ccc;
+    border: 1px solid #ccc;
     border-bottom: none;
     border-top: none;
       border-right: none;" />
