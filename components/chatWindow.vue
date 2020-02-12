@@ -52,14 +52,17 @@
             </div>
         </div>
     </div>
-    <v-btn color="#dddddd
-    " dark rigth fab slot="reference" class="liveChat">
-        <div class="liveChatBUtton">
-            <v-img class="livechatImg" src="/favicon.png"></v-img>
-        </div>
+    <v-btn  rigth fab slot="reference" class="liveChat">
+       <v-icon>chat</v-icon> 
     </v-btn>
 
+   
+
+
 </popper>
+
+
+
 </template>
 
 <script>
@@ -204,14 +207,17 @@ export default {
 </script>
 
 <style scoped>
+
 .liveChat {
     position: fixed;
     right: 80px;
     bottom: 20px;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
+    color:#FFF;
     /* background: radial-gradient(circle at bottom left, transparent 58%, #333 60%); */
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
+    background-color: #2aaf3e !important;
 }
 
 .livechatImg {
@@ -226,7 +232,7 @@ export default {
 
 .liveChatBUtton {
     text-align: center;
-    background-color: aliceblue;
+    background-color: #2aaf3e;
     width: 50px;
     height: 50px;
     border-radius: 180px;

@@ -105,8 +105,6 @@
                 <v-span class="addChart" @click="addTrendMap()">
                     <v-icon>add</v-icon>                    
                 </v-span>
-           
-           
 
         </v-flex>
     </v-layout>
