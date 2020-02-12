@@ -101,12 +101,18 @@
                 </div>
             </v-flex>
 
-            <v-flex xs12 class="text-xs-center" v-if="trendTypes.length<4">
-                <v-btn class="text-white" color="#003e70" @click="addTrendMap()">
-                    <v-icon left dark>add</v-icon>
-                    {{$t('msg.addtrendchart')}}
-                </v-btn>
-            </v-flex>
+            
+                <v-span   class="addChart " @click="addTrendMap()">
+                    <v-icon  >add</v-icon>                    
+                </v-span>
+            
+
+            
+                <!-- <v-btn class="text-white " color="#003e70" @click="addTrendMap()" style="border:1px solid red;">
+                    <v-icon left dark>add</v-icon>                    
+                </v-btn> -->
+           
+
         </v-flex>
     </v-layout>
     <div ref="guideline" class="overlay">
@@ -546,6 +552,24 @@ export default {
     font-size: 14px;
 
 }
+.v-icon{
+    color: #FFF !important;
+    font-size:28px;
+    font-weight: bolder;
+}
+.addChart{
+  cursor: pointer;
+  border-radius:180px;
+  height:47px;
+  width: 47px;
+  padding: 10px !important;
+  background-color: #4464ff !important;
+  position: absolute;
+  left: 64%;
+  margin-top: -12%;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
 
 .layout-bottom {
     position: absolute;

@@ -37,6 +37,10 @@
         </div>
       </v-flex>
 
+       <!-- <v-flex xs12 class="text-xs-center" style="margin-top:10px;" >          
+              <v-icon class="addChart" @click="addTrendMap()">add</v-icon>         
+      </v-flex> -->
+
       <v-flex
         :class="setClass('pl-3 pb-5')"
         style="margin-top:10px;"
@@ -168,6 +172,20 @@ export default {
     // }
   },
   methods: {
+    addTrendMap() {
+            let trendCount = this.trendTypes.length;
+            switch (trendCount) {
+                case 1:
+                    this.trendTypes.push("lastDigit");
+                    break;
+                case 2:
+                    this.trendTypes.push("bothDigit");
+                    break;
+                case 3:
+                    this.trendTypes.push("twoDigit");
+                    break;
+            }
+    },
     setClass(value) {
       if (
         this.$vuetify.breakpoint.md ||
@@ -1129,7 +1147,17 @@ p {
   color: #003e70;
   font-weight: 500;
 }
+.addChart{
+  cursor: pointer;
+  border-radius:180px;
+  height:45px;
+  width: 45px;
+  color:#FFF;  
+  font-weight: bolder;
+  padding: 10px !important;
+  background-color: #4464ff !important;
 
+}
 .red {
   text-align: center;
   color: #fff;

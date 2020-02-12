@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-layout wrap pa-4 row style="padding-bottom:0 !important;padding-top:48px !important">
-      <v-flex xs2 lg2 v-if="!isFullscreen">
-        <v-layout>
+    <v-layout wrap pa-4 row style="padding-bottom:0 !important;padding-top:48px !important;">
+      <v-flex xs2 lg2 v-if="!isFullscreen" style="padding-top:50px;" >
+        <v-layout >
           <v-flex xs9>
             <v-btn
               block
@@ -109,26 +109,38 @@ export default {
   border-bottom: 18px solid transparent;
   align-self: center;
 }
-
 .firstDigit { 
   font-weight: bolder;
   border-radius: 10px;
+  white-space:pre-wrap !important;   
+  height: 60px;
+font-size: 18px;
   background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
 }
 .lastDigit { 
   text-align: center;
   border-radius: 10px;
   font-weight: bolder;  
+  white-space:pre-wrap;   
+  height: 60px;
+ font-size: 18px;
   background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
 }
 .bothDigit { 
   font-weight: bolder;
   border-radius: 10px;
+  white-space:pre-wrap; 
+  height: 60px;
+  /* word-spacing: 80px; */
+  font-size: 18px;
   background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
 }
 .twoDigit {  
   font-weight: bolder;
   border-radius: 10px;
+  white-space:pre-wrap;  
+  height: 60px;
+  font-size: 18px;
   background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
 }
 </style>
