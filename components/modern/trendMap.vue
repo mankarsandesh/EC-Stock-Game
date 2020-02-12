@@ -37,10 +37,7 @@
         </div>
       </v-flex>
 
-       <!-- <v-flex xs12 class="text-xs-center" style="margin-top:10px;" >          
-              <v-icon class="addChart" @click="addTrendMap()">add</v-icon>         
-      </v-flex> -->
-
+      
       <v-flex
         :class="setClass('pl-3 pb-5')"
         style="margin-top:10px;"
@@ -1087,31 +1084,15 @@ export default {
   background: transparent url("http://davidrhysthomas.co.uk/linked/strike.png")
     0 50% repeat-x;
 }
-
 .tooltip-inner {
   text-align: left;
 }
 
 .table-responsive {
-  /* overflow-x: hidden;
-  overflow-y: hidden; */
   border:1px solid #dddddd;
   border-radius:5px;
 }
-
-/* .line-t {
-  background: transparent url(/images/t.png);
-    background-repeat: repeat-y;
-    background-size: 100%;
-}
-.line-l {
-  background: transparent url("/images/L.png");
-  background-repeat: no-repeat;
-  background-size: 100%;
-} */
 table {
-  /* overflow-x: hidden;
-  overflow-y: hidden; */
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
@@ -1127,8 +1108,7 @@ table td {
 }
 
 td,
-tr {
-  /* border: 1px solid black; */
+tr { 
   min-width: 24px;
   height: 24px;
   text-align: center;
@@ -1146,17 +1126,6 @@ td,
 p {
   color: #003e70;
   font-weight: 500;
-}
-.addChart{
-  cursor: pointer;
-  border-radius:180px;
-  height:45px;
-  width: 45px;
-  color:#FFF;  
-  font-weight: bolder;
-  padding: 10px !important;
-  background-color: #4464ff !important;
-
 }
 .red {
   text-align: center;
@@ -1254,7 +1223,6 @@ p {
   background-color: #c0e6f2;
   border: 1px solid #17b1ca !important;
 }
-
 .padding {
   padding-top: 10px;
 }

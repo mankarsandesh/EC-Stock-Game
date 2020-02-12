@@ -550,7 +550,6 @@ export default {
 <style scoped>
 .lastDraw {
     font-size: 14px;
-
 }
 .v-icon{
     color: #FFF !important;
@@ -569,14 +568,11 @@ export default {
   margin-top: -12%;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
-
-
 .layout-bottom {
     position: absolute;
     bottom: calc(100% - 568px);
     display: inherit;
 }
-
 .overlay {
     height: 0%;
     width: 100%;
