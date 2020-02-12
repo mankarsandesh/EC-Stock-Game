@@ -179,6 +179,11 @@
         "bothdigit": "合数",
         "twodigit": "=两位数",
 
+        "firstdigits": "第一位数",
+        "lastdigits": "第二位数",
+        "bothdigits": "合数",
+        "twodigits": "=两位数",
+
         "big": "大",
         "small": "小",
         "odd": "单",

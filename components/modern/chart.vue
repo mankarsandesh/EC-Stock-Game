@@ -10,7 +10,7 @@
         <span class="text-second">{{ getLivePrice(stockid) }}</span>
       </v-flex>
     </v-layout>
-    <apexchart type="area" height="325vh" width="99.5%" :options="chartOptions" :series="series" />
+    <apexchart type="area" height="335vh" width="99.5%" :options="chartOptions" :series="series" />
   </div>
 </template>
 

@@ -9,7 +9,7 @@
         <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
     </div>
 
-    <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
+    <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
         <v-container pa-0>
             <v-toolbar color="#003e70" class="white--text">
                 <v-layout wrap style="margin-top:-10px;">
@@ -23,7 +23,7 @@
                 </v-layout>
             </v-toolbar>
         </v-container>
-    </v-container> -->
+    </v-container>
     <v-container class="pa-0">
         <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
             <v-toolbar-title>
@@ -38,20 +38,16 @@
                     <v-btn class="btn-langage" text flat>
                         <i class="fa fa-dollar icon-dollar" />
                         USD
-                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;"/>
+                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
                     </v-btn>
                 </div>
                 <div class="layout-btn">
                     <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
                         <countryFlag :country="countryflag" size="normal" /> {{$t('msg.chooselanguage')}}
-                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;"/>
+                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
                     </v-btn>
                 </div>
-                <Logout style="display: flex;
- border: 1px solid #ccc;
-    border-bottom: none;
-    border-top: none;
-      border-right: none;" />
+                <Logout class="layout-logout" />
             </v-toolbar-items>
         </v-toolbar>
         <hr />
@@ -285,5 +281,13 @@ export default {
 nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
     color: #ffffff;
     background: rgba(7, 207, 7, 0.932);
+}
+
+.layout-logout {
+    display: flex;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-top: none;
+    border-right: none;
 }
 </style>

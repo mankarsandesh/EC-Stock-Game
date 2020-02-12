@@ -30,7 +30,7 @@
                     <span>{{$t('msg.amount')}}</span>
                 </v-flex>
                 <v-flex style="align-self:center">
-                    <input type="number"  :min="1"  v-model="betValue" class="input-bet" />
+                    <input type="number" readonly :min="1"  v-model="betValue" class="input-bet" />
                 </v-flex>
                 <v-flex style="align-self:center">
                     <v-btn color="error" @click="clear">{{$t('msg.Clear')}}</v-btn>

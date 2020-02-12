@@ -22,7 +22,7 @@
 
 .v-card-style {
     box-shadow: none !important;
-    border: 1px solid #003e70;
+    /* border: 1px solid #003e70; */
     border-radius: 0;
 }
 
@@ -75,7 +75,8 @@ ul {
 body,
 .container,
 .light-toobar {
-    background-color: #ffffff !important;
+    /* background-color: #ffffff !important; */
+    background: linear-gradient(to bottom, #dadada 19%, #ffffff 70%)!important;
 }
 
 .text-color .v-input__control label {
@@ -427,9 +428,66 @@ table.result-table tr {
     margin: 0 4px;
 }
 
+.w12 {
+    width: 12.55555%;
+    margin: 0 2px;
+}
+
 .w10 {
     width: 10.55555%;
     margin: 0 4px;
+}
+
+.bg-btn-first {
+    background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+    height: 83px;
+    font-size: 16px;
+    font-weight: 400;
+    /* background-color: #093e70 !important; */
+    /* color: #ffffff !important; */
+    min-width: 88%;
+    border-radius: 6px;
+    padding: 0;
+    margin: 4px;
+}
+
+.bg-btn-last {
+    background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+    height: 83px;
+    font-size: 16px;
+    font-weight: 400;
+    /* background-color: #093e70 !important; */
+    /* color: #ffffff !important; */
+    min-width: 88%;
+    border-radius: 6px;
+    padding: 0;
+    margin: 4px;
+}
+
+.bg-btn-both {
+    background: linear-gradient(to right, #be3095 20%, #e71275 51%);
+    height: 83px;
+    font-size: 16px;
+    font-weight: 400;
+    /* background-color: #093e70 !important; */
+    /* color: #ffffff !important; */
+    min-width: 100%;
+    border-radius: 6px;
+    padding: 0;
+    margin: 4px;
+}
+
+.bg-btn-two {
+    background: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+    height: 83px;
+    font-size: 16px;
+    font-weight: 400;
+    /* background-color: #093e70 !important; */
+    /* color: #ffffff !important; */
+    min-width: 100%;
+    border-radius: 6px;
+    padding: 0;
+    margin: 4px;
 }
 
 .align_button4 span,
@@ -439,14 +497,15 @@ table.result-table tr {
 }
 
 .align_button4.v-btn {
-    height: 80px;
-    font-size: 18px;
+    height: 83px;
+    font-size: 16px;
     font-weight: 400;
-    /* background-color: #003e70 !important; */
+    /* background-color: #093e70 !important; */
     /* color: #ffffff !important; */
-    margin: 4px;
     min-width: 100%;
     border-radius: 6px;
+    padding: 0;
+    margin: 4px;
 }
 
 .align_button5.v-btn {
@@ -480,13 +539,13 @@ table.result-table tr {
 .betting-small.v-btn.theme--light {
     border-radius: 6px;
     padding: 0px;
-    margin: 2px 0px 2px 0;
+    margin: 4px 0px 2px 6px;
     height: 83px;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     /* background-color: #003e70 !important; */
     /* color: #fff !important; */
-    width: 100%;
+    min-width: 70px !important;
 }
 
 .layout .flex .layout .flex .container-btn-small {
