@@ -3,6 +3,7 @@
     <v-layout wrap pa-4 row style="padding-bottom:0 !important;padding-top:48px !important;">
       <v-flex xs2 lg2 v-if="!isFullscreen" style="padding-top:50px;" >
         <v-layout >
+ 
           <v-flex xs9>
             <v-btn
               block

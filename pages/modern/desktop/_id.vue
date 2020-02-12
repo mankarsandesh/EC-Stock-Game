@@ -21,7 +21,7 @@
             </v-layout>
         </v-flex>
         <v-flex xs10 pa-2>
-            <v-layout>
+            <v-layout mb-4>
                 <v-flex xs6 style="padding-top:21px">
                     <v-layout column>
                         <v-flex xs12>
@@ -67,7 +67,7 @@
                             <span>{{$t('msg.BetClosein')}}:</span>
                             <div id="betCloseInGuideline">
                                 <v-flex flex-style class="lastDraw">
-                                    <span class="text-yellow">{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
+                                    <span class="text-black">{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
 
                                 </v-flex>
                             </div>
@@ -76,7 +76,7 @@
                             <span>{{$t('msg.lotterydraw')}}:</span>
                             <div id="lotteryDrawGuidelines">
                                 <v-flex flex-style class="lastDraw">
-                                    <span class="text-yellow">{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
+                                    <span class="text-black">{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
                                 </v-flex>
                             </div>
                         </v-flex>
@@ -570,7 +570,7 @@ export default {
 }
 .layout-bottom {
     position: absolute;
-    bottom: calc(100% - 568px);
+    bottom: calc(100% - 466px);
     display: inherit;
 }
 .overlay {

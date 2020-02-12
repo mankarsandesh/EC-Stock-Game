@@ -9,7 +9,7 @@
         <v-progress-circular style="top: calc(100% - 68%);" :size="100" :width="10" color="#ffffff" indeterminate></v-progress-circular>
     </div>
 
-    <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
+    <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
         <v-container pa-0>
             <v-toolbar color="#003e70" class="white--text">
                 <v-layout wrap style="margin-top:-10px;">
@@ -23,23 +23,35 @@
                 </v-layout>
             </v-toolbar>
         </v-container>
-    </v-container>
+    </v-container> -->
     <v-container class="pa-0">
         <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
             <v-toolbar-title>
-                <v-img width="158" src="/logo.png"></v-img>
+                <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')"></v-img>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
                 <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
-                    {{
-            $t(`menu.${item.title}`)
-            }}
+                    <i :class="item.icon" style="margin-right: 3px;" /> <span> {{$t(`menu.${item.title}`)}}</span>
                 </v-btn>
-                <v-btn text flat @click="$refs.language.showDialog()">
-                    <countryFlag :country="countryflag" size="normal" />
-                </v-btn>
-                <Logout style="margin-top: 1%;" />
+                <div class="layout-btn">
+                    <v-btn class="btn-langage" text flat>
+                        <i class="fa fa-dollar icon-dollar" />
+                        USD
+                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;"/>
+                    </v-btn>
+                </div>
+                <div class="layout-btn">
+                    <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
+                        <countryFlag :country="countryflag" size="normal" /> {{$t('msg.chooselanguage')}}
+                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;"/>
+                    </v-btn>
+                </div>
+                <Logout style="display: flex;
+ border: 1px solid #ccc;
+    border-bottom: none;
+    border-top: none;
+      border-right: none;" />
             </v-toolbar-items>
         </v-toolbar>
         <hr />
@@ -241,5 +253,37 @@ export default {
 
 .v-progress-circular {
     margin: 1rem
+}
+
+.layout-btn {
+    padding: 0 5px;
+    display: flex;
+}
+
+.v-btn {
+    /* padding: 0 5px !important; */
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-top: none;
+}
+
+.btn-langage {
+    border: 1px solid #ccc;
+    height: 48% !important;
+    border-radius: 1em;
+    display: flow-root;
+}
+
+.icon-dollar {
+    color: white;
+    background: green;
+    padding: 6px;
+    border-radius: 10em;
+    width: 27px;
+}
+
+nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
+    color: #ffffff;
+    background: rgba(7, 207, 7, 0.932);
 }
 </style>

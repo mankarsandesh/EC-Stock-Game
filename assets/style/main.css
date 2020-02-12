@@ -427,6 +427,11 @@ table.result-table tr {
     margin: 0 4px;
 }
 
+.w10 {
+    width: 10.55555%;
+    margin: 0 4px;
+}
+
 .align_button4 span,
 .align_button5 span {
     width: 100%;
@@ -437,8 +442,8 @@ table.result-table tr {
     height: 80px;
     font-size: 18px;
     font-weight: 400;
-    background-color: #003e70 !important;
-    color: #ffffff !important;
+    /* background-color: #003e70 !important; */
+    /* color: #ffffff !important; */
     margin: 4px;
     min-width: 100%;
     border-radius: 6px;
@@ -448,8 +453,8 @@ table.result-table tr {
     height: 83px;
     font-size: 16px;
     font-weight: 400;
-    background-color: #093e70 !important;
-    color: #ffffff !important;
+    /* background-color: #093e70 !important; */
+    /* color: #ffffff !important; */
     min-width: 100%;
     border-radius: 6px;
     padding: 0;
@@ -457,7 +462,8 @@ table.result-table tr {
 }
 
 .align_button4.v-btn .v-btn__content,
-.align_button5.v-btn .v-btn__content {
+.align_button5.v-btn .v-btn__content,
+.betting-small.v-btn.theme--light {
     display: block;
 }
 
@@ -472,13 +478,14 @@ table.result-table tr {
 }
 
 .betting-small.v-btn.theme--light {
-    height: 25px;
     border-radius: 6px;
-    font-size: 9x;
     padding: 0px;
     margin: 2px 0px 2px 0;
-    background-color: #003e70 !important;
-    color: #fff !important;
+    height: 83px;
+    font-size: 16px;
+    font-weight: 400;
+    /* background-color: #003e70 !important; */
+    /* color: #fff !important; */
     width: 100%;
 }
 
@@ -551,10 +558,14 @@ table.result-table {
 
 .flex-style {
     width: 100%;
-    padding: 10px;
-    background-color: #003e70;
-    color: #fff;
+    font-size: 1.5em !important;
+    padding: 2px;
+    font-weight: bold;
+    /* background-color: #003e70; */
+    color: #000;
     min-height: 36px;
+    border: 1px solid #003e70;
+    border-radius: 0.5em;
 }
 
 .table-responsive {

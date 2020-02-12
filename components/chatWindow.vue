@@ -72,14 +72,14 @@ import {
 import io from "socket.io-client";
 import VueChatScroll from 'vue-chat-scroll';
 
-export const socket = io("http://159.138.47.250", {
-    transports: ["polling"],
-    query: `userId=123`
-});
-export const socketGame = io("http://159.138.47.250", {
-    transports: ["polling"],
-    path: "/chatgame/socket.io"
-});
+// export const socket = io("http://159.138.47.250", {
+//     transports: ["polling"],
+//     query: `userId=123`
+// });
+// export const socketGame = io("http://159.138.47.250", {
+//     transports: ["polling"],
+//     path: "/chatgame/socket.io"
+// });
 
 export default {
     components: {
@@ -123,41 +123,41 @@ export default {
         // Socket for Channel
         // console.log("created run");
 
-        socket.on("new-message-global", data => {
-            // console.log("created");
-            // console.log(data);
-            this.getMessages.push({
-                name: data.name,
-                userId: data.userId,
-                message: data.message
-            });
-            // console.log(this.getMessages);
-        });
+        // socket.on("new-message-global", data => {
+        //     // console.log("created");
+        //     // console.log(data);
+        //     this.getMessages.push({
+        //         name: data.name,
+        //         userId: data.userId,
+        //         message: data.message
+        //     });
+        //     // console.log(this.getMessages);
+        // });
         // Socket for Game 
-        socketGame.on("new-message-game", data => {
-            // console.log("created Game two");
-            // console.log(data);
-            this.getMessagesGame.push({
-                name: data.name,
-                userId: data.userId,
-                message: data.message
-            });
-        });
+        // socketGame.on("new-message-game", data => {
+        //     // console.log("created Game two");
+        //     // console.log(data);
+        //     this.getMessagesGame.push({
+        //         name: data.name,
+        //         userId: data.userId,
+        //         message: data.message
+        //     });
+        // });
 
-        socket.on("user-count-global", data => {
-            // console.log("Count");
-            // console.log(data);
-            this.totoalUserCount = data;
+        // socket.on("user-count-global", data => {
+        //     // console.log("Count");
+        //     // console.log(data);
+        //     this.totoalUserCount = data;
 
-        });
+        // });
 
-        socket.on('chat-global', (data) => {
-            // console.log(data);
-        });
+        // socket.on('chat-global', (data) => {
+        //     // console.log(data);
+        // });
 
-        socketGame.on('chat-game', data => {
-            // console.log(data);
-        });
+        // socketGame.on('chat-game', data => {
+        //     // console.log(data);
+        // });
 
     },
     methods: {
@@ -177,23 +177,23 @@ export default {
         },
         sendMsg: function (event) {
             if (this.message) {
-                socket.emit("send-message-global", {
-                    message: this.message,
-                    userId: this.getUserName.userId,
-                    name: this.getUserName.name
-                });
+                // socket.emit("send-message-global", {
+                //     message: this.message,
+                //     userId: this.getUserName.userId,
+                //     name: this.getUserName.name
+                // });
                 console.log("Message Send");
                 this.message = "";
             }
         },
         sendMsgGame: function (event) {
             if (this.messageGame) {
-                socketGame.emit("send-message-game", {
-                    message: this.messageGame,
-                    userId: this.getUserName.userId,
-                    name: this.getUserName.name,
-                    gameId: 13213
-                });
+                // socketGame.emit("send-message-game", {
+                //     message: this.messageGame,
+                //     userId: this.getUserName.userId,
+                //     name: this.getUserName.name,
+                //     gameId: 13213
+                // });
                 console.log("Send Game Message");
                 console.log(this.messageGame);
                 this.messageGame = "";

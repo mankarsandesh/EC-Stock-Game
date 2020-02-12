@@ -74,6 +74,12 @@ span.text-red {
     color: red !important;
 }
 
+span.text-black {
+    @extend %rules;
+    color: #000!important;
+    font-size: 1em;
+}
+
 %notactive {
     background-color: transparent;
     box-shadow: none;
