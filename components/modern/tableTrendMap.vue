@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout wrap pa-4 row style="padding-bottom:0 !important;padding-top:48px !important">
+    <v-layout wrap row>
       <v-flex xs2 lg2 v-if="!isFullscreen">
         <v-layout>
           <v-flex xs9>

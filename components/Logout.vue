@@ -1,13 +1,26 @@
 <template>
-<div>
-    <v-menu offset-y :close-on-content-click="false" :nudge-width="150">
+<div style="z-index:100">
+    <v-menu offset-y :close-on-content-click="false" :min-width="180">
         <template v-slot:activator="{ on }">
-            <v-btn color="primary" flat icon v-on="on">
+            <v-btn flat v-on="on" v-show="isShow == 'classic'">
                 <v-icon size="30">account_circle</v-icon>
+            </v-btn>
+            <v-btn flat v-on="on" v-show="isShow == 'modern'">
+                <v-avatar size="40">
+                    <img src="/user.png" alt />
+                </v-avatar>
+                <div style="display: inline-grid;justify-items: center;">
+                    <span>{{getUserName.name}}</span>
+                    <span>
+                        {{$t('msg.Balance')}}:
+                        <animated-number :value="getBalance" :formatValue="formatToPrice" />
+                    </span>
+                </div>
+                <i class="fa fa-caret-down" />
             </v-btn>
         </template>
         <v-list>
-            <div style="display: inline-grid;justify-items: center;width: 100%;">
+            <div v-show="isShow == 'classic'" style="display: inline-grid;justify-items: center;width: 100%;">
                 <v-avatar size="90">
                     <img src="/user.png" alt />
                 </v-avatar>
@@ -18,10 +31,20 @@
                 <v-list-tile-title>Profile</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="$router.push('/modern/desktop/profile');" v-show="isShow == 'modern'">
-                <v-list-tile-title>Profile</v-list-tile-title>
+                <i class="fa fa-user fa-2x margin-right-5" />
+                <v-list-tile-title> {{$t('menu.profile')}}</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="$router.push('/modern/desktop/profile');" v-show="isShow == 'modern'">
+                <i class="fa fa-hourglass-half fa-15x margin-right-5" />
+                <v-list-tile-title> {{$t('profile.online history')}}</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="$router.push('/modern/desktop/profile');" v-show="isShow == 'modern'">
+                <i class="fa fa-line-chart fa-15x margin-right-5" />
+                <v-list-tile-title> {{$t('profile.stock analysis')}}</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="getLogout()">
-                <v-list-tile-title>Sign Out</v-list-tile-title>
+                <i class="fa fa-lock fa-2x margin-right-5" />
+                <v-list-tile-title> Sign Out</v-list-tile-title>
             </v-list-tile>
         </v-list>
     </v-menu>
@@ -42,6 +65,7 @@
 </template>
 
 <script>
+import AnimatedNumber from "animated-number-vue";
 import {
     mapGetters,
     mapActions,
@@ -50,23 +74,30 @@ import {
 import profile from "~/pages/modern/desktop/profile";
 export default {
     components: {
-        profile
+        profile,
+        AnimatedNumber
     },
     data() {
         return {
             dialogprofile: false,
-            isShow: ""
+            isShow: "",
         }
     },
     computed: {
         ...mapGetters([
-            "getUserName"
+            "getUserName",
+            "getBalance"
         ]),
     },
     mounted() {
         this.isShow = location.pathname.split("/")[1]
     },
     methods: {
+        formatToPrice(value) {
+            return `$ ${Number(value)
+        .toFixed(2)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        },
         getLogout() {
             this.$swal({
                 title: "Are you sure?",
@@ -86,7 +117,7 @@ export default {
                         showConfirmButton: false,
                         timer: 1500
                     }).then(Confirm => {
-                        this.$store.state.auth_token= [] 
+                        this.$store.state.auth_token = []
                         localStorage.apikey = []
                         window.close()
                     })
@@ -103,3 +134,27 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.fa-15x {
+    font-size: 1.45em;
+}
+
+.margin-right-5 {
+    margin-right: 5px;
+}
+
+.v-avatar {
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 50%;
+    display: -webkit-inline-box;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid;
+}
+</style>
