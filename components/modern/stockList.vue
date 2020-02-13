@@ -60,15 +60,14 @@ th {
 
 th,
 td {
+  text-transform: capitalize;
   text-align: center;
   padding: 8px 2px 6px 4px;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
+
 .table-responsive {
     overflow: auto;
 }

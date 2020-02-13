@@ -30,9 +30,9 @@
                 </div>
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
-                <div id="chartGuideline">
+                <div id="chartGuideline" class="chartDesgin">
                   <v-flex >
-                    <chartApp
+                    <chartApp                   
                       :data="getStockById($route.params.id).stockPrice"
                       :time="getStockById($route.params.id).stockTime"
                       :key="getStockById($route.params.id).stockPrice[0]"
@@ -58,12 +58,12 @@
             </v-layout>
           </v-flex>
           <v-flex xs6 class="mx-2">
-            <v-layout>
+            <v-layout style="margin-bottom:10px;">
               <v-flex class="text-xs-center" px-2>
                 <span>{{$t('msg.Lastdraw')}}:</span>
                 <div id="lastDrawGuideline">
-                  <v-flex flex-style class="lastDraw">
-                    <span v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></span>
+                  <v-flex class="lastdraw">
+                    <span   class="text-black" v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -71,7 +71,7 @@
               <v-flex class="text-xs-center" px-2>
                 <span>{{$t('msg.BetClosein')}}:</span>
                 <div id="betCloseInGuideline">
-                  <v-flex flex-style class="lastDraw">
+                  <v-flex  class="betclose">
                     <span
                       class="text-black"
                     >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
@@ -81,7 +81,7 @@
               <v-flex class="text-xs-center" px-2>
                 <span>{{$t('msg.lotterydraw')}}:</span>
                 <div id="lotteryDrawGuidelines">
-                  <v-flex flex-style class="lastDraw">
+                  <v-flex class="lottery">
                     <span
                       class="text-black"
                     >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
@@ -536,6 +536,12 @@ export default {
 </script>
 
 <style scoped>
+.chartDesgin{
+  margin-top: 10px;
+  padding: 5px 5px;
+  background-color: #FFF;
+  border-radius:10px;
+}
 .fullscreen {
   position: fixed !important;
   bottom: 18px;
@@ -548,8 +554,28 @@ export default {
 .fullscreen .v-icon {
   font-size: 30px;
 }
-.lastDraw {
+
+
+.lastdraw {
   font-size: 14px;
+  border:1.5px solid #4b65ff;
+  border-radius:10px;
+  font-size: 20px;
+  font-weight: 400;
+}
+.betclose {
+  font-size: 14px;
+  border:1.5px solid #ef076a;
+  border-radius:10px;
+  font-size: 20px;
+  font-weight: 400;
+}
+.lottery {
+  font-size: 14px;
+  border:1.5px solid #01e3bf;
+  border-radius:10px;
+  font-size: 20px;
+  font-weight: 400;
 }
 .v-icon {
   color: #fff !important;
