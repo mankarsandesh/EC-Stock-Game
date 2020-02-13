@@ -3,18 +3,18 @@
     <v-layout>
       <v-flex
         pa-2
-        class="text-xs-center text-uppercase text-white flex-cursor pa-0"
-        style=" background-color: #003e70"
-        @click="switchIsShowBet(true)"
+        class="text-xs-center  flex-cursor pa-0 betTab"       
+        :class="{activeTab:selected == 1}"
+        @click="switchIsShowBet(true,1)"
       >
         <span>{{$t('msg.Bet Result')}}</span>
       </v-flex>
       <v-spacer></v-spacer>
       <v-flex
         pa-2
-        class="text-xs-center text-uppercase text-white flex-cursor"
-        style=" background-color: #33658d"
-        @click="switchIsShowBet(false)"
+        class="text-xs-center  flex-cursor betTab"      
+        :class="{activeTab:selected == 2}"
+        @click="switchIsShowBet(false,2)"
       >
         <span>{{$t('msg.All Results')}}</span>
       </v-flex>
@@ -65,7 +65,9 @@
 import { mapGetters } from "vuex";
 export default {
   data() {
+     
     return {
+      selected: 1,
       isShowBet: true
     };
   },
@@ -73,7 +75,9 @@ export default {
     ...mapGetters(["getStockList", "getLotteryDraw", "getStockById"])
   },
   methods: {
-    switchIsShowBet(boolean) {
+    switchIsShowBet(boolean,active) {
+      this.selected = active;
+      console.log(this.selected);
       this.isShowBet = boolean;
     },
     onlyTime(value) {
@@ -84,6 +88,13 @@ export default {
 };
 </script>
 <style scoped>
+.betTab{
+  border-top:1px solid #dddddd;
+}
+.activeTab{
+  background-color: #0b2a68;
+  color:#FFF;
+}
 table {
   border-collapse: collapse;
   width: 100%;

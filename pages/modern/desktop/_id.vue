@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-layout>
-      <v-flex xs2 pa-2>
+    <v-layout style="background-color:#eaebf2;">
+      <v-flex xs2 class="leftStocklist">
         <v-layout column>
           <v-flex xs12 pt-2 style="padding-top:21px !important">
             <div id="stocklistGuidelines">
@@ -21,7 +21,7 @@
         </v-layout>
       </v-flex>
       <v-flex xs10 pa-2>
-        <v-layout mb-4>
+        <v-layout >
           <v-flex xs6 style="padding-top:21px">
             <v-layout column>
               <v-flex xs12>
@@ -31,7 +31,7 @@
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
                 <div id="chartGuideline">
-                  <v-flex style="height:421px">
+                  <v-flex >
                     <chartApp
                       :data="getStockById($route.params.id).stockPrice"
                       :time="getStockById($route.params.id).stockTime"
@@ -173,7 +173,7 @@
           </div>
         </div>
       </div>
-      <!-- chart 6 -->
+      <!-- Stock chart 6 -->
       <div ref="chartGuideline" style="position:fixed;" v-show="isStep == 6">
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
