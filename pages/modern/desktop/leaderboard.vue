@@ -14,7 +14,7 @@
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import leaderBoard from "~/components/modern/leaderBoard.vue";
+import leaderBoard from "~/components/modern/leaderboard.vue";
 export default {
   layout: "desktopModern",
   components: {
