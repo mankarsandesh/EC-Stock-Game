@@ -21,7 +21,7 @@
       ></v-progress-circular>
     </div>
 
-    <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
+    <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
         <v-container pa-0>
             <v-toolbar color="#003e70" class="white--text">
                 <v-layout wrap style="margin-top:-10px;">
@@ -35,7 +35,7 @@
                 </v-layout>
             </v-toolbar>
         </v-container>
-    </v-container>
+    </v-container> -->
     <v-container class="pa-0">
         <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
             <v-toolbar-title>

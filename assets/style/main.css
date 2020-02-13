@@ -75,8 +75,8 @@ ul {
 body,
 .container,
 .light-toobar {
-    /* background-color: #ffffff !important; */
-    background: linear-gradient(to bottom, #dadada 19%, #ffffff 70%)!important;
+    background-color: #ffffff !important;
+    /* background: linear-gradient(to bottom, #dadada 19%, #ffffff 70%); */
 }
 
 .text-color .v-input__control label {
@@ -524,6 +524,13 @@ table.result-table tr {
 .align_button5.v-btn .v-btn__content,
 .betting-small.v-btn.theme--light {
     display: block;
+}
+
+.firstDigit.v-btn .v-btn__content,
+.lastDigit.v-btn .v-btn__content,
+.bothDigit.v-btn .v-btn__content,
+.twoDigit.v-btn .v-btn__content {
+    white-space: pre-line !important;
 }
 
 .big-digit {
