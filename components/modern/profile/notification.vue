@@ -29,6 +29,28 @@
           </div>
         </div>
       </v-flex>
+      <v-flex xs12>
+        <div class="group_container">
+          <span class="group_title">receive by message</span>
+          <div class="title_container">
+            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+            <span class="titile">insufficient balance in an account</span>
+            <br />
+            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+            <span class="titile">wining bets</span>
+            <br />
+            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+            <span class="titile">losing bets</span>
+            <br />
+            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+            <span class="titile">users follw me</span>
+            <br />
+            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+            <span class="titile">amount credited or debited to an account</span>
+            <br />
+          </div>
+        </div>
+      </v-flex>
     </v-flex>
   </div>
 </template>
@@ -44,6 +66,9 @@ export default {};
 </script>
 
 <style scoped>
+.title_menu{
+    text-transform: uppercase
+}
 .titile {
   padding-left: 5px;
 }
