@@ -1,5 +1,6 @@
 import Vue from 'vue'
 
+// set color for lottery draw 
 Vue.filter('lastDraw', (value) => {
     if (!value) return ''
     value = value.toString()
@@ -9,11 +10,12 @@ Vue.filter('lastDraw', (value) => {
     let result = `${newS2}<span style="color:#ce3b6a;font-weight: bold;">${f}${l}</span>`;
     return result
 })
+// currency format
 Vue.filter('currency', (value, decimalCount = 2) => {
     if (!value) return ''
     return formatMoney(value, decimalCount)
 })
-
+// countdown bet close in
 Vue.filter('betclosein', (value, loop) => {
     if (!value || !loop) return ''
     if (value == "close") return "MARKET CLOSE"
@@ -41,6 +43,7 @@ Vue.filter('betclosein', (value, loop) => {
     }
     return result
 })
+// set second to minute for 5 minute loop game
 Vue.filter('lotterydraw', (value, loop) => {
     if (!value | !loop) return ''
     if (value == "close") return ""
@@ -62,6 +65,7 @@ Vue.filter('lotterydraw', (value, loop) => {
     }
     return result
 })
+// set bet status 
 Vue.filter('betstatus', (value, loop) => {
     if (!value | !loop) return ''
     if (value === "close") return "close"
@@ -81,7 +85,7 @@ Vue.filter('betstatus', (value, loop) => {
     }
     return result
 })
-
+// convert second to minute
 function changeNumberToTime(value) {
     let result = ""
     let mm = "0" + parseInt(value / 60)
@@ -89,7 +93,7 @@ function changeNumberToTime(value) {
     result = mm + ":" + appendHero(ss)
     return result
 }
-
+// append 0 infort if number <=9
 function appendHero(value) {
     let result = ""
     if (value < 10) {
@@ -99,7 +103,7 @@ function appendHero(value) {
     }
     return result
 }
-
+// set number format money
 function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
     try {
         decimalCount = Math.abs(decimalCount);
@@ -115,6 +119,7 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
         console.log(e)
     }
 };
+// set color live price green or red
 Vue.filter('livePriceColor', (current, previous) => {
     if (!current) return ''
     let result = ""
