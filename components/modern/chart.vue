@@ -1,16 +1,15 @@
 <template>
-  <div class="v-card-style" v-if="stockid !== null">
-    <v-layout px-1 style="background-color:#fff">
-      <v-flex xs6 class="text-xs-left">
+  <div class="v-card-style " v-if="stockid !== null"  >
+    <v-layout px-1 >
+      <v-flex xs6 class="text-xs-left stockTimer">
         {{ $t("msg.livetime") }}:
-        <span class="text-primary">{{ getLiveTime(stockid) }}</span>
+        <span class="stockTimer" >{{ getLiveTime(stockid) }}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(stockid) > 0">
-        {{ $t("msg.liveprice") }}:
-        <span class="text-second">{{ getLivePrice(stockid) }}</span>
+      <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(stockid) > 0">      
+        <span class="stockPrice">${{ getLivePrice(stockid) }}</span>
       </v-flex>
     </v-layout>
-    <apexchart type="area" height="335vh" width="99.5%" :options="chartOptions" :series="series" />
+    <apexchart class="chartDesgin" type="area" height="310vh" width="99.5%" :options="chartOptions" :series="series" />
   </div>
 </template>
 
@@ -60,11 +59,11 @@ export default {
           autoScaleYaxis: false,
           zoomedArea: {
             fill: {
-              color: "#90CAF9",
-              opacity: 0.4
+              color: "#0b2a68",
+              opacity: 0.3
             },
             stroke: {
-              color: "#0D47A1",
+              color: "#0b2a68",
               opacity: 0.4,
               width: 1
             }
@@ -104,7 +103,7 @@ export default {
         },
         grid: {
           row: {
-            colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+            colors: ["#fff", "transparent"], // takes an array which will be repeated on columns
             opacity: 0.5
           }
         },
@@ -138,3 +137,19 @@ export default {
   }
 };
 </script>
+<style>
+.stockPrice{
+  padding-right:14px;
+  color:green;
+  font-size: 24px;
+  margin: 0px;
+  font-weight: 600;
+}
+.stockTimer{
+  padding-left:20px;
+  color:#333;
+  font-size: 20px;
+  margin: 0px;
+  font-weight: 600;
+}
+</style>

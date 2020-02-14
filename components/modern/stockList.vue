@@ -1,17 +1,17 @@
 <template>
   <div>
     <v-layout>
-      <v-flex pa-2 class="head-result-stock">{{$t('menu.stock list')}}</v-flex>
+      <v-flex pa-2 class="headerStockBar">{{$t('menu.stock list')}}</v-flex>
     </v-layout>
     <div class="table-responsive">
       <table class="table">
         <tr>
-          <th>{{$t('msg.Stock Name')}}</th>
+          <th width="20%">{{$t('msg.Stock Name')}}</th>
           <th>{{$t("msg.liveprice")}}</th>
           <th>{{$t("msg.Status")}}</th>
           <th>{{$t("msg.Countdown")}}</th>
         </tr>
-        <tr v-for="(data,index) in getStockList" :key="index">
+        <tr  v-for="(data,index) in getStockList" :key="index">
           <td>
             <nuxt-link :to="'/modern/desktop/'+data.id">{{ $t(`stockname.${data.stockname}`) }}{{ data.stockname == 'btc1' ? '1':data.stockname == 'btc5' ? '5':'' }}</nuxt-link>
           </td>
@@ -60,15 +60,14 @@ th {
 
 th,
 td {
+  text-transform: capitalize;
   text-align: center;
   padding: 8px 2px 6px 4px;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
+
 .table-responsive {
     overflow: auto;
 }
