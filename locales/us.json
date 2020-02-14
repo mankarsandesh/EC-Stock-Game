@@ -36,6 +36,7 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
+        "acc":"Acc",
         "calculating": "Calculating...",
         "marketclosed": "Market Closed!",
         "reset": "Reset",
