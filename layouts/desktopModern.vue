@@ -12,7 +12,7 @@
         ></v-progress-circular>
       </div>
     </div> -->
-    <!-- <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
+     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
       <v-progress-circular
         style="top: calc(100% - 68%);"
         :size="100"
@@ -73,9 +73,7 @@
         </v-container>
       </v-content>
     </v-container>
-    <!-- <v-float dark color="#003e70" >   
-  EC
-    </v-float>-->
+
 
     <!-- chat Window -->
     <chatWindow />
