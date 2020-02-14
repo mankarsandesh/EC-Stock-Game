@@ -52,7 +52,7 @@
           <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs9">
+      <v-flex class="xs10">
         <v-layout row wrap>
           <v-flex xs12 lg12 md12 ≈>
             <trendMap
@@ -65,13 +65,12 @@
         </v-layout>
       </v-flex>
 
-      <v-flex class="xs2">
+      <v-flex class="xs1">
         <v-layout row wrap>
           <v-flex xs12 lg12 md12 ≈>
             <v-btn
               class="multiGame"
               :to="'/modern/multigame/' +$route.params.id"
-              color="#003e70"
             >{{$t('msg.Multiplegaming')}}</v-btn>
           </v-flex>
         </v-layout>
@@ -117,8 +116,13 @@ export default {
 <style scoped>
 .multiGame {
   color: #fff;
-  margin: 50px;
-  background-color: #2bb13a !important;
+  margin: 20px 15px;
+  font-weight: 600;
+  font-size: 12px !important;
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+  padding: 0px 9px;
+  border-radius: 10px;
 }
 .triangle-right {
   width: 0;
@@ -131,7 +135,7 @@ export default {
 .firstDigit {
   font-weight: bolder;
   border-radius: 10px;
-  white-space: pre-wrap !important;
+ white-space: pre-line !important;
   height: 60px;
   font-size: 15px;
   background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
@@ -140,7 +144,7 @@ export default {
   text-align: center;
   border-radius: 10px;
   font-weight: bolder;
-  white-space: pre-wrap;
+ white-space: pre-line !important;
   height: 60px;
   font-size: 15px;
   background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
@@ -148,7 +152,7 @@ export default {
 .bothDigit {
   font-weight: bolder;
   border-radius: 10px;
-  white-space: pre-wrap;
+  white-space: pre-line !important; 
   height: 60px;
   /* word-spacing: 80px; */
   font-size: 15px;
@@ -157,7 +161,7 @@ export default {
 .twoDigit {
   font-weight: bolder;
   border-radius: 10px;
-  white-space: pre-wrap;
+white-space: pre-line !important;
   height: 60px;
   font-size: 15px;
   background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);

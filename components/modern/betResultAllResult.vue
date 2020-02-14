@@ -14,8 +14,7 @@
         pa-2
         class="text-xs-center  flex-cursor betTab"      
         :class="{activeTab:selected == 2}"
-        @click="switchIsShowBet(false,2)"
-      >
+        @click="switchIsShowBet(false,2)"      >
         <span>{{$t('msg.All Results')}}</span>
       </v-flex>
     </v-layout>
@@ -90,6 +89,7 @@ export default {
 <style scoped>
 .betTab{
   border-top:1px solid #dddddd;
+  
 }
 .activeTab{
   background-color: #0b2a68;
@@ -116,8 +116,6 @@ td {
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
 }
-
-
 .flex-cursor {
   cursor: pointer;
   height: 100%;

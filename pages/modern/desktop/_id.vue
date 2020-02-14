@@ -590,7 +590,7 @@ export default {
   padding: 10px !important;
   background-color: #4464ff !important;
   position: absolute;
-  left: 54%;
+  left: 57%;
   margin-top: -13%;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
