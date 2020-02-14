@@ -48,27 +48,26 @@
             <th scope="col">game id</th>
             <th scope="col">bet id</th>
             <th scope="col">Bet Details</th>
-             <th scope="col">Bet Time</th>
+            <th scope="col">Bet Time</th>
             <th scope="col">amount</th>
-           
+
             <th scope="col">payout</th>
           </tr>
         </thead>
         <tbody>
-           <tr v-for="(item,index) in getHistory" :key="index">
-              <td>{{item.gameId}}</td>
-              <td>{{item.betId}}</td>
-              <td>{{item.rule}} ({{item.payoutAmount}}) {{item.stockName}} {{item.loops}} MINUTE</td>
-                <td>{{item.betTime}}</td>
-              <td>{{item.betAmount}}</td>
-            
-          
-               <td><span :style="item.rollingAmount < 0 ? 'color: red;':'color: green;'">{{item.rollingAmount}}</span></td>
+          <tr v-for="(item,index) in getHistory" :key="index">
+            <td>{{item.gameId}}</td>
+            <td>{{item.betId}}</td>
+            <td>{{item.rule}} ({{item.payoutAmount}}) {{item.stockName}} {{item.loops}} MINUTE</td>
+            <td>{{item.betTime}}</td>
+            <td>{{item.betAmount}}</td>
 
+            <td>
+              <span
+                :style="item.rollingAmount < 0 ? 'color: red;':'color: green;'"
+              >{{item.rollingAmount}}</span>
+            </td>
           </tr>
-
-          
-
         </tbody>
       </table>
     </v-flex>
@@ -98,6 +97,5 @@ export default {
   computed: {
     ...mapGetters(["getHistory"])
   }
- 
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
   <div>
+   
     <v-layout row wrap justify-end>
       <v-flex xs2 class="main-select">
         <p class="ma-0">Exclusive</p>
@@ -31,6 +32,7 @@
         </tbody>
       </table>
     </v-flex>
+    <h1>Hello world</h1>
     <v-btn class="main-btn back">
       <v-icon>arrow_back_ios</v-icon>back
     </v-btn>
