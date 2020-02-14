@@ -5,7 +5,7 @@
       <v-flex xs12 md12 style="margin-top:100px;">
         <v-window  vertical>
           <v-window-item>
-                  <leaderBoard/>        
+                  <!-- <leaderBoard/>         -->
           </v-window-item>
         </v-window>
       </v-flex>
@@ -14,11 +14,11 @@
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import leaderBoard from "~/components/modern/leaderboard.vue";
+// import leaderBoard from "~/components/modern/leaderBoard.vue";
 export default {
   layout: "desktopModern",
   components: {
-    leaderBoard
+    // leaderBoard
   },
   data() {
       return {

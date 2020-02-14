@@ -1,6 +1,8 @@
 <template>
 <div>
+   
     <currentbet></currentbet>
+     
 </div>
 </template>
 
