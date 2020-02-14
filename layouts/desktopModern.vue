@@ -1,6 +1,7 @@
 <template>
   <v-app style=" background-color: #f4f5fd;">
     <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
+
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"
@@ -10,8 +11,8 @@
           indeterminate
         ></v-progress-circular>
       </div>
-    </div>
-    <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
+    </div> -->
+    <!-- <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
       <v-progress-circular
         style="top: calc(100% - 68%);"
         :size="100"
@@ -19,7 +20,8 @@
         color="#ffffff"
         indeterminate
       ></v-progress-circular>
-    </div>
+  </div>
+
     <v-container class="pa-0">
       <v-toolbar class="toolBar" height="69" color="#fff" style="justify-content: center !importan;">
         <v-toolbar-title>

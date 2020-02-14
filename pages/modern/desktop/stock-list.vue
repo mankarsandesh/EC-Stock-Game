@@ -1,6 +1,8 @@
 <template>
   <div>
     <v-layout row wrap>
+
+
       <v-flex xs12 md2>
         <v-item-group v-model="window" class="shrink mr-4" mandatory tag="v-flex">
           <v-item v-for="n in tabs" :key="n">
@@ -31,20 +33,22 @@
         </v-window>
       </v-flex>
     </v-layout>
+    <!-- <SelectStock /> component select stock will be on the home page -->
   </div>
 </template>
 <script>
-import {mapMutations} from 'vuex'
+import { mapMutations } from "vuex";
 import sotkclist from "~/components/modern/stocklist/stocklist";
 import annoucement from "~/components/modern/stocklist/annoucement";
 import rules from "~/components/modern/stocklist/rules";
-
+import SelectStock from "~/components/stockSelect";
 export default {
   layout: "desktopModern",
   components: {
     sotkclist,
     annoucement,
-    rules
+    rules,
+    SelectStock
   },
   data() {
     return {
@@ -53,13 +57,9 @@ export default {
       active: null
     };
   },
-   mounted(){
 
-  },
-  methods:{
-    ...mapMutations([
-      "setIsLoadingStockGame"
-    ])
+  methods: {
+    ...mapMutations(["setIsLoadingStockGame"])
   }
 };
 </script>
