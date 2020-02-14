@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style=" background-color: #f4f5fd;">
     <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
@@ -20,49 +20,48 @@
         indeterminate
       ></v-progress-circular>
     </div>
-
-    <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
-        <v-container pa-0>
-            <v-toolbar color="#003e70" class="white--text">
-                <v-layout wrap style="margin-top:-10px;">
-                    <v-flex xs4>
-                        <welcome-user></welcome-user>
-                    </v-flex>
-                    <v-spacer></v-spacer>
-                    <v-flex xs5 class="text-xs-right">
-                        <winnerMarquee :scrollSpeed="scrollSpeed" :showSpeed="showSpeed" :pauseOnHover="pauseOnHover" :pauseTime="pauseTime" :marqueeList="winner" height="36px" width="100%" color="#f76a24" fontSize="14px"></winnerMarquee>
-                    </v-flex>
-                </v-layout>
-            </v-toolbar>
-        </v-container>
-    </v-container> -->
     <v-container class="pa-0">
-        <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
-            <v-toolbar-title>
-                <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')"></v-img>
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-                <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
-                    <i :class="item.icon" style="margin-right: 3px;" /> <span> {{$t(`menu.${item.title}`)}}</span>
+      <v-toolbar class="toolBar" height="69" color="#fff" style="justify-content: center !importan;">
+        <v-toolbar-title>
+          <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')"></v-img>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
+            <i :class="item.icon" style="margin-right: 3px;" />
+            <span>{{$t(`menu.${item.title}`)}}</span>
+          </v-btn>
+          <div class="layout-btn">
+            <v-menu offset-y :close-on-content-click="false" :min-width="110">
+              <template v-slot:activator="{ on }">
+                <v-btn class="btn-langage currencySelect" v-on="on" text flat>
+                  <i class="fa fa-dollar icon-dollar" /> 
+                  <i>USD</i>
+                  <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
                 </v-btn>
-                <div class="layout-btn">
-                    <v-btn class="btn-langage" text flat>
-                        <i class="fa fa-dollar icon-dollar" />
-                        USD
-                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
-                    </v-btn>
-                </div>
-                <div class="layout-btn">
-                    <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
-                        <countryFlag :country="countryflag" size="normal" /> {{$t('msg.chooselanguage')}}
-                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
-                    </v-btn>
-                </div>
-                <Logout class="layout-logout" />
-            </v-toolbar-items>
-        </v-toolbar>
-        <hr />
+              </template>
+              <v-list >
+                <v-list-tile class="currencyMenu" v-for="(item, i) in currency" :key="i"> 
+                  <i class="fa fa-dollar icon-usd" />
+                  <v-list-tile-title class="currencyName" style="padding-left:5px;">{{ item.title }}</v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </div>
+          <div class="layout-btn">
+            <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
+              <countryFlag :country="countryflag" size="normal" />
+              {{$t('msg.chooselanguage')}}
+              <i
+                class="fa fa-caret-down"
+                style="margin: 0 -6px 0px 8px;"
+              />
+            </v-btn>
+          </div>
+          <Logout class="layout-logout" />
+        </v-toolbar-items>
+      </v-toolbar>
+      
 
       <languageDialog ref="language"></languageDialog>
 
@@ -109,6 +108,7 @@ export default {
   },
   data() {
     return {
+      currency: [{ title: "USD" }, { title: "BATH" }, { title: "KIP" }],
       direction: "top",
       fab: true,
       fling: true,
@@ -219,6 +219,31 @@ export default {
 </script>
 
 <style scoped>
+.toolBar{}
+.currencySelect i{
+  padding-left:3px;
+}
+.currencySelect {
+padding: 0px;
+}
+.currencyName{
+  padding-left:-5px;
+  cursor: pointer;
+}
+.currencyMenu:hover{
+    cursor: pointer;
+  background-color: #dddddd;
+}
+.currencyMenu {
+  cursor: pointer;
+ height: 50px;
+ padding: 5px;
+}
+.toolMenu {
+  border: 1px solid red;
+  width: 100% !important;
+  padding: 5px;
+}
 .v-toolbar__content {
   padding: 0 !important;
   justify-content: center !important;
@@ -294,10 +319,10 @@ nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
 }
 
 .layout-logout {
-    display: flex;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    border-top: none;
-    border-right: none;
+  display: flex;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-top: none;
+  border-right: none;
 }
 </style>

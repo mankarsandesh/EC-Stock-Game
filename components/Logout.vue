@@ -9,11 +9,11 @@
                 <v-avatar size="40">
                     <img src="/user.png" alt />
                 </v-avatar>
-                <div style="display: inline-grid;justify-items: center;">
+                <div class="userLogoutMenu">
                     <span>{{getUserName.name}}</span>
-                    <span>
-                        {{$t('msg.Balance')}}:
-                        <animated-number :value="getBalance" :formatValue="formatToPrice" />
+                    <span >
+                        {{$t('msg.acc')}}:
+                        <animated-number :value="getBalance" :formatValue="formatToPrice" class="balance" />
                     </span>
                 </div>
                 <i class="fa fa-caret-down" />
@@ -136,6 +136,32 @@ export default {
 </script>
 
 <style scoped>
+
+.v-menu__content{
+    border-radius: 15px;
+}
+.v-list{
+    padding: 0px;
+}
+.userLogoutMenu{
+    font-size: 12px;
+    float:left;
+    text-align: left;
+    padding:10px 20px;
+    display: inline-grid;
+}
+.userLogoutMenu .balance{
+    color:#003f70;
+    font-size: 16px;
+}
+.v-list__tile i{
+font-size: 16px;
+}
+.v-list__tile .v-list__tile__title{
+    margin-left:5px;
+   text-transform: capitalize;
+   font-size: 14px;
+}
 .fa-15x {
     font-size: 1.45em;
 }
@@ -143,6 +169,7 @@ export default {
 .margin-right-5 {
     margin-right: 5px;
 }
+
 
 .v-avatar {
     -webkit-box-align: center;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout style="background-color:#eaebf2;">
+    <v-layout style="background-color:#f4f5fd;">
       <v-flex xs2 class="leftStocklist">
         <v-layout column>
           <v-flex xs12 pt-2 style="padding-top:21px !important">
