@@ -296,27 +296,27 @@ const createStore = () => {
                 }
             },
             async asynUserInfo(context) {
-                // try {
-                //     const res = await this.$axios.$get(
-                //         `/api/me?apikey=${context.getters.getAuth_token}`
-                //     );
-                //     if (!res.status) {
-                //         setTimeout(() => {
-                //             if (res.status) return;
+                try {
+                    const res = await this.$axios.$get(
+                        `/api/me?apikey=${context.getters.getAuth_token}`
+                    );
+                    if (!res.status) {
+                        setTimeout(() => {
+                            if (res.status) return;
 
-                //             localStorage.removeItem('apikey');
-                //             console.log("Sorry, your session has expired. Please refresh and try again.")
-                //                 // location.href = "http://159.138.130.64"
-                //             location.href = "http://" + location.hostname + ":8001"
-                //             return
-                //         }, 10000)
-                //     }
-                //     let userInfo = res.data.original;
-                //     context.commit("setUserData", userInfo);
-                // } catch (ex) {
-                //     console.error(ex);
-                //     // alert(ex)
-                // }
+                            localStorage.removeItem('apikey');
+                            console.log("Sorry, your session has expired. Please refresh and try again.")
+                                // location.href = "http://159.138.130.64"
+                            location.href = "http://" + location.hostname + ":8001"
+                            return
+                        }, 10000)
+                    }
+                    let userInfo = res.data.original;
+                    context.commit("setUserData", userInfo);
+                } catch (ex) {
+                    console.error(ex);
+                    // alert(ex)
+                }
             },
             async asymessages(context) {
                 try {
