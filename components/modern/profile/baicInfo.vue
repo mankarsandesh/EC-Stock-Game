@@ -1,80 +1,119 @@
 <template>
   <div>
-    <div style="margin-top:20px">
-      <form action="/action_page.php">
-        <div class="row">
-          <div class="col-15">
-            <label for="fname">player ID</label>
+    <v-flex xs12 class="pt-5">
+      <v-layout row>
+        <v-flex xs6 sm6 md4 lg3>
+          <div class="amount_container">
+            <div class="decorator_card decorator_card_green"></div>
+            <span>account balance</span>
+            <br />
+            <span class="amount">1.615,36</span>
+            <span class="title_currentcy">kip</span>
           </div>
-          <div class="col-85">
-            <input disabled type="text" id="fname" name="firstname" placeholder="188" />
+        </v-flex>
+        <v-flex xs6 sm6 md4 lg3>
+          <div class="amount_container">
+            <div class="decorator_card decorator_card_blue"></div>
+
+            <span>rolling amount</span>
+            <br />
+            <span class="amount">1.615,36</span>
+            <span class="title_currentcy">kip</span>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-15">
-            <label for="lname">name</label>
+        </v-flex>
+        <v-flex xs6 sm6 md4 lg3>
+          <div class="amount_container">
+            <div class="decorator_card decorator_card_red"></div>
+
+            <span>due amount</span>
+            <br />
+            <span class="amount">1.615,36</span>
+            <span class="title_currentcy">kip</span>
           </div>
-          <div class="col-85">
-            <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
+        </v-flex>
+      </v-layout>
+    </v-flex>
+    <v-flex xs12 pt-3>
+      <v-layout>
+        <v-flex xs12 pt-2 pl-5>
+          <div style="margin-top:20px">
+            <form action="/action_page.php">
+              <div class="row">
+                <div class="col-15">
+                  <label for="fname">player ID</label>
+                </div>
+                <div class="col-85">
+                  <input disabled type="text" id="fname" name="firstname" placeholder="188" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="lname">name</label>
+                </div>
+                <div class="col-85">
+                  <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country">gender</label>
+                </div>
+                <div class="col-85">
+                  <select id="country" name="country">
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="usa">USA</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country">email</label>
+                </div>
+                <div class="col-85">
+                  <select id="country" name="country">
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="usa">USA</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country">follow me</label>
+                </div>
+                <div class="col-85">
+                  <select id="country" name="country">
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="usa">USA</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country">country</label>
+                </div>
+                <div class="col-85">
+                  <select id="country" name="country">
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="usa">USA</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15"></div>
+                <div class="col-85">
+                  <v-btn class="btn_save">save</v-btn>
+                  <v-btn class="btn_cancel">cancel</v-btn>
+                </div>
+              </div>
+            </form>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-15">
-            <label for="country">gender</label>
-          </div>
-          <div class="col-85">
-            <select id="country" name="country">
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-15">
-            <label for="country">email</label>
-          </div>
-          <div class="col-85">
-            <select id="country" name="country">
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-15">
-            <label for="country">follow me</label>
-          </div>
-          <div class="col-85">
-            <select id="country" name="country">
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-15">
-            <label for="country">country</label>
-          </div>
-          <div class="col-85">
-            <select id="country" name="country">
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-15"></div>
-          <div class="col-85">
-            <v-btn class="btn_save">save</v-btn>
-            <v-btn class="btn_cancel">cancel</v-btn>
-          </div>
-        </div>
-      </form>
-    </div>
+        </v-flex>
+      </v-layout>
+    </v-flex>
   </div>
 </template>
 
@@ -141,5 +180,48 @@ label {
   background-color: #656464 !important;
   color: white;
   border-radius: 7px;
+}
+
+.amount_container {
+  background-color: white;
+  color: black;
+  padding: 10px 0 10px 0;
+  margin-left: 20px;
+  box-shadow: 0px 2px 5px rgb(145, 145, 145);
+  border-radius: 15px;
+  border-left-width: 1px;
+  border-left-color: green;
+  text-align: center;
+  text-transform: capitalize;
+  line-height: 1.1;
+}
+.amount {
+  font-size: 32px;
+  font-weight: bold;
+  position: relative;
+}
+.title_currentcy {
+  color: #888888;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding-left: 5px;
+  position: absolute;
+}
+.decorator_card {
+  position: absolute;
+  height: 35px;
+  width: 5px;
+  border-radius: 10px;
+  margin-top: 8px;
+  margin-left: -2px;
+}
+.decorator_card_green {
+  background-color: #39b01e;
+}
+.decorator_card_blue {
+  background-color: #1e45b0;
+}
+.decorator_card_red {
+  background-color: #b01e1e;
 }
 </style>
