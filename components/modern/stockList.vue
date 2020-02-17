@@ -7,9 +7,8 @@
     <div class="table-responsive">
       <table class="table">
 
-        <th>
+        <tr>
           <th>{{$t('msg.Stock Name')}}</th>
-
           <th>{{$t("msg.liveprice")}}</th>
           <th>{{$t("msg.Status")}}</th>
           <th>{{$t("msg.Countdown")}}</th>

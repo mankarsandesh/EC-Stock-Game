@@ -23,9 +23,9 @@
   </div>
 
     <v-container class="pa-0">
-      <v-toolbar class="toolBar" height="69" color="#fff" style="justify-content: center !importan;">
+      <v-toolbar class="toptoolBar" height="69" color="#fff" style="justify-content: center;">
         <v-toolbar-title>
-          <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')"></v-img>
+          <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')" class="logostyle"></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
@@ -217,6 +217,10 @@ export default {
 </script>
 
 <style scoped>
+
+.logostyle{
+  margin-left:15px;
+}
 .currencySelect i{
   padding-left:3px;
 }
@@ -310,9 +314,10 @@ padding: 0px;
   width: 27px;
 }
 
+
 nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
   color: #ffffff;
-  background: rgba(7, 207, 7, 0.932);
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
 }
 
 .layout-logout {

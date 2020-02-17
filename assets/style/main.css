@@ -404,6 +404,12 @@ nav.modal-bet.v-toolbar.theme--light p {
     background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
 }
+.buttonCancel{
+    color:  #FFF !important;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, #888787 30%, #626161 51%);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+}
 .headerStockBar{
    font-size: 21px;
    text-transform: uppercase;
