@@ -1,6 +1,7 @@
 <template>
-  <v-app>
+  <v-app style=" background-color: #f4f5fd;">
     <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
+
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"
@@ -10,8 +11,8 @@
           indeterminate
         ></v-progress-circular>
       </div>
-    </div>
-    <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
+    </div> 
+     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
       <v-progress-circular
         style="top: calc(100% - 68%);"
         :size="100"
@@ -19,7 +20,8 @@
         color="#ffffff"
         indeterminate
       ></v-progress-circular>
-    </div>
+  </div>
+
 
     <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
         <v-container pa-0>
@@ -36,6 +38,8 @@
             </v-toolbar>
         </v-container>
     </v-container>-->
+
+  
 
     <v-toolbar height="75" class="elevation-1">
       <v-container class="navbar">
@@ -70,10 +74,12 @@
       </v-container>
     </v-toolbar>
 
+
     <languageDialog ref="language" />
     <v-content>
       <nuxt />
     </v-content>
+
     <chatWindow />
   </v-app>
 </template>
@@ -106,6 +112,7 @@ export default {
   },
   data() {
     return {
+      currency: [{ title: "USD" }, { title: "BATH" }, { title: "KIP" }],
       direction: "top",
       fab: true,
       fling: true,
@@ -216,6 +223,30 @@ export default {
 </script>
 
 <style scoped>
+.currencySelect i{
+  padding-left:3px;
+}
+.currencySelect {
+padding: 0px;
+}
+.currencyName{
+  padding-left:-5px;
+  cursor: pointer;
+}
+.currencyMenu:hover{
+    cursor: pointer;
+  background-color: #dddddd;
+}
+.currencyMenu {
+  cursor: pointer;
+ height: 50px;
+ padding: 5px;
+}
+.toolMenu {
+  border: 1px solid red;
+  width: 100% !important;
+  padding: 5px;
+}
 .v-toolbar__content {
   padding: 0 !important;
   justify-content: center !important;

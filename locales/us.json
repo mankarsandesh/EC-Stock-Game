@@ -36,6 +36,7 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
+        "acc":"Acc",
         "calculating": "Calculating...",
         "marketclosed": "Market Closed!",
         "reset": "Reset",
@@ -77,6 +78,7 @@
         "User Info": "User Info",
         "Bet Result": "Bet Result",
         "All Results": "All Results",
+        "View All Results": "View All Results",
         "Player": "Player",
         "Balance": "Balance",
         "Totalprofit": "Total profit",

@@ -1,5 +1,6 @@
 <template>
 <div>
+      
     <ul class="main-navigation">
         <li>
             <a href="#">
@@ -9,11 +10,15 @@
                         <i class="fa fa-plus"></i>
                     </span>
                 </span>
-                <span v-show="!isMultigame" style="font-size:0.89rem;">
-                    {{$t('msg.SelectStock')}} > 
-                    {{$t('navlist.'+getStockType(stockId))}} > 
-                    {{ $t(`stockname.${stockId}`) }} > 
-                    {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} > {{GameId}}
+                <span v-show="!isMultigame"  style="font-size:0.89rem;">
+                    <span class="MenuStyle">
+                        <span> {{$t('msg.SelectStock')}} <i class="fa fa-caret-right"></i></span>                          
+                        <span> {{$t('navlist.'+getStockType(stockId))}} <i class="fa fa-caret-right"></i> </span>
+                        <span>{{ $t(`stockname.${stockId}`) }} <i class="fa fa-caret-right"></i></span>
+                        <span>  {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} <i class="fa fa-caret-right"></i> </span>
+                        <span>{{GameId}} <i class="fa fa-caret-down"></i></span>
+                    </span>
+                  
                     <span class="show-icon">
                         <i class="fa fa-caret-down"></i>
                     </span>
@@ -74,6 +79,7 @@ export default {
     },
     data() {
         return {
+             items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
             GameId:"00000000000",
             stockData: [{
                     type: "crypto",
@@ -171,16 +177,24 @@ export default {
 </script>
 
 <style scoped>
+.MenuStyle span{
+    border:1px solid #dddddd;
+    color:#333;
+    background-color: #FFF;
+    border-radius: 10px;
+    padding:6px 10px;
+    font-size: 15px;
+}
 .show-icon {
     position: absolute;
     right: 10px;
 }
-
 ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    background: #003e70;
+    /* border:1px solid red; */
+    /* background: #003e70; */
 }
 
 ul li {
@@ -188,7 +202,7 @@ ul li {
     width: 100%;
     position: relative;
     float: left;
-    background: #003e70;
+    /* background: #003e70; */
 }
 
 li ul {
@@ -206,7 +220,7 @@ ul li a {
 }
 
 ul li a:hover {
-    background: #003e70;
+    /* background: #003e70; */
 }
 
 li:hover>ul {
@@ -219,11 +233,12 @@ li:hover li {
 }
 
 li:hover a {
-    background: #003e70;
+    background: #dddddd;
+    color:#333;
 }
 
 li:hover li a:hover {
-    background: #1b405f;
+    background: #dddddd;
 }
 
 .main-navigation li ul li {

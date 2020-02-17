@@ -56,7 +56,7 @@ ul {
 }
 
 .v-toolbar {
-  box-shadow: none !important;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 .border-right {
@@ -69,7 +69,15 @@ ul {
 }
 
 .border-left {
-  border-left: 1px solid !important;
+    border-left: 1px solid !important;
+}
+
+body,
+.container,
+.light-toobar {
+    background-color: #f4f5fd !important;
+    background: linear-gradient(to bottom, #dadada 19%, #ffffff 70%)!important;
+
 }
 
 .text-color .v-input__control label {
@@ -384,6 +392,7 @@ nav.modal-bet.v-toolbar.theme--light p {
 
 /* ================= Stock List ===================== */
 
+
 .head-result-stock {
   text-align: center;
   text-transform: uppercase;
@@ -391,7 +400,39 @@ nav.modal-bet.v-toolbar.theme--light p {
   color: #ffffff;
   padding: 0;
 }
+.totalAmount{
+    background-color: #8392b2;
+    text-align: center;
+    border-radius:20px;
+    color:#FFF;
+    font-size: 22px;
+}
+.buttonGreen{
+    color:  #FFF !important;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+}
+.headerStockBar{
+   font-size: 21px;
+   text-transform: uppercase;
+   color:#0a2762;
+   font-weight: 500;
+}
+.table tr:first-child{
+    border:none;
+    font-size: 11px;
+}
+.leftStocklist .table tr td{
+font-size: 11px;
+}
+.leftStocklist{
+    background-color: #FFF;
+    margin:10px 5px;
+    border-radius: 20px;
+    
 
+}
 table.result-table tr {
   font-size: 5px;
 }
