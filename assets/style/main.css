@@ -482,7 +482,7 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   /* background-color: #093e70 !important; */
-  /* color: #ffffff !important; */
+  color: #ffffff !important;
   min-width: 88%;
   border-radius: 6px;
   padding: 0;
@@ -495,7 +495,7 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   /* background-color: #093e70 !important; */
-  /* color: #ffffff !important; */
+  color: #ffffff !important;
   min-width: 88%;
   border-radius: 6px;
   padding: 0;
@@ -508,7 +508,7 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   /* background-color: #093e70 !important; */
-  /* color: #ffffff !important; */
+  color: #ffffff !important;
   min-width: 100%;
   border-radius: 6px;
   padding: 0;
@@ -521,7 +521,7 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   /* background-color: #093e70 !important; */
-  /* color: #ffffff !important; */
+  color: #ffffff !important;
   min-width: 100%;
   border-radius: 6px;
   padding: 0;

@@ -175,7 +175,7 @@ export default {
                 amount: this.betValue
             };
             this.confirmDisabled = true;     
-            this.sendBetting(data);
+            this.sendBetting(data);           
             // console.warn(this.getOnBetting);
         },
         closePopper() {
