@@ -11,7 +11,7 @@
           indeterminate
         ></v-progress-circular>
       </div>
-    </div> -->
+    </div> 
      <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
       <v-progress-circular
         style="top: calc(100% - 68%);"
@@ -72,9 +72,7 @@
           <nuxt />
         </v-container>
       </v-content>
-    </v-container>    
-
-
+    </v-container>
     <!-- chat Window -->
     <chatWindow />
   </v-app>
@@ -219,7 +217,6 @@ export default {
 </script>
 
 <style scoped>
-.toolBar{}
 .currencySelect i{
   padding-left:3px;
 }
