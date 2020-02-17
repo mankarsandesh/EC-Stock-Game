@@ -17,7 +17,7 @@
                       placement: 'bottom-end',
                        modifiers: { offset: { offset: '25px' } }
                 }">
-            <div class="popper">
+            <div class="popper" >
                 <!-- this component display the modal,the modal let users choose amount they want to bet -->
                 <betModal :stockName="stockName" :loop="loop" :betId="'firstdigit-'+data.rule" :payout="data.payout"></betModal>
             </div>
@@ -473,6 +473,11 @@ export default {
 </script>
 
 <style scoped>
+.popper{
+    border-radius: 20px;
+    background-color: #FFF;
+     box-shadow: 5px 5px 5px #aaaaaa;
+}
 .bet-close {
     width: 100%;
     z-index: 10;
