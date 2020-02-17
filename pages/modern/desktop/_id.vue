@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-layout>
       <v-flex xs2 pa-2>
         <v-layout column>
@@ -248,7 +248,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>

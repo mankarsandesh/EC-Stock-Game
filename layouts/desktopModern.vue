@@ -35,48 +35,45 @@
                 </v-layout>
             </v-toolbar>
         </v-container>
-    </v-container> -->
-    <v-container class="pa-0">
-        <v-toolbar height="69" color="#fff" style="justify-content: center !importan;">
-            <v-toolbar-title>
-                <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')"></v-img>
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-                <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
-                    <i :class="item.icon" style="margin-right: 3px;" /> <span> {{$t(`menu.${item.title}`)}}</span>
-                </v-btn>
-                <div class="layout-btn">
-                    <v-btn class="btn-langage" text flat>
-                        <i class="fa fa-dollar icon-dollar" />
-                        USD
-                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
-                    </v-btn>
-                </div>
-                <div class="layout-btn">
-                    <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
-                        <countryFlag :country="countryflag" size="normal" /> {{$t('msg.chooselanguage')}}
-                        <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
-                    </v-btn>
-                </div>
-                <Logout class="layout-logout" />
-            </v-toolbar-items>
-        </v-toolbar>
-        <hr />
+    </v-container>-->
 
-      <languageDialog ref="language"></languageDialog>
+    <v-toolbar height="75" class="elevation-1">
+      <v-container class="navbar">
+        <v-toolbar-title>
+          <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')"></v-img>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
+            <i :class="item.icon" style="margin-right: 3px;" />
+            <span>{{$t(`menu.${item.title}`)}}</span>
+          </v-btn>
+          <div class="layout-btn">
+            <v-btn class="btn-langage" text flat>
+              <i class="fa fa-dollar icon-dollar" />
+              USD
+              <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
+            </v-btn>
+          </div>
+          <div class="layout-btn">
+            <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
+              <countryFlag :country="countryflag" size="normal" />
+              {{$t('msg.chooselanguage')}}
+              <i
+                class="fa fa-caret-down"
+                style="margin: 0 -6px 0px 8px;"
+              />
+            </v-btn>
+          </div>
+          <Logout class="layout-logout" />
+        </v-toolbar-items>
+      </v-container>
+    </v-toolbar>
 
-      <v-content>
-        <v-container pa-0>
-          <nuxt />
-        </v-container>
-      </v-content>
-    </v-container>
-    <!-- <v-float dark color="#003e70" >   
-  EC
-    </v-float>-->
-
-    <!-- chat Window -->
+    <languageDialog ref="language" />
+    <v-content>
+      <nuxt />
+    </v-content>
     <chatWindow />
   </v-app>
 </template>
@@ -288,16 +285,12 @@ export default {
   width: 27px;
 }
 
-nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
-  color: #ffffff;
-  background: rgba(7, 207, 7, 0.932);
-}
 
 .layout-logout {
-    display: flex;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    border-top: none;
-    border-right: none;
+  display: flex;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-top: none;
+  border-right: none;
 }
 </style>
