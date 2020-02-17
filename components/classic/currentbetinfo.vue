@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
-
     <v-data-table
       :headers="headers"
       hide-actions
@@ -9,17 +8,16 @@
       :items="history"
       :pagination.sync="pagination"
       ref="table"
-      class="elevation-1"
     >
       <template v-slot:headers="headers">
         <tr>
-          <th class="text-white">{{$t('msg.BetId')}}</th>
-          <th class="text-white">{{$t('msg.gameid')}}</th>
-          <th class="text-white">{{$t('msg.Betdetail')}}</th>
-          <th class="text-white">{{$t('msg.Time')}}</th>
-          <th class="text-white">{{$t('msg.amount')}}</th>
-          <th class="text-white">{{$t('msg.payout')}}</th>
-          <th class="text-white">{{$t('msg.Bet Status')}}</th>
+          <th>{{$t('msg.BetId')}}</th>
+          <th>{{$t('msg.gameid')}}</th>
+          <th>{{$t('msg.Betdetail')}}</th>
+          <th>{{$t('msg.Time')}}</th>
+          <th>{{$t('msg.amount')}}</th>
+          <th>{{$t('msg.payout')}}</th>
+          <th>{{$t('msg.Bet Status')}}</th>
         </tr>
       </template>
       <template v-slot:items="props">
@@ -41,30 +39,32 @@
         <td>{{props.item.betStatus == 0 ? 'Pending':'Done'}}</td>
       </template>
       <template slot="footer">
-        <tr>
+        <!-- This is code for total the column this comment first,
+        Maybe in the futur that we need
+        -->
+        <!-- <tr>
           <td>{{$t('msg.Total This Page')}}</td>
-          <td colspan="3">
+          <td colspan="2">
             <span class="text-xs-right" v-for="(column, key) in headers" :key="key">
               <span v-if="column.page">{{ total1(column) }}</span>
             </span>
           </td>
+          <td></td>
           <td>
             <span class="text-xs-right" v-for="(column, key) in headers" :key="key">
               <strong v-if="column.total">{{ formatToPrice(total1(column)) }}</strong>
             </span>
           </td>
-
-          <td></td>
-          <td></td>
-        </tr>
+          <td colspan="2"></td>
+        </tr>-->
         <tr>
           <td>{{$t('msg.Total')}}</td>
-          <td colspan="3">{{colspan}}</td>
+          <td colspan="2">{{colspan}}</td>
+          <td></td>
           <td>
             <strong>{{formatToPrice(sumTotalbetAmount)}}</strong>
           </td>
-          <td></td>
-          <td></td>
+          <td colspan="2"></td>
         </tr>
       </template>
       <template v-slot:no-data>
@@ -256,12 +256,4 @@ export default {
 </script>
 
 <style scoped>
-table thead tr th {
-  background-color: #003e70;
-  font-size: 1rem;
-}
-
-.text-white {
-  color: #fff;
-}
 </style>
