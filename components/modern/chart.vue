@@ -65,7 +65,7 @@ export default {
             stroke: {
               color: "#0b2a68",
               opacity: 0.4,
-              width: 1
+              width: 1,
             }
           }
         },
@@ -83,7 +83,12 @@ export default {
             enabled: false
           },
           toolbar: {
-            show: false
+             shared: false,
+              y: {
+                formatter: function (val) {
+                  return (val / 1000000).toFixed(0)
+                }
+              }
           }
         },
         brush: {
@@ -95,7 +100,7 @@ export default {
         },
         stroke: {
           show: true,
-          //   curve: "smooth",
+            curve: "smooth",
           lineCap: "butt",
           colors: undefined,
           width: 1,
@@ -127,6 +132,9 @@ export default {
           show: true,
           labels: {
             show: true
+          },
+          title:{
+            text: 'Price'
           }
           //   tickAmount:
           // min: Math.max(...this.data)+10,
