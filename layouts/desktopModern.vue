@@ -22,8 +22,29 @@
       ></v-progress-circular>
   </div>
 
-    <v-container class="pa-0">
-      <v-toolbar class="toptoolBar" height="69" color="#fff" style="justify-content: center;">
+
+
+    <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
+        <v-container pa-0>
+            <v-toolbar color="#003e70" class="white--text">
+                <v-layout wrap style="margin-top:-10px;">
+                    <v-flex xs4>
+                        <welcome-user></welcome-user>
+                    </v-flex>
+                    <v-spacer></v-spacer>
+                    <v-flex xs5 class="text-xs-right">
+                        <winnerMarquee :scrollSpeed="scrollSpeed" :showSpeed="showSpeed" :pauseOnHover="pauseOnHover" :pauseTime="pauseTime" :marqueeList="winner" height="36px" width="100%" color="#f76a24" fontSize="14px"></winnerMarquee>
+                    </v-flex>
+                </v-layout>
+            </v-toolbar>
+        </v-container>
+    </v-container>-->
+
+  
+
+    <v-toolbar height="75" class="elevation-1">
+      <v-container class="navbar">
+
         <v-toolbar-title>
           <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')" class="logostyle"></v-img>
         </v-toolbar-title>
@@ -34,21 +55,11 @@
             <span>{{$t(`menu.${item.title}`)}}</span>
           </v-btn>
           <div class="layout-btn">
-            <v-menu offset-y :close-on-content-click="false" :min-width="110">
-              <template v-slot:activator="{ on }">
-                <v-btn class="btn-langage currencySelect" v-on="on" text flat>
-                  <i class="fa fa-dollar icon-dollar" /> 
-                  <i>USD</i>
-                  <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
-                </v-btn>
-              </template>
-              <v-list >
-                <v-list-tile class="currencyMenu" v-for="(item, i) in currency" :key="i"> 
-                  <i class="fa fa-dollar icon-usd" />
-                  <v-list-tile-title class="currencyName" style="padding-left:5px;">{{ item.title }}</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
+            <v-btn class="btn-langage" text flat>
+              <i class="fa fa-dollar icon-dollar" />
+              USD
+              <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
+            </v-btn>
           </div>
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
@@ -62,18 +73,15 @@
           </div>
           <Logout class="layout-logout" />
         </v-toolbar-items>
-      </v-toolbar>
-      
+      </v-container>
+    </v-toolbar>
 
-      <languageDialog ref="language"></languageDialog>
 
-      <v-content>
-        <v-container pa-0>
-          <nuxt />
-        </v-container>
-      </v-content>
-    </v-container>
-    <!-- chat Window -->
+    <languageDialog ref="language" />
+    <v-content>
+      <nuxt />
+    </v-content>
+
     <chatWindow />
   </v-app>
 </template>
@@ -313,7 +321,6 @@ padding: 0px;
   border-radius: 10em;
   width: 27px;
 }
-
 
 nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
   color: #ffffff;
