@@ -68,7 +68,7 @@
         </tr>
       </template>
       <template v-slot:no-data>
-        <v-alert :value="true" color="#384e63" icon="priority_high" outline>{{$t('msg.nodata')}} :(</v-alert>
+        {{$t('msg.nodata')}} :(
       </template>
     </v-data-table>
     <div class="text-xs-center pt-2" v-if="pages != 0 ">

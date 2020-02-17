@@ -3,7 +3,7 @@
     <v-container>
       <v-layout row class="justify-between">
         <h3 class="display-2 white--text">{{title}}</h3>
-        <Button :linkItem="linkItem" btnTitle="View bet history" />
+        <Button v-if="linkItem" :linkItem="linkItem" btnTitle="View bet history" />
       </v-layout>
     </v-container>
   </section>
