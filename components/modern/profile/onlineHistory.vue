@@ -21,11 +21,13 @@
               </span>
             </div>
           </div>
-          <v-date-picker
-            v-if="isShowDateStart"
-            v-model="startDate"
-            @input="isShowDateStart = false"
-          ></v-date-picker>
+          <div style="position:absolute;z-index:1">
+            <v-date-picker
+              v-if="isShowDateStart"
+              v-model="startDate"
+              @input="isShowDateStart = false"
+            ></v-date-picker>
+          </div>
         </v-flex>
         <!-- select end date -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
@@ -40,7 +42,9 @@
               </span>
             </div>
           </div>
-          <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+          <div style="position:absolute;z-index:1">
+            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+          </div>
         </v-flex>
         <!-- go button -->
         <v-flex xs6 sm6 md2 lg1>
@@ -78,13 +82,7 @@
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
-        <VueApexCharts
-          type="area"
-          height="400vh"
-     
-          :options="chartOptions"
-          :series="series"
-        />
+        <VueApexCharts type="area" height="400vh" :options="chartOptions" :series="series" />
       </div>
     </v-flex>
     <v-flex xs12 class="pt-3 pl-5">
@@ -131,7 +129,7 @@ export default {
           toolbar: {
             show: false
           }
-        },
+        }
       },
       series: [
         {
@@ -185,6 +183,7 @@ button:focus {
 }
 .date_picker_container {
   text-transform: capitalize;
+  cursor: pointer;
 }
 .chart_container {
   background-color: white;

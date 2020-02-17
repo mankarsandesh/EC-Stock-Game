@@ -52,6 +52,9 @@
                 </div>
                 <div class="col-85">
                   <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">edit</v-icon>
+                  </span>
                 </div>
               </div>
               <div class="row">
@@ -64,6 +67,9 @@
                     <option value="canada">Canada</option>
                     <option value="usa">USA</option>
                   </select>
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                  </span>
                 </div>
               </div>
               <div class="row">
@@ -71,11 +77,7 @@
                   <label for="country">email</label>
                 </div>
                 <div class="col-85">
-                  <select id="country" name="country">
-                    <option value="australia">Australia</option>
-                    <option value="canada">Canada</option>
-                    <option value="usa">USA</option>
-                  </select>
+                  <input type="text" id="lname" name="lastname" placeholder="mackychinma@gmail.com" />
                 </div>
               </div>
               <div class="row">
@@ -88,6 +90,9 @@
                     <option value="canada">Canada</option>
                     <option value="usa">USA</option>
                   </select>
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                  </span>
                 </div>
               </div>
               <div class="row">
@@ -100,6 +105,9 @@
                     <option value="canada">Canada</option>
                     <option value="usa">USA</option>
                   </select>
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                  </span>
                 </div>
               </div>
               <div class="row">
@@ -142,6 +150,10 @@ select {
   border-radius: 15px;
   resize: vertical;
   background-color: white;
+  padding-right: 35px;
+}
+select{
+  cursor: pointer;
 }
 
 input:focus,
@@ -160,6 +172,7 @@ label {
 }
 
 .col-85 {
+  position: relative;
   float: left;
   width: 87%;
   margin-top: 16px;
@@ -223,5 +236,9 @@ label {
 }
 .decorator_card_red {
   background-color: #b01e1e;
+}
+.icon-container {
+  position: relative;
+  right: 37px;
 }
 </style>

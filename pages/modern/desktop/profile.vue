@@ -35,6 +35,7 @@
         <basicInfo v-if="activeMenu =='basic information'"></basicInfo>
         <onlineHistoy v-if="activeMenu =='online history'"></onlineHistoy>
         <notification v-if="activeMenu =='my notification'"></notification>
+        <stockAnalysis  v-if="activeMenu =='stock analysis'"></stockAnalysis>
       </v-flex>
     </v-layout>
   </div>
