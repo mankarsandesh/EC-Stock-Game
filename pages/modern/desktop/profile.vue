@@ -35,6 +35,9 @@
         <basicInfo v-if="activeMenu =='basic information'"></basicInfo>
         <onlineHistoy v-if="activeMenu =='online history'"></onlineHistoy>
         <notification v-if="activeMenu =='my notification'"></notification>
+        <stockAnalysis  v-if="activeMenu =='stock analysis'"></stockAnalysis>
+        <follower  v-if="activeMenu =='my followers'"></follower>
+        <setting  v-if="activeMenu =='setting'"></setting>
       </v-flex>
     </v-layout>
   </div>
@@ -45,13 +48,17 @@ import basicInfo from "~/components/modern/profile/baicInfo";
 import onlineHistoy from "~/components/modern/profile/onlineHistory";
 import notification from "~/components/modern/profile/notification";
 import stockAnalysis from "~/components/modern/profile/stockAnalysis";
+import follower from "~/components/modern/profile/follower";
+import setting from "~/components/modern/profile/setting";
 export default {
   layout: "desktopModern",
   components: {
     basicInfo,
     onlineHistoy,
     notification,
-    stockAnalysis
+    stockAnalysis,
+    follower,
+    setting
   },
   data() {
     return {

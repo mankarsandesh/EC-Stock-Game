@@ -122,4 +122,6 @@ input[type="checkbox"] {
 .select_date {
   text-transform: uppercase;
 }
+/* checkbox */
+
 </style>
