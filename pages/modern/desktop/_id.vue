@@ -115,15 +115,13 @@
           <v-icon>add</v-icon>
         </v-span>
       </v-flex>
-
       <v-dialog v-model="dialog" width="600">
-        <v-card class="ruleModel">
+        <v-card class="ruleModel" style="border-radius:10px;"> 
           <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title class="headline grey lighten-2" primary-title>EC Gaming Rules</v-card-title>
+          <v-card-title class="headline grey lighten-2"  style="border-radius:10px;" primary-title>EC Gaming Rules</v-card-title>
           <v-card-text>
             <onlyrules />
           </v-card-text>
-
           <v-divider></v-divider>
         </v-card>
       </v-dialog>
