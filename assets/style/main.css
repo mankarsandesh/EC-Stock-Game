@@ -788,6 +788,9 @@ table.result-table {
 .text-right {
   text-align: right !important;
 }
+.text-left {
+  text-align: left !important;
+}
 .container.fluid { 
   padding: 0 15px !important;
 }

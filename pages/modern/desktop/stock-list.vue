@@ -1,65 +1,59 @@
 <template>
   <div>
-    <v-layout row wrap>
-
-
-      <v-flex xs12 md2>
-        <v-item-group v-model="window" class="shrink mr-4" mandatory tag="v-flex">
-          <v-item v-for="n in tabs" :key="n">
-            <div slot-scope="{ active, toggle }">
-              <v-btn :input-value="active" block class="main-btn" @click="toggle">{{$t('menu.'+n)}}</v-btn>
-            </div>
-          </v-item>
-        </v-item-group>
-      </v-flex>
-      <v-flex xs12 md10>
-        <v-window v-model="window" class="elevation-1" vertical>
-          <!-- stock list -->
-          <v-window-item>
-            <sotkclist />
-          </v-window-item>
-          <!-- stock list -->
-
-          <!-- annoucement  -->
-          <v-window-item>
-            <annoucement />
-          </v-window-item>
-          <!-- annoucement  -->
-          <!-- rules -->
-          <v-window-item>
-            <rules />
-          </v-window-item>
-          <!-- rules -->
-        </v-window>
-      </v-flex>
-    </v-layout>
-    <!-- <SelectStock /> component select stock will be on the home page -->
+    <breadcrumbs
+      title="Stock List"
+      linkItem="annoucement"
+      linkItem2="rule"
+      titlebtn="annoucement"
+      titlebtn2="rule"
+    />
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs3 class="d-flex">
+          <v-select
+            class="border-round"
+            hide-details
+            :items="items"
+            placeholder="Sort By :"
+            v-model="itemss"
+          ></v-select>
+        </v-flex>
+        <v-flex xs1 class="d-flex mx-3">
+          <v-btn @click="goSearch" class="main-btn">go</v-btn>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <sotkclist1 />
+        </v-flex>
+      </v-layout>     
+    </v-container>
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
-import sotkclist from "~/components/modern/stocklist/stocklist";
-import annoucement from "~/components/modern/stocklist/annoucement";
-import rules from "~/components/modern/stocklist/rules";
-import SelectStock from "~/components/stockSelect";
+import breadcrumbs from "~/components/breadcrumbs";
+import { mapMutations, mapGetters } from "vuex";
+import sotkclist1 from "~/components/modern/stocklist/stocklist1";
 export default {
   layout: "desktopModern",
   components: {
-    sotkclist,
-    annoucement,
-    rules,
-    SelectStock
+    sotkclist1,
+    breadcrumbs
   },
   data() {
     return {
-      window: 0,
-      tabs: ["stock list", "announcement", "rule"],
-      active: null
+      items: ["day", "weeks", "months", "years", "all"],
+      itemss: ""
     };
   },
-
+  computed: {
+    ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
+  },
   methods: {
-    ...mapMutations(["setIsLoadingStockGame"])
+    ...mapMutations(["setIsLoadingStockGame"]),
+    goSearch() {
+      alert("You're right");
+    }
   }
 };
 </script>
