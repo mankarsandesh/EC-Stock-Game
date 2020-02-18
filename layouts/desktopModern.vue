@@ -50,7 +50,7 @@
             <span>{{$t(`menu.${item.title}`)}}</span>
           </v-btn>
           <div class="layout-btn">
-            <v-btn class="btn-langage" text flat>
+            <v-btn class="btn-currency" text flat>
               <i class="fa fa-dollar icon-dollar" />
               USD
               <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
@@ -302,6 +302,12 @@ export default {
 }
 
 .btn-langage {
+  border: 1px solid #ccc;
+  height: 48% !important;
+  border-radius: 1em;
+  display: flow-root;
+}
+.btn-currency {
   border: 1px solid #ccc;
   height: 48% !important;
   border-radius: 1em;

@@ -59,7 +59,7 @@
           </v-flex>
           <v-flex xs6 class="mx-2">
             <v-layout style="margin-bottom:10px;">
-              <v-flex class="text-xs-center" px-2>
+              <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.Lastdraw')}}:</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
@@ -71,7 +71,7 @@
                 </div>
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
-              <v-flex class="text-xs-center" px-2>
+              <v-flex class="text-xs-center text-uppercase" px-2 style="font-weight:600;">
                 <span>{{$t('msg.BetClosein')}}:</span>
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
@@ -81,7 +81,7 @@
                   </v-flex>
                 </div>
               </v-flex>
-              <v-flex class="text-xs-center" px-2>
+              <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.lotterydraw')}}:</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
@@ -91,11 +91,11 @@
                   </v-flex>
                 </div>
               </v-flex>
-              <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
+              <!-- <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
                 <v-btn fab dark small color="#003e70" @click="setNextstep(),getopen()">
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
-              </v-flex>
+              </v-flex>-->
             </v-layout>
             <div id="betRuleButton">
               <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
@@ -115,6 +115,18 @@
           <v-icon>add</v-icon>
         </v-span>
       </v-flex>
+
+      <v-dialog v-model="dialog" width="600">
+        <v-card class="ruleModel">
+          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
+          <v-card-title class="headline grey lighten-2" primary-title>EC Gaming Rules</v-card-title>
+          <v-card-text>
+            <onlyrules />
+          </v-card-text>
+
+          <v-divider></v-divider>
+        </v-card>
+      </v-dialog>
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -263,6 +275,7 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
+import onlyrules from "~/components/modern/stocklist/onlyrule";
 
 export default {
   async validate({ params, store }) {
@@ -276,10 +289,12 @@ export default {
     chartApp,
     betButton,
     tableTrendMap,
-    selectStock
+    selectStock,
+    onlyrules
   },
   data() {
     return {
+      dialog: true,
       bgColor: "#778899",
       position: "top-right",
       fabActions: [
@@ -539,6 +554,17 @@ export default {
 </script>
 
 <style scoped>
+.ruleModel .headline {
+  color: #0b2a68;
+  font-weight: 500;
+}
+.closePopup {
+  background-color: #fff;
+  color: #333 !important;
+  border-radius: 180px;
+  position: absolute;
+  right: 0;
+}
 .chartDesgin {
   margin-top: 10px;
   padding: 5px 5px;
@@ -562,21 +588,24 @@ export default {
   font-size: 14px;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 22px;
+  padding: 2px 6px;
   font-weight: 400;
 }
 .betclose {
   font-size: 14px;
   border: 1.5px solid #ef076a;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 22px;
+  padding: 2px 6px;
   font-weight: 400;
 }
 .lottery {
   font-size: 14px;
   border: 1.5px solid #01e3bf;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 22px;
+  padding: 2px 6px;
   font-weight: 400;
 }
 .v-icon {
