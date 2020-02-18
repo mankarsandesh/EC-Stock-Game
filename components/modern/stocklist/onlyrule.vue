@@ -1,11 +1,11 @@
 <template>
   <v-expansion-panel v-model="panel" expand>
-    <v-expansion-panel-content>
+    <v-expansion-panel-content class="ruleHeading ruleActive"  >
       <template v-slot:header>
-        <div>{{$t('gamemsg.firstdigit')}} (????. ??)</div>
+        <div >{{$t('gamemsg.firstdigit')}} (????. ??)</div>
       </template>
       <v-card>
-        <v-card-text class="grey lighten-3">
+        <v-card-text class="white">
           <span class="text-blue">SMALL</span> – 0, 1, 2, 3, 4;
           <br />
           <span class="text-success">BIG</span> – 5, 6, 7, 8, 9;
@@ -25,12 +25,12 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content>
+    <v-expansion-panel-content class="ruleActive" >
       <template v-slot:header>
         <div>{{$t('gamemsg.lastdigit')}} (????. ??)</div>
       </template>
       <v-card>
-        <v-card-text class="grey lighten-3">
+        <v-card-text class="white">
           <span class="text-blue">SMALL</span> – 0, 1, 2, 3, 4;
           <br />
           <span class="text-success">BIG</span> – 5, 6, 7, 8, 9;
@@ -50,12 +50,12 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content>
+    <v-expansion-panel-content class="ruleActive">
       <template v-slot:header>
         <div>{{$t('gamemsg.bothdigit')}} (????.? + ? = ?)</div>
       </template>
       <v-card>
-        <v-card-text class="grey lighten-3">
+        <v-card-text class="white">
           <span class="text-blue">SMALL</span>– 1, 2, 3, 4, 5, 6, 7, 8, 9;
           <br />
           <span class="text-success">BIG</span> – 10, 11, 12, 13, 14, 15, 16, 17, 18;
@@ -76,12 +76,12 @@
         </v-card-text>
       </v-card>
     </v-expansion-panel-content>
-    <v-expansion-panel-content>
+    <v-expansion-panel-content class="ruleActive"> 
       <template v-slot:header>
         <div>{{$t('gamemsg.twodigit')}} (????. ??)</div>
       </template>
       <v-card>
-        <v-card-text class="grey lighten-3">
+        <v-card-text class="white">
           <span class="text-blue">SMALL</span> – 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50;
           <br />
           <span class="text-success">BIG</span> – 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99;
@@ -104,4 +104,30 @@
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
+<script>
+  export default {
+    data() {
+        return {           
+            panel: 0
+        };
+    }
+  }
+</script>
 
+<style>
+.v-expansion-panel{
+    border:noen;
+}
+.ruleActive{
+    border-radius: 10px;
+    margin:7px;
+    border:1px solid #dddddd;
+}
+.ruleHeading{
+    background-color: #0b2a68 !important;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    color: #ffffff !important;
+    text-transform: capitalize;
+}
+</style>

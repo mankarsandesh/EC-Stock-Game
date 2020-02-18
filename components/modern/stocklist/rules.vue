@@ -2,7 +2,7 @@
 <div>
     <div>
         <v-container fill-height>
-            <v-layout align-center>
+            <v-layout >
                 <v-flex>
                     <h2 class="display-1">EC Gaming Rules description</h2>
 
@@ -10,11 +10,11 @@
 
                     <v-divider class="my-3"></v-divider>
 
-                    <div class="title mb-3">Result introduction!</div>
+                  
 
                     <v-dialog v-model="dialog" width="500">
                         <template v-slot:activator="{ on }">
-                            <v-btn color="red lighten-2" dark v-on="on">See more</v-btn>
+                            <v-btn color="red lighten-2 buttonGreen" dark v-on="on">Result introduction!</v-btn>
                         </template>
 
                         <v-card>
@@ -68,7 +68,7 @@ export default {
     data() {
         return {
             dialog: false,
-            panel: [true]
+            panel: [0]
         };
     }
 };
