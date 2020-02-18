@@ -1,8 +1,8 @@
 <template>
   <v-expansion-panel v-model="panel" expand>
-    <v-expansion-panel-content>
+    <v-expansion-panel-content class="ruleHeading ruleActive"  >
       <template v-slot:header>
-        <div>{{$t('gamemsg.firstdigit')}} (????. ??)</div>
+        <div >{{$t('gamemsg.firstdigit')}} (????. ??)</div>
       </template>
       <v-card>
         <v-card-text class="white">
@@ -25,7 +25,7 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content>
+    <v-expansion-panel-content class="ruleActive" >
       <template v-slot:header>
         <div>{{$t('gamemsg.lastdigit')}} (????. ??)</div>
       </template>
@@ -50,7 +50,7 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content>
+    <v-expansion-panel-content class="ruleActive">
       <template v-slot:header>
         <div>{{$t('gamemsg.bothdigit')}} (????.? + ? = ?)</div>
       </template>
@@ -76,7 +76,7 @@
         </v-card-text>
       </v-card>
     </v-expansion-panel-content>
-    <v-expansion-panel-content>
+    <v-expansion-panel-content class="ruleActive"> 
       <template v-slot:header>
         <div>{{$t('gamemsg.twodigit')}} (????. ??)</div>
       </template>
@@ -104,6 +104,30 @@
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
-<style>
+<script>
+  export default {
+    data() {
+        return {           
+            panel: 0
+        };
+    }
+  }
+</script>
 
+<style>
+.v-expansion-panel{
+    border:noen;
+}
+.ruleActive{
+    border-radius: 10px;
+    margin:7px;
+    border:1px solid #dddddd;
+}
+.ruleHeading{
+    background-color: #0b2a68 !important;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    color: #ffffff !important;
+    text-transform: capitalize;
+}
 </style>
