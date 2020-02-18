@@ -1,10 +1,17 @@
 <template>
   <section class="breadcrumbs">
     <v-container>
-      <v-layout row class="justify-between">
-        <h3 class="display-2 white--text">{{title}}</h3>
-        <Button v-if="linkItem" :linkItem="linkItem" btnTitle="View bet history" />
-      </v-layout>
+      <v-parallax dark height="150">
+        <v-layout align-center row>
+          <v-flex xs6>
+            <h3 class="display-2 font-weight-thin mb-3">{{title}}</h3>
+          </v-flex>
+          <v-flex xs6 class="text-right">
+            <Button v-if="linkItem" :linkItem="linkItem" :btnTitle="titlebtn" />
+            <Button v-if="linkItem2" :linkItem="linkItem2" :btnTitle="titlebtn2" />
+          </v-flex>
+        </v-layout>
+      </v-parallax>
     </v-container>
   </section>
 </template>
@@ -14,6 +21,6 @@ export default {
   components: {
     Button
   },
-  props: ["linkItem", "title"]
+  props: ["linkItem", "linkItem2", "title", "titlebtn", "titlebtn2"]
 };
 </script>

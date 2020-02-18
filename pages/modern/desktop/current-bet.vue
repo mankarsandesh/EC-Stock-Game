@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs title="Current Bet" linkItem="bet-history" />
+    <breadcrumbs title="Current Bet" linkItem="bet-history"  titlebtn="bet-history" />
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 md12>
