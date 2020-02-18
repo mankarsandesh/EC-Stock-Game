@@ -1,7 +1,6 @@
 <template>
   <v-app style=" background-color: #f4f5fd;">
     <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
-
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"
@@ -11,8 +10,8 @@
           indeterminate
         ></v-progress-circular>
       </div>
-    </div> 
-     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
+    </div>
+    <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
       <v-progress-circular
         style="top: calc(100% - 68%);"
         :size="100"
@@ -20,8 +19,7 @@
         color="#ffffff"
         indeterminate
       ></v-progress-circular>
-  </div>
-
+    </div>
 
 
     <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
@@ -40,11 +38,8 @@
         </v-container>
     </v-container>-->
 
-  
-
-    <v-toolbar height="75" class="elevation-1">
-      <v-container class="navbar">
-
+    <v-toolbar height="75" class="elevation-3">
+      <v-container fluid class="navbar">
         <v-toolbar-title>
           <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')" class="logostyle"></v-img>
         </v-toolbar-title>
@@ -75,7 +70,6 @@
         </v-toolbar-items>
       </v-container>
     </v-toolbar>
-
 
     <languageDialog ref="language" />
     <v-content>
@@ -233,20 +227,20 @@ export default {
   padding-left:3px;
 }
 .currencySelect {
-padding: 0px;
+  padding: 0px;
 }
-.currencyName{
-  padding-left:-5px;
+.currencyName {
+  padding-left: -5px;
   cursor: pointer;
 }
-.currencyMenu:hover{
-    cursor: pointer;
+.currencyMenu:hover {
+  cursor: pointer;
   background-color: #dddddd;
 }
 .currencyMenu {
   cursor: pointer;
- height: 50px;
- padding: 5px;
+  height: 50px;
+  padding: 5px;
 }
 .toolMenu {
   border: 1px solid red;
