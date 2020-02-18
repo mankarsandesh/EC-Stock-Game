@@ -1,22 +1,19 @@
 <template>
 <div>
-    <v-layout class="mx-5 my-3" column>
+    <v-layout class="mx-5 my-3 bettingModel" column>
         <v-flex>
             <h3>
                 {{$t('msg.bettingon')}}
                 <span class="text-uppercase"> {{betId.split("-")[1] >= 0 ? $t('gamemsg.'+betId.split("-")[0])+' - '+betId.split("-")[1]: $t('gamemsg.'+betId.split("-")[0])+' - '+$t('gamemsg.'+betId.split("-")[1])}}</span>
             </h3>
         </v-flex>
-        <v-flex class="pt-1">
-            <span>{{$t('msg.Stock Name')}}: {{ $t(`stockname.${stockName}`) }} -{{loop}}</span>
-        </v-flex>
-        <v-flex class="pt-1">
-            <span>{{$t('msg.payout')}}: {{$store.state.payout[parseInt(payout)].dynamicOdds}}</span>
+        <v-flex class="pt-1 text-uppercase betHeading" >
+            <span>{{$t('msg.Stock Name')}}: {{ $t(`stockname.${stockName}`) }} - {{loop}} minute</span> | <span>{{$t('msg.payout')}}: {{$store.state.payout[parseInt(payout)].dynamicOdds}}</span>
         </v-flex>
         <v-flex>
             <v-layout row>
-                <v-flex class="py-3 text-center">
-                    <v-avatar size="70" v-for="(item,key) in imgChip" :key="key">
+                <v-flex class="py-3 text-center " >
+                    <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" class="chips">
                         <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" :width="item.width" :alt="item.title" :class="item.color" class="chipImg">
                             <span class="setpricechip"> {{getCoins_modern[key]}}</span>
                         </v-img>
@@ -26,25 +23,24 @@
         </v-flex>
         <v-flex>
             <v-layout row justify-center>
-                <v-flex class="pr-1" style="align-self:center">
+                <!-- <v-flex class="pr-1" style="align-self:center">
                     <span>{{$t('msg.amount')}}</span>
-                </v-flex>
+                </v-flex> -->
                 <v-flex style="align-self:center">
                     <input type="number" readonly :min="1"  v-model="betValue" class="input-bet" />
                 </v-flex>
-                <v-flex style="align-self:center">
-                    <v-btn color="error" @click="clear">{{$t('msg.Clear')}}</v-btn>
+                <v-flex style="align-self:center" >
+                    <v-btn color="error"  @click="clear">{{$t('msg.Clear')}}</v-btn>
                 </v-flex>
             </v-layout>
         </v-flex>
-        <v-flex class="py-1">
-            <span>{{$t('msg.max')}} = $5000;{{$t('msg.min')}} = $100</span>
-
+        <v-flex class="py-1 betHeading">
+            <span>{{$t('msg.max')}} = $5000, {{$t('msg.min')}} = $100</span>
         </v-flex>
-        <v-divider></v-divider>
+        <!-- <v-divider></v-divider> -->
         <v-flex xs-12 class="pt-2 text-uppercase">
-            <v-btn color="#003e70" dark @click="confirmBet()" :disabled="confirmDisabled">{{$t('msg.confirm')}}</v-btn>
-            <v-btn color="#003e70" dark @click="closePopper">{{$t('msg.cancel')}}</v-btn>
+            <v-btn class="buttonGreen" dark @click="confirmBet()" :disabled="confirmDisabled">{{$t('msg.confirm')}}</v-btn>
+            <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{$t('msg.cancel')}}</v-btn>
         </v-flex>
     </v-layout>
 </div>
@@ -195,11 +191,34 @@ export default {
 </script>
 
 <style scoped>
+.chips{
+margin:0px 3px;
+-webkit-transition: -webkit-transform .8s ease-in-out;
+          transition:         transform .8s ease-in-out;
+}
+.chips:hover{
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
+  -ms-transform: rotate(360deg); /* IE 9 */
+  transform: rotate(360deg);
+}
+.betHeading{
+    font-weight:500;
+    color:#545353;
+}
+.bettingModel h3{
+    text-transform: capitalize;
+    color: #0b2a68;
+}
+.input-bet:focus{
+     outline: none;
+}
 .input-bet {
-    border: 1px solid rgb(83, 82, 82);
+    border: 1px solid #dddddd;
     font-size: 15px;
-    padding: 5px 10px;
-    width: 90px;
+    padding: 8px 10px;
+    width: 100px;
+    text-align: center;
+    border-radius:8px;
 }
 
 .setpricechip {
