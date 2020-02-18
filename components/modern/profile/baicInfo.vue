@@ -53,7 +53,7 @@
                 <div class="col-85">
                   <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">edit</v-icon>
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </div>
               </div>
@@ -131,7 +131,13 @@ import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
-export default {};
+export default {
+  methods: {
+    iconClick(e) {
+      e.target.parentElement.parentElement.firstElementChild.focus();
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -152,7 +158,7 @@ select {
   background-color: white;
   padding-right: 35px;
 }
-select{
+select {
   cursor: pointer;
 }
 
