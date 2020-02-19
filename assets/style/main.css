@@ -405,6 +405,13 @@ nav.modal-bet.v-toolbar.theme--light p {
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
 }
 
+.buttonRed {
+  color: #fff !important;
+  border-radius: 10px;
+  background-image: linear-gradient(to right, #b73599 20%, #eb106e 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
 .buttonCancel{
     color:  #FFF !important;
     border-radius: 10px;
@@ -529,7 +536,7 @@ table.result-table tr {
   height: 83px;
   font-size: 16px;
   font-weight: 400;
-  /* background-color: #093e70 !important; */
+  background-color: #FFF !important;
   /* color: #ffffff !important; */
   min-width: 100%;
   border-radius: 6px;
@@ -541,7 +548,7 @@ table.result-table tr {
   height: 83px;
   font-size: 16px;
   font-weight: 400;
-  /* background-color: #093e70 !important; */
+  background-color: #FFF !important;
   /* color: #ffffff !important; */
   min-width: 100%;
   border-radius: 6px;
