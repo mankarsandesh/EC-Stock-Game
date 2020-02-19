@@ -76,6 +76,7 @@
       <nuxt />
     </v-content>
 
+    <!-- Chat Windows-->
     <chatWindow />
   </v-app>
 </template>
