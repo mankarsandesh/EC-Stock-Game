@@ -2,9 +2,9 @@
   <div>
     <breadcrumbs
       title="Stock List"
-      linkItem="annoucement"
+      linkItem="announcement"
       linkItem2="rule"
-      titlebtn="annoucement"
+      titlebtn="announcement"
       titlebtn2="rule"
     />
     <v-container>

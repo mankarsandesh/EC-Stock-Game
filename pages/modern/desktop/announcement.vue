@@ -1,11 +1,10 @@
 <template>
-  <div
-  >
-    <breadcrumbs title="Announcement" linkItem="bet-history" />
+  <div>
+    <breadcrumbs title="Announcement" linkItem="gamerule" titlebtn="Game Rule" />
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 md12 >
-           <annoucement />
+           <announcement />
         </v-flex>
       </v-layout>
     </v-container>
@@ -14,25 +13,20 @@
 <script>
 import {mapMutations} from 'vuex'
 import breadcrumbs from "~/components/breadcrumbs";
-import annoucement from "~/components/modern/stocklist/annoucement";
-import rules from "~/components/modern/stocklist/rules";
+import announcement from "~/components/modern/stocklist/announcement";
 
 export default {
   layout: "desktopModern",
   components: {
-    annoucement,
-    rules,
+    announcement,
     breadcrumbs
   },
   data() {
     return {
       window: 0,
-      tabs: ["announcement", "rule"],
+      tabs: ["announcement"],
       active: null
     };
-  },
-   mounted(){
-
   },
   methods:{
     ...mapMutations([

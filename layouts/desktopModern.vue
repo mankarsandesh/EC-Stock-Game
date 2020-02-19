@@ -221,6 +221,7 @@ export default {
 <style scoped>
 
 .logostyle{
+  cursor: pointer;
   margin-left:15px;
 }
 .currencySelect i{
