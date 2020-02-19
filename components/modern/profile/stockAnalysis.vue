@@ -82,7 +82,7 @@
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
-       <apexchart  :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="bar" height="400vh" :options="chartOptions" :series="series"></apexchart>
       </div>
     </v-flex>
   </div>
@@ -95,7 +95,32 @@ import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
+// set color win and lose color in bar chart
+let index = 0;
+let barColor = [
+  ["#67c9d3", "#f75b54", "#fcc624"],
+  ["#81eaf5", "#f9a5a3", "#fddf84"]
+];
 export default {
+  components: {
+    apexchart: apexchart
+  },
+  created() {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+    this.startDate = yyyy + "-" + mm + "-" + dd;
+    this.endDate = yyyy + "-" + mm + "-" + dd;
+  },
+  computed: {
+    a() {
+      return 0;
+    }
+  },
+  destroyed() {
+    index = 0; // reset index
+  },
   data() {
     return {
       isShowDateStart: false,
@@ -110,59 +135,115 @@ export default {
       ],
       series: [
         {
-          data: [21, 22, 10, 28, 16, 21, 13, 30]
+          name: "win",
+          data: [44, 55, 41]
+        },
+        {
+          name: "lose",
+          data: [13, 23, 20]
         }
       ],
       chartOptions: {
-        chart: {
-          height: 350,
-          type: "bar"
-        },
-        colors: "red",
-        plotOptions: {
-          bar: {
-            columnWidth: "45%",
-            distributed: true
+        colors: [
+          // console.log(this.series)
+          function({ value, seriesIndex, w }) {
+            let color = "";
+            color = barColor[index][seriesIndex];
+            if (seriesIndex == 2 && index == 0) {
+              color = barColor[index][seriesIndex];
+              index = 1;
+            }
+            return color;
+          }
+        ],
+        grid: {
+          show: true,
+          borderColor: "#90A4AE",
+          strokeDashArray: 0,
+          position: "back",
+          xaxis: {
+            lines: {
+              show: true
+            }
+          },
+          yaxis: {
+            lines: {
+              show: true
+            }
+          },
+          row: {
+            colors: undefined,
+            opacity: 0.5
+          },
+          column: {
+            colors: undefined,
+            opacity: 0.5
+          },
+          padding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0
           }
         },
         dataLabels: {
           enabled: false
         },
-        legend: {
-          show: false
+        chart: {
+          type: "bar",
+          height: 350,
+          stacked: true,
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: false
+          }
         },
-        xaxis: {
-          categories: [
-            ["John", "Doe"],
-            ["Joe", "Smith"],
-            ["Jake", "Williams"],
-            "Amber",
-            ["Peter", "Brown"],
-            ["Mary", "Evans"],
-            ["David", "Wilson"],
-            ["Lily", "Roberts"]
-          ],
-          labels: {
-            style: {
-              colors: "red",
-              fontSize: "12px"
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              legend: {
+                position: "bottom",
+                offsetX: -10,
+                offsetY: 0
+              }
             }
           }
+        ],
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            distributed: true
+          }
+        },
+        xaxis: {
+          type: "datetime",
+          categories: [
+            "01/01/2011 GMT",
+            "01/02/2011 GMT",
+            "01/03/2011 GMT",
+            "01/04/2011 GMT",
+            "01/05/2011 GMT",
+            "01/06/2011 GMT"
+          ]
+        },
+        legend: {
+          itemMargin: {
+            horizontal: 10,
+            vertical: 10
+          },
+          show:false,
+          position: "top",
+          horizontalAlign: "right",
+          offsetX: 40
+        },
+        fill: {
+          opacity: 1
         }
       }
     };
-  },
-  components: {
-    apexchart: apexchart
-  },
-  created() {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-
-    this.startDate = yyyy + "-" + mm + "-" + dd;
-    this.endDate = yyyy + "-" + mm + "-" + dd;
   }
 };
 </script>
