@@ -62,7 +62,7 @@ export default {
   },
   data() {
     return {
-      activeMenu: "basic information",
+      activeMenu: "stock analysis",
       profileMenu: [
         {
           title: "basic information",
@@ -72,8 +72,7 @@ export default {
         { title: "stock analysis", class: "menu_title" },
         { title: "my followers", class: "menu_title" },
         { title: "my notification", class: "menu_title" },
-        { title: "setting", class: "menu_title" },
-        { title: "sign out", class: "menu_title" }
+        { title: "setting", class: "menu_title" }
       ],
       window: 0,
       active: null
@@ -97,8 +96,8 @@ export default {
 .display_component {
   position: absolute;
   height: 550px;
-  width: 8px;
-  right: -8px;
+  width: 5px;
+  right: -5px;
   top:-73px;
   background: linear-gradient(to bottom, #6713cd 20%, #9b19a8 51%);
 }
