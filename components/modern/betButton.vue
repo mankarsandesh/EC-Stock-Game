@@ -17,11 +17,11 @@
                       placement: 'bottom-end',
                        modifiers: { offset: { offset: '25px' } }
                 }">
-            <div class="popper">
+            <div class="popper" >
                 <!-- this component display the modal,the modal let users choose amount they want to bet -->
                 <betModal :stockName="stockName" :loop="loop" :betId="'firstdigit-'+data.rule" :payout="data.payout"></betModal>
             </div>
-            <v-btn class="align_button4" style="margin-left: -5px;" slot="reference" @click="betButtonClick('firstdigit-'+data.rule)">
+            <v-btn class="align_button4 " :id="'firstdigit-'+data.rule" style="margin-left: -5px;" slot="reference" @click="betButtonClick('firstdigit-'+data.rule)">
                 <showChipAmount text-center size="45px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'firstdigit-'+data.rule})"></showChipAmount>
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
                 <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
@@ -31,7 +31,7 @@
         </popper>
 
         <span class="w12">
-            <v-btn class="align_button4" @click="btnNumber('first')">
+            <v-btn class="align_button4"  id="first"   @click="btnNumber('first')">
                 <showChipAmount size="45px" :amount="getAmountBetSpecificNumber({stockId:getStockId(stockName) ,gameRule:'firstdigit'})"></showChipAmount>
                 <span class="big-digit">0 - 9</span>
                 <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
@@ -56,7 +56,7 @@
             <div class="popper">
                 <betModal :stockName="stockName" :loop="loop" :betId="'lastdigit-'+data.rule" :payout="data.payout"></betModal>
             </div>
-            <v-btn class="align_button4" style="margin-left: -5px;" @click="betButtonClick('lastdigit-'+data.rule)" slot="reference">
+            <v-btn class="align_button4"  :id="'lastdigit-'+data.rule" style="margin-left: -5px;" @click="betButtonClick('lastdigit-'+data.rule)" slot="reference">
                 <showChipAmount size="45px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'lastdigit-'+data.rule})"></showChipAmount>
 
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
@@ -67,7 +67,7 @@
         </popper>
 
         <span class="w12">
-            <v-btn class="align_button4" @click="btnNumber('last')">
+            <v-btn class="align_button4" id="last" @click="btnNumber('last')">
                 <showChipAmount size="45px" :amount="getAmountBetSpecificNumber({stockId:getStockId(stockName) ,gameRule:'lastdigit'})"></showChipAmount>
                 <span class="big-digit">0 - 9</span>
                 <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
@@ -92,7 +92,7 @@
             <div class="popper">
                 <betModal :stockName="stockName" :loop="loop" :betId="'bothdigit-'+data.rule" :payout="data.payout"></betModal>
             </div>
-            <v-btn class="align_button5" @click="betButtonClick('bothdigit-'+data.rule)" slot="reference">
+            <v-btn class="align_button5" :id="'bothdigit-'+data.rule"  @click="betButtonClick('bothdigit-'+data.rule)" slot="reference">
                 <showChipAmount size="45px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'bothdigit-'+data.rule})"></showChipAmount>
 
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
@@ -103,7 +103,7 @@
         </popper>
 
         <span class="w12">
-            <v-btn class="align_button4" @click="btnNumber('both')">
+            <v-btn class="align_button4" id="both" @click="btnNumber('both')">
                 <showChipAmount size="45px" :amount="getAmountBetSpecificNumber({stockId:getStockId(stockName) ,gameRule:'bothdigit'})"></showChipAmount>
 
                 <span class="big-digit">0 - 18</span>
@@ -129,7 +129,7 @@
             <div class="popper">
                 <betModal :stockName="stockName" :loop="loop" :betId="'twodigit-'+data.rule" :payout="data.payout"></betModal>
             </div>
-            <v-btn class="align_button5" @click="betButtonClick('twodigit-'+data.rule)" slot="reference">
+            <v-btn class="align_button5" :id="'twodigit-'+data.rule"   @click="betButtonClick('twodigit-'+data.rule)" slot="reference">
                 <showChipAmount size="45px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'twodigit-'+data.rule})"></showChipAmount>
 
                 <span class="big-digit">{{$t('gamemsg.'+data.rule)}}</span>
@@ -140,7 +140,7 @@
         </popper>
 
         <span class="w12">
-            <v-btn class="align_button4" @click="btnNumber('two')">
+            <v-btn class="align_button4" id="two" @click="btnNumber('two')">
                 <showChipAmount size="45px" :amount="getAmountBetSpecificNumber({stockId:getStockId(stockName) ,gameRule:'twodigit'})"></showChipAmount>
 
                 <span class="big-digit">00 - 99</span>
@@ -219,6 +219,7 @@ export default {
     },
     data() {
         return {
+            isActive: false,
             number: null,
             // rules payout
             payout_high_mid_low: payout.high_mid_low,
@@ -451,8 +452,10 @@ export default {
     },
     methods: {
         ...mapMutations(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
-        betButtonClick(betId) {
-            if (this.checkFooterBet) {
+        betButtonClick(betId) {             
+            $("#"+betId).addClass('bg-btn-first');    
+            if (this.checkFooterBet) {               
+                
                 let data = {
                     // stockId: this.stockName,
                     stockId: this.getStockId(this.stockName),
@@ -465,14 +468,20 @@ export default {
             }
         },
         // the btnNumber methods use to switch specific number first,last,both and two
-        btnNumber(value) {
-            value == this.number ? (this.number = null) : (this.number = value);
+        btnNumber(value) {           
+            value == this.number ? (this.number = null) : (this.number = value);          
         }
     }
 };
 </script>
 
 <style scoped>
+
+.popper{
+    border-radius: 20px;
+    background-color: #FFF;
+     box-shadow: 5px 5px 5px #aaaaaa;
+}
 .bet-close {
     width: 100%;
     z-index: 10;

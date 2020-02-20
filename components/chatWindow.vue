@@ -6,9 +6,8 @@
                        modifiers: { offset: { offset: '55px' } }
                 }"
   >
-    <div class="popper" style="width:400px;">
-      <div class="chatRoom">
-        <div id="headerChat">
+    <div class="popper" >
+      <div id="headerChat">
           <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
             <a href="#">All Channel</a>
           </span>
@@ -17,11 +16,15 @@
           </span>
         </div>
 
+      <div class="chatRoom">
+        
+
         <div v-if="allChannel">
           <div id="bodyChat" class="messages">
             <div id="messagechannel" v-for="data in getMessages" :key="data.index" class="msguser">
               <div class="messageChatview">
                 <a href="#">{{data.name}}</a>
+                <span>10 minutes ago</span>
                 <p class="msgbody">{{data.message}}</p>
               </div>
             </div>
@@ -29,9 +32,9 @@
 
           <div id="messageCHat">
             <input resize="none" v-model="message" placeholder="Say Somthing..." />
-            <v-btn v-on:click="sendMsg" class="btn">
+            <span v-on:click="sendMsg" class="btn">
               <i class="fa fa-paper-plane"></i>
-            </v-btn>
+            </span>
           </div>
         </div>
 
@@ -40,6 +43,7 @@
             <div class="msguser" v-for="data in getMessagesGame" :key="data.index">
               <div class="messageChatview">
                 <a href="#">{{data.name}}</a>
+                <span>10 minutes ago</span>
                 <p class="msgbody">{{data.message}}</p>
               </div>
             </div>
@@ -47,9 +51,9 @@
 
           <div id="messageCHat">
             <input resize="none" v-model="messageGame" placeholder="Say Somthing..." />
-            <v-btn v-on:click="sendMsgGame" class="btn">
+            <span v-on:click="sendMsgGame" class="btn">
               <i class="fa fa-paper-plane"></i>
-            </v-btn>
+            </span>
           </div>
         </div>
       </div>
@@ -206,12 +210,14 @@ export default {
   bottom: 20px;
   width: 60px;
   height: 60px;
-  color: #fff;
-  /* background: radial-gradient(circle at bottom left, transparent 58%, #333 60%); */
-  /* background-attachment: fixed; */
+  color: #fff; 
   background-color: #2aaf3e !important;
 }
-
+.popper{
+  width:400px;
+  border-radius: 15px;
+   border:1px solid #dddddd;
+}
 .livechatImg {
   text-align: center;
   border-radius: 6px;
@@ -243,6 +249,12 @@ export default {
   height: 45px;
   /* border: 1px solid #333; */
 }
+#headerChat span:first-child a{
+  border-top-left-radius: 15px;  
+}
+#headerChat span:last-child a{
+  border-top-right-radius: 15px;
+}
 
 #headerChat .tabs span {
   background-color: #fff;
@@ -251,29 +263,32 @@ export default {
   height: 40px;
   width: 40px;
   font-size: 16px;
-  border-radius: 180px;
+ 
 }
 
 #headerChat .tabs {
   text-align: center;
-  width: 45%;
-  margin-right: 10px;
+  width: 50%;
+  /* border:1px solid red; */
   float: left;
 }
 
-#headerChat .tabs a {
-  margin-left: 10px;
+#headerChat .tabs a {  
+  font-weight: 500;
+  text-transform: uppercase;
   width: 100%;
-  border-radius: 10px;
-  color: #003e70;
-  font-size: 16px;
+  /* border-top-right-radius: 20px; */
+  font-size: 18px;
   float: left;
-  padding: 5px 10px;
-  border: 1px solid #003e70;
+  padding: 10px 15px;
+ 
+  color:  #333 ;  
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
 }
 
 #headerChat .active a {
   color: #fff;
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   background-color: #003e70 !important;
 }
 
@@ -299,9 +314,9 @@ export default {
 }
 
 .msguser {
-  background: #dcdfe0;
-  color: #003e70;
-  padding: 3px 15px 0px;
+  border:1px solid #cecece;;
+  background-color: #f5f4f4;  
+  padding: 10px 15px 0px;
   overflow: auto;
   border-radius: 8px;
   max-width: 350px;
@@ -310,32 +325,46 @@ export default {
   /* border:1px solid red; */
   /* box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2) */
 }
-
+.msguser span{
+  background-color: #ced1d0;
+  border-radius: 20px;
+  padding:2px 8px;
+  float: right;
+  font-size: 12px;
+}
 .msguser p {
+  float: left;
+  width: 100%;
   margin-bottom: 5px;
 }
 
-.msguser a {
+.msguser a { 
+  width: 50%;
   text-transform: capitalize;
   font-weight: 600;
+  float: left;
   color: #003e70;
 }
 
 .msgbody {
-  color: #003e70;
+  color: #7f7e7e;
 }
-
+#messageCHat{
+  margin-top:10px;
+ border: 1px solid #d3d2d2;
+ border-radius:10px; 
+}
 #messageCHat input {
+ 
   float: left;
-  border: 1px solid #084e88;
-  width: 90%;
+  width: 100%;
   padding: 5px;
   margin-right: 0px;
   font-size: 15px;
   height: 40px;
   resize: none;
   color: #003e70;
-  border-radius: 4px;
+ 
 }
 
 #messageCHat input:focus {
@@ -343,34 +372,32 @@ export default {
 }
 
 #messageCHat .btn {
-  /* background-color: #003e70; */
-  color: #333;
-  height: 37px;
-  display: table-cell;
-  vertical-align: baseline;
-  color: #003e70;
+  padding:5px 10px;  
+  color: #d3d2d2;
   cursor: pointer;
   font-size: 20px;
-  border-radius: 40rem;
-  border: 1px solid #003e70;
+  border-radius: 40rem; 
   margin-top: 0px;
+}
+#messageCHat .btn:hover {
+  color:#003e70;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px #003e70;
+  box-shadow: inset 0 0 7px #acacac;
   border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #003e70;
-  border-radius: 10px;
+  background: #acacac;
+  border-radius: 15px;
 }
 
 /* Handle on hover */

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-layout>
-      <v-flex xs2 pa-2>
+  <v-container class="mt-2">
+    <v-layout style="background-color:#f4f5fd;">
+      <v-flex xs2 pa-2 class="leftStocklist">
         <v-layout column>
           <v-flex xs12 pt-2 style="padding-top:21px !important">
             <div id="stocklistGuidelines">
@@ -21,7 +21,7 @@
         </v-layout>
       </v-flex>
       <v-flex xs10 pa-2>
-        <v-layout mb-4>
+        <v-layout>
           <v-flex xs6 style="padding-top:21px">
             <v-layout column>
               <v-flex xs12>
@@ -30,8 +30,8 @@
                 </div>
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
-                <div id="chartGuideline">
-                  <v-flex style="height:421px">
+                <div id="chartGuideline" class="chartDesgin">
+                  <v-flex>
                     <chartApp
                       :data="getStockById($route.params.id).stockPrice"
                       :time="getStockById($route.params.id).stockTime"
@@ -58,41 +58,44 @@
             </v-layout>
           </v-flex>
           <v-flex xs6 class="mx-2">
-            <v-layout>
-              <v-flex class="text-xs-center" px-2>
+            <v-layout style="margin-bottom:10px;">
+              <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.Lastdraw')}}:</span>
                 <div id="lastDrawGuideline">
-                  <v-flex flex-style class="lastDraw">
-                    <span v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"></span>
+                  <v-flex class="lastdraw">
+                    <span
+                      class="text-black"
+                      v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"
+                    ></span>
                   </v-flex>
                 </div>
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
-              <v-flex class="text-xs-center" px-2>
+              <v-flex class="text-xs-center text-uppercase" px-2 style="font-weight:600;">
                 <span>{{$t('msg.BetClosein')}}:</span>
                 <div id="betCloseInGuideline">
-                  <v-flex flex-style class="lastDraw">
+                  <v-flex class="betclose">
                     <span
                       class="text-black"
                     >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
                   </v-flex>
                 </div>
               </v-flex>
-              <v-flex class="text-xs-center" px-2>
+              <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.lotterydraw')}}:</span>
                 <div id="lotteryDrawGuidelines">
-                  <v-flex flex-style class="lastDraw">
+                  <v-flex class="lottery">
                     <span
                       class="text-black"
                     >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
                   </v-flex>
                 </div>
               </v-flex>
-              <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
+              <!-- <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
                 <v-btn fab dark small color="#003e70" @click="setNextstep(),getopen()">
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
-              </v-flex>
+              </v-flex>-->
             </v-layout>
             <div id="betRuleButton">
               <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
@@ -112,6 +115,16 @@
           <v-icon>add</v-icon>
         </v-span>
       </v-flex>
+      <v-dialog v-model="dialog" width="600">
+        <v-card class="ruleModel" style="border-radius:10px;"> 
+          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
+          <v-card-title class="headline grey lighten-2"  style="border-radius:10px;" primary-title>EC Gaming Rules</v-card-title>
+          <v-card-text>
+            <onlyrules />
+          </v-card-text>
+          <v-divider></v-divider>
+        </v-card>
+      </v-dialog>
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -173,7 +186,7 @@
           </div>
         </div>
       </div>
-      <!-- chart 6 -->
+      <!-- Stock chart 6 -->
       <div ref="chartGuideline" style="position:fixed;" v-show="isStep == 6">
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
@@ -248,7 +261,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -260,6 +273,7 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
+import onlyrules from "~/components/modern/stocklist/onlyrule";
 
 export default {
   async validate({ params, store }) {
@@ -273,10 +287,12 @@ export default {
     chartApp,
     betButton,
     tableTrendMap,
-    selectStock
+    selectStock,
+    onlyrules
   },
   data() {
     return {
+      dialog: true,
       bgColor: "#778899",
       position: "top-right",
       fabActions: [
@@ -536,6 +552,23 @@ export default {
 </script>
 
 <style scoped>
+.ruleModel .headline {
+  color: #0b2a68;
+  font-weight: 500;
+}
+.closePopup {
+  background-color: #fff;
+  color: #333 !important;
+  border-radius: 180px;
+  position: absolute;
+  right: 0;
+}
+.chartDesgin {
+  margin-top: 10px;
+  padding: 5px 5px;
+  background-color: #fff;
+  border-radius: 10px;
+}
 .fullscreen {
   position: fixed !important;
   bottom: 18px;
@@ -548,8 +581,30 @@ export default {
 .fullscreen .v-icon {
   font-size: 30px;
 }
-.lastDraw {
+
+.lastdraw {
   font-size: 14px;
+  border: 1.5px solid #4b65ff;
+  border-radius: 10px;
+  font-size: 22px;
+  padding: 2px 6px;
+  font-weight: 400;
+}
+.betclose {
+  font-size: 14px;
+  border: 1.5px solid #ef076a;
+  border-radius: 10px;
+  font-size: 22px;
+  padding: 2px 6px;
+  font-weight: 400;
+}
+.lottery {
+  font-size: 14px;
+  border: 1.5px solid #01e3bf;
+  border-radius: 10px;
+  font-size: 22px;
+  padding: 2px 6px;
+  font-weight: 400;
 }
 .v-icon {
   color: #fff !important;
@@ -564,7 +619,7 @@ export default {
   padding: 10px !important;
   background-color: #4464ff !important;
   position: absolute;
-  left: 54%;
+  left: 57%;
   margin-top: -13%;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }

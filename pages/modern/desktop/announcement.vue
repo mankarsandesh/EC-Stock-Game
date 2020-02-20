@@ -1,53 +1,32 @@
 <template>
   <div>
-    <v-layout row wrap>
-      <v-flex xs12 md2>
-        <v-item-group v-model="window" class="shrink mr-4" mandatory tag="v-flex">
-          <v-item v-for="n in tabs" :key="n">
-            <div slot-scope="{ active, toggle }">
-              <v-btn :input-value="active" block class="main-btn" @click="toggle">{{$t('menu.'+n)}}</v-btn>
-            </div>
-          </v-item>
-        </v-item-group>
-      </v-flex>
-      <v-flex xs12 md10>
-        <v-window v-model="window" class="elevation-1" vertical>
-          <!-- stock list -->
-          <v-window-item>
-            <annoucement />
-          </v-window-item>
-          <!-- stock list -->
-
-          <!-- rules -->
-          <v-window-item>
-            <rules />
-          </v-window-item>
-          <!-- rules -->
-        </v-window>
-      </v-flex>
-    </v-layout>
+    <breadcrumbs title="Announcement" linkItem="gamerule" titlebtn="Game Rule" />
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12 md12 >
+           <announcement />
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import annoucement from "~/components/modern/stocklist/annoucement";
-import rules from "~/components/modern/stocklist/rules";
+import breadcrumbs from "~/components/breadcrumbs";
+import announcement from "~/components/modern/stocklist/announcement";
 
 export default {
   layout: "desktopModern",
   components: {
-    annoucement,
-    rules
+    announcement,
+    breadcrumbs
   },
   data() {
     return {
       window: 0,
-      tabs: ["announcement", "rule"],
+      tabs: ["announcement"],
       active: null
     };
-  },
-   mounted(){
-
   },
   methods:{
     ...mapMutations([

@@ -19,7 +19,7 @@
           <!-- rules -->
           <!-- stock list -->
           <v-window-item>
-            <annoucement />
+            <announcement />
           </v-window-item>
           <!-- stock list -->
         </v-window>
@@ -29,13 +29,13 @@
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import annoucement from "~/components/modern/stocklist/annoucement";
+import announcement from "~/components/modern/stocklist/announcement";
 import rules from "~/components/modern/stocklist/rules";
 
 export default {
   layout: "desktopModern",
   components: {
-    annoucement,
+    announcement,
     rules
   },
   data() {

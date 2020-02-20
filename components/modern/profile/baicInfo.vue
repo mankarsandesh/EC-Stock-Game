@@ -1,319 +1,250 @@
 <template>
-<div>
-    <div :class="colors" v-if="succesFiled">
-        {{ this.succesMessage }}
-    </div>
-
-    <div class="d-between">
-        <v-tooltip right>
-            <template #activator="{ on: tooltip }">
-                <v-avatar size="150" @click="dialog = !dialog">
-                    <img v-on="{ ...tooltip }" :src="profile.avatar" v-if="profile.avatar != null" alt />
-                    <img v-on="{ ...tooltip }" src="/user.png" v-else alt />
-                </v-avatar>
-            </template>
-            <span>Edit Profile Picture</span>
-        </v-tooltip>
-    </div>
-
-    <v-dialog v-model="dialog" max-width="450" persistent>
-        <v-card>
-            <v-card-title class="headline">Update Image Profile</v-card-title>
-            <v-card-text style="text-align: center;">
-                <uploadprofile />
-            </v-card-text>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="green darken-1" flat="flat" @click.native="dialog = false,UpLoadimage('upload')">UpLoad</v-btn>
-                <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Close</v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
-
-    <p style="float:right; color: #003e70;">
-        {{$t("msg.online")}} {{$t("msg.Status")}} : {{setTime(getOnlimeTime.todayOnline, 0)}}
-        <span>{{$t("msg.currentbalance")}} : {{formatToPrice(getBalance)}}</span>
-    </p>
-
-    <v-form @submit.prevent="updateProfile" v-show="isShow">
-        <v-flex lg12>
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <th scope="row" class="row">{{$t("msg.playerid")}}</th>
-                        <td>{{profile.userApiId}}</td>
-                        <td>
-                            <v-select hide-details v-model="profile.idSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="row">{{$t("msg.name")}}</th>
-                        <td>
-                            {{profile.name}}
-                            <popper trigger="click" :options="{placement: 'top-end',modifiers: { offset: { offset: '45px' } }}">
-                                <div class="popper padding-4">
-                                    <v-text-field v-model="profile.name" required></v-text-field>
-                                </div>
-                                <v-btn icon slot="reference">
-                                    <v-icon>edit</v-icon>
-                                </v-btn>
-                            </popper>
-                        </td>
-                        <td>
-                            <v-select hide-details v-model="profile.nameSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="row">{{$t("msg.gender")}}</th>
-                        <td>
-                            <v-select class="select" v-if="profile.gender == 'male'" hide-details v-model="profile.genderSelect" :items="genders" :label="$t('msg.male')"></v-select>
-                            <v-select class="select" v-else hide-details v-model="profile.genderSelect" :items="genders" :label="$t('msg.female')"></v-select>
-                        </td>
-                        <td>
-                            <v-select hide-details v-model="profile.gender" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="row">{{$t("msg.email")}}</th>
-                        <td>
-                            {{profile.email}}
-                            <popper trigger="click" :options="{placement: 'top-end',modifiers: { offset: { offset: '45px' } }}">
-                                <div class="popper padding-4">
-                                    <v-text-field v-model="profile.email" required></v-text-field>
-                                </div>
-                                <v-btn icon slot="reference">
-                                    <v-icon>edit</v-icon>
-                                </v-btn>
-                            </popper>
-                        </td>
-                        <td>
-                            <v-select hide-details v-model="profile.emailSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="row">{{$t("msg.membership")}}</th>
-                        <td>{{profile.memberShip}} Stock God</td>
-                        <td>
-                            <v-select hide-details v-model="profile.membershipSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="row">{{$t("msg.country")}}</th>
-                        <td>
-                            <v-select class="select" hide-details v-model="profile.country" :items="countrySelects" :label="profile.countrySelect"></v-select>
-                        </td>
-                        <td>
-                            <v-select hide-details v-model="profile.countrySelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="row">{{$t('msg.Currency')}}</th>
-                        <td>
-                            USD
-                        </td>
-                        <td>
-                            <v-select hide-details v-model="profile.countrySelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="row">{{$t("msg.Balance")}}</th>
-                        <td>{{formatToPrice(profile.userBalance)}}</td>
-                        <td>
-                            <v-select hide-details v-model="profile.balanceSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="row">{{$t("msg.rolling")}}</th>
-                        <td>{{formatToPrice(profile.rolling)}}</td>
-                        <td>
-                            <v-select hide-details v-model="profile.rollingSelect" :items="selects" :label="$t('msg.everyonecansee')"></v-select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <v-flex>
-                <v-btn class="my-btn" type="submit">{{$t("msg.save")}}</v-btn>
-                <v-btn class="my-btn cancel">{{$t("msg.cancel")}}</v-btn>
-            </v-flex>
+  <div>
+    <v-flex xs12 class="pt-5">
+      <v-layout row>
+        <v-flex xs6 sm6 md4 lg3>
+          <div class="amount_container">
+            <div class="decorator_card decorator_card_green"></div>
+            <span>account balance</span>
+            <br />
+            <span class="amount">1.615,36</span>
+            <span class="title_currentcy">kip</span>
+          </div>
         </v-flex>
-    </v-form>
-</div>
+        <v-flex xs6 sm6 md4 lg3>
+          <div class="amount_container">
+            <div class="decorator_card decorator_card_blue"></div>
+
+            <span>rolling amount</span>
+            <br />
+            <span class="amount">1.615,36</span>
+            <span class="title_currentcy">kip</span>
+          </div>
+        </v-flex>
+        <v-flex xs6 sm6 md4 lg3>
+          <div class="amount_container">
+            <div class="decorator_card decorator_card_red"></div>
+
+            <span>due amount</span>
+            <br />
+            <span class="amount">1.615,36</span>
+            <span class="title_currentcy">kip</span>
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-flex>
+    <v-flex xs12 pt-3>
+      <v-layout>
+        <v-flex xs12 pt-2 pl-5>
+          <div style="margin-top:20px">
+            <form action="/action_page.php">
+              <div class="row">
+                <div class="col-15">
+                  <label for="fname">player ID</label>
+                </div>
+                <div class="col-85">
+                  <input disabled type="text" id="fname" name="firstname" placeholder="188" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="lname">name</label>
+                </div>
+                <div class="col-85">
+                  <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country">gender</label>
+                </div>
+                <div class="col-85">
+                  <select id="country" name="country">
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="usa">USA</option>
+                  </select>
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country">email</label>
+                </div>
+                <div class="col-85">
+                  <input type="text" id="lname" name="lastname" placeholder="mackychinma@gmail.com" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country">follow me</label>
+                </div>
+                <div class="col-85">
+                  <select id="country" name="country">
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="usa">USA</option>
+                  </select>
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country">country</label>
+                </div>
+                <div class="col-85">
+                  <select id="country" name="country">
+                    <option value="australia">Australia</option>
+                    <option value="canada">Canada</option>
+                    <option value="usa">USA</option>
+                  </select>
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15"></div>
+                <div class="col-85">
+                  <v-btn class="btn_save">save</v-btn>
+                  <v-btn class="btn_cancel">cancel</v-btn>
+                </div>
+              </div>
+            </form>
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-flex>
+  </div>
 </template>
 
 <script>
-import {
-    mapGetters,
-    mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "./UploadFile"
+import uploadprofile from "./UploadFile";
 export default {
-    components: {
-        popper,
-        uploadprofile
-    },
-    data() {
-        return {
-            succesMessage: "User info Successfully Updated",
-            succesFiled: false,
-            selects: [this.$root.$t('msg.everyonecansee'), this.$root.$t("msg.onlyme")],
-            countrySelects: ['China', 'Laos'],
-            genders: [this.$root.$t("msg.male"), this.$root.$t("msg.female")],
-            countselects: [],
-            profile: {
-                avatar: "",
-                country: "",
-                created_at: "",
-                currencyId: "",
-                email: "",
-                gender: "",
-                id: "",
-                lastActivity: "",
-                lastLoginAt: "",
-                memberShip: "",
-                name: "",
-                portalProvider: "",
-                rolling: "",
-                totalBet: "",
-                totalOnlineTime: "",
-                userApiId: "",
-                userBalance: "",
-                userId: "",
-                userIp: "",
-                userStatus: "",
-                rolling: "",
-                // value from select
-                idSelect: "",
-                nameSelect: "",
-                genderSelect: "",
-                emailSelect: "",
-                membershipSelect: "",
-                countrySelect: "",
-                balanceSelect: "",
-                rollingSelect: ""
-            },
-            time: "",
-            dialog: false,
-            colors: "",
-            isShow: false
-        };
-    },
-
-    computed: {
-        ...mapGetters(["getBalance", "getUserName", "getOnlimeTime"])
-    },
-    mounted() {
-        setTimeout(() => {
-            this.profile = this.getUserName;
-            this.isShow = true
-        }, 1500);
-    },
-
-    methods: {
-        ...mapActions(["asynUserInfo"]),
-        formatToPrice(value) {
-            return `$ ${Number(value)
-            .toFixed(2)
-            .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
-        },
-        async updateProfile() {
-            this.DataProfile = {
-                name: this.profile.name,
-                email: this.profile.email,
-                gender: this.profile.genderSelect ? this.profile.genderSelect : this.profile.gender,
-                country: this.profile.country
-                // portalProvider: this.profile.portalProvider,
-                // avatar: this.profile.avatar,
-                // memberShip: this.profile.memberShip
-            }
-            if (this.getUserName.name !== this.DataProfile.name || this.getUserName.email !== this.DataProfile.email || this.getUserName.gender !== this.DataProfile.gender) {
-                let res = await this.$axios.$post("/api/me/editProfile?apikey=" + this.$store.state.auth_token, this.DataProfile);
-                console.log(res);
-                res.status ? this.asynUserInfo() : '';
-                this.succesFiled = true;
-                this.succesMessage = res.status ? "User info Successfully Updated" : "User info Update Failed!";
-                this.colors = res.status ? "success" : "error"
-                setTimeout(() => {
-                    this.succesFiled = false
-                }, 2000)
-            }
-        },
-
-        setTime(seconds, val) {
-            let days = Math.floor(seconds / (24 * 60 * 60));
-            seconds -= days * (24 * 60 * 60);
-            let hours = Math.floor(seconds / (60 * 60));
-            seconds -= hours * (60 * 60);
-            let minutes = Math.floor(seconds / 60);
-            seconds -= minutes * 60;
-            if (val == 1) {
-                return (
-                    (0 < days ? days + this.$root.$t("msg.days") + ", " : "") +
-                    hours +
-                    this.$root.$t("msg.hours") +
-                    ", " +
-                    minutes +
-                    this.$root.$t("msg.minute")
-                );
-            } else {
-                return (
-                    hours +
-                    this.$root.$t("msg.hours") +
-                    ", " +
-                    minutes +
-                    this.$root.$t("msg.minute")
-                );
-            }
-        },
-        UpLoadimage(val) {
-            $("#Submit").click()[0]
-        },
-
+  methods: {
+    iconClick(e) {
+      e.target.parentElement.parentElement.firstElementChild.focus();
     }
+  }
 };
 </script>
 
 <style scoped>
-table tr td {
-    text-transform: capitalize;
+/* .......form....... */
+label {
+  text-transform: capitalize;
+}
+input[type="text"]:disabled {
+  background-color: #ccc;
+}
+input[type="text"],
+select {
+  width: 350px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  resize: vertical;
+  background-color: white;
+  padding-right: 35px;
+}
+select {
+  cursor: pointer;
 }
 
-.float-left {
-    float: left;
+input:focus,
+select:focus {
+  outline: none;
 }
 
-.select {
-    width: 100px;
-    margin: 0 auto;
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+.col-15 {
+  float: left;
+  width: 13%;
+  margin-top: 16px;
 }
 
-.success {
-    background-color: #4caf50;
-    padding: 10px;
-    margin: 5px;
-    font-size: 18px;
-    color: #333;
+.col-85 {
+  position: relative;
+  float: left;
+  width: 87%;
+  margin-top: 16px;
 }
 
-.error {
-    background-color: red;
-    padding: 10px;
-    margin: 5px;
-    font-size: 18px;
-    color: #333;
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.btn_save {
+  background-color: #38af3e !important;
+  color: white;
+  border-radius: 7px;
+}
+.btn_cancel {
+  background-color: #656464 !important;
+  color: white;
+  border-radius: 7px;
 }
 
-.images {
-    display: -webkit-box !important;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: baseline;
-    align-items: baseline;
+.amount_container {
+  background-color: white;
+  color: black;
+  padding: 10px 0 10px 0;
+  margin-left: 20px;
+  box-shadow: 0px 2px 5px rgb(145, 145, 145);
+  border-radius: 15px;
+  border-left-width: 1px;
+  border-left-color: green;
+  text-align: center;
+  text-transform: capitalize;
+  line-height: 1.1;
 }
-
-.padding-4 {
-    padding: 4px;
+.amount {
+  font-size: 32px;
+  font-weight: bold;
+  position: relative;
+}
+.title_currentcy {
+  color: #888888;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding-left: 5px;
+  position: absolute;
+}
+.decorator_card {
+  position: absolute;
+  height: 35px;
+  width: 5px;
+  border-radius: 10px;
+  margin-top: 8px;
+  margin-left: -2px;
+}
+.decorator_card_green {
+  background-color: #39b01e;
+}
+.decorator_card_blue {
+  background-color: #1e45b0;
+}
+.decorator_card_red {
+  background-color: #b01e1e;
+}
+.icon-container {
+  position: relative;
+  right: 37px;
 }
 </style>
