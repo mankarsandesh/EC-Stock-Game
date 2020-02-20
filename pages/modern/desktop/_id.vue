@@ -111,9 +111,9 @@
             </div>
           </div>
         </v-flex>
-        <v-span class="addChart" @click="addTrendMap()">
+        <span class="addChart" @click="addTrendMap()">
           <v-icon>add</v-icon>
-        </v-span>
+        </span>
       </v-flex>
       <v-dialog v-model="dialog" width="600">
         <v-card class="ruleModel" style="border-radius:10px;"> 

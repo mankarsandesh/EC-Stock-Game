@@ -6,19 +6,17 @@
                        modifiers: { offset: { offset: '55px' } }
                 }"
   >
-    <div class="popper" >
+    <div class="popper">
       <div id="headerChat">
-          <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
-            <a href="#">All Channel</a>
-          </span>
-          <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
-            <a href="#">Current Bet</a>
-          </span>
-        </div>
+        <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
+          <a href="#">All Channel</a>
+        </span>
+        <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
+          <a href="#">Game Channel</a>
+        </span>
+      </div>
 
       <div class="chatRoom">
-        
-
         <div v-if="allChannel">
           <div id="bodyChat" class="messages">
             <div id="messagechannel" v-for="data in getMessages" :key="data.index" class="msguser">
@@ -206,17 +204,17 @@ export default {
 <style scoped>
 .liveChat {
   position: fixed;
-  right: 80px;
+  right: 60px;
   bottom: 20px;
   width: 60px;
   height: 60px;
-  color: #fff; 
+  color: #fff;
   background-color: #2aaf3e !important;
 }
-.popper{
-  width:400px;
+.popper {
+  width: 400px;
   border-radius: 15px;
-   border:1px solid #dddddd;
+  border: 1px solid #dddddd;
 }
 .livechatImg {
   text-align: center;
@@ -249,10 +247,10 @@ export default {
   height: 45px;
   /* border: 1px solid #333; */
 }
-#headerChat span:first-child a{
-  border-top-left-radius: 15px;  
+#headerChat span:first-child a {
+  border-top-left-radius: 15px;
 }
-#headerChat span:last-child a{
+#headerChat span:last-child a {
   border-top-right-radius: 15px;
 }
 
@@ -263,7 +261,6 @@ export default {
   height: 40px;
   width: 40px;
   font-size: 16px;
- 
 }
 
 #headerChat .tabs {
@@ -273,7 +270,7 @@ export default {
   float: left;
 }
 
-#headerChat .tabs a {  
+#headerChat .tabs a {
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
@@ -281,8 +278,8 @@ export default {
   font-size: 18px;
   float: left;
   padding: 10px 15px;
- 
-  color:  #333 ;  
+
+  color: #333;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
 }
 
@@ -314,8 +311,8 @@ export default {
 }
 
 .msguser {
-  border:1px solid #cecece;;
-  background-color: #f5f4f4;  
+  border: 1px solid #cecece;
+  background-color: #f5f4f4;
   padding: 10px 15px 0px;
   overflow: auto;
   border-radius: 8px;
@@ -325,10 +322,10 @@ export default {
   /* border:1px solid red; */
   /* box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2) */
 }
-.msguser span{
+.msguser span {
   background-color: #ced1d0;
   border-radius: 20px;
-  padding:2px 8px;
+  padding: 2px 8px;
   float: right;
   font-size: 12px;
 }
@@ -338,7 +335,7 @@ export default {
   margin-bottom: 5px;
 }
 
-.msguser a { 
+.msguser a {
   width: 50%;
   text-transform: capitalize;
   font-weight: 600;
@@ -349,13 +346,12 @@ export default {
 .msgbody {
   color: #7f7e7e;
 }
-#messageCHat{
-  margin-top:10px;
- border: 1px solid #d3d2d2;
- border-radius:10px; 
+#messageCHat {
+  margin-top: 10px;
+  border: 1px solid #d3d2d2;
+  border-radius: 10px;
 }
 #messageCHat input {
- 
   float: left;
   width: 100%;
   padding: 5px;
@@ -364,7 +360,6 @@ export default {
   height: 40px;
   resize: none;
   color: #003e70;
- 
 }
 
 #messageCHat input:focus {
@@ -372,15 +367,15 @@ export default {
 }
 
 #messageCHat .btn {
-  padding:5px 10px;  
+  padding: 5px 10px;
   color: #d3d2d2;
   cursor: pointer;
   font-size: 20px;
-  border-radius: 40rem; 
+  border-radius: 40rem;
   margin-top: 0px;
 }
 #messageCHat .btn:hover {
-  color:#003e70;
+  color: #003e70;
 }
 
 /* width */
