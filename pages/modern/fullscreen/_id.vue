@@ -57,7 +57,7 @@
             <v-flex>
               <v-layout xs12>
                 <v-flex xs12 lg4 class="text-xs-center1" style="width:100%;align-self: center;">
-                  <span class="stockname" >
+                  <span class="stockname">
                     {{
                     $t(`stockname.${$route.params.id}`)
                     }}
@@ -66,24 +66,10 @@
                 </v-flex>
 
                 <v-flex xs12 lg8 class="text-xs-right topHeader">
-                  <!-- <span                    
-                    class="buttonGreen"
-                  >1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</span>-->
 
-                  <v-btn color="buttonGreen">1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn>
+                  <v-btn color="buttonRed">1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn>
+                  <v-btn color="buttonGreen" @click="dialogOtherstock = true" >{{ $t("msg.otherstock") }}</v-btn>
 
-                  <v-btn
-                    color="buttonRed"
-                    @click="dialogOtherstock = true"
-                  >{{ $t("msg.otherstock") }}</v-btn>
-
-                  <!-- <span
-                    style="cursor: pointer"
-                    class="button"
-                    dark
-                    color="#003e70"
-                    @click="dialogOtherstock = true"
-                  >{{ $t("msg.otherstock") }}</span>-->
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -100,7 +86,7 @@
         <v-flex xs12 sm12 md5 lg5>
           <v-flex>
             <v-layout>
-              <v-flex class="text-xs-center" xs3 px-2>
+              <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
                 <v-flex flex-style class="lastdraw">
                   <h4
@@ -113,7 +99,7 @@
                   ></h4>
                 </v-flex>
               </v-flex>
-              <v-flex class="text-xs-center" xs3 px-2>
+              <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.BetClosein") }}:</span>
                 <v-flex flex-style class="betclose">
                   <span class="text-black">
@@ -124,7 +110,7 @@
                   </span>
                 </v-flex>
               </v-flex>
-              <v-flex class="text-xs-center" xs3 px-2>
+              <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.lotterydraw") }}:</span>
                 <v-flex flex-style class="lottery">
                   <span class="text-black">
@@ -135,11 +121,11 @@
                   </span>
                 </v-flex>
               </v-flex>
-              <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
-                <!-- <v-btn fab dark small color="#003e70">
+              <!-- <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
+                <v-btn fab dark small color="#003e70">
                 <v-icon dark size="25">fa-question</v-icon>
-                </v-btn>-->
-              </v-flex>
+                </v-btn>
+              </v-flex> -->
             </v-layout>
           </v-flex>
           <v-flex>
@@ -150,23 +136,22 @@
             ></betButton>
           </v-flex>
         </v-flex>
-        <v-flex xs12 lg3>
-          <div class="text-center">{{ msg }}</div>
-          <div style="height: calc(100% - 0%);">
-            <livestock v-if="isShow" :dataGet="chartData"></livestock>
-          </div>
+        <v-flex xs12 sm12 md3 lg3>
+          <h2 font-weight-bold style="text-align:right;color:#013f70;">Acc : $9885555</h2>
+          <fullscreenchart></fullscreenchart>
+
           <div class="setborder">
             <span class="seticon">
               <i class="fa fa-user fa-2x iconcolor" />
-              {{dataliveBetAll.totalUsers}}
+              <span>{{dataliveBetAll.totalUsers}}</span>
             </span>
             <span class="seticon">
               <i class="fa fa-gamepad fa-2x iconcolor" />
-              {{dataliveBetAll.totalBets}}
+              <span>{{dataliveBetAll.totalBets}}</span>
             </span>
-            <span class="seticons">
+            <span class="seticon">
               <i class="fa fa-money fa-2x iconcolor" />
-              {{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}
+              <span>{{ dataliveBetAll.totalAmount ? formatToPrice(dataliveBetAll.totalAmount):formatToPrice(0)}}</span>
             </span>
           </div>
         </v-flex>
@@ -212,7 +197,7 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
-import livestock from "~/components/modern/livestock";
+import fullscreenchart from "~/components/modern/fullscreenchart";
 
 export default {
   layout: "fullscreen",
@@ -268,7 +253,7 @@ export default {
     chartApp,
     footerBet,
     trendMapFullScreen,
-    livestock
+    fullscreenchart
   },
   computed: {
     ...mapGetters([
@@ -429,15 +414,15 @@ export default {
 </script>
 
 <style scoped>
-.stockname{
-font-size: 26px;
-font-weight:600;
-color:#4b65ff;
+.stockname {
+  font-size: 26px;
+  font-weight: 600;
+  color: #4b65ff;
 }
-.gameid{
-font-size: 16px;
-color:#333;
-font-weight: 500;
+.gameid {
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
 }
 
 .chartDesgin {
@@ -450,9 +435,9 @@ font-weight: 500;
   position: fixed !important;
   border-radius: 180px;
   bottom: 18px;
-  right: 150px;
-  width: 70px;
-  height: 70px;
+  right: 60px;
+  width: 60px;
+  height: 60px;
   color: #fff;
   background: linear-gradient(
     215deg,
@@ -495,28 +480,25 @@ font-weight: 500;
 }
 
 .setborder {
-  border: 1px solid;
-  border-radius: 10px;
-  position: relative;
-  top: calc(100% - 108%);
-  width: calc(200% - 100%);
+ text-align: center;
 }
 
 .seticon {
-  display: inline-block;
-  width: calc(125% - 100%);
-  position: relative;
-  margin-left: 6px;
-  font-family: fantasy;
+  border:2px solid #b4b2b2;
+  border-radius:20px;
+  margin:10px 20px;
+  padding:8px 20px;
+  height: 25px;
+}
+.seticon i{
+  color: #545352;
+  font-size: 22px;
+}
+.seticon span{
+  font-weight: 600;
+  color: #545352;
+  font-size: 22px;
 }
 
-.seticons {
-  position: relative;
-  margin-left: 6px;
-  font-family: fantasy;
-}
 
-.iconcolor {
-  color: #003f70;
-}
 </style>
