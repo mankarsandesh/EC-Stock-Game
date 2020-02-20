@@ -1,10 +1,10 @@
 <template>
   <div>
-    <breadcrumbs title="Bet History" linkItem="current-bet" />
+    <breadcrumbs title="Bet History" linkItem="current-bet" titlebtn="current-bet" />
     <v-container>
       <v-layout row class="justify-center">
         <v-flex xs12 md12>
-          <h1>This is the Main page of bet histoy</h1>
+          <bethistory />
         </v-flex>
       </v-layout>
     </v-container>
@@ -12,12 +12,14 @@
 </template>
 
 <script>
+import bethistory from "~/components/classic/bethistory";
 import breadcrumbs from "~/components/breadcrumbs";
 
 export default {
   layout: "desktopModern",
   components: {
-    breadcrumbs
+    breadcrumbs,
+    bethistory
   }
 };
 </script>
