@@ -15,7 +15,7 @@
               <span>from</span>
             </div>
             <div class="date_picker">
-              <span class="select_date">{{startDate}}</span>
+              <span class="select_date">{{ startDate }}</span>
               <span class="icon_date">
                 <v-icon>date_range</v-icon>
               </span>
@@ -36,7 +36,7 @@
               <span>to</span>
             </div>
             <div class="date_picker">
-              <span class="select_date">{{endDate}}</span>
+              <span class="select_date">{{ endDate }}</span>
               <span class="icon_date">
                 <v-icon>date_range</v-icon>
               </span>
@@ -82,7 +82,13 @@
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
-        <apexchart type="bar" height="400vh" :options="chartOptions" :series="series"></apexchart>
+        <div class="chart-map-color">
+          <span v-for="(color,index) in colors[0]" :key="index">
+            <span class="circle-color" :style="{backgroundColor:color}"></span>
+            <span style="margin-right:10px">{{stocks[index]}}</span>
+          </span>
+        </div>
+        <apexchart type="bar" height="480vh" :options="chartOptions" :series="series"></apexchart>
       </div>
     </v-flex>
   </div>
@@ -113,16 +119,28 @@ export default {
     this.startDate = yyyy + "-" + mm + "-" + dd;
     this.endDate = yyyy + "-" + mm + "-" + dd;
   },
-  computed: {
-    a() {
-      return 0;
-    }
-  },
+  computed: {},
   destroyed() {
     index = 0; // reset index
   },
+  updated() {
+    index = 0; // reset index
+  },
+
   data() {
     return {
+      colors: barColor,
+      // match with color by index
+      // 'barColor' variable above
+      stocks: [
+        "US Dollar Index",
+        "BTC/USD1",
+        "BTC/USD5",
+        "SH000001",
+        "SZ399001",
+        "SZ399415",
+        "SH000300"
+      ],
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
@@ -140,7 +158,7 @@ export default {
         },
         {
           name: "lose",
-          data: [13, 23, 20]
+          data: [13, 80, 20]
         }
       ],
       chartOptions: {
@@ -191,7 +209,6 @@ export default {
         },
         chart: {
           type: "bar",
-          height: 350,
           stacked: true,
           toolbar: {
             show: false
@@ -219,6 +236,9 @@ export default {
           }
         },
         xaxis: {
+          labels: {
+            show: false
+          },
           type: "datetime",
           categories: [
             "01/01/2011 GMT",
@@ -226,7 +246,11 @@ export default {
             "01/03/2011 GMT",
             "01/04/2011 GMT",
             "01/05/2011 GMT",
-            "01/06/2011 GMT"
+            "01/06/2011 GMT",
+            "01/07/2011 GMT",
+            "01/08/2011 GMT",
+            "01/09/2011 GMT",
+            "01/10/2011 GMT"
           ]
         },
         legend: {
@@ -234,7 +258,7 @@ export default {
             horizontal: 10,
             vertical: 10
           },
-          show:false,
+          show: false,
           position: "top",
           horizontalAlign: "right",
           offsetX: 40
@@ -249,6 +273,23 @@ export default {
 </script>
 
 <style scoped>
+li {
+  list-style-type: none;
+}
+.chart-map-color {
+  position: relative;
+  float: right;
+  margin-top:15px;
+  display: inline-block;
+}
+.circle-color {
+  position: relative;
+  display: inline-block;
+  top: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
 button {
   background-color: green;
   padding: 10px;
@@ -276,7 +317,7 @@ button:focus {
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
   border-radius: 10px;
   width: 100%;
-  height: 420px;
+  min-height: 550px;
 }
 .date_picker {
   background-color: white;
