@@ -1,6 +1,6 @@
 <template>
-  <v-expansion-panel v-model="panel" expand>
-    <v-expansion-panel-content class="ruleHeading ruleActive"  >
+  <v-expansion-panel v-model="panel" expand style="background-color:#f2f4ff;">
+    <v-expansion-panel-content class="ruleHeading ruleActive">
       <template v-slot:header>
         <div >{{$t('gamemsg.firstdigit')}} (????. ??)</div>
       </template>

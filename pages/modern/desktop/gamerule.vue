@@ -1,14 +1,20 @@
 <template>
-  <div>
+  <div xs2>
     <breadcrumbs
-      title="Game Rule"     
+      title="Rule"     
       linkItem2="announcement"     
       titlebtn2="announcement"
     />
     <v-container>      
       <v-layout row wrap>
-        <v-flex xs12>
+        <v-flex xs2>
+          
+        </v-flex>
+        <v-flex xs8>
           <rules />
+        </v-flex>
+        <v-flex xs2>
+          
         </v-flex>
       </v-layout>     
     </v-container>

@@ -784,3 +784,32 @@ main.v-content {
   }
 }
 // table
+
+/* Main Page design  */
+.container.image-bg.fluid.grid-list-lg.fill-height {
+  background-image: url("/bg/19928.png");
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 0px !important;
+  .layout {
+    padding: 350px;
+    .v-responsive {
+      .v-image__image {
+        background-size: 480px;
+      }
+    }
+  }
+}
+
+.container.bg-gmaeType.fluid.grid-list-lg.fill-height {
+  background-image: url("/bg/17580.png");
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 0px !important;
+}
+
+/* End main page */

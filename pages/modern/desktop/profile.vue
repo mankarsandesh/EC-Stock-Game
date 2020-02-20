@@ -1,43 +1,47 @@
 <template>
   <div>
-    <v-layout row wrap>
-      <v-flex xs3 class="pt-5" style="background-color:white">
-        <div class="profile_head text-xs-center">
-          <div class="image_container">
-            <v-avatar :size="90">
-              <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar" />
-            </v-avatar>
-            <span class="camera_container">
-              <button class="btn_camera">
-                <v-icon color="black" :size="20">photo_camera</v-icon>
-              </button>
-            </span>
-          </div>
-          <h1>Naresh kathad</h1>
-          <p>Online Status : 2hours</p>
-        </div>
+    <v-layout row wrap class="justify-center">
+      <v-flex xs9 >
+        <v-layout>
+          <v-flex xs2 class="pt-5" style="background-color:white">
+            <div class="profile_head text-xs-center">
+              <div class="image_container">
+                <v-avatar :size="90">
+                  <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar" />
+                </v-avatar>
+                <span class="camera_container">
+                  <button class="btn_camera">
+                    <v-icon color="black" :size="20">photo_camera</v-icon>
+                  </button>
+                </span>
+              </div>
+              <h1>Naresh kathad</h1>
+              <p>Online Status : 2hours</p>
+            </div>
 
-        <div class="profile_menu">
-          <div class="display_component"></div>
-          <ul class="pa-3">
-            <li
-              :class="menu.class"
-              @click="setActiveMenu(index)"
-              v-for="(menu,index) in profileMenu"
-              :key="index"
-            >{{menu.title}}</li>
-          </ul>
-        </div>
-      </v-flex>
+            <div class="profile_menu">
+              <div class="display_component"></div>
+              <ul class="pa-3">
+                <li
+                  :class="menu.class"
+                  @click="setActiveMenu(index)"
+                  v-for="(menu,index) in profileMenu"
+                  :key="index"
+                >{{menu.title}}</li>
+              </ul>
+            </div>
+          </v-flex>
 
-      <!-- change component here when click menu  -->
-      <v-flex xs9>
-        <basicInfo v-if="activeMenu =='basic information'"></basicInfo>
-        <onlineHistoy v-if="activeMenu =='online history'"></onlineHistoy>
-        <notification v-if="activeMenu =='my notification'"></notification>
-        <stockAnalysis  v-if="activeMenu =='stock analysis'"></stockAnalysis>
-        <follower  v-if="activeMenu =='my followers'"></follower>
-        <setting  v-if="activeMenu =='setting'"></setting>
+          <!-- change component here when click menu  -->
+          <v-flex xs10>
+            <basicInfo v-if="activeMenu =='basic information'"></basicInfo>
+            <onlineHistoy v-if="activeMenu =='online history'"></onlineHistoy>
+            <notification v-if="activeMenu =='my notification'"></notification>
+            <stockAnalysis v-if="activeMenu =='stock analysis'"></stockAnalysis>
+            <follower v-if="activeMenu =='my followers'"></follower>
+            <setting v-if="activeMenu =='setting'"></setting>
+          </v-flex>
+        </v-layout>
       </v-flex>
     </v-layout>
   </div>
@@ -72,8 +76,7 @@ export default {
         { title: "stock analysis", class: "menu_title" },
         { title: "my followers", class: "menu_title" },
         { title: "my notification", class: "menu_title" },
-        { title: "setting", class: "menu_title" },
-        { title: "sign out", class: "menu_title" }
+        { title: "setting", class: "menu_title" }
       ],
       window: 0,
       active: null
@@ -97,9 +100,9 @@ export default {
 .display_component {
   position: absolute;
   height: 550px;
-  width: 8px;
-  right: -8px;
-  top:-73px;
+  width: 5px;
+  right: -5px;
+  top: -73px;
   background: linear-gradient(to bottom, #6713cd 20%, #9b19a8 51%);
 }
 .btn_camera {
