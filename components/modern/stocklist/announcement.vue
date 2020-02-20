@@ -1,20 +1,24 @@
 <template>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col" class="bg-colors">{{$t('msg.titles')}}</th>
-        <th scope="col" class="bg-colors">{{$t('msg.date')}}</th>
-        <th scope="col" class="bg-colors">{{$t('msg.preview')}}</th>
-      </tr>
-    </thead>
-    <tbody style="text-align:center;">
-      <tr v-for="(item,index) in getAnnoucement" :key="index" class="tabletr">
-        <td>{{item.title}}</td>
-        <td>{{item.created_at}}</td>
-        <td>{{item.messageContent}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <v-flex xs12 class="mt-3">
+    <div class="v-table__overflow">
+      <table class="v-datatable v-table theme--light">
+        <thead>
+          <tr>
+            <th scope="col" class="bg-colors">{{$t('msg.titles')}}</th>
+            <th scope="col" class="bg-colors">{{$t('msg.date')}}</th>
+            <th scope="col" class="bg-colors">{{$t('msg.preview')}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item,index) in getAnnoucement" :key="index"  class="tabletr">
+            <td>{{item.title}}</td>
+            <td>{{item.created_at}}</td>
+            <td>{{item.messageContent}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </v-flex>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
