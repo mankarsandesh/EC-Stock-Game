@@ -4,7 +4,7 @@
       <v-parallax dark height="150">
         <v-layout align-center row>
           <v-flex xs6>
-            <h3 class="display-2 font-weight-thick mb-3 text-center">{{title}}</h3>
+            <h3 class="display-2 font-weight-thick mb-3 ">{{title}}</h3>
           </v-flex>
           <v-flex xs8 class="text-right">
             <Button v-if="linkItem" :linkItem="linkItem" :btnTitle="titlebtn" />

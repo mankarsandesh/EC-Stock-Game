@@ -104,21 +104,25 @@
         </v-layout>
 
         <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
-          <div v-for="(trendType, index) in trendTypes" :key="index">
+          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap></tableTrendMap>
+              <tableTrendMap :isShowMultigameButton="index"></tableTrendMap>
             </div>
+            <span class="addChart" @click="addTrendMap()" v-if="trendTypes.length == index+1 && trendTypes.length < 4" >
+              <v-icon>add</v-icon>
+            </span>
           </div>
         </v-flex>
-        <v-span class="addChart" @click="addTrendMap()">
-          <v-icon>add</v-icon>
-        </v-span>
       </v-flex>
       <v-dialog v-model="dialog" width="600">
-        <v-card class="ruleModel" style="border-radius:10px;"> 
+        <v-card class="ruleModel" style="border-radius:10px;">
           <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title class="headline grey lighten-2"  style="border-radius:10px;" primary-title>EC Gaming Rules</v-card-title>
+          <v-card-title
+            class="headline grey lighten-2"
+            style="border-radius:10px;"
+            primary-title
+          >EC Gaming Rules</v-card-title>
           <v-card-text>
             <onlyrules />
           </v-card-text>
@@ -611,16 +615,20 @@ export default {
   font-size: 28px;
   font-weight: bolder;
 }
+.trendmap-container {
+  position: relative;
+}
 .addChart {
   cursor: pointer;
-  border-radius: 180px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
   height: 47px;
   width: 47px;
-  padding: 10px !important;
   background-color: #4464ff !important;
   position: absolute;
-  left: 57%;
-  margin-top: -13%;
+  left: 49%;
+  top: 46%;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 .layout-bottom {
