@@ -66,10 +66,11 @@
                 </v-flex>
 
                 <v-flex xs12 lg8 class="text-xs-right topHeader">
-
                   <v-btn color="buttonRed">1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn>
-                  <v-btn color="buttonGreen" @click="dialogOtherstock = true" >{{ $t("msg.otherstock") }}</v-btn>
-
+                  <v-btn
+                    color="buttonGreen"
+                    @click="dialogOtherstock = true"
+                  >{{ $t("msg.otherstock") }}</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -125,7 +126,7 @@
                 <v-btn fab dark small color="#003e70">
                 <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
-              </v-flex> -->
+              </v-flex>-->
             </v-layout>
           </v-flex>
           <v-flex>
@@ -159,8 +160,8 @@
 
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
           <footerBet style></footerBet>
-          <v-layout class="fullroadMap">
-            <v-flex xs12 sm12 md12 lg12 wrap>
+          <v-layout class="fullroadMap elevation-4" style="margin-top:-40px;">
+            <v-flex xs12 sm12 md12 lg12 wrap pt-2>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
                   <trendMapFullScreen which_one="B/S"></trendMapFullScreen>
@@ -480,33 +481,29 @@ export default {
 }
 
 .setborder {
- text-align: center;
+  text-align: center;
 }
 
 .seticon {
-  border:2px solid #b4b2b2;
-  border-radius:20px;
-  margin:10px 20px;
-  padding:8px 20px;
+  border: 2px solid #b4b2b2;
+  border-radius: 20px;
+  margin: 10px 20px;
+  padding: 8px 20px;
   height: 25px;
 }
-.seticon i{
+.seticon i {
   color: #545352;
   font-size: 22px;
 }
-.seticon span{
+.seticon span {
   font-weight: 600;
   color: #545352;
   font-size: 22px;
 }
-.fullroadMap{
-  box-shadow: 5px 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  margin-top:50px;
-  padding-top:50px;
-  border-top:10px solid #092968;
-  border-left:2px solid #dddddd;
-  border-right:2px solid #dddddd;
+.fullroadMap {
+  border-top: 10px solid #092968;
+  border-left: 2px solid #dddddd;
+  border-right: 2px solid #dddddd;
   border-radius: 10px;
 }
-
 </style>
