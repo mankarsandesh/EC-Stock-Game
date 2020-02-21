@@ -3,15 +3,16 @@
     <v-fade-transition mode="out-in">
       <v-layout align-center column>
         <v-img src="/bg/group33.png" width="500" height="100" />
-        <div class="preloader-wrap">
-          <div class="percentage" id="precent"></div>
-          <div class="loader">
-            <div class="trackbar">
-              <div class="loadbar"></div>
+          <div class="preloader-wrap">
+            <div class="percentage" id="precent"></div>
+            <div class="loader">
+              <div class="trackbar">
+                <div class="loadbar"></div>
+              </div>
+              <div class="glow"></div>
             </div>
-            <div class="glow"></div>
           </div>
-        </div>
+       
       </v-layout>
     </v-fade-transition>
   </v-container>
@@ -90,8 +91,8 @@ export default {
 
         let timer = setInterval(function() {
           current += increment;
-        //   $(obj).text(current + "%");  //sHOW BY %
-          $(obj).text("lOADING..."); // SHOW BY LOADING 
+          //   $(obj).text(current + "%");  //sHOW BY %
+          $(obj).text("lOADING..."); // SHOW BY LOADING
           //obj.innerHTML = current;
           if (current == end) {
             clearInterval(timer);
