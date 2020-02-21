@@ -64,8 +64,9 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs1" >
-        <v-layout row wrap v-if="isShowMultigameButton == 0">
+
+      <v-flex class="xs1">
+        <v-layout row wrap>
           <v-flex xs12 lg12 md12 ≈>
             <v-btn
               class="multiGame"
@@ -89,10 +90,6 @@ export default {
     };
   },
   props: {
-    isShowMultigameButton:{
-      type:Number,
-      required:true
-    },
     trendType: {
       type: String,
       default: "firstDigit"
