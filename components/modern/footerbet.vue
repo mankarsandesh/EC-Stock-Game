@@ -1,5 +1,31 @@
 <template>
 <div>
+    
+    <v-layout row justify-center>
+      <v-flex xs1 class="amount">
+         <div>
+             $ {{getAllBettingAmount}}
+         </div> 
+      </v-flex>
+      <v-flex xs3  class="chipsdiv">
+             <v-layout row>
+                <v-flex class="text-center" >
+                    <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" class="chips">
+                        <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" :width="item.width" :alt="item.title" :class="item.color" class="chipImg">
+                            <span class="setpricechip"> {{getCoins_modern[key]}}</span>
+                        </v-img>
+                    </v-avatar>
+                </v-flex>
+            </v-layout>
+      </v-flex>
+      <v-flex xs2  class="betButton">
+          <div>
+              <v-btn class="buttonGreen" dark >{{$t('msg.confirm')}}</v-btn>
+              <v-btn class="buttonCancel" >{{$t('msg.cancel')}}</v-btn>
+          </div>            
+      </v-flex>
+    </v-layout>
+
     <!-- Generator: Adobe Illustrator 24.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 70" style="enable-background:new 0 0 1366 70; margin-bottom: -4.6px;" xml:space="preserve">
 
@@ -105,8 +131,37 @@ export default {
         return {
             isSending: false,
             dialog: false,
-            texts: "confirm"
-        };
+            texts: "confirm",
+            imgChip: [{
+                    title: "Danger",
+                    img: "/chip/danger.png",
+                    width: "55"
+                },
+                {
+                    title: "Primary",
+                    img: "/chip/primary.png",
+                     width: "55"
+                },
+                {
+                    title: "success",
+                    img: "/chip/success.png",
+                     width: "60"
+                },
+                {
+                    title: "warning",
+                    img: "/chip/warning.png",
+                     width: "60"
+                },
+                {
+                    title: "black",
+                    img: "/chip/black.png",
+                     width: "70",
+                    color: "text-white" 
+                }
+            ]
+        }         
+
+        
     },
     methods: {
         ...mapActions(["sendBetting"]),
@@ -128,6 +183,43 @@ export default {
 </script>
 
 <style scoped>
+.amount{
+/*    
+    border-left:2px solid #aeadad;
+    border-top:2px solid #aeadad;
+    border-bottom:2px solid #aeadad; */
+}
+.amount div{
+    margin:10px -15px;
+    padding: 8px;
+    border-left:3px solid #aeadad;
+    border-top:3px solid #aeadad;
+    border-bottom:3px solid #aeadad;
+    font-size: 30px;
+    text-align: left;
+    vertical-align: center;
+}
+.chipsdiv{
+    padding:5px;
+    border-top-left-radius:50px;
+    border-bottom-left-radius:50px;
+    border-top-right-radius:50px;
+    border-bottom-right-radius:50px;
+    
+    border-right:3px solid #aeadad;
+    border-left:3px solid #aeadad;
+    border-top:3px solid #aeadad;
+    border-bottom:3px solid #aeadad;
+}
+.betButton div{
+    padding:8px;
+    margin:10px -20px;
+    border-right:3px solid #aeadad;
+    border-top:3px solid #aeadad;
+    border-bottom:3px solid #aeadad;
+}
+
+
 .st0 {
     display: none;
 }

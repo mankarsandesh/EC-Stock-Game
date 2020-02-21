@@ -62,7 +62,6 @@ const createStore = () => {
                 }
             },
             payout: payouts,
-
             stocks: {
                 sh000001: {
                     url: {
