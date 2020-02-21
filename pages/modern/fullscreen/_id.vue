@@ -159,7 +159,7 @@
 
         <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
           <footerBet style></footerBet>
-          <v-layout style="background-color:#003f70">
+          <v-layout class="fullroadMap">
             <v-flex xs12 sm12 md12 lg12 wrap>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
@@ -499,6 +499,14 @@ export default {
   color: #545352;
   font-size: 22px;
 }
-
+.fullroadMap{
+  box-shadow: 5px 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  margin-top:50px;
+  padding-top:50px;
+  border-top:10px solid #092968;
+  border-left:2px solid #dddddd;
+  border-right:2px solid #dddddd;
+  border-radius: 10px;
+}
 
 </style>
