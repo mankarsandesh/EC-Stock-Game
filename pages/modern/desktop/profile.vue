@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row wrap class="justify-center">
+    <v-layout pt-3 row wrap class="justify-center">
       <v-flex xs9 >
         <v-layout>
           <v-flex xs2 class="pt-5" style="background-color:white">
