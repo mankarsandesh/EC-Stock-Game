@@ -3,9 +3,9 @@
     <breadcrumbs
       title="Stock List"
       linkItem="announcement"
-      linkItem2="rule"
+      linkItem2="gamerule"
       titlebtn="announcement"
-      titlebtn2="rule"
+      titlebtn2="game rule"
     />
     <v-container>
       <v-layout row wrap>
