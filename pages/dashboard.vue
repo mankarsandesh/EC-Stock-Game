@@ -87,7 +87,7 @@ export default {
       .flex {
         .v-responsive {
           .v-responsive__content {
-            justify-content: end;
+            justify-content: flex-end;
             display: flex;
           }
         }
