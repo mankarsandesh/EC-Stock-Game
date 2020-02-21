@@ -67,7 +67,7 @@ export default {
   },
   data() {
     return {
-      imageBase64:"",
+      imageBase64:"/no-profile-pic.jpg",
       activeMenu: "basic information",
       profileMenu: [
         {
