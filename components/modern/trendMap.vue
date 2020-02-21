@@ -7,11 +7,11 @@
         v-show="which_one == 'B/S' || which_one == !isFullscreen"
       >
         <div v-show="isFullscreen">
-          <span class="countBig text-white"></span>
-          <span class="countSmall text-white"></span>
+          <span class="countBig text-grey"></span>
+          <span class="countSmall text-grey"></span>
         </div>
         <div class="bs-coltabledivlast">
-          <table class="table-responsive" ref="tablebsTwo">
+          <table class="table-responsive" ref="tablebsTwo" >
             <tr v-for="tr in rowTable">
               <td v-for="td in BSLength"></td>
             </tr>
@@ -25,8 +25,8 @@
         v-show="which_one == 'O/E' || which_one == !isFullscreen"
       >
         <div v-show="isFullscreen">
-          <span class="countOdd text-white"></span>
-          <span class="countEven text-white"></span>
+          <span class="countOdd text-grey"></span>
+          <span class="countEven text-grey"></span>
         </div>
         <div class="oe-coltabledivlast">
           <table class="table-responsive" ref="tableOETwo">
@@ -44,9 +44,9 @@
         v-show="which_one == 'U/L' || which_one == !isFullscreen"
       >
         <div v-show="isFullscreen">
-          <span class="countUpper text-white"></span>
-          <span class="countMiddle text-white"></span>
-          <span class="countLower text-white"></span>
+          <span class="countUpper text-grey"></span>
+          <span class="countMiddle text-grey"></span>
+          <span class="countLower text-grey"></span>
         </div>
         <div class="ul-coltabledivlast">
           <table class="table-responsive" ref="tablebUMLTwo">
@@ -63,16 +63,16 @@
         v-show="which_one == 'NUM' || which_one == !isFullscreen"
       >
         <div v-show="isFullscreen" ref="sortNumber">
-          <span class="text-white"></span>
-          <span class="text-white"></span>
-          <span class="text-white"></span>
-          <span class="text-white"></span>
-          <span class="text-white"></span>
-          <span class="text-white"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
         </div>
         <div class="num-coltabledivlast">
           <table class="table-responsive" ref="tableNumberTwo">
-            <tr v-for="tr in rowTable">
+            <tr v-for="tr in rowTable" >
               <td v-for="td in Numlength"></td>
             </tr>
           </table>
@@ -1090,7 +1090,8 @@ export default {
 
 .table-responsive {
   border:1px solid #dddddd;
-  border-radius:5px;
+  border-radius:7px;
+  padding: 5px;
 }
 table {
   width: 100%;

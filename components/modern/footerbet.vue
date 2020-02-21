@@ -1,33 +1,37 @@
 <template>
-<div>
-    
-    <v-layout row justify-center>
-      <v-flex xs1 class="amount">
-         <div>
-             $ {{getAllBettingAmount}}
-         </div> 
+  <div>
+    <v-layout row justify-center class="footerBet">
+      <v-flex xs2 class="amount">
+        <div>{{getAllBettingAmount}}</div>
       </v-flex>
-      <v-flex xs3  class="chipsdiv">
-             <v-layout row>
-                <v-flex class="text-center" >
-                    <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" class="chips">
-                        <v-img @click="coinClick(getCoins_modern[key])" :src="item.img" :width="item.width" :alt="item.title" :class="item.color" class="chipImg">
-                            <span class="setpricechip"> {{getCoins_modern[key]}}</span>
-                        </v-img>
-                    </v-avatar>
-                </v-flex>
-            </v-layout>
+      <v-flex xs3 class="chipsdiv">
+        <v-layout row>
+          <v-flex class="text-center">
+            <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" class="chips">
+              <v-img
+                @click="setFooterBetAmount(getCoins_modern[key])"
+                :src="item.img"
+                :width="item.width"
+                :alt="item.title"
+                :class="item.color"
+                class="chipImg"
+              >
+                <span class="setpricechip">{{getCoins_modern[key]}}</span>
+              </v-img>
+            </v-avatar>
+          </v-flex>
+        </v-layout>
       </v-flex>
-      <v-flex xs2  class="betButton">
-          <div>
-              <v-btn class="buttonGreen" dark >{{$t('msg.confirm')}}</v-btn>
-              <v-btn class="buttonCancel" >{{$t('msg.cancel')}}</v-btn>
-          </div>            
+      <v-flex xs2 class="betButton">
+        <div>
+          <v-btn class="buttonGreen" dark @click="getSending()">{{$t('msg.'+texts)}}</v-btn>
+          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{$t('msg.cancel')}}</v-btn>
+        </div>
       </v-flex>
     </v-layout>
 
     <!-- Generator: Adobe Illustrator 24.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 70" style="enable-background:new 0 0 1366 70; margin-bottom: -4.6px;" xml:space="preserve">
+    <!-- <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1366 70" style="enable-background:new 0 0 1366 70; margin-bottom: -4.6px;" xml:space="preserve">
 
         <g class="st0">
             <g class="st1">
@@ -102,157 +106,167 @@ c1.3,0,2.3,1,2.3,2.3C777.1,59.7,776,60.7,774.7,60.7z" />
             <text transform="matrix(1 0 0 1 810.1836 56.0176)" class="st5 st6 st8" style="cursor:pointer" @click="getSending()">{{$t('msg.'+texts)}}</text>
             <text transform="matrix(1.2851 0 0 1 895.7578 56.6572)" class="st5 st6 st8" style="cursor:pointer" @click="clearDataMultiGameBet()">{{$t('msg.cancel')}}</text>
         </g>
-    </svg>
+    </svg>-->
 
     <!-- add chip setting -->
-    <v-dialog v-model="dialog" max-width="900">
+    <!-- <v-dialog v-model="dialog" max-width="900">
         <v-card-title small class="headline grey lighten-2" primary-title>
             Setting
             <v-spacer></v-spacer>
             <v-btn color="primary" flat @click="dialog = false">X</v-btn>
         </v-card-title>
         <setting v-if="dialog" />
-    </v-dialog>
-</div>
+    </v-dialog>-->
+  </div>
 </template>
 
 <script>
-import {
-    mapGetters,
-    mapMutations,
-    mapActions
-} from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import setting from "../modern/setting/chipamout";
 export default {
-    components: {
-        setting
-    },
-    data() {
-        return {
-            isSending: false,
-            dialog: false,
-            texts: "confirm",
-            imgChip: [{
-                    title: "Danger",
-                    img: "/chip/danger.png",
-                    width: "55"
-                },
-                {
-                    title: "Primary",
-                    img: "/chip/primary.png",
-                     width: "55"
-                },
-                {
-                    title: "success",
-                    img: "/chip/success.png",
-                     width: "60"
-                },
-                {
-                    title: "warning",
-                    img: "/chip/warning.png",
-                     width: "60"
-                },
-                {
-                    title: "black",
-                    img: "/chip/black.png",
-                     width: "70",
-                    color: "text-white" 
-                }
-            ]
-        }         
-
-        
-    },
-    methods: {
-        ...mapActions(["sendBetting"]),
-        ...mapMutations(["setFooterBetAmount", "clearDataMultiGameBet"]),
-        getSending() {
-            this.isSending = true;
-            this.texts = "sending";
-            setTimeout(() => {
-                this.sendBetting();
-                this.isSending = false;
-                this.texts = "confirm";
-            }, 1000);
+  components: {
+    setting
+  },
+  data() {
+    return {
+      isSending: false,
+      dialog: false,
+      texts: "confirm",
+      imgChip: [
+        {
+          title: "Danger",
+          img: "/chip/danger.png",
+          width: "55"
+        },
+        {
+          title: "Primary",
+          img: "/chip/primary.png",
+          width: "55"
+        },
+        {
+          title: "success",
+          img: "/chip/success.png",
+          width: "60"
+        },
+        {
+          title: "warning",
+          img: "/chip/warning.png",
+          width: "60"
+        },
+        {
+          title: "black",
+          img: "/chip/black.png",
+          width: "80"
         }
-    },
-    computed: {
-        ...mapGetters(["getCoins_modern", "checkFooterBet", "getAllBettingAmount"])
+      ]
+    };
+  },
+  methods: {
+    ...mapActions(["sendBetting"]),
+    ...mapMutations(["setFooterBetAmount", "clearDataMultiGameBet"]),
+    getSending() {
+      this.isSending = true;
+      this.texts = "sending";
+      setTimeout(() => {
+        this.sendBetting();
+        this.isSending = false;
+        this.texts = "confirm";
+      }, 1000);
     }
+  },
+  computed: {
+    ...mapGetters(["getCoins_modern", "checkFooterBet", "getAllBettingAmount"])
+  }
 };
 </script>
 
 <style scoped>
-.amount{
-/*    
-    border-left:2px solid #aeadad;
-    border-top:2px solid #aeadad;
-    border-bottom:2px solid #aeadad; */
+.amount div {
+  margin: 10px -15px;
+  padding: 8px;
+  color:#615f60;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-left: 3px solid #aeadad;
+  border-top: 3px solid #aeadad;
+  border-bottom: 3px solid #aeadad;
+  font-size: 30px;
+  text-align: left;
+  vertical-align: center;
+  background-color: #fff;
 }
-.amount div{
-    margin:10px -15px;
-    padding: 8px;
-    border-left:3px solid #aeadad;
-    border-top:3px solid #aeadad;
-    border-bottom:3px solid #aeadad;
-    font-size: 30px;
-    text-align: left;
-    vertical-align: center;
+.chipsdiv {
+  padding: 5px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border-right: 3px solid #aeadad;
+  border-left: 3px solid #aeadad;
+  border-top: 3px solid #aeadad;
+  border-bottom: 3px solid #aeadad;
+  background-color: #fff;
 }
-.chipsdiv{
-    padding:5px;
-    border-top-left-radius:50px;
-    border-bottom-left-radius:50px;
-    border-top-right-radius:50px;
-    border-bottom-right-radius:50px;
-    
-    border-right:3px solid #aeadad;
-    border-left:3px solid #aeadad;
-    border-top:3px solid #aeadad;
-    border-bottom:3px solid #aeadad;
+.betButton div {
+  padding: 8px;
+  margin: 10px -18px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-right: 3px solid #aeadad;
+  border-top: 3px solid #aeadad;
+  border-bottom: 3px solid #aeadad;
+  background-color: #fff;
 }
-.betButton div{
-    padding:8px;
-    margin:10px -20px;
-    border-right:3px solid #aeadad;
-    border-top:3px solid #aeadad;
-    border-bottom:3px solid #aeadad;
+.chips {
+  cursor: pointer;
+  margin: 2px 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
+  -webkit-transition: -webkit-transform 0.8s ease-in-out;
+  transition: transform 0.8s ease-in-out;
 }
-
+.chips:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
+  -ms-transform: rotate(360deg); /* IE 9 */
+  transform: rotate(360deg);
+}
+.chipImg {
+  color: #333;
+  font-size: 24px;
+}
 
 .st0 {
-    display: none;
+  display: none;
 }
 
 .st1 {
-    display: inline;
+  display: inline;
 }
 
 .st2 {
-    fill: #C1272D;
+  fill: #c1272d;
 }
 
 .st3 {
-    fill: #003F70;
+  fill: #003f70;
 }
 
 .st4 {
-    fill: #FF1D25;
+  fill: #ff1d25;
 }
 
 .st5 {
-    fill: #FFFFFF;
+  fill: #ffffff;
 }
 
 .st6 {
-    font-family: 'MyriadPro-Regular';
+  font-family: "MyriadPro-Regular";
 }
 
 .st7 {
-    font-size: 7.0968px;
+  font-size: 7.0968px;
 }
 
 .st8 {
-    font-size: 11.2821px;
+  font-size: 11.2821px;
 }
 </style>
