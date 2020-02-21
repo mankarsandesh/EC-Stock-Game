@@ -1,17 +1,18 @@
 <template>
   <div>
+    <input @change="readFile($event)" type="file" ref="inputFile" hidden />
     <v-layout pt-3 row wrap class="justify-center">
-      <v-flex xs9 >
+      <v-flex xs9>
         <v-layout>
           <v-flex xs2 class="pt-5" style="background-color:white">
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar" />
+                  <img :src="imageBase64" alt="avatar" />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20">photo_camera</v-icon>
+                    <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
                   </button>
                 </span>
               </div>
@@ -66,6 +67,7 @@ export default {
   },
   data() {
     return {
+      imageBase64:"",
       activeMenu: "basic information",
       profileMenu: [
         {
@@ -84,6 +86,21 @@ export default {
   },
   mounted() {},
   methods: {
+    readFile(e) {
+      let seft = this;
+      console.log(e.target);
+      if (e.target.files && e.target.files[0]) {
+        let FR = new FileReader();
+        FR.addEventListener("load", function(e) {
+          seft.imageBase64 = e.target.result;
+        });
+        FR.readAsDataURL(e.target.files[0]);
+      }
+    },
+    cameraClick() {
+      this.$refs.inputFile.click();
+    },
+
     setActiveMenu(index) {
       this.profileMenu.forEach(element => {
         element.class = "menu_title";
