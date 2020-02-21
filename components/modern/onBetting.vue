@@ -6,8 +6,7 @@
     >{{$t('msg.View All Results')}}</v-btn>
 
     <v-flex pa-2 class="headerStockBar">{{$t('msg.betting')}}</v-flex>
-
-    <v-flex class="text-xs-center" style="overflow:auto; max-height:350px;">
+    <v-flex class="text-xs-center" style="overflow:auto; max-height:380px;">
       <h3 v-show="getOnGoingBet.length<=0" class="pa-5">{{$t('msg.nobetting')}}</h3>
       <!-- v-show="getOnGoingBet.length>0" -->
 
