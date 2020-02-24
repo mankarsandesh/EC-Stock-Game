@@ -64,9 +64,8 @@
           </v-flex>
         </v-layout>
       </v-flex>
-
       <v-flex class="xs1">
-        <v-layout row wrap>
+        <v-layout row wrap v-if="isShowMultigameButton == 0">
           <v-flex xs12 lg12 md12 ≈>
             <v-btn
               class="multiGame"
@@ -90,6 +89,10 @@ export default {
     };
   },
   props: {
+    isShowMultigameButton: {
+      type: Number,
+      required: true
+    },
     trendType: {
       type: String,
       default: "firstDigit"
@@ -135,7 +138,7 @@ export default {
 .firstDigit {
   font-weight: bolder;
   border-radius: 10px;
- white-space: pre-line !important;
+  white-space: pre-line !important;
   height: 60px;
   font-size: 15px;
   background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
@@ -144,7 +147,7 @@ export default {
   text-align: center;
   border-radius: 10px;
   font-weight: bolder;
- white-space: pre-line !important;
+  white-space: pre-line !important;
   height: 60px;
   font-size: 15px;
   background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
@@ -152,7 +155,7 @@ export default {
 .bothDigit {
   font-weight: bolder;
   border-radius: 10px;
-  white-space: pre-line !important; 
+  white-space: pre-line !important;
   height: 60px;
   /* word-spacing: 80px; */
   font-size: 15px;
@@ -161,7 +164,7 @@ export default {
 .twoDigit {
   font-weight: bolder;
   border-radius: 10px;
-white-space: pre-line !important;
+  white-space: pre-line !important;
   height: 60px;
   font-size: 15px;
   background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
