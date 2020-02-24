@@ -118,7 +118,7 @@
       <v-dialog v-model="dialog" width="600">
         <v-card class="ruleModel" style="border-radius:10px;"> 
           <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title class="headline grey lighten-2"  style="border-radius:10px;" primary-title>EC Gaming Rules</v-card-title>
+          <v-card-title class="headline lighten-2"  style="border-radius:10px;" primary-title>EC Gaming Rules</v-card-title>
           <v-card-text>
             <onlyrules />
           </v-card-text>
