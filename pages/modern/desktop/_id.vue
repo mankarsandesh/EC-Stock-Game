@@ -60,7 +60,7 @@
           <v-flex xs6 class="mx-2">
             <v-layout style="margin-bottom:10px;">
               <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
-                <span>{{$t('msg.Lastdraw')}}:</span>
+                <span class="text-gray">{{$t('msg.Lastdraw')}}:</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
                     <span
@@ -72,17 +72,18 @@
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
               <v-flex class="text-xs-center text-uppercase" px-2 style="font-weight:600;">
-                <span>{{$t('msg.BetClosein')}}:</span>
+                <span class="text-gray">{{$t('msg.BetClosein')}}:</span>
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
                     <span
-                      class="text-black"
+                   class="text-yellow"
                     >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
                   </v-flex>
+                  
                 </div>
               </v-flex>
               <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
-                <span>{{$t('msg.lotterydraw')}}:</span>
+                <span class="text-gray">{{$t('msg.lotterydraw')}}:</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
                     <span
@@ -563,12 +564,7 @@ export default {
   position: absolute;
   right: 0;
 }
-.chartDesgin {
-  margin-top: 10px;
-  padding: 5px 5px;
-  background-color: #fff;
-  border-radius: 10px;
-}
+
 .fullscreen {
   position: fixed !important;
   bottom: 18px;
@@ -582,30 +578,7 @@ export default {
   font-size: 30px;
 }
 
-.lastdraw {
-  font-size: 14px;
-  border: 1.5px solid #4b65ff;
-  border-radius: 10px;
-  font-size: 22px;
-  padding: 2px 6px;
-  font-weight: 400;
-}
-.betclose {
-  font-size: 14px;
-  border: 1.5px solid #ef076a;
-  border-radius: 10px;
-  font-size: 22px;
-  padding: 2px 6px;
-  font-weight: 400;
-}
-.lottery {
-  font-size: 14px;
-  border: 1.5px solid #01e3bf;
-  border-radius: 10px;
-  font-size: 22px;
-  padding: 2px 6px;
-  font-weight: 400;
-}
+
 .v-icon {
   color: #fff !important;
   font-size: 28px;
