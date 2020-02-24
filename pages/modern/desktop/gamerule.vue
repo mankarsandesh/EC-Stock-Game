@@ -7,14 +7,8 @@
     />
     <v-container>      
       <v-layout row wrap>
-        <v-flex xs2>
-          
-        </v-flex>
-        <v-flex xs8>
+        <v-flex xs12>
           <rules />
-        </v-flex>
-        <v-flex xs2>
-          
         </v-flex>
       </v-layout>     
     </v-container>
