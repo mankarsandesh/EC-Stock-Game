@@ -12,8 +12,8 @@
         <tbody>
           <tr v-for="(item,index) in apiData" :key="index" class="tabletr">
             <td>{{item.title}}</td>
-            <td>{{item.created_at}}</td>
-            <td>{{item.messageContent}}</td>
+            <td>{{item.createdAt}}</td>
+            <td>{{item.message}}</td>
           </tr>
         </tbody>
       </table>
@@ -21,6 +21,7 @@
   </v-flex>
 </template>
 <script>
+
 import { mapState } from "vuex";
 export default {
   data(){
