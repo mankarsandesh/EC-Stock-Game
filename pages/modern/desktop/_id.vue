@@ -1,7 +1,8 @@
 <template>
   <v-container class="mt-2">
     <v-layout style="background-color:#f4f5fd;">
-      <v-flex xs2 pa-2 class="leftStocklist">
+      <v-flex xs2 pa-2 class="leftStocklist wrapper" style="box-shadow: 0 0 10px gray;">
+        <span class="close"></span>
         <v-layout column>
           <v-flex xs12 pt-2 style="padding-top:21px !important">
             <div id="stocklistGuidelines">
@@ -123,7 +124,7 @@
         <v-card class="ruleModel" style="border-radius:10px;">
           <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
           <v-card-title
-            class="headline grey lighten-2"
+            class="headline lighten-2"
             style="border-radius:10px;"
             primary-title
           >EC Gaming Rules</v-card-title>
@@ -711,5 +712,24 @@ p.guideline {
 
 .btn-nextsetp {
   z-index: 10000;
+}
+
+/* left side corner  */
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+.close:before {
+  content: '✕';
+}
+.close {
+  background-color: #ffffff;
+  color: #0b2a68 bold;
+  position: absolute;
+  top: 0;
+  right: -20px;
+  cursor: pointer;
+  width: 16px;
+  border-radius: 15px;
 }
 </style>
