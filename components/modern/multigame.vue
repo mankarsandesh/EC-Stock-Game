@@ -1,10 +1,10 @@
 <template>
   <!-- <v-flex xs6>
   <div class="border-flex">-->
-  <v-layout>
+  <v-layout class="multiplescreen">
     <v-flex xs12 class="pt-2">
       <h3
-        class="text-uppercase"
+        class="text-uppercase ml-4 heading" 
       >{{$t('stockname.'+stockid)}} {{getStockLoop(stockid)}} {{$t('msg.minute')}} {{$t('msg.loop')}}</h3>
       <chartApp
         class="chartDesgin"
@@ -16,12 +16,9 @@
       ></chartApp>
       <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
       <v-layout>
-        <v-flex align-left >
+        <v-flex align-left class="totalPrice">
           <h4>{{formatToPrice(getAmountBettingByStockId(getStockId(stockid)))}}</h4>
         </v-flex>
-      
-          
-       
       </v-layout>
     </v-flex>
     <v-flex xs12>
@@ -40,7 +37,7 @@
             <span class="text-gray">{{$t('msg.BetClosein')}}:</span>
             <v-flex class="betclose">
               <span
-                class="text-yellow"
+                class="text-black"
               >{{getLotteryDraw(stockid) | betclosein(getStockLoop(stockid))}}</span>
             </v-flex>
           </v-flex>
@@ -53,10 +50,9 @@
             </v-flex>
           </v-flex>
         </v-layout>
-      </v-flex>
-      <v-flex>
+     
         <betButton :isFullscreen="true" :stockName="stockid" :loop="getStockLoop(stockid)"></betButton>
-        <v-btn fab align-right class="multiplefull" :to="'/modern/fullscreen/' +stockid" >
+        <v-btn fab  class="multiplefull" :to="'/modern/fullscreen/' +stockid" style="float:right;" >
             <v-icon>fullscreen</v-icon>
           </v-btn>
       </v-flex>
@@ -103,7 +99,21 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped >
+.heading{
+  color:#013f70;
+  font-size: 22px;
+}
+.totalPrice{
+  font-size: 24px;
+  margin-left:50px;
+}
+.multiplescreen{
+  border-top:10px solid #092a68;
+  background-color: #FFF;
+  border-radius:10px;
+  padding: 10px;
+}
 .multiplefull {
   background-color: #8d31cd !important;
   color: #fff !important;
