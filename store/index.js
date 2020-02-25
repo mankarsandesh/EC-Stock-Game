@@ -6,6 +6,10 @@ const createStore = () => {
         state: () => ({
             loader: false,
             isLoadingStockGame: false,
+            portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
+            headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+            },
             auth_token: localStorage.apikey = 'JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX',
             isLoadingAnnoucement: [],
             isLoadingTopPlayer: [],
