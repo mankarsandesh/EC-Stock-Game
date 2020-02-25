@@ -8,7 +8,7 @@
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img :src="imageBase64" alt="avatar" />
+                  <img :src="imgProfile" alt="avatar" />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions , mapGetters} from "vuex";
 import basicInfo from "~/components/modern/profile/baicInfo";
 import onlineHistoy from "~/components/modern/profile/onlineHistory";
 import notification from "~/components/modern/profile/notification";
@@ -85,6 +85,12 @@ export default {
     };
   },
   mounted() {},
+  computed:{
+    ...mapGetters(["getUserInfo"]),
+    imgProfile(){
+      return  'http://uattesting.equitycapitalgaming.com/' + this.getUserInfo.profileImage
+    }
+  },
   methods: {
     readFile(e) {
       let seft = this;

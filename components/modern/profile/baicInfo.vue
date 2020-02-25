@@ -43,7 +43,7 @@
                   <label for="fname">player ID</label>
                 </div>
                 <div class="col-85">
-                  <input disabled type="text" id="fname" name="firstname" placeholder="188" />
+                  <input disabled type="text" id="fname" name="firstname" :value="userData.PID" />
                 </div>
               </div>
               <div class="row">
@@ -51,7 +51,13 @@
                   <label for="lname">name</label>
                 </div>
                 <div class="col-85">
-                  <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
+                  <input
+                    type="text"
+                    :value="userData.firstName"
+                    id="lname"
+                    name="lastname"
+                    placeholder="Your last name.."
+                  />
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
@@ -77,7 +83,13 @@
                   <label for="country">email</label>
                 </div>
                 <div class="col-85">
-                  <input type="text" id="lname" name="lastname" placeholder="mackychinma@gmail.com" />
+                  <input
+                    type="text"
+                    :value="userData.email"
+                    id="lname"
+                    name="lastname"
+                    placeholder="mackychinma@gmail.com"
+                  />
                 </div>
               </div>
               <div class="row">
@@ -132,6 +144,18 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
 export default {
+  data() {
+    return {};
+  },
+  mounted() {
+  },
+  computed: {
+    ...mapGetters(["getUserInfo"]),
+    userData() {
+      let data = {...this.getUserInfo}
+      return data;
+    }
+  },
   methods: {
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
