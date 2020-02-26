@@ -202,7 +202,7 @@ ul li {
     width: 100%;
     position: relative;
     float: left;
-    /* background: #003e70; */
+    background: #003e70;
 }
 
 li ul {

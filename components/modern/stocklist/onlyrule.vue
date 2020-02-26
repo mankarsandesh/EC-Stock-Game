@@ -1,9 +1,9 @@
 <template>
   <v-expansion-panel v-model="panel" expand style="background-color:#fff;">
-    <v-expansion-panel-content class=" ruleActive ruleHeading">
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div>
-          <span class="rules" v-on:click="rule1" v-bind:class="{ active: isActiverule1}">{{$t('gamemsg.firstdigit')}} (????. ??)</span> 
+        <div @click="setActive($event)">
+          <span class="rules">{{$t('gamemsg.firstdigit')}} (????. ??)</span>
         </div>
       </template>
       <v-card>
@@ -27,10 +27,10 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content class="ruleActive" >
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div>
-          <span class="rules" v-on:click="rule2" v-bind:class="{ active: isActiverule2}">{{$t('gamemsg.lastdigit')}} (????. ??)</span> 
+        <div @click="setActive($event)">
+          <span class="rules">{{$t('gamemsg.lastdigit')}} (????. ??)</span>
         </div>
       </template>
       <v-card>
@@ -54,10 +54,10 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content class="ruleActive">
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div>
-          <span class="rules" v-on:click="rule3" v-bind:class="{ active: isActiverule3}">{{$t('gamemsg.bothdigit')}} (????. ??)</span>
+        <div @click="setActive($event)">
+          <span class="rules">{{$t('gamemsg.bothdigit')}} (????. ??)</span>
         </div>
       </template>
       <v-card>
@@ -82,10 +82,10 @@
         </v-card-text>
       </v-card>
     </v-expansion-panel-content>
-    <v-expansion-panel-content class="ruleActive"> 
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div>
-          <span class="rules" v-on:click="rule4" v-bind:class="{ active: isActiverule4}">{{$t('gamemsg.twodigit')}} (????. ??)</span>
+        <div @click="setActive($event)">
+          <span class="rules">{{$t('gamemsg.twodigit')}} (????. ??)</span>
         </div>
       </template>
       <v-card>
@@ -113,64 +113,43 @@
   </v-expansion-panel>
 </template>
 <script>
-  export default {
-    data() {
-        return {           
-            panel: 0
-        };
-    },
-    methods: {
-    
-      rule1: function(event) {
-        this.isActiverule1 = true;
-        this.isActiverule2 = false;
-        this.isActiverule3 = false;
-        this.isActiverule4 = false;
-      },
-      rule2: function(event) {
-        this.isActiverule1 = false;
-        this.isActiverule2 = true;
-        this.isActiverule3 = false;
-        this.isActiverule4 = false;
-      },
-      rule3: function(event) {
-        this.isActiverule1 = false;
-        this.isActiverule2 = false;
-        this.isActiverule3 = true;
-        this.isActiverule4 = false;
-      },
-      rule4: function(event) {
-        this.isActiverule1 = false;
-        this.isActiverule2 = false;
-        this.isActiverule3 = false;
-        this.isActiverule4 = true;
-      }
+export default {
+  data() {
+    return {
+      panel: 0
+    };
+  },
+  methods: {
+    setActive(e) {
+      // $(".ruleHeading").removeClass("ruleHeading");
+      // $(e.target.parentElement.parentElement).addClass("ruleHeading");
+    }
   }
 };
 </script>
 
 <style>
-.v-expansion-panel{
-    border:noen;
+.v-expansion-panel {
+  border: noen;
 }
-.rules span:active{ 
-    color: #ffffff !important;
-    background-color: #0b2a68 !important;
+.rules span:active {
+  color: #ffffff !important;
+  background-color: #0b2a68 !important;
 }
-.rules span{
-    color: #0b2a68 !important;
-    background-color: #ffffff !important; 
+.rules span {
+  color: #0b2a68 !important;
+  background-color: #ffffff !important;
 }
-.ruleActive{
-    border-radius: 10px;
-    margin:7px;
-    border:1px solid #dddddd;
+.ruleActive {
+  /* border-radius: 10px; */
+  margin: 7px;
+  border: 1px solid #dddddd;
 }
-.ruleHeading{
-    background-color: #0b2a68 !important;
-    border-top-left-radius:10px;
-    border-top-right-radius:10px;
-    color: #ffffff !important;
-    text-transform: capitalize;
+.ruleHeading {
+  background: linear-gradient(to right, #0bb177 30%, #2bb13a 51%) !important;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: #ffffff !important;
+  text-transform: capitalize;
 }
 </style>
