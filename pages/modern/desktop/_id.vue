@@ -566,6 +566,7 @@ export default {
     right: 0;
 }
 
+
 .chartDesgin {
     margin-top: 10px;
     padding: 5px 5px;
@@ -576,16 +577,18 @@ export default {
 .fullscreen {
     position: fixed !important;
     bottom: 18px;
-    right: 150px;
+    right: 130px;
     width: 60px;
     height: 60px;
     color: #fff;
     background-color: #8d31cd !important;
+
 }
 
 .fullscreen .v-icon {
     font-size: 30px;
 }
+
 
 .lastdraw {
     font-size: 14px;
@@ -613,6 +616,7 @@ export default {
     padding: 2px 6px;
     font-weight: 400;
 }
+
 
 .v-icon {
     color: #fff !important;
