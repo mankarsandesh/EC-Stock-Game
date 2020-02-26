@@ -21,7 +21,6 @@
       ></v-progress-circular>
     </div>
 
-
     <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
         <v-container pa-0>
             <v-toolbar color="#003e70" class="white--text">
@@ -41,7 +40,12 @@
     <v-toolbar height="75" class="elevation-3">
       <v-container fluid class="navbar">
         <v-toolbar-title>
-          <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')" class="logostyle"></v-img>
+          <v-img
+            width="158"
+            src="/logo.png"
+            @click="$router.push('/modern/desktop/btc1')"
+            class="logostyle"
+          ></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
@@ -77,7 +81,7 @@
     </v-content>
 
     <!-- Chat Windows-->
-    <chatWindow />
+    <chatWindow  :gameChannel=false />
   </v-app>
 </template>
 
@@ -140,11 +144,13 @@ export default {
       timeout: 3000
     };
   },
-
   created() {
+   
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
     let isFullscreen = path[1];
+    alert(isFullscreen);
+    
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
@@ -171,7 +177,6 @@ export default {
 
     // this.setIsLoadingStockGame(false);
   },
-  created() {},
   methods: {
     getwinuser() {
       this.$axios
@@ -220,13 +225,12 @@ export default {
 </script>
 
 <style scoped>
-
-.logostyle{
+.logostyle {
   cursor: pointer;
-  margin-left:15px;
+  margin-left: 15px;
 }
-.currencySelect i{
-  padding-left:3px;
+.currencySelect i {
+  padding-left: 3px;
 }
 .currencySelect {
   padding: 0px;

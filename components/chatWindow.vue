@@ -11,7 +11,13 @@
         <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
           <a href="#">All Channel</a>
         </span>
-        <span class="tabs" v-on:click="tab2" v-bind:class="{ active: isActivetab2 }">
+
+        <span
+          class="tabs"
+          v-on:click="tab2"
+          v-show="gameChannel"
+          v-bind:class="{ active: isActivetab2 }"
+        >
           <a href="#">Game Channel</a>
         </span>
       </div>
@@ -79,12 +85,19 @@ import VueChatScroll from "vue-chat-scroll";
 // });
 
 export default {
+  
+  props: {
+      gameChannel: {
+            type: Boolean,
+            default: false
+        }    
+  },
   components: {
     popper,
     VueChatScroll
   },
-  data() {
-    return {     
+  data(){
+    return {
       isActivetab1: true,
       isActivetab2: false,
       allChannel: true,
@@ -113,7 +126,7 @@ export default {
     this.asymessagesGame();
     this.asynUserInfo();
   },
-  updated() {    
+  updated() {
     $("#bodyChat")
       .stop()
       .animate(
@@ -124,10 +137,6 @@ export default {
       );
   },
   created() {
-     var currentUrl = window.location.pathname;
-
-        alert(currentUrl);
-   
     // console.log(this.getUserName.userId);
     // Socket for Channel
     // console.log("created run");
