@@ -108,20 +108,6 @@ export default {
 };
 </script>
 
-<script>
-import onlyrules from "~/components/modern/stocklist/onlyrule";
-export default {
-    components: {
-        onlyrules
-    },
-    data() {
-        return {
-            dialog: false,
-            panel: [0]
-        };
-    }
-};
-</script>
 <style>
 .ruleHeading{
     background-color: #0b2a68 !important;
