@@ -84,7 +84,7 @@ export default {
     VueChatScroll
   },
   data() {
-    return {
+    return {     
       isActivetab1: true,
       isActivetab2: false,
       allChannel: true,
@@ -113,7 +113,7 @@ export default {
     this.asymessagesGame();
     this.asynUserInfo();
   },
-  updated() {
+  updated() {    
     $("#bodyChat")
       .stop()
       .animate(
@@ -124,6 +124,10 @@ export default {
       );
   },
   created() {
+     var currentUrl = window.location.pathname;
+
+        alert(currentUrl);
+   
     // console.log(this.getUserName.userId);
     // Socket for Channel
     // console.log("created run");

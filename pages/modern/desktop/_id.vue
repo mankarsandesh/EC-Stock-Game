@@ -580,6 +580,7 @@ export default {
   width: 60px;
   height: 60px;
   color: #fff;
+  z-index:999;
   background-color: #8d31cd !important;
 }
 .fullscreen .v-icon {
