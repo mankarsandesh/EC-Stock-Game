@@ -2,7 +2,7 @@
 <v-container class="mt-2">
     <v-layout style="background-color:#f4f5fd;">
         <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
-            <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
+            <v-btn @click="isHidden = true" fab small slot="reference" class="sidebar-close">
                 <v-icon style="color: #0b2a68 !important;">close</v-icon>
             </v-btn>
             <v-layout column>
@@ -28,8 +28,8 @@
                 <v-icon style="color: #0b2a68 !important;">list</v-icon>
             </v-btn>
         </v-flex>
-        <v-flex :xs10="!isHidden" :xs12="isHidden">  
-            <v-layout xs12 pa-2 >
+        <v-flex :xs10="!isHidden" :xs12="isHidden">
+            <v-layout xs12 pa-2>
                 <v-flex xs6 style="padding-top:21px">
                     <v-layout column>
                         <v-flex xs12>
@@ -108,9 +108,17 @@
             </v-flex>
         </v-flex>
 
+        <!-- 
+        <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
+            <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
+                <v-icon style="color: #0b2a68 !important;">close</v-icon>
+            </v-btn> -->
 
         <v-dialog v-model="dialog" width="600">
             <v-card class="ruleModel" style="border-radius:10px;">
+                <!-- <v-btn @click="dialog = false" fab small class="closePopup">
+                    <v-icon style="color: #0b2a68 !important;">close</v-icon>
+                </v-btn> -->
                 <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
                 <v-card-title class="headline lighten-2" style="border-radius:10px;" primary-title>EC Gaming Rules</v-card-title>
                 <v-card-text>
@@ -119,6 +127,7 @@
                 <v-divider></v-divider>
             </v-card>
         </v-dialog>
+
     </v-layout>
     <div ref="guideline" class="overlay">
         <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -560,12 +569,13 @@ export default {
 
 .closePopup {
     background-color: #fff;
-    color: #333 !important;
+    color: #0b2a68 !important;
     border-radius: 180px;
     position: absolute;
-    right: 0;
+    top: 0px;
+    right: 0px;
+    z-index: 1;
 }
-
 
 .chartDesgin {
     margin-top: 10px;
@@ -588,7 +598,6 @@ export default {
 .fullscreen .v-icon {
     font-size: 30px;
 }
-
 
 .lastdraw {
     font-size: 14px;
@@ -616,7 +625,6 @@ export default {
     padding: 2px 6px;
     font-weight: 400;
 }
-
 
 .v-icon {
     color: #fff !important;
@@ -724,7 +732,7 @@ p.guideline {
 /* left side corner  */
 .leftStocklist {
     background-color: #fff;
-    margin: 35px 7px ;
+    margin: 35px 7px;
     border-radius: 20px;
     position: relative;
     display: inline-block;
@@ -741,9 +749,9 @@ p.guideline {
 }
 
 .sidebar-toggle {
-  position:fixed;
-  left:3px;
-  top:95px;
-  background-color: #ffffff !important;
+    position: fixed;
+    left: 3px;
+    top: 95px;
+    background-color: #ffffff !important;
 }
 </style>
