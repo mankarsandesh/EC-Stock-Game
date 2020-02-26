@@ -1,7 +1,7 @@
 <template>
 <v-container class="mt-2">
     <v-layout style="background-color:#f4f5fd;">
-        <v-flex xs2 pa-2 v-if="!isHidden" class="leftStocklist wrapper" style="box-shadow: 0 0 10px gray;">
+        <v-flex v-if="!isHidden" class="leftStocklist wrapper" style="box-shadow: 0 0 10px gray;">
             <!-- <button class="close" @click="isHidden = true"></button> -->
             <v-btn @click="isHidden = true" rigth fab small slot="reference" class="sidebar-close">
                 <v-icon style="color: #0b2a68 !important;">close</v-icon>
@@ -24,13 +24,13 @@
                 </v-flex>
             </v-layout>
         </v-flex>
-        <v-flex xs2 pa-2 v-if="isHidden" @click="isHidden = false">
+        <v-flex v-if="isHidden" @click="isHidden = false">
             <v-btn rigth fab slot="reference" class="sidebar-toggle">
                 <v-icon style="color: #0b2a68 !important;">list</v-icon>
             </v-btn>
         </v-flex>
-        <v-flex xs10 pa-2>
-            <v-layout>
+        <v-flex :xs10="!isHidden" :xs12="isHidden">  
+            <v-layout xs12 pa-2 >
                 <v-flex xs6 style="padding-top:21px">
                     <v-layout column>
                         <v-flex xs12>
@@ -93,6 +93,7 @@
                         <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
                     </div>
                 </v-flex>
+
             </v-layout>
 
             <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
@@ -107,6 +108,8 @@
                 </div>
             </v-flex>
         </v-flex>
+
+
         <v-dialog v-model="dialog" width="600">
             <v-card class="ruleModel" style="border-radius:10px;">
                 <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
@@ -295,6 +298,7 @@ export default {
             bgColor: "#778899",
             position: "top-right",
             isHidden: false,
+            firstPanelFocus: false,
             fabActions: [{
                     name: "cache",
                     icon: "cached"
@@ -734,6 +738,9 @@ p.guideline {
 }
 
 .sidebar-toggle {
+  position:fixed;
+  left:3px;
+  top:100px;
   background-color: #ffffff !important;
 }
 </style>
