@@ -560,6 +560,12 @@ const createStore = () => {
       }
     },
     getters: {
+      getPortalProviderUUID(state) {
+        return state.portalProviderUUID;
+      },
+      getUserUUID(state) {
+        return state.userUUID;
+      },
       getPayout: state => gameRule => {
         {
           // console.log(state.payout[gameRule])
