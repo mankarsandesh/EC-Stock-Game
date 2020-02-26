@@ -6,9 +6,9 @@
                 <multigame  :class="index%2==0 ?'pl-0':'pr-0'" :stockid="stockid"></multigame>
             </div>
         </v-flex>
-        <v-flex xs6 d-flex v-if="getStockMultigame.length < 4">
-            <div class="pt-10">               
-                <selectStock  :isMultigame="true" :stockId="$route.params.id"></selectStock>
+        <v-flex xs6 class="pt-5" v-if="getStockMultigame.length < 4">
+            <div  >               
+                <selectStock  style="width:50%;margin:0 auto;" :isMultigame="true" :stockId="$route.params.id"></selectStock>
             </div>
         </v-flex>
     </v-layout>

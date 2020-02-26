@@ -76,7 +76,7 @@
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
                     <span
-                   class="text-yellow"
+                   class="text-black"
                     >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
                   </v-flex>
                   
@@ -568,7 +568,7 @@ export default {
 .fullscreen {
   position: fixed !important;
   bottom: 18px;
-  right: 150px;
+  right: 130px;
   width: 60px;
   height: 60px;
   color: #fff;
