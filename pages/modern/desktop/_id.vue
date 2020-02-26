@@ -1,13 +1,12 @@
 <template>
 <v-container class="mt-2">
     <v-layout style="background-color:#f4f5fd;">
-        <v-flex v-if="!isHidden" class="leftStocklist wrapper" style="box-shadow: 0 0 10px gray;">
-            <!-- <button class="close" @click="isHidden = true"></button> -->
-            <v-btn @click="isHidden = true" rigth fab small slot="reference" class="sidebar-close">
+        <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
+            <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
                 <v-icon style="color: #0b2a68 !important;">close</v-icon>
             </v-btn>
             <v-layout column>
-                <v-flex xs12 pt-2 style="padding-top:21px !important">
+                <v-flex xs12 pt-2>
                     <div id="stocklistGuidelines">
                         <stockList></stockList>
                     </div>
@@ -719,28 +718,28 @@ p.guideline {
 }
 
 /* left side corner  */
-.wrapper {
+.leftStocklist {
+    background-color: #fff;
+    margin: 35px 7px ;
+    border-radius: 20px;
     position: relative;
     display: inline-block;
     top: 0;
-    right: -10px;
-    cursor: pointer;
+    right: -1px;
 }
-
-
 
 .sidebar-close {
     background-color: #ffffff !important;
     border-radius: 180px;
     position: absolute;
-    top: -20px;
+    top: -30px;
     right: -20px;
 }
 
 .sidebar-toggle {
   position:fixed;
   left:3px;
-  top:100px;
+  top:95px;
   background-color: #ffffff !important;
 }
 </style>
