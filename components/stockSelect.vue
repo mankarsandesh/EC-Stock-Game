@@ -13,13 +13,14 @@
     </v-flex>
     <v-flex md2>
       <v-autocomplete
-        v-model="stock_name"
-        :items="stock_names"
+        v-model="stockName"
+        :items="stockNames"
         label="cyto Currency"
         prepend-icon="category"
         color="green"
         full-width
         solo
+        id="stockName"
       />
     </v-flex>
     <v-flex md2>
@@ -31,7 +32,7 @@
         color="red"
         full-width
         solo
-        hint="Based on the selected category"
+        id="minute"
       />
     </v-flex>
     <v-flex md2>
@@ -43,47 +44,88 @@
         color="blue"
         full-width
         solo
+        id="gameId"
       />
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import Stock from "~/data/json/stock";
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     stock: null,
-    stock_name: null,
+    stockName: null,
     minute: null,
     gameId: null,
     minutes: [],
-    stocks: [],
-    stockName: []
+    stockNames: [],
+    stocks: []
   }),
-
   mounted() {
-    Stock.map(item => {
+    console.log(this.getAllStockByType);
+    this.getAllStockByType.map(item => {
       this.stocks.push(item.type);
     });
   },
+  watch: {
+    stock(value) {
+      if (value !== null) {
+        this.selectStocks(value);
+        $("#stockName").click();
+      }
+    },
+    stockName(value) {
+      if (value !== null) {
+        this.getStockName(this.stockName);
+        $("#minute").click();
+      }
+    },
+    minute(value) {
+      if (value !== null) {
+        $("#gameId").click();
+      }
+    },
+    gameId(value) {
+      if (value !== null) {
+        return alert("You can run now");
+      }
+    }
+  },
+
   computed: {
-    // select stock name
-    stock_names() {
-      let nameType = [];
-      Stock.find(item => {
-        if (item.type == this.stock) {
-          item.stock_name.map(item => {
-            this.minutes = item.type;
-            nameType.push(item.name);
+    ...mapGetters(["getAllStockByType"]),
+
+    gameIds() {
+      return [12312314325345345];
+    }
+  },
+  methods: {
+    selectStocks(value) {
+      this.stockNames = [];
+      this.stockName = null;
+      this.getAllStockByType.map(item => {
+        if (item.type == value) {
+          item.stockName.forEach(element => {
+            return this.stockNames.push(element.name);
           });
         }
       });
-      return nameType;
     },
-
-    // Game id select from stock, but now is example data
-    gameIds() {
-      return [12312314325345345];
+    //
+    getStockName(val) {     
+      this.minute = null;
+      this.minutes = [];
+      this.getAllStockByType.map(item => {
+        item.stockName.map(item => {
+          item.loop.map(items => {
+            if (items.stockId == val) {
+              console.log(val);
+              return this.minutes.push(items.loop);
+            }            
+          });
+        });
+      });
     }
   }
 };

@@ -4,6 +4,10 @@ import payouts from "../data/json/payout"
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
+            headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+            },
             loader: false,
             isLoadingStockGame: false,
             auth_token: localStorage.apikey = 'JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX',
@@ -222,7 +226,7 @@ const createStore = () => {
                 state.multiGameBet = [];
                 state.footerBetAmount = 0;
                 state.onGoingBet = []
-                    // console.warn(state.multiGameBet);
+                // console.warn(state.multiGameBet);
             },
             removeAllFooterBet(state) {
                 state.multiGameBet = [];
@@ -305,7 +309,7 @@ const createStore = () => {
 
                             localStorage.removeItem('apikey');
                             console.log("Sorry, your session has expired. Please refresh and try again.")
-                                // location.href = "http://159.138.130.64"
+                            // location.href = "http://159.138.130.64"
                             location.href = "http://" + location.hostname + ":8001"
                             return
                         }, 10000)
@@ -519,6 +523,10 @@ const createStore = () => {
                 } catch (error) {
                     console.log(error);
                 }
+            },
+            TestCall() {
+                return alert('Hello vue x  with test action')
+
             }
         },
         getters: {
@@ -759,11 +767,11 @@ const createStore = () => {
                         result =
                             result +
                             stockIdObject
-                            .filter(x =>
-                                x.rule.toLowerCase().includes(`${data.gameRule}-${i}`)
-                            )
-                            .map(x => x.betAmount)
-                            .reduce((a, b) => a + b, 0);
+                                .filter(x =>
+                                    x.rule.toLowerCase().includes(`${data.gameRule}-${i}`)
+                                )
+                                .map(x => x.betAmount)
+                                .reduce((a, b) => a + b, 0);
                     }
                     // .map(x => x.amount).reduce((a, b) => a + b, 0)
                     return result;
@@ -1053,6 +1061,7 @@ const createStore = () => {
             getStockLength(state) {
                 return Object.keys(state.stocks).length;
             }
+
         }
     });
 };
