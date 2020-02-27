@@ -735,9 +735,9 @@ p.guideline {
     margin: 35px 7px;
     border-radius: 20px;
     position: relative;
-    display: inline-block;
     top: 0;
-    right: -1px;
+    right: 20px;
+    
 }
 
 .sidebar-close {
@@ -746,6 +746,7 @@ p.guideline {
     position: absolute;
     top: -30px;
     right: -20px;
+    transition: none !important;
 }
 
 .sidebar-toggle {
@@ -753,5 +754,6 @@ p.guideline {
     left: 3px;
     top: 95px;
     background-color: #ffffff !important;
+
 }
 </style>
