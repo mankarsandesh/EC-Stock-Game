@@ -5,7 +5,7 @@
                       placement: 'top-end',
                        modifiers: { offset: { offset: '55px' } }
                 }"
-  >
+    >
     <div class="popper">
       <div id="headerChat">
         <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
@@ -15,7 +15,7 @@
         <span
           class="tabs"
           v-on:click="tab2"
-          v-show="gameChannel"
+          v-show="getGameChannel"
           v-bind:class="{ active: isActivetab2 }"
         >
           <a href="#">Game Channel</a>
@@ -71,7 +71,7 @@
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions , mapMutations } from "vuex";
 import io from "socket.io-client";
 import VueChatScroll from "vue-chat-scroll";
 
@@ -86,12 +86,6 @@ import VueChatScroll from "vue-chat-scroll";
 
 export default {
   
-  props: {
-      gameChannel: {
-            type: Boolean,
-            default: false
-        }    
-  },
   components: {
     popper,
     VueChatScroll
@@ -115,6 +109,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getGameChannel",
       "getMessages",
       "getMessagesGame",
       "getUserName",

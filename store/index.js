@@ -4,6 +4,7 @@ import payouts from "../data/json/payout"
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            activeGameChannel : false,
             loader: false,
             isLoadingStockGame: false,
             portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
@@ -191,6 +192,9 @@ const createStore = () => {
             time: {}
         }),
         mutations: {
+            setGameChannelShow(state,value){            
+                state.activeGameChannel = value;
+            },
             setIsLoadingStockGame(state, value) {
                 state.isLoadingStockGame = value;
             },
@@ -526,6 +530,9 @@ const createStore = () => {
             }
         },
         getters: {
+            getGameChannel(state){
+                return state.activeGameChannel;
+            },
             getPayout: state => gameRule => {
                 {
                     // console.log(state.payout[gameRule])

@@ -81,7 +81,7 @@
     </v-content>
 
     <!-- Chat Windows-->
-    <chatWindow  :gameChannel=false />
+    <chatWindow  />
   </v-app>
 </template>
 
@@ -112,7 +112,7 @@ export default {
     Logout
   },
   data() {
-    return {
+    return {      
       currency: [{ title: "USD" }, { title: "BATH" }, { title: "KIP" }],
       direction: "top",
       fab: true,
@@ -144,12 +144,20 @@ export default {
       timeout: 3000
     };
   },
+  updated(){
+    let path = this.$nuxt.$route.name.split("-");
+    let pageName = path[2];   
+    if(pageName === "id"){
+      this.setGameChannelShow(true);
+    }else{
+      this.setGameChannelShow(false);
+    }
+  },
   created() {
    
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];
-    alert(isFullscreen);
+    let isFullscreen = path[1];   
     
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
@@ -178,6 +186,7 @@ export default {
     // this.setIsLoadingStockGame(false);
   },
   methods: {
+     ...mapMutations(["setGameChannelShow"]),
     getwinuser() {
       this.$axios
         .$get("api/fetchBet")
