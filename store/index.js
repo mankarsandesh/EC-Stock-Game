@@ -2,9 +2,14 @@ import Vuex from "vuex";
 import { hostname } from "os";
 import payouts from "../data/json/payout";
 const createStore = () => {
+
   return new Vuex.Store({
     state: () => ({
       loader: false,
+        portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
+            headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+            },
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
@@ -135,7 +140,6 @@ const createStore = () => {
           loop: 5,
           type: "china",
           crawlerData: "",
-
           lastDraw: "",
           timeLastDraw: "",
           livePrice: {
@@ -436,7 +440,6 @@ const createStore = () => {
           context.commit("setIsSendBetting", false);
         }
       },
-
       async asynGetAllStock(context) {
         // console.log("working...");
         // console.log(context.getters.getAuth_token);
@@ -454,7 +457,6 @@ const createStore = () => {
           // alert(ex)
         }
       },
-
       asynInitCallApi(context) {
         // call crawler api
         for (let i = 0; i < context.getters.getStockLength; i++) {
@@ -804,6 +806,7 @@ const createStore = () => {
           // check rule in stockId
           // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
 
+
           // get amount by rule
           let result = 0;
           for (let i = 0; i <= count; i++) {
@@ -843,7 +846,6 @@ const createStore = () => {
       getCoins_modern(state) {
         return state.coins_modern;
       },
-
       // check stockId in state "stocks" is exist or not
       getCheckStock: state => id => {
         return state.stocks[id];
