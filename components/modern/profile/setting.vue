@@ -12,23 +12,38 @@
           <span class="group_title">account</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>User allow to visit my profile</span>
+              <span>Users allow to visit my profile</span>
               <label class="switch">
-                <input type="checkbox" checked />
+                <input
+                  @change="updateSetting"
+                  type="checkbox"
+                  ref="isAllowToVisitProfile"
+                  :checked="getUserInfo.isAllowToVisitProfile"
+                />
                 <span class="slider round"></span>
               </label>
             </div>
             <div class="setting_container">
-              <span>User allow to visit my profile</span>
+              <span>Users allow follow me</span>
               <label class="switch">
-                <input type="checkbox" checked />
+                <input
+                  @change="updateSetting"
+                  type="checkbox"
+                  ref="isAllowToFollow"
+                  :checked="getUserInfo.isAllowToFollow"
+                />
                 <span class="slider round"></span>
               </label>
             </div>
             <div class="setting_container">
-              <span>User allow to visit my profile</span>
+              <span>User allow to send direct message</span>
               <label class="switch">
-                <input type="checkbox" checked />
+                <input
+                  @change="updateSetting"
+                  type="checkbox"
+                  ref="isAllowToDirectMessage"
+                  :checked="getUserInfo.isAllowToDirectMessage"
+                />
                 <span class="slider round"></span>
               </label>
             </div>
@@ -40,16 +55,26 @@
           <span class="group_title">game options</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>User allow to visit my profile</span>
+              <span>Sound</span>
               <label class="switch">
-                <input type="checkbox" checked />
+                <input
+                  @change="updateSetting"
+                  type="checkbox"
+                  ref="isSound"
+                  :checked="getUserInfo.isSound"
+                />
                 <span class="slider round"></span>
               </label>
             </div>
             <div class="setting_container">
-              <span>User allow to visit my profile</span>
+              <span>Allow to location</span>
               <label class="switch">
-                <input type="checkbox" />
+                <input
+                  @change="updateSetting"
+                  type="checkbox"
+                  ref="isAllowToLocation"
+                  :checked="getUserInfo.isAllowToLocation"
+                />
                 <span class="slider round"></span>
               </label>
             </div>
@@ -67,7 +92,61 @@ import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+  },
+  methods: {
+    ...mapActions(["asynUserInfo"]),
+    async updateSetting() {
+      // set value to 1 or 0 true==1 false==0
+      let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
+        ? 1
+        : 0;
+      let isAllowToFollow = this.$refs.isAllowToFollow.checked ? 1 : 0;
+      let isAllowToDirectMessage = this.$refs.isAllowToDirectMessage.checked
+        ? 1
+        : 0;
+      let isSound = this.$refs.isSound.checked ? 1 : 0;
+      let isAllowToLocation = this.$refs.isAllowToLocation.checked ? 1 : 0;
+      // end set value to 1 or 0 true==1 false==0
+
+      try {
+        let userSetting = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          isAllowToVisitProfile,
+          isAllowToFollow,
+          isAllowToDirectMessage,
+          isSound,
+          isAllowToLocation
+        };
+        const res = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting",
+          userSetting,
+          {
+            headers: {
+              ContentType: "application/json",
+              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
+            }
+          }
+        );
+        if (res.code === 200) {
+          this.asynUserInfo();
+        } else {
+          console.log(res.message);
+          alert(res.message);
+        }
+      } catch (ex) {
+        console.error(ex);
+        alert(ex.message);
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>

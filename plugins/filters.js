@@ -13,7 +13,7 @@ Vue.filter('lastDraw', (value) => {
 // currency format
 Vue.filter('currency', (value, decimalCount = 2) => {
     if (!value) return ''
-    return formatMoney(value, decimalCount)
+    return formatCurrency(value, decimalCount)
 })
 // countdown bet close in
 Vue.filter('betclosein', (value, loop) => {
@@ -104,7 +104,7 @@ function appendHero(value) {
     return result
 }
 // set number format money
-function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+function formatCurrency(amount, decimalCount = 2, decimal = ".", thousands = ",") {
     try {
         decimalCount = Math.abs(decimalCount);
         decimalCount = isNaN(decimalCount) ? 2 : decimalCount;

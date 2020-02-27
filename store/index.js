@@ -14,8 +14,8 @@ const createStore = () => {
       isLoadingMessageGame: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "d2803bd7-f801-422f-8718-b0be4c19d7c8",
-      userUUID: "dcd4ada4-70d4-4a47-957f-229361ef22a8",
+      portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
+      userUUID: "6a5c2100-f2c5-4722-bcac-a1857e4ac1c4",
       Username: "TnkwebApi",
       Password: "Test123!",
       // end set portal provider and user UUID for authentication
@@ -327,16 +327,17 @@ const createStore = () => {
             context.commit("setUserData", userInfo);
           } else {
             console.log(res);
-            setTimeout(() => {
-              if (res.status) return;
-              localStorage.removeItem("apikey");
-              console.log(
-                "Sorry, your session has expired. Please refresh and try again."
-              );
-              // location.href = "http://159.138.130.64"
-              location.href = "http://" + location.hostname + ":8001";
-              return;
-            }, 10000);
+            alert(res.message)
+            // setTimeout(() => {
+            //   if (res.status) return;
+            //   localStorage.removeItem("apikey");
+            //   console.log(
+            //     "Sorry, your session has expired. Please refresh and try again."
+            //   );
+            //   // location.href = "http://159.138.130.64"
+            //   location.href = "http://" + location.hostname + ":8001";
+            //   return;
+            // }, 10000);
           }
         } catch (ex) {
           console.error(ex);
