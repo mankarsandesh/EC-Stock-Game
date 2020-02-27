@@ -27,9 +27,7 @@ export default {
   //   );
   //   console.log(data);
   // },
-  mounted() {},
 
-  methods: {}
 };
 </script>
 
