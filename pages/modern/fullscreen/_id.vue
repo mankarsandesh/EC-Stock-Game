@@ -17,7 +17,7 @@
                   <span class="text-close-bet">market close</span>
                 </div>
 
-                <v-card-text class="pa-0" min-height="556">
+                <v-card-text class="pa-0" min-height="500">
                   <chartApp
                     :data="data.stockPrice"
                     :time="getStockById(data.id).stockTime"

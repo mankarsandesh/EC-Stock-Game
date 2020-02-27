@@ -266,7 +266,6 @@
     </div>
 </v-container>
 </template>
-
 <script>
 import {
     mapActions,
@@ -585,14 +584,14 @@ export default {
 }
 
 .fullscreen {
-    position: fixed !important;
-    bottom: 18px;
-    right: 130px;
-    width: 60px;
-    height: 60px;
-    color: #fff;
-    background-color: #8d31cd !important;
-
+  position: fixed !important;
+  bottom: 18px;
+  right: 130px;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  z-index:999;
+  background-color: #8d31cd !important;
 }
 
 .fullscreen .v-icon {
