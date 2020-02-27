@@ -54,6 +54,8 @@ export default {
     goSearch() {
       alert("You're right");
     }
+  },created(){
+   this.active  = false;
   }
 };
 </script>

@@ -21,7 +21,6 @@
       ></v-progress-circular>
     </div>
 
-
     <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
         <v-container pa-0>
             <v-toolbar color="#003e70" class="white--text">
@@ -41,7 +40,12 @@
     <v-toolbar height="75" class="elevation-3">
       <v-container fluid class="navbar">
         <v-toolbar-title>
-          <v-img width="158" src="/logo.png" @click="$router.push('/modern/desktop/btc1')" class="logostyle"></v-img>
+          <v-img
+            width="158"
+            src="/logo.png"
+            @click="$router.push('/modern/desktop/btc1')"
+            class="logostyle"
+          ></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
@@ -77,7 +81,7 @@
     </v-content>
 
     <!-- Chat Windows-->
-    <chatWindow />
+    <chatWindow  />
   </v-app>
 </template>
 
@@ -108,7 +112,7 @@ export default {
     Logout
   },
   data() {
-    return {
+    return {      
       currency: [{ title: "USD" }, { title: "BATH" }, { title: "KIP" }],
       direction: "top",
       fab: true,
@@ -140,11 +144,21 @@ export default {
       timeout: 3000
     };
   },
-
+  updated(){
+    let path = this.$nuxt.$route.name.split("-");
+    let pageName = path[2];   
+    if(pageName === "id"){
+      this.setGameChannelShow(true);
+    }else{
+      this.setGameChannelShow(false);
+    }
+  },
   created() {
+   
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];
+    let isFullscreen = path[1];   
+    
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
@@ -171,8 +185,8 @@ export default {
 
     // this.setIsLoadingStockGame(false);
   },
-  created() {},
   methods: {
+     ...mapMutations(["setGameChannelShow"]),
     getwinuser() {
       this.$axios
         .$get("api/fetchBet")
@@ -220,13 +234,12 @@ export default {
 </script>
 
 <style scoped>
-
-.logostyle{
+.logostyle {
   cursor: pointer;
-  margin-left:15px;
+  margin-left: 15px;
 }
-.currencySelect i{
-  padding-left:3px;
+.currencySelect i {
+  padding-left: 3px;
 }
 .currencySelect {
   padding: 0px;

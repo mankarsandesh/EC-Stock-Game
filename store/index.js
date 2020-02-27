@@ -198,6 +198,9 @@ const createStore = () => {
       time: {}
     }),
     mutations: {
+      setGameChannelShow(state,value){            
+        state.activeGameChannel = value;
+      },
       setIsLoadingStockGame(state, value) {
         state.isLoadingStockGame = value;
       },
@@ -488,7 +491,6 @@ const createStore = () => {
           console.log(error);
         }
       },
-
       // to get live price
       async asynLivePrice(context, payload) {
         try {
@@ -519,7 +521,6 @@ const createStore = () => {
           console.log(error);
         }
       },
-
       // to get User bet History
       async asyhistory(context) {
         try {
@@ -560,6 +561,9 @@ const createStore = () => {
       }
     },
     getters: {
+      getGameChannel(state){
+         return state.activeGameChannel;
+      },
       getPortalProviderUUID(state) {
         return state.portalProviderUUID;
       },
