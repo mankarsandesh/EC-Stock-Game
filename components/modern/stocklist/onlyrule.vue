@@ -147,9 +147,8 @@ export default {
 }
 .ruleHeading {
   background: linear-gradient(to right, #0b2a68 30%, #0b2a68 51%) !important;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   color: #ffffff !important;
   text-transform: capitalize;
+  border-radius: 10px;
 }
 </style>
