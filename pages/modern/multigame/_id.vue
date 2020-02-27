@@ -1,23 +1,14 @@
 <template>
 <div style="margin-bottom:250px">
-    <v-layout wrap class="pt-5">
+    <v-layout wrap  >
         <v-flex xs6 d-flex v-for="(stockid,index) in getStockMultigame" :key="stockid">
             <div class="border-flex">
-                <multigame :class="index%2==0 ?'pl-0':'pr-0'" :stockid="stockid"></multigame>
+                <multigame  :class="index%2==0 ?'pl-0':'pr-0'" :stockid="stockid"></multigame>
             </div>
         </v-flex>
-        <v-flex xs6 d-flex v-if="getStockMultigame.length < 4">
-            <div class="border-flex">
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <selectStock :isMultigame="true" :stockId="$route.params.id"></selectStock>
+        <v-flex xs6 class="pt-5" v-if="getStockMultigame.length < 4">
+            <div  >               
+                <selectStock  style="width:50%;margin:0 auto;" :isMultigame="true" :stockId="$route.params.id"></selectStock>
             </div>
         </v-flex>
     </v-layout>
@@ -44,7 +35,7 @@ export default {
     },
     data() {
         return {
-            stockSelect: [],
+            stockSelect: []
         };
     },
 
@@ -64,9 +55,7 @@ export default {
 
 <style scoped>
 .border-flex {
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+   
     padding: 15px;
     min-height: 550px;
 }

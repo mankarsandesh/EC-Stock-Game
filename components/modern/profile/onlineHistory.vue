@@ -93,7 +93,7 @@
         </span>
         <span style="margin-right:30px">
           online time :
-          <b>7hours,35minute</b>
+          <b>{{asynUserInfo.currentActiveTime}}</b>
         </span>
         <span style="margin-right:30px">
           total online :
@@ -112,6 +112,12 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
 export default {
+  methods: {
+    ...mapActions(["asynUserInfo"])
+  },
+  mounted() {
+    this.asynUserInfo();
+  },
   data() {
     return {
       chartOptions: {

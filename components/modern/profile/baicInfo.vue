@@ -7,7 +7,7 @@
             <div class="decorator_card decorator_card_green"></div>
             <span>account balance</span>
             <br />
-            <span class="amount">1.615,36</span>
+            <span class="amount">{{userData.balance}}</span>
             <span class="title_currentcy">kip</span>
           </div>
         </v-flex>
@@ -21,7 +21,7 @@
             <span class="title_currentcy">kip</span>
           </div>
         </v-flex>
-        <v-flex xs6 sm6 md4 lg3>
+        <!-- <v-flex xs6 sm6 md4 lg3>
           <div class="amount_container">
             <div class="decorator_card decorator_card_red"></div>
 
@@ -30,7 +30,7 @@
             <span class="amount">1.615,36</span>
             <span class="title_currentcy">kip</span>
           </div>
-        </v-flex>
+        </v-flex>-->
       </v-layout>
     </v-flex>
     <v-flex xs12 pt-3>
@@ -43,15 +43,40 @@
                   <label for="fname">player ID</label>
                 </div>
                 <div class="col-85">
-                  <input disabled type="text" id="fname" name="firstname" placeholder="188" />
+                  <input disabled type="text" id="fname" name="firstname" :value="userData.PID" />
                 </div>
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="lname">name</label>
+                  <label for="lname">first name</label>
                 </div>
                 <div class="col-85">
-                  <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
+                  <input
+                    ref="firstname"
+                    type="text"
+                    :value="userData.firstName"
+                    id="lname"
+                    name="lastname"
+                    placeholder="Your first name"
+                  />
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="lname">last name</label>
+                </div>
+                <div class="col-85">
+                  <input
+                    ref="lastname"
+                    type="text"
+                    :value="userData.lastName"
+                    id="lname"
+                    name="lastname"
+                    placeholder="Your last name"
+                  />
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
@@ -62,7 +87,7 @@
                   <label for="country">gender</label>
                 </div>
                 <div class="col-85">
-                  <select id="country" name="country">
+                  <select ref="gender" id="country" name="country">
                     <option value="australia">Australia</option>
                     <option value="canada">Canada</option>
                     <option value="usa">USA</option>
@@ -77,10 +102,17 @@
                   <label for="country">email</label>
                 </div>
                 <div class="col-85">
-                  <input type="text" id="lname" name="lastname" placeholder="mackychinma@gmail.com" />
+                  <input
+                    ref="email"
+                    type="text"
+                    :value="userData.email"
+                    id="lname"
+                    name="lastname"
+                    placeholder="mackychinma@gmail.com"
+                  />
                 </div>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-15">
                   <label for="country">follow me</label>
                 </div>
@@ -94,13 +126,13 @@
                     <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </div>
-              </div>
+              </div>-->
               <div class="row">
                 <div class="col-15">
                   <label for="country">country</label>
                 </div>
                 <div class="col-85">
-                  <select id="country" name="country">
+                  <select ref="country" id="country" name="country">
                     <option value="australia">Australia</option>
                     <option value="canada">Canada</option>
                     <option value="usa">USA</option>
@@ -113,7 +145,12 @@
               <div class="row">
                 <div class="col-15"></div>
                 <div class="col-85">
-                  <v-btn class="btn_save">save</v-btn>
+                  <v-btn
+                    :loading="updating"
+                    :disabled="updating"
+                    class="btn_save"
+                    @click="saveClick()"
+                  >save</v-btn>
                   <v-btn class="btn_cancel">cancel</v-btn>
                 </div>
               </div>
@@ -132,9 +169,61 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
 export default {
+  data() {
+    return {
+      updating: false,
+      userForm: {}
+    };
+  },
+  mounted() {},
+  computed: {
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+    userData() {
+      let data = { ...this.getUserInfo };
+      return data;
+    }
+  },
   methods: {
+    ...mapActions(["asynUserInfo"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
+    },
+    async saveClick() {
+      this.updating = true;
+      const ref = this.$refs;
+      let formData = new FormData();
+      formData.append("email", ref.email.value);
+      formData.append("firstName", ref.firstname.value);
+      formData.append("lastName", ref.lastname.value);
+      formData.append("gender", ref.gender.value);
+      formData.append("country", ref.country.value);
+      formData.append("portalProviderUUID", this.getPortalProviderUUID);
+      formData.append("userUUID", this.getUserUUID);
+      formData.append("version", 1);
+      this.userForm = formData;
+      try {
+        const res = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+          this.userForm,
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+            }
+          }
+        );
+        if (res.code === 200) {
+          this.asynUserInfo();
+          setTimeout(() => {
+            this.updating = false;
+          }, 1000);
+        } else {
+          alert(res.message);
+          console.log(res);
+        }
+      } catch (ex) {
+        console.error(ex);
+        alert(ex.message);
+      }
     }
   }
 };
@@ -246,5 +335,42 @@ label {
 .icon-container {
   position: relative;
   right: 37px;
+}
+/* loading.... */
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
