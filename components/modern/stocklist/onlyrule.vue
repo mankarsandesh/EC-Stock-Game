@@ -3,7 +3,7 @@
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
-          <span class="rules">{{$t('gamemsg.firstdigit')}} (????. ??)</span>
+          <span class="rules">{{$t('gamemsg.firstdigit')}} (????. <b class="headline1">?</b>?)</span>
         </div>
       </template>
       <v-card>
@@ -30,7 +30,7 @@
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
-          <span class="rules">{{$t('gamemsg.lastdigit')}} (????. ??)</span>
+          <span class="rules">{{$t('gamemsg.lastdigit')}} (????. ?<b class="headline1">?</b>)</span>
         </div>
       </template>
       <v-card>
@@ -57,7 +57,7 @@
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
-          <span class="rules">{{$t('gamemsg.bothdigit')}} (????. ??)</span>
+          <span class="rules">{{$t('gamemsg.bothdigit')}} (????. ?+?<b class="headline1">=??</b> )</span>
         </div>
       </template>
       <v-card>
@@ -85,7 +85,7 @@
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
-          <span class="rules">{{$t('gamemsg.twodigit')}} (????. ??)</span>
+          <span class="rules">{{$t('gamemsg.twodigit')}} (????. <b class="headline1">??</b>)</span>
         </div>
       </template>
       <v-card>
@@ -132,13 +132,13 @@ export default {
 .v-expansion-panel {
   border: noen;
 }
-.rules span:active {
-  color: #ffffff !important;
-  background-color: #0b2a68 !important;
+.rules{
+  color: #ffffff;
+  background-color: #0b2a68 ;
 }
 .rules span {
-  color: #0b2a68 !important;
-  background-color: #ffffff !important;
+  color: #0b2a68;
+  background-color: #ffffff;
 }
 .ruleActive {
   /* border-radius: 10px; */
@@ -146,10 +146,12 @@ export default {
   border: 1px solid #dddddd;
 }
 .ruleHeading {
-  background: linear-gradient(to right, #0bb177 30%, #2bb13a 51%) !important;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  color: #ffffff !important;
+  background: linear-gradient(to right, #0b2a68 30%, #0b2a68 51%) ;
+  color: #ffffff ;
   text-transform: capitalize;
+  border-radius: 10px;
+}
+.headline1{
+  color:red;
 }
 </style>
