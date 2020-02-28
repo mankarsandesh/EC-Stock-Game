@@ -101,14 +101,14 @@
         <v-divider></v-divider>
       </v-list>
     </SlideMenu>
-    <v-toolbar color="#003e70" class="white--text pa-0">
+      <v-toolbar class="buttonGreen pa-0">
       <v-layout row wrap class="pa-0">
         <v-flex xs6 class="text-center border-right d-flex justify-center">
           <v-btn text flat @click="filterClick">
             <span class="uppercase-text white--text">filter</span>
           </v-btn>
         </v-flex>
-
+        <v-spacer></v-spacer>
         <v-flex xs6 class="d-flex justify-center text-center">
           <v-btn text flat @click="sortClick">
             <span class="uppercase-text white--text">sort</span>
@@ -116,7 +116,6 @@
         </v-flex>
       </v-layout>
     </v-toolbar>
-
     <v-layout row wrap px-2 pt-2>
       <v-flex pa-2 v-for="(data,index) in getStockChart " :key="index" xs6 sm4 md4>
         <nuxt-link :to="'/modern/betting/' +data.id">
@@ -153,7 +152,7 @@
     </v-layout>
 
     <v-layout row wrap pb-3 justify-center>
-      <v-flex xs5 class="text-center d-flex">
+      <v-flex xs5 class="text-center d-flex"  style="color:#8291b2">
         <v-btn class="text-uppercase buttonGreen">load more</v-btn>
       </v-flex>
     </v-layout>
