@@ -68,7 +68,8 @@ module.exports = {
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
         "@nuxtjs/axios",
-        "@nuxtjs/font-awesome"
+        "@nuxtjs/font-awesome",
+        '@nuxtjs/moment',
     ],
     /*
      ** Axios module configuration

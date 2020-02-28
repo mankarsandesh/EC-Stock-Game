@@ -6,24 +6,23 @@
           <h1 class="display-1">{{$t('msg.ChooseTheVersionToPlay')}}</h1>
         </v-flex>
         <v-flex xs12>
-          <v-img src="/bg/gameType.png">
-            <v-layout row wrap align-end justify-space-around>
-              <v-btn
-                :to="stockname == '' ? '/classic/l-btc1-live':'/classic/l-'+stockname+'-live'"
-                :large="$vuetify.breakpoint.smAndUp"
-                :small="$vuetify.breakpoint.smAndDown"
-                color="red"
-                class="white--text"
-              >{{$t('msg.ClassicVersion')}}</v-btn>
-              <v-btn
-                :to="linkto"
-                :large="$vuetify.breakpoint.smAndUp"
-                :small="$vuetify.breakpoint.smAndDown"
-                color="green"
-                class="white--text"
-              >{{$t('msg.ModernVersion')}}</v-btn>
-            </v-layout>
-          </v-img>
+          <v-img src="/bg/gameType.png" />
+          <v-layout row wrap align-end justify-space-around>
+            <v-btn
+              :to="stockname == '' ? '/classic/l-btc1-live':'/classic/l-'+stockname+'-live'"
+              :large="$vuetify.breakpoint.smAndUp"
+              :small="$vuetify.breakpoint.smAndDown"
+              color="red"
+              class="white--text"
+            >{{$t('msg.ClassicVersion')}}</v-btn>
+            <v-btn
+              :to="linkto"
+              :large="$vuetify.breakpoint.smAndUp"
+              :small="$vuetify.breakpoint.smAndDown"
+              color="green"
+              class="white--text"
+            >{{$t('msg.ModernVersion')}}</v-btn>
+          </v-layout>
         </v-flex>
       </v-layout>
     </v-container>
@@ -87,7 +86,6 @@ export default {
       .flex {
         .v-responsive {
           .v-responsive__content {
-            justify-content: flex-end;
             display: flex;
           }
         }
