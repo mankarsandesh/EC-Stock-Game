@@ -1,15 +1,22 @@
 <template>
-  <div class="v-card-style " v-if="stockid !== null"  >
-    <v-layout px-1 >
+  <div class="v-card-style" v-if="stockid !== null">
+    <v-layout px-1>
       <v-flex xs6 class="text-xs-left stockTimer">
         {{ $t("msg.livetime") }}:
-        <span class="stockTimer" >{{ getLiveTime(stockid) }}</span>
+        <span class="stockTimer">{{ getLiveTime(stockid) }}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(stockid) > 0">      
+      <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(stockid) > 0">
         <span class="stockPrice">${{ getLivePrice(stockid) }}</span>
       </v-flex>
     </v-layout>
-    <apexchart class="chartDesgin" type="area" height="310vh" width="99.5%" :options="chartOptions" :series="series" />
+    <apexchart
+      class="chartDesgin"
+      type="area"
+      height="310vh"
+      width="99.5%"
+      :options="chartOptions"
+      :series="series"
+    />
   </div>
 </template>
 
@@ -65,7 +72,7 @@ export default {
             stroke: {
               color: "#0b2a68",
               opacity: 0.4,
-              width: 1,
+              width: 1
             }
           }
         },
@@ -83,12 +90,12 @@ export default {
             enabled: false
           },
           toolbar: {
-             shared: false,
-              y: {
-                formatter: function (val) {
-                  return (val / 1000000).toFixed(0)
-                }
+            shared: false,
+            y: {
+              formatter: function(val) {
+                return (val / 1000000).toFixed(0);
               }
+            }
           }
         },
         brush: {
@@ -100,7 +107,7 @@ export default {
         },
         stroke: {
           show: true,
-            curve: "smooth",
+          curve: "smooth",
           lineCap: "butt",
           colors: undefined,
           width: 1,
@@ -133,8 +140,8 @@ export default {
           labels: {
             show: true
           },
-          title:{
-            text: 'Price'
+          title: {
+            text: "Price"
           }
           //   tickAmount:
           // min: Math.max(...this.data)+10,
@@ -146,16 +153,16 @@ export default {
 };
 </script>
 <style>
-.stockPrice{
-  padding-right:14px;
-  color:green;
+.stockPrice {
+  padding-right: 14px;
+  color: green;
   font-size: 24px;
   margin: 0px;
   font-weight: 600;
 }
-.stockTimer{
-  padding-left:20px;
-  color:#333;
+.stockTimer {
+  padding-left: 20px;
+  color: #333;
   font-size: 20px;
   margin: 0px;
   font-weight: 600;

@@ -82,7 +82,7 @@
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
-        <VueApexCharts type="area" height="400vh" :options="chartOptions" :series="series" />
+        <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
       </div>
     </v-flex>
     <v-flex xs12 class="pt-3 pl-5">
@@ -105,49 +105,20 @@
 </template>
 
 <script>
-import VueApexCharts from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
+import onlineChart from "./onlinechart";
 export default {
-  methods: {
-    ...mapActions(["asynUserInfo"])
-  },
-  computed:{
-    ...mapGetters([
-      "getUserInfo"
-    ])
-  },
-  mounted() {
-    this.asynUserInfo();
+  components: {
+    onlineChart
   },
   data() {
     return {
-      chartOptions: {
-        chart: {
-          id: "vuechart-example"
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        },
-        chart: {
-          parentHeightOffset: 0,
-          zoom: {
-            enabled: false
-          },
-          toolbar: {
-            show: false
-          }
-        }
-      },
-      series: [
-        {
-          name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
-        }
-      ],
+      chartData: [],
+      xaxis: [],
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
@@ -160,9 +131,6 @@ export default {
       ]
     };
   },
-  components: {
-    VueApexCharts: VueApexCharts
-  },
   created() {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, "0");
@@ -170,6 +138,55 @@ export default {
     let yyyy = today.getFullYear();
     this.startDate = yyyy + "-" + mm + "-" + dd;
     this.endDate = yyyy + "-" + mm + "-" + dd;
+  },
+  mounted() {
+    // this.asynUserInfo();
+    this.getOnlineHistory();
+  },
+
+  computed: {
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+  },
+  methods: {
+    ...mapActions(["asynUserInfo"]),
+    async getOnlineHistory() {
+      try {
+        const res = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile",
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
+            dateRangeFrom: "2020-02-02",
+            dateRangeTo: "2020-02-28"
+          },
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+            }
+          }
+        );
+        if (res.code === 200) {
+          this.chartData = [1500];
+          this.xaxis = ["2020-02-26"];
+          let result = res.data[0].activeTimeDateWise;
+          console.log("result online chart");
+          console.log(res);
+          console.log("result online chart");
+          result.forEach(element => {
+            this.chartData.push(parseInt(element.activeTimeInMins));
+            this.xaxis.push(element.Date);
+          });
+          console.log(this.chartData);
+          console.log(this.xaxis);
+        } else {
+          console.log(res);
+          alert(res.message);
+        }
+      } catch (ex) {
+        console.error(ex);
+        alert(ex.message);
+      }
+    }
   }
 };
 </script>
