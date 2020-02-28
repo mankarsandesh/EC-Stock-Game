@@ -89,10 +89,10 @@
       <div>
         <span style="margin-right:30px">
           player id :
-          <b>188</b>
+          <b>{{getUserInfo.PID}}</b>
         </span>
         <span style="margin-right:30px">
-          online time :
+          online time : {{getUserInfo.currentActiveTime}}
           <b>{{asynUserInfo.currentActiveTime}}</b>
         </span>
         <span style="margin-right:30px">
@@ -114,6 +114,11 @@ import uploadprofile from "./UploadFile";
 export default {
   methods: {
     ...mapActions(["asynUserInfo"])
+  },
+  computed:{
+    ...mapGetters([
+      "getUserInfo"
+    ])
   },
   mounted() {
     this.asynUserInfo();
@@ -163,7 +168,6 @@ export default {
     let dd = String(today.getDate()).padStart(2, "0");
     let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = today.getFullYear();
-
     this.startDate = yyyy + "-" + mm + "-" + dd;
     this.endDate = yyyy + "-" + mm + "-" + dd;
   }

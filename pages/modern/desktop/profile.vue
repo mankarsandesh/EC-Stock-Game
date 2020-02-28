@@ -129,8 +129,8 @@ export default {
       formData.append("email", this.getUserInfo.email);
       formData.append("firstName", this.getUserInfo.firstName);
       formData.append("lastName", this.getUserInfo.lastName);
-      formData.append("gender", this.getUserInfo.gender);
-      formData.append("country", this.getUserInfo.country);
+      // formData.append("gender", this.getUserInfo.gender);
+      // formData.append("country", this.getUserInfo.country);
       formData.append("profileImage", this.$refs.inputFile.files[0], "file");
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
@@ -141,7 +141,7 @@ export default {
           formData,
           {
             headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
             },
 
             onUploadProgress: progressEvent => {
