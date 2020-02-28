@@ -32,10 +32,15 @@ export default {
     };
   },
   mounted() {
+
+  const userData = this.$route.query
+  console.log(userData)
+  sessionStorage.setItem('userData', JSON.stringify(userData))
     this.getProgress();
     this.linkto = isMobile ? "/modern" : "/modern/desktop/" + this.stockname;
   },
   created() {
+   
     this.stockname = window.location.search
       .split("?")[1]
       .split("=")[1]
