@@ -3,7 +3,7 @@
         "node": "10.15.0"
     },
     "name": "modern-mobile",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "description": "modern mobile version",
     "author": "Macky",
     "private": true,

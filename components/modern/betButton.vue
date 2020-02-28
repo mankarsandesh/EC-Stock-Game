@@ -7,7 +7,7 @@
     </div>
     <!-- end for show bet close -->
     <v-layout row>
-        <span class="w12">
+        <span class="w12 buttonbtn">
             <v-btn class="bg-btn-first">
                 <span class="btn-digit">{{$t('gamemsg.firstdigits')}}</span>
             </v-btn>
@@ -43,7 +43,7 @@
 
     <!-- Row betting button2 -->
     <v-layout row>
-        <span class="w12">
+         <span class="w12 buttonbtn">
             <v-btn class="bg-btn-last">
                 <span class="btn-digit">{{$t('gamemsg.lastdigits')}}</span>
             </v-btn>
@@ -79,7 +79,7 @@
     <!-- Row betting button2 -->
     <!-- Row betting button3 -->
     <v-layout row>
-        <span class="w12">
+         <span class="w12 buttonbtn">
             <v-btn class="bg-btn-both">
                 <span class="btn-digit">{{$t('gamemsg.bothdigits')}}</span>
             </v-btn>
@@ -116,7 +116,7 @@
     <!-- Row betting button3 -->
     <!-- Row betting button3 -->
     <v-layout row>
-        <span class="w12">
+         <span class="w12 buttonbtn">
             <v-btn class="bg-btn-two">
                 <span class="btn-digit">{{$t('gamemsg.twodigits')}}</span>
             </v-btn>
@@ -453,7 +453,7 @@ export default {
     methods: {
         ...mapMutations(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
         betButtonClick(betId) {             
-            $("#"+betId).addClass('bg-btn-first');    
+            // $("#"+betId).addClass('bg-btn-first');    
             if (this.checkFooterBet) {               
                 
                 let data = {
@@ -476,7 +476,9 @@ export default {
 </script>
 
 <style scoped>
-
+.buttonbtn{
+    width: 130px;
+}
 .popper{
     border-radius: 20px;
     background-color: #FFF;

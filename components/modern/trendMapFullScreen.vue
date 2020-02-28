@@ -1,10 +1,10 @@
 <template>
-  <v-layout wrap style="padding:10px;" >
-    <v-flex lg2 md2  >
-      <v-select v-model="trendType" :items="typeItem" :height="10" solo></v-select>
-      <v-select v-model="which_one" :items="which_oneItem" solo></v-select>
+  <v-layout wrap pa-2>
+    <v-flex lg2 md2 pt-5>
+      <v-select v-model="trendType" :items="typeItem" :height="10" solo class="rounded-card"></v-select>
+      <v-select v-model="which_one" :items="which_oneItem" solo class="rounded-card"></v-select>
     </v-flex>
-    <v-flex  lg10 md10  >
+    <v-flex lg10 md10>
       <trendMap
         v-if="which_one !==''"
         :dataArray="getStockCrawlerData($route.params.id)"
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       typeItem: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
-      which_oneItem: ["B/S", "O/E", "U/L", "NUM"],
+      which_oneItem: ["B/S", "O/E", "U/L", "NUM"]
       // which_one: "B/S",
       // trendType: "firstDigit"
     };

@@ -1,8 +1,10 @@
 <template>
-  <v-expansion-panel v-model="panel" expand style="background-color:#f2f4ff;">
-    <v-expansion-panel-content class="ruleHeading ruleActive">
+  <v-expansion-panel v-model="panel" expand style="background-color:#fff;">
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div >{{$t('gamemsg.firstdigit')}} (????. ??)</div>
+        <div @click="setActive($event)">
+          <span class="rules">{{$t('gamemsg.firstdigit')}} (????. <b class="headline1">?</b>?)</span>
+        </div>
       </template>
       <v-card>
         <v-card-text class="white">
@@ -25,9 +27,11 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content class="ruleActive" >
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div>{{$t('gamemsg.lastdigit')}} (????. ??)</div>
+        <div @click="setActive($event)">
+          <span class="rules">{{$t('gamemsg.lastdigit')}} (????. ?<b class="headline1">?</b>)</span>
+        </div>
       </template>
       <v-card>
         <v-card-text class="white">
@@ -50,9 +54,11 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content class="ruleActive">
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div>{{$t('gamemsg.bothdigit')}} (????.? + ? = ?)</div>
+        <div @click="setActive($event)">
+          <span class="rules">{{$t('gamemsg.bothdigit')}} (????. ?+?<b class="headline1">=??</b> )</span>
+        </div>
       </template>
       <v-card>
         <v-card-text class="white">
@@ -76,9 +82,11 @@
         </v-card-text>
       </v-card>
     </v-expansion-panel-content>
-    <v-expansion-panel-content class="ruleActive"> 
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div>{{$t('gamemsg.twodigit')}} (????. ??)</div>
+        <div @click="setActive($event)">
+          <span class="rules">{{$t('gamemsg.twodigit')}} (????. <b class="headline1">??</b>)</span>
+        </div>
       </template>
       <v-card>
         <v-card-text class="white">
@@ -105,29 +113,45 @@
   </v-expansion-panel>
 </template>
 <script>
-  export default {
-    data() {
-        return {           
-            panel: 0
-        };
+export default {
+  data() {
+    return {
+      panel: 0
+    };
+  },
+  methods: {
+    setActive(e) {
+      // $(".ruleHeading").removeClass("ruleHeading");
+      // $(e.target.parentElement.parentElement).addClass("ruleHeading");
     }
   }
+};
 </script>
 
 <style>
-.v-expansion-panel{
-    border:noen;
+.v-expansion-panel {
+  border: noen;
 }
-.ruleActive{
-    border-radius: 10px;
-    margin:7px;
-    border:1px solid #dddddd;
+.rules{
+  color: #ffffff;
+  background-color: #0b2a68 ;
 }
-.ruleHeading{
-    background-color: #0b2a68 !important;
-    border-top-left-radius:10px;
-    border-top-right-radius:10px;
-    color: #ffffff !important;
-    text-transform: capitalize;
+.rules span {
+  color: #0b2a68;
+  background-color: #ffffff;
+}
+.ruleActive {
+  /* border-radius: 10px; */
+  margin: 7px;
+  border: 1px solid #dddddd;
+}
+.ruleHeading {
+  background: linear-gradient(to right, #0b2a68 30%, #0b2a68 51%) ;
+  color: #ffffff ;
+  text-transform: capitalize;
+  border-radius: 10px;
+}
+.headline1{
+  color:red;
 }
 </style>

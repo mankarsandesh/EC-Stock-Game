@@ -10,10 +10,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,index) in getAnnoucement" :key="index"  class="tabletr">
+          <tr v-for="(item,index) in apiData" :key="index" class="tabletr">
             <td>{{item.title}}</td>
-            <td>{{item.created_at}}</td>
-            <td>{{item.messageContent}}</td>
+            <td>{{item.createdAt}}</td>
+            <td>{{item.message}}</td>
           </tr>
         </tbody>
       </table>
@@ -21,21 +21,30 @@
   </v-flex>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+
+import { mapState } from "vuex";
 export default {
-  data() {
-    return {
-      items: ["day", "weeks", "months", "years"]
-    };
-  },
-  mounted() {
-    this.asyannoucement();
-  },
-  methods: {
-    ...mapActions(["asyannoucement"])
+  data(){
+    return{
+      apiData:[]
+    }
   },
   computed: {
-    ...mapGetters(["getAnnoucement"])
+    ...mapState(["portalProviderUUID", "headers"])
+  },
+  mounted(){
+    this.callApi()
+  },
+  methods: {
+    async callApi() {
+      const { data } = await this.$axios.$post(
+        "http://uattesting.equitycapitalgaming.com/webApi/getAllAnnouncements",
+        { portalProviderUUID: this.portalProviderUUID },
+        { headers: this.headers }
+      );
+      this.apiData = data
+      console.log(data);
+    }
   }
 };
 </script>
@@ -46,7 +55,7 @@ table {
   /* border:1px solid red; */
   border-radius: 10px;
   background-color: #fff;
-  box-shadow: 2px 3px 10px rgb(0,0,0,0.3);
+  box-shadow: 2px 3px 10px rgb(0, 0, 0, 0.3);
 }
 
 .thead-dark {

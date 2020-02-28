@@ -5,7 +5,7 @@
       linkItem="announcement"
       linkItem2="gamerule"
       titlebtn="announcement"
-      titlebtn2="rule"
+      titlebtn2="game rule"
     />
     <v-container>
       <v-layout row wrap>
@@ -54,6 +54,8 @@ export default {
     goSearch() {
       alert("You're right");
     }
+  },created(){
+   this.active  = false;
   }
 };
 </script>

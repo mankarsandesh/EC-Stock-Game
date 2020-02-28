@@ -2,21 +2,28 @@
   <div>
     <input @change="readFile($event)" type="file" ref="inputFile" hidden />
     <v-layout pt-3 row wrap class="justify-center">
-      <v-flex xs9>
+      <v-flex xs12 ms12 lg9>
         <v-layout>
-          <v-flex xs2 class="pt-5" style="background-color:white">
+          <v-flex xs4 ms3 lg3 xl2 class="pt-5" style="background-color:white">
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img :src="imageBase64" alt="avatar" />
+                  <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
+                  <img
+                    :style="{ filter: `blur(${blurValue}px)`}"
+                    v-else
+                    :src="imageBase64"
+                    alt="img-profile"
+                  />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
                     <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
                   </button>
                 </span>
+                <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h1>Naresh kathad</h1>
+              <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
               <p>Online Status : 2hours</p>
             </div>
 
@@ -34,7 +41,7 @@
           </v-flex>
 
           <!-- change component here when click menu  -->
-          <v-flex xs10>
+          <v-flex xs8 sm9 lg9 xl10>
             <basicInfo v-if="activeMenu =='basic information'"></basicInfo>
             <onlineHistoy v-if="activeMenu =='online history'"></onlineHistoy>
             <notification v-if="activeMenu =='my notification'"></notification>
@@ -48,7 +55,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions, mapGetters } from "vuex";
 import basicInfo from "~/components/modern/profile/baicInfo";
 import onlineHistoy from "~/components/modern/profile/onlineHistory";
 import notification from "~/components/modern/profile/notification";
@@ -67,7 +74,8 @@ export default {
   },
   data() {
     return {
-      imageBase64:"",
+      blurValue: 5,
+      imageBase64: "",
       activeMenu: "basic information",
       profileMenu: [
         {
@@ -85,7 +93,22 @@ export default {
     };
   },
   mounted() {},
+  computed: {
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+    imgProfile() {
+      return this.getUserInfo.profileImage === ""
+        ? "/no-profile-pic.jpg"
+        : "http://uattesting.equitycapitalgaming.com/" +
+            this.getUserInfo.profileImage;
+    }
+  },
+  watch: {
+    imageBase64() {
+      this.updateProfile();
+    }
+  },
   methods: {
+    ...mapActions(["asynUserInfo"]),
     readFile(e) {
       let seft = this;
       console.log(e.target);
@@ -99,6 +122,53 @@ export default {
     },
     cameraClick() {
       this.$refs.inputFile.click();
+    },
+    async updateProfile() {
+      const ref = this.$refs;
+      let formData = new FormData();
+      formData.append("email", this.getUserInfo.email);
+      formData.append("firstName", this.getUserInfo.firstName);
+      formData.append("lastName", this.getUserInfo.lastName);
+      // formData.append("gender", this.getUserInfo.gender);
+      // formData.append("country", this.getUserInfo.country);
+      formData.append("profileImage", this.$refs.inputFile.files[0], "file");
+      formData.append("portalProviderUUID", this.getPortalProviderUUID);
+      formData.append("userUUID", this.getUserUUID);
+      formData.append("version", 1);
+      try {
+        const res = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+          formData,
+          {
+            headers: {
+              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
+            },
+
+            onUploadProgress: progressEvent => {
+              console.log("process......");
+              const totalLength = progressEvent.lengthComputable
+                ? progressEvent.total
+                : progressEvent.target.getResponseHeader("content-length") ||
+                  progressEvent.target.getResponseHeader(
+                    "x-decompressed-content-length"
+                  );
+              if (totalLength !== null) {
+                this.blurValue = Math.round(totalLength - progressEvent.loaded);
+              }
+            }
+          }
+        );
+        if (res.code === 200) {
+          this.blurValue = 0;
+        } else {
+          alert(res.message);
+          console.log(res);
+          this.imageBase64 = "";
+        }
+      } catch (ex) {
+        console.error(ex);
+        alert(ex.message);
+      }
     },
 
     setActiveMenu(index) {
@@ -134,10 +204,20 @@ export default {
 .image_container {
   position: relative;
 }
+.blur-img {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #39b01e;
+  opacity: 0.5;
+  left: 114px;
+}
 .camera_container {
   position: absolute;
   margin-top: 56px;
   margin-left: -28px;
+  z-index: 1;
 }
 .profile_menu {
   margin-bottom: 100%;
@@ -164,8 +244,8 @@ li {
   text-transform: uppercase;
   font-weight: bold;
 }
-.v-avatar img {
-  box-shadow: 1px 7px 19px rgb(145, 145, 145);
+img {
+  box-shadow: 1px 7px 19px rgb(145, 145, 145) !important;
 }
 </style>
   

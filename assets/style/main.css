@@ -1,3 +1,38 @@
+/*
+Home Page Component
+*/
+.lastdraw {
+  font-size: 14px;
+  border: 1.5px solid #4b65ff;
+  border-radius: 10px;
+  font-size: 22px;
+  padding: 2px 6px;
+  font-weight: 400;
+}
+.betclose {
+  font-size: 14px;
+  border: 1.5px solid #ef076a;
+  border-radius: 10px;
+  font-size: 22px;
+  padding: 2px 6px;
+  font-weight: 400;
+}
+.lottery {
+  font-size: 14px;
+  border: 1.5px solid #01e3bf;
+  border-radius: 10px;
+  font-size: 22px;
+  padding: 2px 6px;
+  font-weight: 400;
+}
+.chartDesgin {
+  margin-top: 10px;
+  padding: 5px 5px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+
 .button {
   background-color: #003e70;
   font-size: 14px;
@@ -882,3 +917,15 @@ table.result-table {
 }
 
 /* END THE LOADING PAGE */
+
+
+/*  Background  */
+/* background: rgb(76,182,121);
+background: radial-gradient(circle, rgba(76,182,121,1) 31%, rgba(93,190,109,1) 100%); */
+
+
+/* background: rgb(76,182,121);
+background: radial-gradient(circle, rgba(76,182,121,1) 31%, rgba(93,190,109,1) 100%); */
+
+
+/* End Background gradient */

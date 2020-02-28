@@ -59,7 +59,7 @@
         </tr>-->
         <tr>
           <td>{{$t('msg.Total')}}</td>
-          <td colspan="2">{{colspan}}</td>
+          <td colspan="2"></td>
           <td></td>
           <td>
             <strong>{{formatToPrice(sumTotalbetAmount)}}</strong>
