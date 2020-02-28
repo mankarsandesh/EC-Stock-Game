@@ -154,7 +154,7 @@
 
     <v-layout row wrap pb-3 justify-center>
       <v-flex xs5 class="text-center d-flex">
-        <v-btn outline color="#003e70" class="text-uppercase">load more</v-btn>
+        <v-btn class="text-uppercase buttonGreen">load more</v-btn>
       </v-flex>
     </v-layout>
     <!-- back to top -->
