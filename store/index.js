@@ -6,7 +6,6 @@ const createStore = () => {
   return new Vuex.Store({
     state: () => ({
       loader: false,
-        portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
             headers: {
                 Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
             },
