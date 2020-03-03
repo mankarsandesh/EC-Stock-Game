@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app >
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -25,13 +25,13 @@
         </div>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar height="30" color="#003e70" class="white--text" style="z-index: 100;">
+    <!-- <v-toolbar height="30" color="#003e70" class="white--text" style="z-index: 100;">
       <v-layout row wrap>
         <v-flex xs12 class="pa-3">
           <welcome-user></welcome-user>
         </v-flex>
       </v-layout>
-    </v-toolbar>
+    </v-toolbar> -->
 
     <v-toolbar :clipped-left="clipped" class="pa-1 text-primary light-toobar">
       <v-flex class="pa-2">
@@ -49,8 +49,8 @@
       <languageDialog ref="language"></languageDialog>
       <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
     </v-toolbar>
-    <v-content>
-      <v-container fluid pa-0>
+    <v-content >
+      <v-container  >
         <nuxt />
       </v-container>
     </v-content>
