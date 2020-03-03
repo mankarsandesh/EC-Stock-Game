@@ -125,7 +125,7 @@
     </v-list>
     <v-layout row wrap pb-3 justify-center>
       <v-flex xs5 class="text-center d-flex">
-        <v-btn outline color="#003e70" class="text-uppercase">{{$t("stock-list.load more")}}</v-btn>
+        <v-btn color="#003e70" class="text-uppercase buttonGreen">{{$t("stock-list.load more")}}</v-btn>
       </v-flex>
     </v-layout>
     <!-- back to top -->

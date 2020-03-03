@@ -17,35 +17,35 @@ export default {
       series: [
         {
           name: "BIG",
-          data: [10, 55, 41, 37]
+          data: [0,0,0,0]
         },
         {
           name: "SMALL",
-          data: [20, 32, 33, 52]
+          data: [0,0,4,2]
         },
         {
           name: "ODD",
-          data: [10, 17, 11, 9]
+          data: [0,0,3,0]
         },
         {
           name: "EVEN",
-          data: [20, 7, 5, 8]
+          data: [0,0,0,0]
         },
         {
           name: "HIGH",
-          data: [10, 7, 5, 8]
+          data: [0,0,0,0]
         },
         {
           name: "MID",
-          data: [0, 7, 5, 8]
+          data: [0,0,0,0]
         },
         {
           name: "LOW",
-          data: [10, 7, 5, 8]
+          data: [0,0,0,0]
         },
         {
           name: "NUMBER",
-          data: [9, 7, 5, 8]
+          data: [0,0,0,0]
         }
       ],
       chartOptions: {
