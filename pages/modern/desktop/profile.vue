@@ -26,28 +26,21 @@
               <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
               <p>Online Status : 2hours</p>
             </div>
-
             <div class="profile_menu">
               <div class="display_component"></div>
               <ul class="pa-3">
-                <li
-                  :class="menu.class"
-                  @click="setActiveMenu(index)"
-                  v-for="(menu,index) in profileMenu"
-                  :key="index"
-                >{{menu.title}}</li>
+                <nuxt-link v-for="(menu,index) in profileMenu" :key="index" :to="menu.path">
+                  <li
+                    :class=" menu.path.toLowerCase() === currentChild.toLowerCase() ?' menu_title_active':'menu_title'"
+                  >{{menu.title}}</li>
+                </nuxt-link>
               </ul>
             </div>
           </v-flex>
 
           <!-- change component here when click menu  -->
           <v-flex xs8 sm9 lg9 xl10>
-            <basicInfo v-if="activeMenu =='basic information'"></basicInfo>
-            <onlineHistoy v-if="activeMenu =='online history'"></onlineHistoy>
-            <notification v-if="activeMenu =='my notification'"></notification>
-            <stockAnalysis v-if="activeMenu =='stock analysis'"></stockAnalysis>
-            <follower v-if="activeMenu =='my followers'"></follower>
-            <setting v-if="activeMenu =='setting'"></setting>
+            <nuxt-child />
           </v-flex>
         </v-layout>
       </v-flex>
@@ -56,43 +49,54 @@
 </template>
 <script>
 import { mapMutations, mapActions, mapGetters } from "vuex";
-import basicInfo from "~/components/modern/profile/baicInfo";
-import onlineHistoy from "~/components/modern/profile/onlineHistory";
-import notification from "~/components/modern/profile/notification";
-import stockAnalysis from "~/components/modern/profile/stockAnalysis";
-import follower from "~/components/modern/profile/follower";
-import setting from "~/components/modern/profile/setting";
 export default {
   layout: "desktopModern",
-  components: {
-    basicInfo,
-    onlineHistoy,
-    notification,
-    stockAnalysis,
-    follower,
-    setting
-  },
+
   data() {
     return {
+      currentChild: "basicinfo",
       blurValue: 5,
       imageBase64: "",
-      activeMenu: "basic information",
+      activeMenu: "online history",
       profileMenu: [
         {
           title: "basic information",
-          class: "menu_title_active"
+          path: "basicinfo"
         },
-        { title: "online history", class: "menu_title" },
-        { title: "stock analysis", class: "menu_title" },
-        { title: "my followers", class: "menu_title" },
-        { title: "my notification", class: "menu_title" },
-        { title: "setting", class: "menu_title" }
+        {
+          title: "online history",
+          path: "onlinehistory"
+        },
+        {
+          title: "stock analysis",
+          path: "stockanalysis"
+        },
+        {
+          title: "my followers",
+          path: "follower"
+        },
+        {
+          title: "my notification",
+          path: "notification"
+        },
+        { title: "setting", path: "setting" }
       ],
       window: 0,
       active: null
     };
   },
-  mounted() {},
+  beforeUpdate() {
+    console.log(this.$route.name);
+    let url = this.$route.name.split("-");
+    this.currentChild = url[url.length - 1];
+  },
+  created() {
+    let url = this.$route.name.split("-");
+    this.currentChild = url[url.length - 1];
+    if (this.$route.name === "modern-desktop-profile") {
+      this.$router.push("profile/basicinfo");
+    }
+  },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
@@ -169,14 +173,6 @@ export default {
         console.error(ex);
         alert(ex.message);
       }
-    },
-
-    setActiveMenu(index) {
-      this.profileMenu.forEach(element => {
-        element.class = "menu_title";
-      });
-      this.activeMenu = this.profileMenu[index].title;
-      this.profileMenu[index].class = "menu_title_active";
     },
     ...mapMutations(["setIsLoadingStockGame"])
   }
