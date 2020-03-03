@@ -3,16 +3,15 @@
     <v-fade-transition mode="out-in">
       <v-layout align-center column>
         <v-img src="/bg/group33.png" width="500" height="100" />
-          <div class="preloader-wrap">
-            <div class="percentage" id="precent"></div>
-            <div class="loader">
-              <div class="trackbar">
-                <div class="loadbar"></div>
-              </div>
-              <div class="glow"></div>
+        <div class="preloader-wrap">
+          <div class="percentage" id="precent"></div>
+          <div class="loader">
+            <div class="trackbar">
+              <div class="loadbar"></div>
             </div>
+            <div class="glow"></div>
           </div>
-       
+        </div>
       </v-layout>
     </v-fade-transition>
   </v-container>
@@ -21,6 +20,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { isMobile } from "mobile-device-detect";
+import { CryptoJS } from "crypto-js";
 export default {
   layout: "nolayout",
   middleware: "getApiKey",
@@ -32,15 +32,58 @@ export default {
     };
   },
   mounted() {
+    // const userData = this.$route.query;
+    const userData = {
+        "authUser": "TNKSuper",
+        "authPassword": "Test123!",
+        "portalProviderUUID": "743c7b7d-0166-48be-84c3-375430a3c0ae",
+        "userId": "dd7060bd-5da1-4f6c-96a2-fc292acd23f8"
+    }
+   
+    if(userData.authUser && userData.authPassword){
+        if(userData.portalProviderUUID && userData.userId){
+              sessionStorage.setItem("userData", JSON.stringify(userData));
+              this.getProgress();
+              this.linkto = isMobile ? "/modern" : "/modern/desktop/" + this.stockname;
+        }else{
+          console.log("Portal Provider OR userID is Missing..");
+        }
+    }else{
+      console.log("Authication authUser & authPassword is Missing.");
+    }
+   
 
-  const userData = this.$route.query
-  console.log(userData)
-  sessionStorage.setItem('userData', JSON.stringify(userData))
-    this.getProgress();
-    this.linkto = isMobile ? "/modern" : "/modern/desktop/" + this.stockname;
+    // var SECRET_KEY = "sandesh";
+
+    // const secureStorage = new SecureStorage(localStorage, {
+    //   hash: function hash(key) {
+    //     key = CryptoJS.SHA256(key, SECRET_KEY);
+
+    //     return key.toString();
+    //   },
+    //   encrypt: function encrypt(data) {
+    //     data = CryptoJS.AES.encrypt(data, SECRET_KEY);
+
+    //     data = data.toString();
+
+    //     return data;
+    //   },
+    //   decrypt: function decrypt(data) {
+    //     data = CryptoJS.AES.decrypt(data, SECRET_KEY);
+
+    //     data = data.toString(CryptoJS.enc.Utf8);
+
+    //     return data;
+    //   }
+    // });
+
+    // var data = {
+    //   secret: "data"
+    // };
+
+    // secureStorage.setItem('data', data);  
   },
   created() {
-   
     this.stockname = window.location.search
       .split("?")[1]
       .split("=")[1]
