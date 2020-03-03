@@ -6,9 +6,11 @@ const createStore = () => {
   return new Vuex.Store({
     state: () => ({
       loader: false,
-            headers: {
-                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            },
+      userLoginData : {},
+      portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
+      headers: {
+        Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+      },
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
@@ -201,7 +203,7 @@ const createStore = () => {
       time: {}
     }),
     mutations: {
-      setGameChannelShow(state,value){            
+      setGameChannelShow(state, value) {
         state.activeGameChannel = value;
       },
       setIsLoadingStockGame(state, value) {
@@ -210,10 +212,9 @@ const createStore = () => {
       setIsSendBetting(state, value) {
         state.isSendBetting = value;
       },
-      setUserData(state, payload) {
-        state.userData = payload;
+      setUserLoginData(state, payload) {
+        state.userLoginData = payload;
       },
-
       // store api_token in vuex auth_token
       setAuth_token(state, token) {
         state.auth_token = token;
@@ -544,9 +545,7 @@ const createStore = () => {
           const res = await this.$axios.$get(
             `api/fetchTopPlayersList?result=win&days=7&apikey=${context.getters.getAuth_token}`
           );
-          context.commit("setTopPlayer", res.data);
-          // console.log(res.data);
-          console.log("sandesh here");
+          context.commit("setTopPlayer", res.data);          
         } catch (error) {
           console.log(error);
         }
@@ -563,8 +562,8 @@ const createStore = () => {
       }
     },
     getters: {
-      getGameChannel(state){
-         return state.activeGameChannel;
+      getGameChannel(state) {
+        return state.activeGameChannel;
       },
       getPortalProviderUUID(state) {
         return state.portalProviderUUID;
@@ -628,7 +627,14 @@ const createStore = () => {
       getOnlimeTime(state) {
         return state.OnlineTime;
       },
-
+      // get auth_token
+      getPortalProviderUser(state) {
+        // sessionStorage.setItem("userData", JSON.stringify(userData));
+        if(sessionStorage.getItem('userData') !== null) {
+          const formData = JSON.parse(sessionStorage.getItem('userData'));
+        }
+        return state.formData;
+      }, 
       // get auth_token
       getAuth_token(state) {
         return state.auth_token;

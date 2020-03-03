@@ -1,28 +1,37 @@
 <template>
-<div>
-    <v-layout>
+<div >
+    <v-layout >
         <v-flex>
-            <v-toolbar color="#003e70" class="white--text v-toolbar__content-remove-r">
+          
                 <v-layout row wrap class="pa-3">
-                    <v-flex xs8 sm6>
+                    <v-flex xs12 sm6>
                         <v-layout>
-                            <v-flex>
-                                <span class="uppercase-text white--text">{{$t('msg.Lastdraw')}}:</span>
-                                <h4 v-html="$options.filters.lastDraw(getStockById($route.params.id).lastDraw)"></h4>
+                            <v-flex class="text-xs-center">
+                                <span class="uppercase-text grey--text">{{$t('msg.Lastdraw')}}:</span>
+                                  <v-flex flex-style class="lastdraw"><h4 class="body-3" v-html="$options.filters.lastDraw(getStockById($route.params.id).lastDraw)"></h4></v-flex>
                             </v-flex>
                             <v-flex class="text-xs-center">
-                                <span class="uppercase-text white--text">{{$t('msg.BetClosein')}}:</span>
-                                <h4 class="uppercase-text text-yellow">{{getLotteryDraw($route.params.id) | betclosein(getStockById($route.params.id).loop)}}</h4>
+                                <span class="uppercase-text grey--text">{{$t('msg.BetClosein')}}:</span>
+                                <v-flex flex-style class="betclose"><h4  class="body-3 uppercase-text text-black">{{getLotteryDraw($route.params.id) | betclosein(getStockById($route.params.id).loop)}}</h4></v-flex>
                             </v-flex>
                             <v-flex class="text-xs-center">
-                                <span class="uppercase-text white--text">{{$t('msg.lotterydraw')}}:</span>
-                                <h4 class="uppercase-text text-yellow">{{getLotteryDraw($route.params.id) | lotterydraw(getStockById($route.params.id).loop)}}</h4>
+                                <span class="uppercase-text grey--text">{{$t('msg.lotterydraw')}}:</span>
+                                <v-flex flex-style class="lottery"><h4  class="body-3 uppercase-text text-black">{{getLotteryDraw($route.params.id) | lotterydraw(getStockById($route.params.id).loop)}}</h4></v-flex>
                             </v-flex>
                         </v-layout>
                     </v-flex>
                     <!-- <v-spacer></v-spacer> -->
-                    <v-flex></v-flex>
-                    <v-flex xs2 class="border-left text-xs-center">
+                    <v-flex xs12 sm6 >
+                         <v-layout class="text-xs-center pa-3">
+                        <v-flex xs6 class="text-xs-center pr-2">
+                            <v-btn class="buttonGreen"> {{$t('msg.Game Mode')}}</v-btn>
+                        </v-flex>
+                        <v-flex xs6 class="text-xs-center pl-2">
+                            <v-btn class="buttonGreen"  >  <nuxt-link to="/modern" class="text-white"> {{$t('msg.otherstock')}}</nuxt-link></v-btn>
+                        </v-flex>
+                         </v-layout>
+                    </v-flex>
+                    <!-- <v-flex xs2 class="border-left text-xs-center">
                         <span class="text-uppercase white--text">
                             <small>
                                 {{$t('msg.Game Mode')}}
@@ -32,19 +41,21 @@
                     <v-flex xs2 class="border-left text-xs-center">
                         <nuxt-link to="/modern">
                             <span class="text-uppercase white--text cursor">
-                                <small>
+                                <small class="buttonGreen">
                                     {{$t('msg.otherstock')}}
                                 </small>
                             </span>
                         </nuxt-link>
-                    </v-flex>
+                    </v-flex> -->
+
+
                 </v-layout>
-            </v-toolbar>
+           
         </v-flex>
     </v-layout>
     <!-- betting zone -->
     <v-layout row wrap class="container-bet">
-        <v-flex xs12 sm6 md12 class="border-color-primary">
+        <v-flex xs12 sm6 md12 >
             <v-layout wrap xs6>
                 <v-flex xs1 align-self-center class="text-xs-right">
                     <v-icon color="#003e70" v-show="isShowTrendMap" @click="changeShowTrendMap()">keyboard_arrow_left</v-icon>
@@ -60,7 +71,7 @@
                             <span>0909090</span>
                         </span>
                     </span>
-                    <v-flex pa-2 xs12 class="border-chart">
+                    <v-flex pa-2 xs12 class="chartDesgin">
                         <chartMobile :data="getStockById($route.params.id).stockPrice" :key="getStockById($route.params.id).stockPrice[0]"></chartMobile>
                     </v-flex>
                 </v-flex>
@@ -75,11 +86,12 @@
                 <p>{{$t('msg.betclosed')}}</p>
             </div>
             <v-layout wrap sm6>
-                <v-tabs slider-color="#003e70" grow centered style="width:100%;" @change="tabChanged($event)">
-                    <v-tab>{{$t('gamemsg.firstdigit')}}</v-tab>
-                    <v-tab>{{$t('gamemsg.lastdigit')}}</v-tab>
-                    <v-tab>{{$t('gamemsg.bothdigit')}}</v-tab>
-                    <v-tab>{{$t('gamemsg.twodigit')}}</v-tab>
+                <v-tabs  grow centered style="width:100%;" @change="tabChanged($event)">
+                    
+                    <v-tab class="bg-btn-first-color text-white" >{{$t('gamemsg.firstdigit')}}</v-tab>
+                    <v-tab class="bg-btn-last-color text-white">{{$t('gamemsg.lastdigit')}}</v-tab>
+                    <v-tab class="bg-btn-both-color text-white">{{$t('gamemsg.bothdigit')}}</v-tab>
+                    <v-tab class="bg-btn-two-color text-white" >{{$t('gamemsg.twodigit')}}</v-tab>
 
                     <!-- First Digit -->
 
@@ -355,8 +367,8 @@
                 </v-tabs>
             </v-layout>
 
-            <v-toolbar bottom class="total-bet bettingFooter">
-                <span>{{$t('msg.totalbet')}}: {{formatToPrice(getAllBettingAmount)}}</span>
+            <v-toolbar class="bettingFooter justify-center">
+               <span> {{$t('msg.totalbet')}}: {{formatToPrice(getAllBettingAmount)}} </span> 
             </v-toolbar>
         </v-flex>
     </v-layout>
@@ -862,6 +874,40 @@ export default {
 </script>
 
 <style lang="css" scoped>
+h4{font-size: 16px;}
+.lastdraw {
+  font-size: 14px;
+  border: 1px solid #4b65ff;
+  border-radius: 20px;  
+  padding: 2px 6px;
+  margin:5px 3px;
+  font-weight: 400;
+  text-align: center;
+}
+.betclose {
+  font-size: 14px;
+  border: 1px solid #ef076a;
+  border-radius: 20px; 
+  padding: 2px 10px;
+  margin:5px 3px;
+  font-weight: 400;
+   text-align: center;
+}
+.lottery {
+  font-size: 14px;
+  border: 1px solid #01e3bf;
+  border-radius: 20px;
+  padding: 2px 6px;
+ margin:5px 3px;
+  font-weight: 400;
+   text-align: center;
+}
+.chartDesgin {
+    margin-top: 10px;
+    padding: 5px 5px;
+    background-color: #fff;
+    border-radius: 10px;
+}
 .v-dialog__content.v-dialog__content--active .v-dialog.v-dialog--active {
     position: absolute;
     right: 0px;
@@ -872,8 +918,13 @@ export default {
 }
 
 .bettingFooter {
-    margin-top: 10px;
+    border-radius:20px;
+    margin-top: 20px;
     color: #fff;
+    background-color: #8291b2;
+    text-align: center !important;
+    font-size: 24px;
+
 }
 
 .setpricechip {

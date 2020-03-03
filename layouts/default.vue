@@ -49,7 +49,6 @@
         <Logout class="layout-logout" size="normal" />
         <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
     </v-toolbar>
-
     <v-content>
         <v-container fluid pa-0>
             <nuxt />

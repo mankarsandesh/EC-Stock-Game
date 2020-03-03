@@ -156,12 +156,15 @@ a {
 }
 
 .v-window .v-window__container .v-window-item .box-click {
-  background-color: #003e70;
-  color: #fff;
+  background-color: #FFF;
+  color: #003e70;
   padding: 10px;
+  font-size: 14px;
+  font-weight: 400;
   border-radius: 5px;
   margin: 4px;
   width: 7rem;
+  box-shadow: 5px 5px 18px 5px #888888;
   /* height: 4rem; */
 }
 
@@ -505,7 +508,10 @@ table.result-table tr {
   width: 10.55555%;
   margin: 0 4px;
 }
-
+.bg-btn-first-color{
+  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+  color:#FFF !important;
+}
 .bg-btn-first {
   background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
   height: 83px;
@@ -518,7 +524,9 @@ table.result-table tr {
   padding: 0;
   margin: 4px;
 }
-
+.bg-btn-last-color{
+  background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+}
 .bg-btn-last {
   background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
   height: 83px;
@@ -531,7 +539,9 @@ table.result-table tr {
   padding: 0;
   margin: 4px;
 }
-
+.bg-btn-both-color {
+  background: linear-gradient(to right, #be3095 20%, #e71275 51%);
+}
 .bg-btn-both {
   background: linear-gradient(to right, #be3095 20%, #e71275 51%);
   height: 83px;
@@ -544,7 +554,9 @@ table.result-table tr {
   padding: 0;
   margin: 4px;
 }
-
+.bg-btn-two-color{
+  background: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+}
 .bg-btn-two {
   background: linear-gradient(to right, #25dac2 20%, #0287db 51%);
   height: 83px;
