@@ -11,7 +11,6 @@
         <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
           <a href="#">All Channel</a>
         </span>
-
         <span
           class="tabs"
           v-on:click="tab2"
@@ -83,6 +82,7 @@ export default {
   },
   data() {
     return {
+      getGameChannel: true,
       newmessages: [],
       portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
       gameUUID: "4578b4cc-82f0-4ebf-9b58-70bbacfc7ed8",
@@ -96,6 +96,7 @@ export default {
       message: null,
       messageGame: null,
       getMessages: [],
+      getMessagesGame: [],
       allmessageGame: [],
       connectClient: [],
       totoalUserCount: 0,
@@ -109,26 +110,44 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "getGameChannel",
-      "getMessagesGame",
-      "getUserName",
-      "getStockType"
-    ])
+    ...mapGetters(["getUserName", "getStockType"])
   },
   mounted() {
-    this.listenForBroadcast(this.socketLiveStockInput, ({ data }) => {
-      data.data.forEach(element => {
-        this.getMessages.push({
-          name: `user ${this.uniqueUserID}`,
-          userId: element.userUUID,
-          message: element.message,
-          date: element.date
+    // Global Channel
+    this.listenForBroadcast(
+      {
+        channelName: `messageSend.${this.portalProviderUUID}.global`,
+        eventName: "messageSend"
+      },
+      ({ data }) => {
+        data.data.forEach(element => {
+          this.getMessages.push({
+            name: `user ${this.uniqueUserID}`,
+            userId: element.userUUID,
+            message: element.message,
+            date: element.date
+          });
         });
-      });
-    });
-    this.asymessages();
-    this.asymessagesGame();
+      }
+    );
+    // Game Channel Game ID wise
+    this.listenForBroadcast(
+      {
+        channelName: `messageSend.${this.portalProviderUUID}.${this.gameUUID}`,
+        eventName: "messageSend"
+      },
+      ({ data }) => {
+        data.data.forEach(element => {
+          this.getMessagesGame.push({
+            name: `user ${this.uniqueUserID}`,
+            userId: element.userUUID,
+            message: element.message,
+            date: element.date
+          });
+        });
+      }
+    );
+
     this.asynUserInfo();
   },
   updated() {
@@ -187,6 +206,7 @@ export default {
       this.isActivetab2 = true;
       this.isActivetab1 = false;
     },
+    // Global Channel for all Ssers
     sendMsg: function(event) {
       if (this.message) {
         this.$axios
@@ -196,7 +216,7 @@ export default {
               portalProviderUUID: this.portalProviderUUID,
               userUUID: this.userUUID,
               gameUUID: this.gameUUID,
-              chatType: "1",
+              chatType: "2",
               message: this.message
             },
             {
@@ -215,6 +235,25 @@ export default {
     },
     sendMsgGame: function(event) {
       if (this.messageGame) {
+        this.$axios
+          .$post(
+            "http://uattesting.equitycapitalgaming.com/webApi/messages/send",
+            {
+              portalProviderUUID: this.portalProviderUUID,
+              userUUID: this.userUUID,
+              gameUUID: this.gameUUID,
+              chatType: "1",
+              message: this.messageGame
+            },
+            {
+              headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+              }
+            }
+          )
+          .then(response => {
+            console.log(response.data);
+          });
         console.log("Send Game Message");
         console.log(this.messageGame);
         this.messageGame = "";

@@ -89,7 +89,6 @@
 import { mapGetters, mapMutations } from "vuex";
 
 import menu from "~/data/menudesktop";
-
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import winnerMarquee from "~/components/modern/winnerMarquee";
@@ -98,9 +97,6 @@ import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
 import chatWindow from "~/components/chatWindow";
-// import popper from "vue-popperjs";
-// import "vue-popperjs/dist/vue-popper.css";
-
 import Logout from "../components/Logout";
 export default {
   components: {
@@ -124,14 +120,12 @@ export default {
       bottom: true,
       left: false,
       transition: "slide-y-reverse-transition",
-
       //winner mqrquee
       winner: [],
       pauseTime: 2000,
       pauseOnHover: false,
       scrollSpeed: 30,
       showSpeed: 20,
-
       clipped: false,
       drawer: false,
       fixed: false,
@@ -146,25 +140,22 @@ export default {
   },
   updated(){
     let path = this.$nuxt.$route.name.split("-");
-    let pageName = path[2];   
+    let pageName = path[2];     
     if(pageName === "id"){
       this.setGameChannelShow(true);
     }else{
       this.setGameChannelShow(false);
     }
   },
-  created() {
-   
+  created() {   
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];   
-    
+    let isFullscreen = path[1];       
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
       this.isFullscreen = false;
     }
-
     console.log("crearted");
   },
   mounted() {
@@ -180,9 +171,7 @@ export default {
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
     // setInterval(function() {
-
     // }, 1000);
-
     // this.setIsLoadingStockGame(false);
   },
   methods: {
@@ -201,15 +190,13 @@ export default {
             let name = response.data[i].name;
             if (result == "1") {
               resultStatus = "Win";
-
               //  console.log(resultStatus);
               let betAmount = response.data[i].betAmount;
               let betTime = response.data[i].betTime;
-              let win = `
-          <span class="text-slide text-white"><span class="text-warning">
-          <i class="fa fa-bell"></i>
-          </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
-          </span> ${name}  ${betTime}</span>`;
+              let win = `<span class="text-slide text-white"><span class="text-warning">
+                        <i class="fa fa-bell"></i>
+                        </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
+                        </span> ${name}  ${betTime}</span>`;
               this.winner.push(win);
             }
           }
@@ -221,6 +208,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getGameChannel",
       "getBalance",
       "getlocale",
       "getIsLoadingStockGame",
