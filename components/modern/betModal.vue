@@ -70,13 +70,14 @@ export default {
     // },
     props: [
         "stockName",
+        "ruleid",
         "loop",
         "betId",
         "payout",
     ],
     data() {
         return {
-            
+            gameUUID:"59ef1059-60b9-48d8-a299-6b846b7e3f54",
             confirmDisabled: false,
             betValue: 0,
             imgChip: [{
@@ -138,12 +139,13 @@ export default {
             let data = {
                 data: [betData]
             };
+            console.log(data);
             try {
                const res = await this.$axios.$post(
                   "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
                   {
-                    portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
-                    userUUID: "3a0534e2-9d2f-4d22-b82d-11c0692ecba8",
+                    portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
+                    userUUID: "e10fdea7-842e-4d57-b17a-fa0189aa1f94",
                     version : "0.1",
                     betData : [data]
                   },
@@ -157,7 +159,7 @@ export default {
                     this.balance()
                     this.closePopper();
                     // console.warn(res.data[0]);
-                    this.pushDataOnGoingBet(res.data[0]);
+                    // this.pushDataOnGoingBet(res.data[0]);
                     // console.warn(this.getOnBetting);
                     this.$swal({
                         type: "success",
@@ -182,10 +184,9 @@ export default {
         },
         confirmBet() {
             let data = {
-                stockId: this.getStockId(this.stockName),
-                loop: this.loop,
-                gameRule: this.betId,
-                amount: this.betValue
+                gameUUID: this.gameUUID,              
+                ruleID: this.ruleid,
+                betAmount: this.betValue
             };
             this.confirmDisabled = true;     
             this.sendBetting(data);           
