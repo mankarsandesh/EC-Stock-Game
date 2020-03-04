@@ -58,7 +58,7 @@
 
 <script>
 import onlyrules from "~/components/modern/stocklist/onlyrule";
-import breadcrumbs from "~/components/breadcrumbs";
+import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
 export default {
     components: {
         onlyrules,
