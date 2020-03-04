@@ -19,7 +19,7 @@ const createStore = () => {
       isLoadingTopPlayer: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
+      portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
       userUUID: "6a5c2100-f2c5-4722-bcac-a1857e4ac1c4",
       Username: "TnkwebApi",
       Password: "Test123!",
