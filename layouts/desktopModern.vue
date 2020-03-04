@@ -254,7 +254,7 @@ export default {
 }
 .currencyMenu {
   cursor: pointer;
-  height: 50px;
+  height: 75%;
   padding: 5px;
 }
 .toolMenu {

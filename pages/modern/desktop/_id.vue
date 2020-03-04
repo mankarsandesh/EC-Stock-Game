@@ -108,17 +108,14 @@
             </v-flex>
         </v-flex>
 
-        <!-- 
-        <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
+        <!-- <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
             <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
-                <v-icon style="color: #0b2a68 !important;">close</v-icon>
-            </v-btn> -->
+            <v-icon style="color: #0b2a68 !important;">close</v-icon>
+        </v-btn> -->
 
+        <!-- Game Rule Popup -->
         <v-dialog v-model="dialog" width="600">
             <v-card class="ruleModel" style="border-radius:10px;">
-                <!-- <v-btn @click="dialog = false" fab small class="closePopup">
-                    <v-icon style="color: #0b2a68 !important;">close</v-icon>
-                </v-btn> -->
                 <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
                 <v-card-title class="headline lighten-2" style="border-radius:10px;" primary-title>EC Gaming Rules</v-card-title>
                 <v-card-text>
@@ -301,7 +298,7 @@ export default {
     },
     data() {
         return {
-            dialog: true,
+            dialog: false,
             bgColor: "#778899",
             position: "top-right",
             isHidden: false,
@@ -332,6 +329,15 @@ export default {
             isloading: false,
             isStep: 0
         };
+    },
+    created(){
+        // Game Rule Popup check and open Ne User
+        if(localStorage.getItem('gameRule') != 'shown'){
+            this.dialog = true;
+            localStorage.setItem('gameRule','shown')
+        }else{
+            this.dialog = false;
+        }
     },
     mounted() {
         // call this every page that used "dekstopModern" layout to hide loading
