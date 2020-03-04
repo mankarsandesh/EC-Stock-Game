@@ -5,7 +5,7 @@
                       placement: 'top-end',
                        modifiers: { offset: { offset: '55px' } }
                 }"
-    >
+  >
     <div class="popper">
       <div id="headerChat">
         <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActivetab1 }">
@@ -28,7 +28,7 @@
             <div id="messagechannel" v-for="data in getMessages" :key="data.index" class="msguser">
               <div class="messageChatview">
                 <a href="#">{{data.name}}</a>
-                <span>10 minutes ago</span>
+                <span>{{data.date}}</span>
                 <p class="msgbody">{{data.message}}</p>
               </div>
             </div>
@@ -71,27 +71,23 @@
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import { mapGetters, mapActions , mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import io from "socket.io-client";
 import VueChatScroll from "vue-chat-scroll";
-
-// export const socket = io("http://159.138.47.250", {
-//     transports: ["polling"],
-//     query: `userId=123`
-// });
-// export const socketGame = io("http://159.138.47.250", {
-//     transports: ["polling"],
-//     path: "/chatgame/socket.io"
-// });
-
+import Echo from "laravel-echo";
+let name = "btc5";
 export default {
-  
   components: {
     popper,
     VueChatScroll
   },
-  data(){
+  data() {
     return {
+      newmessages: [],
+      portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
+      gameUUID: "4578b4cc-82f0-4ebf-9b58-70bbacfc7ed8",
+      userUUID: "c127dd04-cfed-4dc4-8fe9-797b8d78003c",
+      uniqueUserID: Math.floor(Math.random() * (999 - 100 + 1) + 100),
       isActivetab1: true,
       isActivetab2: false,
       allChannel: true,
@@ -99,24 +95,38 @@ export default {
       Messagedata: [],
       message: null,
       messageGame: null,
-      allmessage: [],
+      getMessages: [],
       allmessageGame: [],
       connectClient: [],
       totoalUserCount: 0,
-      userId: 0
+      userId: 0,
+      socketLiveStockInput: {
+        channelName:
+          "messageSend.f267680f-5e7f-4e40-b317-29a902e8adb7.4578b4cc-82f0-4ebf-9b58-70bbacfc7ed8",
+        eventName: "messageSend"
+      }
       // username : this.getUserName.name
     };
   },
   computed: {
     ...mapGetters([
       "getGameChannel",
-      "getMessages",
       "getMessagesGame",
       "getUserName",
       "getStockType"
     ])
   },
   mounted() {
+    this.listenForBroadcast(this.socketLiveStockInput, ({ data }) => {
+      data.data.forEach(element => {
+        this.getMessages.push({
+          name: `user ${this.uniqueUserID}`,
+          userId: element.userUUID,
+          message: element.message,
+          date: element.date
+        });
+      });
+    });
     this.asymessages();
     this.asymessagesGame();
     this.asynUserInfo();
@@ -132,42 +142,38 @@ export default {
       );
   },
   created() {
-    // console.log(this.getUserName.userId);
-    // Socket for Channel
-    // console.log("created run");
-    // socket.on("new-message-global", data => {
-    //     // console.log("created");
-    //     // console.log(data);
-    //     this.getMessages.push({
-    //         name: data.name,
-    //         userId: data.userId,
-    //         message: data.message
-    //     });
-    //     // console.log(this.getMessages);
-    // });
-    // Socket for Game
-    // socketGame.on("new-message-game", data => {
-    //     // console.log("created Game two");
-    //     // console.log(data);
-    //     this.getMessagesGame.push({
-    //         name: data.name,
-    //         userId: data.userId,
-    //         message: data.message
-    //     });
-    // });
-    // socket.on("user-count-global", data => {
-    //     // console.log("Count");
-    //     // console.log(data);
-    //     this.totoalUserCount = data;
-    // });
-    // socket.on('chat-global', (data) => {
-    //     // console.log(data);
-    // });
-    // socketGame.on('chat-game', data => {
-    //     // console.log(data);
-    // });
+    this.setUpSocketIO();
   },
   methods: {
+    setUpSocketIO: (
+      hostName = "uattesting.equitycapitalgaming.com",
+      port = 6001
+    ) => {
+      window.io = require("socket.io-client");
+      window.Pusher = require("pusher-js");
+
+      if (typeof io !== "undefined") {
+        try {
+          window.Echo = new Echo({
+            broadcaster: "pusher",
+            key: "CC21128A312FAF7817C93D1B51CB9", // SERVER_KEY = CC21128A312FAF7817C93D1B51CB9 ,Local Key = 6E591671FA45AE32B4AC2CB5BFA69
+            wsHost: hostName,
+            wsPort: port,
+            disableStats: true,
+            auth: {
+              headers: {
+                Authorization: "Basic dG5rc3VwZXI6VGVzdDEyMyEs="
+              }
+            }
+          });
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+    },
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
     ...mapActions(["asymessages", "asymessagesGame", "asynUserInfo"]),
     tab1: function(event) {
       this.betChannel = false;
@@ -183,23 +189,32 @@ export default {
     },
     sendMsg: function(event) {
       if (this.message) {
-        // socket.emit("send-message-global", {
-        //     message: this.message,
-        //     userId: this.getUserName.userId,
-        //     name: this.getUserName.name
-        // });
+        this.$axios
+          .$post(
+            "http://uattesting.equitycapitalgaming.com/webApi/messages/send",
+            {
+              portalProviderUUID: this.portalProviderUUID,
+              userUUID: this.userUUID,
+              gameUUID: this.gameUUID,
+              chatType: "1",
+              message: this.message
+            },
+            {
+              headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+              }
+            }
+          )
+          .then(response => {
+            console.log(response.data);
+          });
+
         console.log("Message Send");
         this.message = "";
       }
     },
     sendMsgGame: function(event) {
       if (this.messageGame) {
-        // socketGame.emit("send-message-game", {
-        //     message: this.messageGame,
-        //     userId: this.getUserName.userId,
-        //     name: this.getUserName.name,
-        //     gameId: 13213
-        // });
         console.log("Send Game Message");
         console.log(this.messageGame);
         this.messageGame = "";
