@@ -1,12 +1,6 @@
 <template>
 <div xs12>
-    <breadcrumbs
-      title="Rule"     
-      linkItem2="announcement"     
-      titlebtn2="announcement"
-    />
-
-
+    <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" />
     <h1 class="jumbotron-heading text-center">
         EC Gaming Rules Description</h1>
     <p class="lead text-muted text-center">
@@ -20,7 +14,7 @@
             </template>
 
             <v-card>
-                <v-card-title class="headline lighten-2"  style="color:#0b2a68;" primary-title>
+                <v-card-title class="headline lighten-2" style="color:#0b2a68;" primary-title>
                     <b>Introduction</b>
                 </v-card-title>
                 <v-card-text>
@@ -28,7 +22,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="accept" color="buttonGreen" dark v-on="on"  @click="dialog = false">
+                    <v-btn class="accept" color="buttonGreen" dark v-on="on" @click="dialog = false">
                         I accept
                     </v-btn>
                 </v-card-actions>
@@ -50,7 +44,7 @@
             </v-card>
         </v-expansion-panel-content>
     </v-expansion-panel> -->
-    <v-card >
+    <v-card>
         <onlyrules />
     </v-card>
 </div>
@@ -98,7 +92,7 @@ export default {
     color: red
 }
 
-.accept{
+.accept {
     min-width: 80px;
     min-height: 25px;
 }
