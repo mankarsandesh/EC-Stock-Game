@@ -1,11 +1,11 @@
 <template>
 <div>
     <!-- filter -->
-    <SlideMenu ref="refslideleft" title="filter">
+    <SlideMenu class="filter-style mt-5" ref="refslideleft" title="filter">
         <v-list class="pt-0 text-primary" dense>
             <!-- filter stock name -->
             <v-divider></v-divider>
-            <v-list-tile class="pt-2" @click="showfilterStock = !showfilterStock">
+            <v-list-tile class="pt-2 " @click="showfilterStock = !showfilterStock">
                 <v-list-tile-content>
                     <v-list-tile-title class="text-uppercase">stock</v-list-tile-title>
                 </v-list-tile-content>
@@ -58,7 +58,7 @@
         </v-list>
     </SlideMenu>
     <!-- sort -->
-    <SlideMenu ref="refslideright" title="sort" :right="true">
+    <SlideMenu class="filter-style mt-5" ref="refslideright" title="sort" :right="true">
         <v-list class="pt-0 text-primary" dense>
             <!-- sort stock name -->
             <v-divider></v-divider>
@@ -112,7 +112,7 @@
               </v-flex>
         </v-layout>
     </v-toolbar> -->
-    <div class="text-center" style="margin-top:15px!important;">
+    <div class="text-center mt-3">
       <v-flex order-xs6 class="text-center  d-flex justify-center"> 
         <v-btn text flat @click="filterClick" class="buttonGreen">
             <span class="uppercase-text white--text">filter</span>
@@ -132,7 +132,7 @@
                     <div class="close-bet-chart" v-if="getLotteryDraw(data.id) ==='close'">
                         <span class="text-close-bet">market close</span>
                     </div>
-                    <v-card-title class="px-1 py-0" style="font-size:11px;padding:5px!important;">
+                    <v-card-title class="px-1 py-0 pa-2" style="font-size:11px;">
                         <v-layout>
                             <v-flex xs6 class="text-xs-left">
                                 {{$t('msg.livetime')}}:
@@ -146,7 +146,7 @@
                         </v-layout>
                     </v-card-title>
                     <v-card-text class="pa-0" min-height="156">
-                        <chartIndex :data="data.stockPrice" :key="data.stockPrice[0]" style="padding:5px!important;"></chartIndex>
+                        <chartIndex :data="data.stockPrice" :key="data.stockPrice[0]" class="pa-2"></chartIndex>
                     </v-card-text>
                 </v-card>
                 <div class="pt-2">
@@ -161,7 +161,7 @@
 
     <v-layout row wrap pb-3 justify-center>
         <v-flex xs5 class="text-center d-flex" style="color:#8291b2">
-            <v-btn class="text-uppercase" style="background-color: #8291b2;border-radius: 15px; color: #fff;">load more</v-btn>
+            <v-btn class="text-uppercase white--text" style="background-color: #8291b2;border-radius: 15px;">load more</v-btn>
         </v-flex>
     </v-layout>
     <!-- back to top -->
@@ -217,5 +217,10 @@ export default {
 <style scoped>
 .v-card-style {
     border-radius: 10px;
+}
+.filter-style{
+    height: 66% !important;
+    transform: translateX(0px);
+    width: 300px !important;
 }
 </style>
