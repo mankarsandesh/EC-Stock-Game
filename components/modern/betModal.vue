@@ -139,8 +139,20 @@ export default {
                 data: [betData]
             };
             try {
-                const res = await this.$axios.$post(`/api/storebet?apikey=${this.getAuth_token}`,data);
-                // console.log(res);
+               const res = await this.$axios.$post(
+                  "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+                  {
+                    portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
+                    userUUID: "3a0534e2-9d2f-4d22-b82d-11c0692ecba8",
+                    version : "0.1",
+                    betData : [data]
+                  },
+                  {
+                    headers: {
+                      Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+                    }
+                  }
+                );               
                 if (res.status) {
                     this.balance()
                     this.closePopper();
@@ -161,6 +173,7 @@ export default {
                         showConfirmButton: true
                     });
                 }
+
             } catch (ex) {
                 this.confirmDisabled = false;
                 console.error(ex);
