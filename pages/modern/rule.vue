@@ -1,6 +1,6 @@
 <template>
 <div xs12>
-    <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" />
+    <!-- <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" /> -->
     <h1 class="jumbotron-heading text-center">
         EC Gaming Rules Description</h1>
     <p class="lead text-muted text-center">

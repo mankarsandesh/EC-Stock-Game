@@ -2,7 +2,7 @@
 <div>
     <v-divider></v-divider>
 
-    <breadcrumbs title="Stock list" linkItem="announcement" titlebtn="announcement" linkItem2="rule" titlebtn2="game rule" />
+    <!-- <breadcrumbs title="Stock list" linkItem="announcement" titlebtn="announcement" linkItem2="rule" titlebtn2="game rule" /> -->
 
     <!-- search -->
     <v-layout row wrap>

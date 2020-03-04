@@ -1,7 +1,7 @@
 <template>
 <div>
     <!-- filter -->
-    <breadcrumbs title="Announcement" linkItem2="rule" titlebtn2="Game rule" />
+    <!-- <breadcrumbs linkItem2="rule" titlebtn2="Game rule" /> -->
     <v-container>
         <v-layout row wrap>
             <v-flex xs12 md12>

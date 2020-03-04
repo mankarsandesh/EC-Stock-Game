@@ -30,15 +30,15 @@
         <v-flex class="pa-2">
             <nuxt-link to="/modern">
                 <v-toolbar-title>
-                    <v-img width="100" src="/logo.png"></v-img>
+                    <v-img width="30" src="/logo.png"></v-img>
                 </v-toolbar-title>
             </nuxt-link>
         </v-flex>
 
         <v-spacer></v-spacer>
-        <v-btn text flat @click="$refs.language.showDialog()">
+        <button text flat @click="$refs.language.showDialog()">
             <countryFlag :country="countryflag" size="normal" />
-        </v-btn>
+        </button>
         <languageDialog ref="language"></languageDialog>
 
         <!-- <v-btn class="btn-currency" text flat>
@@ -51,9 +51,21 @@
     </v-toolbar>
 
     <v-content>
-        <v-container fluid pa-0>
+        <div class="title-layout" v-show="isShow == 'history' || isShow == 'stock-list'||isShow == 'current-bet' ||isShow == 'announcement'">
+            <h2 v-show="isShow == 'history'">{{ $t('menu.history') }}</h2>
+            <h2 v-show="isShow == 'stock-list'">{{ $t('menu.stock list') }}</h2>
+            <h2 v-show="isShow == 'current-bet'">{{ $t('menu.current bet') }}</h2>
+            <h2 v-show="isShow == 'announcement'">{{ $t('menu.announcement') }}</h2>
+            <v-flex xs8 class="text-right">
+                <Button v-if="linkItem" :linkItem="linkItem" :btnTitle="titlebtn" />
+                <Button v-if="linkItem2" :linkItem="linkItem2" :btnTitle="titlebtn2" />
+            </v-flex>
+        </div>
+        <v-container pa-1>
+
             <nuxt />
         </v-container>
+
     </v-content>
 </v-app>
 </template>
@@ -73,13 +85,17 @@ import openSocket from "socket.io-client";
 import Logout from "../components/mobileLogout";
 
 import i18n from "vue-i18n";
+
+import Button from "~/components/Button";
 export default {
     components: {
         countryFlag,
         languageDialog,
         welcomeUser,
-        Logout
+        Logout,
+        Button
     },
+    props: ["linkItem", "linkItem2", "title", "titlebtn", "titlebtn2"],
     data() {
         return {
             clipped: false,
@@ -89,12 +105,17 @@ export default {
             miniVariant: false,
             right: true,
             rightDrawer: false,
-            title: "EC gaming"
+            title: "EC gaming",
+            isShow: ""
         };
     },
 
     created() {},
-    mounted() {},
+    mounted() {
+        setInterval(() => {
+            this.isShow = location.pathname.split("/")[2]
+        })
+    },
     methods: {},
     computed: {
         ...mapGetters(["getBalance", "getlocale"]),
@@ -107,10 +128,19 @@ export default {
 
 <style scoped>
 .layout-logout {
-  display: flex;
-  border: 1px solid #ccc;
-  border-bottom: none;
-  border-top: none;
-  border-right: none;
+    display: flex;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-top: none;
+    border-right: none;
+}
+
+.title-layout {
+    background: url("/bg/Inner-page-banner.png");
+    background-size: cover;
+    height: 45px;
+    width: 100%;
+    color: white;
+    padding: 5px 0px 0px 45px;
 }
 </style>
