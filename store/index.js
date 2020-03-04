@@ -1,6 +1,7 @@
 import Vuex from "vuex";
 import { hostname } from "os";
 import payouts from "../data/json/payout";
+import Echo from "laravel-echo";
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
@@ -17,7 +18,7 @@ const createStore = () => {
       isLoadingMessageGame: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
+      portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
       userUUID: "6a5c2100-f2c5-4722-bcac-a1857e4ac1c4",
       Username: "TnkwebApi",
       Password: "Test123!",
@@ -72,66 +73,7 @@ const createStore = () => {
         }
       },
       payout: payouts,
-      stocks2: [
-        {
-          stockName: "sh000001",
-          stockUUID: "7ef9bffb-bb70-4b74-8727-012505d02cc8",
-          reference:
-            "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
-          type: "china",
-          loop: 5,
-          gameUUID: "3f08905c-b31d-49c9-be78-636763cd6727",
-          roadMap: []
-        },
-        {
-          stockName: "sh000300",
-          stockUUID: "c370ed72-814c-417b-9d93-7b920cbb9859",
-          reference:
-            "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml",
-          type: "china",
-          loop: 5,
-          gameUUID: "e46b3904-d16a-4016-a975-be87c60ba975",
-          roadMap: []
-        },
-        {
-          stockName: "sz399415",
-          stockUUID: "f5651f15-e382-449c-8414-faa2a49482f2",
-          reference:
-            "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml",
-          type: "china",
-          loop: 5,
-          gameUUID: "b379b648-eb06-42d4-a242-67c2c9c8c9cc",
-          roadMap: []
-        },
-        {
-          stockName: "sz399001",
-          stockUUID: "12343496-ba36-48d0-a101-1b8760d224f0",
-          reference:
-            "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml",
-          type: "china",
-          loop: 5,
-          gameUUID: "7f45f901-08a6-4eb9-a4a4-ac1afe164e1c",
-          roadMap: []
-        },
-        {
-          stockName: "btc5",
-          stockUUID: "913d772e-e83f-41f6-a4aa-0f07c55947b6",
-          reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
-          type: "crypto",
-          loop: 5,
-          gameUUID: "445e4dcd-d6e6-42a7-bd5c-80f755fe2df7",
-          roadMap: []
-        },
-        {
-          stockName: "btc1",
-          stockUUID: "da9f5511-961b-4700-afa8-3952be130595",
-          reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
-          type: "crypto",
-          loop: 1,
-          gameUUID: "6335f0dc-bf25-4796-9d04-00962132dd9e",
-          roadMap: []
-        }
-      ],
+      stocks2: [],
       stocks: {
         sh000001: {
           url: {
@@ -352,13 +294,13 @@ const createStore = () => {
       }
     },
     actions: {
-      async asyncStocks(context){
+      async asyncStocks(context) {
         try {
           const res = await this.$axios.$post(
             "http://uattesting.equitycapitalgaming.com/webApi/getStock",
             {
               portalProviderUUID: context.state.portalProviderUUID,
-              userUUID: context.state.userUUID
+              version: 1
             },
             {
               headers: {
@@ -367,15 +309,61 @@ const createStore = () => {
             }
           );
           if (res.code === 200) {
-            let userInfo = res.data[0];
-            context.commit("setUserData", userInfo);
+            context.state.stocks2 = res.data;
+            // socket new api
+            function setUpSocketIO(
+              hostName = "uattesting.equitycapitalgaming.com",
+              port = 6001
+            ) {
+              window.io = require("socket.io-client");
+              window.Pusher = require("pusher-js");
+
+              if (typeof io !== "undefined") {
+                try {
+                  window.Echo = new Echo({
+                    broadcaster: "pusher",
+                    key: "CC21128A312FAF7817C93D1B51CB9", // SERVER_KEY = CC21128A312FAF7817C93D1B51CB9 ,Local Key = 6E591671FA45AE32B4AC2CB5BFA69
+                    wsHost: hostName,
+                    wsPort: port,
+                    disableStats: true,
+                    auth: {
+                      headers: {
+                        Authorization: "Basic dG5rc3VwZXI6VGVzdDEyMyEs="
+                      }
+                    }
+                  });
+                } catch (error) {
+                  console.log(error.message);
+                }
+              }
+            }
+            function listenForBroadcast({ channelName, eventName }, callback) {
+              window.Echo.channel(channelName).listen(eventName, callback);
+            }
+            setUpSocketIO();
+
+            context.getters.getStocks.forEach(element => {
+              listenForBroadcast(
+                {
+                  channelName: `roadMap.${element.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
+                  eventName: "roadMap"
+                },
+                ({ data }) => {
+                  console.log("new socket success");
+                  console.log(data.data.roadMap);
+                  element.crawlData = data.data.roadMap;
+                  console.log(element.crawlData);
+                  console.log("new socket success");
+                }
+              );
+            });
           } else {
-            console.log(res);
+            throw new Error();
           }
         } catch (ex) {
-          console.error(ex);
+          console.log(ex)
+          // this.$router.push("/error");
         }
-      },
       },
       async asyncPayout(context) {
         try {
@@ -647,6 +635,14 @@ const createStore = () => {
       }
     },
     getters: {
+      getStocks(state) {
+        return state.stocks2;
+      },
+      getLastDraw(state) {
+        return state.stocks2[1].crawlData.length > 0
+          ? state.stocks2[1].crawlData[0].stockValue
+          : "000";
+      },
       getGameChannel(state) {
         return state.activeGameChannel;
       },
