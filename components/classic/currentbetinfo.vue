@@ -1,12 +1,6 @@
 <template>
   <div>
-    <v-toolbar class="light-toobar">
-      <h1 class="text-primary text-uppercase">{{ $t('menu.current bet') }}</h1>
-      <v-spacer></v-spacer>
-      <v-btn icon @click="$router.go(-1)">
-        <v-icon>clear</v-icon>
-      </v-btn>
-    </v-toolbar>
+
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
     <v-data-table
       :headers="headers"
@@ -25,14 +19,6 @@
           <th>{{$t('msg.amount')}}</th>
           <th>{{$t('msg.payout')}}</th>
           <th>{{$t('msg.Bet Status')}}</th>
-
-
-
-
-
-
-
-          
         </tr>
       </template>
       <template v-slot:items="props">

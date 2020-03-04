@@ -17,9 +17,8 @@ import {
     mapGetters,
     mapActions
 } from "vuex";
-import SlideMenu from "~/components/SlideMenu.vue";
 import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
-import announcement from "~/components/modern/stocklist/announcement";
+import announcement from "~/components/mobile/announcement";
 
 export default {
     components: {

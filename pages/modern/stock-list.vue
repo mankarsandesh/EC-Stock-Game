@@ -35,12 +35,10 @@
 import {
     mapGetters
 } from "vuex";
-import SlideMenu from "~/components/SlideMenu.vue";
 import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
-import sotkclist1 from "~/components/modern/stocklist/stocklist1";
+import sotkclist1 from "~/components/mobile/stocklist1";
 export default {
     components: {
-        SlideMenu,
         breadcrumbs,
         sotkclist1
     },
