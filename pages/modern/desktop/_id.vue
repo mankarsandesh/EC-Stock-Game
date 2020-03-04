@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-2">
+  <v-container class="mt-2" v-if="getStocks.length > 0">
     <v-layout style="background-color:#f4f5fd;">
       <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
         <v-btn @click="isHidden = true" fab small slot="reference" class="sidebar-close">
@@ -74,7 +74,7 @@
                   <v-flex class="lastdraw">
                     <span
                       class="text-black"
-                      v-html="$options.filters.lastDraw(getStockLastDraw($route.params.id))"
+                      v-html="$options.filters.lastDraw(getLastDraw)"
                     ></span>
                   </v-flex>
                 </div>
@@ -128,8 +128,6 @@
           </div>
         </v-flex>
       </v-flex>
-
-
         <!-- <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
             <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
             <v-icon style="color: #0b2a68 !important;">close</v-icon>
@@ -146,7 +144,6 @@
                 <v-divider></v-divider>
             </v-card>
         </v-dialog>
-
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -467,7 +464,6 @@ export default {
       "removeAllFooterBet",
       "setIsLoadingStockGame"
     ]),
-
     async getStock() {
       try {
         const { data } = await this.$axios.$post(
@@ -481,7 +477,6 @@ export default {
         console.log(error);
       }
     },
-
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -664,6 +659,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStocks",
+      "getLastDraw",
       "getStockById",
       "getLotteryDraw",
       "lotterydraw",
@@ -673,6 +670,7 @@ export default {
       "getLoop"
     ]),
     ...mapState(["portalProviderUUID", "headers"])
+
   }
 };
 </script>
