@@ -1,5 +1,12 @@
 <template>
-<div>
+<div xs12>
+    <breadcrumbs
+      title="Rule"     
+      linkItem2="announcement"     
+      titlebtn2="announcement"
+    />
+
+
     <h1 class="jumbotron-heading text-center">
         EC Gaming Rules Description</h1>
     <p class="lead text-muted text-center">
@@ -29,7 +36,7 @@
         </v-dialog>
     </div>
 
-    <v-expansion-panel v-model="panels" expand>
+    <!-- <v-expansion-panel v-model="panels" expand>
         <v-expansion-panel-content class="bg-color" v-for="(items, idx) in rules" :key="idx">
             <template v-slot:header>
                 <div>{{$t('gamemsg.'+items.name)}} {{items.type}}</div>
@@ -37,28 +44,33 @@
             <v-card>
                 <table>
                     <tr v-for="(data,idx1) in items.values" :key="idx1">
-                        <td class="text-left"><span :class="data.color+' font-weight-bold'">{{$t('gamemsg.'+data.name)}} </span>{{data.value}}</td>
+                        <td class="pl-4"><span :class="data.color+' font-weight-bold'">{{$t('gamemsg.'+data.name)}} </span>{{data.value}}</td>
                     </tr>
                 </table>
             </v-card>
         </v-expansion-panel-content>
-    </v-expansion-panel>
+    </v-expansion-panel> -->
+    <v-card >
+        <onlyrules />
+    </v-card>
 </div>
 </template>
 
 <script>
-import rules from '~/data/json/rule.json'
+import onlyrules from "~/components/modern/stocklist/onlyrule";
+import breadcrumbs from "~/components/breadcrumbs";
 export default {
+    components: {
+        onlyrules,
+        breadcrumbs
+    },
     data() {
         return {
-            item: 5,
-            panel: [true],
-            panels: [true, false, false, false],
-            rules: rules,
             dialog: false,
-        }
+            panel: [0]
+        };
     }
-}
+};
 </script>
 
 <style scoped>
