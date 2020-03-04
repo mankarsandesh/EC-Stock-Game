@@ -129,29 +129,24 @@
         </v-flex>
       </v-flex>
 
-      <!-- 
-        <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
-            <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
-                <v-icon style="color: #0b2a68 !important;">close</v-icon>
-      </v-btn>-->
 
-      <v-dialog v-model="dialog" width="600">
-        <v-card class="ruleModel" style="border-radius:10px;">
-          <!-- <v-btn @click="dialog = false" fab small class="closePopup">
-                    <v-icon style="color: #0b2a68 !important;">close</v-icon>
-          </v-btn>-->
-          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title
-            class="headline lighten-2"
-            style="border-radius:10px;"
-            primary-title
-          >EC Gaming Rules</v-card-title>
-          <v-card-text>
-            <onlyrules />
-          </v-card-text>
-          <v-divider></v-divider>
-        </v-card>
-      </v-dialog>
+        <!-- <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
+            <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
+            <v-icon style="color: #0b2a68 !important;">close</v-icon>
+        </v-btn> -->
+
+        <!-- Game Rule Popup -->
+        <v-dialog v-model="dialog" width="600">
+            <v-card class="ruleModel" style="border-radius:10px;">
+                <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
+                <v-card-title class="headline lighten-2" style="border-radius:10px;" primary-title>EC Gaming Rules</v-card-title>
+                <v-card-text>
+                    <onlyrules />
+                </v-card-text>
+                <v-divider></v-divider>
+            </v-card>
+        </v-dialog>
+
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -303,33 +298,114 @@ import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 
 export default {
-  async validate({ params, store }) {
-    return store.getters.getCheckStock(params.id);
-  },
-  layout: "desktopModern",
-  components: {
-    stockSelect,
-    stockList,
-    betResultAllResult,
-    onBetting,
-    chartApp,
-    betButton,
-    tableTrendMap,
-    selectStock,
-    onlyrules
-  },
-  data() {
-    return {
-      stock: [],
-      dialog: true,
-      bgColor: "#778899",
-      position: "top-right",
-      isHidden: false,
-      firstPanelFocus: false,
-      fabActions: [
-        {
-          name: "cache",
-          icon: "cached"
+    async validate({
+        params,
+        store
+    }) {
+        return store.getters.getCheckStock(params.id);
+    },
+    layout: "desktopModern",
+    components: {
+        stockList,
+        betResultAllResult,
+        onBetting,
+        chartApp,
+        betButton,
+        tableTrendMap,
+        selectStock,
+        onlyrules,
+        stockSelect
+    },
+    data() {
+        return {
+        stock: [],
+            dialog: false,
+            bgColor: "#778899",
+            position: "top-right",
+            isHidden: false,
+            firstPanelFocus: false,
+            fabActions: [{
+                    name: "cache",
+                    icon: "cached"
+                },
+                {
+                    name: "alertMe",
+                    icon: "add_alert"
+                }
+            ],
+            items: [{
+                    title: "Click Me"
+                },
+                {
+                    title: "Click Me"
+                },
+                {
+                    title: "Click Me"
+                },
+                {
+                    title: "Click Me 2"
+                }
+            ],
+            trendTypes: ["firstDigit"],
+            isloading: false,
+            isStep: 0
+        };
+    },
+    created(){
+        // Game Rule Popup check and open Ne User
+        if(localStorage.getItem('gameRule') != 'shown'){
+            this.dialog = true;
+            localStorage.setItem('gameRule','shown')
+        }else{
+            this.dialog = false;
+        }
+    },
+    mounted() {
+        // call this every page that used "dekstopModern" layout to hide loading
+        this.setIsLoadingStockGame(false);
+        // console.warn("mounted...");
+
+        // set footerBet to zero because on this page cant use bet footer
+        this.setFooterBetAmount(0);
+        this.removeAllFooterBet();
+        // function resize Tutorial
+        let vm = this;
+        $(document).ready(function () {
+            $(window).resize(function () {
+                if (vm.$refs.guidelineContent.hidden == false) {
+                    vm.setTutorial(this.isStep);
+                }
+            });
+        });
+        this.setNextstepstart();
+    },
+    watch: {
+        "$screen.width"() {
+            if (this.$screen.width <= 1204) {
+                let linkto = `/modern/betting/${this.$route.params.id}`;
+                this.$router.push(linkto);
+            }
+        }
+    },
+    methods: {
+        ...mapMutations([
+            "setFooterBetAmount",
+            "removeAllFooterBet",
+            "setIsLoadingStockGame"
+        ]),
+        addTrendMap() {
+            let trendCount = this.trendTypes.length;
+            switch (trendCount) {
+                case 1:
+                    this.trendTypes.push("lastDigit");
+                    break;
+                case 2:
+                    this.trendTypes.push("bothDigit");
+                    break;
+                case 3:
+                    this.trendTypes.push("twoDigit");
+                    break;
+            }
         },
         {
           name: "alertMe",

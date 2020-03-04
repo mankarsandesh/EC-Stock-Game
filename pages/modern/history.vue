@@ -1,15 +1,16 @@
 <template>
 <div>
-    <v-toolbar class="light-toobar">
+    <!-- <v-toolbar class="light-toobar">
       <h1 class="text-primary text-uppercase">{{ $t('menu.history') }}</h1>
       <v-spacer></v-spacer>
 
       <v-btn icon @click="$router.go(-1)">
         <v-icon>clear</v-icon>
       </v-btn>
-    </v-toolbar>
+    </v-toolbar> -->
     <v-layout row wrap id="history">
-        <v-flex xs5 sm4 md2 lg2 style="float:left;" class="input-text">
+
+        <v-flex xs5 sm2 md2 lg2 mr-1 style="float:left;" class="input-text">
             <v-menu v-model="from" :close-on-content-click="false" :nudge-right="0" lazy transition="scale-transition" offset-y full-width min-width="290px">
                 <template v-slot:activator="{ on }">
                     <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -17,7 +18,8 @@
                 <v-date-picker v-model="datefrom" @input="from = false"></v-date-picker>
             </v-menu>
         </v-flex>
-        <v-flex xs5 sm4 md2 lg2 style="float:left;" class="input-text">
+
+        <v-flex xs5 sm2 md2 lg2 mr-1 style="float:left;" class="input-text">
             <v-menu v-model="to" :close-on-content-click="false" :nudge-right="0" transition="scale-transition" offset-y full-width min-width="290px">
                 <template v-slot:activator="{ on }">
                     <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -25,40 +27,56 @@
                 <v-date-picker v-model="dateto" @input="to = false"></v-date-picker>
             </v-menu>
         </v-flex>
-        <v-flex xs6 sm2 md1 lg1>
-            <v-btn @click="dateSearch()" class="goButton buttonGreen">go</v-btn>
+
+        <v-flex xs2 sm1 md1 ml-1 mr-2>
+            <button @click="dateSearch()" class="goButton buttonGreen">go</button>
         </v-flex>
+
         <!-- <v-flex xs2 sm2 md2 lg1>
             <v-select label="Limit Total" single-line hide-details :items="itemlimit" v-model="limit" color="#FFF" class="limits text-white"></v-select>
-      </v-flex>-->
+      </v-flex> -->
 
-        <v-flex xs6 sm4 md2 lg2 class="input-text">
+        <v-flex xs2 sm2 md2 lg1 mr-1 class="input-text">
             <v-select label="Limit Page" single-line hide-details :items="itemspage" v-model="itemspages" color="#FFF" class="selectHistory text-white"></v-select>
         </v-flex>
 
-        <v-flex xs4 sm4 md2 lg2 class="input-text">
+        <v-flex xs4 sm2 md2 lg2 mr-1 class="input-text">
             <v-text-field single-line hide-details v-model="search" append-icon="search" class="selectHistory text-white" style="padding:4px;"></v-text-field>
         </v-flex>
-        <v-flex xs4 sm4 md2 lg2 te class="input-text">
+        <v-flex xs3 sm2 md2 lg2 class="input-text">
             <v-select single-line hide-details :items="items" label="Sort By :" v-model="itemss" class="selectHistory"></v-select>
         </v-flex>
     </v-layout>
 
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
-    <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1">
+    <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1 border-radius-10">
         <template v-slot:headers="headers">
-            <tr>
-                <th class="text-white">{{$t('msg.BetId')}}</th>
-                <th class="text-white">{{$t('msg.gameid')}}</th>
-                <th class="text-white">{{$t('msg.Betdetail')}}</th>
-                <th class="text-white">{{$t('msg.Time')}}</th>
-                <th class="text-white">{{$t('msg.amount')}}</th>
-                <th class="text-white">{{$t('msg.payout')}}</th>
+            <tr class="border-radius-10">
+                <th>{{$t('msg.BetId')}}</th>
+                <th>{{$t('msg.gameid')}}</th>
+                <th>{{$t('msg.Betdetail')}}</th>
+                <th>{{$t('msg.Time')}}</th>
+                <th>{{$t('msg.amount')}}</th>
+                <th>{{$t('msg.payout')}}</th>
             </tr>
         </template>
         <template v-slot:items="props">
-            <td>{{props.item.betId}}</td>
-            <td>{{props.item.gameId}}</td>
+            <td>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                        <span color="primary" dark v-on="on">{{props.item.betId.substring(12, 20)}}</span>
+                    </template>
+                    <span>{{props.item.betId}}</span>
+                </v-tooltip>
+            </td>
+            <td>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                        <span color="primary" dark v-on="on">{{props.item.gameId.substring(8, 20)}}</span>
+                    </template>
+                    <span>{{props.item.gameId}}</span>
+                </v-tooltip>
+            </td>
             <td>
                 {{props.item.rule.split("-")[1] >= 0 ? $t('gamemsg.'+props.item.rule.split("-")[0])+' - '+props.item.rule.split("-")[1]: $t('gamemsg.'+props.item.rule.split("-")[0])+' - '+$t('gamemsg.'+props.item.rule.split("-")[1])}}
                 ({{props.item.payoutAmount}})
@@ -123,7 +141,7 @@ export default {
             items: ["day", "weeks", "months", "years", "all"],
             itemss: "",
             itemspage: [5, 10, 25, 50, 100],
-            itemspages: 10,
+            itemspages: 5,
             load: false,
             history: [],
             StockName: null,
@@ -187,7 +205,7 @@ export default {
     mounted() {
         this.gethistory(null);
         this.getSotckId();
-        this.pagination.rowsPerPage = 10;
+        this.pagination.rowsPerPage = 5;
     },
     watch: {
         itemss(val) {
@@ -398,7 +416,7 @@ export default {
 }
 
 table thead tr th {
-    background-color: #003e70;
+    /* background-color: #003e70; */
     font-size: 1rem;
 }
 
@@ -449,7 +467,7 @@ label,
 
 .selectHistory {
     /* border:1px solid red !important; */
-    margin-top: 8px !important;
+    /* margin-top: 0px !important; */
     padding: 4px 6px;
     color: #fff !important;
 }
@@ -477,4 +495,10 @@ label,
 .v-select__selection--comma {
     color: #fff !important;
 }
+
+.border-radius-10 {
+    border-radius: 10px;
+}
+
+
 </style>
