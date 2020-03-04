@@ -161,10 +161,12 @@ import {
     mapGetters,
     mapActions
 } from "vuex";
+
 import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "~/components/modern/profile/UploadFile";
+
 export default {
     data() {
         return {
