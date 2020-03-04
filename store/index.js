@@ -2,13 +2,12 @@ import Vuex from "vuex";
 import { hostname } from "os";
 import payouts from "../data/json/payout";
 const createStore = () => {
-
   return new Vuex.Store({
     state: () => ({
       loader: false,
-            headers: {
-                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            },
+      headers: {
+        Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+      },
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
@@ -73,11 +72,71 @@ const createStore = () => {
         }
       },
       payout: payouts,
+      stocks2: [
+        {
+          stockName: "sh000001",
+          stockUUID: "7ef9bffb-bb70-4b74-8727-012505d02cc8",
+          reference:
+            "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
+          type: "china",
+          loop: 5,
+          gameUUID: "3f08905c-b31d-49c9-be78-636763cd6727",
+          roadMap: []
+        },
+        {
+          stockName: "sh000300",
+          stockUUID: "c370ed72-814c-417b-9d93-7b920cbb9859",
+          reference:
+            "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml",
+          type: "china",
+          loop: 5,
+          gameUUID: "e46b3904-d16a-4016-a975-be87c60ba975",
+          roadMap: []
+        },
+        {
+          stockName: "sz399415",
+          stockUUID: "f5651f15-e382-449c-8414-faa2a49482f2",
+          reference:
+            "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml",
+          type: "china",
+          loop: 5,
+          gameUUID: "b379b648-eb06-42d4-a242-67c2c9c8c9cc",
+          roadMap: []
+        },
+        {
+          stockName: "sz399001",
+          stockUUID: "12343496-ba36-48d0-a101-1b8760d224f0",
+          reference:
+            "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml",
+          type: "china",
+          loop: 5,
+          gameUUID: "7f45f901-08a6-4eb9-a4a4-ac1afe164e1c",
+          roadMap: []
+        },
+        {
+          stockName: "btc5",
+          stockUUID: "913d772e-e83f-41f6-a4aa-0f07c55947b6",
+          reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
+          type: "crypto",
+          loop: 5,
+          gameUUID: "445e4dcd-d6e6-42a7-bd5c-80f755fe2df7",
+          roadMap: []
+        },
+        {
+          stockName: "btc1",
+          stockUUID: "da9f5511-961b-4700-afa8-3952be130595",
+          reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
+          type: "crypto",
+          loop: 1,
+          gameUUID: "6335f0dc-bf25-4796-9d04-00962132dd9e",
+          roadMap: []
+        }
+      ],
       stocks: {
         sh000001: {
           url: {
             crawler: `/api/getCrawlerData?stockId=1&limit=100`,
-            livePrice: "/api/newlivedata/sh01"
+            livePrice: ""
           },
           stockId: 4,
           stockname: "sh000001",
@@ -95,7 +154,7 @@ const createStore = () => {
         sz399001: {
           url: {
             crawler: `/api/getCrawlerData?stockId=4&limit=100`,
-            livePrice: "/api/newlivedata/sz01"
+            livePrice: ""
           },
           stockId: 3,
           stockname: "sz399001",
@@ -113,7 +172,7 @@ const createStore = () => {
         sz399415: {
           url: {
             crawler: `/api/getCrawlerData?stockId=3&limit=100`,
-            livePrice: "/api/newlivedata/sz15"
+            livePrice: ""
           },
           stockId: 2,
           stockname: "sz399415",
@@ -131,7 +190,7 @@ const createStore = () => {
         sh000300: {
           url: {
             crawler: `/api/getCrawlerData?stockId=2&limit=100`,
-            livePrice: "/api/newlivedata/sz300"
+            livePrice: ""
           },
           stockId: 1,
           stockname: "sh000300",
@@ -149,7 +208,7 @@ const createStore = () => {
         usindex: {
           url: {
             crawler: `/api/getCrawlerData?stockId=5&limit=100`,
-            livePrice: "/api/newlivedata/usindex"
+            livePrice: ""
           },
           stockId: 5,
           stockname: "usindex",
@@ -166,7 +225,7 @@ const createStore = () => {
         btc5: {
           url: {
             crawler: `/api/getCrawlerData?stockId=6&limit=100`,
-            livePrice: "/api/newlivedata/btc"
+            livePrice: ""
           },
           stockId: 6,
           stockname: "btc5",
@@ -183,7 +242,7 @@ const createStore = () => {
         btc1: {
           url: {
             crawler: `/api/getCrawlerData?stockId=7&limit=100`,
-            livePrice: "/api/newlivedata/btc"
+            livePrice: ""
           },
           stockId: 7,
           stockname: "btc1",
@@ -201,7 +260,7 @@ const createStore = () => {
       time: {}
     }),
     mutations: {
-      setGameChannelShow(state,value){            
+      setGameChannelShow(state, value) {
         state.activeGameChannel = value;
       },
       setIsLoadingStockGame(state, value) {
@@ -293,6 +352,31 @@ const createStore = () => {
       }
     },
     actions: {
+      async asyncStocks(context){
+        try {
+          const res = await this.$axios.$post(
+            "http://uattesting.equitycapitalgaming.com/webApi/getStock",
+            {
+              portalProviderUUID: context.state.portalProviderUUID,
+              userUUID: context.state.userUUID
+            },
+            {
+              headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+              }
+            }
+          );
+          if (res.code === 200) {
+            let userInfo = res.data[0];
+            context.commit("setUserData", userInfo);
+          } else {
+            console.log(res);
+          }
+        } catch (ex) {
+          console.error(ex);
+        }
+      },
+      },
       async asyncPayout(context) {
         try {
           // const respayoutinitial = await this.$axios.$get(
@@ -333,7 +417,7 @@ const createStore = () => {
             context.commit("setUserData", userInfo);
           } else {
             console.log(res);
-            alert(res.message)
+            alert(res.message);
             // setTimeout(() => {
             //   if (res.status) return;
             //   localStorage.removeItem("apikey");
@@ -563,8 +647,8 @@ const createStore = () => {
       }
     },
     getters: {
-      getGameChannel(state){
-         return state.activeGameChannel;
+      getGameChannel(state) {
+        return state.activeGameChannel;
       },
       getPortalProviderUUID(state) {
         return state.portalProviderUUID;
@@ -805,7 +889,6 @@ const createStore = () => {
           let stockIdObject = object.filter(x => x.stock === data.stockId);
           // check rule in stockId
           // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
-
 
           // get amount by rule
           let result = 0;
