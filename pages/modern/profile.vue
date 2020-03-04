@@ -1,301 +1,407 @@
 <template>
 <div>
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-        <v-card>
-            <v-toolbar class="pa-1 light-toobar">
-                <v-toolbar-title class="text-uppercase text-primary">
-                    <h2>{{$root.$t('msg.'+title)}}</h2>
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn icon @click="dialog = false">
-                    <v-icon color="text-primary">clear</v-icon>
-                </v-btn>
-            </v-toolbar>
-            <v-divider></v-divider>
-            <v-layout column px-5 pt-3>
-                <v-flex xs-12 pt-2>
-                    <label class="text-primary">
-                        <h3>{{$root.$t('msg.'+title)}}</h3>
+    <v-flex xs12 v-if="$vuetify.breakpoint.xs">
+        <v-layout row>
+            <v-flex xs12 sm2 md4 lg3>
+                <div class="profile_head text-xs-center">
+                    <div class="image_container">
+                        <v-avatar :size="90">
+                            <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
+                            <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" />
+                        </v-avatar>
+                        <span class="camera_container">
+                            <button class="btn_camera">
+                                <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
+                            </button>
+                        </span>
+                    </div>
+                    <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+                    <p>Online Status : 2hours</p>
+                </div>
+            </v-flex>
+        </v-layout>
+    </v-flex>
 
-                    </label>
-                    <v-text-field :label="val" v-model="val" single-line outline full-width color="#003e70"></v-text-field>
-                    <!-- <v-select v-if="title == 'gender'" :items="gender" v-model="filedName" outline></v-select> -->
-                </v-flex>
-                <v-flex xs-12 pt-2>
-                    <label class="text-primary">
-                        <h3>Privacy </h3>
-                    </label>
-                    <!-- <v-text-field label="EVERY ONE CAN SEE" single-line outline full-width color="#003e70"></v-text-field> -->
-                    <v-select :items="itemstest" v-model="privacy" outline></v-select>
-                </v-flex>
-            </v-layout>
+    <v-flex xs12>
+        <v-layout row>
+            <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
+                <div class="profile_head text-xs-center">
+                    <div class="image_container">
+                        <v-avatar :size="90">
+                            <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
+                            <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" />
+                        </v-avatar>
+                        <span class="camera_container">
+                            <button class="btn_camera">
+                                <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
+                            </button>
+                        </span>
+                    </div>
+                    <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+                    <p>Online Status : 2hours</p>
+                </div>
+            </v-flex>
 
-            <!-- apply button -->
+            <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6' " md4 lg3>
+                <div class="amount_container">
+                    <div class="decorator_card decorator_card_green"></div>
+                    <span>account balance</span>
+                    <br />
+                    <span class="amount">{{123456 | currency}}</span>
+                    <span class="title_currentcy">kip</span>
+                </div>
+            </v-flex>
 
-            <v-layout style="bottom: 0;position: fixed;width: 100%; background-color:#003e70">
-                <v-btn block color="#003e70" @click="saveData" large class="white--text">save</v-btn>
-            </v-layout>
+            <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6' " md4 lg3>
+                <div class="amount_container">
+                    <div class="decorator_card decorator_card_blue"></div>
+                    <span>rolling amount</span>
+                    <br />
+                    <span class="amount">{{161536 | currency}}</span>
+                    <span class="title_currentcy">kip</span>
+                </div>
+            </v-flex>
+        </v-layout>
+    </v-flex>
+    <v-flex xs12>
+        <v-layout>
+            <v-flex xs12 pt-2 pl-1>
+                <div style="margin-top:20px">
+                    <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
+                        <div class="row">
+                            <div class="col-15">
+                                <label for="fname">player ID</label>
+                            </div>
+                            <div class="col-85">
+                                <input disabled type="text" id="fname" name="firstname" :value="userData.PID" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-15">
+                                <label for="lname">first name</label>
+                            </div>
+                            <div class="col-85">
+                                <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" />
+                                <span class="icon-container">
+                                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-15">
+                                <label for="lname">last name</label>
+                            </div>
+                            <div class="col-85">
+                                <input ref="lastname" type="text" :value="userData.lastName" id="lname" name="lastname" placeholder="Your last name" />
+                                <span class="icon-container">
+                                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-15">
+                                <label for="country">gender</label>
+                            </div>
+                            <div class="col-85">
+                                <select ref="gender" id="country" name="country">
+                                    <option value="female">Female</option>
+                                    <option value="male">Male</option>
+                                </select>
+                                <span class="icon-container">
+                                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-15">
+                                <label for="country">email</label>
+                            </div>
+                            <div class="col-85">
+                                <input ref="email" type="text" :value="userData.email" id="lname" name="lastname" placeholder="mackychinma@gmail.com" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-15">
+                                <label for="country">country</label>
+                            </div>
+                            <div class="col-85">
+                                <select ref="country" id="country" name="country">
+                                    <option value="china">China</option>
+                                    <option value="usa">USA</option>
+                                    <option value="thailand">Thailand</option>
+                                    <option value="laos">Laos</option>
+                                </select>
+                                <span class="icon-container">
+                                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-15"></div>
+                            <div class="col-85">
+                                <v-btn :loading="updating" :disabled="updating" class="btn_save" @click="saveClick()">save</v-btn>
+                                <v-btn class="btn_cancel">cancel</v-btn>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" style="text-align: -webkit-center;">
+                        <v-btn :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">online history</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">stock analysis</span> <i class="fa fa-plus"></i></v-btn>
+                    </div>
 
-        </v-card>
-    </v-dialog>
-    <!-- profile -->
-    <v-divider></v-divider>
-    <v-toolbar class="pa-3 light-toobar">
-        <v-avatar color="indigo" size="58">
-            <v-icon dark>account_circle</v-icon>
-        </v-avatar>
-        <div class="pl-4 text-primary">
-            <ul>
-                <li>
-                    <b>{{$root.$t('msg.Balance')}}: {{formatToPrice(getBalance)}}</b>
-                </li>
-                <li>
-                    <b>{{$root.$t('msg.online')}} {{$root.$t('msg.Status')}} : {{setTime(getOnlimeTime.todayOnline,0)}}</b>
-                </li>
-            </ul>
-        </div>
-    </v-toolbar>
-    <v-divider></v-divider>
-
-    <v-list two-line class="mx-4">
-        <template v-for="(item, index) in items">
-            <v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-
-            <v-divider class="dashed" v-else-if="item.divider" :key="index"></v-divider>
-
-            <v-list-tile v-else :key="item.title" avatar class="mt-2">
-                <!-- <v-list-tile-avatar>
-            <img :src="item.avatar" />
-          </v-list-tile-avatar>-->
-                <v-layout row wrap>
-                    <!-- <v-list-tile-content> -->
-                    <v-flex xs8>
-                        <v-list-tile-title class="text-primary" v-html=" $root.$t('msg.'+item.title)"></v-list-tile-title>
-                    </v-flex>
-                    <v-spacer></v-spacer>
-                    <v-flex xs4 style="text-align: end" v-if="item.title != 'Balance'&& item.title != 'rolling'">
-                        <v-icon @click="dialog = true, edit(item.title, item.info)">edit</v-icon>
-                    </v-flex>
-
-                    <v-list-tile-sub-title class="pt-2">
-                        <v-layout row wrap>
-                            <span v-if="item.info != null">{{item.info}}</span>
-                            <span v-else>No Data</span>
-                        </v-layout>
-                    </v-list-tile-sub-title>
-                    <!-- </v-list-tile-content> -->
-                </v-layout>
-            </v-list-tile>
-        </template>
-    </v-list>
-    <!-- online history -->
-    <v-divider></v-divider>
-    <v-toolbar class="pa-3 light-toobar">
-        <v-toolbar-title class="text-uppercase text-primary">{{$t('profile.online history')}}</v-toolbar-title>
-        <v-spacer></v-spacer>
-
-        <v-btn icon @click="getdialog = true,getcomonent('onlinehistory')">
-            <v-icon color="text-primary">add</v-icon>
-        </v-btn>
-    </v-toolbar>
-    <!-- stock analysis -->
-    <v-divider></v-divider>
-    <v-toolbar class="pa-3 light-toobar">
-        <v-toolbar-title class="text-uppercase text-primary">{{$t('profile.stock analysis')}}</v-toolbar-title>
-        <v-spacer></v-spacer>
-
-        <v-btn icon @click="getdialog = true,getcomonent('stockAnalysis')">
-            <v-icon color="text-primary">add</v-icon>
-        </v-btn>
-    </v-toolbar>
-
-    <v-dialog v-model="getdialog" fullscreen hide-overlay>
-        <v-card>
-            <v-toolbar class="pa-1 light-toobar">
-                <v-toolbar-title class="text-uppercase text-primary">
-                    <h3 v-if="iscomonent == 'onlinehistory'">{{$t('profile.online history')}}</h3>
-                    <h3 v-else>{{$t('profile.stock analysis')}}</h3>
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn icon @click="getdialog = false">
-                    <v-icon color="text-primary">clear</v-icon>
-                </v-btn>
-            </v-toolbar>
-            <v-divider></v-divider>
-            <v-layout column pt-3>
-                <onlinehistory v-if="iscomonent == 'onlinehistory'" />
-                <stockAnalysis v-else />
-            </v-layout>
-
-        </v-card>
-    </v-dialog>
+                </div>
+            </v-flex>
+        </v-layout>
+    </v-flex>
 </div>
 </template>
 
 <script>
 import {
-    mapGetters
+    mapGetters,
+    mapActions
 } from "vuex";
-import onlinehistory from "~/components/modern/profile/onlineHistory"
-import stockAnalysis from "~/components/modern/profile/stockAnalysis"
+import axios from "axios";
+import popper from "vue-popperjs";
+import "vue-popperjs/dist/vue-popper.css";
+import uploadprofile from "~/components/modern/profile/UploadFile";
 export default {
-    components: {
-        onlinehistory,
-        stockAnalysis
-    },
-    computed: {
-        ...mapGetters(["getBalance", "getUserName", "getOnlimeTime"])
-    },
     data() {
         return {
-            privacy: "Only Me",
-            filedName: "Male",
-            gender: ["Male", "Female"],
-            itemstest: ["Only Me", "Everyone Can See"],
-            dialog: false,
-            getdialog: false,
-            items: [],
-            title: "",
-            val: "",
-            iscomonent: ""
+            updating: false
         };
     },
-    mounted() {
-        setTimeout(() => {
-            this.isUserName()
-        }, 3000);
+    mounted() {},
+    computed: {
+        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+        userData() {
+            let data = {
+                ...this.getUserInfo
+            };
+            return data;
+        }
     },
     methods: {
-        isUserName() {
-            this.items = [
-                {
-                    title: 'name',
-                    info: this.getUserName.name
-                },
-                {
-                    divider: true,
-                    inset: true
-                },
-                {
-                    title: 'gender',
-                    info: this.getUserName.gender
-                },
-                {
-                    divider: true,
-                    inset: true
-                },
-                {
-                    title: 'email',
-                    info: this.getUserName.email
-                },
-                {
-                    divider: true,
-                    inset: true
-                },
-                {
-                    title: 'membership',
-                    info: this.getUserName.memberShip
-                },
-                {
-                    divider: true,
-                    inset: true
-                },
-                {
-                    title: 'country',
-                    info: this.getUserName.country
-                },
-                {
-                    divider: true,
-                    inset: true
-                },
-                {
-                    title: 'Balance',
-                    info: this.formatToPrice(this.getUserName.userBalance)
-                },
-                {
-                    divider: true,
-                    inset: true
-                },
-                {
-                    title: 'rolling',
-                    info: this.formatToPrice(this.getUserName.rolling)
+        ...mapActions(["asynUserInfo"]),
+        iconClick(e) {
+            e.target.parentElement.parentElement.firstElementChild.focus();
+        },
+        async saveClick() {
+            this.updating = true;
+            const ref = this.$refs;
+            let formData = new FormData();
+            formData.append("portalProviderUUID", this.getPortalProviderUUID);
+            formData.append("userUUID", this.getUserUUID);
+            formData.append("email", ref.email.value);
+            formData.append("firstName", ref.firstname.value);
+            formData.append("lastName", ref.lastname.value);
+            // formData.append("gender", ref.gender.value);
+            // formData.append("country", ref.country.value);
+            formData.append("version", 1);
+            try {
+                const res = await this.$axios.$post(
+                    "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+                    formData, {
+                        headers: {
+                            ContentType: "application/json",
+                            Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
+                        }
+                    }
+                );
+                if (res.code === 200) {
+                    this.asynUserInfo();
+                    setTimeout(() => {
+                        this.updating = false;
+                    }, 1000);
+                } else {
+                    alert(res.message);
+                    this.updating = false;
+                    console.log(res);
                 }
-            ];
-        },
-        saveData() {
-            console.log(this.val);
-            console.log(this.privacy);
-            console.log(this.getUserName.userId);
-
-        },
-        getcomonent(val) {
-            this.iscomonent = val;
-        },
-        setTime(seconds, val) {
-            let days = Math.floor(seconds / (24 * 60 * 60));
-            seconds -= days * (24 * 60 * 60);
-            let hours = Math.floor(seconds / (60 * 60));
-            seconds -= hours * (60 * 60);
-            let minutes = Math.floor(seconds / 60);
-            seconds -= minutes * 60;
-            if (val == 1) {
-                return (
-                    (0 < days ? days + this.$root.$t('msg.days') + ', ' : '') +
-                    hours +
-                    this.$root.$t('msg.hours') +
-                    ', ' +
-                    minutes +
-                    this.$root.$t('msg.minute')
-                );
-            } else {
-                return (
-                    hours +
-                    this.$root.$t('msg.hours') +
-                    ', ' +
-                    minutes +
-                    this.$root.$t('msg.minute')
-                );
+            } catch (ex) {
+                console.error(ex);
+                this.updating = false;
+                alert(ex.message);
             }
-        },
-        edit(title, val) {
-            this.title = title;
-            this.val = val;
-        },
-        formatToPrice(value) {
-            return `$ ${Number(value)
-        .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         }
     }
 };
 </script>
 
 <style scoped>
-.dashed {
-    border-top: 1px dashed !important;
-    opacity: 0.4 !important;
+.padding-right-60 {
+    padding-right: 60%;
+}
+    .width-50{
+            width: 50%;
+    }
+     .width-100{
+            width: 100%;
+    }
+
+/* .......form....... */
+label {
+    text-transform: capitalize;
 }
 
-.v-toolbar__title {
-    font-size: 15px !important;
+input[type="text"]:disabled {
+    background-color: #ccc;
 }
 
-.v-list--two-line .v-list__tile {
-    height: 60px;
+input[type="text"],
+select {
+    width: 250px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    resize: vertical;
+    background-color: white;
+    padding-right: 35px;
 }
 
-/* .v-icon .material-icons theme--light{
-    color: rgb(255, 255, 255);
-    font-size: 42px;
-    background-color: #003e70;
-    padding: 7px 3px;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-} */
-.dot:before {
-    content: ".";
-    color: "gray";
-    font-weight: 900;
-    border: 3px;
+select {
+    cursor: pointer;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+.col-15 {
+    float: left;
+    width: 24%;
+    margin-top: 16px;
+}
+
+.col-85 {
+    position: relative;
+    float: left;
+    width: auto;
+    margin-top: 16px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.btn_save {
+    background-color: #38af3e !important;
+    color: white;
+    border-radius: 7px;
+}
+
+.btn_cancel {
+    background-color: #656464 !important;
+    color: white;
+    border-radius: 7px;
+}
+
+.amount_container {
+    background-color: white;
+    color: black;
+    padding: 10px 0 10px 0;
+    margin-left: 20px;
+    box-shadow: 0px 2px 5px rgb(145, 145, 145);
+    border-radius: 15px;
+    border-left-width: 1px;
+    border-left-color: green;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 1.1;
+}
+
+.amount {
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+}
+
+.title_currentcy {
+    color: #888888;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding-left: 5px;
+    position: absolute;
+}
+
+.decorator_card {
+    position: absolute;
+    height: 20px;
+    width: 5px;
+    border-radius: 10px;
+    margin-top: 8px;
+    margin-left: -2px;
+}
+
+.decorator_card_green {
+    background-color: #39b01e;
+}
+
+.decorator_card_blue {
+    background-color: #1e45b0;
+}
+
+.decorator_card_red {
+    background-color: #b01e1e;
+}
+
+.icon-container {
+    position: relative;
+    right: 37px;
+}
+
+/* loading.... */
+.custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+}
+
+@-moz-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loader {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 </style>
