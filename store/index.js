@@ -5,6 +5,7 @@ const createStore = () => {
 
   return new Vuex.Store({
     state: () => ({
+      activeGameChannel : true,
       loader: false,
       userLoginData : {},
       portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
@@ -16,8 +17,6 @@ const createStore = () => {
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
       isLoadingAnnoucement: [],
       isLoadingTopPlayer: [],
-      isLoadingMessage: [],
-      isLoadingMessageGame: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
       portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
@@ -280,12 +279,6 @@ const createStore = () => {
       setAnouncement(state, payload) {
         state.isLoadingAnnoucement = payload;
       },
-      setMessages(state, payload) {
-        state.isLoadingMessage = payload;
-      },
-      setMessagesGame(state, payload) {
-        state.isLoadingMessageGame = payload;
-      },
       setHistory(state, payload) {
         state.isLoadingHistory = payload;
       },
@@ -334,7 +327,6 @@ const createStore = () => {
             context.commit("setUserData", userInfo);
           } else {
             console.log(res);
-            alert(res.message)
             // setTimeout(() => {
             //   if (res.status) return;
             //   localStorage.removeItem("apikey");
@@ -352,34 +344,6 @@ const createStore = () => {
         }
       },
       // end get user info from api
-
-      async asymessages(context) {
-        try {
-          // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
-          const res = await this.$axios.$get(
-            "http://159.138.47.250/chatglobal/allmessages"
-          );
-          //console.log(res);
-          context.commit("setMessages", res.data);
-          // console.log("Message View");
-          // console.log(res.data);
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      async asymessagesGame(context) {
-        try {
-          // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
-          const res = await this.$axios.$get(
-            "http://159.138.47.250/chatgame/messages"
-          );
-          // console.log(res);
-          context.commit("setMessagesGame", res.data);
-          // console.log("Message View Message");
-        } catch (error) {
-          console.log(error);
-        }
-      },
       async balance(context) {
         try {
           const res = await this.$axios.$get(
@@ -594,13 +558,7 @@ const createStore = () => {
       },
       getTopPlayer(state) {
         return state.isLoadingTopPlayer;
-      },
-      getMessages(state) {
-        return state.isLoadingMessage;
-      },
-      getMessagesGame(state) {
-        return state.isLoadingMessageGame;
-      },
+      },     
       // get user info
       getUserInfo(state) {
         return state.userData;
