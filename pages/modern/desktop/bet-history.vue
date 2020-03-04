@@ -41,7 +41,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["portalProviderUUID", "headers"]) //get 2 data from vuex first, in the computed
+    ...mapState(["portalProviderUUID", "headers","userUUID"]) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.fetch(); // after this component render done, this will call the function from method
@@ -52,7 +52,7 @@ export default {
       const data1 = {
         // before we call the data we should make the object to the send the request with the API
         portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-        userUUID: "102e29ca-24ac-42e8-b680-ccc33e5e761e", // get the userUUID with the this object
+        userUUID: this.userUUID, // get the userUUID with the this object
         version: "0.1", // version of API
         betResult: [-1, 0, 1], // -1= pending, 0= lose , 1 = win
         limit: "20", // limit the data we the data come will come only the 20 that we limit in this case
