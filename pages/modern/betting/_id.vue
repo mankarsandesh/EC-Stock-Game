@@ -383,13 +383,13 @@
     <v-dialog v-model="bettingDialog" fullscreen hide-overlay transition="dialog-bottom-transition" color="red" scrollable light>
         <v-card tile color="#f4f6fd">
             <v-toolbar flat>
-                <v-layout row mt-3>
+                <v-layout row >
                     <v-spacer></v-spacer>
                     <v-icon size="30" @click="bettingDialog=false">close</v-icon>
                 </v-layout>
             </v-toolbar>
 
-            <v-card class="mx-auto pa-2 mt-5 round-3" color="#ffffff">
+            <v-card class="mx-auto pa-2 round-3" color="#ffffff">
                 <v-flex xs12 class="text-center">
                     <div class="d-block text-center" style="color:#000">
                         <p class="text-uppercase">stockname : {{ $t(`stockname.${$route.params.id}`) }} payout: {{odd}}</p>
@@ -428,13 +428,13 @@
     <v-dialog v-model="reviewbetDialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable light>
         <v-card tile color="#f4f6fd">
             <v-toolbar flat>
-                <v-layout row mt-3>
+                <v-layout row>
                     <v-spacer></v-spacer>
                     <v-icon size="30" @click="reviewbetDialog=false">close</v-icon>
                 </v-layout>
             </v-toolbar>
 
-            <v-card class="mx-auto pa-2 mt-5 round-3" color="#ffffff">
+            <v-card class="mx-auto pa-2 round-3" color="#ffffff">
                 <v-flex xs12 class="text-center">
                     <div class="d-block text-center" style="color:#000">
 
