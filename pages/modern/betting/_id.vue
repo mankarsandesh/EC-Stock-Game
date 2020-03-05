@@ -1,37 +1,45 @@
 <template>
-<div >
-    <v-layout >
+<div>
+    <v-layout style="margin: 0 0 -1% 0px;">
         <v-flex>
-          
-                <v-layout row wrap class="pa-3">
-                    <v-flex xs12 sm6>
-                        <v-layout>
-                            <v-flex class="text-xs-center">
-                                <span class="uppercase-text grey--text">{{$t('msg.Lastdraw')}}:</span>
-                                  <v-flex flex-style class="lastdraw"><h4 class="body-3" v-html="$options.filters.lastDraw(getStockById($route.params.id).lastDraw)"></h4></v-flex>
+
+            <v-layout row wrap class="pt-1">
+                <v-flex xs12 sm6>
+                    <v-layout>
+                        <v-flex class="text-xs-center">
+                            <span class="uppercase-text grey--text">{{$t('msg.Lastdraw')}}:</span>
+                            <v-flex flex-style class="lastdraw">
+                                <h4 class="body-3" v-html="$options.filters.lastDraw(getStockById($route.params.id).lastDraw)"></h4>
                             </v-flex>
-                            <v-flex class="text-xs-center">
-                                <span class="uppercase-text grey--text">{{$t('msg.BetClosein')}}:</span>
-                                <v-flex flex-style class="betclose"><h4  class="body-3 uppercase-text text-black">{{getLotteryDraw($route.params.id) | betclosein(getStockById($route.params.id).loop)}}</h4></v-flex>
+                        </v-flex>
+                        <v-flex class="text-xs-center">
+                            <span class="uppercase-text grey--text">{{$t('msg.BetClosein')}}:</span>
+                            <v-flex flex-style class="betclose">
+                                <h4 class="body-3 uppercase-text text-black">{{getLotteryDraw($route.params.id) | betclosein(getStockById($route.params.id).loop)}}</h4>
                             </v-flex>
-                            <v-flex class="text-xs-center">
-                                <span class="uppercase-text grey--text">{{$t('msg.lotterydraw')}}:</span>
-                                <v-flex flex-style class="lottery"><h4  class="body-3 uppercase-text text-black">{{getLotteryDraw($route.params.id) | lotterydraw(getStockById($route.params.id).loop)}}</h4></v-flex>
+                        </v-flex>
+                        <v-flex class="text-xs-center">
+                            <span class="uppercase-text grey--text">{{$t('msg.lotterydraw')}}:</span>
+                            <v-flex flex-style class="lottery">
+                                <h4 class="body-3 uppercase-text text-black">{{getLotteryDraw($route.params.id) | lotterydraw(getStockById($route.params.id).loop)}}</h4>
                             </v-flex>
-                        </v-layout>
-                    </v-flex>
-                    <!-- <v-spacer></v-spacer> -->
-                    <v-flex xs12 sm6 >
-                         <v-layout class="text-xs-center pa-3">
+                        </v-flex>
+                    </v-layout>
+                </v-flex>
+                <!-- <v-spacer></v-spacer> -->
+                <v-flex xs12 sm6>
+                    <v-layout class="text-xs-center pa-3">
                         <v-flex xs6 class="text-xs-center pr-2">
                             <v-btn class="buttonGreen"> {{$t('msg.Game Mode')}}</v-btn>
                         </v-flex>
                         <v-flex xs6 class="text-xs-center pl-2">
-                            <v-btn class="buttonGreen"  >  <nuxt-link to="/modern" class="text-white"> {{$t('msg.otherstock')}}</nuxt-link></v-btn>
+                            <v-btn class="buttonGreen">
+                                <nuxt-link to="/modern" class="text-white"> {{$t('msg.otherstock')}}</nuxt-link>
+                            </v-btn>
                         </v-flex>
-                         </v-layout>
-                    </v-flex>
-                    <!-- <v-flex xs2 class="border-left text-xs-center">
+                    </v-layout>
+                </v-flex>
+                <!-- <v-flex xs2 class="border-left text-xs-center">
                         <span class="text-uppercase white--text">
                             <small>
                                 {{$t('msg.Game Mode')}}
@@ -48,14 +56,13 @@
                         </nuxt-link>
                     </v-flex> -->
 
+            </v-layout>
 
-                </v-layout>
-           
         </v-flex>
     </v-layout>
     <!-- betting zone -->
     <v-layout row wrap class="container-bet">
-        <v-flex xs12 sm6 md12 >
+        <v-flex xs12 sm6 md12>
             <v-layout wrap xs6>
                 <v-flex xs1 align-self-center class="text-xs-right">
                     <v-icon color="#003e70" v-show="isShowTrendMap" @click="changeShowTrendMap()">keyboard_arrow_left</v-icon>
@@ -82,16 +89,16 @@
         </v-flex>
 
         <v-flex>
-            <div sm12 xs12 class="betClose" v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null ">
+            <div sm12 xs12 class="betClose" :style="$vuetify.breakpoint.xs ?  'width: 100%;':' width: 50%;'" v-if="checkBetClose  || getLotteryDraw($route.params.id) ==='close' || getLotteryDraw($route.params.id) == null ">
                 <p>{{$t('msg.betclosed')}}</p>
             </div>
             <v-layout wrap sm6>
-                <v-tabs  grow centered style="width:100%;" @change="tabChanged($event)">
-                    
-                    <v-tab class="bg-btn-first-color text-white" >{{$t('gamemsg.firstdigit')}}</v-tab>
-                    <v-tab class="bg-btn-last-color text-white">{{$t('gamemsg.lastdigit')}}</v-tab>
-                    <v-tab class="bg-btn-both-color text-white">{{$t('gamemsg.bothdigit')}}</v-tab>
-                    <v-tab class="bg-btn-two-color text-white" >{{$t('gamemsg.twodigit')}}</v-tab>
+                <v-tabs grow centered style="width:100%;background-color: #f2f4ff;" @change="tabChanged($event)">
+
+                    <v-tab class="bg-btn-first-color border-radius mr-1 ml-1"><span class="text-pre-line"> {{$t('gamemsg.firstdigits')}}</span></v-tab>
+                    <v-tab class="bg-btn-last-color border-radius mr-1 ml-1"><span class="text-pre-line">{{$t('gamemsg.lastdigits')}}</span></v-tab>
+                    <v-tab class="bg-btn-both-color border-radius mr-1 ml-1"><span class="text-pre-line">{{$t('gamemsg.bothdigits')}}</span></v-tab>
+                    <v-tab class="bg-btn-two-color border-radius mr-1 ml-1"><span class="text-pre-line">{{$t('gamemsg.twodigits')}}</span></v-tab>
 
                     <!-- First Digit -->
 
@@ -367,103 +374,117 @@
                 </v-tabs>
             </v-layout>
 
-            <v-toolbar class="bettingFooter justify-center">
-               <span> {{$t('msg.totalbet')}}: {{formatToPrice(getAllBettingAmount)}} </span> 
+            <v-toolbar class="bettingFooter justify-center settotalbet">
+                <span class="text-size08"> {{$t('msg.totalbet')}}: {{formatToPrice(getAllBettingAmount)}} </span>
             </v-toolbar>
         </v-flex>
     </v-layout>
 
-    <v-dialog v-model="bettingDialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable light>
-        <v-card tile>
-            <v-toolbar flat color="white">
+    <v-dialog v-model="bettingDialog" fullscreen hide-overlay transition="dialog-bottom-transition" color="red" scrollable light>
+        <v-card tile color="#f4f6fd">
+            <v-toolbar flat>
                 <v-layout row mt-3>
-                    <div class="d-block">
-                        <h3 class="text-uppercase">{{ $t(`stockname.${$route.params.id}`) }}</h3>
-                        <p class="text-uppercase">{{getStockLoop($route.params.id)}} MINUTE GAME | {{gameRule}}</p>
-                    </div>
                     <v-spacer></v-spacer>
-                    <!-- <v-btn class="close" flat @click="bettingDialog=false"> -->
                     <v-icon size="30" @click="bettingDialog=false">close</v-icon>
-                    <!-- </v-btn> -->
                 </v-layout>
             </v-toolbar>
 
-            <v-card class="mx-auto round-1 mt-3" color="#003e70" raised>
-                <h3>Betting on</h3>
-                <h1 class="text-uppercase">{{gameRule}}</h1>
-            </v-card>
-            <p class="text-dest my-0">odd {{odd}}</p>
-
-            <!-- Chip -->
-            <v-layout row justify-center>
+            <v-card class="mx-auto pa-2 mt-5 round-3" color="#ffffff">
                 <v-flex xs12 class="text-center">
-                    <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" @click="shipClick(getCoins_modern[key])">
+                    <div class="d-block text-center" style="color:#000">
+                        <p class="text-uppercase">stockname : {{ $t(`stockname.${$route.params.id}`) }} payout: {{odd}}</p>
+                        <p class="text-uppercase test-time-loop">{{getStockLoop($route.params.id)}} MINUTE GAME</p>
+                        <p class="text-uppercase test-rule-betting"> Betting On {{gameRule}}</p>
+                    </div>
+                </v-flex>
+
+                <v-flex xs12 class="text-center">
+                    <v-avatar size="60" v-for="(item,key) in imgChip" :key="key" @click="shipClick(getCoins_modern[key])">
                         <v-img class="ma-4" :src="item.img" :alt="item.title">
                             <span class="setpricechip">{{getCoins_modern[key]}}</span>
                         </v-img>
                     </v-avatar>
                 </v-flex>
-            </v-layout>
-            <v-layout row mb-3 mt-3 justify-center>
-                <v-flex xs8 class="px-2 text-center">
-                    <h5>Amount:</h5>
-                    <v-text-field type="number" readonly solo label="$0" clearable v-model="amount"></v-text-field>
+
+                <v-flex xs10 class="px-2 text-center ml-4 mt-3">
+                    <input class="round-2 text-input" type="number" readonly label="$0" v-model="amount">
+                    <br>
+                    Max = $5000; MIN = $100
                 </v-flex>
-            </v-layout>
+
+                <v-flex xs12 class="px-2 text-center mt-3">
+                    <v-btn class="buttonGreen" @click="reviewbet()">
+                        review bet
+                    </v-btn>
+                    <v-btn class="btn_cancel" @click="bettingDialog = false">
+                        cancel bet
+                    </v-btn>
+                </v-flex>
+            </v-card>
         </v-card>
-        <v-toolbar bottom class="modal-bet" @click="reviewbet()">
-            <p>review bet</p>
-        </v-toolbar>
     </v-dialog>
     <!-- price: "200" -->
     <!-- Review bet  -->
     <v-dialog v-model="reviewbetDialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable light>
-        <v-card tile>
-            <v-toolbar flat color="white">
-                <v-layout row mt-4>
-                    <div class="d-block">
-                        <h3>REVIEW YOUR BET</h3>
-                        <p>Please confirm your bet below</p>
-                    </div>
+        <v-card tile color="#f4f6fd">
+            <v-toolbar flat>
+                <v-layout row mt-3>
                     <v-spacer></v-spacer>
-                    <v-btn class="close" flat text-xs-right @click="reviewbetDialog =false">
-                        <v-icon size="30">close</v-icon>
-                    </v-btn>
+                    <v-icon size="30" @click="reviewbetDialog=false">close</v-icon>
                 </v-layout>
             </v-toolbar>
-            <hr />
 
-            <!-- Chip -->
-            <v-container class="w80 mb-5">
-                <div class="row d-flex justify-space-between hr">
-                    <p class="stockName">Stock name</p>
-                    <p class="stockDetail text-uppercase">{{ $t(`stockname.${$route.params.id}`) }}</p>
-                </div>
-                <div class="row d-flex justify-space-between hr">
-                    <p class="stockName">Game ID</p>
-                    <p class="stockDetail">0909090</p>
-                </div>
-                <div class="row d-flex justify-space-between hr">
-                    <p class="stockName">Game Type</p>
-                    <p class="stockDetail">{{getStockLoop($route.params.id)}} Minute game</p>
-                </div>
-                <div class="row d-flex justify-space-between hr">
-                    <p class="stockName">Betting on</p>
-                    <p class="stockDetail text-uppercase">{{gameRule}}</p>
-                </div>
-                <div class="row d-flex justify-space-between hr">
-                    <p class="stockName">Odd</p>
-                    <p class="stockDetail">1.95</p>
-                </div>
-                <div class="row d-flex justify-space-between hr">
-                    <p class="stockName">Amount</p>
-                    <p class="stockDetail text-uppercase">{{amount}}</p>
-                </div>
-            </v-container>
+            <v-card class="mx-auto pa-2 mt-5 round-3" color="#ffffff">
+                <v-flex xs12 class="text-center">
+                    <div class="d-block text-center" style="color:#000">
+
+                        <h2 class="text-color-blue">REVIEW YOUR BET</h2>
+                        <p>Please confirm your bet below</p>
+
+                    </div>
+                </v-flex>
+                <hr />
+                <v-flex xs12 class="text-center">
+
+                    <table class="table-review">
+                        <tr>
+                            <td class="text-right">Stock name: </td>
+                            <td class="text-left pl-2 text-color-blue">{{ $t(`stockname.${$route.params.id}`) }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Game ID: </td>
+                            <td class="text-left pl-2 text-color-blue">0909090</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Game Type: </td>
+                            <td class="text-left pl-2 text-color-blue">{{getStockLoop($route.params.id)}} Minute game</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Betting on: </td>
+                            <td class="text-left pl-2 text-color-blue">{{gameRule}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Payout: </td>
+                            <td class="text-left pl-2 text-color-blue">1.95</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Amount: </td>
+                            <td class="text-left pl-2 text-color-green">{{amount}}</td>
+                        </tr>
+                    </table>
+
+                </v-flex>
+
+                <v-flex xs12 class="px-2 text-center mt-3">
+                    <v-btn class="buttonGreen" @click="placeBet">
+                        Place bet
+                    </v-btn>
+                    <v-btn class="btn_cancel" @click="reviewbetDialog = false">
+                        cancel bet
+                    </v-btn>
+                </v-flex>
+            </v-card>
         </v-card>
-        <v-toolbar bottom class="modal-bet" @click="placeBet">
-            <p>Place bet</p>
-        </v-toolbar>
     </v-dialog>
     <!-- price: "200" -->
     <!-- End review bet -->
@@ -874,40 +895,52 @@ export default {
 </script>
 
 <style lang="css" scoped>
-h4{font-size: 16px;}
+h4 {
+    font-size: 16px;
+}
+
+.text-size08 {
+    padding: 0px 5px;
+    font-size: 0.8em;
+}
+
 .lastdraw {
-  font-size: 14px;
-  border: 1px solid #4b65ff;
-  border-radius: 20px;  
-  padding: 2px 6px;
-  margin:5px 3px;
-  font-weight: 400;
-  text-align: center;
+    font-size: 14px;
+    border: 1px solid #4b65ff;
+    border-radius: 20px;
+    padding: 6px 6px;
+    margin: 0px 3px;
+    font-weight: 400;
+    text-align: center;
 }
+
 .betclose {
-  font-size: 14px;
-  border: 1px solid #ef076a;
-  border-radius: 20px; 
-  padding: 2px 10px;
-  margin:5px 3px;
-  font-weight: 400;
-   text-align: center;
+    font-size: 14px;
+    border: 1px solid #ef076a;
+    border-radius: 20px;
+    padding: 6px 10px;
+    margin: 0px 3px;
+    font-weight: 400;
+    text-align: center;
 }
+
 .lottery {
-  font-size: 14px;
-  border: 1px solid #01e3bf;
-  border-radius: 20px;
-  padding: 2px 6px;
- margin:5px 3px;
-  font-weight: 400;
-   text-align: center;
+    font-size: 14px;
+    border: 1px solid #01e3bf;
+    border-radius: 20px;
+    padding: 6px 6px;
+    margin: 0px 3px;
+    font-weight: 400;
+    text-align: center;
 }
+
 .chartDesgin {
     margin-top: 10px;
     padding: 5px 5px;
     background-color: #fff;
     border-radius: 10px;
 }
+
 .v-dialog__content.v-dialog__content--active .v-dialog.v-dialog--active {
     position: absolute;
     right: 0px;
@@ -918,7 +951,7 @@ h4{font-size: 16px;}
 }
 
 .bettingFooter {
-    border-radius:20px;
+    border-radius: 20px;
     margin-top: 20px;
     color: #fff;
     background-color: #8291b2;
@@ -932,5 +965,56 @@ h4{font-size: 16px;}
     top: 0px;
     color: black;
     font-size: 0.85rem;
+}
+
+.btn_cancel {
+    background-color: #656464 !important;
+    color: white;
+    border-radius: 7px;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.round-2 {
+    border-radius: 10px;
+}
+
+.round-3 {
+    border-radius: 10px !important;
+    text-align: center;
+}
+
+.test-time-loop {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.test-rule-betting {
+    font-size: 22px;
+    font-weight: bold;
+    color: #193571;
+}
+
+.text-input {
+    height: 40px;
+    border: 2px solid #cdcdcd;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.table-review {
+    margin-top: 6%;
+    border: 0px;
+}
+.text-color-blue{
+    color: #2e477d;
+    font-weight: bold;
+}
+.text-color-green{
+    color: #17b542;
+    font-weight: bold;
 }
 </style>

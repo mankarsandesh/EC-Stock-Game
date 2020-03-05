@@ -15,7 +15,7 @@
         </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar :clipped-left="clipped" class="pa-1 text-primary light-toobar">
+    <v-toolbar :clipped-left="clipped" class="pa-1 text-primary light-toobar setheight">
         <v-flex class="pa-2">
             <nuxt-link to="/modern">
                 <v-toolbar-title>
@@ -34,7 +34,7 @@
         <Logout size="normal" />
         <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
     </v-toolbar>
-    <v-content>
+
 
         <div class="title-layout" v-show="isShow == 'history' || isShow == 'stock-list'||isShow == 'current-bet' ||isShow == 'announcement' ||isShow == 'rule' ||isShow == 'setting'">
             <h2 class="text-uppercase" v-show="isShow == 'history'">{{ $t('menu.history') }}</h2>
@@ -50,6 +50,7 @@
             <v-btn to="/modern/announcement" v-show="isShow == 'rule'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.announcement')}}</v-btn>
             <v-btn to="/modern/rule" v-show="isShow == 'setting'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.rule')}}</v-btn>
         </div>
+
         <v-container pa-1>
             <nuxt />
         </v-container>
