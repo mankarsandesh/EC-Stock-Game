@@ -1,47 +1,40 @@
 <template>
   <div>
     <breadcrumbs title="Bet History" linkItem="current-bet" titlebtn="current-bet" />
-    <v-container>
-      <bethistory :head="head" :desserts="desserts" />
-    </v-container>
+    <fillterHistory />
+    <bethistory :head="head" :desserts="desserts" />
   </div>
 </template>
 
 <script>
 import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
+import fillterHistory from "~/components/modern/fillterHistory";
 import { mapState } from "vuex";
 export default {
   layout: "desktopModern",
   components: {
     breadcrumbs,
+    fillterHistory,
     bethistory
   },
   data() {
     return {
       head: [
-        { text: "UUID", value: "UUID" },
-        { text: "betID", value: "betID" },
-        { text: "ruleName", value: "ruleName" },
-        { text: "betAmount", value: "betAmount" },
-        { text: "rollingAmount", value: "rollingAmount" },
+        { text: "bet ID", value: "betID" },
+        { text: "game ID", value: "gameID" },
+        { text: "bet detail", value: "ruleName" },
+        { text: "time", value: "createdTime" },
         { text: "payout", value: "payout" },
-        { text: "betResult", value: "betResult" },
-        { text: "createdDate", value: "createdDate" },
-        { text: "createdTime", value: "createdTime" },
-        { text: "gameID", value: "gameID" },
-        { text: "gamePID", value: "gamePID" },
-        { text: "stockName", value: "stockName" },
-        { text: "gameStartDate", value: "gameStartDate" },
-        { text: "gameStartTime", value: "gameStartTime" },
-        { text: "gameStatus", value: "gameStatus" },
-        
+        { text: "bet status", value: "gameStatus" },
+        { text: "amount", value: "betAmount" },
+        { text: "rolling", value: "rollingAmount" }
       ],
       desserts: []
     };
   },
   computed: {
-    ...mapState(["portalProviderUUID", "headers","userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.fetch(); // after this component render done, this will call the function from method

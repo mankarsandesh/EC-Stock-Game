@@ -52,14 +52,7 @@
           <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
             <i :class="item.icon" style="margin-right: 3px;" />
             <span>{{$t(`menu.${item.title}`)}}</span>
-          </v-btn>
-          <div class="layout-btn">
-            <v-btn class="btn-currency" text flat>
-              <i class="fa fa-dollar icon-dollar" />
-              USD
-              <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
-            </v-btn>
-          </div>
+          </v-btn>        
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
               <countryFlag :country="countryflag" size="normal" />
@@ -107,8 +100,7 @@ export default {
     Logout
   },
   data() {
-    return {
-      currency: [{ title: "USD" }, { title: "BATH" }, { title: "KIP" }],
+    return {      
       direction: "top",
       fab: true,
       fling: true,
@@ -219,25 +211,7 @@ export default {
   cursor: pointer;
   margin-left: 15px;
 }
-.currencySelect i {
-  padding-left: 3px;
-}
-.currencySelect {
-  padding: 0px;
-}
-.currencyName {
-  padding-left: -5px;
-  cursor: pointer;
-}
-.currencyMenu:hover {
-  cursor: pointer;
-  background-color: #dddddd;
-}
-.currencyMenu {
-  cursor: pointer;
-  height: 75%;
-  padding: 5px;
-}
+
 .toolMenu {
   border: 1px solid red;
   width: 100% !important;
@@ -298,12 +272,6 @@ export default {
 }
 
 .btn-langage {
-  border: 1px solid #ccc;
-  height: 48% !important;
-  border-radius: 1em;
-  display: flow-root;
-}
-.btn-currency {
   border: 1px solid #ccc;
   height: 48% !important;
   border-radius: 1em;
