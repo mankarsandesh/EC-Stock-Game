@@ -1,12 +1,12 @@
 <template>
-    <v-navigation-drawer v-model="drawer" fixed :right="right" temporary>
+    <v-navigation-drawer v-model="drawer" fixed :right="right" temporary class="slide-navbar">
       <v-list class="pt-4 pr-0 text-primary">
         <v-list-tile class="mt-3 pr-0">
           <v-list-tile-content>
             <v-list-tile-title class="text-uppercase"><em>{{ $t(`${title}`) }}</em></v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer" v-if="!isHideClear">
+          <v-btn icon  @click.stop="drawer = !drawer" v-if="!isHideClear">
             <v-icon>clear</v-icon>
           </v-btn>
         </v-list-tile>
@@ -46,3 +46,12 @@ export default {
     }
 }
 </script>
+
+<style>
+.slide-navbar{
+        height: 66%;
+    margin-top: 77px;
+    transform: translateX(0px);
+    width: 300px;
+}
+</style>

@@ -136,8 +136,8 @@
 import {
     mapGetters
 } from "vuex";
-import onlinehistory from "~/components/modern/profile/onlineHistory"
-import stockAnalysis from "~/components/modern/profile/stockAnalysis"
+import onlinehistory from "~/components/mobile/onlineHistory"
+import stockAnalysis from "~/components/mobile/stockAnalysis"
 export default {
     components: {
         onlinehistory,
