@@ -51,6 +51,14 @@
           <i class="fa fa-line-chart fa-15x margin-right-5" />
           <v-list-tile-title>{{$t('profile.stock analysis')}}</v-list-tile-title>
         </v-list-tile>
+        <v-list-tile
+          @click="$router.push('/modern/desktop/leaderboard');"
+          v-show="isShow == 'modern'"
+        >
+          <i class="fa fa-line-chart fa-15x margin-right-5" />
+          <v-list-tile-title>{{$t('profile.leaderboard')}}</v-list-tile-title>
+        </v-list-tile>
+
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
           <v-list-tile-title>Sign Out</v-list-tile-title>

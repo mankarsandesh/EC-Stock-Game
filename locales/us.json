@@ -180,13 +180,10 @@
         "lastdigit": "Last Digit",
         "bothdigit": "Both Digit",
         "twodigit": "Two Digit",
-
         "firstdigits": "First\nDigit",
         "lastdigits": "Last\nDigit",
         "bothdigits": "Both\nDigit",
         "twodigits": "Two\nDigit",
-
-
         "big": "Big",
         "small": "Small",
         "odd": "Odd",
@@ -217,6 +214,11 @@
     "profile": {
         "basic info": "basic infor",
         "online history": "online history",
-        "stock analysis": "stock analysis"
+        "stock analysis": "stock analysis",
+        "leaderboard": "Leaderboard"
+    },
+    "useraction": {
+        "followbet": "FOLLOW BET",
+        "unfollowt": "UNFOLLOW"
     }
 }
