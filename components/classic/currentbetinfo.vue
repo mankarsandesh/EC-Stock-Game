@@ -11,7 +11,7 @@
       ref="table"
     >
       <template v-slot:headers="headers">
-        <tr>
+        <tr style="background-color:#f5f5f5;">
           <th>{{$t('msg.BetId')}}</th>
           <th>{{$t('msg.gameid')}}</th>
           <th>{{$t('msg.Betdetail')}}</th>
@@ -58,7 +58,7 @@
           </td>
           <td colspan="2"></td>
         </tr>-->
-        <tr>
+        <tr style="background-color: #e7e9f0;">
           <td>{{$t('msg.Total')}}</td>
           <td colspan="2"></td>
           <td></td>
