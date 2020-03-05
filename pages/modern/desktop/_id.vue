@@ -404,11 +404,6 @@ export default {
                     break;
             }
         },
-        {
-          name: "alertMe",
-          icon: "add_alert"
-        }
-      ],
       items: [
         {
           title: "Click Me"
@@ -426,7 +421,7 @@ export default {
       trendTypes: ["firstDigit"],
       isloading: false,
       isStep: 0
-    };
+    
   },
   created() {
     this.getStock();
