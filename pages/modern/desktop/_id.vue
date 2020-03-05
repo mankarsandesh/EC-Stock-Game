@@ -374,6 +374,8 @@ export default {
     this.setNextstepstart();
   },
   watch: {
+    // check size screen
+    // change to mobile component
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
         let linkto = `/modern/betting/${this.$route.params.id}`;

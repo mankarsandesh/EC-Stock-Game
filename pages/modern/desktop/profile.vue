@@ -130,7 +130,7 @@ export default {
     async updateProfile() {
       const ref = this.$refs;
       let formData = new FormData();
-      formData.append("email", this.getUserInfo.email);
+      formData.append("email", "macky@gmail.com");
       formData.append("firstName", this.getUserInfo.firstName);
       formData.append("lastName", this.getUserInfo.lastName);
       // formData.append("gender", this.getUserInfo.gender);
@@ -165,8 +165,7 @@ export default {
         if (res.code === 200) {
           this.blurValue = 0;
         } else {
-          alert(res.message);
-          console.log(res);
+          console.log(res.message);
           this.imageBase64 = "";
         }
       } catch (ex) {
