@@ -50,7 +50,8 @@
 import {
     mapGetters,
     mapMutations,
-    mapActions
+    mapActions,
+    mapState
 } from "vuex";
 export default {
     // props: {
@@ -77,7 +78,7 @@ export default {
     ],
     data() {
         return {
-            gameUUID:"59ef1059-60b9-48d8-a299-6b846b7e3f54",
+            gameUUID:"5d147c4c-6fab-4dfa-a97a-69a863b2fa24",
             confirmDisabled: false,
             betValue: 0,
             imgChip: [{
@@ -115,7 +116,8 @@ export default {
             "getOnBetting",
             "getAuth_token",
             "getStockId"
-        ])
+        ]),
+        ...mapState(["portalProviderUUID", "headers","userUUID"]) //get 2 data from vuex first, in the computed
     },
     created() {
         // check is full screen or not
@@ -136,18 +138,16 @@ export default {
             this.betValue = this.betValue + amount;
         },
         async sendBetting(betData) {
-            let data = {
-                data: [betData]
-            };
-            console.log(data);
+            let finalData = betData;
+            
             try {
                const res = await this.$axios.$post(
                   "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
                   {
-                    portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
-                    userUUID: "e10fdea7-842e-4d57-b17a-fa0189aa1f94",
+                    portalProviderUUID: this.portalProviderUUID,
+                    userUUID: this.userUUID,
                     version : "0.1",
-                    betData : [data]
+                    betData : [finalData]
                   },
                   {
                     headers: {
@@ -156,6 +156,8 @@ export default {
                   }
                 );               
                 if (res.status) {
+                   console.log("i am here 2");   
+                    console.log(res);
                     this.balance()
                     this.closePopper();
                     // console.warn(res.data[0]);
@@ -188,7 +190,9 @@ export default {
                 ruleID: this.ruleid,
                 betAmount: this.betValue
             };
-            this.confirmDisabled = true;     
+            this.confirmDisabled = true;  
+            console.log("i am here 1");   
+            console.log(data);
             this.sendBetting(data);           
             // console.warn(this.getOnBetting);
         },
