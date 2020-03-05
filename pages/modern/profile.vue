@@ -11,7 +11,7 @@
                         </v-avatar>
                         <span class="camera_container">
                             <button class="btn_camera">
-                                <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
+                                <!-- <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon> -->
                             </button>
                         </span>
                     </div>
@@ -33,7 +33,7 @@
                         </v-avatar>
                         <span class="camera_container">
                             <button class="btn_camera">
-                                <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
+                                <!-- <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon> -->
                             </button>
                         </span>
                     </div>
@@ -46,7 +46,7 @@
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_green"></div>
                     <span>account balance</span>
-                    <br />
+                    <br>
                     <span class="amount">{{123456 | currency}}</span>
                     <span class="title_currentcy">kip</span>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_blue"></div>
                     <span>rolling amount</span>
-                    <br />
+                    <br>
                     <span class="amount">{{161536 | currency}}</span>
                     <span class="title_currentcy">kip</span>
                 </div>
@@ -145,14 +145,45 @@
                         </div>
                     </form>
                     <div class="row" style="text-align: -webkit-center;">
-                        <v-btn :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">online history</span> <i class="fa fa-plus"></i></v-btn>
-                        <v-btn :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">stock analysis</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="dialogOnlineHistory = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">online history</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="dialogStockAnalysis = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">stock analysis</span> <i class="fa fa-plus"></i></v-btn>
                     </div>
 
                 </div>
             </v-flex>
         </v-layout>
     </v-flex>
+
+    <div class="text-xs-center">
+        <v-dialog v-model="dialogOnlineHistory">
+            <v-card>
+                <OnlineHistory />
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" flat @click="dialogOnlineHistory = false">
+                        X
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="dialogStockAnalysis">
+            <v-card>
+                <StockAnalysis />
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" flat @click="dialogStockAnalysis = false">
+                        X
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </div>
+
 </div>
 </template>
 
@@ -161,17 +192,20 @@ import {
     mapGetters,
     mapActions
 } from "vuex";
-
-import axios from "axios";
-import popper from "vue-popperjs";
-import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "~/components/modern/profile/UploadFile";
+import OnlineHistory from "../../components/mobile/onlineHistory"
+import StockAnalysis from "../../components/mobile/stockAnalysis"
 
 export default {
     data() {
         return {
-            updating: false
+            updating: false,
+            dialogOnlineHistory: false,
+            dialogStockAnalysis: false
         };
+    },
+    components: {
+        OnlineHistory,
+        StockAnalysis
     },
     mounted() {},
     computed: {
@@ -234,12 +268,14 @@ export default {
 .padding-right-60 {
     padding-right: 60%;
 }
-    .width-50{
-            width: 50%;
-    }
-     .width-100{
-            width: 100%;
-    }
+
+.width-50 {
+    width: 50%;
+}
+
+.width-100 {
+    width: 100%;
+}
 
 /* .......form....... */
 label {

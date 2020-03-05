@@ -121,7 +121,7 @@ export default {
       );
     },
     formatToPrice(value) {
-        //  return `$ ${this.nFormatter(value, 2)}`;
+         return `$ ${this.nFormatter(value, 2)}`;
       return `$ ${Number(value)
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
