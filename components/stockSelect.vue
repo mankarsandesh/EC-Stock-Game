@@ -1,5 +1,5 @@
 <template>
-  <v-layout wrap>
+  <v-layout wrap class="select-stock">
     <v-flex md3>
       <v-autocomplete
         v-model="stock"
@@ -8,6 +8,7 @@
         prepend-icon="bar_chart"
         full-width
         solo
+        hide-details
         color="blue"
       />
     </v-flex>
@@ -16,10 +17,11 @@
         v-model="stockName"
         :items="stockNames"
         label="cyto Currency"
-        prepend-icon="category"
+        prepend-icon="navigate_next"
         color="green"
         full-width
         solo
+        hide-details
         id="stockName"
       />
     </v-flex>
@@ -28,10 +30,11 @@
         v-model="minute"
         :items="minutes"
         label="minute"
-        prepend-icon="category"
+        prepend-icon="navigate_next"
         color="red"
         full-width
         solo
+        hide-details
         id="minute"
       />
     </v-flex>
@@ -39,10 +42,11 @@
       <v-text-field
         v-model="gameId"
         label="game id"
-        prepend-icon="category"
+        prepend-icon="navigate_next"
         color="blue"
         full-width
         solo
+        hide-details
         disabled
         id="gameId"
       />

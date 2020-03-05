@@ -645,8 +645,8 @@ nav {
       .v-expansion-panel__container {
         .v-expansion-panel__header {
           background-color: #0b2a68;
-          border-top-left-radius:10px;
-          border-top-right-radius:10px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
           color: #ffffff;
           text-transform: capitalize;
           .v-expansion-panel__header__icon {
@@ -814,3 +814,40 @@ main.v-content {
 }
 
 /* End main page */
+
+/* -------------------------------------------------------------------------- */
+/*                                Select stock                                */
+/* -------------------------------------------------------------------------- */
+.application {
+  .v-autocomplete__content.v-menu__content {
+    border-radius: 10px;
+  }
+}
+.layout.select-stock {
+  .flex {
+    .v-input {
+      .v-input__prepend-outer {
+        margin: 5px 2px;
+        border: 2px solid #00000054;
+        border-radius: 20px;
+        padding: 2px;
+      }
+      .v-input__control {
+        .v-input__slot {
+          border-radius: 10px;
+          padding: 0 4px;
+          min-height: 40px;
+          .v-text-field__slot {
+            input {
+              margin: 0px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               End selec stock                              */
+/* -------------------------------------------------------------------------- */
