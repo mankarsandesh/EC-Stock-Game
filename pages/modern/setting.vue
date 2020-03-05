@@ -9,7 +9,7 @@
                         <v-text-field class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
                     <v-card-actions>
-                        <v-btn class="chipamount ml-4" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
+                        <v-btn  class="buttonGreen chipamount ml-4" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
                     </v-card-actions>
                     <div v-show="conOrE=='confirm'">
                         <v-card-text>{{$t('msg.min')}} = $200</v-card-text>
@@ -20,12 +20,12 @@
         </v-layout>
 
         <v-layout row wrap justify-center>
-            <v-btn text @click="reset">{{$t('msg.resettodefault')}}</v-btn>
+            <v-btn text @click="reset" class="buttonGreen">{{$t('msg.resettodefault')}}</v-btn>
         </v-layout>
 
         <v-layout row wrap justify-center>
-            <v-btn class="my-btn" @click="saveClick()">{{$t('msg.save')}}</v-btn>
-            <v-btn class="my-btn cancel">{{$t('msg.cancel')}}</v-btn>
+            <v-btn class="my-btn buttonGreen" @click="saveClick()">{{$t('msg.save')}}</v-btn>
+            <v-btn class="my-btn cancel buttonCancel">{{$t('msg.cancel')}}</v-btn>
         </v-layout>
 
     </v-card>

@@ -6,11 +6,10 @@
 
     <!-- search -->
     <v-layout row wrap>
-        <v-flex xs6 class="d-flex">
-            <v-select class="border-round" hide-details :items="items" placeholder="Sort By :" v-model="itemss"></v-select>
-        </v-flex>
-        <v-flex xs1 class="d-flex mx-3">
-            <v-btn @click="goSearch" class="main-btn" style="border-radius:8px;">go</v-btn>
+        <v-flex xs12 class="d-flex">
+            <v-select class="border-round mt-2" hide-details :items="items" placeholder="Sort By :" v-model="itemss"></v-select>
+        
+            <v-btn @click="goSearch" class="main-btn mx-3" style="border-radius:8px;">go</v-btn>
         </v-flex>
     </v-layout>
     <!-- end serach -->
@@ -21,7 +20,7 @@
     </v-layout>
     <v-layout row wrap pb-3 justify-center>
         <v-flex xs5 class="text-center d-flex">
-            <v-btn color="#003e70" class="text-uppercase buttonGreen">{{$t("stock-list.load more")}}</v-btn>
+            <v-btn color="#8291b2" class="text-uppercase mt-4 text-white">{{$t("stock-list.load more")}}</v-btn>
         </v-flex>
     </v-layout>
     <!-- back to top -->
