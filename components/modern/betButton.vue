@@ -19,7 +19,7 @@
                 }">
             <div class="popper" >
                 <!-- this component display the modal,the modal let users choose amount they want to bet -->
-                <betModal :stockName="stockName" :loop="loop" :betId="'firstdigit-'+data.rule" :payout="data.payout"></betModal>
+                <betModal :stockName="stockName" :loop="loop" :ruleid="data.ruleid" :betId="'firstdigit-'+data.rule" :payout="data.payout"></betModal>
             </div>
             <v-btn class="align_button4 " :id="'firstdigit-'+data.rule" style="margin-left: -5px;" slot="reference" @click="betButtonClick('firstdigit-'+data.rule)">
                 <showChipAmount text-center size="45px" :amount="getAmountMultiGameBet({stockId:getStockId(stockName) ,gameRule:'firstdigit-'+data.rule})"></showChipAmount>
@@ -229,42 +229,49 @@ export default {
             payout_99: payout._99,
             // games rules
             firstDigit: [{
+                    ruleid: "1",
                     rule: "big",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
                     payout: 0
                 },
                 {
+                    ruleid: "2",
                     rule: "small",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
                     payout: 1
                 },
                 {
+                    ruleid: "3",
                     rule: "odd",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
                     payout: 2
                 },
                 {
+                    ruleid: "4",
                     rule: "even",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
                     payout: 3
                 },
                 {
+                    ruleid: "5",
                     rule: "high",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
                     payout: 4
                 },
                 {
+                    ruleid: "6",
                     rule: "mid",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,
                     payout: 5
                 },
                 {
+                    ruleid: "7",
                     rule: "low",
                     stock_id: this.$route.params.id,
                     stock_name: this.$route.params.id,

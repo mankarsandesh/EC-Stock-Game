@@ -74,13 +74,12 @@
     </v-content>
 
     <!-- Chat Windows-->
-    <chatWindow  />
+    <chatWindow />
   </v-app>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
@@ -130,19 +129,19 @@ export default {
       timeout: 3000
     };
   },
-  updated(){
+  updated() {
     let path = this.$nuxt.$route.name.split("-");
-    let pageName = path[2];     
-    if(pageName === "id"){
+    let pageName = path[2];
+    if (pageName === "id") {
       this.setGameChannelShow(true);
-    }else{
+    } else {
       this.setGameChannelShow(false);
     }
   },
-  created() {   
+  created() {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];       
+    let isFullscreen = path[1];
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
@@ -162,19 +161,13 @@ export default {
       autoplay: true,
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
-    // setInterval(function() {
-    // }, 1000);
-    // this.setIsLoadingStockGame(false);
   },
   methods: {
-     ...mapMutations(["setGameChannelShow"]),
+    ...mapMutations(["setGameChannelShow"]),
     getwinuser() {
       this.$axios
         .$get("api/fetchBet")
         .then(response => {
-          //  console.log("response.....................")
-          // console.log(response.data)
-          //  console.log("response.......................")
           let resultStatus = null;
           for (let i = 0; i < response.data.length - 1; i++) {
             let betID = response.data[i].betId;
