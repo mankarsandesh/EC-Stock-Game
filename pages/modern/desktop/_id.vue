@@ -41,12 +41,13 @@
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
-                    <chartApp
+                    <chartApp></chartApp>
+                    <!-- <chartApp
                       :data="getStockById($route.params.id).stockPrice"
                       :time="getStockById($route.params.id).stockTime"
                       :key="getStockById($route.params.id).stockPrice[0]"
                       :stockid="$route.params.id"
-                    ></chartApp>
+                    ></chartApp> -->
                   </v-flex>
                 </div>
                 <v-layout>

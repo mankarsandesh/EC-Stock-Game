@@ -1,15 +1,17 @@
 <template>
-  <div class="v-card-style" v-if="stockid !== null">
+  <div class="v-card-style">
     <v-layout px-1>
       <v-flex xs6 class="text-xs-left stockTimer">
         {{ $t("msg.livetime") }}:
-        <span class="stockTimer">{{ getLiveTime(stockid) }}</span>
+        <!-- <span class="stockTimer">{{ getLiveTime(stockid) }}</span> -->
       </v-flex>
-      <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(stockid) > 0">
+      <!-- <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(stockid) > 0">
         <span class="stockPrice">${{ getLivePrice(stockid) }}</span>
-      </v-flex>
+      </v-flex>-->
     </v-layout>
+    <v-btn @click="updateChart">update chart</v-btn>
     <apexchart
+      ref="realtimeChart"
       class="chartDesgin"
       type="area"
       height="310vh"
@@ -28,37 +30,14 @@ import Chart from "chart.js";
 import { mapGetters } from "vuex";
 export default {
   props: {
-    stockid: {
-      type: String,
-      default: null
-    },
     height: {
       type: String,
       default: "auto"
-    },
-    data: {
-      type: Array,
-      required: true
-    },
-    time: {
-      type: Array,
-      required: true
     }
   },
-  components: {
-    apexchart: VueApexCharts
-  },
-  computed: {
-    ...mapGetters(["getLiveTime", "getLivePrice", "getLotteryDraw"])
-  },
+
   data() {
     return {
-      series: [
-        {
-          name: "Price",
-          data: this.data
-        }
-      ],
       chartOptions: {
         zoom: {
           enabled: true,
@@ -149,6 +128,58 @@ export default {
         }
       }
     };
+  },
+  components: {
+    apexchart: VueApexCharts
+  },
+  computed: {
+    ...mapGetters([
+      "getLiveTime",
+      "getLivePrice",
+      "getLotteryDraw",
+      "getRoadMap"
+    ]),
+    time() {
+      let newTime = [];
+      this.getRoadMap.forEach(element => {
+        newTime.push(element.stockTimestamp);
+      });
+      console.log("newTime.......");
+      console.log(newTime);
+      console.log("newTime.......");
+      return newTime;
+    },
+    series() {
+      let newData = [];
+      this.getRoadMap.forEach(element => {
+        newData.push(element.stockValue);
+      });
+      return [
+        {
+          name: "Price",
+          data: newData
+        }
+      ];
+    }
+  },
+  methods: {
+    updateChart() {
+      console.log('updating....')
+      let newData = [];
+      this.getRoadMap.forEach(element => {
+        newData.push(element.stockValue);
+      });
+      newData.push(1)
+      this.$refs.realtimeChart.updateSeries(
+        [
+          {
+            data: newData 
+          }
+        ],
+        false,
+        true
+      );
+    }
   }
 };
 </script>

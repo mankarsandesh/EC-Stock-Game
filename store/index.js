@@ -700,6 +700,7 @@ const createStore = () => {
         return state.stocks2;
       },
       getLastDraw(state) {
+        console.log('getLastDraw')
         return state.roadMap.length > 0 ? state.roadMap[state.roadMap.length - 1].stockValue : "...";
       },
       // end new api
