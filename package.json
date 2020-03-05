@@ -22,6 +22,7 @@
         "@rabota/yandex-metrika": "^1.1.2",
         "animated-number-vue": "^1.0.0",
         "apexcharts": "^3.8.5",
+        "axios": "^0.19.2",
         "chart.js": "^2.9.3",
         "chartjs": "^0.3.24",
         "chartjs-plugin-zoom": "^0.7.3",

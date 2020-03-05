@@ -1,15 +1,15 @@
 <template>
 <div>
     <v-card class="my-bg">
-        
+
         <v-layout row wrap justify-center class="allchips">
-            <v-flex class="settingchips" xs4 sm3  md3 lg2 v-for="(item,key) in imgChip" :key="key" justify-center >
+            <v-flex class="settingchips" xs3 sm3 md3 lg2 v-for="(item,key) in imgChip" :key="key" justify-center>
                 <div class="d-block">
-                    <v-img  :width="item.width"  :src="item.img" class="chipImage">
+                    <v-img :width="item.width" :src="item.img" class="chipImage">
                         <v-text-field class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
-                    <v-card-actions >
-                        <v-btn class="chipamount" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
+                    <v-card-actions>
+                        <v-btn  class="buttonGreen chipamount ml-4" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
                     </v-card-actions>
                     <div v-show="conOrE=='confirm'">
                         <v-card-text>{{$t('msg.min')}} = $200</v-card-text>
@@ -20,12 +20,12 @@
         </v-layout>
 
         <v-layout row wrap justify-center>
-            <v-btn text @click="reset">{{$t('msg.resettodefault')}}</v-btn>
+            <v-btn text @click="reset" class="buttonGreen">{{$t('msg.resettodefault')}}</v-btn>
         </v-layout>
 
         <v-layout row wrap justify-center>
-            <v-btn class="my-btn" @click="saveClick()">{{$t('msg.save')}}</v-btn>
-            <v-btn class="my-btn cancel">{{$t('msg.cancel')}}</v-btn>
+            <v-btn class="my-btn buttonGreen" @click="saveClick()">{{$t('msg.save')}}</v-btn>
+            <v-btn class="my-btn cancel buttonCancel">{{$t('msg.cancel')}}</v-btn>
         </v-layout>
 
     </v-card>
@@ -53,26 +53,26 @@ export default {
                     id: "ship2",
                     title: "Primary",
                     img: "/chip/primary.png",
-                     width: "100"
+                    width: "100"
                 },
                 {
                     id: "ship3",
                     title: "success",
                     img: "/chip/success.png",
-                     width: "105"
+                    width: "105"
                 },
                 {
                     id: "ship4",
                     title: "warning",
                     img: "/chip/warning.png",
-                     width: "110"
+                    width: "110"
                 },
                 {
                     id: "ship5",
                     title: "black",
                     img: "/chip/black.png",
                     color: "text-dark",
-                     width: "120"
+                    width: "120"
                 }
             ]
         };
@@ -117,30 +117,36 @@ export default {
     color: black;
     font-size: 1.2rem;
 }
-input{
+
+input {
     background-color: brown
 }
-.settingchips{
-    margin:5px 10px;
+
+.settingchips {
+    margin: 5px 10px;
     text-align: center;
-    clear:both;
+    clear: both;
 }
-.allchips{
-    margin-top:30px;
+
+.allchips {
+    margin-top: 30px;
 }
-.chipImage{
-    margin:0 auto;
+
+.chipImage {
+    margin: 0 auto;
 }
-.chipamount{  
-     margin:0 auto;
+
+.chipamount {
+    margin: 0 auto;
     text-align: center;
 }
-.v-btn { 
-  font-size: 14px;
-  font-weight: 400;
-  background-color: #093e70 !important;
-  color: #ffffff !important;
-  padding: 4px 10px;
-  margin: 4px;
+
+.v-btn {
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #093e70 !important;
+    color: #ffffff !important;
+    padding: 4px 10px;
+    margin: 4px;
 }
 </style>
