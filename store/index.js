@@ -1,8 +1,8 @@
 import Vuex from "vuex";
 import { hostname } from "os";
 import payouts from "../data/json/payout";
+import Echo from "laravel-echo";
 const createStore = () => {
-
   return new Vuex.Store({
     state: () => ({
       activeGameChannel : true,
@@ -74,11 +74,12 @@ const createStore = () => {
         }
       },
       payout: payouts,
+      stocks2: [],
       stocks: {
         sh000001: {
           url: {
             crawler: `/api/getCrawlerData?stockId=1&limit=100`,
-            livePrice: "/api/newlivedata/sh01"
+            livePrice: ""
           },
           stockId: 4,
           stockname: "sh000001",
@@ -96,7 +97,7 @@ const createStore = () => {
         sz399001: {
           url: {
             crawler: `/api/getCrawlerData?stockId=4&limit=100`,
-            livePrice: "/api/newlivedata/sz01"
+            livePrice: ""
           },
           stockId: 3,
           stockname: "sz399001",
@@ -114,7 +115,7 @@ const createStore = () => {
         sz399415: {
           url: {
             crawler: `/api/getCrawlerData?stockId=3&limit=100`,
-            livePrice: "/api/newlivedata/sz15"
+            livePrice: ""
           },
           stockId: 2,
           stockname: "sz399415",
@@ -132,7 +133,7 @@ const createStore = () => {
         sh000300: {
           url: {
             crawler: `/api/getCrawlerData?stockId=2&limit=100`,
-            livePrice: "/api/newlivedata/sz300"
+            livePrice: ""
           },
           stockId: 1,
           stockname: "sh000300",
@@ -150,7 +151,7 @@ const createStore = () => {
         usindex: {
           url: {
             crawler: `/api/getCrawlerData?stockId=5&limit=100`,
-            livePrice: "/api/newlivedata/usindex"
+            livePrice: ""
           },
           stockId: 5,
           stockname: "usindex",
@@ -167,7 +168,7 @@ const createStore = () => {
         btc5: {
           url: {
             crawler: `/api/getCrawlerData?stockId=6&limit=100`,
-            livePrice: "/api/newlivedata/btc"
+            livePrice: ""
           },
           stockId: 6,
           stockname: "btc5",
@@ -184,7 +185,7 @@ const createStore = () => {
         btc1: {
           url: {
             crawler: `/api/getCrawlerData?stockId=7&limit=100`,
-            livePrice: "/api/newlivedata/btc"
+            livePrice: ""
           },
           stockId: 7,
           stockname: "btc1",
@@ -287,6 +288,77 @@ const createStore = () => {
       }
     },
     actions: {
+      async asyncStocks(context) {
+        try {
+          const res = await this.$axios.$post(
+            "http://uattesting.equitycapitalgaming.com/webApi/getStock",
+            {
+              portalProviderUUID: context.state.portalProviderUUID,
+              version: 1
+            },
+            {
+              headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+              }
+            }
+          );
+          if (res.code === 200) {
+            context.state.stocks2 = res.data;
+            // socket new api
+            function setUpSocketIO(
+              hostName = "uattesting.equitycapitalgaming.com",
+              port = 6001
+            ) {
+              window.io = require("socket.io-client");
+              window.Pusher = require("pusher-js");
+
+              if (typeof io !== "undefined") {
+                try {
+                  window.Echo = new Echo({
+                    broadcaster: "pusher",
+                    key: "CC21128A312FAF7817C93D1B51CB9", // SERVER_KEY = CC21128A312FAF7817C93D1B51CB9 ,Local Key = 6E591671FA45AE32B4AC2CB5BFA69
+                    wsHost: hostName,
+                    wsPort: port,
+                    disableStats: true,
+                    auth: {
+                      headers: {
+                        Authorization: "Basic dG5rc3VwZXI6VGVzdDEyMyEs="
+                      }
+                    }
+                  });
+                } catch (error) {
+                  console.log(error.message);
+                }
+              }
+            }
+            function listenForBroadcast({ channelName, eventName }, callback) {
+              window.Echo.channel(channelName).listen(eventName, callback);
+            }
+            setUpSocketIO();
+
+            context.getters.getStocks.forEach(element => {
+              listenForBroadcast(
+                {
+                  channelName: `roadMap.${element.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
+                  eventName: "roadMap"
+                },
+                ({ data }) => {
+                  console.log("new socket success");
+                  console.log(data.data.roadMap);
+                  element.crawlData = data.data.roadMap;
+                  console.log(element.crawlData);
+                  console.log("new socket success");
+                }
+              );
+            });
+          } else {
+            throw new Error();
+          }
+        } catch (ex) {
+          console.log(ex)
+          // this.$router.push("/error");
+        }
+      },
       async asyncPayout(context) {
         try {
           // const respayoutinitial = await this.$axios.$get(
@@ -526,6 +598,14 @@ const createStore = () => {
       }
     },
     getters: {
+      getStocks(state) {
+        return state.stocks2;
+      },
+      getLastDraw(state) {
+        return state.stocks2[1].crawlData.length > 0
+          ? state.stocks2[1].crawlData[0].stockValue
+          : "000";
+      },
       getGameChannel(state) {
         return state.activeGameChannel;
       },
@@ -769,7 +849,6 @@ const createStore = () => {
           let stockIdObject = object.filter(x => x.stock === data.stockId);
           // check rule in stockId
           // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
-
 
           // get amount by rule
           let result = 0;
