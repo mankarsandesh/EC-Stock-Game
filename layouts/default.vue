@@ -37,14 +37,15 @@
     <v-content>
 
         <div class="title-layout" v-show="isShow == 'history' || isShow == 'stock-list'||isShow == 'current-bet' ||isShow == 'announcement'">
-            <h2 v-show="isShow == 'history'">{{ $t('menu.history') }}</h2>
-            <h2 v-show="isShow == 'stock-list'">{{ $t('menu.stock list') }}</h2>
-            <h2 v-show="isShow == 'current-bet'">{{ $t('menu.current bet') }}</h2>
-            <h2 v-show="isShow == 'announcement'">{{ $t('menu.announcement') }}</h2>
-
+            <h2 class="text-uppercase" v-show="isShow == 'history'">{{ $t('menu.history') }}</h2>
+            <h2 class="text-uppercase" v-show="isShow == 'stock-list'">{{ $t('menu.stock list') }}</h2>
+            <h2 class="text-uppercase" v-show="isShow == 'current-bet'">{{ $t('menu.current bet') }}</h2>
+            <h2 class="text-uppercase" v-show="isShow == 'announcement'">{{ $t('menu.announcement') }}</h2>
+            <v-btn to="/modern/history" v-show="isShow == 'current-bet'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.history')}}</v-btn>
+            <v-btn to="/modern/current-bet" v-show="isShow == 'history'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.current bet')}}</v-btn>
+            <v-btn to="/modern/current-bet" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.announcement')}}</v-btn>
         </div>
         <v-container pa-1>
-
             <nuxt />
         </v-container>
 
@@ -117,6 +118,7 @@ export default {
     border-top: none;
     border-right: none;
 }
+
 .title-layout {
     background: url("/bg/Inner-page-banner.png");
     background-size: cover;
