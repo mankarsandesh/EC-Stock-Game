@@ -1,5 +1,4 @@
 <template>
-<!-- fix git -->
   <v-container class="mt-2" v-if="getStocks.length > 0">
     <v-layout style="background-color:#f4f5fd;">
       <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
