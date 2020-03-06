@@ -7,13 +7,13 @@
             </button>
             <v-btn flat v-on="on" v-show="isShow == 'modern'">
                 <v-avatar size="30">
-                    <img src="/user.png" alt />
+                    <img :src="imgProfile" alt />
                 </v-avatar>
                 <div class="userLogoutMenu">
                     <span>{{getUserName.name}}</span>
                     <span>
                         {{$t('msg.acc')}}:
-                        <animated-number :value="getBalance" :formatValue="formatToPrice" class="balance" />
+                        <animated-number :value="getUserInfo.balance" :formatValue="formatToPrice" class="balance" />
                     </span>
                 </div>
                 <!-- <i class="fa fa-caret-down" /> -->
@@ -76,7 +76,13 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getUserName", "getBalance"])
+        ...mapGetters(["getUserName", "getBalance", "getUserInfo"]),
+        imgProfile() {
+            return this.getUserInfo.profileImage === "" ?
+                "/user.png" :
+                "http://uattesting.equitycapitalgaming.com/" +
+                this.getUserInfo.profileImage;
+        }
     },
     mounted() {
         this.isShow = location.pathname.split("/")[1];
