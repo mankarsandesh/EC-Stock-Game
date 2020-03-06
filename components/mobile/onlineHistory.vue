@@ -21,7 +21,7 @@
             </span>
             <!-- <span class="blur-img">uploading</span> -->
         </div>
-        <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+        <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
         <p>Online Status : 2hours</p>
         <v-divider></v-divider>
     </v-flex>
@@ -38,7 +38,7 @@
                     </span>
                     <!-- <span class="blur-img">uploading</span> -->
                 </div>
-                <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+                <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
                 <p>Online Status : 2hours</p>
             </v-flex>
             <v-flex xs12 sm10>

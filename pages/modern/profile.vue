@@ -9,11 +9,11 @@
                             <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
                             <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
-                        <span class="camera_container" style="    position: absolute;    top: 15%;">
+                        <span class="camera_container" style="    position: absolute;    top: 9%;">
                             <v-icon color="black" :size="20">photo_camera</v-icon>
                         </span>
                     </div>
-                    <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+                    <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
                     <p>Online Status : 2hours</p>
                 </div>
             </v-flex>
@@ -29,12 +29,12 @@
                             <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
                             <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
-                        <span class="camera_container" style="position: absolute;top: 10%;">
+                        <span class="camera_container" style="position: absolute;top: 5%;">
                             <v-icon color="black" :size="20">photo_camera</v-icon>
 
                         </span>
                     </div>
-                    <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+                    <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
                     <p>Online Status : 2hours</p>
                 </div>
             </v-flex>
