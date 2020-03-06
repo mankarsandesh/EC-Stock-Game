@@ -56,6 +56,7 @@ module.exports = {
         "@/plugins/chart",
         "@/plugins/sweetAlert",
         "@/plugins/vueScreen",
+        "@/plugins/socketio",
         { src: "@/plugins/vChart", mode: 'client' }
     ],
     router: {

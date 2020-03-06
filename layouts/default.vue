@@ -82,7 +82,6 @@ export default {
         Logout,
         Button
     },
-    props: ["linkItem", "linkItem2", "title", "titlebtn", "titlebtn2"],
     data() {
         return {
             clipped: false,

@@ -168,7 +168,7 @@ export default {
       formData.append("email", ref.email.value);
       formData.append("firstName", ref.firstname.value);
       formData.append("lastName", ref.lastname.value);
-      // formData.append("gender", ref.gender.value);
+      formData.append("gender", ref.gender.value);
       // formData.append("country", ref.country.value);
       formData.append("version", 1);
       try {
