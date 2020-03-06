@@ -121,7 +121,10 @@
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3>
-          <h2 font-weight-bold style="text-align:right;color:#013f70;">Acc : $9885555</h2>
+          <h2
+            font-weight-bold
+            style="text-align:right;color:#013f70;"
+          >Acc : $ {{getUserInfo.balance | currency}}</h2>
           <fullscreenchart></fullscreenchart>
 
           <div class="setborder">
@@ -254,6 +257,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getUserInfo",
       "getLastDraw",
       "getRoadMap",
       "getStockById",
