@@ -26,7 +26,8 @@ import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import Echo from "laravel-echo";
 export default {
   props: {
     height: {
@@ -37,7 +38,57 @@ export default {
 
   data() {
     return {
-      chartOptions: {
+      stockUUID: "0eb357dc-d15f-4739-96d0-983ab92d94ee"
+    };
+  },
+  created() {
+    this.asyncChart(this.stockUUID);
+  },
+  mounted() {
+    // socket new api
+    this.listenForBroadcast(
+      {
+        // liveStockData.stockName
+        channelName: `liveStockData.btc1`,
+        eventName: "liveStockData"
+      },
+      ({ data }) => {
+        console.log("live chart data");
+        console.log(data.data.roadMap[0]);
+        let dataIndex = data.data.roadMap[0];
+        let readyData = {
+          stockValue: dataIndex.stockValue.replace(",", ""),
+          stockTimestamp: dataIndex.stockTimestamp,
+          number1: dataIndex.number1,
+          number2: dataIndex.number2
+        };
+        if (
+          dataIndex.stockTimestamp !==
+          this.getLiveChart[this.getLiveChart.length - 1].stockTimestamp
+        ) {
+          this.setLiveChart(readyData);
+        }
+
+        console.log("live chart data");
+      }
+    );
+  },
+  components: {
+    apexchart: VueApexCharts
+  },
+  computed: {
+    ...mapGetters([
+      "getLiveTime",
+      "getLivePrice",
+      "getLotteryDraw",
+      "getLiveChart"
+    ]),
+    chartOptions() {
+      let newTime = [];
+      this.getLiveChart.forEach(element => {
+        newTime.push(element.stockTimestamp);
+      });
+      return {
         zoom: {
           enabled: true,
           type: "x",
@@ -107,7 +158,7 @@ export default {
 
         // },
         xaxis: {
-          categories: this.time,
+          categories: newTime,
           show: false,
           labels: {
             show: false
@@ -125,32 +176,11 @@ export default {
           // min: Math.max(...this.data)+10,
           //   max: Math.min(10470),
         }
-      }
-    };
-  },
-  components: {
-    apexchart: VueApexCharts
-  },
-  computed: {
-    ...mapGetters([
-      "getLiveTime",
-      "getLivePrice",
-      "getLotteryDraw",
-      "getRoadMap"
-    ]),
-    time() {
-      let newTime = [];
-      this.getRoadMap.forEach(element => {
-        newTime.push(element.stockTimestamp);
-      });
-      console.log("newTime.......");
-      console.log(newTime);
-      console.log("newTime.......");
-      return newTime;
+      };
     },
     series() {
       let newData = [];
-      this.getRoadMap.forEach(element => {
+      this.getLiveChart.forEach(element => {
         newData.push(element.stockValue);
       });
       return [
@@ -162,17 +192,25 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["asyncChart"]),
+    ...mapMutations(["setLiveChart"]),
+    changeChartType(value) {
+      this.trendType = value;
+    },
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    }
     // updateChart() {
     //   console.log('updating....')
     //   let newData = [];
-    //   this.getRoadMap.forEach(element => {
+    //   this.getLiveChart.forEach(element => {
     //     newData.push(element.stockValue);
     //   });
     //   newData.push(1)
     //   this.$refs.realtimeChart.updateSeries(
     //     [
     //       {
-    //         data: newData 
+    //         data: newData
     //       }
     //     ],
     //     false,

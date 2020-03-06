@@ -80,7 +80,6 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import Echo from "laravel-echo";
 import trendMap from "~/components/modern/trendMap";
 export default {
   data() {
@@ -106,7 +105,6 @@ export default {
   mounted() {
     this.asyncRoadMap(this.stockUUID);
     // socket new api
-    this.setUpSocketIO();
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
@@ -115,7 +113,7 @@ export default {
       ({ data }) => {
         console.log("new socket success");
         console.log(data.data.roadMap);
-        this.setLiveRoadMap(data.data.roadMap[0])
+        this.setLiveRoadMap(data.data.roadMap[0]);
         console.log("new socket success");
       }
     );
@@ -134,32 +132,6 @@ export default {
     },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
-    },
-    setUpSocketIO(
-      hostName = "uattesting.equitycapitalgaming.com",
-      port = 6001
-    ) {
-      window.io = require("socket.io-client");
-      window.Pusher = require("pusher-js");
-
-      if (typeof io !== "undefined") {
-        try {
-          window.Echo = new Echo({
-            broadcaster: "pusher",
-            key: "CC21128A312FAF7817C93D1B51CB9", // SERVER_KEY = CC21128A312FAF7817C93D1B51CB9 ,Local Key = 6E591671FA45AE32B4AC2CB5BFA69
-            wsHost: hostName,
-            wsPort: port,
-            disableStats: true,
-            auth: {
-              headers: {
-                Authorization: "Basic dG5rc3VwZXI6VGVzdDEyMyEs="
-              }
-            }
-          });
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
     }
   }
 };

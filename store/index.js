@@ -24,6 +24,7 @@ const createStore = () => {
       Password: "Test123!",
       // end set portal provider and user UUID for authentication
       roadMap: [],
+      liveChart: [],
       userData: {},
       payout: {},
       balance: "",
@@ -275,6 +276,9 @@ const createStore = () => {
       setLiveRoadMap(state, payload) {
         state.roadMap.push(payload);
       },
+      setLiveChart(state, payload) {
+        state.liveChart.push(payload);
+      },
       // end new api
       setUserData(state, payload) {
         state.userData = payload;
@@ -365,6 +369,32 @@ const createStore = () => {
     },
     actions: {
       // new api
+      async asyncChart(context, stockUUID) {
+        try {
+          const res = await this.$axios.$post(
+            "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
+            {
+              portalProviderUUID: context.state.portalProviderUUID,
+              limit: 50,
+              stockUUID: stockUUID,
+              version: 1
+            },
+            {
+              headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+              }
+            }
+          );
+          if (res.code === 200) {
+            let readyData = res.data.roadMap.reverse();
+            context.state.liveChart = readyData;
+          } else {
+            throw new Error();
+          }
+        } catch (ex) {
+          console.log(ex.message);
+        }
+      },
       async asyncRoadMap(context, stockUUID) {
         try {
           const res = await this.$axios.$post(
@@ -382,8 +412,8 @@ const createStore = () => {
             }
           );
           if (res.code === 200) {
-            context.state.roadMap = res.data.roadMap.reverse();
-            console.log(context.state.roadMap);
+            let readyData = res.data.roadMap.reverse();
+            context.state.roadMap = readyData;
           } else {
             throw new Error();
           }
@@ -407,53 +437,6 @@ const createStore = () => {
           );
           if (res.code === 200) {
             context.state.stocks2 = res.data;
-            // socket new api
-            function setUpSocketIO(
-              hostName = "uattesting.equitycapitalgaming.com",
-              port = 6001
-            ) {
-              window.io = require("socket.io-client");
-              window.Pusher = require("pusher-js");
-
-              if (typeof io !== "undefined") {
-                try {
-                  window.Echo = new Echo({
-                    broadcaster: "pusher",
-                    key: "CC21128A312FAF7817C93D1B51CB9", // SERVER_KEY = CC21128A312FAF7817C93D1B51CB9 ,Local Key = 6E591671FA45AE32B4AC2CB5BFA69
-                    wsHost: hostName,
-                    wsPort: port,
-                    disableStats: true,
-                    auth: {
-                      headers: {
-                        Authorization: "Basic dG5rc3VwZXI6VGVzdDEyMyEs="
-                      }
-                    }
-                  });
-                } catch (error) {
-                  console.log(error.message);
-                }
-              }
-            }
-            function listenForBroadcast({ channelName, eventName }, callback) {
-              window.Echo.channel(channelName).listen(eventName, callback);
-            }
-            setUpSocketIO();
-
-            context.getters.getStocks.forEach(element => {
-              listenForBroadcast(
-                {
-                  channelName: `roadMap.${element.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
-                  eventName: "roadMap"
-                },
-                ({ data }) => {
-                  console.log("new socket success");
-                  console.log(data.data.roadMap);
-                  element.crawlData = data.data.roadMap;
-                  console.log(element.crawlData);
-                  console.log("new socket success");
-                }
-              );
-            });
           } else {
             throw new Error();
           }
@@ -696,12 +679,17 @@ const createStore = () => {
       getRoadMap(state) {
         return state.roadMap;
       },
+      getLiveChart(state) {
+        return state.liveChart;
+      },
       getStocks(state) {
         return state.stocks2;
       },
       getLastDraw(state) {
-        console.log('getLastDraw')
-        return state.roadMap.length > 0 ? state.roadMap[state.roadMap.length - 1].stockValue : "...";
+        console.log("getLastDraw");
+        return state.roadMap.length > 0
+          ? state.roadMap[state.roadMap.length - 1].stockValue
+          : "...";
       },
       // end new api
       getGameChannel(state) {
