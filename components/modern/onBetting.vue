@@ -2,7 +2,7 @@
   <v-layout column wrap>
     <v-btn
       class="buttonGreen"
-      :to="'/modern/desktop//current-bet'"    
+      :to="'/modern/desktop/current-bet'"    
     >{{$t('msg.View All Results')}}</v-btn>
 
     <v-flex pa-2 class="headerStockBar">{{$t('msg.betting')}}</v-flex>

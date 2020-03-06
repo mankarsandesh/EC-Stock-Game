@@ -20,23 +20,6 @@
         indeterminate
       ></v-progress-circular>
     </div>
-
-    <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
-        <v-container pa-0>
-            <v-toolbar color="#003e70" class="white--text">
-                <v-layout wrap style="margin-top:-10px;">
-                    <v-flex xs4>
-                        <welcome-user></welcome-user>
-                    </v-flex>
-                    <v-spacer></v-spacer>
-                    <v-flex xs5 class="text-xs-right">
-                        <winnerMarquee :scrollSpeed="scrollSpeed" :showSpeed="showSpeed" :pauseOnHover="pauseOnHover" :pauseTime="pauseTime" :marqueeList="winner" height="36px" width="100%" color="#f76a24" fontSize="14px"></winnerMarquee>
-                    </v-flex>
-                </v-layout>
-            </v-toolbar>
-        </v-container>
-    </v-container>-->
-
     <v-toolbar height="75" class="elevation-3">
       <v-container fluid class="navbar">
         <v-toolbar-title>
