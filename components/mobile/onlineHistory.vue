@@ -14,7 +14,7 @@
     <v-flex xs12 md12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
         <div class="image_container">
             <v-avatar :size="90">
-                <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                <img :src="imgProfile" alt="img-profile" />
             </v-avatar>
             <span class="camera_container" style="position: absolute; top: 19%;">
                 <v-icon color="black" :size="20">photo_camera</v-icon>
@@ -31,7 +31,7 @@
             <v-flex xs2 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
                 <div class="image_container">
                     <v-avatar :size="60">
-                        <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                        <img :src="imgProfile" alt="img-profile" />
                     </v-avatar>
                     <span class="camera_container" style="position: absolute;top: 32%;left: 12%;">
                         <v-icon color="black" :size="20">photo_camera</v-icon>
@@ -229,7 +229,13 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
+        imgProfile() {
+            return this.getUserInfo.profileImage === "" ?
+                "/user.png" :
+                "http://uattesting.equitycapitalgaming.com/" +
+                this.getUserInfo.profileImage;
+        },
     },
     methods: {
         ...mapActions(["asynUserInfo"]),
