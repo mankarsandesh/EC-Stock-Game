@@ -18,12 +18,7 @@
                 </div>
 
                 <v-card-text class="pa-0" min-height="500">
-                  <chartApp
-                    :data="data.stockPrice"
-                    :time="getStockById(data.id).stockTime"
-                    :key="getStockById(data.id).stockPrice[0]"
-                    :stockid="data.id"
-                  ></chartApp>
+                  <chartApp></chartApp>
                 </v-card-text>
               </v-card>
               <div class="pt-2" style="color: white;">
@@ -75,12 +70,7 @@
               </v-layout>
             </v-flex>
             <v-flex xs12 sm12 md8 lg8 class="pt-2 chartDesgin">
-              <chartApp
-                :data="getStockById($route.params.id).stockPrice"
-                :time="getStockById($route.params.id).stockTime"
-                :key="getStockById($route.params.id).stockPrice[0]"
-                :stockid="$route.params.id"
-              ></chartApp>
+              <chartApp></chartApp>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -90,14 +80,7 @@
               <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
                 <v-flex flex-style class="lastdraw">
-                  <h4
-                    class="text-black"
-                    v-html=" 
-                      $options.filters.lastDraw(
-                        getStockLastDraw($route.params.id)
-                      )
-                    "
-                  ></h4>
+                  <h4 class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></h4>
                 </v-flex>
               </v-flex>
               <v-flex class="text-xs-center" xs4 px-2>
@@ -164,18 +147,18 @@
             <v-flex xs12 sm12 md12 lg12 wrap pt-2>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen which_one="B/S"></trendMapFullScreen>
+                  <trendMapFullScreen :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen which_one="O/E"></trendMapFullScreen>
+                  <trendMapFullScreen :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen which_one="U/L"></trendMapFullScreen>
+                  <trendMapFullScreen :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen which_one="NUM"></trendMapFullScreen>
+                  <trendMapFullScreen :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -191,7 +174,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import winnerMarquee from "~/components/modern/winnerMarquee";
 import welcomeUser from "~/components/welcomeUser";
 import betButton from "~/components/modern/betButton";
@@ -204,8 +187,7 @@ export default {
   layout: "fullscreen",
   data() {
     return {
-      which_one: "B/S",
-      trendType: "twoDigit",
+      stockUUID: "0eb357dc-d15f-4739-96d0-983ab92d94ee",
       dialogOtherstock: false,
       //winner mqrquee
       winner: [],
@@ -228,8 +210,22 @@ export default {
   },
   created() {
     this.getSotckId();
+    this.asyncRoadMap(this.stockUUID);
   },
   mounted() {
+    // socket new api
+    this.listenForBroadcast(
+      {
+        channelName: `roadMap.${this.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
+        eventName: "roadMap"
+      },
+      ({ data }) => {
+        console.log("new socket success");
+        console.log(data.data.roadMap);
+        this.setLiveRoadMap(data.data.roadMap[0]);
+        console.log("new socket success");
+      }
+    );
     this.getwinuser();
     setTimeout(() => {
       this.getliveBetCount();
@@ -258,6 +254,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getLastDraw",
+      "getRoadMap",
       "getStockById",
       "getLotteryDraw",
       "lotterydraw",
@@ -271,6 +269,11 @@ export default {
     ])
   },
   methods: {
+    ...mapMutations(["setLiveRoadMap"]),
+    ...mapActions(["asyncRoadMap"]),
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
     getwinuser() {
       this.$axios
         .$get("api/fetchBet")
