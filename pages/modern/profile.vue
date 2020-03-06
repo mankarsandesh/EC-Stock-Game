@@ -6,16 +6,14 @@
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
                         <v-avatar :size="90">
-                            <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
-                            <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" />
+                            <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                            <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
-                        <span class="camera_container">
-                            <button class="btn_camera">
-                                <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
-                            </button>
+                        <span class="camera_container" style="    position: absolute;    top: 9%;">
+                            <v-icon color="black" :size="20">photo_camera</v-icon>
                         </span>
                     </div>
-                    <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+                    <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
                     <p>Online Status : 2hours</p>
                 </div>
             </v-flex>
@@ -27,17 +25,16 @@
             <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
-                        <v-avatar :size="90">
-                            <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
-                            <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" />
+                        <v-avatar :size="50">
+                            <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                            <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
-                        <span class="camera_container">
-                            <button class="btn_camera">
-                                <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
-                            </button>
+                        <span class="camera_container" style="position: absolute;top: 5%;">
+                            <v-icon color="black" :size="20">photo_camera</v-icon>
+
                         </span>
                     </div>
-                    <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+                    <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
                     <p>Online Status : 2hours</p>
                 </div>
             </v-flex>
@@ -46,7 +43,7 @@
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_green"></div>
                     <span>account balance</span>
-                    <br />
+                    <br>
                     <span class="amount">{{123456 | currency}}</span>
                     <span class="title_currentcy">kip</span>
                 </div>
@@ -56,7 +53,7 @@
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_blue"></div>
                     <span>rolling amount</span>
-                    <br />
+                    <br>
                     <span class="amount">{{161536 | currency}}</span>
                     <span class="title_currentcy">kip</span>
                 </div>
@@ -65,7 +62,7 @@
     </v-flex>
     <v-flex xs12>
         <v-layout>
-            <v-flex xs12 pt-2 pl-1>
+            <v-flex xs12 pt-0 pl-1>
                 <div style="margin-top:20px">
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
                         <div class="row">
@@ -145,14 +142,41 @@
                         </div>
                     </form>
                     <div class="row" style="text-align: -webkit-center;">
-                        <v-btn :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">online history</span> <i class="fa fa-plus"></i></v-btn>
-                        <v-btn :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">stock analysis</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="dialogOnlineHistory = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">online history</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="dialogStockAnalysis = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">stock analysis</span> <i class="fa fa-plus"></i></v-btn>
                     </div>
 
                 </div>
             </v-flex>
         </v-layout>
     </v-flex>
+
+    <v-dialog v-model="dialogOnlineHistory" fullscreen hide-overlay transition="dialog-bottom-transition" light>
+        <v-card>
+            <v-toolbar flat>
+                <v-layout row>
+                    <v-spacer></v-spacer>
+                    <v-icon size="20" @click="dialogOnlineHistory=false">close</v-icon>
+                </v-layout>
+            </v-toolbar>
+            <OnlineHistory />
+
+        </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="dialogStockAnalysis" fullscreen hide-overlay transition="dialog-bottom-transition" light>
+        <v-card>
+            <v-toolbar flat>
+                <v-layout row>
+                    <v-spacer></v-spacer>
+                    <v-icon size="20" @click="dialogStockAnalysis=false">close</v-icon>
+                </v-layout>
+            </v-toolbar>
+            <StockAnalysis />
+
+        </v-card>
+    </v-dialog>
+
 </div>
 </template>
 
@@ -161,17 +185,23 @@ import {
     mapGetters,
     mapActions
 } from "vuex";
-
-import axios from "axios";
-import popper from "vue-popperjs";
-import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "~/components/modern/profile/UploadFile";
+import OnlineHistory from "../../components/mobile/onlineHistory"
+import StockAnalysis from "../../components/mobile/stockAnalysis"
 
 export default {
     data() {
         return {
-            updating: false
+            updating: false,
+            dialogOnlineHistory: false,
+            dialogStockAnalysis: false,
+            profile: {
+                imgProfile: ''
+            }
         };
+    },
+    components: {
+        OnlineHistory,
+        StockAnalysis
     },
     mounted() {},
     computed: {
@@ -234,12 +264,14 @@ export default {
 .padding-right-60 {
     padding-right: 60%;
 }
-    .width-50{
-            width: 50%;
-    }
-     .width-100{
-            width: 100%;
-    }
+
+.width-50 {
+    width: 50%;
+}
+
+.width-100 {
+    width: 100%;
+}
 
 /* .......form....... */
 label {
