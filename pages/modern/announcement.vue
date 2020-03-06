@@ -1,10 +1,10 @@
 <template>
 <div>
-        <v-layout row wrap>
-            <v-flex xs12 md12>
-                <announcement />
-            </v-flex>
-        </v-layout>
+    <v-layout row wrap>
+        <v-flex xs12 md12>
+            <announcement />
+        </v-flex>
+    </v-layout>
 </div>
 </template>
 
