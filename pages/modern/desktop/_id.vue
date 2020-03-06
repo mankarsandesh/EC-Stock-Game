@@ -30,11 +30,11 @@
       </v-flex>
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-layout xs12 pa-2>
-          <v-flex xs6 style="padding-top:21px">
+          <v-flex xs6 style="padding-top:14px">
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
-                  <stockSelect :items="stock" />
+                  <stockSelect :items="SelectStockItems.data" />
                   <!-- <selectStock :stockId="$route.params.id"></selectStock> -->
                 </div>
               </v-flex>
@@ -294,6 +294,7 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
+import SelectStockItems from "~/data/json/current-bet";
 
 export default {
   async validate({ params, store }) {
@@ -313,6 +314,7 @@ export default {
   },
   data() {
     return {
+      SelectStockItems,
       stock: [],
       dialog: false,
       bgColor: "#778899",
@@ -597,198 +599,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.ruleModel .headline {
-  color: #0b2a68;
-  font-weight: 500;
-}
-
-.closePopup {
-  background-color: #fff;
-  color: #0b2a68 !important;
-  border-radius: 180px;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  z-index: 1;
-}
-
-.chartDesgin {
-  margin-top: 10px;
-  padding: 5px 5px;
-  background-color: #fff;
-  border-radius: 10px;
-}
-
-.fullscreen {
-  position: fixed !important;
-  bottom: 18px;
-  right: 130px;
-  width: 60px;
-  height: 60px;
-  color: #fff;
-  z-index: 999;
-  background-color: #8d31cd !important;
-}
-
-.fullscreen .v-icon {
-  font-size: 30px;
-}
-
-.lastdraw {
-  font-size: 14px;
-  border: 1.5px solid #4b65ff;
-  border-radius: 10px;
-  font-size: 22px;
-  padding: 2px 6px;
-  font-weight: 400;
-}
-
-.betclose {
-  font-size: 14px;
-  border: 1.5px solid #ef076a;
-  border-radius: 10px;
-  font-size: 22px;
-  padding: 2px 6px;
-  font-weight: 400;
-}
-
-.lottery {
-  font-size: 14px;
-  border: 1.5px solid #01e3bf;
-  border-radius: 10px;
-  font-size: 22px;
-  padding: 2px 6px;
-  font-weight: 400;
-}
-
-.v-icon {
-  color: #fff !important;
-  font-size: 28px;
-  font-weight: bolder;
-}
-
-.trendmap-container {
-  position: relative;
-}
-
-.addChart {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  border-radius: 50%;
-  height: 47px;
-  width: 47px;
-  padding: 10px !important;
-  background-color: #4464ff !important;
-  position: absolute;
-  left: 49%;
-  top: 46%;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
-}
-
-.layout-bottom {
-  position: absolute;
-  bottom: calc(100% - 466px);
-  display: inherit;
-}
-
-.overlay {
-  height: 0%;
-  width: 100%;
-  position: fixed;
-  z-index: 10000;
-  top: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
-  overflow-y: hidden;
-  transition: 0.5s;
-  opacity: 0.7;
-}
-
-.overlay-content {
-  position: absolute;
-  top: 25%;
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;
-  opacity: 1;
-  z-index: 10001;
-  color: #ffffff;
-}
-
-.overlay a {
-  padding: 8px;
-  text-decoration: none;
-  font-size: 36px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.overlay a:hover,
-.overlay a:focus {
-  color: #f1f1f1;
-}
-
-.overlay .closebtn {
-  cursor: pointer;
-  position: absolute;
-  top: 20px;
-  right: 45px;
-  font-size: 60px;
-}
-
-.border-color-coral {
-  border-color: coral;
-}
-
-.arrow {
-  font-size: 70px;
-  color: #f44336 !important;
-}
-
-.line-my {
-  line-height: 0.3 !important;
-}
-
-p.guideline {
-  background-color: rgb(240, 238, 238);
-  color: #000;
-  border-radius: 7px;
-  padding: 6px;
-  opacity: 0.9;
-}
-
-.btn-nextsetp {
-  z-index: 10000;
-}
-
-/* left side corner  */
-.leftStocklist {
-  background-color: #fff;
-  margin: 35px 7px;
-  border-radius: 20px;
-  position: relative;
-  top: 0;
-  right: 20px;
-}
-
-.sidebar-close {
-  background-color: #ffffff !important;
-  border-radius: 180px;
-  position: absolute;
-  top: -30px;
-  right: -20px;
-  transition: none !important;
-}
-
-.sidebar-toggle {
-  position: fixed;
-  left: 3px;
-  top: 95px;
-  background-color: #ffffff !important;
-}
-</style>
