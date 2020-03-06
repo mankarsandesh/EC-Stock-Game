@@ -851,3 +851,104 @@ main.v-content {
 /* -------------------------------------------------------------------------- */
 /*                               End selec stock                              */
 /* -------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                 current bet                                */
+/* -------------------------------------------------------------------------- */
+
+.current-bet {
+  .v-table__overflow {
+    table {
+      thead {
+        tr {
+          th.column {
+            justify-content: center;
+            text-align: center !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         this is the end current bet                        */
+/* -------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                 bet history                                */
+/* -------------------------------------------------------------------------- */
+section.filter {
+  margin: 30px 0;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 0px 0px rgba(0, 0, 0, 0.12) !important;
+  .layout.filter-history {
+    text-align: center;
+    .flex {
+      text-align: center;
+      .layout {
+        align-items: center;
+        .flex {
+          padding: 0 15px;
+          .v-text-field {
+            .v-label--active {
+              transform: none;
+            }
+          }
+          .v-input {
+            .v-input__control {
+              border-radius: 20px;
+              border: 1px solid #00000047;
+              padding: 6px 16px;
+              .v-input__slot {
+                .v-text-field__slot {
+                  label {
+                    top: -32px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               This is the end                              */
+/* -------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------- */
+/*                                 pagination                                 */
+/* -------------------------------------------------------------------------- */
+.my-pagination {
+  ul {
+    li {
+      button.v-pagination__navigation,
+      button,
+      button.v-pagination__item {
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+          0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        height: 3rem !important;
+        width: 3rem !important;
+      }
+      button.v-pagination__item.v-pagination__item--active {
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+          0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        height: 3rem !important;
+        width: 3rem !important;
+      }
+    }
+  }
+}

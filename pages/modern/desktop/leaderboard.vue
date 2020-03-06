@@ -1,24 +1,22 @@
 <template>
   <div>
-    <v-layout row wrap>
-     
-      <v-flex xs12 md12 style="margin-top:100px;">
-        <v-window  vertical>
-          <v-window-item>
-                  <!-- <leaderBoard/>         -->
-          </v-window-item>
-        </v-window>
-      </v-flex>
-    </v-layout>
+    <breadcrumbs title="Leaderboard" linkItem="bet-history" titlebtn="bet-history" />
+    <v-container>
+       <leaderBoard/>   
+    </v-container>
   </div>
 </template>
+
+
 <script>
 import {mapMutations} from 'vuex'
-// import leaderBoard from "~/components/modern/leaderBoard.vue";
+import leaderBoard from "~/components/modern/leaderBoard.vue";
+import breadcrumbs from "~/components/breadcrumbs";
 export default {
   layout: "desktopModern",
   components: {
-    // leaderBoard
+    breadcrumbs,
+    leaderBoard
   },
   data() {
       return {

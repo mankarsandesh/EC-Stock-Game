@@ -16,35 +16,25 @@ export default {
     currentBet,
     breadcrumbs
   },
- data() {
-    return {
+  data() {
+    return {    
       head: [
-        { text: "UUID", value: "UUID" },
-        { text: "betID", value: "betID" },
-        { text: "ruleName", value: "ruleName" },
-        { text: "betAmount", value: "betAmount" },
-        { text: "rollingAmount", value: "rollingAmount" },
+        { text: "bet ID", value: "betID" },
+        { text: "game ID", value: "gameID" },
+        { text: "bet detail", value: "ruleName" },
+        { text: "time", value: "createdTime" },
+        { text: "amount", value: "betAmount" },
         { text: "payout", value: "payout" },
-        { text: "betResult", value: "betResult" },
-        { text: "createdDate", value: "createdDate" },
-        { text: "createdTime", value: "createdTime" },
-        { text: "gameID", value: "gameID" },
-        { text: "gamePID", value: "gamePID" },
-        { text: "stockName", value: "stockName" },
-        { text: "gameStartDate", value: "gameStartDate" },
-        { text: "gameStartTime", value: "gameStartTime" },
-        { text: "gameStatus", value: "gameStatus" },
-       
-        
+        { text: "bet status", value: "gameStatus" }
       ],
       desserts: []
     };
   },
   computed: {
-    ...mapState(["portalProviderUUID", "headers","userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
   },
-  mounted() {
-    this.fetch(); // after this component render done, this will call the function from method
+  mounted() {  
+   this.fetch(); // after this component render done, this will call the function from method
   },
   methods: {
     async fetch() {
@@ -67,7 +57,7 @@ export default {
           }
         }
       );
-      console.log(data)
+      console.log(data);
       this.desserts = data.data; // after will get the respone the object or array that come with will be equal the array that we create in the data funtion
     }
   }

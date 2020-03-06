@@ -1,0 +1,14 @@
+[
+    {
+        "betID": "e6f6205c-d674-4d54-a3ac-0aca5e35754a",
+        "gameID": "a3486fcb-6bb9-42b5-a395-1377ec23b29c",
+        "stockName": "btc1",
+        "ruleName": "FD_ODD",
+        "loop": "5 minutes",
+        "createdTime": "2020-02-13 11:27:52",
+        "betAmount": 5000,
+        "payout": 1.95,
+        "betResult": "pending"
+    }
+    
+]

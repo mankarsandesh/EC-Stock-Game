@@ -29,7 +29,7 @@
         </v-flex>
 
         <v-flex xs2 sm1 md1 ml-1 mr-2>
-            <button @click="dateSearch()" class="goButton buttonGreen">go</button>
+            <button @click="dateSearch()" class="goButton buttonGreen">GO</button>
         </v-flex>
 
         <!-- <v-flex xs2 sm2 md2 lg1>

@@ -119,7 +119,7 @@ export default {
         eventName: "messageSend"
       },
       ({ data }) => {
-        data.data.forEach(element => {
+        data.data.forEach(element => {         
           this.getMessages.push({
             name: `user ${this.uniqueUserID}`,
             userId: element.userUUID,
@@ -189,7 +189,8 @@ export default {
               userUUID: this.userUUID,
               gameUUID: this.gameUUID,
               chatType: "2",
-              message: this.message
+              message: this.message,
+              version : "0.1"
             },
             {
               headers: {
@@ -215,7 +216,8 @@ export default {
               userUUID: this.userUUID,
               gameUUID: this.gameUUID,
               chatType: "1",
-              message: this.messageGame
+              message: this.messageGame,
+              version : "0.1"
             },
             {
               headers: {
