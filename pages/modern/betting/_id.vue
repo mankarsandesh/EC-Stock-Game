@@ -380,7 +380,7 @@
         </v-flex>
     </v-layout>
 
-    <v-dialog v-model="bettingDialog" fullscreen hide-overlay transition="dialog-bottom-transition" color="red" scrollable light>
+    <v-dialog v-model="bettingDialog" fullscreen hide-overlay transition="dialog-bottom-transition" light>
         <v-card tile color="#f4f6fd">
             <v-toolbar flat>
                 <v-layout row >
@@ -425,7 +425,7 @@
     </v-dialog>
     <!-- price: "200" -->
     <!-- Review bet  -->
-    <v-dialog v-model="reviewbetDialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable light>
+    <v-dialog v-model="reviewbetDialog" fullscreen hide-overlay transition="dialog-bottom-transition" light>
         <v-card tile color="#f4f6fd">
             <v-toolbar flat>
                 <v-layout row>
