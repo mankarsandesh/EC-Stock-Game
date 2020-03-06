@@ -18,6 +18,8 @@
         "sound control": "การควบคุมเสียง"
     },
     "stock-list": {
+        "stock lists": "รายการสินค้า",
+        "stock name": "ชื่อหุ้น",
         "live price": "ราคาสด",
         "reference": "การอ้างอิง",
         "load more": "โหลดเพิ่มเติม",
@@ -33,6 +35,7 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
+        "acc":"Acc",
         "calculating": "การคำนวณ...",
         "marketclosed": "ปิดตลาด!",
         "reset": "รีเซ็ต",
@@ -74,6 +77,7 @@
         "User Info": "ข้อมูลผู้ใช้",
         "Bet Result": "ผลการเดิมพัน",
         "All Results": "ผลลัพธ์ทั้งหมด",
+        "View All Results": "ดูผลลัพธ์ทั้งหมด",
         "Player": "ผู้เล่น",
         "Balance": "เงีน",
         "Totalprofit": "กำไรรวม",
@@ -88,11 +92,9 @@
         "Clear": "ล้าง",
         "Total Bet": "การเดิมพันทั้งหมด",
         "Win Rate": "อัตราการชนะ",
-
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
         "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
-
         "Lastdraw": "การจับรางวัลล่าสุด",
         "BetClosein": "เดิมพันปิด",
         "lotterydraw": "จับสลาก",
@@ -143,8 +145,6 @@
         "ClassicVersion": "รุ่นคลาสสิก",
         "ModernVersion": "รุ่นทันสมัย",
         "ChooseTheVersionToPlay": "เลือกรุ่นที่จะเล่น"
-
-
     },
     "navlist": {
         "live Stock": "หุ้นที่เปิดอยู่",
@@ -172,17 +172,14 @@
         "Odd-Even": "คลิก-คู่",
         "High-Mid-Low": "สูง-กลาง-ต่ำ",
         "Specific-Number": "เฉพาะจำนวน",
-
         "firstdigit": "ตัวเลขตัวแรก",
         "lastdigit": "ตัวเลขสุดท้าย",
         "bothdigit": "ตัวเลขทั้งหลัก",
         "twodigit": "ตัวเลขสองหลัก",
-
         "firstdigits": "ตัวเลข\nตัวแรก",
         "lastdigits": "ตัวเลข\nสุดท้าย",
         "bothdigits": "ตัวเลข\nทั้งหลัก",
         "twodigits": "ตัวเลข\nสองหลัก",
-
         "big": "ใหญ่",
         "small": "เล็ก",
         "odd": "คลิก",
@@ -192,7 +189,6 @@
         "low": "ต่ำ",
         "tie": "เสมอ",
         "number": "ตัวเลข",
-
         "B": "B",
         "S": "S",
         "E": "E",

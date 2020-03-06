@@ -22,7 +22,8 @@
         "stock name": "股票名称",
         "live price": "实时报价",
         "reference": "参考网址",
-        "load more": "更多"
+        "load more": "更多",
+        "search stock": "搜索库存"
     },
     "home": {
         "welcome": "欢迎",
@@ -34,6 +35,7 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
+        "acc": "Acc",
         "calculating": "计算中...",
         "marketclosed": "市場收盤!",
         "reset": "重啟",
@@ -75,6 +77,7 @@
         "User Info": "用戶信息",
         "Bet Result": "下注结果",
         "All Results": "所有结果",
+        "View All Results": "查看所有结果",
         "Player": "玩家",
         "Balance": "余额",
         "Totalprofit": "总盈利",
@@ -89,12 +92,9 @@
         "Clear": "重置",
         "Total Bet": "总下注金额",
         "Win Rate": "赢率",
-
-
         "resultintroduction": "结果参照举例如下",
         "textinfoule": "简介 我们的平台利用不同的可参照股票构建一个公正，刺激，结果不可控的游戏。 我们根据所选股票提供四种主要游戏玩法类型（大/小，单/双，上/中/下，数字）。根据我们的规则，所有游戏结果都取决于股价的两位特定小数。",
         "textresultintroduction": "假设某股价为1234.56，我们所有的游戏类型只会将小数 “56”作为结果; 在结果为“56”的情况下， 我们将小数 “5”定义为 “第一位数字”的结果; 小数 “6”作为. “第二位数字”，的结果; 小数“5”和“6”一起作为“两位数字”的结果; 除此之外，我们还将第一位数字与第二位数字相加（5+6）的结果定为 “合数” 的结果，顾结果为 “11”;",
-
         "Lastdraw": "最新结果",
         "BetClosein": "距离封盘",
         "lotterydraw": "距离开奖",
@@ -145,7 +145,6 @@
         "ClassicVersion": "经典版",
         "ModernVersion": "现代版",
         "ChooseTheVersionToPlay": "選擇要播放的版本"
-
     },
     "navlist": {
         "live Stock": "正开放股票",
@@ -173,17 +172,14 @@
         "Odd-Even": "单-双",
         "High-Mid-Low": "上-中-下",
         "Specific-Number": "数字",
-
         "firstdigit": "第一位数",
         "lastdigit": "第二位数",
         "bothdigit": "合数",
         "twodigit": "=两位数",
-
         "firstdigits": "第一位数",
         "lastdigits": "第二位数",
         "bothdigits": "合数",
         "twodigits": "=两位数",
-
         "big": "大",
         "small": "小",
         "odd": "单",
@@ -193,7 +189,6 @@
         "low": "下",
         "tie": "和",
         "number": "数字 ",
-
         "B": "大",
         "S": "小",
         "E": "双",
