@@ -8,7 +8,6 @@ const createStore = () => {
       activeGameChannel : true,
       loader: false,
       userLoginData : {},
-      portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
       headers: {
         Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
       },
@@ -20,7 +19,7 @@ const createStore = () => {
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
       portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
-      userUUID: "e6f6205c-d674-4d54-a3ac-0aca5e35754a",
+      userUUID: "594a372d-f72d-45a8-aa27-34158bb45647",
       Username: "TnkwebApi",
       Password: "Test123!",
       // end set portal provider and user UUID for authentication
