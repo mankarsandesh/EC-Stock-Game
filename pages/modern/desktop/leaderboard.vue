@@ -10,7 +10,7 @@
 
 <script>
 import {mapMutations} from 'vuex'
-import leaderBoard from "~/components/modern/leaderBoard.vue";
+import leaderBoard from "~/components/modern/leaderboard";
 import breadcrumbs from "~/components/breadcrumbs";
 export default {
   layout: "desktopModern",
