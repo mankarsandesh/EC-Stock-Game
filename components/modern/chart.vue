@@ -9,7 +9,6 @@
         <span class="stockPrice">${{ getLivePrice(stockid) }}</span>
       </v-flex>-->
     </v-layout>
-    <v-btn @click="updateChart">update chart</v-btn>
     <apexchart
       ref="realtimeChart"
       class="chartDesgin"
@@ -163,23 +162,23 @@ export default {
     }
   },
   methods: {
-    updateChart() {
-      console.log('updating....')
-      let newData = [];
-      this.getRoadMap.forEach(element => {
-        newData.push(element.stockValue);
-      });
-      newData.push(1)
-      this.$refs.realtimeChart.updateSeries(
-        [
-          {
-            data: newData 
-          }
-        ],
-        false,
-        true
-      );
-    }
+    // updateChart() {
+    //   console.log('updating....')
+    //   let newData = [];
+    //   this.getRoadMap.forEach(element => {
+    //     newData.push(element.stockValue);
+    //   });
+    //   newData.push(1)
+    //   this.$refs.realtimeChart.updateSeries(
+    //     [
+    //       {
+    //         data: newData 
+    //       }
+    //     ],
+    //     false,
+    //     true
+    //   );
+    // }
   }
 };
 </script>
