@@ -24,7 +24,9 @@
         "live price": "Live Price",
         "reference": "reference",
         "load more": "load more",
-        "search stock": "SEARCH STOCK"
+        "search stock": "SEARCH STOCK",
+        "lose": "Lose",
+        "win": "Win"
     },
     "home": {
         "welcome": "Welcome",
@@ -78,6 +80,8 @@
         "Stock": "Stock",
         "User Info": "User Info",
         "Bet Result": "Bet Result",
+        "myResult": "My Result",
+        "stockResult": "Stock Result",
         "All Results": "All Results",
         "View All Results": "View All Results",
         "Player": "Player",
