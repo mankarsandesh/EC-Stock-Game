@@ -6,10 +6,10 @@
 
     <!-- search -->
     <v-layout row wrap>
-        <v-flex xs10 sm10 class="d-flex">
+        <v-flex xs8 sm9 md9 lg9  class="d-flex">
             <v-select class="border-round mt-2" hide-details :items="items" placeholder="Sort By :" v-model="itemss"></v-select>
         </v-flex>
-        <v-flex xs2 sm2>
+        <v-flex xs2 sm2 md3 lg2 >
             <v-btn @click="goSearch" class="mt-3 buttonGreen" style="border-radius:8px;">go</v-btn>
         </v-flex>
     </v-layout>
