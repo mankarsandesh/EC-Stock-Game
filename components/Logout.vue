@@ -33,46 +33,38 @@
         <v-list-tile @click="dialogprofile = true" v-show="isShow == 'classic'">
           <v-list-tile-title>Profile</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile @click="$router.push('/modern/desktop/profile');" v-show="isShow == 'modern'">
+        <v-list-tile @click="$router.push('/modern/desktop/profile/basicinfo');" v-show="isShow == 'modern'">
           <i class="fa fa-user fa-2x margin-right-5" />
           <v-list-tile-title>{{$t('menu.profile')}}</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile @click="$router.push('/modern/desktop/profile');" v-show="isShow == 'modern'">
+        <v-list-tile
+          @click="$router.push('/modern/desktop/profile/onlinehistory');"
+          v-show="isShow == 'modern'"
+        >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
           <v-list-tile-title>{{$t('profile.online history')}}</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile @click="$router.push('/modern/desktop/profile');" v-show="isShow == 'modern'">
+        <v-list-tile
+          @click="$router.push('/modern/desktop/profile/stockanalysis');"
+          v-show="isShow == 'modern'"
+        >
           <i class="fa fa-line-chart fa-15x margin-right-5" />
           <v-list-tile-title>{{$t('profile.stock analysis')}}</v-list-tile-title>
-        </v-list-tile>
+        </v-list-tile>       
+
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
           <v-list-tile-title>Sign Out</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
-
-    <v-dialog v-model="dialogprofile" max-width="1240px">
-      <v-card>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <button class="cancel" @click="dialogprofile = false">X</button>
-        </v-card-actions>
-        <v-card-text>
-          <profile v-if="dialogprofile" />
-        </v-card-text>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
-
 <script>
 import AnimatedNumber from "animated-number-vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import profile from "~/pages/modern/desktop/profile";
 export default {
   components: {
-    profile,
     AnimatedNumber
   },
   data() {

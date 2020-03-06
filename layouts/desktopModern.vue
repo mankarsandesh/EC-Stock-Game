@@ -52,14 +52,7 @@
           <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
             <i :class="item.icon" style="margin-right: 3px;" />
             <span>{{$t(`menu.${item.title}`)}}</span>
-          </v-btn>
-          <div class="layout-btn">
-            <v-btn class="btn-currency" text flat>
-              <i class="fa fa-dollar icon-dollar" />
-              USD
-              <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
-            </v-btn>
-          </div>
+          </v-btn>        
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
               <countryFlag :country="countryflag" size="normal" />
@@ -81,15 +74,13 @@
     </v-content>
 
     <!-- Chat Windows-->
-    <chatWindow  />
+    <chatWindow />
   </v-app>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-
 import menu from "~/data/menudesktop";
-
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import winnerMarquee from "~/components/modern/winnerMarquee";
@@ -98,9 +89,6 @@ import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
 import chatWindow from "~/components/chatWindow";
-// import popper from "vue-popperjs";
-// import "vue-popperjs/dist/vue-popper.css";
-
 import Logout from "../components/Logout";
 export default {
   components: {
@@ -113,7 +101,6 @@ export default {
   },
   data() {
     return {      
-      currency: [{ title: "USD" }, { title: "BATH" }, { title: "KIP" }],
       direction: "top",
       fab: true,
       fling: true,
@@ -124,14 +111,12 @@ export default {
       bottom: true,
       left: false,
       transition: "slide-y-reverse-transition",
-
       //winner mqrquee
       winner: [],
       pauseTime: 2000,
       pauseOnHover: false,
       scrollSpeed: 30,
       showSpeed: 20,
-
       clipped: false,
       drawer: false,
       fixed: false,
@@ -144,27 +129,24 @@ export default {
       timeout: 3000
     };
   },
-  updated(){
+  updated() {
     let path = this.$nuxt.$route.name.split("-");
-    let pageName = path[2];   
-    if(pageName === "id"){
+    let pageName = path[2];
+    if (pageName === "id") {
       this.setGameChannelShow(true);
-    }else{
+    } else {
       this.setGameChannelShow(false);
     }
   },
   created() {
-   
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];   
-    
+    let isFullscreen = path[1];
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
       this.isFullscreen = false;
     }
-
     console.log("crearted");
   },
   mounted() {
@@ -179,21 +161,13 @@ export default {
       autoplay: true,
       path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
     });
-    // setInterval(function() {
-
-    // }, 1000);
-
-    // this.setIsLoadingStockGame(false);
   },
   methods: {
-     ...mapMutations(["setGameChannelShow"]),
+    ...mapMutations(["setGameChannelShow"]),
     getwinuser() {
       this.$axios
         .$get("api/fetchBet")
         .then(response => {
-          //  console.log("response.....................")
-          // console.log(response.data)
-          //  console.log("response.......................")
           let resultStatus = null;
           for (let i = 0; i < response.data.length - 1; i++) {
             let betID = response.data[i].betId;
@@ -201,15 +175,13 @@ export default {
             let name = response.data[i].name;
             if (result == "1") {
               resultStatus = "Win";
-
               //  console.log(resultStatus);
               let betAmount = response.data[i].betAmount;
               let betTime = response.data[i].betTime;
-              let win = `
-          <span class="text-slide text-white"><span class="text-warning">
-          <i class="fa fa-bell"></i>
-          </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
-          </span> ${name}  ${betTime}</span>`;
+              let win = `<span class="text-slide text-white"><span class="text-warning">
+                        <i class="fa fa-bell"></i>
+                        </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
+                        </span> ${name}  ${betTime}</span>`;
               this.winner.push(win);
             }
           }
@@ -221,6 +193,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getGameChannel",
       "getBalance",
       "getlocale",
       "getIsLoadingStockGame",
@@ -238,25 +211,7 @@ export default {
   cursor: pointer;
   margin-left: 15px;
 }
-.currencySelect i {
-  padding-left: 3px;
-}
-.currencySelect {
-  padding: 0px;
-}
-.currencyName {
-  padding-left: -5px;
-  cursor: pointer;
-}
-.currencyMenu:hover {
-  cursor: pointer;
-  background-color: #dddddd;
-}
-.currencyMenu {
-  cursor: pointer;
-  height: 50px;
-  padding: 5px;
-}
+
 .toolMenu {
   border: 1px solid red;
   width: 100% !important;
@@ -317,12 +272,6 @@ export default {
 }
 
 .btn-langage {
-  border: 1px solid #ccc;
-  height: 48% !important;
-  border-radius: 1em;
-  display: flow-root;
-}
-.btn-currency {
   border: 1px solid #ccc;
   height: 48% !important;
   border-radius: 1em;

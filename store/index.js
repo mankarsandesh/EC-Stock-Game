@@ -1,26 +1,25 @@
 import Vuex from "vuex";
 import { hostname } from "os";
 import payouts from "../data/json/payout";
+import Echo from "laravel-echo";
 const createStore = () => {
-
   return new Vuex.Store({
     state: () => ({
+      activeGameChannel : true,
       loader: false,
-        portalProviderUUID: "5399356e-2d26-4664-a766-86b26e3891ba",
-            headers: {
-                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            },
+      userLoginData : {},
+      headers: {
+        Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+      },
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
       isLoadingAnnoucement: [],
       isLoadingTopPlayer: [],
-      isLoadingMessage: [],
-      isLoadingMessageGame: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
-      userUUID: "6a5c2100-f2c5-4722-bcac-a1857e4ac1c4",
+      portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
+      userUUID: "594a372d-f72d-45a8-aa27-34158bb45647",
       Username: "TnkwebApi",
       Password: "Test123!",
       // end set portal provider and user UUID for authentication
@@ -74,11 +73,12 @@ const createStore = () => {
         }
       },
       payout: payouts,
+      stocks2: [],
       stocks: {
         sh000001: {
           url: {
             crawler: `/api/getCrawlerData?stockId=1&limit=100`,
-            livePrice: "/api/newlivedata/sh01"
+            livePrice: ""
           },
           stockId: 4,
           stockname: "sh000001",
@@ -96,7 +96,7 @@ const createStore = () => {
         sz399001: {
           url: {
             crawler: `/api/getCrawlerData?stockId=4&limit=100`,
-            livePrice: "/api/newlivedata/sz01"
+            livePrice: ""
           },
           stockId: 3,
           stockname: "sz399001",
@@ -114,7 +114,7 @@ const createStore = () => {
         sz399415: {
           url: {
             crawler: `/api/getCrawlerData?stockId=3&limit=100`,
-            livePrice: "/api/newlivedata/sz15"
+            livePrice: ""
           },
           stockId: 2,
           stockname: "sz399415",
@@ -132,7 +132,7 @@ const createStore = () => {
         sh000300: {
           url: {
             crawler: `/api/getCrawlerData?stockId=2&limit=100`,
-            livePrice: "/api/newlivedata/sz300"
+            livePrice: ""
           },
           stockId: 1,
           stockname: "sh000300",
@@ -150,7 +150,7 @@ const createStore = () => {
         usindex: {
           url: {
             crawler: `/api/getCrawlerData?stockId=5&limit=100`,
-            livePrice: "/api/newlivedata/usindex"
+            livePrice: ""
           },
           stockId: 5,
           stockname: "usindex",
@@ -167,7 +167,7 @@ const createStore = () => {
         btc5: {
           url: {
             crawler: `/api/getCrawlerData?stockId=6&limit=100`,
-            livePrice: "/api/newlivedata/btc"
+            livePrice: ""
           },
           stockId: 6,
           stockname: "btc5",
@@ -184,7 +184,7 @@ const createStore = () => {
         btc1: {
           url: {
             crawler: `/api/getCrawlerData?stockId=7&limit=100`,
-            livePrice: "/api/newlivedata/btc"
+            livePrice: ""
           },
           stockId: 7,
           stockname: "btc1",
@@ -202,7 +202,7 @@ const createStore = () => {
       time: {}
     }),
     mutations: {
-      setGameChannelShow(state,value){            
+      setGameChannelShow(state, value) {
         state.activeGameChannel = value;
       },
       setIsLoadingStockGame(state, value) {
@@ -211,10 +211,9 @@ const createStore = () => {
       setIsSendBetting(state, value) {
         state.isSendBetting = value;
       },
-      setUserData(state, payload) {
-        state.userData = payload;
+      setUserLoginData(state, payload) {
+        state.userLoginData = payload;
       },
-
       // store api_token in vuex auth_token
       setAuth_token(state, token) {
         state.auth_token = token;
@@ -280,12 +279,6 @@ const createStore = () => {
       setAnouncement(state, payload) {
         state.isLoadingAnnoucement = payload;
       },
-      setMessages(state, payload) {
-        state.isLoadingMessage = payload;
-      },
-      setMessagesGame(state, payload) {
-        state.isLoadingMessageGame = payload;
-      },
       setHistory(state, payload) {
         state.isLoadingHistory = payload;
       },
@@ -294,6 +287,77 @@ const createStore = () => {
       }
     },
     actions: {
+      async asyncStocks(context) {
+        try {
+          const res = await this.$axios.$post(
+            "http://uattesting.equitycapitalgaming.com/webApi/getStock",
+            {
+              portalProviderUUID: context.state.portalProviderUUID,
+              version: 1
+            },
+            {
+              headers: {
+                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+              }
+            }
+          );
+          if (res.code === 200) {
+            context.state.stocks2 = res.data;
+            // socket new api
+            function setUpSocketIO(
+              hostName = "uattesting.equitycapitalgaming.com",
+              port = 6001
+            ) {
+              window.io = require("socket.io-client");
+              window.Pusher = require("pusher-js");
+
+              if (typeof io !== "undefined") {
+                try {
+                  window.Echo = new Echo({
+                    broadcaster: "pusher",
+                    key: "CC21128A312FAF7817C93D1B51CB9", // SERVER_KEY = CC21128A312FAF7817C93D1B51CB9 ,Local Key = 6E591671FA45AE32B4AC2CB5BFA69
+                    wsHost: hostName,
+                    wsPort: port,
+                    disableStats: true,
+                    auth: {
+                      headers: {
+                        Authorization: "Basic dG5rc3VwZXI6VGVzdDEyMyEs="
+                      }
+                    }
+                  });
+                } catch (error) {
+                  console.log(error.message);
+                }
+              }
+            }
+            function listenForBroadcast({ channelName, eventName }, callback) {
+              window.Echo.channel(channelName).listen(eventName, callback);
+            }
+            setUpSocketIO();
+
+            context.getters.getStocks.forEach(element => {
+              listenForBroadcast(
+                {
+                  channelName: `roadMap.${element.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
+                  eventName: "roadMap"
+                },
+                ({ data }) => {
+                  console.log("new socket success");
+                  console.log(data.data.roadMap);
+                  element.crawlData = data.data.roadMap;
+                  console.log(element.crawlData);
+                  console.log("new socket success");
+                }
+              );
+            });
+          } else {
+            throw new Error();
+          }
+        } catch (ex) {
+          console.log(ex)
+          // this.$router.push("/error");
+        }
+      },
       async asyncPayout(context) {
         try {
           // const respayoutinitial = await this.$axios.$get(
@@ -334,7 +398,6 @@ const createStore = () => {
             context.commit("setUserData", userInfo);
           } else {
             console.log(res);
-            alert(res.message)
             // setTimeout(() => {
             //   if (res.status) return;
             //   localStorage.removeItem("apikey");
@@ -352,34 +415,6 @@ const createStore = () => {
         }
       },
       // end get user info from api
-
-      async asymessages(context) {
-        try {
-          // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
-          const res = await this.$axios.$get(
-            "http://159.138.47.250/chatglobal/allmessages"
-          );
-          //console.log(res);
-          context.commit("setMessages", res.data);
-          // console.log("Message View");
-          // console.log(res.data);
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      async asymessagesGame(context) {
-        try {
-          // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
-          const res = await this.$axios.$get(
-            "http://159.138.47.250/chatgame/messages"
-          );
-          // console.log(res);
-          context.commit("setMessagesGame", res.data);
-          // console.log("Message View Message");
-        } catch (error) {
-          console.log(error);
-        }
-      },
       async balance(context) {
         try {
           const res = await this.$axios.$get(
@@ -545,9 +580,7 @@ const createStore = () => {
           const res = await this.$axios.$get(
             `api/fetchTopPlayersList?result=win&days=7&apikey=${context.getters.getAuth_token}`
           );
-          context.commit("setTopPlayer", res.data);
-          // console.log(res.data);
-          console.log("sandesh here");
+          context.commit("setTopPlayer", res.data);          
         } catch (error) {
           console.log(error);
         }
@@ -564,8 +597,16 @@ const createStore = () => {
       }
     },
     getters: {
-      getGameChannel(state){
-         return state.activeGameChannel;
+      getStocks(state) {
+        return state.stocks2;
+      },
+      getLastDraw(state) {
+        return state.stocks2[1].crawlData.length > 0
+          ? state.stocks2[1].crawlData[0].stockValue
+          : "000";
+      },
+      getGameChannel(state) {
+        return state.activeGameChannel;
       },
       getPortalProviderUUID(state) {
         return state.portalProviderUUID;
@@ -596,13 +637,7 @@ const createStore = () => {
       },
       getTopPlayer(state) {
         return state.isLoadingTopPlayer;
-      },
-      getMessages(state) {
-        return state.isLoadingMessage;
-      },
-      getMessagesGame(state) {
-        return state.isLoadingMessageGame;
-      },
+      },     
       // get user info
       getUserInfo(state) {
         return state.userData;
@@ -629,7 +664,14 @@ const createStore = () => {
       getOnlimeTime(state) {
         return state.OnlineTime;
       },
-
+      // get auth_token
+      getPortalProviderUser(state) {
+        // sessionStorage.setItem("userData", JSON.stringify(userData));
+        if(sessionStorage.getItem('userData') !== null) {
+          const formData = JSON.parse(sessionStorage.getItem('userData'));
+        }
+        return state.formData;
+      }, 
       // get auth_token
       getAuth_token(state) {
         return state.auth_token;
@@ -806,7 +848,6 @@ const createStore = () => {
           let stockIdObject = object.filter(x => x.stock === data.stockId);
           // check rule in stockId
           // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
-
 
           // get amount by rule
           let result = 0;

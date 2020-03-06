@@ -77,7 +77,7 @@
                                 <p class="text-center">‘-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as</p>
                                 <p class="text-center"><span class="text-red">both</span>, digits’ result, which is<span class="text-red">‘11’</span>.</p>
                                 <div class= "text-xs-center" >                           
-                                    <v-btn style="min-width: 180px;min-height: 45px;" color="buttonGreen" dark v-on="on"  @click="dialog = false">I accept</v-btn>
+                                    <v-btn class="accept" color="buttonGreen" dark v-on="on"  @click="dialog = false">I accept</v-btn>
                                 </div>
                             </v-card-text>
                         </v-card>
@@ -138,5 +138,10 @@ export default {
 
   background-color:#fff;
   border-top-right-radius:10px;
+}
+
+.accept{
+    min-width: 100px;
+    min-height: 25px;
 }
 </style>

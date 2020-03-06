@@ -50,7 +50,8 @@
 import {
     mapGetters,
     mapMutations,
-    mapActions
+    mapActions,
+    mapState
 } from "vuex";
 export default {
     // props: {
@@ -70,13 +71,14 @@ export default {
     // },
     props: [
         "stockName",
+        "ruleid",
         "loop",
         "betId",
         "payout",
     ],
     data() {
         return {
-            
+            gameUUID:"5d147c4c-6fab-4dfa-a97a-69a863b2fa24",
             confirmDisabled: false,
             betValue: 0,
             imgChip: [{
@@ -114,7 +116,8 @@ export default {
             "getOnBetting",
             "getAuth_token",
             "getStockId"
-        ])
+        ]),
+        ...mapState(["portalProviderUUID", "headers","userUUID"]) //get 2 data from vuex first, in the computed
     },
     created() {
         // check is full screen or not
@@ -135,17 +138,30 @@ export default {
             this.betValue = this.betValue + amount;
         },
         async sendBetting(betData) {
-            let data = {
-                data: [betData]
-            };
+            let finalData = betData;
+            
             try {
-                const res = await this.$axios.$post(`/api/storebet?apikey=${this.getAuth_token}`,data);
-                // console.log(res);
+               const res = await this.$axios.$post(
+                  "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+                  {
+                    portalProviderUUID: this.portalProviderUUID,
+                    userUUID: this.userUUID,
+                    version : "0.1",
+                    betData : [finalData]
+                  },
+                  {
+                    headers: {
+                      Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+                    }
+                  }
+                );               
                 if (res.status) {
+                   console.log("i am here 2");   
+                    console.log(res);
                     this.balance()
                     this.closePopper();
                     // console.warn(res.data[0]);
-                    this.pushDataOnGoingBet(res.data[0]);
+                    // this.pushDataOnGoingBet(res.data[0]);
                     // console.warn(this.getOnBetting);
                     this.$swal({
                         type: "success",
@@ -161,6 +177,7 @@ export default {
                         showConfirmButton: true
                     });
                 }
+
             } catch (ex) {
                 this.confirmDisabled = false;
                 console.error(ex);
@@ -169,12 +186,13 @@ export default {
         },
         confirmBet() {
             let data = {
-                stockId: this.getStockId(this.stockName),
-                loop: this.loop,
-                gameRule: this.betId,
-                amount: this.betValue
+                gameUUID: this.gameUUID,              
+                ruleID: this.ruleid,
+                betAmount: this.betValue
             };
-            this.confirmDisabled = true;     
+            this.confirmDisabled = true;  
+            console.log("i am here 1");   
+            console.log(data);
             this.sendBetting(data);           
             // console.warn(this.getOnBetting);
         },

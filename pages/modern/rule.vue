@@ -1,5 +1,6 @@
 <template>
-<div>
+<div xs12>
+    <!-- <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" /> -->
     <h1 class="jumbotron-heading text-center">
         EC Gaming Rules Description</h1>
     <p class="lead text-muted text-center">
@@ -7,22 +8,21 @@
     <div class="text-xs-center">
         <v-dialog v-model="dialog">
             <template v-slot:activator="{ on }">
-                <v-btn color="red lighten-2" dark v-on="on">
+                <v-btn color="red lighten-2 buttonGreen" dark v-on="on">
                     result introduction
                 </v-btn>
             </template>
 
             <v-card>
-                <v-card-title class="headline grey lighten-2" primary-title>
-                    result introduction
+                <v-card-title class="headline lighten-2" style="color:#0b2a68;" primary-title>
+                    <b>Introduction</b>
                 </v-card-title>
                 <v-card-text>
                     {{$t('msg.textresultintroduction')}}
                 </v-card-text>
-                <v-divider></v-divider>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" flat @click="dialog = false">
+                    <v-btn class="accept" color="buttonGreen" dark v-on="on" @click="dialog = false">
                         I accept
                     </v-btn>
                 </v-card-actions>
@@ -30,7 +30,7 @@
         </v-dialog>
     </div>
 
-    <v-expansion-panel v-model="panels" expand>
+    <!-- <v-expansion-panel v-model="panels" expand>
         <v-expansion-panel-content class="bg-color" v-for="(items, idx) in rules" :key="idx">
             <template v-slot:header>
                 <div>{{$t('gamemsg.'+items.name)}} {{items.type}}</div>
@@ -38,28 +38,33 @@
             <v-card>
                 <table>
                     <tr v-for="(data,idx1) in items.values" :key="idx1">
-                        <td class="text-left"><span :class="data.color+' font-weight-bold'">{{$t('gamemsg.'+data.name)}} </span>{{data.value}}</td>
+                        <td class="pl-4"><span :class="data.color+' font-weight-bold'">{{$t('gamemsg.'+data.name)}} </span>{{data.value}}</td>
                     </tr>
                 </table>
             </v-card>
         </v-expansion-panel-content>
-    </v-expansion-panel>
+    </v-expansion-panel> -->
+    <v-card>
+        <onlyrules />
+    </v-card>
 </div>
 </template>
 
 <script>
-import rules from '~/data/json/rule.json'
+import onlyrules from "~/components/modern/stocklist/onlyrule";
+import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
 export default {
+    components: {
+        onlyrules,
+        breadcrumbs
+    },
     data() {
         return {
-            item: 5,
-            panel: [true],
-            panels: [true, false, false, false],
-            rules: rules,
             dialog: false,
-        }
+            panel: [0]
+        };
     }
-}
+};
 </script>
 
 <style scoped>
@@ -85,5 +90,10 @@ export default {
 
 .text-danger {
     color: red
+}
+
+.accept {
+    min-width: 80px;
+    min-height: 25px;
 }
 </style>
