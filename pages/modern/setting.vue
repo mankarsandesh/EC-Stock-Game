@@ -3,13 +3,13 @@
     <v-card class="my-bg">
 
         <v-layout row wrap justify-center class="allchips">
-            <v-flex class="settingchips" xs3 sm3 md3 lg2 v-for="(item,key) in imgChip" :key="key" justify-center>
+            <v-flex class="settingchips" xs4 sm3 md3 lg2 v-for="(item,key) in imgChip" :key="key" justify-center>
                 <div class="d-block">
                     <v-img :width="item.width" :src="item.img" class="chipImage">
                         <v-text-field class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
-                    <v-card-actions>
-                        <v-btn  class="buttonGreen chipamount ml-4" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
+                    <v-card-actions class="justify-center">
+                        <v-btn class="buttonGreen chipamount" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
                     </v-card-actions>
                     <div v-show="conOrE=='confirm'">
                         <v-card-text>{{$t('msg.min')}} = $200</v-card-text>
