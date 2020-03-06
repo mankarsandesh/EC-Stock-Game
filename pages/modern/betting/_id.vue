@@ -380,16 +380,16 @@
         </v-flex>
     </v-layout>
 
-    <v-dialog v-model="bettingDialog" fullscreen hide-overlay transition="dialog-bottom-transition" color="red" scrollable light>
+    <v-dialog v-model="bettingDialog" fullscreen hide-overlay transition="dialog-bottom-transition" light>
         <v-card tile color="#f4f6fd">
             <v-toolbar flat>
-                <v-layout row >
+                <v-layout row>
                     <v-spacer></v-spacer>
                     <v-icon size="30" @click="bettingDialog=false">close</v-icon>
                 </v-layout>
             </v-toolbar>
 
-            <v-card class="mx-auto pa-2 round-3" color="#ffffff">
+            <v-card class="mx-auto pa-2 round-3" :style="$vuetify.breakpoint.xs? 'width: 100%;' :'width: 60%;'" color="#ffffff">
                 <v-flex xs12 class="text-center">
                     <div class="d-block text-center" style="color:#000">
                         <p class="text-uppercase">stockname : {{ $t(`stockname.${$route.params.id}`) }} payout: {{odd}}</p>
@@ -425,7 +425,7 @@
     </v-dialog>
     <!-- price: "200" -->
     <!-- Review bet  -->
-    <v-dialog v-model="reviewbetDialog" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable light>
+    <v-dialog v-model="reviewbetDialog" fullscreen hide-overlay transition="dialog-bottom-transition" light>
         <v-card tile color="#f4f6fd">
             <v-toolbar flat>
                 <v-layout row>
@@ -434,7 +434,7 @@
                 </v-layout>
             </v-toolbar>
 
-            <v-card class="mx-auto pa-2 round-3" color="#ffffff">
+            <v-card class="mx-auto pa-2 round-3" :style="$vuetify.breakpoint.xs? 'width: 100%;' :'width: 60%;'" color="#ffffff">
                 <v-flex xs12 class="text-center">
                     <div class="d-block text-center" style="color:#000">
 
@@ -1009,11 +1009,13 @@ h4 {
     margin-top: 6%;
     border: 0px;
 }
-.text-color-blue{
+
+.text-color-blue {
     color: #2e477d;
     font-weight: bold;
 }
-.text-color-green{
+
+.text-color-green {
     color: #17b542;
     font-weight: bold;
 }

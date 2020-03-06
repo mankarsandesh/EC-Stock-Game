@@ -6,13 +6,11 @@
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
                         <v-avatar :size="90">
-                            <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
-                            <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" />
+                            <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                            <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
-                        <span class="camera_container">
-                            <button class="btn_camera">
-                                <!-- <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon> -->
-                            </button>
+                        <span class="camera_container" style="    position: absolute;    top: 15%;">
+                            <v-icon color="black" :size="20">photo_camera</v-icon>
                         </span>
                     </div>
                     <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
@@ -27,14 +25,13 @@
             <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
-                        <v-avatar :size="90">
-                            <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
-                            <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" />
+                        <v-avatar :size="50">
+                            <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                            <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
-                        <span class="camera_container">
-                            <button class="btn_camera">
-                                <!-- <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon> -->
-                            </button>
+                        <span class="camera_container" style="position: absolute;top: 10%;">
+                            <v-icon color="black" :size="20">photo_camera</v-icon>
+
                         </span>
                     </div>
                     <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
@@ -65,7 +62,7 @@
     </v-flex>
     <v-flex xs12>
         <v-layout>
-            <v-flex xs12 pt-2 pl-1>
+            <v-flex xs12 pt-0 pl-1>
                 <div style="margin-top:20px">
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
                         <div class="row">
@@ -154,35 +151,31 @@
         </v-layout>
     </v-flex>
 
-    <div class="text-xs-center">
-        <v-dialog v-model="dialogOnlineHistory">
-            <v-card>
-                <OnlineHistory />
-                <v-divider></v-divider>
-
-                <v-card-actions>
+    <v-dialog v-model="dialogOnlineHistory" fullscreen hide-overlay transition="dialog-bottom-transition" light>
+        <v-card>
+            <v-toolbar flat>
+                <v-layout row>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" flat @click="dialogOnlineHistory = false">
-                        X
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+                    <v-icon size="20" @click="dialogOnlineHistory=false">close</v-icon>
+                </v-layout>
+            </v-toolbar>
+            <OnlineHistory />
 
-        <v-dialog v-model="dialogStockAnalysis">
-            <v-card>
-                <StockAnalysis />
-                <v-divider></v-divider>
+        </v-card>
+    </v-dialog>
 
-                <v-card-actions>
+    <v-dialog v-model="dialogStockAnalysis" fullscreen hide-overlay transition="dialog-bottom-transition" light>
+        <v-card>
+            <v-toolbar flat>
+                <v-layout row>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" flat @click="dialogStockAnalysis = false">
-                        X
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </div>
+                    <v-icon size="20" @click="dialogStockAnalysis=false">close</v-icon>
+                </v-layout>
+            </v-toolbar>
+            <StockAnalysis />
+
+        </v-card>
+    </v-dialog>
 
 </div>
 </template>
@@ -200,7 +193,10 @@ export default {
         return {
             updating: false,
             dialogOnlineHistory: false,
-            dialogStockAnalysis: false
+            dialogStockAnalysis: false,
+            profile: {
+                imgProfile: ''
+            }
         };
     },
     components: {

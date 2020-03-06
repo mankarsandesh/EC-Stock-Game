@@ -1,21 +1,21 @@
 <template>
 <div>
-    <v-flex xs12 class="pt-5 pl-5">
+    <v-flex xs12 md8 class="pt-2 pl-5 pr-5">
         <div>
             <h2 class="title_menu">stock analysis</h2>
             <v-divider></v-divider>
         </div>
     </v-flex>
-    <v-flex xs12 pt-3 pl-5>
+    <v-flex xs12 pt-3>
         <v-layout row>
             <!-- select start date  -->
-            <v-flex xs12 sm12 md3 lg3 pr-5>
+            <v-flex xs5 sm3 mr-1 ml-1>
                 <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
                     <div class="title_date_picker">
                         <span>from</span>
                     </div>
                     <div class="date_picker">
-                        <span class="select_date">{{ startDate }}</span>
+                        <span class="select_date">{{startDate}}</span>
                         <span class="icon_date">
                             <v-icon>date_range</v-icon>
                         </span>
@@ -26,13 +26,13 @@
                 </div>
             </v-flex>
             <!-- select end date -->
-            <v-flex xs12 sm12 md12 lg3 pr-5>
+            <v-flex xs5 sm3 mr-1>
                 <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
                     <div class="title_date_picker">
                         <span>to</span>
                     </div>
                     <div class="date_picker">
-                        <span class="select_date">{{ endDate }}</span>
+                        <span class="select_date">{{endDate}}</span>
                         <span class="icon_date">
                             <v-icon>date_range</v-icon>
                         </span>
@@ -42,22 +42,22 @@
                     <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
                 </div>
             </v-flex>
-            <!-- go button -->
-            <v-flex xs12 sm12 md12 lg1>
+
+            <v-flex xs1 sm1 ml-1 mr-2>
                 <div class="date_picker_container">
                     <div class="title_date_picker">
                         <span></span>
                     </div>
-                    <button>GO</button>
+                    <button class="buttonGreen btn-go">GO</button>
                 </div>
             </v-flex>
-            <v-flex xs12 sm12 md12 lg3 pr-5>
+            <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
                 <div class="date_picker_container">
                     <div class="title_date_picker">
                         <span>Sort By</span>
                     </div>
                     <div class="date_picker">
-                        <!-- sort by  -->
+
                         <v-menu offset-y>
                             <template v-slot:activator="{ on }">
                                 <span class="select_date">2020-02-12</span>
@@ -76,16 +76,51 @@
             </v-flex>
         </v-layout>
     </v-flex>
-    <v-flex xs12 sm12 md10 lg10 class="pa-2">
-        <div class="chart_container">
-            <div class="chart-map-color">
-                <span v-for="(color,index) in colors[0]" :key="index">
-                    <span class="circle-color" :style="{backgroundColor:color}"></span>
-                    <span style="margin-right:10px">{{stocks[index]}}</span>
-                </span>
-            </div>
-            <apexchart type="bar" height="280vh" :options="chartOptions" :series="series"></apexchart>
-        </div>
+    <v-flex xs12 sm12 pt-3 v-if="$vuetify.breakpoint.xs">
+        <v-layout row>
+            <v-flex xs3 sm3>
+                <div class="title_date_picker mt-2">
+                    <span>Sort By</span>
+                </div>
+            </v-flex>
+            <v-flex xs5 sm5>
+                <div class="date_picker_container">
+                    <div class="date_picker">
+                        <v-menu offset-y>
+                            <template v-slot:activator="{ on }">
+                                <span class="select_date">2020-02-12</span>
+                                <span class="icon_date">
+                                    <v-icon v-on="on">arrow_drop_down</v-icon>
+                                </span>
+                            </template>
+                            <v-list>
+                                <v-list-tile v-for="(item, index) in items" :key="index">
+                                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                </v-list-tile>
+                            </v-list>
+                        </v-menu>
+                    </div>
+                </div>
+            </v-flex>
+        </v-layout>
+    </v-flex>
+
+    <v-flex xs12 sm12 md10 lg10 mt-4>
+        <v-layout row>
+            <v-flex xs1 sm2>
+            </v-flex>
+            <v-flex xs10 sm8>
+                <div class="chart_container">
+                    <div class="chart-map-color">
+                        <span v-for="(color,index) in colors[0]" :key="index">
+                            <span class="circle-color" :style="{backgroundColor:color}"></span>
+                            <span style="margin-right:10px">{{stocks[index]}}</span>
+                        </span>
+                    </div>
+                    <apexchart type="bar" height="250vh" :options="chartOptions" :series="series"></apexchart>
+                </div>
+            </v-flex>
+        </v-layout>
     </v-flex>
 </div>
 </template>
@@ -280,6 +315,12 @@ export default {
 </script>
 
 <style scoped>
+.btn-go {
+    width: 45px !important;
+    height: 42px !important;
+    font-size: 16px !important;
+}
+
 li {
     list-style-type: none;
 }
