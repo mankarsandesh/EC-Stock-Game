@@ -273,7 +273,6 @@ export default {
 
 .btn-langage {
   border: 1px solid #ccc;
-  height: 48% !important;
   border-radius: 1em;
   display: flow-root;
 }
