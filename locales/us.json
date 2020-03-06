@@ -15,7 +15,8 @@
         "setting": "setting",
         "game result": "Game Result",
         "chip amount": "Chip Amount",
-        "sound control": "Sound Control"
+        "sound control": "Sound Control",
+        "leaderboard":"Leaderboard"
     },
     "stock-list": {
         "stock lists": "stock lists",

@@ -48,7 +48,7 @@
           <h3 class="subtitle-1 text-uppercase text-center pt-2">Sandesh Mankar</h3>
         </v-card-text>
 
-        <v-card-actions >
+        <v-card-actions>
           <v-flex lg6 pr-4>
             <v-select :items="followby" label="Follow by Amount" solo></v-select>
           </v-flex>
