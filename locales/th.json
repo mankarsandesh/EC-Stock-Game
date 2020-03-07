@@ -17,7 +17,8 @@
         "setting": "การตั้งค่า",
         "game result": "ผลลัพธ์ของเกม",
         "chip amount": "จำนวนชิป",
-        "sound control": "การควบคุมเสียง"
+        "sound control": "การควบคุมเสียง",
+        "leaderboard": "ลีดเดอร์"
     },
     "stock-list": {
         "stock lists": "รายการสินค้า",
@@ -227,5 +228,19 @@
         "stock analysis": "การวิเคราะห์หุ้น",
         "online time":"เวลาออนไลน์",
         "total online":"ออนไลน์ทั้งหมด"
+    },
+    "useraction": {
+        "followbet": "ทำตามการพนัน",
+        "unfollow": "เลิก"
+    },
+    "leaderboard": {
+        "user":"ผู้ใช้งาน",
+        "winning rate": "อัตราการชนะ",
+        "Bets":"เดิมพัน",
+        "winning amount":"จำนวนเงินที่ชนะ",
+        "follow":"ปฏิบัติตาม",
+        "weekly rankings":"อันดับประจำสัปดาห์",
+        "monthly rankings":"อันดับรายเดือน",
+        "Top 10 Leaders":"ผู้นำ 10 อันดับแรก"
     }
 }

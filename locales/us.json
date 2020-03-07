@@ -18,7 +18,7 @@
         "game result": "Game Result",
         "chip amount": "Chip Amount",
         "sound control": "Sound Control",
-        "leaderboard":"Leaderboard"
+        "leaderboard": "Leaderboard"
     },
     "stock-list": {
         "stock lists": "Stock Lists",
@@ -228,12 +228,21 @@
         "basic info": "basic infor",
         "online history": "online history",
         "stock analysis": "stock analysis",
-        "leaderboard": "Leaderboard",
         "online time":"online time",
         "total online":"total online"
     },
     "useraction": {
         "followbet": "FOLLOW BET",
-        "unfollowt": "UNFOLLOW"
+        "unfollow": "UNFOLLOW"
+    },
+    "leaderboard": {
+        "user":"user",
+        "winning rate": "winning rate",
+        "Bets":"Bets",
+        "winning amount":"winning amount",
+        "follow":"follow",
+        "weekly rankings":"WEEKLY RANKINGS",
+        "monthly rankings":"MONTHLY RANKINGS",
+        "Top 10 Leaders":"Top 10 Leaders"
     }
 }

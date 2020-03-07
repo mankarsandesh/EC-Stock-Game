@@ -57,9 +57,9 @@ export default {
                 return value; // after the value is not a number  we return value out
             }
             var formatter = new Intl.NumberFormat("en-US", { // if the value is number 
-                style: "currency", // you also can change the curreny to other curreny that you like 
+                style: "currency", // you can also change the curreny to other curreny that you like 
                 currency: "USD", // in this case we choose the USD 
-                minimumFractionDigits: 0 // minumum the value is not equal than 0
+                minimumFractionDigits: 0 // minumum value shoul not be equal than 0
             });
             return formatter.format(value); // after get the currency that you prefer, than we return out with value
         }
