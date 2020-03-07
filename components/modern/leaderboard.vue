@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-flex xs8 style="margin:0 auto;">
+    <v-flex xs8 style="margin:0 auto;">  
       <v-layout row>
         <v-flex grow pa-1>
           <p class="float-left md6">
@@ -16,7 +16,7 @@
           </span>
         </v-flex>
       </v-layout>
-      <div v-for="(item,index) in getTopPlayer" :key="index" class="userRow">
+      <div  class="userRow">
         <th>
           <img style="vertical-align:middle" class="pimage" src="https://placehold.it/60x60" />
           <span class="subtitle-1 text-uppercase">Sandesh Mankar</span>
@@ -24,15 +24,15 @@
         </th>
         <th>
           <h3 class="header">WINNING RAATE</h3>
-          <h4 class="green--text title">{{item.winRate}} %</h4>
+          <h4 class="green--text title">100 %</h4>
         </th>
         <th>
           <h3 class="header">BETS</h3>
-          <H4 style="color:#eb0b6e;" class="title">{{item.totalBet}}</H4>
+          <H4 style="color:#eb0b6e;" class="title">20</H4>
         </th>
         <th>
           <h3 class="header">WINNING AMOUNT</h3>
-          <h4 style="color:#0b2a68;" class="title">{{item.totalProfitEarned}}</h4>
+          <h4 style="color:#0b2a68;" class="title">25000</h4>
         </th>
         <th>
           <v-btn class="buttonGreensmall" @click="dialog = true" dark>{{$t('useraction.followbet')}}</v-btn>
@@ -47,7 +47,6 @@
           <img class="pimage" src="https://placehold.it/60x60" width="120px" />
           <h3 class="subtitle-1 text-uppercase text-center pt-2">Sandesh Mankar</h3>
         </v-card-text>
-
         <v-card-actions>
           <v-flex lg6 pr-4>
             <v-select :items="followby" label="Follow by Amount" solo></v-select>
@@ -73,13 +72,10 @@ export default {
     };
   },
   mounted() {
-    this.asyTopPlayer();
+   
   },
   methods: {
     ...mapActions(["asyTopPlayer"])
-  },
-  computed: {
-    ...mapGetters(["getTopPlayer"])
   }
 };
 </script>

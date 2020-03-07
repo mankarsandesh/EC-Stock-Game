@@ -1,32 +1,32 @@
 <template>
 <div>
-    <v-flex xs12 v-if="$vuetify.breakpoint.xs">
+    <v-flex xs12 mt-2 mb-2 v-if="$vuetify.breakpoint.xs">
         <v-layout row>
             <v-flex xs12 sm2 md4 lg3>
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
                         <v-avatar :size="90">
-                            <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                            <img :src="imgProfile" alt="img-profile" />
                             <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
-                        <span class="camera_container" style="    position: absolute;    top: 9%;">
+                        <span class="camera_container" style=" position: absolute; top: 9%;">
                             <v-icon color="black" :size="20">photo_camera</v-icon>
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>Online Status : 2hours</p>
+                    <span>{{$t('profile.online status')}} : 2hours</span>
                 </div>
             </v-flex>
         </v-layout>
     </v-flex>
 
-    <v-flex xs12>
+    <v-flex xs12 :class="!$vuetify.breakpoint.xs ? 'mt-2':''">
         <v-layout row>
             <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
                         <v-avatar :size="50">
-                            <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                            <img :src="imgProfile" alt="img-profile" />
                             <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
                         <span class="camera_container" style="position: absolute;top: 5%;">
@@ -35,16 +35,16 @@
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>Online Status : 2hours</p>
+                    <p>{{$t('profile.online status')}} : 2hours</p>
                 </div>
             </v-flex>
 
             <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6' " md4 lg3>
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_green"></div>
-                    <span>account balance</span>
+                    <span>{{$t('msg.account balance')}}</span>
                     <br>
-                    <span class="amount">{{123456 | currency}}</span>
+                    <span class="amount">{{getUserInfo.balance | currency}}</span>
                     <span class="title_currentcy">kip</span>
                 </div>
             </v-flex>
@@ -52,7 +52,7 @@
             <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6' " md4 lg3>
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_blue"></div>
-                    <span>rolling amount</span>
+                    <span>{{$t('msg.rolling amount')}}</span>
                     <br>
                     <span class="amount">{{161536 | currency}}</span>
                     <span class="title_currentcy">kip</span>
@@ -63,11 +63,11 @@
     <v-flex xs12>
         <v-layout>
             <v-flex xs12 pt-0 pl-1>
-                <div style="margin-top:20px">
+                <div>
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
                         <div class="row">
                             <div class="col-15">
-                                <label for="fname">player ID</label>
+                                <label for="fname">{{$t('msg.playerid')}}</label>
                             </div>
                             <div class="col-85">
                                 <input disabled type="text" id="fname" name="firstname" :value="userData.PID" />
@@ -75,7 +75,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="lname">first name</label>
+                                <label for="lname">{{$t('profile.first name')}}</label>
                             </div>
                             <div class="col-85">
                                 <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" />
@@ -86,7 +86,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="lname">last name</label>
+                                <label for="lname">{{$t('profile.last name')}}</label>
                             </div>
                             <div class="col-85">
                                 <input ref="lastname" type="text" :value="userData.lastName" id="lname" name="lastname" placeholder="Your last name" />
@@ -97,7 +97,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="country">gender</label>
+                                <label for="country">{{$t('profile.gender')}}</label>
                             </div>
                             <div class="col-85">
                                 <select ref="gender" id="country" name="country">
@@ -111,7 +111,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="country">email</label>
+                                <label for="country">{{$t('profile.email')}}</label>
                             </div>
                             <div class="col-85">
                                 <input ref="email" type="text" :value="userData.email" id="lname" name="lastname" placeholder="mackychinma@gmail.com" />
@@ -119,7 +119,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="country">country</label>
+                                <label for="country">{{$t('profile.country')}}</label>
                             </div>
                             <div class="col-85">
                                 <select ref="country" id="country" name="country">
@@ -136,14 +136,14 @@
                         <div class="row">
                             <div class="col-15"></div>
                             <div class="col-85">
-                                <v-btn :loading="updating" :disabled="updating" class="btn_save" @click="saveClick()">save</v-btn>
-                                <v-btn class="btn_cancel">cancel</v-btn>
+                                <v-btn :loading="updating" :disabled="updating" class="btn_save" @click="saveClick()">{{$t('msg.save')}}</v-btn>
+                                <v-btn class="btn_cancel">{{$t('msg.cancel')}}</v-btn>
                             </div>
                         </div>
                     </form>
                     <div class="row" style="text-align: -webkit-center;">
-                        <v-btn @click="dialogOnlineHistory = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">online history</span> <i class="fa fa-plus"></i></v-btn>
-                        <v-btn @click="dialogStockAnalysis = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">stock analysis</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="$refs.onlineHistory.showDialogOnlineHistory()" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">{{$t('profile.online history')}}</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="$refs.stockAnalysis.showDialogStockAnalysis()" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">{{$t('profile.stock analysis')}}</span> <i class="fa fa-plus"></i></v-btn>
                     </div>
 
                 </div>
@@ -151,31 +151,8 @@
         </v-layout>
     </v-flex>
 
-    <v-dialog v-model="dialogOnlineHistory" fullscreen hide-overlay transition="dialog-bottom-transition" light>
-        <v-card>
-            <v-toolbar flat>
-                <v-layout row>
-                    <v-spacer></v-spacer>
-                    <v-icon size="20" @click="dialogOnlineHistory=false">close</v-icon>
-                </v-layout>
-            </v-toolbar>
-            <OnlineHistory />
-
-        </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="dialogStockAnalysis" fullscreen hide-overlay transition="dialog-bottom-transition" light>
-        <v-card>
-            <v-toolbar flat>
-                <v-layout row>
-                    <v-spacer></v-spacer>
-                    <v-icon size="20" @click="dialogStockAnalysis=false">close</v-icon>
-                </v-layout>
-            </v-toolbar>
-            <StockAnalysis />
-
-        </v-card>
-    </v-dialog>
+    <OnlineHistory ref="onlineHistory"></OnlineHistory>
+    <StockAnalysis ref="stockAnalysis"></StockAnalysis>
 
 </div>
 </template>
@@ -185,8 +162,8 @@ import {
     mapGetters,
     mapActions
 } from "vuex";
-import OnlineHistory from "../../components/mobile/onlineHistory"
-import StockAnalysis from "../../components/mobile/stockAnalysis"
+import OnlineHistory from "~/components/mobile/onlineHistory"
+import StockAnalysis from "~/components/mobile/stockAnalysis"
 
 export default {
     data() {
@@ -205,7 +182,13 @@ export default {
     },
     mounted() {},
     computed: {
-        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
+        imgProfile() {
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
+                "/user.png" :
+                "http://uattesting.equitycapitalgaming.com/" +
+                this.getUserInfo.profileImage;
+        },
         userData() {
             let data = {
                 ...this.getUserInfo
@@ -261,6 +244,10 @@ export default {
 </script>
 
 <style scoped>
+p {
+    margin-bottom: 0px !important;
+}
+
 .padding-right-60 {
     padding-right: 60%;
 }

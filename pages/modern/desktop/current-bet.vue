@@ -10,6 +10,7 @@
 import currentBet from "~/components/modern/currentBet";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
+import config from "../../../config/config.global";
 export default {
   layout: "desktopModern",
   components: {
@@ -43,7 +44,7 @@ export default {
         // before we call the data we should make the object to the send the request with the API
         portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
         userUUID: this.userUUID, // get the userUUID with the this object
-        version: "0.1", // version of API
+        version: config.version, // version of API
         betResult: [-1], // -1= pending, pending that mean is betting
         limit: "20", // limit the data we the data come will come only the 20 that we limit in this case
         offset: "0" // offset or skip the data

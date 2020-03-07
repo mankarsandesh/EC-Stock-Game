@@ -285,6 +285,7 @@ import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import SelectStockItems from "~/data/json/current-bet";
+import config from "../../../config/config.global";
 
 export default {
   async validate({ params, store }) {
@@ -385,7 +386,7 @@ export default {
       try {
         const { data } = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/getStock",
-          { portalProviderUUID: this.portalProviderUUID, version: 1 },
+          { portalProviderUUID: this.portalProviderUUID, version: config.version },
           { headers: this.headers }
         );
 
@@ -593,4 +594,31 @@ export default {
 };
 </script>
 
+<style scoped>
+/* left side corner toggle functionality in desktop  */
+.leftStocklist {
+  background-color: #fff;
+  margin: 35px 7px;
+  border-radius: 20px;
+  position: relative;
+  top: 0;
+  right: 20px;
+}
 
+.sidebar-close {
+  background-color: #ffffff !important;
+  border-radius: 180px;
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  transition: none !important;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  left: 3px;
+  top: 95px;
+  background-color: #ffffff !important;
+}
+
+</style>

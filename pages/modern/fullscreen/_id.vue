@@ -228,7 +228,7 @@ export default {
         console.log("new socket success");
       }
     );
-    this.getwinuser();
+    // this.getwinuser();
     setTimeout(() => {
       this.getliveBetCount();
       this.getliveAll();
@@ -277,33 +277,33 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
-    getwinuser() {
-      this.$axios
-        .$get("api/fetchBet")
-        .then(response => {
-          // console.log("response.....................")
-          // console.log(response.data)
-          // console.log("response.......................")
-          let resultStatus = null;
-          for (let i = 0; i < response.data.length - 1; i++) {
-            let betID = response.data[i].betId;
-            let result = response.data[i].result;
-            let name = response.data[i].name;
-            if (result == 1) {
-              let betAmount = response.data[i].betAmount;
-              let betTime = response.data[i].betTime;
-              let win = `<span class="text-slide text-white"><span class="text-warning">
-          <i class="fa fa-bell"></i>
-          </span>Player ${betID}, <span class="text-warning"> Win $${betAmount},
-          </span> ${name}  ${betTime}</span>`;
-              this.winner.push(win);
-            }
-          }
-        })
-        .catch(error => {
-          // alert(error);
-        });
-    },
+    // getwinuser() {
+    //   this.$axios
+    //     .$get("api/fetchBet")
+    //     .then(response => {
+    //       // console.log("response.....................")
+    //       // console.log(response.data)
+    //       // console.log("response.......................")
+    //       let resultStatus = null;
+    //       for (let i = 0; i < response.data.length - 1; i++) {
+    //         let betID = response.data[i].betId;
+    //         let result = response.data[i].result;
+    //         let name = response.data[i].name;
+    //         if (result == 1) {
+    //           let betAmount = response.data[i].betAmount;
+    //           let betTime = response.data[i].betTime;
+    //           let win = `<span class="text-slide text-white"><span class="text-warning">
+    //       <i class="fa fa-bell"></i>
+    //       </span>Player ${betID}, <span class="text-warning"> Win $${betAmount},
+    //       </span> ${name}  ${betTime}</span>`;
+    //           this.winner.push(win);
+    //         }
+    //       }
+    //     })
+    //     .catch(error => {
+    //       // alert(error);
+    //     });
+    // },
 
     test() {
       console.warn(this.$router.history);

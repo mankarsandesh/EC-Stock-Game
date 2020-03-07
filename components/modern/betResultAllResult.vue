@@ -50,12 +50,14 @@
               <th>{{$t('msg.Result')}}</th>
               <th>{{$t('msg.amount')}}</th>
             </tr>
-            <tr v-for="(data,index) in myResult" :key="index">
+          
+            <tr v-for="(data,index) in myResult" v-show="myResult.length>0" :key="index">
               <td class="text-xs-center">{{ $t(`stockname.${data.stockName}`)}}</td>
-              <td class="text-xs-center">{{ $t(`stock-list.${data.betResult}`)}}</td>           
+              <td class="text-xs-center">{{ $t(`stock-list.${data.betResult}`)}}</td>
               <td class="text-xs-center">{{ data.rollingAmount }}</td>
             </tr>
           </table>
+            <h4 v-show="myResult.length<=0" class="pa-3">{{$t('msg.nobetting')}}</h4>
         </div>
       </v-flex>
     </v-layout>

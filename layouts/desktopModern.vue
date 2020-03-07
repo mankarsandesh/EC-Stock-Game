@@ -133,10 +133,10 @@ export default {
     console.log("crearted");
   },
   mounted() {
-    setInterval(() => {
-      this.getwinuser();
-    }, 10000);
-    this.getwinuser();
+    // setInterval(() => {
+    //   this.getwinuser();
+    // }, 10000);
+    // this.getwinuser();
     lottie.loadAnimation({
       container: this.$refs.svgContainer, // the dom element that will contain the animation
       renderer: "svg",
@@ -147,32 +147,33 @@ export default {
   },
   methods: {
     ...mapMutations(["setGameChannelShow"]),
-    getwinuser() {
-      this.$axios
-        .$get("api/fetchBet")
-        .then(response => {
-          let resultStatus = null;
-          for (let i = 0; i < response.data.length - 1; i++) {
-            let betID = response.data[i].betId;
-            let result = response.data[i].result;
-            let name = response.data[i].name;
-            if (result == "1") {
-              resultStatus = "Win";
-              //  console.log(resultStatus);
-              let betAmount = response.data[i].betAmount;
-              let betTime = response.data[i].betTime;
-              let win = `<span class="text-slide text-white"><span class="text-warning">
-                        <i class="fa fa-bell"></i>
-                        </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
-                        </span> ${name}  ${betTime}</span>`;
-              this.winner.push(win);
-            }
-          }
-        })
-        .catch(error => {
-          // alert(error);
-        });
-    }
+    // Not usable. from the old api
+    // getwinuser() {
+    //   this.$axios
+    //     .$get("api/fetchBet")
+    //     .then(response => {
+    //       let resultStatus = null;
+    //       for (let i = 0; i < response.data.length - 1; i++) {
+    //         let betID = response.data[i].betId;
+    //         let result = response.data[i].result;
+    //         let name = response.data[i].name;
+    //         if (result == "1") {
+    //           resultStatus = "Win";
+    //           //  console.log(resultStatus);
+    //           let betAmount = response.data[i].betAmount;
+    //           let betTime = response.data[i].betTime;
+    //           let win = `<span class="text-slide text-white"><span class="text-warning">
+    //                     <i class="fa fa-bell"></i>
+    //                     </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
+    //                     </span> ${name}  ${betTime}</span>`;
+    //           this.winner.push(win);
+    //         }
+    //       }
+    //     })
+    //     .catch(error => {
+    //       // alert(error);
+    //     });
+    // }
   },
   computed: {
     ...mapGetters([
