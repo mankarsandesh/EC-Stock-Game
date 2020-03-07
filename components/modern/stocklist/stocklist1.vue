@@ -34,13 +34,29 @@ export default {
       items: ["day", "weeks", "months", "years"]
     };
   },
+  mounted() {    
+    this.listenForBroadcast(
+      {
+        channelName: "stockList.f267680f-5e7f-4e40-b317-29a902e8adb7",
+        eventName: "stockList"
+      },
+      ({ data }) => {
+        console.log(data);
+      }
+    );
+  },
   computed: {
     ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
+  },
+  methods: {
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    }
   }
 };
 </script>
-<style scoped>
-.bg-colors {
-  background-color: #003e70 !important;
-}
-</style>
+
+<p class="text-red">9104.27</p>
+
+<p class="text-green">9004.27</p>
+

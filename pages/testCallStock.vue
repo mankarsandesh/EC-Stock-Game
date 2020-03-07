@@ -1,6 +1,6 @@
 <template>
   <v-container class="mt-3">
-    <stockSelect :items="stock" />
+    <stockSelect :items="SelectStockItems.data" />
   </v-container>
 </template>
 
@@ -8,6 +8,7 @@
 import stockSelect from "~/components/stockSelect";
 import { mapActions, mapState } from "vuex";
 import Echo from "laravel-echo";
+import SelectStockItems from "~/data/json/current-bet";
 export default {
   layout: "desktopModern",
   components: {
@@ -15,33 +16,32 @@ export default {
   },
   data: () => ({
     stock: [],
-    socketLiveStockInput: {
-      channelName: "liveStockData.btc5",
-      eventName: "liveStockData"
-    }
+    SelectStockItems
   }),
-  async created() {
-    // this.getStock();
-    const { data } = await this.$axios.$post(
-      "http://uattesting.equitycapitalgaming.com/webApi/getStock",
-      { portalProviderUUID: this.portalProviderUUID, version: 1 },
-      { headers: this.headers }
-    );
-    this.stock = data;
+  mounted() { 
+    // this.setUpSocketIO();
+    // this.listenForBroadcast(
+    //   {
+    //     channelName: "stockList.f267680f-5e7f-4e40-b317-29a902e8adb7",
+    //     eventName: "stockList"
+    //   },
+    //   ({ data }) => {
+    //     this.stock = data.data.stockData;
+    //   }
+    // );
   },
-  mounted() {
-    // this.listenForBroadcast(this.socketLiveStockInput, ({ data }) => {
-    //   console.log(data);
-    // });
-  },
+
   computed: {
     ...mapState(["portalProviderUUID", "headers"])
   },
   methods: {
-    getStock: (
-      hostName = "http://uattesting.equitycapitalgaming.com",
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
+    setUpSocketIO(
+      hostName = "uattesting.equitycapitalgaming.com",
       port = 6001
-    ) => {
+    ) {
       window.io = require("socket.io-client");
       window.Pusher = require("pusher-js");
 
@@ -61,9 +61,6 @@ export default {
           console.log(error.message);
         }
       }
-    },
-    listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
     }
   }
 };

@@ -37,9 +37,11 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
+
         "acc":"acc",
         "account balance":"ຍອດບັນຊີ",
         "rolling amount":"ປະລິມານມ້ວນ",
+
         "calculating": "ກຳລັງຄິດໄລ່...",
         "marketclosed": "ປິດຕະຫຼາດ!",
         "reset": "ປັບໃໝ່",
@@ -81,6 +83,7 @@
         "User Info": "ຂໍ້ມູນຜູ້ໃຊ້",
         "Bet Result": "ຜົນການເດີມພັນ",
         "All Results": "ຜົນໄດ້ຮັບທັງໝົດ",
+        "View All Results": "ເບິ່ງຜົນໄດ້ຮັບທັງ ໝົດ",
         "Player": "ຜູ້​ຫຼິ້ນ",
         "Balance": "ເງິນ",
         "Totalprofit": "ກຳໄລລວມ",
@@ -100,7 +103,6 @@
         "resultintroduction": "ການແນະນຳຜົນໄດ້ຮັບ",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
         "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
-
         "Lastdraw": "ແຕ້ມສຸດທ້າຍ",
         "BetClosein": "ເດີມພັນປິດໃນ",
         "lotterydraw": "ຜົນອອກໃນເວລາ",
@@ -151,7 +153,6 @@
         "ClassicVersion": "ລຸ້ນຄຼາສສິກ",
         "ModernVersion": "ລຸ້ນທັນສະໃໝ",
         "ChooseTheVersionToPlay": "ເລືອກລຸ້ນທີ່ຈະຫລິ້ນ"
-
     },
     "navlist": {
         "live Stock": "ຫຸ້ນເປີດ",
@@ -183,12 +184,10 @@
         "lastdigit": "ຕົວເລກສຸດທ້າຍ",
         "bothdigit": "ຕົວເລກທຳອິດ+ສຸດທ້າຍ",
         "twodigit": "ສອງຕົວເລກ",
-
         "firstdigits": "ຕົວເລກ\nທຳອິດ",
         "lastdigits": "ຕົວເລກ\nສຸດທ້າຍ",
         "bothdigits": "ຕົວເລກ\nທຳອິດ+ສຸດທ້າຍ",
         "twodigits": "ຕົວເລກ\nສອງຕົວ",
-
         "big": "ໃຫຍ່",
         "small": "ນ້ອຍ",
         "odd": "ຄີກ",
