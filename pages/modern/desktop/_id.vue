@@ -596,3 +596,32 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* left side corner toggle functionality in desktop  */
+.leftStocklist {
+  background-color: #fff;
+  margin: 35px 7px;
+  border-radius: 20px;
+  position: relative;
+  top: 0;
+  right: 20px;
+}
+
+.sidebar-close {
+  background-color: #ffffff !important;
+  border-radius: 180px;
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  transition: none !important;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  left: 3px;
+  top: 95px;
+  background-color: #ffffff !important;
+}
+
+</style>
