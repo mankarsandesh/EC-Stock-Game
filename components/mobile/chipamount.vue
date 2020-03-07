@@ -6,7 +6,7 @@
             <v-flex class="settingchips" xs4 sm3 md3 lg2 v-for="(item,key) in imgChip" :key="key" justify-center>
                 <div class="d-block">
                     <v-img :width="item.width" :src="item.img" class="chipImage">
-                        <v-text-field  class="setpricechip text-black" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
+                        <v-text-field  class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
                     <v-card-actions class="justify-center">
                         <v-btn class="chipamount" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
@@ -113,7 +113,9 @@ export default {
 .setpricechip {
     position: relative;
     left: 6px;
-    top: 25px;
+    top: 32%;
+    padding-bottom: 2px;
+    text-align:center;
     color: black;
     font-size: 1.2rem;
 }
