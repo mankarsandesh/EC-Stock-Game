@@ -13,7 +13,8 @@
                 <tr v-for="(item,index) in apiData" :key="index" class="tabletr">
                     <td>{{item.title}}</td>
                     <td>{{item.createdAt}}</td>
-                    <td>{{item.message}}</td>
+                    <td v-if="item.message.length>100">{{item.message.slice(0,100)}}</td>
+                    <td v-else>{{item.message}}</td>
                 </tr>
             </tbody>
         </table>

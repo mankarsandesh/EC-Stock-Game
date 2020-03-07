@@ -1,8 +1,10 @@
 {
-    "filter": "filter",
-    "sort": "sort",
-    "search": "search",
+    "filter": "ການກັ່ນຕອງ",
+    "sort": "ຄັດ",
+    "search": "ຄົ້ນຫາ",
     "stock": "ຫຸ້ນ",
+    "stock type" : "ປະເພດຫຸ້ນ",
+    "game type" : "ປະເພດເກມ",
     "default": "ຄ່າເລີ່ມຕົ້ນ",
     "menu": {
         "home": "ໜ້າຫຼັກ",
@@ -35,6 +37,9 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
+        "acc":"acc",
+        "account balance":"ຍອດບັນຊີ",
+        "rolling amount":"ປະລິມານມ້ວນ",
         "calculating": "ກຳລັງຄິດໄລ່...",
         "marketclosed": "ປິດຕະຫຼາດ!",
         "reset": "ປັບໃໝ່",
@@ -47,7 +52,7 @@
         "ok": "ຕົກ​ລົງ",
         "cancel": "ຍົກເລີກ",
         "edit": "ແກ້ໄຂ",
-        "save": "ບັນທຶກ",
+        "save": "ປະຢັດ",
         "resettodefault": "ຕັ້ງຄ່າໄວ້ໃນຕອນຕົ້ນ",
         "changechartview": "ປ່ຽນມຸມເບິ່ງ",
         "reference": "ເອກະສານອ້າງອີງ",
@@ -90,6 +95,7 @@
         "Clear": "ລ້າງ",
         "Total Bet": "ການເດີມພັນທັງໝົດ",
         "Win Rate": "ອັດຕາຊະນະ",
+        "minute game": "ເກມນາທີ",
 
         "resultintroduction": "ການແນະນຳຜົນໄດ້ຮັບ",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
@@ -211,8 +217,16 @@
         "sh000300": "SH000300"
     },
     "profile": {
+        "first name":"ຊື່​ແທ້",
+        "last name":"ນາມ​ສະ​ກຸນ",
+        "gender":"ເພດ",
+        "email":"ອີເມວ",
+        "country":"ປະເທດ",
+        "online status":"ສະຖານະພາບທາງອິນເຕີເນັດ",
         "basic info": "ຂໍ້ມູນພື້ນຖານ",
         "online history": "ປະຫວັດອອນລາຍ",
-        "stock analysis": "ການວິເຄາະຫຼັກຊັບ"
+        "stock analysis": "ການວິເຄາະຫຼັກຊັບ",
+        "online time":"ເວລາ ອອນລາຍ",
+        "total online":"ທັງ ໝົດ ອອນລາຍ"
     }
 }
