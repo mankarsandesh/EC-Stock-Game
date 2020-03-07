@@ -15,11 +15,10 @@ const createStore = () => {
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
       isLoadingAnnoucement: [],
-      isLoadingTopPlayer: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
-      userUUID: "84795f3c-2ced-4cd2-8205-ff9c3c19c821",
+      portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
+      userUUID: "5e167890-9c42-46e1-b6c4-324fddbc9630",
       Username: "TnkwebApi",
       Password: "Test123!",
       // end set portal provider and user UUID for authentication
@@ -651,18 +650,6 @@ const createStore = () => {
           console.log(error);
         }
       },
-      // to get User bet History
-      async asyTopPlayer(context) {
-        try {
-          // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
-          const res = await this.$axios.$get(
-            `api/fetchTopPlayersList?result=win&days=7&apikey=${context.getters.getAuth_token}`
-          );
-          context.commit("setTopPlayer", res.data);
-        } catch (error) {
-          console.log(error);
-        }
-      },
       async OnlineTime(context) {
         try {
           let res = await this.$axios.$get(
@@ -721,9 +708,6 @@ const createStore = () => {
       },
       getHistory(state) {
         return state.isLoadingHistory;
-      },
-      getTopPlayer(state) {
-        return state.isLoadingTopPlayer;
       },
       // get user info
       getUserInfo(state) {
