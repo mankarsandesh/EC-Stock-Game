@@ -1,6 +1,6 @@
 <template>
   <v-app style=" background-color: #f4f5fd;">
-    <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
+    <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"

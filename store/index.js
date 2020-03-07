@@ -18,8 +18,8 @@ const createStore = () => {
       isLoadingTopPlayer: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
-      userUUID: "84795f3c-2ced-4cd2-8205-ff9c3c19c821",
+      portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
+      userUUID: "5e167890-9c42-46e1-b6c4-324fddbc9630",
       Username: "TnkwebApi",
       Password: "Test123!",
       // end set portal provider and user UUID for authentication
@@ -77,69 +77,69 @@ const createStore = () => {
       payout: payouts,
       stocks2: [
         {
+          stockName: "btc5",
+          stockUUID: "6231bf0c-2a93-4325-8b42-b7bfcfaaab93",
+          reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
+          type: "crypto",
+          loop: 5,
+          gameUUID: "8417e73d-09d1-418e-a0b7-153758d4185b",
+          crawlData: []
+        },
+        {
           stockName: "sh000001",
-          stockUUID: "dc0f210c-8c8d-486b-ae13-8eac18df491e",
+          stockUUID: "e9543b3d-7870-4a5e-975e-fbe228b50f49",
           reference:
             "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
           type: "china",
           loop: 5,
-          gameUUID: "7e7236f7-eef5-4bf7-a6f1-f9002d5dccc3",
+          gameUUID: null,
           crawlData: []
         },
         {
           stockName: "sh000300",
-          stockUUID: "309839e2-9135-469c-ab8e-d0c6cd87ba0e",
+          stockUUID: "56f0d2d4-4d9b-4cfc-bd76-97375b451d7d",
           reference:
             "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml",
           type: "china",
           loop: 5,
-          gameUUID: "f6bd5738-f8d0-430f-b94d-ebb426960e69",
+          gameUUID: null,
           crawlData: []
         },
         {
           stockName: "sz399415",
-          stockUUID: "878649a1-8ddf-4480-b0f4-8623c6281331",
+          stockUUID: "0ecce345-8d3b-4fee-bf57-f1bdd6eaa373",
           reference:
             "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml",
           type: "china",
           loop: 5,
-          gameUUID: "d0b661d4-f331-4588-a122-bc752d30beed",
+          gameUUID: null,
           crawlData: []
         },
         {
           stockName: "sz399001",
-          stockUUID: "085adb18-5f6e-47c1-84d7-f04e169efb46",
+          stockUUID: "636115a3-11cb-4498-a699-1e8ef6d90bce",
           reference:
             "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml",
           type: "china",
           loop: 5,
-          gameUUID: "b74944a6-519e-4d1a-8253-85324df6b5b7",
-          crawlData: []
-        },
-        {
-          stockName: "btc5",
-          stockUUID: "0323a5ce-68fd-43ab-90aa-94f42a205b52",
-          reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
-          type: "crypto",
-          loop: 5,
-          gameUUID: "80f425ab-4a84-4c64-99ab-747ed9abe865",
-          crawlData: []
-        },
-        {
-          stockName: "btc1",
-          stockUUID: "0eb357dc-d15f-4739-96d0-983ab92d94ee",
-          reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
-          type: "crypto",
-          loop: 1,
-          gameUUID: "77c00c36-c02e-4709-8d74-f582323a2307",
+          gameUUID: null,
           crawlData: []
         },
         {
           stockName: "usindex",
-          stockUUID: "62d9c737-0420-4848-b4d3-9b8e6198c911",
+          stockUUID: "6503b060-414e-4749-bf73-a6b46b488d0d",
           reference: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml",
           type: "usa",
           loop: 5,
+          gameUUID: null,
+          crawlData: []
+        },
+        {
+          stockName: "btc1",
+          stockUUID: "88778f4f-610b-4ec3-937d-65ef7bf24af5",
+          reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
+          type: "crypto",
+          loop: 1,
           gameUUID: null,
           crawlData: []
         }
@@ -370,6 +370,7 @@ const createStore = () => {
     actions: {
       // new api
       async asyncChart(context, stockUUID) {
+        context.state.liveChart = [];
         try {
           const res = await this.$axios.$post(
             "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
@@ -396,6 +397,7 @@ const createStore = () => {
         }
       },
       async asyncRoadMap(context, stockUUID) {
+        context.state.roadMap = [];
         try {
           const res = await this.$axios.$post(
             "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
@@ -676,6 +678,16 @@ const createStore = () => {
     },
     getters: {
       // new api
+      getStockUUIDByStockName: state => stockName => {
+        let result = null;
+        for (let i = 0; i < state.stocks2.length; i++) {
+          if (state.stocks2[i].stockName === stockName) {
+            result = state.stocks2[i].stockUUID;
+            break;
+          }
+        }
+        return result;
+      },
       getRoadMap(state) {
         return state.roadMap;
       },
@@ -976,16 +988,14 @@ const createStore = () => {
         return state.coins_modern;
       },
       // check stockId in state "stocks" is exist or not
-      getCheckStock: state => id => {
-        return true;
-        console.log(state.stocks2);
+      getCheckStock: state => stockname => {
+        let result = false;
         state.stocks2.forEach(element => {
-          if (element.stockUUID === id) {
-            console.log(`equel ${id}`);
-            return True;
+          if (element.stockName === stockname) {
+            result = true;
           }
         });
-        return false;
+        return result;
       },
 
       // get current language

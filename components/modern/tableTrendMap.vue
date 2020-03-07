@@ -84,7 +84,6 @@ import trendMap from "~/components/modern/trendMap";
 export default {
   data() {
     return {
-      stockUUID: "0eb357dc-d15f-4739-96d0-983ab92d94ee"
       // trendType: "firstDigit"
     };
   },
@@ -103,11 +102,11 @@ export default {
     }
   },
   mounted() {
-    this.asyncRoadMap(this.stockUUID);
+    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // socket new api
     this.listenForBroadcast(
       {
-        channelName: `roadMap.${this.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
+        channelName: `roadMap.${this.getStockUUIDByStockName(this.$route.params.id)}.${this.getPortalProviderUUID}`,
         eventName: "roadMap"
       },
       ({ data }) => {
@@ -122,7 +121,12 @@ export default {
     trendMap
   },
   computed: {
-    ...mapGetters(["getStockCrawlerData", "getRoadMap"])
+    ...mapGetters([
+      "getStockUUIDByStockName",
+      "getStockCrawlerData",
+      "getRoadMap",
+      "getPortalProviderUUID"
+    ])
   },
   methods: {
     ...mapMutations(["setLiveRoadMap"]),

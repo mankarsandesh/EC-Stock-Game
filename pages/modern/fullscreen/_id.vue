@@ -9,10 +9,9 @@
           </v-btn>
         </v-card-title>
         <v-layout row wrap px-2 pt-2>
-          <v-flex pa-2 v-for="(data, index) in getStockChart" :key="index" xs6 sm6 md6>
+          <!-- <v-flex pa-2 v-for="(data, index) in getStockChart" :key="index" xs6 sm6 md6>
             <nuxt-link :to="'/modern/fullscreen/' + data.id">
               <v-card class="v-card-style">
-                <!-- bet close -->
                 <div class="close-bet-chart" v-if="getLotteryDraw(data.id) === 'close'">
                   <span class="text-close-bet">market close</span>
                 </div>
@@ -28,7 +27,7 @@
                 </h4>
               </div>
             </nuxt-link>
-          </v-flex>
+          </v-flex>-->
         </v-layout>
       </v-card>
     </v-dialog>
@@ -144,7 +143,7 @@
         </v-flex>
         <!-- live Chart -->
 
-        <v-flex v-if="getStockCrawlerData($route.params.id) !== ''" xs12 class="text-xs-center">
+        <v-flex xs12 class="text-xs-center">
           <footerBet style></footerBet>
           <v-layout class="fullroadMap elevation-4" style="margin-top:-40px;">
             <v-flex xs12 sm12 md12 lg12 wrap pt-2>
@@ -178,8 +177,6 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import winnerMarquee from "~/components/modern/winnerMarquee";
-import welcomeUser from "~/components/welcomeUser";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
@@ -187,10 +184,12 @@ import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 
 export default {
+   async validate({ params, store }) {
+    return store.getters.getCheckStock(params.id);
+  },
   layout: "fullscreen",
   data() {
     return {
-      stockUUID: "0eb357dc-d15f-4739-96d0-983ab92d94ee",
       dialogOtherstock: false,
       //winner mqrquee
       winner: [],
@@ -213,13 +212,13 @@ export default {
   },
   created() {
     this.getSotckId();
-    this.asyncRoadMap(this.stockUUID);
+    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
   },
   mounted() {
     // socket new api
     this.listenForBroadcast(
       {
-        channelName: `roadMap.${this.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
+        channelName: `roadMap.${this.getStockUUIDByStockName(this.$route.params.id)}.${this.getPortalProviderUUID}`,
         eventName: "roadMap"
       },
       ({ data }) => {
@@ -240,15 +239,13 @@ export default {
       this.getliveAll();
     }, 1000);
     console.log(
-      // this.getLotteryDraw(this.$route.params.id)
+      // this.getLotteryDraw($route.params.id)
       //   |
-      this.getStockLoop(this.$route.params.id)
+      this.getStockLoop("btc1")
     );
   },
 
   components: {
-    winnerMarquee,
-    welcomeUser,
     betButton,
     chartApp,
     footerBet,
@@ -257,6 +254,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockUUIDByStockName",
+      "getPortalProviderUUID",
       "getUserInfo",
       "getLastDraw",
       "getRoadMap",
@@ -320,7 +319,7 @@ export default {
           `/api/fetchStockOnly?apikey=${this.$store.state.auth_token}`
         );
         stcokId.data.forEach(element => {
-          if (element.stockName == this.$route.params.id) {
+          if (element.stockName == "btc1") {
             this.stockId = element.stockId;
           }
         });
@@ -332,7 +331,7 @@ export default {
       try {
         const res = await this.$axios.$get(
           `/api/liveBetCount?stock=${this.stockId}&loop=${this.getLoop(
-            this.$route.params.id
+            "btc1"
           )}&apikey=${this.$store.state.auth_token}`
         );
         if (res.status == false) {
@@ -404,7 +403,7 @@ export default {
       try {
         const res = await this.$axios.$get(
           `/api/liveBetAll?stock=${this.stockId}&loop=${this.getLoop(
-            this.$route.params.id
+            "btc1"
           )}&apikey=${this.$store.state.auth_token}`
         );
         if (res.status == false) {
