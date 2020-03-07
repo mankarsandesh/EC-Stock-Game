@@ -17,7 +17,8 @@
         "setting": "設置",
         "game result": "遊戲結果",
         "chip amount": "籌碼金額",
-        "sound control": "聲音控制"
+        "sound control": "聲音控制",
+        "leaderboard": "排行榜"
     },
     "stock-list": {
         "stock lists": "库存清单",
@@ -226,5 +227,20 @@
         "stock analysis": "库存分析",
         "online time":"上线时间",
         "total online":"总在线"
+    },
+    "useraction": {
+        "followbet": "跟进",
+        "unfollow": "取消关注"
+    },
+    "leaderboard": {
+        "user":"用户",
+        "winning rate": "胜率",
+        "Bets":"赌注",
+        "winning amount":"中奖金额",
+        "follow":"跟随",
+        "weekly rankings":"每周排名",
+        "monthly rankings":"每月排名",
+        "Top 10 Leaders":"十大领袖"
     }
+
 }
