@@ -6,7 +6,7 @@
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
                         <v-avatar :size="90">
-                            <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                            <img :src="imgProfile" alt="img-profile" />
                             <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
                         <span class="camera_container" style="    position: absolute;    top: 9%;">
@@ -26,7 +26,7 @@
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
                         <v-avatar :size="50">
-                            <img :src="profile.imgProfile == '' ? '/user.png' :profile.imgProfile" alt="img-profile" />
+                            <img :src="imgProfile" alt="img-profile" />
                             <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
                         <span class="camera_container" style="position: absolute;top: 5%;">
@@ -44,7 +44,7 @@
                     <div class="decorator_card decorator_card_green"></div>
                     <span>account balance</span>
                     <br>
-                    <span class="amount">{{123456 | currency}}</span>
+                    <span class="amount">{{getUserInfo.balance | currency}}</span>
                     <span class="title_currentcy">kip</span>
                 </div>
             </v-flex>
@@ -205,7 +205,13 @@ export default {
     },
     mounted() {},
     computed: {
-        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
+        imgProfile() {
+            return this.getUserInfo.profileImage === "" ?
+                "/user.png" :
+                "http://uattesting.equitycapitalgaming.com/" +
+                this.getUserInfo.profileImage;
+        },
         userData() {
             let data = {
                 ...this.getUserInfo

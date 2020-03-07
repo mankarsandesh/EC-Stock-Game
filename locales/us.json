@@ -24,13 +24,14 @@
         "live price": "Live Price",
         "reference": "reference",
         "load more": "load more",
-        "search stock": "SEARCH STOCK"
+        "search stock": "SEARCH STOCK",
+        "lose": "Lose",
+        "win": "Win"
     },
     "home": {
         "welcome": "Welcome",
         "goodluck": "Good Luck!",
         "yourcurrentbalanceis": "your current balance is"
-
     },
     "about": {
         "title": "About",
@@ -78,6 +79,8 @@
         "Stock": "Stock",
         "User Info": "User Info",
         "Bet Result": "Bet Result",
+        "myResult": "My Result",
+        "stockResult": "Stock Result",
         "All Results": "All Results",
         "View All Results": "View All Results",
         "Player": "Player",
@@ -94,11 +97,9 @@
         "Clear": "Clear",
         "Total Bet": "Total Bet",
         "Win Rate": "Win Rate",
-
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
         "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
-
         "Lastdraw": "Last draw",
         "BetClosein": "Bet Close in",
         "lotterydraw": "lottery draw",
@@ -149,7 +150,6 @@
         "ClassicVersion": "Classic Version",
         "ModernVersion": "Modern Version",
         "ChooseTheVersionToPlay": "Choose The Version To Play"
-
     },
     "navlist": {
         "live Stock": "live Stock",
