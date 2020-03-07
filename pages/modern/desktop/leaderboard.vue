@@ -2,14 +2,12 @@
   <div>
     <breadcrumbs title="Leaderboard" linkItem="bet-history" titlebtn="bet-history" />
     <v-container>
-       <leaderBoard />   
+       <leaderBoard :topPlayerData="topPlayerData" />   
     </v-container>
   </div>
 </template>
-
-
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations,mapState} from 'vuex'
 import leaderBoard from "~/components/modern/leaderboard";
 import breadcrumbs from "~/components/breadcrumbs";  
 export default {
@@ -21,15 +19,8 @@ export default {
   data() {
       return {
       tabs: ["history", "current bet"],
-      active: null
-    };
-    
-  },
-  mounted(){
-
-  },
-  methods:{
-   
+      active: null,     
+    };   
   }
 };
 </script>

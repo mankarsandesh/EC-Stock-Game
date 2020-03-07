@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-flex xs8 style="margin:0 auto;">  
+    <v-flex xs8 style="margin:0 auto;">
       <v-layout row>
         <v-flex grow pa-1>
           <p class="float-left md6">
-            <span class="title">Top 10 Leaders</span> (last updated 1 minutes ago)
+            <span class="title">Top {{topPlayerData.length}} Leaders</span> (last updated 1 minutes ago)
           </p>
         </v-flex>
         <v-flex grow pa-1 class="text-lg-right ranking">
@@ -16,33 +16,33 @@
           </span>
         </v-flex>
       </v-layout>
-      <div  class="userRow">
+      <tr class="userRow" v-for="(data,index) in topPlayerData" :key="index">
         <th>
+           <i class="fa fa-crown fa-2x" style="margin-right: 3px;" />
           <img style="vertical-align:middle" class="pimage" src="https://placehold.it/60x60" />
-          <span class="subtitle-1 text-uppercase">Sandesh Mankar</span>
+          <span class="subtitle-1 text-uppercase">Sandesh</span>
           <!-- <span  style="border:1px solid red;height:30px;width:40px;" class="flag flag-us small-flag"></span>-->
         </th>
         <th>
           <h3 class="header">WINNING RAATE</h3>
-          <h4 class="green--text title">100 %</h4>
+          <h4 class="green--text title">{{data.winRate}} %</h4>
         </th>
         <th>
           <h3 class="header">BETS</h3>
-          <H4 style="color:#eb0b6e;" class="title">20</H4>
+          <H4 style="color:#eb0b6e;" class="title">{{data.totalWinBets}}</H4>
         </th>
         <th>
           <h3 class="header">WINNING AMOUNT</h3>
-          <h4 style="color:#0b2a68;" class="title">25000</h4>
+          <h4 style="color:#0b2a68;" class="title">{{data.totalWinAmount}}</h4>
         </th>
         <th>
           <v-btn class="buttonGreensmall" @click="dialog = true" dark>{{$t('useraction.followbet')}}</v-btn>
         </th>
-      </div>
+      </tr>
     </v-flex>
     <v-dialog v-model="dialog" width="600" style="border:radius:20px; !important">
       <v-card class="followup">
         <h3 class="title font-weight-bold" style="text-align:center;color:#0b2a68;">FOLLOW BET</h3>
-
         <v-card-text style="text-align:center;">
           <img class="pimage" src="https://placehold.it/60x60" width="120px" />
           <h3 class="subtitle-1 text-uppercase text-center pt-2">Sandesh Mankar</h3>
@@ -63,19 +63,44 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
+      topPlayerData: [],
       dialog: false,
       followby: ["Follow by Amount", "Follow by Rate"]
     };
   },
   mounted() {
-   
+    this.leaderBoard();
+  },
+  computed: {
+    ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   methods: {
-    ...mapActions(["asyTopPlayer"])
+    async leaderBoard() {
+      const LeaderBoardData = {
+        portalProviderUUID: this.portalProviderUUID, 
+        userUUID: this.userUUID, 
+        version: "0.1", 
+        limit: "10" 
+      };
+      try {
+        const { data } = await this.$axios.post(
+          "http://uattesting.equitycapitalgaming.com/webApi/getLeaderBoard", 
+          LeaderBoardData, 
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" 
+            }
+          }
+        );
+        this.topPlayerData = data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 };
 </script>
@@ -95,7 +120,6 @@ export default {
   color: #6c6c6c;
 }
 .userRow {
-  border: 1px solid #dddddd;
   border-radius: 10px;
   background-color: #ffffff;
   margin: 5px 0px;
