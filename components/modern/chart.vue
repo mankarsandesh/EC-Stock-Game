@@ -35,26 +35,21 @@ export default {
       default: "auto"
     }
   },
-
   data() {
-    return {
-      stockUUID: "0eb357dc-d15f-4739-96d0-983ab92d94ee"
-    };
+    return {};
   },
   created() {
-    this.asyncChart(this.stockUUID);
+    this.asyncChart(this.getStockUUIDByStockName(this.$route.params.id));
   },
   mounted() {
     // socket new api
     this.listenForBroadcast(
       {
         // liveStockData.stockName
-        channelName: `liveStockData.btc1`,
+        channelName: `liveStockData.${this.$route.params.id}`,
         eventName: "liveStockData"
       },
       ({ data }) => {
-        console.log("live chart data");
-        console.log(data.data.roadMap[0]);
         let dataIndex = data.data.roadMap[0];
         let readyData = {
           stockValue: dataIndex.stockValue.replace(",", ""),
@@ -68,8 +63,6 @@ export default {
         ) {
           this.setLiveChart(readyData);
         }
-
-        console.log("live chart data");
       }
     );
   },
@@ -78,6 +71,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockUUIDByStockName",
       "getLiveTime",
       "getLivePrice",
       "getLotteryDraw",
@@ -114,7 +108,7 @@ export default {
         chart: {
           background: "#fff",
           parentHeightOffset: 0,
-          height: 400,
+          height: 300,
           zoom: {
             enabled: false
           },

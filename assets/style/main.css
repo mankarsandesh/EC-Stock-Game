@@ -1171,3 +1171,11 @@ p.guideline {
   z-index: 10000;
 }
 /* ----------------------------- style from _id ----------------------------- */
+
+
+.error-load-road-map{
+  background-color: rgb(238, 115, 115);
+  min-width: 150px;
+  min-height: 150px;
+  text-align: center;
+}

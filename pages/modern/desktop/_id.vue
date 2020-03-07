@@ -35,7 +35,7 @@
               <v-flex xs12>
                 <div id="selectstockGuideline">
                   <stockSelect :items="SelectStockItems.data" />
-                  <!-- <selectStock :stockId="$route.params.id"></selectStock> -->
+                  <!-- <selectStock :stockId="'btc1'"></selectStock> -->
                 </div>
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
@@ -47,12 +47,7 @@
                 <v-layout>
                   <v-flex class="layout-bottom">
                     <div id="fullscreenGuidelines">
-                      <v-btn
-                        rigth
-                        fab
-                        class="fullscreen"
-                        :to="'/modern/fullscreen/' +$route.params.id"
-                      >
+                      <v-btn rigth fab class="fullscreen" :to="'/modern/fullscreen/' +$route.params.id">
                         <v-icon>fullscreen</v-icon>
                       </v-btn>
                     </div>
@@ -99,12 +94,12 @@
               </v-flex>-->
             </v-layout>
             <div id="betRuleButton">
-              <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
+              <betButton :stockName="'btc1'" :loop="getLoop($route.params.id)"></betButton>
             </div>
           </v-flex>
         </v-layout>
 
-        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
+        <v-flex xs12 >
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
@@ -376,7 +371,7 @@ export default {
     // change to mobile component
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
-        let linkto = `/modern/betting/${this.$route.params.id}`;
+        let linkto = `/modern/betting/btc1`;
         this.$router.push(linkto);
       }
     }
@@ -583,6 +578,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getRoadMap",
       "getStocks",
       "getLastDraw",
       "getStockById",
