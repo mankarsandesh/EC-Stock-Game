@@ -49,6 +49,7 @@
 </template>
 <script>
 import { mapMutations, mapActions, mapGetters } from "vuex";
+import config from "../../../config/config.global";
 export default {
   layout: "desktopModern",
 
