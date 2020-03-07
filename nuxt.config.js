@@ -97,7 +97,9 @@ module.exports = {
          ** You can extend webpack config here
          */
         extend: function (config, {isDev, isClient}) {
-            
+            if(isClient) {
+                config.devtool = '#source-map'
+            }
             config.node = {
                 fs: "empty"
             };
