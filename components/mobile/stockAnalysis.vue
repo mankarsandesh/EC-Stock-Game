@@ -2,7 +2,7 @@
 <div>
     <v-flex xs12 md8 class="pt-2 pl-5 pr-5">
         <div>
-            <h2 class="title_menu">stock analysis</h2>
+            <h2 class="title_menu">{{$t('profile.stock analysis')}}</h2>
             <v-divider></v-divider>
         </div>
     </v-flex>
@@ -12,7 +12,7 @@
             <v-flex xs5 sm3 mr-1 ml-1>
                 <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
                     <div class="title_date_picker">
-                        <span>from</span>
+                        <span>{{$t('msg.from')}}</span>
                     </div>
                     <div class="date_picker">
                         <span class="select_date">{{startDate}}</span>
@@ -29,7 +29,7 @@
             <v-flex xs5 sm3 mr-1>
                 <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
                     <div class="title_date_picker">
-                        <span>to</span>
+                        <span>{{$t('msg.to')}}</span>
                     </div>
                     <div class="date_picker">
                         <span class="select_date">{{endDate}}</span>
@@ -54,7 +54,7 @@
             <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
                 <div class="date_picker_container">
                     <div class="title_date_picker">
-                        <span>Sort By</span>
+                        <span>{{$t('msg.sortby')}}</span>
                     </div>
                     <div class="date_picker">
 
@@ -80,7 +80,7 @@
         <v-layout row>
             <v-flex xs3 sm3>
                 <div class="title_date_picker mt-2">
-                    <span>Sort By</span>
+                    <span>{{$t('msg.sortby')}}</span>
                 </div>
             </v-flex>
             <v-flex xs5 sm5>

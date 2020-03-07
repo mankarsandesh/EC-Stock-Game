@@ -1,8 +1,10 @@
 {
-    "filter": "filter",
-    "sort": "sort",
-    "search": "search",
-    "stock": "stock",
+    "filter": "กรอง",
+    "sort": "ประเภท",
+    "search": "ค้นหา",
+    "stock": "คลังสินค้า",
+    "stock type" : "ประเภทหุ้น",
+    "game type" : "ประเภทเกม",
     "default": "ค่าเริ่มต้น",
     "menu": {
         "home": "หน้าหลัก",
@@ -35,7 +37,11 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
-        "acc":"Acc",
+
+        "acc":"acc",
+        "account balance":"ยอดเงินในบัญชี",
+        "rolling amount":"จำนวนกลิ้ง",
+
         "calculating": "การคำนวณ...",
         "marketclosed": "ปิดตลาด!",
         "reset": "รีเซ็ต",
@@ -92,6 +98,8 @@
         "Clear": "ล้าง",
         "Total Bet": "การเดิมพันทั้งหมด",
         "Win Rate": "อัตราการชนะ",
+        "minute game": "เกมนาที",
+
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
         "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
@@ -208,8 +216,16 @@
         "sh000300": "ดัชนีเซี่ยงไฮ้และเซินเจิ้น 300"
     },
     "profile": {
+        "first name":"ชื่อจริง",
+        "last name":"นามสกุล",
+        "gender":"เพศ",
+        "email":"อีเมล",
+        "country":"ประเทศ",
+        "online status":"สถานะออนไลน์",
         "basic info": "ข้อมูลพื้นฐาน",
         "online history": "ประวัติออนไลน์",
-        "stock analysis": "การวิเคราะห์หุ้น"
+        "stock analysis": "การวิเคราะห์หุ้น",
+        "online time":"เวลาออนไลน์",
+        "total online":"ออนไลน์ทั้งหมด"
     }
 }

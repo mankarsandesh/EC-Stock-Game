@@ -71,7 +71,7 @@
                     <span>
                         <h3 class="text-uppercase">{{$t('stockname.'+getStockById($route.params.id).stockname)}}</h3>
                         <span class="text-primary">
-                            <span>{{getStockById($route.params.id).loop}}</span> minute game | ID:
+                            <span>{{getStockById($route.params.id).loop}}</span> {{$t('msg.minute game')}} | ID:
                             <span>0909090</span>
                         </span>
                     </span>

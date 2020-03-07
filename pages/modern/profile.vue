@@ -14,7 +14,7 @@
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>Online Status : 2hours</p>
+                    <span>{{$t('profile.online status')}} : 2hours</span>
                 </div>
             </v-flex>
         </v-layout>
@@ -35,14 +35,14 @@
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>Online Status : 2hours</p>
+                    <p>{{$t('profile.online status')}} : 2hours</p>
                 </div>
             </v-flex>
 
             <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6' " md4 lg3>
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_green"></div>
-                    <span>account balance</span>
+                    <span>{{$t('msg.account balance')}}</span>
                     <br>
                     <span class="amount">{{getUserInfo.balance | currency}}</span>
                     <span class="title_currentcy">kip</span>
@@ -52,7 +52,7 @@
             <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6' " md4 lg3>
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_blue"></div>
-                    <span>rolling amount</span>
+                    <span>{{$t('msg.rolling amount')}}</span>
                     <br>
                     <span class="amount">{{161536 | currency}}</span>
                     <span class="title_currentcy">kip</span>
@@ -67,7 +67,7 @@
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
                         <div class="row">
                             <div class="col-15">
-                                <label for="fname">player ID</label>
+                                <label for="fname">{{$t('msg.playerid')}}</label>
                             </div>
                             <div class="col-85">
                                 <input disabled type="text" id="fname" name="firstname" :value="userData.PID" />
@@ -75,7 +75,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="lname">first name</label>
+                                <label for="lname">{{$t('profile.first name')}}</label>
                             </div>
                             <div class="col-85">
                                 <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" />
@@ -86,7 +86,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="lname">last name</label>
+                                <label for="lname">{{$t('profile.last name')}}</label>
                             </div>
                             <div class="col-85">
                                 <input ref="lastname" type="text" :value="userData.lastName" id="lname" name="lastname" placeholder="Your last name" />
@@ -97,7 +97,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="country">gender</label>
+                                <label for="country">{{$t('profile.gender')}}</label>
                             </div>
                             <div class="col-85">
                                 <select ref="gender" id="country" name="country">
@@ -111,7 +111,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="country">email</label>
+                                <label for="country">{{$t('profile.email')}}</label>
                             </div>
                             <div class="col-85">
                                 <input ref="email" type="text" :value="userData.email" id="lname" name="lastname" placeholder="mackychinma@gmail.com" />
@@ -119,7 +119,7 @@
                         </div>
                         <div class="row">
                             <div class="col-15">
-                                <label for="country">country</label>
+                                <label for="country">{{$t('profile.country')}}</label>
                             </div>
                             <div class="col-85">
                                 <select ref="country" id="country" name="country">
@@ -136,14 +136,14 @@
                         <div class="row">
                             <div class="col-15"></div>
                             <div class="col-85">
-                                <v-btn :loading="updating" :disabled="updating" class="btn_save" @click="saveClick()">save</v-btn>
-                                <v-btn class="btn_cancel">cancel</v-btn>
+                                <v-btn :loading="updating" :disabled="updating" class="btn_save" @click="saveClick()">{{$t('msg.save')}}</v-btn>
+                                <v-btn class="btn_cancel">{{$t('msg.cancel')}}</v-btn>
                             </div>
                         </div>
                     </form>
                     <div class="row" style="text-align: -webkit-center;">
-                        <v-btn @click="dialogOnlineHistory = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">online history</span> <i class="fa fa-plus"></i></v-btn>
-                        <v-btn @click="dialogStockAnalysis = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">stock analysis</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="dialogOnlineHistory = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">{{$t('profile.online history')}}</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="dialogStockAnalysis = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">{{$t('profile.stock analysis')}}</span> <i class="fa fa-plus"></i></v-btn>
                     </div>
 
                 </div>

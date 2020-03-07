@@ -7,7 +7,7 @@
             <v-divider></v-divider>
             <v-list-tile class="pt-2 " @click="showfilterStock = !showfilterStock">
                 <v-list-tile-content>
-                    <v-list-tile-title class="text-uppercase">stock</v-list-tile-title>
+                    <v-list-tile-title class="text-uppercase">{{$t('stock')}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
             <div class="text-uppercase text-primary pa-0" v-show="showfilterStock">
@@ -32,7 +32,7 @@
             <v-divider></v-divider>
             <v-list-tile class="pt-2">
                 <v-list-tile-content @click="showfilterType = !showfilterType">
-                    <v-list-tile-title class="text-uppercase">game type</v-list-tile-title>
+                    <v-list-tile-title class="text-uppercase">{{$t('game type')}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
             <div class="text-uppercase text-primary pa-0" v-show="showfilterType">
@@ -51,7 +51,7 @@
             <v-divider></v-divider>
             <v-list-tile class="py-2">
                 <v-list-tile-content>
-                    <v-list-tile-title class="text-uppercase">default</v-list-tile-title>
+                    <v-list-tile-title class="text-uppercase">{{$t('default')}}</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
             <v-divider></v-divider>
@@ -64,7 +64,7 @@
             <v-divider></v-divider>
             <v-list-tile class="pt-2">
                 <v-list-tile-content>
-                    <v-list-tile-title class="text-uppercase">stock name</v-list-tile-title>
+                    <v-list-tile-title class="text-uppercase">{{$t('stock-list.stock name')}}</v-list-tile-title>
                 </v-list-tile-content>
                 <v-spacer></v-spacer>
                 <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
@@ -76,7 +76,7 @@
             <v-divider></v-divider>
             <v-list-tile class="pt-2">
                 <v-list-tile-content>
-                    <v-list-tile-title class="text-uppercase">stock type</v-list-tile-title>
+                    <v-list-tile-title class="text-uppercase">{{$t('stock type')}}</v-list-tile-title>
                 </v-list-tile-content>
                 <v-spacer></v-spacer>
                 <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
@@ -86,7 +86,7 @@
             <v-divider></v-divider>
             <v-list-tile class="py-2">
                 <v-list-tile-content>
-                    <v-list-tile-title class="text-uppercase">default</v-list-tile-title>
+                    <v-list-tile-title class="text-uppercase">{{$t('default')}}</v-list-tile-title>
                 </v-list-tile-content>
                 <v-spacer></v-spacer>
                 <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
@@ -115,12 +115,12 @@
     <div class="text-center mt-3">
       <v-flex order-xs6 class="text-center  d-flex justify-center"> 
         <v-btn text flat @click="filterClick" class="buttonGreen">
-            <span class="uppercase-text white--text">filter</span>
+            <span class="uppercase-text white--text">{{$t('filter')}}</span>
         </v-btn>
       <!-- </v-flex>
       <v-flex offset-xs6 class="text-center d-flex justify-center">  -->
         <v-btn text flat @click="sortClick" class="buttonGreen">
-            <span class="uppercase-text white--text">sort</span>
+            <span class="uppercase-text white--text">{{$t('sort')}}</span>
         </v-btn>
       </v-flex>
     </div>

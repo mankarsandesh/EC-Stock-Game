@@ -3,6 +3,8 @@
     "sort": "排序方式",
     "search": "搜索",
     "stock": "股票",
+    "stock type" : "股票类型",
+    "game type" : "游戏类型",
     "default": "默认",
     "menu": {
         "home": "主页",
@@ -35,7 +37,10 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
-        "acc": "Acc",
+
+        "acc":"Acc",
+        "account balance":"账户余额",
+        "rolling amount":"滚动量",
         "calculating": "计算中...",
         "marketclosed": "市場收盤!",
         "reset": "重啟",
@@ -92,6 +97,8 @@
         "Clear": "重置",
         "Total Bet": "总下注金额",
         "Win Rate": "赢率",
+        "minute game": "分钟比赛",
+
         "resultintroduction": "结果参照举例如下",
         "textinfoule": "简介 我们的平台利用不同的可参照股票构建一个公正，刺激，结果不可控的游戏。 我们根据所选股票提供四种主要游戏玩法类型（大/小，单/双，上/中/下，数字）。根据我们的规则，所有游戏结果都取决于股价的两位特定小数。",
         "textresultintroduction": "假设某股价为1234.56，我们所有的游戏类型只会将小数 “56”作为结果; 在结果为“56”的情况下， 我们将小数 “5”定义为 “第一位数字”的结果; 小数 “6”作为. “第二位数字”，的结果; 小数“5”和“6”一起作为“两位数字”的结果; 除此之外，我们还将第一位数字与第二位数字相加（5+6）的结果定为 “合数” 的结果，顾结果为 “11”;",
@@ -208,8 +215,16 @@
         "sh000300": "沪深300指数"
     },
     "profile": {
+        "first name":"名字",
+        "last name":"姓",
+        "gender":"性别",
+        "email":"电子邮件",
+        "country":"国家",
+        "online status":"在线状态",
         "basic info": "基础信息",
         "online history": "在线历史",
-        "stock analysis": "库存分析"
+        "stock analysis": "库存分析",
+        "online time":"上线时间",
+        "total online":"总在线"
     }
 }

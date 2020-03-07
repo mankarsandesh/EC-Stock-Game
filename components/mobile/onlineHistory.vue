@@ -5,7 +5,7 @@
             <v-flex xs0 sm2>
             </v-flex>
             <v-flex xs12 sm10>
-                <h2 class="title_menu">online history</h2>
+                <h2 class="title_menu">{{$t('profile.online history')}}</h2>
                 <v-divider></v-divider>
             </v-flex>
         </v-layout>
@@ -22,7 +22,7 @@
             <!-- <span class="blur-img">uploading</span> -->
         </div>
         <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-        <p>Online Status : 2hours</p>
+        <p>{{$t('profile.online status')}} : 2hours</p>
         <v-divider></v-divider>
     </v-flex>
 
@@ -39,7 +39,7 @@
                     <!-- <span class="blur-img">uploading</span> -->
                 </div>
                 <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                <p>Online Status : 2hours</p>
+                <p>{{$t('profile.online status')}} : 2hours</p>
             </v-flex>
             <v-flex xs12 sm10>
                 <v-layout row>
@@ -47,7 +47,7 @@
                     <v-flex xs5 sm3 mr-1 ml-1>
                         <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
                             <div class="title_date_picker">
-                                <span>from</span>
+                                <span>{{$t('msg.from')}}</span>
                             </div>
                             <div class="date_picker">
                                 <span class="select_date">{{startDate}}</span>
@@ -64,7 +64,7 @@
                     <v-flex xs5 sm3 mr-1>
                         <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
                             <div class="title_date_picker">
-                                <span>to</span>
+                                <span>{{$t('msg.to')}}</span>
                             </div>
                             <div class="date_picker">
                                 <span class="select_date">{{endDate}}</span>
@@ -89,7 +89,7 @@
                     <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
                         <div class="date_picker_container">
                             <div class="title_date_picker">
-                                <span>Sort By</span>
+                                <span>{{$t('msg.sortby')}}</span>
                             </div>
                             <div class="date_picker">
 
@@ -158,15 +158,15 @@
     <v-flex xs12 class="pt-3 pl-5">
         <div>
             <span style="margin-right:30px">
-                player id :
+                {{$t('msg.playerid')}} :
                 <b>{{getUserInfo.PID}}</b>
             </span>
             <span style="margin-right:30px">
-                online time : {{getUserInfo.currentActiveTime}}
+                {{$t('profile.online time')}} : {{getUserInfo.currentActiveTime}}
                 <b>{{asynUserInfo.currentActiveTime}}</b>
             </span>
             <span style="margin-right:30px">
-                total online :
+                {{$t('profile.total online')}}:
                 <b>2day,15hours,11minute</b>
             </span>
         </div>

@@ -113,7 +113,7 @@ export default {
 .setpricechip {
     position: relative;
     left: 6px;
-    top: 15px;
+    top: 25px;
     color: black;
     font-size: 1.2rem;
 }

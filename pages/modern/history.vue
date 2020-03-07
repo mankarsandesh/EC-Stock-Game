@@ -29,7 +29,7 @@
         </v-flex>
 
         <v-flex xs2 sm1 md1 ml-1 mr-2>
-            <button @click="dateSearch()" class="goButton buttonGreen">GO</button>
+            <button @click="dateSearch()" class="goButton buttonGreen">{{$t('msg.go')}}</button>
         </v-flex>
 
         <!-- <v-flex xs2 sm2 md2 lg1>

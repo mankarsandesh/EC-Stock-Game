@@ -10,7 +10,7 @@
             <v-select class="border-round mt-2" hide-details :items="items" placeholder="Sort By :" v-model="itemss"></v-select>
         </v-flex>
         <v-flex xs2 sm2 md3 lg2 >
-            <v-btn @click="goSearch" class="mt-3 buttonGreen" style="border-radius:8px;">go</v-btn>
+            <v-btn @click="goSearch" class="mt-3 buttonGreen" style="border-radius:8px;">{{$t('msg.go')}}</v-btn>
         </v-flex>
     </v-layout>
     <!-- end serach -->
