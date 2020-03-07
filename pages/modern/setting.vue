@@ -5,7 +5,7 @@
         <v-item-group v-model="window" class="shrink ml-5 mr-5" mandatory tag="v-flex">
           <v-item v-for="n in tabs" :key="n">
             <div slot-scope="{ active, toggle }">
-              <v-btn :input-value="active" block class="main-btn" @click="toggle">{{$t('menu.'+n)}}</v-btn>
+              <v-btn block :class="active ? 'setting-btn-active' : 'setting-btn'" @click="toggle">{{$t('menu.'+n)}}</v-btn>
             </div>
           </v-item>
         </v-item-group>
