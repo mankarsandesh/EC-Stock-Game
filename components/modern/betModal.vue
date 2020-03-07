@@ -63,7 +63,7 @@ export default {
     ],
     data() {
         return {
-            gameUUID:"5d147c4c-6fab-4dfa-a97a-69a863b2fa24",
+            gameUUID:"b308301f-5038-42f5-9e15-02982fd76ee5",
             confirmDisabled: false,
             betValue: 0,
             imgChip: [{
@@ -176,7 +176,7 @@ export default {
             console.log("i am here 1");   
             console.log(data);
             this.sendBetting(data);           
-            // console.warn(this.getOnBetting);
+            console.warn(this.getOnBetting);
         },
         closePopper() {
             $(".closepopper").click();
