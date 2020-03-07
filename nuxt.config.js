@@ -35,7 +35,6 @@ module.exports = {
      ** Customize the progress-bar color
      */
     loading: false,
-
     /*
      ** Global CSS
      */
@@ -44,7 +43,6 @@ module.exports = {
         "~/assets/style/main.scss",
         "~/assets/style/app.styl"
     ],
-
     /*
      ** Plugins to load before mounting the App
      */
@@ -62,7 +60,6 @@ module.exports = {
     router: {
         middleware: ["auth", "showLoading"]
     },
-
     /*
      ** Nuxt.js modules
      */
