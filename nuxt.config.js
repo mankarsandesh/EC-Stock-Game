@@ -99,7 +99,12 @@ module.exports = {
         /*
          ** You can extend webpack config here
          */
-        extend(config, ctx) {}
+        extend: function (config, {isDev, isClient}) {
+            
+            config.node = {
+                fs: "empty"
+            };
+        }
     },
     server: {
          port: 8000, // default: 3000

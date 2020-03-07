@@ -290,6 +290,7 @@ import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import SelectStockItems from "~/data/json/current-bet";
+import config from "../../../config/config.global";
 
 export default {
   async validate({ params, store }) {
@@ -390,7 +391,7 @@ export default {
       try {
         const { data } = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/getStock",
-          { portalProviderUUID: this.portalProviderUUID, version: 1 },
+          { portalProviderUUID: this.portalProviderUUID, version: config.version },
           { headers: this.headers }
         );
 

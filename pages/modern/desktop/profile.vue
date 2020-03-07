@@ -138,7 +138,7 @@ export default {
       formData.append("profileImage", this.$refs.inputFile.files[0], "file");
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
-      formData.append("version", 1);
+      formData.append("version", config.version);
       try {
         const res = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
