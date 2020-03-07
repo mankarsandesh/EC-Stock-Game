@@ -54,21 +54,6 @@ import {
     mapState
 } from "vuex";
 export default {
-    // props: {
-    //     stockName: {
-    //         type: String
-    //     },
-    //     loop: {
-    //         type: Number
-    //     },
-    //     betId: {
-    //         type: String
-    //     },
-    //     payout: {
-    //         type: Number,
-    //         required: true
-    //     }
-    // },
     props: [
         "stockName",
         "ruleid",
@@ -160,9 +145,6 @@ export default {
                     console.log(res);
                     this.balance()
                     this.closePopper();
-                    // console.warn(res.data[0]);
-                    // this.pushDataOnGoingBet(res.data[0]);
-                    // console.warn(this.getOnBetting);
                     this.$swal({
                         type: "success",
                         title: "Confirm!",
