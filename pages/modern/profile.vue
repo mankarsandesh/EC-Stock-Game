@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-flex xs12 v-if="$vuetify.breakpoint.xs">
+    <v-flex xs12 mt-2 mb-2 v-if="$vuetify.breakpoint.xs">
         <v-layout row>
             <v-flex xs12 sm2 md4 lg3>
                 <div class="profile_head text-xs-center">
@@ -9,7 +9,7 @@
                             <img :src="imgProfile" alt="img-profile" />
                             <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
                         </v-avatar>
-                        <span class="camera_container" style="    position: absolute;    top: 9%;">
+                        <span class="camera_container" style=" position: absolute; top: 9%;">
                             <v-icon color="black" :size="20">photo_camera</v-icon>
                         </span>
                     </div>
@@ -20,7 +20,7 @@
         </v-layout>
     </v-flex>
 
-    <v-flex xs12>
+    <v-flex xs12 :class="!$vuetify.breakpoint.xs ? 'mt-2':''">
         <v-layout row>
             <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
                 <div class="profile_head text-xs-center">
@@ -63,7 +63,7 @@
     <v-flex xs12>
         <v-layout>
             <v-flex xs12 pt-0 pl-1>
-                <div style="margin-top:20px">
+                <div>
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
                         <div class="row">
                             <div class="col-15">
@@ -142,8 +142,8 @@
                         </div>
                     </form>
                     <div class="row" style="text-align: -webkit-center;">
-                        <v-btn @click="dialogOnlineHistory = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">{{$t('profile.online history')}}</span> <i class="fa fa-plus"></i></v-btn>
-                        <v-btn @click="dialogStockAnalysis = true" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">{{$t('profile.stock analysis')}}</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="$refs.onlineHistory.showDialogOnlineHistory()" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">{{$t('profile.online history')}}</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="$refs.stockAnalysis.showDialogStockAnalysis()" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">{{$t('profile.stock analysis')}}</span> <i class="fa fa-plus"></i></v-btn>
                     </div>
 
                 </div>
@@ -151,31 +151,8 @@
         </v-layout>
     </v-flex>
 
-    <v-dialog v-model="dialogOnlineHistory" fullscreen hide-overlay transition="dialog-bottom-transition" light>
-        <v-card>
-            <v-toolbar flat>
-                <v-layout row>
-                    <v-spacer></v-spacer>
-                    <v-icon size="20" @click="dialogOnlineHistory=false">close</v-icon>
-                </v-layout>
-            </v-toolbar>
-            <OnlineHistory />
-
-        </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="dialogStockAnalysis" fullscreen hide-overlay transition="dialog-bottom-transition" light>
-        <v-card>
-            <v-toolbar flat>
-                <v-layout row>
-                    <v-spacer></v-spacer>
-                    <v-icon size="20" @click="dialogStockAnalysis=false">close</v-icon>
-                </v-layout>
-            </v-toolbar>
-            <StockAnalysis />
-
-        </v-card>
-    </v-dialog>
+    <OnlineHistory ref="onlineHistory"></OnlineHistory>
+    <StockAnalysis ref="stockAnalysis"></StockAnalysis>
 
 </div>
 </template>
@@ -185,8 +162,8 @@ import {
     mapGetters,
     mapActions
 } from "vuex";
-import OnlineHistory from "../../components/mobile/onlineHistory"
-import StockAnalysis from "../../components/mobile/stockAnalysis"
+import OnlineHistory from "~/components/mobile/onlineHistory"
+import StockAnalysis from "~/components/mobile/stockAnalysis"
 
 export default {
     data() {
@@ -207,7 +184,7 @@ export default {
     computed: {
         ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
         imgProfile() {
-            return this.getUserInfo.profileImage === "" ?
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
                 "/user.png" :
                 "http://uattesting.equitycapitalgaming.com/" +
                 this.getUserInfo.profileImage;
@@ -267,6 +244,10 @@ export default {
 </script>
 
 <style scoped>
+p {
+    margin-bottom: 0px !important;
+}
+
 .padding-right-60 {
     padding-right: 60%;
 }
