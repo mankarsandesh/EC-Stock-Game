@@ -47,7 +47,12 @@
                 <v-layout>
                   <v-flex class="layout-bottom">
                     <div id="fullscreenGuidelines">
-                      <v-btn rigth fab class="fullscreen" :to="'/modern/fullscreen/' +$route.params.id">
+                      <v-btn
+                        rigth
+                        fab
+                        class="fullscreen"
+                        :to="'/modern/fullscreen/' +$route.params.id"
+                      >
                         <v-icon>fullscreen</v-icon>
                       </v-btn>
                     </div>
@@ -99,11 +104,14 @@
           </v-flex>
         </v-layout>
 
-        <v-flex xs12 >
+        <v-flex xs12 v-if="getRoadMap.length > 0">
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap :isShowMultigameButton="index"></tableTrendMap>
+              <tableTrendMap
+                :dataArray="getRoadMap"
+                :isShowMultigameButton="index"
+              ></tableTrendMap>
             </div>
             <span
               class="addChart"
@@ -348,6 +356,22 @@ export default {
     }
   },
   mounted() {
+    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    // socket new api
+    this.listenForBroadcast(
+      {
+        channelName: `roadMap.${this.getStockUUIDByStockName(
+          this.$route.params.id
+        )}.${this.getPortalProviderUUID}`,
+        eventName: "roadMap"
+      },
+      ({ data }) => {
+        console.log("new socket success");
+        console.log(data.data.roadMap);
+        this.setLiveRoadMap(data.data.roadMap[0]);
+        console.log("new socket success");
+      }
+    );
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
     // console.warn("mounted...");
@@ -377,16 +401,24 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["asyncRoadMap"]),
     ...mapMutations([
+      "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
       "setIsLoadingStockGame"
     ]),
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
     async getStock() {
       try {
         const { data } = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/getStock",
-          { portalProviderUUID: this.portalProviderUUID, version: config.version },
+          {
+            portalProviderUUID: this.portalProviderUUID,
+            version: config.version
+          },
           { headers: this.headers }
         );
 
@@ -578,7 +610,9 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockUUIDByStockName",
       "getRoadMap",
+      "getPortalProviderUUID",
       "getStocks",
       "getLastDraw",
       "getStockById",
@@ -620,5 +654,4 @@ export default {
   top: 95px;
   background-color: #ffffff !important;
 }
-
 </style>
