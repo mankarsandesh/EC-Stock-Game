@@ -47,7 +47,12 @@
                 <v-layout>
                   <v-flex class="layout-bottom">
                     <div id="fullscreenGuidelines">
-                      <v-btn rigth fab class="fullscreen" :to="'/modern/fullscreen/' +$route.params.id">
+                      <v-btn
+                        rigth
+                        fab
+                        class="fullscreen"
+                        :to="'/modern/fullscreen/' +$route.params.id"
+                      >
                         <v-icon>fullscreen</v-icon>
                       </v-btn>
                     </div>
@@ -99,7 +104,7 @@
           </v-flex>
         </v-layout>
 
-        <v-flex xs12 >
+        <v-flex xs12>
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
@@ -121,19 +126,17 @@
       </v-btn>-->
 
       <!-- Game Rule Popup -->
-      <v-dialog v-model="dialog" width="600">
+      <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius:10px;">
           <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title
-            class="headline lighten-2"
-            style="border-radius:10px;"
-            primary-title
-          >EC Gaming Rules</v-card-title>
+          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
           <v-card-text>
-            <onlyrules />
+            <leaderBoard />
           </v-card-text>
           <v-divider></v-divider>
         </v-card>
+
+        <!-- <leaderBoard  />    -->
       </v-dialog>
     </v-layout>
     <div ref="guideline" class="overlay">
@@ -285,6 +288,7 @@ import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import SelectStockItems from "~/data/json/current-bet";
+import leaderBoard from "~/components/modern/leaderboard/leaderboard";
 import config from "../../../config/config.global";
 
 export default {
@@ -301,13 +305,14 @@ export default {
     tableTrendMap,
     selectStock,
     onlyrules,
-    stockSelect
+    stockSelect,
+    leaderBoard
   },
   data() {
     return {
       SelectStockItems,
       stock: [],
-      dialog: false,
+      dialog: true,
       bgColor: "#778899",
       position: "top-right",
       isHidden: false,
@@ -340,12 +345,12 @@ export default {
   created() {
     this.getStock();
     // Game Rule Popup check and open Ne User
-    if (localStorage.getItem("gameRule") != "shown") {
-      this.dialog = true;
-      localStorage.setItem("gameRule", "shown");
-    } else {
-      this.dialog = false;
-    }
+    // if (localStorage.getItem("gameRule") != "shown") {
+    //   this.dialog = true;
+    //   localStorage.setItem("gameRule", "shown");
+    // } else {
+    //   this.dialog = false;
+    // }
   },
   mounted() {
     // call this every page that used "dekstopModern" layout to hide loading
@@ -386,7 +391,10 @@ export default {
       try {
         const { data } = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/getStock",
-          { portalProviderUUID: this.portalProviderUUID, version: config.version },
+          {
+            portalProviderUUID: this.portalProviderUUID,
+            version: config.version
+          },
           { headers: this.headers }
         );
 
@@ -620,5 +628,4 @@ export default {
   top: 95px;
   background-color: #ffffff !important;
 }
-
 </style>
