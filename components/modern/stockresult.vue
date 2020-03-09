@@ -9,13 +9,14 @@
       <!-- bet result -->
       <v-flex xs12>
         <div class="table-responsive">
+          <h3 class="title" v-show="getStockResult.length < 0"></h3>
           <table class="table">
             <tr>
               <th>{{$t('msg.Stock Name')}}</th>
               <th>{{$t('msg.Time')}}</th>
               <th>{{$t('msg.Result')}}</th>
             </tr>
-            <tr v-for="(data,index) in getStockList" :key="index">
+            <tr v-for="(data,index) in getStockResult" :key="index">
               <td>
                 <nuxt-link
                   :to="'/modern/desktop/'+data.stockName"
@@ -36,11 +37,10 @@ export default {
   data() {
     return {
       selected: 1,
-      getStockList: []
+      getStockResult: []
     };
   },
   computed: {
-    ...mapGetters(["getStockList", "getLotteryDraw", "getStockById"]),
     ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   mounted() {
@@ -66,9 +66,7 @@ export default {
           }
         }
       );
-      this.getStockList = data.data; 
-      console.log("This is a Heading");
-      console.log(this.getStockList);
+      this.getStockResult = data.data;      
     }
   }
 };

@@ -135,8 +135,7 @@
           </v-card-text>
           <v-flex class="text-lg-right">
             <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
-          </v-flex>
-             
+          </v-flex>             
         </v-card>       
       </v-dialog>
 
@@ -314,7 +313,7 @@ export default {
     return {
       SelectStockItems,
       stock: [],
-      dialog: true,
+      dialog: false,
       bgColor: "#778899",
       position: "top-right",
       isHidden: false,

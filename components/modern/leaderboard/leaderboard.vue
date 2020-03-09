@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-flex xs12 style="margin:0 auto;">
-      <tr class="userRow" v-for="(data,index) in topPlayerData" :key="index">
+    <v-flex xs12 style="margin:0 auto;"   v-for="(data,index) in topPlayerData" :key="index">
+      <tr class="userRow"  style="border:1px solid #333;">
         <th>
            <i class="fa fa-crown fa-2x" style="margin-right: 3px;" />
           <img style="vertical-align:middle" class="pimage" src="https://placehold.it/60x60" />
@@ -95,6 +95,8 @@ export default {
   padding: 10px;
   border-radius: 20px;
 }
+
+
 .ranking span:hover {
   color: green;
   cursor: pointer;
@@ -106,7 +108,7 @@ export default {
   color: #6c6c6c;
 }
 .userRow {
-  border:1px solid #333 !important;
+  border:1px solid blue;
   border-radius: 10px;
   background-color: #ffffff;
   margin: 5px 0px;
