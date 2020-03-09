@@ -15,8 +15,36 @@
             </div>
         </v-flex>
 
+        <v-flex xs12 md12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+            <div class="image_container">
+                <v-avatar :size="90">
+                    <img :src="imgProfile" alt="img-profile" />
+                </v-avatar>
+                <span class="camera_container" style="position: absolute; top: 19%;">
+                    <v-icon color="black" :size="20">photo_camera</v-icon>
+                </span>
+                <!-- <span class="blur-img">uploading</span> -->
+            </div>
+            <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
+            <p>{{$t('profile.online status')}} : 2hours</p>
+            <v-divider></v-divider>
+        </v-flex>
+
         <v-flex xs12 pt-3>
             <v-layout row>
+                <v-flex xs2 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+                    <div class="image_container">
+                        <v-avatar :size="60">
+                            <img :src="imgProfile" alt="img-profile" />
+                        </v-avatar>
+                        <span class="camera_container" style="position: absolute;top: 32%;left: 12%;">
+                            <v-icon color="black" :size="20">photo_camera</v-icon>
+                        </span>
+                        <!-- <span class="blur-img">uploading</span> -->
+                    </div>
+                    <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
+                    <p>{{$t('profile.online status')}} : 2hours</p>
+                </v-flex>
                 <!-- select start date  -->
                 <v-flex xs5 sm3 mr-1 ml-1>
                     <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
@@ -164,7 +192,15 @@ export default {
         this.startDate = yyyy + "-" + mm + "-" + dd;
         this.endDate = yyyy + "-" + mm + "-" + dd;
     },
-    computed: {},
+    computed: {
+        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
+        imgProfile() {
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
+                "/user.png" :
+                "http://uattesting.equitycapitalgaming.com/" +
+                this.getUserInfo.profileImage;
+        },
+    },
     destroyed() {
         index = 0; // reset index
     },
@@ -327,6 +363,46 @@ export default {
         showDialogStockAnalysis() {
             this.dialogStockAnalysis = true;
         },
+        ...mapActions(["asynUserInfo"]),
+        showDialogOnlineHistory() {
+            this.dialogOnlineHistory = true;
+        },
+        async getOnlineHistory() {
+            try {
+                const res = await this.$axios.$post(
+                    "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile", {
+                        portalProviderUUID: this.getPortalProviderUUID,
+                        userUUID: this.getUserUUID,
+                        dateRangeFrom: "2020-02-02",
+                        dateRangeTo: "2020-02-28"
+                    }, {
+                        headers: {
+                            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+                        }
+                    }
+                );
+                if (res.code === 200) {
+                    this.chartData = [1500];
+                    this.xaxis = ["2020-02-26"];
+                    let result = res.data[0].activeTimeDateWise;
+                    console.log("result online chart");
+                    console.log(res);
+                    console.log("result online chart");
+                    result.forEach(element => {
+                        this.chartData.push(parseInt(element.activeTimeInMins));
+                        this.xaxis.push(element.Date);
+                    });
+                    console.log(this.chartData);
+                    console.log(this.xaxis);
+                } else {
+                    console.log(res);
+                    // alert(res.message);
+                }
+            } catch (ex) {
+                console.error(ex);
+                // alert(ex.message);
+            }
+        }
     },
 };
 </script>

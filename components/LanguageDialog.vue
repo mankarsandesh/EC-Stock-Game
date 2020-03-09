@@ -1,5 +1,5 @@
 <template>
-<v-dialog v-model="dialog" max-width="400">
+<v-dialog v-model="dialog" max-width="400" style="background-color:#fff!important;">
     <v-card class="pa-3">
         <v-card-title class="headline">{{$t('msg.chooselanguage')}}</v-card-title>
         <v-layout class="card-flag">
@@ -29,8 +29,7 @@ export default {
     data() {
         return {
             dialog: false,
-            lang: [
-                {
+            lang: [{
                     country: "cn",
                     value: "cn"
                 }, {
