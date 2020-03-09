@@ -17,7 +17,7 @@ const createStore = () => {
             isLoadingHistory: [],
             // set portal provider and user UUID for authentication
             portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
-            userUUID: "5e167890-9c42-46e1-b6c4-324fddbc9630",
+            userUUID: "dfdcb1e4-2275-4026-8efd-cafc79cc6f44",
             Username: "TnkwebApi",
             Password: "Test123!",
             // end set portal provider and user UUID for authentication
@@ -977,7 +977,7 @@ const createStore = () => {
                 const livePrice = state.liveprice[id].currentPrice;
                 return livePrice;
             },
-            // get previouse price to compare with current price to know to ti's down or up
+            // get previouse price to compare with current price to know to if the price increased or decreased
             getPreviousPrice: state => id => {
                 // console.log("getPreviousPrice")
                 if (id == "") {
