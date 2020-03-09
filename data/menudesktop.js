@@ -1,6 +1,16 @@
 const Menu = [  
     {
-        icon: "fa fa-area-chart fa-2x",
+        icon: "fa fa-bullhorn fa-2x",
+        title: "announcement",
+        to: "/modern/desktop/announcement"
+    },
+    {
+        icon: "fa fa-info-circle fa-2x",
+        title: "gamerule",
+        to: "/modern/desktop/gamerule"
+    },
+    {
+        icon: "fa fa-trophy fa-2x",
         title: "leaderboard",
         to: "/modern/desktop/leaderboard"
     },

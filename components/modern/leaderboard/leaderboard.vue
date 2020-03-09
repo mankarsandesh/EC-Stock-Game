@@ -1,22 +1,7 @@
 <template>
   <div>
-    <v-flex xs8 style="margin:0 auto;">
-      <v-layout row>
-        <v-flex grow pa-1>
-          <p class="float-left md6">
-            <span class="title">Top {{topPlayerData.length}} Leaders</span> (last updated 1 minutes ago)
-          </p>
-        </v-flex>
-        <v-flex grow pa-1 class="text-lg-right ranking">
-          <span class="text-uppercase font-weight-bold">
-            <v-icon small>event</v-icon>WEEKLY RANKINGS
-          </span>
-          <span class="text-uppercase font-weight-bold">
-            <v-icon small>event</v-icon>MONTHLY RANKINGS
-          </span>
-        </v-flex>
-      </v-layout>
-      <tr class="userRow" v-for="(data,index) in topPlayerData" :key="index">
+    <v-flex xs12 style="margin:0 auto;"   v-for="(data,index) in topPlayerData" :key="index">
+      <tr class="userRow"  style="border:1px solid #333;">
         <th>
            <i class="fa fa-crown fa-2x" style="margin-right: 3px;" />
           <img style="vertical-align:middle" class="pimage" src="https://placehold.it/60x60" />
@@ -36,7 +21,7 @@
           <h4 style="color:#0b2a68;" class="title">{{data.totalWinAmount}}</h4>
         </th>
         <th>
-          <v-btn class="buttonGreensmall" @click="dialog = true" dark>{{$t('useraction.followbet')}}</v-btn>
+          <v-btn class="buttonGreensmall " @click="dialog = true" dark>{{$t('useraction.followbet')}}</v-btn>
         </th>
       </tr>
     </v-flex>
@@ -60,6 +45,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    
   </div>
 </template>
 <script>
@@ -109,6 +95,8 @@ export default {
   padding: 10px;
   border-radius: 20px;
 }
+
+
 .ranking span:hover {
   color: green;
   cursor: pointer;
@@ -120,6 +108,7 @@ export default {
   color: #6c6c6c;
 }
 .userRow {
+  border:1px solid blue;
   border-radius: 10px;
   background-color: #ffffff;
   margin: 5px 0px;

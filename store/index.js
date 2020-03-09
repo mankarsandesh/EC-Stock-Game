@@ -1171,7 +1171,7 @@ const createStore = () => {
                     result.push(data);
                 }
 
-                // console.log(result)
+               // console.log(result)
                 return result;
             },
             // get some stock poproty to show in stock list page
@@ -1203,7 +1203,6 @@ const createStore = () => {
             getStockCrawlerData: state => id => {
                 // console.log("getStockCrawlerData")
                 let ids = id == undefined || id == "" ? "btc1" : id;
-
                 let result = [null];
                 if (state.stocks[ids].crawlerData.length < 0) {
                     return result;
