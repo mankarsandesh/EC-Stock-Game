@@ -13,7 +13,7 @@
           </v-flex>
           <v-flex xs12 pt-2>
             <div id="betresultGuidelines">
-              <betResultAllResult></betResultAllResult>
+              <stockResult></stockResult>
             </div>
           </v-flex>
           <v-flex xs12 pt-2>
@@ -133,11 +133,13 @@
           <v-card-text>
             <leaderBoard />
           </v-card-text>
-          <v-divider></v-divider>
-        </v-card>
-
-        <!-- <leaderBoard  />    -->
+          <v-flex class="text-lg-right">
+            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
+          </v-flex>
+             
+        </v-card>       
       </v-dialog>
+
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -279,7 +281,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import stockList from "~/components/modern/stockList";
-import betResultAllResult from "~/components/modern/betResultAllResult";
+import stockResult from "~/components/modern/stockresult";
 import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
@@ -298,7 +300,7 @@ export default {
   layout: "desktopModern",
   components: {
     stockList,
-    betResultAllResult,
+    stockResult,
     onBetting,
     chartApp,
     betButton,

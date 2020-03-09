@@ -1192,9 +1192,8 @@ const createStore = () => {
         // console.log(result)
         return result;
       },
-      // get some stock poproty to show in stock list page
-      getStockList(state, getters) {
-        // console.log("getStockList")
+      // get some stock Property to show in stock list page
+      getStockList(state, getters) {     
         let result = [];
         for (let i = 0; i < getters.getStockLength; i++) {
           const id = getters.getStockKeys[i];
@@ -1217,6 +1216,7 @@ const createStore = () => {
           result.push(data);
         }
         return result;
+        
       },
       getStockCrawlerData: state => id => {
         // console.log("getStockCrawlerData")

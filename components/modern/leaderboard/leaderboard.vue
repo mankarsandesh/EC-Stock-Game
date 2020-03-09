@@ -21,7 +21,7 @@
           <h4 style="color:#0b2a68;" class="title">{{data.totalWinAmount}}</h4>
         </th>
         <th>
-          <v-btn class="buttonGreensmall" @click="dialog = true" dark>{{$t('useraction.followbet')}}</v-btn>
+          <v-btn class="buttonGreensmall " @click="dialog = true" dark>{{$t('useraction.followbet')}}</v-btn>
         </th>
       </tr>
     </v-flex>
