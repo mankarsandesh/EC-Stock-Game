@@ -9,7 +9,7 @@
                         <v-text-field class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
                     <v-card-actions class="justify-center">
-                        <v-btn class="chipamount" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
+                        <v-btn class="chipamount" text @click="conOrEClick()">{{$t('msg.'+conOrE)}}</v-btn>
                     </v-card-actions>
                     <div v-show="conOrE=='confirm'">
                         <v-card-text>{{$t('msg.min')}} = $200</v-card-text>
@@ -25,7 +25,7 @@
 
         <v-layout row wrap justify-center style="background-color: #f2f4ff;">
             <v-btn class="my-btn buttonGreen" @click="saveClick()">{{$t('msg.save')}}</v-btn>
-            <v-btn class="my-btn cancel buttonCancel" @click="conOrECancelClick">{{$t('msg.cancel')}}</v-btn>
+            <v-btn class="my-btn cancel buttonCancel" @click="conOrEClick()">{{$t('msg.cancel')}}</v-btn>
         </v-layout>
 
     </v-card>
@@ -86,9 +86,7 @@ export default {
             if (this.conOrE == 'edit') {
                 this.conOrE = 'confirm';
             }
-        },
-        conOrECancelClick() {
-            if (this.conOrE == 'confirm') {
+            else {
                 this.conOrE = 'edit';
             }
         },
@@ -112,6 +110,9 @@ export default {
             let new_amount = `["${ship1}", "${ship2}", "${ship3}", "${ship4}", "${ship5}"]`;
             localStorage.setItem("coinModern", new_amount);
             this.setCoins_modern();
+            if (this.conOrE == 'confirm') {
+                this.conOrE = 'edit';
+            }
         }
     }
 };

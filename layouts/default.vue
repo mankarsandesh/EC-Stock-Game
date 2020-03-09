@@ -1,9 +1,9 @@
 <template>
 <v-app>
     <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed right style="z-index:101">
-        <v-list v-if="!isHidden">
+        <v-list>
             <!-- Close button cross mark for mobile responsive side bar -->
-            <v-btn icon @click.stop="drawer = !drawer" style="float: right;">
+            <v-btn icon @click="drawer = !drawer" style="float: right;">
                 <v-icon>clear</v-icon>
             </v-btn>
             <div v-for="(item, i) in menu" :key="i">

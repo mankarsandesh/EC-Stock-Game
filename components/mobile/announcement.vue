@@ -26,6 +26,7 @@
 import {
     mapState
 } from "vuex";
+import config from "../../config/config.global";
 export default {
     data() {
         return {
@@ -43,12 +44,11 @@ export default {
             const {
                 data
             } = await this.$axios.$post(
-                "http://uattesting.equitycapitalgaming.com/webApi/getAllAnnouncements", {
-                    portalProviderUUID: this.portalProviderUUID,
-                    version: "0.1"
-                }, {
+                "http://uattesting.equitycapitalgaming.com/webApi/getAllAnnouncements",
+                { portalProviderUUID: this.portalProviderUUID, version: config.version }, 
+                {
                     headers: {
-                        Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, because the backend they will check
+                        Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
                     }
                 }
             );
