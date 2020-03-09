@@ -35,12 +35,13 @@
         <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
     </v-toolbar>
 
-    <div class="title-layout" v-show="isShow == 'history' || isShow == 'stock-list'||isShow == 'current-bet' ||isShow == 'announcement' ||isShow == 'rule' ||isShow == 'setting'">
+    <div class="title-layout" v-show="isShow == 'history' || isShow == 'stock-list'||isShow == 'current-bet' ||isShow == 'announcement' ||isShow == 'rule' || isShow == 'leaderboard' ||isShow == 'setting'">
         <h2 class="text-uppercase" v-show="isShow == 'history'">{{ $t('menu.history') }}</h2>
         <h2 class="text-uppercase" v-show="isShow == 'stock-list'">{{ $t('menu.stock list') }}</h2>
         <h2 class="text-uppercase" v-show="isShow == 'current-bet'">{{ $t('menu.current bet') }}</h2>
         <h2 class="text-uppercase" v-show="isShow == 'announcement'">{{ $t('menu.announcement') }}</h2>
         <h2 class="text-uppercase" v-show="isShow == 'rule'">{{ $t('menu.rule') }}</h2>
+        <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">{{ $t('menu.leaderboard') }}</h2>
         <h2 class="text-uppercase" v-show="isShow == 'setting'">{{ $t('menu.setting') }}</h2>
         <v-btn to="/modern/history" v-show="isShow == 'current-bet'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.history')}}</v-btn>
         <v-btn to="/modern/current-bet" v-show="isShow == 'history'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.current bet')}}</v-btn>
