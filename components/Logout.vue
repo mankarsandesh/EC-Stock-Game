@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     formatToPrice(value) {
-      return `$ ${Number(value)
+      return `${Number(value)
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     },

@@ -63,7 +63,7 @@ export default {
     ],
     data() {
         return {
-            gameUUID:"b308301f-5038-42f5-9e15-02982fd76ee5",
+            gameUUID:"14363ec5-6dda-41f7-91fd-669cfb9502ea",
             confirmDisabled: false,
             betValue: 0,
             imgChip: [{
@@ -165,8 +165,7 @@ export default {
                 alert(ex.message);
             }
         },
-        confirmBet() {
-          
+        confirmBet() {          
             let data = {
                 gameUUID: this.gameUUID,              
                 ruleID: this.ruleid,
@@ -176,8 +175,7 @@ export default {
             console.log("i am here 1");   
             console.log(data);
             this.sendBetting(data);    
-            console.log(this.betId.split("-")[0]);
-            $("#"+this.betId).addClass(this.betId.split("-")[0]);       
+           $("#"+this.betId).addClass(this.betId.split("-")[0]);       
             console.warn(this.getOnBetting);
         },
         closePopper() {

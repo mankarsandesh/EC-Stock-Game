@@ -5,7 +5,7 @@ const Menu = [
         to: "/modern/desktop/announcement"
     },
     {
-        icon: "fa fa-info-circle fa-2x",
+        icon: "fa fa-file fa-2x",
         title: "gamerule",
         to: "/modern/desktop/gamerule"
     },
