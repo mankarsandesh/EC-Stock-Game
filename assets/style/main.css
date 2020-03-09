@@ -566,7 +566,7 @@ table.result-table tr {
     margin: 0 4px;
 }
 
-.bg-btn-first-color {
+.firstdigit {
     background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
     color: #fff !important;
 }
@@ -584,8 +584,9 @@ table.result-table tr {
     margin: 4px;
 }
 
-.bg-btn-last-color {
+.lastdigit {
     background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+    color: #fff !important;
 }
 
 .bg-btn-last {
@@ -601,8 +602,9 @@ table.result-table tr {
     margin: 4px;
 }
 
-.bg-btn-both-color {
+.bothdigit{
     background: linear-gradient(to right, #be3095 20%, #e71275 51%);
+    color: #fff !important;
 }
 
 .bg-btn-both {
@@ -618,8 +620,9 @@ table.result-table tr {
     margin: 4px;
 }
 
-.bg-btn-two-color {
+.twodigit {
     background: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+    color: #fff !important;
 }
 
 .bg-btn-two {
