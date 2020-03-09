@@ -123,8 +123,7 @@ export default {
             this.betValue = this.betValue + amount;
         },
         async sendBetting(betData) {
-            let finalData = betData;
-            
+            let finalData = betData;            
             try {
                const res = await this.$axios.$post(
                   "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
@@ -167,6 +166,7 @@ export default {
             }
         },
         confirmBet() {
+          
             let data = {
                 gameUUID: this.gameUUID,              
                 ruleID: this.ruleid,
@@ -175,7 +175,9 @@ export default {
             this.confirmDisabled = true;  
             console.log("i am here 1");   
             console.log(data);
-            this.sendBetting(data);           
+            this.sendBetting(data);    
+            console.log(this.betId.split("-")[0]);
+            $("#"+this.betId).addClass(this.betId.split("-")[0]);       
             console.warn(this.getOnBetting);
         },
         closePopper() {
