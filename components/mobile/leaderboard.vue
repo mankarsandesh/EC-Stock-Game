@@ -40,22 +40,22 @@
             </th>
         </div>
     </v-flex>
-    <v-dialog v-model="dialog" width="600" style="border:radius:20px; !important">
+    <v-dialog v-model="dialog" width="300" style="border:radius:20px; !important">
         <v-card class="followup">
-            <h3 class="title font-weight-bold" style="text-align:center;color:#0b2a68;">FOLLOW BET</h3>
+            <p class="title font-weight-bold" style="text-align:center;color:#0b2a68;">FOLLOW BET</p>
 
             <v-card-text style="text-align:center;">
                 <img class="pimage" src="https://placehold.it/60x60" width="120px" />
-                <h3 class="subtitle-1 text-uppercase text-center pt-2">Ritesh Naik</h3>
+                <p class="subtitle-1 text-uppercase text-center pt-2">Ritesh Naik</p>
             </v-card-text>
             <v-card-actions>
-                <v-flex lg6 pr-4>
+                <v-flex xs12 lg6 pr-4>
                     <v-select :items="followby" label="Follow by Amount" solo></v-select>
                 </v-flex>
-                <v-flex lg3 pr-2>
+                <v-flex xs12 lg3 pr-2>
                     <v-text-field solo label="1000" append-icon="money"></v-text-field>
                 </v-flex>
-                <v-flex lg3 pl-3 pb-3>
+                <v-flex xs12 lg3 pl-3 pb-3>
                     <v-btn color="buttonGreensmall" text @click="dialog = false">Follow</v-btn>
                 </v-flex>
             </v-card-actions>

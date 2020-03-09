@@ -11,7 +11,7 @@
                                 <h4 class="body-3" v-html="$options.filters.lastDraw(getStockById($route.params.id).lastDraw)"></h4>
                             </v-flex>
                         </v-flex>
-                        
+
                         <v-flex class="text-xs-center">
                             <span class="uppercase-text grey--text">{{$t('msg.BetClosein')}}:</span>
                             <v-flex flex-style class="betclose">
@@ -28,13 +28,13 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs12 sm6>
-                    <v-layout class="text-xs-center pa-3">
-                        <v-flex xs6 class="text-xs-center pr-2">
+                <v-flex xs7 sm6 md12 lg12>
+                    <v-layout class="text-xs-center pt-3">
+                        <v-flex xs9 md6 lg6 class="text-xs-center pr-2">
                             <v-btn class="buttonGreen">{{$t('msg.Game Mode')}}</v-btn>
                         </v-flex>
 
-                        <v-flex xs6 class="text-xs-center pl-2">
+                        <v-flex xs3 md6 lg6 class="text-xs-center pl-2">
                             <v-btn class="buttonGreen">
                                 <nuxt-link to="/modern" class="text-white">{{$t('msg.otherstock')}}</nuxt-link>
                             </v-btn>
@@ -106,7 +106,7 @@
                                     <span>0 TO 4</span>
                                 </v-card-title>
                             </v-card>
-                            
+
                             <v-card class="box-click" @click="showBetDialog('firstdigit-big')">
                                 <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:'firstdigit-big'})" />
                                 <v-card-title class="d-block">
@@ -244,7 +244,7 @@
                                     <span>0 TO 9</span>
                                 </v-card-title>
                             </v-card>
-                            
+
                             <v-card class="box-click" @click="showBetDialog('bothdigit-tie')">
                                 <showChipAmount text-center size="35px" :amount="getAmountMultiGameBet({stockId:getStockId($route.params.id) ,gameRule:'bothdigit-tie'})" />
                                 <v-card-title class="d-block">

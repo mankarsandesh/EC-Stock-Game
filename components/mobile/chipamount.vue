@@ -6,7 +6,7 @@
             <v-flex class="settingchips" xs4 sm3 md3 lg2 v-for="(item,key) in imgChip" :key="key" justify-center>
                 <div class="d-block">
                     <v-img :width="item.width" :src="item.img" class="chipImage">
-                        <v-text-field  class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
+                        <v-text-field class="setpricechip" outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
                     <v-card-actions class="justify-center">
                         <v-btn class="chipamount" text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
@@ -25,7 +25,7 @@
 
         <v-layout row wrap justify-center style="background-color: #f2f4ff;">
             <v-btn class="my-btn buttonGreen" @click="saveClick()">{{$t('msg.save')}}</v-btn>
-            <v-btn class="my-btn cancel buttonCancel">{{$t('msg.cancel')}}</v-btn>
+            <v-btn class="my-btn cancel buttonCancel" @click="conOrECancelClick">{{$t('msg.cancel')}}</v-btn>
         </v-layout>
 
     </v-card>
@@ -87,6 +87,11 @@ export default {
                 this.conOrE = 'confirm';
             }
         },
+        conOrECancelClick() {
+            if (this.conOrE == 'confirm') {
+                this.conOrE = 'edit';
+            }
+        },
         reset() {
             let defaultCoin = ["100", "500", "1000", "5000", "10000"];
             this.$refs.ship1[0].value = defaultCoin[0]
@@ -94,6 +99,9 @@ export default {
             this.$refs.ship3[0].value = defaultCoin[2]
             this.$refs.ship4[0].value = defaultCoin[3]
             this.$refs.ship5[0].value = defaultCoin[4]
+            if (this.conOrE == 'confirm') {
+                this.conOrE = 'edit';
+            }
         },
         saveClick() {
             let ship1 = this.$refs.ship1[0].value
@@ -115,7 +123,7 @@ export default {
     left: 6px;
     top: 32%;
     padding-bottom: 2px;
-    text-align:center;
+    text-align: center;
     color: black;
     font-size: 1.2rem;
 }
@@ -142,9 +150,8 @@ input {
 .chipamount {
     margin: 0 auto;
     text-align: center;
-    border-radius:8px;
+    border-radius: 8px;
 }
-
 
 .v-btn {
     font-size: 14px;
