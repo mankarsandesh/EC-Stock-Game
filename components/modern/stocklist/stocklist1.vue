@@ -10,8 +10,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,index) in getStockList" :key="index">
-            <td>{{$t(`stockname.${item.stockname}`)}} {{ item.stockname == 'btc1' ? ' 1':item.stockname == 'btc5' ? ' 5':'' }}</td>
+          <tr v-for="(item,index) in desserts" :key="index">
+            <td>{{item.stockName}}</td>
+            <td
+              :class="{'text-red': currentPrice,'text-green': !currentPrice}"
+            >{{checkStock(item.stockPrice)}}</td>
+            <td class="text-left">
+              <a
+                :href="item.referenceUrl"
+                target="_blank"
+                style="overflow-y: auto; white-space: nowrap;"
+              >
+                <b>{{item.referenceUrl}}</b>
+              </a>
+            </td>
+            <!-- <td>{{$t(`stockname.${item.stockname}`)}} {{ item.stockname == 'btc1' ? ' 1':item.stockname == 'btc5' ? ' 5':'' }}</td>
             <td
               v-html="$options.filters.livePriceColor(getLivePrice(item.id),getPreviousPrice(item.id))"
             ></td>
@@ -19,7 +32,7 @@
               <a :href="item.urlRef" target="_blank" style="overflow-y: auto; white-space: nowrap;">
                 <b>{{item.urlRef}}</b>
               </a>
-            </td>
+            </td>-->
           </tr>
         </tbody>
       </table>
@@ -29,34 +42,76 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  props: ["item"],
   data() {
     return {
-      items: ["day", "weeks", "months", "years"]
+      items: ["day", "weeks", "months", "years"],
+      last_price: 0,
+      stockStatus: false,
+      currentPrice: null,
+      head: [
+        { text: "stock name", value: "stockName" },
+        { text: "live price", value: "stockOpenOrClosed" },
+        { text: "reference", value: "referenceUrl" }
+      ],
+      desserts: []
     };
   },
-  mounted() {    
+  mounted() {
     this.listenForBroadcast(
       {
-        channelName: "stockList.f267680f-5e7f-4e40-b317-29a902e8adb7",
+        channelName: "stockList.0c0de128-e2bd-41f1-a8ec-40a57c72bae5",
         eventName: "stockList"
       },
       ({ data }) => {
-        console.log(data);
+        this.desserts = data.data.stockData;
       }
     );
+  },
+  watch: {
+    item(val) {
+      function compare(a, b) {
+        if (val == "ascending") {
+          if (a.stockName < b.stockName) return -1;
+          if (a.stockName > b.stockName) return 1;
+          return 0;
+        } else {
+          if (a.stockName < b.stockName) return 1;
+          if (a.stockName > b.stockName) return -1;
+          return 1;
+        }
+      }
+      return this.desserts.sort(compare);
+    }
   },
   computed: {
     ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
   },
-  methods: {
+  methods: {  
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
+    },
+
+    checkStock(value) {
+      let close = {};
+      if (value == "") {
+        close = "Close";
+        this.stockStatus = true;
+      } else if (value) {
+        if (this.last_price > value) {
+          console.log("DOWN " + value);
+          this.currentPrice = false;
+        } else {
+          console.log("UP " + value);
+          this.currentPrice = true;
+        }
+        this.last_price = value;
+        close = value;
+      } else {
+        close = "NO DATA";
+      }
+      return close;
     }
   }
 };
 </script>
-
-<p class="text-red">9104.27</p>
-
-<p class="text-green">9004.27</p>
-
