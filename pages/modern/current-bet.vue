@@ -20,7 +20,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
+        ...mapState(["portalProviderUUID","userUUID"]) //get 2 data from vuex first, in the computed
     },
     mounted() {
         this.fetch(); // after this component render done, this will call the function from method

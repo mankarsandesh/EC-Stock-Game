@@ -122,7 +122,7 @@ export default {
 .setpricechip {
     position: relative;
     left: 6px;
-    top: 32%;
+    top: 34%;
     padding-bottom: 2px;
     text-align: center;
     color: black;
