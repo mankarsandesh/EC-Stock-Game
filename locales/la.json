@@ -17,7 +17,8 @@
         "setting": "ການຕັ້ງຄ່າ",
         "game result": "ຜົນໄດ້ຮັບ",
         "chip amount": "ຈຳນວນເງິນຊິບ",
-        "sound control": "ການຄວບຄຸມສຽງ"
+        "sound control": "ການຄວບຄຸມສຽງ",
+        "leaderboard": "ກະດານ ນຳ"
     },
     "stock-list": {
         "stock lists": "ບັນຊີລາຍຊື່",
@@ -227,5 +228,19 @@
         "stock analysis": "ການວິເຄາະຫຼັກຊັບ",
         "online time":"ເວລາ ອອນລາຍ",
         "total online":"ທັງ ໝົດ ອອນລາຍ"
+    },
+    "useraction": {
+        "followbet": "ປະຕິບັດຕາມ BET",
+        "unfollow": "UNFOLLOW"
+    },
+    "leaderboard": {
+        "user":"ຜູ້ໃຊ້",
+        "winning rate": "ອັດຕາການຊະນະ",
+        "Bets":"ພະນັນ",
+        "winning amount":"ຈຳ ນວນທີ່ຊະນະ",
+        "follow":"ປະຕິບັດຕາມ",
+        "weekly rankings":"ການຈັດອັນດັບປະ ຈຳ ອາທິດ",
+        "monthly rankings":"ການຈັດອັນດັບປະ ຈຳ ເດືອນ",
+        "Top 10 Leaders":"ຜູ້ ນຳ ສູງສຸດ 10 ຄົນ"
     }
 }

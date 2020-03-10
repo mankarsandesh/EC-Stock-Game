@@ -108,6 +108,7 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import onlineChart from "../../../../components/modern/profile/onlinechart";
+import config from "../../../../config/config.global";
 export default {
   components: {
     onlineChart
@@ -154,7 +155,8 @@ export default {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             dateRangeFrom: "2020-02-02",
-            dateRangeTo: "2020-02-28"
+            dateRangeTo: "2020-02-28",
+            version: config.version
           },
           {
             headers: {

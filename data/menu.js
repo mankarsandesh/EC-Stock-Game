@@ -35,6 +35,11 @@ const Menu = [{
     },
     {
         icon: "bubble_chart",
+        title: "leaderboard",
+        to: "/modern/leaderboard"
+    },
+    {
+        icon: "bubble_chart",
         title: "setting",
         to: "/modern/setting"
     }

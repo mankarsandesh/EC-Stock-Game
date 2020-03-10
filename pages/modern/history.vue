@@ -50,7 +50,7 @@
 
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
     <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1 border-radius-10">
-        <template v-slot:headers="headers">
+        <template>
             <tr class="border-radius-10">
                 <th>{{$t('msg.BetId')}}</th>
                 <th>{{$t('msg.gameid')}}</th>
@@ -499,6 +499,4 @@ label,
 .border-radius-10 {
     border-radius: 10px;
 }
-
-
 </style>
