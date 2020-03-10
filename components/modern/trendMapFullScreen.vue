@@ -1,7 +1,7 @@
 <template>
   <v-layout wrap pa-2 v-if="dataArray.length>0">
     <v-flex lg2 md2 pt-5>
-      <v-select v-model="trendType" :items="typeItem" :height="10" solo class="rounded-card"></v-select>
+      <v-select v-model="trendType" :items="typeItems" :height="10" solo class="rounded-card"></v-select>
       <v-select v-model="which_one" :items="which_oneItem" solo class="rounded-card"></v-select>
     </v-flex>
     <v-flex lg10 md10>
@@ -26,29 +26,36 @@ export default {
     dataArray: {
       type: Array,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
-      trendType: "firstDigit",
-      typeItem: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
+      trendType: null,
+      selectedType:'',
+      typeItems: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
       which_oneItem: ["B/S", "O/E", "U/L", "NUM"],
       which_one: "B/S"
-      // trendType: "firstDigit"
     };
   },
   components: {
     trendMap
   },
-  mounted() {},
+  computed: {
+    ...mapGetters(["getStockCrawlerData"]),
+  },
+  mounted() {
+    this.trendType = this.typeItems[this.index]
+  },
   methods: {},
   watch: {
+  
     // which_one() {
     //   alert(this.which_one);
     // }
-  },
-  computed: {
-    ...mapGetters(["getStockCrawlerData"])
   }
 };
 </script>

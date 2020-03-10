@@ -6,14 +6,13 @@
 
     <div class="table-responsive">
       <table class="table">
-
         <tr>
           <th>{{$t('msg.Stock Name')}}</th>
           <th>{{$t("msg.liveprice")}}</th>
           <th>{{$t("msg.Status")}}</th>
           <th>{{$t("msg.Countdown")}}</th>
         </tr>
-        <tr  v-for="(data,index) in getStockList" :key="index">
+        <tr v-for="(data,index) in getStockList" :key="index">
           <td>
             <nuxt-link
               :to="'/modern/desktop/'+data.id"
@@ -36,6 +35,7 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters([
+      "getPortalProviderUUID",
       "getStockList",
       "getLotteryDraw",
       "getStockById",
@@ -45,6 +45,30 @@ export default {
   },
   data() {
     return {};
+  },
+  mounted() {
+    this.listenForBroadcast(
+      {
+        channelName: `stockList.${this.getPortalProviderUUID}`,
+        eventName: "stockList"
+      },
+      ({ data }) => {
+        console.log("new socket success");
+        console.log(data);
+        console.log("new socket success");
+      }
+    );
+  },
+  beforeDestroy() {
+    this.stopListenSocket();
+  },
+  methods: {
+    stopListenSocket() {
+      window.Echo.leave(`stockList.${this.getPortalProviderUUID}`);
+    },
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    }
   }
 };
 </script>
@@ -71,7 +95,6 @@ td {
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
 }
-
 
 .table-responsive {
   overflow: auto;
