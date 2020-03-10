@@ -64,17 +64,19 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs1">
+      <!-- <v-flex class="xs1">
         <v-layout row wrap v-if="isShowMultigameButton == 0">
           <v-flex xs12 lg12 md12 ≈>
-            <v-btn
-              class="multiGame"
-              :to="'/modern/multigame/' +$route.params.id"
-            >{{$t('msg.Multiplegaming')}}</v-btn>
+            
           </v-flex>
         </v-layout>
-      </v-flex>
+      </v-flex>-->
     </v-layout>
+
+    <v-btn rigth fab class="multiGame" :to="'/modern/multigame/' +$route.params.id">
+      <v-icon>games</v-icon>
+    </v-btn>
+
   </div>
 </template>
 
@@ -128,14 +130,16 @@ export default {
 
 <style scoped>
 .multiGame {
+  position: fixed;
+  right:20px;
+  bottom:160px;
   color: #fff;
-  margin: 20px 15px;
-  font-weight: 600;
+  width: 60px;
+  height: 60px;
   font-size: 12px !important;
-  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   padding: 0px 9px;
-  border-radius: 10px;
 }
 .triangle-right {
   width: 0;
