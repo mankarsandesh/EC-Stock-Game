@@ -107,10 +107,7 @@
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap
-                :dataArray="getRoadMap"
-                :isShowMultigameButton="index"
-              ></tableTrendMap>
+              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index"></tableTrendMap>
             </div>
             <span
               class="addChart"
@@ -137,10 +134,9 @@
           </v-card-text>
           <v-flex class="text-lg-right">
             <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
-          </v-flex>             
-        </v-card>       
+          </v-flex>
+        </v-card>
       </v-dialog>
-
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -313,6 +309,7 @@ export default {
   },
   data() {
     return {
+      routeParams:this.$route.params.id,
       SelectStockItems,
       stock: [],
       dialog: false,
@@ -354,6 +351,13 @@ export default {
     // } else {
     //   this.dialog = false;
     // }
+  },
+  beforeDestroy() {
+    this.stopListenSocket(
+      `roadMap.${this.getStockUUIDByStockName(this.routeParams)}.${
+        this.getPortalProviderUUID
+      }`
+    );
   },
   mounted() {
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
@@ -408,6 +412,9 @@ export default {
       "removeAllFooterBet",
       "setIsLoadingStockGame"
     ]),
+    stopListenSocket(channel) {
+      window.Echo.leave(channel);
+    },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },

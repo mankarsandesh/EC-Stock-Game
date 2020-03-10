@@ -112,6 +112,7 @@ export default {
   },
   data() {
     return {
+      // set column length
       BSLength: 100,
       OELength: 100,
       HMLLength: 200,
@@ -271,7 +272,24 @@ export default {
         n++;
         if (this.trendType === "firstDigit") {
           firstlast = element.number1;
-          this.gameID.push(element.stockTimestamp + "\n" + element.stockValue);
+          this.gameID.push(
+            element.stockTimestamp +
+              "\n" +
+              element.stockValue +
+              "\n" +
+              "F: " +
+              element.number1 +
+              " | " +
+              "L: " +
+              element.number2 +
+              " | " +
+              "B: " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              " | " +
+              "T :" +
+              element.number1 +
+              element.number2
+          );
           //bigsmall
           if (firstlast < 5) {
             this.trent.push(0);
@@ -301,7 +319,24 @@ export default {
           }
         } else if (this.trendType === "lastDigit") {
           firstlast = element.number2;
-          this.gameID.push(element.stockTimestamp + "\n" + element.stockValue);
+          this.gameID.push(
+            element.stockTimestamp +
+              "\n" +
+              element.stockValue +
+              "\n" +
+              "F: " +
+              element.number1 +
+              " | " +
+              "L: " +
+              element.number2 +
+              " | " +
+              "B: " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              " | " +
+              "T :" +
+              element.number1 +
+              element.number2
+          );
           //bigsmall
           if (firstlast < 5) {
             this.trent.push(0);
@@ -332,7 +367,24 @@ export default {
         } else if (this.trendType === "bothDigit") {
           let rs = element.number1 + element.number2;
           firstlast = parseInt(rs);
-          this.gameID.push(element.stockTimestamp + "\n" + element.stockValue);
+          this.gameID.push(
+            element.stockTimestamp +
+              "\n" +
+              element.stockValue +
+              "\n" +
+              "F: " +
+              element.number1 +
+              " | " +
+              "L: " +
+              element.number2 +
+              " | " +
+              "B: " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              " | " +
+              "T :" +
+              element.number1 +
+              element.number2
+          );
           //bigsmall
           if (firstlast < 9) {
             this.trent.push(0);
@@ -363,7 +415,24 @@ export default {
         } else if (this.trendType === "twoDigit") {
           let rs = element.number1.toString() + element.number2.toString();
           firstlast = parseInt(rs);
-          this.gameID.push(element.stockTimestamp + "\n" + element.stockValue);
+          this.gameID.push(
+            element.stockTimestamp +
+              "\n" +
+              element.stockValue +
+              "\n" +
+              "F: " +
+              element.number1 +
+              " | " +
+              "L: " +
+              element.number2 +
+              " | " +
+              "B: " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              " | " +
+              "T :" +
+              element.number1 +
+              element.number2
+          );
           //bigsmall
           if (firstlast <= 49) {
             this.trent.push(0);

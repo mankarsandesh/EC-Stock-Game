@@ -12,7 +12,7 @@
             >{{$t('gamemsg.firstdigit')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="text-xs-center triangle-right" v-show="trendType=='firstDigit'"></v-flex>
+          <v-flex class="text-xs-center triangle-right" v-show="activeType=='firstDigit'"></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -24,7 +24,7 @@
             >{{$t('gamemsg.lastdigits')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="trendType=='lastDigit'"></v-flex>
+          <v-flex class="triangle-right" v-show="activeType=='lastDigit'"></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -37,7 +37,7 @@
           </v-flex>
           <v-spacer></v-spacer>
 
-          <v-flex class="triangle-right" v-show="trendType=='bothDigit'"></v-flex>
+          <v-flex class="triangle-right" v-show="activeType=='bothDigit'"></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -49,7 +49,7 @@
             >{{$t('gamemsg.twodigits')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
+          <v-flex class="triangle-right" v-show="activeType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
       <v-flex class="xs10">
@@ -57,9 +57,9 @@
           <v-flex xs12 lg12 md12>
             <trendMap
               :dataArray="dataArray"
-              :trendType="trendType"
+              :trendType="activeType"
               :isFullscreen="isFullscreen"
-              :key="dataArray[dataArray.length -1].stockTimestamp + trendType"
+              :key="dataArray[dataArray.length -1].stockTimestamp + activeType"
             ></trendMap>
           </v-flex>
         </v-layout>
@@ -84,10 +84,14 @@ import trendMap from "~/components/modern/trendMap";
 export default {
   data() {
     return {
-      // trendType: "firstDigit"
+      trendTypes: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
+      trendType: null
     };
   },
   props: {
+    index: {
+      type: Number
+    },
     dataArray: {
       type: Array,
       required: true
@@ -95,10 +99,6 @@ export default {
     isShowMultigameButton: {
       type: Number,
       required: true
-    },
-    trendType: {
-      type: String,
-      default: "firstDigit"
     },
     isFullscreen: {
       type: Boolean,
@@ -109,7 +109,15 @@ export default {
   components: {
     trendMap
   },
-  computed: {},
+  computed: {
+    activeType() {
+      if (this.trendType === null) {
+        return this.trendTypes[this.index];
+      } else {
+        return this.trendType;
+      }
+    }
+  },
   methods: {
     changeChartType(value) {
       this.trendType = value;
