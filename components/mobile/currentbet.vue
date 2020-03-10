@@ -1,7 +1,18 @@
 <template>
 <v-layout row class="justify-center">
     <v-flex xs12 md12>
-        <v-data-table :headers="head" :items="desserts" :items-per-page="5" ref="table" :search="search" class="current-bet">
+        <v-data-table :headers="headers" :items="desserts" :items-per-page="5" ref="table" :search="search" class="current-bet">
+            <template v-slot:headers="headers">
+            <tr class="border-radius-10">
+                <th>{{$t('msg.BetId')}}</th>
+                <th>{{$t('msg.gameid')}}</th>
+                <th>{{$t('msg.Betdetail')}}</th>
+                <th>{{$t('msg.Time')}}</th>
+                <th>{{$t('msg.amount')}}</th>
+                <th>{{$t('msg.payout')}}</th>
+                <th>{{$t('msg.Bet Status')}}</th>
+            </tr>
+        </template>
             <template v-slot:items="item">
                 <td>{{item.item.betID}}</td>
                 <td>{{item.item.gameID}}</td>
@@ -46,9 +57,9 @@ export default {
                 return value; // after the value is not a number  we return value out
             }
             var formatter = new Intl.NumberFormat("en-US", { // if the value is number 
-                style: "currency", // you also can change the curreny to other curreny that you like 
+                style: "currency", // you can also change the curreny to other curreny that you like 
                 currency: "USD", // in this case we choose the USD 
-                minimumFractionDigits: 0 // minumum the value is not equal than 0
+                minimumFractionDigits: 0 // minumum value shoul not be equal than 0
             });
             return formatter.format(value); // after get the currency that you prefer, than we return out with value
         }

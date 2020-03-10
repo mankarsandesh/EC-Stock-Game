@@ -13,7 +13,7 @@
           </v-flex>
           <v-flex xs12 pt-2>
             <div id="betresultGuidelines">
-              <betResultAllResult></betResultAllResult>
+              <stockResult></stockResult>
             </div>
           </v-flex>
           <v-flex xs12 pt-2>
@@ -35,7 +35,7 @@
               <v-flex xs12>
                 <div id="selectstockGuideline">
                   <stockSelect :items="SelectStockItems.data" />
-                  <!-- <selectStock :stockId="$route.params.id"></selectStock> -->
+                  <!-- <selectStock :stockId="'btc1'"></selectStock> -->
                 </div>
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
@@ -99,16 +99,18 @@
               </v-flex>-->
             </v-layout>
             <div id="betRuleButton">
-              <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
+              <betButton :stockName="'btc1'" :loop="getLoop($route.params.id)"></betButton>
             </div>
           </v-flex>
         </v-layout>
-
-        <v-flex xs12 v-if="getStockCrawlerData($route.params.id) !== ''">
+        <v-flex xs12 v-if="getRoadMap.length > 0">
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap :isShowMultigameButton="index"></tableTrendMap>
+              <tableTrendMap
+                :dataArray="getRoadMap"
+                :isShowMultigameButton="index"
+              ></tableTrendMap>
             </div>
             <span
               class="addChart"
@@ -126,20 +128,19 @@
       </v-btn>-->
 
       <!-- Game Rule Popup -->
-      <v-dialog v-model="dialog" width="600">
+      <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius:10px;">
           <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title
-            class="headline lighten-2"
-            style="border-radius:10px;"
-            primary-title
-          >EC Gaming Rules</v-card-title>
+          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
           <v-card-text>
-            <onlyrules />
+            <leaderBoard />
           </v-card-text>
-          <v-divider></v-divider>
-        </v-card>
+          <v-flex class="text-lg-right">
+            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
+          </v-flex>             
+        </v-card>       
       </v-dialog>
+
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -281,7 +282,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import stockList from "~/components/modern/stockList";
-import betResultAllResult from "~/components/modern/betResultAllResult";
+import stockResult from "~/components/modern/stockresult";
 import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
@@ -290,6 +291,8 @@ import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import SelectStockItems from "~/data/json/current-bet";
+import leaderBoard from "~/components/modern/leaderboard/leaderboard";
+import config from "../../../config/config.global";
 
 export default {
   async validate({ params, store }) {
@@ -298,14 +301,15 @@ export default {
   layout: "desktopModern",
   components: {
     stockList,
-    betResultAllResult,
+    stockResult,
     onBetting,
     chartApp,
     betButton,
     tableTrendMap,
     selectStock,
     onlyrules,
-    stockSelect
+    stockSelect,
+    leaderBoard
   },
   data() {
     return {
@@ -344,14 +348,30 @@ export default {
   created() {
     this.getStock();
     // Game Rule Popup check and open Ne User
-    if (localStorage.getItem("gameRule") != "shown") {
-      this.dialog = true;
-      localStorage.setItem("gameRule", "shown");
-    } else {
-      this.dialog = false;
-    }
+    // if (localStorage.getItem("gameRule") != "shown") {
+    //   this.dialog = true;
+    //   localStorage.setItem("gameRule", "shown");
+    // } else {
+    //   this.dialog = false;
+    // }
   },
   mounted() {
+    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    // socket new api
+    this.listenForBroadcast(
+      {
+        channelName: `roadMap.${this.getStockUUIDByStockName(
+          this.$route.params.id
+        )}.${this.getPortalProviderUUID}`,
+        eventName: "roadMap"
+      },
+      ({ data }) => {
+        console.log("new socket success");
+        console.log(data.data.roadMap);
+        this.setLiveRoadMap(data.data.roadMap[0]);
+        console.log("new socket success");
+      }
+    );
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
     // console.warn("mounted...");
@@ -375,22 +395,30 @@ export default {
     // change to mobile component
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
-        let linkto = `/modern/betting/${this.$route.params.id}`;
+        let linkto = `/modern/betting/btc1`;
         this.$router.push(linkto);
       }
     }
   },
   methods: {
+    ...mapActions(["asyncRoadMap"]),
     ...mapMutations([
+      "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
       "setIsLoadingStockGame"
     ]),
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
     async getStock() {
       try {
         const { data } = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/getStock",
-          { portalProviderUUID: this.portalProviderUUID, version: 1 },
+          {
+            portalProviderUUID: this.portalProviderUUID,
+            version: config.version
+          },
           { headers: this.headers }
         );
 
@@ -582,6 +610,9 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockUUIDByStockName",
+      "getRoadMap",
+      "getPortalProviderUUID",
       "getStocks",
       "getLastDraw",
       "getStockById",
@@ -596,3 +627,31 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* left side corner toggle functionality in desktop  */
+.leftStocklist {
+  background-color: #fff;
+  margin: 35px 7px;
+  border-radius: 20px;
+  position: relative;
+  top: 0;
+  right: 20px;
+}
+
+.sidebar-close {
+  background-color: #ffffff !important;
+  border-radius: 180px;
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  transition: none !important;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  left: 3px;
+  top: 95px;
+  background-color: #ffffff !important;
+}
+</style>

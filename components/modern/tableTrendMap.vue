@@ -1,5 +1,5 @@
 <template>
-  <div v-if="getRoadMap.length > 0 ">
+  <div v-if="dataArray.length > 0 ">
     <v-layout wrap pa-4 row>
       <v-flex xs1 lg1 v-if="!isFullscreen" style="padding-top:50px;">
         <v-layout>
@@ -56,10 +56,10 @@
         <v-layout row wrap>
           <v-flex xs12 lg12 md12>
             <trendMap
-              :dataArray="getRoadMap"
+              :dataArray="dataArray"
               :trendType="trendType"
               :isFullscreen="isFullscreen"
-              :key="getRoadMap[getRoadMap.length -1].stockTimestamp + trendType"
+              :key="dataArray[dataArray.length -1].stockTimestamp + trendType"
             ></trendMap>
           </v-flex>
         </v-layout>
@@ -79,16 +79,19 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import trendMap from "~/components/modern/trendMap";
 export default {
   data() {
     return {
-      stockUUID: "0eb357dc-d15f-4739-96d0-983ab92d94ee"
       // trendType: "firstDigit"
     };
   },
   props: {
+    dataArray: {
+      type: Array,
+      required: true
+    },
     isShowMultigameButton: {
       type: Number,
       required: true
@@ -102,36 +105,14 @@ export default {
       default: false
     }
   },
-  mounted() {
-    this.asyncRoadMap(this.stockUUID);
-    // socket new api
-    this.listenForBroadcast(
-      {
-        channelName: `roadMap.${this.stockUUID}.f267680f-5e7f-4e40-b317-29a902e8adb7`,
-        eventName: "roadMap"
-      },
-      ({ data }) => {
-        console.log("new socket success");
-        console.log(data.data.roadMap);
-        this.setLiveRoadMap(data.data.roadMap[0]);
-        console.log("new socket success");
-      }
-    );
-  },
+  mounted() {},
   components: {
     trendMap
   },
-  computed: {
-    ...mapGetters(["getStockCrawlerData", "getRoadMap"])
-  },
+  computed: {},
   methods: {
-    ...mapMutations(["setLiveRoadMap"]),
-    ...mapActions(["asyncRoadMap"]),
     changeChartType(value) {
       this.trendType = value;
-    },
-    listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
     }
   }
 };

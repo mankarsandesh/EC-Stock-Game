@@ -29,7 +29,7 @@
         </v-flex>
 
         <v-flex xs2 sm1 md1 ml-1 mr-2>
-            <button @click="dateSearch()" class="goButton buttonGreen">GO</button>
+            <button @click="dateSearch()" class="goButton buttonGreen">{{$t('msg.go')}}</button>
         </v-flex>
 
         <!-- <v-flex xs2 sm2 md2 lg1>
@@ -50,7 +50,7 @@
 
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
     <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1 border-radius-10">
-        <template v-slot:headers="headers">
+        <template>
             <tr class="border-radius-10">
                 <th>{{$t('msg.BetId')}}</th>
                 <th>{{$t('msg.gameid')}}</th>
@@ -499,6 +499,4 @@ label,
 .border-radius-10 {
     border-radius: 10px;
 }
-
-
 </style>

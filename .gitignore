@@ -19,6 +19,9 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+# env file
+.env
+
 # nyc test coverage
 .nyc_output
 
@@ -82,5 +85,6 @@ dist
 
 # Service worker
 sw.*
+
 #node_modules
 node_modules

@@ -22,7 +22,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="accept" color="buttonGreen" dark v-on="on" @click="dialog = false">
+                    <v-btn class="accept" color="buttonGreen" dark  @click="dialog = false">
                         I accept
                     </v-btn>
                 </v-card-actions>

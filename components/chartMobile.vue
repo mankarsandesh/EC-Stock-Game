@@ -1,129 +1,198 @@
-
 <template>
-  <div>
-    <v-card class="v-card-style">
-      <v-card-title class="px-1 py-0" style="font-size:13px">
-        <v-layout>
-          <v-flex xs6 class="text-xs-left">
-            {{$t('msg.livetime')}}:
-            <span class="text-primary">{{getLiveTime($route.params.id)}}</span>
-          </v-flex>
-          <v-spacer></v-spacer>
-          <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw($route.params.id) >0">
-            {{$t('msg.liveprice')}}:
-            <span class="text-second">{{getLivePrice($route.params.id)}}</span>
-          </v-flex>
-        </v-layout>
-      </v-card-title>
-      <v-card-text class="pa-0">
-        <apexchart type="area" width="100%" height="100%" :options="chartOptions" :series="series" />
-        <div class="text-xs-right"></div>
-      </v-card-text>
-    </v-card>
-  </div>
+<div>
+    <apexchart ref="realtimeChart" class="chartDesgin" type="area" width="99.5%" :options="chartOptions" :series="series" />
+</div>
 </template>
-<script>
-import { mapGetters } from "vuex";
-import VueApexCharts from "vue-apexcharts";
 
+<script>
+import VueApexCharts from "vue-apexcharts";
+import {
+    Line,
+    mixins
+} from "vue-chartjs";
+import VueCharts from "vue-chartjs";
+import Chart from "chart.js";
+import {
+    mapGetters,
+    mapMutations,
+    mapActions
+} from "vuex";
+import Echo from "laravel-echo";
 export default {
-  props: {
-    data: {
-      type: Array,
-      required: true
-    }
-  },
-  components: {
-    apexchart: VueApexCharts
-  },
-  computed: {
-    ...mapGetters(["getLiveTime", "getLotteryDraw", "getLivePrice"])
-  },
-  data() {
-    return {
-      series: [
-        {
-          name: "Price",
-          data: this.data
+    props: {
+        height: {
+            type: String,
+            default: "auto"
         }
-      ],
-      chartOptions: {
-        zoom: {
-          enabled: true,
-          type: "x",
-          autoScaleYaxis: false,
-          zoomedArea: {
-            fill: {
-              color: "#90CAF9",
-              opacity: 0.4
+    },
+    data() {
+        return {};
+    },
+    created() {
+        this.asyncChart(this.getStockUUIDByStockName(this.$route.params.id));
+    },
+    mounted() {
+        // socket new api
+        this.listenForBroadcast({
+                // liveStockData.stockName
+                channelName: `liveStockData.${this.$route.params.id}`,
+                eventName: "liveStockData"
             },
-            stroke: {
-              color: "#0D47A1",
-              opacity: 0.4,
-              width: 1
+            ({
+                data
+            }) => {
+                let dataIndex = data.data.roadMap[0];
+                let readyData = {
+                    stockValue: dataIndex.stockValue.replace(",", ""),
+                    stockTimestamp: dataIndex.stockTimestamp,
+                    number1: dataIndex.number1,
+                    number2: dataIndex.number2
+                };
+                if (
+                    dataIndex.stockTimestamp !==
+                    this.getLiveChart[this.getLiveChart.length - 1].stockTimestamp
+                ) {
+                    this.setLiveChart(readyData);
+                }
             }
-          }
+        );
+    },
+    components: {
+        apexchart: VueApexCharts
+    },
+    computed: {
+        ...mapGetters([
+            "getStockUUIDByStockName",
+            "getLiveTime",
+            "getLivePrice",
+            "getLotteryDraw",
+            "getLiveChart"
+        ]),
+        chartOptions() {
+            let newTime = [];
+            this.getLiveChart.forEach(element => {
+                newTime.push(element.stockTimestamp);
+            });
+            return {
+                zoom: {
+                    enabled: true,
+                    type: "x",
+                    autoScaleYaxis: false,
+                    zoomedArea: {
+                        fill: {
+                            color: "#0b2a68",
+                            opacity: 0.3
+                        },
+                        stroke: {
+                            color: "#0b2a68",
+                            opacity: 0.4,
+                            width: 1
+                        }
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        lineHeight: "100%",
+                        horizontal: true // <---- "true" flip the axis, "100" is not shown anymore
+                    }
+                },
+                chart: {
+                    background: "#fff",
+                    parentHeightOffset: 0,
+                    height: 200,
+                    zoom: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false,
+                        shared: false,
+                        y: {
+                            formatter: function (val) {
+                                return (val / 1000000).toFixed(0);
+                            }
+                        }
+                    }
+                },
+                brush: {
+                    target: "chartArea",
+                    enabled: true
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    curve: "smooth",
+                    lineCap: "butt",
+                    colors: undefined,
+                    width: 1,
+                    dashArray: 0
+                },
+                grid: {
+                    row: {
+                        colors: ["#fff", "transparent"], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    }
+                },
+                xaxis: {
+                    categories: newTime,
+                    show: false,
+                    labels: {
+                        show: false
+                    }
+                },
+                yaxis: {
+                    show: true,
+                    labels: {
+                        show: true
+                    },
+                    title: {
+                        text: "Price"
+                    }
+                }
+            };
         },
-        plotOptions: {
-          line: {
-            lineHeight: "100%",
-            horizontal: true // <---- "true" flip the axis, "100" is not shown anymore
-          }
-        },
-        chart: {
-          parentHeightOffset: 0,
-          height: 600,
-          zoom: {
-            enabled: false
-          },
-          toolbar: {
-            show: false
-          }
-        },
-        brush: {
-          target: "chartArea",
-          enabled: true
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          //   curve: "smooth",
-          lineCap: "butt",
-          colors: undefined,
-          width: 1,
-          dashArray: 0
-        },
-        grid: {
-          padding: {
-            left: 0,
-            right: 0,
-            top: -30,
-            bottom: -35
-          },
-          show: false
-        },
-        xaxis: {
-          show: false,
-          labels: {
-            show: false
-          },
-          axisBorder: {
-            show: false
-          }
-        },
-        yaxis: {
-          show: false,
-          labels: {
-            show: false
-          }
-          // tickAmount: 3
-          // min: Math.max(...this.data)+10,
-          // max: Math.min(...this.data)+10,
+        series() {
+            let newData = [];
+            this.getLiveChart.forEach(element => {
+                newData.push(element.stockValue);
+            });
+            return [{
+                name: "Price",
+                data: newData
+            }];
         }
-      }
-    };
-  }
+    },
+    methods: {
+        ...mapActions(["asyncChart"]),
+        ...mapMutations(["setLiveChart"]),
+        changeChartType(value) {
+            this.trendType = value;
+        },
+        listenForBroadcast({
+            channelName,
+            eventName
+        }, callback) {
+            window.Echo.channel(channelName).listen(eventName, callback);
+        }
+    }
 };
 </script>
+
+<style>
+.stockPrice {
+    padding-right: 14px;
+    color: green;
+    font-size: 24px;
+    margin: 0px;
+    font-weight: 600;
+}
+
+.stockTimer {
+    padding-left: 20px;
+    color: #333;
+    font-size: 20px;
+    margin: 0px;
+    font-weight: 600;
+}
+</style>

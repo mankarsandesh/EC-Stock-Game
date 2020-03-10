@@ -35,7 +35,6 @@ module.exports = {
      ** Customize the progress-bar color
      */
     loading: false,
-
     /*
      ** Global CSS
      */
@@ -44,7 +43,6 @@ module.exports = {
         "~/assets/style/main.scss",
         "~/assets/style/app.styl"
     ],
-
     /*
      ** Plugins to load before mounting the App
      */
@@ -62,7 +60,6 @@ module.exports = {
     router: {
         middleware: ["auth", "showLoading"]
     },
-
     /*
      ** Nuxt.js modules
      */
@@ -99,7 +96,14 @@ module.exports = {
         /*
          ** You can extend webpack config here
          */
-        extend(config, ctx) {}
+        extend: function (config, {isDev, isClient}) {
+            if(isClient) {
+                config.devtool = '#source-map'
+            }
+            config.node = {
+                fs: "empty"
+            };
+        }
     },
     server: {
          port: 8000, // default: 3000

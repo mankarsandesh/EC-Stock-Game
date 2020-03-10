@@ -8,12 +8,8 @@
   >
     <div class="popper">
       <div id="headerChat">
-        <span 
-          class="tabs" 
-          v-on:click="tab1" 
-          v-bind:class="{ active: isActiveTab1 }"
-        >
-          <a href="#">All Channel</a>
+        <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActiveTab1 }">
+          <a href="#">EC World</a>
         </span>
         <span
           class="tabs"
@@ -26,7 +22,6 @@
       </div>
 
       <div class="chatRoom">
-
         <div v-if="allChannel">
           <div id="bodyChat" class="messages">
             <div id="messageChannel" v-for="data in getMessages" :key="data.index" class="msgUser">
@@ -64,7 +59,6 @@
             </span>
           </div>
         </div>
-
       </div>
     </div>
     <v-btn rigth fab slot="reference" class="liveChat">
@@ -76,7 +70,7 @@
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations,mapState } from "vuex";
 import io from "socket.io-client";
 import moment from "moment";
 import VueChatScroll from "vue-chat-scroll";
@@ -90,9 +84,7 @@ export default {
     return {
       getGameChannel: true,
       newMessages: [],
-      portalProviderUUID: "f267680f-5e7f-4e40-b317-29a902e8adb7",
       gameUUID: "4578b4cc-82f0-4ebf-9b58-70bbacfc7ed8",
-      userUUID: "c127dd04-cfed-4dc4-8fe9-797b8d78003c",
       uniqueUserID: Math.floor(Math.random() * (999 - 100 + 1) + 100),
       isActiveTab1: true,
       isActiveTab2: false,
@@ -108,14 +100,16 @@ export default {
       totoalUserCount: 0,
       userId: 0,
       socketLiveStockInput: {
-        channelName: "messageSend.f267680f-5e7f-4e40-b317-29a902e8adb7.4578b4cc-82f0-4ebf-9b58-70bbacfc7ed8",
+        channelName:
+          "messageSend.f267680f-5e7f-4e40-b317-29a902e8adb7.4578b4cc-82f0-4ebf-9b58-70bbacfc7ed8",
         eventName: "messageSend"
       }
       // username : this.getUserName.name
     };
   },
   computed: {
-    ...mapGetters(["getUserName", "getStockType"])
+    ...mapGetters(["getUserName", "getStockType"]),
+    ...mapState(["portalProviderUUID", "headers", "userUUID"])
   },
   mounted() {
     // Global Channel
@@ -125,7 +119,7 @@ export default {
         eventName: "messageSend"
       },
       ({ data }) => {
-        data.data.forEach(element => {         
+        data.data.forEach(element => {
           this.getMessages.push({
             name: `user ${this.uniqueUserID}`,
             userId: element.userUUID,
@@ -165,8 +159,7 @@ export default {
         1000
       );
   },
-  created() {
-  },
+  created() {},
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
@@ -196,7 +189,7 @@ export default {
               gameUUID: this.gameUUID,
               chatType: "2",
               message: this.message,
-              version : "0.1"
+              version: "0.1"
             },
             {
               headers: {
@@ -222,7 +215,7 @@ export default {
               gameUUID: this.gameUUID,
               chatType: "1",
               message: this.messageGame,
-              version : "0.1"
+              version: "0.1"
             },
             {
               headers: {
