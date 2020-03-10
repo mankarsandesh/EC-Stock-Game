@@ -30,23 +30,41 @@
             <form action="/action_page.php">
               <div class="row">
                 <div class="col-15">
-                  <label for="fname">player ID</label>
+                  <label for="player-id">Player ID</label>
                 </div>
                 <div class="col-85">
-                  <input disabled type="text" id="fname" name="firstname" :value="userData.PID" />
+                  <input disabled type="text" id="player-id" name="player-id" :value="userData.PID" />
                 </div>
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="lname">first name</label>
+                  <label for="username">Username</label>
                 </div>
                 <div class="col-85">
                   <input
-                    ref="firstname"
+                    ref="username"
+                    type="text"
+                    :value="userData.userName"
+                    id="username"
+                    name="username"
+                    placeholder="Type your Username"
+                  />
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-15">
+                  <label for="first-name">First Name</label>
+                </div>
+                <div class="col-85">
+                  <input
+                    ref="firstName"
                     type="text"
                     :value="userData.firstName"
-                    id="lname"
-                    name="lastname"
+                    id="first-name"
+                    name="first-name"
                     placeholder="Your first name"
                   />
                   <span class="icon-container">
@@ -56,16 +74,16 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="lname">last name</label>
+                  <label for="last-name">Last Name</label>
                 </div>
                 <div class="col-85">
                   <input
-                    ref="lastname"
+                    ref="lastName"
                     type="text"
                     :value="userData.lastName"
-                    id="lname"
-                    name="lastname"
-                    placeholder="Your last name"
+                    id="last-name"
+                    name="last-name"
+                    placeholder="Your Last Name"
                   />
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -74,10 +92,10 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="country">gender</label>
+                  <label for="gender">gender</label>
                 </div>
                 <div class="col-85">
-                  <select ref="gender" id="country" name="country">
+                  <select ref="gender" id="gender" name="gender">
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                   </select>
@@ -88,22 +106,22 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="country">email</label>
+                  <label for="email">Email</label>
                 </div>
                 <div class="col-85">
                   <input
                     ref="email"
                     type="text"
                     :value="userData.email"
-                    id="lname"
-                    name="lastname"
-                    placeholder="mackychinma@gmail.com"
+                    id="email"
+                    name="email"
+                    placeholder="example@gmail.com"
                   />
                 </div>
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="country">country</label>
+                  <label for="country">Country</label>
                 </div>
                 <div class="col-85">
                   <select ref="country" id="country" name="country">
@@ -117,6 +135,7 @@
                   </span>
                 </div>
               </div>
+              <p>{{error}}</p>
               <div class="row">
                 <div class="col-15"></div>
                 <div class="col-85">
@@ -143,14 +162,15 @@ import axios from "axios";
 export default {
   data() {
     return {
-      updating: false
+      updating: false,
+      error: ''
     };
   },
   mounted() {},
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     userData() {
-      let data = { ...this.getUserInfo };
+      let data = this.getUserInfo;
       return data;
     }
   },
@@ -166,8 +186,9 @@ export default {
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("email", ref.email.value);
-      formData.append("firstName", ref.firstname.value);
-      formData.append("lastName", ref.lastname.value);
+      formData.append("userName", ref.username.value);
+      formData.append("firstName", ref.firstName.value);
+      formData.append("lastName", ref.lastName.value);
       formData.append("gender", ref.gender.value);
       // formData.append("country", ref.country.value);
       formData.append("version", 1);
@@ -184,12 +205,11 @@ export default {
         );
         if (res.code === 200) {
           this.asynUserInfo();
-          setTimeout(() => {
-            this.updating = false;
-          }, 1000);
+          this.updating = false;
         } else {
           alert(res.message);
           this.updating = false;
+          this.error = res.message;
           console.log(res);
         }
       } catch (ex) {
