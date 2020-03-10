@@ -44,7 +44,7 @@
         </v-data-table>
       </v-flex>
     </v-layout>
-    <div class="text-right my-3 my-pagination">
+    <div class="text-right my-3 my-pagination" v-if="desserts.length > 4">
       <v-pagination v-model="pagination.page" color="#1db42f" :length="4"></v-pagination>
     </div>
   </v-container>
