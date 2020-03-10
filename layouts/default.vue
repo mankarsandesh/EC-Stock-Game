@@ -49,7 +49,7 @@
         <h2 class="text-uppercase" v-show="isShow == 'setting'">{{ $t('menu.setting') }}</h2>
         <v-btn to="/modern/history" v-show="isShow == 'current-bet'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.history')}}</v-btn>
         <v-btn to="/modern/current-bet" v-show="isShow == 'history'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.current bet')}}</v-btn>
-        <v-btn to="/modern/announcement" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.announcement')}}</v-btn>
+        <!-- <v-btn to="/modern/announcement" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.announcement')}}</v-btn> -->
         <v-btn to="/modern/rule" v-show="isShow == 'announcement'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.rule')}}</v-btn>
         <v-btn to="/modern/leaderboard" v-show="isShow == 'rule'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.leaderboard')}}</v-btn>
         <v-btn to="/modern/setting" v-show="isShow == 'leaderboard'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.setting')}}</v-btn>

@@ -1,5 +1,6 @@
 <template>
 <div>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <currentbet :head="head" :desserts="desserts"></currentbet>
 </div>
 </template>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <v-layout row wrap > 
       <v-flex xs12 md2>
         <v-item-group v-model="window" class="shrink ml-5 mr-5" mandatory tag="v-flex">

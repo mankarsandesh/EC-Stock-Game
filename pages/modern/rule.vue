@@ -1,5 +1,6 @@
 <template>
 <div xs12>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <!-- <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" /> -->
     <h1 class="jumbotron-heading text-center">
         EC Gaming Rules Description</h1>
