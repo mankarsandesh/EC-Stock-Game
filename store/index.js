@@ -295,7 +295,7 @@ const createStore = () => {
             },
             // push data to on going bet
             pushDataOnGoingBet(state, payload) {
-                state.onGoingBet.splice(0, 0, payload);
+                state.onGoingBet.splice(0, 0, payload);                
             },
             // push data to on going bet
             pushDataMultiGameBet(state, payload) {
@@ -859,6 +859,8 @@ const createStore = () => {
 
                 function getAmountbet(object) {
                     // find stockname
+                    console.log("i am here 12");
+                    console.log(object);
                     if (object.findIndex(x => x.stock === stockId) == -1) return 0;
                     let result = object
                         .filter(x => x.stock === stockId)

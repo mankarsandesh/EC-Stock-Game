@@ -1,14 +1,10 @@
 <template>
   <v-layout column wrap>
-    <v-btn
-      class="buttonGreen"
-      :to="'/modern/desktop/current-bet'"    
-    >{{$t('msg.View All Results')}}</v-btn>
+    <v-btn class="buttonGreen" :to="'/modern/desktop/current-bet'">{{$t('msg.View All Results')}}</v-btn>
 
     <v-flex pa-2 class="headerStockBar">{{$t('msg.betting')}}</v-flex>
 
     <v-flex class="text-xs-center" style="overflow:auto; max-height:380px;">
-
       <h3 v-show="getOnGoingBet.length<=0" class="pa-5">{{$t('msg.nobetting')}}</h3>
       <!-- v-show="getOnGoingBet.length>0" -->
 
@@ -19,25 +15,23 @@
           <v-list-tile :key="data.index" avatar>
             <v-list-tile-content>
               <span class="current-bet">
-               <table>
+                <table>
                   <tr>
                     <td>Bet ID</td>
-                    <td>{{ data.betId }}</td>
+                    <td>{{ data.betUUID }}</td>
                   </tr>
                   <tr>
                     <td>Date & Time</td>
-                    <td>{{data.betTime}}</td>
+                    <td>{{data.payout}}</td>
                   </tr>
                   <tr>
                     <td>Bet</td>
-                    <td>${{data.betAmount}} on {{data.rule}}</td>
+                    <td>{{data.betAmount}} on {{data.ruleID}}</td>
                   </tr>
                   <tr>
                     <td>Stock name:</td>
-                    <td>{{$t('stockname.'+getStockIdtoStockName(data.stock))}}
-                    - {{data.loops}} {{$t('msg.minute')}} {{$t('msg.loop')}}</td>
+                    <td>{{data.message}}</td>
                   </tr>
-
                 </table>
               </span>
               <!-- <v-list-tile-title >Amount:{{5000}}<span class="text-uppercase">(firstdigit-mid)</span></v-list-tile-title>
@@ -47,10 +41,7 @@
         </template>
       </v-list>
     </v-flex>
-    <v-flex
-      pa-2
-      class="totalAmount "
-      >$ {{getBettingAmount}}</v-flex>
+    <v-flex pa-2 class="totalAmount">$ {{getBettingAmount}}</v-flex>
   </v-layout>
 </template>
 
@@ -71,20 +62,18 @@ export default {
 </script>
 
 <style scoped>
-.current-bet{
-padding: 10px 0px;
+.current-bet {
+  padding: 10px 0px;
   width: 100%;
 }
-table{
- 
+table {
   width: 100%;
-  border:none;
-  
+  border: none;
 }
-table tr{
+table tr {
   width: 100%;
 }
-table tr td:first-child{
+table tr td:first-child {
   width: 40%;
 }
 
@@ -92,5 +81,4 @@ table tr td:first-child{
   font-size: 12px;
   color: #000;
 }
-
 </style>
