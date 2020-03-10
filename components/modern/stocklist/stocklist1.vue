@@ -42,6 +42,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  props: ["item"],
   data() {
     return {
       items: ["day", "weeks", "months", "years"],
@@ -67,10 +68,26 @@ export default {
       }
     );
   },
+  watch: {
+    item(val) {
+      function compare(a, b) {
+        if (val == "ascending") {
+          if (a.stockName < b.stockName) return -1;
+          if (a.stockName > b.stockName) return 1;
+          return 0;
+        } else {
+          if (a.stockName < b.stockName) return 1;
+          if (a.stockName > b.stockName) return -1;
+          return 1;
+        }
+      }
+      return this.desserts.sort(compare);
+    }
+  },
   computed: {
     ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
   },
-  methods: {
+  methods: {  
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },

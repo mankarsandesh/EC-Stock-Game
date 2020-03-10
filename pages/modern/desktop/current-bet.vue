@@ -8,7 +8,7 @@
 </template>
 <script>
 import currentBet from "~/components/modern/currentBet";
-import breadcrumbs from "~/components/breadcrumbs";
+import breadcrumbs from "~/components/breadcrumbs"; 
 import { mapState } from "vuex";
 export default {
   layout: "desktopModern",

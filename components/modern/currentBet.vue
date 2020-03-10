@@ -14,7 +14,7 @@
           <td>{{item.item.gameID}}</td>
           <td>{{item.item.ruleName}} - ({{item.item.payout}}) {{item.item.stockName}} / {{item.item.loop}}</td>
           <td>{{item.item.createdTime}}</td>
-          <td>{{item.item.betAmount | toCurrency}}</td>
+          <td>{{item.item.betAmount | toCurrency}}</td>  
           <td>{{item.item.payout}}</td>
           <td v-if="item.item.betResult == 'win'">
             <v-chip color="green" text-color="white">{{item.item.betResult}}</v-chip>
