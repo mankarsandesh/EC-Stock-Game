@@ -34,24 +34,25 @@ export default {
   mounted() {
     // const userData = this.$route.query;
     const userData = {
-        "authUser": "TNKSuper",
-        "authPassword": "Test123!",
-        "portalProviderUUID": "743c7b7d-0166-48be-84c3-375430a3c0ae",
-        "userId": "dd7060bd-5da1-4f6c-96a2-fc292acd23f8"
-    }
-   
-    if(userData.authUser && userData.authPassword){
-        if(userData.portalProviderUUID && userData.userId){
-              sessionStorage.setItem("userData", JSON.stringify(userData));
-              this.getProgress();
-              this.linkto = isMobile ? "/modern" : "/modern/desktop/" + this.stockname;
-        }else{
-          console.log("Portal Provider OR userID is Missing..");
-        }
-    }else{
+      authUser: "TNKSuper",
+      authPassword: "Test123!",
+      portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
+      userId: "dd7060bd-5da1-4f6c-96a2-fc292acd23f8"
+    };
+
+    if (userData.authUser && userData.authPassword) {
+      if (userData.portalProviderUUID && userData.userId) {
+        sessionStorage.setItem("userData", JSON.stringify(userData));
+        this.getProgress();
+        this.linkto = isMobile
+          ? "/modern"
+          : "/modern/desktop/" + this.stockname;
+      } else {
+        console.log("Portal Provider OR userID is Missing..");
+      }
+    } else {
       console.log("Authication authUser & authPassword is Missing.");
     }
-   
 
     // var SECRET_KEY = "sandesh";
 
@@ -81,7 +82,7 @@ export default {
     //   secret: "data"
     // };
 
-    // secureStorage.setItem('data', data);  
+    // secureStorage.setItem('data', data);
   },
   created() {
     this.stockname = window.location.search
@@ -144,7 +145,8 @@ export default {
           //obj.innerHTML = current;
           if (current == end) {
             clearInterval(timer);
-            seft.$router.push("/dashboard?stockname=" + seft.stockname);
+            seft.$router.push("/modern/desktop/btc1");
+            // seft.$router.push("/dashboard?stockname=" + seft.stockname);
           }
         }, stepTime);
       }
