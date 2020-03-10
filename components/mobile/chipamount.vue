@@ -24,8 +24,8 @@
         </v-layout>
 
         <v-layout row wrap justify-center style="background-color: #f2f4ff;">
-            <v-btn class="my-btn buttonGreen" @click="saveClick()">{{$t('msg.save')}}</v-btn>
-            <v-btn class="my-btn cancel buttonCancel" @click="conOrEClick()">{{$t('msg.cancel')}}</v-btn>
+            <v-btn class="my-btn buttonGreensmall" @click="saveClick()">{{$t('msg.save')}}</v-btn>
+            <v-btn class="my-btn buttonCancel" @click="conOrEClick()">{{$t('msg.cancel')}}</v-btn>
         </v-layout>
 
     </v-card>
@@ -85,8 +85,7 @@ export default {
         conOrEClick() {
             if (this.conOrE == 'edit') {
                 this.conOrE = 'confirm';
-            }
-            else {
+            } else {
                 this.conOrE = 'edit';
             }
         },

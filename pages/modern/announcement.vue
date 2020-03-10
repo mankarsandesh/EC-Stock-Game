@@ -1,5 +1,6 @@
 <template>
 <div>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <v-layout row wrap>
         <v-flex xs12 md12>
             <announcement />
