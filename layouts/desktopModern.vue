@@ -1,31 +1,26 @@
 <template>
   <v-app style=" background-color: #f4f5fd;">
-    <v-container
-      fluid
-      pa-0
-      style="background-color: #2cb028 !important;max-height: 40px; !important"
-    >
-      <v-container pa-0>
-        <v-toolbar color="#003e70" class="white--text">
-          <v-layout wrap style="margin-top:-10px;">
-            <v-spacer></v-spacer>
-            <v-flex xs5 class="text-xs-right">
-              <winnerMarquee
-                :scrollSpeed="scrollSpeed"
-                :showSpeed="showSpeed"
-                :pauseOnHover="pauseOnHover"
-                :pauseTime="pauseTime"
-                :marqueeList="winner"
-                height="36px"
-                width="100%"
-                color="#f76a24"
-                fontSize="14px"
-              ></winnerMarquee>
-            </v-flex>
-          </v-layout>
-        </v-toolbar>
-      </v-container>
-    </v-container>
+    
+    <v-toolbar class="notification" xs12  >
+      <v-flex xs8 class="text-xs-right"  style="margin:0px;"></v-flex>
+      <v-flex xs4 class="text-xs-right"  >
+        <winnerMarquee
+          style="margin-top:-10px;"
+          :scrollSpeed="scrollSpeed"
+          :showSpeed="showSpeed"
+          :pauseOnHover="pauseOnHover"
+          :pauseTime="pauseTime"
+          :marqueeList="winner"
+          height="33px"
+          width="100%"
+          color="#f76a24"
+          fontSize="14px"
+        ></winnerMarquee>
+      </v-flex>
+      <v-flex xs1 class="text-xs-right" style="margin-right:10px;margin-top:-15px;color:#FFF;">
+        <i class="fa fa-close fa-2x" />
+      </v-flex>
+    </v-toolbar>
 
     <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
@@ -173,7 +168,7 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setGameChannelShow"]),  
+    ...mapMutations(["setGameChannelShow"]),
     async fetchNotification() {
       const betData = {
         portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
@@ -225,6 +220,7 @@ export default {
 </script>
 
 <style scoped>
+
 .logostyle {
   cursor: pointer;
   margin-left: 15px;
