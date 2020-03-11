@@ -18,9 +18,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { isMobile } from "mobile-device-detect";
-import { CryptoJS } from "crypto-js";
 export default {
   layout: "nolayout",
   middleware: "getApiKey",
@@ -46,6 +45,9 @@ export default {
 
     if (this.userData.authUser && this.userData.authPassword) {
       if (this.userData.portalProviderUUID && this.userData.userId) {
+        let buffDecode = new Buffer(base64data, "base64");
+        let authData = buffDecode.toString("ascii");
+        this.setAuth(authData);
         sessionStorage.setItem("AUTH", JSON.stringify(base64data));
         this.getProgress();
         this.linkto = isMobile
@@ -63,8 +65,6 @@ export default {
       .split("?")[1]
       .split("=")[1]
       .split("&")[0];
-    console.log(this.authUser)
-
   },
   watch: {
     "$screen.width"() {
@@ -75,10 +75,8 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState(["authUser"])
-  },
   methods: {
+    ...mapMutations(["setAuth"]),
     getProgress() {
       let seft = this;
       let width = 100,
