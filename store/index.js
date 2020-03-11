@@ -4,6 +4,7 @@ import payouts from "../data/json/payout";
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
+            authUser: {},
             activeGameChannel: true,
             loader: false,
             userLoginData: {},
@@ -74,68 +75,68 @@ const createStore = () => {
             },
             payout: payouts,
             stocks2: [{
-                    stockName: "btc5",
-                    stockUUID: "6231bf0c-2a93-4325-8b42-b7bfcfaaab93",
-                    reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
-                    type: "crypto",
-                    loop: 5,
-                    gameUUID: "8417e73d-09d1-418e-a0b7-153758d4185b",
-                    crawlData: []
-                },
-                {
-                    stockName: "sh000001",
-                    stockUUID: "e9543b3d-7870-4a5e-975e-fbe228b50f49",
-                    reference: "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
-                    type: "china",
-                    loop: 5,
-                    gameUUID: null,
-                    crawlData: []
-                },
-                {
-                    stockName: "sh000300",
-                    stockUUID: "56f0d2d4-4d9b-4cfc-bd76-97375b451d7d",
-                    reference: "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml",
-                    type: "china",
-                    loop: 5,
-                    gameUUID: null,
-                    crawlData: []
-                },
-                {
-                    stockName: "sz399415",
-                    stockUUID: "0ecce345-8d3b-4fee-bf57-f1bdd6eaa373",
-                    reference: "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml",
-                    type: "china",
-                    loop: 5,
-                    gameUUID: null,
-                    crawlData: []
-                },
-                {
-                    stockName: "sz399001",
-                    stockUUID: "636115a3-11cb-4498-a699-1e8ef6d90bce",
-                    reference: "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml",
-                    type: "china",
-                    loop: 5,
-                    gameUUID: null,
-                    crawlData: []
-                },
-                {
-                    stockName: "usindex",
-                    stockUUID: "6503b060-414e-4749-bf73-a6b46b488d0d",
-                    reference: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml",
-                    type: "usa",
-                    loop: 5,
-                    gameUUID: null,
-                    crawlData: []
-                },
-                {
-                    stockName: "btc1",
-                    stockUUID: "88778f4f-610b-4ec3-937d-65ef7bf24af5",
-                    reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
-                    type: "crypto",
-                    loop: 1,
-                    gameUUID: null,
-                    crawlData: []
-                }
+                stockName: "btc5",
+                stockUUID: "6231bf0c-2a93-4325-8b42-b7bfcfaaab93",
+                reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
+                type: "crypto",
+                loop: 5,
+                gameUUID: "8417e73d-09d1-418e-a0b7-153758d4185b",
+                crawlData: []
+            },
+            {
+                stockName: "sh000001",
+                stockUUID: "e9543b3d-7870-4a5e-975e-fbe228b50f49",
+                reference: "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
+                type: "china",
+                loop: 5,
+                gameUUID: null,
+                crawlData: []
+            },
+            {
+                stockName: "sh000300",
+                stockUUID: "56f0d2d4-4d9b-4cfc-bd76-97375b451d7d",
+                reference: "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml",
+                type: "china",
+                loop: 5,
+                gameUUID: null,
+                crawlData: []
+            },
+            {
+                stockName: "sz399415",
+                stockUUID: "0ecce345-8d3b-4fee-bf57-f1bdd6eaa373",
+                reference: "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml",
+                type: "china",
+                loop: 5,
+                gameUUID: null,
+                crawlData: []
+            },
+            {
+                stockName: "sz399001",
+                stockUUID: "636115a3-11cb-4498-a699-1e8ef6d90bce",
+                reference: "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml",
+                type: "china",
+                loop: 5,
+                gameUUID: null,
+                crawlData: []
+            },
+            {
+                stockName: "usindex",
+                stockUUID: "6503b060-414e-4749-bf73-a6b46b488d0d",
+                reference: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml",
+                type: "usa",
+                loop: 5,
+                gameUUID: null,
+                crawlData: []
+            },
+            {
+                stockName: "btc1",
+                stockUUID: "88778f4f-610b-4ec3-937d-65ef7bf24af5",
+                reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
+                type: "crypto",
+                loop: 1,
+                gameUUID: null,
+                crawlData: []
+            }
             ],
             stocks: {
                 sh000001: {
@@ -261,6 +262,9 @@ const createStore = () => {
             time: {}
         }),
         mutations: {
+            setAuth(state, payload) {             
+                state.authUser = payload
+            },
             //new api
             setLiveRoadMap(state, payload) {
                 state.roadMap.push(payload);
@@ -363,15 +367,15 @@ const createStore = () => {
                 try {
                     const res = await this.$axios.$post(
                         "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap", {
-                            portalProviderUUID: context.state.portalProviderUUID,
-                            limit: 50,
-                            stockUUID: stockUUID,
-                            version: 1
-                        }, {
-                            headers: {
-                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                            }
+                        portalProviderUUID: context.state.portalProviderUUID,
+                        limit: 50,
+                        stockUUID: stockUUID,
+                        version: 1
+                    }, {
+                        headers: {
+                            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
                         }
+                    }
                     );
                     if (res.code === 200) {
                         let readyData = res.data.roadMap.reverse();
@@ -388,15 +392,15 @@ const createStore = () => {
                 try {
                     const res = await this.$axios.$post(
                         "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap", {
-                            portalProviderUUID: context.state.portalProviderUUID,
-                            limit: 50,
-                            stockUUID: stockUUID,
-                            version: 1
-                        }, {
-                            headers: {
-                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                            }
+                        portalProviderUUID: context.state.portalProviderUUID,
+                        limit: 50,
+                        stockUUID: stockUUID,
+                        version: 1
+                    }, {
+                        headers: {
+                            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
                         }
+                    }
                     );
                     if (res.code === 200) {
                         let readyData = res.data.roadMap.reverse();
@@ -412,13 +416,13 @@ const createStore = () => {
                 try {
                     const res = await this.$axios.$post(
                         "http://uattesting.equitycapitalgaming.com/webApi/getStock", {
-                            portalProviderUUID: context.state.portalProviderUUID,
-                            version: 1
-                        }, {
-                            headers: {
-                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                            }
+                        portalProviderUUID: context.state.portalProviderUUID,
+                        version: 1
+                    }, {
+                        headers: {
+                            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
                         }
+                    }
                     );
                     if (res.code === 200) {
                         context.state.stocks2 = res.data;
@@ -435,14 +439,14 @@ const createStore = () => {
                 try {
                     const res = await this.$axios.$post(
                         "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile", {
-                            portalProviderUUID: context.state.portalProviderUUID,
-                            userUUID: context.state.userUUID,
-                            version: 1
-                        }, {
-                            headers: {
-                                Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
-                            }
+                        portalProviderUUID: context.state.portalProviderUUID,
+                        userUUID: context.state.userUUID,
+                        version: 1
+                    }, {
+                        headers: {
+                            Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
                         }
+                    }
                     );
                     if (res.code === 200) {
                         let userInfo = res.data[0];
@@ -920,11 +924,11 @@ const createStore = () => {
                         result =
                             result +
                             stockIdObject
-                            .filter(x =>
-                                x.rule.toLowerCase().includes(`${data.gameRule}-${i}`)
-                            )
-                            .map(x => x.betAmount)
-                            .reduce((a, b) => a + b, 0);
+                                .filter(x =>
+                                    x.rule.toLowerCase().includes(`${data.gameRule}-${i}`)
+                                )
+                                .map(x => x.betAmount)
+                                .reduce((a, b) => a + b, 0);
                     }
                     // .map(x => x.amount).reduce((a, b) => a + b, 0)
                     return result;
@@ -1171,7 +1175,7 @@ const createStore = () => {
                     result.push(data);
                 }
 
-               // console.log(result)
+                // console.log(result)
                 return result;
             },
             // get some stock poproty to show in stock list page
