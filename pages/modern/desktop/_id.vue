@@ -64,7 +64,7 @@
                   <v-flex class="betclose">
                     <span
                       class="text-black"
-                    >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).betCloseTimeCountDownInMins | betclosein($route.params.id)}}</span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -75,7 +75,7 @@
                   <v-flex class="lottery">
                     <span
                       class="text-black"
-                    >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins  | lotterydraw($route.params.id)}}</span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -366,10 +366,7 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        console.log("new socket success");
-        console.log(data.data.roadMap);
         this.setLiveRoadMap(data.data.roadMap[0]);
-        console.log("new socket success");
       }
     );
     // call this every page that used "dekstopModern" layout to hide loading
@@ -613,6 +610,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getTimerByStockName",
       "getStockUUIDByStockName",
       "getRoadMap",
       "getPortalProviderUUID",
