@@ -85,8 +85,6 @@
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
               </v-flex>
-
-              
             </v-layout>
             <div id="betRuleButton">
               <betButton :stockName="'btc1'" :loop="getLoop($route.params.id)"></betButton>
@@ -135,8 +133,6 @@
           </v-btn>
         </div>
       </v-flex>
-
-
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -637,18 +633,19 @@ export default {
 
 <style scoped>
 .fullscreen {
-    position: fixed !important;
-    bottom: 90px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    color: #fff;
-    z-index: 999;
-    background-color: #8d31cd !important;
+  position: fixed !important;
+  bottom: 160px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  z-index: 999;
+  background: linear-gradient(to right, #773bca 20%, #9c2bce 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
 }
 
 .fullscreen .v-icon {
-    font-size: 30px;
+  font-size:40px;
 }
 
 /* left side corner toggle functionality in desktop  */

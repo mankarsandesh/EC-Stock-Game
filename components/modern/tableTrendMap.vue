@@ -74,9 +74,8 @@
     </v-layout>
 
     <v-btn rigth fab class="multiGame" :to="'/modern/multigame/' +$route.params.id">
-      <v-icon>games</v-icon>
+      <i style="font-size:30px;" class="fa fa-gamepad" aria-hidden="true"></i>
     </v-btn>
-
   </div>
 </template>
 
@@ -131,8 +130,8 @@ export default {
 <style scoped>
 .multiGame {
   position: fixed;
-  right:20px;
-  bottom:160px;
+  right: 20px;
+  bottom: 90px;
   color: #fff;
   width: 60px;
   height: 60px;

@@ -24,7 +24,7 @@
                     <languageDialog ref="language"></languageDialog>
                 </template>
                <!-- Logout -->
-               <Logout/>
+               <userMenu/>
             </v-layout>
         </v-container>
     </v-toolbar>
@@ -266,7 +266,7 @@ import gameresult from "~/pages/classic/game-result";
 import announcement from "~/pages/classic/announcement";
 import rule from "~/pages/classic/rule";
 import setting from "~/pages/classic/setting";
-import Logout from "../components/Logout";
+import userMenu from "../components/userMenu";
 import lottie from "lottie-web";
 export default {
     components: {
@@ -284,7 +284,7 @@ export default {
         announcement,
         rule,
         setting,
-        Logout
+        userMenu
     },
 
     data() {

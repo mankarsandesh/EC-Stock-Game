@@ -20,7 +20,7 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <v-toolbar height="75" class="elevation-3">
+    <v-toolbar class="elevation-3">
       <v-container fluid class="navbar">
         <v-toolbar-title>
           <v-img
@@ -46,7 +46,7 @@
               />
             </v-btn>
           </div>
-          <Logout class="layout-logout" />
+          <userMenu class="layout-logout" />
         </v-toolbar-items>
       </v-container>
     </v-toolbar>
@@ -72,7 +72,7 @@ import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
 import chatWindow from "~/components/chatWindow";
-import Logout from "../components/Logout";
+import userMenu from "../components/userMenu";
 export default {
   components: {
     chatWindow,
@@ -80,7 +80,7 @@ export default {
     languageDialog,
     winnerMarquee,
     welcomeUser,
-    Logout
+    userMenu
   },
   data() {
     return {      
