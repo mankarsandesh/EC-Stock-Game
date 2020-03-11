@@ -1,5 +1,6 @@
 <template>
 <div>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <v-flex xs12 mt-2 mb-2 v-if="$vuetify.breakpoint.xs">
         <v-layout row>
             <v-flex xs12 sm2 md4 lg3>
@@ -65,63 +66,85 @@
             <v-flex xs12 pt-0 pl-1>
                 <div>
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
-                        <div class="row">
-                            <div class="col-15">
-                                <label for="fname">{{$t('msg.playerid')}}</label>
-                            </div>
-                            <div class="col-85">
-                                <input disabled type="text" id="fname" name="firstname" :value="userData.PID" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-15">
+                        <v-layout pt-3>
+                            <v-flex xs3 sm2 md3 lg6>
+                                <label for="player-id">{{$t('msg.playerid')}}</label>
+                            </v-flex>
+
+                            <v-flex xs9 sm6 md9 lg6 pr-2>
+                                <input disabled type="text" id="player-id" name="player-id" :value="userData.PID" />
+                                <!-- <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" /> -->
+                            </v-flex>
+                        </v-layout>
+
+                        <v-layout pt-3>
+                            <v-flex xs2 sm2 md2 lg6>
+                                <label for="username">Username</label>
+                            </v-flex>
+                            <v-flex xs10 sm6 md6 lg6>
+                                <input ref="username" type="text" :value="userData.userName" id="username" name="username" placeholder="Type your Username" />
+                                <span class="icon-container">
+                                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                                </span>
+                            </v-flex>
+                        </v-layout>
+
+                        <v-layout pt-3>
+                            <v-flex xs2 sm2 md2 lg6>
                                 <label for="lname">{{$t('profile.first name')}}</label>
-                            </div>
-                            <div class="col-85">
-                                <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" />
+                            </v-flex>
+                            <v-flex xs10 sm6 md6 lg6>
+                                <input ref="firstName" type="text" :value="userData.firstName" id="first-name" name="first-name" placeholder="Your First Name" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                                 </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-15">
+                            </v-flex>
+                        </v-layout>
+
+                        <v-layout pt-2>
+                            <v-flex xs2 sm2 md2 lg6>
                                 <label for="lname">{{$t('profile.last name')}}</label>
-                            </div>
-                            <div class="col-85">
-                                <input ref="lastname" type="text" :value="userData.lastName" id="lname" name="lastname" placeholder="Your last name" />
+                            </v-flex>
+                            <v-flex xs10 sm6 md6 lg6>
+                                <input ref="lastName" type="text" :value="userData.lastName" id="last-name" name="last-name" placeholder="Your Last Name" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                                 </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-15">
-                                <label for="country">{{$t('profile.gender')}}</label>
-                            </div>
-                            <div class="col-85">
-                                <select ref="gender" id="country" name="country">
+                            </v-flex>
+                        </v-layout>
+
+                        <v-layout pt-2>
+                            <v-flex xs2 sm2 md2 lg6 pt2>
+                                <label for="gender">{{$t('profile.gender')}}</label>
+                            </v-flex>
+                            <v-flex xs10 sm6 md6 lg6>
+                                <select ref="gender" id="gender" name="gender">
                                     <option value="female">Female</option>
                                     <option value="male">Male</option>
                                 </select>
                                 <span class="icon-container">
-                                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                                    <v-icon :size="15" color="#bdbdbd">arrow_drop_down</v-icon>
                                 </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-15">
-                                <label for="country">{{$t('profile.email')}}</label>
-                            </div>
-                            <div class="col-85">
-                                <input ref="email" type="text" :value="userData.email" id="lname" name="lastname" placeholder="mackychinma@gmail.com" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-15">
+                            </v-flex>
+                        </v-layout>
+
+                        <v-layout pt-3>
+                            <v-flex xs2 sm2 md2 lg6>
+                                <label for="email">{{$t('profile.email')}}</label>
+                            </v-flex>
+                            <v-flex xs10 sm6 md6 lg6>
+                                <input ref="email" type="text" :value="userData.email" id="email" name="email" placeholder="mackychinma@gmail.com" />
+                                <span class="icon-container">
+                                    <v-icon :size="15" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                                </span>
+                            </v-flex>
+                        </v-layout>
+
+                        <v-layout pt-3>
+                            <v-flex xs2 sm2 md2 lg6>
                                 <label for="country">{{$t('profile.country')}}</label>
-                            </div>
-                            <div class="col-85">
+                            </v-flex>
+                            <v-flex xs10 sm6 md6 lg6>
                                 <select ref="country" id="country" name="country">
                                     <option value="china">China</option>
                                     <option value="usa">USA</option>
@@ -131,8 +154,9 @@
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
                                 </span>
-                            </div>
-                        </div>
+                            </v-flex>
+                        </v-layout>
+
                         <div class="row">
                             <div class="col-15"></div>
                             <div class="col-85">
@@ -190,9 +214,7 @@ export default {
                 this.getUserInfo.profileImage;
         },
         userData() {
-            let data = {
-                ...this.getUserInfo
-            };
+            let data = this.getUserInfo;
             return data;
         }
     },
@@ -208,9 +230,10 @@ export default {
             formData.append("portalProviderUUID", this.getPortalProviderUUID);
             formData.append("userUUID", this.getUserUUID);
             formData.append("email", ref.email.value);
+            formData.append("userName", ref.username.value);
             formData.append("firstName", ref.firstname.value);
             formData.append("lastName", ref.lastname.value);
-            // formData.append("gender", ref.gender.value);
+            formData.append("gender", ref.gender.value);
             // formData.append("country", ref.country.value);
             formData.append("version", 1);
             try {
@@ -225,12 +248,12 @@ export default {
                 );
                 if (res.code === 200) {
                     this.asynUserInfo();
-                    setTimeout(() => {
-                        this.updating = false;
-                    }, 1000);
+                    this.updating = false;
+                    
                 } else {
                     alert(res.message);
                     this.updating = false;
+                    this.error = res.message;
                     console.log(res);
                 }
             } catch (ex) {
@@ -271,7 +294,7 @@ input[type="text"]:disabled {
 
 input[type="text"],
 select {
-    width: 250px;
+    width: 230px;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 15px;

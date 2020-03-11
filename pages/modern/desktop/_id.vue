@@ -44,26 +44,12 @@
                     <chartApp />
                   </v-flex>
                 </div>
-                <v-layout>
-                  <v-flex class="layout-bottom">
-                    <div id="fullscreenGuidelines">
-                      <v-btn
-                        rigth
-                        fab
-                        class="fullscreen"
-                        :to="'/modern/fullscreen/' +$route.params.id"
-                      >
-                        <v-icon>fullscreen</v-icon>
-                      </v-btn>
-                    </div>
-                  </v-flex>
-                </v-layout>
               </v-flex>
             </v-layout>
           </v-flex>
           <v-flex xs6 class="mx-2">
-            <v-layout style="margin-bottom:10px;">
-              <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
+            <v-layout mb-3>
+              <v-flex xs4 class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.Lastdraw')}}:</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
@@ -72,31 +58,33 @@
                 </div>
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
-              <v-flex class="text-xs-center text-uppercase" px-2 style="font-weight:600;">
+              <v-flex xs4 class="text-xs-center text-uppercase" px-2 style="font-weight:600;">
                 <span>{{$t('msg.BetClosein')}}:</span>
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
                     <span
                       class="text-black"
-                    >{{getLotteryDraw($route.params.id) | betclosein(getStockLoop($route.params.id))}}</span>
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).betCloseTimeCountDownInMins | betclosein($route.params.id)}}</span>
                   </v-flex>
                 </div>
               </v-flex>
-              <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
+
+              <v-flex xs4 class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.lotterydraw')}}:</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
                     <span
                       class="text-black"
-                    >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins  | lotterydraw($route.params.id)}}</span>
                   </v-flex>
                 </div>
               </v-flex>
-              <!-- <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-              <v-btn fab dark small color="#003e70" @click="setNextstep(),getopen()">
-                <v-icon dark size="25">fa-question</v-icon>
-              </v-btn>
-              </v-flex>-->
+
+              <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
+                <v-btn fab dark small class="helpButton" @click="setNextstep(),getopen()">
+                  <v-icon dark size="25">fa-question</v-icon>
+                </v-btn>
+              </v-flex>
             </v-layout>
             <div id="betRuleButton">
               <betButton :stockName="'btc1'" :loop="getLoop($route.params.id)"></betButton>
@@ -107,10 +95,7 @@
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap
-                :dataArray="getRoadMap"
-                :isShowMultigameButton="index"
-              ></tableTrendMap>
+              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index"></tableTrendMap>
             </div>
             <span
               class="addChart"
@@ -137,10 +122,17 @@
           </v-card-text>
           <v-flex class="text-lg-right">
             <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
-          </v-flex>             
-        </v-card>       
+          </v-flex>
+        </v-card>
       </v-dialog>
 
+      <v-flex class="layout-bottom">
+        <div id="fullscreenGuidelines">
+          <v-btn rigth fab class="fullscreen" :to="'/modern/fullscreen/' +$route.params.id">
+            <v-icon>fullscreen</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -313,6 +305,7 @@ export default {
   },
   data() {
     return {
+      routeParams: this.$route.params.id,
       SelectStockItems,
       stock: [],
       dialog: false,
@@ -355,6 +348,13 @@ export default {
     //   this.dialog = false;
     // }
   },
+  beforeDestroy() {
+    this.stopListenSocket(
+      `roadMap.${this.getStockUUIDByStockName(this.routeParams)}.${
+        this.getPortalProviderUUID
+      }`
+    );
+  },
   mounted() {
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // socket new api
@@ -366,10 +366,7 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        console.log("new socket success");
-        console.log(data.data.roadMap);
         this.setLiveRoadMap(data.data.roadMap[0]);
-        console.log("new socket success");
       }
     );
     // call this every page that used "dekstopModern" layout to hide loading
@@ -408,6 +405,9 @@ export default {
       "removeAllFooterBet",
       "setIsLoadingStockGame"
     ]),
+    stopListenSocket(channel) {
+      window.Echo.leave(channel);
+    },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
@@ -610,6 +610,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getTimerByStockName",
       "getStockUUIDByStockName",
       "getRoadMap",
       "getPortalProviderUUID",
@@ -629,7 +630,29 @@ export default {
 </script>
 
 <style scoped>
+.fullscreen {
+  position: fixed !important;
+  bottom: 160px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  z-index: 999;
+  background: linear-gradient(to right, #773bca 20%, #9c2bce 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+.fullscreen .v-icon {
+  font-size:40px;
+}
+
 /* left side corner toggle functionality in desktop  */
+.helpButton {
+  background-color: #4464ff !important;
+  color: #fff;
+  padding: 5px;
+  font-size: 22px;
+}
 .leftStocklist {
   background-color: #fff;
   margin: 35px 7px;

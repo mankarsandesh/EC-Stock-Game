@@ -36,10 +36,15 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      routeParams:this.$route.params.id
+    };
   },
   created() {
     this.asyncChart(this.getStockUUIDByStockName(this.$route.params.id));
+  },
+  beforeDestroy(){
+    window.Echo.leave(`liveStockData.${this.routeParams}`)
   },
   mounted() {
     // socket new api

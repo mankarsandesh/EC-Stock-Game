@@ -1,5 +1,6 @@
 <template>
   <div>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <tableTrendMap :isShowMultigameButton="1"></tableTrendMap>
     <h1>{{getRoadMap}}</h1>
   </div>

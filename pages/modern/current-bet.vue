@@ -1,5 +1,6 @@
 <template>
 <div>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <currentbet :head="head" :desserts="desserts"></currentbet>
 </div>
 </template>
@@ -20,7 +21,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
+        ...mapState(["portalProviderUUID","userUUID"]) //get 2 data from vuex first, in the computed
     },
     mounted() {
         this.fetch(); // after this component render done, this will call the function from method

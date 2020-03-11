@@ -149,18 +149,18 @@
             <v-flex xs12 sm12 md12 lg12 wrap pt-2>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen :index="0" :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen :index="1" :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen :index="2" :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen :index="3" :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -184,12 +184,13 @@ import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 
 export default {
-   async validate({ params, store }) {
+  async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
   layout: "fullscreen",
   data() {
     return {
+      routeParamID: this.$route.params.id,
       dialogOtherstock: false,
       //winner mqrquee
       winner: [],
@@ -214,18 +215,24 @@ export default {
     this.getSotckId();
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
   },
+  beforeDestroy() {
+    window.Echo.leave(
+      `roadMap.${this.getStockUUIDByStockName(this.routeParamID)}.${
+        this.getPortalProviderUUID
+      }`
+    );
+  },
   mounted() {
     // socket new api
     this.listenForBroadcast(
       {
-        channelName: `roadMap.${this.getStockUUIDByStockName(this.$route.params.id)}.${this.getPortalProviderUUID}`,
+        channelName: `roadMap.${this.getStockUUIDByStockName(
+          this.$route.params.id
+        )}.${this.getPortalProviderUUID}`,
         eventName: "roadMap"
       },
       ({ data }) => {
-        console.log("new socket success");
-        console.log(data.data.roadMap);
         this.setLiveRoadMap(data.data.roadMap[0]);
-        console.log("new socket success");
       }
     );
     // this.getwinuser();
