@@ -75,7 +75,7 @@
                   <v-flex class="lottery">
                     <span
                       class="text-black"
-                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins  | lotterydraw($route.params.id)}}</span>
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins | lotterydraw($route.params.id)}}</span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -110,7 +110,7 @@
       <!-- <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
             <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
             <v-icon style="color: #0b2a68 !important;">close</v-icon>
-      </v-btn>-->
+      </v-btn> -->
 
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
@@ -127,11 +127,23 @@
       </v-dialog>
 
       <v-flex class="layout-bottom">
-        <div id="fullscreenGuidelines">
-          <v-btn rigth fab class="fullscreen" :to="'/modern/fullscreen/' +$route.params.id">
-            <v-icon>fullscreen</v-icon>
-          </v-btn>
-        </div>
+        <v-tooltip left id="fullscreenGuidelines">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              color="primary"
+              rigth
+              fab
+              :to="'/modern/fullscreen/' +$route.params.id"
+              class="fullscreen"
+              dark
+              v-on="on"
+              title="Full Screen"
+            >
+              <v-icon>fullscreen</v-icon>
+            </v-btn>
+          </template>
+          <span>Full Screen</span>
+        </v-tooltip>
       </v-flex>
     </v-layout>
     <div ref="guideline" class="overlay">
@@ -643,7 +655,7 @@ export default {
 }
 
 .fullscreen .v-icon {
-  font-size:40px;
+  font-size: 40px;
 }
 
 /* left side corner toggle functionality in desktop  */

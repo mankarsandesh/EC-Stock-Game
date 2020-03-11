@@ -353,8 +353,6 @@ export default {
   max-width: 350px;
   margin: 10px 10px;
   text-align: justify;
-  /* border:1px solid red; */
-  /* box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2) */
 }
 .msgUser span {
   background-color: #ced1d0;
