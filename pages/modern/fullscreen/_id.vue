@@ -232,10 +232,7 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        console.log("new socket success");
-        console.log(data.data.roadMap);
         this.setLiveRoadMap(data.data.roadMap[0]);
-        console.log("new socket success");
       }
     );
     // this.getwinuser();
