@@ -1,5 +1,32 @@
 <template>
   <v-app style=" background-color: #f4f5fd;">
+    <v-container
+      fluid
+      pa-0
+      style="background-color: #2cb028 !important;max-height: 40px; !important"
+    >
+      <v-container pa-0>
+        <v-toolbar color="#003e70" class="white--text">
+          <v-layout wrap style="margin-top:-10px;">
+            <v-spacer></v-spacer>
+            <v-flex xs5 class="text-xs-right">
+              <winnerMarquee
+                :scrollSpeed="scrollSpeed"
+                :showSpeed="showSpeed"
+                :pauseOnHover="pauseOnHover"
+                :pauseTime="pauseTime"
+                :marqueeList="winner"
+                height="36px"
+                width="100%"
+                color="#f76a24"
+                fontSize="14px"
+              ></winnerMarquee>
+            </v-flex>
+          </v-layout>
+        </v-toolbar>
+      </v-container>
+    </v-container>
+
     <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
@@ -47,6 +74,9 @@
             </v-btn>
           </div>
           <userMenu class="layout-logout" />
+          <v-btn flat>
+            <i class="fa fa-bell-o fa-2x" />
+          </v-btn>
         </v-toolbar-items>
       </v-container>
     </v-toolbar>
@@ -62,7 +92,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
@@ -133,10 +163,7 @@ export default {
     console.log("crearted");
   },
   mounted() {
-    // setInterval(() => {
-    //   this.getwinuser();
-    // }, 10000);
-    // this.getwinuser();
+    this.fetchNotification();
     lottie.loadAnimation({
       container: this.$refs.svgContainer, // the dom element that will contain the animation
       renderer: "svg",
@@ -146,37 +173,44 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setGameChannelShow"])
-    // Not usable. from the old api
-    // getwinuser() {
-    //   this.$axios
-    //     .$get("api/fetchBet")
-    //     .then(response => {
-    //       let resultStatus = null;
-    //       for (let i = 0; i < response.data.length - 1; i++) {
-    //         let betID = response.data[i].betId;
-    //         let result = response.data[i].result;
-    //         let name = response.data[i].name;
-    //         if (result == "1") {
-    //           resultStatus = "Win";
-    //           //  console.log(resultStatus);
-    //           let betAmount = response.data[i].betAmount;
-    //           let betTime = response.data[i].betTime;
-    //           let win = `<span class="text-slide text-white"><span class="text-warning">
-    //                     <i class="fa fa-bell"></i>
-    //                     </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
-    //                     </span> ${name}  ${betTime}</span>`;
-    //           this.winner.push(win);
-    //         }
-    //       }
-    //     })
-    //     .catch(error => {
-    //       // alert(error);
-    //     });
-    // }
+    ...mapMutations(["setGameChannelShow"]),  
+    async fetchNotification() {
+      const betData = {
+        portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
+        userUUID: this.getUserUUID, // get the userUUID with the this object
+        version: "0.1", // version of API
+        betResult: [0, 1], // -1= pending, pending that mean is betting
+        limit: "10", // limit the data we the data come will come only the 20 that we limit in this case
+        offset: "0" // offset or skip the data
+      };
+      const { data } = await this.$axios.post(
+        "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
+        betData,
+        {
+          headers: {
+            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, becase the backend they will check
+          }
+        }
+      );
+      for (let i = 0; i < data.data.length - 1; i++) {
+        let betID = data.data[i].betID;
+        let betResult = data.data[i].betResult;
+        let name = data.data[i].name;
+        let ruleName = data.data[i].ruleName;
+        let betAmount = data.data[i].betAmount;
+        let betTime = data.data[i].createdTime;
+        let win = `<span class="text-slide text-white"><span class="text-warning">
+                        <i class="fa fa-bell"></i>
+                        </span>Player ${betID}, <span class="text-warning">${betResult} ${betAmount},
+                        </span> ${ruleName}  ${betTime}</span>`;
+        this.winner.push(win);
+      }
+    }
   },
   computed: {
     ...mapGetters([
+      "getPortalProviderUUID", // Get Portalprovider
+      "getUserUUID", // Get UserUUID
       "getGameChannel",
       "getBalance",
       "getlocale",
