@@ -31,14 +31,14 @@
           ></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" >
+        <v-toolbar-items class="hidden-xs-only text-s1">
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
             <i :class="item.icon" style="margin-right: 3px;" />
             <span>{{$t(`menu.${item.title}`)}}</span>
-          </v-btn>        
+          </v-btn>
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
-              <countryFlag :country="countryflag" size="normal" />
+              <countryFlag :country="countryflag" size="normal" style="margin-right:0px;" />
               {{$t('msg.chooselanguage')}}
               <i
                 class="fa fa-caret-down"
@@ -83,7 +83,7 @@ export default {
     userMenu
   },
   data() {
-    return {      
+    return {
       direction: "top",
       fab: true,
       fling: true,
@@ -146,7 +146,7 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setGameChannelShow"]),
+    ...mapMutations(["setGameChannelShow"])
     // Not usable. from the old api
     // getwinuser() {
     //   this.$axios
@@ -173,7 +173,7 @@ export default {
     //     .catch(error => {
     //       // alert(error);
     //     });
-    // }   
+    // }
   },
   computed: {
     ...mapGetters([
