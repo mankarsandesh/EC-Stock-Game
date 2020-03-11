@@ -1,9 +1,8 @@
 <template>
   <v-app style=" background-color: #f4f5fd;">
-    
-    <v-toolbar class="notification" xs12  >
-      <v-flex xs8 class="text-xs-right"  style="margin:0px;"></v-flex>
-      <v-flex xs4 class="text-xs-right"  >
+    <v-toolbar class="notification" xs12 v-if="showNotification">
+      <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
+      <v-flex xs4 class="text-xs-right">
         <winnerMarquee
           style="margin-top:-10px;"
           :scrollSpeed="scrollSpeed"
@@ -17,8 +16,8 @@
           fontSize="14px"
         ></winnerMarquee>
       </v-flex>
-      <v-flex xs1 class="text-xs-right" style="margin-right:10px;margin-top:-15px;color:#FFF;">
-        <i class="fa fa-close fa-2x" />
+      <v-flex xs1 class="text-xs-right closebutton">
+        <i class="fa fa-close fa-2x" @click="showNotification = false" />
       </v-flex>
     </v-toolbar>
 
@@ -54,7 +53,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
             <i :class="item.icon" style="margin-right: 3px;" />
             <span>{{$t(`menu.${item.title}`)}}</span>
           </v-btn>
@@ -69,9 +68,9 @@
             </v-btn>
           </div>
           <userMenu class="layout-logout" />
-          <v-btn flat>
+          <span flat @click="showNotification = true" id="notification"  class="menuItemNotification"   >
             <i class="fa fa-bell-o fa-2x" />
-          </v-btn>
+          </span>
         </v-toolbar-items>
       </v-container>
     </v-toolbar>
@@ -85,7 +84,6 @@
     <chatWindow />
   </v-app>
 </template>
-
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
 import menu from "~/data/menudesktop";
@@ -109,6 +107,8 @@ export default {
   },
   data() {
     return {
+      activeClass: null,
+      showNotification: false,
       direction: "top",
       fab: true,
       fling: true,
@@ -220,26 +220,44 @@ export default {
 </script>
 
 <style scoped>
-
+.closebutton {
+  margin-right: 10px;
+  margin-top: -15px;
+  color: #fff;
+  cursor: pointer;
+}
+.menuItemNotification {
+  height: 62px !important;
+  width: 50px !important;
+  text-align: center;
+  padding-top: 16px;
+  cursor: pointer;
+}
+.activeNotification {
+  color: #ffffff;
+  background-color: #2bb13a;
+  height: 62px !important;
+  width: 50px !important;
+  text-align: center;
+  padding-top: 16px;
+  cursor: pointer;
+}
+.menuItem {
+  border-right: 2px solid #dddddd;
+  height: 62px !important;
+  padding:15px 15px;
+}
 .logostyle {
   cursor: pointer;
   margin-left: 15px;
-}
-
-.toolMenu {
-  border: 1px solid red;
-  width: 100% !important;
-  padding: 5px;
 }
 .v-toolbar__content {
   padding: 0 !important;
   justify-content: center !important;
 }
-
 .settop {
   top: 30%;
 }
-
 .popper {
   background-color: #333;
   border-radius: 10px;
@@ -280,7 +298,6 @@ export default {
 
 .v-btn {
   /* padding: 0 5px !important; */
-  border: 1px solid #ccc;
   border-bottom: none;
   border-top: none;
 }
