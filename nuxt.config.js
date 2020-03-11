@@ -58,7 +58,7 @@ module.exports = {
         { src: "@/plugins/vChart", mode: 'client' }
     ],
     router: {
-        middleware: ["auth", "showLoading", "checkAuth"]
+        middleware: ["auth", "showLoading"]
     },
     /*
      ** Nuxt.js modules
