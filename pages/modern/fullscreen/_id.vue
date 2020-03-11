@@ -227,38 +227,34 @@ export default {
         );
     },
     mounted() {
-        // socket new api
-        this.listenForBroadcast({
-                channelName: `roadMap.${this.getStockUUIDByStockName(
-          this.$route.params.id
-        )}.${this.getPortalProviderUUID}`,
-                eventName: "roadMap"
-            },
-            ({
-                data
-            }) => {
-                console.log("new socket success");
-                console.log(data.data.roadMap);
-                this.setLiveRoadMap(data.data.roadMap[0]);
-                console.log("new socket success");
-            }
+            // socket new api
+            this.listenForBroadcast({
+                    channelName: `roadMap.${this.getStockUUIDByStockName(
+            this.$route.params.id
+            )}.${this.getPortalProviderUUID}`,
+            eventName: "roadMap"
+        },
+        ({ data }) => {
+            this.setLiveRoadMap(data.data.roadMap[0]);
+        }
         );
         // this.getwinuser();
         setTimeout(() => {
-            this.getliveBetCount();
-            this.getliveAll();
+        this.getliveBetCount();
+        this.getliveAll();
         }, 1000);
 
         setInterval(() => {
-            this.getliveBetCount();
-            this.getliveAll();
+        this.getliveBetCount();
+        this.getliveAll();
         }, 1000);
         console.log(
-            // this.getLotteryDraw($route.params.id)
-            //   |
-            this.getStockLoop("btc1")
+        // this.getLotteryDraw($route.params.id)
+        //   |
+        this.getStockLoop("btc1")
         );
     },
+
 
     components: {
         betButton,

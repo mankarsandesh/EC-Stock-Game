@@ -34,14 +34,12 @@ import { mapGetters, mapMutations } from "vuex";
 import { isMobile } from "mobile-device-detect";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
-import Logout from "~/components/Logout";
 export default {
   layout: "nolayout",
   // middleware: 'getApiKey',
   components: {
     countryFlag,
-    languageDialog,
-    Logout
+    languageDialog
   },
   data() {
     return {
