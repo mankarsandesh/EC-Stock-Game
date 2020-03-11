@@ -1081,20 +1081,7 @@ background: radial-gradient(circle, rgba(76,182,121,1) 31%, rgba(93,190,109,1) 1
     border-radius: 10px;
 }
 
-.fullscreen {
-    position: fixed !important;
-    bottom: 18px;
-    right: 130px;
-    width: 60px;
-    height: 60px;
-    color: #fff;
-    z-index: 999;
-    background-color: #8d31cd !important;
-}
 
-.fullscreen .v-icon {
-    font-size: 30px;
-}
 
 .lastdraw {
     font-size: 14px;

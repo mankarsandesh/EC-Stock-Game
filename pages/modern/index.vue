@@ -1,5 +1,6 @@
 <template>
 <div>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <!-- filter -->
     <SlideMenu class="filter-style mt-5" ref="refslideleft" title="filter">
         <v-list class="pt-0 text-primary" dense>
@@ -67,9 +68,9 @@
                     <v-list-tile-title class="text-uppercase">{{$t('stock-list.stock name')}}</v-list-tile-title>
                 </v-list-tile-content>
                 <v-spacer></v-spacer>
-                <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
+                <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
                     <v-icon class="icon-primary">done</v-icon>
-                </v-btn>
+                </v-btn> -->
             </v-list-tile>
 
             <!--sort game type -->
@@ -79,9 +80,9 @@
                     <v-list-tile-title class="text-uppercase">{{$t('stock type')}}</v-list-tile-title>
                 </v-list-tile-content>
                 <v-spacer></v-spacer>
-                <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
+                <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
                     <v-icon class="icon-primary">done</v-icon>
-                </v-btn>
+                </v-btn> -->
             </v-list-tile>
             <v-divider></v-divider>
             <v-list-tile class="py-2">
@@ -89,9 +90,9 @@
                     <v-list-tile-title class="text-uppercase">{{$t('default')}}</v-list-tile-title>
                 </v-list-tile-content>
                 <v-spacer></v-spacer>
-                <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
+                <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
                     <v-icon class="icon-primary">done</v-icon>
-                </v-btn>
+                </v-btn> -->
             </v-list-tile>
             <v-divider></v-divider>
         </v-list>
@@ -113,16 +114,16 @@
         </v-layout>
     </v-toolbar> -->
     <div class="text-center mt-3">
-      <v-flex order-xs6 class="text-center  d-flex justify-center"> 
-        <v-btn text flat @click="filterClick" class="buttonGreen">
-            <span class="uppercase-text white--text">{{$t('filter')}}</span>
-        </v-btn>
-      <!-- </v-flex>
+        <v-flex order-xs6 class="text-center  d-flex justify-center">
+            <v-btn text flat @click="filterClick" class="buttonGreen">
+                <span class="uppercase-text white--text">{{$t('filter')}}</span>
+            </v-btn>
+            <!-- </v-flex>
       <v-flex offset-xs6 class="text-center d-flex justify-center">  -->
-        <v-btn text flat @click="sortClick" class="buttonGreen">
-            <span class="uppercase-text white--text">{{$t('sort')}}</span>
-        </v-btn>
-      </v-flex>
+            <v-btn text flat @click="sortClick" class="buttonGreen">
+                <span class="uppercase-text white--text">{{$t('sort')}}</span>
+            </v-btn>
+        </v-flex>
     </div>
     <v-layout row wrap px-2 pt-2>
         <v-flex pa-2 v-for="(data,index) in getStockChart " :key="index" xs6 sm4 md4>
@@ -218,7 +219,8 @@ export default {
 .v-card-style {
     border-radius: 10px;
 }
-.filter-style{
+
+.filter-style {
     height: 66% !important;
     transform: translateX(0px);
     width: 300px !important;

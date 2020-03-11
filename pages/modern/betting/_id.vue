@@ -28,13 +28,13 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs7 sm6 md12 lg12>
-                    <v-layout class="text-xs-center pt-3">
-                        <v-flex xs9 md6 lg6 class="text-xs-center pr-2">
+                <v-flex xs7 sm6 md6 lg6>
+                    <v-layout class=" pt-3">
+                        <v-flex xs9 sm5 md6 lg7 class=" pr-2">
                             <v-btn class="buttonGreen">{{$t('msg.Game Mode')}}</v-btn>
                         </v-flex>
 
-                        <v-flex xs3 md6 lg6 class="text-xs-center pl-2">
+                        <v-flex xs3 sm7 md6 lg6 class=" pl-2">
                             <v-btn class="buttonGreen">
                                 <nuxt-link to="/modern" class="text-white">{{$t('msg.otherstock')}}</nuxt-link>
                             </v-btn>
@@ -82,17 +82,17 @@
             </div>
             <v-layout wrap sm6>
                 <v-tabs grow centered style="width:100%;background-color: #f2f4ff;" @change="tabChanged($event)">
-                    <v-tab class="bg-btn-first-color border-radius mr-1 ml-1">
-                        <span class="text-pre-line">{{$t('gamemsg.firstdigits')}}</span>
+                    <v-tab class="firstdigit border-radius mr-1 ml-1">
+                        <span class="text-pre-line text-white">{{$t('gamemsg.firstdigits')}}</span>
                     </v-tab>
-                    <v-tab class="bg-btn-last-color border-radius mr-1 ml-1">
-                        <span class="text-pre-line">{{$t('gamemsg.lastdigits')}}</span>
+                    <v-tab class="lastdigit border-radius mr-1 ml-1">
+                        <span class="text-pre-line text-white">{{$t('gamemsg.lastdigits')}}</span>
                     </v-tab>
-                    <v-tab class="bg-btn-both-color border-radius mr-1 ml-1">
-                        <span class="text-pre-line">{{$t('gamemsg.bothdigits')}}</span>
+                    <v-tab class="bothdigit border-radius mr-1 ml-1">
+                        <span class="text-pre-line text-white">{{$t('gamemsg.bothdigits')}}</span>
                     </v-tab>
-                    <v-tab class="bg-btn-two-color border-radius mr-1 ml-1">
-                        <span class="text-pre-line">{{$t('gamemsg.twodigits')}}</span>
+                    <v-tab class="twodigit border-radius mr-1 ml-1">
+                        <span class="text-pre-line text-white">{{$t('gamemsg.twodigits')}}</span>
                     </v-tab>
 
                     <!-- First Digit -->
@@ -749,7 +749,6 @@ export default {
     computed: {
         ...mapGetters([
             "getStockById",
-            "getLivePrice",
             "getLiveTime",
             "getLotteryDraw",
             "getCheckStock",

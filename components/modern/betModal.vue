@@ -63,7 +63,7 @@ export default {
     ],
     data() {
         return {
-            gameUUID:"14363ec5-6dda-41f7-91fd-669cfb9502ea",
+            gameUUID:"854fdec3-9b20-469c-8471-b0cd3c39aba3",
             confirmDisabled: false,
             betValue: 0,
             imgChip: [{
@@ -144,6 +144,14 @@ export default {
                     console.log(res);
                     this.balance()
                     this.closePopper();
+                    let data = {
+                        "betId": "Hello",
+                        "betTime" : "20-3-2020",              
+                        "betAmount": "2000",
+                        "rule" : "First Digit",
+                        "stockName": "CHinaaa"
+                    };
+                    this.pushDataOnGoingBet(res.data[0]);
                     this.$swal({
                         type: "success",
                         title: "Confirm!",
@@ -176,7 +184,7 @@ export default {
             console.log(data);
             this.sendBetting(data);    
            $("#"+this.betId).addClass(this.betId.split("-")[0]);       
-            console.warn(this.getOnBetting);
+          
         },
         closePopper() {
             $(".closepopper").click();

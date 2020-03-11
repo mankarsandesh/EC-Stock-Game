@@ -1,15 +1,10 @@
 const Menu = [  
     {
-        icon: "fa fa-bullhorn fa-2x",
-        title: "announcement",
-        to: "/modern/desktop/announcement"
-    },
-    {
-        icon: "fa fa-file fa-2x",
-        title: "gamerule",
+        icon: "fa fa-file-text-o fa-2x",
+        title: "rule",
         to: "/modern/desktop/gamerule"
     },
-    {
+    { 
         icon: "fa fa-trophy fa-2x",
         title: "leaderboard",
         to: "/modern/desktop/leaderboard"
@@ -18,11 +13,16 @@ const Menu = [
         icon: "fa fa-money fa-2x",
         title: "current bet",
         to: "/modern/desktop/current-bet"
-    },    
+    },
     {
-        icon: "fa fa-area-chart fa-2x",
+        icon: "fa fa-bar-chart fa-2x",
         title: "stock list",
         to: "/modern/desktop/stock-list"
     },
+    {
+        icon: "fa fa-bullhorn fa-2x",
+        title: "announcement",
+        to: "/modern/desktop/announcement"
+    }
 ]
 export default Menu;

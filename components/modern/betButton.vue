@@ -15,7 +15,6 @@
           <span class="btn-digit">{{$t('gamemsg.firstdigits')}}</span>
         </v-btn>
       </span>
-
       <popper
         :disabled="checkFooterBet"
         v-for="data in firstDigit"
@@ -39,7 +38,7 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4 "
+          class="align_button4"
           :id="'firstdigit-'+data.rule"
           style="margin-left: -5px;"
           slot="reference"
@@ -278,6 +277,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
+            :ruleid="8+index"
             :betId="'firstdigit-'+index"
             :payout="index+30"
           ></betModal>
@@ -303,6 +303,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
+            :ruleid="25+index"
             :betId="'lastdigit-'+index"
             :payout="index+40"
           ></betModal>
@@ -328,6 +329,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
+            :ruleid="149+index"
             :betId="'bothdigit-'+index"
             :payout="index+50"
           ></betModal>
@@ -353,6 +355,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
+            :ruleid="42+index"
             :betId="index < 10 ? 'twodigit-0' + index :'twodigit-'+index"
             :payout="index+69"
           ></betModal>
@@ -402,6 +405,7 @@ export default {
       payout_99: payout._99,
       // games rules
       firstDigit: [
+
         {
           ruleid: 1,
           rule: "big",
@@ -454,42 +458,49 @@ export default {
       ],
       lastDigit: [
         {
+          ruleid: 19,
           rule: "big",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 7
         },
         {
+          ruleid: 19,
           rule: "small",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 8
         },
         {
+          ruleid: 20,
           rule: "odd",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 9
         },
         {
+          ruleid: 21,
           rule: "even",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 10
         },
         {
+          ruleid: 22,
           rule: "high",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 11
         },
         {
+          ruleid: 23,
           rule: "mid",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 12
         },
         {
+          ruleid: 24,
           rule: "low",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
@@ -498,48 +509,56 @@ export default {
       ],
       bothDigit: [
         {
+          ruleid: 142,
           rule: "big",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 14
         },
         {
+          ruleid: 169,
           rule: "tie",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 15
         },
         {
+          ruleid: 143,
           rule: "small",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 16
         },
         {
+          ruleid: 144,
           rule: "odd",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 17
         },
         {
+          ruleid: 145,
           rule: "even",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 18
         },
         {
+          ruleid: 146,
           rule: "high",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 19
         },
         {
+          ruleid: 147,
           rule: "mid",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 20
         },
         {
+          ruleid: 148,
           rule: "low",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
@@ -548,48 +567,56 @@ export default {
       ],
       twoDigit: [
         {
+          ruleid: 35,
           rule: "big",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 22
         },
         {
+          ruleid: 168,
           rule: "tie",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 23
         },
         {
+          ruleid: 36,
           rule: "small",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 24
         },
         {
+          ruleid: 37,
           rule: "odd",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 25
         },
         {
+          ruleid: 38,
           rule: "even",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 26
         },
         {
+          ruleid: 39,
           rule: "high",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 27
         },
         {
+          ruleid: 40,
           rule: "mid",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,
           payout: 28
         },
         {
+          ruleid: 71,
           rule: "low",
           stock_id: this.$route.params.id,
           stock_name: this.$route.params.id,

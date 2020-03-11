@@ -1,5 +1,6 @@
 <template>
 <div>
+    <meta name="viewport" content= "width=device-width, user-scalable=no">
     <!-- <v-toolbar class="light-toobar">
       <h1 class="text-primary text-uppercase">{{ $t('menu.history') }}</h1>
       <v-spacer></v-spacer>
@@ -412,7 +413,7 @@ export default {
 .input-text {
     border-radius: 5px;
     height: 44px;
-    border: 1px solid #003e70;
+    border: 1px solid;
 }
 
 table thead tr th {

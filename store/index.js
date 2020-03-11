@@ -389,6 +389,7 @@ const createStore = () => {
               headers: {
                 Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
               }
+
             }
           );
           if (res.code === 200) {
@@ -789,7 +790,6 @@ const createStore = () => {
         for (let i = 0; i < getters.getStockLength; i++) {
           const id = getters.getStockKeys[i];
           const type = state.stocks[id].type;
-
           const data = {
             type: type,
             stockName: []
@@ -897,6 +897,39 @@ const createStore = () => {
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
+
+                function getAmountbet(object) {
+                    // find stockname
+                    console.log("i am here 12");
+                    console.log(object);
+                    if (object.findIndex(x => x.stock === stockId) == -1) return 0;
+                    let result = object
+                        .filter(x => x.stock === stockId)
+                        .map(x => x.betAmount)
+                        .reduce((a, b) => a + b, 0);
+                    return parseInt(result);
+                }
+                return getAmount(state.multiGameBet) + getAmountbet(state.onGoingBet);
+            },
+            // to show ship and amount on bet button
+            getAmountMultiGameBet: state => data => {
+                // console.log(state.multiGameBet)
+                function getAmount(object) {
+                    // find stockId
+                    if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0;
+                    // get data by stockId
+                    let stockIdObject = object.filter(x => x.stockId === data.stockId);
+                    // check rule in stockId
+                    if (stockIdObject.findIndex(x => x.gameRule === data.gameRule) == -1)
+                        return 0;
+                    // get amount by rule
+                    let result = stockIdObject
+                        .filter(x => x.gameRule === data.gameRule)
+                        .map(x => x.amount)
+                        .reduce((a, b) => a + b, 0);
+                    return parseInt(result);
+                }
+
 
         function getAmountbet(object) {
           // find stockname

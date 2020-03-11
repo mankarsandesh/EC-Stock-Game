@@ -44,26 +44,12 @@
                     <chartApp />
                   </v-flex>
                 </div>
-                <v-layout>
-                  <v-flex class="layout-bottom">
-                    <div id="fullscreenGuidelines">
-                      <v-btn
-                        rigth
-                        fab
-                        class="fullscreen"
-                        :to="'/modern/fullscreen/' +$route.params.id"
-                      >
-                        <v-icon>fullscreen</v-icon>
-                      </v-btn>
-                    </div>
-                  </v-flex>
-                </v-layout>
               </v-flex>
             </v-layout>
           </v-flex>
           <v-flex xs6 class="mx-2">
-            <v-layout style="margin-bottom:10px;">
-              <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
+            <v-layout mb-3>
+              <v-flex xs4 class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.Lastdraw')}}:</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
@@ -72,7 +58,7 @@
                 </div>
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
-              <v-flex class="text-xs-center text-uppercase" px-2 style="font-weight:600;">
+              <v-flex xs4 class="text-xs-center text-uppercase" px-2 style="font-weight:600;">
                 <span>{{$t('msg.BetClosein')}}:</span>
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
@@ -82,7 +68,8 @@
                   </v-flex>
                 </div>
               </v-flex>
-              <v-flex class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
+
+              <v-flex xs4 class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.lotterydraw')}}:</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
@@ -92,11 +79,12 @@
                   </v-flex>
                 </div>
               </v-flex>
-              <!-- <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-              <v-btn fab dark small color="#003e70" @click="setNextstep(),getopen()">
-                <v-icon dark size="25">fa-question</v-icon>
-              </v-btn>
-              </v-flex>-->
+
+              <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
+                <v-btn fab dark small class="helpButton" @click="setNextstep(),getopen()">
+                  <v-icon dark size="25">fa-question</v-icon>
+                </v-btn>
+              </v-flex>
             </v-layout>
             <div id="betRuleButton">
               <betButton :stockName="'btc1'" :loop="getLoop($route.params.id)"></betButton>
@@ -137,6 +125,14 @@
           </v-flex>
         </v-card>
       </v-dialog>
+
+      <v-flex class="layout-bottom">
+        <div id="fullscreenGuidelines">
+          <v-btn rigth fab class="fullscreen" :to="'/modern/fullscreen/' +$route.params.id">
+            <v-icon>fullscreen</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
     </v-layout>
     <div ref="guideline" class="overlay">
       <a class="closebtn" @click="closeGuideline()">&times;</a>
@@ -634,7 +630,29 @@ export default {
 </script>
 
 <style scoped>
+.fullscreen {
+  position: fixed !important;
+  bottom: 160px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  z-index: 999;
+  background: linear-gradient(to right, #773bca 20%, #9c2bce 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+.fullscreen .v-icon {
+  font-size:40px;
+}
+
 /* left side corner toggle functionality in desktop  */
+.helpButton {
+  background-color: #4464ff !important;
+  color: #fff;
+  padding: 5px;
+  font-size: 22px;
+}
 .leftStocklist {
   background-color: #fff;
   margin: 35px 7px;

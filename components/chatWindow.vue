@@ -70,7 +70,7 @@
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import { mapGetters, mapActions, mapMutations,mapState } from "vuex";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import io from "socket.io-client";
 import moment from "moment";
 import VueChatScroll from "vue-chat-scroll";
@@ -238,7 +238,7 @@ export default {
 <style scoped>
 .liveChat {
   position: fixed;
-  right: 60px;
+  right: 20px;
   bottom: 20px;
   width: 60px;
   height: 60px;
