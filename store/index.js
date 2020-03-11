@@ -4,6 +4,7 @@ import payouts from "../data/json/payout";
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
+           authUser: {},
       activeGameChannel: true,
       loader: false,
       userLoginData: {},
@@ -271,6 +272,9 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+        setAuth(state, payload) {             
+                state.authUser = payload
+            },
       setStockListTimer(state, payload) {
         state.stockListTimer.splice(0, 0, payload);
         if (state.stockListTimer.length === 3) {
@@ -394,7 +398,6 @@ const createStore = () => {
           );
           if (res.code === 200) {
             let readyData = res.data[0].roadMap.reverse();
-
             context.state.liveChart = readyData;
           } else {
             throw new Error();
@@ -930,7 +933,6 @@ const createStore = () => {
                     return parseInt(result);
                 }
 
-
         function getAmountbet(object) {
           // find stockname
           if (object.findIndex(x => x.stock === stockId) == -1) return 0;
@@ -960,7 +962,6 @@ const createStore = () => {
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
-
         function getAmounts(object) {
           // find stockId
           if (object.findIndex(x => x.stock === data.stockId) == -1) return 0;
@@ -1218,7 +1219,6 @@ const createStore = () => {
       // get data for display in "/" route
       getStockChart(state, getters) {
         // console.log("getStockChart")
-
         let result = [];
         for (let i = 0; i < getters.getStockLength; i++) {
           const id = getters.getStockKeys[i];

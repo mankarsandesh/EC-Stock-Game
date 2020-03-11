@@ -58,7 +58,7 @@ module.exports = {
         { src: "@/plugins/vChart", mode: 'client' }
     ],
     router: {
-        middleware: ["auth", "showLoading"]
+        middleware: ["auth", "showLoading", "checkAuth"]
     },
     /*
      ** Nuxt.js modules
@@ -96,8 +96,8 @@ module.exports = {
         /*
          ** You can extend webpack config here
          */
-        extend: function (config, {isDev, isClient}) {
-            if(isClient) {
+        extend: function (config, { isDev, isClient }) {
+            if (isClient) {
                 config.devtool = '#source-map'
             }
             config.node = {
@@ -106,8 +106,8 @@ module.exports = {
         }
     },
     server: {
-         port: 8000, // default: 3000
-        
-         host: "0.0.0.0" // default: localhost
+        port: 8000, // default: 3000
+
+        host: "0.0.0.0" // default: localhost
     } // other configs
 }
