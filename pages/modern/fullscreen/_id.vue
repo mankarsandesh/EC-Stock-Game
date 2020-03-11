@@ -114,24 +114,25 @@
             </v-flex>
             <v-flex xs12 sm12 md3 lg3>
                 <h2 font-weight-bold style="text-align:right;color:#013f70;">Acc : {{getUserInfo.balance | currency}}</h2>
+                <!-- Toggle between two components -->
                 <fullscreenchart v-if="!isHidden"></fullscreenchart>
                 <currentBet v-else></currentBet>
                 <!-- <div  style="height=300px;"> Hello</div> -->
                 <div class="setborder">
-                    <span class="seticon">
+                    <span class="seticon" >
                         <i class="fa fa-user fa-2x iconcolor" />
-                        <span>{{dataliveBetAll.totalUsers}}</span>
+                        <span>{{dataliveBetAll.totalUsers ? dataliveBetAll.totalUsers:0 }}</span>
                     </span>
                     <span class="seticon">
                         <i class="fa fa-gamepad fa-2x iconcolor" />
-                        <span>{{dataliveBetAll.totalBets}}</span>
+                        <span>{{dataliveBetAll.totalBets ? dataliveBetAll.totalBets:0 }}</span>
                     </span>
                     <span class="seticon">
                         <i class="fa fa-money fa-2x iconcolor" />
                         <span>{{ dataliveBetAll.totalAmount ? dataliveBetAll.totalAmount:0}}</span>
                     </span>
                     <span>
-                        <v-btn @click="isHidden = true" class="" color="buttonGreensmall">{{ $t("menu.current bet") }}</v-btn>
+                        <v-btn  @click="isHidden = !isHidden"   color="buttonGreensmall" class="curretbet-btn">{{ $t("menu.current bet") }}</v-btn>
                     </span>
                 </div>
             </v-flex>
@@ -435,6 +436,9 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .stockname {
     font-size: 26px;
     font-weight: 600;
@@ -514,6 +518,7 @@ export default {
     margin: 10px 13px;
     padding: 8px 10px;
     height: 25px;
+    min-width: 25px!important;
 }
 
 .seticon i {
@@ -525,6 +530,7 @@ export default {
     font-weight: 600;
     color: #545352;
     font-size: 15px;
+    min-width: 25px!important;
 }
 
 .fullroadMap {
