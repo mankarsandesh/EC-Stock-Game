@@ -277,16 +277,16 @@ export default {
               "\n" +
               element.stockValue +
               "\n" +
-              "F: " +
+              "Fist Digit = " +
               element.number1 +
-              " | " +
-              "L: " +
+              "\n" +
+              "Last Digit = " +
               element.number2 +
-              " | " +
-              "B: " +
+              "\n" +
+              "Both Digit = " +
               (parseInt(element.number1) + parseInt(element.number2)) +
-              " | " +
-              "T :" +
+              "\n" +
+              "Two Digit = " +
               element.number1 +
               element.number2
           );
@@ -324,16 +324,16 @@ export default {
               "\n" +
               element.stockValue +
               "\n" +
-              "F: " +
+              "Fist Digit = " +
               element.number1 +
-              " | " +
-              "L: " +
+              "\n" +
+              "Last Digit = " +
               element.number2 +
-              " | " +
-              "B: " +
+              "\n" +
+              "Both Digit = " +
               (parseInt(element.number1) + parseInt(element.number2)) +
-              " | " +
-              "T :" +
+              "\n" +
+              "Two Digit = " +
               element.number1 +
               element.number2
           );
@@ -372,16 +372,16 @@ export default {
               "\n" +
               element.stockValue +
               "\n" +
-              "F: " +
+              "Fist Digit = " +
               element.number1 +
-              " | " +
-              "L: " +
+              "\n" +
+              "Last Digit = " +
               element.number2 +
-              " | " +
-              "B: " +
+              "\n" +
+              "Both Digit = " +
               (parseInt(element.number1) + parseInt(element.number2)) +
-              " | " +
-              "T :" +
+              "\n" +
+              "Two Digit = " +
               element.number1 +
               element.number2
           );
@@ -420,16 +420,16 @@ export default {
               "\n" +
               element.stockValue +
               "\n" +
-              "F: " +
+              "Fist Digit = " +
               element.number1 +
-              " | " +
-              "L: " +
+              "\n" +
+              "Last Digit = " +
               element.number2 +
-              " | " +
-              "B: " +
+              "\n" +
+              "Both Digit = " +
               (parseInt(element.number1) + parseInt(element.number2)) +
-              " | " +
-              "T :" +
+              "\n" +
+              "Two Digit = " +
               element.number1 +
               element.number2
           );
