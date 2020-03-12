@@ -96,13 +96,15 @@ th {
   background-color: #cccccc;
 }
 
-th,
-td {
+th {
   text-transform: capitalize;
+  padding: 5px;
+}
+td {
+  
   text-align: center;
-  padding: 8px 2px 6px 4px;
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd;
+  padding: 5px;
+  border: 1px solid #ddd;
 }
 
 .table-responsive {

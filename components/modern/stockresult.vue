@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-flex pa-2 class="text-xs-center flex-cursor pa-0 betTab activeTab">
-        <span>{{$t('msg.stockResult')}}</span>
-      </v-flex>
+      <v-flex pa-2 class="headerStockBar">{{$t('msg.stockResult')}}</v-flex>
     </v-layout>
     <v-layout>
       <!-- bet result -->
@@ -90,12 +88,15 @@ td a {
 th {
   background-color: #cccccc;
 }
-th,
+th {
+  text-transform: capitalize;
+  padding: 5px;
+}
 td {
+  font-weight: 400;
   text-align: center;
-  padding: 8px;
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd;
+  padding: 5px;
+  border: 1px solid #ddd;
 }
 .flex-cursor {
   cursor: pointer;

@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-2" v-if="getStocks.length > 0">
     <v-layout style="background-color:#f4f5fd;">
-      <v-flex v-if="!isHidden" class="leftStocklist" >
+      <v-flex v-if="!isHidden" class="leftStocklist">
         <v-btn @click="isHidden = true" fab small slot="reference" class="sidebar-close">
           <v-icon style="color: #0b2a68 !important;">close</v-icon>
         </v-btn>
@@ -30,7 +30,7 @@
       </v-flex>
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-layout xs12 pa-2>
-          <v-flex xs6 style="padding-top:14px">
+          <v-flex xs6 md5 style="padding-top:14px">
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
@@ -38,7 +38,7 @@
                   <!-- <selectStock :stockId="'btc1'"></selectStock> -->
                 </div>
               </v-flex>
-              <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
+              <v-flex v-if="getStockById($route.params.id).stockPrice.length>0">
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
                     <chartApp />
@@ -47,7 +47,8 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs6 class="mx-2">
+
+          <v-flex xs6 md7 class="mx-2">
             <v-layout mb-3>
               <v-flex xs4 class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.Lastdraw')}}:</span>
@@ -81,9 +82,10 @@
               </v-flex>
 
               <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn fab dark small class="helpButton" @click="setNextstep(),getopen()">
+                <v-btn fab dark small class="helpButton" @click="setNextstep(),getopen()" title="Help">
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
+            
               </v-flex>
             </v-layout>
             <div id="betRuleButton">
@@ -91,7 +93,7 @@
             </div>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getRoadMap.length > 0" >
+        <v-flex xs12 v-if="getRoadMap.length > 0">
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
@@ -110,7 +112,7 @@
       <!-- <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
             <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
             <v-icon style="color: #0b2a68 !important;">close</v-icon>
-      </v-btn> -->
+      </v-btn>-->
 
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
@@ -667,7 +669,7 @@ export default {
 }
 .leftStocklist {
   background-color: #fff;
-  margin: 35px 7px;
+  margin: 35px 0px;
   border-radius: 20px;
   position: relative;
   top: 0;
