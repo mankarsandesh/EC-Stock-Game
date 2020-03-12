@@ -8,11 +8,10 @@
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="40">
             <img :src="imgProfile" />
-          </v-avatar>
+          </v-avatar>          
           <div class="userLogoutMenu">
             <span>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</span>
-            <span>
-              {{$t('msg.acc')}}:
+            <span>            
               <animated-number
                 :value="getUserInfo.balance"
                 :formatValue="formatToPrice"
@@ -24,19 +23,6 @@
         </v-btn>
       </template>
       <v-list>
-        <div
-          v-show="isShow == 'classic'"
-          style="display: inline-grid;justify-items: center;width: 100%;"
-        >
-          <v-avatar size="90">
-            <img :src="imgProfile" />
-          </v-avatar>
-          <span>55555</span>
-          <span>6666666</span>
-        </div>
-        <v-list-tile @click="dialogprofile = true" v-show="isShow == 'classic'">
-          <v-list-tile-title>Profile</v-list-tile-title>
-        </v-list-tile>
         <v-list-tile
           @click="$router.push('/modern/desktop/profile/basicinfo');"
           v-show="isShow == 'modern'"
@@ -96,7 +82,7 @@ export default {
     formatToPrice(value) {
       return `${Number(value)
         .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "1,")}`;
     },
     getLogout() {
       this.$swal({

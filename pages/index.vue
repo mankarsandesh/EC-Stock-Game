@@ -20,7 +20,6 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { isMobile } from "mobile-device-detect";
-import { CryptoJS } from "crypto-js";
 export default {
   layout: "nolayout",
   middleware: "getApiKey",
@@ -28,21 +27,28 @@ export default {
   data() {
     return {
       stockname: "btc1",
-      linkto: ""
+      linkto: "",
+      // const userData = this.$route.query;
+      userData: {
+        authUser: "TNKSuper",
+        authPassword: "Test123!",
+        portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
+        userId: "dd7060bd-5da1-4f6c-96a2-fc292acd23f8",
+        redirect: "www.whitelabel.com"
+      }
     };
   },
   mounted() {
-    // const userData = this.$route.query;
-    const userData = {
-      authUser: "TNKSuper",
-      authPassword: "Test123!",
-      portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
-      userId: "dd7060bd-5da1-4f6c-96a2-fc292acd23f8"
-    };
+    let objJsonStr = JSON.stringify(this.userData);
+    let buff = new Buffer(objJsonStr);
+    let base64data = buff.toString("base64");
 
-    if (userData.authUser && userData.authPassword) {
-      if (userData.portalProviderUUID && userData.userId) {
-        sessionStorage.setItem("userData", JSON.stringify(userData));
+    if (this.userData.authUser && this.userData.authPassword) {
+      if (this.userData.portalProviderUUID && this.userData.userId) {
+        let buffDecode = new Buffer(base64data, "base64");
+        let authData = buffDecode.toString("ascii");
+        this.setAuth(authData);
+        sessionStorage.setItem("AUTH", JSON.stringify(base64data));
         this.getProgress();
         this.linkto = isMobile
           ? "/modern"
@@ -53,43 +59,12 @@ export default {
     } else {
       console.log("Authication authUser & authPassword is Missing.");
     }
-
-    // var SECRET_KEY = "sandesh";
-
-    // const secureStorage = new SecureStorage(localStorage, {
-    //   hash: function hash(key) {
-    //     key = CryptoJS.SHA256(key, SECRET_KEY);
-
-    //     return key.toString();
-    //   },
-    //   encrypt: function encrypt(data) {
-    //     data = CryptoJS.AES.encrypt(data, SECRET_KEY);
-
-    //     data = data.toString();
-
-    //     return data;
-    //   },
-    //   decrypt: function decrypt(data) {
-    //     data = CryptoJS.AES.decrypt(data, SECRET_KEY);
-
-    //     data = data.toString(CryptoJS.enc.Utf8);
-
-    //     return data;
-    //   }
-    // });
-
-    // var data = {
-    //   secret: "data"
-    // };
-
-    // secureStorage.setItem('data', data);
   },
   created() {
     this.stockname = window.location.search
       .split("?")[1]
       .split("=")[1]
       .split("&")[0];
-    // console.log(this.stockname)
   },
   watch: {
     "$screen.width"() {
@@ -101,6 +76,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(["setAuth"]),
     getProgress() {
       let seft = this;
       let width = 100,
@@ -142,7 +118,7 @@ export default {
           current += increment;
           //   $(obj).text(current + "%");  //sHOW BY %
           $(obj).text("lOADING..."); // SHOW BY LOADING
-          //obj.innerHTML = current;
+          obj.innerHTML = current;
           if (current == end) {
             clearInterval(timer);
             seft.$router.push("/modern/desktop/btc1");

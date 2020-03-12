@@ -24,7 +24,7 @@
       </v-flex>
       <v-flex xs2 class="betButton">
         <div>
-          <v-btn class="buttonGreen" dark @click="getSending()">{{$t('msg.'+texts)}}</v-btn>
+          <v-btn class="buttonGreensmall" dark @click="getSending()">{{$t('msg.'+texts)}}</v-btn>
           <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{$t('msg.cancel')}}</v-btn>
         </div>
       </v-flex>

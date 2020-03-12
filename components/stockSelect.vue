@@ -78,12 +78,12 @@
 <script>
 import { mapGetters } from "vuex"; // impor the vuex library frist, before use vuex
 export default {
-  props: ["items"], // receive the value from props
   data: () => ({
     stock: null,
     stockName: null,
     minute: null,
     gameId: null,
+    items: [],
     minutes: [],
     stockNames: []
   }),
@@ -113,7 +113,7 @@ export default {
       // watch the minute v-model
       if (value !== null) {
         this.gameId = null;
-        this.gameId = value.loopUUID;
+        this.gameId = value.gameID;
         //after the minute model is not null we call the getMinute functions
         // check minute model is empty or not by the condition
         $("#gameId").click(); // call the jquery to call the method click to show up the game id up
@@ -127,6 +127,25 @@ export default {
         // check model if game id is empty or not by the condition
         return console.log("This is the Game ID : " + value); // run your logic after condition is true
       }
+    }
+  },
+  mounted() {
+    this.listenForBroadcast(
+      {
+        channelName:
+          "getActiveGamesByCategory.0c0de128-e2bd-41f1-a8ec-40a57c72bae5",
+        eventName: "getActiveGamesByCategory"
+      },
+      ({ data }) => {
+        this.items = data.data;
+        console.log("Web socket stock is comming");
+        console.log(data);
+      }
+    );
+  },
+  methods: {
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
     }
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-2" v-if="getStocks.length > 0">
     <v-layout style="background-color:#f4f5fd;">
-      <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
+      <v-flex v-if="!isHidden" class="leftStocklist">
         <v-btn @click="isHidden = true" fab small slot="reference" class="sidebar-close">
           <v-icon style="color: #0b2a68 !important;">close</v-icon>
         </v-btn>
@@ -30,15 +30,14 @@
       </v-flex>
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-layout xs12 pa-2>
-          <v-flex xs6 style="padding-top:14px">
+          <v-flex xs6 md5 style="padding-top:14px">
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
-                  <stockSelect :items="SelectStockItems.data" />
-                  <!-- <selectStock :stockId="$route.params.id"></selectStock> -->
+                  <stockSelect />
                 </div>
               </v-flex>
-              <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
+              <v-flex v-if="getStockById($route.params.id).stockPrice.length>0">
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
                     <chartApp />
@@ -47,7 +46,8 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs6 class="mx-2">
+
+          <v-flex xs6 md7 class="mx-2">
             <v-layout mb-3>
               <v-flex xs4 class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
                 <span>{{$t('msg.Lastdraw')}}:</span>
@@ -86,9 +86,10 @@
               </v-flex>
 
               <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn fab dark small class="helpButton" @click="setNextstep(),getopen()">
+                <v-btn fab dark small class="helpButton" @click="setNextstep(),getopen()" title="Help">
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
+            
               </v-flex>
             </v-layout>
             <div id="betRuleButton">
@@ -132,11 +133,23 @@
       </v-dialog>
 
       <v-flex class="layout-bottom">
-        <div id="fullscreenGuidelines">
-          <v-btn rigth fab class="fullscreen" :to="'/modern/fullscreen/' +$route.params.id">
-            <v-icon>fullscreen</v-icon>
-          </v-btn>
-        </div>
+        <v-tooltip left id="fullscreenGuidelines">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              color="primary"
+              rigth
+              fab
+              :to="'/modern/fullscreen/' +$route.params.id"
+              class="fullscreen"
+              dark
+              v-on="on"
+              title="Full Screen"
+            >
+              <v-icon>fullscreen</v-icon>
+            </v-btn>
+          </template>
+          <span>Full Screen</span>
+        </v-tooltip>
       </v-flex>
     </v-layout>
     <div ref="guideline" class="overlay">
@@ -287,7 +300,6 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
-import SelectStockItems from "~/data/json/current-bet";
 import leaderBoard from "~/components/modern/leaderboard/leaderboard";
 import config from "../../../config/config.global";
 
@@ -311,7 +323,6 @@ export default {
   data() {
     return {
       routeParams: this.$route.params.id,
-      SelectStockItems,
       stock: [],
       dialog: false,
       bgColor: "#778899",
@@ -661,10 +672,11 @@ export default {
 }
 .leftStocklist {
   background-color: #fff;
-  margin: 35px 7px;
+  margin: 35px 0px;
   border-radius: 20px;
   position: relative;
   top: 0;
+  box-shadow: 0 0 10px grey;
   right: 20px;
 }
 
