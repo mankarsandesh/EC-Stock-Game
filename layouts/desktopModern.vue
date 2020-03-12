@@ -4,7 +4,7 @@
       <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
       <v-flex xs4 class="text-xs-right">
         <winnerMarquee
-          style="margin-top:-10px;"
+          class="winnerText"
           :scrollSpeed="scrollSpeed"
           :showSpeed="showSpeed"
           :pauseOnHover="pauseOnHover"
@@ -68,8 +68,14 @@
             </v-btn>
           </div>
           <userMenu class="layout-logout" />
-          <span flat @click="showNotification = true" id="notification"  class="menuItemNotification"   >
+          <span
+            flat
+            @click="showNotification = true"
+            id="notification"
+            class="menuItemNotification"
+          >
             <i class="fa fa-bell-o fa-2x" />
+            <span class="badge">{{messagesCount}}</span>
           </span>
         </v-toolbar-items>
       </v-container>
@@ -86,6 +92,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
+import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
@@ -103,10 +110,12 @@ export default {
     languageDialog,
     winnerMarquee,
     welcomeUser,
-    userMenu
+    userMenu,
+    AnimatedNumber
   },
   data() {
     return {
+      messagesCount: 2,
       activeClass: null,
       showNotification: false,
       direction: "top",
@@ -175,7 +184,7 @@ export default {
         userUUID: this.getUserUUID, // get the userUUID with the this object
         version: "0.1", // version of API
         betResult: [0, 1], // -1= pending, pending that mean is betting
-        limit: "10", // limit the data we the data come will come only the 20 that we limit in this case
+        limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
         offset: "0" // offset or skip the data
       };
       const { data } = await this.$axios.post(
@@ -187,6 +196,7 @@ export default {
           }
         }
       );
+      this.messagesCount = data.data.length;
       for (let i = 0; i < data.data.length - 1; i++) {
         let betID = data.data[i].betID;
         let betResult = data.data[i].betResult;
@@ -194,10 +204,11 @@ export default {
         let ruleName = data.data[i].ruleName;
         let betAmount = data.data[i].betAmount;
         let betTime = data.data[i].createdTime;
+        let stockName = data.data[i].stockName;
         let win = `<span class="text-slide text-white"><span class="text-warning">
                         <i class="fa fa-bell"></i>
-                        </span>Player ${betID}, <span class="text-warning">${betResult} ${betAmount},
-                        </span> ${ruleName}  ${betTime}</span>`;
+                        </span>Player ${betResult}  ${betAmount} chips on,
+                         ${stockName} stock ${ruleName}  ${betTime}</span>`;
         this.winner.push(win);
       }
     }
@@ -220,6 +231,25 @@ export default {
 </script>
 
 <style scoped>
+.winnerText {
+  margin-top: -10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.badge {
+  position: absolute;
+  margin-top: -6px;
+  margin-right: 25px;
+  background-color: red;
+  color: #fff;
+  border-radius: 180px;
+  padding: 1px;
+  height: 21px;
+  width: 21px;
+  font-size: 11px;
+  font-weight: 800;
+  border: 1px solid #dddddd;
+}
 .closebutton {
   margin-right: 10px;
   margin-top: -15px;
@@ -245,7 +275,7 @@ export default {
 .menuItem {
   border-right: 2px solid #dddddd;
   height: 62px !important;
-  padding:15px 15px;
+  padding: 15px 15px;
 }
 .logostyle {
   cursor: pointer;
