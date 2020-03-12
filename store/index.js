@@ -1,6 +1,8 @@
 import Vuex from "vuex";
 import { hostname } from "os";
 import payouts from "../data/json/payout";
+import config from "../config/config.global";
+
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
@@ -465,16 +467,16 @@ const createStore = () => {
                         {
                             portalProviderUUID: context.state.portalProviderUUID,
                             userUUID: context.state.userUUID,
-                            version: 1
+                            version: config.version
                         },
                         {
                             headers: {
-                                Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
+                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
                             }
                         }
                     );
                     if (res.code === 200) {
-                        let userInfo = res.data[0];
+                        let userInfo = res.data;
                         context.commit("setUserData", userInfo);
                     } else {
                         console.log(res);

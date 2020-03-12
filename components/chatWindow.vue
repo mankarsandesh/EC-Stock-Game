@@ -95,11 +95,13 @@ import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import io from "socket.io-client";
 import moment from "moment";
 import VueChatScroll from "vue-chat-scroll";
+import config from "../config/config.global";
 let name = "btc5";
 export default {
   components: {
     popper,
-    VueChatScroll
+    VueChatScroll,
+    config
   },
   data() {
     return {
@@ -135,15 +137,12 @@ export default {
       },
       ({ data }) => {
         data.data.forEach(element => {
-          console.log("Test11111");
-          console.log(element);
           this.getMessagesGame.push({
             name: `user ${this.uniqueUserID}`,
             userId: element.userUUID,
             message: element.message,
             date: element.date
           });
-          this;
         });
       }
     );
@@ -161,7 +160,6 @@ export default {
             message: element.message,
             date: element.date
           });
-          console.log(this.getMessages);
         });
       }
     );
@@ -181,7 +179,6 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
-    // ...mapActions(["asymessages", "asymessagesGame", "asynUserInfo"]),   // // This function call has no use to the central state(we are not going to dispatch anything to the central state) because we are not going to dispatch anything to the central state(only in case of the chat window. Hence in future it will be removed)
     tab1: function(event) {
       this.betChannel = false;
       this.allChannel = true;
@@ -205,11 +202,11 @@ export default {
               userUUID: this.userUUID,
               chatType: 2,
               message: this.message,
-              version: "0.1"
+              version: config.version
             },
             {
               headers: {
-                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+                Authorization: this.headers
               }
             }
           )
@@ -230,17 +227,15 @@ export default {
               gameUUID: this.gameUUID,
               chatType: 1,
               message: this.messageGame,
-              version: "0.1"
+              version: config.version
             },
             {
-              headers: {
-                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-              }
+              headers: { headers: this.headers }
             }
           )
           .then(response => {
             console.log(response.data);
-          });       
+          });
         this.messageGame = "";
       }
     }

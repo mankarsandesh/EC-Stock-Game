@@ -33,9 +33,7 @@
                     <td>{{data.message}}</td>
                   </tr>
                 </table>
-              </span>
-              <!-- <v-list-tile-title >Amount:{{5000}}<span class="text-uppercase">(firstdigit-mid)</span></v-list-tile-title>
-              <v-list-tile-sub-title>Stock:btc1</v-list-tile-sub-title>-->
+              </span>            
             </v-list-tile-content>
           </v-list-tile>
         </template>
