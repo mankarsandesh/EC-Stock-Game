@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-2" v-if="getStocks.length > 0">
     <v-layout style="background-color:#f4f5fd;">
-      <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
+      <v-flex v-if="!isHidden" class="leftStocklist" >
         <v-btn @click="isHidden = true" fab small slot="reference" class="sidebar-close">
           <v-icon style="color: #0b2a68 !important;">close</v-icon>
         </v-btn>
@@ -91,7 +91,7 @@
             </div>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getRoadMap.length > 0">
+        <v-flex xs12 v-if="getRoadMap.length > 0" >
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
@@ -671,6 +671,7 @@ export default {
   border-radius: 20px;
   position: relative;
   top: 0;
+  box-shadow: 0 0 10px grey;
   right: 20px;
 }
 

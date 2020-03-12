@@ -55,7 +55,7 @@
         <v-toolbar-items class="hidden-xs-only text-s1">
           <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
             <i :class="item.icon" style="margin-right: 3px;" />
-            <span>{{$t(`menu.${item.title}`)}}</span>
+            <span> {{$t(`menu.${item.title}`)}}</span>
           </v-btn>
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
@@ -231,6 +231,12 @@ export default {
 </script>
 
 <style scoped>
+.menuItem span {
+  font-size: 12px;
+}
+.menuItem i{
+  font-size: 20px;
+}
 .winnerText {
   margin-top: -10px;
   font-weight: 800;

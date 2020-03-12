@@ -1,7 +1,7 @@
 <template>
   <div v-if="dataArray.length > 0 ">
-    <v-layout wrap pa-5 row>
-      <v-flex xs1 lg1 v-if="!isFullscreen" style="padding-top:50px;">
+    <v-layout wrap  row >
+      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" style="padding-top:50px;">
         <v-layout>
           <v-flex xs9>
             <v-btn
@@ -52,7 +52,7 @@
           <v-flex class="triangle-right" v-show="activeType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs11">
+      <v-flex xs10 md10 lg10 xl10>
         <v-layout row wrap>
           <v-flex xs12 lg12 md12>
             <trendMap
