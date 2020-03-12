@@ -33,7 +33,7 @@
                 <b>{{item.urlRef}}</b>
               </a>
             </td>-->
-          </tr>
+          </tr>  
         </tbody>
       </table>
     </div>
