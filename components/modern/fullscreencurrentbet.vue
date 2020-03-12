@@ -30,13 +30,13 @@
                 <tr class="table-rowheight">
                     <th class="fixed-side table-headbg">BET STATUS</th>
                     <td v-if="item.betResult == 'win'">
-                        <v-chip color="green" text-color="white">{{item.betResult}}</v-chip>
+                        <v-chip class="betstatus text-uppercase" color="green" text-color="white">{{item.betResult}}</v-chip>
                     </td>
                     <td v-if="item.betResult == 'lose'">
-                        <v-chip color="red" text-color="white">{{item.betResult}}</v-chip>
+                        <v-chip class="betstatus text-uppercase" color="red" text-color="white">{{item.betResult}}</v-chip>
                     </td>
                     <td v-if="item.betResult == 'pending'">
-                        <v-chip color="yellow " text-color="black">{{item.betResult}}...</v-chip>
+                        <v-chip class="betstatus text-uppercase" color="yellow " text-color="black">{{item.betResult}}...</v-chip>
                     </td>
                 </tr>
             </tbody>
@@ -126,7 +126,9 @@ export default {
 .clone tfoot {
     background: transparent;
 }
-
+.betstatus{
+    border-radius:10px;
+}
 
 ::-webkit-scrollbar {
   width: 12px;

@@ -74,7 +74,7 @@
     </v-layout>
 
     <v-btn rigth fab class="multiGame" :to="'/modern/multigame/' +$route.params.id">
-      <i style="font-size:30px;" class="fa fa-gamepad" aria-hidden="true"></i>
+      <i style="font-size:30px;z-index: 999;" class="fa fa-gamepad" aria-hidden="true"></i>
     </v-btn>
   </div>
 </template>
