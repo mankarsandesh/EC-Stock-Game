@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="stockAnalysis.length>0">
     <v-flex xs12 class="pt-5 pl-5">
       <div>
         <h2 class="title_menu">stock analysis</h2>
@@ -83,9 +83,9 @@
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
         <div class="chart-map-color">
-          <span v-for="(color,index) in colors[0]" :key="index">
-            <span class="circle-color" :style="{backgroundColor:color}"></span>
-            <span style="margin-right:10px">{{stocks[index]}}</span>
+          <span v-for="(stock,index) in stocks" :key="index">
+            <span class="circle-color" :style="{backgroundColor:colors[0][index]}"></span>
+            <span style="margin-right:10px">{{stock}}</span>
           </span>
         </div>
         <apexchart type="bar" height="480vh" :options="chartOptions" :series="series"></apexchart>
@@ -101,8 +101,8 @@ import axios from "axios";
 // set color win and lose color in bar chart
 let index = 0;
 let barColor = [
-  ["#67c9d3", "#f75b54", "#fcc624"],
-  ["#81eaf5", "#f9a5a3", "#fddf84"]
+  ["#67c9d3", "#f75b54", "#fcc624", "#1a237e", "#d81b60", "#ff6f00", "#01579b"], // win color
+  ["#81eaf5", "#f9a5a3", "#fddf84", "#7986cb", "#f06292", "#ffb74d", "#90caf9"] // loss color
 ];
 export default {
   components: {
@@ -111,10 +111,12 @@ export default {
   created() {
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, "0");
+    let last7d = String(today.getDate() - 7).padStart(2, "0");
     let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = today.getFullYear();
-    this.startDate = yyyy + "-" + mm + "-" + dd;
+    this.startDate = yyyy + "-" + mm + "-" + last7d;
     this.endDate = yyyy + "-" + mm + "-" + dd;
+    this.getStockAnalysis();
   },
   computed: {},
   destroyed() {
@@ -126,18 +128,10 @@ export default {
 
   data() {
     return {
+      stockAnalysis: [],
       colors: barColor,
       // match with color by index
       // 'barColor' variable above
-      stocks: [
-        "US Dollar Index",
-        "BTC/USD1",
-        "BTC/USD5",
-        "SH000001",
-        "SZ399001",
-        "SZ399415",
-        "SH000300"
-      ],
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
@@ -148,19 +142,9 @@ export default {
         { title: "Click Me" },
         { title: "Click Me 2" }
       ],
-      series: [
-        {
-          name: "win",
-          data: [44, 55, 41]
-        },
-        {
-          name: "lose",
-          data: [13, 80, 20]
-        }
-      ],
+
       chartOptions: {
         colors: [
-          // console.log(this.series)
           function({ value, seriesIndex, w }) {
             let color = "";
             color = barColor[index][seriesIndex];
@@ -265,6 +249,63 @@ export default {
         }
       }
     };
+  },
+  computed: {
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"]),
+    stocks() {
+      let stocks = [];
+      this.stockAnalysis.forEach(element => {
+        stocks.push(element.stockName);
+      });
+      return stocks;
+    },
+    series() {
+      let win = [];
+      let loss = [];
+      this.stockAnalysis.forEach(element => {
+        win.push(element.winCount);
+        loss.push(element.lossCount);
+      });
+      return [
+        {
+          name: "win",
+          data: win
+        },
+        {
+          name: "loss",
+          data: loss
+        }
+      ];
+    }
+  },
+  methods: {
+    async getStockAnalysis() {
+      try {
+        const res = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/getUserBetAnalysis",
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
+            version: 1,
+            dateRangeFrom: this.startDate,
+            dateRangeTo: this.endDate
+          },
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+            }
+          }
+        );
+        if (res.code === 200) {
+          this.stockAnalysis = res.data;
+          console.log(res.data);
+        } else {
+          throw new Error(res.message);
+        }
+      } catch (ex) {
+        console.log(ex.message);
+      }
+    }
   }
 };
 </script>
@@ -276,7 +317,7 @@ li {
 .chart-map-color {
   position: relative;
   float: right;
-  margin-top:15px;
+  margin-top: 15px;
   display: inline-block;
 }
 .circle-color {

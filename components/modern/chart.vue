@@ -185,23 +185,6 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     }
-    // updateChart() {
-    //   console.log('updating....')
-    //   let newData = [];
-    //   this.getLiveChart.forEach(element => {
-    //     newData.push(element.stockValue);
-    //   });
-    //   newData.push(1)
-    //   this.$refs.realtimeChart.updateSeries(
-    //     [
-    //       {
-    //         data: newData
-    //       }
-    //     ],
-    //     false,
-    //     true
-    //   );
-    // }
   }
 };
 </script>
