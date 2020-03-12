@@ -1,6 +1,27 @@
 <template>
   <v-app style=" background-color: #f4f5fd;">
-    <div v-if="getStockCrawlerData($route.params.id).length == ''" class="container-loading">
+    <v-toolbar class="notification" xs12 v-if="showNotification">
+      <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
+      <v-flex xs4 class="text-xs-right">
+        <winnerMarquee
+          class="winnerText"
+          :scrollSpeed="scrollSpeed"
+          :showSpeed="showSpeed"
+          :pauseOnHover="pauseOnHover"
+          :pauseTime="pauseTime"
+          :marqueeList="winner"
+          height="30px"
+          width="100%"
+          color="#f76a24"
+          fontSize="13px"
+        ></winnerMarquee>
+      </v-flex>
+      <v-flex xs1 class="text-xs-right closebutton">
+        <i class="fa fa-close fa-2x" @click="showNotification = false" />
+      </v-flex>
+    </v-toolbar>
+
+    <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"
@@ -20,24 +41,7 @@
         indeterminate
       ></v-progress-circular>
     </div>
-
-    <!-- <v-container fluid pa-0 style="background-color: #003e70 !important;max-height: 40px; !important">
-        <v-container pa-0>
-            <v-toolbar color="#003e70" class="white--text">
-                <v-layout wrap style="margin-top:-10px;">
-                    <v-flex xs4>
-                        <welcome-user></welcome-user>
-                    </v-flex>
-                    <v-spacer></v-spacer>
-                    <v-flex xs5 class="text-xs-right">
-                        <winnerMarquee :scrollSpeed="scrollSpeed" :showSpeed="showSpeed" :pauseOnHover="pauseOnHover" :pauseTime="pauseTime" :marqueeList="winner" height="36px" width="100%" color="#f76a24" fontSize="14px"></winnerMarquee>
-                    </v-flex>
-                </v-layout>
-            </v-toolbar>
-        </v-container>
-    </v-container>-->
-
-    <v-toolbar height="75" class="elevation-3">
+    <v-toolbar >
       <v-container fluid class="navbar">
         <v-toolbar-title>
           <v-img
@@ -48,14 +52,14 @@
           ></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-xs-only text-s1 .macky-color">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to">
+        <v-toolbar-items class="hidden-xs-only text-s1">
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
             <i :class="item.icon" style="margin-right: 3px;" />
             <span>{{$t(`menu.${item.title}`)}}</span>
-          </v-btn>        
+          </v-btn>
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
-              <countryFlag :country="countryflag" size="normal" />
+              <countryFlag :country="countryflag" size="normal" style="margin-right:0px;" />
               {{$t('msg.chooselanguage')}}
               <i
                 class="fa fa-caret-down"
@@ -63,7 +67,16 @@
               />
             </v-btn>
           </div>
-          <Logout class="layout-logout" />
+          <userMenu class="layout-logout" />
+          <span
+            flat
+            @click="showNotification = true"
+            id="notification"
+            class="menuItemNotification"
+          >
+            <i class="fa fa-bell-o fa-2x" />
+            <span class="badge">{{messagesCount}}</span>
+          </span>
         </v-toolbar-items>
       </v-container>
     </v-toolbar>
@@ -77,9 +90,9 @@
     <chatWindow />
   </v-app>
 </template>
-
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
+import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
@@ -89,7 +102,7 @@ import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
 import chatWindow from "~/components/chatWindow";
-import Logout from "../components/Logout";
+import userMenu from "../components/userMenu";
 export default {
   components: {
     chatWindow,
@@ -97,10 +110,14 @@ export default {
     languageDialog,
     winnerMarquee,
     welcomeUser,
-    Logout
+    userMenu,
+    AnimatedNumber
   },
   data() {
-    return {      
+    return {
+      messagesCount: 2,
+      activeClass: null,
+      showNotification: false,
       direction: "top",
       fab: true,
       fling: true,
@@ -150,10 +167,7 @@ export default {
     console.log("crearted");
   },
   mounted() {
-    setInterval(() => {
-      this.getwinuser();
-    }, 10000);
-    this.getwinuser();
+    this.fetchNotification();
     lottie.loadAnimation({
       container: this.$refs.svgContainer, // the dom element that will contain the animation
       renderer: "svg",
@@ -164,35 +178,45 @@ export default {
   },
   methods: {
     ...mapMutations(["setGameChannelShow"]),
-    getwinuser() {
-      this.$axios
-        .$get("api/fetchBet")
-        .then(response => {
-          let resultStatus = null;
-          for (let i = 0; i < response.data.length - 1; i++) {
-            let betID = response.data[i].betId;
-            let result = response.data[i].result;
-            let name = response.data[i].name;
-            if (result == "1") {
-              resultStatus = "Win";
-              //  console.log(resultStatus);
-              let betAmount = response.data[i].betAmount;
-              let betTime = response.data[i].betTime;
-              let win = `<span class="text-slide text-white"><span class="text-warning">
-                        <i class="fa fa-bell"></i>
-                        </span>Player ${betID}, <span class="text-warning">${resultStatus} ${betAmount},
-                        </span> ${name}  ${betTime}</span>`;
-              this.winner.push(win);
-            }
+    async fetchNotification() {
+      const betData = {
+        portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
+        userUUID: this.getUserUUID, // get the userUUID with the this object
+        version: "0.1", // version of API
+        betResult: [0, 1], // -1= pending, pending that mean is betting
+        limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
+        offset: "0" // offset or skip the data
+      };
+      const { data } = await this.$axios.post(
+        "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
+        betData,
+        {
+          headers: {
+            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, becase the backend they will check
           }
-        })
-        .catch(error => {
-          // alert(error);
-        });
+        }
+      );
+      this.messagesCount = data.data.length;
+      for (let i = 0; i < data.data.length - 1; i++) {
+        let betID = data.data[i].betID;
+        let betResult = data.data[i].betResult;
+        let name = data.data[i].name;
+        let ruleName = data.data[i].ruleName;
+        let betAmount = data.data[i].betAmount;
+        let betTime = data.data[i].createdTime;
+        let stockName = data.data[i].stockName;
+        let win = `<span class="text-slide text-white"><span class="text-warning">
+                        <i class="fa fa-bell"></i>
+                        </span>Player ${betResult}  ${betAmount} chips on,
+                         ${stockName} stock ${ruleName}  ${betTime}</span>`;
+        this.winner.push(win);
+      }
     }
   },
   computed: {
     ...mapGetters([
+      "getPortalProviderUUID", // Get Portalprovider
+      "getUserUUID", // Get UserUUID
       "getGameChannel",
       "getBalance",
       "getlocale",
@@ -207,25 +231,69 @@ export default {
 </script>
 
 <style scoped>
+.menuItem span {
+  font-size: 13px;
+}
+.menuItem i {
+  font-size: 18px;
+}
+.winnerText {
+  margin-top: -10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.badge {
+  position: absolute;
+  margin-top: -5px;
+  margin-left: -15px;
+  background-color: red;
+  color: #fff;
+  border-radius: 180px;
+  padding: 1px;
+  height: 18px;
+  width: 18px;
+  font-size: 10px;
+  font-weight: 800;
+  border: 1px solid #333;
+}
+.closebutton {
+  margin-right: 10px;
+  margin-top: -15px;
+  color: #fff;
+  cursor: pointer;
+}
+.menuItemNotification {
+  height: 62px !important;
+  width: 40px !important;
+  text-align: center;
+  padding-top: 16px;
+  cursor: pointer;
+}
+.activeNotification {
+  color: #ffffff;
+  background-color: #2bb13a;
+  height: 62px !important;
+  width: 50px !important;
+  text-align: center;
+  padding-top: 16px;
+  cursor: pointer;
+}
+.menuItem {
+  border-right: 2px solid #dddddd;
+  height: 62px !important;
+  padding: 15px 15px;
+}
 .logostyle {
   cursor: pointer;
   margin-left: 15px;
-}
-
-.toolMenu {
-  border: 1px solid red;
-  width: 100% !important;
-  padding: 5px;
 }
 .v-toolbar__content {
   padding: 0 !important;
   justify-content: center !important;
 }
-
 .settop {
   top: 30%;
 }
-
 .popper {
   background-color: #333;
   border-radius: 10px;
@@ -266,15 +334,13 @@ export default {
 
 .v-btn {
   /* padding: 0 5px !important; */
-  border: 1px solid #ccc;
   border-bottom: none;
   border-top: none;
 }
 
 .btn-langage {
   border: 1px solid #ccc;
-  height: 48% !important;
-  border-radius: 1em;
+  border-radius: 4px;
   display: flow-root;
 }
 

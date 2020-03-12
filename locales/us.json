@@ -3,6 +3,8 @@
     "sort": "sort",
     "search": "search",
     "stock": "stock",
+    "stock type" : "stock type",
+    "game type" : "game type",
     "default": "default",
     "menu": {
         "home": "home",
@@ -11,26 +13,28 @@
         "history": "history",
         "stock list": "stock list",
         "announcement": "announcement",
-        "rule": "rule",
+        "rule":"rule",
+        "gamerule": "Game Rule",
         "setting": "setting",
         "game result": "Game Result",
         "chip amount": "Chip Amount",
         "sound control": "Sound Control",
-        "leaderboard":"Leaderboard"
+        "leaderboard": "Leaderboard"
     },
     "stock-list": {
-        "stock lists": "stock lists",
-        "stock name": "stock name",
+        "stock lists": "Stock Lists",
+        "stock name": "Stock Name",
         "live price": "Live Price",
         "reference": "reference",
         "load more": "load more",
-        "search stock": "SEARCH STOCK"
+        "search stock": "SEARCH STOCK",
+        "lose": "Lose",
+        "win": "Win"
     },
     "home": {
         "welcome": "Welcome",
         "goodluck": "Good Luck!",
         "yourcurrentbalanceis": "your current balance is"
-
     },
     "about": {
         "title": "About",
@@ -38,10 +42,12 @@
     },
     "msg": {
         "acc":"Acc",
+        "account balance":"account balance",
+        "rolling amount":"rolling amount",
         "calculating": "Calculating...",
         "marketclosed": "Market Closed!",
         "reset": "Reset",
-        "confirm": "Confirm Bet",
+        "confirm": "Confirm",
         "gamerule": "Game Rule",
         "payout": "Payout",
         "deleteall": "Delete All",
@@ -78,6 +84,8 @@
         "Stock": "Stock",
         "User Info": "User Info",
         "Bet Result": "Bet Result",
+        "myResult": "My Result",
+        "stockResult": "Stock Result",
         "All Results": "All Results",
         "View All Results": "View All Results",
         "Player": "Player",
@@ -94,11 +102,11 @@
         "Clear": "Clear",
         "Total Bet": "Total Bet",
         "Win Rate": "Win Rate",
+        "minute game": "minute game",
 
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
         "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
-
         "Lastdraw": "Last draw",
         "BetClosein": "Bet Close in",
         "lotterydraw": "lottery draw",
@@ -123,7 +131,7 @@
         "male": "male",
         "female": "female",
         "name": "Name",
-        "playerid": "Player Id",
+        "playerid": "Player ID",
         "country": "Country",
         "everyonecansee": "Everyone Can See",
         "onlyme": "Only Me",
@@ -149,7 +157,6 @@
         "ClassicVersion": "Classic Version",
         "ModernVersion": "Modern Version",
         "ChooseTheVersionToPlay": "Choose The Version To Play"
-
     },
     "navlist": {
         "live Stock": "live Stock",
@@ -203,8 +210,8 @@
         "M": "M"
     },
     "stockname": {
-        "btc1": "BTC/USDT",
-        "btc": "BTC/USDT",
+        "btc1": "BTC/USDT1",
+        "btc": "BTC/USDT5",
         "usindex": "US dollar Index",
         "btc5": "BTC/USDT",
         "sh000001": "SH000001",
@@ -213,13 +220,30 @@
         "sh000300": "SH000300"
     },
     "profile": {
+        "first name":"first name",
+        "last name":"last name",
+        "gender":"gender",
+        "email":"email",
+        "country":"country",
+        "online status":"online status",
         "basic info": "basic infor",
         "online history": "online history",
         "stock analysis": "stock analysis",
-        "leaderboard": "Leaderboard"
+        "online time":"online time",
+        "total online":"total online"
     },
     "useraction": {
         "followbet": "FOLLOW BET",
-        "unfollowt": "UNFOLLOW"
+        "unfollow": "UNFOLLOW"
+    },
+    "leaderboard": {
+        "user":"user",
+        "winning rate": "winning rate",
+        "Bets":"Bets",
+        "winning amount":"winning amount",
+        "follow":"follow",
+        "weekly rankings":"WEEKLY RANKINGS",
+        "monthly rankings":"MONTHLY RANKINGS",
+        "Top 10 Leaders":"Top 10 Leaders"
     }
 }

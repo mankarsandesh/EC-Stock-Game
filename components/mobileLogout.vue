@@ -7,13 +7,13 @@
             </button>
             <v-btn flat v-on="on" v-show="isShow == 'modern'">
                 <v-avatar size="30">
-                    <img src="/user.png" alt />
+                    <img :src="imgProfile" alt />
                 </v-avatar>
                 <div class="userLogoutMenu">
                     <span>{{getUserName.name}}</span>
                     <span>
                         {{$t('msg.acc')}}:
-                        <animated-number :value="getBalance" :formatValue="formatToPrice" class="balance" />
+                        <animated-number :value="getUserInfo.balance" :formatValue="formatToPrice" class="balance" />
                     </span>
                 </div>
                 <!-- <i class="fa fa-caret-down" /> -->
@@ -27,11 +27,11 @@
                 <i class="fa fa-user fa-2x margin-right-5" />
                 <v-list-tile-title>{{$t('menu.profile')}}</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile @click="$router.push('/modern/profile');" v-show="isShow == 'modern'">
+            <v-list-tile @click="$refs.onlineHistory.showDialogOnlineHistory()" v-show="isShow == 'modern'">
                 <i class="fa fa-hourglass-half fa-15x margin-right-5" />
                 <v-list-tile-title>{{$t('profile.online history')}}</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile @click="$router.push('/modern/profile');" v-show="isShow == 'modern'">
+            <v-list-tile @click="$refs.stockAnalysis.showDialogStockAnalysis()" v-show="isShow == 'modern'">
                 <i class="fa fa-line-chart fa-15x margin-right-5" />
                 <v-list-tile-title>{{$t('profile.stock analysis')}}</v-list-tile-title>
             </v-list-tile>
@@ -53,10 +53,15 @@
             </v-card-text>
         </v-card>
     </v-dialog>
+
+    <OnlineHistory ref="onlineHistory"></OnlineHistory>
+    <StockAnalysis ref="stockAnalysis"></StockAnalysis>
 </div>
 </template>
 
 <script>
+import OnlineHistory from "~/components/mobile/onlineHistory"
+import StockAnalysis from "~/components/mobile/stockAnalysis"
 import AnimatedNumber from "animated-number-vue";
 import {
     mapGetters,
@@ -67,7 +72,9 @@ import profile from "~/pages/modern/desktop/profile";
 export default {
     components: {
         profile,
-        AnimatedNumber
+        AnimatedNumber,
+        OnlineHistory,
+        StockAnalysis
     },
     data() {
         return {
@@ -76,14 +83,62 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getUserName", "getBalance"])
+        ...mapGetters(["getUserName", "getBalance", "getUserInfo"]),
+        imgProfile() {
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
+                "/user.png" :
+                "http://uattesting.equitycapitalgaming.com/" +
+                this.getUserInfo.profileImage;
+        }
     },
     mounted() {
         this.isShow = location.pathname.split("/")[1];
     },
-    formatToPrice(value) {
-         return `$ ${this.nFormatter(value, 2)}`;
-      return `$ ${Number(value)
+    methods: {
+        nFormatter(num, digits) {
+            var si = [{
+                    value: 1,
+                    symbol: ""
+                },
+                {
+                    value: 1e3,
+                    symbol: "k"
+                },
+                {
+                    value: 1e6,
+                    symbol: "M"
+                },
+                {
+                    value: 1e9,
+                    symbol: "G"
+                },
+                {
+                    value: 1e12,
+                    symbol: "T"
+                },
+                {
+                    value: 1e15,
+                    symbol: "P"
+                },
+                {
+                    value: 1e18,
+                    symbol: "E"
+                }
+            ];
+            var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+            var i;
+            for (i = si.length - 1; i > 0; i--) {
+                if (num >= si[i].value) {
+                    break;
+                }
+            }
+            return (
+                (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol
+            );
+        },
+        formatToPrice(value) {
+            // return `$ ${this.nFormatter(value, 2)}`;
+            return `$ ${Number(value)
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
         },
@@ -120,7 +175,7 @@ export default {
                 }
             });
         }
-    
+    }
 };
 </script>
 

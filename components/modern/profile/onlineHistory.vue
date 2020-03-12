@@ -156,6 +156,7 @@ export default {
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
+            version:1,
             dateRangeFrom: "2020-02-02",
             dateRangeTo: "2020-02-28"
           },

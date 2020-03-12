@@ -25,7 +25,8 @@ export default ({ store }) => {
     store.dispatch('asynInitCallApi')
     store.dispatch("balance")
     store.dispatch("asyncPayout")
-    store.dispatch("asyncStocks");
+        // store.dispatch("asyncStocks");
+    store.dispatch("asynUserInfo")
 }
 
 function setLanguage(store) {

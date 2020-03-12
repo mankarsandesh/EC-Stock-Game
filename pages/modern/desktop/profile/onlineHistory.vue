@@ -108,6 +108,7 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import onlineChart from "../../../../components/modern/profile/onlinechart";
+import config from "../../../../config/config.global";
 export default {
   components: {
     onlineChart
@@ -142,7 +143,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "headers","getUserUUID"])
   },
   methods: {
     ...mapActions(["asynUserInfo"]),
@@ -154,18 +155,17 @@ export default {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             dateRangeFrom: "2020-02-02",
-            dateRangeTo: "2020-02-28"
+            dateRangeTo: "2020-02-28",
+            version: config.version
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            }
+            headers: this.headers
           }
         );
         if (res.code === 200) {
           this.chartData = [1500];
           this.xaxis = ["2020-02-26"];
-          let result = res.data[0].activeTimeDateWise;
+          let result = res.data.activeTimeDateWise;
           console.log("result online chart");
           console.log(res);
           console.log("result online chart");
@@ -177,7 +177,7 @@ export default {
           console.log(this.xaxis);
         } else {
           console.log(res);
-          alert(res.message);
+          //alert(res.message);
         }
       } catch (ex) {
         console.error(ex);

@@ -2,6 +2,10 @@
 <v-app>
     <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed right style="z-index:101">
         <v-list>
+            <!-- Close button cross mark for mobile responsive side bar -->
+            <v-btn icon @click="drawer = !drawer" style="float: right;">
+                <v-icon>clear</v-icon>
+            </v-btn>
             <div v-for="(item, i) in menu" :key="i">
                 <v-list-tile :to="item.to" router exact class="text-primary text-uppercase">
                     <v-list-tile-content>
@@ -35,26 +39,25 @@
         <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
     </v-toolbar>
 
-
-        <div class="title-layout" v-show="isShow == 'history' || isShow == 'stock-list'||isShow == 'current-bet' ||isShow == 'announcement' ||isShow == 'rule' ||isShow == 'setting'">
-            <h2 class="text-uppercase" v-show="isShow == 'history'">{{ $t('menu.history') }}</h2>
-            <h2 class="text-uppercase" v-show="isShow == 'stock-list'">{{ $t('menu.stock list') }}</h2>
-            <h2 class="text-uppercase" v-show="isShow == 'current-bet'">{{ $t('menu.current bet') }}</h2>
-            <h2 class="text-uppercase" v-show="isShow == 'announcement'">{{ $t('menu.announcement') }}</h2>
-            <h2 class="text-uppercase" v-show="isShow == 'rule'">{{ $t('menu.rule') }}</h2>
-            <h2 class="text-uppercase" v-show="isShow == 'setting'">{{ $t('menu.setting') }}</h2>
-            <v-btn to="/modern/history" v-show="isShow == 'current-bet'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.history')}}</v-btn>
-            <v-btn to="/modern/current-bet" v-show="isShow == 'history'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.current bet')}}</v-btn>
-            <v-btn to="/modern/announcement" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.announcement')}}</v-btn>
-            <v-btn to="/modern/rule" v-show="isShow == 'announcement'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.rule')}}</v-btn>
-            <v-btn to="/modern/announcement" v-show="isShow == 'rule'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.announcement')}}</v-btn>
-            <v-btn to="/modern/rule" v-show="isShow == 'setting'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.rule')}}</v-btn>
-        </div>
-
+    <div class="title-layout" v-show="isShow == 'history' || isShow == 'stock-list'||isShow == 'current-bet' ||isShow == 'announcement' ||isShow == 'rule' || isShow == 'leaderboard' ||isShow == 'setting'">
+        <h2 class="text-uppercase" v-show="isShow == 'history'">{{ $t('menu.history') }}</h2>
+        <h2 class="text-uppercase" v-show="isShow == 'stock-list'">{{ $t('menu.stock list') }}</h2>
+        <h2 class="text-uppercase" v-show="isShow == 'current-bet'">{{ $t('menu.current bet') }}</h2>
+        <h2 class="text-uppercase" v-show="isShow == 'announcement'">{{ $t('menu.announcement') }}</h2>
+        <h2 class="text-uppercase" v-show="isShow == 'rule'">{{ $t('menu.rule') }}</h2>
+        <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">{{ $t('menu.leaderboard') }}</h2>
+        <h2 class="text-uppercase" v-show="isShow == 'setting'">{{ $t('menu.setting') }}</h2>
+        <v-btn to="/modern/history" v-show="isShow == 'current-bet'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.history')}}</v-btn>
+        <v-btn to="/modern/current-bet" v-show="isShow == 'history'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.current bet')}}</v-btn>
+        <!-- <v-btn to="/modern/announcement" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.announcement')}}</v-btn> -->
+        <v-btn to="/modern/rule" v-show="isShow == 'announcement'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.rule')}}</v-btn>
+        <v-btn to="/modern/leaderboard" v-show="isShow == 'rule'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.leaderboard')}}</v-btn>
+        <v-btn to="/modern/setting" v-show="isShow == 'leaderboard'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.setting')}}</v-btn>
+    </div>
+    <v-content>
         <v-container pa-1>
             <nuxt />
         </v-container>
-
     </v-content>
 </v-app>
 </template>
@@ -84,7 +87,6 @@ export default {
         Logout,
         Button
     },
-    props: ["linkItem", "linkItem2", "title", "titlebtn", "titlebtn2"],
     data() {
         return {
             clipped: false,

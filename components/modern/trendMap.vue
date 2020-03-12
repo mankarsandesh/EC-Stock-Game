@@ -11,9 +11,9 @@
           <span class="countSmall text-grey"></span>
         </div>
         <div class="bs-coltabledivlast">
-          <table class="table-responsive" ref="tablebsTwo" >
-            <tr v-for="tr in rowTable">
-              <td v-for="td in BSLength"></td>
+          <table class="table-responsive" ref="tablebsTwo">
+            <tr v-for="(tr,index) in rowTable" :key="index">
+              <td v-for="(td,index) in BSLength" :key="index"></td>
             </tr>
           </table>
         </div>
@@ -30,14 +30,13 @@
         </div>
         <div class="oe-coltabledivlast">
           <table class="table-responsive" ref="tableOETwo">
-            <tr v-for="tr in rowTable">
-              <td v-for="td in OELength"></td>
+            <tr v-for="(tr,index) in rowTable" :key="index">
+              <td v-for="(td,index) in OELength" :key="index"></td>
             </tr>
           </table>
         </div>
       </v-flex>
 
-      
       <v-flex
         :class="setClass('pl-3 pb-5')"
         style="margin-top:10px;"
@@ -50,8 +49,8 @@
         </div>
         <div class="ul-coltabledivlast">
           <table class="table-responsive" ref="tablebUMLTwo">
-            <tr v-for="tr in rowTable">
-              <td v-for="td in HMLLength"></td>
+            <tr v-for="(tr,index) in rowTable" :key="index">
+              <td v-for="(td,index) in HMLLength" :key="index"></td>
             </tr>
           </table>
         </div>
@@ -72,8 +71,8 @@
         </div>
         <div class="num-coltabledivlast">
           <table class="table-responsive" ref="tableNumberTwo">
-            <tr v-for="tr in rowTable" >
-              <td v-for="td in Numlength"></td>
+            <tr v-for="(tr,index) in rowTable" :key="index">
+              <td v-for="(td,index) in Numlength" :key="index"></td>
             </tr>
           </table>
         </div>
@@ -113,6 +112,7 @@ export default {
   },
   data() {
     return {
+      // set column length
       BSLength: 100,
       OELength: 100,
       HMLLength: 200,
@@ -170,18 +170,18 @@ export default {
   },
   methods: {
     addTrendMap() {
-            let trendCount = this.trendTypes.length;
-            switch (trendCount) {
-                case 1:
-                    this.trendTypes.push("lastDigit");
-                    break;
-                case 2:
-                    this.trendTypes.push("bothDigit");
-                    break;
-                case 3:
-                    this.trendTypes.push("twoDigit");
-                    break;
-            }
+      let trendCount = this.trendTypes.length;
+      switch (trendCount) {
+        case 1:
+          this.trendTypes.push("lastDigit");
+          break;
+        case 2:
+          this.trendTypes.push("bothDigit");
+          break;
+        case 3:
+          this.trendTypes.push("twoDigit");
+          break;
+      }
     },
     setClass(value) {
       if (
@@ -271,9 +271,24 @@ export default {
       this.dataArray.forEach(element => {
         n++;
         if (this.trendType === "firstDigit") {
-          firstlast = element.no1;
+          firstlast = element.number1;
           this.gameID.push(
-            element.gameId + "\n" + element.PT + "\n" + element.writetime
+            element.stockTimestamp +
+              "\n" +
+              element.stockValue +
+              "\n" +
+              "Fist Digit = " +
+              element.number1 +
+              "\n" +
+              "Last Digit = " +
+              element.number2 +
+              "\n" +
+              "Both Digit = " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              "\n" +
+              "Two Digit = " +
+              element.number1 +
+              element.number2
           );
           //bigsmall
           if (firstlast < 5) {
@@ -303,9 +318,24 @@ export default {
             return;
           }
         } else if (this.trendType === "lastDigit") {
-          firstlast = element.no2;
+          firstlast = element.number2;
           this.gameID.push(
-            element.gameId + "\n" + element.PT + "\n" + element.writetime
+            element.stockTimestamp +
+              "\n" +
+              element.stockValue +
+              "\n" +
+              "Fist Digit = " +
+              element.number1 +
+              "\n" +
+              "Last Digit = " +
+              element.number2 +
+              "\n" +
+              "Both Digit = " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              "\n" +
+              "Two Digit = " +
+              element.number1 +
+              element.number2
           );
           //bigsmall
           if (firstlast < 5) {
@@ -335,10 +365,25 @@ export default {
             return;
           }
         } else if (this.trendType === "bothDigit") {
-          let rs = element.no1 + element.no2;
+          let rs = element.number1 + element.number2;
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameId + "\n" + element.PT + "\n" + element.writetime
+            element.stockTimestamp +
+              "\n" +
+              element.stockValue +
+              "\n" +
+              "Fist Digit = " +
+              element.number1 +
+              "\n" +
+              "Last Digit = " +
+              element.number2 +
+              "\n" +
+              "Both Digit = " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              "\n" +
+              "Two Digit = " +
+              element.number1 +
+              element.number2
           );
           //bigsmall
           if (firstlast < 9) {
@@ -368,10 +413,25 @@ export default {
             return;
           }
         } else if (this.trendType === "twoDigit") {
-          let rs = element.no1.toString() + element.no2.toString();
+          let rs = element.number1.toString() + element.number2.toString();
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.gameId + "\n" + element.PT + "\n" + element.writetime
+            element.stockTimestamp +
+              "\n" +
+              element.stockValue +
+              "\n" +
+              "Fist Digit = " +
+              element.number1 +
+              "\n" +
+              "Last Digit = " +
+              element.number2 +
+              "\n" +
+              "Both Digit = " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              "\n" +
+              "Two Digit = " +
+              element.number1 +
+              element.number2
           );
           //bigsmall
           if (firstlast <= 49) {
@@ -1089,8 +1149,8 @@ export default {
 }
 
 .table-responsive {
-  border:1px solid #dddddd;
-  border-radius:7px;
+  border: 1px solid #dddddd;
+  border-radius: 7px;
   padding: 5px;
 }
 table {
@@ -1109,7 +1169,7 @@ table td {
 }
 
 td,
-tr { 
+tr {
   min-width: 24px;
   height: 24px;
   text-align: center;

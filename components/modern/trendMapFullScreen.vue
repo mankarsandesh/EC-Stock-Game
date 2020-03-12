@@ -1,14 +1,14 @@
 <template>
-  <v-layout wrap pa-2>
+  <v-layout wrap pa-2 v-if="dataArray.length>0">
     <v-flex lg2 md2 pt-5>
-      <v-select v-model="trendType" :items="typeItem" :height="10" solo class="rounded-card"></v-select>
+      <v-select v-model="trendType" :items="typeItems" :height="10" solo class="rounded-card"></v-select>
       <v-select v-model="which_one" :items="which_oneItem" solo class="rounded-card"></v-select>
     </v-flex>
     <v-flex lg10 md10>
       <trendMap
         v-if="which_one !==''"
-        :dataArray="getStockCrawlerData($route.params.id)"
-        :key="getStockCrawlerData($route.params.id)[0].writetime + '-' + trendType + '-' + which_one"
+        :dataArray="dataArray"
+        :key="dataArray[dataArray.length -1].stockTimestamp + '-' + trendType + '-' + which_one"
         :isFullscreen="true"
         :which_one="which_one"
         :trendType="trendType"
@@ -23,33 +23,39 @@ import trendMap from "~/components/modern/trendMap";
 
 export default {
   props: {
-    which_one: {
-      type: String,
+    dataArray: {
+      type: Array,
       required: true
     },
-    trendType: {
-      type: String,
-      default: "firstDigit"
+    index: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
-      typeItem: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
-      which_oneItem: ["B/S", "O/E", "U/L", "NUM"]
-      // which_one: "B/S",
-      // trendType: "firstDigit"
+      trendType: null,
+      selectedType:'',
+      typeItems: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
+      which_oneItem: ["B/S", "O/E", "U/L", "NUM"],
+      which_one: "B/S"
     };
   },
   components: {
     trendMap
   },
+  computed: {
+    ...mapGetters(["getStockCrawlerData"]),
+  },
+  mounted() {
+    this.trendType = this.typeItems[this.index]
+  },
+  methods: {},
   watch: {
+  
     // which_one() {
     //   alert(this.which_one);
     // }
-  },
-  computed: {
-    ...mapGetters(["getStockCrawlerData"])
   }
 };
 </script>

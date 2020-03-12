@@ -1,14 +1,11 @@
 <template>
 <div>
-    <!-- filter -->
-    <!-- <breadcrumbs linkItem2="rule" titlebtn2="Game rule" /> -->
-    <v-container>
-        <v-layout row wrap>
-            <v-flex xs12 md12>
-                <announcement />
-            </v-flex>
-        </v-layout>
-    </v-container>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <v-layout row wrap>
+        <v-flex xs12 md12>
+            <announcement />
+        </v-flex>
+    </v-layout>
 </div>
 </template>
 
@@ -17,13 +14,11 @@ import {
     mapGetters,
     mapActions
 } from "vuex";
-import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
 import announcement from "~/components/mobile/announcement";
 
 export default {
     components: {
-        announcement,
-        breadcrumbs
+        announcement
     },
     data() {
         return {

@@ -1,8 +1,10 @@
 {
-    "filter": "filter",
-    "sort": "sort",
-    "search": "search",
-    "stock": "stock",
+    "filter": "กรอง",
+    "sort": "ประเภท",
+    "search": "ค้นหา",
+    "stock": "คลังสินค้า",
+    "stock type" : "ประเภทหุ้น",
+    "game type" : "ประเภทเกม",
     "default": "ค่าเริ่มต้น",
     "menu": {
         "home": "หน้าหลัก",
@@ -12,12 +14,16 @@
         "stock list": "รายการหุ้น",
         "announcement": "การประกาศ",
         "rule": "กฎระเบียบ",
+        "gamerule": "กฎของเกม",
         "setting": "การตั้งค่า",
         "game result": "ผลลัพธ์ของเกม",
         "chip amount": "จำนวนชิป",
-        "sound control": "การควบคุมเสียง"
+        "sound control": "การควบคุมเสียง",
+        "leaderboard": "ลีดเดอร์"
     },
     "stock-list": {
+        "stock lists": "รายการสินค้า",
+        "stock name": "ชื่อหุ้น",
         "live price": "ราคาสด",
         "reference": "การอ้างอิง",
         "load more": "โหลดเพิ่มเติม",
@@ -33,6 +39,11 @@
         "introduction": "This page is made to give you more informations."
     },
     "msg": {
+
+        "acc":"acc",
+        "account balance":"ยอดเงินในบัญชี",
+        "rolling amount":"จำนวนกลิ้ง",
+
         "calculating": "การคำนวณ...",
         "marketclosed": "ปิดตลาด!",
         "reset": "รีเซ็ต",
@@ -50,6 +61,7 @@
         "changechartview": "Change Chart View",
         "reference": "การอ้างอิง",
         "totals": "ผลรวม",
+        "stockResult": "ผลสต็อก",
         "winbet": "ชนะเดิมพัน",
         "losebet": "สูญเสียเดิมพัน",
         "amount": "จำนวน",
@@ -74,6 +86,7 @@
         "User Info": "ข้อมูลผู้ใช้",
         "Bet Result": "ผลการเดิมพัน",
         "All Results": "ผลลัพธ์ทั้งหมด",
+        "View All Results": "ดูผลลัพธ์ทั้งหมด",
         "Player": "ผู้เล่น",
         "Balance": "เงีน",
         "Totalprofit": "กำไรรวม",
@@ -88,11 +101,11 @@
         "Clear": "ล้าง",
         "Total Bet": "การเดิมพันทั้งหมด",
         "Win Rate": "อัตราการชนะ",
+        "minute game": "เกมนาที",
 
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
         "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
-
         "Lastdraw": "การจับรางวัลล่าสุด",
         "BetClosein": "เดิมพันปิด",
         "lotterydraw": "จับสลาก",
@@ -143,8 +156,6 @@
         "ClassicVersion": "รุ่นคลาสสิก",
         "ModernVersion": "รุ่นทันสมัย",
         "ChooseTheVersionToPlay": "เลือกรุ่นที่จะเล่น"
-
-
     },
     "navlist": {
         "live Stock": "หุ้นที่เปิดอยู่",
@@ -172,17 +183,14 @@
         "Odd-Even": "คลิก-คู่",
         "High-Mid-Low": "สูง-กลาง-ต่ำ",
         "Specific-Number": "เฉพาะจำนวน",
-
         "firstdigit": "ตัวเลขตัวแรก",
         "lastdigit": "ตัวเลขสุดท้าย",
         "bothdigit": "ตัวเลขทั้งหลัก",
         "twodigit": "ตัวเลขสองหลัก",
-
         "firstdigits": "ตัวเลข\nตัวแรก",
         "lastdigits": "ตัวเลข\nสุดท้าย",
         "bothdigits": "ตัวเลข\nทั้งหลัก",
         "twodigits": "ตัวเลข\nสองหลัก",
-
         "big": "ใหญ่",
         "small": "เล็ก",
         "odd": "คลิก",
@@ -192,7 +200,6 @@
         "low": "ต่ำ",
         "tie": "เสมอ",
         "number": "ตัวเลข",
-
         "B": "B",
         "S": "S",
         "E": "E",
@@ -212,8 +219,30 @@
         "sh000300": "ดัชนีเซี่ยงไฮ้และเซินเจิ้น 300"
     },
     "profile": {
+        "first name":"ชื่อจริง",
+        "last name":"นามสกุล",
+        "gender":"เพศ",
+        "email":"อีเมล",
+        "country":"ประเทศ",
+        "online status":"สถานะออนไลน์",
         "basic info": "ข้อมูลพื้นฐาน",
         "online history": "ประวัติออนไลน์",
-        "stock analysis": "การวิเคราะห์หุ้น"
+        "stock analysis": "การวิเคราะห์หุ้น",
+        "online time":"เวลาออนไลน์",
+        "total online":"ออนไลน์ทั้งหมด"
+    },
+    "useraction": {
+        "followbet": "ทำตามการพนัน",
+        "unfollow": "เลิก"
+    },
+    "leaderboard": {
+        "user":"ผู้ใช้งาน",
+        "winning rate": "อัตราการชนะ",
+        "Bets":"เดิมพัน",
+        "winning amount":"จำนวนเงินที่ชนะ",
+        "follow":"ปฏิบัติตาม",
+        "weekly rankings":"อันดับประจำสัปดาห์",
+        "monthly rankings":"อันดับรายเดือน",
+        "Top 10 Leaders":"ผู้นำ 10 อันดับแรก"
     }
 }

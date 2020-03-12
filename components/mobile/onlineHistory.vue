@@ -1,121 +1,186 @@
 <template>
-<div class="profile_head text-xs-center">
-    
-    <div class="image_container">
-        <v-avatar :size="90">
-            <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
-            <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" />
-        </v-avatar>
-        <span class="camera_container">
-            <button class="btn_camera">
-                <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
-            </button>
-        </span>
-        <!-- <span class="blur-img">uploading</span> -->
-    </div>
-    <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
-    <p>Online Status : 2hours</p>
-   
-      <div>
-          <v-flex xs12 md8 class="pt-5 pl-5 pr-5">
-              <div>
-                  <h2 class="title_menu">online history</h2>
-                  <v-divider></v-divider>
-              </div>
-          </v-flex>
-          <v-flex xs12 pt-3 pl-5>
-              <v-layout row>
-                  <!-- select start date  -->
-                  <v-flex xs6 sm12 md3 lg3 pr-5>
-                      <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
-                          <div class="title_date_picker">
-                              <span>from</span>
-                          </div>
-                          <div class="date_picker">
-                              <span class="select_date">{{startDate}}</span>
-                              <span class="icon_date">
-                                  <v-icon>date_range</v-icon>
-                              </span>
-                          </div>
-                      </div>
-                      <div style="position:absolute;z-index:1">
-                          <v-date-picker v-if="isShowDateStart" v-model="startDate" @input="isShowDateStart = false"></v-date-picker>
-                      </div>
-                  </v-flex>
-                  <!-- select end date -->
-                  <v-flex xs6 sm12 md3 lg3 pr-5>
-                      <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
-                          <div class="title_date_picker">
-                              <span>to</span>
-                          </div>
-                          <div class="date_picker">
-                              <span class="select_date">{{endDate}}</span>
-                              <span class="icon_date" >
-                                  <v-icon>date_range</v-icon>
-                              </span>
-                          </div>
-                      </div>
-                      <div style="position:absolute;z-index:1">
-                          <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
-                      </div>
-                  </v-flex>
-                  <!-- go button -->
-                  <v-flex xs6 sm12 md2 lg1>
-                      <div class="date_picker_container">
-                          <div class="title_date_picker">
-                              <span></span>
-                          </div>
-                          <button class="buttonGreen">GO</button>
-                      </div>
-                  </v-flex>
-                  <v-flex xs6 sm12 md3 lg3 pl-5 pr-5>
-                      <div class="date_picker_container">
-                          <div class="title_date_picker">
-                              <span>Sort By</span>
-                          </div>
-                          <div class="date_picker">
-                              <!-- sort by  -->
-                              <v-menu offset-y>
-                                  <template v-slot:activator="{ on }">
-                                      <span class="select_date">2020-02-12</span>
-                                      <span class="icon_date">
-                                          <v-icon v-on="on">arrow_drop_down</v-icon>
-                                      </span>
-                                  </template>
-                                  <v-list>
-                                      <v-list-tile v-for="(item, index) in items" :key="index">
-                                          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                      </v-list-tile>
-                                  </v-list>
-                              </v-menu>
-                          </div>
-                      </div>
-                  </v-flex>
-              </v-layout>
-          </v-flex>
-          <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5 pr-5">
-              <div class="chart_container">
-                  <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
-              </div>
-          </v-flex>
-          <v-flex xs12 class="pt-3 pl-5">
-              <div>
-                  <span style="margin-right:30px">
-                      player id :
-                      <b>{{getUserInfo.PID}}</b>
-                  </span>
-                  <span style="margin-right:30px">
-                      online time : {{getUserInfo.currentActiveTime}}
-                      <b>{{asynUserInfo.currentActiveTime}}</b>
-                  </span>
-                  <span style="margin-right:30px">
-                      total online :
-                      <b>2day,15hours,11minute</b>
-                  </span>
-              </div>
-          </v-flex>
-      </div>
-</div>
+<v-dialog v-model="dialogOnlineHistory" fullscreen hide-overlay transition="dialog-bottom-transition" light>
+    <v-card>
+        <v-toolbar flat>
+            <v-layout row>
+                <v-spacer></v-spacer>
+                <v-icon size="20" @click="dialogOnlineHistory=false">close</v-icon>
+            </v-layout>
+        </v-toolbar>
+
+        <v-flex xs12 sm12 class="pt-2 pl-5 pr-5">
+            <v-layout row>
+                <v-flex xs0 sm2>
+                </v-flex>
+                <v-flex xs12 sm10>
+                    <h2 class="title_menu">{{$t('profile.online history')}}</h2>
+                    <v-divider></v-divider>
+                </v-flex>
+            </v-layout>
+        </v-flex>
+
+        <v-flex xs12 md12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+            <div class="image_container">
+                <v-avatar :size="90">
+                    <img :src="imgProfile" alt="img-profile" />
+                </v-avatar>
+                <span class="camera_container" style="position: absolute; top: 19%;">
+                    <v-icon color="black" :size="20">photo_camera</v-icon>
+                </span>
+                <!-- <span class="blur-img">uploading</span> -->
+            </div>
+            <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
+            <p>{{$t('profile.online status')}} : 2hours</p>
+            <v-divider></v-divider>
+        </v-flex>
+
+        <v-flex xs12 sm12 pt-3>
+            <v-layout row>
+                <v-flex xs2 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+                    <div class="image_container">
+                        <v-avatar :size="60">
+                            <img :src="imgProfile" alt="img-profile" />
+                        </v-avatar>
+                        <span class="camera_container" style="position: absolute;top: 32%;left: 12%;">
+                            <v-icon color="black" :size="20">photo_camera</v-icon>
+                        </span>
+                        <!-- <span class="blur-img">uploading</span> -->
+                    </div>
+                    <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
+                    <p>{{$t('profile.online status')}} : 2hours</p>
+                </v-flex>
+                <v-flex xs12 sm10>
+                    <v-layout row>
+                        <!-- select start date  -->
+                        <v-flex xs5 sm3 mr-1 ml-1>
+                            <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
+                                <div class="title_date_picker">
+                                    <span>{{$t('msg.from')}}</span>
+                                </div>
+                                <div class="date_picker">
+                                    <span class="select_date">{{startDate}}</span>
+                                    <span class="icon_date">
+                                        <v-icon>date_range</v-icon>
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="position:absolute;z-index:1">
+                                <v-date-picker v-if="isShowDateStart" v-model="startDate" @input="isShowDateStart = false"></v-date-picker>
+                            </div>
+                        </v-flex>
+                        <!-- select end date -->
+                        <v-flex xs5 sm3 mr-1>
+                            <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
+                                <div class="title_date_picker">
+                                    <span>{{$t('msg.to')}}</span>
+                                </div>
+                                <div class="date_picker">
+                                    <span class="select_date">{{endDate}}</span>
+                                    <span class="icon_date">
+                                        <v-icon>date_range</v-icon>
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="position:absolute;z-index:1">
+                                <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+                            </div>
+                        </v-flex>
+
+                        <v-flex xs1 sm1 ml-1 mr-2>
+                            <div class="date_picker_container">
+                                <div class="title_date_picker">
+                                    <span></span>
+                                </div>
+                                <button class="buttonGreen btn-go">GO</button>
+                            </div>
+                        </v-flex>
+                        <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
+                            <div class="date_picker_container">
+                                <div class="title_date_picker">
+                                    <span>{{$t('msg.sortby')}}</span>
+                                </div>
+                                <div class="date_picker">
+
+                                    <v-menu offset-y>
+                                        <template v-slot:activator="{ on }">
+                                            <span class="select_date">2020-02-12</span>
+                                            <span class="icon_date">
+                                                <v-icon v-on="on">arrow_drop_down</v-icon>
+                                            </span>
+                                        </template>
+                                        <v-list>
+                                            <v-list-tile v-for="(item, index) in items" :key="index">
+                                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                            </v-list-tile>
+                                        </v-list>
+                                    </v-menu>
+                                </div>
+                            </div>
+                        </v-flex>
+                    </v-layout>
+                </v-flex>
+            </v-layout>
+        </v-flex>
+
+        <v-flex xs12 sm12 pt-3 v-if="$vuetify.breakpoint.xs">
+            <v-layout row>
+                <v-flex xs3 sm3>
+                    <div class="title_date_picker mt-2">
+                        <span>Sort By</span>
+                    </div>
+                </v-flex>
+                <v-flex xs5 sm5>
+                    <div class="date_picker_container">
+                        <div class="date_picker">
+                            <v-menu offset-y>
+                                <template v-slot:activator="{ on }">
+                                    <span class="select_date">2020-02-12</span>
+                                    <span class="icon_date">
+                                        <v-icon v-on="on">arrow_drop_down</v-icon>
+                                    </span>
+                                </template>
+                                <v-list>
+                                    <v-list-tile v-for="(item, index) in items" :key="index">
+                                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                    </v-list-tile>
+                                </v-list>
+                            </v-menu>
+                        </div>
+                    </div>
+                </v-flex>
+            </v-layout>
+        </v-flex>
+
+        <v-flex xs12 sm12 md10 lg10 :class="$vuetify.breakpoint.xs ? 'mt-4':''">
+            <v-layout row>
+                <v-flex xs1 sm2>
+                </v-flex>
+                <v-flex xs10 sm8>
+                    <div class="chart_container">
+                        <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
+                    </div>
+                </v-flex>
+            </v-layout>
+        </v-flex>
+
+        <v-flex xs12 class="pt-3 pl-5">
+            <div>
+                <span style="margin-right:30px">
+                    {{$t('msg.playerid')}} :
+                    <b>{{getUserInfo.PID}}</b>
+                </span>
+                <span style="margin-right:30px">
+                    {{$t('profile.online time')}} : {{getUserInfo.currentActiveTime}}
+                    <b>{{asynUserInfo.currentActiveTime}}</b>
+                </span>
+                <span style="margin-right:30px">
+                    {{$t('profile.total online')}}:
+                    <b>2day,15hours,11minute</b>
+                </span>
+            </div>
+        </v-flex>
+    </v-card>
+</v-dialog>
 </template>
 
 <script>
@@ -140,6 +205,10 @@ export default {
             isShowDateEnd: false,
             startDate: "",
             endDate: "",
+            profile: {
+                imgProfile: ''
+            },
+            dialogOnlineHistory: false,
             items: [{
                     title: "Click Me"
                 },
@@ -169,10 +238,19 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
+        imgProfile() {
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
+                "/user.png" :
+                "http://uattesting.equitycapitalgaming.com/" +
+                this.getUserInfo.profileImage;
+        },
     },
     methods: {
         ...mapActions(["asynUserInfo"]),
+        showDialogOnlineHistory() {
+            this.dialogOnlineHistory = true;
+        },
         async getOnlineHistory() {
             try {
                 const res = await this.$axios.$post(
@@ -214,6 +292,12 @@ export default {
 </script>
 
 <style scoped>
+.btn-go {
+    width: 45px !important;
+    height: 42px !important;
+    font-size: 16px !important;
+}
+
 button {
     background-color: green;
     padding: 10px;
@@ -226,15 +310,18 @@ button {
 button:focus {
     outline: none;
 }
+
 .btn_camera {
-  background-color: #ffffff;
-  border-radius: 50%;
-  padding: 6px;
-  box-shadow: 0px 2px 5px rgb(145, 145, 145);
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: 0px 2px 5px rgb(145, 145, 145);
 }
+
 .btn_camera:focus {
-  outline: none;
+    outline: none;
 }
+
 .title_menu {
     padding-bottom: 15px;
     text-transform: capitalize;
@@ -253,7 +340,7 @@ button:focus {
     box-shadow: 0px 2px 5px rgb(145, 145, 145);
     border-radius: 10px;
     width: 100%;
-    height: 420px;
+    height: 200px;
 }
 
 .date_picker {

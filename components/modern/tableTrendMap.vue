@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-layout wrap pa-4 row>
-      <v-flex xs1 lg1 v-if="!isFullscreen" style="padding-top:50px;">
+  <div v-if="dataArray.length > 0 ">
+    <v-layout wrap  row >
+      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" style="padding-top:50px;">
         <v-layout>
           <v-flex xs9>
             <v-btn
@@ -12,7 +12,7 @@
             >{{$t('gamemsg.firstdigit')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="text-xs-center triangle-right" v-show="trendType=='firstDigit'"></v-flex>
+          <v-flex class="text-xs-center triangle-right" v-show="activeType=='firstDigit'"></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -24,7 +24,7 @@
             >{{$t('gamemsg.lastdigits')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="trendType=='lastDigit'"></v-flex>
+          <v-flex class="triangle-right" v-show="activeType=='lastDigit'"></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -37,7 +37,7 @@
           </v-flex>
           <v-spacer></v-spacer>
 
-          <v-flex class="triangle-right" v-show="trendType=='bothDigit'"></v-flex>
+          <v-flex class="triangle-right" v-show="activeType=='bothDigit'"></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -49,64 +49,87 @@
             >{{$t('gamemsg.twodigits')}}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
+          <v-flex class="triangle-right" v-show="activeType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs10">
+      <v-flex xs10 md10 lg10 xl10>
         <v-layout row wrap>
-          <v-flex xs12 lg12 md12 ≈>
+          <v-flex xs12 lg12 md12>
             <trendMap
-              :dataArray="getStockCrawlerData($route.params.id)"
-              :trendType="trendType"
-              :key="getStockCrawlerData($route.params.id)[0].writetime + trendType"
+              :dataArray="dataArray"
+              :trendType="activeType"
               :isFullscreen="isFullscreen"
+              :key="dataArray[dataArray.length -1].stockTimestamp + activeType"
             ></trendMap>
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs1">
+      <!-- <v-flex class="xs1">
         <v-layout row wrap v-if="isShowMultigameButton == 0">
           <v-flex xs12 lg12 md12 ≈>
-            <v-btn
-              class="multiGame"
-              :to="'/modern/multigame/' +$route.params.id"
-            >{{$t('msg.Multiplegaming')}}</v-btn>
+            
           </v-flex>
         </v-layout>
-      </v-flex>
+      </v-flex>-->
     </v-layout>
+    <v-tooltip left id="fullscreenGuidelines">
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="primary"
+          :to="'/modern/multigame/' +$route.params.id"
+          rigth
+          fab
+          class="multiGame"
+          dark
+          v-on="on"          
+        >
+          <i style="font-size:30px;" class="fa fa-gamepad" aria-hidden="true"></i>
+        </v-btn>
+      </template>
+      <span>Multiple Game</span>
+    </v-tooltip>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
+import { mapMutations } from "vuex";
 import trendMap from "~/components/modern/trendMap";
 export default {
   data() {
     return {
-      // trendType: "firstDigit"
+      trendTypes: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
+      trendType: null
     };
   },
   props: {
+    index: {
+      type: Number
+    },
+    dataArray: {
+      type: Array,
+      required: true
+    },
     isShowMultigameButton: {
       type: Number,
       required: true
-    },
-    trendType: {
-      type: String,
-      default: "firstDigit"
     },
     isFullscreen: {
       type: Boolean,
       default: false
     }
   },
+  mounted() {},
   components: {
     trendMap
   },
   computed: {
-    ...mapGetters(["getStockCrawlerData"])
+    activeType() {
+      if (this.trendType === null) {
+        return this.trendTypes[this.index];
+      } else {
+        return this.trendType;
+      }
+    }
   },
   methods: {
     changeChartType(value) {
@@ -118,14 +141,17 @@ export default {
 
 <style scoped>
 .multiGame {
+  z-index: 999;
+  position: fixed;
+  right: 20px;
+  bottom: 90px;
   color: #fff;
-  margin: 20px 15px;
-  font-weight: 600;
+  width: 60px;
+  height: 60px;
   font-size: 12px !important;
-  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   padding: 0px 9px;
-  border-radius: 10px;
 }
 .triangle-right {
   width: 0;

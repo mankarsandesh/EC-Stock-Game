@@ -54,21 +54,6 @@ import {
     mapState
 } from "vuex";
 export default {
-    // props: {
-    //     stockName: {
-    //         type: String
-    //     },
-    //     loop: {
-    //         type: Number
-    //     },
-    //     betId: {
-    //         type: String
-    //     },
-    //     payout: {
-    //         type: Number,
-    //         required: true
-    //     }
-    // },
     props: [
         "stockName",
         "ruleid",
@@ -78,7 +63,7 @@ export default {
     ],
     data() {
         return {
-            gameUUID:"5d147c4c-6fab-4dfa-a97a-69a863b2fa24",
+            gameUUID:"854fdec3-9b20-469c-8471-b0cd3c39aba3",
             confirmDisabled: false,
             betValue: 0,
             imgChip: [{
@@ -138,8 +123,7 @@ export default {
             this.betValue = this.betValue + amount;
         },
         async sendBetting(betData) {
-            let finalData = betData;
-            
+            let finalData = betData;            
             try {
                const res = await this.$axios.$post(
                   "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
@@ -160,9 +144,14 @@ export default {
                     console.log(res);
                     this.balance()
                     this.closePopper();
-                    // console.warn(res.data[0]);
-                    // this.pushDataOnGoingBet(res.data[0]);
-                    // console.warn(this.getOnBetting);
+                    let data = {
+                        "betId": "Hello",
+                        "betTime" : "20-3-2020",              
+                        "betAmount": "2000",
+                        "rule" : "First Digit",
+                        "stockName": "CHinaaa"
+                    };
+                    this.pushDataOnGoingBet(res.data[0]);
                     this.$swal({
                         type: "success",
                         title: "Confirm!",
@@ -184,7 +173,7 @@ export default {
                 alert(ex.message);
             }
         },
-        confirmBet() {
+        confirmBet() {          
             let data = {
                 gameUUID: this.gameUUID,              
                 ruleID: this.ruleid,
@@ -193,8 +182,9 @@ export default {
             this.confirmDisabled = true;  
             console.log("i am here 1");   
             console.log(data);
-            this.sendBetting(data);           
-            // console.warn(this.getOnBetting);
+            this.sendBetting(data);    
+           $("#"+this.betId).addClass(this.betId.split("-")[0]);       
+          
         },
         closePopper() {
             $(".closepopper").click();

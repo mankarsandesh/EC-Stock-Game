@@ -1,5 +1,6 @@
 <template>
 <div>
+    <meta name="viewport" content= "width=device-width, user-scalable=no">
     <!-- <v-toolbar class="light-toobar">
       <h1 class="text-primary text-uppercase">{{ $t('menu.history') }}</h1>
       <v-spacer></v-spacer>
@@ -29,7 +30,7 @@
         </v-flex>
 
         <v-flex xs2 sm1 md1 ml-1 mr-2>
-            <button @click="dateSearch()" class="goButton buttonGreen">GO</button>
+            <button @click="dateSearch()" class="goButton buttonGreen">{{$t('msg.go')}}</button>
         </v-flex>
 
         <!-- <v-flex xs2 sm2 md2 lg1>
@@ -50,7 +51,7 @@
 
     <v-progress-linear :indeterminate="true" color="blue darken-3" v-show="!load"></v-progress-linear>
     <v-data-table :headers="headers" hide-actions :search="search" :items="history" :pagination.sync="pagination" ref="table" class="elevation-1 border-radius-10">
-        <template v-slot:headers="headers">
+        <template>
             <tr class="border-radius-10">
                 <th>{{$t('msg.BetId')}}</th>
                 <th>{{$t('msg.gameid')}}</th>
@@ -412,7 +413,7 @@ export default {
 .input-text {
     border-radius: 5px;
     height: 44px;
-    border: 1px solid #003e70;
+    border: 1px solid;
 }
 
 table thead tr th {
@@ -499,6 +500,4 @@ label,
 .border-radius-10 {
     border-radius: 10px;
 }
-
-
 </style>

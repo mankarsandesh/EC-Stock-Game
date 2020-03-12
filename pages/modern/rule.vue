@@ -1,5 +1,6 @@
 <template>
 <div xs12>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <!-- <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" /> -->
     <h1 class="jumbotron-heading text-center">
         EC Gaming Rules Description</h1>
@@ -22,7 +23,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="accept" color="buttonGreen" dark v-on="on" @click="dialog = false">
+                    <v-btn class="accept" color="buttonGreen" dark  @click="dialog = false">
                         I accept
                     </v-btn>
                 </v-card-actions>

@@ -11,6 +11,7 @@ import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
 import fillterHistory from "~/components/modern/fillterHistory";
 import { mapState } from "vuex";
+import config from "../../../config/config.global";
 export default {
   layout: "desktopModern",
   components: {
@@ -46,7 +47,7 @@ export default {
         // before we call the data we should make the object to the send the request with the API
         portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
         userUUID: this.userUUID, // get the userUUID with the this object
-        version: "0.1", // version of API
+        version: config.version, // version of API
         betResult: [-1, 0, 1], // -1= pending, 0= lose , 1 = win
         limit: "20", // limit the data we the data come will come only the 20 that we limit in this case
         offset: "0" // offset or skip the data
@@ -55,9 +56,7 @@ export default {
         "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
         data1, // data object
         {
-          headers: {
-            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, becase the backend they will check
-          }
+          headers: this.headers
         }
       );
       this.desserts = data.data; // after will get the respone the object or array that come with will be equal the array that we create in the data funtion

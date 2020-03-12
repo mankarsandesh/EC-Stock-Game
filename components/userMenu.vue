@@ -7,33 +7,26 @@
         </v-btn>
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="40">
-            <img src="/user.png" alt />
-          </v-avatar>
+            <img :src="imgProfile" />
+          </v-avatar>          
           <div class="userLogoutMenu">
-            <span>{{getUserName.name}}</span>
-            <span>
-              {{$t('msg.acc')}}:
-              <animated-number :value="getBalance" :formatValue="formatToPrice" class="balance" />
+            <span>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</span>
+            <span>            
+              <animated-number
+                :value="getUserInfo.balance"
+                :formatValue="formatToPrice"
+                class="balance"
+              />
             </span>
           </div>
           <i class="fa fa-caret-down" />
         </v-btn>
       </template>
       <v-list>
-        <div
-          v-show="isShow == 'classic'"
-          style="display: inline-grid;justify-items: center;width: 100%;"
+        <v-list-tile
+          @click="$router.push('/modern/desktop/profile/basicinfo');"
+          v-show="isShow == 'modern'"
         >
-          <v-avatar size="90">
-            <img src="/user.png" alt />
-          </v-avatar>
-          <span>{{getUserName.name}}</span>
-          <span>{{getUserName.email}}</span>
-        </div>
-        <v-list-tile @click="dialogprofile = true" v-show="isShow == 'classic'">
-          <v-list-tile-title>Profile</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="$router.push('/modern/desktop/profile/basicinfo');" v-show="isShow == 'modern'">
           <i class="fa fa-user fa-2x margin-right-5" />
           <v-list-tile-title>{{$t('menu.profile')}}</v-list-tile-title>
         </v-list-tile>
@@ -50,7 +43,7 @@
         >
           <i class="fa fa-line-chart fa-15x margin-right-5" />
           <v-list-tile-title>{{$t('profile.stock analysis')}}</v-list-tile-title>
-        </v-list-tile>       
+        </v-list-tile>
 
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
@@ -74,16 +67,22 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserName", "getBalance"])
+    ...mapGetters(["getUserInfo"]),
+    imgProfile() {
+      return this.getUserInfo.profileImage === ""
+        ? "/no-profile-pic.jpg"
+        : "http://uattesting.equitycapitalgaming.com/" +
+            this.getUserInfo.profileImage;
+    }
   },
   mounted() {
     this.isShow = location.pathname.split("/")[1];
   },
   methods: {
     formatToPrice(value) {
-      return `$ ${Number(value)
+      return `${Number(value)
         .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "1,")}`;
     },
     getLogout() {
       this.$swal({

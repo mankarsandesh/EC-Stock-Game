@@ -5,37 +5,47 @@
     </v-layout>
 
     <div class="table-responsive">
-      <table class="table">
-
+      <table class="table" v-if="getStockListTimer.length===2">
         <tr>
           <th>{{$t('msg.Stock Name')}}</th>
           <th>{{$t("msg.liveprice")}}</th>
           <th>{{$t("msg.Status")}}</th>
           <th>{{$t("msg.Countdown")}}</th>
         </tr>
-        <tr  v-for="(data,index) in getStockList" :key="index">
+        <tr v-for="(data,index) in getStockListTimer[0]" :key="index">
           <td>
             <nuxt-link
-              :to="'/modern/desktop/'+data.id"
-            >{{ $t(`stockname.${data.stockname}`) }}{{ data.stockname == 'btc1' ? '1':data.stockname == 'btc5' ? '5':'' }}</nuxt-link>
+              :to="'/modern/desktop/'+data.stockName"
+            >{{ $t(`stockname.${data.stockName}`) }}{{ data.stockName == 'btc1' ? '1':data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
           </td>
           <td
-            v-html="$options.filters.livePriceColor(getLivePrice(data.id),getPreviousPrice(data.id) )"
+            v-html="$options.filters.livePriceColor(data.stockPrice ,getStockListTimer[1][index].stockPrice)"
           ></td>
-          <td
+          <td v-if="data.stockOpenOrClosed==='Closed!'">{{data.stockOpenOrClosed}}</td>
+
+          <td v-else>
+            <span>{{data.gameEndTimeCountDownInMins | betstatus(getStockLoop(data.stockName))}}</span>
+          </td>
+          <td>{{data.gameEndTimeCountDownInMins | lotterydraw(getStockLoop(data.stockName)) }}</td>
+          <!-- <td
+            v-html="$options.filters.livePriceColor(getLivePrice(data.id),getPreviousPrice(data.id) )"
+          ></td>-->
+          <!-- <td
             style="font-size: 0.8rem;"
           >{{getLotteryDraw(data.id) | betstatus(getStockById(data.id).loop)}}</td>
-          <td>{{getLotteryDraw(data.id) | lotterydraw(getStockById(data.id).loop)}}</td>
+          <td>{{getLotteryDraw(data.id) | lotterydraw(getStockById(data.id).loop)}}</td>-->
         </tr>
       </table>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   computed: {
     ...mapGetters([
+      "getStockLoop",
+      "getStockListTimer",
       "getStockList",
       "getLotteryDraw",
       "getStockById",
@@ -45,6 +55,10 @@ export default {
   },
   data() {
     return {};
+  },
+  created() {},
+  methods: {
+    ...mapMutations(["setStockListTimer"]),
   }
 };
 </script>
@@ -63,15 +77,16 @@ th {
   background-color: #cccccc;
 }
 
-th,
-td {
+th {
   text-transform: capitalize;
-  text-align: center;
-  padding: 8px 2px 6px 4px;
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd;
+  padding: 5px;
 }
-
+td {
+  
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #ddd;
+}
 
 .table-responsive {
   overflow: auto;

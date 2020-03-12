@@ -16,6 +16,7 @@
             :items="items"
             placeholder="Sort By :"
             v-model="itemss"
+            v-on:change="sort(itemss)"
           ></v-select>
         </v-flex>
         <v-flex xs1 class="d-flex mx-3">
@@ -24,16 +25,16 @@
       </v-layout>
       <v-layout row wrap>
         <v-flex xs12>
-          <sotkclist1 />
+          <sotkclist1 :item="itemss" />
         </v-flex>
-      </v-layout>     
+      </v-layout>
     </v-container>
   </div>
 </template>
 <script>
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapMutations, mapGetters } from "vuex";
-import sotkclist1 from "~/components/modern/stocklist/stocklist1";
+import sotkclist1 from "~/components/modern/stocklist/stocklist1";  
 export default {
   layout: "desktopModern",
   components: {
@@ -42,7 +43,7 @@ export default {
   },
   data() {
     return {
-      items: ["day", "weeks", "months", "years", "all"],
+      items: ["ascending", "descending"],
       itemss: ""
     };
   },
@@ -52,10 +53,12 @@ export default {
   methods: {
     ...mapMutations(["setIsLoadingStockGame"]),
     goSearch() {
-      alert("You're right");
-    }
-  },created(){
-   this.active  = false;
+      console.log("You press search button");
+      // alert("You're right");
+    },  
+  },
+  created() {
+    this.active = false;
   }
 };
 </script>
