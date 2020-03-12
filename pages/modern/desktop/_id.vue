@@ -35,7 +35,6 @@
               <v-flex xs12>
                 <div id="selectstockGuideline">
                   <stockSelect />
-                  <!-- <selectStock :stockId="'btc1'"></selectStock> -->
                 </div>
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
@@ -63,8 +62,13 @@
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
                     <span
+                      v-if="getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).stockOpenOrClosed === 'Closed!'"
                       class="text-black"
-                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).betCloseTimeCountDownInMins | betclosein($route.params.id)}}</span>
+                    >{{getTimerByStockName($route.params.id) && 'close' | betclosein(getStockLoop($route.params.id))}}</span>
+                    <span
+                      v-else
+                      class="text-black"
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins | betclosein(getStockLoop($route.params.id))}}</span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -75,7 +79,7 @@
                   <v-flex class="lottery">
                     <span
                       class="text-black"
-                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins  | lotterydraw($route.params.id)}}</span>
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins | lotterydraw(getStockLoop($route.params.id))}}</span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -87,7 +91,7 @@
               </v-flex>
             </v-layout>
             <div id="betRuleButton">
-              <betButton :stockName="'btc1'" :loop="getLoop($route.params.id)"></betButton>
+              <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
             </div>
           </v-flex>
         </v-layout>
@@ -608,6 +612,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockLoop",
       "getTimerByStockName",
       "getStockUUIDByStockName",
       "getRoadMap",
@@ -641,7 +646,7 @@ export default {
 }
 
 .fullscreen .v-icon {
-  font-size:40px;
+  font-size: 40px;
 }
 
 /* left side corner toggle functionality in desktop  */
