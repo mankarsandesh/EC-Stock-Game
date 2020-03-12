@@ -520,7 +520,6 @@ const createStore = () => {
                     // alert(ex)
                 }
             },
-
             async sendBetting(context) {
                 context.commit("setIsSendBetting", true);
                 // console.warn("sendBetting...");
@@ -735,6 +734,7 @@ const createStore = () => {
                     return state.payout[gameRule];
                 }
             },
+
 
             checkAuth(state) {
                 if (
@@ -990,7 +990,6 @@ const createStore = () => {
                     let stockIdObject = object.filter(x => x.stock === data.stockId);
                     // check rule in stockId
                     // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
-
                     // get amount by rule
                     let result = 0;
                     for (let i = 0; i <= count; i++) {

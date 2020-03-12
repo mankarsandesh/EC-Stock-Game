@@ -5,9 +5,9 @@
         {{ $t("msg.livetime") }}:
         <!-- <span class="stockTimer">{{ getLiveTime(stockid) }}</span> -->
       </v-flex>
-      <!-- <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(stockid) > 0">
-        <span class="stockPrice">${{ getLivePrice(stockid) }}</span>
-      </v-flex>-->
+      <v-flex xs6 class="text-xs-right">
+        <span class="stockPrice">{{ getStockLivePrice(routeParams) }}</span>
+      </v-flex>
     </v-layout>
     <apexchart
       ref="realtimeChart"
@@ -37,14 +37,14 @@ export default {
   },
   data() {
     return {
-      routeParams:this.$route.params.id
+      routeParams: this.$route.params.id
     };
   },
   created() {
     this.asyncChart(this.getStockUUIDByStockName(this.$route.params.id));
   },
-  beforeDestroy(){
-    window.Echo.leave(`liveStockData.${this.routeParams}`)
+  beforeDestroy() {
+    window.Echo.leave(`liveStockData.${this.routeParams}`);
   },
   mounted() {
     // socket new api
@@ -76,6 +76,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockLivePrice",
       "getStockUUIDByStockName",
       "getLiveTime",
       "getLivePrice",

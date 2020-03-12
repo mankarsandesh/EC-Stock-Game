@@ -34,7 +34,7 @@
 <script>
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapMutations, mapGetters } from "vuex";
-import sotkclist1 from "~/components/modern/stocklist/stocklist1";
+import sotkclist1 from "~/components/modern/stocklist/stocklist1";  
 export default {
   layout: "desktopModern",
   components: {

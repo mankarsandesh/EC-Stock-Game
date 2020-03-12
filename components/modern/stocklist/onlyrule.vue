@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel v-model="panel" expand style="background-color:#fff;">
+  <v-expansion-panel v-model="panel" expand>
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
@@ -121,8 +121,8 @@ export default {
   },
   methods: {
     setActive(e) {
-      // $(".ruleHeading").removeClass("ruleHeading");
-      // $(e.target.parentElement.parentElement).addClass("ruleHeading");
+      $(".ruleHeading").removeClass("ruleHeading");
+      $(e.target.parentElement.parentElement).addClass("ruleHeading");
     }
   }
 };
@@ -130,16 +130,38 @@ export default {
 
 <style>
 .v-expansion-panel {
-  border: noen;
+  background-color: #f2f4ff;
+  border: none;
+}
+
+.theme--light.v-expansion-panel .v-expansion-panel__container .v-expansion-panel__header .v-expansion-panel__header__icon .v-icon {
+    color: #ffffff!important;
 }
 .rules{
-  color: #ffffff;
+  /* color: #ffffff; */
   background-color: #0b2a68 ;
 }
+
 .rules span {
-  color: #0b2a68;
+  /* color: #0b2a68; */
   background-color: #ffffff;
 }
+
+
+
+.rules-active{
+  background-color: #ffffff;
+}
+
+.rules-active span {
+  /* color: #0b2a68; */
+  background-color: #c9c8c8 ;
+}
+
+
+
+
+
 .ruleActive {
   /* border-radius: 10px; */
   margin: 7px;
@@ -151,6 +173,7 @@ export default {
   text-transform: capitalize;
   border-radius: 10px;
 }
+
 .headline1{
   color:red;
 }

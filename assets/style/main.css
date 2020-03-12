@@ -1,3 +1,12 @@
+.curretbet-btn:after {
+    left: auto;
+    top: -10px; 
+    content: "";
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #29B13D;
+    position: absolute;
+}
 /*
 Home Page Component
 */

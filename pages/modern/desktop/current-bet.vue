@@ -35,7 +35,7 @@ export default {
     ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   mounted() {
-    this.fetch(); // after this component render done, this will call the function from method
+    this.fetch(); // after this component    render done, this will call the function from method
   },
   methods: {
     async fetch() {
@@ -58,6 +58,7 @@ export default {
           }
         );
         this.desserts = data.data; // after will get the respone the object or array that come with will be equal the array that we create in the data funtion
+        console.log(data, "current bett");
       } catch (error) {
         console.log(data);
       }

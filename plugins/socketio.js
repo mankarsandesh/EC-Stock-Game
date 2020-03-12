@@ -1,5 +1,5 @@
 import Echo from "laravel-echo";
-export default () => {
+export default ({ store }) => {
   const hostName = "uattesting.equitycapitalgaming.com";
   const port = 6001;
 
@@ -24,4 +24,17 @@ export default () => {
       console.log(error.message);
     }
   }
+  function listenForBroadcast({ channelName, eventName }, callback) {
+    window.Echo.channel(channelName).listen(eventName, callback);
+  }
+  // start listening socket stock live price
+  listenForBroadcast(
+    {
+      channelName: `stockList.${store.getters.getPortalProviderUUID}`,
+      eventName: "stockList"
+    },
+    ({ data }) => {
+      store.commit("setStockListTimer", data.data.stockData);
+    }
+  );
 };

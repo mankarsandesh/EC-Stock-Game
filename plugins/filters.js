@@ -17,7 +17,7 @@ Vue.filter("currency", (value, decimalCount = 2) => {
 });
 // countdown bet close in
 Vue.filter("betclosein", (value, loop) => {
-  if (!value || !loop) return "";
+  if (!value || !loop) return "...";
   if (value == "close") return "MARKET CLOSE";
   let result = "";
   // for  loop 1
@@ -44,14 +44,10 @@ Vue.filter("betclosein", (value, loop) => {
   return result;
 });
 // set second to minute for 5 minute loop game
-Vue.filter("lotterydraw", (value, stockName) => {
-  if (!value | !stockName) return "";
-  if (value == "close") return "";
-  let loop = 5;
+Vue.filter("lotterydraw", (value, loop) => {
+  if (!value | !loop) return "...";
+  if (value == "close") return "...";
   let result = "";
-  if (stockName === "btc1") {
-    loop = 1;
-  }
   if (loop == 1) {
     if (value > 40) {
       value = value + 40 - 80;

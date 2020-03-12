@@ -34,8 +34,7 @@
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
-                  <stockSelect :items="SelectStockItems.data" />
-                  <!-- <selectStock :stockId="'btc1'"></selectStock> -->
+                  <stockSelect />
                 </div>
               </v-flex>
               <v-flex v-if="getStockById($route.params.id).stockPrice.length>0">
@@ -64,8 +63,13 @@
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
                     <span
+                      v-if="getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).stockOpenOrClosed === 'Closed!'"
                       class="text-black"
-                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).betCloseTimeCountDownInMins | betclosein($route.params.id)}}</span>
+                    >{{getTimerByStockName($route.params.id) && 'close' | betclosein(getStockLoop($route.params.id))}}</span>
+                    <span
+                      v-else
+                      class="text-black"
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins | betclosein(getStockLoop($route.params.id))}}</span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -76,7 +80,7 @@
                   <v-flex class="lottery">
                     <span
                       class="text-black"
-                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins | lotterydraw($route.params.id)}}</span>
+                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins | lotterydraw(getStockLoop($route.params.id))}}</span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -89,7 +93,7 @@
               </v-flex>
             </v-layout>
             <div id="betRuleButton">
-              <betButton :stockName="'btc1'" :loop="getLoop($route.params.id)"></betButton>
+              <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
             </div>
           </v-flex>
         </v-layout>
@@ -296,7 +300,6 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
-import SelectStockItems from "~/data/json/current-bet";
 import leaderBoard from "~/components/modern/leaderboard/leaderboard";
 import config from "../../../config/config.global";
 
@@ -320,7 +323,6 @@ export default {
   data() {
     return {
       routeParams: this.$route.params.id,
-      SelectStockItems,
       stock: [],
       dialog: false,
       bgColor: "#778899",
@@ -624,6 +626,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockLoop",
       "getTimerByStockName",
       "getStockUUIDByStockName",
       "getRoadMap",

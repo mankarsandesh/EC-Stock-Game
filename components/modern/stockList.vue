@@ -22,11 +22,11 @@
             v-html="$options.filters.livePriceColor(data.stockPrice ,getStockListTimer[1][index].stockPrice)"
           ></td>
           <td v-if="data.stockOpenOrClosed==='Closed!'">{{data.stockOpenOrClosed}}</td>
+
           <td v-else>
-            <span v-if="data.betCloseTimeCountDownInMins>0">ACCEPTING</span>
-            <span v-else>CALCULATING</span>
+            <span>{{data.gameEndTimeCountDownInMins | betstatus(getStockLoop(data.stockName))}}</span>
           </td>
-          <td>{{data.gameEndTimeCountDownInMins | lotterydraw(data.stockName) }}</td>
+          <td>{{data.gameEndTimeCountDownInMins | lotterydraw(getStockLoop(data.stockName)) }}</td>
           <!-- <td
             v-html="$options.filters.livePriceColor(getLivePrice(data.id),getPreviousPrice(data.id) )"
           ></td>-->
@@ -44,8 +44,8 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   computed: {
     ...mapGetters([
+      "getStockLoop",
       "getStockListTimer",
-      "getPortalProviderUUID",
       "getStockList",
       "getLotteryDraw",
       "getStockById",
@@ -56,28 +56,9 @@ export default {
   data() {
     return {};
   },
-  created() {
-    this.listenForBroadcast(
-      {
-        channelName: `stockList.${this.getPortalProviderUUID}`,
-        eventName: "stockList"
-      },
-      ({ data }) => {
-        this.setStockListTimer(data.data.stockData);
-      }
-    );
-  },
-  beforeDestroy() {
-    this.stopListenSocket();
-  },
+  created() {},
   methods: {
     ...mapMutations(["setStockListTimer"]),
-    stopListenSocket() {
-      window.Echo.leave(`stockList.${this.getPortalProviderUUID}`);
-    },
-    listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
-    }
   }
 };
 </script>
