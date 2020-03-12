@@ -130,7 +130,10 @@ export default {
 
 <style>
 .v-expansion-panel {
-  border: noen;
+  border: none;
+}
+.theme--light.v-expansion-panel .v-expansion-panel__container .v-expansion-panel__header .v-expansion-panel__header__icon .v-icon {
+    color: #ffffff!important;
 }
 .rules{
   color: #ffffff;
