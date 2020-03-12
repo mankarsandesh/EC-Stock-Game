@@ -34,8 +34,7 @@
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
-                  <stockSelect :items="SelectStockItems.data" />
-                  <!-- <selectStock :stockId="$route.params.id"></selectStock> -->
+                  <stockSelect />
                 </div>
               </v-flex>
               <v-flex pt-1 v-if="getStockById($route.params.id).stockPrice.length>0">
@@ -287,7 +286,6 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
-import SelectStockItems from "~/data/json/current-bet";
 import leaderBoard from "~/components/modern/leaderboard/leaderboard";
 import config from "../../../config/config.global";
 
@@ -311,7 +309,6 @@ export default {
   data() {
     return {
       routeParams: this.$route.params.id,
-      SelectStockItems,
       stock: [],
       dialog: false,
       bgColor: "#778899",
