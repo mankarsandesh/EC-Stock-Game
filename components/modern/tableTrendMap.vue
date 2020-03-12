@@ -81,8 +81,7 @@
           fab
           class="multiGame"
           dark
-          v-on="on"
-          title="Full Screen"
+          v-on="on"          
         >
           <i style="font-size:30px;" class="fa fa-gamepad" aria-hidden="true"></i>
         </v-btn>
@@ -142,6 +141,7 @@ export default {
 
 <style scoped>
 .multiGame {
+  z-index: 999;
   position: fixed;
   right: 20px;
   bottom: 90px;

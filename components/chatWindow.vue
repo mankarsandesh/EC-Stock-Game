@@ -2,13 +2,17 @@
   <popper
     trigger="click"
     :options="{
-                      placement: 'bottom-end',
-                       modifiers: { offset: { offset: '55px' } }
-                }"
+      placement: 'bottom-end',
+      modifiers: { offset: { offset: '65px' } }
+    }"
   >
     <div class="popper">
       <div id="headerChat">
-        <span class="tabs" v-on:click="tab1" v-bind:class="{ active: isActiveTab1 }">
+        <span
+          class="tabs"
+          v-on:click="tab1"
+          v-bind:class="{ active: isActiveTab1 }"
+        >
           <a href="#">EC World</a>
         </span>
         <span
@@ -24,17 +28,26 @@
       <div class="chatRoom">
         <div v-if="allChannel">
           <div id="bodyChat" class="messages">
-            <div id="messageChannel" v-for="data in getMessages" :key="data.index" class="msgUser">
+            <div
+              id="messageChannel"
+              v-for="data in getMessages"
+              :key="data.index"
+              class="msgUser"
+            >
               <div class="messageChatView">
-                <a href="#">{{data.name}}</a>
-                <span>{{new Date(data.date).toString().slice(4,24)}}</span>
-                <p class="msgBody">{{data.message}}</p>
+                <a href="#">{{ data.name }}</a>
+                <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
+                <p class="msgBody">{{ data.message }}</p>
               </div>
             </div>
           </div>
 
           <div id="messageChat">
-            <input resize="none" v-model="message" placeholder="Say Somthing..." />
+            <input
+              resize="none"
+              v-model="message"
+              placeholder="Say Somthing..."
+            />
             <span v-on:click="sendMsg" class="btn">
               <i class="fa fa-paper-plane"></i>
             </span>
@@ -43,17 +56,25 @@
 
         <div v-if="betChannel">
           <div id="bodyChat">
-            <div class="msgUser" v-for="data in getMessagesGame" :key="data.index">
+            <div
+              class="msgUser"
+              v-for="data in getMessagesGame"
+              :key="data.index"
+            >
               <div class="messageChatView">
-                <a href="#">{{data.name}}</a>
-                <span>{{new Date(data.date).toString().slice(4,24)}}</span>
-                <p class="msgBody">{{data.message}}</p>
+                <a href="#">{{ data.name }}</a>
+                <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
+                <p class="msgBody">{{ data.message }}</p>
               </div>
             </div>
           </div>
 
           <div id="messageChat">
-            <input resize="none" v-model="messageGame" placeholder="Say Somthing..." />
+            <input
+              resize="none"
+              v-model="messageGame"
+              placeholder="Say Somthing..."
+            />
             <span v-on:click="sendMsgGame" class="btn">
               <i class="fa fa-paper-plane"></i>
             </span>
@@ -84,7 +105,7 @@ export default {
     return {
       getGameChannel: true,
       newMessages: [],
-      gameUUID: "4578b4cc-82f0-4ebf-9b58-70bbacfc7ed8",
+      gameUUID: "b78548b9-05a1-4a9a-826e-288010df28d0",
       uniqueUserID: Math.floor(Math.random() * (999 - 100 + 1) + 100),
       isActiveTab1: true,
       isActiveTab2: false,
@@ -98,13 +119,7 @@ export default {
       allMessageGame: [],
       connectClient: [],
       totoalUserCount: 0,
-      userId: 0,
-      socketLiveStockInput: {
-        channelName:
-          "messageSend.f267680f-5e7f-4e40-b317-29a902e8adb7.4578b4cc-82f0-4ebf-9b58-70bbacfc7ed8",
-        eventName: "messageSend"
-      }
-      // username : this.getUserName.name
+      userId: 0
     };
   },
   computed: {
@@ -113,6 +128,26 @@ export default {
   },
   mounted() {
     // Global Channel
+    this.listenForBroadcast(
+      {
+        channelName: `messageSend.${this.portalProviderUUID}.${this.gameUUID}`,
+        eventName: "messageSend"
+      },
+      ({ data }) => {
+        data.data.forEach(element => {
+          console.log("Test11111");
+          console.log(element);
+          this.getMessagesGame.push({
+            name: `user ${this.uniqueUserID}`,
+            userId: element.userUUID,
+            message: element.message,
+            date: element.date
+          });
+          this;
+        });
+      }
+    );
+    // Game Channel Game ID wise
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.portalProviderUUID}.global`,
@@ -126,28 +161,10 @@ export default {
             message: element.message,
             date: element.date
           });
+          console.log(this.getMessages);
         });
       }
     );
-    // Game Channel Game ID wise
-    this.listenForBroadcast(
-      {
-        channelName: `messageSend.${this.portalProviderUUID}.${this.gameUUID}`,
-        eventName: "messageSend"
-      },
-      ({ data }) => {
-        data.data.forEach(element => {
-          this.getMessagesGame.push({
-            name: `user ${this.uniqueUserID}`,
-            userId: element.userUUID,
-            message: element.message,
-            date: element.date
-          });
-        });
-      }
-    );
-
-    // this.asynUserInfo();    // This function call has no use to the central state(we are not going to dispatch anything to the central state) because we are not going to dispatch anything to the central state(only in case of the chat window. Hence in future it will be removed)
   },
   updated() {
     $("#bodyChat")
@@ -186,8 +203,7 @@ export default {
             {
               portalProviderUUID: this.portalProviderUUID,
               userUUID: this.userUUID,
-              gameUUID: this.gameUUID,
-              chatType: "2",
+              chatType: 2,
               message: this.message,
               version: "0.1"
             },
@@ -200,7 +216,6 @@ export default {
           .then(response => {
             console.log(response.data);
           });
-        console.log("Message Send");
         this.message = "";
       }
     },
@@ -213,7 +228,7 @@ export default {
               portalProviderUUID: this.portalProviderUUID,
               userUUID: this.userUUID,
               gameUUID: this.gameUUID,
-              chatType: "1",
+              chatType: 1,
               message: this.messageGame,
               version: "0.1"
             },
@@ -225,9 +240,7 @@ export default {
           )
           .then(response => {
             console.log(response.data);
-          });
-        console.log("Send Game Message");
-        console.log(this.messageGame);
+          });       
         this.messageGame = "";
       }
     }
@@ -237,6 +250,7 @@ export default {
 
 <style scoped>
 .liveChat {
+  z-index: 999;
   position: fixed;
   right: 20px;
   bottom: 20px;
@@ -246,8 +260,8 @@ export default {
   background-color: #2aaf3e !important;
 }
 .popper {
-  width: 400px;
-  border-radius: 15px;
+  width: 300px;
+  border-radius: 10px;
   border: 1px solid #dddddd;
 }
 .liveChatImg {
@@ -269,17 +283,16 @@ export default {
 }
 
 .chatRoom {
-  height: 600px;
+  height: 400px;
   width: 100%;
   /* margin-r: 300px; */
-  padding: 10px 10px;
+  padding: 2px 3px;
   border-radius: 5px;
   background-color: #fff;
 }
 
 #headerChat {
   height: 45px;
-  /* border: 1px solid #333; */
 }
 #headerChat span:first-child a {
   border-top-left-radius: 15px;
@@ -292,15 +305,14 @@ export default {
   background-color: #fff;
   color: #333;
   padding: 0px 4px;
-  height: 40px;
-  width: 40px;
-  font-size: 16px;
+  height: 30px;
+  width: 30px;
+  font-size: 14px;
 }
 
 #headerChat .tabs {
   text-align: center;
   width: 50%;
-  /* border:1px solid red; */
   float: left;
 }
 
@@ -309,7 +321,7 @@ export default {
   text-transform: uppercase;
   width: 100%;
   /* border-top-right-radius: 20px; */
-  font-size: 18px;
+  font-size: 13px;
   float: left;
   padding: 10px 15px;
 
@@ -325,29 +337,18 @@ export default {
 
 #bodyChat {
   background-color: #fff;
-  height: 480px;
+  height: 350px;
   text-align: left;
-  padding: 10px 0px;
   overflow: scroll;
   overflow-x: hidden;
   border-radius: 4px;
   margin-bottom: 10px;
-  /* border: 1px solid #cccccc; */
-}
-
-#messageChat {
-  background-color: #fff;
-  height: 45px;
-  padding: 0px 10px;
-  /* border: 1px solid red; */
-  width: 100%;
-  display: inline-flex;
 }
 
 .msgUser {
   border: 1px solid #cecece;
   background-color: #f5f4f4;
-  padding: 10px 15px 0px;
+  padding: 5px 8px 0px;
   overflow: auto;
   border-radius: 8px;
   max-width: 350px;
@@ -359,12 +360,15 @@ export default {
   border-radius: 20px;
   padding: 2px 8px;
   float: right;
-  font-size: 12px;
+  font-size: 10px;
 }
 .msgUser p {
+  text-align: justify;
   float: left;
   width: 100%;
+  margin-top: 2px;
   margin-bottom: 5px;
+  font-size: 11px;
 }
 
 .msgUser a {
@@ -373,23 +377,29 @@ export default {
   font-weight: 600;
   float: left;
   color: #003e70;
+  font-size: 12px;
 }
 
 .msgBody {
   color: #7f7e7e;
 }
 #messageChat {
-  margin-top: 10px;
+  background-color: #fff;
+  height: 35px;
+  padding: 0px 10px;
+  width: 100%;
+  display: inline-flex;
+  border-radius: 5px;
   border: 1px solid #d3d2d2;
-  border-radius: 10px;
 }
+
 #messageChat input {
   float: left;
   width: 100%;
   padding: 5px;
   margin-right: 0px;
-  font-size: 15px;
-  height: 40px;
+  font-size: 12px;
+  height: 30px;
   resize: none;
   color: #003e70;
 }
@@ -402,8 +412,7 @@ export default {
   padding: 5px 10px;
   color: #d3d2d2;
   cursor: pointer;
-  font-size: 20px;
-  border-radius: 40rem;
+  font-size: 16px;
   margin-top: 0px;
 }
 #messageChat .btn:hover {
@@ -412,7 +421,7 @@ export default {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
 }
 
 /* Track */

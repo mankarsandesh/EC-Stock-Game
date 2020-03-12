@@ -10,10 +10,10 @@
           :pauseOnHover="pauseOnHover"
           :pauseTime="pauseTime"
           :marqueeList="winner"
-          height="33px"
+          height="30px"
           width="100%"
           color="#f76a24"
-          fontSize="14px"
+          fontSize="13px"
         ></winnerMarquee>
       </v-flex>
       <v-flex xs1 class="text-xs-right closebutton">
@@ -41,7 +41,7 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <v-toolbar class="elevation-3">
+    <v-toolbar >
       <v-container fluid class="navbar">
         <v-toolbar-title>
           <v-img
@@ -244,17 +244,17 @@ export default {
 }
 .badge {
   position: absolute;
-  margin-top: -6px;
-  margin-right: 25px;
+  margin-top: -5px;
+  margin-left: -15px;
   background-color: red;
   color: #fff;
   border-radius: 180px;
   padding: 1px;
-  height: 21px;
-  width: 21px;
-  font-size: 11px;
+  height: 18px;
+  width: 18px;
+  font-size: 10px;
   font-weight: 800;
-  border: 1px solid #dddddd;
+  border: 1px solid #333;
 }
 .closebutton {
   margin-right: 10px;
@@ -264,7 +264,7 @@ export default {
 }
 .menuItemNotification {
   height: 62px !important;
-  width: 50px !important;
+  width: 40px !important;
   text-align: center;
   padding-top: 16px;
   cursor: pointer;
