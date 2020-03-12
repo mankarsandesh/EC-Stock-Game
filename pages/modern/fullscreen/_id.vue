@@ -115,9 +115,8 @@
             <v-flex xs12 sm12 md3 lg3>
                 <h2 font-weight-bold style="text-align:right;color:#013f70;">Acc : {{getUserInfo.balance | currency}}</h2>
                 <!-- Toggle between two components -->
-                <fullscreenchart v-if="!isHidden"></fullscreenchart>
-                <currentBet v-else></currentBet>
-                <!-- <div  style="height=300px;"> Hello</div> -->
+                <fullscreenchart v-if="!isHidden" ></fullscreenchart>
+                <currentBet v-else :desserts="desserts" ></currentBet>
                 <div class="setborder">
                     <span class="seticon" >
                         <i class="fa fa-user fa-2x iconcolor" />
@@ -213,12 +212,13 @@ export default {
             msg: "",
             dataliveBetAll: {},
             stockId: "",
-            loop: ""
+            desserts:[]
+            
         };
     },
     created() {
         this.getSotckId();
-        this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+        this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));  
     },
     beforeDestroy() {
         window.Echo.leave(
@@ -228,6 +228,7 @@ export default {
         );
     },
     mounted() {
+        this.fetch()
             // socket new api
             this.listenForBroadcast({
                     channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -281,7 +282,9 @@ export default {
             "getLoop",
             "getStockChart",
             "getLiveTime",
-            "getLivePrice"
+            "getLivePrice",
+            "headers",
+            "getUserUUID"
         ])
     },
     methods: {
@@ -430,7 +433,34 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        async fetch() {
+            try {
+                // afer moumted call the functions this method will run the fetch the data from API
+                const data1 = {
+                // before we call the data we should make the object to the send the request with the API
+                portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
+                userUUID: this.getUserUUID, // get the userUUID with the this object
+                version: "0.1", // version of API
+                betResult: [-1, 0, 1], // -1= pending, pending that mean is betting
+                limit: "20", // limit the data we the data come will come only the 20 that we limit in this case
+                offset: "0" // offset or skip the data
+                };
+                const { data } = await this.$axios.post(
+                "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
+                data1, // data object
+                {
+                    headers: {
+                    Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, becase the backend they will check
+                    }
+                }
+                );
+                this.desserts = data.data; // after will get the respone the object or array that come with will be equal the array that we create in the data funtion
+                console.log(data,"current betttt");
+            } catch (error) {
+                console.log(data,"current betttt");
+            }
+        },
     }
 };
 </script>
@@ -514,8 +544,8 @@ export default {
 
 .seticon {
     border: 2px solid #b4b2b2;
-    border-radius: 20px;
-    margin: 10px 13px;
+    border-radius: 10px;
+    margin: 10px 23px;
     padding: 8px 10px;
     height: 25px;
     min-width: 25px!important;

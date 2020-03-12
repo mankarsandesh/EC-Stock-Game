@@ -1,71 +1,44 @@
 <template>
 <div id="table-scroll" class="table-scroll table-wrapper-scroll-y pl-3">
     <div>
-        <table class="main-table text-center">
-
-            <tbody>
+        <table class="main-table">
+            <tbody v-for="(item ,index) in desserts" :key="index">
                 <tr class="table-rowheight">
                     <th class="fixed-side table-headbg">BET ID</th>
-                    <td>5716868786168778918788</td>
+                    <td>{{item.betID}}</td>
                 </tr>
                 <tr class="table-rowheight">
                     <th class="fixed-side table-headbg">GAME ID</th>
-                    <td>528176897187</td>
+                    <td>{{item.gameID}}</td>
                 </tr>
                 <tr class="table-rowheight">
                     <th class="fixed-side table-headbg">BET DETAIL</th>
-                    <td>Both digit-odd(1.95)BTC/USDT 1 minute</td>
+                    <td>{{item.ruleName}} - ({{item.payout}}) {{item.stockName}} / {{item.loop}}</td>
                 </tr>
                 <tr class="table-rowheight">
                     <th class="fixed-side table-headbg">TIME</th>
-                    <td>2020-02-13 08:31:36</td>
+                    <td>{{item.createdTime}}</td>
                 </tr>
                 <tr class="table-rowheight">
                     <th class="fixed-side table-headbg">AMOUNT</th>
-                    <td>200</td>
+                    <td>{{item.betAmount}}</td>
                 </tr>
                 <tr class="table-rowheight">
                     <th class="fixed-side table-headbg">PAYOUT</th>
-                    <td>1.95</td>
+                    <td>{{item.payout}}</td>
                 </tr>
                 <tr class="table-rowheight">
                     <th class="fixed-side table-headbg">BET STATUS</th>
-                    <td>
-                        <v-chip color="yellow " text-color="black">PENDING</v-chip>
+                    <td v-if="item.betResult == 'win'">
+                        <v-chip color="green" text-color="white">{{item.betResult}}</v-chip>
+                    </td>
+                    <td v-if="item.betResult == 'lose'">
+                        <v-chip color="red" text-color="white">{{item.betResult}}</v-chip>
+                    </td>
+                    <td v-if="item.betResult == 'pending'">
+                        <v-chip color="yellow " text-color="black">{{item.betResult}}...</v-chip>
                     </td>
                 </tr>
-
-                <tr class="table-rowheight">
-                    <th class="fixed-side table-headbg">BET ID</th>
-                    <td>5716868786168778918788</td>
-                </tr>
-                <tr class="table-rowheight">
-                    <th class="fixed-side table-headbg">GAME ID</th>
-                    <td>528176897187</td>
-                </tr>
-                <tr class="table-rowheight">
-                    <th class="fixed-side table-headbg">BET DETAIL</th>
-                    <td>Both digit-odd(1.95)BTC/USDT 1 minute</td>
-                </tr>
-                <tr class="table-rowheight">
-                    <th class="fixed-side table-headbg">TIME</th>
-                    <td>2020-02-13 08:31:36</td>
-                </tr>
-                <tr class="table-rowheight">
-                    <th class="fixed-side table-headbg">AMOUNT</th>
-                    <td>200</td>
-                </tr>
-                <tr class="table-rowheight">
-                    <th class="fixed-side table-headbg">PAYOUT</th>
-                    <td>1.95</td>
-                </tr>
-                <tr class="table-rowheight">
-                    <th class="fixed-side table-headbg">BET STATUS</th>
-                    <td>
-                        <v-chip color="yellow " text-color="black">PENDING</v-chip>
-                    </td>
-                </tr>
-
             </tbody>
         </table>
     </div>
@@ -75,8 +48,15 @@
 <script>
 // requires jquery library
 jQuery(document).ready(function () {
-    jQuery(".main-table").clone(true).appendTo('#table-scroll').addClass('clone');
+    jQuery(".main-table")
+        .clone(true)
+        .appendTo("#table-scroll")
+        .addClass("clone");
 });
+</script><script>
+export default {
+    props: ["desserts"]
+};
 </script>
 
 <style scoped>
@@ -86,6 +66,7 @@ jQuery(document).ready(function () {
 
 .table-scroll {
     position: relative;
+
     max-width: 600px;
     margin: auto;
     overflow: auto;
@@ -93,7 +74,7 @@ jQuery(document).ready(function () {
 }
 
 .table-wrapper-scroll-y {
-display: block;
+    display: block;
 }
 
 .th {
@@ -126,8 +107,6 @@ display: block;
     background: #f9f9f9;
 }
 
-
-
 .clone tbody th {
     visibility: visible;
     color: red;
@@ -137,7 +116,6 @@ display: block;
     border: 1px solid #000;
     background: #f1f1f1;
     visibility: visible;
-
 }
 
 .table-headbg {
@@ -147,5 +125,24 @@ display: block;
 .clone thead,
 .clone tfoot {
     background: transparent;
+}
+
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 7px #ACACAC;
+  border-radius: 10px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ACACAC;
+  border-radius: 15px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2C6B9E;
 }
 </style>
