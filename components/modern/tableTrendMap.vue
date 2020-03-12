@@ -1,7 +1,7 @@
 <template>
   <div v-if="dataArray.length > 0 ">
-    <v-layout wrap pa-4 row>
-      <v-flex xs1 lg1 v-if="!isFullscreen" style="padding-top:50px;">
+    <v-layout wrap  row >
+      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" style="padding-top:50px;">
         <v-layout>
           <v-flex xs9>
             <v-btn
@@ -52,7 +52,7 @@
           <v-flex class="triangle-right" v-show="activeType=='twoDigit'"></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex class="xs10">
+      <v-flex xs10 md10 lg10 xl10>
         <v-layout row wrap>
           <v-flex xs12 lg12 md12>
             <trendMap
@@ -72,10 +72,22 @@
         </v-layout>
       </v-flex>-->
     </v-layout>
-
-    <v-btn rigth fab class="multiGame" :to="'/modern/multigame/' +$route.params.id">
-      <i style="font-size:30px;z-index: 999;" class="fa fa-gamepad" aria-hidden="true"></i>
-    </v-btn>
+    <v-tooltip left id="fullscreenGuidelines">
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="primary"
+          :to="'/modern/multigame/' +$route.params.id"
+          rigth
+          fab
+          class="multiGame"
+          dark
+          v-on="on"          
+        >
+          <i style="font-size:30px;" class="fa fa-gamepad" aria-hidden="true"></i>
+        </v-btn>
+      </template>
+      <span>Multiple Game</span>
+    </v-tooltip>
   </div>
 </template>
 
@@ -129,6 +141,7 @@ export default {
 
 <style scoped>
 .multiGame {
+  z-index: 999;
   position: fixed;
   right: 20px;
   bottom: 90px;

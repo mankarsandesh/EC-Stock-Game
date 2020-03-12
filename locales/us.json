@@ -210,8 +210,8 @@
         "M": "M"
     },
     "stockname": {
-        "btc1": "BTC/USDT",
-        "btc": "BTC/USDT",
+        "btc1": "BTC/USDT1",
+        "btc": "BTC/USDT5",
         "usindex": "US dollar Index",
         "btc5": "BTC/USDT",
         "sh000001": "SH000001",

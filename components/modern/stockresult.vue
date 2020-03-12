@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-flex pa-2 class="text-xs-center flex-cursor pa-0 betTab activeTab">
-        <span>{{$t('msg.stockResult')}}</span>
-      </v-flex>
+      <v-flex pa-2 class="headerStockBar">{{ $t("msg.stockResult") }}</v-flex>
     </v-layout>
     <v-layout>
       <!-- bet result -->
@@ -12,18 +10,18 @@
           <h3 class="title" v-show="getStockResult.length < 0"></h3>
           <table class="table">
             <tr>
-              <th>{{$t('msg.Stock Name')}}</th>
-              <th>{{$t('msg.Time')}}</th>
-              <th>{{$t('msg.Result')}}</th>
+              <th>{{ $t("msg.Stock Name") }}</th>
+              <th>{{ $t("msg.Time") }}</th>
+              <th>{{ $t("msg.Result") }}</th>
             </tr>
-            <tr v-for="(data,index) in getStockResult" :key="index">
+            <tr v-for="(data, index) in getStockResult" :key="index">
               <td>
-                <nuxt-link
-                  :to="'/modern/desktop/'+data.stockName"
-                >{{ $t(`stockname.${data.stockName}`)}} </nuxt-link>
+                <nuxt-link :to="'/modern/desktop/' + data.stockName"
+                  >{{ $t(`stockname.${data.stockName}`) }}
+                </nuxt-link>
               </td>
-              <td class="text-xs-center">{{data.stockTimestamp}}</td>
-                <td class="text-xs-center">{{data.stockValue}}</td>
+              <td class="text-xs-center">{{ data.stockTimestamp }}</td>
+              <td class="text-xs-center">{{ data.stockValue }}</td>
             </tr>
           </table>
         </div>
@@ -33,6 +31,7 @@
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
+import config from "../../config/config.global";
 export default {
   data() {
     return {
@@ -55,18 +54,16 @@ export default {
     async stockResult() {
       const dataSend = {
         portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-        version: "0.1" // version of API
+        version: config.version // version of API
       };
       const { data } = await this.$axios.post(
         "http://uattesting.equitycapitalgaming.com/webApi/getAllStock", // after finish crawl the every API will the the baseURL from AXIOS
         dataSend, // data object
         {
-          headers: {
-            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, becase the backend they will check
-          }
+          headers: this.headers
         }
       );
-      this.getStockResult = data.data;      
+      this.getStockResult = data.data;
     }
   }
 };
@@ -90,12 +87,15 @@ td a {
 th {
   background-color: #cccccc;
 }
-th,
+th {
+  text-transform: capitalize;
+  padding: 5px;
+}
 td {
+  font-weight: 400;
   text-align: center;
-  padding: 8px;
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd;
+  padding: 5px;
+  border: 1px solid #ddd;
 }
 .flex-cursor {
   cursor: pointer;

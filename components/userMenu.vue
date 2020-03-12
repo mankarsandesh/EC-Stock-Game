@@ -82,7 +82,7 @@ export default {
     formatToPrice(value) {
       return `${Number(value)
         .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "1,")}`;
     },
     getLogout() {
       this.$swal({

@@ -4,16 +4,16 @@
       <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
       <v-flex xs4 class="text-xs-right">
         <winnerMarquee
-          style="margin-top:-10px;"
+          class="winnerText"
           :scrollSpeed="scrollSpeed"
           :showSpeed="showSpeed"
           :pauseOnHover="pauseOnHover"
           :pauseTime="pauseTime"
           :marqueeList="winner"
-          height="33px"
+          height="30px"
           width="100%"
           color="#f76a24"
-          fontSize="14px"
+          fontSize="13px"
         ></winnerMarquee>
       </v-flex>
       <v-flex xs1 class="text-xs-right closebutton">
@@ -41,7 +41,7 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <v-toolbar class="elevation-3">
+    <v-toolbar >
       <v-container fluid class="navbar">
         <v-toolbar-title>
           <v-img
@@ -68,8 +68,14 @@
             </v-btn>
           </div>
           <userMenu class="layout-logout" />
-          <span flat @click="showNotification = true" id="notification"  class="menuItemNotification"   >
+          <span
+            flat
+            @click="showNotification = true"
+            id="notification"
+            class="menuItemNotification"
+          >
             <i class="fa fa-bell-o fa-2x" />
+            <span class="badge">{{messagesCount}}</span>
           </span>
         </v-toolbar-items>
       </v-container>
@@ -86,6 +92,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
+import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
@@ -103,10 +110,12 @@ export default {
     languageDialog,
     winnerMarquee,
     welcomeUser,
-    userMenu
+    userMenu,
+    AnimatedNumber
   },
   data() {
     return {
+      messagesCount: 2,
       activeClass: null,
       showNotification: false,
       direction: "top",
@@ -175,7 +184,7 @@ export default {
         userUUID: this.getUserUUID, // get the userUUID with the this object
         version: "0.1", // version of API
         betResult: [0, 1], // -1= pending, pending that mean is betting
-        limit: "10", // limit the data we the data come will come only the 20 that we limit in this case
+        limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
         offset: "0" // offset or skip the data
       };
       const { data } = await this.$axios.post(
@@ -187,6 +196,7 @@ export default {
           }
         }
       );
+      this.messagesCount = data.data.length;
       for (let i = 0; i < data.data.length - 1; i++) {
         let betID = data.data[i].betID;
         let betResult = data.data[i].betResult;
@@ -194,10 +204,11 @@ export default {
         let ruleName = data.data[i].ruleName;
         let betAmount = data.data[i].betAmount;
         let betTime = data.data[i].createdTime;
+        let stockName = data.data[i].stockName;
         let win = `<span class="text-slide text-white"><span class="text-warning">
                         <i class="fa fa-bell"></i>
-                        </span>Player ${betID}, <span class="text-warning">${betResult} ${betAmount},
-                        </span> ${ruleName}  ${betTime}</span>`;
+                        </span>Player ${betResult}  ${betAmount} chips on,
+                         ${stockName} stock ${ruleName}  ${betTime}</span>`;
         this.winner.push(win);
       }
     }
@@ -220,6 +231,31 @@ export default {
 </script>
 
 <style scoped>
+.menuItem span {
+  font-size: 13px;
+}
+.menuItem i {
+  font-size: 18px;
+}
+.winnerText {
+  margin-top: -10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.badge {
+  position: absolute;
+  margin-top: -5px;
+  margin-left: -15px;
+  background-color: red;
+  color: #fff;
+  border-radius: 180px;
+  padding: 1px;
+  height: 18px;
+  width: 18px;
+  font-size: 10px;
+  font-weight: 800;
+  border: 1px solid #333;
+}
 .closebutton {
   margin-right: 10px;
   margin-top: -15px;
@@ -228,7 +264,7 @@ export default {
 }
 .menuItemNotification {
   height: 62px !important;
-  width: 50px !important;
+  width: 40px !important;
   text-align: center;
   padding-top: 16px;
   cursor: pointer;
@@ -245,7 +281,7 @@ export default {
 .menuItem {
   border-right: 2px solid #dddddd;
   height: 62px !important;
-  padding:15px 15px;
+  padding: 15px 15px;
 }
 .logostyle {
   cursor: pointer;
@@ -304,7 +340,7 @@ export default {
 
 .btn-langage {
   border: 1px solid #ccc;
-  border-radius: 1em;
+  border-radius: 4px;
   display: flow-root;
 }
 

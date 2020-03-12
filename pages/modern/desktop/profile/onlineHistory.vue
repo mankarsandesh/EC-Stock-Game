@@ -143,7 +143,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "headers","getUserUUID"])
   },
   methods: {
     ...mapActions(["asynUserInfo"]),
@@ -159,15 +159,13 @@ export default {
             version: config.version
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            }
+            headers: this.headers
           }
         );
         if (res.code === 200) {
           this.chartData = [1500];
           this.xaxis = ["2020-02-26"];
-          let result = res.data[0].activeTimeDateWise;
+          let result = res.data.activeTimeDateWise;
           console.log("result online chart");
           console.log(res);
           console.log("result online chart");
@@ -179,7 +177,7 @@ export default {
           console.log(this.xaxis);
         } else {
           console.log(res);
-          alert(res.message);
+          //alert(res.message);
         }
       } catch (ex) {
         console.error(ex);
