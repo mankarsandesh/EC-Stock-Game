@@ -1,7 +1,5 @@
-require('dotenv');
-
 const config = {
-    version: "1",
+    version: "2",
     header: {
         authorization: process.env.BASIC_AUTH
     },
