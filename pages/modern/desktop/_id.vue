@@ -2,7 +2,13 @@
   <v-container class="mt-2">
     <v-layout style="background-color:#f4f5fd;">
       <v-flex v-if="!isHidden" class="leftStocklist">
-        <v-btn @click="isHidden = true" fab small slot="reference" class="sidebar-close">
+        <v-btn
+          @click="isHidden = true"
+          fab
+          small
+          slot="reference"
+          class="sidebar-close"
+        >
           <v-icon style="color: #0b2a68 !important;">close</v-icon>
         </v-btn>
         <v-layout column>
@@ -30,7 +36,7 @@
       </v-flex>
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-layout xs12 pa-2>
-          <v-flex xs6 md5 style="padding-top:14px">
+          <v-flex xs6 md5 pt-2>
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
@@ -47,66 +53,111 @@
             </v-layout>
           </v-flex>
 
-          <v-flex xs6 md7 class="mx-2">
+          <v-flex xs7 md6 class="mx-2">
             <v-layout mb-3>
-              <v-flex xs4 class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
-                <span>{{$t('msg.Lastdraw')}}:</span>
+              <v-flex
+                xs4
+                class="text-xs-center text-uppercase"
+                px-2
+              >
+                <span>{{ $t("msg.Lastdraw") }}</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
-                    <span class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></span>
+                    <span
+                      class="text-black"
+                      v-html="$options.filters.lastDraw(getLastDraw)"
+                    ></span>
                   </v-flex>
                 </div>
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
-              <v-flex xs4 class="text-xs-center text-uppercase" px-2 style="font-weight:600;">
-                <span>{{$t('msg.BetClosein')}}:</span>
+              <v-flex
+                xs4
+                class="text-xs-center text-uppercase"
+                px-2
+              >
+                <span>{{ $t("msg.BetClosein") }}</span>
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
                     <span
-                      v-if="getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).stockOpenOrClosed === 'Closed!'"
+                      v-if="
+                        getTimerByStockName($route.params.id) &&
+                          getTimerByStockName($route.params.id)
+                            .stockOpenOrClosed === 'Closed!'
+                      "
                       class="text-black"
-                    >{{getTimerByStockName($route.params.id) && 'close' | betclosein(getStockLoop($route.params.id))}}</span>
-                    <span
-                      v-else
-                      class="text-black"
-                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins | betclosein(getStockLoop($route.params.id))}}</span>
+                      >{{
+                        getTimerByStockName($route.params.id) &&
+                          "close" | betclosein(getStockLoop($route.params.id))
+                      }}</span
+                    >
+                    <span v-else class="text-black">{{
+                      getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                          .gameEndTimeCountDownInMins
+                          | betclosein(getStockLoop($route.params.id))
+                    }}</span>
                   </v-flex>
                 </div>
               </v-flex>
 
-              <v-flex xs4 class="text-xs-center text-uppercase" style="font-weight:600;" px-2>
-                <span>{{$t('msg.lotterydraw')}}:</span>
+              <v-flex
+                xs4
+                class="text-xs-center text-uppercase"
+                px-2
+              >
+                <span>{{ $t("msg.lotterydraw") }}</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
-                    <span
-                      class="text-black"
-                    >{{getTimerByStockName($route.params.id) && getTimerByStockName($route.params.id).gameEndTimeCountDownInMins | lotterydraw(getStockLoop($route.params.id))}}</span>
+                    <span class="text-black">{{
+                      getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                          .gameEndTimeCountDownInMins
+                          | lotterydraw(getStockLoop($route.params.id))
+                    }}</span>
                   </v-flex>
                 </div>
               </v-flex>
 
               <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn fab dark small class="helpButton" @click="setNextstep(),getopen()" title="Help">
+                <v-btn
+                  fab
+                  dark
+                  small
+                  class="helpButton"
+                  @click="setNextstep(), getopen()"
+                  title="Help"
+                >
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
-            
               </v-flex>
             </v-layout>
             <div id="betRuleButton">
-              <betButton :stockName="$route.params.id" :loop="getLoop($route.params.id)"></betButton>
+              <betButton
+                :stockName="$route.params.id"
+                :loop="getLoop($route.params.id)"
+              ></betButton>
             </div>
           </v-flex>
         </v-layout>
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
+          <div
+            class="trendmap-container"
+            v-for="(trendType, index) in trendTypes"
+            :key="index"
+          >
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index"></tableTrendMap>
+              <tableTrendMap
+                :index="index"
+                :dataArray="getRoadMap"
+                :isShowMultigameButton="index"
+              ></tableTrendMap>
             </div>
             <span
               class="addChart"
               @click="addTrendMap()"
-              v-if="trendTypes.length == index+1 && trendTypes.length < 4"
+              v-if="trendTypes.length == index + 1 && trendTypes.length < 4"
             >
               <v-icon>add</v-icon>
             </span>
@@ -121,13 +172,25 @@
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius:10px;">
-          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
+          <v-icon
+            class="closePopup"
+            color="#333 !important"
+            @click="dialog = false"
+            >close</v-icon
+          >
+          <v-card-title class="title" primary-title
+            >TOP 10 LEADERS</v-card-title
+          >
           <v-card-text>
             <leaderBoard />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
+            <v-btn
+              class="buttonGreensmall"
+              to="/modern/desktop/leaderboard"
+              dark
+              >Go to Leaderboard</v-btn
+            >
           </v-flex>
         </v-card>
       </v-dialog>
@@ -139,7 +202,7 @@
               color="primary"
               rigth
               fab
-              :to="'/modern/fullscreen/' +$route.params.id"
+              :to="'/modern/fullscreen/' + $route.params.id"
               class="fullscreen"
               dark
               v-on="on"
@@ -189,7 +252,11 @@
       </div>
 
       <!-- bet close in 4 -->
-      <div ref="betCloseInGuideline" style="position:fixed" v-show="isStep == 4">
+      <div
+        ref="betCloseInGuideline"
+        style="position:fixed"
+        v-show="isStep == 4"
+      >
         <div class="d-block">
           <div style="position: relative">
             <p class="float-right guideline" @click="setNextstep">
@@ -201,7 +268,11 @@
         </div>
       </div>
       <!-- lottery draw 5 -->
-      <div ref="lotteryDrawGuideline" style="position:fixed" v-show="isStep == 5">
+      <div
+        ref="lotteryDrawGuideline"
+        style="position:fixed"
+        v-show="isStep == 5"
+      >
         <div class="d-flex">
           <div class="arrow float-left line-my">&#8630;</div>
           <div>
@@ -245,7 +316,11 @@
       </div>
 
       <!-- fullscreen 9-->
-      <div ref="fullScreenGuideline" style="position:fixed" v-show="isStep == 9">
+      <div
+        ref="fullScreenGuideline"
+        style="position:fixed"
+        v-show="isStep == 9"
+      >
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
             Click to enter full screen mode
@@ -255,7 +330,11 @@
         </div>
       </div>
       <!-- multi game 10-->
-      <div ref="multigameGuideline" style="position:fixed" v-show="isStep == 10">
+      <div
+        ref="multigameGuideline"
+        style="position:fixed"
+        v-show="isStep == 10"
+      >
         <div class="d-flex">
           <div class="arrow float-left line-my">&#8630;</div>
           <div>
@@ -371,7 +450,7 @@ export default {
       }`
     );
   },
-  mounted() {
+  mounted() {  
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // socket new api
     this.listenForBroadcast(
@@ -647,10 +726,10 @@ export default {
 <style scoped>
 .fullscreen {
   position: fixed !important;
-  bottom: 160px;
+  bottom: 140px;
   right: 20px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   color: #fff;
   z-index: 999;
   background: linear-gradient(to right, #773bca 20%, #9c2bce 51%);

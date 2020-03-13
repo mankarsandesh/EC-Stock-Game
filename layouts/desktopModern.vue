@@ -16,7 +16,7 @@
           fontSize="13px"
         ></winnerMarquee>
       </v-flex>
-      <v-flex xs1 class="text-xs-right closebutton">
+      <v-flex xs1 class="text-xs-right closeNotification">
         <i class="fa fa-close fa-2x" @click="showNotification = false" />
       </v-flex>
     </v-toolbar>
@@ -237,7 +237,7 @@ export default {
   font-size: 18px;
 }
 .winnerText {
-  margin-top: -10px;
+  margin-top: -30px;
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -255,7 +255,7 @@ export default {
   font-weight: 800;
   border: 1px solid #333;
 }
-.closebutton {
+.closeNotification {
   margin-right: 10px;
   margin-top: -15px;
   color: #fff;

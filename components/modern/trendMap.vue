@@ -1170,10 +1170,10 @@ table td {
 
 td,
 tr {
-  min-width: 24px;
-  height: 24px;
+  min-width: 20px;
+  height: 20px;
   text-align: center;
-  margin: 5px !important;
+  margin: 3px !important;
 }
 
 .text-edit {
@@ -1191,50 +1191,46 @@ p {
 .red {
   text-align: center;
   color: #fff;
-  /* font-weight: bold; */
-  height: 24px;
-  width: 24px;
+  height: 18px;
+  width: 18px;
   background-color: red;
   border-radius: 5rem !important;
   display: inline-block;
-  font-size: 17px;
+  font-size: 13px;
   padding: 0px;
 }
 
 .blue {
   text-align: center;
   color: #fff;
-  /* font-weight: bold; */
-  height: 24px;
-  width: 24px;
+  height: 18px;
+  width: 18px;
   background-color: #003f70;
   border-radius: 5rem !important;
   display: inline-block;
-  font-size: 17px;
+  font-size: 13px;
   padding: 0px;
 }
 
 .green {
   text-align: center;
   color: #fff;
-  /* font-weight: bold; */
-  height: 24px;
-  width: 24px;
+  height: 18px;
+  width: 18px;
   background-color: rgb(8, 214, 77);
   border-radius: 5rem !important;
   display: inline-block;
-  font-size: 17px;
+  font-size: 13px;
   padding: 0px;
 }
 
 .big-number {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bolder;
   color: #4871ff;
   outline: none;
   background-color: #d0dafd;
   border: 1px solid #97a9fe !important;
-
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -1243,7 +1239,7 @@ p {
 
 .small-number {
   margin-right: 10px;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bolder;
   color: #fc4783;
   outline: none;
@@ -1259,7 +1255,7 @@ p {
 .rs-e,
 .rs-u {
   color: #003f70;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bolder;
   color: #fc4181;
   background-color: #f7d0e3;
@@ -1270,7 +1266,7 @@ p {
 .rs-o,
 .rs-l {
   color: red;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bolder;
   color: #4b72ff;
   background-color: #d0dafd;
@@ -1278,7 +1274,7 @@ p {
 }
 
 .rs-m {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bolder;
   color: #17b1ca;
   background-color: #c0e6f2;

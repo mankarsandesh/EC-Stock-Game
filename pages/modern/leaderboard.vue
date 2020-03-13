@@ -6,8 +6,6 @@
     </v-container>
   </div>
 </template>
-
-
 <script>
 import {mapMutations} from 'vuex'
 import leaderBoard from "~/components/mobile/leaderboard";
@@ -19,8 +17,7 @@ export default {
       return {
       tabs: ["history", "current bet"],
       active: null
-    };
-    
+    };    
   },
   mounted(){
 

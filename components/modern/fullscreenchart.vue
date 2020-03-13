@@ -78,9 +78,9 @@ export default {
           width: 1,
           colors: ["#fff"]
         },
-        title: {
-          text: "Live Bet Data"
-        },
+        // title: {
+        //   text: "Live Bet Data"
+        // },
         xaxis: {
           categories: ["First Digit", "Last Digit", "Both Digit", "Two Digit"]
         },
