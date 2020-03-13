@@ -677,7 +677,6 @@ export default {
       "getTimerByStockName",
       "getStockLoop",
       "getLotteryDraw",
-      "getStockLoop",
       "getLotteryDraw",
       "getLoop",
       "checkFooterBet",

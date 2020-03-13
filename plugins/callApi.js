@@ -15,14 +15,13 @@ export default ({ store }) => {
         let time1 = data.btc1.timer;
         // get new data crawler
         if (time5 == 241 || time1 == 41) {
-            store.dispatch('asynInitCallApi')
+            
         }
         // store.dispatch("asyncPayout")
         store.commit('SET_TIME', data)
     });
 
     // store.dispatch('asynGetAllStock')
-    store.dispatch('asynInitCallApi')
     store.dispatch("balance")
     store.dispatch("asyncPayout")
         // store.dispatch("asyncStocks");

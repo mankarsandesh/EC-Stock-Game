@@ -21,7 +21,7 @@
       </v-flex>
     </v-toolbar>
 
-    <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
+    <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"
@@ -31,7 +31,7 @@
           indeterminate
         ></v-progress-circular>
       </div>
-    </div>
+    </div> -->
     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
       <v-progress-circular
         style="top: calc(100% - 68%);"
