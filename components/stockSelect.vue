@@ -126,8 +126,8 @@ export default {
       // watch the game id model
       if (value !== null) {
         this.setGameID(value);
-        // check model if game id is empty or not by the condition
-        return console.log("This is the Game ID : " + value); // run your logic after condition is true
+        // check model if game id is empty or not by the condition 
+        // run your logic after condition is true
       }
     }
   },
