@@ -36,7 +36,7 @@
       </v-flex>
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-layout xs12 pa-2>
-          <v-flex xs6 md5 pt-2>
+          <v-flex xs6 md5 pt-2> 
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
@@ -53,7 +53,7 @@
             </v-layout>
           </v-flex>
 
-          <v-flex xs7 md6 class="mx-2">
+          <v-flex xs6 md6 class="mx-2" >
             <v-layout mb-3>
               <v-flex
                 xs4

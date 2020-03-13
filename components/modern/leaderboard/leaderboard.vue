@@ -93,7 +93,7 @@ export default {
     this.leaderBoard();
   },
   computed: {
-    ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState(["portalProviderUUID","userUUID"]) //get 2 data from vuex first, in the computed
   },
   methods: {
     async leaderBoard() {
@@ -108,11 +108,10 @@ export default {
           "http://uattesting.equitycapitalgaming.com/webApi/getLeaderBoard",
           LeaderBoardData,
           {
-            headers: this.headers
+            headers: config.header
           }
         );
-        this.topPlayerData = data.data;
-        console.log(this.topPlayerData);
+        this.topPlayerData = data.data;       
       } catch (error) {
         console.log(error);
       }

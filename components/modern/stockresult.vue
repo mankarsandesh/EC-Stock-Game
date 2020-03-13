@@ -56,14 +56,15 @@ export default {
         portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
         version: config.version // version of API
       };
-      console.log(dataSend);
       const { data } = await this.$axios.post(
         "http://uattesting.equitycapitalgaming.com/webApi/getAllStock", // after finish crawl the every API will the the baseURL from AXIOS
         dataSend, // data object
         {
-          headers: this.headers
+          headers: config.header
         }
       );
+      console.log(data);
+      console.log("Hello");
       this.getStockResult = data.data;
     }
   }
