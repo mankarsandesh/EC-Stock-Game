@@ -79,14 +79,7 @@
             ></trendMap>
           </v-flex>
         </v-layout>
-      </v-flex>
-      <!-- <v-flex class="xs1">
-        <v-layout row wrap v-if="isShowMultigameButton == 0">
-          <v-flex xs12 lg12 md12 ≈>
-            
-          </v-flex>
-        </v-layout>
-      </v-flex>-->
+      </v-flex> 
     </v-layout>
     <v-tooltip left id="fullscreenGuidelines">
       <template v-slot:activator="{ on }">

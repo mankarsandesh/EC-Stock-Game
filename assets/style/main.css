@@ -591,10 +591,8 @@ table.result-table tr {
 
 .bg-btn-first {
   background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
-  height: 83px;
-  font-size: 16px;
+  height: 83px; 
   font-weight: 400;
-  /* background-color: #093e70 !important; */
   color: #ffffff !important;
   min-width: 88%;
   border-radius: 6px;
@@ -612,7 +610,6 @@ table.result-table tr {
   height: 83px;
   font-size: 16px;
   font-weight: 400;
-  /* background-color: #093e70 !important; */
   color: #ffffff !important;
   min-width: 88%;
   border-radius: 6px;
@@ -630,7 +627,6 @@ table.result-table tr {
   height: 83px;
   font-size: 16px;
   font-weight: 400;
-  /* background-color: #093e70 !important; */
   color: #ffffff !important;
   min-width: 100%;
   border-radius: 6px;
@@ -648,7 +644,6 @@ table.result-table tr {
   height: 83px;
   font-size: 16px;
   font-weight: 400;
-  /* background-color: #093e70 !important; */
   color: #ffffff !important;
   min-width: 100%;
   border-radius: 6px;

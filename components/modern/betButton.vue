@@ -750,7 +750,7 @@ export default {
 
 <style scoped>
 .buttonbtn {
-  width: 130px;
+  width: 100px;
 }
 .popper {
   border-radius: 20px;
@@ -776,20 +776,13 @@ export default {
   z-index: 50;
   text-transform: capitalize;
 }
-
-/* .btnp p{
-  font-size: 16px;
-  margin:0;
-}  */
 .setlayuot {
   flex-flow: wrap;
   position: relative;
 }
-
 .btn-digit {
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
-  /* font-family: fantasy; */
   font-weight: bold;
   white-space: pre-line;
 }
