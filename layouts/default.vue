@@ -110,7 +110,7 @@ export default {
     },
     methods: {},
     computed: {
-        ...mapGetters(["getBalance", "getlocale"]),
+        ...mapGetters(["getlocale"]),
         countryflag() {
             return this.getlocale;
         }

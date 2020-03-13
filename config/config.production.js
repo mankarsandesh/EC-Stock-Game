@@ -1,9 +1,7 @@
-require('dotenv');
-
 const config = {
-    version: "1",
+    version: "2",
     header: {
-        authorization: process.env.BASIC_AUTH
+        authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
     },
     getStock: {
         url: "http://uattesting.equitycapitalgaming.com/webApi/getStock"

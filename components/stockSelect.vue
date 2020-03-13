@@ -19,7 +19,7 @@
       <v-autocomplete
         v-model="stockName"
         :items="stockNames"
-        label="cyto Currency"
+        label="Stock Name"
         prepend-icon="navigate_next"
         color="green"
         full-width
@@ -35,7 +35,7 @@
       <v-autocomplete
         v-model="minute"
         :items="minutes"
-        label="minute"
+        label="Minute"
         prepend-icon="navigate_next"
         color="red"
         full-width
@@ -76,9 +76,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"; // impor the vuex library frist, before use vuex
+import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
 export default {
   data: () => ({
+    stockSocket: false,
     stock: null,
     stockName: null,
     minute: null,
@@ -124,10 +125,14 @@ export default {
     gameId(value) {
       // watch the game id model
       if (value !== null) {
-        // check model if game id is empty or not by the condition
-        return console.log("This is the Game ID : " + value); // run your logic after condition is true
+        this.setGameID(value);
+        // check model if game id is empty or not by the condition 
+        // run your logic after condition is true
       }
     }
+  },
+  created() {
+    this.getActiveGamesByCategory();
   },
   mounted() {
     this.listenForBroadcast(
@@ -137,15 +142,34 @@ export default {
         eventName: "getActiveGamesByCategory"
       },
       ({ data }) => {
-        this.items = data.data;
-        console.log("Web socket stock is comming");
-        console.log(data);
+        this.stockSocket = true;
+        this.items = data.res.data;
       }
     );
   },
   methods: {
+    ...mapMutations(["setGameID"]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
+    },
+    async getActiveGamesByCategory() {
+      try {
+        const { data } = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/getActiveGamesByCategory",
+          {
+            portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
+            version: 0.1
+          },
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
+            }
+          }
+        );
+        this.items = data;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

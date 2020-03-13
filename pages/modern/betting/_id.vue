@@ -780,7 +780,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["balance", "asyncRoadMap"]),
+        ...mapActions(["asyncRoadMap"]),
         ...mapMutations([
             "setFooterBetAmount",
             "pushDataOnGoingBet",
@@ -859,7 +859,6 @@ export default {
                 ); 
                 console.log(res,"betting placed response");
                 if (res.status) {
-                    this.balance();
                     // console.warn(res.data[0]);
                     this.bettingDialog = false;
                     this.reviewbetDialog = false;

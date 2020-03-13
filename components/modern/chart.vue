@@ -5,15 +5,16 @@
         {{ $t("msg.livetime") }}:
         <!-- <span class="stockTimer">{{ getLiveTime(stockid) }}</span> -->
       </v-flex>
-      <v-flex xs6 class="text-xs-right">
-        <span class="stockPrice">{{ getStockLivePrice(routeParams) }}</span>
+      <v-flex xs6 class="text-xs-right stockPrice">
+        {{ $t("msg.liveprice") }}:
+        <span>{{ getStockLivePrice(routeParams) }}</span>
       </v-flex>
     </v-layout>
     <apexchart
       ref="realtimeChart"
       class="chartDesgin"
       type="area"
-      height="310vh"
+      height="240vh"
       width="99.5%"
       :options="chartOptions"
       :series="series"
@@ -51,8 +52,10 @@ export default {
     this.listenForBroadcast(
       {
         // liveStockData.stockName
-        channelName: `liveStockData.${this.$route.params.id}`,
-        eventName: "liveStockData"
+        channelName: `roadMap.${this.getStockUUIDByStockName(
+          this.routeParams
+        )}.${this.getPortalProviderUUID}`,
+        eventName: "roadMap"
       },
       ({ data }) => {
         let dataIndex = data.data.roadMap[0];
@@ -76,6 +79,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getPortalProviderUUID",
       "getStockLivePrice",
       "getStockUUIDByStockName",
       "getLiveTime",
@@ -114,7 +118,7 @@ export default {
         chart: {
           background: "#fff",
           parentHeightOffset: 0,
-          height: 300,
+          height: 230,
           zoom: {
             enabled: false
           },
@@ -147,7 +151,7 @@ export default {
             colors: ["#fff", "transparent"], // takes an array which will be repeated on columns
             opacity: 0.5
           }
-        },        
+        },
         xaxis: {
           categories: newTime,
           show: false,
@@ -189,17 +193,17 @@ export default {
 };
 </script>
 <style>
-.stockPrice {
+.stockPrice span {
   padding-right: 14px;
   color: green;
-  font-size: 24px;
+  font-size: 16px;
   margin: 0px;
   font-weight: 600;
 }
-.stockTimer {
+.stockTimer span {
   padding-left: 20px;
   color: #333;
-  font-size: 20px;
+  font-size: 16px;
   margin: 0px;
   font-weight: 600;
 }
