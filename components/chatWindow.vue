@@ -107,8 +107,7 @@ export default {
     return {
       getGameChannel: true,
       newMessages: [],
-      gameUUID: "b78548b9-05a1-4a9a-826e-288010df28d0",
-      uniqueUserID: Math.floor(Math.random() * (999 - 100 + 1) + 100),
+      gameUUID: "b78548b9-05a1-4a9a-826e-288010df28d0",     
       isActiveTab1: true,
       isActiveTab2: false,
       allChannel: true,
@@ -138,7 +137,7 @@ export default {
       ({ data }) => {
         data.data.forEach(element => {
           this.getMessagesGame.push({
-            name: `user ${this.uniqueUserID}`,
+            name: element.username,
             userId: element.userUUID,
             message: element.message,
             date: element.date
@@ -155,7 +154,7 @@ export default {
       ({ data }) => {
         data.data.forEach(element => {
           this.getMessages.push({
-            name: `user ${this.uniqueUserID}`,
+            name: element.username,
             userId: element.userUUID,
             message: element.message,
             date: element.date

@@ -10,14 +10,6 @@
 /*
 Home Page Component
 */
-
-.notification {
-  background-color: #2cb028 !important;
-  height: 42px !important;
-  padding: 0px;
-  margin: 0px;
-}
-
 .text-pre-line {
   white-space: pre-line;
 }

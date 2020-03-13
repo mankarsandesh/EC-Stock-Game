@@ -452,7 +452,7 @@ export default {
       }`
     );
   },
-  mounted() {
+  mounted() {  
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // socket new api
     this.listenForBroadcast(
