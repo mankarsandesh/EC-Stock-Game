@@ -470,9 +470,7 @@ const createStore = () => {
                             version: config.version
                         },
                         {
-                            headers: {
-                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                            }
+                            headers: this.headers
                         }
                     );
                     if (res.code === 200) {
