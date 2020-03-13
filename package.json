@@ -17,6 +17,7 @@
     "dependencies": {
         "@nuxtjs/auth": "^4.8.4",
         "@nuxtjs/axios": "^5.8.0",
+        "@nuxtjs/dotenv": "^1.4.1",
         "@nuxtjs/font-awesome": "^1.0.4",
         "@nuxtjs/moment": "^1.6.0",
         "@rabota/yandex-metrika": "^1.1.2",
