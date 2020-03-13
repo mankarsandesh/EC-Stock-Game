@@ -19,7 +19,7 @@
       <v-autocomplete
         v-model="stockName"
         :items="stockNames"
-        label="cyto Currency"
+        label="Stock Name"
         prepend-icon="navigate_next"
         color="green"
         full-width
@@ -35,7 +35,7 @@
       <v-autocomplete
         v-model="minute"
         :items="minutes"
-        label="minute"
+        label="Minute"
         prepend-icon="navigate_next"
         color="red"
         full-width
@@ -79,6 +79,7 @@
 import { mapGetters } from "vuex"; // impor the vuex library frist, before use vuex
 export default {
   data: () => ({
+    stockSocket: false,
     stock: null,
     stockName: null,
     minute: null,
@@ -129,6 +130,9 @@ export default {
       }
     }
   },
+  created() {
+    this.getActiveGamesByCategory();
+  },
   mounted() {
     this.listenForBroadcast(
       {
@@ -137,13 +141,33 @@ export default {
         eventName: "getActiveGamesByCategory"
       },
       ({ data }) => {
-        this.items = data.data;
+        this.stockSocket = true;
+        this.items = data.res.data;
       }
     );
   },
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
+    },
+    async getActiveGamesByCategory() {
+      try {
+        const { data } = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/getActiveGamesByCategory",
+          {
+            portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
+            version: 0.1
+          },
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
+            }
+          }
+        );
+        this.items = data;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };
