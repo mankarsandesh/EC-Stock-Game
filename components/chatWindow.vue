@@ -249,8 +249,8 @@ export default {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height:50px;
   color: #fff;
   background-color: #2aaf3e !important;
 }
