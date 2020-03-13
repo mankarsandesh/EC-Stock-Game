@@ -1,7 +1,7 @@
 <template>
   <div v-if="dataArray.length > 0">
     <v-layout wrap row>
-      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" style="padding-top:50px;">
+      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" mt-4>
         <v-layout>
           <v-flex xs9>
             <v-btn

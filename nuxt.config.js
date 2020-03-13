@@ -39,6 +39,7 @@ module.exports = {
      ** Global CSS
      */
     css: [
+        "~/assets/style/media-query.css",
         "~/assets/style/main.css",
         "~/assets/style/main.scss",
         "~/assets/style/app.styl"

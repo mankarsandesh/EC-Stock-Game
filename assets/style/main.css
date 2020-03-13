@@ -67,7 +67,7 @@ Home Page Component
 
 .chartDesgin {
   margin-top: 10px;
-  padding: 5px 5px;
+  padding:3px;
   background-color: #fff;
   border-radius: 10px;
 }
@@ -591,7 +591,7 @@ table.result-table tr {
 
 .bg-btn-first {
   background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
-  height: 83px; 
+  height: 65px; 
   font-weight: 400;
   color: #ffffff !important;
   min-width: 88%;
@@ -607,7 +607,7 @@ table.result-table tr {
 
 .bg-btn-last {
   background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
-  height: 83px;
+  height: 65px;
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -624,7 +624,7 @@ table.result-table tr {
 
 .bg-btn-both {
   background: linear-gradient(to right, #be3095 20%, #e71275 51%);
-  height: 83px;
+  height: 65px;
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -641,7 +641,7 @@ table.result-table tr {
 
 .bg-btn-two {
   background: linear-gradient(to right, #25dac2 20%, #0287db 51%);
-  height: 83px;
+  height: 65px;
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -658,11 +658,10 @@ table.result-table tr {
 }
 
 .align_button4.v-btn {
-  height: 83px;
-  font-size: 16px;
+  height: 65px;
+  font-size: 12px;
   font-weight: 400;
   background-color: #fff !important;
-  /* color: #ffffff !important; */
   min-width: 100%;
   border-radius: 6px;
   padding: 0;
@@ -670,8 +669,8 @@ table.result-table tr {
 }
 
 .align_button5.v-btn {
-  height: 83px;
-  font-size: 16px;
+  height: 65px;
+  font-size: 14px;
   font-weight: 400;
   background-color: #fff !important;
   /* color: #ffffff !important; */
@@ -1096,37 +1095,24 @@ background: radial-gradient(circle, rgba(76,182,121,1) 31%, rgba(93,190,109,1) 1
   right: 0px;
   z-index: 1;
 }
-
-.chartDesgin {
-  margin-top: 10px; 
-  background-color: #fff;
-  border-radius: 10px;
-}
-
-
-
 .lastdraw {
   font-size: 18px;
-  border: 1.5px solid #4b65ff;
-  border-radius: 10px;
-  padding: 2px 6px;
-  font-weight: 400;
+  border: 1px solid #4b65ff;
+  border-radius: 7px;
+text-align: center;
 }
-
 .betclose {
   font-size: 18px;
-  border: 1.5px solid #ef076a;
-  border-radius: 10px;
-  padding: 2px 6px;
-  font-weight: 400;
+  border: 1px solid #ef076a;
+  border-radius: 7px;
+  text-align: center;
 }
 
 .lottery {
   font-size: 18px;
-  border: 1.5px solid #01e3bf;
-  border-radius: 10px;
-  padding: 2px 6px;
-  font-weight: 400;
+  border: 1px solid #01e3bf;
+  border-radius: 7px;
+  text-align: center;
 }
 
 .trendmap-container {
