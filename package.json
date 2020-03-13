@@ -17,6 +17,7 @@
     "dependencies": {
         "@nuxtjs/auth": "^4.8.4",
         "@nuxtjs/axios": "^5.8.0",
+        "@nuxtjs/dotenv": "^1.4.1",
         "@nuxtjs/font-awesome": "^1.0.4",
         "@nuxtjs/moment": "^1.6.0",
         "@rabota/yandex-metrika": "^1.1.2",
@@ -28,7 +29,6 @@
         "chartjs-plugin-zoom": "^0.7.3",
         "cross-env": "^5.2.0",
         "crypto-js": "^4.0.0",
-        "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "hchs-vue-charts": "^1.2.8",
         "howler": "^2.1.2",
