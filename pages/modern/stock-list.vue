@@ -64,7 +64,7 @@ export default {
     methods: {
 
         goSearch() {
-            alert("You're right");
+            // alert("You're right");
         }
     },
     created() {

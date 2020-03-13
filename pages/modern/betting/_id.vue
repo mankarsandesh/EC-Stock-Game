@@ -28,14 +28,13 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs7 sm6 md6 lg6>
-                    <v-layout class=" pt-3">
-                        <v-flex xs9 sm5 md6 lg7 class=" pr-2">
-                            <v-btn class="buttonGreen">{{$t('msg.Game Mode')}}</v-btn>
+                <v-flex xs12 sm6 pt-3>
+                    <v-layout xs12 sm6>
+                        <v-flex xs12 xs6 class="text-xs-center">
+                            <v-btn class="buttonGreensmall">{{$t('msg.Game Mode')}}</v-btn>
                         </v-flex>
-
-                        <v-flex xs3 sm7 md6 lg6 class=" pl-2">
-                            <v-btn class="buttonGreen">
+                        <v-flex xs12 xs6 class="text-xs-center">
+                            <v-btn class="buttonGreensmall">
                                 <nuxt-link to="/modern" class="text-white">{{$t('msg.otherstock')}}</nuxt-link>
                             </v-btn>
                         </v-flex>
@@ -661,13 +660,14 @@
 import {
     mapGetters,
     mapMutations,
-    mapActions
+    mapActions,
+    mapState
 } from "vuex";
 import chartMobile from "~/components/chartMobile";
 import payout from "~/data/payout";
 import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
-
+import config from "../../../config/config.global";
 export default {
     async validate({
         params,
@@ -764,6 +764,7 @@ export default {
             "getStockUUIDByStockName",
             "getPortalProviderUUID"
         ]),
+        ...mapState(["portalProviderUUID", "headers","userUUID"]),
         checkBetClose() {
             if (this.getStockLoop(this.$route.params.id) == 1) {
                 if (this.getLotteryDraw(this.$route.params.id) == 40) {
@@ -786,6 +787,7 @@ export default {
             "clearDataMultiGameBet",
             "setLiveRoadMap"
         ]),
+        
         listenForBroadcast({
             channelName,
             eventName
@@ -835,18 +837,27 @@ export default {
             };
             this.confirmDisabled = true;
             this.sendBetting(data);
+            console.log(data,"bet dattaaa")
             // console.warn(this.getOnBetting);
         },
         async sendBetting(betData) {
-            let data = {
-                data: [betData]
-            };
+            let finalData = betData;
             try {
                 const res = await this.$axios.$post(
-                    `/api/storebet?apikey=${this.getAuth_token}`,
-                    data
-                );
-                // console.log(res);
+                  "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+                  {
+                    portalProviderUUID: this.portalProviderUUID,
+                    userUUID: this.userUUID,
+                    version : "1.0", 
+                    betData : [finalData]
+                  },
+                  {
+                    headers: {
+                      Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+                    }
+                  }
+                ); 
+                console.log(res,"betting placed response");
                 if (res.status) {
                     // console.warn(res.data[0]);
                     this.bettingDialog = false;

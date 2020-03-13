@@ -220,6 +220,7 @@
         "sh000300": "SH000300"
     },
     "profile": {
+        "user name":"Username",
         "first name":"first name",
         "last name":"last name",
         "gender":"gender",
@@ -231,6 +232,7 @@
         "stock analysis": "stock analysis",
         "online time":"online time",
         "total online":"total online"
+        
     },
     "useraction": {
         "followbet": "FOLLOW BET",

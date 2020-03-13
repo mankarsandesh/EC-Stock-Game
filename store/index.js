@@ -465,7 +465,6 @@ const createStore = () => {
       },
 
       // end new api
-
       async asyncPayout(context) {
         try {
           // const respayoutinitial = await this.$axios.$get(
@@ -611,7 +610,6 @@ const createStore = () => {
         }
         return result;
       },
-
       getTimerByStockName: state => stockName => {
         if (!stockName || state.stockListTimer.length <= 0) {
           return null;

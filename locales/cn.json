@@ -218,6 +218,7 @@
         "sh000300": "沪深300指数"
     },
     "profile": {
+        "user name":"用户名",
         "first name":"名字",
         "last name":"姓",
         "gender":"性别",
