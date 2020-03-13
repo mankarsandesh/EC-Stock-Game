@@ -362,13 +362,11 @@ export default {
 
     computed: {
         ...mapGetters([
-            "getBalance",
             "getStockLength",
             "getlocale",
             "getStockNewData",
             "getReference",
             "getstockname",
-            "getBalance",
             "getUserName"
         ]),
         countryflag() {

@@ -25,7 +25,6 @@ const createStore = () => {
       liveChart: [],
       userData: {},
       payout: {},
-      balance: "",
       OnlineTime: "",
       footerBetAmount: 0,
       // store data betting
@@ -344,23 +343,8 @@ const createStore = () => {
         }
         localStorage.setItem("lang", locale);
       },
-      // set user balance
-      setBalance(state, payload) {
-        state.balance = payload;
-      },
       setOnlineTime(state, payload) {
         state.OnlineTime = payload;
-      },
-      SET_TIME(state, payload) {
-        state.time = payload;
-        // console.log(state.time)
-      },
-      // set Live price for stocks
-      setLivePrice(state, payload) {
-        state.liveprice = payload;
-        // console.log("liveprice......")
-        // console.log(state.liveprice)
-        // console.log("liveprice.....")
       },
       setFooterBetAmount(state, payload) {
         state.footerBetAmount = parseInt(payload);
@@ -495,19 +479,6 @@ const createStore = () => {
         }
       },
       // end get user info from api
-      async balance(context) {
-        try {
-          const res = await this.$axios.$get(
-            `/api/me/balance?apikey=${context.getters.getAuth_token}`
-          );
-          if (res.status) {
-            context.commit("setBalance", res.data.balance);
-          }
-        } catch (ex) {
-          console.error(ex);
-          // alert(ex)
-        }
-      },
       async sendBetting(context) {
         context.commit("setIsSendBetting", true);
         // console.warn("sendBetting...");
@@ -721,11 +692,6 @@ const createStore = () => {
 
       getIsSendBetting(state) {
         return state.isSendbetting;
-      },
-
-      // get user balance
-      getBalance(state) {
-        return state.balance;
       },
       getOnlimeTime(state) {
         return state.OnlineTime;

@@ -218,7 +218,6 @@ export default {
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID
       "getGameChannel",
-      "getBalance",
       "getlocale",
       "getIsLoadingStockGame",
       "getStockCrawlerData"

@@ -16,7 +16,7 @@
                         <td class="text-left">
                             <i class="fa fa-balance-scale fa-2x font-size15"></i>
                             {{$t('msg.Balance')}} :
-                            <animated-number :value="getBalance" :formatValue="formatToPrice" />
+                            <animated-number :value="15000" :formatValue="formatToPrice" />
                         </td>
                     </tr>
                     <tr>
@@ -113,7 +113,7 @@ export default {
         setTimeout(() => {
             this.gethistoryTotal()
         }, 1000)
-         $("#txtbalance").text(this.formatToPrice(this.getBalance))
+         $("#txtbalance").text(this.formatToPrice(15000))
     },
     created() {
         if (this.$vuetify.breakpoint.smAndDown) {
@@ -127,7 +127,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["getStockList", "getLotteryDraw", "getStockById","getBalance","getUserName"])
+        ...mapGetters(["getStockList", "getLotteryDraw", "getStockById","getUserName"])
     },
     methods: {
         onlyTime(value) {

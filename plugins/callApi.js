@@ -5,26 +5,7 @@ export default ({ store }) => {
     initLocalStorageCoin(store)
         // set language
     setLanguage(store)
-        // websocket broadcast live time aand timer
-    const socket = openSocket("https://apitimer.herokuapp.com");
-    socket.on("liveprice", data => {
-        store.commit('setLivePrice', data)
-    });
-    socket.on("time", data => {
-        let time5 = data.sh000001.timer;
-        let time1 = data.btc1.timer;
-        // get new data crawler
-        if (time5 == 241 || time1 == 41) {
-            
-        }
-        // store.dispatch("asyncPayout")
-        store.commit('SET_TIME', data)
-    });
-
-    // store.dispatch('asynGetAllStock')
-    store.dispatch("balance")
     store.dispatch("asyncPayout")
-        // store.dispatch("asyncStocks");
     store.dispatch("asynUserInfo")
 }
 
