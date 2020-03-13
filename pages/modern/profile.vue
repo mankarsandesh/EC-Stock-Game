@@ -67,21 +67,21 @@
                 <div>
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
                         <v-layout pt-3>
-                            <v-flex xs3 sm2 md3 lg2>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
                                 <label for="player-id">{{$t('msg.playerid')}}</label>
                             </v-flex>
 
-                            <v-flex xs9 sm6 md9 lg6 pr-2>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input disabled type="text" id="player-id" name="player-id" :value="userData.PID" />
                                 <!-- <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" /> -->
                             </v-flex>
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg2>
-                                <label for="username">Username</label>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
+                                <label for="username">{{$t('profile.user name')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="username" type="text" :value="userData.userName" id="username" name="username" placeholder="Type your Username" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -90,10 +90,10 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg2>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
                                 <label for="lname">{{$t('profile.first name')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="firstName" type="text" :value="userData.firstName" id="first-name" name="first-name" placeholder="Your First Name" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -102,10 +102,10 @@
                         </v-layout>
 
                         <v-layout pt-2>
-                            <v-flex xs2 sm2 md2 lg2>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
                                 <label for="lname">{{$t('profile.last name')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="lastName" type="text" :value="userData.lastName" id="last-name" name="last-name" placeholder="Your Last Name" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -114,10 +114,10 @@
                         </v-layout>
 
                         <v-layout pt-2>
-                            <v-flex xs2 sm2 md2 lg2 pt2>
+                            <v-flex xs2 sm2 md2 lg2 pt2 class="text-xs-center">
                                 <label for="gender">{{$t('profile.gender')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <select ref="gender" id="gender" name="gender">
                                     <option value="female">Female</option>
                                     <option value="male">Male</option>
@@ -129,10 +129,10 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg2>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
                                 <label for="email">{{$t('profile.email')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="email" type="text" :value="userData.email" id="email" name="email" placeholder="mackychinma@gmail.com" />
                                 <span class="icon-container">
                                     <v-icon :size="15" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -141,10 +141,10 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg2>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
                                 <label for="country">{{$t('profile.country')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <select ref="country" id="country" name="country">
                                     <option value="china">China</option>
                                     <option value="usa">USA</option>

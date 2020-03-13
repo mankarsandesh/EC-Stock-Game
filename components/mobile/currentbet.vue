@@ -1,8 +1,8 @@
 <template>
 <v-layout row class="justify-center">
     <v-flex xs12 md12>
-        <v-data-table  :head="headers" :items="desserts" :items-per-page="5" ref="table" :search="search" class="current-bet">
-            <template >
+        <v-data-table :headers="headers" :items="desserts" :items-per-page="5" ref="table" :search="search" class="current-bet">
+            <template v-slot:headers="headers">
             <tr class="border-radius-10">
                 <th>{{$t('msg.BetId')}}</th>
                 <th>{{$t('msg.gameid')}}</th>
@@ -12,7 +12,7 @@
                 <th>{{$t('msg.payout')}}</th>
                 <th>{{$t('msg.Bet Status')}}</th>
             </tr>
-            </template>
+        </template>
             <template v-slot:items="item">
                 <td>{{item.item.betID}}</td>
                 <td>{{item.item.gameID}}</td>
