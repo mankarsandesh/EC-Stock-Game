@@ -362,13 +362,11 @@ export default {
 
     computed: {
         ...mapGetters([
-            "getBalance",
             "getStockLength",
             "getlocale",
             "getStockNewData",
             "getReference",
             "getstockname",
-            "getBalance",
             "getUserName"
         ]),
         countryflag() {
@@ -381,7 +379,6 @@ export default {
             this.Switchfooters = localStorage.switchfooter = value
             $("#switch").click()[0]
         },
-        ...mapActions(["asynInitCallApi"]),
         ...mapMutations(["SET_LANG", "SET_TIME"]),
         setLanguage() {
             let lang = localStorage.getItem("lang");
