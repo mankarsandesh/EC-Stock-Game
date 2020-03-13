@@ -468,13 +468,11 @@ const createStore = () => {
                             version: 1
                         },
                         {
-                            headers: {
-                                Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
-                            }
+                            headers: this.headers
                         }
                     );
                     if (res.code === 200) {
-                        let userInfo = res.data[0];
+                        let userInfo = res.data;
                         context.commit("setUserData", userInfo);
                     } else {
                         console.log(res);

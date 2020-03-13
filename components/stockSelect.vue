@@ -138,8 +138,6 @@ export default {
       },
       ({ data }) => {
         this.items = data.data;
-        console.log("Web socket stock is comming");
-        console.log(data);
       }
     );
   },
