@@ -4,6 +4,13 @@ const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 
 module.exports = {
     mode: "spa",
+    buildModules: [
+        // Simple usage
+        '@nuxtjs/dotenv'
+    
+        // With options
+        // ['@nuxtjs/dotenv', { /* module options */ }]
+    ],
 
     /*
      ** Headers of the page

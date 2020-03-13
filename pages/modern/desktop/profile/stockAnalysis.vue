@@ -98,6 +98,8 @@
 import apexchart from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import date from "date-and-time";
+
 // set color win and lose color in bar chart
 let index = 0;
 let barColor = [
@@ -109,13 +111,10 @@ export default {
     apexchart: apexchart
   },
   created() {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let last7d = String(today.getDate() - 7).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    this.startDate = yyyy + "-" + mm + "-" + last7d;
-    this.endDate = yyyy + "-" + mm + "-" + dd;
+    const now = date.format(new Date(), "YYYY-MM-DD");
+    const last2week = date.addDays(new Date(), -14);
+    this.startDate = date.format(last2week, "YYYY-MM-DD");
+    this.endDate = now;
     this.getStockAnalysis();
   },
   computed: {},

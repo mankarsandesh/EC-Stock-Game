@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-2" v-if="getStocks.length > 0">
+  <v-container class="mt-2">
     <v-layout style="background-color:#f4f5fd;">
       <v-flex v-if="!isHidden" class="leftStocklist">
         <v-btn
@@ -43,9 +43,7 @@
                   <stockSelect />
                 </div>
               </v-flex>
-              <v-flex
-                v-if="getStockById($route.params.id).stockPrice.length > 0"
-              >
+              <v-flex>
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
                     <chartApp />
@@ -712,9 +710,7 @@ export default {
       "getStockUUIDByStockName",
       "getRoadMap",
       "getPortalProviderUUID",
-      "getStocks",
       "getLastDraw",
-      "getStockById",
       "getLotteryDraw",
       "lotterydraw",
       "getStockLoop",

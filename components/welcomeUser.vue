@@ -4,7 +4,7 @@
         {{$t('home.welcome')}}
         <span class="warning--text">{{getUserName.name}},</span> {{$t('home.yourcurrentbalanceis')}}
         <span class="warning--text">
-            <animated-number :value="getBalance" :formatValue="formatToPrice" />
+            <animated-number value="15000" :formatValue="formatToPrice" />
         </span>
         {{$t('home.goodluck')}}！
         <span class="slideInLeft" :style="' color:'+color" v-if="snackbar"><i class="fa fa-bell" style="color: yellow;" v-if="betPrice>0" />
@@ -27,7 +27,7 @@ export default {
         AnimatedNumber
     },
     computed: {
-        ...mapGetters(["getBalance", "getUserName"])
+        ...mapGetters(["getUserName"])
     },
     data() {
         return {
@@ -41,7 +41,6 @@ export default {
         this.getTime()
     },
     methods: {
-        ...mapActions(["balance"]),
         formatToPrice(value) {
             return `$ ${Number(value)
         .toFixed(2)
@@ -67,10 +66,6 @@ export default {
 
                 if (times == calculating - 3) {
                     this.alertOutCome()
-                    setTimeout(() => {
-                        this.snackbar = false
-                        this.balance()
-                    }, 3500)
                 }
             });
         },

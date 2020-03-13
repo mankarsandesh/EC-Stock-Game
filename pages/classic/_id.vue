@@ -470,7 +470,7 @@ export default {
         }, 3000);
     },
     computed: {
-        ...mapGetters(["getStockName", "getStockNewData", "getBalance"]),
+        ...mapGetters(["getStockName", "getStockNewData"]),
         sumTotalAll() {
             let total = 0;
             if (this.betData.betdetails.length >= 0) {
@@ -522,7 +522,7 @@ export default {
             })
         },
         async getConfirmBet() {
-            if (this.sumTotalAll > this.getBalance || this.sumTotalAll == '') {
+            if (this.sumTotalAll > 1500 || this.sumTotalAll == '') {
                 this.getalertstartstop('error')
             } else {
                 // console.log("data..........");
@@ -538,7 +538,7 @@ export default {
                         this.setPrice("reset");
                     }
                     $(".getupdatebalance")[0].click()
-                    $("#txtbalance").text(this.formatToPrice(this.getBalance))
+                    $("#txtbalance").text(this.formatToPrice(1500))
                 }, 700);
             }
         },
@@ -650,7 +650,7 @@ export default {
 
         bet(e, specialName = "none") {
             // this.playSound('/voice/bet-chips.mp3')
-            if (this.price == 0 || this.price == null || this.price > this.getBalance - this.sumTotalAll) {
+            if (this.price == 0 || this.price == null || this.price > 1500 - this.sumTotalAll) {
                 // console.log("Null-0");
                 this.price = 0
                 this.getalertstartstop("notenough")
@@ -788,7 +788,6 @@ export default {
                 this.text = this.$root.$t('msg.winbet');
                 this.color = "#2962FF";
                 this.playSound('/voice/winbet.mp3')
-                this.balance()
             } else {
                 this.text = this.$root.$t('msg.losebet');
                 this.color = "#D50000";
@@ -806,7 +805,6 @@ export default {
             } else if (val.status == true) {
                 this.alertext = this.$root.$t('msg.confirmed')
                 this.color = "success";
-                this.balance()
             } else if (val.status == false) {
                 this.alertext = this.$root.$t('msg.moneynotenough') + "\n" + val.message;
                 this.color = "error";
@@ -833,8 +831,8 @@ export default {
 
         },
         getMbFooter() {
-            $("#txtbalance").text(this.formatToPrice(this.getBalance))
-            $("#txttotal").text(this.formatTotal(this.price))
+            $("#txtbalance").text(this.formatToPrice(15800))
+            $("#txttotal").text(this.formatTotal(5000))
             $("#ch10").text(this.chips[0].price)
             $("#ch50").text(this.chips[1].price)
             $("#ch100").text(this.chips[2].price)
@@ -850,27 +848,27 @@ export default {
                 this.setPrice("reset");
             });
             $("#chips, #ch10").click(() => {
-                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[0].price))
+                if (1500 - this.sumTotalAll >= parseInt(this.chips[0].price))
                     this.setPrice(this.chips[0].price)
             });
             $("#OS93GB1we-copy, #ch50").click(() => {
-                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[1].price))
+                if (1500 - this.sumTotalAll >= parseInt(this.chips[1].price))
                     this.setPrice(this.chips[1].price)
             });
             $("#OS93GB2, #ch100").click(() => {
-                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[2].price))
+                if (1500 - this.sumTotalAll >= parseInt(this.chips[2].price))
                     this.setPrice(this.chips[2].price)
             });
             $("#OS93GB1-copy, #ch500").click(() => {
-                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[3].price))
+                if (1500 - this.sumTotalAll >= parseInt(this.chips[3].price))
                     this.setPrice(this.chips[3].price)
             });
             $("#OS93GB5-copy, #ch1000").click(() => {
-                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[4].price))
+                if (1500 - this.sumTotalAll >= parseInt(this.chips[4].price))
                     this.setPrice(this.chips[4].price)
             });
             $("#OS93GB3a-copy-copy, #ch5000").click(() => {
-                if (this.getBalance - this.sumTotalAll >= parseInt(this.chips[5].price))
+                if (1500 - this.sumTotalAll >= parseInt(this.chips[5].price))
                     this.setPrice(this.chips[5].price)
             });
 

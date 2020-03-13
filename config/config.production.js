@@ -1,5 +1,3 @@
-require('dotenv');
-
 const config = {
     version: "2",
     header: {
