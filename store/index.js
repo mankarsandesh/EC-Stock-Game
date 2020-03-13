@@ -276,7 +276,7 @@ const createStore = () => {
         }),
         mutations: {
             setGameID(state, payload) {
-                alert("This game id from vuex " + payload)
+                console.log("This game id from vuex " + payload)
                 state.gameStockId = payload
             },
             setAuth(state, payload) {
