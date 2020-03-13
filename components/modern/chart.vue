@@ -6,7 +6,8 @@
         <!-- <span class="stockTimer">{{ getLiveTime(stockid) }}</span> -->
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
-         {{ $t("msg.liveprice") }}: <span >{{ getStockLivePrice(routeParams) }}</span>
+        {{ $t("msg.liveprice") }}:
+        <span>{{ getStockLivePrice(routeParams) }}</span>
       </v-flex>
     </v-layout>
     <apexchart
@@ -51,8 +52,10 @@ export default {
     this.listenForBroadcast(
       {
         // liveStockData.stockName
-        channelName: `liveStockData.${this.$route.params.id}`,
-        eventName: "liveStockData"
+        channelName: `roadMap.${this.getStockUUIDByStockName(
+          this.routeParams
+        )}.${this.getPortalProviderUUID}`,
+        eventName: "roadMap"
       },
       ({ data }) => {
         let dataIndex = data.data.roadMap[0];
@@ -76,6 +79,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getPortalProviderUUID",
       "getStockLivePrice",
       "getStockUUIDByStockName",
       "getLiveTime",
@@ -147,7 +151,7 @@ export default {
             colors: ["#fff", "transparent"], // takes an array which will be repeated on columns
             opacity: 0.5
           }
-        },        
+        },
         xaxis: {
           categories: newTime,
           show: false,
@@ -196,7 +200,7 @@ export default {
   margin: 0px;
   font-weight: 600;
 }
-.stockTimer span{
+.stockTimer span {
   padding-left: 20px;
   color: #333;
   font-size: 16px;
