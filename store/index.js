@@ -10,9 +10,6 @@ const createStore = () => {
             activeGameChannel: true,
             loader: false,
             userLoginData: {},
-            headers: {
-                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            },
             isLoadingStockGame: false,
             auth_token: (localStorage.apikey =
                 "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
@@ -389,12 +386,10 @@ const createStore = () => {
                             portalProviderUUID: context.state.portalProviderUUID,
                             limit: 50,
                             stockUUID: [stockUUID],
-                            version: 1
+                            version: config.version
                         },
                         {
-                            headers: {
-                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                            }
+                            headers:config.header
 
                         }
                     );
@@ -417,12 +412,10 @@ const createStore = () => {
                             portalProviderUUID: context.state.portalProviderUUID,
                             limit: 50,
                             stockUUID: [stockUUID],
-                            version: 1
+                            version: config.version
                         },
                         {
-                            headers: {
-                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                            }
+                            headers:config.header
                         }
                     );
                     if (res.code === 200) {
@@ -441,12 +434,10 @@ const createStore = () => {
                         "http://uattesting.equitycapitalgaming.com/webApi/getStock",
                         {
                             portalProviderUUID: context.state.portalProviderUUID,
-                            version: 1
+                            version: config.version
                         },
                         {
-                            headers: {
-                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                            }
+                            headers:config.header
                         }
                     );
                     if (res.code === 200) {
@@ -470,9 +461,7 @@ const createStore = () => {
                             version: config.version
                         },
                         {
-                            headers: {
-                                Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                            }
+                            headers: config.header
                         }
                     );
                     if (res.code === 200) {
@@ -726,7 +715,6 @@ const createStore = () => {
                 return state.stocks2;
             },
             getLastDraw(state) {
-                console.log("getLastDraw");
                 return state.roadMap.length > 0
                     ? state.roadMap[state.roadMap.length - 1].stockValue
                     : "...";

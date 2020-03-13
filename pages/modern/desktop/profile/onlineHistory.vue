@@ -107,6 +107,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import date from "date-and-time";
 import onlineChart from "../../../../components/modern/profile/onlinechart";
 import config from "../../../../config/config.global";
 export default {
@@ -130,12 +131,10 @@ export default {
     };
   },
   created() {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    this.startDate = yyyy + "-" + mm + "-" + dd;
-    this.endDate = yyyy + "-" + mm + "-" + dd;
+    const now = date.format(new Date(), "YYYY-MM-DD");
+    const last2week = date.addDays(new Date(), -7);
+    this.startDate = date.format(last2week, "YYYY-MM-DD");
+    this.endDate = now;
   },
   mounted() {
     // this.asynUserInfo();
@@ -143,7 +142,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "headers","getUserUUID"])
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
     ...mapActions(["asynUserInfo"]),
@@ -154,17 +153,17 @@ export default {
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
-            dateRangeFrom: "2020-02-02",
-            dateRangeTo: "2020-02-28",
+            dateRangeFrom: this.startDate,
+            dateRangeTo: this.endDate,
             version: config.version
           },
           {
-            headers: this.headers
+            headers: config.header
           }
         );
         if (res.code === 200) {
-          this.chartData = [1500];
-          this.xaxis = ["2020-02-26"];
+          this.chartData = [1500, 2000, 1850];
+          this.xaxis = ["2020-02-26", "2020-02-28", "2020-02-29"];
           let result = res.data.activeTimeDateWise;
           console.log("result online chart");
           console.log(res);
@@ -180,8 +179,7 @@ export default {
           //alert(res.message);
         }
       } catch (ex) {
-        console.error(ex);
-        alert(ex.message);
+        console.error(ex.message);
       }
     }
   }
