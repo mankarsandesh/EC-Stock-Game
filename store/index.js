@@ -1,6 +1,8 @@
 import Vuex from "vuex";
 import { hostname } from "os";
 import payouts from "../data/json/payout";
+import config from "../config/config.global";
+
 const createStore = () => {
     return new Vuex.Store({
         state: () => ({
@@ -465,7 +467,7 @@ const createStore = () => {
                         {
                             portalProviderUUID: context.state.portalProviderUUID,
                             userUUID: context.state.userUUID,
-                            version: 1
+                            version: config.version
                         },
                         {
                             headers: this.headers
@@ -672,6 +674,19 @@ const createStore = () => {
             }
         },
         getters: {
+            getStockLivePrice: state => stockName => {
+                if (!stockName || state.stockListTimer.length <= 0) {
+                  return null;
+                }
+                let result = 0;
+                for (let i = 0; i < state.stockListTimer[0].length; i++) {
+                  if (state.stockListTimer[0][i].stockName === stockName) {
+                    result = state.stockListTimer[0][i].stockPrice;
+                    break;
+                  }
+               }
+               return result;
+            },              
             // new api
             getTimerByStockName: state => stockName => {
                 if (!stockName || state.stockListTimer.length <= 0) {

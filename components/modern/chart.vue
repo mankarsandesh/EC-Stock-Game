@@ -147,16 +147,7 @@ export default {
             colors: ["#fff", "transparent"], // takes an array which will be repeated on columns
             opacity: 0.5
           }
-        },
-        // grid: {
-        //   // padding: {
-        //   //   left: 0,
-        //   //   right: 0,
-        //   //   top: 0,
-        //   //   bottom: 0
-        //   // },
-
-        // },
+        },        
         xaxis: {
           categories: newTime,
           show: false,
@@ -168,13 +159,7 @@ export default {
           show: true,
           labels: {
             show: true
-          },
-          title: {
-            text: "Price"
           }
-          //   tickAmount:
-          // min: Math.max(...this.data)+10,
-          //   max: Math.min(10470),
         }
       };
     },
@@ -200,23 +185,6 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     }
-    // updateChart() {
-    //   console.log('updating....')
-    //   let newData = [];
-    //   this.getLiveChart.forEach(element => {
-    //     newData.push(element.stockValue);
-    //   });
-    //   newData.push(1)
-    //   this.$refs.realtimeChart.updateSeries(
-    //     [
-    //       {
-    //         data: newData
-    //       }
-    //     ],
-    //     false,
-    //     true
-    //   );
-    // }
   }
 };
 </script>
