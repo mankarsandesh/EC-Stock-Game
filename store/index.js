@@ -6,6 +6,7 @@ import config from "../config/config.global";
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
+      gameStockId: null,
       authUser: {},
       activeGameChannel: true,
       loader: false,
@@ -270,6 +271,10 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+       setGameID(state, payload) {
+                console.log("This game id from vuex " + payload)
+                state.gameStockId = payload
+            },
       setAuth(state, payload) {
         state.authUser = payload;
       },

@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"; // impor the vuex library frist, before use vuex
+import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
 export default {
   data: () => ({
     stockSocket: false,
@@ -125,8 +125,9 @@ export default {
     gameId(value) {
       // watch the game id model
       if (value !== null) {
-        // check model if game id is empty or not by the condition
-        return console.log("This is the Game ID : " + value); // run your logic after condition is true
+        this.setGameID(value);
+        // check model if game id is empty or not by the condition 
+        // run your logic after condition is true
       }
     }
   },
@@ -147,6 +148,7 @@ export default {
     );
   },
   methods: {
+    ...mapMutations(["setGameID"]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
