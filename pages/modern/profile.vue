@@ -67,7 +67,7 @@
                 <div>
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
                         <v-layout pt-3>
-                            <v-flex xs3 sm2 md3 lg6>
+                            <v-flex xs3 sm2 md3 lg2>
                                 <label for="player-id">{{$t('msg.playerid')}}</label>
                             </v-flex>
 
@@ -78,7 +78,7 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg6>
+                            <v-flex xs2 sm2 md2 lg2>
                                 <label for="username">Username</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6>
@@ -90,7 +90,7 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg6>
+                            <v-flex xs2 sm2 md2 lg2>
                                 <label for="lname">{{$t('profile.first name')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6>
@@ -102,7 +102,7 @@
                         </v-layout>
 
                         <v-layout pt-2>
-                            <v-flex xs2 sm2 md2 lg6>
+                            <v-flex xs2 sm2 md2 lg2>
                                 <label for="lname">{{$t('profile.last name')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6>
@@ -114,7 +114,7 @@
                         </v-layout>
 
                         <v-layout pt-2>
-                            <v-flex xs2 sm2 md2 lg6 pt2>
+                            <v-flex xs2 sm2 md2 lg2 pt2>
                                 <label for="gender">{{$t('profile.gender')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6>
@@ -129,7 +129,7 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg6>
+                            <v-flex xs2 sm2 md2 lg2>
                                 <label for="email">{{$t('profile.email')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6>
@@ -141,7 +141,7 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg6>
+                            <v-flex xs2 sm2 md2 lg2>
                                 <label for="country">{{$t('profile.country')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6>

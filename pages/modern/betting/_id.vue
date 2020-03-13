@@ -28,14 +28,13 @@
                     </v-layout>
                 </v-flex>
 
-                <v-flex xs7 sm6 md6 lg6>
-                    <v-layout class=" pt-3">
-                        <v-flex xs9 sm5 md6 lg7 class=" pr-2">
-                            <v-btn class="buttonGreen">{{$t('msg.Game Mode')}}</v-btn>
+                <v-flex xs12 sm6 class=" pl-2 pr-2" >
+                    <v-layout >
+                        <v-flex class="py-2">
+                            <v-btn class="buttonGreensmall">{{$t('msg.Game Mode')}}</v-btn>
                         </v-flex>
-
-                        <v-flex xs3 sm7 md6 lg6 class=" pl-2">
-                            <v-btn class="buttonGreen">
+                        <v-flex class="py-2">
+                            <v-btn class="buttonGreensmall">
                                 <nuxt-link to="/modern" class="text-white">{{$t('msg.otherstock')}}</nuxt-link>
                             </v-btn>
                         </v-flex>

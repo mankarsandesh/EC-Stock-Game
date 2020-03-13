@@ -1,8 +1,8 @@
 <template>
-  <v-expansion-panel v-model="panel" expand>
-    <v-expansion-panel-content class="ruleActive ruleHeading">
+  <v-expansion-panel v-model="panel" id= "app">
+    <v-expansion-panel-content :class="{'ruleHeading-active': activeTab === 1 }"  @click="activeTab = 1">
       <template v-slot:header>
-        <div @click="setActive($event)">
+        <div >
           <span class="rules rules-active">{{$t('gamemsg.firstdigit')}} (????. <b class="headline1">?</b>?)</span>
         </div>
       </template>
@@ -27,9 +27,9 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content class="ruleActive ruleHeading">
+    <v-expansion-panel-content :class="{'ruleHeading-active': activeTab === 2 }"  @click="activeTab = 2">
       <template v-slot:header>
-        <div @click="setActive($event)">
+        <div >
           <span class="rules rules-active">{{$t('gamemsg.lastdigit')}} (????. ?<b class="headline1">?</b>)</span>
         </div>
       </template>
@@ -54,9 +54,9 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content class="ruleActive ruleHeading">
+    <v-expansion-panel-content :class="{'ruleHeading-active': activeTab === 3 }"  @click="activeTab = 3">
       <template v-slot:header>
-        <div @click="setActive($event)">
+        <div >
           <span class="rules rules-active">{{$t('gamemsg.bothdigit')}} (????. ?+?<b class="headline1">=??</b> )</span>
         </div>
       </template>
@@ -82,9 +82,9 @@
         </v-card-text>
       </v-card>
     </v-expansion-panel-content>
-    <v-expansion-panel-content class="ruleActive ruleHeading">
+    <v-expansion-panel-content :class="{'ruleHeading-active': activeTab === 4 }"  @click="activeTab = 4">
       <template v-slot:header>
-        <div @click="setActive($event)">
+        <div >
           <span class="rules rules-active">{{$t('gamemsg.twodigit')}} (????. <b class="headline1">??</b>)</span>
         </div>
       </template>
@@ -114,20 +114,24 @@
 </template>
 <script>
 export default {
+  
   data() {
     return {
-      panel: 0
+      panel: 0,
+      activeTab: 1
     };
   },
-  methods: {
-    setActive(e) {
-      $(".ruleActive").removeClass("ruleHeading");
-      $(".ruleActive").removeClass("rules");
-      $(".ruleActive").addClass("rules-active");
-      $(e.target.parentElement.parentElement).addClass("ruleHeading");
+  // methods: {
+  //   setActive(e) {
+  //     $(".ruleActive").removeClass("ruleHeading");
+  //     $(".ruleActive").removeClass("rules");
+  //     $(".ruleActive").addClass("rules-active");
+  //     $(".ruleHeading").removeClass("rules");
+  //     $(".ruleHeading").addClass("rules-active");
+  //     $(e.target.parentElement.parentElement).addClass("ruleHeading");
       
-    }
-  }
+  //   }
+  // }
 };
 </script>
 
@@ -140,37 +144,29 @@ export default {
 .theme--light.v-expansion-panel .v-expansion-panel__container .v-expansion-panel__header .v-expansion-panel__header__icon .v-icon {
     color: #ffffff!important;
 }
-.rules{
-  color: #ffffff;
-  /* background-color: #0b2a68 ; */
+
+.ruleHeading {
+  background: linear-gradient(to right, #ffffff 30%, #ffffff 51%) ;
+  color: #000000 ;
+  text-transform: capitalize;
+  border-radius: 10px;
 }
 
-.rules-active{
-  color: #ffffff;
-}
-
-.rules span {
-  color: #fff;
+.ruleHeading span {
+  color: #000000;
   /* background-color: #ffffff; */
 }
 
-
-.rules-active span {
-  color: #fff;
-  background-color: #c9c8c8 ;
-}
-
-.ruleActive {
-  /* border-radius: 10px; */
-  color: #ffffff ;
-  margin: 7px;
-  border: 1px solid #dddddd;
-}
-.ruleHeading {
+.ruleHeading-active {
   background: linear-gradient(to right, #0b2a68 30%, #0b2a68 51%) ;
   color: #ffffff ;
   text-transform: capitalize;
   border-radius: 10px;
+}
+
+.ruleHeading-active span {
+  color: #ffffff;
+  /* background-color: #ffffff; */
 }
 
 .headline1{

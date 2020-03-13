@@ -164,7 +164,7 @@ export default {
     } else {
       this.isFullscreen = false;
     }
-    console.log("crearted");
+    // console.log("crearted");
   },
   mounted() {
     this.fetchNotification();

@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import onlyrules from "~/components/modern/stocklist/onlyrule";
+import onlyrules from "~/components/mobile/onlyrule";
 import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
 export default {
     components: {

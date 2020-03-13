@@ -19,14 +19,14 @@ export default {
   data() {
     return {
       head: [
-        { text: "bet ID", value: "betID" },
-        { text: "game ID", value: "gameID" },
-        { text: "bet detail", value: "ruleName" },
-        { text: "time", value: "createdTime" },
-        { text: "payout", value: "payout" },
-        { text: "bet status", value: "gameStatus" },
-        { text: "amount", value: "betAmount" },
-        { text: "rolling", value: "rollingAmount" }
+        { text: this.$root.$t("msg.BetId"), value: "betID" },
+        { text: this.$root.$t("msg.gameid"), value: "gameID" },
+        { text: this.$root.$t("msg.Betdetail"), value: "ruleName" },
+        { text: this.$root.$t("msg.Time"), value: "createdTime" },
+        { text: this.$root.$t("msg.payout"), value: "payout" },
+        { text: this.$root.$t("msg.Bet Status"), value: "gameStatus" },
+        { text: this.$root.$t("msg.amount"), value: "betAmount" },
+        { text: this.$root.$t("msg.rolling"), value: "rollingAmount" }
       ],
       desserts: []
     };
