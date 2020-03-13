@@ -660,13 +660,14 @@
 import {
     mapGetters,
     mapMutations,
-    mapActions
+    mapActions,
+    mapState
 } from "vuex";
 import chartMobile from "~/components/chartMobile";
 import payout from "~/data/payout";
 import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
-
+import config from "../../../config/config.global";
 export default {
     async validate({
         params,
@@ -763,6 +764,7 @@ export default {
             "getStockUUIDByStockName",
             "getPortalProviderUUID"
         ]),
+        ...mapState(["portalProviderUUID", "headers","userUUID"]),
         checkBetClose() {
             if (this.getStockLoop(this.$route.params.id) == 1) {
                 if (this.getLotteryDraw(this.$route.params.id) == 40) {
@@ -785,6 +787,7 @@ export default {
             "clearDataMultiGameBet",
             "setLiveRoadMap"
         ]),
+        
         listenForBroadcast({
             channelName,
             eventName
@@ -834,18 +837,27 @@ export default {
             };
             this.confirmDisabled = true;
             this.sendBetting(data);
+            console.log(data,"bet dattaaa")
             // console.warn(this.getOnBetting);
         },
         async sendBetting(betData) {
-            let data = {
-                data: [betData]
-            };
+            let finalData = betData;
             try {
                 const res = await this.$axios.$post(
-                    `/api/storebet?apikey=${this.getAuth_token}`,
-                    data
-                );
-                // console.log(res);
+                  "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+                  {
+                    portalProviderUUID: this.portalProviderUUID,
+                    userUUID: this.userUUID,
+                    version : "1.0", 
+                    betData : [finalData]
+                  },
+                  {
+                    headers: {
+                      Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+                    }
+                  }
+                ); 
+                console.log(res,"betting placed response");
                 if (res.status) {
                     this.balance();
                     // console.warn(res.data[0]);
