@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2" >
+  <v-container  mt-2 class="containerNew pa-2 " >
     <v-layout style="background-color:#f4f5fd;">
       <v-flex md3 lg3 mt-3 >
         <v-flex v-if="!isHidden" class="leftStocklist">
@@ -718,7 +718,7 @@ export default {
 .fullscreen {
   position: fixed !important;
   bottom: 140px;
-  right: 20px;
+  right: 12px;
   width: 50px;
   height: 50px;
   color: #fff;

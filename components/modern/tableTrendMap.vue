@@ -1,7 +1,7 @@
 <template>
   <div v-if="dataArray.length > 0">
     <v-layout wrap row>
-      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" mt-4>
+      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" mt-5>
         <v-layout>
           <v-flex xs9>
             <v-btn
@@ -9,8 +9,7 @@
               class="text-white firstDigit"
               color="#003e70"
               @click="changeChartType('firstDigit')"
-              >{{ $t("gamemsg.firstdigit") }}</v-btn
-            >
+              >{{ $t("gamemsg.firstdigit") }}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
           <v-flex
@@ -68,7 +67,7 @@
           ></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs10 md10 lg10 xl10>
+      <v-flex xs9 md10 lg10 xl11>
         <v-layout row wrap>
           <v-flex xs12 lg12 md12>
             <trendMap
@@ -156,7 +155,7 @@ export default {
 .multiGame {
   z-index: 999;
   position: fixed;
-  right: 20px;
+  right: 12px;
   bottom: 80px;
   color: #fff;
   width: 50px;
@@ -174,37 +173,5 @@ export default {
   border-bottom: 18px solid transparent;
   align-self: center;
 }
-.firstDigit {
-  font-weight: bolder;
-  border-radius: 10px;
-  white-space: pre-line !important;
-  height: 60px;
-  font-size: 12px;
-  background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
-}
-.lastDigit {
-  text-align: center;
-  border-radius: 10px;
-  font-weight: bolder;
-  white-space: pre-line !important;
-  height: 60px;
-  font-size: 12px;
-  background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
-}
-.bothDigit {
-  font-weight: bolder;
-  border-radius: 10px;
-  white-space: pre-line !important;
-  height: 60px;
-  font-size: 12px;
-  background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
-}
-.twoDigit {
-  font-weight: bolder;
-  border-radius: 10px;
-  white-space: pre-line !important;
-  height: 60px;
-  font-size: 12px;
-  background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
-}
+
 </style>

@@ -15,27 +15,180 @@ Big Screen
   }
 
   .containerNew {
-    width: 80% !important;
+    width: 100% !important;
   }
-  .buttonbtn {   
+
+  .buttonbtn {
     width: 140px;
   }
-   /* game Rule Category Button */
-  .btnHeight{
+
+  /* game Rule Category Button */
+  .btnHeight {
     height: 85px;
   }
-  .align_button4{
+
+  .align_button4 {
     height: 85px;
   }
-  .align_button5{
+
+  .align_button5 {
     height: 85px;
   }
+
   .big-digit {
     font-size: 14px;
     font-weight: 600;
     color: #595858;
   }
+
+  .big-number {
+    font-size: 15px;
+    font-weight: bolder;
+    color: #4871ff !important;
+    outline: none;
+    background-color: #d0dafd;
+    border: 1px solid #97a9fe !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .small-number {
+    margin-right: 10px;
+    font-size: 15px;
+    font-weight: bolder;
+    color: #fc4783 !important;
+    outline: none;
+    background-color: #f6d0e3;
+    border: 1px solid #fc4783 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .rs1,
+  .rs-e,
+  .rs-u {
+    color: #003f70;
+    font-size: 15px;
+    font-weight: bolder;
+    color: #fc4181 !important;
+    background-color: #f7d0e3;
+    border: 1px solid #fc4181 !important;
+  }
+
+  .rs0,
+  .rs-o,
+  .rs-l {
+    color: red;
+    font-size: 15px;
+    font-weight: bolder;
+    color: #4b72ff !important;
+    background-color: #d0dafd;
+    border: 1px solid #4b72ff !important;
+  }
+
+  .rs-m {
+    font-size: 15px;
+    font-weight: bolder;
+    color: #17b1ca !important;
+    background-color: #c0e6f2;
+    border: 1px solid #17b1ca !important;
+  }
+  span.addChart i {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    height: 47px;
+    width: 47px;
+    padding: 10px !important;
+    color: #ffffff !important;
+    background-color: #4464ff !important;
+    position: absolute;
+    left: 53%;
+    top: 46%;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .red {
+    text-align: center;
+    color: #fff;
+    height: 24px;
+    width: 24px;
+    background-color: red;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
   
+  .blue {
+    text-align: center;
+    color: #fff;
+    height: 24px;
+    width: 24px;
+    background-color: #003f70;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+  
+  .green {
+    text-align: center;
+    color: #fff;
+    height: 24px;
+    width: 24px;
+    background-color: rgb(8, 214, 77);
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+
+  .firstDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+  }
+  .lastDigit {
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bolder;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 12p14pxx;
+    background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+  }
+  .bothDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
+  }
+  .twoDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+  }
+.RoadMapTable tr td{
+  min-width:23px;
+  height: 23px;
+}
+
+
 }
 
 /* 
@@ -43,28 +196,183 @@ Big Screen
   ##Screen = B/w 1025px to 1280px
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
+ 
+
   .notification {
     background-color: #2cb028 !important;
     height: 40px !important;
     padding: 0px;
     margin: 0px;
   }
+
+  .containerNew {
+    width: 100% !important;
+  }
   /* game Rule Category Button */
-  .btnHeight{
+  .btnHeight {
     height: 65px;
   }
-  .align_button4{
+
+  .align_button4 {
     height: 65px;
   }
-  .align_button5{
+
+  .align_button5 {
     height: 65px;
   }
+
   .big-digit {
     font-size: 12px;
     font-weight: 600;
     color: #595858;
   }
- 
+
+  .big-number {
+    font-size: 12px;
+    font-weight: bolder;
+    color: #4871ff !important;
+    outline: none;
+    background-color: #d0dafd;
+    border: 1px solid #97a9fe !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .small-number {
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #fc4783 !important;
+    outline: none;
+    background-color: #f6d0e3;
+    border: 1px solid #fc4783 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .rs1,
+  .rs-e,
+  .rs-u {
+    color: #003f70;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #fc4181 !important;
+    background-color: #f7d0e3;
+    border: 1px solid #fc4181 !important;
+  }
+
+  .rs0,
+  .rs-o,
+  .rs-l {
+    color: red;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #4b72ff !important;
+    background-color: #d0dafd;
+    border: 1px solid #4b72ff !important;
+  }
+
+  .rs-m {
+    font-size: 12px;
+    font-weight: bolder;
+    color: #17b1ca !important;
+    background-color: #c0e6f2;
+    border: 1px solid #17b1ca !important;
+  }
+  span.addChart i {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    height: 47px;
+    width: 47px;
+    padding: 10px !important;
+    color: #ffffff !important;
+    background-color: #4464ff !important;
+    position: absolute;
+    left: 49%;
+    top: 46%;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .red {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: red;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+  
+  .blue {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: #003f70;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+  
+  .green {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: rgb(8, 214, 77);
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .firstDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+  }
+  .lastDigit {
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bolder;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 12p14pxx;
+    background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+  }
+  .bothDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
+  }
+  .twoDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+  } 
+  .RoadMapTable tr td{
+    min-width:16px;
+    height: 16px;
+  }
+
 }
 
 /* 
