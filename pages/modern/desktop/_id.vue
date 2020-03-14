@@ -182,7 +182,7 @@
             >TOP 10 LEADERS</v-card-title
           >
           <v-card-text>
-            <leaderBoard />
+            <leaderboardUserlist />
           </v-card-text>
           <v-flex class="text-lg-right">
             <v-btn
@@ -379,7 +379,7 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
-import leaderBoard from "~/components/modern/leaderboard/leaderboard";
+import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "../../../config/config.global";
 
 export default {
@@ -397,7 +397,7 @@ export default {
     selectStock,
     onlyrules,
     stockSelect,
-    leaderBoard
+    leaderboardUserlist
   },
   data() {
     return {
