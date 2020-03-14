@@ -7,6 +7,12 @@
     border-bottom: 10px solid #29B13D;
     position: absolute;
 }
+.borderRed{
+border:1px solid red;
+}
+.borderBlue{
+  border:1px solid blue;
+}
 /*
 Home Page Component
 */
@@ -583,7 +589,6 @@ table.result-table tr {
 
 .bg-btn-first {
   background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
-  height: 65px; 
   font-weight: 400;
   color: #ffffff !important;
   min-width: 88%;
@@ -599,7 +604,6 @@ table.result-table tr {
 
 .bg-btn-last {
   background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
-  height: 65px;
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -616,7 +620,6 @@ table.result-table tr {
 
 .bg-btn-both {
   background: linear-gradient(to right, #be3095 20%, #e71275 51%);
-  height: 65px;
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -633,7 +636,6 @@ table.result-table tr {
 
 .bg-btn-two {
   background: linear-gradient(to right, #25dac2 20%, #0287db 51%);
-  height: 65px;
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -649,23 +651,22 @@ table.result-table tr {
   float: left;
 }
 
-.align_button4.v-btn {
-  height: 65px;
-  font-size: 12px;
+.align_button4.v-btn {  
   font-weight: 400;
   background-color: #fff !important;
+  border:1px soli #e8e8e8;
+  box-shadow:red;
   min-width: 100%;
   border-radius: 6px;
   padding: 0;
   margin: 4px;
 }
 
-.align_button5.v-btn {
-  height: 65px;
-  font-size: 14px;
+.align_button5.v-btn {  
   font-weight: 400;
   background-color: #fff !important;
-  /* color: #ffffff !important; */
+  box-shadow: none;
+  border:1px solid #e8e8e8;
   min-width: 100%;
   border-radius: 6px;
   padding: 0;
@@ -683,12 +684,6 @@ table.result-table tr {
 .bothDigit.v-btn .v-btn__content,
 .twoDigit.v-btn .v-btn__content {
   white-space: pre-line !important;
-}
-
-.big-digit {
-  font-size: 13px;
-  font-weight: 600;
-  color: #444343;
 }
 
 .small-digit {

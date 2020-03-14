@@ -64,7 +64,7 @@ export default {
         }
       );
       console.log(data);
-      console.log("Hello");
+      console.log("Stock Resdult");
       this.getStockResult = data.data;
     }
   }

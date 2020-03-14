@@ -8,11 +8,11 @@
     <!-- end for show bet close -->
     <v-layout row>
       <span class="w12 buttonbtn">
-        <v-btn class="bg-btn-first">
+        <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
         </v-btn>
       </span>
-      <popper
+      <popper 
         :disabled="checkFooterBet"
         v-for="data in firstDigit"
         :key="data.rule"
@@ -35,9 +35,8 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          class="align_button4 "
           :id="'firstdigit-' + data.rule"
-          style="margin-left: -5px;"
           slot="reference"
           @click="betButtonClick('firstdigit-' + data.rule)"
         >
@@ -84,7 +83,7 @@
     <!-- Row betting button2 -->
     <v-layout row>
       <span class="w12 buttonbtn">
-        <v-btn class="bg-btn-last">
+        <v-btn class="bg-btn-last btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.lastdigits") }}</span>
         </v-btn>
       </span>
@@ -111,7 +110,6 @@
         <v-btn
           class="align_button4"
           :id="'lastdigit-' + data.rule"
-          style="margin-left: -5px;"
           @click="betButtonClick('lastdigit-' + data.rule)"
           slot="reference"
         >
@@ -158,7 +156,7 @@
     <!-- Row betting button3 -->
     <v-layout row>
       <span class="w12 buttonbtn">
-        <v-btn class="bg-btn-both">
+        <v-btn class="bg-btn-both btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.bothdigits") }}</span>
         </v-btn>
       </span>
@@ -183,7 +181,7 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button5"
+          class="align_button4"
           :id="'bothdigit-' + data.rule"
           @click="betButtonClick('bothdigit-' + data.rule)"
           slot="reference"
@@ -232,7 +230,7 @@
     <!-- Row betting button3 -->
     <v-layout row>
       <span class="w12 buttonbtn">
-        <v-btn class="bg-btn-two">
+        <v-btn class="bg-btn-two btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.twodigits") }}</span>
         </v-btn>
       </span>
@@ -257,7 +255,7 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button5"
+           class="align_button4"
           :id="'twodigit-' + data.rule"
           @click="betButtonClick('twodigit-' + data.rule)"
           slot="reference"
@@ -748,9 +746,6 @@ export default {
 </script>
 
 <style scoped>
-.buttonbtn {
-  width: 100px;
-}
 .popper {
   border-radius: 20px;
   background-color: #fff;

@@ -1,42 +1,45 @@
 <template>
-  <v-container class="mt-2">
+  <v-container fluid mt-2 class="containerNew pa-2" >
     <v-layout style="background-color:#f4f5fd;">
-      <v-flex v-if="!isHidden" class="leftStocklist">
-        <v-btn
-          @click="isHidden = true"
-          fab
-          small
-          slot="reference"
-          class="sidebar-close"
-        >
-          <v-icon style="color: #0b2a68 !important;">close</v-icon>
-        </v-btn>
-        <v-layout column>
-          <v-flex xs12 pt-2>
-            <div id="stocklistGuidelines">
-              <stockList></stockList>
-            </div>
-          </v-flex>
-          <v-flex xs12 pt-2>
-            <div id="betresultGuidelines">
-              <stockResult></stockResult>
-            </div>
-          </v-flex>
-          <v-flex xs12 pt-2>
-            <div id="bettingGuidelines">
-              <onBetting></onBetting>
-            </div>
-          </v-flex>
-        </v-layout>
+      <v-flex md3 lg3 mt-3 >
+        <v-flex v-if="!isHidden" class="leftStocklist">
+          <v-btn
+            @click="isHidden = true"
+            fab
+            small
+            slot="reference"
+            class="sidebar-close"
+          >
+            <v-icon style="color: #0b2a68 !important;">close</v-icon>
+          </v-btn>
+          <v-layout column>
+            <v-flex xs12 pt-2>
+              <div id="stocklistGuidelines">
+                <stockList></stockList>
+              </div>
+            </v-flex>
+            <v-flex xs12 pt-2>
+              <div id="betresultGuidelines">
+                <stockResult></stockResult>
+              </div>
+            </v-flex>
+            <v-flex xs12 pt-2>
+              <div id="bettingGuidelines">
+                <onBetting></onBetting>
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex v-if="isHidden" @click="isHidden = false">
+          <v-btn rigth fab slot="reference" class="sidebar-toggle">
+            <v-icon style="color: #0b2a68 !important;">list</v-icon>
+          </v-btn>
+        </v-flex>
       </v-flex>
-      <v-flex v-if="isHidden" @click="isHidden = false">
-        <v-btn rigth fab slot="reference" class="sidebar-toggle">
-          <v-icon style="color: #0b2a68 !important;">list</v-icon>
-        </v-btn>
-      </v-flex>
-      <v-flex :xs10="!isHidden" :xs12="isHidden">
+
+      <v-flex md10 lg10 :xs10="!isHidden" :xs12="isHidden" >
         <v-layout xs12 pa-2>
-          <v-flex xs6 md5 pt-2> 
+          <v-flex xs6 md6 lg6 pt-2>
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
@@ -53,13 +56,9 @@
             </v-layout>
           </v-flex>
 
-          <v-flex xs6 md6 class="mx-2" >
+          <v-flex xs6 md6 class="mx-2">
             <v-layout mb-3>
-              <v-flex
-                xs4
-                class="text-xs-center text-uppercase"
-                px-2
-              >
+              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.Lastdraw") }}</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
@@ -71,11 +70,7 @@
                 </div>
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
-              <v-flex
-                xs4
-                class="text-xs-center text-uppercase"
-                px-2
-              >
+              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.BetClosein") }}</span>
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
@@ -101,11 +96,7 @@
                 </div>
               </v-flex>
 
-              <v-flex
-                xs4
-                class="text-xs-center text-uppercase"
-                px-2
-              >
+              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.lotterydraw") }}</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
@@ -450,7 +441,7 @@ export default {
       }`
     );
   },
-  mounted() {  
+  mounted() {
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // socket new api
     this.listenForBroadcast(
@@ -749,12 +740,11 @@ export default {
 }
 .leftStocklist {
   background-color: #fff;
-  margin: 35px 0px;
   border-radius: 20px;
   position: relative;
   top: 0;
   box-shadow: 0 0 10px grey;
-  right: 20px;
+  right:5px;
 }
 
 .sidebar-close {
