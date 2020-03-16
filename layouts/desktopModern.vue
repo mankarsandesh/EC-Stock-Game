@@ -82,7 +82,7 @@
     </v-toolbar>
 
     <languageDialog ref="language" />
-    <v-content>
+    <v-content  >
       <nuxt />
     </v-content>
 

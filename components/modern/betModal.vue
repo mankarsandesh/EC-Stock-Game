@@ -63,6 +63,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
+import config from "../../config/config.global";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
   data() {
@@ -107,7 +108,7 @@ export default {
       "getAuth_token",
       "getStockId"
     ]),
-    ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState(["portalProviderUUID","userUUID","gameStockId"]) //get 2 data from vuex first, in the computed
   },
   created() {
     // check is full screen or not
@@ -121,7 +122,7 @@ export default {
     //  this.getwinuser()
   },
   methods: {
-    ...mapMutations(["pushDataOnGoingBet"]),
+    ...mapMutations(["pushDataOnGoingBet","setGameID"]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
@@ -134,18 +135,16 @@ export default {
           {
             portalProviderUUID: this.portalProviderUUID,
             userUUID: this.userUUID,
-            version: "0.1",
+            version: config.version,
             betData: [finalData]
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            }
+            headers: config.header
           }
         );
         if (res.status) {
-          console.log("i am here 2");
-          console.log(res);
+          console.log("i am here 2");       
+          console.log(gameStockId);  
           this.closePopper();
           let data = {
             betId: "Hello",

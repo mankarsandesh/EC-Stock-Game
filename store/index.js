@@ -585,7 +585,7 @@ const createStore = () => {
         }
       }
     },
-    getters: {
+    getters: {     
       // new api
       getStockLoop: state => stockName => {
         let result = null;

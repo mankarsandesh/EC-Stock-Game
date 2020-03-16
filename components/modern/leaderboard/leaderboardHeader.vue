@@ -1,9 +1,9 @@
 <template>
   <div>   
-    <v-flex xs8 style="margin:0 auto;">
+    <v-flex xs12 md12 lg12 style="margin:0 auto;">
       <v-layout row>
         <v-flex grow pa-1>
-          <p class="float-left md6">
+          <p class="float-left md6 lg8">
             <span class="title">Top 10 Leaders</span> (last updated 1 minutes ago)
           </p>
         </v-flex>
@@ -19,41 +19,6 @@
       </v-flex>
   </div>
 </template>
-<script>
-import { mapGetters, mapActions, mapState } from "vuex";
-export default {
- mounted() {
-    this.leaderBoard();
-  },
-  computed: {
-    ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
-  },
-  methods: {
-    async leaderBoard() {
-      const LeaderBoardData = {
-        portalProviderUUID: this.portalProviderUUID, 
-        userUUID: this.userUUID, 
-        version: "0.1", 
-        limit: "10" 
-      };
-      try {
-        const { data } = await this.$axios.post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getLeaderBoard", 
-          LeaderBoardData, 
-          {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" 
-            }
-          }
-        );
-        this.topPlayerData = data.data;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
-};
-</script>
 <style scoped>
 .followup {
   padding: 10px;

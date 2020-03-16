@@ -14,7 +14,7 @@
       ref="realtimeChart"
       class="chartDesgin"
       type="area"
-      height="240vh"
+      :height="chartHeight"
       width="99.5%"
       :options="chartOptions"
       :series="series"
@@ -38,6 +38,11 @@ export default {
   },
   data() {
     return {
+      chartHeight:"240vh",
+       window: {
+            width: 0,
+            height: 0
+        },
       routeParams: this.$route.params.id
     };
   },
@@ -65,6 +70,7 @@ export default {
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
+      
         if (
           dataIndex.stockTimestamp !==
           this.getLiveChart[this.getLiveChart.length - 1].stockTimestamp
@@ -180,11 +186,32 @@ export default {
       ];
     }
   },
+  created(){
+     window.addEventListener('resize', this.handleResize);
+     this.handleResize();
+  },
+  destroyed() {
+        window.removeEventListener('resize', this.handleResize);
+  },
   methods: {
     ...mapActions(["asyncChart"]),
     ...mapMutations(["setLiveChart"]),
     changeChartType(value) {
       this.trendType = value;
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+      console.log("Window Size");
+      console.log(this.window.height);
+      console.log(this.window.width);
+      if(this.window.width >= 2252){
+        this.chartHeight = "350vh";
+      }else if(this.window.width >= 1920){
+        this.chartHeight = "290vh";
+      }else{
+        this.chartHeight = "240vh";
+      }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
