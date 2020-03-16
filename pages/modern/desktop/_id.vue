@@ -235,7 +235,7 @@
       <div ref="lastDrawtGuideline" style="position:fixed" v-show="isStep == 3">
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
-            The lastest result
+            The latest result
             <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
           </p>
           <div class="arrow float-left line-my">&#8628;</div>
