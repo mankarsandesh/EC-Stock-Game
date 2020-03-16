@@ -1006,20 +1006,20 @@ const createStore = () => {
           return;
         }
         let stockname;
-        if (id == 7) {
-          stockname = "btc1";
+        if (id == 1) {
+          stockname = "sh000001";
+        } else if (id == 2) {
+          stockname = "sh000300";
+        } else if (id == 3) {
+          stockname = "sz399415";
+        } else if (id == 4) {
+          stockname = "sz399001";
         } else if (id == 5) {
           stockname = "usindex";
         } else if (id == 6) {
           stockname = "btc5";
-        } else if (id == 1) {
-          stockname = "sh000001";
-        } else if (id == 4) {
-          stockname = "sz399001";
-        } else if (id == 3) {
-          stockname = "sz399415";
-        } else if (id == 2) {
-          stockname = "sh000300";
+        } else if (id == 7) {
+          stockname = "btc1";
         }
         const data = state.stocks[stockname].stockname;
         return data;
@@ -1138,7 +1138,6 @@ const createStore = () => {
 
       // get data for display in "/" route
       getStockChart(state, getters) {
-        // console.log("getStockChart")
         let result = [];
         for (let i = 0; i < getters.getStockLength; i++) {
           const id = getters.getStockKeys[i];
@@ -1163,6 +1162,7 @@ const createStore = () => {
             stockPrice
           };
           result.push(data);
+          console.log(data.stockPrice,"Get stock chart");
         }
 
         // console.log(result)
