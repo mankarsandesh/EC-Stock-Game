@@ -90,7 +90,6 @@ export default {
       "getStockUUIDByStockName",
       "getLiveTime",
       "getLivePrice",
-      "getLotteryDraw",
       "getLiveChart"
     ]),
     chartOptions() {

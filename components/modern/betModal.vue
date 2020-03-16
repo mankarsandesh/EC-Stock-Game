@@ -105,8 +105,7 @@ export default {
     ...mapGetters([
       "getCoins_modern",
       "getOnBetting",
-      "getAuth_token",
-      "getStockId"
+      "getAuth_token"
     ]),
     ...mapState(["portalProviderUUID","userUUID","gameStockId"]) //get 2 data from vuex first, in the computed
   },
