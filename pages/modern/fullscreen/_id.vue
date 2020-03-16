@@ -35,7 +35,7 @@
       </v-card>
     </v-dialog>
 
-    <v-container class="bg-fullscreen" style="padding:0;">
+    <v-container fluid class="containerNew">
       <v-layout pa-1 wrap>
         <v-flex xs4 sm12 md6 lg4>
           <v-layout column>
@@ -120,13 +120,15 @@
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3>
-          <h2
-            font-weight-bold
-            style="text-align:right;color:#013f70;"
-          >Acc : {{ getUserInfo.balance | currency }}</h2>
+          <h3 class="balanceUser">
+            Acc : {{ getUserInfo.balance | currency }}
+          </h3>
           <!-- Toggle between two components -->
           <fullscreenchart v-if="!isHidden"></fullscreenchart>
-          <fullscreencurrentbet v-else :desserts="desserts"></fullscreencurrentbet>
+          <fullscreencurrentbet
+            v-else
+            :desserts="desserts"
+          ></fullscreencurrentbet>
           <v-layout pa-3>
             <v-flex xs3 sm3 md3 lg3>
               <span class="seticon">
@@ -473,18 +475,10 @@ export default {
 </script>
 
 <style scoped>
-.stockname {
-  font-size: 22px;
-  font-weight: 600;
-  color: #4b65ff;
+.balanceUser {
+  float: right;
+  margin: 10px 20px;
 }
-
-.gameid {
-  font-size: 16px;
-  color: #333;
-  font-weight: 500;
-}
-
 .chartDesgin {
   margin-top: 10px;
   padding: 5px 5px;

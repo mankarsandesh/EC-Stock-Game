@@ -6,7 +6,7 @@
         <v-divider></v-divider>
       </div>
     </v-flex>
-    <v-flex xs12 pt-3 pl-5>
+    <v-flex xs12 pt-3 pl-5 >
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
@@ -80,7 +80,7 @@
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
+    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5" >
       <div class="chart_container">
         <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
       </div>
@@ -89,14 +89,14 @@
       <div>
         <span style="margin-right:30px">
           player id :
-          <b>{{getUserInfo.PID}}</b>
+          <b>123</b>
         </span>
         <span style="margin-right:30px">
-          online time : {{getUserInfo.currentActiveTime}}
+          Online Time : <b>{{getUserInfo.currentActiveTime}}</b>
           <b>{{asynUserInfo.currentActiveTime}}</b>
         </span>
         <span style="margin-right:30px">
-          total online :
+          Total Online :
           <b>2day,15hours,11minute</b>
         </span>
       </div>

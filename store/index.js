@@ -113,8 +113,8 @@ const createStore = () => {
     mutations: {
       //new api
       setGameID(state, payload) {
-        console.log("This game id from vuex " + payload);
-        state.gameStockId = payload;
+        console.log("This game id from vuex " + payload)
+        state.gameStockId = payload
       },
       setAuth(state, payload) {
         state.authUser = payload;
@@ -410,6 +410,9 @@ const createStore = () => {
       }
     },
     getters: {
+      getStockGameId(state) {
+        return state.gameStockId;
+      },
       // new api
       getAllStocks(state) {
         return state.stocks2;

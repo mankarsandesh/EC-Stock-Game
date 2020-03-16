@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <v-container fluid >
     <input @change="readFile($event)" type="file" ref="inputFile" hidden />
     <v-layout pt-3 row wrap class="justify-center">
-      <v-flex xs12 ms12 lg9>
+      <v-flex xs12 ms12 lg10 md10 >
         <v-layout>
-          <v-flex xs4 ms3 lg3 xl2 class="pt-5" style="background-color:white">
+          <v-flex xs4 md3 lg3 xl2 class="pt-5" style="background-color:white">
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
@@ -39,13 +39,13 @@
           </v-flex>
 
           <!-- change component here when click menu  -->
-          <v-flex xs8 sm9 lg9 xl10>
+          <v-flex xs8 sm9 lg10 xl10>
             <nuxt-child />
           </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
-  </div>
+  </v-container>
 </template>
 <script>
 import { mapMutations, mapActions, mapGetters } from "vuex";
