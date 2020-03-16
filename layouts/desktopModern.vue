@@ -50,15 +50,15 @@
           ></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-xs-only text-s1">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
+        <v-toolbar-items class="hidden-xs-only text-s1 toolBar" >
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem" >
               <i :class="item.icon"  />
               <span>&nbsp;{{$t(`menu.${item.title}`)}}</span>
           </v-btn>
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
-              <countryFlag :country="countryflag" size="normal" style="margin-right:0px;" />
-              {{$t('msg.chooselanguage')}}
+              <countryFlag :country="countryflag" size="normal"  />
+              <span >&nbsp;{{$t('msg.chooselanguage')}}</span>
               <i
                 class="fa fa-caret-down"
                 style="margin: 0 -6px 0px 8px;"
@@ -269,11 +269,6 @@ export default {
   text-align: center;
   padding-top: 16px;
   cursor: pointer;
-}
-.menuItem {
-  border-right: 2px solid #dddddd;
-  height: 62px !important;
-  padding: 15px 15px;
 }
 
 .v-toolbar__content {

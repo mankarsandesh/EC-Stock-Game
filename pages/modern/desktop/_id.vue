@@ -740,7 +740,7 @@ export default {
   border-radius: 20px;
   position: relative;
   top: 0;
-  box-shadow: 0 0 10px grey;
+  box-shadow: 0 0 2px grey;
   right:5px;
 }
 
