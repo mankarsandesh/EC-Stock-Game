@@ -28,17 +28,15 @@ Big Screen
   }
 
   .align_button4 {
+    box-shadow: none !important;
+    border:2px solid #e8e8e8 ;
     height: 85px;
   }
 
-  .align_button5 {
-    height: 85px;
-  }
-
+  
   .big-digit {
     font-size: 14px;
     font-weight: 600;
-    color: #595858;
   }
 
   .big-number {
@@ -214,17 +212,14 @@ Big Screen
   }
 
   .align_button4 {
-    height: 65px;
-  }
-
-  .align_button5 {
+    box-shadow: none !important;
+    border:2px solid #e8e8e8 ;
     height: 65px;
   }
 
   .big-digit {
     font-size: 12px;
     font-weight: 600;
-    color: #595858;
   }
 
   .big-number {

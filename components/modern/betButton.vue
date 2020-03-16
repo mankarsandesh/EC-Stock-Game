@@ -103,6 +103,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
+             :ruleid="data.ruleid"
             :betId="'lastdigit-' + data.rule"
             :payout="data.payout"
           ></betModal>
@@ -176,6 +177,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
+             :ruleid="data.ruleid"
             :betId="'bothdigit-' + data.rule"
             :payout="data.payout"
           ></betModal>
@@ -250,6 +252,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
+            :ruleid="data.ruleid"
             :betId="'twodigit-' + data.rule"
             :payout="data.payout"
           ></betModal>

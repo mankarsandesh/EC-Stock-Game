@@ -271,10 +271,10 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
-       setGameID(state, payload) {
-                console.log("This game id from vuex " + payload)
-                state.gameStockId = payload
-            },
+      setGameID(state, payload) {
+        console.log("This game id from vuex " + payload)
+        state.gameStockId = payload
+      },
       setAuth(state, payload) {
         state.authUser = payload;
       },
@@ -585,7 +585,10 @@ const createStore = () => {
         }
       }
     },
-    getters: {     
+    getters: {
+      getStockGameId(state) {
+        return state.gameStockId;
+      },
       // new api
       getStockLoop: state => stockName => {
         let result = null;

@@ -106,9 +106,10 @@ export default {
       "getCoins_modern",
       "getOnBetting",
       "getAuth_token",
-      "getStockId"
+      "getStockId",
+      "getStockGameId"
     ]),
-    ...mapState(["portalProviderUUID","userUUID","gameStockId"]) //get 2 data from vuex first, in the computed
+    ...mapState(["portalProviderUUID","userUUID"]) //get 2 data from vuex first, in the computed
   },
   created() {
     // check is full screen or not
@@ -128,7 +129,7 @@ export default {
       this.betValue = this.betValue + amount;
     },
     async sendBetting(betData) {
-      let finalData = betData;
+      let finalData = betData;     
       try {
         const res = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
@@ -142,17 +143,9 @@ export default {
             headers: config.header
           }
         );
-        if (res.status) {
-          console.log("i am here 2");       
-          console.log(gameStockId);  
-          this.closePopper();
-          let data = {
-            betId: "Hello",
-            betTime: "20-3-2020",
-            betAmount: "2000",
-            rule: "First Digit",
-            stockName: "CHinaaa"
-          };
+         console.log(res);
+        if (res.data[0].status == true) {           
+          this.closePopper();        
           this.pushDataOnGoingBet(res.data[0]);
           this.$swal({
             type: "success",
@@ -171,12 +164,16 @@ export default {
       } catch (ex) {
         this.confirmDisabled = false;
         console.error(ex);
-        alert(ex.message);
+         this.$swal({
+            type: "error",
+            title: `Error ${ex.message}`,
+            showConfirmButton: true
+          });
       }
     },
     confirmBet() {
       let data = {
-        gameUUID: this.gameUUID,
+        gameUUID: this.getStockGameId,
         ruleID: this.ruleid,
         betAmount: this.betValue
       };
