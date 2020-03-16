@@ -135,7 +135,7 @@
             <div id="betRuleButton">
               <betButton
                 :stockName="$route.params.id"
-                :loop="getLoop($route.params.id)"
+                :loop="1"
               ></betButton>
             </div>
           </v-flex>
@@ -711,12 +711,10 @@ export default {
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "getLotteryDraw",
       "lotterydraw",
       "getStockLoop",
       "getStockLastDraw",
-      "getStockCrawlerData",
-      "getLoop"
+      "getStockCrawlerData"
     ]),
     ...mapState(["portalProviderUUID", "headers"])
   }

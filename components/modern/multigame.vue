@@ -17,7 +17,7 @@
       <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
       <v-layout>
         <v-flex align-left class="totalPrice">
-          <h4>{{formatToPrice(getAmountBettingByStockId(getStockId(stockid)))}}</h4>
+          <h4>{{formatToPrice(getAmountBettingByStockId('btc1'))}}</h4>
         </v-flex>
       </v-layout>
     </v-flex>
@@ -36,17 +36,17 @@
           <v-flex class="text-xs-center" px-2>
             <span class="text-gray">{{$t('msg.BetClosein')}}:</span>
             <v-flex class="betclose">
-              <span
+              <!-- <span
                 class="text-black"
-              >{{getLotteryDraw(stockid) | betclosein(getStockLoop(stockid))}}</span>
+              >{{getLotteryDraw(stockid) | betclosein(getStockLoop(stockid))}}</span> -->
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
             <span class="text-gray">{{$t('msg.lotterydraw')}}:</span>
             <v-flex class="lottery">
-              <span
+              <!-- <span
                 class="text-black"
-              >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>
+              >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span> -->
             </v-flex>
           </v-flex>
         </v-layout>
@@ -83,11 +83,9 @@ export default {
     ...mapGetters([
       "getStockLoop",
       "getStockLastDraw",
-      "getLotteryDraw",
       "lotterydraw",
       "getStockById",
       "getAmountBettingByStockId",
-      "getStockId"
     ])
   },
   methods: {

@@ -46,7 +46,7 @@
             size="45px"
             :amount="
               getAmountMultiGameBet({
-                stockId: getStockId(stockName),
+                stockId: 'btc1',
                 gameRule: 'firstdigit-' + data.rule
               })
             "
@@ -68,7 +68,7 @@
             size="45px"
             :amount="
               getAmountBetSpecificNumber({
-                stockId: getStockId(stockName),
+                stockId: 'btc1',
                 gameRule: 'firstdigit'
               })
             "
@@ -119,7 +119,7 @@
             size="45px"
             :amount="
               getAmountMultiGameBet({
-                stockId: getStockId(stockName),
+                stockId: 'btc1',
                 gameRule: 'lastdigit-' + data.rule
               })
             "
@@ -142,7 +142,7 @@
             size="45px"
             :amount="
               getAmountBetSpecificNumber({
-                stockId: getStockId(stockName),
+                stockId: 'btc1',
                 gameRule: 'lastdigit'
               })
             "
@@ -192,7 +192,7 @@
             size="45px"
             :amount="
               getAmountMultiGameBet({
-                stockId: getStockId(stockName),
+                stockId: 'btc1',
                 gameRule: 'bothdigit-' + data.rule
               })
             "
@@ -215,7 +215,7 @@
             size="45px"
             :amount="
               getAmountBetSpecificNumber({
-                stockId: getStockId(stockName),
+                stockId: 'btc1',
                 gameRule: 'bothdigit'
               })
             "
@@ -266,7 +266,7 @@
             size="45px"
             :amount="
               getAmountMultiGameBet({
-                stockId: getStockId(stockName),
+                stockId: 'btc1',
                 gameRule: 'twodigit-' + data.rule
               })
             "
@@ -289,7 +289,7 @@
             size="45px"
             :amount="
               getAmountBetSpecificNumber({
-                stockId: getStockId(stockName),
+                stockId: 'btc1',
                 gameRule: 'twodigit'
               })
             "
@@ -676,16 +676,12 @@ export default {
     ...mapGetters([
       "getTimerByStockName",
       "getStockLoop",
-      "getLotteryDraw",
-      "getLotteryDraw",
-      "getLoop",
       "checkFooterBet",
       "getFooterBetAmount",
       "getMultiGameBet",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "getPayout",
-      "getStockId"
+      "getPayout"
     ]),
     // check bet close using stockOpenOrClosed and timer
     checkBetClose() {
@@ -730,7 +726,7 @@ export default {
       if (this.checkFooterBet) {
         let data = {
           // stockId: this.stockName,
-          stockId: this.getStockId(this.stockName),
+          stockId: 'btc1',
           loop: this.loop,
           gameRule: betId,
           amount: this.getFooterBetAmount

@@ -47,7 +47,6 @@ export default {
       "getStockLoop",
       "getStockListTimer",
       "getStockList",
-      "getLotteryDraw",
       "getStockById",
       "getLivePrice",
       "getPreviousPrice"
