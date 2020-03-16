@@ -7,6 +7,18 @@ Big Screen
 */
 
 @media (min-width: 1281px) {
+  
+  .logoStyle {
+    width: 150px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+  .menuItem span {
+    font-size: 14px;
+  }
+  .menuItem i {
+    font-size: 18px;
+  }
   .stockname {
     font-size: 22px;
     font-weight: 600;
@@ -204,7 +216,20 @@ Big Screen
   ##Screen = B/w 1025px to 1280px
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
-  
+  .toolbarMenu{
+    height: 55px;
+   }
+   .menuItem span {
+    font-size: 13px;
+  }
+  .menuItem i {
+    font-size: 14px;
+  }
+  .logoStyle {
+    width: 100px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
   .stockname {
     font-size: 18px;
     font-weight: 600;

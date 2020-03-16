@@ -20,7 +20,6 @@
         <i class="fa fa-close fa-2x" @click="showNotification = false" />
       </v-flex>
     </v-toolbar>
-
     <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
@@ -41,21 +40,20 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <v-toolbar >
+    <v-toolbar class="toolbarMenu">
       <v-container fluid class="navbar">
         <v-toolbar-title>
-          <v-img
-            width="158"
+          <v-img          
             src="/logo.png"
             @click="$router.push('/modern/desktop/btc1')"
-            class="logostyle"
+            class="logoStyle"
           ></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only text-s1">
           <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
-            <i :class="item.icon" style="margin-right: 3px;" />
-            <span>{{$t(`menu.${item.title}`)}}</span>
+              <i :class="item.icon"  />
+              <span>&nbsp;{{$t(`menu.${item.title}`)}}</span>
           </v-btn>
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
@@ -230,12 +228,7 @@ export default {
 </script>
 
 <style scoped>
-.menuItem span {
-  font-size: 13px;
-}
-.menuItem i {
-  font-size: 18px;
-}
+
 .winnerText {
   margin-top: -30px;
   font-weight: 800;
@@ -282,10 +275,7 @@ export default {
   height: 62px !important;
   padding: 15px 15px;
 }
-.logostyle {
-  cursor: pointer;
-  margin-left: 15px;
-}
+
 .v-toolbar__content {
   padding: 0 !important;
   justify-content: center !important;

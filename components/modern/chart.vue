@@ -38,7 +38,8 @@ export default {
   },
   data() {
     return {
-      chartHeight:"240vh",
+      heightChart : 290,
+      chartHeight:"290vh",
        window: {
             width: 0,
             height: 0
@@ -46,8 +47,10 @@ export default {
       routeParams: this.$route.params.id
     };
   },
-  created() {
+  created() {    
     this.asyncChart(this.getStockUUIDByStockName(this.$route.params.id));
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   },
   beforeDestroy() {
     window.Echo.leave(`liveStockData.${this.routeParams}`);
@@ -124,7 +127,7 @@ export default {
         chart: {
           background: "#fff",
           parentHeightOffset: 0,
-          height: 230,
+          height: this.heightChart,
           zoom: {
             enabled: false
           },
@@ -186,10 +189,6 @@ export default {
       ];
     }
   },
-  created(){
-     window.addEventListener('resize', this.handleResize);
-     this.handleResize();
-  },
   destroyed() {
         window.removeEventListener('resize', this.handleResize);
   },
@@ -203,14 +202,15 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
       console.log("Window Size");
-      console.log(this.window.height);
       console.log(this.window.width);
-      if(this.window.width >= 2252){
-        this.chartHeight = "350vh";
-      }else if(this.window.width >= 1920){
-        this.chartHeight = "290vh";
+      if(this.window.width >= 1900){
+        this.chartHeight = "320vh";
+        this.heightChart = 320;
+        console.log("yes");
       }else{
-        this.chartHeight = "240vh";
+        this.chartHeight = "250vh";
+        this.heightChart = 250;
+        console.log("no");
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
