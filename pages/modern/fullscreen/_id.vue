@@ -9,7 +9,7 @@
           </v-btn>
         </v-card-title>
         <v-layout row wrap px-2 pt-2>
-          <!-- <v-flex pa-2 v-for="(data, index) in getStockChart" :key="index" xs6 sm6 md6>
+          <v-flex pa-2 v-for="(data, index) in getStockChart" :key="index" xs6 sm6 md6>
             <nuxt-link :to="'/modern/fullscreen/' + data.id">
               <v-card class="v-card-style">
                 <div class="close-bet-chart" v-if="getLotteryDraw(data.id) === 'close'">
@@ -27,7 +27,7 @@
                 </h4>
               </div>
             </nuxt-link>
-          </v-flex>-->
+          </v-flex>
         </v-layout>
       </v-card>
     </v-dialog>
