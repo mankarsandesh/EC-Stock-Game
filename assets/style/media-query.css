@@ -7,6 +7,43 @@ Big Screen
 */
 
 @media (min-width: 1281px) {
+  .btn-langage span {
+    font-size: 14px;
+  }
+
+  .menuItem {
+    border-right: 2px solid #dddddd;
+    height: 60px !important;
+    padding: 15px;
+  }
+
+  .logoStyle {
+    width: 150px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+
+  .menuItem span {
+    font-size: 14px;
+  }
+
+  .menuItem i {
+    margin-right: 5px;
+    font-size: 18px;
+  }
+
+  .stockname {
+    font-size: 22px;
+    font-weight: 600;
+    color: #4b65ff;
+  }
+
+  .gameid {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+
   .notification {
     background-color: #2cb028 !important;
     height: 42px !important;
@@ -15,7 +52,7 @@ Big Screen
   }
 
   .containerNew {
-    width: 100% !important;
+    width: 85% !important;
   }
 
   .buttonbtn {
@@ -28,17 +65,15 @@ Big Screen
   }
 
   .align_button4 {
+    box-shadow: none !important;
+    border: 2px solid #e8e8e8;
     height: 85px;
   }
 
-  .align_button5 {
-    height: 85px;
-  }
 
   .big-digit {
     font-size: 14px;
     font-weight: 600;
-    color: #595858;
   }
 
   .big-number {
@@ -97,6 +132,7 @@ Big Screen
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
   }
+
   span.addChart i {
     cursor: pointer;
     display: flex;
@@ -124,7 +160,7 @@ Big Screen
     font-size: 13px;
     padding: 0px;
   }
-  
+
   .blue {
     text-align: center;
     color: #fff;
@@ -136,7 +172,7 @@ Big Screen
     font-size: 13px;
     padding: 0px;
   }
-  
+
   .green {
     text-align: center;
     color: #fff;
@@ -158,6 +194,7 @@ Big Screen
     font-size: 14px;
     background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
   }
+
   .lastDigit {
     text-align: center;
     border-radius: 10px;
@@ -167,6 +204,7 @@ Big Screen
     font-size: 12p14pxx;
     background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
   }
+
   .bothDigit {
     font-weight: bolder;
     border-radius: 10px;
@@ -175,6 +213,7 @@ Big Screen
     font-size: 14px;
     background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
   }
+
   .twoDigit {
     font-weight: bolder;
     border-radius: 10px;
@@ -183,10 +222,11 @@ Big Screen
     font-size: 14px;
     background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
   }
-.RoadMapTable tr td{
-  min-width:23px;
-  height: 23px;
-}
+
+  .RoadMapTable tr td {
+    min-width: 23px;
+    height: 23px;
+  }
 
 
 }
@@ -196,7 +236,51 @@ Big Screen
   ##Screen = B/w 1025px to 1280px
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
- 
+  .btn-langage span {
+    font-size: 12px;
+  }
+
+  .toolBar {
+    margin-top: -10px;
+  }
+
+  .menuItem {
+    /* border:1px solid red; */
+    border-right: 1px solid #dddddd;
+    height: 55px !important;
+    padding: 5px 10px;
+  }
+
+  .toolbarMenu {
+    /* border:1px solid red; */
+    height: 55px;
+  }
+
+  .menuItem span {
+    font-size: 12px;
+  }
+
+  .menuItem i {
+    margin-right: 5px;
+    font-size: 14px;
+  }
+
+  .logoStyle {
+    width: 120px;
+    cursor: pointer;
+  }
+
+  .stockname {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4b65ff;
+  }
+
+  .gameid {
+    font-size: 12px;
+    color: #333;
+    font-weight: 500;
+  }
 
   .notification {
     background-color: #2cb028 !important;
@@ -208,23 +292,21 @@ Big Screen
   .containerNew {
     width: 100% !important;
   }
+
   /* game Rule Category Button */
   .btnHeight {
     height: 65px;
   }
 
   .align_button4 {
-    height: 65px;
-  }
-
-  .align_button5 {
+    box-shadow: none !important;
+    border: 2px solid #e8e8e8;
     height: 65px;
   }
 
   .big-digit {
     font-size: 12px;
     font-weight: 600;
-    color: #595858;
   }
 
   .big-number {
@@ -283,6 +365,7 @@ Big Screen
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
   }
+
   span.addChart i {
     cursor: pointer;
     display: flex;
@@ -310,7 +393,7 @@ Big Screen
     font-size: 13px;
     padding: 0px;
   }
-  
+
   .blue {
     text-align: center;
     color: #fff;
@@ -322,7 +405,7 @@ Big Screen
     font-size: 13px;
     padding: 0px;
   }
-  
+
   .green {
     text-align: center;
     color: #fff;
@@ -343,6 +426,7 @@ Big Screen
     font-size: 14px;
     background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
   }
+
   .lastDigit {
     text-align: center;
     border-radius: 10px;
@@ -352,6 +436,7 @@ Big Screen
     font-size: 12p14pxx;
     background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
   }
+
   .bothDigit {
     font-weight: bolder;
     border-radius: 10px;
@@ -360,6 +445,7 @@ Big Screen
     font-size: 14px;
     background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
   }
+
   .twoDigit {
     font-weight: bolder;
     border-radius: 10px;
@@ -367,9 +453,10 @@ Big Screen
     height: 60px;
     font-size: 14px;
     background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
-  } 
-  .RoadMapTable tr td{
-    min-width:16px;
+  }
+
+  .RoadMapTable tr td {
+    min-width: 16px;
     height: 16px;
   }
 

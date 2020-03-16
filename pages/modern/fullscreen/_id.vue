@@ -9,10 +9,20 @@
           </v-btn>
         </v-card-title>
         <v-layout row wrap px-2 pt-2>
-          <!-- <v-flex pa-2 v-for="(data, index) in getStockChart" :key="index" xs6 sm6 md6>
+          <v-flex
+            pa-2
+            v-for="(data, index) in getStockChart"
+            :key="index"
+            xs6
+            sm6
+            md6
+          >
             <nuxt-link :to="'/modern/fullscreen/' + data.id">
               <v-card class="v-card-style">
-                <div class="close-bet-chart" v-if="getLotteryDraw(data.id) === 'close'">
+                <div
+                  class="close-bet-chart"
+                  v-if="getLotteryDraw(data.id) === 'close'"
+                >
                   <span class="text-close-bet">market close</span>
                 </div>
 
@@ -21,18 +31,20 @@
                 </v-card-text>
               </v-card>
               <div class="pt-2" style="color: white;">
-                <h3 class="text-uppercase">{{ $t('stockname.'+data.stockname) }}</h3>
+                <h3 class="text-uppercase">
+                  {{ $t("stockname." + data.stockname) }}
+                </h3>
                 <h4 style="line-height: 1">
                   <em>{{ data.loop }} minute game</em>
                 </h4>
               </div>
             </nuxt-link>
-          </v-flex>-->
+          </v-flex>
         </v-layout>
       </v-card>
     </v-dialog>
 
-    <v-container class="bg-fullscreen" style="padding:0;">
+    <v-container fluid class="containerNew">
       <v-layout pa-1 wrap>
         <v-flex xs4 sm12 md6 lg4>
           <v-layout column>
@@ -118,12 +130,15 @@
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3>
-          <h2 font-weight-bold style="text-align:right;color:#013f70;">
+          <h3 class="balanceUser">
             Acc : {{ getUserInfo.balance | currency }}
-          </h2>
+          </h3>
           <!-- Toggle between two components -->
           <fullscreenchart v-if="!isHidden"></fullscreenchart>
-          <fullscreencurrentbet v-else :desserts="desserts"></fullscreencurrentbet>
+          <fullscreencurrentbet
+            v-else
+            :desserts="desserts"
+          ></fullscreencurrentbet>
           <v-layout pa-3>
             <v-flex xs3 sm3 md3 lg3>
               <span class="seticon">
@@ -150,14 +165,12 @@
               </span>
             </v-flex>
             <v-flex xs3 sm3 md3 lg3 mb-1>
-             
-                <v-btn
-                  @click="isHidden = !isHidden"
-                  color="buttonGreensmall"
-                  class="curretbet-btn"
-                  >{{ $t("menu.current bet") }}</v-btn
-                >
-              
+              <v-btn
+                @click="isHidden = !isHidden"
+                color="buttonGreensmall"
+                class="curretbet-btn"
+                >{{ $t("menu.current bet") }}</v-btn
+              >
             </v-flex>
           </v-layout>
         </v-flex>
@@ -477,18 +490,10 @@ export default {
 </script>
 
 <style scoped>
-.stockname {
-  font-size: 22px;
-  font-weight: 600;
-  color: #4b65ff;
+.balanceUser {
+  float: right;
+  margin: 10px 20px;
 }
-
-.gameid {
-  font-size: 16px;
-  color: #333;
-  font-weight: 500;
-}
-
 .chartDesgin {
   margin-top: 10px;
   padding: 5px 5px;

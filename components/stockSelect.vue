@@ -4,11 +4,10 @@
       <v-autocomplete
         v-model="stock"
         :items="items"
-        full-width
         solo
         hide-details
         color="blue"
-        label="select stock"
+        label="Select Stock"
         prepend-icon="bar_chart"
         item-text="type"
         item-value="name"
@@ -16,7 +15,7 @@
       />
     </v-flex>
     <v-flex md3>
-      <v-autocomplete
+      <v-autocomplete      
         v-model="stockName"
         :items="stockNames"
         label="Stock Name"
@@ -175,5 +174,6 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style scoped>
+
+</style>> 
