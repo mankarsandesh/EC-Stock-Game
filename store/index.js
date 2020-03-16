@@ -40,38 +40,6 @@ const createStore = () => {
       coins_modern: [],
       // multi game
       isSendBetting: false,
-      // all stocks data
-      // if we have new stock available we can add it here with same object format
-      liveprice: {
-        btc1: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        usindex: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        btc5: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        sh000001: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        sz399001: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        sz399415: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        sh000300: {
-          currentPrice: 0,
-          previousPrice: 0
-        }
-      },
       payout: payouts,
       stocks2: [
         {
@@ -530,22 +498,6 @@ const createStore = () => {
           context.commit("setIsSendBetting", false);
         }
       },
-      // to get live price
-      async asynLivePrice(context, payload) {
-        try {
-          const url = payload.url;
-          const name = payload.name;
-          const res = await this.$axios.$get(url);
-          if (res) {
-            context.state.stocks[name].livePrice.currentPrice =
-              res.data.currentPrice;
-            context.state.stocks[name].livePrice.previousPrice =
-              res.data.previousPrice;
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
       // to get Annoucement
       async asyannoucement(context) {
         try {
@@ -967,24 +919,7 @@ const createStore = () => {
       getlocale(state) {
         return state.locale;
       },
-      // sometimes you  need to get only liveprice -----> believe me ^_^ <------
-      getLivePrice: state => id => {
-        // console.log("getLivePrice")
-        if (id == "") {
-          return;
-        }
-        const livePrice = state.liveprice[id].currentPrice;
-        return livePrice;
-      },
-      // get previouse price to compare with current price to know to if the price increased or decreased
-      getPreviousPrice: state => id => {
-        // console.log("getPreviousPrice")
-        if (id == "") {
-          return;
-        }
-        const previousPrice = state.liveprice[id].previousPrice;
-        return previousPrice;
-      },
+   
       // get loop by stock id "btc1,btc5..."
       getLoop: state => id => {
         if (id == "") {
@@ -1122,16 +1057,6 @@ const createStore = () => {
           return result;
         }
         result = state.stocks[stock].crawlerData;
-        return result;
-      },
-      getReference: state => id => {
-        if (id == "") return;
-        let stock = id.split("-")[1];
-        let result = [null];
-        if (state.stocks[stock].crawlerData.length < 0) {
-          return result;
-        }
-        result = state.stocks[stock].livePrice.refLink;
         return result;
       },
       // end classic .............................................................
