@@ -4,16 +4,18 @@
   <v-layout class="multiplescreen">
     <v-flex xs12 class="pt-2">
       <h3
-        class="text-uppercase ml-4 heading" 
+        class="text-uppercase ml-4 heading"
       >{{$t('stockname.'+stockid)}} {{getStockLoop(stockid)}} {{$t('msg.minute')}} {{$t('msg.loop')}}</h3>
-      <chartApp
+      <!-- <chartApp
         class="chartDesgin"
         :data="getStockById(stockid).stockPrice"
         :time="getStockById(stockid).stockTime"
         :key="getStockById(stockid).stockPrice[0]"
         :stockid="stockid"
-        height="400px"
-      ></chartApp>
+       
+      ></chartApp>-->
+      <chartApp/>
+
       <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
       <v-layout>
         <v-flex align-left class="totalPrice">
@@ -27,10 +29,10 @@
           <v-flex class="text-xs-center" px-2>
             <span class="text-gray">{{$t('msg.Lastdraw')}}:</span>
             <v-flex class="lastdraw">
-              <span
+              <!-- <span
                 class="text-black"
                 v-html="$options.filters.lastDraw(getStockLastDraw(stockid))"
-              ></span>
+              ></span>-->
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
@@ -38,7 +40,7 @@
             <v-flex class="betclose">
               <!-- <span
                 class="text-black"
-              >{{getLotteryDraw(stockid) | betclosein(getStockLoop(stockid))}}</span> -->
+              >{{getLotteryDraw(stockid) | betclosein(getStockLoop(stockid))}}</span>-->
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
@@ -46,17 +48,16 @@
             <v-flex class="lottery">
               <!-- <span
                 class="text-black"
-              >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span> -->
+              >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>-->
             </v-flex>
           </v-flex>
         </v-layout>
-     
+
         <betButton :isFullscreen="true" :stockName="stockid" :loop="getStockLoop(stockid)"></betButton>
-        <v-btn fab  class="multiplefull" :to="'/modern/fullscreen/' +stockid" style="float:right;" >
-            <v-icon>fullscreen</v-icon>
-          </v-btn>
+        <v-btn fab class="multiplefull" :to="'/modern/fullscreen/' +stockid" style="float:right;">
+          <v-icon>fullscreen</v-icon>
+        </v-btn>
       </v-flex>
-     
     </v-flex>
   </v-layout>
   <!-- </div>
@@ -82,10 +83,9 @@ export default {
   computed: {
     ...mapGetters([
       "getStockLoop",
-      "getStockLastDraw",
       "lotterydraw",
       "getStockById",
-      "getAmountBettingByStockId",
+      "getAmountBettingByStockId"
     ])
   },
   methods: {
@@ -98,18 +98,18 @@ export default {
 };
 </script>
 <style scoped >
-.heading{
-  color:#013f70;
+.heading {
+  color: #013f70;
   font-size: 22px;
 }
-.totalPrice{
+.totalPrice {
   font-size: 24px;
-  margin-left:50px;
+  margin-left: 50px;
 }
-.multiplescreen{
-  border-top:10px solid #092a68;
-  background-color: #FFF;
-  border-radius:10px;
+.multiplescreen {
+  border-top: 10px solid #092a68;
+  background-color: #fff;
+  border-radius: 10px;
   padding: 10px;
 }
 .multiplefull {
