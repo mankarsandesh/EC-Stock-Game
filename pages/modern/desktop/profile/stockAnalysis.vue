@@ -85,7 +85,7 @@
         <div class="chart-map-color">
           <span v-for="(stock,index) in stocks" :key="index">
             <span class="circle-color" :style="{backgroundColor:colors[0][index]}"></span>
-            <span style="margin-right:10px">{{stock}}</span>
+            <span style="margin-right:10px" class="text-uppercase">{{stock}}</span>
           </span>
         </div>
         <apexchart type="bar" height="480vh" :options="chartOptions" :series="series"></apexchart>
@@ -129,8 +129,6 @@ export default {
     return {
       stockAnalysis: [],
       colors: barColor,
-      // match with color by index
-      // 'barColor' variable above
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
