@@ -7,6 +7,16 @@ Big Screen
 */
 
 @media (min-width: 1281px) {
+  .stockname {
+    font-size: 22px;
+    font-weight: 600;
+    color: #4b65ff;
+  }
+  .gameid {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
   .notification {
     background-color: #2cb028 !important;
     height: 42px !important;
@@ -15,7 +25,7 @@ Big Screen
   }
 
   .containerNew {
-    width: 100% !important;
+    width: 90% !important;
   }
 
   .buttonbtn {
@@ -194,7 +204,17 @@ Big Screen
   ##Screen = B/w 1025px to 1280px
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
- 
+  
+  .stockname {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4b65ff;
+  }
+  .gameid {
+    font-size: 12px;
+    color: #333;
+    font-weight: 500;
+  }
 
   .notification {
     background-color: #2cb028 !important;
