@@ -14,7 +14,7 @@
         :stockid="stockid"
        
       ></chartApp>-->
-      <chartApp/>
+      <chartApp />
 
       <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
       <v-layout>
@@ -29,26 +29,46 @@
           <v-flex class="text-xs-center" px-2>
             <span class="text-gray">{{$t('msg.Lastdraw')}}:</span>
             <v-flex class="lastdraw">
-              <!-- <span
-                class="text-black"
-                v-html="$options.filters.lastDraw(getStockLastDraw(stockid))"
-              ></span>-->
+              <span class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></span>
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
             <span class="text-gray">{{$t('msg.BetClosein')}}:</span>
             <v-flex class="betclose">
-              <!-- <span
+              <span
+                v-if="
+                        getTimerByStockName($route.params.id) &&
+                          getTimerByStockName($route.params.id)
+                            .stockOpenOrClosed === 'Closed!'
+                      "
                 class="text-black"
-              >{{getLotteryDraw(stockid) | betclosein(getStockLoop(stockid))}}</span>-->
+              >
+                {{
+                getTimerByStockName($route.params.id) &&
+                "close" | betclosein(getStockLoop($route.params.id))
+                }}
+              </span>
+              <span v-else class="text-black">
+                {{
+                getTimerByStockName($route.params.id) &&
+                getTimerByStockName($route.params.id)
+                .gameEndTimeCountDownInSec
+                | betclosein(getStockLoop($route.params.id))
+                }}
+              </span>
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
             <span class="text-gray">{{$t('msg.lotterydraw')}}:</span>
             <v-flex class="lottery">
-              <!-- <span
-                class="text-black"
-              >{{getLotteryDraw($route.params.id) | lotterydraw(getStockLoop($route.params.id))}}</span>-->
+              <span class="text-black">
+                {{
+                getTimerByStockName($route.params.id) &&
+                getTimerByStockName($route.params.id)
+                .gameEndTimeCountDownInSec
+                | lotterydraw(getStockLoop($route.params.id))
+                }}
+              </span>
             </v-flex>
           </v-flex>
         </v-layout>
@@ -82,6 +102,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getLastDraw",
+      "getTimerByStockName",
       "getStockLoop",
       "lotterydraw",
       "getStockById",

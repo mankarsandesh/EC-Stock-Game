@@ -7,7 +7,7 @@
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
         {{ $t("msg.liveprice") }}:
-        <span>{{ getStockLivePrice(routeParams) }}</span>
+        <span>{{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
     <apexchart
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import config from "../../config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
@@ -34,35 +35,42 @@ export default {
     height: {
       type: String,
       default: "auto"
+    },
+    stockName: {
+      type: String,
+      default: "btc1"
     }
   },
   data() {
     return {
-      heightChart : 290,
-      chartHeight:"290vh",
-       window: {
-            width: 0,
-            height: 0
-        },
-      routeParams: this.$route.params.id
+      chartHeight: "240vh",
+      window: {
+        width: 0,
+        height: 0
+      },
+      chartData: []
     };
   },
-  created() {    
-    this.asyncChart(this.getStockUUIDByStockName(this.$route.params.id));
-    window.addEventListener('resize', this.handleResize);
+  created() {
+    this.fetchChart(this.getStockUUIDByStockName(this.stockName));
+    window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
   beforeDestroy() {
-    window.Echo.leave(`liveStockData.${this.routeParams}`);
+    window.Echo.leave(
+      `roadMap.${this.getStockUUIDByStockName(this.stockName)}.${
+        this.getPortalProviderUUID
+      }`
+    );
   },
   mounted() {
     // socket new api
     this.listenForBroadcast(
       {
         // liveStockData.stockName
-        channelName: `roadMap.${this.getStockUUIDByStockName(
-          this.routeParams
-        )}.${this.getPortalProviderUUID}`,
+        channelName: `roadMap.${this.getStockUUIDByStockName(this.stockName)}.${
+          this.getPortalProviderUUID
+        }`,
         eventName: "roadMap"
       },
       ({ data }) => {
@@ -73,10 +81,10 @@ export default {
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
-      
+
         if (
           dataIndex.stockTimestamp !==
-          this.getLiveChart[this.getLiveChart.length - 1].stockTimestamp
+          this.chartData[this.chartData.length - 1].stockTimestamp
         ) {
           this.setLiveChart(readyData);
         }
@@ -91,13 +99,11 @@ export default {
       "getPortalProviderUUID",
       "getStockLivePrice",
       "getStockUUIDByStockName",
-      "getLiveTime",
-      "getLivePrice",
-      "getLiveChart"
+      "getLiveTime"
     ]),
     chartOptions() {
       let newTime = [];
-      this.getLiveChart.forEach(element => {
+      this.chartData.forEach(element => {
         newTime.push(element.stockTimestamp);
       });
       return {
@@ -177,7 +183,7 @@ export default {
     },
     series() {
       let newData = [];
-      this.getLiveChart.forEach(element => {
+      this.chartData.forEach(element => {
         newData.push(element.stockValue);
       });
       return [
@@ -189,11 +195,36 @@ export default {
     }
   },
   destroyed() {
-        window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-    ...mapActions(["asyncChart"]),
-    ...mapMutations(["setLiveChart"]),
+    setLiveChart(payload) {
+      this.chartData.push(payload);
+    },
+    async fetchChart(stockUUID) {
+      try {
+        const res = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            limit: 50,
+            stockUUID: [stockUUID],
+            version: config.version
+          },
+          {
+            headers: config.header
+          }
+        );
+        if (res.code === 200) {
+          let readyData = res.data[0].roadMap.reverse();
+          this.chartData = readyData;
+        } else {
+          throw new Error();
+        }
+      } catch (ex) {
+        console.error(ex.message);
+      }
+    },
     changeChartType(value) {
       this.trendType = value;
     },

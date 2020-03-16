@@ -162,8 +162,6 @@ export default {
           }
         );
         if (res.code === 200) {
-          this.chartData = [1500, 2000, 1850];
-          this.xaxis = ["2020-02-26", "2020-02-28", "2020-02-29"];
           let result = res.data.activeTimeDateWise;
           console.log("result online chart");
           console.log(res);

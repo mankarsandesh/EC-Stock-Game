@@ -46,7 +46,7 @@
               <v-flex>
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
-                    <chartApp />
+                    <chartApp :stockName="routeParams" />
                   </v-flex>
                 </div>
               </v-flex>

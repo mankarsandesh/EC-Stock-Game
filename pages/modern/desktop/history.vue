@@ -2,7 +2,6 @@
   <div>
     <breadcrumbs title="History" :linkItem="false" />
     <v-container>
-      <Histoy />
     </v-container>
   </div>
 </template>
@@ -12,7 +11,6 @@ import { mapMutations } from "vuex";
 export default {
   layout: "desktopModern",
   components: {
-    Histoy,
     breadcrumbs
   },
   methods: {

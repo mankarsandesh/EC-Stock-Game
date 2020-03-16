@@ -19,8 +19,6 @@ const createStore = () => {
       // set portal provider and user UUID for authentication
       portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
       userUUID: "dfdcb1e4-2275-4026-8efd-cafc79cc6f44",
-      Username: "TnkwebApi",
-      Password: "Test123!",
       // end set portal provider and user UUID for authentication
       roadMap: [],
       liveChart: [],
@@ -110,135 +108,10 @@ const createStore = () => {
           crawlData: []
         }
       ],
-      stocks: {
-        sh000001: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=1&limit=100`,
-            livePrice: ""
-          },
-          stockId: 4,
-          stockname: "sh000001",
-          name: "sh000001",
-          loop: 5,
-          type: "china",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink:
-              "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml"
-          }
-        },
-        sz399001: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=4&limit=100`,
-            livePrice: ""
-          },
-          stockId: 3,
-          stockname: "sz399001",
-          name: "sz399001",
-          loop: 5,
-          type: "china",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink:
-              "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml"
-          }
-        },
-        sz399415: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=3&limit=100`,
-            livePrice: ""
-          },
-          stockId: 2,
-          stockname: "sz399415",
-          name: "sz399415",
-          loop: 5,
-          type: "china",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink:
-              "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml"
-          }
-        },
-        sh000300: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=2&limit=100`,
-            livePrice: ""
-          },
-          stockId: 1,
-          stockname: "sh000300",
-          name: "sh000300",
-          loop: 5,
-          type: "china",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink:
-              "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml"
-          }
-        },
-        usindex: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=5&limit=100`,
-            livePrice: ""
-          },
-          stockId: 5,
-          stockname: "usindex",
-          name: "usindex",
-          loop: 5,
-          type: "usa",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml"
-          }
-        },
-        btc5: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=6&limit=100`,
-            livePrice: ""
-          },
-          stockId: 6,
-          stockname: "btc5",
-          name: "btc",
-          loop: 5,
-          type: "cypto",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-          }
-        },
-        btc1: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=7&limit=100`,
-            livePrice: ""
-          },
-          stockId: 7,
-          stockname: "btc1",
-          name: "btc",
-          loop: 1,
-          type: "cypto",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-          }
-        }
-      },
-      time: {},
       stockListTimer: []
     }),
     mutations: {
+      //new api
       setGameID(state, payload) {
         console.log("This game id from vuex " + payload)
         state.gameStockId = payload
@@ -252,7 +125,6 @@ const createStore = () => {
           state.stockListTimer.pop();
         }
       },
-      //new api
       setLiveRoadMap(state, payload) {
         state.roadMap.push(payload);
       },
@@ -542,6 +414,9 @@ const createStore = () => {
         return state.gameStockId;
       },
       // new api
+      getAllStocks(state) {
+        return state.stocks2;
+      },
       getStockLoop: state => stockName => {
         let result = null;
         for (let i = 0; i < state.stocks2.length; i++) {
