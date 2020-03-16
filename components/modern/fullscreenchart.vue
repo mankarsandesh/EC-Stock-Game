@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <apexchart type="bar" height="350" :options="chartOptions" :series="series" ></apexchart>
+    <apexchart type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey"></apexchart>
   </div>
 </template>
 
@@ -18,50 +18,51 @@ export default {
       series: [
         {
           name: "BIG",
-          data: [[1,1],[0,1],[0,1],[0,1]],
-          betCount: [15, 14, 13, 0]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 0]
         },
         {
           name: "SMALL",
-          data: [[1,1],[0,1],[0,1],[0,1]],
-          betCount: [15, 14, 13, 100]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 100]
         },
         {
           name: "ODD",
-          data: [[1,1],[0,1],[0,1],[0,1]],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "EVEN",
-          data: [[1,1],[0,1],[0,1],[0,1]],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "HIGH",
-          data: [[1,1],[0,1],[0,1],[0,1]],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "MID",
-          data: [[1,1],[0,1],[0,1],[0,1]],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "LOW",
-          data: [[1,1],[0,1],[0,1],[0,1]],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "NUMBER",
-          data: [[1,1],[0,1],[0,1],[0,1]],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name : "TIE",
-          data: [[1,1],[0,1],[0,1],[10,20]],
-          betCount: [15, 14, 13, 20]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 20]
         }
       ],
+      componentKey: 0,
       chartOptions: {
         chart: {
           toolbar : { show :false },     
@@ -94,12 +95,12 @@ export default {
           },
           y: {
             formatter: function(val, { series, seriesIndex, dataPointIndex, w }) {
-              console.log(w.config.series[seriesIndex].data[dataPointIndex], 'ayaaaaaaaaaaaaaaaaaaaaa')
+              console.log(w.config.series[seriesIndex].betCounts[dataPointIndex], 'ayaaaaaaaaaaaaaaaaaaaaa')
               return '<div class="arrow_box">' +
-                '<span> Amount $' + w.config.series[seriesIndex].data[dataPointIndex][0] + 'BetCount' + w.config.series[seriesIndex].data[dataPointIndex][1] + ' </span>' +
+                 '<span> Amount $' + series[seriesIndex][dataPointIndex] + ' </span>' +
                 '</div>' +
                 '<div class="arrow_box">' + 
-                '<span> BetCount' + w.config.series[seriesIndex].betCount[dataPointIndex] + '</span>' +
+                '<span> BetCount' + w.config.series[seriesIndex].betCounts[dataPointIndex] + '</span>' +
                 '</div>'
             }
           }
@@ -124,7 +125,6 @@ export default {
     ])
   },
   mounted() {
-    console.log()
     this.listenForBroadcast({ 
       channelName: "liveBetCounts." + this.gameStockId,
       eventName: "liveBetCounts" 
@@ -132,7 +132,7 @@ export default {
      ({ data }) => {
       console.log(data.data);
       this.series = data.data;
-      console.log(this.series, 'series');
+      this.componentKey += 1;
     }
     );
   },
