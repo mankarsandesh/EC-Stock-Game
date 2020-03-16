@@ -699,25 +699,25 @@ export default {
       if (this.getStockLoop(this.stockName) === 5) {
         if (
           this.getTimerByStockName(this.stockName) &&
-          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInMins ==
+          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec ==
             240
         ) {
           this.clearDataMultiGameBet();
         }
         return (
-          this.getTimerByStockName(this.stockName) && this.getTimerByStockName(this.stockName).gameEndTimeCountDownInMins >
+          this.getTimerByStockName(this.stockName) && this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec >
           240
         );
       } else {
         if (
           this.getTimerByStockName(this.stockName) &&
-          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInMins ==
+          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec ==
             40
         ) {
           this.clearDataMultiGameBet();
         }
         return (
-         this.getTimerByStockName(this.stockName) &&  this.getTimerByStockName(this.stockName).gameEndTimeCountDownInMins >
+         this.getTimerByStockName(this.stockName) &&  this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec >
           40
         );
       }

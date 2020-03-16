@@ -94,7 +94,7 @@
                     <span v-else class="text-black">{{
                       getTimerByStockName($route.params.id) &&
                         getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInMins
+                          .gameEndTimeCountDownInSec
                           | betclosein(getStockLoop($route.params.id))
                     }}</span>
                   </v-flex>
@@ -112,7 +112,7 @@
                     <span class="text-black">{{
                       getTimerByStockName($route.params.id) &&
                         getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInMins
+                          .gameEndTimeCountDownInSec
                           | lotterydraw(getStockLoop($route.params.id))
                     }}</span>
                   </v-flex>

@@ -12,7 +12,7 @@ Vue.filter("lastDraw", value => {
 });
 // currency format
 Vue.filter("currency", (value, decimalCount = 2) => {
-  if (!value) return "";
+  if (!value) return "...";
   return formatCurrency(value, decimalCount);
 });
 // countdown bet close in

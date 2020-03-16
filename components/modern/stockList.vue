@@ -24,9 +24,9 @@
           <td v-if="data.stockOpenOrClosed==='Closed!'">{{data.stockOpenOrClosed}}</td>
 
           <td v-else>
-            <span>{{data.gameEndTimeCountDownInMins | betstatus(getStockLoop(data.stockName))}}</span>
+            <span>{{data.gameEndTimeCountDownInSec | betstatus(getStockLoop(data.stockName))}}</span>
           </td>
-          <td>{{data.gameEndTimeCountDownInMins | lotterydraw(getStockLoop(data.stockName)) }}</td>
+          <td>{{data.gameEndTimeCountDownInSec | lotterydraw(getStockLoop(data.stockName)) }}</td>
           <!-- <td
             v-html="$options.filters.livePriceColor(getLivePrice(data.id),getPreviousPrice(data.id) )"
           ></td>-->
