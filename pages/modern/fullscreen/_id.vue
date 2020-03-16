@@ -95,23 +95,23 @@
               <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.BetClosein") }}:</span>
                 <v-flex flex-style class="betclose">
-                  <span class="text-black">
+                  <!-- <span class="text-black">
                     {{
                       getLotteryDraw($route.params.id)
                         | betclosein(getStockLoop($route.params.id))
                     }}
-                  </span>
+                  </span> -->
                 </v-flex>
               </v-flex>
               <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.lotterydraw") }}:</span>
                 <v-flex flex-style class="lottery">
-                  <span class="text-black">
+                  <!-- <span class="text-black">
                     {{
                       getLotteryDraw($route.params.id)
                         | lotterydraw(getStockLoop($route.params.id))
                     }}
-                  </span>
+                  </span> -->
                 </v-flex>
               </v-flex>
               <!-- <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
@@ -125,7 +125,7 @@
             <betButton
               :isFullscreen="true"
               :stockName="$route.params.id"
-              :loop="getLoop($route.params.id)"
+              :loop="1"
             ></betButton>
           </v-flex>
         </v-flex>
@@ -300,12 +300,12 @@ export default {
     );
     // this.getwinuser();
     setTimeout(() => {
-      this.getliveBetCount();
+      // this.getliveBetCount();
       this.getliveAll();
     }, 1000);
 
     setInterval(() => {
-      this.getliveBetCount();
+      // this.getliveBetCount();
       this.getliveAll();
     }, 1000);
     console.log(
@@ -331,12 +331,10 @@ export default {
       "getLastDraw",
       "getRoadMap",
       "getStockById",
-      "getLotteryDraw",
       "lotterydraw",
       "getStockLoop",
       "getStockLastDraw",
       "getStockCrawlerData",
-      "getLoop",
       "getStockChart",
       "getLiveTime",
       "getLivePrice",
@@ -372,83 +370,82 @@ export default {
         console.log(e);
       }
     },
-    async getliveBetCount() {
-      try {
-        const res = await this.$axios.$get(
-          `/api/liveBetCount?stock=${this.stockId}&loop=${this.getLoop(
-            "btc1"
-          )}&apikey=${this.$store.state.auth_token}`
-        );
-        if (res.status == false) {
-          console.log("No Data");
-          return;
-        }
-        for (let i = 0; i < res.data.length; i++) {
-          this.rulenew = res.data[i].totalUsers;
-        }
-        if (
-          res.data.length != 0 ||
-          res.data.length > this.chartData.length ||
-          this.rulenew > this.ruleold
-        ) {
-          // console.log("Okkk");
-          // this.msg = this.$root.$t('msg.betting');
-          if (this.rulenew == undefined) return;
-          if (
-            (this.isShow == true && res.data.length > this.chartData.length) ||
-            this.rulenew > this.ruleold
-          ) {
-            this.chartData = res.data;
-            this.isShow = false;
-            for (let i = 0; i < res.data.length; i++) {
-              this.ruleold = res.data[i].totalUsers;
-            }
-          } else {
-            this.chartData = res.data;
-            this.isShow = true;
-          }
-        } else {
-          // console.log("Nooo");
-          // this.msg = this.$root.$t('msg.nobetting');
-          // this.chartData = []
+    // async getliveBetCount() {
+    //   try {
+    //     const res = await this.$axios.$get(
+    //       `/api/liveBetCount?stock=${this.stockId}&loop=${this.getLoop(
+    //         "btc1"
+    //       )}&apikey=${this.$store.state.auth_token}`
+    //     );
+    //     if (res.status == false) {
+    //       console.log("No Data");
+    //       return;
+    //     }
+    //     for (let i = 0; i < res.data.length; i++) {
+    //       this.rulenew = res.data[i].totalUsers;
+    //     }
+    //     if (
+    //       res.data.length != 0 ||
+    //       res.data.length > this.chartData.length ||
+    //       this.rulenew > this.ruleold
+    //     ) {
+    //       // console.log("Okkk");
+    //       // this.msg = this.$root.$t('msg.betting');
+    //       if (this.rulenew == undefined) return;
+    //       if (
+    //         (this.isShow == true && res.data.length > this.chartData.length) ||
+    //         this.rulenew > this.ruleold
+    //       ) {
+    //         this.chartData = res.data;
+    //         this.isShow = false;
+    //         for (let i = 0; i < res.data.length; i++) {
+    //           this.ruleold = res.data[i].totalUsers;
+    //         }
+    //       } else {
+    //         this.chartData = res.data;
+    //         this.isShow = true;
+    //       }
+    //     } else {
+    //       // console.log("Nooo");
+    //       // this.msg = this.$root.$t('msg.nobetting');
+    //       // this.chartData = []
 
-          if (this.chartData.length != 4 || this.chartData.length == null) {
-            this.isShow = false;
-          } else {
-            this.isShow = true;
-          }
-          this.chartData = [
-            {
-              rule: "bothdigit-big",
-              totalAmount: "1",
-              totalUsers: 1
-            },
-            {
-              rule: "firstdigit-big",
-              totalAmount: "2",
-              totalUsers: 1
-            },
-            {
-              rule: "lastdigit-big",
-              totalAmount: "3",
-              totalUsers: 1
-            },
-            {
-              rule: "twodigit-big",
-              totalAmount: "4",
-              totalUsers: 1
-            }
-          ];
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    //       if (this.chartData.length != 4 || this.chartData.length == null) {
+    //         this.isShow = false;
+    //       } else {
+    //         this.isShow = true;
+    //       }
+    //       this.chartData = [
+    //         {
+    //           rule: "bothdigit-big",
+    //           totalAmount: "1",
+    //           totalUsers: 1
+    //         },
+    //         {
+    //           rule: "firstdigit-big",
+    //           totalAmount: "2",
+    //           totalUsers: 1
+    //         },
+    //         {
+    //           rule: "lastdigit-big",
+    //           totalAmount: "3",
+    //           totalUsers: 1
+    //         },
+    //         {
+    //           rule: "twodigit-big",
+    //           totalAmount: "4",
+    //           totalUsers: 1
+    //         }
+    //       ];
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     async getliveAll() {
       try {
         const res = await this.$axios.$get(
-          `/api/liveBetAll?stock=${this.stockId}&loop=${this.getLoop(
-            "btc1"
+          `/api/liveBetAll?stock=${this.stockId}&loop=1
           )}&apikey=${this.$store.state.auth_token}`
         );
         if (res.status == false) {

@@ -9,7 +9,6 @@
 <script>
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapMutations } from "vuex";
-import Histoy from "~/components/classic/historyinfo";
 export default {
   layout: "desktopModern",
   components: {

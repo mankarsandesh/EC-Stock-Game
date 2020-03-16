@@ -86,7 +86,7 @@
                     <span v-else class="text-black">{{
                       getTimerByStockName($route.params.id) &&
                         getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInMins
+                          .gameEndTimeCountDownInSec
                           | betclosein(getStockLoop($route.params.id))
                     }}</span>
                   </v-flex>
@@ -100,7 +100,7 @@
                     <span class="text-black">{{
                       getTimerByStockName($route.params.id) &&
                         getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInMins
+                          .gameEndTimeCountDownInSec
                           | lotterydraw(getStockLoop($route.params.id))
                     }}</span>
                   </v-flex>
@@ -123,7 +123,7 @@
             <div id="betRuleButton">
               <betButton
                 :stockName="$route.params.id"
-                :loop="getLoop($route.params.id)"
+                :loop="1"
               ></betButton>
             </div>
           </v-flex>
@@ -232,7 +232,7 @@
       <div ref="lastDrawtGuideline" style="position:fixed" v-show="isStep == 3">
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
-            The lastest result
+            The latest result
             <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
           </p>
           <div class="arrow float-left line-my">&#8628;</div>
@@ -699,12 +699,10 @@ export default {
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "getLotteryDraw",
       "lotterydraw",
       "getStockLoop",
       "getStockLastDraw",
-      "getStockCrawlerData",
-      "getLoop"
+      "getStockCrawlerData"
     ]),
     ...mapState(["portalProviderUUID", "headers"])
   }

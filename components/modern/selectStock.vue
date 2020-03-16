@@ -15,7 +15,7 @@
                         <span> {{$t('msg.SelectStock')}} <i class="fa fa-caret-right"></i></span>                          
                         <span> {{$t('navlist.'+getStockType(stockId))}} <i class="fa fa-caret-right"></i> </span>
                         <span>{{ $t(`stockname.${stockId}`) }} <i class="fa fa-caret-right"></i></span>
-                        <span>  {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} <i class="fa fa-caret-right"></i> </span>
+                        <!-- <span>  {{getLoop(stockId)}} {{$t('msg.minute')}} {{$t('msg.loop')}} <i class="fa fa-caret-right"></i> </span> -->
                         <span>{{GameId}} <i class="fa fa-caret-down"></i></span>
                     </span>
                   
@@ -155,7 +155,6 @@ export default {
 
     computed: {
         ...mapGetters([
-            "getLoop",
             "getStockType",
             "checkMultigameExistAndDisable",
             "checkMultigameExistAndShowIcon",
