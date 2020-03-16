@@ -2,7 +2,7 @@
   <div>
     <v-flex xs12 class="pt-5">
       <v-layout row>
-        <v-flex xs6 sm6 md4 lg3>
+        <v-flex xs6 sm6 md6 lg4>
           <div class="amount_container">
             <div class="decorator_card decorator_card_green"></div>
             <span>account balance</span>
@@ -11,7 +11,7 @@
             <span class="title_currentcy">kip</span>
           </div>
         </v-flex>
-        <v-flex xs6 sm6 md4 lg3>
+        <v-flex xs6 sm6 md6 lg4>
           <div class="amount_container">
             <div class="decorator_card decorator_card_blue"></div>
 

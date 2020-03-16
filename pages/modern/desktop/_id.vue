@@ -1,42 +1,42 @@
 <template>
-  <v-container class="mt-2">
+  <v-container fluid mt-2 class="containerNew pa-2 " >
     <v-layout style="background-color:#f4f5fd;">
-      <v-flex v-if="!isHidden" class="leftStocklist">
-        <v-btn
-          @click="isHidden = true"
-          fab
-          small
-          slot="reference"
-          class="sidebar-close"
-        >
-          <v-icon style="color: #0b2a68 !important;">close</v-icon>
-        </v-btn>
-        <v-layout column>
-          <v-flex xs12 pt-2>
-            <div id="stocklistGuidelines">
-              <stockList></stockList>
-            </div>
-          </v-flex>
-          <v-flex xs12 pt-2>
-            <div id="betresultGuidelines">
-              <stockResult></stockResult>
-            </div>
-          </v-flex>
-          <v-flex xs12 pt-2>
-            <div id="bettingGuidelines">
-              <onBetting></onBetting>
-            </div>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex v-if="isHidden" @click="isHidden = false">
-        <v-btn rigth fab slot="reference" class="sidebar-toggle">
-          <v-icon style="color: #0b2a68 !important;">list</v-icon>
-        </v-btn>
-      </v-flex>
-      <v-flex :xs10="!isHidden" :xs12="isHidden">
+      <!-- <v-flex md3 lg3 mt-3 > -->
+        <v-flex v-if="!isHidden" class="leftStocklist">
+          <span
+            @click="isHidden = true"            
+            class="sidebar-close"
+          >
+            <v-icon color="#0b2968" >close</v-icon>
+          </span>
+          <v-layout column>
+            <v-flex xs12 pt-2>
+              <div id="stocklistGuidelines">
+                <stockList></stockList>
+              </div>
+            </v-flex>
+            <v-flex xs12 pt-2>
+              <div id="betresultGuidelines">
+                <stockResult></stockResult>
+              </div>
+            </v-flex>
+            <v-flex xs12 pt-2>
+              <div id="bettingGuidelines">
+                <onBetting></onBetting>
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex v-if="isHidden" @click="isHidden = false">
+          <span class="sidebar-toggle">
+            <v-icon color="#0b2968">list</v-icon>
+          </span>
+        </v-flex>
+      <!-- </v-flex> -->
+
+      <v-flex  :xs10="!isHidden" :xs12="isHidden" >
         <v-layout xs12 pa-2>
-          <v-flex xs6 md5 pt-2>
+          <v-flex xs6 md6 lg6 pt-2>
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
@@ -46,20 +46,16 @@
               <v-flex>
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
-                    <chartApp />
+                    <chartApp :stockName="routeParams" />
                   </v-flex>
                 </div>
               </v-flex>
             </v-layout>
           </v-flex>
 
-          <v-flex xs7 md6 class="mx-2">
+          <v-flex xs6 md6 class="mx-2">
             <v-layout mb-3>
-              <v-flex
-                xs4
-                class="text-xs-center text-uppercase"
-                px-2
-              >
+              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.Lastdraw") }}</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
@@ -71,11 +67,7 @@
                 </div>
               </v-flex>
               <!-- <v-spacer></v-spacer> -->
-              <v-flex
-                xs4
-                class="text-xs-center text-uppercase"
-                px-2
-              >
+              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.BetClosein") }}</span>
                 <div id="betCloseInGuideline">
                   <v-flex class="betclose">
@@ -94,25 +86,21 @@
                     <span v-else class="text-black">{{
                       getTimerByStockName($route.params.id) &&
                         getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInMins
+                          .gameEndTimeCountDownInSec
                           | betclosein(getStockLoop($route.params.id))
                     }}</span>
                   </v-flex>
                 </div>
               </v-flex>
 
-              <v-flex
-                xs4
-                class="text-xs-center text-uppercase"
-                px-2
-              >
+              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.lotterydraw") }}</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
                     <span class="text-black">{{
                       getTimerByStockName($route.params.id) &&
                         getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInMins
+                          .gameEndTimeCountDownInSec
                           | lotterydraw(getStockLoop($route.params.id))
                     }}</span>
                   </v-flex>
@@ -135,7 +123,7 @@
             <div id="betRuleButton">
               <betButton
                 :stockName="$route.params.id"
-                :loop="getLoop($route.params.id)"
+                :loop="1"
               ></betButton>
             </div>
           </v-flex>
@@ -182,7 +170,7 @@
             >TOP 10 LEADERS</v-card-title
           >
           <v-card-text>
-            <leaderBoard />
+            <leaderboardUserlist />
           </v-card-text>
           <v-flex class="text-lg-right">
             <v-btn
@@ -244,7 +232,7 @@
       <div ref="lastDrawtGuideline" style="position:fixed" v-show="isStep == 3">
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
-            The lastest result
+            The latest result
             <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
           </p>
           <div class="arrow float-left line-my">&#8628;</div>
@@ -379,7 +367,7 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import selectStock from "~/components/modern/selectStock";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
-import leaderBoard from "~/components/modern/leaderboard/leaderboard";
+import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "../../../config/config.global";
 
 export default {
@@ -397,7 +385,7 @@ export default {
     selectStock,
     onlyrules,
     stockSelect,
-    leaderBoard
+    leaderboardUserlist
   },
   data() {
     return {
@@ -450,7 +438,7 @@ export default {
       }`
     );
   },
-  mounted() {  
+  mounted() {
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // socket new api
     this.listenForBroadcast(
@@ -711,12 +699,10 @@ export default {
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "getLotteryDraw",
       "lotterydraw",
       "getStockLoop",
       "getStockLastDraw",
-      "getStockCrawlerData",
-      "getLoop"
+      "getStockCrawlerData"
     ]),
     ...mapState(["portalProviderUUID", "headers"])
   }
@@ -727,7 +713,7 @@ export default {
 .fullscreen {
   position: fixed !important;
   bottom: 140px;
-  right: 20px;
+  right: 12px;
   width: 50px;
   height: 50px;
   color: #fff;
@@ -749,27 +735,32 @@ export default {
 }
 .leftStocklist {
   background-color: #fff;
-  margin: 35px 0px;
   border-radius: 20px;
   position: relative;
   top: 0;
-  box-shadow: 0 0 10px grey;
-  right: 20px;
+  box-shadow: 0 0 2px grey;
+  right:5px;
 }
 
 .sidebar-close {
+  cursor: pointer;
   background-color: #ffffff !important;
   border-radius: 180px;
   position: absolute;
-  top: -30px;
-  right: -20px;
+  top: -10px;
+  right: 0px;
   transition: none !important;
 }
 
 .sidebar-toggle {
+  cursor: pointer;
   position: fixed;
-  left: 3px;
-  top: 95px;
+  left: 5px;
+  top: 75px;
   background-color: #ffffff !important;
+  color: #4464ff;
+  padding:5px;
+  border:1px solid #dddddd;
+  border-radius:180px;
 }
 </style>

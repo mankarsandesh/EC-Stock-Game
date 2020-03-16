@@ -130,9 +130,9 @@
             <nuxt-link :to="'/modern/betting/' +data.id">
                 <v-card class="v-card-style">
                     <!-- bet close -->
-                    <div class="close-bet-chart" v-if="getLotteryDraw(data.id) ==='close'">
+                    <!-- <div class="close-bet-chart" v-if="getLotteryDraw(data.id) ==='close'">
                         <span class="text-close-bet">market close</span>
-                    </div>
+                    </div> -->
                     <v-card-title class="px-1 py-0 pa-2" style="font-size:11px;">
                         <v-layout>
                             <v-flex xs6 class="text-xs-left">
@@ -140,10 +140,10 @@
                                 <span class="text-primary">{{getLiveTime(data.id)}}</span>
                             </v-flex>
                             <v-spacer></v-spacer>
-                            <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(data.id) >0">
+                            <!-- <v-flex xs6 class="text-xs-right" v-if="getLotteryDraw(data.id) >0">
                                 {{$t('msg.liveprice')}}:
                                 <span class="text-primary">{{getLivePrice(data.id)}}</span>
-                            </v-flex>
+                            </v-flex> -->
                         </v-layout>
                     </v-card-title>
                     <v-card-text class="pa-0" min-height="156">
@@ -200,8 +200,7 @@ export default {
         ...mapGetters([
             "getStockChart",
             "getLivePrice",
-            "getLiveTime",
-            "getLotteryDraw"
+            "getLiveTime"
         ])
     },
     methods: {

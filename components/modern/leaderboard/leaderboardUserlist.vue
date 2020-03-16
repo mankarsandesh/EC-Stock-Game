@@ -5,10 +5,11 @@
       style="margin:0 auto;"
       v-for="(data, index) in topPlayerData"
       :key="index"
+      id="userRow"
     >
-      <tr class="userRow" style="border:1px solid #333;">
+      <tr class="userRow" >
         <th>
-          <i class="fa fa-crown fa-2x" style="margin-right: 3px;" />
+          <i class="fa fa-crown fa-2x"  />
           <img
             style="vertical-align:middle"
             class="pimage"
@@ -93,7 +94,7 @@ export default {
     this.leaderBoard();
   },
   computed: {
-    ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState(["portalProviderUUID","userUUID"]) //get 2 data from vuex first, in the computed
   },
   methods: {
     async leaderBoard() {
@@ -108,11 +109,10 @@ export default {
           "http://uattesting.equitycapitalgaming.com/webApi/getLeaderBoard",
           LeaderBoardData,
           {
-            headers: this.headers
+            headers: config.header
           }
         );
-        this.topPlayerData = data.data;
-        console.log(this.topPlayerData);
+        this.topPlayerData = data.data;       
       } catch (error) {
         console.log(error);
       }
@@ -135,8 +135,10 @@ export default {
 .header {
   color: #6c6c6c;
 }
+#userRow{
+    border-radius:10px;
+}
 .userRow {
-  border: 1px solid blue;
   border-radius: 10px;
   background-color: #ffffff;
   margin: 5px 0px;

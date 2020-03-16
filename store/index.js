@@ -19,8 +19,6 @@ const createStore = () => {
       // set portal provider and user UUID for authentication
       portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
       userUUID: "dfdcb1e4-2275-4026-8efd-cafc79cc6f44",
-      Username: "TnkwebApi",
-      Password: "Test123!",
       // end set portal provider and user UUID for authentication
       roadMap: [],
       liveChart: [],
@@ -40,38 +38,6 @@ const createStore = () => {
       coins_modern: [],
       // multi game
       isSendBetting: false,
-      // all stocks data
-      // if we have new stock available we can add it here with same object format
-      liveprice: {
-        btc1: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        usindex: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        btc5: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        sh000001: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        sz399001: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        sz399415: {
-          currentPrice: 0,
-          previousPrice: 0
-        },
-        sh000300: {
-          currentPrice: 0,
-          previousPrice: 0
-        }
-      },
       payout: payouts,
       stocks2: [
         {
@@ -142,139 +108,14 @@ const createStore = () => {
           crawlData: []
         }
       ],
-      stocks: {
-        sh000001: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=1&limit=100`,
-            livePrice: ""
-          },
-          stockId: 4,
-          stockname: "sh000001",
-          name: "sh000001",
-          loop: 5,
-          type: "china",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink:
-              "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml"
-          }
-        },
-        sz399001: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=4&limit=100`,
-            livePrice: ""
-          },
-          stockId: 3,
-          stockname: "sz399001",
-          name: "sz399001",
-          loop: 5,
-          type: "china",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink:
-              "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml"
-          }
-        },
-        sz399415: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=3&limit=100`,
-            livePrice: ""
-          },
-          stockId: 2,
-          stockname: "sz399415",
-          name: "sz399415",
-          loop: 5,
-          type: "china",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink:
-              "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml"
-          }
-        },
-        sh000300: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=2&limit=100`,
-            livePrice: ""
-          },
-          stockId: 1,
-          stockname: "sh000300",
-          name: "sh000300",
-          loop: 5,
-          type: "china",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink:
-              "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml"
-          }
-        },
-        usindex: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=5&limit=100`,
-            livePrice: ""
-          },
-          stockId: 5,
-          stockname: "usindex",
-          name: "usindex",
-          loop: 5,
-          type: "usa",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml"
-          }
-        },
-        btc5: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=6&limit=100`,
-            livePrice: ""
-          },
-          stockId: 6,
-          stockname: "btc5",
-          name: "btc",
-          loop: 5,
-          type: "cypto",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-          }
-        },
-        btc1: {
-          url: {
-            crawler: `/api/getCrawlerData?stockId=7&limit=100`,
-            livePrice: ""
-          },
-          stockId: 7,
-          stockname: "btc1",
-          name: "btc",
-          loop: 1,
-          type: "cypto",
-          crawlerData: "",
-          lastDraw: "",
-          timeLastDraw: "",
-          livePrice: {
-            refLink: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt"
-          }
-        }
-      },
-      time: {},
       stockListTimer: []
     }),
     mutations: {
-       setGameID(state, payload) {
-                console.log("This game id from vuex " + payload)
-                state.gameStockId = payload
-            },
+      //new api
+      setGameID(state, payload) {
+        console.log("This game id from vuex " + payload)
+        state.gameStockId = payload
+      },
       setAuth(state, payload) {
         state.authUser = payload;
       },
@@ -284,7 +125,6 @@ const createStore = () => {
           state.stockListTimer.pop();
         }
       },
-      //new api
       setLiveRoadMap(state, payload) {
         state.roadMap.push(payload);
       },
@@ -530,22 +370,6 @@ const createStore = () => {
           context.commit("setIsSendBetting", false);
         }
       },
-      // to get live price
-      async asynLivePrice(context, payload) {
-        try {
-          const url = payload.url;
-          const name = payload.name;
-          const res = await this.$axios.$get(url);
-          if (res) {
-            context.state.stocks[name].livePrice.currentPrice =
-              res.data.currentPrice;
-            context.state.stocks[name].livePrice.previousPrice =
-              res.data.previousPrice;
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
       // to get Annoucement
       async asyannoucement(context) {
         try {
@@ -586,7 +410,13 @@ const createStore = () => {
       }
     },
     getters: {
+      getStockGameId(state) {
+        return state.gameStockId;
+      },
       // new api
+      getAllStocks(state) {
+        return state.stocks2;
+      },
       getStockLoop: state => stockName => {
         let result = null;
         for (let i = 0; i < state.stocks2.length; i++) {
@@ -710,68 +540,6 @@ const createStore = () => {
       // get auth_token
       getAuth_token(state) {
         return state.auth_token;
-      },
-      getAllStockByType(state, getters) {
-        let stockData = [];
-        let stockType = [];
-        // get type for all stocks
-        for (let i = 0; i < getters.getStockLength; i++) {
-          const id = getters.getStockKeys[i];
-          const type = state.stocks[id].type;
-          const data = {
-            type: type,
-            stockName: []
-          };
-          if (!stockType.includes(type)) {
-            stockType.push(type);
-            stockData.push(data);
-          }
-        }
-        // get stock name for all stocks
-        let stockName = [];
-        for (let i = 0; i < stockType.length; i++) {
-          for (let j = 0; j < getters.getStockLength; j++) {
-            const id = getters.getStockKeys[j];
-            const type = state.stocks[id].type;
-            if (type === stockType[i]) {
-              const name = state.stocks[id].name;
-              const data = {
-                name: name,
-                loop: []
-              };
-              if (!stockName.includes(name)) {
-                stockName.push(name);
-                stockData[i].stockName.push(data);
-              }
-            }
-          }
-        }
-        // get loop
-        let loop = [];
-        for (let i = 0; i < stockType.length; i++) {
-          for (let j = 0; j < getters.getStockLength; j++) {
-            const id = getters.getStockKeys[j];
-            const type = state.stocks[id].type;
-            if (type === stockType[i]) {
-              const loop = state.stocks[id].loop;
-              const stockId = state.stocks[id].stockname;
-              const data = {
-                loop: loop,
-                stockId: stockId
-              };
-              // console.warn(data);
-              // console.warn(type);
-              for (let ok = 0; ok < stockData[i].stockName.length; ok++) {
-                const name = stockData[i].stockName[ok].name;
-                stockData[i].stockName[ok].loop.push(data);
-              }
-              // console.log(state.stocks[id]);
-              // console.log("Select");
-            }
-          }
-        }
-        // console.warn(stockData.stockName);
-        return stockData;
       },
       // check stock in multi game if exits disable button
       checkMultigameExistAndDisable: state => data => {
@@ -962,7 +730,6 @@ const createStore = () => {
         });
         return result;
       },
-
       // get current language
       getlocale(state) {
         return state.locale;

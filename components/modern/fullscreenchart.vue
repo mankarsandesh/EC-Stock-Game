@@ -1,11 +1,12 @@
 <template>
   <div class="text-xs-center">
-    <apexchart type="bar" height="350" :options="chartOptions" :series="series" ></apexchart>
+    <apexchart type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey"></apexchart>
   </div>
 </template>
 
 <script>
 import VueApexCharts from "vue-apexcharts";
+import { mapGetters, mapState } from "vuex";
 import openSocket from "socket.io-client";
 export default {
   props: ["StockData"],
@@ -17,50 +18,51 @@ export default {
       series: [
         {
           name: "BIG",
-          data: [0,0,0,0],
-          betCount: [15, 14, 13, 0]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 0]
         },
         {
           name: "SMALL",
-          data: [0,0,4,2],
-          betCount: [15, 14, 13, 100]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 100]
         },
         {
           name: "ODD",
-          data: [0,0,3,0],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "EVEN",
-          data: [0,0,0,0],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "HIGH",
-          data: [0,0,0,0],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "MID",
-          data: [0,0,0,0],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "LOW",
-          data: [0,0,0,0],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name: "NUMBER",
-          data: [0,0,0,0],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 12]
         },
         {
           name : "TIE",
-          data: [0,0,0,0],
-          betCount: [15, 14, 13, 12]
+          data: [1, 0, 0, 1],
+          betCounts: [15, 14, 13, 20]
         }
       ],
+      componentKey: 0,
       chartOptions: {
         chart: {
           toolbar : { show :false },     
@@ -93,12 +95,12 @@ export default {
           },
           y: {
             formatter: function(val, { series, seriesIndex, dataPointIndex, w }) {
-              console.log('ayaaaaaaaaaaaaaaaaaaaaa')
+              console.log(w.config.series[seriesIndex].betCounts[dataPointIndex], 'ayaaaaaaaaaaaaaaaaaaaaa')
               return '<div class="arrow_box">' +
-                '<span> Amount $' + series[seriesIndex][dataPointIndex] + ' </span>' +
+                 '<span> Amount $' + series[seriesIndex][dataPointIndex] + ' </span>' +
                 '</div>' +
                 '<div class="arrow_box">' + 
-                '<span> BetCount' + w.config.series[seriesIndex].betCount[dataPointIndex] + '</span>' +
+                '<span> BetCount' + w.config.series[seriesIndex].betCounts[dataPointIndex] + '</span>' +
                 '</div>'
             }
           }
@@ -113,7 +115,33 @@ export default {
         }
       }
     };
+  },
+  computed: {
+    ...mapGetters([
+      ""
+    ]),
+    ...mapState([
+      "gameStockId"
+    ])
+  },
+  mounted() {
+    this.listenForBroadcast({ 
+      channelName: "liveBetCounts." + this.gameStockId,
+      eventName: "liveBetCounts" 
+    },
+     ({ data }) => {
+      console.log(data.data);
+      this.series = data.data;
+      this.componentKey += 1;
+    }
+    );
+  },
+  methods: {
+    listenForBroadcast({ channelName, eventName }, callback) {
+    window.Echo.channel(channelName).listen(eventName, callback);
+    }
   }
+
 };
 </script>
 
@@ -126,3 +154,4 @@ export default {
   margin: 1rem;
 }
 </style>
+
