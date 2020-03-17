@@ -188,6 +188,7 @@ import {
 } from "vuex";
 import OnlineHistory from "~/components/mobile/onlineHistory"
 import StockAnalysis from "~/components/mobile/stockAnalysis"
+import config from "../../config/config.global";
 
 export default {
     data() {
@@ -235,7 +236,7 @@ export default {
             formData.append("lastName", ref.lastname.value);
             formData.append("gender", ref.gender.value);
             // formData.append("country", ref.country.value);
-            formData.append("version", 1);
+            formData.append("version", config.version);
             try {
                 const res = await this.$axios.$post(
                     "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
@@ -244,6 +245,7 @@ export default {
                             ContentType: "application/json",
                             Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
                         }
+
                     }
                 );
                 if (res.code === 200) {
