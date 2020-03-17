@@ -39,7 +39,7 @@
             {{ Math.round(data.totalWinAmount, 1) }}
           </h4>
         </th>
-        <th v-if="data.isFollwing == 0">
+        <th v-if="data.isFollwing == 0" style="width:20%;">
           <v-btn
             class="buttonGreensmall "
             v-on:click="followUser(data.username,data.userImage,data.userUUID)"
@@ -47,7 +47,13 @@
             >{{ $t("useraction.followbet") }}</v-btn
           >
         </th>
-        <th v-if="data.isFollwing == 1">
+        <th v-if="data.isFollwing == -1" style="width:20%;">
+           <v-btn
+            class="buttonGreensmall "          
+            dark
+            >{{ $t("useraction.followbet") }}</v-btn>
+        </th>
+         <th v-if="data.isFollwing == 2" style="width:20%;">
           <v-btn class="buttonCancel " @click="dialog = true" dark>{{
             $t("useraction.unfollow")
           }}</v-btn>
