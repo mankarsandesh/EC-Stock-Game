@@ -42,18 +42,24 @@
         <th v-if="data.isFollwing == 0" style="width:20%;">
           <v-btn
             class="buttonGreensmall "
-            v-on:click="followUser(data.username,data.userImage,data.userUUID)"
+            v-on:click="
+              followUser(
+                data.username,
+                data.userImage,
+                data.userUUID,
+                data.isFollwing
+              )
+            "
             dark
-            >{{ $t("useraction.followbet") }}</v-btn
-          >
+            >{{ $t("useraction.followbet") }}
+          </v-btn>
         </th>
         <th v-if="data.isFollwing == -1" style="width:20%;">
-           <v-btn
-            class="buttonGreensmall "          
-            dark
-            >{{ $t("useraction.followbet") }}</v-btn>
+          <v-btn class="buttonGreensmall " dark
+            >{{ $t("useraction.followbet") }}
+          </v-btn>
         </th>
-         <th v-if="data.isFollwing == 2" style="width:20%;">
+        <th v-if="data.isFollwing == 2" style="width:20%;">
           <v-btn class="buttonCancel " @click="dialog = true" dark>{{
             $t("useraction.unfollow")
           }}</v-btn>
@@ -76,28 +82,40 @@
         <v-card-text style="text-align:center;">
           <img class="pimage" v-bind:src="this.userImage" width="140px" />
           <h3 class="subtitle-1 text-uppercase text-center pt-2">
-            {{ this.fullname }}
+            {{ this.username }}
           </h3>
         </v-card-text>
         <v-card-actions>
           <v-flex lg6 pr-4>
             <v-select
               :items="followby"
-              label="Follow by Amount"
+              label="Select bet type"
               v-model="selectedFollow"
               item-text="name"
-              item-value="id"
+              item-value="value"
               v-on:change="changeAmountRate($event)"
               solo
             ></v-select>
           </v-flex>
           <v-flex lg3 pr-2>
-
-             <v-text-field solo label="10%" v-if="selectRate" append-icon="money"></v-text-field>
-             <v-text-field solo label="100" v-if="selectAmount" @keypress="onlyNumber" append-icon="money"></v-text-field>
+            <v-text-field
+              solo
+              label="10%"
+              v-if="selectRate"
+              append-icon="money"
+              v-model="rateValue"
+            ></v-text-field>
+            <v-text-field
+              solo
+              label="100"
+              v-if="selectAmount"
+              @keypress="onlyNumber"
+              v-model="amountValue"
+              append-icon="money"
+            ></v-text-field>
           </v-flex>
           <v-flex lg3 pl-3 pb-3>
-            <v-btn color="buttonGreensmall" text v-on:click="followThisUser(this.FollowUserUUID)"
+            <v-btn color="buttonGreensmall" text v-on:click="followThisUser()"
               >Follow</v-btn
             >
           </v-flex>
@@ -109,19 +127,28 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import config from "../../../config/config.global";
+import leaderboardVue from "../../../pages/modern/desktop/leaderboard.vue";
 export default {
   data() {
-    return {   
-      selectRate : false,
-      selectAmount : true, 
+    return {
+      selectRate: false,
+      selectAmount: true,
       topPlayerData: [],
-      fullname: "",
+      FolloworNot: "",
+      FollowMethod: "",
+      FollowUserUUID: "",
+      method: "",
+      UserfollowType: "",
+      amountValue: "100",
+      rateValue: "10%",
+      BetValue: "",
+      username: "",
       userImage: "/no-profile-pic.jpg",
       dialog: false,
-      selectedFollow : { id: 1, name: "Follow by Amount" },
+      selectedFollow: "",
       followby: [
-        { id: 1, name: "Follow by Amount" },
-        { id: 2, name: "Follow by Rate" }
+        { id: 1, name: "Follow by Amount", value: "Amount" },
+        { id: 2, name: "Follow by Rate", value: "Rate" }
       ]
     };
   },
@@ -132,29 +159,48 @@ export default {
     ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   methods: {
-    onlyNumber($event){
-      //console.log($event.keyCode); //keyCodes value
-   let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
-   if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
-      $event.preventDefault();
-   }
-    },
-    followThisUser:function(){
-
-    },   
-    changeAmountRate: function() {      
-      console.log(this.selectedFollow);
-      if(this.selectedFollow == 1){
-        this.selectAmount = true;
-        this.selectRate = false;
-      }else{
-         this.selectAmount = false;
-         this.selectRate = true;
+    onlyNumber($event) {
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
       }
     },
-    followUser: function(username, userImage,userUUID) {
-      this.fullname = username;
+    followThisUser() {
+      if (this.selectedFollow == "Amount") {
+        this.BetValue = this.amountValue;
+      } else if (this.selectedFollow == "Rate") {
+        this.BetValue = this.rateValue;
+      }
+      if (this.FolloworNot == 0) {
+        this.FollowMethod = "follow";
+      } else if (this.FolloworNot == 1) {
+        this.FollowMethod = "unfollow";
+      }
+      const LeaderBoardData = {
+        portalProviderUUID: this.portalProviderUUID,
+        userUUID: this.userUUID,
+        followToID: this.FollowUserUUID,
+        method: this.FollowMethod,
+        followType: this.selectedFollow,
+        value: this.BetValue,
+        version: 1
+      };
+    },
+    changeAmountRate() {
+      this.UserfollowType = this.selectedFollow;
+      if (this.selectedFollow == "Amount") {
+        this.selectAmount = true;
+        this.selectRate = false;
+      } else {
+        this.selectAmount = false;
+        this.selectRate = true;
+      }
+    },
+    followUser(username, userImage, userUUID, method) {
+      this.username = username;
       this.FollowUserUUID = userUUID;
+      this.FolloworNot = method;
       this.userImage = "http://uattesting.equitycapitalgaming.com/" + userImage;
       this.dialog = true;
     },
@@ -162,8 +208,7 @@ export default {
       const LeaderBoardData = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
-        version: config.version,
-        limit: "10"
+        version: config.version
       };
       try {
         const { data } = await this.$axios.post(
@@ -174,6 +219,7 @@ export default {
           }
         );
         this.topPlayerData = data.data;
+        console.log(this.topPlayerData);
       } catch (error) {
         console.log(error);
       }
