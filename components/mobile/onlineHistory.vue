@@ -30,7 +30,7 @@
                 <!-- <span class="blur-img">uploading</span> -->
             </div>
             <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-            <p>{{$t('profile.online status')}} : 2hours</p>
+            <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
             <v-divider></v-divider>
         </v-flex>
 
@@ -47,7 +47,7 @@
                         <!-- <span class="blur-img">uploading</span> -->
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>{{$t('profile.online status')}} : 2hours</p>
+                    <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
                 </v-flex>
                 <v-flex xs12 sm10>
                     <v-layout row>
@@ -238,13 +238,14 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
+        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
         imgProfile() {
             return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
                 "/user.png" :
                 "http://uattesting.equitycapitalgaming.com/" +
                 this.getUserInfo.profileImage;
         },
+        
     },
     methods: {
         ...mapActions(["asynUserInfo"]),

@@ -90,10 +90,10 @@ export default {
         this.stockStatus = true;
       } else if (value) {
         if (this.last_price > value) {
-          console.log("DOWN " + value);
+          // console.log("DOWN " + value);
           this.currentPrice = false;
         } else {
-          console.log("UP " + value);
+          // console.log("UP " + value);
           this.currentPrice = true;
         }
         this.last_price = value;
