@@ -12,13 +12,10 @@
       <div class="userRow">
         <th>
           <img
-            style="vertical-align:middle"
+            style="vertical-align:middle;"
             class="pimage"
-            v-bind:src="
-              'http://uattesting.equitycapitalgaming.com/' + data.userImage
-            "
-          />
-          <span class="subtitle-1 text-uppercase">{{ data.username }}</span>
+            :src="getImgUrl(data.userImage)" />
+          <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
         <th>
@@ -159,6 +156,12 @@ export default {
     ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   methods: {
+    getImgUrl(userImage){     
+     return userImage === null
+        ? "/no-profile-pic.jpg"
+        : "http://uattesting.equitycapitalgaming.com/" +
+            userImage;
+    },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
       if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
@@ -201,7 +204,7 @@ export default {
       this.username = username;
       this.FollowUserUUID = userUUID;
       this.FolloworNot = method;
-      this.userImage = "http://uattesting.equitycapitalgaming.com/" + userImage;
+      this.userImage = this.getImgUrl(userImage);
       this.dialog = true;
     },
     async leaderBoard() {
