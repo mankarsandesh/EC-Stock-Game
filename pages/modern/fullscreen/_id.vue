@@ -135,7 +135,7 @@
                 <i class="fa fa-user fa-2x iconcolor" />
                 <span>
                   {{
-                  dataliveBetAll.totalUsers ? dataliveBetAll.totalUsers : 0
+                  dataliveBetAll.totalUsers ? dataliveBetAll.totalUsers : 15
                   }}
                 </span>
               </span>
@@ -145,7 +145,7 @@
                 <i class="fa fa-gamepad fa-2x iconcolor" />
                 <span>
                   {{
-                  dataliveBetAll.totalBets ? dataliveBetAll.totalBets : 0
+                  dataliveBetAll.totalBets ? dataliveBetAll.totalBets : 35
                   }}
                 </span>
               </span>
@@ -155,7 +155,7 @@
                 <i class="fa fa-money fa-2x iconcolor" />
                 <span>
                   {{
-                  dataliveBetAll.totalAmount ? dataliveBetAll.totalAmount : 0
+                  dataliveBetAll.totalAmount ? dataliveBetAll.totalAmount : 5500
                   }}
                 </span>
               </span>

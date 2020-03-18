@@ -5,6 +5,7 @@ import config from "../config/config.global";
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
+      stockCategory: [],
       gameStockId: null,
       authUser: {},
       activeGameChannel: true,
@@ -109,10 +110,12 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      SET_STOCK_CATEGORY(state, payload){
+        state.stockCategory = payload
+      },
       //new api
       setGameID(state, payload) {
-        console.log("This game id from vuex " + payload);
-        state.gameStockId = payload;
+        state.gameStockId = payload
       },
       setAuth(state, payload) {
         state.authUser = payload;
@@ -380,6 +383,9 @@ const createStore = () => {
       }
     },
     getters: {
+      getStockCategory(state) {
+        return state.stockCategory;
+      },
       getStockGameId(state) {
         return state.gameStockId;
       },

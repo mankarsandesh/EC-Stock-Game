@@ -11,7 +11,7 @@
     </v-toolbar> -->
     <v-layout row wrap id="history">
 
-        <v-flex xs5 sm2 md2 lg2 mr-1 style="float:left;" class="input-text">
+        <v-flex xs5 sm2 md2 lg2 mr-1 mt-2 mb-2 style="float:left;" class="input-text">
             <v-menu v-model="from" :close-on-content-click="false" :nudge-right="0" lazy transition="scale-transition" offset-y full-width min-width="290px">
                 <template v-slot:activator="{ on }">
                     <v-text-field v-model="datefrom" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -20,7 +20,7 @@
             </v-menu>
         </v-flex>
 
-        <v-flex xs5 sm2 md2 lg2 mr-1 style="float:left;" class="input-text">
+        <v-flex xs5 sm2 md2 lg2 mr-1 ml-1 mt-2 mb-2 style="float:left;" class="input-text">
             <v-menu v-model="to" :close-on-content-click="false" :nudge-right="0" transition="scale-transition" offset-y full-width min-width="290px">
                 <template v-slot:activator="{ on }">
                     <v-text-field v-model="dateto" prepend-icon="event" readonly v-on="on" single-line hide-details></v-text-field>
@@ -29,7 +29,7 @@
             </v-menu>
         </v-flex>
 
-        <v-flex xs2 sm1 md1 ml-1 mr-2>
+        <v-flex xs2 sm1 md1 ml-1 mr-2 mt-2 mb-2>
             <button @click="dateSearch()" class="goButton buttonGreen">{{$t('msg.go')}}</button>
         </v-flex>
 
@@ -37,14 +37,14 @@
             <v-select label="Limit Total" single-line hide-details :items="itemlimit" v-model="limit" color="#FFF" class="limits text-white"></v-select>
       </v-flex> -->
 
-        <v-flex xs2 sm2 md2 lg1 mr-1 class="input-text">
+        <v-flex xs2 sm2 md2 lg1 mr-2 mt-2 mb-2 class="input-text">
             <v-select label="Limit Page" single-line hide-details :items="itemspage" v-model="itemspages" color="#FFF" class="selectHistory text-white"></v-select>
         </v-flex>
 
-        <v-flex xs4 sm2 md2 lg2 mr-1 class="input-text">
+        <v-flex xs3 sm2 md2 lg2 mr-2  mt-2 mb-2 class="input-text">
             <v-text-field single-line hide-details v-model="search" append-icon="search" class="selectHistory text-white" style="padding:4px;"></v-text-field>
         </v-flex>
-        <v-flex xs3 sm2 md2 lg2 class="input-text">
+        <v-flex xs3 sm2 md2 lg2 mt-2 mb-2 class="input-text">
             <v-select single-line hide-details :items="items" label="Sort By :" v-model="itemss" class="selectHistory"></v-select>
         </v-flex>
     </v-layout>
