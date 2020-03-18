@@ -36,31 +36,31 @@
             {{ Math.round(data.totalWinAmount, 1) }}
           </h4>
         </th>
-        <th v-if="data.isFollwing == 0" style="width:20%;">
+        <th v-if="data.isFollowing == 0" style="width:20%;">
           <v-btn
-            class="buttonGreensmall "
+            class="buttonGreensmall"
             v-on:click="
               followUser(
                 data.username,
                 data.userImage,
                 data.userUUID,
-                data.isFollwing
+                data.isFollowing
               )
-            "
-            dark
+            "            dark
             >{{ $t("useraction.followbet") }}
           </v-btn>
         </th>
-        <th v-if="data.isFollwing == -1" style="width:20%;">
+        <th v-if="data.isFollowing == -1" style="width:20%;">
           <v-btn class="buttonGreensmall " dark
             >{{ $t("useraction.followbet") }}
           </v-btn>
         </th>
-        <th v-if="data.isFollwing == 2" style="width:20%;">
+        <th v-if="data.isFollowing == 1" style="width:20%;">
           <v-btn class="buttonCancel " @click="dialog = true" dark>{{
             $t("useraction.unfollow")
           }}</v-btn>
         </th>
+        
       </div>
     </v-flex>
 
@@ -76,7 +76,8 @@
         >
           FOLLOW BET
         </h3>
-        <v-card-text style="text-align:center;">
+        
+        <v-card-text style="text-align:center;">         
           <img class="pimage" v-bind:src="this.userImage" width="140px" />
           <h3 class="subtitle-1 text-uppercase text-center pt-2">
             {{ this.username }}
@@ -169,7 +170,7 @@ export default {
         $event.preventDefault();
       }
     },
-    followThisUser() {
+    async followThisUser() {
       if (this.selectedFollow == "Amount") {
         this.BetValue = this.amountValue;
       } else if (this.selectedFollow == "Rate") {
@@ -189,6 +190,23 @@ export default {
         value: this.BetValue,
         version: 1
       };
+      console.log(LeaderBoardData);
+
+       try {
+        const { data } = await this.$axios.post(
+          "http://uattesting.equitycapitalgaming.com/webApi/followUser",
+          LeaderBoardData,
+          {
+            headers: config.header
+          }
+        );
+      
+        this.followData = data;        
+        console.log(this.followData);
+      } catch (error) {
+        console.log(error);
+      }
+
     },
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
@@ -221,7 +239,9 @@ export default {
             headers: config.header
           }
         );
+      
         this.topPlayerData = data.data;
+        
         console.log(this.topPlayerData);
       } catch (error) {
         console.log(error);
@@ -231,6 +251,13 @@ export default {
 };
 </script>
 <style scoped>
+.successful{
+  width:10%;
+  /* margin:0 auto; */
+  border:1px solid ;
+  text-align: center;
+  color:green;
+}
 .titleText {
   font-size: 24px;
 }
