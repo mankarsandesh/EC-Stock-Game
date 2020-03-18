@@ -12,7 +12,7 @@
             <v-layout row>
                 <v-flex xs0 sm2>
                 </v-flex>
-                <v-flex xs12 sm10>
+                <v-flex xs12 sm10 class="text-xs-center">
                     <h2 class="title_menu">{{$t('profile.online history')}}</h2>
                     <v-divider></v-divider>
                 </v-flex>
@@ -24,7 +24,7 @@
                 <v-avatar :size="90">
                     <img :src="imgProfile" alt="img-profile" />
                 </v-avatar>
-                <span class="camera_container" style="position: absolute; top: 19%;">
+                <span class="camera_container" style="position: absolute; top: 23%;">
                     <v-icon color="black" :size="20">photo_camera</v-icon>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
@@ -86,7 +86,7 @@
                             </div>
                         </v-flex>
 
-                        <v-flex xs1 sm1 ml-1 mr-2>
+                        <v-flex xs1 sm1 ml-1 mr-4>
                             <div class="date_picker_container">
                                 <div class="title_date_picker">
                                     <span></span>
@@ -163,8 +163,8 @@
             </v-layout>
         </v-flex>
 
-        <v-flex xs12 class="pt-3 pl-5">
-            <div>
+        <v-flex xs12 class="pt-3 pl-5 text-xs-center">
+            <div class="text-xs-center">
                 <span style="margin-right:30px">
                     {{$t('msg.playerid')}} :
                     <b>{{getUserInfo.PID}}</b>
@@ -279,7 +279,7 @@ export default {
                     console.log(this.chartData);
                     console.log(this.xaxis);
                 } else {
-                    console.log(res);
+                    // console.log(res);
                     // alert(res.message);
                 }
             } catch (ex) {
@@ -350,6 +350,7 @@ button:focus {
     box-shadow: 0px 2px 5px rgb(145, 145, 145);
     border-radius: 10px;
     position: relative;
+    width: 120px;
 }
 
 .title_date_picker {

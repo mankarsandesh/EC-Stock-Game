@@ -177,8 +177,8 @@ import {
     mapGetters
 } from "vuex";
 
-import chartIndex from "~/components/chartIndex";
-import SlideMenu from "~/components/SlideMenu.vue";
+import chartIndex from "~/components/mobile/chartIndex";
+import SlideMenu from "~/components/mobile/SlideMenu.vue";
 
 export default {
     components: {

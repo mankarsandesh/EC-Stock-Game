@@ -13,7 +13,7 @@
                 <v-icon small>event</v-icon>{{$t('leaderboard.weekly rankings')}}
             </span>
             <span class="text-uppercase font-weight-bold">
-                <v-icon small>event</v-icon>{{$t('leaderboard.weekly rankings')}}
+                <v-icon small>event</v-icon>{{$t('leaderboard.monthly rankings')}}
             </span>
         </v-flex>
 
@@ -32,7 +32,7 @@
                 <h6 style="color:#eb0b6e;" class="title">20</h6>
             </th>
             <th>
-                <h6 class="header">WINNING AMOUNT</h6>
+                <h5 class="header">WINNING AMOUNT</h5>
                 <h6 style="color:#0b2a68;" class="title">25000</h6>
             </th>
             <th>

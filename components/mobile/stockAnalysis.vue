@@ -8,7 +8,7 @@
             </v-layout>
         </v-toolbar>
 
-        <v-flex xs12 md8 class="pt-2 pl-5 pr-5">
+        <v-flex xs12 md8 class="pt-2 pl-5 pr-5 text-xs-center">
             <div>
                 <h2 class="title_menu">{{$t('profile.stock analysis')}}</h2>
                 <v-divider></v-divider>
@@ -20,7 +20,7 @@
                 <v-avatar :size="90">
                     <img :src="imgProfile" alt="img-profile" />
                 </v-avatar>
-                <span class="camera_container" style="position: absolute; top: 19%;">
+                <span class="camera_container" style="position: absolute; top: 23%;">
                     <v-icon color="black" :size="20">photo_camera</v-icon>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
@@ -80,7 +80,7 @@
                     </div>
                 </v-flex>
 
-                <v-flex xs1 sm1 ml-1 mr-2>
+                <v-flex xs1 sm1 ml-1 mr-4>
                     <div class="date_picker_container">
                         <div class="title_date_picker">
                             <span></span>
@@ -475,6 +475,7 @@ button:focus {
     box-shadow: 0px 2px 5px rgb(145, 145, 145);
     border-radius: 10px;
     position: relative;
+    width: 120px;
 }
 
 .title_date_picker {
