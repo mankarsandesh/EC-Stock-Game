@@ -827,18 +827,21 @@ main.v-content {
   .flex {
     .v-input {
       .v-input__prepend-outer {
-        margin: 5px -7px;
-        border: 2px solid rgba(0, 0, 0, 0.32941);
+        margin: 6px -7px;
+        border: 1px solid rgba(0, 0, 0, 0.32941);
         border-radius: 20px;
-        padding: 2px;
-        z-index: 55555555;
+        padding: 0px;
+        z-index: 10;
         background: #fafafa;
+        width: 25px;
+        height: 25px;
       }
       .v-input__control {
+        min-height: 40px;
         .v-input__slot {
           border-radius: 10px;
           padding: 0 4px;
-          min-height: 40px;
+          min-height: 35px;
           .v-select__slot {
             label,
             input,
