@@ -84,12 +84,10 @@
     </v-flex>
   </div>
 </template>
-
 <script>
 import { mapGetters, mapActions } from "vuex";
 import config from "../../../../config/config.global";
 import axios from "axios";
-import config from "../../../../config/config.global";
 export default {
   data() {
     return {};
