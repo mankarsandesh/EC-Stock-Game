@@ -88,6 +88,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import config from "../../../../config/config.global";
 export default {
   data() {
     return {};
@@ -114,6 +115,7 @@ export default {
         let userSetting = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
+          version: config.version,
           isAllowToVisitProfile,
           isAllowToFollow,
           isAllowToDirectMessage,
