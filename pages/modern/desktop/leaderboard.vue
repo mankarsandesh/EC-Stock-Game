@@ -5,7 +5,7 @@
       linkItem="bet-history"
       titlebtn="bet-history"
     />
-    <v-container>
+    <v-container mb-5>
       <leaderBoardHeader />
       <leaderboardUserlist />
     </v-container>

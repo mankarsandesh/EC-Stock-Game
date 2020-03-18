@@ -4,7 +4,7 @@
 
     <v-flex pa-2 class="headerStockBar">{{$t('msg.betting')}}</v-flex>
 
-    <v-flex class="text-xs-center" style="overflow:auto; max-height:380px;">
+    <v-flex class="text-xs-center" style="overflow-y: auto;height:200px">
       <h3 v-show="getOnGoingBet.length<=0" class="pa-5">{{$t('msg.nobetting')}}</h3>
       <!-- v-show="getOnGoingBet.length>0" -->
 
@@ -12,25 +12,25 @@
         <template v-for="(data, index) in getOnGoingBet" class="pa-0">
           <v-divider :key="index" v-if="index>0"></v-divider>
 
-          <v-list-tile :key="data.index" avatar>
+          <v-list-tile :key="data.index" avatar class="listBet">
             <v-list-tile-content>
               <span class="current-bet">
                 <table>
                   <tr>
-                    <td>Bet ID</td>
+                    <td><label>Bet ID</label></td>
                     <td>{{ data.betUUID }}</td>
                   </tr>
                   <tr>
-                    <td>Date & Time</td>
+                    <td><label>Date & Time</label></td>
                     <td>{{data.payout}}</td>
                   </tr>
                   <tr>
-                    <td>Bet</td>
-                    <td>{{data.betAmount}} on {{data.ruleID}}</td>
+                    <td><label>Bet</label></td>
+                    <td>{{data.betAmount}} on {{data.ruleName}}</td>
                   </tr>
                   <tr>
-                    <td>Stock name:</td>
-                    <td>{{data.message}}</td>
+                    <td><label>Stock name:</label></td>
+                    <td>{{data.stockName}}</td>
                   </tr>
                 </table>
               </span>            
@@ -63,6 +63,13 @@ export default {
 .current-bet {
   padding: 10px 0px;
   width: 100%;
+}
+.current-bet label{
+  color:#333;
+  font-weight: 500;
+}
+.listBet{
+  padding: 5px 0px;
 }
 table {
   width: 100%;

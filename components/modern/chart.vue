@@ -230,16 +230,12 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-      console.log("Window Size");
-      console.log(this.window.width);
       if(this.window.width >= 1900){
         this.chartHeight = "320vh";
         this.heightChart = 320;
-        console.log("yes");
       }else{
         this.chartHeight = "250vh";
         this.heightChart = 250;
-        console.log("no");
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
