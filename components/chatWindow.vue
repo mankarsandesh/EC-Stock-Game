@@ -138,7 +138,7 @@ export default {
         data.data.forEach(element => {
           console.log("Socket Listing");
           this.getMessagesGame.push({
-            name: element.username,
+            name: element.userName,
             userId: element.userUUID,
             message: element.message,
             date: element.date
@@ -155,7 +155,7 @@ export default {
       ({ data }) => {
         data.data.forEach(element => {
           this.getMessages.push({
-            name: element.username,
+            name: element.userName,
             userId: element.userUUID,
             message: element.message,
             date: element.date
