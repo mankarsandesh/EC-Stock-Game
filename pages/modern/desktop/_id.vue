@@ -461,13 +461,13 @@ export default {
     this.removeAllFooterBet();
     // function resize Tutorial
     let vm = this;
-    $(document).ready(function() {
-      $(window).resize(function() {
-        if (vm.$refs.guidelineContent.hidden == false) {
-          vm.setTutorial(this.isStep);
-        }
-      });
-    });
+    // $(document).ready(function() {
+    //   $(window).resize(function() {
+    //     if (vm.$refs.guidelineContent.hidden == false) {
+    //       vm.setTutorial(this.isStep);
+    //     }
+    //   });
+    // });
     this.setNextstepstart();
   },
   watch: {
