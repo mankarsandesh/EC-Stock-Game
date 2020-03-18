@@ -357,7 +357,7 @@
   </v-container>
 </template>
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import stockList from "~/components/modern/stockList";
 import stockResult from "~/components/modern/stockresult";
 import onBetting from "~/components/modern/onBetting";
@@ -499,10 +499,10 @@ export default {
         const { data } = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/getStock",
           {
-            portalProviderUUID: this.portalProviderUUID,
+            portalProviderUUID: this.getPortalProviderUUID,
             version: config.version
           },
-          { headers: this.headers }
+          { headers: config.header }
         );
 
         this.stock = data;
@@ -703,8 +703,7 @@ export default {
       "getStockLoop",
       "getStockLastDraw",
       "getStockCrawlerData"
-    ]),
-    ...mapState(["portalProviderUUID", "headers"])
+    ])
   }
 };
 </script>

@@ -87,6 +87,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import config from "../../../../config/config.global";
 import axios from "axios";
 import config from "../../../../config/config.global";
 export default {
@@ -120,16 +121,14 @@ export default {
           isAllowToFollow,
           isAllowToDirectMessage,
           isSound,
-          isAllowToLocation
+          isAllowToLocation,
+          version: config.version
         };
         const res = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting",
           userSetting,
           {
-            headers: {
-              ContentType: "application/json",
-              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
-            }
+            headers: config.header
           }
         );
         if (res.code === 200) {

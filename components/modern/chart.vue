@@ -11,7 +11,6 @@
       </v-flex>
     </v-layout>
     <apexchart
-      ref="realtimeChart"
       class="chartDesgin"
       type="area"
       :height="chartHeight"
