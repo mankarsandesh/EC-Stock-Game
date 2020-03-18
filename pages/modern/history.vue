@@ -53,7 +53,7 @@ export default {
         "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
         data1, // data object
         {
-          headers: config.headers
+          headers: config.header    //fetching header from config file
         }
       );
       this.desserts = data.data; // after will get the respone the object or array that come with will be equal the array that we create in the data funtion

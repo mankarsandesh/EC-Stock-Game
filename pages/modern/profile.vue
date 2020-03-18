@@ -15,14 +15,14 @@
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <span>{{$t('profile.online status')}} : 2hours</span>
+                    <span>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</span>
                 </div>
             </v-flex>
         </v-layout>
     </v-flex>
 
     <v-flex xs12 :class="!$vuetify.breakpoint.xs ? 'mt-2':''">
-        <v-layout row>
+        <v-layout row class="text-xs-center">
             <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
@@ -71,14 +71,14 @@
                                 <label for="player-id">{{$t('msg.playerid')}}</label>
                             </v-flex>
 
-                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center" pr-4>
                                 <input disabled type="text" id="player-id" name="player-id" :value="userData.PID" />
                                 <!-- <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" /> -->
                             </v-flex>
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
+                            <v-flex xs2 sm2 md2 lg2 pr-2 class="text-xs-center">
                                 <label for="username">{{$t('profile.user name')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
@@ -363,6 +363,7 @@ label {
     text-align: center;
     text-transform: capitalize;
     line-height: 1.1;
+    min-height: 50px;
 }
 
 .amount {
