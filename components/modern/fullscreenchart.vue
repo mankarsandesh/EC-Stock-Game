@@ -97,10 +97,10 @@ export default {
             formatter: function(val, { series, seriesIndex, dataPointIndex, w }) {
               console.log(w.config.series[seriesIndex].betCounts[dataPointIndex], 'ayaaaaaaaaaaaaaaaaaaaaa')
               return '<div class="arrow_box">' +
-                 '<span> Amount $' + series[seriesIndex][dataPointIndex] + ' </span>' +
+                 '<span> Amount: $' + series[seriesIndex][dataPointIndex] + ' </span>' +
                 '</div>' +
                 '<div class="arrow_box">' + 
-                '<span> BetCount' + w.config.series[seriesIndex].betCounts[dataPointIndex] + '</span>' +
+                '<span> BetCount:' + w.config.series[seriesIndex].betCounts[dataPointIndex] + '</span>' +
                 '</div>'
             }
           }
