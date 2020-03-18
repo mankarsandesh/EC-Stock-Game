@@ -26,7 +26,7 @@
                 <!-- <span class="blur-img">uploading</span> -->
             </div>
             <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-            <p>{{$t('profile.online status')}} : 2hours</p>
+            <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
             <v-divider></v-divider>
         </v-flex>
 
@@ -43,7 +43,7 @@
                         <!-- <span class="blur-img">uploading</span> -->
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>{{$t('profile.online status')}} : 2hours</p>
+                    <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
                 </v-flex>
                 <!-- select start date  -->
                 <v-flex xs5 sm3 mr-1 ml-1>
