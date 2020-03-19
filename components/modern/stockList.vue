@@ -16,7 +16,7 @@
           <td>
             <nuxt-link
               :to="'/modern/desktop/'+data.stockName"
-            >{{ $t(`stockname.${data.stockName}`) }}{{ data.stockName == 'btc1' ? '1':data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
+            >{{ $t(`stockname.${data.stockName}`) }}{{ data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
           </td>
           <td
             v-html="$options.filters.livePriceColor(data.stockPrice ,getStockListTimer[1][index].stockPrice)"
@@ -57,7 +57,7 @@ export default {
   },
   created() {},
   methods: {
-    ...mapMutations(["setStockListTimer"]),
+    ...mapMutations(["setStockListTimer"])
   }
 };
 </script>
@@ -81,7 +81,6 @@ th {
   padding: 5px;
 }
 td {
-  
   text-align: center;
   padding: 5px;
   border: 1px solid #ddd;

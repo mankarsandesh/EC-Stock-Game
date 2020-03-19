@@ -1,39 +1,42 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2 ">
-    <v-layout style="background-color:#f4f5fd;">
+  <v-container fluid mt-2 class="containerNew pa-3" >
+    <v-layout style="background-color:#f4f5fd; ">
       <!-- <v-flex md3 lg3 mt-3 > -->
-      <v-flex v-if="!isHidden" class="leftStocklist">
-        <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">close</v-icon>
-        </span>
-        <v-layout column>
-          <v-flex xs12 pt-2>
-            <div id="stocklistGuidelines">
-              <stockList></stockList>
-            </div>
-          </v-flex>
-          <v-flex xs12 pt-2>
-            <div id="betresultGuidelines">
-              <stockResult></stockResult>
-            </div>
-          </v-flex>
-          <v-flex xs12 pt-2>
-            <div id="bettingGuidelines">
-              <onBetting></onBetting>
-            </div>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex v-if="isHidden" @click="isHidden = false">
-        <span class="sidebar-toggle">
-          <v-icon color="#0b2968">list</v-icon>
-        </span>
-      </v-flex>
+        <v-flex v-if="!isHidden" class="leftStocklist ">
+          <span
+            @click="isHidden = true"            
+            class="sidebar-close"
+          >
+            <v-icon color="#0b2968" >close</v-icon>
+          </span>
+          <v-layout column>
+            <v-flex xs12 pt-2>
+              <div id="stocklistGuidelines">
+                <stockList></stockList>
+              </div>
+            </v-flex>
+            <v-flex xs12 pt-2>
+              <div id="betresultGuidelines">
+                <stockResult></stockResult>
+              </div>
+            </v-flex>
+            <v-flex xs12 pt-2>
+              <div id="bettingGuidelines">
+                <onBetting></onBetting>
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex v-if="isHidden" @click="isHidden = false">
+          <span class="sidebar-toggle">
+            <v-icon color="#0b2968">list</v-icon>
+          </span>
+        </v-flex>
       <!-- </v-flex> -->
 
-      <v-flex :xs10="!isHidden" :xs12="isHidden">
-        <v-layout xs12 pa-2>
-          <v-flex xs6 md6 lg6 pt-2>
+      <v-flex  :xs10="!isHidden" :xs12="isHidden" >
+        <v-layout xs12 pt-2>
+          <v-flex xs6 md6 lg6 pt-2 >
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
@@ -50,7 +53,7 @@
             </v-layout>
           </v-flex>
 
-          <v-flex xs6 md6 class="mx-2">
+          <v-flex xs6 md6 lg6 class="mx-2 " >
             <v-layout mb-3>
               <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.Lastdraw") }}</span>

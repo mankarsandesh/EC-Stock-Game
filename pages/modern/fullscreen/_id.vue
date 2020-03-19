@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Other Stock List popup -->
     <v-dialog v-model="dialogOtherstock" style="position:fixed !important">
       <v-card color="rgb(0, 62, 111, 0.8)">
         <v-card-title>
@@ -154,17 +155,12 @@
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3>
-          <h3 class="balanceUser">
-            Acc : {{ getUserInfo.balance | currency }}
-          </h3>
+          <h3 class="balanceUser">Acc : {{ getUserInfo.balance | currency }}</h3>
           <!-- Toggle between two components -->
           <fullscreenchart v-if="!isHidden"></fullscreenchart>
-          <fullscreencurrentbet
-            v-else
-            :desserts="desserts"
-          ></fullscreencurrentbet>
+          <fullscreencurrentbet v-else :desserts="desserts"></fullscreencurrentbet>
           <v-layout pa-3>
-            <v-flex xs3 sm3 md3 lg3>
+            <v-flex xs3 sm3 md3 lg3 pt-2>
               <span class="seticon">
                 <i class="fa fa-user fa-2x iconcolor" />
                 <span>
@@ -174,7 +170,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3>
+            <v-flex xs3 sm3 md3 lg3 pt-2>
               <span class="seticon">
                 <i class="fa fa-gamepad fa-2x iconcolor" />
                 <span>
@@ -182,7 +178,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3>
+            <v-flex xs3 sm3 md3 lg3 pt-2>
               <span class="seticon">
                 <i class="fa fa-money fa-2x iconcolor" />
                 <span>

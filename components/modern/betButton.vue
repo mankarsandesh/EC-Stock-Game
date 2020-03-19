@@ -1,12 +1,12 @@
 <template>
-  <div class="p-relative">
+  <div class="p-relative" >
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
       <p>{{ $t("msg.betclosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row>
+    <v-layout row >
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
@@ -16,7 +16,6 @@
         :disabled="checkFooterBet"
         v-for="data in firstDigit"
         :key="data.rule"
-        md3
         class="w12"
         trigger="click"
         :options="{
@@ -763,12 +762,7 @@ export default {
   align-items: center;
 }
 
-.bet-close p {
-  position: absolute;
-  font-size: 8rem;
-  z-index: 50;
-  text-transform: capitalize;
-}
+
 .setlayuot {
   flex-flow: wrap;
   position: relative;
