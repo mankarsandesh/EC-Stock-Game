@@ -227,7 +227,12 @@ Big Screen
     min-width: 23px;
     height: 23px;
   }
-
+  .bet-close p {
+    position: absolute;
+    font-size: 8em;
+    z-index: 50;
+    text-transform: capitalize;
+  }
 
 }
 
@@ -300,7 +305,7 @@ Big Screen
 
   .align_button4 {
     box-shadow: none !important;
-    border: 2px solid #e8e8e8;
+    border: 1px solid #e8e8e8;
     height: 65px;
   }
 
@@ -459,7 +464,12 @@ Big Screen
     min-width: 16px;
     height: 16px;
   }
-
+  .bet-close p {
+    position: absolute;
+    font-size: 5em;
+    z-index: 50;
+    text-transform: capitalize;
+  }
 }
 
 /* 

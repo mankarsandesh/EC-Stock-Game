@@ -61,8 +61,8 @@
           >
         </th>
         <th v-if="data.isFollowing == -1" style="width:20%;">
-          <v-btn class="buttonGreensmall " dark
-            >{{ $t("useraction.followbet") }}
+          <v-btn class="buttonGreensmall " 
+            >Yourself
           </v-btn>
         </th>
       </div>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Other Stock List popup -->
     <v-dialog v-model="dialogOtherstock" style="position:fixed !important">
       <v-card color="rgb(0, 62, 111, 0.8)">
         <v-card-title>

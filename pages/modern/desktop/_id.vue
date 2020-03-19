@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2 " >
-    <v-layout style="background-color:#f4f5fd;">
+  <v-container fluid mt-2 class="containerNew pa-3" >
+    <v-layout style="background-color:#f4f5fd; ">
       <!-- <v-flex md3 lg3 mt-3 > -->
-        <v-flex v-if="!isHidden" class="leftStocklist">
+        <v-flex v-if="!isHidden" class="leftStocklist ">
           <span
             @click="isHidden = true"            
             class="sidebar-close"
@@ -35,8 +35,8 @@
       <!-- </v-flex> -->
 
       <v-flex  :xs10="!isHidden" :xs12="isHidden" >
-        <v-layout xs12 pa-2>
-          <v-flex xs6 md6 lg6 pt-2>
+        <v-layout xs12 pt-2>
+          <v-flex xs6 md6 lg6 pt-2 >
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
@@ -53,7 +53,7 @@
             </v-layout>
           </v-flex>
 
-          <v-flex xs6 md6 class="mx-2">
+          <v-flex xs6 md6 lg6 class="mx-2 " >
             <v-layout mb-3>
               <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.Lastdraw") }}</span>
