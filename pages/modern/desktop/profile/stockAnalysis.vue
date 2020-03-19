@@ -55,29 +55,6 @@
             <button>GO</button>
           </div>
         </v-flex>
-        <v-flex xs6 sm6 md3 lg3 pl-5>
-          <div class="date_picker_container">
-            <div class="title_date_picker">
-              <span>Sort By</span>
-            </div>
-            <div class="date_picker">
-              <!-- sort by  -->
-              <v-menu offset-y>
-                <template v-slot:activator="{ on }">
-                  <span class="select_date">2020-02-12</span>
-                  <span class="icon_date">
-                    <v-icon v-on="on">arrow_drop_down</v-icon>
-                  </span>
-                </template>
-                <v-list>
-                  <v-list-tile v-for="(item, index) in items" :key="index">
-                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-            </div>
-          </div>
-        </v-flex>
       </v-layout>
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
@@ -133,61 +110,60 @@ export default {
       isShowDateEnd: false,
       startDate: "",
       endDate: "",
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" }
-      ],
-
       chartOptions: {
         colors: [
-          function({ value, seriesIndex, w }) {
-            let color = "";
-            color = barColor[index][seriesIndex];
-            if (seriesIndex == 2 && index == 0) {
-              color = barColor[index][seriesIndex];
-              index = 1;
+          function({ value, seriesIndex, dataPointIndex, w }) {
+            console.log('value ', value, 'seriesIndex ', seriesIndex, 'dataPointIndex: ', dataPointIndex, index, 'w ', w);
+            if(seriesIndex == 0) {
+              return barColor[0][dataPointIndex];
             }
-            return color;
+            if(seriesIndex == 1) {
+              return barColor[1][dataPointIndex]
+            }
           }
         ],
-        grid: {
-          show: true,
-          borderColor: "#90A4AE",
-          strokeDashArray: 0,
-          position: "back",
-          xaxis: {
-            lines: {
-              show: true
-            }
-          },
-          yaxis: {
-            lines: {
-              show: true
-            }
-          },
-          row: {
-            colors: undefined,
-            opacity: 0.5
-          },
-          column: {
-            colors: undefined,
-            opacity: 0.5
-          },
-          padding: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0
+        plotOptions: {
+          bar: {
+            horizontal: false,
           }
         },
+        // grid: {
+        //   show: true,
+        //   borderColor: "#90A4AE",
+        //   strokeDashArray: 0,
+        //   position: "back",
+        //   xaxis: {
+        //     lines: {
+        //       show: false
+        //     }
+        //   },
+        //   yaxis: {
+        //     lines: {
+        //       show: true
+        //     }
+        //   },
+        //   row: {
+        //     colors: undefined,
+        //     opacity: 0.5
+        //   },
+        //   column: {
+        //     colors: undefined,
+        //     opacity: 0.5
+        //   },
+        //   padding: {
+        //     top: 0,
+        //     right: 0,
+        //     bottom: 0,
+        //     left: 0
+        //   }
+        // },
         dataLabels: {
           enabled: false
         },
         chart: {
           type: "bar",
           stacked: true,
+          //stackType: '100%',
           toolbar: {
             show: false
           },
@@ -195,54 +171,78 @@ export default {
             enabled: false
           }
         },
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              legend: {
-                position: "bottom",
-                offsetX: -10,
-                offsetY: 0
-              }
-            }
+        tooltip: {
+          enabled: true,
+          followCursor: true,
+          intersect: true,
+          onDataSetHover: {
+            highlightDataSeries: false
           }
-        ],
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            distributed: true
-          }
+          // y: {
+          //   formatter: function(val, { series, seriesIndex, dataPointIndex, w }) {
+          //     console.log(w.config.series[seriesIndex].betCounts[dataPointIndex], 'ayaaaaaaaaaaaaaaaaaaaaa')
+          //     return '<div class="arrow_box">' +
+          //        '<span> Amount: $' + series[seriesIndex][dataPointIndex] + ' </span>' +
+          //       '</div>' +
+          //       '<div class="arrow_box">' + 
+          //       '<span> BetCount:' + w.config.series[seriesIndex].betCounts[dataPointIndex] + '</span>' +
+          //       '</div>'
+          //   }
+          // }
         },
+        // responsive: [
+        //   {
+        //     breakpoint: 480,
+        //     options: {
+        //       legend: {
+        //         position: "bottom",
+        //         offsetX: -10,
+        //         offsetY: 0
+        //       }
+        //     }
+        //   }
+        // ],
+        // plotOptions: {
+        //   bar: {
+        //     horizontal: false,
+        //     // distributed: true
+        //   }
+        // },
+        // xaxis: {
+        //   labels: {
+        //     show: false
+        //   }
+        //   // type: "datetime",
+        //   // categories: [
+        //   //   "01/01/2011 GMT",
+        //   //   "01/02/2011 GMT",
+        //   //   "01/03/2011 GMT",
+        //   //   "01/04/2011 GMT",
+        //   //   "01/05/2011 GMT",
+        //   //   "01/06/2011 GMT",
+        //   //   "01/07/2011 GMT",
+        //   //   "01/08/2011 GMT",
+        //   //   "01/09/2011 GMT",
+        //   //   "01/10/2011 GMT"
+        //   // ]
+        // },
+        // legend: {
+        //   // itemMargin: {
+        //   //   horizontal: -100,
+        //   //   vertical: -100
+        //   // },
+        //   show: false,
+        //   // position: "top",
+        //   // horizontalAlign: "right",
+        //   // offsetX: 40
+        // },
+        // fill: {
+        //   opacity: 100
+        // },
         xaxis: {
           labels: {
-            show: false
-          },
-          type: "datetime",
-          categories: [
-            "01/01/2011 GMT",
-            "01/02/2011 GMT",
-            "01/03/2011 GMT",
-            "01/04/2011 GMT",
-            "01/05/2011 GMT",
-            "01/06/2011 GMT",
-            "01/07/2011 GMT",
-            "01/08/2011 GMT",
-            "01/09/2011 GMT",
-            "01/10/2011 GMT"
-          ]
-        },
-        legend: {
-          itemMargin: {
-            horizontal: 10,
-            vertical: 10
-          },
-          show: false,
-          position: "top",
-          horizontalAlign: "right",
-          offsetX: 40
-        },
-        fill: {
-          opacity: 1
+            offsetX: 0
+          }
         }
       }
     };
