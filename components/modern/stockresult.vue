@@ -14,11 +14,15 @@
               <th>{{ $t("msg.Time") }}</th>
               <th>{{ $t("msg.Result") }}</th>
             </tr>
-            <tr v-for="(data, index) in getStockResult" :key="index"  v-show="getStockResult.length > 0">
+            <tr
+              v-for="(data, index) in getStockResult"
+              :key="index"
+              v-show="getStockResult.length > 0"
+            >
               <td>
-                <nuxt-link :to="'/modern/desktop/' + data.stockName"
-                  >{{ $t(`stockname.${data.stockName}`) }}
-                </nuxt-link>
+                <nuxt-link
+                  :to="'/modern/desktop/' + data.stockName"
+                >{{ $t(`stockname.${data.stockName}`) }} {{ data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
               </td>
               <td class="text-xs-center">{{ data.stockTimestamp }}</td>
               <td class="text-xs-center">{{ roundValue(data.stockValue) }}</td>

@@ -87,6 +87,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import config from "../../../../config/config.global";
 export default {
   data() {
     return {};
@@ -118,8 +119,7 @@ export default {
           isAllowToFollow,
           isAllowToDirectMessage,
           isSound,
-          isAllowToLocation,
-          version: config.version
+          isAllowToLocation
         };
         const res = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting",
@@ -132,11 +132,11 @@ export default {
           this.asynUserInfo();
         } else {
           console.log(res.message);
-          alert(res.message);
+          // alert(res.message);
         }
       } catch (ex) {
         console.error(ex);
-        alert(ex.message);
+        // alert(ex.message);
       }
     }
   }
