@@ -21,7 +21,7 @@
                 </nuxt-link>
               </td>
               <td class="text-xs-center">{{ data.stockTimestamp }}</td>
-              <td class="text-xs-center">{{ data.stockValue }}</td>
+              <td class="text-xs-center">{{ roundValue(data.stockValue) }}</td>
             </tr>
           </table>
         </div>
@@ -47,6 +47,11 @@ export default {
   },
 
   methods: {
+    roundValue(value) {
+      return `${Number(value)
+        .toFixed(2)
+}`;
+    },
     onlyTime(value) {
       let d = value.split(" ");
       return d[1];
