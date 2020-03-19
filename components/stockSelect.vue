@@ -1,5 +1,5 @@
 <template>
-  <v-layout wrap class="select-stock">
+  <v-layout wrap class="select-stock mt-2">
     <v-flex md3>
       <v-autocomplete
         v-model="stock"
@@ -42,7 +42,7 @@
         solo
         hide-details
         item-text="loopName"
-        item-value="name"
+        item-value="loopName"
         return-object
         id="minute"
       >
@@ -131,6 +131,7 @@ export default {
       if (this.stockSocket) {
         if (value !== "") {
           if (this.stock.type == "crypto") {
+            console.log(this.stockName.stockName + this.minute.loopName);
             this.$router.replace(
               `/modern/desktop/${this.stockName.stockName}${this.minute.loopName}`
             );
@@ -144,31 +145,22 @@ export default {
       } else {
         this.stockSocket = false;
       }
+    },
+    getStockCategory(val) {
+      this.items = val;
+      console.log("Is will be error");
+      console.log(val);
+      // this.getGameUUID(val);
     }
   },
   created() {
     this.getActiveGamesByCategory();
   },
-  mounted() {
-    this.listenForBroadcast(
-      {
-        channelName:
-          "getActiveGamesByCategory.0c0de128-e2bd-41f1-a8ec-40a57c72bae5",
-        eventName: "getActiveGamesByCategory"
-      },
-      ({ data }) => {
-        console.log("STOCK CATEGORY FROM WEB SOCKET");
-        console.log(data);
-        this.items = data.res.data;
-      }
-    );
+  computed: {
+    ...mapGetters(["getStockCategory"])
   },
-
   methods: {
     ...mapMutations(["setGameID"]),
-    listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
-    },
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
@@ -191,38 +183,43 @@ export default {
     },
     getGameUUID(items) {
       items.forEach(element => {
-        console.log(element);
         // loop the data that receive from the getActiveGamesByCategory function
         element.stocks.map(item => {
-          if (element.type == "crypto") {
+          if (element.type === "crypto") {
             var data = this.$route.params.id; // get the stock from URL
             var stockName = data.substring(0, data.length - 1); // split we get only the stock name
             var stockLoop = data.substr(data.length - 1); // => "1"; // get the loop
             // console.log(stockName, stockLoop);
             // binding the data to the element after loop
-            if (item.stockName == stockName) {
-              // compare the data is equal the stockNmae that we
-              item.loops.map(loop => {
-                // loop the loop minuste
-                if (loop.loopName == stockLoop) {
-                  this.stock = element.type;
-                  this.stockName = item.stockName;
-                  this.stockNames.push(item.stockName);
-                  this.minute = loop.loopName;
-                  this.minutes.push(loop);
-                  this.gameId = loop.gameID;
-                  this.stockSocket = true;
-                  this.setGameID(loop.gameID);
-                  console.log("STOCK TYPE : " + element.type);
-                  console.log("STOCK NAME : " + item.stockName);
-                  console.log("LOOP : " + loop.loopName);
-                  console.log("GAME UUID : " + loop.gameID);
-                }
-              });
+            if (item.stockName === stockName) {
+              console.log(item.stockName === stockName);
+              //   // compare the data is equal the stockNmae that we
+                item.loops.map(loop => {
+                  // loop the loop minuste
+                  if (loop.loopName == stockLoop) {
+                    this.stockNames = [];
+                    this.minutes = [];
+                    this.stock = element.type;
+                    this.stockName = item.stockName;
+                    this.stockNames.push(item.stockName);
+                    this.minute = loop.loopName;
+                    this.minutes.push(loop);
+                    this.gameId = loop.gameID;
+                    this.stockSocket = true;
+                    this.setGameID(loop.gameID);
+                    console.log("STOCK STATUS : " + loop.gameStatus);
+                    console.log("STOCK TYPE : " + element.type);
+                    console.log("STOCK NAME : " + item.stockName);
+                    console.log("LOOP : " + loop.loopName);
+                    console.log("GAME UUID : " + loop.gameID);
+                  }
+                });
             }
           } else {
-            if (item.stockName == this.$route.params.id) {
+            if (item.stockName === this.$route.params.id) {
               item.loops.map(loop => {
+                this.stockNames = [];
+                this.minutes = [];
                 this.stock = element.type;
                 this.stockName = this.$route.params.id;
                 this.stockNames.push(item.stockName);
@@ -231,6 +228,7 @@ export default {
                 this.gameId = loop.gameID;
                 this.stockSocket = true;
                 this.setGameID(loop.gameID);
+                console.log("STOCK STATUS : " + loop.gameStatus);
                 console.log("STOCK TYPE : " + element.type);
                 console.log("STOCK NAME : " + item.stockName);
                 console.log("LOOP : " + loop.loopName);

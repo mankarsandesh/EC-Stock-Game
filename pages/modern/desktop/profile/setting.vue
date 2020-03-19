@@ -84,7 +84,6 @@
     </v-flex>
   </div>
 </template>
-
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
@@ -114,20 +113,19 @@ export default {
         let userSetting = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
+          version: config.version,
           isAllowToVisitProfile,
           isAllowToFollow,
           isAllowToDirectMessage,
           isSound,
-          isAllowToLocation
+          isAllowToLocation,
+          version: config.version
         };
         const res = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting",
           userSetting,
           {
-            headers: {
-              ContentType: "application/json",
-              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
-            }
+            headers: config.header
           }
         );
         if (res.code === 200) {

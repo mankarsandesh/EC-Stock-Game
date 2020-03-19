@@ -124,20 +124,21 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserName", "getStockType"]),
+    ...mapGetters(["getUserName", "getStockType","getStockGameId"]),
     ...mapState(["portalProviderUUID", "headers", "userUUID"])
   },
   mounted() {
     // Global Channel
     this.listenForBroadcast(
       {
-        channelName: `messageSend.${this.portalProviderUUID}.${this.gameUUID}`,
+        channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
         eventName: "messageSend"
       },
       ({ data }) => {
         data.data.forEach(element => {
+          console.log("Socket Listing");
           this.getMessagesGame.push({
-            name: element.username,
+            name: element.userName,
             userId: element.userUUID,
             message: element.message,
             date: element.date
@@ -154,7 +155,7 @@ export default {
       ({ data }) => {
         data.data.forEach(element => {
           this.getMessages.push({
-            name: element.username,
+            name: element.userName,
             userId: element.userUUID,
             message: element.message,
             date: element.date
@@ -204,9 +205,7 @@ export default {
               version: config.version
             },
             {
-              headers: {
-                Authorization: this.headers
-              }
+               headers: config.header
             }
           )
           .then(response => {
@@ -216,6 +215,7 @@ export default {
       }
     },
     sendMsgGame: function(event) {
+      console.log(this.getStockGameId);
       if (this.messageGame) {
         this.$axios
           .$post(
@@ -223,13 +223,13 @@ export default {
             {
               portalProviderUUID: this.portalProviderUUID,
               userUUID: this.userUUID,
-              gameUUID: this.gameUUID,
+              gameUUID: this.getStockGameId,
               chatType: 1,
               message: this.messageGame,
               version: config.version
             },
             {
-              headers: { headers: this.headers }
+              headers: config.header
             }
           )
           .then(response => {

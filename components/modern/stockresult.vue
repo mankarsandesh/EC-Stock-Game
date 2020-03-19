@@ -104,4 +104,7 @@ td {
   height: 100%;
   width: 100%;
 }
+.table-responsive {
+  overflow: hidden;
+}
 </style>

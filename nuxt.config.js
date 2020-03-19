@@ -43,6 +43,7 @@ module.exports = {
   },
   generate: {
     routes: [
+      // dynamic route for desktop
       "/modern/desktop/btc1",
       "/modern/desktop/btc5",
       "/modern/desktop/sh000001",
@@ -50,6 +51,7 @@ module.exports = {
       "/modern/desktop/sz399415",
       "/modern/desktop/sz399001",
       "/modern/desktop/usindex",
+      // dynamic route for fullscreen
       "/modern/fullscreen/btc1",
       "/modern/fullscreen/btc5",
       "/modern/fullscreen/sh000001",
@@ -57,13 +59,22 @@ module.exports = {
       "/modern/fullscreen/sz399415",
       "/modern/fullscreen/sz399001",
       "/modern/fullscreen/usindex",
+      // dynamic route for multigame
       "/modern/multigame/btc1",
       "/modern/multigame/btc5",
       "/modern/multigame/sh000001",
       "/modern/multigame/sh000300",
       "/modern/multigame/sz399415",
       "/modern/multigame/sz399001",
-      "/modern/multigame/usindex"
+      "/modern/multigame/usindex",
+      // dynamic route for mobile
+      "/modern/betting/btc1",
+      "/modern/betting/btc5",
+      "/modern/betting/sh000001",
+      "/modern/betting/sh000300",
+      "/modern/betting/sz399415",
+      "/modern/betting/sz399001",
+      "/modern/betting/usindex"
     ]
   },
 

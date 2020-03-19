@@ -37,4 +37,20 @@ export default ({ store }) => {
       store.commit("setStockListTimer", data.data.stockData);
     }
   );
+
+  // get the stock category
+  function listenStock({ channelName, eventName }, callback) {
+    window.Echo.channel(channelName).listen(eventName, callback);
+  }
+  listenStock(
+    {
+      channelName: 'getActiveGamesByCategory.0c0de128-e2bd-41f1-a8ec-40a57c72bae5',
+      eventName: "getActiveGamesByCategory"
+    },
+    ({ data }) => {
+      store.commit("SET_STOCK_CATEGORY", data.res.data);
+    }
+  );
+
+
 };
