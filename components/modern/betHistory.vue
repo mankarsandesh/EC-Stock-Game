@@ -15,7 +15,7 @@
             <td>{{item.item.betID}}</td>
             <td>{{item.item.gameID}}</td>
             <td>{{item.item.ruleName}} - ({{item.item.payout}}) {{item.item.stockName}} / {{item.item.loop}}</td>
-            <td>{{item.item.createdTime}}</td>
+            <td>{{item.item.createdDate}} {{item.item.createdTime}}</td>
             <td>{{item.item.payout}}</td>
             <td v-if="item.item.betResult == 'win'" class="text-uppercase">
                 <span  class="win">{{item.item.betResult}}</span>
@@ -26,13 +26,15 @@
             <td v-if="item.item.betResult == 'pending'">
               <span class="pending">{{item.item.betResult}}...</span>
             </td>
+            <td v-if="item.item.rollingAmount != 0">{{item.item.rollingAmount - item.item.betAmount }}</td>
+            <td v-if="item.item.rollingAmount == 0">0</td>
             <td>{{item.item.betAmount | toCurrency}}</td>
             <td>{{item.item.rollingAmount}}</td>
           </template>
           <template slot="footer">
             <tr>
               <td>{{$t('msg.Total')}}</td>
-              <td colspan="5">{{desserts.length}} bets</td>
+              <td colspan="6">{{desserts.length}} bets</td>
               <td>
                 <strong>{{TotalAmount | toCurrency}}</strong>
               </td>

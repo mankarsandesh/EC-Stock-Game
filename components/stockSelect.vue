@@ -7,9 +7,9 @@
         full-width
         solo
         hide-details
+        class="selectStock"
         color="blue"
-        label="select stock"
-        prepend-icon="bar_chart"
+        label="select stock"      
         item-text="type"
         item-value="name"
         return-object
@@ -20,6 +20,7 @@
         v-model="stockName"
         :items="stockNames"
         label="Stock Name"
+        class="selectStock"
         prepend-icon="navigate_next"
         color="green"
         full-width
@@ -34,6 +35,7 @@
     <v-flex md3>
       <v-autocomplete
         v-model="minute"
+        class="selectStock"
         :items="minutes"
         label="Minute"
         prepend-icon="navigate_next"
@@ -133,10 +135,10 @@ export default {
           if (this.stock.type == "crypto") {
             console.log(this.stockName.stockName + this.minute.loopName);
             this.$router.replace(
-              `/modern/desktop/${this.stockName.stockName}${this.minute.loopName}`
+              `/modern/multigame/${this.stockName.stockName}${this.minute.loopName}`
             );
           } else {
-            this.$router.replace(`/modern/desktop/${this.stockName.stockName}`);
+            this.$router.replace(`/modern/multigame/${this.stockName.stockName}`);
           }
           this.setGameID(value);
           // check model if game id is empty or not by the condition
@@ -243,5 +245,12 @@ export default {
 };
 </script>
 
-<style>
+<style  scoped>
+.selectStock{
+  font-size: 14px;
+}
+.v-list {
+  font-size: 12px;
+}
 </style>
+

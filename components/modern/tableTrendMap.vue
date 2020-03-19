@@ -67,7 +67,7 @@
           ></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs9 md10 lg10 xl11>
+      <v-flex xs9 md10 lg10 xl10>
         <v-layout row wrap>
           <v-flex xs12 lg12 md12>
             <trendMap

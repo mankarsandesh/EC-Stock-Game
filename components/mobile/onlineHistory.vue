@@ -126,7 +126,7 @@
             <v-layout row>
                 <v-flex xs3 sm3>
                     <div class="title_date_picker mt-2">
-                        <span>Sort By</span>
+                        <span>{{$t('msg.sortby')}}</span>
                     </div>
                 </v-flex>
                 <v-flex xs5 sm5>
