@@ -14,7 +14,8 @@
           <img
             style="vertical-align:middle;"
             class="pimage"
-            :src="getImgUrl(data.userImage)" />
+            :src="getImgUrl(data.userImage)"
+          />
           <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
@@ -46,21 +47,24 @@
                 data.userUUID,
                 data.isFollowing
               )
-            "            dark
+            "
+            dark
             >{{ $t("useraction.followbet") }}
           </v-btn>
+        </th>
+        <th v-if="data.isFollowing == 1" style="width:20%;">
+          <v-btn
+            class="buttonCancel "
+            v-on:click="unfollowUser(data.userUUID)"
+            dark
+            >{{ $t("useraction.unfollow") }}</v-btn
+          >
         </th>
         <th v-if="data.isFollowing == -1" style="width:20%;">
           <v-btn class="buttonGreensmall " dark
             >{{ $t("useraction.followbet") }}
           </v-btn>
         </th>
-        <th v-if="data.isFollowing == 1" style="width:20%;">
-          <v-btn class="buttonCancel " @click="dialog = true" dark>{{
-            $t("useraction.unfollow")
-          }}</v-btn>
-        </th>
-        
       </div>
     </v-flex>
 
@@ -76,8 +80,8 @@
         >
           FOLLOW BET
         </h3>
-        
-        <v-card-text style="text-align:center;">         
+
+        <v-card-text style="text-align:center;">
           <img class="pimage" v-bind:src="this.userImage" width="140px" />
           <h3 class="subtitle-1 text-uppercase text-center pt-2">
             {{ this.username }}
@@ -113,8 +117,11 @@
             ></v-text-field>
           </v-flex>
           <v-flex lg3 pl-3 pb-3>
-            <v-btn color="buttonGreensmall" text v-on:click="followThisUser()"
-              >Follow</v-btn
+            <v-btn
+              color="buttonGreensmall"
+              text
+              v-on:click="followThisUser()"
+              >{{ FollowName }}</v-btn
             >
           </v-flex>
         </v-card-actions>
@@ -125,10 +132,10 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import config from "../../../config/config.global";
-import leaderboardVue from "../../../pages/modern/desktop/leaderboard.vue";
 export default {
   data() {
     return {
+      FollowName: "Follow",
       selectRate: false,
       selectAmount: true,
       topPlayerData: [],
@@ -141,7 +148,7 @@ export default {
       rateValue: "10%",
       BetValue: "",
       username: "",
-      userImage: "/no-profile-pic.jpg",
+      userImage: "",
       dialog: false,
       selectedFollow: "",
       followby: [
@@ -157,17 +164,42 @@ export default {
     ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   methods: {
-    getImgUrl(userImage){     
-     return userImage === null
+    getImgUrl(userImage) {
+      return userImage === null
         ? "/no-profile-pic.jpg"
-        : "http://uattesting.equitycapitalgaming.com/" +
-            userImage;
+        : "http://uattesting.equitycapitalgaming.com/" + userImage;
     },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
       if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
         // 46 is dot
         $event.preventDefault();
+      }
+    },
+    // Unfollow User
+    async unfollowUser(FollowUserUUID) {
+      console.log(FollowUserUUID);
+      const LeaderBoardData = {
+        portalProviderUUID: this.portalProviderUUID,
+        userUUID: this.userUUID,
+        followToID: FollowUserUUID,
+        method: "unfollow",
+        version: config.version
+      };
+      console.log(LeaderBoardData);
+      try {
+        const { data } = await this.$axios.post(
+          "http://uattesting.equitycapitalgaming.com/webApi/followUser",
+          LeaderBoardData,
+          {
+            headers: config.header
+          }
+        );
+        this.unfollowUser = data;
+        location.reload();
+        console.log(this.unfollowUser);
+      } catch (error) {
+        console.log(error);
       }
     },
     async followThisUser() {
@@ -190,9 +222,7 @@ export default {
         value: this.BetValue,
         version: 1
       };
-      console.log(LeaderBoardData);
-
-       try {
+      try {
         const { data } = await this.$axios.post(
           "http://uattesting.equitycapitalgaming.com/webApi/followUser",
           LeaderBoardData,
@@ -200,13 +230,17 @@ export default {
             headers: config.header
           }
         );
-      
-        this.followData = data;        
-        console.log(this.followData);
+
+        this.followData = data;
+        location.reload();
+        if ((data.status = 200)) {
+          this.FollowName = "Following";
+        } else {
+          console.log(this.followData);
+        }
       } catch (error) {
         console.log(error);
       }
-
     },
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
@@ -239,9 +273,9 @@ export default {
             headers: config.header
           }
         );
-      
+
         this.topPlayerData = data.data;
-        
+
         console.log(this.topPlayerData);
       } catch (error) {
         console.log(error);
@@ -251,12 +285,12 @@ export default {
 };
 </script>
 <style scoped>
-.successful{
-  width:10%;
+.successful {
+  width: 10%;
   /* margin:0 auto; */
-  border:1px solid ;
+  border: 1px solid;
   text-align: center;
-  color:green;
+  color: green;
 }
 .titleText {
   font-size: 24px;

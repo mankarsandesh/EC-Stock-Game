@@ -20,7 +20,7 @@ export default {
   layout: "desktopModern",
   components: {
     breadcrumbs,
-    leaderboardUserlist,
+    'leaderboardUserlist': leaderboardUserlist,
     leaderBoardHeader
   },
   data() {
