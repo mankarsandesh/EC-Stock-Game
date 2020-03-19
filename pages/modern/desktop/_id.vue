@@ -1,40 +1,37 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2 " >
+  <v-container fluid mt-2 class="containerNew pa-2 ">
     <v-layout style="background-color:#f4f5fd;">
       <!-- <v-flex md3 lg3 mt-3 > -->
-        <v-flex v-if="!isHidden" class="leftStocklist">
-          <span
-            @click="isHidden = true"            
-            class="sidebar-close"
-          >
-            <v-icon color="#0b2968" >close</v-icon>
-          </span>
-          <v-layout column>
-            <v-flex xs12 pt-2>
-              <div id="stocklistGuidelines">
-                <stockList></stockList>
-              </div>
-            </v-flex>
-            <v-flex xs12 pt-2>
-              <div id="betresultGuidelines">
-                <stockResult></stockResult>
-              </div>
-            </v-flex>
-            <v-flex xs12 pt-2>
-              <div id="bettingGuidelines">
-                <onBetting></onBetting>
-              </div>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-        <v-flex v-if="isHidden" @click="isHidden = false">
-          <span class="sidebar-toggle">
-            <v-icon color="#0b2968">list</v-icon>
-          </span>
-        </v-flex>
+      <v-flex v-if="!isHidden" class="leftStocklist">
+        <span @click="isHidden = true" class="sidebar-close">
+          <v-icon color="#0b2968">close</v-icon>
+        </span>
+        <v-layout column>
+          <v-flex xs12 pt-2>
+            <div id="stocklistGuidelines">
+              <stockList></stockList>
+            </div>
+          </v-flex>
+          <v-flex xs12 pt-2>
+            <div id="betresultGuidelines">
+              <stockResult></stockResult>
+            </div>
+          </v-flex>
+          <v-flex xs12 pt-2>
+            <div id="bettingGuidelines">
+              <onBetting></onBetting>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex v-if="isHidden" @click="isHidden = false">
+        <span class="sidebar-toggle">
+          <v-icon color="#0b2968">list</v-icon>
+        </span>
+      </v-flex>
       <!-- </v-flex> -->
 
-      <v-flex  :xs10="!isHidden" :xs12="isHidden" >
+      <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-layout xs12 pa-2>
           <v-flex xs6 md6 lg6 pt-2>
             <v-layout column>
@@ -121,10 +118,7 @@
               </v-flex>
             </v-layout>
             <div id="betRuleButton">
-              <betButton
-                :stockName="$route.params.id"
-                :loop="1"
-              ></betButton>
+              <betButton :stockName="$route.params.id" :loop="1"></betButton>
             </div>
           </v-flex>
         </v-layout>
@@ -190,10 +184,9 @@
               color="primary"
               rigth
               fab
-              :to="'/modern/fullscreen/' + $route.params.id"
               class="fullscreen"
               dark
-              v-on="on"
+              @click="setAfterFullScreenClosePage()"
               title="Full Screen"
             >
               <v-icon>fullscreen</v-icon>
@@ -488,6 +481,10 @@ export default {
       "removeAllFooterBet",
       "setIsLoadingStockGame"
     ]),
+    setAfterFullScreenClosePage() {
+      localStorage.setItem("fullscreenclosed", "desktop");
+      this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
+    },
     stopListenSocket(channel) {
       window.Echo.leave(channel);
     },
@@ -496,7 +493,7 @@ export default {
     },
     async getStock() {
       try {
-        const { data } = await this.$axios.$post(
+        const data = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/getStock",
           {
             portalProviderUUID: this.getPortalProviderUUID,
@@ -738,7 +735,7 @@ export default {
   position: relative;
   top: 0;
   box-shadow: 0 0 2px grey;
-  right:5px;
+  right: 5px;
 }
 
 .sidebar-close {
@@ -758,8 +755,8 @@ export default {
   top: 75px;
   background-color: #ffffff !important;
   color: #4464ff;
-  padding:5px;
-  border:1px solid #dddddd;
-  border-radius:180px;
+  padding: 5px;
+  border: 1px solid #dddddd;
+  border-radius: 180px;
 }
 </style>

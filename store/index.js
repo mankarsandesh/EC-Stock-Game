@@ -404,7 +404,7 @@ const createStore = () => {
             }
           }
         } else {
-          result = "stockCategory length = 0";
+          result = "....";
         }
         return result;
       },
