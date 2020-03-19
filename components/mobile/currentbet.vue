@@ -27,14 +27,14 @@
           <td>{{item.item.createdTime}}</td>
           <td>{{item.item.betAmount | toCurrency}}</td>
           <td>{{item.item.payout}}</td>
-          <td v-if="item.item.betResult == 'win'">
-            <v-chip color="green" text-color="white">{{item.item.betResult}}</v-chip>
+          <td v-if="item.item.betResult == 'win'" >
+            <v-chip color="green" text-color="white" class="text-uppercase betresult" >{{item.item.betResult}}</v-chip>
           </td>
-          <td v-if="item.item.betResult == 'lose'">
-            <v-chip color="red" text-color="white">{{item.item.betResult}}</v-chip>
+          <td v-if="item.item.betResult == 'lose'" >
+            <v-chip color="red" text-color="white" class="text-uppercase betresult" >{{item.item.betResult}}</v-chip>
           </td>
-          <td v-if="item.item.betResult == 'pending'">
-            <v-chip color="yellow " text-color="black">{{item.item.betResult}}...</v-chip>
+          <td v-if="item.item.betResult == 'pending'" >
+            <v-chip color="yellow " text-color="black" class="text-uppercase betresult">{{item.item.betResult}}...</v-chip>
           </td>
         </template>
         <template slot="footer">
@@ -87,3 +87,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.betresult{
+  width: auto;
+}
+</style>

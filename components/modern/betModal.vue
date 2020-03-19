@@ -171,10 +171,16 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
         if (res.data[0].status == true) {
           this.closePopper();
-          this.pushDataOnGoingBet(res.data[0]);
+          let OnGoingdata = {
+            betUUID: res.data[0].betUUID,
+            ruleName: res.data[0].ruleName,
+            payout: res.data[0].payout,
+            betAmount: res.data[0].betAmount,
+            stockName: this.$props.stockName
+          };
+          this.pushDataOnGoingBet(OnGoingdata);
           this.$swal({
             type: "success",
             title: "Confirm!",
