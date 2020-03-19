@@ -121,10 +121,7 @@
               </v-flex>
             </v-layout>
             <div id="betRuleButton">
-              <betButton
-                :stockName="$route.params.id"
-                :loop="1"
-              ></betButton>
+              <betButton :stockName="$route.params.id" :loop="1"></betButton>
             </div>
           </v-flex>
         </v-layout>
@@ -190,10 +187,9 @@
               color="primary"
               rigth
               fab
-              :to="'/modern/fullscreen/' + $route.params.id"
               class="fullscreen"
               dark
-              v-on="on"
+              @click="setAfterFullScreenClosePage()"
               title="Full Screen"
             >
               <v-icon>fullscreen</v-icon>
@@ -488,6 +484,10 @@ export default {
       "removeAllFooterBet",
       "setIsLoadingStockGame"
     ]),
+    setAfterFullScreenClosePage() {
+      localStorage.setItem("fullscreenclosed", "desktop");
+      this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
+    },
     stopListenSocket(channel) {
       window.Echo.leave(channel);
     },
@@ -496,7 +496,7 @@ export default {
     },
     async getStock() {
       try {
-        const { data } = await this.$axios.$post(
+        const data = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/getStock",
           {
             portalProviderUUID: this.getPortalProviderUUID,
@@ -738,7 +738,7 @@ export default {
   position: relative;
   top: 0;
   box-shadow: 0 0 2px grey;
-  right:5px;
+  right: 5px;
 }
 
 .sidebar-close {
@@ -758,8 +758,8 @@ export default {
   top: 75px;
   background-color: #ffffff !important;
   color: #4464ff;
-  padding:5px;
-  border:1px solid #dddddd;
-  border-radius:180px;
+  padding: 5px;
+  border: 1px solid #dddddd;
+  border-radius: 180px;
 }
 </style>
