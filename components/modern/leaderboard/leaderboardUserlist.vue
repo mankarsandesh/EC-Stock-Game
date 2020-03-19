@@ -20,7 +20,7 @@
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
         <th>
-          <h3 class="header">WINNING RAATE</h3>
+          <h3 class="header">WINNING RATE</h3>
           <h4 class="green--text titleText">
             {{ Math.round(data.winRate, 1) }} %
           </h4>
