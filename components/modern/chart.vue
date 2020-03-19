@@ -81,10 +81,8 @@ export default {
           number2: dataIndex.number2
         };
 
-        if (
-          dataIndex.stockTimestamp !==
-          this.chartData[this.chartData.length - 1].stockTimestamp
-        ) {
+        if (dataIndex.stockTimestamp !== this.chartData[this.chartData.length - 1].stockTimestamp) {
+          console.log('RoadMap data', readyData);
           this.setLiveChart(readyData);
         }
       }
@@ -215,6 +213,7 @@ export default {
           }
         );
         if (res.code === 200) {
+          console.log('Component gets mounted and rest api is called for the roadMap data \n', res.data[0].roadMap);
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
