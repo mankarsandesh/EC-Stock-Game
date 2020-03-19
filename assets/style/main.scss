@@ -820,7 +820,7 @@ main.v-content {
 /* -------------------------------------------------------------------------- */
 .application {
   .v-autocomplete__content.v-menu__content {
-    border-radius: 10px;
+    border-radius: 5px;   
   }
 }
 .layout.select-stock {
@@ -839,14 +839,16 @@ main.v-content {
       .v-input__control {
         min-height: 40px;
         .v-input__slot {
-          border-radius: 10px;
+          border-radius: 5px;
           padding: 0 4px;
-          min-height: 35px;
+          min-height: 25px;
           .v-select__slot {
             label,
             input,
             .v-select__selections {
               margin: 0 0 0 10px;
+              color:#333;
+              text-transform: capitalize;
             }
           }
           .v-text-field__slot {

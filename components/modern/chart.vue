@@ -7,7 +7,7 @@
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
         {{ $t("msg.liveprice") }}:
-        <span>{{ getStockLivePrice(stockName) }}</span>
+        <span>{{ getStockLivePrice(stockName) }} </span>
       </v-flex>
     </v-layout>
     <apexchart
@@ -80,7 +80,6 @@ export default {
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
-
         if (dataIndex.stockTimestamp !== this.chartData[this.chartData.length - 1].stockTimestamp) {
           console.log('RoadMap data', readyData);
           this.setLiveChart(readyData);
@@ -229,12 +228,14 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
+      this.demo = this.window.width;
       if(this.window.width >= 1900){
         this.chartHeight = "320vh";
         this.heightChart = 320;
+        
       }else{
-        this.chartHeight = "250vh";
-        this.heightChart = 250;
+        this.chartHeight = "320vh";
+        this.heightChart = 320;
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

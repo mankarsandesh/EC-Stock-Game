@@ -10,7 +10,7 @@ Big Screen
   .btn-langage span {
     font-size: 14px;
   }
-
+  
   .menuItem {
     border-right: 2px solid #dddddd;
     height: 60px !important;
@@ -52,16 +52,16 @@ Big Screen
   }
 
   .containerNew {
-    width: 85% !important;
+    width: 95% !important;
   }
 
   .buttonbtn {
-    width: 140px;
+    width: 100px;
   }
 
   /* game Rule Category Button */
   .btnHeight {
-    height: 85px;
+    height: 80px;
   }
 
   .align_button4 {
@@ -72,7 +72,7 @@ Big Screen
 
 
   .big-digit {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
   }
 
@@ -144,7 +144,7 @@ Big Screen
     color: #ffffff !important;
     background-color: #4464ff !important;
     position: absolute;
-    left: 53%;
+    left: 49%;
     top: 46%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
@@ -229,7 +229,7 @@ Big Screen
   }
   .bet-close p {
     position: absolute;
-    font-size: 8em;
+    font-size: 6em;
     z-index: 50;
     text-transform: capitalize;
   }

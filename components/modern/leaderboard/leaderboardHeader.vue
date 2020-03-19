@@ -1,6 +1,6 @@
 <template>
   <div>   
-    <v-flex xs12 md8 lg8 style="margin:0 auto;">
+    <v-flex xs12 md10 lg10 style="margin:0 auto;">
       <v-layout row>
         <v-flex grow pa-1>
           <p class="float-left md6 lg8">
