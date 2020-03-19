@@ -3,20 +3,38 @@
     <v-layout class="mx-5 my-3 bettingModel" column>
       <v-flex>
         <h3>
-          {{$t('msg.bettingon')}}
-          <span
-            class="text-uppercase"
-          >{{betId.split("-")[1] >= 0 ? $t('gamemsg.'+betId.split("-")[0])+' - '+betId.split("-")[1]: $t('gamemsg.'+betId.split("-")[0])+' - '+$t('gamemsg.'+betId.split("-")[1])}}</span>
+          {{ $t("msg.bettingon") }}
+          <span class="text-uppercase">{{
+            betId.split("-")[1] >= 0
+              ? $t("gamemsg." + betId.split("-")[0]) +
+                " - " +
+                betId.split("-")[1]
+              : $t("gamemsg." + betId.split("-")[0]) +
+                " - " +
+                $t("gamemsg." + betId.split("-")[1])
+          }}</span>
         </h3>
       </v-flex>
       <v-flex class="pt-1 text-uppercase betHeading">
-        <span>{{$t('msg.Stock Name')}}: {{ $t(`stockname.${stockName}`) }} - {{loop}} minute</span> |
-        <span>{{$t('msg.payout')}}: {{$store.state.payout[parseInt(payout)].dynamicOdds}}</span>
+        <span
+          >{{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
+          {{ loop }} minute</span
+        >
+        |
+        <span
+          >{{ $t("msg.payout") }}:
+          {{ $store.state.payout[parseInt(payout)].dynamicOdds }}</span
+        >
       </v-flex>
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="coinClick(getCoins_modern[key])"
                 :src="item.img"
@@ -25,7 +43,7 @@
                 :class="item.color"
                 class="chipImg"
               >
-                <span class="setpricechip">{{getCoins_modern[key]}}</span>
+                <span class="setpricechip">{{ getCoins_modern[key] }}</span>
               </v-img>
             </v-avatar>
           </v-flex>
@@ -37,15 +55,21 @@
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
           <v-flex style="align-self:center">
-            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
           </v-flex>
           <v-flex style="align-self:center">
-            <v-btn color="error" @click="clear">{{$t('msg.Clear')}}</v-btn>
+            <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
           </v-flex>
         </v-layout>
       </v-flex>
       <v-flex class="py-1 betHeading">
-        <span>{{$t('msg.max')}} = $5000, {{$t('msg.min')}} = $100</span>
+        <span>{{ $t("msg.max") }} = $5000, {{ $t("msg.min") }} = $100</span>
       </v-flex>
       <!-- <v-divider></v-divider> -->
       <v-flex xs-12 class="pt-2 text-uppercase">
@@ -54,8 +78,11 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-        >{{$t('msg.confirm')}}</v-btn>
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{$t('msg.cancel')}}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn
+        >
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{
+          $t("msg.cancel")
+        }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -103,13 +130,14 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getGameUUIDByStockName",
       "getCoins_modern",
       "getOnBetting",
       "getAuth_token",
       "getStockId",
       "getStockGameId"
     ]),
-    ...mapState(["portalProviderUUID","userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   created() {
     // check is full screen or not
@@ -123,13 +151,13 @@ export default {
     //  this.getwinuser()
   },
   methods: {
-    ...mapMutations(["pushDataOnGoingBet","setGameID"]),
+    ...mapMutations(["pushDataOnGoingBet", "setGameID"]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
     },
     async sendBetting(betData) {
-      let finalData = betData;     
+      let finalData = betData;
       try {
         const res = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
@@ -143,9 +171,9 @@ export default {
             headers: config.header
           }
         );
-         console.log(res);
-        if (res.data[0].status == true) {           
-          this.closePopper();        
+        console.log(res);
+        if (res.data[0].status == true) {
+          this.closePopper();
           this.pushDataOnGoingBet(res.data[0]);
           this.$swal({
             type: "success",
@@ -164,16 +192,16 @@ export default {
       } catch (ex) {
         this.confirmDisabled = false;
         console.error(ex);
-         this.$swal({
-            type: "error",
-            title: `Error ${ex.message}`,
-            showConfirmButton: true
-          });
+        this.$swal({
+          type: "error",
+          title: `Error ${ex.message}`,
+          showConfirmButton: true
+        });
       }
     },
     confirmBet() {
       let data = {
-        gameUUID: this.getStockGameId,
+        gameUUID: this.getGameUUIDByStockName(this.stockName),
         ruleID: this.ruleid,
         betAmount: this.betValue
       };
