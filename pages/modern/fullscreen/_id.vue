@@ -17,6 +17,7 @@
             xs6
             sm6
             md6
+            v-if="$route.params.id !== data.stockName"
           >
             <nuxt-link :to="'/modern/fullscreen/' + data.stockName">
               <v-card class="v-card-style">
@@ -244,7 +245,7 @@
               color="primary"
               rigth
               fab
-              @click="$router.go(-1)"
+              @click="$router.push(closeFullscreen)"
               class="fullscreenclose"
               dark
               v-on="on"
@@ -349,6 +350,16 @@ export default {
     fullscreencurrentbet
   },
   computed: {
+    closeFullscreen() {
+      let fullscreenClose = localStorage.getItem("fullscreenclosed");
+      if (
+        localStorage.getItem("fullscreenclosed") == null ||
+        localStorage.getItem("fullscreenclosed") == "undefined"
+      ) {
+        fullscreenClose = "desktop";
+      }
+      return `/modern/${fullscreenClose}/${this.$route.params.id}`;
+    },
     ...mapGetters([
       "getGameUUIDByStockName",
       "getAllStocks",
