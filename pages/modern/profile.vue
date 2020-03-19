@@ -79,10 +79,10 @@
 
                         <v-layout pt-3>
                             <v-flex xs2 sm2 md2 lg2 pr-2 class="text-xs-center">
-                                <label for="username">{{$t('profile.user name')}}</label>
+                                <label for="userName">{{$t('profile.user name')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                                <input ref="username" type="text" :value="userData.userName" id="username" name="username" placeholder="Type your Username" />
+                                <input ref="userName" type="text" :value="userData.userName" id="userName" name="userName" placeholder="Type your Username" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                                 </span>
@@ -91,7 +91,7 @@
 
                         <v-layout pt-3>
                             <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
-                                <label for="lname">{{$t('profile.first name')}}</label>
+                                <label for="firstName">{{$t('profile.first name')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="firstName" type="text" :value="userData.firstName" id="first-name" name="first-name" placeholder="Your First Name" />
@@ -103,7 +103,7 @@
 
                         <v-layout pt-2>
                             <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
-                                <label for="lname">{{$t('profile.last name')}}</label>
+                                <label for="lastName">{{$t('profile.last name')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="lastName" type="text" :value="userData.lastName" id="last-name" name="last-name" placeholder="Your Last Name" />
@@ -194,8 +194,6 @@ export default {
     data() {
         return {
             updating: false,
-            dialogOnlineHistory: false,
-            dialogStockAnalysis: false,
             profile: {
                 imgProfile: ''
             }
@@ -243,12 +241,12 @@ export default {
                     formData, {
                         headers: {
                             ContentType: "application/json",
-                            Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
+                            Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE=z"
                         }
 
                     }
                 );
-                console.log(res);
+                
                 if (res.code === 200) {
                     this.asynUserInfo();
                     this.updating = false;
@@ -264,6 +262,7 @@ export default {
                 this.updating = false;
                 alert(ex.message);
             }
+            console.log(res);
         }
     }
 };
