@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <v-flex
+  <div  v-if="topPlayerData.length > 0">
+    <v-flex     
       xs12
-      md8
-      lg8
+      md10
+      lg10
+      xl8
       style="margin:0 auto;"
       v-for="(data, index) in topPlayerData"
       :key="index"
       id="userRow"
+      
     >
       <div class="userRow">
         <th>
@@ -145,7 +147,7 @@ export default {
       method: "",
       UserfollowType: "",
       amountValue: "100",
-      rateValue: "10%",
+      rateValue: "10",
       BetValue: "",
       username: "",
       userImage: "",
@@ -222,6 +224,7 @@ export default {
         value: this.BetValue,
         version: 1
       };
+      console.log(LeaderBoardData);
       try {
         const { data } = await this.$axios.post(
           "http://uattesting.equitycapitalgaming.com/webApi/followUser",
@@ -232,6 +235,7 @@ export default {
         );
 
         this.followData = data;
+        console.log(this.followData);
         location.reload();
         if ((data.status = 200)) {
           this.FollowName = "Following";
