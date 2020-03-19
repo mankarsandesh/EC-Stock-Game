@@ -88,6 +88,6 @@ td {
 }
 
 .table-responsive {
-  overflow: auto;
+  overflow: hidden;
 }
 </style>

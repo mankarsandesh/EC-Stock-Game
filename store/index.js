@@ -1,11 +1,11 @@
 import Vuex from "vuex";
-import { hostname } from "os";
 import payouts from "../data/json/payout";
 import config from "../config/config.global";
 
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
+      stockCategory: [],
       gameStockId: null,
       authUser: {},
       activeGameChannel: true,
@@ -21,7 +21,6 @@ const createStore = () => {
       userUUID: "dfdcb1e4-2275-4026-8efd-cafc79cc6f44",
       // end set portal provider and user UUID for authentication
       roadMap: [],
-      liveChart: [],
       userData: {},
       payout: {},
       OnlineTime: "",
@@ -111,6 +110,9 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      SET_STOCK_CATEGORY(state, payload){
+        state.stockCategory = payload
+      },
       //new api
       setGameID(state, payload) {
         state.gameStockId = payload
@@ -126,9 +128,6 @@ const createStore = () => {
       },
       setLiveRoadMap(state, payload) {
         state.roadMap.push(payload);
-      },
-      setLiveChart(state, payload) {
-        state.liveChart.push(payload);
       },
       // end new api
       setUserData(state, payload) {
@@ -205,31 +204,6 @@ const createStore = () => {
     },
     actions: {
       // new api
-      async asyncChart(context, stockUUID) {
-        context.state.liveChart = [];
-        try {
-          const res = await this.$axios.$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
-            {
-              portalProviderUUID: context.state.portalProviderUUID,
-              limit: 50,
-              stockUUID: [stockUUID],
-              version: config.version
-            },
-            {
-              headers: config.header
-            }
-          );
-          if (res.code === 200) {
-            let readyData = res.data[0].roadMap.reverse();
-            context.state.liveChart = readyData;
-          } else {
-            throw new Error();
-          }
-        } catch (ex) {
-          console.log(ex.message);
-        }
-      },
       async asyncRoadMap(context, stockUUID) {
         context.state.roadMap = [];
         try {
@@ -409,6 +383,9 @@ const createStore = () => {
       }
     },
     getters: {
+      getStockCategory(state) {
+        return state.stockCategory;
+      },
       getStockGameId(state) {
         return state.gameStockId;
       },
@@ -467,9 +444,6 @@ const createStore = () => {
       },
       getRoadMap(state) {
         return state.roadMap;
-      },
-      getLiveChart(state) {
-        return state.liveChart;
       },
       getLastDraw(state) {
         return state.roadMap.length > 0
