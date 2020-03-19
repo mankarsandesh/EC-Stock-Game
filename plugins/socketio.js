@@ -21,7 +21,7 @@ export default ({ store }) => {
         }
       });
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message);  
     }
   }
   function listenForBroadcast({ channelName, eventName }, callback) {
@@ -51,6 +51,4 @@ export default ({ store }) => {
       store.commit("SET_STOCK_CATEGORY", data.res.data);
     }
   );
-
-
 };

@@ -112,7 +112,7 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
-      SET_STOCK_CATEGORY(state, payload){
+      SET_STOCK_CATEGORY(state, payload) {
         state.stockCategory = payload
       },
       //new api
