@@ -12,7 +12,7 @@
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
         </v-btn>
       </span>
-      <popper 
+      <popper
         :disabled="checkFooterBet"
         v-for="data in firstDigit"
         :key="data.rule"
@@ -53,9 +53,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
-            {{
-            $store.state.payout[parseInt(data.payout)].dynamicOdds
-            }}
+            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -102,7 +100,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
-             :ruleid="data.ruleid"
+            :ruleid="data.ruleid"
             :betId="'lastdigit-' + data.rule"
             :payout="data.payout"
           ></betModal>
@@ -127,9 +125,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{
-            $store.state.payout[parseInt(data.payout)].dynamicOdds
-            }}
+            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -176,7 +172,7 @@
           <betModal
             :stockName="stockName"
             :loop="loop"
-             :ruleid="data.ruleid"
+            :ruleid="data.ruleid"
             :betId="'bothdigit-' + data.rule"
             :payout="data.payout"
           ></betModal>
@@ -201,9 +197,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{
-            $store.state.payout[parseInt(data.payout)].dynamicOdds
-            }}
+            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -257,7 +251,7 @@
           ></betModal>
         </div>
         <v-btn
-           class="align_button4"
+          class="align_button4"
           :id="'twodigit-' + data.rule"
           @click="betButtonClick('twodigit-' + data.rule)"
           slot="reference"
@@ -276,9 +270,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{
-            $store.state.payout[parseInt(data.payout)].dynamicOdds
-            }}
+            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -328,7 +320,8 @@
           @click="betButtonClick('firstdigit-' + index)"
           v-show="number == 'first'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBet"
@@ -354,7 +347,8 @@
           @click="betButtonClick('lastdigit-' + index)"
           v-show="number == 'last'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBet"
@@ -380,7 +374,8 @@
           @click="betButtonClick('bothdigit-' + index)"
           v-show="number == 'both'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBet"
@@ -406,7 +401,8 @@
           @click="betButtonClick('twodigit-' + index)"
           v-show="number == 'two'"
           class="btn-small"
-        >{{ index < 10 ? "0" + index : index }}</v-btn>
+          >{{ index < 10 ? "0" + index : index }}</v-btn
+        >
       </popper>
     </v-layout>
   </div>
@@ -674,6 +670,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getGameUUIDByStockName",
       "getTimerByStockName",
       "getStockLoop",
       "checkFooterBet",
@@ -701,8 +698,9 @@ export default {
           this.clearDataMultiGameBet();
         }
         return (
-          this.getTimerByStockName(this.stockName) && this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec >
-          240
+          this.getTimerByStockName(this.stockName) &&
+          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec >
+            240
         );
       } else {
         if (
@@ -713,12 +711,14 @@ export default {
           this.clearDataMultiGameBet();
         }
         return (
-         this.getTimerByStockName(this.stockName) &&  this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec >
-          40
+          this.getTimerByStockName(this.stockName) &&
+          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec >
+            40
         );
       }
     }
   },
+  mounted() {},
   methods: {
     ...mapMutations(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
     betButtonClick(betId) {
@@ -726,7 +726,7 @@ export default {
       if (this.checkFooterBet) {
         let data = {
           // stockId: this.stockName,
-          stockId: 'btc1',
+          stockId: "btc1",
           loop: this.loop,
           gameRule: betId,
           amount: this.getFooterBetAmount

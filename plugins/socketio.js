@@ -1,4 +1,5 @@
 import Echo from "laravel-echo";
+import config from "../config/config.global";
 export default ({ store }) => {
   const hostName = "uattesting.equitycapitalgaming.com";
   const port = 6001;
@@ -7,6 +8,7 @@ export default ({ store }) => {
   window.Pusher = require("pusher-js");
 
   if (typeof io !== "undefined") {
+    // connect to web socket
     try {
       window.Echo = new Echo({
         broadcaster: "pusher",
@@ -15,9 +17,7 @@ export default ({ store }) => {
         wsPort: port,
         disableStats: true,
         auth: {
-          headers: {
-            Authorization: "Basic dG5rc3VwZXI6VGVzdDEyMyEs="
-          }
+          headers: config.header
         }
       });
     } catch (error) {
@@ -44,13 +44,11 @@ export default ({ store }) => {
   }
   listenStock(
     {
-      channelName: 'getActiveGamesByCategory.0c0de128-e2bd-41f1-a8ec-40a57c72bae5',
+      channelName: `getActiveGamesByCategory.${store.getters.getPortalProviderUUID}`,
       eventName: "getActiveGamesByCategory"
     },
     ({ data }) => {
       store.commit("SET_STOCK_CATEGORY", data.res.data);
     }
   );
-
-
 };

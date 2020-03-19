@@ -130,6 +130,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getGameUUIDByStockName",
       "getCoins_modern",
       "getOnBetting",
       "getAuth_token",
@@ -206,7 +207,7 @@ export default {
     },
     confirmBet() {
       let data = {
-        gameUUID: this.getStockGameId,
+        gameUUID: this.getGameUUIDByStockName(this.stockName),
         ruleID: this.ruleid,
         betAmount: this.betValue
       };
