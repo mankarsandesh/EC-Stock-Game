@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Other Stock List popup -->
     <v-dialog v-model="dialogOtherstock" style="position:fixed !important">
       <v-card color="rgb(0, 62, 111, 0.8)">
         <v-card-title>
@@ -10,7 +11,7 @@
         </v-card-title>
         <v-layout row wrap px-2 pt-2>
           <v-flex pa-2 v-for="(data, index) in getAllStocks" :key="index" xs6 sm6 md6>
-            <nuxt-link :to="'/modern/fullscreen/' + data.stockName">
+            <nuxt-link :to="'/modern/fullscreen/' + data.stockName" >
               <v-card class="v-card-style">
                 <div
                   class="close-bet-chart"
