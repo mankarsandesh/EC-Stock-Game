@@ -110,12 +110,12 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
-      SET_STOCK_CATEGORY(state, payload){
-        state.stockCategory = payload
+      SET_STOCK_CATEGORY(state, payload) {
+        state.stockCategory = payload;
       },
       //new api
       setGameID(state, payload) {
-        state.gameStockId = payload
+        state.gameStockId = payload;
       },
       setAuth(state, payload) {
         state.authUser = payload;
@@ -383,6 +383,31 @@ const createStore = () => {
       }
     },
     getters: {
+      getGameUUIDByStockName: state => stockName => {
+        let loopIndex = 0;
+        if (stockName === "btc1" || stockName === "btc5") {
+          stockName = "btc";
+        }
+        if (stockName === "btc5") {
+          loopIndex = 1;
+        }
+        let result = "suss";
+        if (state.stockCategory.length > 0) {
+          for (let i = 0; i < state.stockCategory.length; i++) {
+            for (let j = 0; j < state.stockCategory[i].stocks.length; j++) {
+              console.log(state.stockCategory[i].stocks[j].stockName);
+              if (state.stockCategory[i].stocks[j].stockName === stockName) {
+                return state.stockCategory[i].stocks[j].loops[loopIndex].gameID;
+              } else {
+                console.log(state.stockCategory[i].stocks[j].stockName);
+              }
+            }
+          }
+        } else {
+          result = "stockCategory length = 0";
+        }
+        return result;
+      },
       getStockCategory(state) {
         return state.stockCategory;
       },

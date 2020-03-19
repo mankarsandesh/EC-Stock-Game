@@ -2,6 +2,8 @@ const pkg = require("./package");
 
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 
+import config from "./config/config.global";
+
 module.exports = {
   mode: "spa",
   buildModules: [
@@ -150,9 +152,5 @@ module.exports = {
       };
     }
   },
-  server: {
-    port: 8000, // default: 3000
-
-    host: "0.0.0.0" // default: localhost
-  } // other configs
+  server: config.serverConfig
 };
