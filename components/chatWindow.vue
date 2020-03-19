@@ -47,6 +47,7 @@
               resize="none"
               v-model="message"
               placeholder="Say Somthing..."
+              v-on:keyup.enter="sendMsg"
             />
             <span v-on:click="sendMsg" class="btn">
               <i class="fa fa-paper-plane"></i>
@@ -74,6 +75,7 @@
               resize="none"
               v-model="messageGame"
               placeholder="Say Somthing..."
+              v-on:keyup.enter="sendMsgGame"
             />
             <span v-on:click="sendMsgGame" class="btn">
               <i class="fa fa-paper-plane"></i>
