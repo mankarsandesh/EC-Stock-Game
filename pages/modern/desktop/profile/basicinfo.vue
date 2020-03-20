@@ -127,7 +127,7 @@
                   </span>
                 </div>
               </div>
-              <p>{{error}}</p>
+              <p class=error-message>{{error}}</p>
               <div class="row">
                 <div class="col-15"></div>
                 <div class="col-85">
@@ -197,8 +197,10 @@ export default {
           }
         );
         if (res.code === 200) {
+          console.log('basic info', res);
           this.asynUserInfo();
           this.updating = false;
+          this.error = '';
         } else {
           alert(res.message);
           this.updating = false;
@@ -236,7 +238,9 @@ select {
 select {
   cursor: pointer;
 }
-
+.error-message {
+  color: red;
+}
 input:focus,
 select:focus {
   outline: none;
