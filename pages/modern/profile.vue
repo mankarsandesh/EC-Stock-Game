@@ -15,14 +15,14 @@
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <span>{{$t('profile.online status')}} : 2hours</span>
+                    <span>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</span>
                 </div>
             </v-flex>
         </v-layout>
     </v-flex>
 
     <v-flex xs12 :class="!$vuetify.breakpoint.xs ? 'mt-2':''">
-        <v-layout row>
+        <v-layout row class="text-xs-center">
             <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
                 <div class="profile_head text-xs-center">
                     <div class="image_container">
@@ -36,7 +36,7 @@
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>{{$t('profile.online status')}} : 2hours</p>
+                    <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
                 </div>
             </v-flex>
 
@@ -67,22 +67,22 @@
                 <div>
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
                         <v-layout pt-3>
-                            <v-flex xs3 sm2 md3 lg6>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
                                 <label for="player-id">{{$t('msg.playerid')}}</label>
                             </v-flex>
 
-                            <v-flex xs9 sm6 md9 lg6 pr-2>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center" pr-4>
                                 <input disabled type="text" id="player-id" name="player-id" :value="userData.PID" />
                                 <!-- <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" /> -->
                             </v-flex>
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg6>
-                                <label for="username">Username</label>
+                            <v-flex xs2 sm2 md2 lg2 pr-2 class="text-xs-center">
+                                <label for="userName">{{$t('profile.user name')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
-                                <input ref="username" type="text" :value="userData.userName" id="username" name="username" placeholder="Type your Username" />
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
+                                <input ref="userName" type="text" :value="userData.userName" id="userName" name="userName" placeholder="Type your Username" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                                 </span>
@@ -90,10 +90,10 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg6>
-                                <label for="lname">{{$t('profile.first name')}}</label>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
+                                <label for="firstName">{{$t('profile.first name')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="firstName" type="text" :value="userData.firstName" id="first-name" name="first-name" placeholder="Your First Name" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -102,10 +102,10 @@
                         </v-layout>
 
                         <v-layout pt-2>
-                            <v-flex xs2 sm2 md2 lg6>
-                                <label for="lname">{{$t('profile.last name')}}</label>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
+                                <label for="lastName">{{$t('profile.last name')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="lastName" type="text" :value="userData.lastName" id="last-name" name="last-name" placeholder="Your Last Name" />
                                 <span class="icon-container">
                                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -114,10 +114,10 @@
                         </v-layout>
 
                         <v-layout pt-2>
-                            <v-flex xs2 sm2 md2 lg6 pt2>
+                            <v-flex xs2 sm2 md2 lg2 pt2 class="text-xs-center">
                                 <label for="gender">{{$t('profile.gender')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <select ref="gender" id="gender" name="gender">
                                     <option value="female">Female</option>
                                     <option value="male">Male</option>
@@ -129,10 +129,10 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg6>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
                                 <label for="email">{{$t('profile.email')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="email" type="text" :value="userData.email" id="email" name="email" placeholder="mackychinma@gmail.com" />
                                 <span class="icon-container">
                                     <v-icon :size="15" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -141,10 +141,10 @@
                         </v-layout>
 
                         <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg6>
+                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
                                 <label for="country">{{$t('profile.country')}}</label>
                             </v-flex>
-                            <v-flex xs10 sm6 md6 lg6>
+                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <select ref="country" id="country" name="country">
                                     <option value="china">China</option>
                                     <option value="usa">USA</option>
@@ -188,13 +188,12 @@ import {
 } from "vuex";
 import OnlineHistory from "~/components/mobile/onlineHistory"
 import StockAnalysis from "~/components/mobile/stockAnalysis"
+import config from "../../config/config.global";
 
 export default {
     data() {
         return {
             updating: false,
-            dialogOnlineHistory: false,
-            dialogStockAnalysis: false,
             profile: {
                 imgProfile: ''
             }
@@ -235,17 +234,19 @@ export default {
             formData.append("lastName", ref.lastname.value);
             formData.append("gender", ref.gender.value);
             // formData.append("country", ref.country.value);
-            formData.append("version", 1);
+            formData.append("version", config.version);
             try {
                 const res = await this.$axios.$post(
                     "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
                     formData, {
                         headers: {
                             ContentType: "application/json",
-                            Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
+                            Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE=z"
                         }
+
                     }
                 );
+                
                 if (res.code === 200) {
                     this.asynUserInfo();
                     this.updating = false;
@@ -261,6 +262,7 @@ export default {
                 this.updating = false;
                 alert(ex.message);
             }
+            console.log(res);
         }
     }
 };
@@ -361,6 +363,7 @@ label {
     text-align: center;
     text-transform: capitalize;
     line-height: 1.1;
+    min-height: 50px;
 }
 
 .amount {

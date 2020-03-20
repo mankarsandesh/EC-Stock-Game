@@ -1,6 +1,10 @@
 <template>
   <div>
-    <breadcrumbs title="Announcement" linkItem="gamerule" titlebtn="Game Rule" />
+    <breadcrumbs
+      title="Announcement"
+      linkItem="gamerule"
+      titlebtn="Game Rule"
+    />
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 md12>
@@ -14,7 +18,7 @@
 import { mapMutations, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import announcement from "~/components/modern/stocklist/announcement";
-
+import config from "../../../config/config.global";
 export default {
   layout: "desktopModern",
   components: {
@@ -24,7 +28,7 @@ export default {
   data() {
     return {
       window: 0,
-      tabs: ["announcement"], 
+      tabs: ["announcement"],
       active: null,
       head: [
         { text: "title", value: "title" },
@@ -38,7 +42,7 @@ export default {
     this.fetch();
   },
   computed: {
-    ...mapState(["portalProviderUUID", "headers"])
+    ...mapState(["portalProviderUUID"])
   },
   methods: {
     ...mapMutations(["setIsLoadingStockGame"]),
@@ -48,12 +52,10 @@ export default {
           "http://uattesting.equitycapitalgaming.com/webApi/getAllAnnouncements",
           {
             portalProviderUUID: this.portalProviderUUID,
-            version: "0.1"
+            version: config.version
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, because the backend they will check
-            }
+            headers: config.header
           }
         );
         this.desserts = data;

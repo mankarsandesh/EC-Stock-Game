@@ -70,11 +70,11 @@ import {
 import menu from "~/data/menu";
 
 import countryFlag from "vue-country-flag";
-import languageDialog from "~/components/LanguageDialog";
+import languageDialog from "~/components/mobile/LanguageDialog";
 import welcomeUser from "~/components/welcomeUser";
 
 import openSocket from "socket.io-client";
-import Logout from "../components/mobileLogout";
+import Logout from "../components/mobile/mobileLogout";
 
 import i18n from "vue-i18n";
 
@@ -110,7 +110,7 @@ export default {
     },
     methods: {},
     computed: {
-        ...mapGetters(["getBalance", "getlocale"]),
+        ...mapGetters(["getlocale"]),
         countryflag() {
             return this.getlocale;
         }

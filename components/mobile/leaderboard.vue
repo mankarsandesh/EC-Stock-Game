@@ -13,30 +13,30 @@
                 <v-icon small>event</v-icon>{{$t('leaderboard.weekly rankings')}}
             </span>
             <span class="text-uppercase font-weight-bold">
-                <v-icon small>event</v-icon>{{$t('leaderboard.weekly rankings')}}
+                <v-icon small>event</v-icon>{{$t('leaderboard.monthly rankings')}}
             </span>
         </v-flex>
 
         <div class="userRow">
             <th>
                 <img style="vertical-align:middle" class="pimage" src="https://placehold.it/60x60" />
-                <span class="subtitle-1 text-uppercase">Ritesh Naik</span>
+                <h6 class="subtitle-1 text-uppercase">Ritesh Naik</h6>
                 <!-- <span  style="border:1px solid red;height:30px;width:40px;" class="flag flag-us small-flag"></span>-->
             </th>
             <th>
-                <h3 class="header">WINNING RAATE</h3>
-                <h4 class="green--text title">100 %</h4>
+                <h5 class="header">WINNING RATE</h5>
+                <h6 class="green--text title">100 %</h6>
             </th>
             <th>
-                <h3 class="header">BETS</h3>
-                <H4 style="color:#eb0b6e;" class="title">20</H4>
+                <h5 class="header">BETS</h5>
+                <h6 style="color:#eb0b6e;" class="title">20</h6>
             </th>
             <th>
-                <h3 class="header">WINNING AMOUNT</h3>
-                <h4 style="color:#0b2a68;" class="title">25000</h4>
+                <h5 class="header">WINNING AMOUNT</h5>
+                <h6 style="color:#0b2a68;" class="title">25000</h6>
             </th>
             <th>
-                <v-btn class="buttonGreensmall" @click="dialog = true" dark>{{$t('useraction.followbet')}}</v-btn>
+                <v-btn class="buttonGreensmall" @click="dialog = true">{{$t('useraction.followbet')}}</v-btn>
             </th>
         </div>
     </v-flex>

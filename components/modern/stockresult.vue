@@ -7,21 +7,25 @@
       <!-- bet result -->
       <v-flex xs12>
         <div class="table-responsive">
-          <h3 class="title" v-show="getStockResult.length < 0"></h3>
+          <!-- <h3 class="title" v-show="getStockResult.code == 500">There are no Data</h3> -->
           <table class="table">
             <tr>
               <th>{{ $t("msg.Stock Name") }}</th>
               <th>{{ $t("msg.Time") }}</th>
               <th>{{ $t("msg.Result") }}</th>
             </tr>
-            <tr v-for="(data, index) in getStockResult" :key="index">
+            <tr
+              v-for="(data, index) in getStockResult"
+              :key="index"
+              v-show="getStockResult.length > 0"
+            >
               <td>
-                <nuxt-link :to="'/modern/desktop/' + data.stockName"
-                  >{{ $t(`stockname.${data.stockName}`) }}
-                </nuxt-link>
+                <nuxt-link
+                  :to="'/modern/desktop/' + data.stockName"
+                >{{ $t(`stockname.${data.stockName}`) }} {{ data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
               </td>
               <td class="text-xs-center">{{ data.stockTimestamp }}</td>
-              <td class="text-xs-center">{{ data.stockValue }}</td>
+              <td class="text-xs-center">{{ roundValue(data.stockValue) }}</td>
             </tr>
           </table>
         </div>
@@ -47,6 +51,11 @@ export default {
   },
 
   methods: {
+    roundValue(value) {
+      return `${Number(value)
+        .toFixed(2)
+}`;
+    },
     onlyTime(value) {
       let d = value.split(" ");
       return d[1];
@@ -60,9 +69,11 @@ export default {
         "http://uattesting.equitycapitalgaming.com/webApi/getAllStock", // after finish crawl the every API will the the baseURL from AXIOS
         dataSend, // data object
         {
-          headers: this.headers
+          headers: config.header
         }
       );
+      console.log(data);
+      console.log("Stock Resdult");
       this.getStockResult = data.data;
     }
   }
@@ -101,5 +112,8 @@ td {
   cursor: pointer;
   height: 100%;
   width: 100%;
+}
+.table-responsive {
+  overflow: hidden;
 }
 </style>

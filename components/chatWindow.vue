@@ -47,6 +47,7 @@
               resize="none"
               v-model="message"
               placeholder="Say Somthing..."
+              v-on:keyup.enter="sendMsg"
             />
             <span v-on:click="sendMsg" class="btn">
               <i class="fa fa-paper-plane"></i>
@@ -74,6 +75,7 @@
               resize="none"
               v-model="messageGame"
               placeholder="Say Somthing..."
+              v-on:keyup.enter="sendMsgGame"
             />
             <span v-on:click="sendMsgGame" class="btn">
               <i class="fa fa-paper-plane"></i>
@@ -107,8 +109,7 @@ export default {
     return {
       getGameChannel: true,
       newMessages: [],
-      gameUUID: "b78548b9-05a1-4a9a-826e-288010df28d0",
-      uniqueUserID: Math.floor(Math.random() * (999 - 100 + 1) + 100),
+      gameUUID: "b78548b9-05a1-4a9a-826e-288010df28d0",     
       isActiveTab1: true,
       isActiveTab2: false,
       allChannel: true,
@@ -125,20 +126,21 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserName", "getStockType"]),
+    ...mapGetters(["getUserName", "getStockType","getStockGameId"]),
     ...mapState(["portalProviderUUID", "headers", "userUUID"])
   },
   mounted() {
     // Global Channel
     this.listenForBroadcast(
       {
-        channelName: `messageSend.${this.portalProviderUUID}.${this.gameUUID}`,
+        channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
         eventName: "messageSend"
       },
       ({ data }) => {
         data.data.forEach(element => {
+          console.log("Socket Listing");
           this.getMessagesGame.push({
-            name: `user ${this.uniqueUserID}`,
+            name: element.userName,
             userId: element.userUUID,
             message: element.message,
             date: element.date
@@ -155,7 +157,7 @@ export default {
       ({ data }) => {
         data.data.forEach(element => {
           this.getMessages.push({
-            name: `user ${this.uniqueUserID}`,
+            name: element.userName,
             userId: element.userUUID,
             message: element.message,
             date: element.date
@@ -205,9 +207,7 @@ export default {
               version: config.version
             },
             {
-              headers: {
-                Authorization: this.headers
-              }
+               headers: config.header
             }
           )
           .then(response => {
@@ -217,6 +217,7 @@ export default {
       }
     },
     sendMsgGame: function(event) {
+      console.log(this.getStockGameId);
       if (this.messageGame) {
         this.$axios
           .$post(
@@ -224,13 +225,13 @@ export default {
             {
               portalProviderUUID: this.portalProviderUUID,
               userUUID: this.userUUID,
-              gameUUID: this.gameUUID,
+              gameUUID: this.getStockGameId,
               chatType: 1,
               message: this.messageGame,
               version: config.version
             },
             {
-              headers: { headers: this.headers }
+              headers: config.header
             }
           )
           .then(response => {
@@ -247,10 +248,10 @@ export default {
 .liveChat {
   z-index: 999;
   position: fixed;
-  right: 20px;
+  right: 12px;
   bottom: 20px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height:50px;
   color: #fff;
   background-color: #2aaf3e !important;
 }

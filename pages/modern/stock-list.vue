@@ -1,7 +1,6 @@
 <template>
 <div>
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <v-divider></v-divider>
 
     <!-- <breadcrumbs title="Stock list" linkItem="announcement" titlebtn="announcement" linkItem2="rule" titlebtn2="game rule" /> -->
 
@@ -15,7 +14,7 @@
         </v-flex>
     </v-layout>
     <!-- end serach -->
-    <v-layout row wrap>
+    <v-layout row wrap mt-2> 
         <v-flex xs12>
             <sotkclist1 />
         </v-flex>
@@ -64,7 +63,7 @@ export default {
     methods: {
 
         goSearch() {
-            alert("You're right");
+            // alert("You're right");
         }
     },
     created() {

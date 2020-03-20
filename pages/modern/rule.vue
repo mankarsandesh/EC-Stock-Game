@@ -1,100 +1,102 @@
 <template>
-<div xs12>
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+  <div xs12>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <!-- <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" /> -->
-    <h1 class="jumbotron-heading text-center">
-        EC Gaming Rules Description</h1>
-    <p class="lead text-muted text-center">
-        {{$t('msg.textinfoule')}}</p>
+    <h1 class="jumbotron-heading text-center">EC Gaming Rules Description</h1>
+    <p class="lead text-muted text-center">{{$t('msg.textinfoule')}}</p>
     <div class="text-xs-center">
-        <v-dialog v-model="dialog">
-            <template v-slot:activator="{ on }">
-                <v-btn color="red lighten-2 buttonGreen" dark v-on="on">
-                    result introduction
-                </v-btn>
-            </template>
+      <v-dialog v-model="dialog">
+        <template v-slot:activator="{ on }">
+          <v-btn color="red lighten-2 buttonGreen" dark v-on="on">result introduction</v-btn>
+        </template>
 
-            <v-card>
-                <v-card-title class="headline lighten-2" style="color:#0b2a68;" primary-title>
-                    <b>Introduction</b>
-                </v-card-title>
-                <v-card-text>
-                    {{$t('msg.textresultintroduction')}}
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn class="accept" color="buttonGreen" dark  @click="dialog = false">
-                        I accept
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        <v-card>
+          <v-card-title class="headline lighten-2" style="color:#0b2a68;" primary-title>
+            <b>Introduction</b>
+          </v-card-title>
+          <v-card-text>
+            <!-- {{$t('msg.textresultintroduction')}} -->
+            <v-icon
+              class="closePopup close-button topright v-icon closePopup v-icon--link material-icons theme--light"
+              style="position:right;"
+              color="#808080 !important"
+              @click="dialog = false"
+            >close</v-icon>
+            <p>
+              e.g. Assuming a stock resulting in 1234.
+              <span class="text-red">56</span>, all our game types would only take decimal ‘56’ as result;In the case the result is now serving as
+              <span
+                class="text-red"
+              >‘56’</span>,we define decimal
+              <span class="text-red">‘5’</span>, as
+              <span class="text-red">‘first</span>, digit’ result;decimal
+              <span class="text-red">‘6’</span>, as
+              <span class="text-red">‘last’</span>,‘ digit’ result;decimals
+              <span class="text-red">‘5’</span>, and
+              <span class="text-red">‘6’</span>, together as
+              <span class="text-red">two</span>,
+              ‘-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as
+              <span class="text-red">both</span>, digits’ result, which is
+              <span class="text-red">‘11’</span>.
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn class="accept" color="buttonGreensmall" dark @click="dialog = false">I accept</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
-
-    <!-- <v-expansion-panel v-model="panels" expand>
-        <v-expansion-panel-content class="bg-color" v-for="(items, idx) in rules" :key="idx">
-            <template v-slot:header>
-                <div>{{$t('gamemsg.'+items.name)}} {{items.type}}</div>
-            </template>
-            <v-card>
-                <table>
-                    <tr v-for="(data,idx1) in items.values" :key="idx1">
-                        <td class="pl-4"><span :class="data.color+' font-weight-bold'">{{$t('gamemsg.'+data.name)}} </span>{{data.value}}</td>
-                    </tr>
-                </table>
-            </v-card>
-        </v-expansion-panel-content>
-    </v-expansion-panel> -->
     <v-card>
-        <onlyrules />
+      <onlyrules />
     </v-card>
-</div>
+  </div>
 </template>
 
 <script>
-import onlyrules from "~/components/modern/stocklist/onlyrule";
+import onlyrules from "~/components/mobile/onlyrule";
 import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
 export default {
-    components: {
-        onlyrules,
-        breadcrumbs
-    },
-    data() {
-        return {
-            dialog: false,
-            panel: [0]
-        };
-    }
+  components: {
+    onlyrules,
+    breadcrumbs
+  },
+  data() {
+    return {
+      dialog: false,
+      panel: [0]
+    };
+  }
 };
 </script>
 
 <style scoped>
 .flex-column {
-    flex-direction: column !important;
+  flex-direction: column !important;
 }
 
 .text-warning {
-    color: darkorange
+  color: darkorange;
 }
 
 .text-bluelight {
-    color: blue
+  color: blue;
 }
 
 .text-info {
-    color: rgb(19, 116, 116)
+  color: rgb(19, 116, 116);
 }
 
 .text-secondary {
-    color: sandybrown
+  color: sandybrown;
 }
 
 .text-danger {
-    color: red
+  color: red;
 }
 
 .accept {
-    min-width: 80px;
-    min-height: 25px;
+  min-width: 80px;
+  min-height: 25px;
 }
 </style>

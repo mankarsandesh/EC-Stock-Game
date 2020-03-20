@@ -16,23 +16,22 @@
             {{ item.item.ruleName }} - ({{ item.item.payout }})
             {{ item.item.stockName }} / {{ item.item.loop }}
           </td>
-          <td>{{ item.item.createdTime }}</td>
+          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
           <td>{{ item.item.payout }}</td>
           <td v-if="item.item.betResult == 'win'">
-            <v-chip color="green" text-color="white">{{
+            <span color="indigo" class="win">{{
               item.item.betResult
-            }}</v-chip>
+            }}</span>
           </td>
           <td v-if="item.item.betResult == 'lose'">
-            <v-chip color="red" text-color="white">{{
+            <span class="lose">{{
               item.item.betResult
-            }}</v-chip>
+            }}</span>
           </td>
           <td v-if="item.item.betResult == 'pending'">
-            <v-chip color="yellow " text-color="black"
-              >{{ item.item.betResult }}...</v-chip
-            >
+            <span  class="pending"
+              >{{ item.item.betResult }}...</span>            
           </td>
         </template>
         <template slot="footer">
@@ -85,3 +84,32 @@ export default {
   }
 };
 </script>
+<style scoped>
+.lose{
+ border-radius:15px;
+  padding: 4px 10px;
+  color: #FFF;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  background-color: #e05858;
+}
+.win{
+ border-radius:15px;
+  padding: 4px 16px;
+  color: #FFF;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  background-color: #2bb13b;
+}
+.pending{
+  border-radius:15px;
+  padding: 4px 16px;
+  color: #333;
+  font-size: 14px;
+  text-transform:uppercase;
+  font-weight: 600;
+  background-color:#fec623;
+}
+</style>

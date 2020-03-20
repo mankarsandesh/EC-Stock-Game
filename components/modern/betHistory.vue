@@ -15,24 +15,26 @@
             <td>{{item.item.betID}}</td>
             <td>{{item.item.gameID}}</td>
             <td>{{item.item.ruleName}} - ({{item.item.payout}}) {{item.item.stockName}} / {{item.item.loop}}</td>
-            <td>{{item.item.createdTime}}</td>
+            <td>{{item.item.createdDate}} {{item.item.createdTime}}</td>
             <td>{{item.item.payout}}</td>
             <td v-if="item.item.betResult == 'win'" class="text-uppercase">
-              <v-chip color="green" text-color="white">{{item.item.betResult}}</v-chip>
+                <span  class="win">{{item.item.betResult}}</span>
             </td>
             <td v-if="item.item.betResult == 'lose'">
-              <v-chip color="red" text-color="white">{{item.item.betResult}}</v-chip>
+              <span class="lose">{{item.item.betResult}}</span>
             </td>
             <td v-if="item.item.betResult == 'pending'">
-              <v-chip color="yellow " text-color="black">{{item.item.betResult}}...</v-chip>
+              <span class="pending">{{item.item.betResult}}...</span>
             </td>
+            <td v-if="item.item.rollingAmount != 0">{{item.item.rollingAmount - item.item.betAmount }}</td>
+            <td v-if="item.item.rollingAmount == 0">0</td>
             <td>{{item.item.betAmount | toCurrency}}</td>
             <td>{{item.item.rollingAmount}}</td>
           </template>
           <template slot="footer">
             <tr>
               <td>{{$t('msg.Total')}}</td>
-              <td colspan="5">{{desserts.length}} bets</td>
+              <td colspan="6">{{desserts.length}} bets</td>
               <td>
                 <strong>{{TotalAmount | toCurrency}}</strong>
               </td>
@@ -97,6 +99,33 @@ export default {
   }
 };
 </script>
-
-
+<style scoped>
+.lose{
+ border-radius:15px;
+  padding: 4px 10px;
+  color: #FFF;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  background-color: #e05858;
+}
+.win{
+ border-radius:15px;
+  padding: 4px 16px;
+  color: #FFF;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  background-color: #2bb13b;
+}
+.pending{
+  border-radius:15px;
+  padding: 4px 16px;
+  color: #333;
+  font-size: 14px;
+  text-transform:uppercase;
+  font-weight: 600;
+  background-color:#fec623;
+}
+</style>
 

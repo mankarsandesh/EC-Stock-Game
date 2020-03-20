@@ -5,15 +5,15 @@
         {{ $t("msg.livetime") }}:
         <!-- <span class="stockTimer">{{ getLiveTime(stockid) }}</span> -->
       </v-flex>
-      <v-flex xs6 class="text-xs-right">
-        <span class="stockPrice">{{ getStockLivePrice(routeParams) }}</span>
+      <v-flex xs6 class="text-xs-right stockPrice">
+        {{ $t("msg.liveprice") }}:
+        <span>{{ getStockLivePrice(stockName) }} </span>
       </v-flex>
     </v-layout>
     <apexchart
-      ref="realtimeChart"
       class="chartDesgin"
       type="area"
-      height="310vh"
+      :height="chartHeight"
       width="99.5%"
       :options="chartOptions"
       :series="series"
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import config from "../../config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
@@ -33,26 +34,43 @@ export default {
     height: {
       type: String,
       default: "auto"
+    },
+    stockName: {
+      type: String,
+      default: "btc1"
     }
   },
   data() {
     return {
-      routeParams: this.$route.params.id
+      chartHeight: "240vh",
+      window: {
+        width: 0,
+        height: 0
+      },
+      chartData: []
     };
   },
   created() {
-    this.asyncChart(this.getStockUUIDByStockName(this.$route.params.id));
+    this.fetchChart(this.getStockUUIDByStockName(this.stockName));
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
   beforeDestroy() {
-    window.Echo.leave(`liveStockData.${this.routeParams}`);
+    window.Echo.leave(
+      `roadMap.${this.getStockUUIDByStockName(this.stockName)}.${
+        this.getPortalProviderUUID
+      }`
+    );
   },
   mounted() {
     // socket new api
     this.listenForBroadcast(
       {
         // liveStockData.stockName
-        channelName: `liveStockData.${this.$route.params.id}`,
-        eventName: "liveStockData"
+        channelName: `roadMap.${this.getStockUUIDByStockName(this.stockName)}.${
+          this.getPortalProviderUUID
+        }`,
+        eventName: "roadMap"
       },
       ({ data }) => {
         let dataIndex = data.data.roadMap[0];
@@ -62,10 +80,8 @@ export default {
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
-        if (
-          dataIndex.stockTimestamp !==
-          this.getLiveChart[this.getLiveChart.length - 1].stockTimestamp
-        ) {
+        if (dataIndex.stockTimestamp !== this.chartData[this.chartData.length - 1].stockTimestamp) {
+          console.log('RoadMap data', readyData);
           this.setLiveChart(readyData);
         }
       }
@@ -76,16 +92,14 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getPortalProviderUUID",
       "getStockLivePrice",
       "getStockUUIDByStockName",
-      "getLiveTime",
-      "getLivePrice",
-      "getLotteryDraw",
-      "getLiveChart"
+      "getLiveTime"
     ]),
     chartOptions() {
       let newTime = [];
-      this.getLiveChart.forEach(element => {
+      this.chartData.forEach(element => {
         newTime.push(element.stockTimestamp);
       });
       return {
@@ -114,7 +128,7 @@ export default {
         chart: {
           background: "#fff",
           parentHeightOffset: 0,
-          height: 300,
+          height: this.heightChart,
           zoom: {
             enabled: false
           },
@@ -147,7 +161,7 @@ export default {
             colors: ["#fff", "transparent"], // takes an array which will be repeated on columns
             opacity: 0.5
           }
-        },        
+        },
         xaxis: {
           categories: newTime,
           show: false,
@@ -165,7 +179,7 @@ export default {
     },
     series() {
       let newData = [];
-      this.getLiveChart.forEach(element => {
+      this.chartData.forEach(element => {
         newData.push(element.stockValue);
       });
       return [
@@ -176,11 +190,53 @@ export default {
       ];
     }
   },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   methods: {
-    ...mapActions(["asyncChart"]),
-    ...mapMutations(["setLiveChart"]),
+    setLiveChart(payload) {
+      this.chartData.push(payload);
+    },
+    async fetchChart(stockUUID) {
+      try {
+        const res = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            limit: 50,
+            stockUUID: [stockUUID],
+            version: config.version
+          },
+          {
+            headers: config.header
+          }
+        );
+        if (res.code === 200) {
+          console.log('Component gets mounted and rest api is called for the roadMap data \n', res.data[0].roadMap);
+          let readyData = res.data[0].roadMap.reverse();
+          this.chartData = readyData;
+        } else {
+          throw new Error();
+        }
+      } catch (ex) {
+        console.error(ex.message);
+      }
+    },
     changeChartType(value) {
       this.trendType = value;
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+      this.demo = this.window.width;
+      if(this.window.width >= 1900){
+        this.chartHeight = "320vh";
+        this.heightChart = 320;
+        
+      }else{
+        this.chartHeight = "320vh";
+        this.heightChart = 320;
+      }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
@@ -189,17 +245,17 @@ export default {
 };
 </script>
 <style>
-.stockPrice {
+.stockPrice span {
   padding-right: 14px;
   color: green;
-  font-size: 24px;
+  font-size: 16px;
   margin: 0px;
   font-weight: 600;
 }
-.stockTimer {
+.stockTimer span {
   padding-left: 20px;
   color: #333;
-  font-size: 20px;
+  font-size: 16px;
   margin: 0px;
   font-weight: 600;
 }
