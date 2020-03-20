@@ -163,6 +163,8 @@ export default {
             headers: config.header
           }
         );       
+        console.log("Betting");
+        console.log(res);
         if (res.data.status = true) {
           this.closePopper();
           let OnGoingdata = {
