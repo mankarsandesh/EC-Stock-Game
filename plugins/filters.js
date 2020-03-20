@@ -23,22 +23,22 @@ Vue.filter("betclosein", (value, loop) => {
   // for  loop 1
   if (loop == 1) {
     // bet close
-    if (value > 40) {
+    if (value <= 20) {
       result = "Calculating";
     } else {
-      result = "00:" + appendHero(value);
+      result = "00:" + appendHero(value - 20);
     }
   }
   // for loop 5
   else {
     // bet close
-    if (value > 240) {
+    if (value <= 60) {
       result = "Calculating";
     } else {
       // let mm = "0" + parseInt(value / 60)
       // let ss = value % 60
       // result = mm + ":" + appendHero(ss)
-      result = changeNumberToTime(value);
+      result = changeNumberToTime(value - 60);
     }
   }
   return result;
@@ -48,19 +48,21 @@ Vue.filter("lotterydraw", (value, loop) => {
   if (!value | !loop) return "...";
   if (value == "close") return "...";
   let result = "";
+  // lottery draw loop 1 min
   if (loop == 1) {
-    if (value > 40) {
-      value = value + 40 - 80;
-    } else {
-      value = value + 20;
-    }
+    // if (value > 40) {
+    //   value = value + 40 - 80;
+    // } else {
+    //   value = value + 20;
+    // }
     result = "00:" + appendHero(value);
+    // lottery draw loop 5 min
   } else {
-    if (value > 240) {
-      value = value + 60 - 300;
-    } else {
-      value = value + 60;
-    }
+    // if (value > 240) {
+    //   value = value + 60 - 300;
+    // } else {
+    //   value = value + 60;
+    // }
     result = changeNumberToTime(value);
   }
   return result;
@@ -71,13 +73,13 @@ Vue.filter("betstatus", (value, loop) => {
   if (value === "close") return "close";
   let result = "error";
   if (loop == 1) {
-    if (value > 40) {
+    if (value <= 20) {
       result = "calculating";
     } else {
       result = "accepting";
     }
   } else if (loop == 5) {
-    if (value > 240) {
+    if (value <= 60) {
       result = "calculating";
     } else {
       result = "accepting";
@@ -103,7 +105,7 @@ function appendHero(value) {
   }
   return result;
 }
-// set number format money
+// set number format currency
 function formatCurrency(
   amount,
   decimalCount = 2,

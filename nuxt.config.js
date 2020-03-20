@@ -76,7 +76,14 @@ module.exports = {
       "/modern/betting/sh000300",
       "/modern/betting/sz399415",
       "/modern/betting/sz399001",
-      "/modern/betting/usindex"
+      "/modern/betting/usindex",
+      // profile
+      "/modern/desktop/profile",
+      "/modern/desktop/profile/onlinehistory",
+      "/modern/desktop/profile/stockanalysis",
+      "/modern/desktop/profile/follower",
+      "/modern/desktop/profile/notification",
+      "/modern/desktop/profile/setting"
     ]
   },
 
