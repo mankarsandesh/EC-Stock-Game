@@ -66,7 +66,7 @@ export default {
         version: config.version // version of API
       };
       const { data } = await this.$axios.post(
-        "http://uattesting.equitycapitalgaming.com/webApi/getAllStock", // after finish crawl the every API will the the baseURL from AXIOS
+        config.getAllStock.url, // after finish crawl the every API will the the baseURL from AXIOS
         dataSend, // data object
         {
           headers: config.header

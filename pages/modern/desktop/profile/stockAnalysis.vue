@@ -76,6 +76,7 @@ import apexchart from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
+import config from '../../../../config/config.global';
 
 // set color win and lose color in bar chart
 let index = 0;
@@ -284,11 +285,11 @@ export default {
     async getStockAnalysis() {
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getUserBetAnalysis",
+          config.getUserBetAnalysis.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
-            version: 1,
+            version: config.version,
             dateRangeFrom: this.startDate,
             dateRangeTo: this.endDate
           },

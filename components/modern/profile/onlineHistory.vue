@@ -111,6 +111,7 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
 import onlineChart from "./onlinechart";
+import config from '../../../config/config.global';
 export default {
   components: {
     onlineChart
@@ -152,11 +153,11 @@ export default {
     async getOnlineHistory() {
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile",
+          config.getUserProfile.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
-            version:1,
+            version: config.version,
             dateRangeFrom: "2020-02-02",
             dateRangeTo: "2020-02-28"
           },

@@ -20,26 +20,26 @@
           />
           </div>
           
-          <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
+          <h6 class="subtitle-1 text-uppercase ">{{ data.username }}</h6>
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
         <th>
-          <h3 class="header">WINNING RATE</h3>
-          <h4 class="green--text titleText">
+          <h5 class="header">WINNING RATE</h5>
+          <h6 class="green--text titleText">
             {{ Math.round(data.winRate, 1) }} %
-          </h4>
+          </h6>
         </th>
         <th>
-          <h3 class="header">BETS</h3>
-          <H4 style="color:#eb0b6e;" class="titleText">{{
+          <h5 class="header">BETS</h5>
+          <h6 style="color:#eb0b6e;" class="titleText">{{
             data.totalWinBets
-          }}</H4>
+          }}</h6>
         </th>
         <th>
-          <h3 class="header">WINNING AMOUNT</h3>
-          <h4 style="color:#0b2a68;" class="titleText">
+          <h5 class="header">WINNING AMOUNT</h5>
+          <h6 style="color:#0b2a68;" class="titleText">
             {{ Math.round(data.totalWinAmount, 1) }}
-          </h4>
+          </h6>
         </th>
         <th v-if="data.isFollowing == 0" style="width:20%;">
           <v-btn
@@ -169,7 +169,9 @@ export default {
   },
   methods: {
     getImgUrl(userImage) {
-      return userImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + userImage;
+      return userImage === null
+        ? "/no-profile-pic.jpg"
+        : "http://uattesting.equitycapitalgaming.com/" + userImage;
     },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -191,7 +193,7 @@ export default {
       console.log(LeaderBoardData);
       try {
         const { data } = await this.$axios.post(
-          config.followUser.url,
+          "http://uattesting.equitycapitalgaming.com/webApi/followUser",
           LeaderBoardData,
           {
             headers: config.header
@@ -227,7 +229,7 @@ export default {
       console.log(LeaderBoardData);
       try {
         const { data } = await this.$axios.post(
-          config.followUser.url,
+          "http://uattesting.equitycapitalgaming.com/webApi/followUser",
           LeaderBoardData,
           {
             headers: config.header
@@ -271,7 +273,7 @@ export default {
       };
       try {
         const { data } = await this.$axios.post(
-          config.getLeaderBoard.url,
+          "http://uattesting.equitycapitalgaming.com/webApi/getLeaderBoard",
           LeaderBoardData,
           {
             headers: config.header

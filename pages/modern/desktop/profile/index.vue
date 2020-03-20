@@ -196,7 +196,7 @@ export default {
       formData.append("version", config.version);
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+          config.updateUserProfile.url,
           formData,
           {
             headers: config.header

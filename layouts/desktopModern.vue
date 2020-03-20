@@ -101,6 +101,7 @@ import i18n from "vue-i18n";
 import lottie from "lottie-web";
 import chatWindow from "~/components/chatWindow";
 import userMenu from "../components/userMenu";
+import config from '../config/config.global';
 export default {
   components: {
     chatWindow,
@@ -180,13 +181,13 @@ export default {
       const betData = {
         portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
         userUUID: this.getUserUUID, // get the userUUID with the this object
-        version: "0.1", // version of API
+        version: config.version, // version of API
         betResult: [0, 1], // -1= pending, pending that mean is betting
         limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
         offset: "0" // offset or skip the data
       };
       const { data } = await this.$axios.post(
-        "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
+        config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
         betData,
         {
           headers: {

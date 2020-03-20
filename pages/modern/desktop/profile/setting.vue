@@ -123,7 +123,7 @@ export default {
           isAllowToLocation
         };
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting",
+          config.updateUserSetting.url,
           userSetting,
           {
             headers: config.header
@@ -147,7 +147,6 @@ export default {
         alert(ex.message);
       }
     },
-    
   }
 };
 </script>

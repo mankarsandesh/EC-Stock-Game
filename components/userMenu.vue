@@ -56,6 +56,7 @@
 <script>
 import AnimatedNumber from "animated-number-vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import config from '../config/config.global';
 export default {
   components: {
     AnimatedNumber
@@ -69,10 +70,7 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === ""
-        ? "/no-profile-pic.jpg"
-        : "http://uattesting.equitycapitalgaming.com/" +
-            this.getUserInfo.profileImage;
+      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     }
   },
   mounted() {
