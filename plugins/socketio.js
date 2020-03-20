@@ -35,7 +35,6 @@ export default ({ store }) => {
     },
     ({ data }) => {
       store.commit("setStockListTimer", data.data.stockData);
-      console.log(data.data.stockData)
     }
   );
 
