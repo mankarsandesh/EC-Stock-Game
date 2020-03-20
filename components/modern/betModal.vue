@@ -170,8 +170,8 @@ export default {
           {
             headers: config.header
           }
-        );
-        if (res.data[0].status == true) {
+        );       
+        if (res.data.status == true) {
           this.closePopper();
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
@@ -196,8 +196,7 @@ export default {
           });
         }
       } catch (ex) {
-        this.confirmDisabled = false;
-        console.error(ex);
+        this.confirmDisabled = false;      
         this.$swal({
           type: "error",
           title: `Error ${ex.message}`,
@@ -212,8 +211,6 @@ export default {
         betAmount: this.betValue
       };
       this.confirmDisabled = true;
-      console.log("i am here 1");
-      console.log(data);
       this.sendBetting(data);
       $("#" + this.betId).addClass(this.betId.split("-")[0]);
     },

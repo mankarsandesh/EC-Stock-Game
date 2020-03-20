@@ -503,6 +503,7 @@ nav.modal-bet.v-toolbar.theme--light p {
   border-radius: 10px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   font-size: 12px;
+  cursor: pointer;
 }
 
 .buttonRed {

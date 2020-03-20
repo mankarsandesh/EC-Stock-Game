@@ -12,12 +12,14 @@
       
     >
       <div class="userRow">
-        <th>
-          <img
-            style="vertical-align:middle;"
-            class="pimage"
+        
+        <th  style="vertical-align:top;">
+          <div>
+            <img class="pimage"
             :src="getImgUrl(data.userImage)"
           />
+          </div>
+          
           <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
@@ -279,8 +281,6 @@ export default {
         );
 
         this.topPlayerData = data.data;
-
-        console.log(this.topPlayerData);
       } catch (error) {
         console.log(error);
       }
@@ -291,7 +291,6 @@ export default {
 <style scoped>
 .successful {
   width: 10%;
-  /* margin:0 auto; */
   border: 1px solid;
   text-align: center;
   color: green;
@@ -340,8 +339,8 @@ export default {
 }
 .pimage {
   margin-right: 10px;
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border: 2px solid #dddddd;
   border-radius: 180px;
 }
