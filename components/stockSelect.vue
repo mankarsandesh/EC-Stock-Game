@@ -135,10 +135,10 @@ export default {
           if (this.stock.type == "crypto") {
             console.log(this.stockName.stockName + this.minute.loopName);
             this.$router.replace(
-              `/modern/multigame/${this.stockName.stockName}${this.minute.loopName}`
+              `/modern/desktop/${this.stockName.stockName}${this.minute.loopName}`
             );
           } else {
-            this.$router.replace(`/modern/multigame/${this.stockName.stockName}`);
+            this.$router.replace(`/modern/desktop/${this.stockName.stockName}`);
           }
           this.setGameID(value);
           // check model if game id is empty or not by the condition

@@ -549,7 +549,7 @@ export default {
           if (localStorage.valTutorial != "1") {
             this.setNextstep();
           }
-        }, 3000);
+        }, 3000000);
       }
     },
     setNextstep() {
@@ -638,8 +638,8 @@ export default {
         const fullG = $("#fullscreenGuidelines").offset();
         $("#fullscreenGuidelines").css("border-style", "solid");
         $("#fullscreenGuidelines").css("border-color", "coral");
-        $(this.$refs.fullScreenGuideline).css("right", w - fullG.left - 30);
-        $(this.$refs.fullScreenGuideline).css("top", fullG.top + 20);
+        $(this.$refs.fullScreenGuideline).css("right", fullG.left - 360);
+        $(this.$refs.fullScreenGuideline).css("top", fullG.top + 60);
         $("#betresultGuidelines").css("border-style", "none");
       } else if (isStep == 10) {
         // multiple gaming
