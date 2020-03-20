@@ -2,16 +2,19 @@
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <v-container>
-       <leaderBoard />   
+      <leaderBoardHeader />
+      <leaderboardUserlist />  
     </v-container>
   </div>
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import leaderBoard from "~/components/mobile/leaderboard";
+import leaderboardUserlist from "~/components/mobile/leaderboard/leaderboardUserlist";
+import leaderBoardHeader from "~/components/mobile/leaderboard/leaderboardHeader";
 export default {
   components: {
-    leaderBoard
+    'leaderboardUserlist': leaderboardUserlist,
+    leaderBoardHeader
   },
   data() {
       return {
