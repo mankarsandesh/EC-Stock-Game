@@ -16,7 +16,7 @@
             {{ item.item.ruleName }} - ({{ item.item.payout }})
             {{ item.item.stockName }} / {{ item.item.loop }}
           </td>
-          <td>{{ item.item.createdTime }}</td>
+          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
           <td>{{ item.item.payout }}</td>
           <td v-if="item.item.betResult == 'win'">

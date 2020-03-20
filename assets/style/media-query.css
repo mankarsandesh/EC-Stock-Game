@@ -10,7 +10,7 @@ Big Screen
   .btn-langage span {
     font-size: 14px;
   }
-
+  
   .menuItem {
     border-right: 2px solid #dddddd;
     height: 60px !important;
@@ -52,16 +52,16 @@ Big Screen
   }
 
   .containerNew {
-    width: 85% !important;
+    width: 95% !important;
   }
 
   .buttonbtn {
-    width: 140px;
+    width: 100px;
   }
 
   /* game Rule Category Button */
   .btnHeight {
-    height: 85px;
+    height: 80px;
   }
 
   .align_button4 {
@@ -72,7 +72,7 @@ Big Screen
 
 
   .big-digit {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
   }
 
@@ -144,7 +144,7 @@ Big Screen
     color: #ffffff !important;
     background-color: #4464ff !important;
     position: absolute;
-    left: 53%;
+    left: 49%;
     top: 46%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
@@ -227,7 +227,12 @@ Big Screen
     min-width: 23px;
     height: 23px;
   }
-
+  .bet-close p {
+    position: absolute;
+    font-size: 6em;
+    z-index: 50;
+    text-transform: capitalize;
+  }
 
 }
 
@@ -300,7 +305,7 @@ Big Screen
 
   .align_button4 {
     box-shadow: none !important;
-    border: 2px solid #e8e8e8;
+    border: 1px solid #e8e8e8;
     height: 65px;
   }
 
@@ -459,7 +464,12 @@ Big Screen
     min-width: 16px;
     height: 16px;
   }
-
+  .bet-close p {
+    position: absolute;
+    font-size: 5em;
+    z-index: 50;
+    text-transform: capitalize;
+  }
 }
 
 /* 

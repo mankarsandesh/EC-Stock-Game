@@ -57,7 +57,8 @@
           :pagination.sync="pagination"
           ref="table"
           :search="search"
-          class="current-bet"
+          class="bg-colors"
+          scope="col"
         >
           <template v-slot:items="item">
             <td>{{item.item.betID}}</td>
@@ -65,14 +66,14 @@
             <td>{{item.item.ruleName}} - ({{item.item.payout}}) {{item.item.stockName}} / {{item.item.loop}}</td>
             <td>{{item.item.createdTime}}</td>
             <td>{{item.item.payout}}</td>
-            <td v-if="item.item.betResult == 'win'" class="text-uppercase">
-              <v-chip color="green" text-color="white">{{item.item.betResult}}</v-chip>
+            <td v-if="item.item.betResult == 'win'" >
+              <v-chip color="green" text-color="white" class="text-uppercase betresult">{{item.item.betResult}}</v-chip>
             </td>
             <td v-if="item.item.betResult == 'lose'">
-              <v-chip color="red" text-color="white">{{item.item.betResult}}</v-chip>
+              <v-chip color="red" text-color="white" class="text-uppercase betresult">{{item.item.betResult}}</v-chip>
             </td>
             <td v-if="item.item.betResult == 'pending'">
-              <v-chip color="yellow " text-color="black">{{item.item.betResult}}...</v-chip>
+              <v-chip color="yellow " text-color="black" class="text-uppercase betresult">{{item.item.betResult}}...</v-chip>
             </td>
             <td>{{item.item.betAmount | toCurrency}}</td>
             <td>{{item.item.rollingAmount}}</td>
@@ -422,6 +423,10 @@ export default {
 table thead tr th {
     /* background-color: #003e70; */
     font-size: 1rem;
+}
+
+.betresult {
+    width: auto;
 }
 
 label,

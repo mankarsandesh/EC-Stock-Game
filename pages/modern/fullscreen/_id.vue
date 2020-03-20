@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Other Stock List popup -->
     <v-dialog v-model="dialogOtherstock" style="position:fixed !important">
       <v-card color="rgb(0, 62, 111, 0.8)">
         <v-card-title>
@@ -9,12 +10,24 @@
           </v-btn>
         </v-card-title>
         <v-layout row wrap px-2 pt-2>
-          <v-flex pa-2 v-for="(data, index) in getAllStocks" :key="index" xs6 sm6 md6>
+          <v-flex
+            pa-2
+            v-for="(data, index) in getAllStocks"
+            :key="index"
+            xs6
+            sm6
+            md6
+            v-if="$route.params.id !== data.stockName"
+          >
             <nuxt-link :to="'/modern/fullscreen/' + data.stockName">
               <v-card class="v-card-style">
                 <div
                   class="close-bet-chart"
-                  v-if="getTimerByStockName(data.stockName) && getTimerByStockName(data.stockName).stockOpenOrClosed === 'Closed!'"
+                  v-if="
+                    getTimerByStockName(data.stockName) &&
+                      getTimerByStockName(data.stockName).stockOpenOrClosed ===
+                        'Closed!'
+                  "
                 >
                   <span class="text-close-bet">market close</span>
                 </div>
@@ -24,7 +37,9 @@
                 </v-card-text>
               </v-card>
               <div class="pt-2" style="color: white;">
-                <h3 class="text-uppercase">{{ $t('stockname.'+data.stockName) }}</h3>
+                <h3 class="text-uppercase">
+                  {{ $t("stockname." + data.stockName) }}
+                </h3>
                 <h4 style="line-height: 1">
                   <em>{{ data.loop }} minute game</em>
                 </h4>
@@ -41,17 +56,30 @@
           <v-layout column>
             <v-flex>
               <v-layout xs12>
-                <v-flex xs12 lg4 md4 class="text-xs-center1" style="width:100%;align-self: center;">
-                  <span class="stockname">{{ $t(`stockname.${$route.params.id}`) }}</span>
-                  <span class="gameid">010620190923140800</span>
+                <v-flex
+                  xs12
+                  lg4
+                  md4
+                  class="text-xs-center1"
+                  style="width:100%;align-self: center;"
+                >
+                  <span class="stockname">{{
+                    $t(`stockname.${$route.params.id}`)
+                  }}</span>
+                  <span class="gameid">{{
+                    getGameUUIDByStockName($route.params.id)
+                  }}</span>
                 </v-flex>
 
                 <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
-                  <v-btn color="buttonRed">1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn>
+                  <v-btn color="buttonRed"
+                    >1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
+                  >
                   <v-btn
                     color="buttonGreensmall"
                     @click="dialogOtherstock = true"
-                  >{{ $t("msg.otherstock") }}</v-btn>
+                    >{{ $t("msg.otherstock") }}</v-btn
+                  >
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -66,7 +94,10 @@
               <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
                 <v-flex flex-style class="lastdraw">
-                  <h4 class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></h4>
+                  <h4
+                    class="text-black"
+                    v-html="$options.filters.lastDraw(getLastDraw)"
+                  ></h4>
                 </v-flex>
               </v-flex>
               <v-flex class="text-xs-center" xs4 px-2>
@@ -74,23 +105,23 @@
                 <v-flex flex-style class="betclose">
                   <span
                     v-if="
-                        getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id)
-                            .stockOpenOrClosed === 'Closed!'
-                      "
+                      getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                          .stockOpenOrClosed === 'Closed!'
+                    "
                     class="text-black"
                   >
                     {{
-                    getTimerByStockName($route.params.id) &&
-                    "close" | betclosein(getStockLoop($route.params.id))
+                      getTimerByStockName($route.params.id) &&
+                        "close" | betclosein(getStockLoop($route.params.id))
                     }}
                   </span>
                   <span v-else class="text-black">
                     {{
-                    getTimerByStockName($route.params.id) &&
-                    getTimerByStockName($route.params.id)
-                    .gameEndTimeCountDownInSec
-                    | betclosein(getStockLoop($route.params.id))
+                      getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                          .gameEndTimeCountDownInSec
+                          | betclosein(getStockLoop($route.params.id))
                     }}
                   </span>
                 </v-flex>
@@ -100,10 +131,10 @@
                 <v-flex flex-style class="lottery">
                   <span class="text-black">
                     {{
-                    getTimerByStockName($route.params.id) &&
-                    getTimerByStockName($route.params.id)
-                    .gameEndTimeCountDownInSec
-                    | lotterydraw(getStockLoop($route.params.id))
+                      getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                          .gameEndTimeCountDownInSec
+                          | lotterydraw(getStockLoop($route.params.id))
                     }}
                   </span>
                 </v-flex>
@@ -116,46 +147,45 @@
             </v-layout>
           </v-flex>
           <v-flex>
-            <betButton :isFullscreen="true" :stockName="$route.params.id" :loop="1"></betButton>
+            <betButton
+              :isFullscreen="true"
+              :stockName="$route.params.id"
+              :loop="1"
+            ></betButton>
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3>
-          <h3 class="balanceUser">
-            Acc : {{ getUserInfo.balance | currency }}
-          </h3>
+          <h3 class="balanceUser">Acc : {{ getUserInfo.balance | currency }}</h3>
           <!-- Toggle between two components -->
           <fullscreenchart v-if="!isHidden"></fullscreenchart>
-          <fullscreencurrentbet
-            v-else
-            :desserts="desserts"
-          ></fullscreencurrentbet>
+          <fullscreencurrentbet v-else :desserts="desserts"></fullscreencurrentbet>
           <v-layout pa-3>
-            <v-flex xs3 sm3 md3 lg3>
+            <v-flex xs3 sm3 md3 lg3 pt-2>
               <span class="seticon">
                 <i class="fa fa-user fa-2x iconcolor" />
                 <span>
                   {{
-                  dataliveBetAll.totalUsers ? dataliveBetAll.totalUsers : 15
+                    dataliveBetAll.totalUsers ? dataliveBetAll.totalUsers : 15
                   }}
                 </span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3>
+            <v-flex xs3 sm3 md3 lg3 pt-2>
               <span class="seticon">
                 <i class="fa fa-gamepad fa-2x iconcolor" />
                 <span>
-                  {{
-                  dataliveBetAll.totalBets ? dataliveBetAll.totalBets : 35
-                  }}
+                  {{ dataliveBetAll.totalBets ? dataliveBetAll.totalBets : 35 }}
                 </span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3>
+            <v-flex xs3 sm3 md3 lg3 pt-2>
               <span class="seticon">
                 <i class="fa fa-money fa-2x iconcolor" />
                 <span>
                   {{
-                  dataliveBetAll.totalAmount ? dataliveBetAll.totalAmount : 5500
+                    dataliveBetAll.totalAmount
+                      ? dataliveBetAll.totalAmount
+                      : 5500
                   }}
                 </span>
               </span>
@@ -165,7 +195,8 @@
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
                 class="curretbet-btn"
-              >{{ $t("menu.current bet") }}</v-btn>
+                >{{ $t("menu.current bet") }}</v-btn
+              >
             </v-flex>
           </v-layout>
         </v-flex>
@@ -178,18 +209,30 @@
             <v-flex xs12 sm12 md12 lg12 wrap pt-2>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="0" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="0"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="1" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="1"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="2" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="2"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="3" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="3"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -202,7 +245,7 @@
               color="primary"
               rigth
               fab
-              @click="$router.go(-1)"
+              @click="$router.push(closeFullscreen)"
               class="fullscreenclose"
               dark
               v-on="on"
@@ -307,7 +350,18 @@ export default {
     fullscreencurrentbet
   },
   computed: {
+    closeFullscreen() {
+      let fullscreenClose = localStorage.getItem("fullscreenclosed");
+      if (
+        localStorage.getItem("fullscreenclosed") == null ||
+        localStorage.getItem("fullscreenclosed") == "undefined"
+      ) {
+        fullscreenClose = "desktop";
+      }
+      return `/modern/${fullscreenClose}/${this.$route.params.id}`;
+    },
     ...mapGetters([
+      "getGameUUIDByStockName",
       "getAllStocks",
       "getTimerByStockName",
       "getStockUUIDByStockName",
