@@ -27,6 +27,9 @@ const config = {
   sendMessage: {
     url: "http://uattesting.equitycapitalgaming.com/webApi/messages/send"
   },
+  getAllAnnouncements: {
+    url: "http://uattesting.equitycapitalgaming.com/webApi/getAllAnnouncements"
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"

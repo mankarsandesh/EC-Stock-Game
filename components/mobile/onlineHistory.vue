@@ -255,7 +255,7 @@ export default {
         async getOnlineHistory() {
             try {
                 const res = await this.$axios.$post(
-                    "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile", {
+                    config.getUserProfile.url, {
                         portalProviderUUID: this.getPortalProviderUUID,
                         userUUID: this.getUserUUID,
                         dateRangeFrom: "2020-02-02",
