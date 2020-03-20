@@ -58,8 +58,8 @@
               <v-layout xs12>
                 <v-flex
                   xs12
-                  lg4
-                  md4
+                  lg6
+                  md6
                   class="text-xs-center1"
                   style="width:100%;align-self: center;"
                 >
@@ -71,7 +71,7 @@
                   }}</span>
                 </v-flex>
 
-                <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
+                <v-flex xs12 md6 lg6 class="text-xs-right topHeader">
                   <v-btn color="buttonRed"
                     >1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
                   >
