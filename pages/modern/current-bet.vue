@@ -42,7 +42,7 @@ export default {
             const {
                 data
             } = await this.$axios.post(
-                "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
+                config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
                 data1, // data object
                 {
                     headers: config.header

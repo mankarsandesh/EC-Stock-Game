@@ -42,7 +42,7 @@ export default {
     methods: {
         async callApi() {
             const {data} = await this.$axios.$post(
-                "http://uattesting.equitycapitalgaming.com/webApi/getAllAnnouncements",
+                config.getAllAnnouncements.url,
                 { portalProviderUUID: this.portalProviderUUID, version: config.version }, 
                 {
                     headers: config.header

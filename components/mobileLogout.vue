@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import OnlineHistory from "~/components/mobile/onlineHistory"
-import StockAnalysis from "~/components/mobile/stockAnalysis"
+import OnlineHistory from "~/components/mobile/onlineHistory";
+import StockAnalysis from "~/components/mobile/stockAnalysis";
 import AnimatedNumber from "animated-number-vue";
 import {
     mapGetters,
@@ -69,6 +69,7 @@ import {
     mapMutations
 } from "vuex";
 import profile from "~/pages/modern/desktop/profile";
+import config from '../config/config.global';
 export default {
     components: {
         profile,
@@ -87,7 +88,7 @@ export default {
         imgProfile() {
             return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
                 "/user.png" :
-                "http://uattesting.equitycapitalgaming.com/" +
+                `${config.apiDomain}/` +
                 this.getUserInfo.profileImage;
         }
     },

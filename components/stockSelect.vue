@@ -80,6 +80,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
+import config from '../config/config.global';
 export default {
   data() {
     return {
@@ -160,7 +161,7 @@ export default {
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getActiveGamesByCategory",
+          config.getActiveGamesByCategory.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             version: 0.1

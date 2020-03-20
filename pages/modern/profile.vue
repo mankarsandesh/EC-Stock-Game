@@ -207,10 +207,7 @@ export default {
     computed: {
         ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
         imgProfile() {
-            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
-                "/user.png" :
-                "http://uattesting.equitycapitalgaming.com/" +
-                this.getUserInfo.profileImage;
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ? "/user.png" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
         },
         userData() {
             let data = this.getUserInfo;
@@ -237,7 +234,7 @@ export default {
             formData.append("version", config.version);
             try {
                 const res = await this.$axios.$post(
-                    "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+                    config.updateUserProfile.url,
                     formData, {
                         headers: {
                             ContentType: "application/json",

@@ -169,9 +169,7 @@ export default {
   },
   methods: {
     getImgUrl(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : "http://uattesting.equitycapitalgaming.com/" + userImage;
+      return userImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + userImage;
     },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -193,7 +191,7 @@ export default {
       console.log(LeaderBoardData);
       try {
         const { data } = await this.$axios.post(
-          "http://uattesting.equitycapitalgaming.com/webApi/followUser",
+          config.followUser.url,
           LeaderBoardData,
           {
             headers: config.header
@@ -229,7 +227,7 @@ export default {
       console.log(LeaderBoardData);
       try {
         const { data } = await this.$axios.post(
-          "http://uattesting.equitycapitalgaming.com/webApi/followUser",
+          config.followUser.url,
           LeaderBoardData,
           {
             headers: config.header
@@ -273,7 +271,7 @@ export default {
       };
       try {
         const { data } = await this.$axios.post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getLeaderBoard",
+          config.getLeaderBoard.url,
           LeaderBoardData,
           {
             headers: config.header

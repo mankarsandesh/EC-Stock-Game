@@ -497,7 +497,7 @@ export default {
     async getStock() {
       try {
         const data = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getStock",
+          config.getStock.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             version: config.version
