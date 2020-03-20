@@ -1,5 +1,5 @@
 <template>
-  <v-layout wrap class="select-stock">
+  <v-layout wrap class="select-stock mt-2">
     <v-flex md3>
       <v-autocomplete
         v-model="stock"
@@ -7,9 +7,9 @@
         full-width
         solo
         hide-details
+        class="selectStock"
         color="blue"
-        label="select stock"
-        prepend-icon="bar_chart"
+        label="select stock"      
         item-text="type"
         item-value="name"
         return-object
@@ -19,7 +19,8 @@
       <v-autocomplete
         v-model="stockName"
         :items="stockNames"
-        label="cyto Currency"
+        label="Stock Name"
+        class="selectStock"
         prepend-icon="navigate_next"
         color="green"
         full-width
@@ -34,15 +35,16 @@
     <v-flex md3>
       <v-autocomplete
         v-model="minute"
+        class="selectStock"
         :items="minutes"
-        label="minute"
+        label="Minute"
         prepend-icon="navigate_next"
         color="red"
         full-width
         solo
         hide-details
         item-text="loopName"
-        item-value="name"
+        item-value="loopName"
         return-object
         id="minute"
       >
@@ -76,80 +78,179 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"; // impor the vuex library frist, before use vuex
+import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
 export default {
-  data: () => ({
-    stock: null,
-    stockName: null,
-    minute: null,
-    gameId: null,
-    items: [],
-    minutes: [],
-    stockNames: []
-  }),
+  data() {
+    return {
+      stockSocket: false,
+      stock: "",
+      stockName: "",
+      minute: "",
+      gameId: "",
+      items: [],
+      minutes: [],
+      stockNames: []
+    };
+  },
   watch: {
     stock(value) {
-      //watch the v-model of stock
-      if (value !== null) {
-        this.stockName = null;
-        this.stockNames = value.stocks;
-        //check the v-model is empty or not
-        // call the functions with 1 argument ( stock name )
-        $("#stockName").click(); // Tell the jquery to click or make the event the click after we get the respone from the method above
+      if (this.stockSocket) {
+        this.stockSocket = false;
+      } else {
+        if (value !== "") {
+          this.stockName = "";
+          this.stockNames = value.stocks;
+          //check the v-model is empty or not
+          // call the functions with 1 argument ( stock name )
+          $("#stockName").click(); // Tell the jquery to click or make the event the click after we get the respone from the method above
+          this.stockSocket = true;
+        }
       }
     },
     stockName(value) {
-      // watch the stockname
-      if (value !== null) {
-        this.minute = null;
-        this.minutes = value.loops;
-        // check the stock name is empty of not
-        // call the method getstockNmae with 1 argument to get find the data
-        $("#minute").click(); // call the minute the box show up
+      if (this.stockSocket) {
+        if (value !== "") {
+          $("#minute").click();
+          this.minute = "";
+          this.minutes = value.loops;
+        }
+      } else {
+        this.stockSocket = false;
       }
     },
     minute(value) {
-      let val = null;
-      // watch the minute v-model
-      if (value !== null) {
-        this.gameId = null;
-        this.gameId = value.gameID;
-        //after the minute model is not null we call the getMinute functions
-        // check minute model is empty or not by the condition
-        $("#gameId").click(); // call the jquery to call the method click to show up the game id up
-        val = value;
-        return val + "Minutes";
+      if (this.stockSocket) {
+        if (value !== "") {
+          $("#gameId").click();
+          this.gameId = "";
+          this.gameId = value.gameID;
+        }
+      } else {
+        this.stockSocket = false;
       }
     },
     gameId(value) {
-      // watch the game id model
-      if (value !== null) {
-        // check model if game id is empty or not by the condition
-        return console.log("This is the Game ID : " + value); // run your logic after condition is true
+      if (this.stockSocket) {
+        if (value !== "") {
+          if (this.stock.type == "crypto") {
+            console.log(this.stockName.stockName + this.minute.loopName);
+            this.$router.replace(
+              `/modern/multigame/${this.stockName.stockName}${this.minute.loopName}`
+            );
+          } else {
+            this.$router.replace(`/modern/multigame/${this.stockName.stockName}`);
+          }
+          this.setGameID(value);
+          // check model if game id is empty or not by the condition
+          // run your logic after condition is true
+        }
+      } else {
+        this.stockSocket = false;
       }
+    },
+    getStockCategory(val) {
+      this.items = val;
+      console.log("Is will be error");
+      console.log(val);
+      // this.getGameUUID(val);
     }
   },
-  mounted() {
-    this.listenForBroadcast(
-      {
-        channelName:
-          "getActiveGamesByCategory.0c0de128-e2bd-41f1-a8ec-40a57c72bae5",
-        eventName: "getActiveGamesByCategory"
-      },
-      ({ data }) => {
-        this.items = data.data;
-        console.log("Web socket stock is comming");
-        console.log(data);
-      }
-    );
+  created() {
+    this.getActiveGamesByCategory();
+  },
+  computed: {
+    ...mapGetters(["getStockCategory"])
   },
   methods: {
-    listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
+    ...mapMutations(["setGameID"]),
+    async getActiveGamesByCategory() {
+      try {
+        const { data } = await this.$axios.$post(
+          "http://uattesting.equitycapitalgaming.com/webApi/getActiveGamesByCategory",
+          {
+            portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
+            version: 0.1
+          },
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
+            }
+          }
+        );
+        this.getGameUUID(data); // pass 1 argrument by method
+        this.items = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getGameUUID(items) {
+      items.forEach(element => {
+        // loop the data that receive from the getActiveGamesByCategory function
+        element.stocks.map(item => {
+          if (element.type === "crypto") {
+            var data = this.$route.params.id; // get the stock from URL
+            var stockName = data.substring(0, data.length - 1); // split we get only the stock name
+            var stockLoop = data.substr(data.length - 1); // => "1"; // get the loop
+            // console.log(stockName, stockLoop);
+            // binding the data to the element after loop
+            if (item.stockName === stockName) {
+              console.log(item.stockName === stockName);
+              //   // compare the data is equal the stockNmae that we
+                item.loops.map(loop => {
+                  // loop the loop minuste
+                  if (loop.loopName == stockLoop) {
+                    this.stockNames = [];
+                    this.minutes = [];
+                    this.stock = element.type;
+                    this.stockName = item.stockName;
+                    this.stockNames.push(item.stockName);
+                    this.minute = loop.loopName;
+                    this.minutes.push(loop);
+                    this.gameId = loop.gameID;
+                    this.stockSocket = true;
+                    this.setGameID(loop.gameID);
+                    console.log("STOCK STATUS : " + loop.gameStatus);
+                    console.log("STOCK TYPE : " + element.type);
+                    console.log("STOCK NAME : " + item.stockName);
+                    console.log("LOOP : " + loop.loopName);
+                    console.log("GAME UUID : " + loop.gameID);
+                  }
+                });
+            }
+          } else {
+            if (item.stockName === this.$route.params.id) {
+              item.loops.map(loop => {
+                this.stockNames = [];
+                this.minutes = [];
+                this.stock = element.type;
+                this.stockName = this.$route.params.id;
+                this.stockNames.push(item.stockName);
+                this.minute = loop.loopName;
+                this.minutes.push(loop);
+                this.gameId = loop.gameID;
+                this.stockSocket = true;
+                this.setGameID(loop.gameID);
+                console.log("STOCK STATUS : " + loop.gameStatus);
+                console.log("STOCK TYPE : " + element.type);
+                console.log("STOCK NAME : " + item.stockName);
+                console.log("LOOP : " + loop.loopName);
+                console.log("GAME UUID : " + loop.gameID);
+              });
+            }
+          }
+        });
+      });
     }
   }
 };
 </script>
 
-<style>
+<style  scoped>
+.selectStock{
+  font-size: 14px;
+}
+.v-list {
+  font-size: 12px;
+}
 </style>
+

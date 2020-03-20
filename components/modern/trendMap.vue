@@ -11,7 +11,7 @@
           <span class="countSmall text-grey"></span>
         </div>
         <div class="bs-coltabledivlast">
-          <table class="table-responsive" ref="tablebsTwo">
+          <table class="table-responsive RoadMapTable" ref="tablebsTwo">
             <tr v-for="(tr,index) in rowTable" :key="index">
               <td v-for="(td,index) in BSLength" :key="index"></td>
             </tr>
@@ -29,7 +29,7 @@
           <span class="countEven text-grey"></span>
         </div>
         <div class="oe-coltabledivlast">
-          <table class="table-responsive" ref="tableOETwo">
+          <table class="table-responsive RoadMapTable" ref="tableOETwo">
             <tr v-for="(tr,index) in rowTable" :key="index">
               <td v-for="(td,index) in OELength" :key="index"></td>
             </tr>
@@ -48,7 +48,7 @@
           <span class="countLower text-grey"></span>
         </div>
         <div class="ul-coltabledivlast">
-          <table class="table-responsive" ref="tablebUMLTwo">
+          <table class="table-responsive RoadMapTable" ref="tablebUMLTwo">
             <tr v-for="(tr,index) in rowTable" :key="index">
               <td v-for="(td,index) in HMLLength" :key="index"></td>
             </tr>
@@ -70,7 +70,7 @@
           <span class="text-grey"></span>
         </div>
         <div class="num-coltabledivlast">
-          <table class="table-responsive" ref="tableNumberTwo">
+          <table class="table-responsive RoadMapTable" ref="tableNumberTwo">
             <tr v-for="(tr,index) in rowTable" :key="index">
               <td v-for="(td,index) in Numlength" :key="index"></td>
             </tr>
@@ -1161,19 +1161,15 @@ table {
   overflow-x: hidden;
   white-space: nowrap;
   border-collapse: separate;
-  border-spacing: 5px 3px;
+  border-spacing: 3px 2px;
 }
 table td {
   border: 1px solid #dddddd;
   border-radius: 5px;
 }
-
 td,
 tr {
-  min-width: 24px;
-  height: 24px;
   text-align: center;
-  margin: 5px !important;
 }
 
 .text-edit {
@@ -1188,102 +1184,7 @@ p {
   color: #003e70;
   font-weight: 500;
 }
-.red {
-  text-align: center;
-  color: #fff;
-  /* font-weight: bold; */
-  height: 24px;
-  width: 24px;
-  background-color: red;
-  border-radius: 5rem !important;
-  display: inline-block;
-  font-size: 17px;
-  padding: 0px;
-}
 
-.blue {
-  text-align: center;
-  color: #fff;
-  /* font-weight: bold; */
-  height: 24px;
-  width: 24px;
-  background-color: #003f70;
-  border-radius: 5rem !important;
-  display: inline-block;
-  font-size: 17px;
-  padding: 0px;
-}
-
-.green {
-  text-align: center;
-  color: #fff;
-  /* font-weight: bold; */
-  height: 24px;
-  width: 24px;
-  background-color: rgb(8, 214, 77);
-  border-radius: 5rem !important;
-  display: inline-block;
-  font-size: 17px;
-  padding: 0px;
-}
-
-.big-number {
-  font-size: 16px;
-  font-weight: bolder;
-  color: #4871ff;
-  outline: none;
-  background-color: #d0dafd;
-  border: 1px solid #97a9fe !important;
-
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.small-number {
-  margin-right: 10px;
-  font-size: 16px;
-  font-weight: bolder;
-  color: #fc4783;
-  outline: none;
-  background-color: #f6d0e3;
-  border: 1px solid #fc4783 !important;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.rs1,
-.rs-e,
-.rs-u {
-  color: #003f70;
-  font-size: 16px;
-  font-weight: bolder;
-  color: #fc4181;
-  background-color: #f7d0e3;
-  border: 1px solid #fc4181 !important;
-}
-
-.rs0,
-.rs-o,
-.rs-l {
-  color: red;
-  font-size: 16px;
-  font-weight: bolder;
-  color: #4b72ff;
-  background-color: #d0dafd;
-  border: 1px solid #4b72ff !important;
-}
-
-.rs-m {
-  font-size: 16px;
-  font-weight: bolder;
-  color: #17b1ca;
-  background-color: #c0e6f2;
-  border: 1px solid #17b1ca !important;
-}
 .padding {
   padding-top: 10px;
 }

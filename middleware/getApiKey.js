@@ -9,8 +9,5 @@ export default function({ isHMR, app, store, route, error, redirect }) {
         return
     }
     store.commit("setAuth_token", apiKey)
-        // store.dispatch("asynGetAllStock")
-    store.dispatch("asynInitCallApi")
-    store.dispatch("balance")
     store.dispatch("asynUserInfo")
 }

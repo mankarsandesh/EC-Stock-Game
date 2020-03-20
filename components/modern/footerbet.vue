@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-layout row justify-center class="footerBet">
-      <v-flex xs2 class="amount">
+      <v-flex lg2 md2 xs2 class="amount">
         <div>{{getAllBettingAmount}}</div>
       </v-flex>
-      <v-flex xs3 class="chipsdiv">
+      <v-flex lg5 md5 xs3 class="chipsdiv">
         <v-layout row>
           <v-flex class="text-center">
             <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" class="chips">
@@ -22,7 +22,7 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs2 class="betButton">
+      <v-flex lg3 md3 xs2 class="betButton">
         <div>
           <v-btn class="buttonGreensmall" dark @click="getSending()">{{$t('msg.'+texts)}}</v-btn>
           <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{$t('msg.cancel')}}</v-btn>

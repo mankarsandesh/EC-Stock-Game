@@ -2,7 +2,7 @@
   <div>
     <v-flex xs12 class="pt-5">
       <v-layout row>
-        <v-flex xs6 sm6 md4 lg3>
+        <v-flex xs6 sm6 md6 lg4>
           <div class="amount_container">
             <div class="decorator_card decorator_card_green"></div>
             <span>account balance</span>
@@ -11,7 +11,7 @@
             <span class="title_currentcy">kip</span>
           </div>
         </v-flex>
-        <v-flex xs6 sm6 md4 lg3>
+        <v-flex xs6 sm6 md6 lg4>
           <div class="amount_container">
             <div class="decorator_card decorator_card_blue"></div>
 
@@ -28,14 +28,6 @@
         <v-flex xs12 pt-2 pl-5>
           <div style="margin-top:20px">
             <form action="/action_page.php">
-              <div class="row">
-                <div class="col-15">
-                  <label for="player-id">Player ID</label>
-                </div>
-                <div class="col-85">
-                  <input disabled type="text" id="player-id" name="player-id" :value="userData.PID" />
-                </div>
-              </div>
               <div class="row">
                 <div class="col-15">
                   <label for="username">Username</label>
@@ -159,14 +151,18 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import config from "../../../../config/config.global";
+
 export default {
   data() {
     return {
       updating: false,
-      error: ''
+      error: ""
     };
   },
-  mounted() {},
+  mounted() {
+    // alert(process.env.NODE_ENV)
+  },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     userData() {
@@ -191,16 +187,13 @@ export default {
       formData.append("lastName", ref.lastName.value);
       formData.append("gender", ref.gender.value);
       // formData.append("country", ref.country.value);
-      formData.append("version", 1);
+      formData.append("version", config.version);
       try {
         const res = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
           formData,
           {
-            headers: {
-              ContentType: "application/json",
-              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
-            }
+            headers: config.header
           }
         );
         if (res.code === 200) {

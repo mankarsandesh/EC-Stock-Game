@@ -11,7 +11,7 @@
             "stockPrice":"",
             "gameUUID":"221f0857-33b6-43ac-afb6-9daa4b637528",
             "betCloseTimeCountDownInMins":0,
-            "gameEndTimeCountDownInMins":0
+            "gameEndTimeCountDownInSec":0
          },
          {
             "stockUUID":"e1baf7c8-0180-4f45-b70c-abf8ff66df92",
@@ -20,7 +20,7 @@
             "stockPrice":"",
             "gameUUID":"f48a6362-5e6b-41b2-af6c-d323671ee01a",
             "betCloseTimeCountDownInMins":0,
-            "gameEndTimeCountDownInMins":0
+            "gameEndTimeCountDownInSec":0
          },
          {
             "stockUUID":"676fca79-98ba-457c-92a4-3133474b9374",
@@ -29,7 +29,7 @@
             "stockPrice":"",
             "gameUUID":"",
             "betCloseTimeCountDownInMins":"",
-            "gameEndTimeCountDownInMins":""
+            "gameEndTimeCountDownInSec":""
          },
          {
             "stockUUID":"35b515ea-0e73-4fe0-bf9a-acad8ed17631",
@@ -38,7 +38,7 @@
             "stockPrice":"",
             "gameUUID":"",
             "betCloseTimeCountDownInMins":"",
-            "gameEndTimeCountDownInMins":""
+            "gameEndTimeCountDownInSec":""
          },
          {
             "stockUUID":"94ac14a4-5a4e-485b-9f00-44bfab6b15e9",
@@ -47,7 +47,7 @@
             "stockPrice":"",
             "gameUUID":"",
             "betCloseTimeCountDownInMins":"",
-            "gameEndTimeCountDownInMins":""
+            "gameEndTimeCountDownInSec":""
          },
          {
             "stockUUID":"7a27a3eb-0354-4000-b30d-40cb8f9f5b4e",
@@ -56,7 +56,7 @@
             "stockPrice":"9,095.64",
             "gameUUID":"",
             "betCloseTimeCountDownInMins":"",
-            "gameEndTimeCountDownInMins":""
+            "gameEndTimeCountDownInSec":""
          },
          {
             "stockUUID":"794369ef-877a-4506-b1b0-fd76c34743c6",
@@ -65,7 +65,7 @@
             "stockPrice":"9,095.64",
             "gameUUID":"b0d3c41e-7c63-4c4a-9407-a26760892605",
             "betCloseTimeCountDownInMins":0,
-            "gameEndTimeCountDownInMins":0
+            "gameEndTimeCountDownInSec":0
          }
       ]
    },

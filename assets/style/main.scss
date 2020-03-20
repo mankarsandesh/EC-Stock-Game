@@ -820,26 +820,41 @@ main.v-content {
 /* -------------------------------------------------------------------------- */
 .application {
   .v-autocomplete__content.v-menu__content {
-    border-radius: 10px;
+    border-radius: 5px;   
   }
 }
 .layout.select-stock {
   .flex {
     .v-input {
       .v-input__prepend-outer {
-        margin: 5px 2px;
-        border: 2px solid #00000054;
+        margin: 6px -7px;
+        border: 1px solid rgba(0, 0, 0, 0.32941);
         border-radius: 20px;
-        padding: 2px;
+        padding: 0px;
+        z-index: 10;
+        background: #fafafa;
+        width: 25px;
+        height: 25px;
       }
       .v-input__control {
+        min-height: 40px;
         .v-input__slot {
-          border-radius: 10px;
+          border-radius: 5px;
           padding: 0 4px;
-          min-height: 40px;
+          min-height: 25px;
+          .v-select__slot {
+            label,
+            input,
+            .v-select__selections {
+              margin: 0 0 0 10px;
+              color:#333;
+              text-transform: capitalize;
+            }
+          }
           .v-text-field__slot {
+            label,
             input {
-              margin: 0px;
+              margin: 0 0 0 10px;
             }
           }
         }

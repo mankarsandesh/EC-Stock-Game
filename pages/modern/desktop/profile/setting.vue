@@ -84,10 +84,10 @@
     </v-flex>
   </div>
 </template>
-
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import config from "../../../../config/config.global";
 export default {
   data() {
     return {};
@@ -114,6 +114,7 @@ export default {
         let userSetting = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
+          version: config.version,
           isAllowToVisitProfile,
           isAllowToFollow,
           isAllowToDirectMessage,
@@ -124,21 +125,18 @@ export default {
           "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting",
           userSetting,
           {
-            headers: {
-              ContentType: "application/json",
-              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
-            }
+            headers: config.header
           }
         );
         if (res.code === 200) {
           this.asynUserInfo();
         } else {
           console.log(res.message);
-          alert(res.message);
+          // alert(res.message);
         }
       } catch (ex) {
         console.error(ex);
-        alert(ex.message);
+        // alert(ex.message);
       }
     }
   }

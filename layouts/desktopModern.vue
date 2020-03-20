@@ -16,12 +16,11 @@
           fontSize="13px"
         ></winnerMarquee>
       </v-flex>
-      <v-flex xs1 class="text-xs-right closebutton">
+      <v-flex xs1 class="text-xs-right closeNotification">
         <i class="fa fa-close fa-2x" @click="showNotification = false" />
       </v-flex>
     </v-toolbar>
-
-    <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
+    <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"
@@ -31,7 +30,7 @@
           indeterminate
         ></v-progress-circular>
       </div>
-    </div>
+    </div> -->
     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
       <v-progress-circular
         style="top: calc(100% - 68%);"
@@ -41,26 +40,25 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <v-toolbar >
+    <v-toolbar class="toolbarMenu">
       <v-container fluid class="navbar">
         <v-toolbar-title>
-          <v-img
-            width="158"
+          <v-img          
             src="/logo.png"
             @click="$router.push('/modern/desktop/btc1')"
-            class="logostyle"
+            class="logoStyle"
           ></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-xs-only text-s1">
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
-            <i :class="item.icon" style="margin-right: 3px;" />
-            <span>{{$t(`menu.${item.title}`)}}</span>
+        <v-toolbar-items class="hidden-xs-only text-s1 toolBar" >
+          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem" >
+              <i :class="item.icon"  />
+              <span>&nbsp;{{$t(`menu.${item.title}`)}}</span>
           </v-btn>
           <div class="layout-btn">
             <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
-              <countryFlag :country="countryflag" size="normal" style="margin-right:0px;" />
-              {{$t('msg.chooselanguage')}}
+              <countryFlag :country="countryflag" size="normal"  />
+              <span >&nbsp;{{$t('msg.chooselanguage')}}</span>
               <i
                 class="fa fa-caret-down"
                 style="margin: 0 -6px 0px 8px;"
@@ -82,7 +80,7 @@
     </v-toolbar>
 
     <languageDialog ref="language" />
-    <v-content>
+    <v-content  >
       <nuxt />
     </v-content>
 
@@ -164,7 +162,7 @@ export default {
     } else {
       this.isFullscreen = false;
     }
-    console.log("crearted");
+    // console.log("crearted");
   },
   mounted() {
     this.fetchNotification();
@@ -218,7 +216,6 @@ export default {
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID
       "getGameChannel",
-      "getBalance",
       "getlocale",
       "getIsLoadingStockGame",
       "getStockCrawlerData"
@@ -231,14 +228,9 @@ export default {
 </script>
 
 <style scoped>
-.menuItem span {
-  font-size: 13px;
-}
-.menuItem i {
-  font-size: 18px;
-}
+
 .winnerText {
-  margin-top: -10px;
+  margin-top: -30px;
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -256,7 +248,7 @@ export default {
   font-weight: 800;
   border: 1px solid #333;
 }
-.closebutton {
+.closeNotification {
   margin-right: 10px;
   margin-top: -15px;
   color: #fff;
@@ -278,15 +270,7 @@ export default {
   padding-top: 16px;
   cursor: pointer;
 }
-.menuItem {
-  border-right: 2px solid #dddddd;
-  height: 62px !important;
-  padding: 15px 15px;
-}
-.logostyle {
-  cursor: pointer;
-  margin-left: 15px;
-}
+
 .v-toolbar__content {
   padding: 0 !important;
   justify-content: center !important;

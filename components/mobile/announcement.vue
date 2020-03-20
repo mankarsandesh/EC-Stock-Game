@@ -13,7 +13,7 @@
                 <tr v-for="(item,index) in apiData" :key="index" class="tabletr">
                     <td>{{item.title}}</td>
                     <td>{{item.createdAt}}</td>
-                    <td v-if="item.message.length>100">{{item.message.slice(0,100)}}</td>
+                    <td v-if="item.message.length>150">{{item.message.slice(0,150)}}</td>
                     <td v-else>{{item.message}}</td>
                 </tr>
             </tbody>
@@ -41,19 +41,15 @@ export default {
     },
     methods: {
         async callApi() {
-            const {
-                data
-            } = await this.$axios.$post(
+            const {data} = await this.$axios.$post(
                 "http://uattesting.equitycapitalgaming.com/webApi/getAllAnnouncements",
                 { portalProviderUUID: this.portalProviderUUID, version: config.version }, 
                 {
-                    headers: {
-                        Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
-                    }
+                    headers: config.header
                 }
             );
             this.apiData = data
-            console.log(data);
+            // console.log(data);
         }
     }
 };

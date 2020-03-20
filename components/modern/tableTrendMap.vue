@@ -1,7 +1,7 @@
 <template>
-  <div v-if="dataArray.length > 0 ">
-    <v-layout wrap  row >
-      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" style="padding-top:50px;">
+  <div v-if="dataArray.length > 0">
+    <v-layout wrap row>
+      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" mt-5>
         <v-layout>
           <v-flex xs9>
             <v-btn
@@ -9,10 +9,13 @@
               class="text-white firstDigit"
               color="#003e70"
               @click="changeChartType('firstDigit')"
-            >{{$t('gamemsg.firstdigit')}}</v-btn>
+              >{{ $t("gamemsg.firstdigit") }}</v-btn>
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="text-xs-center triangle-right" v-show="activeType=='firstDigit'"></v-flex>
+          <v-flex
+            class="text-xs-center triangle-right"
+            v-show="activeType == 'firstDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -21,10 +24,14 @@
               class="text-white lastDigit"
               color="#003e70"
               @click="changeChartType('lastDigit')"
-            >{{$t('gamemsg.lastdigits')}}</v-btn>
+              >{{ $t("gamemsg.lastdigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="activeType=='lastDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'lastDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -33,11 +40,15 @@
               class="text-white bothDigit"
               color="#003e70"
               @click="changeChartType('bothDigit')"
-            >{{$t('gamemsg.bothdigits')}}</v-btn>
+              >{{ $t("gamemsg.bothdigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
 
-          <v-flex class="triangle-right" v-show="activeType=='bothDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'bothDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -46,44 +57,45 @@
               class="text-white twoDigit"
               color="#003e70"
               @click="changeChartType('twoDigit')"
-            >{{$t('gamemsg.twodigits')}}</v-btn>
+              >{{ $t("gamemsg.twodigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="activeType=='twoDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'twoDigit'"
+          ></v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs10 md10 lg10 xl10>
+      <v-flex xs9 md10 lg10 xl10>
         <v-layout row wrap>
           <v-flex xs12 lg12 md12>
             <trendMap
               :dataArray="dataArray"
               :trendType="activeType"
               :isFullscreen="isFullscreen"
-              :key="dataArray[dataArray.length -1].stockTimestamp + activeType"
+              :key="dataArray[dataArray.length - 1].stockTimestamp + activeType"
             ></trendMap>
           </v-flex>
         </v-layout>
-      </v-flex>
-      <!-- <v-flex class="xs1">
-        <v-layout row wrap v-if="isShowMultigameButton == 0">
-          <v-flex xs12 lg12 md12 ≈>
-            
-          </v-flex>
-        </v-layout>
-      </v-flex>-->
+      </v-flex> 
     </v-layout>
     <v-tooltip left id="fullscreenGuidelines">
       <template v-slot:activator="{ on }">
         <v-btn
           color="primary"
-          :to="'/modern/multigame/' +$route.params.id"
+          :to="'/modern/multigame/' + $route.params.id"
           rigth
           fab
           class="multiGame"
           dark
-          v-on="on"          
+          v-on="on"
         >
-          <i style="font-size:30px;" class="fa fa-gamepad" aria-hidden="true"></i>
+          <i
+            style="font-size:26px;"
+            class="fa fa-gamepad"
+            aria-hidden="true"
+          ></i>
         </v-btn>
       </template>
       <span>Multiple Game</span>
@@ -143,11 +155,11 @@ export default {
 .multiGame {
   z-index: 999;
   position: fixed;
-  right: 20px;
-  bottom: 90px;
+  right: 12px;
+  bottom: 80px;
   color: #fff;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   font-size: 12px !important;
   background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
@@ -161,38 +173,5 @@ export default {
   border-bottom: 18px solid transparent;
   align-self: center;
 }
-.firstDigit {
-  font-weight: bolder;
-  border-radius: 10px;
-  white-space: pre-line !important;
-  height: 60px;
-  font-size: 15px;
-  background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
-}
-.lastDigit {
-  text-align: center;
-  border-radius: 10px;
-  font-weight: bolder;
-  white-space: pre-line !important;
-  height: 60px;
-  font-size: 15px;
-  background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
-}
-.bothDigit {
-  font-weight: bolder;
-  border-radius: 10px;
-  white-space: pre-line !important;
-  height: 60px;
-  /* word-spacing: 80px; */
-  font-size: 15px;
-  background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
-}
-.twoDigit {
-  font-weight: bolder;
-  border-radius: 10px;
-  white-space: pre-line !important;
-  height: 60px;
-  font-size: 15px;
-  background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
-}
+
 </style>

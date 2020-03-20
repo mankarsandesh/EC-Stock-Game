@@ -6,7 +6,7 @@
         <v-divider></v-divider>
       </div>
     </v-flex>
-    <v-flex xs12 pt-3 pl-5>
+    <v-flex xs12 pt-3 pl-5 >
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
@@ -80,7 +80,7 @@
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
+    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5" >
       <div class="chart_container">
         <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
       </div>
@@ -89,14 +89,14 @@
       <div>
         <span style="margin-right:30px">
           player id :
-          <b>{{getUserInfo.PID}}</b>
+          <b>123</b>
         </span>
         <span style="margin-right:30px">
-          online time : {{getUserInfo.currentActiveTime}}
+          Online Time : <b>{{getUserInfo.currentActiveTime}}</b>
           <b>{{asynUserInfo.currentActiveTime}}</b>
         </span>
         <span style="margin-right:30px">
-          total online :
+          Total Online :
           <b>2day,15hours,11minute</b>
         </span>
       </div>
@@ -107,6 +107,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import date from "date-and-time";
 import onlineChart from "../../../../components/modern/profile/onlinechart";
 import config from "../../../../config/config.global";
 export default {
@@ -130,12 +131,10 @@ export default {
     };
   },
   created() {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    this.startDate = yyyy + "-" + mm + "-" + dd;
-    this.endDate = yyyy + "-" + mm + "-" + dd;
+    const now = date.format(new Date(), "YYYY-MM-DD");
+    const last2week = date.addDays(new Date(), -7);
+    this.startDate = date.format(last2week, "YYYY-MM-DD");
+    this.endDate = now;
   },
   mounted() {
     // this.asynUserInfo();
@@ -143,7 +142,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "headers","getUserUUID"])
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
     ...mapActions(["asynUserInfo"]),
@@ -154,17 +153,15 @@ export default {
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
-            dateRangeFrom: "2020-02-02",
-            dateRangeTo: "2020-02-28",
+            dateRangeFrom: this.startDate,
+            dateRangeTo: this.endDate,
             version: config.version
           },
           {
-            headers: this.headers
+            headers: config.header
           }
         );
         if (res.code === 200) {
-          this.chartData = [1500];
-          this.xaxis = ["2020-02-26"];
           let result = res.data.activeTimeDateWise;
           console.log("result online chart");
           console.log(res);
@@ -180,8 +177,7 @@ export default {
           //alert(res.message);
         }
       } catch (ex) {
-        console.error(ex);
-        alert(ex.message);
+        console.error(ex.message);
       }
     }
   }
