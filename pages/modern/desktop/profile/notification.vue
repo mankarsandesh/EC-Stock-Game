@@ -11,6 +11,7 @@
         <div class="group_container">
           <span class="group_title">receive by email</span>
           <div class="title_container">
+            <!-- <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" @click="dialog = showAlert()"/> -->
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
             <span class="titile">insufficient balance in an account</span>
             <br />
@@ -58,12 +59,24 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
-export default {};
+export default {
+  methods: {
+    showAlert() {
+      this.$swal.fire({
+        positio: "top",
+        type: "success",
+        title: "Changes saved",
+        showConfirmButton: false,
+        timer: 1000
+      });
+    }
+  }
+};
 </script>
 
 <style scoped>
-.title_menu{
-    text-transform: uppercase
+.title_menu {
+  text-transform: uppercase;
 }
 .titile {
   padding-left: 5px;
@@ -84,7 +97,7 @@ export default {};
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  color: #353333
+  color: #353333;
 }
 
 .chart_container {
@@ -119,5 +132,4 @@ input[type="checkbox"] {
   text-transform: uppercase;
 }
 /* checkbox */
-
 </style>

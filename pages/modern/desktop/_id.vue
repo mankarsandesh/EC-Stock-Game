@@ -2,7 +2,7 @@
   <v-container fluid mt-2 class="containerNew pa-3" >
     <v-layout style="background-color:#f4f5fd; ">
       <!-- <v-flex md3 lg3 mt-3 > -->
-        <v-flex v-if="!isHidden" class="leftStocklist ">
+        <v-flex v-if="!isHidden" class="leftStocklist " mt-4>
           <span
             @click="isHidden = true"            
             class="sidebar-close"
@@ -29,7 +29,7 @@
         </v-flex>
         <v-flex v-if="isHidden" @click="isHidden = false">
           <span class="sidebar-toggle">
-            <v-icon color="#0b2968">list</v-icon>
+            <v-icon color="#FFF">list</v-icon>
           </span>
         </v-flex>
       <!-- </v-flex> -->
@@ -549,7 +549,7 @@ export default {
           if (localStorage.valTutorial != "1") {
             this.setNextstep();
           }
-        }, 3000);
+        }, 3000000);
       }
     },
     setNextstep() {
@@ -638,8 +638,8 @@ export default {
         const fullG = $("#fullscreenGuidelines").offset();
         $("#fullscreenGuidelines").css("border-style", "solid");
         $("#fullscreenGuidelines").css("border-color", "coral");
-        $(this.$refs.fullScreenGuideline).css("right", w - fullG.left - 30);
-        $(this.$refs.fullScreenGuideline).css("top", fullG.top + 20);
+        $(this.$refs.fullScreenGuideline).css("right", fullG.left - 360);
+        $(this.$refs.fullScreenGuideline).css("top", fullG.top + 60);
         $("#betresultGuidelines").css("border-style", "none");
       } else if (isStep == 10) {
         // multiple gaming
@@ -756,8 +756,8 @@ export default {
   position: fixed;
   left: 5px;
   top: 75px;
-  background-color: #ffffff !important;
-  color: #4464ff;
+  background-color: #4464ff !important;
+  color: #FFF !important;
   padding: 5px;
   border: 1px solid #dddddd;
   border-radius: 180px;

@@ -16,6 +16,7 @@
               <label class="switch">
                 <input
                   @change="updateSetting"
+                  @click="dialog =showAlert()"
                   type="checkbox"
                   ref="isAllowToVisitProfile"
                   :checked="getUserInfo.isAllowToVisitProfile"
@@ -28,6 +29,7 @@
               <label class="switch">
                 <input
                   @change="updateSetting"
+                  @click="dialog =showAlert()"
                   type="checkbox"
                   ref="isAllowToFollow"
                   :checked="getUserInfo.isAllowToFollow"
@@ -40,6 +42,7 @@
               <label class="switch">
                 <input
                   @change="updateSetting"
+                  @click="dialog =showAlert()"
                   type="checkbox"
                   ref="isAllowToDirectMessage"
                   :checked="getUserInfo.isAllowToDirectMessage"
@@ -58,7 +61,8 @@
               <span>Sound</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"
+                  @change="updatesetting"
+                  @click="dialog =showAlert()"
                   type="checkbox"
                   ref="isSound"
                   :checked="getUserInfo.isSound"
@@ -71,6 +75,7 @@
               <label class="switch">
                 <input
                   @change="updateSetting"
+                  @click="dialog =showAlert()"
                   type="checkbox"
                   ref="isAllowToLocation"
                   :checked="getUserInfo.isAllowToLocation"
@@ -88,6 +93,7 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
+
 export default {
   data() {
     return {};
@@ -132,12 +138,21 @@ export default {
           this.asynUserInfo();
         } else {
           console.log(res.message);
-          // alert(res.message);
+          this.$alert("Alert Message.");
         }
       } catch (ex) {
         console.error(ex);
-        // alert(ex.message);
+        alert(ex.message);
       }
+    },
+    showAlert() {
+      this.$swal.fire({
+        positio: "top",
+        type: "success",
+        title: "Changes saved",
+        showConfirmButton: false,
+        timer: 1000
+      });
     }
   }
 };
