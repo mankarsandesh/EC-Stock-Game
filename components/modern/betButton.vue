@@ -1,12 +1,12 @@
 <template>
-  <div class="p-relative" >
+  <div class="p-relative">
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
       <p>{{ $t("msg.betclosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row >
+    <v-layout row>
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
@@ -699,8 +699,8 @@ export default {
         }
         return (
           this.getTimerByStockName(this.stockName) &&
-          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec >
-            240
+          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec <=
+            60
         );
       } else {
         if (
@@ -712,8 +712,8 @@ export default {
         }
         return (
           this.getTimerByStockName(this.stockName) &&
-          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec >
-            40
+          this.getTimerByStockName(this.stockName).gameEndTimeCountDownInSec <=
+            20
         );
       }
     }
@@ -761,7 +761,6 @@ export default {
   display: flex;
   align-items: center;
 }
-
 
 .setlayuot {
   flex-flow: wrap;
