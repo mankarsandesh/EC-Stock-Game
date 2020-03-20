@@ -1,33 +1,55 @@
 const config = {
-  version: "2",
+  version: "1",
+  apiDomain: "http://uattesting.equitycapitalgaming.com",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
   getStock: {
-    url: "http://uattesting.equitycapitalgaming.com/webApi/getStock"
+    url: `${process.env.BASE_URL}/getStock`
+  },
+  getAllStock: {
+    url: `${process.env.BASE_URL}/getAllStock`
   },
   getAllBets: {
-    url: "http://uattesting.equitycapitalgaming.com/webApi/getAllBets"
+    url: `${process.env.BASE_URL}/getAllBets`
   },
   updateUserProfile: {
-    url: "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile"
+    url: `${process.env.BASE_URL}/updateUserProfile`
   },
   getUserProfile: {
-    url: "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile"
+    url: `${process.env.BASE_URL}/getUserProfile`
   },
   updateUserSetting: {
-    url: "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting"
+    url: `${process.env.BASE_URL}/updateUserSetting`
   },
   getRoadMap: {
-    url: "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap"
+    url: `${process.env.BASE_URL}/getRoadMap`
   },
   storeBet: {
-    url: "http://uattesting.equitycapitalgaming.com/webApi/storeBet"
+    url: `${process.env.BASE_URL}/storeBet`
   },
   sendMessage: {
-    url: "http://uattesting.equitycapitalgaming.com/webApi/messages/send"
+    url: `${process.env.BASE_URL}/messages/send`
   },
-  serverConfig: {}
+  getActiveGamesByCategory: {
+    url: `${process.env.BASE_URL}/getActiveGamesByCategory`
+  },
+  getAllAnnouncements: {
+    url: `${process.env.BASE_URL}/getAllAnnouncements`
+  },
+  followUser: {
+    url: `${process.env.BASE_URL}/followUser`
+  },
+  getLeaderBoard: {
+    url: `${process.env.BASE_URL}/getLeaderBoard`
+  },
+  getUserBetAnalysis: {
+    url: `${process.env.BASE_URL}/getUserBetAnalysis`
+  },
+  serverConfig: {
+    port: 8000,
+    host: "0.0.0.0"
+  }
 };
 
 export default config;

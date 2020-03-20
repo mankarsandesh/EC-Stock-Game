@@ -69,6 +69,7 @@ import {
     mapMutations
 } from "vuex";
 import profile from "~/pages/modern/desktop/profile";
+import config from '../../config/config.global';
 export default {
     components: {
         profile,
@@ -85,10 +86,7 @@ export default {
     computed: {
         ...mapGetters(["getUserName", "getBalance", "getUserInfo"]),
         imgProfile() {
-            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
-                "/user.png" :
-                "http://uattesting.equitycapitalgaming.com/" +
-                this.getUserInfo.profileImage;
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ? "/user.png" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
         }
     },
     mounted() {

@@ -198,7 +198,7 @@ export default {
       if (this.message) {
         this.$axios
           .$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/messages/send",
+            config.sendMessage.url,
             {
               portalProviderUUID: this.portalProviderUUID,
               userUUID: this.userUUID,
@@ -221,7 +221,7 @@ export default {
       if (this.messageGame) {
         this.$axios
           .$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/messages/send",
+            config.sendMessage.url,
             {
               portalProviderUUID: this.portalProviderUUID,
               userUUID: this.userUUID,

@@ -113,10 +113,7 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === ""
-        ? "/no-profile-pic.jpg"
-        : "http://uattesting.equitycapitalgaming.com/" +
-            this.getUserInfo.profileImage;
+      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
   },
   watch: {
@@ -127,12 +124,12 @@ export default {
   methods: {
     ...mapActions(["asynUserInfo"]),
     readFile(e) {
-      let seft = this;
+      let self = this;
       console.log(e.target);
       if (e.target.files && e.target.files[0]) {
         let FR = new FileReader();
         FR.addEventListener("load", function(e) {
-          seft.imageBase64 = e.target.result;
+          self.imageBase64 = e.target.result;
         });
         FR.readAsDataURL(e.target.files[0]);
       }
@@ -141,20 +138,14 @@ export default {
       this.$refs.inputFile.click();
     },
     async updateProfile() {
-      const ref = this.$refs;
       let formData = new FormData();
-      formData.append("email", "macky@gmail.com");
-      formData.append("firstName", this.getUserInfo.firstName);
-      formData.append("lastName", this.getUserInfo.lastName);
-      // formData.append("gender", this.getUserInfo.gender);
-      // formData.append("country", this.getUserInfo.country);
       formData.append("profileImage", this.$refs.inputFile.files[0], "file");
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("version", config.version);
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+          config.updateUserProfile.url,
           formData,
           {
             headers: {

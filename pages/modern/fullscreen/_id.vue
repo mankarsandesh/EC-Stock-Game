@@ -269,6 +269,7 @@ import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
+import config from '../../../config/config.global';
 
 export default {
   async validate({ params, store }) {
@@ -510,7 +511,7 @@ export default {
           offset: "0" // offset or skip the data
         };
         const { data } = await this.$axios.post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
+          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
           data1, // data object
           {
             headers: {
