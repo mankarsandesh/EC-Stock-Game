@@ -163,7 +163,7 @@ export default {
             headers: config.header
           }
         );       
-        if (res.data.status == true) {
+        if (res.data.status = true) {
           this.closePopper();
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
