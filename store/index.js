@@ -276,33 +276,20 @@ const createStore = () => {
           // alert(ex)
         }
       },
-
       // end new api
-      async asyncPayout(context) {
-        try {
-          // const respayoutinitial = await this.$axios.$get(
-          //     `/api/payoutinitial2?stockId=7&apikey=${context.getters.getAuth_token}`
-          // );
-          // const res = await this.$axios.$post(
-          //     `/api/gameRuleStock?stockId=7&apikey=${context.getters.getAuth_token}`
-          // );
-          // console.log(res)
-          // context.state.payout = res.data;
-          // console.log(context.state.payout)
-          // context.commit("setUserData", {name:userInfo})
-        } catch (ex) {
-          console.error(ex);
-          // alert(ex)
-        }
-      },
-      // end get user info from api
+      // end new api
+      // end new api
+
+      // send bet data for multigame and footer bet on full screen
       async sendBetting(context) {
+        alert("I will fix this; => Macky");
+        // set sendbetting = true
+        // to show loading
         context.commit("setIsSendBetting", true);
-        // console.warn("sendBetting...");
-        const betData = {
+        const betDatas = {
           data: [...context.state.multiGameBetsend]
         };
-        if (betData.data.length == 0) {
+        if (betDatas.data.length == 0) {
           context.commit("setIsSendBetting", false);
           this._vm.$swal({
             type: "error",
@@ -315,12 +302,17 @@ const createStore = () => {
         // console.log(betData)
         try {
           const res = await this.$axios.$post(
-            `/api/storebet?apikey=${context.getters.getAuth_token}`,
-            betData
+            "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+            {
+              portalProviderUUID: context.state.portalProviderUUID,
+              userUUID: context.state.userUUID,
+              version: config.version,
+              betData: betDatas
+            },
+            {
+              headers: config.header
+            }
           );
-          // console.log("res./.......");
-          // console.log(res);
-          // console.log("res...........");
           if (res.status) {
             context.commit("setIsSendBetting", false);
             context.commit("clearDataMultiGameBetsend");

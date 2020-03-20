@@ -37,7 +37,7 @@
           class="align_button4 "
           :id="'firstdigit-' + data.rule"
           slot="reference"
-          @click="betButtonClick('firstdigit-' + data.rule)"
+          @click="betButtonClick(data.ruleid)"
         >
           <showChipAmount
             text-center
@@ -108,7 +108,7 @@
         <v-btn
           class="align_button4"
           :id="'lastdigit-' + data.rule"
-          @click="betButtonClick('lastdigit-' + data.rule)"
+          @click="betButtonClick(data.ruleid)"
           slot="reference"
         >
           <showChipAmount
@@ -180,7 +180,7 @@
         <v-btn
           class="align_button4"
           :id="'bothdigit-' + data.rule"
-          @click="betButtonClick('bothdigit-' + data.rule)"
+          @click="betButtonClick(data.ruleid)"
           slot="reference"
         >
           <showChipAmount
@@ -253,7 +253,7 @@
         <v-btn
           class="align_button4"
           :id="'twodigit-' + data.rule"
-          @click="betButtonClick('twodigit-' + data.rule)"
+          @click="betButtonClick(data.ruleid)"
           slot="reference"
         >
           <showChipAmount
@@ -721,17 +721,15 @@ export default {
   mounted() {},
   methods: {
     ...mapMutations(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
-    betButtonClick(betId) {
-      // $("#"+betId).addClass('bg-btn-first');
+    betButtonClick(ruleID) {
+      // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBet) {
-        let data = {
-          // stockId: this.stockName,
-          stockId: "btc1",
-          loop: this.loop,
-          gameRule: betId,
-          amount: this.getFooterBetAmount
+        let betData = {
+          gameUUID: this.getGameUUIDByStockName(this.stockName),
+          ruleID: ruleID,
+          betAmount: this.getFooterBetAmount
         };
-        this.pushDataMultiGameBet(data);
+        this.pushDataMultiGameBet(betData);
         // console.warn(this.getMultiGameBet);
       }
     },
