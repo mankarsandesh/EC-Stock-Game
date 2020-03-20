@@ -15,8 +15,7 @@
               <span>Users allow to visit my profile</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"
-                  @click="dialog =showAlert()"
+                  @change="updateSetting"                
                   type="checkbox"
                   ref="isAllowToVisitProfile"
                   :checked="getUserInfo.isAllowToVisitProfile"
@@ -28,8 +27,7 @@
               <span>Users allow follow me</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"
-                  @click="dialog =showAlert()"
+                  @change="updateSetting"                 
                   type="checkbox"
                   ref="isAllowToFollow"
                   :checked="getUserInfo.isAllowToFollow"
@@ -42,7 +40,6 @@
               <label class="switch">
                 <input
                   @change="updateSetting"
-                  @click="dialog =showAlert()"
                   type="checkbox"
                   ref="isAllowToDirectMessage"
                   :checked="getUserInfo.isAllowToDirectMessage"
@@ -62,7 +59,6 @@
               <label class="switch">
                 <input
                   @change="updatesetting"
-                  @click="dialog =showAlert()"
                   type="checkbox"
                   ref="isSound"
                   :checked="getUserInfo.isSound"
@@ -75,7 +71,6 @@
               <label class="switch">
                 <input
                   @change="updateSetting"
-                  @click="dialog =showAlert()"
                   type="checkbox"
                   ref="isAllowToLocation"
                   :checked="getUserInfo.isAllowToLocation"
@@ -95,12 +90,12 @@ import axios from "axios";
 import config from "../../../../config/config.global";
 
 export default {
-  data() {
-    return {};
+  mounted() {
+    // this.updateSetting();
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
-  },
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+  }, 
   methods: {
     ...mapActions(["asynUserInfo"]),
     async updateSetting() {
@@ -135,6 +130,13 @@ export default {
           }
         );
         if (res.code === 200) {
+           this.$swal.fire({
+            position: "top",
+            type: "success",
+            title: "Changes saved",
+            showConfirmButton: false,
+            timer: 1000
+          });
           this.asynUserInfo();
         } else {
           console.log(res.message);
@@ -145,15 +147,7 @@ export default {
         alert(ex.message);
       }
     },
-    showAlert() {
-      this.$swal.fire({
-        positio: "top",
-        type: "success",
-        title: "Changes saved",
-        showConfirmButton: false,
-        timer: 1000
-      });
-    }
+    
   }
 };
 </script>
