@@ -1210,3 +1210,11 @@ p.guideline {
   padding: 6px 8px;
   font-size: 14px;
 }
+
+.text-sucess{
+  border-radius: 4px;
+  color: green; 
+  border:1px dotted greenyellow;
+  padding: 6px 8px;
+  font-size: 14px;
+}

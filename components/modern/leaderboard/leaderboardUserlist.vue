@@ -86,7 +86,7 @@
           </h3>
         </v-card-text>
         <v-flex>
-          <p v-if="FollwingError" class="text-danger">{{ errorMessage }}</p>
+          <p v-if="FollwingError" v-bind:class="{ 'text-danger':hasError,'text-sucess' : hasSucess }">{{ errorMessage }}</p>
         </v-flex>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -137,6 +137,8 @@ import config from "../../../config/config.global";
 export default {
   data() {
     return {
+      hasError : false,
+      hasSucess : false,
       FollwingError: false,
       errorMessage: "",
       FollowName: "Follow",
@@ -217,10 +219,41 @@ export default {
       } else if (this.FolloworNot == 1) {
         this.FollowMethod = "unfollow";
       }
-      console.log(this.amountValue);
+      
       if (this.selectedFollow && this.BetValue) {
-        
-            const LeaderBoardData = {
+        if(this.selectedFollow == "Amount"){
+          if(this.BetValue < 1000 && this.BetValue > 10 ){
+             console.log("yesss");
+             // Code Run 
+             this.follwingBetting();
+          }else{
+             this.FollwingError = true;
+             this.hasError = true;   
+             this.hasSucess = false;        
+             this.errorMessage = "Amount should be Lower then 1000 & Grater then 10";
+             console.log(this.BetValue+"no");          
+          }
+        }else if(this.selectedFollow == "Rate"){
+          
+          if(this.BetValue < 100 && this.BetValue > 10){
+             // Code Run 
+             this.follwingBetting();
+          }else{
+            this.FollwingError = true;
+            this.hasError = true; 
+            this.hasSucess = false;   
+            this.errorMessage = "Bet Rate Should be Lower then 100 & Grater then 10";           
+          }
+        }
+      } else {
+        this.FollwingError = true;
+        this.hasError = true; 
+        this.hasSucess = false;   
+        this.errorMessage = "Follwing type is not selected.";
+      }
+    },
+   async  follwingBetting(){
+      const LeaderBoardData = {
               portalProviderUUID: this.portalProviderUUID,
               userUUID: this.userUUID,
               followToID: this.FollowUserUUID,
@@ -229,7 +262,6 @@ export default {
               value: this.BetValue,
               version: 1
             };
-            console.log(LeaderBoardData);
             try {
               const { data } = await this.$axios.post(
                 config.followUser.url,
@@ -240,20 +272,20 @@ export default {
               );
               this.followData = data;
               console.log(this.followData);
-              // location.reload();
-              if ((data.status = 200)) {
+             
+              if (data.status = 200) {
+                this.FollwingError = true;
+                this.hasSucess = true;
+                this.hasError = false;
+                this.errorMessage = data.message;
                 this.FollowName = "Following";
+                window.setTimeout(function(){location.reload()},3000)
               } else {
                 console.log(this.followData);
               }
             } catch (error) {
               console.log(error);
             }
-         
-      } else {
-        this.FollwingError = true;
-        this.errorMessage = "Follwing type is not selected.";
-      }
     },
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
