@@ -137,9 +137,10 @@ export default {
       "getOnBetting",
       "getAuth_token",
       "getStockId",
-      "getStockGameId"
+      "getStockGameId",
+      "getPortalProviderUUID",
+      "getUserUUID"
     ]),
-    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   created() {
     // check is full screen or not
@@ -164,8 +165,8 @@ export default {
         const res = await this.$axios.$post(
           "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
           {
-            portalProviderUUID: this.portalProviderUUID,
-            userUUID: this.userUUID,
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
             version: config.version,
             betData: [finalData]
           },

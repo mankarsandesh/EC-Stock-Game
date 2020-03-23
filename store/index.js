@@ -561,7 +561,7 @@ const createStore = () => {
           .map(x => x.betAmount)
           .reduce((a, b) => a + b, 0);
         let amount2 = state.multiGameBet
-          .map(x => x.amount)
+          .map(x => x.betAmount)
           .reduce((a, b) => a + b, 0);
         return amount1 + amount2;
       },
@@ -579,7 +579,7 @@ const createStore = () => {
           if (object.findIndex(x => x.stockId === stockId) == -1) return 0;
           let result = object
             .filter(x => x.stockId === stockId)
-            .map(x => x.amount)
+            .map(x => x.betAmount)
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
@@ -611,37 +611,7 @@ const createStore = () => {
           // get amount by rule
           let result = stockIdObject
             .filter(x => x.gameRule === data.gameRule)
-            .map(x => x.amount)
-            .reduce((a, b) => a + b, 0);
-          return parseInt(result);
-        }
-
-        function getAmountbet(object) {
-          // find stockname
-          if (object.findIndex(x => x.stock === stockId) == -1) return 0;
-          let result = object
-            .filter(x => x.stock === stockId)
             .map(x => x.betAmount)
-            .reduce((a, b) => a + b, 0);
-          return parseInt(result);
-        }
-        return getAmount(state.multiGameBet) + getAmountbet(state.onGoingBet);
-      },
-      // to show ship and amount on bet button
-      getAmountMultiGameBet: state => data => {
-        // console.log(state.multiGameBet)
-        function getAmount(object) {
-          // find stockId
-          if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0;
-          // get data by stockId
-          let stockIdObject = object.filter(x => x.stockId === data.stockId);
-          // check rule in stockId
-          if (stockIdObject.findIndex(x => x.gameRule === data.gameRule) == -1)
-            return 0;
-          // get amount by rule
-          let result = stockIdObject
-            .filter(x => x.gameRule === data.gameRule)
-            .map(x => x.amount)
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
@@ -683,7 +653,7 @@ const createStore = () => {
                 .map(x => x.betAmount)
                 .reduce((a, b) => a + b, 0);
           }
-          // .map(x => x.amount).reduce((a, b) => a + b, 0)
+          // .map(x => x.betAmount).reduce((a, b) => a + b, 0)
           return result;
         }
         return getAmount(state.multiGameBet) + getAmount(state.onGoingBet);
