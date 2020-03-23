@@ -95,14 +95,14 @@ export default {
     };
   },
   watch: {
-    stock(value) {
-      if (this.stockSocket) {
-        this.stockSocket = false;
-      } else {
-        if (value !== "") {
-          this.stockName = "";
-          this.stockNames = value.stocks;
-          $("#stockName").click();
+    stock(value) {  // when value is changed this value will do the list 
+      if (this.stockSocket) { // check the stockSocket is come or not 
+        this.stockSocket = false;  // after value is come we set value of stickSocket is flase 
+      } else {  // after value is false the logic will be come in this case 
+        if (value !== "") {   // after reveide the value we have to check the value is not empty 
+          this.stockName = "";  // after value is not empty we clear the value is first 
+          this.stockNames = value.stocks;  // after clear the push the array into the items 
+          $("#stockName").click();   // after have the value we have to click the box
         }
         this.stockSocket = true;
       }
