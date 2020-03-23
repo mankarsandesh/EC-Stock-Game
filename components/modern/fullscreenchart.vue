@@ -95,7 +95,7 @@ export default {
           },
           y: {
             formatter: function(val, { series, seriesIndex, dataPointIndex, w }) {
-              console.log(w.config.series[seriesIndex].betCounts[dataPointIndex], 'ayaaaaaaaaaaaaaaaaaaaaa')
+              // console.log(w.config.series[seriesIndex].betCounts[dataPointIndex], 'ayaaaaaaaaaaaaaaaaaaaaa')
               return '<div class="arrow_box">' +
                  '<span> Amount: $' + series[seriesIndex][dataPointIndex] + ' </span>' +
                 '</div>' +

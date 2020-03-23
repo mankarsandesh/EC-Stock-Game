@@ -49,14 +49,20 @@
         return-object
         id="minute"
       >
-        <template slot="selection" slot-scope="data">{{ data.item.loopName }} Minutes</template>
+        <template slot="selection" slot-scope="data"
+          >{{ data.item.loopName }} Minutes</template
+        >
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content>{{data.loopName}} Minutes</v-list-tile-content>
+            <v-list-tile-content
+              >{{ data.loopName }} Minutes</v-list-tile-content
+            >
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title>{{data.item.loopName}} Minutes</v-list-tile-title>
+              <v-list-tile-title
+                >{{ data.item.loopName }} Minutes</v-list-tile-title
+              >
             </v-list-tile-content>
           </template>
         </template>
@@ -80,7 +86,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
-import config from '../config/config.global';
+import config from "../config/config.global";
 export default {
   data() {
     return {
@@ -95,14 +101,14 @@ export default {
     };
   },
   watch: {
-    stock(value) {
-      if (this.stockSocket) {
-        this.stockSocket = false;
-      } else {
-        if (value !== "") {
-          this.stockName = "";
-          this.stockNames = value.stocks;
-          $("#stockName").click();
+    stock(value) {  // when value is changed this value will do the list 
+      if (this.stockSocket) { // check the stockSocket is come or not 
+        this.stockSocket = false;  // after value is come we set value of stickSocket is flase 
+      } else {  // after value is false the logic will be come in this case 
+        if (value !== "") {   // after reveide the value we have to check the value is not empty 
+          this.stockName = "";  // after value is not empty we clear the value is first 
+          this.stockNames = value.stocks;  // after clear the push the array into the items 
+          $("#stockName").click();   // after have the value we have to click the box
         }
         this.stockSocket = true;
       }
@@ -164,12 +170,10 @@ export default {
           config.getActiveGamesByCategory.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
-            version: 0.1
+            version: config.version
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
-            }
+            headers: config.header
           }
         );
         this.getGameUUID(data);
@@ -263,7 +267,7 @@ export default {
   }
 };
 </script>
-<style  scoped>
+<style scoped>
 .selectStock {
   font-size: 14px;
 }
@@ -271,4 +275,3 @@ export default {
   font-size: 12px;
 }
 </style>
-

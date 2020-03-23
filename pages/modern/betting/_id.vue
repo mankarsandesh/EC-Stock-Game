@@ -1414,8 +1414,8 @@ export default {
         }
         return (
           this.getTimerByStockName(this.$route.params.id) &&
-          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec >
-            240
+          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec <=
+            60
         );
       } else {
         if (
@@ -1427,8 +1427,8 @@ export default {
         }
         return (
           this.getTimerByStockName(this.$route.params.id) &&
-          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec >
-            40
+          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec <=
+            20
         );
       }
     }
