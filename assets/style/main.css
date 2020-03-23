@@ -503,6 +503,7 @@ nav.modal-bet.v-toolbar.theme--light p {
   border-radius: 10px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   font-size: 12px;
+  cursor: pointer;
 }
 
 .buttonRed {
@@ -1200,4 +1201,20 @@ p.guideline {
   min-width: 150px;
   min-height: 150px;
   text-align: center;
+}
+/* Error Class */
+.text-danger{
+  border-radius: 4px;
+  color: #f44336; 
+  border:1px dotted #f44336;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+.text-sucess{
+  border-radius: 4px;
+  color: green; 
+  border:1px dotted greenyellow;
+  padding: 6px 8px;
+  font-size: 14px;
 }

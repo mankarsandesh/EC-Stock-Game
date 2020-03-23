@@ -60,12 +60,12 @@ export default {
       console.log("Authication authUser & authPassword is Missing.");
     }
   },
-  created() {
-    this.stockname = window.location.search
-      .split("?")[1]
-      .split("=")[1]
-      .split("&")[0];
-  },
+  // created() {
+  //   this.stockname = window.location.search 
+  //     .split("?")[1]  // if run on the production will be have the api_key from url 
+  //     .split("=")[1] // find the spit the url 
+  //     .split("&")[0]; //  get data from split 
+  // },
   watch: {
     "$screen.width"() {
       if (this.$screen.width <= 1204) {

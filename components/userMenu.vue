@@ -24,21 +24,21 @@
       </template>
       <v-list>
         <v-list-tile
-          @click="$router.push('/modern/desktop/profile/basicinfo');"
+          @click="$router.push('/modern/desktop/profile/');"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-user fa-2x margin-right-5" />
           <v-list-tile-title>{{$t('menu.profile')}}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
-          @click="$router.push('/modern/desktop/profile/onlinehistory');"
+          @click="$router.push('/modern/desktop/profile/onlinehistory/');"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
           <v-list-tile-title>{{$t('profile.online history')}}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
-          @click="$router.push('/modern/desktop/profile/stockanalysis');"
+          @click="$router.push('/modern/desktop/profile/stockanalysis/');"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-line-chart fa-15x margin-right-5" />
@@ -56,6 +56,7 @@
 <script>
 import AnimatedNumber from "animated-number-vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import config from '../config/config.global';
 export default {
   components: {
     AnimatedNumber
@@ -69,10 +70,7 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === ""
-        ? "/no-profile-pic.jpg"
-        : "http://uattesting.equitycapitalgaming.com/" +
-            this.getUserInfo.profileImage;
+      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     }
   },
   mounted() {

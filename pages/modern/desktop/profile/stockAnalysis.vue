@@ -76,9 +76,11 @@ import apexchart from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
+import config from '../../../../config/config.global';
 
 // set color win and lose color in bar chart
 let index = 0;
+let stocklist = ['SH000001', 'SH000300', 'USDINDEX', 'BTC5', 'BTC1'];
 let barColor = [
   ["#67c9d3", "#f75b54", "#fcc624", "#1a237e", "#d81b60", "#ff6f00", "#01579b"], // win color
   ["#81eaf5", "#f9a5a3", "#fddf84", "#7986cb", "#f06292", "#ffb74d", "#90caf9"] // loss color
@@ -113,7 +115,6 @@ export default {
       chartOptions: {
         colors: [
           function({ value, seriesIndex, dataPointIndex, w }) {
-            console.log('value ', value, 'seriesIndex ', seriesIndex, 'dataPointIndex: ', dataPointIndex, index, 'w ', w);
             if(seriesIndex == 0) {
               return barColor[0][dataPointIndex];
             }
@@ -177,18 +178,23 @@ export default {
           intersect: true,
           onDataSetHover: {
             highlightDataSeries: false
+          },
+          x: {
+            show: false
+          },
+          y: {
+            formatter: function(val, { series, seriesIndex, dataPointIndex }) {
+              return '<div class="arrow_box ">' +
+                 '<span> ' + stocklist[dataPointIndex] + ' </span>'  + 
+                '<span> ' + series[seriesIndex][dataPointIndex] + '</span>' +
+                '</div>'
+            },
+            title: {
+              formatter: function (seriesName) {
+                return seriesName.toUpperCase();
+              }
+            }
           }
-          // y: {
-          //   formatter: function(val, { series, seriesIndex, dataPointIndex, w }) {
-          //     console.log(w.config.series[seriesIndex].betCounts[dataPointIndex], 'ayaaaaaaaaaaaaaaaaaaaaa')
-          //     return '<div class="arrow_box">' +
-          //        '<span> Amount: $' + series[seriesIndex][dataPointIndex] + ' </span>' +
-          //       '</div>' +
-          //       '<div class="arrow_box">' + 
-          //       '<span> BetCount:' + w.config.series[seriesIndex].betCounts[dataPointIndex] + '</span>' +
-          //       '</div>'
-          //   }
-          // }
         },
         // responsive: [
         //   {
@@ -279,11 +285,11 @@ export default {
     async getStockAnalysis() {
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getUserBetAnalysis",
+          config.getUserBetAnalysis.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
-            version: 1,
+            version: config.version,
             dateRangeFrom: this.startDate,
             dateRangeTo: this.endDate
           },
@@ -308,6 +314,11 @@ export default {
 </script>
 
 <style scoped>
+
+#chart_container .apexcharts-tooltip {
+  color: blue;
+  background-color: red;
+}
 li {
   list-style-type: none;
 }
@@ -317,6 +328,7 @@ li {
   margin-top: 15px;
   display: inline-block;
 }
+
 .circle-color {
   position: relative;
   display: inline-block;

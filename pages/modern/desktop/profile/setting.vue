@@ -15,7 +15,7 @@
               <span>Users allow to visit my profile</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"
+                  @change="updateSetting"                
                   type="checkbox"
                   ref="isAllowToVisitProfile"
                   :checked="getUserInfo.isAllowToVisitProfile"
@@ -27,7 +27,7 @@
               <span>Users allow follow me</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"
+                  @change="updateSetting"                 
                   type="checkbox"
                   ref="isAllowToFollow"
                   :checked="getUserInfo.isAllowToFollow"
@@ -58,7 +58,7 @@
               <span>Sound</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"
+                  @change="updatesetting"
                   type="checkbox"
                   ref="isSound"
                   :checked="getUserInfo.isSound"
@@ -88,13 +88,14 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
+
 export default {
-  data() {
-    return {};
+  mounted() {
+    // this.updateSetting();
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
-  },
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+  }, 
   methods: {
     ...mapActions(["asynUserInfo"]),
     async updateSetting() {
@@ -122,23 +123,30 @@ export default {
           isAllowToLocation
         };
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting",
+          config.updateUserSetting.url,
           userSetting,
           {
             headers: config.header
           }
         );
         if (res.code === 200) {
+           this.$swal.fire({
+            position: "top",
+            type: "success",
+            title: "Changes saved",
+            showConfirmButton: false,
+            timer: 1000
+          });
           this.asynUserInfo();
         } else {
           console.log(res.message);
-          // alert(res.message);
+          this.$alert("Alert Message.");
         }
       } catch (ex) {
         console.error(ex);
-        // alert(ex.message);
+        alert(ex.message);
       }
-    }
+    },
   }
 };
 </script>

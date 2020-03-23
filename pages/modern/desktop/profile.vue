@@ -1,16 +1,20 @@
 <template>
-  <v-container fluid >
+  <v-container fluid>
     <input @change="readFile($event)" type="file" ref="inputFile" hidden />
     <v-layout pt-3 row wrap class="justify-center">
-      <v-flex xs12 ms12 lg10 md10 >
+      <v-flex xs12 ms12 lg10 md10>
         <v-layout>
           <v-flex xs4 md3 lg3 xl2 class="pt-5" style="background-color:white">
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img v-if="imageBase64==''" :src="imgProfile" alt="img-profile" />
                   <img
-                    :style="{ filter: `blur(${blurValue}px)`}"
+                    v-if="imageBase64 == ''"
+                    :src="imgProfile"
+                    alt="img-profile"
+                  />
+                  <img
+                    :style="{ filter: `blur(${blurValue}px)` }"
                     v-else
                     :src="imageBase64"
                     alt="img-profile"
@@ -18,21 +22,33 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
+                    <v-icon color="black" :size="20" @click="cameraClick"
+                      >photo_camera</v-icon
+                    >
                   </button>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h1>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h1>
+              <h1>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
               <p>Online Status : 2hours</p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
               <ul class="pa-3">
-                <nuxt-link v-for="(menu,index) in profileMenu" :key="index" :to="menu.path">
+                <nuxt-link
+                  v-for="(menu, index) in profileMenu"
+                  :key="index"
+                  :to="menu.path"
+                >
                   <li
-                    :class=" menu.path.toLowerCase() === currentChild.toLowerCase() ?' menu_title_active':'menu_title'"
-                  >{{menu.title}}</li>
+                    :class="
+                      menu.path.toLowerCase() === currentChild.toLowerCase()
+                        ? ' menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ menu.title }}
+                  </li>
                 </nuxt-link>
               </ul>
             </div>
@@ -62,49 +78,42 @@ export default {
       profileMenu: [
         {
           title: "basic information",
-          path: "basicinfo"
+          path: "/modern/desktop/profile/"
         },
         {
           title: "online history",
-          path: "onlinehistory"
+          path: "/modern/desktop/profile/onlinehistory/"
         },
         {
           title: "stock analysis",
-          path: "stockanalysis"
+          path: "/modern/desktop/profile/stockanalysis/"
         },
         {
           title: "my followers",
-          path: "follower"
+          path: "/modern/desktop/profile/follower/"
         },
         {
           title: "my notification",
-          path: "notification"
+          path: "/modern/desktop/profile/notification/"
         },
-        { title: "setting", path: "setting" }
+        { title: "setting", path: "/modern/desktop/profile/setting/" }
       ],
       window: 0,
       active: null
     };
   },
   beforeUpdate() {
-    console.log(this.$route.name);
-    let url = this.$route.name.split("-");
-    this.currentChild = url[url.length - 1];
+    // make a active menu
+    this.currentChild = this.$route.path;
   },
   created() {
-    let url = this.$route.name.split("-");
-    this.currentChild = url[url.length - 1];
-    if (this.$route.name === "modern-desktop-profile") {
-      this.$router.push("profile/basicinfo");
-    }
+    // make a active menu
+    this.currentChild = this.$route.path;
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === ""
-        ? "/no-profile-pic.jpg"
-        : "http://uattesting.equitycapitalgaming.com/" +
-            this.getUserInfo.profileImage;
+      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
   },
   watch: {
@@ -115,12 +124,12 @@ export default {
   methods: {
     ...mapActions(["asynUserInfo"]),
     readFile(e) {
-      let seft = this;
+      let self = this;
       console.log(e.target);
       if (e.target.files && e.target.files[0]) {
         let FR = new FileReader();
         FR.addEventListener("load", function(e) {
-          seft.imageBase64 = e.target.result;
+          self.imageBase64 = e.target.result;
         });
         FR.readAsDataURL(e.target.files[0]);
       }
@@ -129,20 +138,14 @@ export default {
       this.$refs.inputFile.click();
     },
     async updateProfile() {
-      const ref = this.$refs;
       let formData = new FormData();
-      formData.append("email", "macky@gmail.com");
-      formData.append("firstName", this.getUserInfo.firstName);
-      formData.append("lastName", this.getUserInfo.lastName);
-      // formData.append("gender", this.getUserInfo.gender);
-      // formData.append("country", this.getUserInfo.country);
       formData.append("profileImage", this.$refs.inputFile.files[0], "file");
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("version", config.version);
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+          config.updateUserProfile.url,
           formData,
           {
             headers: {
@@ -244,4 +247,3 @@ img {
   box-shadow: 1px 7px 19px rgb(145, 145, 145) !important;
 }
 </style>
-  
