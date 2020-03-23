@@ -23,7 +23,7 @@
         label="Stock Name"
         class="selectStock"
         prepend-icon="navigate_next"
-        color="green"
+        color="blue"
         full-width
         solo
         hide-details
@@ -40,7 +40,7 @@
         label="Minute"
         class="selectStock"
         prepend-icon="navigate_next"
-        color="red"
+        color="blue"
         full-width
         solo
         hide-details
