@@ -1,42 +1,39 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-3" >
+  <v-container fluid mt-2 class="containerNew pa-3">
     <v-layout style="background-color:#f4f5fd; ">
       <!-- <v-flex md3 lg3 mt-3 > -->
-        <v-flex v-if="!isHidden" class="leftStocklist " mt-4>
-          <span
-            @click="isHidden = true"            
-            class="sidebar-close"
-          >
-            <v-icon color="#0b2968" >close</v-icon>
-          </span>
-          <v-layout column>
-            <v-flex xs12 pt-2>
-              <div id="stocklistGuidelines">
-                <stockList></stockList>
-              </div>
-            </v-flex>
-            <v-flex xs12 pt-2>
-              <div id="betresultGuidelines">
-                <stockResult></stockResult>
-              </div>
-            </v-flex>
-            <v-flex xs12 pt-2>
-              <div id="bettingGuidelines">
-                <onBetting></onBetting>
-              </div>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-        <v-flex v-if="isHidden" @click="isHidden = false">
-          <span class="sidebar-toggle">
-            <v-icon color="#FFF">list</v-icon>
-          </span>
-        </v-flex>
+      <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
+        <span @click="isHidden = true" class="sidebar-close">
+          <v-icon color="#0b2968">close</v-icon>
+        </span>
+        <v-layout column>
+          <v-flex xs12 pt-2>
+            <div id="stocklistGuidelines">
+              <stockList></stockList>
+            </div>
+          </v-flex>
+          <v-flex xs12 pt-2>
+            <div id="betresultGuidelines">
+              <stockResult></stockResult>
+            </div>
+          </v-flex>
+          <v-flex xs12 pt-2>
+            <div id="bettingGuidelines">
+              <onBetting></onBetting>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex v-if="isHidden" @click="isHidden = false">
+        <span class="sidebar-toggle">
+          <v-icon color="#FFF">list</v-icon>
+        </span>
+      </v-flex>
       <!-- </v-flex> -->
 
-      <v-flex  :xs10="!isHidden" :xs12="isHidden" >
+      <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-layout xs12 pt-2>
-          <v-flex xs6 md6 lg6 pt-2 >
+          <v-flex xs6 md6 lg6 pt-2>
             <v-layout column>
               <v-flex xs12>
                 <div id="selectstockGuideline">
@@ -53,16 +50,13 @@
             </v-layout>
           </v-flex>
 
-          <v-flex xs6 md6 lg6 class="mx-2 " >
+          <v-flex xs6 md6 lg6 class="mx-2">
             <v-layout mb-3>
               <v-flex xs4 class="text-xs-center text-uppercase" px-2>
                 <span>{{ $t("msg.Lastdraw") }}</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
-                    <span
-                      class="text-black"
-                      v-html="$options.filters.lastDraw(getLastDraw)"
-                    ></span>
+                    <span class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -78,17 +72,20 @@
                             .stockOpenOrClosed === 'Closed!'
                       "
                       class="text-black"
-                      >{{
-                        getTimerByStockName($route.params.id) &&
-                          "close" | betclosein(getStockLoop($route.params.id))
-                      }}</span
                     >
-                    <span v-else class="text-black">{{
+                      {{
                       getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | betclosein(getStockLoop($route.params.id))
-                    }}</span>
+                      "close" | betclosein(getStockLoop($route.params.id))
+                      }}
+                    </span>
+                    <span v-else class="text-black">
+                      {{
+                      getTimerByStockName($route.params.id) &&
+                      getTimerByStockName($route.params.id)
+                      .gameEndTimeCountDownInSec
+                      | betclosein(getStockLoop($route.params.id))
+                      }}
+                    </span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -97,12 +94,14 @@
                 <span>{{ $t("msg.lotterydraw") }}</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
-                    <span class="text-black">{{
+                    <span class="text-black">
+                      {{
                       getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | lotterydraw(getStockLoop($route.params.id))
-                    }}</span>
+                      getTimerByStockName($route.params.id)
+                      .gameEndTimeCountDownInSec
+                      | lotterydraw(getStockLoop($route.params.id))
+                      }}
+                    </span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -126,18 +125,10 @@
           </v-flex>
         </v-layout>
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div
-            class="trendmap-container"
-            v-for="(trendType, index) in trendTypes"
-            :key="index"
-          >
+          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap
-                :index="index"
-                :dataArray="getRoadMap"
-                :isShowMultigameButton="index"
-              ></tableTrendMap>
+              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index"></tableTrendMap>
             </div>
             <span
               class="addChart"
@@ -157,46 +148,36 @@
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius:10px;">
-          <v-icon
-            class="closePopup"
-            color="#333 !important"
-            @click="dialog = false"
-            >close</v-icon
-          >
-          <v-card-title class="title" primary-title
-            >TOP 10 LEADERS</v-card-title
-          >
+          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
+          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
           <v-card-text>
             <leaderboardUserlist />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn
-              class="buttonGreensmall"
-              to="/modern/desktop/leaderboard"
-              dark
-              >Go to Leaderboard</v-btn
-            >
+            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
 
       <v-flex class="layout-bottom">
-        <v-tooltip left id="fullscreenGuidelines">
-          <template v-slot:activator="{ on }">
-            <v-btn
-              color="primary"
-              rigth
-              fab
-              class="fullscreen"
-              dark
-              @click="setAfterFullScreenClosePage()"
-              title="Full Screen"
-            >
-              <v-icon>fullscreen</v-icon>
-            </v-btn>
-          </template>
-          <span>Full Screen</span>
-        </v-tooltip>
+        <div id="fullscreenGuidelines">
+          <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                rigth
+                fab
+                class="fullscreen"
+                dark
+                @click="setAfterFullScreenClosePage()"
+                title="Full Screen"
+              >
+                <v-icon>fullscreen</v-icon>
+              </v-btn>
+            </template>
+            <span>Full Screen</span>
+          </v-tooltip>
+        </div>
       </v-flex>
     </v-layout>
     <div ref="guideline" class="overlay">
@@ -236,11 +217,7 @@
       </div>
 
       <!-- bet close in 4 -->
-      <div
-        ref="betCloseInGuideline"
-        style="position:fixed"
-        v-show="isStep == 4"
-      >
+      <div ref="betCloseInGuideline" style="position:fixed" v-show="isStep == 4">
         <div class="d-block">
           <div style="position: relative">
             <p class="float-right guideline" @click="setNextstep">
@@ -252,11 +229,7 @@
         </div>
       </div>
       <!-- lottery draw 5 -->
-      <div
-        ref="lotteryDrawGuideline"
-        style="position:fixed"
-        v-show="isStep == 5"
-      >
+      <div ref="lotteryDrawGuideline" style="position:fixed" v-show="isStep == 5">
         <div class="d-flex">
           <div class="arrow float-left line-my">&#8630;</div>
           <div>
@@ -292,7 +265,7 @@
       <div ref="betresultGuideline" style="position:fixed" v-show="isStep == 8">
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
-            The bet result
+            The stock result
             <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
           </p>
           <div class="arrow float-left line-my">&#8628;</div>
@@ -300,11 +273,7 @@
       </div>
 
       <!-- fullscreen 9-->
-      <div
-        ref="fullScreenGuideline"
-        style="position:fixed"
-        v-show="isStep == 9"
-      >
+      <div ref="fullScreenGuideline" style="position:fixed" v-show="isStep == 9">
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
             Click to enter full screen mode
@@ -314,21 +283,17 @@
         </div>
       </div>
       <!-- multi game 10-->
-      <div
-        ref="multigameGuideline"
-        style="position:fixed"
-        v-show="isStep == 10"
-      >
+      <!-- <div ref="multigameGuideline" style="position:fixed" v-show="isStep == 10">
         <div class="d-flex">
-          <div class="arrow float-left line-my">&#8630;</div>
           <div>
             <p class="float-right guideline" @click="setNextstep">
-              This is multiple gamig
+              This is multiple gaming
               <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
             </p>
           </div>
+          <div class="arrow float-left line-my">&#8605;</div>
         </div>
-      </div>
+      </div>-->
       <!-- betting 11 -->
       <div ref="bettingGuideline" style="position:fixed" v-show="isStep == 11">
         <div class="d-flex">
@@ -549,7 +514,7 @@ export default {
           if (localStorage.valTutorial != "1") {
             this.setNextstep();
           }
-        }, 3000000);
+        }, 3000);
       }
     },
     setNextstep() {
@@ -638,16 +603,16 @@ export default {
         const fullG = $("#fullscreenGuidelines").offset();
         $("#fullscreenGuidelines").css("border-style", "solid");
         $("#fullscreenGuidelines").css("border-color", "coral");
-        $(this.$refs.fullScreenGuideline).css("right", fullG.left - 360);
-        $(this.$refs.fullScreenGuideline).css("top", fullG.top + 60);
+        $(this.$refs.fullScreenGuideline).css("right", fullG.left - 10);
+        $(this.$refs.fullScreenGuideline).css("top", fullG.top + 270);
         $("#betresultGuidelines").css("border-style", "none");
       } else if (isStep == 10) {
         // multiple gaming
         let multiG = $("#multiGuideline").offset();
         $("#multiGuideline").css("border-style", "solid");
         $("#multiGuideline").css("border-color", "coral");
-        $(this.$refs.multigameGuideline).css("left", multiG.left + 150);
-        $(this.$refs.multigameGuideline).css("top", multiG.top - 5);
+        $(this.$refs.multigameGuideline).css("right", multiG.left - 300);
+        $(this.$refs.multigameGuideline).css("top", multiG.top - 50);
         $("#fullscreenGuidelines").css("border-style", "none");
       } else if (isStep == 11) {
         // betting
@@ -757,7 +722,7 @@ export default {
   left: 5px;
   top: 75px;
   background-color: #4464ff !important;
-  color: #FFF !important;
+  color: #fff !important;
   padding: 5px;
   border: 1px solid #dddddd;
   border-radius: 180px;
