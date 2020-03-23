@@ -52,52 +52,24 @@
             <div class="title_date_picker">
               <span></span>
             </div>
-            <button>GO</button>
-          </div>
-        </v-flex>
-        <v-flex xs6 sm6 md3 lg3 pl-5>
-          <div class="date_picker_container">
-            <div class="title_date_picker">
-              <span>Sort By</span>
-            </div>
-            <div class="date_picker">
-              <!-- sort by  -->
-              <v-menu offset-y>
-                <template v-slot:activator="{ on }">
-                  <span class="select_date">2020-02-12</span>
-                  <span class="icon_date">
-                    <v-icon v-on="on">arrow_drop_down</v-icon>
-                  </span>
-                </template>
-                <v-list>
-                  <v-list-tile v-for="(item, index) in items" :key="index">
-                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-            </div>
+            <button @click="getOnlineHistory">GO</button>
           </div>
         </v-flex>
       </v-layout>
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5" >
       <div class="chart_container">
-        <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
+        <VueApexCharts type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
       </div>
     </v-flex>
     <v-flex xs12 class="pt-3 pl-5">
       <div>
         <span style="margin-right:30px">
-          player id :
-          <b>123</b>
-        </span>
-        <span style="margin-right:30px">
-          Online Time : <b>{{getUserInfo.currentActiveTime}}</b>
-          <b>{{asynUserInfo.currentActiveTime}}</b>
+          Online Time : <b>{{currentActiveTime}}</b>
         </span>
         <span style="margin-right:30px">
           Total Online :
-          <b>2day,15hours,11minute</b>
+          <b> {{totalOnlineTime}} </b>
         </span>
       </div>
     </v-flex>
@@ -108,33 +80,57 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
-import onlineChart from "../../../../components/modern/profile/onlinechart";
+//import onlineChart from "../../../../components/modern/profile/onlinechart";
 import config from "../../../../config/config.global";
+import VueApexCharts from "vue-apexcharts";
 export default {
   components: {
-    onlineChart
+    VueApexCharts
   },
   data() {
     return {
-      chartData: [],
-      xaxis: [],
+      series: [],
+      componentKey: 0,
+      totalOnlineTime: "",
+      currentActiveTime: "",
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
       endDate: "",
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" }
-      ]
+      chartOptions: {
+        chart: {
+          height: 350,
+          type: 'bar',
+          },
+        plotOptions: {
+          bar: {
+            columnWidth: '45%',
+            distributed: true
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        xaxis: {
+          categories: [],
+          labels: {
+            style: {
+              fontSize: '12px'
+            }
+          }
+        }
+      },
     };
   },
   created() {
     const now = date.format(new Date(), "YYYY-MM-DD");
-    const last2week = date.addDays(new Date(), -7);
-    this.startDate = date.format(last2week, "YYYY-MM-DD");
+    const lastWeek = date.addDays(new Date(), -7);
+    this.startDate = date.format(lastWeek, "YYYY-MM-DD");
     this.endDate = now;
+    this.getOnlineHistory();
   },
   mounted() {
     // this.asynUserInfo();
@@ -142,7 +138,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
   },
   methods: {
     ...mapActions(["asynUserInfo"]),
@@ -162,16 +158,28 @@ export default {
           }
         );
         if (res.code === 200) {
+          console.log(this.startDate);
+          console.log(this.endDate);
           let result = res.data.activeTimeDateWise;
+          this.currentActiveTime = res.data.currentActiveTime;
           console.log("result online chart");
           console.log(res);
           console.log("result online chart");
+          let totalActiveTime = 0;
+          let xAxis = [];
+          let newChartData = []; 
           result.forEach(element => {
-            this.chartData.push(parseInt(element.activeTimeInMins));
-            this.xaxis.push(element.Date);
+            totalActiveTime += parseInt(element.activeTimeInMins);
+            newChartData.push(parseInt(element.activeTimeInMins));
+            xAxis.push(element.Date);
           });
-          console.log(this.chartData);
-          console.log(this.xaxis);
+          let days = Math.floor(totalActiveTime/(24 * 60));
+          let hours = (parseInt(totalActiveTime/60) % 24);
+          let minutes = totalActiveTime%60;
+          this.totalOnlineTime = `${days ? `${days} days, ` : ``}${hours} hours and ${minutes} minutes`;
+          this.series = [{ data: newChartData }];
+          this.chartOptions.xaxis.categories = xAxis;
+          this.componentKey++;
         } else {
           console.log(res);
           //alert(res.message);
