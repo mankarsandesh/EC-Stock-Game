@@ -5,7 +5,6 @@ export default ({ store }) => {
     initLocalStorageCoin(store)
         // set language
     setLanguage(store)
-    store.dispatch("asyncPayout")
     store.dispatch("asynUserInfo")
 }
 
