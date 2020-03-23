@@ -282,7 +282,6 @@ const createStore = () => {
 
       // send bet data for multigame and footer bet on full screen
       async sendBetting(context) {
-        alert("I will fix this; => Macky");
         // set sendbetting = true
         // to show loading
         context.commit("setIsSendBetting", true);
@@ -301,6 +300,7 @@ const createStore = () => {
         }
         // console.log(betData)
         try {
+          console.log(betDatas);
           const res = await this.$axios.$post(
             "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
             {
@@ -313,12 +313,13 @@ const createStore = () => {
               headers: config.header
             }
           );
-          if (res.status) {
+          if (res.status && res.code == 200) {
+            console.log(res);
             context.commit("setIsSendBetting", false);
             context.commit("clearDataMultiGameBetsend");
             this._vm.$swal({
               type: "success",
-              title: "Confirm!",
+              title: res.message,
               showConfirmButton: false,
               timer: 1500
             });

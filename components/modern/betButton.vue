@@ -1,13 +1,5 @@
 <template>
   <div class="p-relative">
-    <h1>
-      {{
-        getAmountMultiGameBet({
-          stockId: "btc1",
-          gameRule: 1
-        })
-      }}
-    </h1>
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
@@ -48,9 +40,13 @@
           @click="betButtonClick(data.ruleid)"
         >
           <showChipAmount
-            text-center
             size="45px"
-            :amount="150"
+            :amount="
+              getAmountMultiGameBet({
+                stockId: 'btc1',
+                gameRule: 'lastdigit-' + data.rule
+              })
+            "
           ></showChipAmount>
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
