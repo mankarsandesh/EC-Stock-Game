@@ -6,16 +6,19 @@
         <v-divider></v-divider>
       </div>
     </v-flex>
-    <v-flex xs12 pt-3 pl-5 >
+    <v-flex xs12 pt-3 pl-5>
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
+          <div
+            class="date_picker_container"
+            @click="isShowDateStart = !isShowDateStart"
+          >
             <div class="title_date_picker">
               <span>from</span>
             </div>
             <div class="date_picker">
-              <span class="select_date">{{startDate}}</span>
+              <span class="select_date">{{ startDate }}</span>
               <span class="icon_date">
                 <v-icon>date_range</v-icon>
               </span>
@@ -31,19 +34,26 @@
         </v-flex>
         <!-- select end date -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
+          <div
+            class="date_picker_container"
+            @click="isShowDateEnd = !isShowDateEnd"
+          >
             <div class="title_date_picker">
               <span>to</span>
             </div>
             <div class="date_picker">
-              <span class="select_date">{{endDate}}</span>
+              <span class="select_date">{{ endDate }}</span>
               <span class="icon_date">
                 <v-icon>date_range</v-icon>
               </span>
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+            <v-date-picker
+              v-if="isShowDateEnd"
+              v-model="endDate"
+              @input="isShowDateEnd = false"
+            ></v-date-picker>
           </div>
         </v-flex>
         <!-- go button -->
@@ -52,37 +62,19 @@
             <div class="title_date_picker">
               <span></span>
             </div>
-            <button>GO</button>
-          </div>
-        </v-flex>
-        <v-flex xs6 sm6 md3 lg3 pl-5>
-          <div class="date_picker_container">
-            <div class="title_date_picker">
-              <span>Sort By</span>
-            </div>
-            <div class="date_picker">
-              <!-- sort by  -->
-              <v-menu offset-y>
-                <template v-slot:activator="{ on }">
-                  <span class="select_date">2020-02-12</span>
-                  <span class="icon_date">
-                    <v-icon v-on="on">arrow_drop_down</v-icon>
-                  </span>
-                </template>
-                <v-list>
-                  <v-list-tile v-for="(item, index) in items" :key="index">
-                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-            </div>
+            <button @click="getOnlineHistory">GO</button>
           </div>
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5" >
+    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
-        <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
+        <onlineChart
+          v-if="chartData.length > 0"
+          :chartData="chartData"
+          :xaxis="xaxis"
+          :key="randomToRender"
+        />
       </div>
     </v-flex>
     <v-flex xs12 class="pt-3 pl-5">
@@ -92,8 +84,8 @@
           <b>123</b>
         </span>
         <span style="margin-right:30px">
-          Online Time : <b>{{getUserInfo.currentActiveTime}}</b>
-          <b>{{asynUserInfo.currentActiveTime}}</b>
+          Online Time : <b>{{ getUserInfo.currentActiveTime }}</b>
+          <b>{{ asynUserInfo.currentActiveTime }}</b>
         </span>
         <span style="margin-right:30px">
           Total Online :
@@ -116,18 +108,13 @@ export default {
   },
   data() {
     return {
+      randomToRender: 0,
       chartData: [],
       xaxis: [],
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
-      endDate: "",
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" }
-      ]
+      endDate: ""
     };
   },
   created() {
@@ -161,22 +148,26 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if (res.code === 200) {
+          this.chartData = [];
+          this.xaxis = [];
           let result = res.data.activeTimeDateWise;
-          console.log("result online chart");
-          console.log(res);
-          console.log("result online chart");
           result.forEach(element => {
             this.chartData.push(parseInt(element.activeTimeInMins));
             this.xaxis.push(element.Date);
           });
-          console.log(this.chartData);
-          console.log(this.xaxis);
+          this.randomToRender = Math.floor(Math.random() * 101);
         } else {
-          console.log(res);
+          throw new Error(res.message.dateRangeTo[0]);
           //alert(res.message);
         }
       } catch (ex) {
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          showConfirmButton: true
+        });
         console.error(ex.message);
       }
     }
