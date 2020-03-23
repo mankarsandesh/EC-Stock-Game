@@ -49,14 +49,20 @@
         return-object
         id="minute"
       >
-        <template slot="selection" slot-scope="data">{{ data.item.loopName }} Minutes</template>
+        <template slot="selection" slot-scope="data"
+          >{{ data.item.loopName }} Minutes</template
+        >
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content>{{data.loopName}} Minutes</v-list-tile-content>
+            <v-list-tile-content
+              >{{ data.loopName }} Minutes</v-list-tile-content
+            >
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title>{{data.item.loopName}} Minutes</v-list-tile-title>
+              <v-list-tile-title
+                >{{ data.item.loopName }} Minutes</v-list-tile-title
+              >
             </v-list-tile-content>
           </template>
         </template>
@@ -80,7 +86,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
-import config from '../config/config.global';
+import config from "../config/config.global";
 export default {
   data() {
     return {
@@ -164,12 +170,10 @@ export default {
           config.getActiveGamesByCategory.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
-            version: 0.1
+            version: config.version
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
-            }
+            headers: config.header
           }
         );
         this.getGameUUID(data);
@@ -263,7 +267,7 @@ export default {
   }
 };
 </script>
-<style  scoped>
+<style scoped>
 .selectStock {
   font-size: 14px;
 }
@@ -271,4 +275,3 @@ export default {
   font-size: 12px;
 }
 </style>
-
