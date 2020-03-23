@@ -172,7 +172,7 @@ export default {
     async fetchChart(stockUUID) {
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
+          config.getRoadMap.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             limit: 50,

@@ -92,6 +92,7 @@ import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
+import config from '../../../config/config.global';
 export default {
   data() {
     return {};
@@ -125,7 +126,7 @@ export default {
           isAllowToLocation
         };
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/updateUserSetting",
+          config.updateUserSetting.url,
           userSetting,
           {
             headers: {

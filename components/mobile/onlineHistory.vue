@@ -193,6 +193,7 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
 import onlineChart from "./onlinechart";
+import config from '../../config/config.global';
 export default {
     components: {
         onlineChart
@@ -240,10 +241,7 @@ export default {
     computed: {
         ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
         imgProfile() {
-            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
-                "/user.png" :
-                "http://uattesting.equitycapitalgaming.com/" +
-                this.getUserInfo.profileImage;
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ? "/user.png" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
         },
         
     },
@@ -255,7 +253,7 @@ export default {
         async getOnlineHistory() {
             try {
                 const res = await this.$axios.$post(
-                    "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile", {
+                    config.getUserProfile.url, {
                         portalProviderUUID: this.getPortalProviderUUID,
                         userUUID: this.getUserUUID,
                         dateRangeFrom: "2020-02-02",

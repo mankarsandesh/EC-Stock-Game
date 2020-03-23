@@ -174,6 +174,7 @@ import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
+import config from '../../config/config.global';
 // set color win and lose color in bar chart
 let index = 0;
 let barColor = [
@@ -195,10 +196,7 @@ export default {
     computed: {
         ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
         imgProfile() {
-            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ?
-                "/user.png" :
-                "http://uattesting.equitycapitalgaming.com/" +
-                this.getUserInfo.profileImage;
+            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ? "/user.png" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
         },
     },
     destroyed() {
@@ -370,7 +368,7 @@ export default {
         async getOnlineHistory() {
             try {
                 const res = await this.$axios.$post(
-                    "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile", {
+                    config.getUserProfile.url, {
                         portalProviderUUID: this.getPortalProviderUUID,
                         userUUID: this.getUserUUID,
                         dateRangeFrom: "2020-02-02",

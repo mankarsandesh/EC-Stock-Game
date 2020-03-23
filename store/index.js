@@ -208,7 +208,7 @@ const createStore = () => {
         context.state.roadMap = [];
         try {
           const res = await this.$axios.$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
+            config.getRoadMap.url,
             {
               portalProviderUUID: context.state.portalProviderUUID,
               limit: 50,
@@ -232,7 +232,7 @@ const createStore = () => {
       async asyncStocks(context) {
         try {
           const res = await this.$axios.$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/getStock",
+            config.getStock.url,
             {
               portalProviderUUID: context.state.portalProviderUUID,
               version: config.version
@@ -255,7 +255,7 @@ const createStore = () => {
       async asynUserInfo(context) {
         try {
           const res = await this.$axios.$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile",
+            config.getUserProfile.url,
             {
               portalProviderUUID: context.state.portalProviderUUID,
               userUUID: context.state.userUUID,
@@ -276,33 +276,19 @@ const createStore = () => {
           // alert(ex)
         }
       },
-
       // end new api
-      async asyncPayout(context) {
-        try {
-          // const respayoutinitial = await this.$axios.$get(
-          //     `/api/payoutinitial2?stockId=7&apikey=${context.getters.getAuth_token}`
-          // );
-          // const res = await this.$axios.$post(
-          //     `/api/gameRuleStock?stockId=7&apikey=${context.getters.getAuth_token}`
-          // );
-          // console.log(res)
-          // context.state.payout = res.data;
-          // console.log(context.state.payout)
-          // context.commit("setUserData", {name:userInfo})
-        } catch (ex) {
-          console.error(ex);
-          // alert(ex)
-        }
-      },
-      // end get user info from api
+      // end new api
+      // end new api
+
+      // send bet data for multigame and footer bet on full screen
       async sendBetting(context) {
+        // set sendbetting = true
+        // to show loading
         context.commit("setIsSendBetting", true);
-        // console.warn("sendBetting...");
-        const betData = {
+        const betDatas = {
           data: [...context.state.multiGameBetsend]
         };
-        if (betData.data.length == 0) {
+        if (betDatas.data.length == 0) {
           context.commit("setIsSendBetting", false);
           this._vm.$swal({
             type: "error",
@@ -314,19 +300,26 @@ const createStore = () => {
         }
         // console.log(betData)
         try {
+          console.log(betDatas);
           const res = await this.$axios.$post(
-            `/api/storebet?apikey=${context.getters.getAuth_token}`,
-            betData
+            "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+            {
+              portalProviderUUID: context.state.portalProviderUUID,
+              userUUID: context.state.userUUID,
+              version: config.version,
+              betData: betDatas
+            },
+            {
+              headers: config.header
+            }
           );
-          // console.log("res./.......");
-          // console.log(res);
-          // console.log("res...........");
-          if (res.status) {
+          if (res.status && res.code == 200) {
+            console.log(res);
             context.commit("setIsSendBetting", false);
             context.commit("clearDataMultiGameBetsend");
             this._vm.$swal({
               type: "success",
-              title: "Confirm!",
+              title: res.message,
               showConfirmButton: false,
               timer: 1500
             });
@@ -569,7 +562,7 @@ const createStore = () => {
           .map(x => x.betAmount)
           .reduce((a, b) => a + b, 0);
         let amount2 = state.multiGameBet
-          .map(x => x.amount)
+          .map(x => x.betAmount)
           .reduce((a, b) => a + b, 0);
         return amount1 + amount2;
       },
@@ -587,7 +580,7 @@ const createStore = () => {
           if (object.findIndex(x => x.stockId === stockId) == -1) return 0;
           let result = object
             .filter(x => x.stockId === stockId)
-            .map(x => x.amount)
+            .map(x => x.betAmount)
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
@@ -607,76 +600,63 @@ const createStore = () => {
       },
       // to show ship and amount on bet button
       getAmountMultiGameBet: state => data => {
-        // console.log(state.multiGameBet)
+        // get total bottom bet amount
         function getAmount(object) {
-          // find stockId
-          if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0;
-          // get data by stockId
-          let stockIdObject = object.filter(x => x.stockId === data.stockId);
-          // check rule in stockId
-          if (stockIdObject.findIndex(x => x.gameRule === data.gameRule) == -1)
+          // check gameUUID is exist or not,if not return 0
+          if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1)
             return 0;
-          // get amount by rule
-          let result = stockIdObject
-            .filter(x => x.gameRule === data.gameRule)
-            .map(x => x.amount)
-            .reduce((a, b) => a + b, 0);
-          return parseInt(result);
-        }
-
-        function getAmountbet(object) {
-          // find stockname
-          if (object.findIndex(x => x.stock === stockId) == -1) return 0;
-          let result = object
-            .filter(x => x.stock === stockId)
+          // get data by gameUUID and store in 'oneGameUUID'
+          let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
+          // check there is ruleid in gameUUID or not,if no has return 0
+          if (oneGameUUID.findIndex(x => x.ruleID === data.ruleID) == -1)
+            return 0;
+          // get gameUUID by from 'oneGameUUID'
+          let result = oneGameUUID
+            .filter(x => x.ruleID === data.ruleID)
             .map(x => x.betAmount)
-            .reduce((a, b) => a + b, 0);
-          return parseInt(result);
-        }
-        return getAmount(state.multiGameBet) + getAmountbet(state.onGoingBet);
-      },
-      // to show ship and amount on bet button
-      getAmountMultiGameBet: state => data => {
-        // console.log(state.multiGameBet)
-        function getAmount(object) {
-          // find stockId
-          if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0;
-          // get data by stockId
-          let stockIdObject = object.filter(x => x.stockId === data.stockId);
-          // check rule in stockId
-          if (stockIdObject.findIndex(x => x.gameRule === data.gameRule) == -1)
-            return 0;
-          // get amount by rule
-          let result = stockIdObject
-            .filter(x => x.gameRule === data.gameRule)
-            .map(x => x.amount)
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
         function getAmounts(object) {
           // find stockId
-          if (object.findIndex(x => x.stock === data.stockId) == -1) return 0;
+          if (object.findIndex(x => x.stock === data.ruleID) == -1) return 0;
           // get data by stockId
-          let stockIdObject = object.filter(x => x.stock === data.stockId);
+          let stockIdObject = object.filter(x => x.stock === data.ruleID);
           // check rule in stockId
-          if (stockIdObject.findIndex(x => x.rule === data.gameRule) == -1)
+          if (stockIdObject.findIndex(x => x.rule === data.ruleID) == -1)
             return 0;
           // get amount by rule
           let result = stockIdObject
-            .filter(x => x.rule === data.gameRule)
+            .filter(x => x.rule === data.ruleID)
             .map(x => x.betAmount)
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
-        return getAmount(state.multiGameBet) + getAmounts(state.onGoingBet);
+        return getAmount(state.multiGameBet);
       },
       getAmountBetSpecificNumber: state => data => {
+        let start = 2000;
+        let end = 2000;
+        if (data.ruleID === "firstdigit") {
+          start = 8;
+          end = 17;
+        } else if (data.ruleID === "lastdigit") {
+          start = 25;
+          end = 34;
+        } else if (data.ruleID === "bothdigit") {
+          start = 149;
+          end = 167;
+        } else {
+          start = 42;
+          end = 141;
+        }
         function getAmount(object) {
           let count = 9;
           // find stockId
-          if (object.findIndex(x => x.stock === data.stockId) == -1) return 0;
+          if (object.findIndex(x => x.gameUUID === data.gameUUID) == -1)
+            return 0;
           // get data by stockId
-          let stockIdObject = object.filter(x => x.stock === data.stockId);
+          let stockIdObject = object.filter(x => x.gameUUID === data.gameUUID);
           // check rule in stockId
           // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
           // get amount by rule
@@ -685,16 +665,14 @@ const createStore = () => {
             result =
               result +
               stockIdObject
-                .filter(x =>
-                  x.rule.toLowerCase().includes(`${data.gameRule}-${i}`)
-                )
+                .filter(x => x.ruleID >= start && x.ruleID <= end)
                 .map(x => x.betAmount)
                 .reduce((a, b) => a + b, 0);
           }
-          // .map(x => x.amount).reduce((a, b) => a + b, 0)
           return result;
         }
-        return getAmount(state.multiGameBet) + getAmount(state.onGoingBet);
+        return getAmount(state.multiGameBet);
+        //  + getAmount(state.onGoingBet);
       },
       //get betting data
       getOnBetting(state) {

@@ -1414,8 +1414,8 @@ export default {
         }
         return (
           this.getTimerByStockName(this.$route.params.id) &&
-          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec >
-            240
+          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec <=
+            60
         );
       } else {
         if (
@@ -1427,8 +1427,8 @@ export default {
         }
         return (
           this.getTimerByStockName(this.$route.params.id) &&
-          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec >
-            40
+          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec <=
+            20
         );
       }
     }
@@ -1495,11 +1495,11 @@ export default {
       let finalData = betData;
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+          config.storeBet.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
-            version: "1.0",
+            version: config.version,
             betData: [finalData]
           },
           {

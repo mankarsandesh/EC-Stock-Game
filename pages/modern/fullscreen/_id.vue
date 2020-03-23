@@ -155,10 +155,15 @@
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3>
-          <h3 class="balanceUser">Acc : {{ getUserInfo.balance | currency }}</h3>
+          <h3 class="balanceUser">
+            Acc : {{ getUserInfo.balance | currency }}
+          </h3>
           <!-- Toggle between two components -->
           <fullscreenchart v-if="!isHidden"></fullscreenchart>
-          <fullscreencurrentbet v-else :desserts="desserts"></fullscreencurrentbet>
+          <fullscreencurrentbet
+            v-else
+            :desserts="desserts"
+          ></fullscreencurrentbet>
           <v-layout pa-3>
             <v-flex xs3 sm3 md3 lg3 pt-2>
               <span class="seticon">
@@ -269,6 +274,7 @@ import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
+import config from "../../../config/config.global";
 
 export default {
   async validate({ params, store }) {
@@ -300,6 +306,7 @@ export default {
     };
   },
   created() {
+    this.getActiveGamesByCategory();
     this.getSotckId();
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
   },
@@ -382,13 +389,28 @@ export default {
     ])
   },
   methods: {
-    ...mapMutations(["setLiveRoadMap"]),
+    ...mapMutations(["setLiveRoadMap", "SET_STOCK_CATEGORY"]),
     ...mapActions(["asyncRoadMap"]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
-    test() {
-      console.warn(this.$router.history);
+    async getActiveGamesByCategory() {
+      try {
+        const { data } = await this.$axios.$post(
+          config.getActiveGamesByCategory.url,
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            version: config.version
+          },
+          {
+            headers: config.header
+          }
+        );
+        this.SET_STOCK_CATEGORY(data);
+        this.items = data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     formatToPrice(value) {
       return `$ ${Number(value)
@@ -510,7 +532,7 @@ export default {
           offset: "0" // offset or skip the data
         };
         const { data } = await this.$axios.post(
-          "http://uattesting.equitycapitalgaming.com/webApi/getAllBets", // after finish crawl the every API will the the baseURL from AXIOS
+          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
           data1, // data object
           {
             headers: {
