@@ -1202,3 +1202,11 @@ p.guideline {
   min-height: 150px;
   text-align: center;
 }
+/* Error Class */
+.text-danger{
+  border-radius: 4px;
+  color: #f44336; 
+  border:1px dotted #f44336;
+  padding: 6px 8px;
+  font-size: 14px;
+}

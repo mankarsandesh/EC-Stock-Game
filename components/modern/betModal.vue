@@ -165,7 +165,7 @@ export default {
         );       
         console.log("Betting");
         console.log(res);
-        if (res.data.status = true) {
+        if (res.data[0].status = true) {
           this.closePopper();
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
@@ -185,7 +185,7 @@ export default {
           this.confirmDisabled = false;
           this.$swal({
             type: "error",
-            title: `Error ${res.message}`,
+            title: `Error ${res.data[0],message}`,
             showConfirmButton: true
           });
         }

@@ -1,6 +1,6 @@
 <template>
-  <div  v-if="topPlayerData.length > 0">
-    <v-flex     
+  <div v-if="topPlayerData.length > 0">
+    <v-flex
       xs12
       md10
       lg10
@@ -9,17 +9,13 @@
       v-for="(data, index) in topPlayerData"
       :key="index"
       id="userRow"
-      
     >
       <div class="userRow">
-        
-        <th  style="vertical-align:top;">
+        <th style="vertical-align:top;">
           <div>
-            <img class="pimage"
-            :src="getImgUrl(data.userImage)"
-          />
+            <img class="pimage" :src="getImgUrl(data.userImage)" />
           </div>
-          
+
           <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
@@ -65,9 +61,7 @@
           >
         </th>
         <th v-if="data.isFollowing == -1" style="width:20%;">
-          <v-btn class="buttonGreensmall " 
-            >Yourself
-          </v-btn>
+          <v-btn class="buttonGreensmall ">Yourself </v-btn>
         </th>
       </div>
     </v-flex>
@@ -91,11 +85,14 @@
             {{ this.username }}
           </h3>
         </v-card-text>
+        <v-flex>
+          <p v-if="FollwingError" class="text-danger">{{ errorMessage }}</p>
+        </v-flex>
         <v-card-actions>
           <v-flex lg6 pr-4>
             <v-select
               :items="followby"
-              label="Select bet type"
+              label="Select Follow type"
               v-model="selectedFollow"
               item-text="name"
               item-value="value"
@@ -110,6 +107,7 @@
               v-if="selectRate"
               append-icon="money"
               v-model="rateValue"
+              @keypress="onlyNumber"
             ></v-text-field>
             <v-text-field
               solo
@@ -139,6 +137,8 @@ import config from "../../../config/config.global";
 export default {
   data() {
     return {
+      FollwingError: false,
+      errorMessage: "",
       FollowName: "Follow",
       selectRate: false,
       selectAmount: true,
@@ -148,8 +148,8 @@ export default {
       FollowUserUUID: "",
       method: "",
       UserfollowType: "",
-      amountValue: "100",
-      rateValue: "10",
+      amountValue: 100,
+      rateValue: 10,
       BetValue: "",
       username: "",
       userImage: "",
@@ -169,7 +169,9 @@ export default {
   },
   methods: {
     getImgUrl(userImage) {
-      return userImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + userImage;
+      return userImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/` + userImage;
     },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -215,35 +217,42 @@ export default {
       } else if (this.FolloworNot == 1) {
         this.FollowMethod = "unfollow";
       }
-      const LeaderBoardData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        followToID: this.FollowUserUUID,
-        method: this.FollowMethod,
-        followType: this.selectedFollow,
-        value: this.BetValue,
-        version: 1
-      };
-      console.log(LeaderBoardData);
-      try {
-        const { data } = await this.$axios.post(
-          config.followUser.url,
-          LeaderBoardData,
-          {
-            headers: config.header
-          }
-        );
-
-        this.followData = data;
-        console.log(this.followData);
-        location.reload();
-        if ((data.status = 200)) {
-          this.FollowName = "Following";
-        } else {
-          console.log(this.followData);
-        }
-      } catch (error) {
-        console.log(error);
+      console.log(this.amountValue);
+      if (this.selectedFollow && this.BetValue) {
+        
+            const LeaderBoardData = {
+              portalProviderUUID: this.portalProviderUUID,
+              userUUID: this.userUUID,
+              followToID: this.FollowUserUUID,
+              method: this.FollowMethod,
+              followType: this.selectedFollow,
+              value: this.BetValue,
+              version: 1
+            };
+            console.log(LeaderBoardData);
+            try {
+              const { data } = await this.$axios.post(
+                config.followUser.url,
+                LeaderBoardData,
+                {
+                  headers: config.header
+                }
+              );
+              this.followData = data;
+              console.log(this.followData);
+              // location.reload();
+              if ((data.status = 200)) {
+                this.FollowName = "Following";
+              } else {
+                console.log(this.followData);
+              }
+            } catch (error) {
+              console.log(error);
+            }
+         
+      } else {
+        this.FollwingError = true;
+        this.errorMessage = "Follwing type is not selected.";
       }
     },
     changeAmountRate() {
