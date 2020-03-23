@@ -163,7 +163,7 @@ export default {
       let finalData = betData;
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+          config.storeBet.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,

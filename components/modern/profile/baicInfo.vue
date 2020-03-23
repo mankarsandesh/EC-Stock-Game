@@ -143,6 +143,7 @@ import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
+import config from '../../../config/config.global';
 export default {
   data() {
     return {
@@ -176,7 +177,7 @@ export default {
       formData.append("version", 1);
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+          config.updateUserProfile.url,
           formData,
           {
             headers: {

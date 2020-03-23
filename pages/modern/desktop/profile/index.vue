@@ -7,8 +7,9 @@
             <div class="decorator_card decorator_card_green"></div>
             <span>account balance</span>
             <br />
-            <span class="amount">{{userData.balance | currency}}</span>
-            <span class="title_currentcy">kip</span>
+            <span class="amount" v-if="userData.balance != 0">{{userData.balance | currency}}</span>
+             <span class="amount" v-if="userData.balance == 0">00.00</span>
+            <span class="title_currentcy">USD</span>
           </div>
         </v-flex>
         <v-flex xs6 sm6 md6 lg4>
@@ -18,7 +19,7 @@
             <span>rolling amount</span>
             <br />
             <span class="amount">{{161536 | currency}}</span>
-            <span class="title_currentcy">kip</span>
+            <span class="title_currentcy">USD</span>
           </div>
         </v-flex>
       </v-layout>
@@ -29,6 +30,10 @@
           <div style="margin-top:20px">
             <form action="/action_page.php">
               <div class="row">
+
+                 <p class=error-message v-if="error">{{error}}</p> 
+                   
+
                 <div class="col-15">
                   <label for="username">Username</label>
                 </div>
@@ -127,7 +132,8 @@
                   </span>
                 </div>
               </div>
-              <p class=error-message>{{error}}</p>
+                
+             
               <div class="row">
                 <div class="col-15"></div>
                 <div class="col-85">
@@ -190,21 +196,27 @@ export default {
       formData.append("version", config.version);
       try {
         const res = await this.$axios.$post(
-          "http://uattesting.equitycapitalgaming.com/webApi/updateUserProfile",
+          config.updateUserProfile.url,
           formData,
           {
             headers: config.header
           }
-        );
+        );        
         if (res.code === 200) {
           console.log('basic info', res);
+          this.$swal({
+            type: "success",
+            title: "Successful Information Saved!",
+            showConfirmButton: false,
+            timer: 1500
+          });          
           this.asynUserInfo();
-          this.updating = false;
+          this.updating = false;         
           this.error = '';
-        } else {
-          alert(res.message);
+        } else {         
           this.updating = false;
           this.error = res.message;
+          this.msgError = true;
           console.log(res);
         }
       } catch (ex) {
@@ -239,7 +251,13 @@ select {
   cursor: pointer;
 }
 .error-message {
+  border:1px solid red;
+  padding:8px 10px;
   color: red;
+  width: 40%;
+  text-transform: capitalize;
+  border-radius:4px;
+  background-color: #FBD7D7;
 }
 input:focus,
 select:focus {

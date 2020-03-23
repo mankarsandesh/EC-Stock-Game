@@ -820,7 +820,7 @@ main.v-content {
 /* -------------------------------------------------------------------------- */
 .application {
   .v-autocomplete__content.v-menu__content {
-    border-radius: 5px;   
+    border-radius: 5px;
   }
 }
 .layout.select-stock {
@@ -847,7 +847,7 @@ main.v-content {
             input,
             .v-select__selections {
               margin: 0 0 0 10px;
-              color:#333;
+              color: #333;
               text-transform: capitalize;
             }
           }
@@ -967,3 +967,59 @@ section.filter {
     }
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*                                select stock                                */
+/* -------------------------------------------------------------------------- */
+
+.application {
+  .v-menu__content.menuable__content__active {
+    -webkit-animation: slide-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: slide-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    top: 134px !important;
+    border-radius: 9px;
+    .v-select-list {
+      .v-list {
+        .blue--text {
+          .v-list__tile {
+            height: 30px !important;
+          }
+        }
+      }
+    }
+    .v-select-list {
+      .v-list {
+        div {
+          a.v-list__tile {
+            height: 30px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@-webkit-keyframes menuable__content__active {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+  }
+}
+@keyframes menuable__content__active {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                       This is the end of select stock                      */
+/* -------------------------------------------------------------------------- */

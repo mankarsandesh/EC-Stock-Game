@@ -208,7 +208,7 @@ const createStore = () => {
         context.state.roadMap = [];
         try {
           const res = await this.$axios.$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/getRoadMap",
+            config.getRoadMap.url,
             {
               portalProviderUUID: context.state.portalProviderUUID,
               limit: 50,
@@ -232,7 +232,7 @@ const createStore = () => {
       async asyncStocks(context) {
         try {
           const res = await this.$axios.$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/getStock",
+            config.getStock.url,
             {
               portalProviderUUID: context.state.portalProviderUUID,
               version: config.version
@@ -255,7 +255,7 @@ const createStore = () => {
       async asynUserInfo(context) {
         try {
           const res = await this.$axios.$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/getUserProfile",
+            config.getUserProfile.url,
             {
               portalProviderUUID: context.state.portalProviderUUID,
               userUUID: context.state.userUUID,
