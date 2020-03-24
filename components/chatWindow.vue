@@ -107,8 +107,10 @@ export default {
   },
   data() {
     return {
-      getGameChannel: true,
+      getGameChannel: false,
       newMessages: [],
+      urlName: this.$route,
+      activeUrl: ["modern-desktop-id", "modern-multigame-id", "modern-fullscreen-id"],
       gameUUID: "b78548b9-05a1-4a9a-826e-288010df28d0",     
       isActiveTab1: true,
       isActiveTab2: false,
@@ -128,6 +130,16 @@ export default {
   computed: {
     ...mapGetters(["getUserName", "getStockType","getStockGameId"]),
     ...mapState(["portalProviderUUID", "headers", "userUUID"])
+  },
+  watch: {
+    urlName: function () {
+      console.log('watchingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg')
+      if(this.activeUrl.includes(this.$route.name)) {
+      this.getGameChannel = true;
+      } else {
+        this.getGameChannel = false;
+      }
+    }
   },
   mounted() {
     // Global Channel
@@ -176,7 +188,11 @@ export default {
         1000
       );
   },
-  created() {},
+  created() {
+    if(this.activeUrl.includes(this.$route.name)) {
+      this.getGameChannel = true;
+    }
+  },
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
