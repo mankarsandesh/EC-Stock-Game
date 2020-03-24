@@ -59,7 +59,7 @@
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5" >
       <div class="chart_container">
-        <VueApexCharts type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
+        <VueApexCharts type="bar" height="350" v-if="dataReady" :options="chartOptions" :series="series" :key="componentKey" />
       </div>
     </v-flex>
     <v-flex xs12 class="pt-3 pl-5">
@@ -80,7 +80,6 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
-//import onlineChart from "../../../../components/modern/profile/onlinechart";
 import config from "../../../../config/config.global";
 import VueApexCharts from "vue-apexcharts";
 export default {
@@ -93,6 +92,7 @@ export default {
       componentKey: 0,
       totalOnlineTime: "",
       currentActiveTime: "",
+      dataReady: false,
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
@@ -101,6 +101,11 @@ export default {
         chart: {
           height: 350,
           type: 'bar',
+          // events: {
+          //   click: function (chart, w, e) {
+          //     console.log(chart, e);
+          //   }
+          // }
           },
         plotOptions: {
           bar: {
@@ -121,20 +126,43 @@ export default {
               fontSize: '12px'
             }
           }
-        }
+        },
+        // tootltip: {
+        //   enabled: false,
+        //   followCurso: true,
+        //   intersect: true,
+        //   onDataSetHover: {
+        //     highlightDataSeries: false
+        //   },
+        //   x: {
+        //     show: false
+        //   },
+        //   custom: function({series, seriesIndex, dataPointIndex, w}) {
+        //     console.log('ayaaaaaaaaa');
+        //     return '<div class="arrow_box">' +
+        //         '<span>' + series[seriesIndex][dataPointIndex] + '</span>' +
+        //       '</div>'
+        //   },
+        //   y: {
+        //     formatter: function (val, {series, seriesIndex, dataPointIndex, w}) {
+        //       console.log('ayaayaaaaaaaaa');
+        //       return '<div class="arrow-box">' +
+        //           '<span> Active minutes: ' + series[seriesIndex] + '</span>'
+        //         '</div>'
+        //     }
+        //   }
+        // },
       },
     };
   },
-  created() {
+  async created() {
     const now = date.format(new Date(), "YYYY-MM-DD");
     const lastWeek = date.addDays(new Date(), -7);
     this.startDate = date.format(lastWeek, "YYYY-MM-DD");
     this.endDate = now;
-    this.getOnlineHistory();
   },
-  mounted() {
-    // this.asynUserInfo();
-    this.getOnlineHistory();
+  async mounted() {
+    await this.getOnlineHistory();
   },
 
   computed: {
@@ -158,26 +186,22 @@ export default {
           }
         );
         if (res.code === 200) {
-          console.log(this.startDate);
-          console.log(this.endDate);
+          this.dataReady = true;
           let result = res.data.activeTimeDateWise;
           this.currentActiveTime = res.data.currentActiveTime;
-          console.log("result online chart");
-          console.log(res);
-          console.log("result online chart");
           let totalActiveTime = 0;
           let xAxis = [];
-          let newChartData = []; 
+          let chartData = []; 
           result.forEach(element => {
             totalActiveTime += parseInt(element.activeTimeInMins);
-            newChartData.push(parseInt(element.activeTimeInMins));
+            chartData.push(parseInt(element.activeTimeInMins));
             xAxis.push(element.Date);
           });
           let days = Math.floor(totalActiveTime/(24 * 60));
           let hours = (parseInt(totalActiveTime/60) % 24);
           let minutes = totalActiveTime%60;
           this.totalOnlineTime = `${days ? `${days} days, ` : ``}${hours} hours and ${minutes} minutes`;
-          this.series = [{ data: newChartData }];
+          this.series = [{ data: chartData }];
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {
