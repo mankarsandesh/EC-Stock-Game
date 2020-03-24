@@ -4,11 +4,12 @@
       <v-data-table
         :headers="head"
         :items="currentBets"
-        :items-per-page="5"
+        :items-per-page="5"        
         ref="table"
         :search="search"
         class="current-bet"
       >
+      <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
         <template v-slot:items="item">
           <td>{{ item.item.betID }}</td>
           <td>{{ item.item.gameID }}</td>
@@ -16,19 +17,9 @@
             {{ item.item.ruleName }} - ({{ item.item.payout }})
             {{ item.item.stockName }} / {{ item.item.loop }}
           </td>
-          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
+          <td>{{ item.item.createdDate }} {{ item.item.createdTime }} </td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
-          <td>{{ item.item.payout }}</td>
-          <td v-if="item.item.betResult == 'win'">
-            <span color="indigo" class="win">{{
-              item.item.betResult
-            }}</span>
-          </td>
-          <td v-if="item.item.betResult == 'lose'">
-            <span class="lose">{{
-              item.item.betResult
-            }}</span>
-          </td>
+          <td>{{ item.item.payout }}</td>        
           <td v-if="item.item.betResult == 'pending'">
             <span  class="pending"
               >{{ item.item.betResult }}...</span>            

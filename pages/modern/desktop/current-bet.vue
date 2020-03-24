@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       head: [
-        { text: "bet ID", value: "betID" },
+        { text: "bet ID", value: "betID" , sortable: true ,value:'createdTime'},
         { text: "game ID", value: "gameID" },
         { text: "bet detail", value: "ruleName" },
         { text: "time", value: "createdTime" },
@@ -57,6 +57,7 @@ export default {
           }
         );
         this.currentBets = data.data; 
+        console.log(this.currentBets);
       } catch (error) {
         console.log(data);
       }

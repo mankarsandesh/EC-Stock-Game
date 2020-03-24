@@ -14,7 +14,7 @@
           :expanded="expanded"
         >
           <template v-slot:items="item">
-            <tr @click="clicked(item.item.betID)" class="selectRow"> 
+            <tr @click="clicked(item.item.betID)" class="selectRow">
               <td>{{ item.item.betID }}</td>
               <td>{{ item.item.gameID }}</td>
               <td>
@@ -151,12 +151,12 @@ export default {
 };
 </script>
 <style scoped>
-.selectRow{
+.selectRow {
   cursor: pointer;
 }
-.extraInfo { 
+.extraInfo {
   padding: 10px;
-  height: 80px;
+  height: 70px;
   background-color: #f3f3f3;
 }
 .lose {
