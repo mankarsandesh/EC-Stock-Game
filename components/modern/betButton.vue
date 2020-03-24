@@ -147,7 +147,7 @@
         </v-btn>
       </span>
     </v-layout>
-    <!-- Row betting button2 -->
+    <!-- Row betting button2 --> 
     <!-- Row betting button3 -->
     <v-layout row>
       <span class="w12 buttonbtn">
