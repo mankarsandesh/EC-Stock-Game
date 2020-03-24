@@ -11,8 +11,8 @@
       >
       <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
         <template v-slot:items="item">
-          <td>{{ item.item.betID }}</td>
-          <td>{{ item.item.gameID }}</td>
+          <td>{{ item.item.betUUID }}</td>
+          <td>{{ item.item.gameUUID }}</td>
           <td>
             {{ item.item.ruleName }} - ({{ item.item.payout }})
             {{ item.item.stockName }} / {{ item.item.loop }}

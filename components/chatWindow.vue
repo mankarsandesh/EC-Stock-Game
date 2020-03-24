@@ -130,7 +130,8 @@ export default {
     ...mapState(["portalProviderUUID", "headers", "userUUID"])
   },
   mounted() {
-    // Global Channel
+    console.log(this.getStockGameId);
+    console.log("Hello");
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,

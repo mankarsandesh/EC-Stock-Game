@@ -67,14 +67,20 @@
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md2>
-                <v-btn class="goButton" @click="searchBetHistory()"> <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>&nbsp;Go</v-btn>
+                <v-btn class="goButton" @click="searchBetHistory()">
+                  <i
+                    v-if="loadingImage"
+                    class="fa fa-circle-o-notch fa-spin"
+                  ></i
+                  >&nbsp;Go</v-btn
+                >
               </v-flex>
             </v-layout>
           </v-flex>
           <v-flex xs12 sm12 md6>
             <v-layout>
-              <v-flex xs6>                
-                 <v-text-field
+              <v-flex xs6>
+                <v-text-field
                   v-model="search"
                   append-icon="search"
                   label="Search"
@@ -85,6 +91,8 @@
               </v-flex>
               <v-flex xs6>
                 <v-select
+                  @change="sortingBy"
+                  v-model="sortby"
                   hide-details
                   :items="dropdown_font"
                   placeholder="Sort By"
@@ -96,7 +104,11 @@
       </v-container>
     </section>
     <!-- <fillterHistory /> -->
-    <bethistory :head="head" :search="search" :userBetHistory="userBetHistory" />
+    <bethistory
+      :head="head"
+      :search="search"
+      :userBetHistory="userBetHistory"
+    />
   </div>
 </template>
 
@@ -115,13 +127,14 @@ export default {
   },
   data() {
     return {
-      search : "",
-      loadingImage : false,
+      sortby: "",
+      search: "",
+      loadingImage: false,
       dateFrom: "",
       from: false,
       dateTo: "",
       to: false,
-      dropdown_font: ["day", "Week", "year"],
+      dropdown_font: ["Today", "This Week", "This Month"],
       head: [
         {
           text: "bet ID",
@@ -156,12 +169,52 @@ export default {
     this.fetch();
   },
   methods: {
+    sortingBy() {
+      console.log(this.sortby);
+      if (this.sortby == "Today") {
+        console.log(this.sortby);
+        const today = new Date();
+        const lastWeek = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 1
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = lastWeek;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.fetch();
+      } else if (this.sortby == "This Week") {
+        const today = new Date();
+        const lastWeek = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 7
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = lastWeek;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.fetch();
+      } else if (this.sortby == "This Month") {
+        const today = new Date();
+        const lastWeek = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 30
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = lastWeek;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.fetch();
+      }
+    },
     searchBetHistory() {
       this.loadingImage = true;
       if (this.dateFrom && this.dateTo) {
-        this.fetch();        
-      } 
-      
+        this.fetch();
+      }
     },
     async fetch() {
       const userData = {
@@ -169,7 +222,7 @@ export default {
         userUUID: this.userUUID, // get the userUUID with the this object
         version: config.version, // version of API
         betResult: [0, 1], // -1= pending, 0= lose , 1 = win
-        limit: "50", 
+        limit: "50",
         offset: "0", // offset or skip the data,
         dateRangeFrom: this.dateFrom,
         dateRangeTo: this.dateTo
@@ -182,33 +235,58 @@ export default {
         }
       );
       this.userBetHistory = data.data;
-       this.loadingImage = false;
+      console.log(this.userBetHistory);
+      this.loadingImage = false;
     }
   }
 };
 </script>
 
 <style scoped>
-.filter{
+.filter {
   padding: 10px;
 }
-.goButton{ 
+.goButton {
   background-color: #1db42f;
   color: #fff !important;
   font-size: 16px;
   border-radius: 8px;
   height: 40px;
   background: rgba(10, 177, 118, 1);
-  background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(10, 177, 118, 1)), color-stop(100%, rgba(14, 177, 30, 1)));
+  background: -moz-linear-gradient(
+    left,
+    rgba(10, 177, 118, 1) 0%,
+    rgba(14, 177, 30, 1) 100%
+  );
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(10, 177, 118, 1)),
+    color-stop(100%, rgba(14, 177, 30, 1))
+  );
   -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
-  background: -webkit-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-  background: -o-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-  background: -ms-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-  background: linear-gradient(to right, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: -webkit-linear-gradient(
+    left,
+    rgba(10, 177, 118, 1) 0%,
+    rgba(14, 177, 30, 1) 100%
+  );
+  background: -o-linear-gradient(
+    left,
+    rgba(10, 177, 118, 1) 0%,
+    rgba(14, 177, 30, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    left,
+    rgba(10, 177, 118, 1) 0%,
+    rgba(14, 177, 30, 1) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgba(10, 177, 118, 1) 0%,
+    rgba(14, 177, 30, 1) 100%
+  );
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0ab176', endColorstr='#0eb11e', GradientType=1);
-
 }
 </style>

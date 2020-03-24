@@ -13,9 +13,9 @@
           show-expand
         >
           <template v-slot:items="item">
-            <tr @click="clicked(item.item.betID)" class="selectRow">
-              <td>{{ item.item.betID }}</td>
-              <td>{{ item.item.gameID }}</td>
+            <tr @click="clicked(item.item.betUUID)" class="selectRow">
+              <td>{{ item.item.betUUID }}</td>
+              <td>{{ item.item.gameUUID }}</td>
               <td>
                 {{ item.item.ruleName }} - ({{ item.item.payout }})
                 {{ item.item.stockName }} / {{ item.item.loop }}
@@ -33,7 +33,7 @@
                 <span class="pending">{{ item.item.betResult }}...</span>
               </td>
             </tr>
-            <tr style="display:none;" class="extraInfo" :id="item.item.betID">
+            <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
               <td colspan="2">
                 <span class="betDraw">BET DRAW :</span>
                 <span
@@ -60,7 +60,7 @@
                 ></span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount == 0">
-                <span class="betDraw"> Your Lossing Amount : </span
+                <span class="betDraw"> Your Loosing Amount : </span
                 ><span class="lossAmount"> {{ item.item.betAmount }} </span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount != 0">
@@ -120,9 +120,9 @@ export default {
     }
   },
   methods: {
-    clicked(betID) {
+    clicked(betUUID) {
       $(".extraInfo").hide();
-      $("#" + betID).show();
+      $("#" + betUUID).show();
     }
   },
   computed: {

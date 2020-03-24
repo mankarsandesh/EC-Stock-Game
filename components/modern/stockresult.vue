@@ -24,7 +24,7 @@
                   :to="'/modern/desktop/' + data.stockName"
                 >{{ $t(`stockname.${data.stockName}`) }} {{ data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
               </td>
-              <td class="text-xs-center">{{ data.stockTimestamp }}</td>
+              <td class="text-xs-center">{{ data.stockTimeStamp }}</td>
               <td class="text-xs-center">{{ roundValue(data.stockValue) }}</td>
             </tr>
           </table>
