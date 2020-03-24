@@ -101,14 +101,18 @@ export default {
     };
   },
   watch: {
-    stock(value) {  // when value is changed this value will do the list 
-      if (this.stockSocket) { // check the stockSocket is come or not 
-        this.stockSocket = false;  // after value is come we set value of stickSocket is flase 
-      } else {  // after value is false the logic will be come in this case 
-        if (value !== "") {   // after reveide the value we have to check the value is not empty 
-          this.stockName = "";  // after value is not empty we clear the value is first 
-          this.stockNames = value.stocks;  // after clear the push the array into the items 
-          $("#stockName").click();   // after have the value we have to click the box
+    stock(value) {
+      // when value is changed this value will do the list
+      if (this.stockSocket) {
+        // check the stockSocket is come or not
+        this.stockSocket = false; // after value is come we set value of stickSocket is flase
+      } else {
+        // after value is false the logic will be come in this case
+        if (value !== "") {
+          // after reveide the value we have to check the value is not empty
+          this.stockName = ""; // after value is not empty we clear the value is first
+          this.stockNames = value.stocks; // after clear the push the array into the items
+          $("#stockName").click(); // after have the value we have to click the box
         }
         this.stockSocket = true;
       }
@@ -139,11 +143,25 @@ export default {
       if (this.stockSocket) {
         if (value !== "") {
           if (this.stock.type == "crypto") {
-            this.$router.replace(
-              `/modern/desktop/${this.stockName.stockName}${this.minute.loopName}`
-            );
+            let routeName =
+              this.stockName.stockName + "" + this.minute.loopName;
+            // check is multi game or not
+            if (this.$route.name === "modern-desktop-id") {
+              this.$router.replace(`/modern/desktop/${routeName}`);
+            } else {
+              // if is multi game then add selected game
+              this.addStockMultigame(routeName);
+            }
           } else {
-            this.$router.replace(`/modern/desktop/${this.stockName.stockName}`);
+            // check is multi game or not
+            if (this.$route.name === "modern-desktop-id") {
+              this.$router.replace(
+                `/modern/desktop/${this.stockName.stockName}`
+              );
+              // if is multi game then add selected game
+            } else {
+              this.addStockMultigame(this.stockName.stockName);
+            }
           }
         }
       } else {
@@ -158,12 +176,14 @@ export default {
   created() {
     this.getActiveGamesByCategory();
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$route);
+  },
   computed: {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
   methods: {
-    ...mapMutations(["setGameID", "SET_STOCK_CATEGORY"]),
+    ...mapMutations(["addStockMultigame", "setGameID", "SET_STOCK_CATEGORY"]),
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
