@@ -73,7 +73,7 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
+        let dataIndex = data.data.roadMap[0];    
         let readyData = {
           stockValue: dataIndex.stockValue.replace(",", ""),
           stockTimeStamp: dataIndex.stockTimeStamp,
@@ -212,7 +212,6 @@ export default {
           }
         );
         if (res.code === 200) {
-          console.log('Component gets mounted and rest api is called for the roadMap data \n', res.data[0].roadMap);
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
