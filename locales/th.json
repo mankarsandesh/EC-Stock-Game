@@ -41,9 +41,8 @@
     "msg": {
 
         "acc":"acc",
-        "account balance":"ยอดเงินในบัญชี",
-        "rolling amount":"จำนวนกลิ้ง",
-
+        "accountbalance":"ยอดเงินในบัญชี",
+        "rollingamount":"จำนวนกลิ้ง",
         "calculating": "การคำนวณ...",
         "marketclosed": "ปิดตลาด!",
         "reset": "รีเซ็ต",
@@ -102,10 +101,10 @@
         "Total Bet": "การเดิมพันทั้งหมด",
         "Win Rate": "อัตราการชนะ",
         "minute game": "เกมนาที",
-
-        "resultintroduction": "result introduction",
-        "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
-        "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
+        "ecgamingrulesdescription":"คำอธิบายกฎการเล่นเกมของ EC",
+        "resultintroduction": "การแนะนำผลลัพธ์",
+        "textinfoule": "เว็บไซต์ของเราใช้หุ้นที่แตกต่างกันโดยมีการอ้างอิงเพื่อสร้างเกมที่น่าตื่นเต้น เราให้บริการเกมสี่ประเภทหลัก (ใหญ่ / เล็ก, ต่ำ / ลึก, ขึ้น / กลาง / ต่ำและตัวเลข) ขึ้นอยู่กับหุ้นที่เลือกผลลัพธ์ของเกมทั้งหมดขึ้นอยู่กับทศนิยมเฉพาะสองกฎตามกฎของเรา ..",
+        "textresultintroduction": "เช่น. สมมติว่าสต็อกส่งผลให้เป็น 1234.56 เกมของเราทุกประเภทจะได้ผลลัพธ์เป็นทศนิยม ‘56’ เท่านั้น ในกรณีที่ผลลัพธ์แสดงเป็น ‘56’ เรากำหนดทศนิยม ‘5’ เป็นผลลัพธ์ result ตัวเลขแรก ’ ทศนิยม ‘6’ เป็น result ผลลัพธ์สุดท้ายของหลัก ทศนิยม ‘5’ และ ‘6’ รวมกันเป็นผลลัพธ์ 'สองหลัก' นอกจากนี้เรายังกำหนดผลลัพธ์ของ ‘5 + 6’ เป็น result ผลลัพธ์ทั้งสองหลักซึ่งก็คือ ‘11’",
         "Lastdraw": "การจับรางวัลล่าสุด",
         "BetClosein": "เดิมพันปิด",
         "lotterydraw": "จับสลาก",
@@ -155,7 +154,9 @@
         "sending": "การส่ง...",
         "ClassicVersion": "รุ่นคลาสสิก",
         "ModernVersion": "รุ่นทันสมัย",
-        "ChooseTheVersionToPlay": "เลือกรุ่นที่จะเล่น"
+        "ChooseTheVersionToPlay": "เลือกรุ่นที่จะเล่น",
+        "introduction":"บทนำ",
+        "accept":"ฉันยอมรับ"
     },
     "navlist": {
         "live Stock": "หุ้นที่เปิดอยู่",
@@ -211,7 +212,7 @@
     "stockname": {
         "btc1": "BTC/USDT",
         "btc": "BTC/USDT",
-        "usindex": "US dollar Index",
+        "usindex": "ดัชนีดอลลาร์สหรัฐ",
         "btc5": "BTC/USDT",
         "sh000001": "ดัชนีเซี่ยงไฮ้คอมโพสิต",
         "sz399001": "ดัชนีส่วนประกอบเซินเจิ้น",
@@ -219,18 +220,21 @@
         "sh000300": "ดัชนีเซี่ยงไฮ้และเซินเจิ้น 300"
     },
     "profile": {
-        "user name":"ຊື່ຜູ້ໃຊ້",
-        "first name":"ชื่อจริง",
-        "last name":"นามสกุล",
+        "username":"ຊື່ຜູ້ໃຊ້",
+        "firstname":"ชื่อจริง",
+        "lastname":"นามสกุล",
         "gender":"เพศ",
+        "male":"ชาย",
+        "female":"หญิง",
         "email":"อีเมล",
         "country":"ประเทศ",
-        "online status":"สถานะออนไลน์",
-        "basic info": "ข้อมูลพื้นฐาน",
-        "online history": "ประวัติออนไลน์",
-        "stock analysis": "การวิเคราะห์หุ้น",
-        "online time":"เวลาออนไลน์",
-        "total online":"ออนไลน์ทั้งหมด"
+        "onlinestatus":"สถานะออนไลน์",
+        "basicinfo": "ข้อมูลพื้นฐาน",
+        "onlinehistory": "ประวัติออนไลน์",
+        "stockanalysis": "การวิเคราะห์หุ้น",
+        "onlinetime":"เวลาออนไลน์",
+        "totalonline":"ออนไลน์ทั้งหมด",
+        "signout":"ออกจากระบบ"
     },
     "useraction": {
         "followbet": "ทำตามการพนัน",
@@ -238,12 +242,41 @@
     },
     "leaderboard": {
         "user":"ผู้ใช้งาน",
-        "winning rate": "อัตราการชนะ",
-        "Bets":"เดิมพัน",
-        "winning amount":"จำนวนเงินที่ชนะ",
+        "winningrate": "อัตราการชนะ",
+        "bets":"เดิมพัน",
+        "winningamount":"จำนวนเงินที่ชนะ",
         "follow":"ปฏิบัติตาม",
-        "weekly rankings":"อันดับประจำสัปดาห์",
-        "monthly rankings":"อันดับรายเดือน",
-        "Top 10 Leaders":"ผู้นำ 10 อันดับแรก"
+        "weeklyrankings":"อันดับประจำสัปดาห์",
+        "monthlyrankings":"อันดับรายเดือน",
+        "Top10Leaders":"ผู้นำ 10 อันดับแรก",
+        "lastupdate":"อัปเดตล่าสุดเมื่อ 1 นาทีที่ผ่านมา"
+    },
+    "breadcrumbs": {
+        "rule" : "กฎ",
+        "gamerule": "กฎของเกม",
+        "leaderboard" : "ลีดเดอร์บอร์ด",
+        "betHistory" : "ประวัติการเดิมพัน",
+        "currentBet" : "เดิมพันปัจจุบัน",
+        "stockList" : "รายการสินค้า",
+        "announcement" : "การประกาศ"
+    },
+    "setting": {
+        "account":"บัญชีผู้ใช้",
+        "usersallowtovisitmyprofile":"ผู้ใช้อนุญาตให้เยี่ยมชมโปรไฟล์ของฉัน",
+        "usersallowfollowme":"ผู้ใช้อนุญาตให้ติดตามฉัน",
+        "userallowtosenddirectmessage":"ผู้ใช้อนุญาตให้ส่งข้อความโดยตรง",
+        "gameoptions":"ตัวเลือกของเกม",
+        "sound":"เสียง",
+        "allowtolocation":"ອະນຸຍາດໃຫ້ຕັ້ງສະຖານທີ່"
+    },
+    "notification":{
+        "mynotification":"การแจ้งเตือนของฉัน",
+        "receivebyemail":"รับทางอีเมล",
+        "receivebymessage":"รับโดยข้อความ",
+        "insufficientbalance": "ยอดเงินไม่เพียงพอในบัญชี",
+        "winingbets":"ชนะเดิมพัน",
+        "losingbets":"สูญเสียเดิมพัน",
+        "usersfollwme":"ผู้ใช้ติดตามฉัน",
+        "amountcreditedordebitedtoanaccount":"จำนวนเงินที่เครดิตหรือหักเข้าบัญชี"
     }
 }

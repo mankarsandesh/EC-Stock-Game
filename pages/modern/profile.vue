@@ -15,7 +15,7 @@
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <span>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</span>
+                    <span>{{$t('profile.onlinestatus')}} : {{getUserInfo.currentActiveTime}}</span>
                 </div>
             </v-flex>
         </v-layout>
@@ -36,7 +36,7 @@
                         </span>
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
+                    <p>{{$t('profile.onlinestatus')}} : {{getUserInfo.currentActiveTime}}</p>
                 </div>
             </v-flex>
 
@@ -79,7 +79,7 @@
 
                         <v-layout pt-3>
                             <v-flex xs2 sm2 md2 lg2 pr-2 class="text-xs-center">
-                                <label for="userName">{{$t('profile.user name')}}</label>
+                                <label for="userName">{{$t('profile.username')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="userName" type="text" :value="userData.userName" id="userName" name="userName" placeholder="Type your Username" />
@@ -91,7 +91,7 @@
 
                         <v-layout pt-3>
                             <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
-                                <label for="firstName">{{$t('profile.first name')}}</label>
+                                <label for="firstName">{{$t('profile.firstname')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="firstName" type="text" :value="userData.firstName" id="first-name" name="first-name" placeholder="Your First Name" />
@@ -103,7 +103,7 @@
 
                         <v-layout pt-2>
                             <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
-                                <label for="lastName">{{$t('profile.last name')}}</label>
+                                <label for="lastName">{{$t('profile.lastname')}}</label>
                             </v-flex>
                             <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                                 <input ref="lastName" type="text" :value="userData.lastName" id="last-name" name="last-name" placeholder="Your Last Name" />
@@ -166,8 +166,8 @@
                         </div>
                     </form>
                     <div class="row" style="text-align: -webkit-center;">
-                        <v-btn @click="$refs.onlineHistory.showDialogOnlineHistory()" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">{{$t('profile.online history')}}</span> <i class="fa fa-plus"></i></v-btn>
-                        <v-btn @click="$refs.stockAnalysis.showDialogStockAnalysis()" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">{{$t('profile.stock analysis')}}</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="$refs.onlineHistory.showDialogOnlineHistory()" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " class="btn_save width-50" block><span class="padding-right-60">{{$t('profile.onlinehistory')}}</span> <i class="fa fa-plus"></i></v-btn>
+                        <v-btn @click="$refs.stockAnalysis.showDialogStockAnalysis()" :class="$vuetify.breakpoint.xs ? 'btn_save width-100' : 'btn_save width-50' " block><span class="padding-right-60">{{$t('profile.stockanalysis')}}</span> <i class="fa fa-plus"></i></v-btn>
                     </div>
 
                 </div>

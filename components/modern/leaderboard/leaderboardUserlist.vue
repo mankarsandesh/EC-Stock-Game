@@ -20,19 +20,19 @@
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
         <th>
-          <h3 class="header">WINNING RATE</h3>
+          <h3 class="header">{{$t('leaderboard.winningrate')}}</h3>
           <h4 class="green--text titleText">
             {{ Math.round(data.winRate, 1) }} %
           </h4>
         </th>
         <th>
-          <h3 class="header">BETS</h3>
+          <h3 class="header">{{$t('leaderboard.bets')}}</h3>
           <H4 style="color:#eb0b6e;" class="titleText">{{
             data.totalWinBets
           }}</H4>
         </th>
         <th>
-          <h3 class="header">WINNING AMOUNT</h3>
+          <h3 class="header">{{$t('leaderboard.winningamount')}}</h3>
           <h4 style="color:#0b2a68;" class="titleText">
             {{ Math.round(data.totalWinAmount, 1) }}
           </h4>

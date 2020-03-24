@@ -148,7 +148,7 @@
                 </div>
               </v-flex>
               <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn fab dark small color="#003e70" @click="setNextstep(), getopen()" title="Help">
+                <v-btn fab dark small class="helpButton" @click="setNextstep(), getopen()" title="Help">
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
               </v-flex>
@@ -842,5 +842,12 @@ export default {
   border-left: 2px solid #dddddd;
   border-right: 2px solid #dddddd;
   border-radius: 10px;
+}
+
+.helpButton {
+  background-color: #4464ff !important;
+  color: #fff;
+  padding: 5px;
+  font-size: 22px;
 }
 </style>
