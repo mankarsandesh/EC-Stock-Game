@@ -91,7 +91,7 @@
               :trendType="trendType"
               :isFullscreen="false"
               :key="
-                getRoadMap[getRoadMap.length - 1].stockTimestamp + trendType
+                getRoadMap[getRoadMap.length - 1].stockTimeStamp + trendType
               "
               :rowTable="4"
               :lop="30"

@@ -41,7 +41,7 @@
           </div>
         </v-flex>
         <v-flex xs3 pt-1>
-          <button class="btn_go">go</button>
+          <button class="btn_go">{{$t('msg.go')}}</button>
         </v-flex>
       </v-layout>
 

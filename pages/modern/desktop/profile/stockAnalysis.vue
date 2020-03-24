@@ -1,5 +1,5 @@
 <template>
-  <div v-if="stockAnalysis.length>0">
+  <div v-if="stockAnalysis.length > 0">
     <v-flex xs12 class="pt-5 pl-5">
       <div>
         <h2 class="title_menu">stock analysis</h2>
@@ -10,9 +10,12 @@
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
+          <div
+            class="date_picker_container"
+            @click="isShowDateStart = !isShowDateStart"
+          >
             <div class="title_date_picker">
-              <span>from</span>
+              <span>{{$t('msg.from')}}</span>
             </div>
             <div class="date_picker">
               <span class="select_date">{{ startDate }}</span>
@@ -31,9 +34,12 @@
         </v-flex>
         <!-- select end date -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
+          <div
+            class="date_picker_container"
+            @click="isShowDateEnd = !isShowDateEnd"
+          >
             <div class="title_date_picker">
-              <span>to</span>
+              <span>{{$t('msg.to')}}</span>
             </div>
             <div class="date_picker">
               <span class="select_date">{{ endDate }}</span>
@@ -43,7 +49,11 @@
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+            <v-date-picker
+              v-if="isShowDateEnd"
+              v-model="endDate"
+              @input="isShowDateEnd = false"
+            ></v-date-picker>
           </div>
         </v-flex>
         <!-- go button -->
@@ -52,7 +62,7 @@
             <div class="title_date_picker">
               <span></span>
             </div>
-            <button>GO</button>
+            <button @click="getStockAnalysis">{{$t('msg.go')}}</button>
           </div>
         </v-flex>
       </v-layout>
@@ -60,12 +70,22 @@
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
         <div class="chart-map-color">
-          <span v-for="(stock,index) in stocks" :key="index">
-            <span class="circle-color" :style="{backgroundColor:colors[0][index]}"></span>
-            <span style="margin-right:10px" class="text-uppercase">{{stock}}</span>
+          <span v-for="(stock, index) in stocks" :key="index">
+            <span
+              class="circle-color"
+              :style="{ backgroundColor: colors[0][index] }"
+            ></span>
+            <span style="margin-right:10px" class="text-uppercase">{{
+              stock
+            }}</span>
           </span>
         </div>
-        <apexchart type="bar" height="480vh" :options="chartOptions" :series="series"></apexchart>
+        <apexchart
+          type="bar"
+          height="480vh"
+          :options="chartOptions"
+          :series="series"
+        ></apexchart>
       </div>
     </v-flex>
   </div>
@@ -76,11 +96,11 @@ import apexchart from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
-import config from '../../../../config/config.global';
+import config from "../../../../config/config.global";
 
 // set color win and lose color in bar chart
 let index = 0;
-let stocklist = ['SH000001', 'SH000300', 'USDINDEX', 'BTC5', 'BTC1'];
+let stocklist = ["SH000001", "SH000300", "USDINDEX", "BTC5", "BTC1"];
 let barColor = [
   ["#67c9d3", "#f75b54", "#fcc624", "#1a237e", "#d81b60", "#ff6f00", "#01579b"], // win color
   ["#81eaf5", "#f9a5a3", "#fddf84", "#7986cb", "#f06292", "#ffb74d", "#90caf9"] // loss color
@@ -115,17 +135,17 @@ export default {
       chartOptions: {
         colors: [
           function({ value, seriesIndex, dataPointIndex, w }) {
-            if(seriesIndex == 0) {
+            if (seriesIndex == 0) {
               return barColor[0][dataPointIndex];
             }
-            if(seriesIndex == 1) {
-              return barColor[1][dataPointIndex]
+            if (seriesIndex == 1) {
+              return barColor[1][dataPointIndex];
             }
           }
         ],
         plotOptions: {
           bar: {
-            horizontal: false,
+            horizontal: false
           }
         },
         // grid: {
@@ -184,13 +204,19 @@ export default {
           },
           y: {
             formatter: function(val, { series, seriesIndex, dataPointIndex }) {
-              return '<div class="arrow_box ">' +
-                 '<span> ' + stocklist[dataPointIndex] + ' </span>'  + 
-                '<span> ' + series[seriesIndex][dataPointIndex] + '</span>' +
-                '</div>'
+              return (
+                '<div class="arrow_box ">' +
+                "<span> " +
+                stocklist[dataPointIndex] +
+                " </span>" +
+                "<span> " +
+                series[seriesIndex][dataPointIndex] +
+                "</span>" +
+                "</div>"
+              );
             },
             title: {
-              formatter: function (seriesName) {
+              formatter: function(seriesName) {
                 return seriesName.toUpperCase();
               }
             }
@@ -303,9 +329,14 @@ export default {
           this.stockAnalysis = res.data;
           console.log(res.data);
         } else {
-          throw new Error(res.message);
+          throw new Error(res.message.dateRangeTo[0]);
         }
       } catch (ex) {
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          showConfirmButton: true
+        });
         console.log(ex.message);
       }
     }
@@ -314,7 +345,6 @@ export default {
 </script>
 
 <style scoped>
-
 #chart_container .apexcharts-tooltip {
   color: blue;
   background-color: red;

@@ -1,5 +1,5 @@
 <template>
-  <VueApexCharts type="area" height="400vh" :options="chartOptions" :series="series" />
+  <VueApexCharts type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
 </template>
 
 <script>
@@ -9,41 +9,50 @@ export default {
   components: {
     VueApexCharts: VueApexCharts
   },
-  props: {
-    xaxis: {
-      type: Array,
-      required: true
+  props: [
+"xaxis",
+"chartData",
+"componentKey"
+  ],
+  watch:{
+    chartData(val) {
+      console.log('chart data', val);
     },
-    chartData: {
-      type: Array,
-      required: true
+    xaxis(val){
+     console.log(val)
     }
   },
   data() {
     return {
+      series: [{
+        data: this.chartData
+      }],
       chartOptions: {
         chart: {
-          id: "vuechart-example"
+          height: 350,
+          type: 'bar',
+          },
+        plotOptions: {
+          bar: {
+            columnWidth: '45%',
+            distributed: true
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
+          show: false
         },
         xaxis: {
-          categories: this.xaxis
-        },
-        chart: {
-          parentHeightOffset: 0,
-          zoom: {
-            enabled: false
-          },
-          toolbar: {
-            show: false
+          categories: this.xaxis,
+          labels: {
+            style: {
+              fontSize: '12px'
+            }
           }
         }
       },
-      series: [
-        {
-          name: "minute",
-          data: this.chartData
-        }
-      ]
     };
   }
 };
@@ -51,3 +60,7 @@ export default {
 
 <style>
 </style>
+
+
+
+    
