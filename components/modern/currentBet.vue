@@ -3,7 +3,7 @@
     <v-flex xs12 md12>
       <v-data-table
         :headers="head"
-        :items="desserts"
+        :items="currentBets"
         :items-per-page="5"
         ref="table"
         :search="search"
@@ -37,7 +37,7 @@
         <template slot="footer">
           <tr>
             <td>{{ $t("msg.Total") }}</td>
-            <td colspan="3">{{ desserts.length }} bets</td>
+            <td colspan="3">{{ currentBets.length }} bets</td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>
             </td>
@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  props: ["head", "desserts"],
+  props: ["head", "currentBets"],
   data: () => ({
     search: ""
   }),
@@ -75,7 +75,7 @@ export default {
     TotalAmount() {
       // make the new value to make the frontend get this value from the computed
       let total = null; // create the new varible before return
-      this.desserts.map(item => {
+      this.currentBets.map(item => {
         // before loading component the computed we defind the value from props
         total += item.betAmount; // after get the value from props, you have the plus the value with the value with lenght
       });

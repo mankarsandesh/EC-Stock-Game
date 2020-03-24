@@ -6,7 +6,7 @@
       titlebtn="current-bet"
     />
     <fillterHistory />
-    <bethistory :head="head" :desserts="desserts" />
+    <bethistory :head="head" :userBetHistory="userBetHistory" />
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
         { text: "payout", value: "payout" },
         { text: "bet status", value: "gameStatus" }
       ],
-      desserts: []
+      userBetHistory: []
     };
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
           headers: config.header
         }
       );
-      this.desserts = data.data;
+      this.userBetHistory = data.data;
     }
   }
 };

@@ -5,7 +5,7 @@
         <v-data-table
           :headers="head"
           hide-actions
-          :items="desserts"
+          :items="userBetHistory"
           :pagination.sync="pagination"
           ref="table"
           :search="search"
@@ -14,7 +14,7 @@
           :expanded="expanded"
         >
           <template v-slot:items="item">
-            <tr @click="clicked(item.item.betID)">
+            <tr @click="clicked(item.item.betID)" class="selectRow"> 
               <td>{{ item.item.betID }}</td>
               <td>{{ item.item.gameID }}</td>
               <td>
@@ -74,7 +74,7 @@
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.Total") }}</td>
-              <td colspan="4">{{ desserts.length }} bets</td>
+              <td colspan="4">{{ userBetHistory.length }} bets</td>
               <td>
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>
@@ -86,7 +86,7 @@
         </v-data-table>
       </v-flex>
     </v-layout>
-    <div class="text-right my-3 my-pagination" v-if="desserts.length > 4">
+    <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
       <v-pagination
         v-model="pagination.page"
         color="#1db42f"
@@ -98,7 +98,7 @@
 
 <script>
 export default {
-  props: ["head", "desserts"],
+  props: ["head", "userBetHistory"],
   data: () => ({
     expanded: ["Donut"],
     search: "",
@@ -132,7 +132,7 @@ export default {
     TotalAmount() {
       // make the new value to make the frontend get this value from the computed
       let total = null; // create the new varible before return
-      this.desserts.map(item => {
+      this.userBetHistory.map(item => {
         // before loading component the computed we defind the value from props
         total += item.betAmount; // after get the value from props, you have the plus the value with the value with lenght
       });
@@ -141,7 +141,7 @@ export default {
     TotalRolling() {
       // make the new value to make the frontend get this value from the computed
       let total = null; // create the new varible before return
-      this.desserts.map(item => {
+      this.userBetHistory.map(item => {
         // before loading component the computed we defind the value from props
         total += item.rollingAmount; // after get the value from props, you have the plus the value with the value with lenght
       });
@@ -151,6 +151,9 @@ export default {
 };
 </script>
 <style scoped>
+.selectRow{
+  cursor: pointer;
+}
 .extraInfo { 
   padding: 10px;
   height: 80px;
