@@ -8,7 +8,7 @@
       <trendMap
         v-if="which_one !==''"
         :dataArray="dataArray"
-        :key="dataArray[dataArray.length -1].stockTimestamp + '-' + trendType + '-' + which_one"
+        :key="dataArray[dataArray.length -1].stockTimeStamp + '-' + trendType + '-' + which_one"
         :isFullscreen="true"
         :which_one="which_one"
         :trendType="trendType"

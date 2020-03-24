@@ -59,7 +59,7 @@
               :dataArray="dataArray"
               :trendType="activeType"
               :isFullscreen="isFullscreen"
-              :key="dataArray[dataArray.length - 1].stockTimestamp + activeType"
+              :key="dataArray[dataArray.length - 1].stockTimeStamp + activeType"
             ></trendMap>
           </v-flex>
         </v-layout>

@@ -73,18 +73,15 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
+        let dataIndex = data.data.roadMap[0];    
         let readyData = {
           stockValue: dataIndex.stockValue.replace(",", ""),
-          stockTimestamp: dataIndex.stockTimestamp,
+          stockTimeStamp: dataIndex.stockTimeStamp,
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
-        if (
-          dataIndex.stockTimestamp !==
-          this.chartData[this.chartData.length - 1].stockTimestamp
-        ) {
-          console.log("RoadMap data", readyData);
+        if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {
+          console.log('RoadMap data', readyData);
           this.setLiveChart(readyData);
         }
       }
@@ -103,7 +100,7 @@ export default {
     chartOptions() {
       let newTime = [];
       this.chartData.forEach(element => {
-        newTime.push(element.stockTimestamp);
+        newTime.push(element.stockTimeStamp);
       });
       return {
         zoom: {
@@ -215,10 +212,6 @@ export default {
           }
         );
         if (res.code === 200) {
-          console.log(
-            "Component gets mounted and rest api is called for the roadMap data \n",
-            res.data[0].roadMap
-          );
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {

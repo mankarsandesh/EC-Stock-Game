@@ -142,7 +142,8 @@ export default {
     }
   },
   mounted() {
-    // Global Channel
+    console.log(this.getStockGameId);
+    console.log("Hello");
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
