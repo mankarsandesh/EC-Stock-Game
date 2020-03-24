@@ -393,7 +393,6 @@ export default {
     };
   },
   created() {
-    console.log(this.$route);
     this.getActiveGamesByCategory();
     this.getSotckId();
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
