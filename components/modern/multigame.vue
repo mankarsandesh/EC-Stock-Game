@@ -7,20 +7,18 @@
         {{ $t("stockname." + stockid) }} {{ getStockLoop(stockid) }}
         {{ $t("msg.minute") }} {{ $t("msg.loop") }}
       </h3>
-      <!-- <chartApp
-        class="chartDesgin"
-        :data="getStockById(stockid).stockPrice"
-        :time="getStockById(stockid).stockTime"
-        :key="getStockById(stockid).stockPrice[0]"
-        :stockid="stockid"
-       
-      ></chartApp>-->
-      <chartApp />
+      <chartApp :stockName="stockid" />
 
       <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
       <v-layout>
         <v-flex align-left class="totalPrice">
-          <h4>{{ formatToPrice(getAmountBettingByStockId("btc1")) }}</h4>
+          <h4>
+            {{
+              formatToPrice(
+                getAmountBettingByStockId(getGameUUIDByStockName(stockid))
+              )
+            }}
+          </h4>
         </v-flex>
       </v-layout>
     </v-flex>
@@ -32,7 +30,7 @@
             <v-flex class="lastdraw">
               <span
                 class="text-black"
-                v-html="$options.filters.lastDraw(getLastDraw)"
+                v-html="$options.filters.lastDraw(lastDraw)"
               ></span>
             </v-flex>
           </v-flex>
@@ -41,23 +39,21 @@
             <v-flex class="betclose">
               <span
                 v-if="
-                  getTimerByStockName($route.params.id) &&
-                    getTimerByStockName($route.params.id).stockOpenOrClosed ===
-                      'Closed!'
+                  getTimerByStockName(stockid) &&
+                    getTimerByStockName(stockid).stockOpenOrClosed === 'Closed!'
                 "
                 class="text-black"
               >
                 {{
-                  getTimerByStockName($route.params.id) &&
-                    "close" | betclosein(getStockLoop($route.params.id))
+                  getTimerByStockName(stockid) &&
+                    "close" | betclosein(getStockLoop(stockid))
                 }}
               </span>
               <span v-else class="text-black">
                 {{
-                  getTimerByStockName($route.params.id) &&
-                    getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | betclosein(getStockLoop($route.params.id))
+                  getTimerByStockName(stockid) &&
+                    getTimerByStockName(stockid).gameEndTimeCountDownInSec
+                      | betclosein(getStockLoop(stockid))
                 }}
               </span>
             </v-flex>
@@ -67,10 +63,9 @@
             <v-flex class="lottery">
               <span class="text-black">
                 {{
-                  getTimerByStockName($route.params.id) &&
-                    getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | lotterydraw(getStockLoop($route.params.id))
+                  getTimerByStockName(stockid) &&
+                    getTimerByStockName(stockid).gameEndTimeCountDownInSec
+                      | lotterydraw(getStockLoop(stockid))
                 }}
               </span>
             </v-flex>
@@ -101,12 +96,44 @@
 import { mapGetters } from "vuex";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
+import config from "../../config/config.global";
 // import livechart from "../modern/livechart"
 export default {
+  data() {
+    return {
+      lastDraw: "..."
+    };
+  },
   props: {
     stockid: {
       require: true
     }
+  },
+  mounted() {
+    // socket new api
+    this.listenForBroadcast(
+      {
+        // liveStockData.stockName
+        channelName: `roadMap.${this.getStockUUIDByStockName(this.stockid)}.${
+          this.getPortalProviderUUID
+        }`,
+        eventName: "roadMap"
+      },
+      ({ data }) => {
+        let dataIndex = data.data.roadMap[0];
+        this.lastDraw = dataIndex.stockValue.replace(",", "");
+      }
+    );
+  },
+  created() {
+    this.fetchChart(this.getStockUUIDByStockName(this.stockid));
+  },
+  beforeDestroy() {
+    window.Echo.leave(
+      `roadMap.${this.getStockUUIDByStockName(this.stockid)}.${
+        this.getPortalProviderUUID
+      }`
+    );
   },
   components: {
     betButton,
@@ -115,7 +142,9 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "getLastDraw",
+      "getGameUUIDByStockName",
+      "getStockUUIDByStockName",
+      "getPortalProviderUUID",
       "getTimerByStockName",
       "getStockLoop",
       "lotterydraw",
@@ -124,9 +153,38 @@ export default {
     ])
   },
   methods: {
+    async fetchChart(stockUUID) {
+      try {
+        const res = await this.$axios.$post(
+          config.getRoadMap.url,
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            limit: 50,
+            stockUUID: [stockUUID],
+            version: config.version
+          },
+          {
+            headers: config.header
+          }
+        );
+        if (res.code === 200) {
+          this.lastDraw = res.data[0].roadMap
+            .reverse()[0]
+            .stockValue.replace(",", "");
+        } else {
+          throw new Error();
+        }
+      } catch (ex) {
+        this.fetchChart(this.getStockUUIDByStockName(this.stockid));
+        console.error(ex.message);
+      }
+    },
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
     setAfterFullScreenClosePage() {
       localStorage.setItem("fullscreenclosed", "multigame");
-      this.$router.push(`/modern/fullscreen/${this.stockid}`)
+      this.$router.push(`/modern/fullscreen/${this.stockid}`);
     },
     formatToPrice(value) {
       return `$ ${Number(value)

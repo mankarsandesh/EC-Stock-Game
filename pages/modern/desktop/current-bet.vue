@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs title="Current Bet" linkItem="bet-history" titlebtn="bet-history" />
+    <breadcrumbs :title=" $t('breadcrumbs.currentBet')" linkItem="bet-history" :titlebtn=" $t('breadcrumbs.betHistory')" />
     <v-container>
       <currentBet :head="head" :currentBets="currentBets" />
     </v-container>

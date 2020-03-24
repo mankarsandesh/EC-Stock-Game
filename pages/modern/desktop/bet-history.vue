@@ -1,9 +1,9 @@
 <template>
   <div>
     <breadcrumbs
-      title="Bet History"
+      :title=" $t('breadcrumbs.betHistory')"
       linkItem="current-bet"
-      titlebtn="current-bet"
+      :titlebtn=" $t('breadcrumbs.currentBet')"
     />
     <section class="filter">
       <v-container>

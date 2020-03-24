@@ -2,52 +2,52 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">my notification</h2>
+        <h2 class="title_menu">{{$t('notification.mynotification')}}</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">receive by email</span>
+          <span class="group_title">{{$t('notification.receivebyemail')}}</span>
           <div class="title_container">
             <!-- <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" @click="dialog = showAlert()"/> -->
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">insufficient balance in an account</span>
+            <span class="titile">{{$t('notification.insufficientbalance')}}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">wining bets</span>
+            <span class="titile">{{$t('notification.winingbets')}}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">losing bets</span>
+            <span class="titile">{{$t('notification.losingbets')}}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">users follw me</span>
+            <span class="titile">{{$t('notification.usersfollwme')}}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">amount credited or debited to an account</span>
+            <span class="titile">{{$t('notification.amountcreditedordebitedtoanaccount')}}</span>
             <br />
           </div>
         </div>
       </v-flex>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">receive by message</span>
+          <span class="group_title">{{$t('notification.receivebymessage')}}</span>
           <div class="title_container">
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">insufficient balance in an account</span>
+            <span class="titile">{{$t('notification.insufficientbalance')}}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">wining bets</span>
+            <span class="titile">{{$t('notification.winingbets')}}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">losing bets</span>
+            <span class="titile">{{$t('notification.losingbets')}}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">users follw me</span>
+            <span class="titile">{{$t('notification.usersfollwme')}}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">amount credited or debited to an account</span>
+            <span class="titile">{{$t('notification.amountcreditedordebitedtoanaccount')}}</span>
             <br />
           </div>
         </div>

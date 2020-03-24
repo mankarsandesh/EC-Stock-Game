@@ -1,9 +1,9 @@
 <template>
   <div>
     <breadcrumbs
-      title="Leaderboard"
+      :title=" $t('breadcrumbs.leaderboard')"
       linkItem="bet-history"
-      titlebtn="bet-history"
+      :titlebtn=" $t('breadcrumbs.betHistory')"
     />
     <v-container mb-5>
       <leaderBoardHeader />

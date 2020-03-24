@@ -37,7 +37,7 @@ export default {
     },
     stockName: {
       type: String,
-      default: "btc1"
+      required: true
     }
   },
   data() {
@@ -221,6 +221,9 @@ export default {
         console.error(ex.message);
       }
     },
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
     changeChartType(value) {
       this.trendType = value;
     },
@@ -228,17 +231,13 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
       this.demo = this.window.width;
-      if(this.window.width >= 1900){
+      if (this.window.width >= 1900) {
         this.chartHeight = "320vh";
         this.heightChart = 320;
-        
-      }else{
+      } else {
         this.chartHeight = "320vh";
         this.heightChart = 320;
       }
-    },
-    listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
     }
   }
 };
