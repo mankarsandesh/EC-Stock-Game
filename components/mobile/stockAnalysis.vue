@@ -10,7 +10,7 @@
 
         <v-flex xs12 md8 class="pt-2 pl-5 pr-5 text-xs-center">
             <div>
-                <h2 class="title_menu">{{$t('profile.stock analysis')}}</h2>
+                <h2 class="title_menu">{{$t('profile.stockanalysis')}}</h2>
                 <v-divider></v-divider>
             </div>
         </v-flex>
@@ -26,7 +26,7 @@
                 <!-- <span class="blur-img">uploading</span> -->
             </div>
             <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-            <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
+            <p>{{$t('profile.onlinestatus')}} : {{getUserInfo.currentActiveTime}}</p>
             <v-divider></v-divider>
         </v-flex>
 
@@ -43,7 +43,7 @@
                         <!-- <span class="blur-img">uploading</span> -->
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
+                    <p>{{$t('profile.onlinestatus')}} : {{getUserInfo.currentActiveTime}}</p>
                 </v-flex>
                 <!-- select start date  -->
                 <v-flex xs5 sm3 mr-1 ml-1>

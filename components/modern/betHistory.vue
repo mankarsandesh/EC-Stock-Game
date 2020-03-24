@@ -5,16 +5,15 @@
         <v-data-table
           :headers="head"
           hide-actions
-          :items="desserts"
+          :items="userBetHistory"
           :pagination.sync="pagination"
           ref="table"
           :search="search"
           class="current-bet"
           show-expand
-          :expanded="expanded"
         >
           <template v-slot:items="item">
-            <tr @click="clicked(item.item.betID)">
+            <tr @click="clicked(item.item.betUUID)" class="selectRow">
               <td>{{ item.item.betUUID }}</td>
               <td>{{ item.item.gameUUID }}</td>
               <td>
@@ -34,7 +33,7 @@
                 <span class="pending">{{ item.item.betResult }}...</span>
               </td>
             </tr>
-            <tr style="display:none;" class="extraInfo" :id="item.item.betID">
+            <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
               <td colspan="2">
                 <span class="betDraw">BET DRAW :</span>
                 <span
@@ -61,7 +60,7 @@
                 ></span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount == 0">
-                <span class="betDraw"> Your Lossing Amount : </span
+                <span class="betDraw"> Your Loosing Amount : </span
                 ><span class="lossAmount"> {{ item.item.betAmount }} </span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount != 0">
@@ -74,7 +73,7 @@
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.Total") }}</td>
-              <td colspan="4">{{ desserts.length }} bets</td>
+              <td colspan="4">{{ userBetHistory.length }} bets</td>
               <td>
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>
@@ -86,11 +85,11 @@
         </v-data-table>
       </v-flex>
     </v-layout>
-    <div class="text-right my-3 my-pagination" v-if="desserts.length > 4">
+    <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
       <v-pagination
         v-model="pagination.page"
         color="#1db42f"
-        :length="4"
+        :length="10"
       ></v-pagination>
     </div>
   </v-container>
@@ -98,10 +97,8 @@
 
 <script>
 export default {
-  props: ["head", "desserts"],
+  props: ["head", "userBetHistory","search"],
   data: () => ({
-    expanded: ["Donut"],
-    search: "",
     pagination: {
       page: 1
     }
@@ -123,16 +120,16 @@ export default {
     }
   },
   methods: {
-    clicked(betID) {
+    clicked(betUUID) {
       $(".extraInfo").hide();
-      $("#" + betID).show();
+      $("#" + betUUID).show();
     }
   },
   computed: {
     TotalAmount() {
       // make the new value to make the frontend get this value from the computed
       let total = null; // create the new varible before return
-      this.desserts.map(item => {
+      this.userBetHistory.map(item => {
         // before loading component the computed we defind the value from props
         total += item.betAmount; // after get the value from props, you have the plus the value with the value with lenght
       });
@@ -141,7 +138,7 @@ export default {
     TotalRolling() {
       // make the new value to make the frontend get this value from the computed
       let total = null; // create the new varible before return
-      this.desserts.map(item => {
+      this.userBetHistory.map(item => {
         // before loading component the computed we defind the value from props
         total += item.rollingAmount; // after get the value from props, you have the plus the value with the value with lenght
       });
@@ -151,9 +148,12 @@ export default {
 };
 </script>
 <style scoped>
-.extraInfo { 
+.selectRow {
+  cursor: pointer;
+}
+.extraInfo {
   padding: 10px;
-  height: 80px;
+  height: 70px;
   background-color: #f3f3f3;
 }
 .lose {

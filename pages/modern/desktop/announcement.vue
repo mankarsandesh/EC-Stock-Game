@@ -1,9 +1,9 @@
 <template>
   <div>
     <breadcrumbs
-      title="Announcement"
+      :title="$t('breadcrumbs.announcement')"
       linkItem="gamerule"
-      titlebtn="Game Rule"
+      :titlebtn="$t('breadcrumbs.gamerule')"
     />
     <v-container>
       <v-layout row wrap>

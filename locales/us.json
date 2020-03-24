@@ -42,8 +42,8 @@
     },
     "msg": {
         "acc":"Acc",
-        "account balance":"account balance",
-        "rolling amount":"rolling amount",
+        "accountbalance":"Account Balance",
+        "rollingamount":"Rolling Amount",
         "calculating": "Calculating...",
         "marketclosed": "Market Closed!",
         "reset": "Reset",
@@ -103,7 +103,7 @@
         "Total Bet": "Total Bet",
         "Win Rate": "Win Rate",
         "minute game": "minute game",
-
+        "ecgamingrulesdescription":"EC Gaming Rules description",
         "resultintroduction": "result introduction",
         "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
         "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
@@ -137,7 +137,7 @@
         "onlyme": "Only Me",
         "from": "Form:",
         "to": "To:",
-        "go": "Go",
+        "go": "GO",
         "moredetails": "More Details",
         "viewchart": "View Chart",
         "sortby": "Sort By:",
@@ -156,7 +156,9 @@
         "sending": "Sending...",
         "ClassicVersion": "Classic Version",
         "ModernVersion": "Modern Version",
-        "ChooseTheVersionToPlay": "Choose The Version To Play"
+        "ChooseTheVersionToPlay": "Choose The Version To Play",
+        "introduction":"Introduction",
+        "accept":"I accept"
     },
     "navlist": {
         "live Stock": "live Stock",
@@ -220,19 +222,21 @@
         "sh000300": "SH000300"
     },
     "profile": {
-        "user name":"Username",
-        "first name":"first name",
-        "last name":"last name",
+        "username":"Username",
+        "firstname":"first name",
+        "lastname":"last name",
         "gender":"gender",
+        "male":"male",
+        "female":"female",
         "email":"email",
         "country":"country",
-        "online status":"online status",
-        "basic info": "basic infor",
-        "online history": "online history",
-        "stock analysis": "stock analysis",
-        "online time":"online time",
-        "total online":"total online"
-        
+        "onlinestatus":"online status",
+        "basicinfo": "basic information",
+        "onlinehistory": "online history",
+        "stockanalysis": "stock analysis",
+        "onlinetime":"online time",
+        "totalonline":"total online",
+        "signout":"Sign Out"
     },
     "useraction": {
         "followbet": "FOLLOW BET",
@@ -240,12 +244,41 @@
     },
     "leaderboard": {
         "user":"user",
-        "winning rate": "winning rate",
-        "Bets":"Bets",
-        "winning amount":"winning amount",
+        "winningrate": "Winning rate",
+        "bets":"Bets",
+        "winningamount":"Winning amount",
         "follow":"follow",
-        "weekly rankings":"WEEKLY RANKINGS",
-        "monthly rankings":"MONTHLY RANKINGS",
-        "Top 10 Leaders":"Top 10 Leaders"
+        "weeklyrankings":"WEEKLY RANKINGS",
+        "monthlyrankings":"MONTHLY RANKINGS",
+        "Top10Leaders":"Top 10 Leaders",
+        "lastupdate":"last updated 1 minutes ago"
+    },
+    "breadcrumbs": {
+        "rule" : "Rule",
+        "gamerule": "Game Rule",
+        "leaderboard" : "Leaderboard",
+        "betHistory" : "Bet History",
+        "currentBet" : "Current Bet",
+        "stockList" : "Stock List",
+        "announcement" : "Announcement"
+    },
+    "setting": {
+        "account":"Account",
+        "usersallowtovisitmyprofile":"Users Allow To Visit My Profile",
+        "usersallowfollowme":"Users Allow Follow Me",
+        "userallowtosenddirectmessage":"User Allow To Send Direct Message",
+        "gameoptions":"GAME OPTIONS",
+        "sound":"Sound",
+        "allowtolocation":"Allow To Location"
+    },
+    "notification":{
+        "mynotification":"my notification",
+        "receivebyemail":"receive by email",
+        "receivebymessage":"receive by message",
+        "insufficientbalance": "insufficient balance in an account",
+        "winingbets":"wining bets",
+        "losingbets":"losing bets",
+        "usersfollwme":"users follw me",
+        "amountcreditedordebitedtoanaccount":"amount credited or debited to an account"
     }
 }

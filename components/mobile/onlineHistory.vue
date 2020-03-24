@@ -13,7 +13,7 @@
                 <v-flex xs0 sm2>
                 </v-flex>
                 <v-flex xs12 sm10 class="text-xs-center">
-                    <h2 class="title_menu">{{$t('profile.online history')}}</h2>
+                    <h2 class="title_menu">{{$t('profile.onlinehistory')}}</h2>
                     <v-divider></v-divider>
                 </v-flex>
             </v-layout>
@@ -30,7 +30,7 @@
                 <!-- <span class="blur-img">uploading</span> -->
             </div>
             <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-            <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
+            <p>{{$t('profile.onlinestatus')}} : {{getUserInfo.currentActiveTime}}</p>
             <v-divider></v-divider>
         </v-flex>
 
@@ -47,7 +47,7 @@
                         <!-- <span class="blur-img">uploading</span> -->
                     </div>
                     <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-                    <p>{{$t('profile.online status')}} : {{getUserInfo.currentActiveTime}}</p>
+                    <p>{{$t('profile.onlinestatus')}} : {{getUserInfo.currentActiveTime}}</p>
                 </v-flex>
                 <v-flex xs12 sm10>
                     <v-layout row>
@@ -170,11 +170,11 @@
                     <b>{{getUserInfo.PID}}</b>
                 </span>
                 <span style="margin-right:30px">
-                    {{$t('profile.online time')}} : {{getUserInfo.currentActiveTime}}
+                    {{$t('profile.onlinetime')}} : {{getUserInfo.currentActiveTime}}
                     <b>{{asynUserInfo.currentActiveTime}}</b>
                 </span>
                 <span style="margin-right:30px">
-                    {{$t('profile.total online')}}:
+                    {{$t('profile.totalonline')}}:
                     <b>2day,15hours,11minute</b>
                 </span>
             </div>

@@ -35,19 +35,19 @@
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.online history')}}</v-list-tile-title>
+          <v-list-tile-title>{{$t('profile.onlinehistory')}}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
           @click="$router.push('/modern/desktop/profile/stockanalysis/');"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-line-chart fa-15x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.stock analysis')}}</v-list-tile-title>
+          <v-list-tile-title>{{$t('profile.stockanalysis')}}</v-list-tile-title>
         </v-list-tile>
 
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
-          <v-list-tile-title>Sign Out</v-list-tile-title>
+          <v-list-tile-title>{{$t('profile.signout')}}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>

@@ -53,14 +53,14 @@ export default {
         let dataIndex = data.data.roadMap[0];
         let readyData = {
           stockValue: dataIndex.stockValue.replace(",", ""),
-          stockTimestamp: dataIndex.stockTimestamp,
+          stockTimeStamp: dataIndex.stockTimeStamp,
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
 
         if (
-          dataIndex.stockTimestamp !==
-          this.chartData[this.chartData.length - 1].stockTimestamp
+          dataIndex.stockTimeStamp !==
+          this.chartData[this.chartData.length - 1].stockTimeStamp
         ) {
           this.setLiveChart(readyData);
         }
@@ -80,7 +80,7 @@ export default {
     chartOptions() {
       let newTime = [];
       this.chartData.forEach(element => {
-        newTime.push(element.stockTimestamp);
+        newTime.push(element.stockTimeStamp);
       });
       return {
         zoom: {

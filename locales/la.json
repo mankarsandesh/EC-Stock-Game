@@ -41,9 +41,8 @@
     "msg": {
 
         "acc":"acc",
-        "account balance":"ຍອດບັນຊີ",
-        "rolling amount":"ປະລິມານມ້ວນ",
-
+        "accountbalance":"ຍອດບັນຊີ",
+        "rollingamount":"ປະລິມານມ້ວນ",
         "calculating": "ກຳລັງຄິດໄລ່...",
         "marketclosed": "ປິດຕະຫຼາດ!",
         "reset": "ປັບໃໝ່",
@@ -102,10 +101,10 @@
         "Total Bet": "ການເດີມພັນທັງໝົດ",
         "Win Rate": "ອັດຕາຊະນະ",
         "minute game": "ເກມນາທີ",
-
+        "ecgamingrulesdescription":"ຄຳ ອະທິບາຍກ່ຽວກັບກົດລະບຽບຂອງເກມ EC",
         "resultintroduction": "ການແນະນຳຜົນໄດ້ຮັບ",
-        "textinfoule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
-        "textresultintroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
+        "textinfoule": "ເວັບໄຊທ໌້ຂອງພວກເຮົາ ນຳ ໃຊ້ຮຸ້ນທີ່ແຕກຕ່າງກັນໂດຍມີເອກະສານອ້າງອີງເພື່ອສ້າງເກມທີ່ກະຕຸ້ນແລະຄວບຄຸມບໍ່ໄດ້. ພວກເຮົາສະ ໜອງ 4 ປະເພດເກມຫລັກ (BIG / SMALL, EVEN / ODD, UP / MID / LOW ແລະ NUMBERS) ໂດຍອີງໃສ່ຮຸ້ນທີ່ເລືອກ, ຜົນໄດ້ຮັບຂອງເກມທັງ ໝົດ ແມ່ນຂື້ນກັບສອງອັດຕານິຍົມສະເພາະຕາມກົດລະບຽບຂອງພວກເຮົາ ..",
+        "textresultintroduction": "ເຊັ່ນ: ສົມມຸດວ່າຫຸ້ນສົ່ງຜົນໃຫ້ 1234.56, ທຸກປະເພດເກມຂອງພວກເຮົາຈະໃຊ້ພຽງແຕ່ທົດສະນິຍົມ '56' ເທົ່ານັ້ນ; ໃນກໍລະນີທີ່ຜົນໄດ້ຮັບໃນປັດຈຸບັນ ກຳ ລັງເປັນ '56', ພວກເຮົາ ກຳ ນົດອັດຕານິຍົມ '5' ເປັນຜົນເປັນຕົວເລກ 'ຕົວເລກ ທຳ ອິດ'; ອັດຕານິຍົມ '6' ເປັນຜົນສຸດທ້າຍຂອງຕົວເລກ '; ອັດຕານິຍົມ '5' ແລະ '6' ຮ່ວມກັນເປັນຜົນໄດ້ຮັບຂອງສອງຕົວເລກ; ນອກ ເໜືອ ຈາກສິ່ງເຫລົ່ານີ້, ພວກເຮົາ ກຳ ລັງແຕ່ງຕັ້ງຜົນຂອງ '5 + 6' ເປັນຜົນມາຈາກທັງສອງຕົວເລກ, ເຊິ່ງແມ່ນ '11';",
         "Lastdraw": "ແຕ້ມສຸດທ້າຍ",
         "BetClosein": "ເດີມພັນປິດໃນ",
         "lotterydraw": "ຜົນອອກໃນເວລາ",
@@ -134,12 +133,12 @@
         "country": "ປະເທດ",
         "everyonecansee": "ທຸກໆຄົນສາມາດເຫັນ",
         "onlyme": "ພຽງ​ຂ້ອຍ",
-        "from": "ຈາກ:",
-        "to": "ເຖິງ:",
-        "go": "ໄປ:",
+        "from": "ຈາກ",
+        "to": "ເຖິງ",
+        "go": "ໄປ",
         "moredetails": "ລາຍ​ລະ​ອຽດ​ເພີ່ມ​ເຕີມ",
         "viewchart": "ເບິ່ງຕາຕະລາງ",
-        "sortby": "ຈັດຮຽງຕາມ:",
+        "sortby": "ຈັດຮຽງຕາມ",
         "membership": "ສະມາຊິກ",
         "min": "ຕ່ຳສຸດ",
         "max": "ສູງສຸດ",
@@ -155,7 +154,9 @@
         "sending": "ການສົ່ງ...",
         "ClassicVersion": "ລຸ້ນຄຼາສສິກ",
         "ModernVersion": "ລຸ້ນທັນສະໃໝ",
-        "ChooseTheVersionToPlay": "ເລືອກລຸ້ນທີ່ຈະຫລິ້ນ"
+        "ChooseTheVersionToPlay": "ເລືອກລຸ້ນທີ່ຈະຫລິ້ນ",
+        "introduction":"ການແນະ ນຳ",
+        "accept":"ຂ້ອຍ​ຍອມ​ຮັບ"
     },
     "navlist": {
         "live Stock": "ຫຸ້ນເປີດ",
@@ -219,18 +220,21 @@
         "sh000300": "SH000300"
     },
     "profile": {
-        "user name":"ຊື່ຜູ້ໃຊ້",
-        "first name":"ຊື່​ແທ້",
-        "last name":"ນາມ​ສະ​ກຸນ",
+        "username":"ຊື່ຜູ້ໃຊ້",
+        "firstname":"ຊື່​ແທ້",
+        "lastname":"ນາມ​ສະ​ກຸນ",
         "gender":"ເພດ",
+        "male":"ຜູ້​ຊາຍ",
+        "female":"ເພດຍິງ",
         "email":"ອີເມວ",
         "country":"ປະເທດ",
-        "online status":"ສະຖານະພາບທາງອິນເຕີເນັດ",
-        "basic info": "ຂໍ້ມູນພື້ນຖານ",
-        "online history": "ປະຫວັດອອນລາຍ",
-        "stock analysis": "ການວິເຄາະຫຼັກຊັບ",
-        "online time":"ເວລາ ອອນລາຍ",
-        "total online":"ທັງ ໝົດ ອອນລາຍ"
+        "onlinestatus":"ສະຖານະພາບທາງອິນເຕີເນັດ",
+        "basicinfo": "ຂໍ້ມູນພື້ນຖານ",
+        "onlinehistory": "ປະຫວັດອອນລາຍ",
+        "stockanalysis": "ການວິເຄາະຫຼັກຊັບ",
+        "onlinetime":"ເວລາ ອອນລາຍ",
+        "totalonline":"ທັງ ໝົດ ອອນລາຍ",
+        "signout":"ອອກ​ຈາກ​ລະ​ບົບ"
     },
     "useraction": {
         "followbet": "ປະຕິບັດຕາມ BET",
@@ -238,12 +242,41 @@
     },
     "leaderboard": {
         "user":"ຜູ້ໃຊ້",
-        "winning rate": "ອັດຕາການຊະນະ",
-        "Bets":"ພະນັນ",
-        "winning amount":"ຈຳ ນວນທີ່ຊະນະ",
+        "winningrate": "ອັດຕາການຊະນະ",
+        "bets":"ພະນັນ",
+        "winningamount":"ຈຳ ນວນທີ່ຊະນະ",
         "follow":"ປະຕິບັດຕາມ",
-        "weekly rankings":"ການຈັດອັນດັບປະ ຈຳ ອາທິດ",
-        "monthly rankings":"ການຈັດອັນດັບປະ ຈຳ ເດືອນ",
-        "Top 10 Leaders":"ຜູ້ ນຳ ສູງສຸດ 10 ຄົນ"
+        "weeklyrankings":"ການຈັດອັນດັບປະ ຈຳ ອາທິດ",
+        "monthlyrankings":"ການຈັດອັນດັບປະ ຈຳ ເດືອນ",
+        "Top10Leaders":"ຜູ້ ນຳ ສູງສຸດ 10 ຄົນ",
+        "lastupdate":"ອັບເດດຫຼ້າສຸດ 1 ນາທີທີ່ແລ້ວ"
+    },
+    "breadcrumbs": {
+        "rule" : "ກົດລະບຽບ",
+        "gamerule": "ກົດລະບຽບເກມ",
+        "leaderboard" : "ກະດານ ນຳ",
+        "betHistory" : "ປະຫວັດການເດີມພັນ",
+        "currentBet" : "ເດີມພັນໃນປະຈຸບັນ",
+        "stockList" : "ລາຍການຫຸ້ນ",
+        "announcement" : "ປະກາດ"
+    },
+    "setting": {
+        "account":"ບັນຊີ",
+        "usersallowtovisitmyprofile":"ຜູ້ໃຊ້ອະນຸຍາດໃຫ້ເຂົ້າເບິ່ງໂປຼໄຟລ໌ຂອງຂ້ອຍ",
+        "usersallowfollowme":"ຜູ້ໃຊ້ອະນຸຍາດໃຫ້ຕິດຕາມຂ້ອຍ",
+        "userallowtosenddirectmessage":"ອະນຸຍາດໃຫ້ຜູ້ໃຊ້ສົ່ງຂໍ້ຄວາມໂດຍກົງ",
+        "gameoptions":"ຕົວເລືອກເກມ",
+        "sound":"ສຽງ",
+        "allowtolocation":"ອະນຸຍາດໃຫ້ຕັ້ງສະຖານທີ່"
+    },
+    "notification":{
+        "mynotification":"ແຈ້ງການຂອງຂ້ອຍ",
+        "receivebyemail":"ຮັບໂດຍອີເມວ",
+        "receivebymessage":"ໄດ້ຮັບໂດຍຂໍ້ຄວາມ",
+        "insufficientbalance": "ຍອດເງິນບໍ່ພຽງພໍໃນບັນຊີ",
+        "winingbets":"ชนะเดิมพัน",
+        "losingbets":"ການສູນເສຍການເດີມພັນ",
+        "usersfollwme":"ຜູ້ໃຊ້ຕິດຕາມຂ້ອຍ",
+        "amountcreditedordebitedtoanaccount":"ຈຳ ນວນເງິນທີ່ຝາກຫຼື debited ເຂົ້າບັນຊີ"
     }
 }

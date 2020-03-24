@@ -273,7 +273,7 @@ export default {
         if (this.trendType === "firstDigit") {
           firstlast = element.number1;
           this.gameID.push(
-            element.stockTimestamp +
+            element.stockTimeStamp +
               "\n" +
               element.stockValue +
               "\n" +
@@ -320,7 +320,7 @@ export default {
         } else if (this.trendType === "lastDigit") {
           firstlast = element.number2;
           this.gameID.push(
-            element.stockTimestamp +
+            element.stockTimeStamp +
               "\n" +
               element.stockValue +
               "\n" +
@@ -368,7 +368,7 @@ export default {
           let rs = element.number1 + element.number2;
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.stockTimestamp +
+            element.stockTimeStamp +
               "\n" +
               element.stockValue +
               "\n" +
@@ -416,7 +416,7 @@ export default {
           let rs = element.number1.toString() + element.number2.toString();
           firstlast = parseInt(rs);
           this.gameID.push(
-            element.stockTimestamp +
+            element.stockTimeStamp +
               "\n" +
               element.stockValue +
               "\n" +

@@ -10,10 +10,10 @@
         </v-layout>
         <v-flex grow pa-1 xs12 class="text-lg-right ranking">
             <span class="text-uppercase font-weight-bold">
-                <v-icon small>event</v-icon>{{$t('leaderboard.weekly rankings')}}
+                <v-icon small>event</v-icon>{{$t('leaderboard.weeklyrankings')}}
             </span>
             <span class="text-uppercase font-weight-bold">
-                <v-icon small>event</v-icon>{{$t('leaderboard.monthly rankings')}}
+                <v-icon small>event</v-icon>{{$t('leaderboard.monthlyrankings')}}
             </span>
         </v-flex>
 
