@@ -15,7 +15,7 @@
             @click="isShowDateStart = !isShowDateStart"
           >
             <div class="title_date_picker">
-              <span>from</span>
+              <span>{{$t('msg.from')}}</span>
             </div>
             <div class="date_picker">
               <span class="select_date">{{ startDate }}</span>
@@ -39,7 +39,7 @@
             @click="isShowDateEnd = !isShowDateEnd"
           >
             <div class="title_date_picker">
-              <span>to</span>
+              <span>{{$t('msg.to')}}</span>
             </div>
             <div class="date_picker">
               <span class="select_date">{{ endDate }}</span>
@@ -62,7 +62,7 @@
             <div class="title_date_picker">
               <span></span>
             </div>
-            <button @click="getStockAnalysis">GO</button>
+            <button @click="getStockAnalysis">{{$t('msg.go')}}</button>
           </div>
         </v-flex>
       </v-layout>

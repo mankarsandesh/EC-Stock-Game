@@ -2,17 +2,17 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">settings</h2>
+        <h2 class="title_menu">{{$t('menu.setting')}}</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">account</span>
+          <span class="group_title">{{$t('setting.account')}}</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>Users allow to visit my profile</span>
+              <span>{{$t('setting.usersallowtovisitmyprofile')}}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"                
@@ -24,7 +24,7 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>Users allow follow me</span>
+              <span>{{$t('setting.usersallowfollowme')}}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"                 
@@ -36,7 +36,7 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>User allow to send direct message</span>
+              <span>{{$t('setting.userallowtosenddirectmessage')}}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -52,13 +52,13 @@
       </v-flex>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">game options</span>
+          <span class="group_title">{{$t('setting.gameoptions')}}</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>Sound</span>
+              <span>{{$t('setting.sound')}}</span>
               <label class="switch">
                 <input
-                  @change="updatesetting"
+                  @change="updateSetting"
                   type="checkbox"
                   ref="isSound"
                   :checked="getUserInfo.isSound"
@@ -67,7 +67,7 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>Allow to location</span>
+              <span>{{$t('setting.allowtolocation')}}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
