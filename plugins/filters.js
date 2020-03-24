@@ -1,5 +1,41 @@
 import Vue from "vue";
 
+// First Digit
+Vue.filter("firstDigit", value => {
+  if (!value) return "";
+  value = value.toString();
+  let first = value[value.length - 2];
+  let result = `<span >${first}</span>`;
+  return result;
+});
+
+//Last Digit
+Vue.filter("lastDigit", value => {
+  if (!value) return "";
+  value = value.toString();
+  let last = value[value.length - 1];
+  return `<span >${last}</span>`; 
+});
+
+//Both Digit
+Vue.filter("bothDigit", value => {
+  if (!value) return "";
+  value = value.toString();
+  let first = value[value.length - 2];
+  let last = value[value.length - 1];
+  let result = Number(first) + Number(last);
+  return `<span >${result}</span>`; 
+});
+
+//Two Digit
+Vue.filter("twoDigit", value => {
+  if (!value) return "";
+  value = value.toString();
+  let first = value[value.length - 2];
+  let last = value[value.length - 1];  
+  return `<span >${first}${last}</span>`; 
+});
+
 // set color for lottery draw
 Vue.filter("lastDraw", value => {
   if (!value) return "";

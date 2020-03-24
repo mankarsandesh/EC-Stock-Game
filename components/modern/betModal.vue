@@ -20,7 +20,7 @@
       <v-flex class="pt-1 text-uppercase betHeading">
         <span>
           {{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
-          {{ loop }} minute
+          {{ getStockLoop(stockName) }} minute
         </span>
         |
         <span>
@@ -118,6 +118,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockLoop",
       "getGameUUIDByStockName",
       "getCoins_modern",
       "getOnBetting",

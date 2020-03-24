@@ -605,46 +605,63 @@ const createStore = () => {
       },
       // to show ship and amount on bet button
       getAmountMultiGameBet: state => data => {
-        // console.log(state.multiGameBet)
+        // get total bottom bet amount
         function getAmount(object) {
-          // find stockId
-          if (object.findIndex(x => x.stockId === data.stockId) == -1) return 0;
-          // get data by stockId
-          let stockIdObject = object.filter(x => x.stockId === data.stockId);
-          // check rule in stockId
-          if (stockIdObject.findIndex(x => x.gameRule === data.gameRule) == -1)
+          // check gameUUID is exist or not,if not return 0
+          if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1)
             return 0;
-          // get amount by rule
-          let result = stockIdObject
-            .filter(x => x.gameRule === data.gameRule)
+          // get data by gameUUID and store in 'oneGameUUID'
+          let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
+          // check there is ruleid in gameUUID or not,if no has return 0
+          if (oneGameUUID.findIndex(x => x.ruleID === data.ruleID) == -1)
+            return 0;
+          // get gameUUID by from 'oneGameUUID'
+          let result = oneGameUUID
+            .filter(x => x.ruleID === data.ruleID)
             .map(x => x.betAmount)
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
         function getAmounts(object) {
           // find stockId
-          if (object.findIndex(x => x.stock === data.stockId) == -1) return 0;
+          if (object.findIndex(x => x.stock === data.ruleID) == -1) return 0;
           // get data by stockId
-          let stockIdObject = object.filter(x => x.stock === data.stockId);
+          let stockIdObject = object.filter(x => x.stock === data.ruleID);
           // check rule in stockId
-          if (stockIdObject.findIndex(x => x.rule === data.gameRule) == -1)
+          if (stockIdObject.findIndex(x => x.rule === data.ruleID) == -1)
             return 0;
           // get amount by rule
           let result = stockIdObject
-            .filter(x => x.rule === data.gameRule)
+            .filter(x => x.rule === data.ruleID)
             .map(x => x.betAmount)
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
-        return getAmount(state.multiGameBet) + getAmounts(state.onGoingBet);
+        return getAmount(state.multiGameBet);
       },
       getAmountBetSpecificNumber: state => data => {
+        let start = 2000;
+        let end = 2000;
+        if (data.ruleID === "firstdigit") {
+          start = 8;
+          end = 17;
+        } else if (data.ruleID === "lastdigit") {
+          start = 25;
+          end = 34;
+        } else if (data.ruleID === "bothdigit") {
+          start = 149;
+          end = 167;
+        } else {
+          start = 42;
+          end = 141;
+        }
         function getAmount(object) {
           let count = 9;
           // find stockId
-          if (object.findIndex(x => x.stock === data.stockId) == -1) return 0;
+          if (object.findIndex(x => x.gameUUID === data.gameUUID) == -1)
+            return 0;
           // get data by stockId
-          let stockIdObject = object.filter(x => x.stock === data.stockId);
+          let stockIdObject = object.filter(x => x.gameUUID === data.gameUUID);
           // check rule in stockId
           // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
           // get amount by rule
@@ -653,16 +670,14 @@ const createStore = () => {
             result =
               result +
               stockIdObject
-                .filter(x =>
-                  x.rule.toLowerCase().includes(`${data.gameRule}-${i}`)
-                )
+                .filter(x => x.ruleID >= start && x.ruleID <= end)
                 .map(x => x.betAmount)
                 .reduce((a, b) => a + b, 0);
           }
-          // .map(x => x.betAmount).reduce((a, b) => a + b, 0)
           return result;
         }
-        return getAmount(state.multiGameBet) + getAmount(state.onGoingBet);
+        return getAmount(state.multiGameBet);
+        //  + getAmount(state.onGoingBet);
       },
       //get betting data
       getOnBetting(state) {
