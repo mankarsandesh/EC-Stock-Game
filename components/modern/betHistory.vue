@@ -11,7 +11,6 @@
           :search="search"
           class="current-bet"
           show-expand
-          :expanded="expanded"
         >
           <template v-slot:items="item">
             <tr @click="clicked(item.item.betID)" class="selectRow">
@@ -90,7 +89,7 @@
       <v-pagination
         v-model="pagination.page"
         color="#1db42f"
-        :length="4"
+        :length="10"
       ></v-pagination>
     </div>
   </v-container>
@@ -98,10 +97,8 @@
 
 <script>
 export default {
-  props: ["head", "userBetHistory"],
+  props: ["head", "userBetHistory","search"],
   data: () => ({
-    expanded: ["Donut"],
-    search: "",
     pagination: {
       page: 1
     }

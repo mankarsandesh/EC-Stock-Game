@@ -131,7 +131,7 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: "http://uattesting.equitycapitalgaming.com/webApi",
+    // baseURL: "http://uattesting.equitycapitalgaming.com/webApi",
   },
 
   /*
