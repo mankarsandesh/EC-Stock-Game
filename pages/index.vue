@@ -25,7 +25,8 @@ export default {
   middleware: "getApiKey",
 
   data() {
-    return {
+    return {  
+      referrer : document.referrer,    
       stockname: "btc1",
       linkto: "",
       // const userData = this.$route.query;
@@ -38,7 +39,8 @@ export default {
       }
     };
   },
-  mounted() {
+  mounted() {    
+    console.log(this.referrer);
     let objJsonStr = JSON.stringify(this.userData);
     let buff = new Buffer(objJsonStr);
     let base64data = buff.toString("base64");
