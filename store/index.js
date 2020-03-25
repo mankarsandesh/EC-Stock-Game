@@ -284,23 +284,19 @@ const createStore = () => {
       async sendBetting(context) {
         // set sendbetting = true
         // to show loading
-        context.commit("setIsSendBetting", true);
-        const betDatas = {
-          data: [...context.state.multiGameBetsend]
-        };
-        if (betDatas.data.length == 0) {
-          context.commit("setIsSendBetting", false);
-          this._vm.$swal({
-            type: "error",
-            title: `Sorry, No Betting...!`,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return;
-        }
-        // console.log(betData)
         try {
-          console.log(betDatas);
+          context.commit("setIsSendBetting", true);
+          const betDatas = context.state.multiGameBetsend;
+          if (betDatas.length == 0) {
+            context.commit("setIsSendBetting", false);
+            this._vm.$swal({
+              type: "error",
+              title: `Sorry, No Betting...!`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+            return;
+          }
           const res = await this.$axios.$post(
             "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
             {
@@ -314,6 +310,7 @@ const createStore = () => {
             }
           );
           if (res.status && res.code == 200) {
+            context.dispatch("asynUserInfo");
             console.log(res);
             context.commit("setIsSendBetting", false);
             context.commit("clearDataMultiGameBetsend");
@@ -377,7 +374,6 @@ const createStore = () => {
     },
     getters: {
       getGameUUIDByStockName: state => stockName => {
-        console.log(state.stockCategory);
         let loopIndex = 0;
         if (stockName === "btc5") {
           loopIndex = 1;
@@ -389,11 +385,8 @@ const createStore = () => {
         if (state.stockCategory.length > 0) {
           for (let i = 0; i < state.stockCategory.length; i++) {
             for (let j = 0; j < state.stockCategory[i].stocks.length; j++) {
-              console.log(state.stockCategory[i].stocks[j].stockName);
               if (state.stockCategory[i].stocks[j].stockName === stockName) {
                 return state.stockCategory[i].stocks[j].loops[loopIndex].gameID;
-              } else {
-                console.log(state.stockCategory[i].stocks[j].stockName);
               }
             }
           }

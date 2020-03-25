@@ -2,12 +2,17 @@
   <div>
     <v-layout row justify-center class="footerBet">
       <v-flex lg2 md2 xs2 class="amount">
-        <div>{{getAllBettingAmount}}</div>
+        <div>{{ getAllBettingAmount }}</div>
       </v-flex>
       <v-flex lg5 md5 xs3 class="chipsdiv">
         <v-layout row>
           <v-flex class="text-center">
-            <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="setFooterBetAmount(getCoins_modern[key])"
                 :src="item.img"
@@ -16,7 +21,7 @@
                 :class="item.color"
                 class="chipImg"
               >
-                <span class="setpricechip">{{getCoins_modern[key]}}</span>
+                <span class="setpricechip">{{ getCoins_modern[key] }}</span>
               </v-img>
             </v-avatar>
           </v-flex>
@@ -24,11 +29,15 @@
       </v-flex>
       <v-flex lg3 md3 xs2 class="betButton">
         <div>
-          <v-btn class="buttonGreensmall" dark @click="getSending()">{{$t('msg.'+texts)}}</v-btn>
-          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{$t('msg.cancel')}}</v-btn>
+          <v-btn class="buttonGreensmall" dark @click="getSending()">{{
+            $t("msg." + texts)
+          }}</v-btn>
+          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
+            $t("msg.cancel")
+          }}</v-btn>
         </div>
       </v-flex>
-    </v-layout>   
+    </v-layout>
   </div>
 </template>
 
@@ -79,11 +88,11 @@ export default {
     getSending() {
       this.isSending = true;
       this.texts = "sending";
-      setTimeout(() => {
-        this.sendBetting();
-        this.isSending = false;
-        this.texts = "confirm";
-      }, 1000);
+      // setTimeout(() => {
+      this.sendBetting();
+      this.isSending = false;
+      this.texts = "confirm";
+      // }, 1000);
     }
   },
   computed: {
@@ -96,7 +105,7 @@ export default {
 .amount div {
   margin: 10px -15px;
   padding: 8px;
-  color:#615f60;
+  color: #615f60;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-left: 3px solid #aeadad;

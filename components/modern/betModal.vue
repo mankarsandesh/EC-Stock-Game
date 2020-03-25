@@ -97,7 +97,6 @@ export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
   data() {
     return {
-      gameUUID: "854fdec3-9b20-469c-8471-b0cd3c39aba3",
       confirmDisabled: false,
       betValue: 0,
       imgChip: [
@@ -155,6 +154,7 @@ export default {
     //  this.getwinuser()
   },
   methods: {
+    ...mapActions(["asynUserInfo"]),
     ...mapMutations(["pushDataOnGoingBet", "setGameID"]),
     coinClick(value) {
       let amount = parseInt(value);
@@ -175,8 +175,11 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
         if (res.status == true) {
+          console.log("bet success...")
+          console.log(res)
+          console.log("bet success...")
+          this.asynUserInfo();
           this.closePopper();
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
