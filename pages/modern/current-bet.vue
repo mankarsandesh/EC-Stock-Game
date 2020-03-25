@@ -1,56 +1,59 @@
 <template>
-<div>
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-    <currentbet :desserts="desserts"></currentbet>
-</div>
+  <div>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <currentbet :head="head" :currentBets="currentBets"></currentbet>
+  </div>
 </template>
 
 <script>
 import currentbet from "~/components/mobile/currentbet";
 import config from "../../config/config.global";
-import {
-    mapState
-} from "vuex";
+import { mapState } from "vuex";
 export default {
-    layout: "",
-    components: {
-        currentbet
-    },
-    data() {
-        return {
-            desserts: []
-        };
-    },
-    computed: {
-        ...mapState(["portalProviderUUID","userUUID"]) //get 2 data from vuex first, in the computed
-    },
-    mounted() {
-        this.fetch(); // after this component render done, this will call the function from method
-    },
-    methods: {
-        async fetch() {
-            // afer moumted call the functions this method will run the fetch the data from API
-            const data1 = {
-                // before we call the data we should make the object to the send the request with the API
-                portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-                userUUID: this.userUUID, // get the userUUID with the this object
-                version: config.version, // version of API
-                betResult: [-1,0,1], // -1= pending, pending that mean is betting
-                limit: "20", // limit the data we the data come will come only the 20 that we limit in this case
-                offset: "0" // offset or skip the data
-            };
-            const {
-                data
-            } = await this.$axios.post(
-                config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
-                data1, // data object
-                {
-                    headers: config.header
-                }
-            );
-            // console.log(data,"current bet data");
-            this.desserts = data.data; // after will get the respone the object or array that come with will be equal the array that we create in the data funtion
-        }
+  layout: "",
+  components: {
+    currentbet
+  },
+  data() {
+    return {
+      head: [
+        {
+          text: "bet ID",
+          value: "betID",
+          sortable: false,
+          value: "createdTime"
+        },
+        { text: "game ID", value: "gameID" },
+        { text: "bet detail", value: "ruleName" },
+        { text: "time", value: "createdTime" },
+        { text: "amount", value: "betAmount" },
+        { text: "payout", value: "payout" },
+        { text: "bet status", value: "gameStatus" }
+      ],
+      currentBets: []
+    };
+  },
+  computed: {
+    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
+  },
+  mounted() {
+    this.fetch();
+  },
+  methods: {
+    async fetch() {
+      const sendData = {
+        portalProviderUUID: this.portalProviderUUID,
+        userUUID: this.userUUID,
+        version: config.version,
+        betResult: [-1],
+        limit: "20",
+        offset: "0"
+      };
+      const { data } = await this.$axios.post(config.getAllBets.url, sendData, {
+        headers: config.header
+      });
+      this.currentBets = data.data;
     }
+  }
 };
 </script>

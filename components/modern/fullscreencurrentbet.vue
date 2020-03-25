@@ -1,25 +1,23 @@
 <template>
-  <div id="table-scroll" class="table-scroll table-wrapper-scroll-y pl-3">
+  <div class="table-scroll table-wrapper-scroll-y pl-3">
     <div>
       <h4
         align="center"
         fill-height
         fluid
         justify="center"
-        v-show="desserts.length <= 0"
+        v-show="currentbet.length <= 0"
         class="pa-5"
-      >
-        {{ $t("msg.nobetting") }}
-      </h4>
-      <table class="main-table" v-show="desserts.length > 0">
-        <tbody v-for="(item, index) in desserts" :key="index">
+      >{{ $t("msg.nobetting") }}</h4>
+      <table class="main-table" v-show="currentbet.length > 0">
+        <tbody v-for="(item, index) in currentbet" :key="index">
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">BET ID</th>
-            <td>{{ item.betID }}</td>
+            <td>{{ item.betUUID }}</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">GAME ID</th>
-            <td>{{ item.gameID }}</td>
+            <td>{{ item.gameUUID }}</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">BET DETAIL</th>
@@ -47,24 +45,21 @@
                 class="betstatus text-uppercase"
                 color="green"
                 text-color="white"
-                >{{ item.betResult }}</v-chip
-              >
+              >{{ item.betResult }}</v-chip>
             </td>
             <td v-if="item.betResult == 'lose'">
               <v-chip
                 class="betstatus text-uppercase"
                 color="red"
                 text-color="white"
-                >{{ item.betResult }}</v-chip
-              >
+              >{{ item.betResult }}</v-chip>
             </td>
             <td v-if="item.betResult == 'pending'">
               <v-chip
                 class="betstatus text-uppercase"
                 color="yellow "
                 text-color="black"
-                >{{ item.betResult }}...</v-chip
-              >
+              >{{ item.betResult }}...</v-chip>
             </td>
           </tr>
         </tbody>
@@ -72,19 +67,9 @@
     </div>
   </div>
 </template>
-
-<script>
-// requires jquery library
-jQuery(document).ready(function() {
-  jQuery(".main-table")
-    .clone(true)
-    .appendTo("#table-scroll")
-    .addClass("clone");
-});
-</script>
 <script>
 export default {
-  props: ["desserts"]
+  props: ["currentbet"]
 };
 </script>
 
@@ -95,11 +80,10 @@ export default {
 
 .table-scroll {
   position: relative;
-
-  max-width: 600px;
+  min-width: 290px;
   margin: auto;
   overflow: auto;
-  height: 365px;
+  max-height: 350px;
 }
 
 .table-wrapper-scroll-y {
@@ -117,6 +101,7 @@ export default {
 
 .table-scroll table {
   width: 100%;
+  min-width: 100%;
   margin: auto;
   border-collapse: separate;
   border-spacing: 0;
@@ -156,7 +141,8 @@ export default {
   background: transparent;
 }
 .betstatus {
-  border-radius: 10px;
+  border-radius: 20px;
+  width: auto;
 }
 
 ::-webkit-scrollbar {
