@@ -1,23 +1,25 @@
 <template>
-  <div>   
+  <div>
     <v-flex xs12 md10 lg10 style="margin:0 auto;">
       <v-layout row>
         <v-flex xs12 grow pa-1>
           <p class="float-left md12">
-            <span class="title" xs10 sm10>{{$t('leaderboard.Top 10 Leader')}}</span> (last updated 1 minutes ago)
+            <span class="title" xs10 sm10>{{$t('leaderboard.Top10Leaders')}}</span>
+            ({{$t('leaderboard.lastupdate')}})
           </p>
         </v-flex>
       </v-layout>
 
       <v-flex grow pa-1 class="text-lg-right ranking">
         <span class="text-uppercase font-weight-bold">
-          <v-icon small>event</v-icon>WEEKLY RANKINGS
+          <v-icon small>event</v-icon>
+          {{$t('leaderboard.weeklyrankings')}}
         </span>
         <span class="text-uppercase font-weight-bold">
-          <v-icon small>event</v-icon>MONTHLY RANKINGS
+          <v-icon small>event</v-icon>
+          {{$t('leaderboard.monthlyrankings')}}
         </span>
       </v-flex>
-      
     </v-flex>
   </div>
 </template>
