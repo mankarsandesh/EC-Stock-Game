@@ -278,24 +278,23 @@ const createStore = () => {
         }
       },
       // end new api  
-
-      // send bet data for Multigame and footer bet on full screen
-      async sendBetting(context) {      
-        context.commit("setIsSendBetting", true);
-        const betData = {
-          data: [...context.state.multiGameBetsend]
-        };
-        if (betData.data.length == 0) {
-          context.commit("setIsSendBetting", false);
-          this._vm.$swal({
-            type: "error",
-            title: `Sorry, No Betting...!`,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return;
-        }       
-        try {      
+      // send bet data for multigame and footer bet on full screen
+      async sendBetting(context) {
+        // set sendbetting = true
+        // to show loading
+        try {
+          context.commit("setIsSendBetting", true);
+          const betDatas = context.state.multiGameBetsend;
+          if (betDatas.length == 0) {
+            context.commit("setIsSendBetting", false);
+            this._vm.$swal({
+              type: "error",
+              title: `Sorry, No Betting...!`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+            return;
+          }
           const res = await this.$axios.$post(
             "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
             {
@@ -309,6 +308,7 @@ const createStore = () => {
             }
           );
           if (res.status && res.code == 200) {
+            context.dispatch("asynUserInfo");
             console.log(res);
             context.commit("setIsSendBetting", false);
             context.commit("clearDataMultiGameBetsend");
@@ -363,7 +363,6 @@ const createStore = () => {
     getters: {
       clearRoadMap: state => state.clearRoadMap,
       getGameUUIDByStockName: state => stockName => {
-        console.log(state.stockCategory);
         let loopIndex = 0;
         if (stockName === "btc5") {
           loopIndex = 1;
@@ -375,11 +374,8 @@ const createStore = () => {
         if (state.stockCategory.length > 0) {
           for (let i = 0; i < state.stockCategory.length; i++) {
             for (let j = 0; j < state.stockCategory[i].stocks.length; j++) {
-              console.log(state.stockCategory[i].stocks[j].stockName);
               if (state.stockCategory[i].stocks[j].stockName === stockName) {
                 return state.stockCategory[i].stocks[j].loops[loopIndex].gameID;
-              } else {
-                console.log(state.stockCategory[i].stocks[j].stockName);
               }
             }
           }
