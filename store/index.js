@@ -5,6 +5,8 @@ import config from "../config/config.global";
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
+      clearRoadMap: false,
+
       stockCategory: [],
       gameStockId: null,
       authUser: {},
@@ -110,6 +112,9 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      SET_CLEAR_ROAD_MAP(state, payload) {
+        state.clearRoadMap = payload;
+      },
       SET_STOCK_CATEGORY(state, payload) {
         state.stockCategory = payload;
       },
@@ -376,6 +381,7 @@ const createStore = () => {
       }
     },
     getters: {
+      clearRoadMap: state => state.clearRoadMap,
       getGameUUIDByStockName: state => stockName => {
         let loopIndex = 0;
         if (stockName === "btc1" || stockName === "btc5") {

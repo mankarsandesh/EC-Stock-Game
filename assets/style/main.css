@@ -1,17 +1,17 @@
 .curretbet-btn:after {
-    left: auto;
-    top: -7px; 
-    content: "";
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #29B13D;
-    position: absolute;
+  left: auto;
+  top: -7px;
+  content: "";
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #29b13d;
+  position: absolute;
 }
-.borderRed{
-border:1px solid red;
+.borderRed {
+  border: 1px solid red;
 }
-.bordeBlue{
-  border:1px solid blue;
+.bordeBlue {
+  border: 1px solid blue;
 }
 /*
 Home Page Component
@@ -65,7 +65,7 @@ Home Page Component
 
 .chartDesgin {
   margin-top: 10px;
-  padding:3px;
+  padding: 3px;
   background-color: #fff;
   border-radius: 10px;
 }
@@ -385,7 +385,8 @@ nav.modal-bet.v-toolbar.theme--light p {
   height: 200px !important;
   text-align: center !important;
   border-radius: 5px !important;
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
 }
 
 .container .bg-primary h1 {
@@ -471,7 +472,6 @@ nav.modal-bet.v-toolbar.theme--light p {
   margin-top: 0px !important;
 }
 
-
 /* ================= Stock List ===================== */
 
 .head-result-stock {
@@ -548,9 +548,7 @@ table.result-table tr {
   font-size: 5px;
 }
 
-
 /* ================= Stock List ===================== */
-
 
 /* ================= Betting Button ===================== */
 
@@ -652,21 +650,21 @@ table.result-table tr {
   float: left;
 }
 
-.align_button4.v-btn {  
+.align_button4.v-btn {
   font-weight: 400;
   background-color: #fff !important;
-  border:1px soli #e8e8e8;
+  border: 1px soli #e8e8e8;
   min-width: 100%;
   border-radius: 6px;
   padding: 0;
   margin: 4px;
 }
 
-.align_button5.v-btn {  
+.align_button5.v-btn {
   font-weight: 400;
   background-color: #fff !important;
   box-shadow: none;
-  border:1px solid #e8e8e8;
+  border: 1px solid #e8e8e8;
   min-width: 100%;
   border-radius: 6px;
   padding: 0;
@@ -723,7 +721,6 @@ button.btn-small.v-btn.theme--light {
   margin: 0;
 }
 
-
 /* .vue-back-to-top i {
   width: 50%;
   display: block;
@@ -733,9 +730,7 @@ button.btn-small.v-btn.theme--light {
   padding: 6px;
 } */
 
-
 /* ================= Betting Button ===================== */
-
 
 /* Bet Close for desktop */
 
@@ -752,9 +747,7 @@ button.btn-small.v-btn.theme--light {
   position: relative !important;
 }
 
-
 /* End of the bet close for deskop */
-
 
 /* Bettting Result */
 
@@ -786,9 +779,7 @@ table.result-table {
   overflow: overlay;
 }
 
-
 /* Iphone 5 */
-
 
 /* iPhone 5 ----------- */
 
@@ -826,9 +817,11 @@ table.result-table {
   }
 }
 
-@media only screen and (min-width: 960px) {}
+@media only screen and (min-width: 960px) {
+}
 
-@media only screen and (min-width: 1264px) {}
+@media only screen and (min-width: 1264px) {
+}
 
 @media only screen and (min-width: 1904px) {
   .d-block.w16 {
@@ -879,7 +872,6 @@ table.result-table {
   justify-content: space-between;
 }
 
-
 /* main button */
 
 .main-btn {
@@ -889,7 +881,12 @@ table.result-table {
   height: 45px;
   background: rgba(10, 177, 118, 1);
   background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(10, 177, 118, 1)), color-stop(100%, rgba(14, 177, 30, 1)));
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(10, 177, 118, 1)),
+    color-stop(100%, rgba(14, 177, 30, 1))
+  );
   -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
@@ -907,7 +904,12 @@ table.result-table {
   height: 45px;
   background: rgba(10, 177, 118, 1);
   background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(10, 177, 118, 1)), color-stop(100%, rgba(14, 177, 30, 1)));
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(10, 177, 118, 1)),
+    color-stop(100%, rgba(14, 177, 30, 1))
+  );
   -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
@@ -926,7 +928,12 @@ table.result-table {
   height: 45px;
   background: rgba(10, 177, 118, 1);
   background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(10, 177, 118, 1)), color-stop(100%, rgba(14, 177, 30, 1)));
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(10, 177, 118, 1)),
+    color-stop(100%, rgba(14, 177, 30, 1))
+  );
   -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
@@ -962,7 +969,6 @@ table.result-table {
 .container.fluid {
   padding: 0 15px !important;
 }
-
 
 /* Loading page  */
 
@@ -1048,23 +1054,17 @@ table.result-table {
   }
 }
 
-
 /* END THE LOADING PAGE */
-
 
 /*  Background  */
 
-
 /* background: rgb(76,182,121);
 background: radial-gradient(circle, rgba(76,182,121,1) 31%, rgba(93,190,109,1) 100%); */
 
-
 /* background: rgb(76,182,121);
 background: radial-gradient(circle, rgba(76,182,121,1) 31%, rgba(93,190,109,1) 100%); */
-
 
 /* End Background gradient */
-
 
 /* ----------------------------- style from _id ----------------------------- */
 
@@ -1086,7 +1086,7 @@ background: radial-gradient(circle, rgba(76,182,121,1) 31%, rgba(93,190,109,1) 1
   font-size: 18px;
   border: 1px solid #4b65ff;
   border-radius: 7px;
-text-align: center;
+  text-align: center;
 }
 .betclose {
   font-size: 18px;
@@ -1105,7 +1105,6 @@ text-align: center;
 .trendmap-container {
   position: relative;
 }
-
 
 .layout-bottom {
   position: absolute;
@@ -1185,7 +1184,6 @@ p.guideline {
   z-index: 10000;
 }
 
-
 .text-red {
   color: #ff0000;
 }
@@ -1203,18 +1201,47 @@ p.guideline {
   text-align: center;
 }
 /* Error Class */
-.text-danger{
+.text-danger {
   border-radius: 4px;
-  color: #f44336; 
-  border:1px dotted #f44336;
+  color: #f44336;
+  border: 1px dotted #f44336;
   padding: 6px 8px;
   font-size: 14px;
 }
 
-.text-sucess{
+.text-sucess {
   border-radius: 4px;
-  color: green; 
-  border:1px dotted greenyellow;
+  color: green;
+  border: 1px dotted greenyellow;
   padding: 6px 8px;
   font-size: 14px;
+}
+@keyframes taadaa {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+.firstdigit.firstdigit-animation {
+  animation: taadaa 1s infinite !important;
+  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%) !important;
+  color: #fff !important;
+}
+.lastdigit.lastdigit-animation {
+  animation: taadaa 1s infinite !important;
+  background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%) !important;
+  color: #fff !important;
+}
+.bothdigit.bothdigit-animation {
+  animation: taadaa 1s infinite !important;
+  background: linear-gradient(to right, #be3095 20%, #e71275 51%) !important;
+  color: #fff !important;
+}
+.twodigit.twodigit-animation {
+  animation: taadaa 1s infinite !important;
+  background: linear-gradient(to right, #25dac2 20%, #0287db 51%) !important;
+  color: #fff !important;
 }

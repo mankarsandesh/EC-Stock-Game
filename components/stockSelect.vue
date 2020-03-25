@@ -49,20 +49,14 @@
         return-object
         id="minute"
       >
-        <template slot="selection" slot-scope="data"
-          >{{ data.item.loopName }} Minutes</template
-        >
+        <template slot="selection" slot-scope="data">{{ data.item.loopName }} Minutes</template>
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content
-              >{{ data.loopName }} Minutes</v-list-tile-content
-            >
+            <v-list-tile-content>{{ data.loopName }} Minutes</v-list-tile-content>
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title
-                >{{ data.item.loopName }} Minutes</v-list-tile-title
-              >
+              <v-list-tile-title>{{ data.item.loopName }} Minutes</v-list-tile-title>
             </v-list-tile-content>
           </template>
         </template>
@@ -101,14 +95,18 @@ export default {
     };
   },
   watch: {
-    stock(value) {  // when value is changed this value will do the list 
-      if (this.stockSocket) { // check the stockSocket is come or not 
-        this.stockSocket = false;  // after value is come we set value of stickSocket is flase 
-      } else {  // after value is false the logic will be come in this case 
-        if (value !== "") {   // after reveide the value we have to check the value is not empty 
-          this.stockName = "";  // after value is not empty we clear the value is first 
-          this.stockNames = value.stocks;  // after clear the push the array into the items 
-          $("#stockName").click();   // after have the value we have to click the box
+    stock(value) {
+      // when value is changed this value will do the list
+      if (this.stockSocket) {
+        // check the stockSocket is come or not
+        this.stockSocket = false; // after value is come we set value of stickSocket is flase
+      } else {
+        // after value is false the logic will be come in this case
+        if (value !== "") {
+          // after reveide the value we have to check the value is not empty
+          this.stockName = ""; // after value is not empty we clear the value is first
+          this.stockNames = value.stocks; // after clear the push the array into the items
+          $("#stockName").click(); // after have the value we have to click the box
         }
         this.stockSocket = true;
       }
@@ -175,7 +173,7 @@ export default {
           {
             headers: config.header
           }
-        );
+        );      
         this.getGameUUID(data);
         this.SET_STOCK_CATEGORY(data);
         this.items = data;
