@@ -327,7 +327,7 @@ export default {
         );
         if (res.code === 200) {
           this.stockAnalysis = res.data;
-          console.log(res.data);
+          console.log(res.data, 'ayayayayayayayyayayya');
         } else {
           throw new Error(res.message.dateRangeTo[0]);
         }
