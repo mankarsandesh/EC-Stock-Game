@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "../../config/config.global";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
