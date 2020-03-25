@@ -45,7 +45,7 @@ export default {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
         version: config.version,
-        betResult: [-1, 0, 1],
+        betResult: [-1],
         limit: "20",
         offset: "0"
       };
