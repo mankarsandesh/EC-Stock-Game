@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import config from "../../config/config.global";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
@@ -186,10 +186,11 @@ export default {
           this.closePopper();
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
+            gameUUID: res.data[0].gameUUID,
             ruleName: res.data[0].ruleName,
             payout: res.data[0].payout,
             betDate: res.data[0].createdDate,
-            betTime: res.data[0].createdTime,            
+            betTime: res.data[0].createdTime,
             betAmount: res.data[0].betAmount,
             stockName: this.$props.stockName
           };

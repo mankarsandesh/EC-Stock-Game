@@ -6,11 +6,11 @@
         fill-height
         fluid
         justify="center"
-        v-show="currentbet.length <= 0"
-        class="pa-5"
+        v-show="getOnGoingBet.length <= 0"
+        class="nobetting"
       >{{ $t("msg.nobetting") }}</h4>
-      <table class="main-table" v-show="currentbet.length > 0">
-        <tbody v-for="(item, index) in currentbet" :key="index">
+      <table class="main-table" v-show="getOnGoingBet.length > 0">
+        <tbody v-for="(item, index) in getOnGoingBet" :key="index">
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">BET ID</th>
             <td>{{ item.betUUID }}</td>
@@ -21,14 +21,11 @@
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">BET DETAIL</th>
-            <td>
-              {{ item.ruleName }} - ({{ item.payout }}) {{ item.stockName }} /
-              {{ item.loop }}
-            </td>
+            <td>{{ item.betAmount }} on rule ({{ item.ruleName }})</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">TIME</th>
-            <td>{{ item.createdTime }}</td>
+            <td>{{ item.betDate }} {{ item.betTime }}</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">AMOUNT</th>
@@ -38,38 +35,17 @@
             <th class="fixed-side table-headbg">PAYOUT</th>
             <td>{{ item.payout }}</td>
           </tr>
-          <tr class="table-rowheight">
-            <th class="fixed-side table-headbg">BET STATUS</th>
-            <td v-if="item.betResult == 'win'">
-              <v-chip
-                class="betstatus text-uppercase"
-                color="green"
-                text-color="white"
-              >{{ item.betResult }}</v-chip>
-            </td>
-            <td v-if="item.betResult == 'lose'">
-              <v-chip
-                class="betstatus text-uppercase"
-                color="red"
-                text-color="white"
-              >{{ item.betResult }}</v-chip>
-            </td>
-            <td v-if="item.betResult == 'pending'">
-              <v-chip
-                class="betstatus text-uppercase"
-                color="yellow "
-                text-color="black"
-              >{{ item.betResult }}...</v-chip>
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
-  props: ["currentbet"]
+  computed: {
+    ...mapGetters(["getOnGoingBet"])
+  }
 };
 </script>
 
@@ -140,11 +116,9 @@ export default {
 .clone tfoot {
   background: transparent;
 }
-.betstatus {
-  border-radius: 20px;
-  width: auto;
+.nobetting {
+  padding: 148px 48px !important;
 }
-
 ::-webkit-scrollbar {
   width: 12px;
 }
