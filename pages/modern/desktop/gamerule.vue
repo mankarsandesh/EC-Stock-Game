@@ -1,9 +1,9 @@
 <template>
   <div xs2>
     <breadcrumbs
-      title="Rule"     
+      :title="$t('breadcrumbs.rule')"
       linkItem2="announcement"     
-      titlebtn2="announcement"
+      :titlebtn2="$t('breadcrumbs.announcement')"
     />
     <v-container>      
       <v-layout row wrap>

@@ -12,7 +12,7 @@
         <v-flex xs6 sm6 md3 lg3 pr-5>
           <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
             <div class="title_date_picker">
-              <span>from</span>
+              <span>{{$t('msg.from')}}</span>
             </div>
             <div class="date_picker">
               <span class="select_date">{{startDate}}</span>
@@ -33,7 +33,7 @@
         <v-flex xs6 sm6 md3 lg3 pr-5>
           <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
             <div class="title_date_picker">
-              <span>to</span>
+              <span>{{$t('msg.to')}}</span>
             </div>
             <div class="date_picker">
               <span class="select_date">{{endDate}}</span>
@@ -52,7 +52,7 @@
             <div class="title_date_picker">
               <span></span>
             </div>
-            <button @click="getOnlineHistory">GO</button>
+            <button @click="getOnlineHistory">{{$t('msg.go')}}</button>
           </div>
         </v-flex>
       </v-layout>
@@ -65,10 +65,10 @@
     <v-flex xs12 class="pt-3 pl-5">
       <div>
         <span style="margin-right:30px">
-          Online Time : <b>{{currentActiveTime}}</b>
+          {{$t('profile.onlinetime')}} : <b>{{currentActiveTime}}</b>
         </span>
         <span style="margin-right:30px">
-          Total Online :
+          {{$t('profile.totalonline')}} 
           <b> {{totalOnlineTime}} </b>
         </span>
       </div>

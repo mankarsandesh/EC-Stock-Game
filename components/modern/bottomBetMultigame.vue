@@ -2,12 +2,17 @@
   <div>
     <v-layout row justify-center class="footerBet">
       <v-flex xs2 class="amount">
-        <div>${{getAllBettingAmount}}</div>
+        <div>{{ formatToPrice(getAllBettingAmount) }}</div>
       </v-flex>
       <v-flex xs3 class="chipsdiv">
         <v-layout row>
           <v-flex class="text-center">
-            <v-avatar size="70" v-for="(item,key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="setFooterBetAmount(getCoins_modern[key])"
                 :src="item.img"
@@ -16,7 +21,7 @@
                 :class="item.color"
                 class="chipImg"
               >
-                <span class="setpricechip">{{getCoins_modern[key]}}</span>
+                <span class="setpricechip">{{ getCoins_modern[key] }}</span>
               </v-img>
             </v-avatar>
           </v-flex>
@@ -24,8 +29,12 @@
       </v-flex>
       <v-flex xs2 class="betButton">
         <div>
-          <v-btn class="buttonGreen" dark @click="getSending()">{{$t('msg.'+texts)}}</v-btn>
-          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{$t('msg.cancel')}}</v-btn>
+          <v-btn class="buttonGreen" dark @click="getSending()">{{
+            $t("msg." + texts)
+          }}</v-btn>
+          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
+            $t("msg.cancel")
+          }}</v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -99,18 +108,18 @@ export default {
 </script>
 
 <style scoped>
-.footerBet{
-	box-shadow: 0 -5px 5px -5px #333;
-	background-color: #FFF;
-	position:fixed;
-	bottom: 0;
-	padding:5px 10px; 
-	width: 100%;
-	 z-index: 99;
+.footerBet {
+  box-shadow: 0 -5px 5px -5px #333;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  padding: 5px 10px;
+  width: 100%;
+  z-index: 99;
 }
 svg {
   position: fixed;
-  z-index: 1000; 
+  z-index: 1000;
   bottom: 0;
   width: 60%;
   align-self: center;
@@ -121,7 +130,7 @@ svg {
   padding: 8px;
   color: #615f60;
   border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;  
+  border-bottom-left-radius: 5px;
   font-size: 30px;
   text-align: left;
   vertical-align: center;

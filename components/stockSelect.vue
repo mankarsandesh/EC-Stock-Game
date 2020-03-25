@@ -137,11 +137,25 @@ export default {
       if (this.stockSocket) {
         if (value !== "") {
           if (this.stock.type == "crypto") {
-            this.$router.replace(
-              `/modern/desktop/${this.stockName.stockName}${this.minute.loopName}`
-            );
+            let routeName =
+              this.stockName.stockName + "" + this.minute.loopName;
+            // check is multi game or not
+            if (this.$route.name === "modern-desktop-id") {
+              this.$router.replace(`/modern/desktop/${routeName}`);
+            } else {
+              // if is multi game then add selected game
+              this.addStockMultigame(routeName);
+            }
           } else {
-            this.$router.replace(`/modern/desktop/${this.stockName.stockName}`);
+            // check is multi game or not
+            if (this.$route.name === "modern-desktop-id") {
+              this.$router.replace(
+                `/modern/desktop/${this.stockName.stockName}`
+              );
+              // if is multi game then add selected game
+            } else {
+              this.addStockMultigame(this.stockName.stockName);
+            }
           }
         }
       } else {
@@ -156,12 +170,14 @@ export default {
   created() {
     this.getActiveGamesByCategory();
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$route);
+  },
   computed: {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
   methods: {
-    ...mapMutations(["setGameID", "SET_STOCK_CATEGORY"]),
+    ...mapMutations(["addStockMultigame", "setGameID", "SET_STOCK_CATEGORY"]),
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(

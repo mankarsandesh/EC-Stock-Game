@@ -22,7 +22,7 @@
                   </tr>
                   <tr>
                     <td><label>Date & Time</label></td>
-                    <td>{{data.payout}}</td>
+                    <td>{{data.betDate}} {{data.betTime}}</td>
                   </tr>
                   <tr>
                     <td><label>Bet</label></td>

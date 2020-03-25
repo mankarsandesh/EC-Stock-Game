@@ -5,21 +5,21 @@
         <v-flex xs6 sm6 md6 lg4>
           <div class="amount_container">
             <div class="decorator_card decorator_card_green"></div>
-            <span>account balance</span>
+            <span>{{$t('msg.accountbalance')}}</span>
             <br />
             <span class="amount" v-if="userData.balance != 0">{{userData.balance | currency}}</span>
              <span class="amount" v-if="userData.balance == 0">00.00</span>
-            <span class="title_currentcy">USD</span>
+            <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
         <v-flex xs6 sm6 md6 lg4>
           <div class="amount_container">
             <div class="decorator_card decorator_card_blue"></div>
 
-            <span>rolling amount</span>
+            <span>{{$t('msg.rollingamount')}}</span>
             <br />
             <span class="amount">{{161536 | currency}}</span>
-            <span class="title_currentcy">USD</span>
+            <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
       </v-layout>
@@ -35,7 +35,7 @@
                    
 
                 <div class="col-15">
-                  <label for="username">Username</label>
+                  <label for="username">{{$t('profile.username')}}</label>
                 </div>
                 <div class="col-85">
                   <input
@@ -53,7 +53,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="first-name">First Name</label>
+                  <label for="first-name">{{$t('profile.firstname')}}</label>
                 </div>
                 <div class="col-85">
                   <input
@@ -71,7 +71,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="last-name">Last Name</label>
+                  <label for="last-name">{{$t('profile.lastname')}}</label>
                 </div>
                 <div class="col-85">
                   <input
@@ -89,12 +89,12 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="gender">gender</label>
+                  <label for="gender">{{$t('profile.gender')}}</label>
                 </div>
                 <div class="col-85">
                   <select ref="gender" id="gender" name="gender">
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
+                    <option value="female">{{$t('profile.female')}}</option>
+                    <option value="male">{{$t('profile.male')}}</option>
                   </select>
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
@@ -103,7 +103,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="email">Email</label>
+                  <label for="email">{{$t('profile.email')}}</label>
                 </div>
                 <div class="col-85">
                   <input
@@ -118,7 +118,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="country">Country</label>
+                  <label for="country">{{$t('profile.country')}}</label>
                 </div>
                 <div class="col-85">
                   <select ref="country" id="country" name="country">
@@ -142,8 +142,8 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                  >save</v-btn>
-                  <v-btn class="btn_cancel">cancel</v-btn>
+                  >{{$t('msg.save')}}</v-btn>
+                  <v-btn class="btn_cancel">{{$t('msg.cancel')}}</v-btn>
                 </div>
               </div>
             </form>

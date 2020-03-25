@@ -383,12 +383,13 @@ const createStore = () => {
     getters: {
       clearRoadMap: state => state.clearRoadMap,
       getGameUUIDByStockName: state => stockName => {
+        console.log(state.stockCategory);
         let loopIndex = 0;
-        if (stockName === "btc1" || stockName === "btc5") {
-          stockName = "btc";
-        }
         if (stockName === "btc5") {
           loopIndex = 1;
+        }
+        if (stockName === "btc1" || stockName === "btc5") {
+          stockName = "btc";
         }
         let result = "suss";
         if (state.stockCategory.length > 0) {
@@ -562,7 +563,7 @@ const createStore = () => {
           .map(x => x.betAmount)
           .reduce((a, b) => a + b, 0);
       },
-      // get amount of betting already confirmed and not confirm
+      // get amount of betting already confirmed and not confirm show on multi game and full screen
       getAllBettingAmount(state) {
         let amount1 = state.onGoingBet
           .map(x => x.betAmount)
@@ -580,31 +581,31 @@ const createStore = () => {
       getOnGoingBet(state) {
         return state.onGoingBet;
       },
-      getAmountBettingByStockId: state => stockId => {
+      getAmountBettingByStockId: state => gameUUID => {
         function getAmount(object) {
           // find stockname
-          if (object.findIndex(x => x.stockId === stockId) == -1) return 0;
+          if (object.findIndex(x => x.gameUUID === gameUUID) == -1) return 0;
           let result = object
-            .filter(x => x.stockId === stockId)
+            .filter(x => x.gameUUID === gameUUID)
             .map(x => x.betAmount)
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
 
-        function getAmountbet(object) {
-          // find stockname
-          console.log("i am here 12");
-          console.log(object);
-          if (object.findIndex(x => x.stock === stockId) == -1) return 0;
-          let result = object
-            .filter(x => x.stock === stockId)
-            .map(x => x.betAmount)
-            .reduce((a, b) => a + b, 0);
-          return parseInt(result);
-        }
-        return getAmount(state.multiGameBet) + getAmountbet(state.onGoingBet);
+        // function getAmountbet(object) {
+        //   // find stockname
+        //   console.log(object);
+        //   if (object.findIndex(x => x.stock === stockId) == -1) return 0;
+        //   let result = object
+        //     .filter(x => x.stock === stockId)
+        //     .map(x => x.betAmount)
+        //     .reduce((a, b) => a + b, 0);
+        //   return parseInt(result);
+        // }
+        return getAmount(state.multiGameBet);
+        //  + getAmountbet(state.onGoingBet);
       },
-      // to show ship and amount on bet button
+      // get bet amount for ech game rule to show on chip
       getAmountMultiGameBet: state => data => {
         // get total bottom bet amount
         function getAmount(object) {

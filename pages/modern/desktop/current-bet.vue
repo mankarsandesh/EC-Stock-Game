@@ -1,8 +1,8 @@
 <template>
   <div>
-    <breadcrumbs title="Current Bet" linkItem="bet-history" titlebtn="bet-history" />
+    <breadcrumbs :title=" $t('breadcrumbs.currentBet')" linkItem="bet-history" :titlebtn=" $t('breadcrumbs.betHistory')" />
     <v-container>
-      <currentBet :head="head" :desserts="desserts" />
+      <currentBet :head="head" :currentBets="currentBets" />
     </v-container>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       head: [
-        { text: "bet ID", value: "betID" },
+        { text: "bet ID", value: "betID" , sortable: false ,value:'createdTime'},
         { text: "game ID", value: "gameID" },
         { text: "bet detail", value: "ruleName" },
         { text: "time", value: "createdTime" },
@@ -28,7 +28,7 @@ export default {
         { text: "payout", value: "payout" },
         { text: "bet status", value: "gameStatus" }
       ],
-      desserts: []
+      currentBets: []
     };
   },
   computed: {
@@ -41,8 +41,7 @@ export default {
     async fetch() {
       try {
         // afer moumted call the functions this method will run the fetch the data from API
-        const data1 = {
-          // before we call the data we should make the object to the send the request with the API
+        const userData = {         
           portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
           userUUID: this.userUUID, // get the userUUID with the this object
           version: config.version, // version of API
@@ -52,13 +51,13 @@ export default {
         };
         const { data } = await this.$axios.post(
           config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
-          data1, // data object
+          userData, // data object
           {
             headers: config.header
           }
         );
-        this.desserts = data.data; // after will get the respone the object or array that come with will be equal the array that we create in the data funtion
-        // console.log(data, "current bett");
+        this.currentBets = data.data; 
+        console.log(this.currentBets);
       } catch (error) {
         console.log(data);
       }
