@@ -399,7 +399,7 @@ export default {
   },
   mounted() {
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
-    // socket new api
+    // live road map from socket
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(

@@ -217,25 +217,25 @@ export default {
       itemlimit: [100, 300, 500, "all"],
       limit: "",
       limits: -1,
-      selected: []     
+      selected: []
     };
   },
   filters: {
-    toCurrency(value) {    
-      if (typeof value !== "number") {       
-        return value; 
+    toCurrency(value) {
+      if (typeof value !== "number") {
+        return value;
       }
       var formatter = new Intl.NumberFormat("en-US", {
         // if the value is number
-        style: "currency", 
-        currency: "USD", 
-        minimumFractionDigits: 0 
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0
       });
-      return formatter.format(value); 
+      return formatter.format(value);
     }
   },
   computed: {
-    TotalAmount() {    
+    TotalAmount() {
       let total = null;
       this.userBetHistory.map(item => {
         total += item.betAmount;
