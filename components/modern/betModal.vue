@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-              betId.split("-")[1] >= 0
-                ? $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  betId.split("-")[1]
-                : $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  $t("gamemsg." + betId.split("-")[1])
+            betId.split("-")[1] >= 0
+            ? $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            betId.split("-")[1]
+            : $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            $t("gamemsg." + betId.split("-")[1])
             }}
           </span>
         </h3>
@@ -31,12 +31,7 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar
-              size="70"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
-            >
+            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
               <v-img
                 @click="coinClick(getCoins_modern[key])"
                 :src="item.img"
@@ -57,13 +52,7 @@
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
           <v-flex style="align-self:center">
-            <input
-              type="number"
-              readonly
-              :min="1"
-              v-model="betValue"
-              class="input-bet"
-            />
+            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -80,24 +69,20 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-          >{{ $t("msg.confirm") }}</v-btn
-        >
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{ $t("msg.cancel") }}
-        </v-btn>
+        >{{ $t("msg.confirm") }}</v-btn>
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{ $t("msg.cancel") }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "../../config/config.global";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
   data() {
     return {
-      gameUUID: "854fdec3-9b20-469c-8471-b0cd3c39aba3",
       confirmDisabled: false,
       betValue: 0,
       imgChip: [
@@ -140,8 +125,25 @@ export default {
       "getStockId",
       "getStockGameId",
       "getPortalProviderUUID",
-      "getUserUUID"
+      "getUserUUID",
+      "clearRoadMap",
+      "getLastDraw"
     ])
+  },
+  watch: {
+    clearRoadMap(val) {
+      if (!val) {
+        $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
+        setTimeout(() => {
+          console.log("wait for 5 second");
+          $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+          $("#" + this.betId).removeClass(
+            this.betId.split("-")[0] + "-animation"
+          );
+        }, 5000);
+      }
+      // $("#" + this.betId).removeClass("bet-animation");
+    }
   },
   created() {
     // check is full screen or not
@@ -155,6 +157,7 @@ export default {
     //  this.getwinuser()
   },
   methods: {
+    ...mapActions(["asynUserInfo"]),
     ...mapMutations(["pushDataOnGoingBet", "setGameID"]),
     coinClick(value) {
       let amount = parseInt(value);
@@ -175,15 +178,19 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
         if (res.status == true) {
+          console.log("bet success...")
+          console.log(res)
+          console.log("bet success...")
+          this.asynUserInfo();
           this.closePopper();
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
+            gameUUID: res.data[0].gameUUID,
             ruleName: res.data[0].ruleName,
             payout: res.data[0].payout,
             betDate: res.data[0].createdDate,
-            betTime: res.data[0].createdTime,            
+            betTime: res.data[0].createdTime,
             betAmount: res.data[0].betAmount,
             stockName: this.$props.stockName
           };

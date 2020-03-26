@@ -43,20 +43,20 @@
             <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6' " md4 lg3>
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_green"></div>
-                    <span>{{$t('msg.account balance')}}</span>
+                    <span>{{$t('msg.accountbalance')}}</span>
                     <br>
                     <span class="amount">{{getUserInfo.balance | currency}}</span>
-                    <span class="title_currentcy">kip</span>
+                    <span class="title_currentcy"></span>
                 </div>
             </v-flex>
 
             <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6' " md4 lg3>
                 <div class="amount_container">
                     <div class="decorator_card decorator_card_blue"></div>
-                    <span>{{$t('msg.rolling amount')}}</span>
+                    <span>{{$t('msg.rollingamount')}}</span>
                     <br>
                     <span class="amount">{{161536 | currency}}</span>
-                    <span class="title_currentcy">kip</span>
+                    <span class="title_currentcy"></span>
                 </div>
             </v-flex>
         </v-layout>
@@ -66,17 +66,6 @@
             <v-flex xs12 pt-0 pl-1>
                 <div>
                     <form action="/action_page.php" :style="$vuetify.breakpoint.xs ? 'text-align: end;':'text-align: end; margin-left: 22%'">
-                        <v-layout pt-3>
-                            <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
-                                <label for="player-id">{{$t('msg.playerid')}}</label>
-                            </v-flex>
-
-                            <v-flex xs10 sm6 md6 lg6 class="text-xs-center" pr-4>
-                                <input disabled type="text" id="player-id" name="player-id" :value="userData.PID" />
-                                <!-- <input ref="firstname" type="text" :value="userData.firstName" id="lname" name="lastname" placeholder="Your first name" /> -->
-                            </v-flex>
-                        </v-layout>
-
                         <v-layout pt-3>
                             <v-flex xs2 sm2 md2 lg2 pr-2 class="text-xs-center">
                                 <label for="userName">{{$t('profile.username')}}</label>

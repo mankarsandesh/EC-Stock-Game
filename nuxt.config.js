@@ -158,5 +158,5 @@ module.exports = {
       };
     }
   },
-  server: config.serverConfig
+  // server: config.serverConfig
 };

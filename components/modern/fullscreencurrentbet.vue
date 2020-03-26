@@ -1,36 +1,31 @@
 <template>
-  <div id="table-scroll" class="table-scroll table-wrapper-scroll-y pl-3">
+  <div class="table-scroll table-wrapper-scroll-y pl-3">
     <div>
       <h4
         align="center"
         fill-height
         fluid
         justify="center"
-        v-show="desserts.length <= 0"
-        class="pa-5"
-      >
-        {{ $t("msg.nobetting") }}
-      </h4>
-      <table class="main-table" v-show="desserts.length > 0">
-        <tbody v-for="(item, index) in desserts" :key="index">
+        v-show="getOnGoingBet.length <= 0"
+        class="nobetting"
+      >{{ $t("msg.nobetting") }}</h4>
+      <table class="main-table" v-show="getOnGoingBet.length > 0">
+        <tbody v-for="(item, index) in getOnGoingBet" :key="index">
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">BET ID</th>
-            <td>{{ item.betID }}</td>
+            <td>{{ item.betUUID }}</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">GAME ID</th>
-            <td>{{ item.gameID }}</td>
+            <td>{{ item.gameUUID }}</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">BET DETAIL</th>
-            <td>
-              {{ item.ruleName }} - ({{ item.payout }}) {{ item.stockName }} /
-              {{ item.loop }}
-            </td>
+            <td>{{ item.betAmount }} on rule ({{ item.ruleName }})</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">TIME</th>
-            <td>{{ item.createdTime }}</td>
+            <td>{{ item.betDate }} {{ item.betTime }}</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">AMOUNT</th>
@@ -40,51 +35,17 @@
             <th class="fixed-side table-headbg">PAYOUT</th>
             <td>{{ item.payout }}</td>
           </tr>
-          <tr class="table-rowheight">
-            <th class="fixed-side table-headbg">BET STATUS</th>
-            <td v-if="item.betResult == 'win'">
-              <v-chip
-                class="betstatus text-uppercase"
-                color="green"
-                text-color="white"
-                >{{ item.betResult }}</v-chip
-              >
-            </td>
-            <td v-if="item.betResult == 'lose'">
-              <v-chip
-                class="betstatus text-uppercase"
-                color="red"
-                text-color="white"
-                >{{ item.betResult }}</v-chip
-              >
-            </td>
-            <td v-if="item.betResult == 'pending'">
-              <v-chip
-                class="betstatus text-uppercase"
-                color="yellow "
-                text-color="black"
-                >{{ item.betResult }}...</v-chip
-              >
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>
   </div>
 </template>
-
 <script>
-// requires jquery library
-jQuery(document).ready(function() {
-  jQuery(".main-table")
-    .clone(true)
-    .appendTo("#table-scroll")
-    .addClass("clone");
-});
-</script>
-<script>
+import { mapGetters } from "vuex";
 export default {
-  props: ["desserts"]
+  computed: {
+    ...mapGetters(["getOnGoingBet"])
+  }
 };
 </script>
 
@@ -95,11 +56,10 @@ export default {
 
 .table-scroll {
   position: relative;
-
-  max-width: 600px;
+  min-width: 290px;
   margin: auto;
   overflow: auto;
-  height: 365px;
+  max-height: 350px;
 }
 
 .table-wrapper-scroll-y {
@@ -117,6 +77,7 @@ export default {
 
 .table-scroll table {
   width: 100%;
+  min-width: 100%;
   margin: auto;
   border-collapse: separate;
   border-spacing: 0;
@@ -155,10 +116,9 @@ export default {
 .clone tfoot {
   background: transparent;
 }
-.betstatus {
-  border-radius: 10px;
+.nobetting {
+  padding: 148px 48px !important;
 }
-
 ::-webkit-scrollbar {
   width: 12px;
 }

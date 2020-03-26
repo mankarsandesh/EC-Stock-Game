@@ -26,14 +26,7 @@
           <td v-else>
             <span>{{data.gameEndTimeCountDownInSec | betstatus(getStockLoop(data.stockName))}}</span>
           </td>
-          <td>{{data.gameEndTimeCountDownInSec | lotterydraw(getStockLoop(data.stockName)) }}</td>
-          <!-- <td
-            v-html="$options.filters.livePriceColor(getLivePrice(data.id),getPreviousPrice(data.id) )"
-          ></td>-->
-          <!-- <td
-            style="font-size: 0.8rem;"
-          >{{getLotteryDraw(data.id) | betstatus(getStockById(data.id).loop)}}</td>
-          <td>{{getLotteryDraw(data.id) | lotterydraw(getStockById(data.id).loop)}}</td>-->
+          <td>{{data.gameEndTimeCountDownInSec | lotterydraw(getStockLoop(data.stockName)) }}</td>        
         </tr>
       </table>
     </div>

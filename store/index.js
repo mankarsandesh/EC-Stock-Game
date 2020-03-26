@@ -5,6 +5,8 @@ import config from "../config/config.global";
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
+      clearRoadMap: false,
+
       stockCategory: [],
       gameStockId: null,
       authUser: {},
@@ -23,7 +25,6 @@ const createStore = () => {
       roadMap: [],
       userData: {},
       payout: {},
-      OnlineTime: "",
       footerBetAmount: 0,
       // store data betting
       onGoingBet: [],
@@ -110,6 +111,9 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      SET_CLEAR_ROAD_MAP(state, payload) {
+        state.clearRoadMap = payload;
+      },
       SET_STOCK_CATEGORY(state, payload) {
         state.stockCategory = payload;
       },
@@ -185,10 +189,7 @@ const createStore = () => {
           state.locale = locale;
         }
         localStorage.setItem("lang", locale);
-      },
-      setOnlineTime(state, payload) {
-        state.OnlineTime = payload;
-      },
+      },      
       setFooterBetAmount(state, payload) {
         state.footerBetAmount = parseInt(payload);
       },
@@ -276,44 +277,38 @@ const createStore = () => {
           // alert(ex)
         }
       },
-      // end new api
-      // end new api
-      // end new api
-
+      // end new api  
       // send bet data for multigame and footer bet on full screen
       async sendBetting(context) {
         // set sendbetting = true
         // to show loading
-        context.commit("setIsSendBetting", true);
-        const betDatas = {
-          data: [...context.state.multiGameBetsend]
-        };
-        if (betDatas.data.length == 0) {
-          context.commit("setIsSendBetting", false);
-          this._vm.$swal({
-            type: "error",
-            title: `Sorry, No Betting...!`,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return;
-        }
-        // console.log(betData)
         try {
-          console.log(betDatas);
+          context.commit("setIsSendBetting", true);
+          const betDatas = context.state.multiGameBetsend;
+          if (betDatas.length == 0) {
+            context.commit("setIsSendBetting", false);
+            this._vm.$swal({
+              type: "error",
+              title: `Sorry, No Betting...!`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+            return;
+          }
           const res = await this.$axios.$post(
             "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
             {
               portalProviderUUID: context.state.portalProviderUUID,
               userUUID: context.state.userUUID,
               version: config.version,
-              betData: betDatas
+              betData: betData
             },
             {
               headers: config.header
             }
           );
           if (res.status && res.code == 200) {
+            context.dispatch("asynUserInfo");
             console.log(res);
             context.commit("setIsSendBetting", false);
             context.commit("clearDataMultiGameBetsend");
@@ -363,21 +358,11 @@ const createStore = () => {
         } catch (error) {
           console.log(error);
         }
-      },
-      async OnlineTime(context) {
-        try {
-          let res = await this.$axios.$get(
-            `/api/me/online?method=profile&apikey=${context.getters.getAuth_token}`
-          );
-          context.commit("setOnlineTime", res.data);
-        } catch (error) {
-          console.log(error);
-        }
       }
     },
     getters: {
+      clearRoadMap: state => state.clearRoadMap,
       getGameUUIDByStockName: state => stockName => {
-        console.log(state.stockCategory);
         let loopIndex = 0;
         if (stockName === "btc5") {
           loopIndex = 1;
@@ -389,11 +374,8 @@ const createStore = () => {
         if (state.stockCategory.length > 0) {
           for (let i = 0; i < state.stockCategory.length; i++) {
             for (let j = 0; j < state.stockCategory[i].stocks.length; j++) {
-              console.log(state.stockCategory[i].stocks[j].stockName);
               if (state.stockCategory[i].stocks[j].stockName === stockName) {
                 return state.stockCategory[i].stocks[j].loops[loopIndex].gameID;
-              } else {
-                console.log(state.stockCategory[i].stocks[j].stockName);
               }
             }
           }
@@ -517,19 +499,13 @@ const createStore = () => {
 
       getIsSendBetting(state) {
         return state.isSendbetting;
-      },
-      getOnlimeTime(state) {
-        return state.OnlineTime;
-      },
-      // get auth_token
+      },    
       getPortalProviderUser(state) {
-        // sessionStorage.setItem("userData", JSON.stringify(userData));
         if (sessionStorage.getItem("userData") !== null) {
           const formData = JSON.parse(sessionStorage.getItem("userData"));
         }
         return state.formData;
-      },
-      // get auth_token
+      },     
       getAuth_token(state) {
         return state.auth_token;
       },
@@ -585,19 +561,7 @@ const createStore = () => {
             .reduce((a, b) => a + b, 0);
           return parseInt(result);
         }
-
-        // function getAmountbet(object) {
-        //   // find stockname
-        //   console.log(object);
-        //   if (object.findIndex(x => x.stock === stockId) == -1) return 0;
-        //   let result = object
-        //     .filter(x => x.stock === stockId)
-        //     .map(x => x.betAmount)
-        //     .reduce((a, b) => a + b, 0);
-        //   return parseInt(result);
-        // }
         return getAmount(state.multiGameBet);
-        //  + getAmountbet(state.onGoingBet);
       },
       // get bet amount for ech game rule to show on chip
       getAmountMultiGameBet: state => data => {

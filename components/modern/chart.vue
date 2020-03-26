@@ -7,7 +7,7 @@
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
         {{ $t("msg.liveprice") }}:
-        <span>{{ getStockLivePrice(stockName) }} </span>
+        <span>{{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
     <apexchart
@@ -82,7 +82,11 @@ export default {
         };
         if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {
           console.log('RoadMap data', readyData);
+           this.SET_CLEAR_ROAD_MAP(true);
           this.setLiveChart(readyData);
+          setTimeout(() => {
+            this.SET_CLEAR_ROAD_MAP(false);
+          }, 1000);
         }
       }
     );
@@ -194,6 +198,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
+    ...mapMutations(["SET_CLEAR_ROAD_MAP"]),
     setLiveChart(payload) {
       this.chartData.push(payload);
     },
