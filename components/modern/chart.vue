@@ -82,6 +82,7 @@ export default {
         };
         if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {
           console.log('RoadMap data', readyData);
+           this.SET_CLEAR_ROAD_MAP(true);
           this.setLiveChart(readyData);
           setTimeout(() => {
             this.SET_CLEAR_ROAD_MAP(false);

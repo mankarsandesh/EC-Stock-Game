@@ -91,73 +91,20 @@
                                 <div class="title_date_picker">
                                     <span></span>
                                 </div>
-                                <button class="buttonGreen btn-go">GO</button>
-                            </div>
-                        </v-flex>
-                        <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
-                            <div class="date_picker_container">
-                                <div class="title_date_picker">
-                                    <span>{{$t('msg.sortby')}}</span>
-                                </div>
-                                <div class="date_picker">
-
-                                    <v-menu offset-y>
-                                        <template v-slot:activator="{ on }">
-                                            <span class="select_date">2020-02-12</span>
-                                            <span class="icon_date">
-                                                <v-icon v-on="on">arrow_drop_down</v-icon>
-                                            </span>
-                                        </template>
-                                        <v-list>
-                                            <v-list-tile v-for="(item, index) in items" :key="index">
-                                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                            </v-list-tile>
-                                        </v-list>
-                                    </v-menu>
-                                </div>
+                                <button @click="getOnlineHistory" class="buttonGreen btn-go">GO</button>
                             </div>
                         </v-flex>
                     </v-layout>
                 </v-flex>
             </v-layout>
         </v-flex>
-
-        <v-flex xs12 sm12 pt-3 v-if="$vuetify.breakpoint.xs">
-            <v-layout row>
-                <v-flex xs3 sm3>
-                    <div class="title_date_picker mt-2">
-                        <span>{{$t('msg.sortby')}}</span>
-                    </div>
-                </v-flex>
-                <v-flex xs5 sm5>
-                    <div class="date_picker_container">
-                        <div class="date_picker">
-                            <v-menu offset-y>
-                                <template v-slot:activator="{ on }">
-                                    <span class="select_date">2020-02-12</span>
-                                    <span class="icon_date">
-                                        <v-icon v-on="on">arrow_drop_down</v-icon>
-                                    </span>
-                                </template>
-                                <v-list>
-                                    <v-list-tile v-for="(item, index) in items" :key="index">
-                                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                                    </v-list-tile>
-                                </v-list>
-                            </v-menu>
-                        </div>
-                    </div>
-                </v-flex>
-            </v-layout>
-        </v-flex>
-
         <v-flex xs12 sm12 md10 lg10 :class="$vuetify.breakpoint.xs ? 'mt-4':''">
             <v-layout row>
                 <v-flex xs1 sm2>
                 </v-flex>
                 <v-flex xs10 sm8>
                     <div class="chart_container">
-                        <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
+                        <VueApexCharts type="bar" height="350" v-if="dataReady" :options="chartOptions" :series="series" :key="componentKey" />
                     </div>
                 </v-flex>
             </v-layout>
@@ -166,16 +113,10 @@
         <v-flex xs12 class="pt-3 pl-5 text-xs-center">
             <div class="text-xs-center">
                 <span style="margin-right:30px">
-                    {{$t('msg.playerid')}} :
-                    <b>{{getUserInfo.PID}}</b>
+                    Online time: <b>{{currentActiveTime}}</b>
                 </span>
                 <span style="margin-right:30px">
-                    {{$t('profile.onlinetime')}} : {{getUserInfo.currentActiveTime}}
-                    <b>{{asynUserInfo.currentActiveTime}}</b>
-                </span>
-                <span style="margin-right:30px">
-                    {{$t('profile.totalonline')}}:
-                    <b>2day,15hours,11minute</b>
+                    Total Online: <b>{{totalOnlineTime}}</b>
                 </span>
             </div>
         </v-flex>
@@ -193,15 +134,20 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
 import onlineChart from "./onlinechart";
+import VueApexCharts from "vue-apexcharts";
+import date from 'date-and-time';
 import config from '../../config/config.global';
 export default {
     components: {
-        onlineChart
+        VueApexCharts
     },
     data() {
         return {
-            chartData: [],
-            xaxis: [],
+            series: [],
+            componentKey: 0,
+            totalOnlineTime: "",
+            currentActiveTime: "",
+            dataReady: false,
             isShowDateStart: false,
             isShowDateEnd: false,
             startDate: "",
@@ -210,32 +156,73 @@ export default {
                 imgProfile: ''
             },
             dialogOnlineHistory: false,
-            items: [{
-                    title: "Click Me"
+            chartOptions: {
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                    // events: {
+                    //   click: function (chart, w, e) {
+                    //     console.log(chart, e);
+                    //   }
+                    // }
                 },
-                {
-                    title: "Click Me"
+                plotOptions: {
+                    bar: {
+                    columnWidth: '45%',
+                    distributed: true
+                    }     
                 },
-                {
-                    title: "Click Me"
+                dataLabels: {
+                    enabled: false
                 },
-                {
-                    title: "Click Me 2"
-                }
-            ]
+                legend: {
+                    show: false
+                },
+                xaxis: {
+                    categories: [],
+                    labels: {
+                    style: {
+                        fontSize: '12px'
+                        }
+                    }
+                },
+        // tootltip: {
+        //   enabled: false,
+        //   followCurso: true,
+        //   intersect: true,
+        //   onDataSetHover: {
+        //     highlightDataSeries: false
+        //   },
+        //   x: {
+        //     show: false
+        //   },
+        //   custom: function({series, seriesIndex, dataPointIndex, w}) {
+        //     console.log('ayaaaaaaaaa');
+        //     return '<div class="arrow_box">' +
+        //         '<span>' + series[seriesIndex][dataPointIndex] + '</span>' +
+        //       '</div>'
+        //   },
+        //   y: {
+        //     formatter: function (val, {series, seriesIndex, dataPointIndex, w}) {
+        //       console.log('ayaayaaaaaaaaa');
+        //       return '<div class="arrow-box">' +
+        //           '<span> Active minutes: ' + series[seriesIndex] + '</span>'
+        //         '</div>'
+        //     }
+        //   }
+        // },
+            },
         };
     },
     created() {
-        let today = new Date();
-        let dd = String(today.getDate()).padStart(2, "0");
-        let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-        let yyyy = today.getFullYear();
-        this.startDate = yyyy + "-" + mm + "-" + dd;
-        this.endDate = yyyy + "-" + mm + "-" + dd;
+        const now = date.format(new Date(), "YYYY-MM-DD");
+        const lastWeek = date.addDays(new Date(), -7);
+        this.startDate = date.format(lastWeek, "YYYY-MM-DD");
+        this.endDate = now;
     },
-    mounted() {
+    async mounted() {
         // this.asynUserInfo();
-        this.getOnlineHistory();
+        await this.getOnlineHistory();
     },
 
     computed: {
@@ -256,29 +243,34 @@ export default {
                     config.getUserProfile.url, {
                         portalProviderUUID: this.getPortalProviderUUID,
                         userUUID: this.getUserUUID,
-                        dateRangeFrom: "2020-02-02",
-                        dateRangeTo: "2020-02-28"
+                        dateRangeFrom: this.startDate,
+                        dateRangeTo: this.endDate,
+                        version: config.version
                     }, {
-                        headers: {
-                            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                        }
+                        headers: config.header
                     }
                 );
                 if (res.code === 200) {
-                    this.chartData = [1500];
-                    this.xaxis = ["2020-02-26"];
-                    let result = res.data[0].activeTimeDateWise;
-                    console.log("result online chart");
-                    console.log(res);
-                    console.log("result online chart");
-                    result.forEach(element => {
-                        this.chartData.push(parseInt(element.activeTimeInMins));
-                        this.xaxis.push(element.Date);
+                    this.dataReady = true;
+                    let result = res.data.activeTimeDateWise;
+                    this.currentActiveTime = res.data.currentActiveTime;
+                    let totalActiveTime = 0;
+                    let xAxis = [];
+                    let chartData = [];
+                    result.forEach((el) => {
+                        totalActiveTime += parseInt(el.activeTimeInMins);
+                        chartData.push(parseInt(el.activeTimeInMins));
+                        xAxis.push(el.Date);
                     });
-                    console.log(this.chartData);
-                    console.log(this.xaxis);
+                    let days = Math.floor(totalActiveTime/(24*60));
+                    let hours = parseInt(totalActiveTime/60) % 24;
+                    let minutes = totalActiveTime%60;
+                    this.totalOnlineTime = `${days ? `${days} days, ` : ``}${hours} hours and ${minutes} minutes`;
+                    this.series = [{ data: chartData }];
+                    this.chartOptions.xaxis.categories = xAxis;
+                    this.componentKey++;
                 } else {
-                    // console.log(res);
+                    console.log(res);
                     // alert(res.message);
                 }
             } catch (ex) {
@@ -339,7 +331,7 @@ button:focus {
     box-shadow: 0px 2px 5px rgb(145, 145, 145);
     border-radius: 10px;
     width: 100%;
-    height: 200px;
+    height: 400px;
 }
 
 .date_picker {

@@ -171,7 +171,6 @@ export default {
     this.getActiveGamesByCategory();
   },
   mounted() {
-    console.log(this.$route);
   },
   computed: {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])

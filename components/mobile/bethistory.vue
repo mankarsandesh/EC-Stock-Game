@@ -2,17 +2,7 @@
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <v-layout row wrap id="history">
-      <v-flex
-        xs4
-        sm2
-        md2
-        lg2
-        mr-1
-        mt-2
-        mb-2
-        style="float:left;"
-        class="input-text"
-      >
+      <v-flex xs4 sm2 md2 lg2 mr-1 mt-2 mb-2 style="float:left;" class="input-text">
         <v-menu
           v-model="from"
           :close-on-content-click="false"
@@ -33,25 +23,11 @@
               hide-details
             ></v-text-field>
           </template>
-          <v-date-picker
-            v-model="dateFrom"
-            @input="from = false"
-          ></v-date-picker>
+          <v-date-picker v-model="dateFrom" @input="from = false"></v-date-picker>
         </v-menu>
       </v-flex>
 
-      <v-flex
-        xs4
-        sm2
-        md2
-        lg2
-        mr-1
-        ml-1
-        mt-2
-        mb-2
-        style="float:left;"
-        class="input-text"
-      >
+      <v-flex xs4 sm2 md2 lg2 mr-1 ml-1 mt-2 mb-2 style="float:left;" class="input-text">
         <v-menu
           v-model="to"
           :close-on-content-click="false"
@@ -135,34 +111,25 @@
         <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
           <td colspan="2">
             <span class="betDraw">BET DRAW :</span>
-            <span
-              class="gameDraw"
-              v-html="$options.filters.lastDraw(item.item.gameDraw)"
-            ></span>
+            <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
           </td>
           <td colspan="2" class="allDigit">
             First Digit
-            <span
-              v-html="$options.filters.firstDigit(item.item.gameDraw)"
-            ></span>
+            <span v-html="$options.filters.firstDigit(item.item.gameDraw)"></span>
             Last Digit
-            <span
-              v-html="$options.filters.lastDigit(item.item.gameDraw)"
-            ></span>
+            <span v-html="$options.filters.lastDigit(item.item.gameDraw)"></span>
             Both Digit
-            <span
-              v-html="$options.filters.bothDigit(item.item.gameDraw)"
-            ></span>
+            <span v-html="$options.filters.bothDigit(item.item.gameDraw)"></span>
             Two Digit
             <span v-html="$options.filters.twoDigit(item.item.gameDraw)"></span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount == 0">
-            <span class="betDraw"> Your Loosing Amount : </span
-            ><span class="lossAmount"> {{ item.item.betAmount }} </span>
+            <span class="betDraw">Your Loosing Amount :</span>
+            <span class="lossAmount">{{ item.item.betAmount }}</span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount != 0">
-            <span class="betDraw"> Your Winning Amount : </span
-            ><span class="winAmount"> {{ item.item.rollingAmount }} </span>
+            <span class="betDraw">Your Winning Amount :</span>
+            <span class="winAmount">{{ item.item.rollingAmount }}</span>
           </td>
         </tr>
       </template>
@@ -181,11 +148,7 @@
       </template>
     </v-data-table>
     <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
-      <v-pagination
-        v-model="pagination.page"
-        color="#1db42f"
-        :length="10"
-      ></v-pagination>
+      <v-pagination v-model="pagination.page" color="#1db42f" :length="10"></v-pagination>
     </div>
   </div>
 </template>
@@ -217,25 +180,25 @@ export default {
       itemlimit: [100, 300, 500, "all"],
       limit: "",
       limits: -1,
-      selected: []     
+      selected: []
     };
   },
   filters: {
-    toCurrency(value) {    
-      if (typeof value !== "number") {       
-        return value; 
+    toCurrency(value) {
+      if (typeof value !== "number") {
+        return value;
       }
       var formatter = new Intl.NumberFormat("en-US", {
         // if the value is number
-        style: "currency", 
-        currency: "USD", 
-        minimumFractionDigits: 0 
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 0
       });
-      return formatter.format(value); 
+      return formatter.format(value);
     }
   },
   computed: {
-    TotalAmount() {    
+    TotalAmount() {
       let total = null;
       this.userBetHistory.map(item => {
         total += item.betAmount;

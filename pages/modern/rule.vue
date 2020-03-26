@@ -2,17 +2,17 @@
   <div xs12>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <!-- <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" /> -->
-    <h1 class="jumbotron-heading text-center">EC Gaming Rules Description</h1>
+    <h1 class="jumbotron-heading text-center">{{$t('msg.ecgamingrulesdescription')}}</h1>
     <p class="lead text-muted text-center">{{$t('msg.textinfoule')}}</p>
     <div class="text-xs-center">
       <v-dialog v-model="dialog">
         <template v-slot:activator="{ on }">
-          <v-btn color="red lighten-2 buttonGreen" dark v-on="on">result introduction</v-btn>
+          <v-btn color="buttonGreen" dark v-on="on">{{$t('msg.resultintroduction')}}</v-btn>
         </template>
 
         <v-card>
           <v-card-title class="headline lighten-2" style="color:#0b2a68;" primary-title>
-            <b>Introduction</b>
+            <b>{{$t('msg.introduction')}}</b>
           </v-card-title>
           <v-card-text>
             <!-- {{$t('msg.textresultintroduction')}} -->
@@ -42,7 +42,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="accept" color="buttonGreensmall" dark @click="dialog = false">I accept</v-btn>
+            <v-btn class="accept" color="buttonGreensmall" dark @click="dialog = false">{{$t('msg.accept')}}</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

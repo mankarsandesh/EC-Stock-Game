@@ -133,7 +133,6 @@ export default {
   },
   watch: {
     urlName: function () {
-      console.log('watchingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg')
       if(this.activeUrl.includes(this.$route.name)) {
       this.getGameChannel = true;
       } else {
