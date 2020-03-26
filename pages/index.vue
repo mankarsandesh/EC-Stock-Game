@@ -3,6 +3,9 @@
     <v-fade-transition mode="out-in">
       <v-layout align-center column>
         <v-img src="/bg/group33.png" width="500" height="100" />
+        <div class="errorBox" v-if="messageError">
+          <h4 v-for="(data, index) in messageError" :key="index">{{ data }}</h4>
+        </div>
         <div class="preloader-wrap">
           <div class="percentage" id="precent"></div>
           <div class="loader">
@@ -19,55 +22,51 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import config from "../config/config.global";
 import { isMobile } from "mobile-device-detect";
 export default {
   layout: "nolayout",
   middleware: "getApiKey",
 
   data() {
-    return {  
-      referrer : document.referrer,    
+    return {
+      getUserAuthInfo : "",
+      error: false,
+      authUser: "",
+      referrerURL: document.referrer.match(/:\/\/(.[^/]+)/)[1],
       stockname: "btc1",
       linkto: "",
-      // const userData = this.$route.query;
-      userData: {
-        authUser: "TNKSuper",
-        authPassword: "Test123!",
-        portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
-        userId: "dd7060bd-5da1-4f6c-96a2-fc292acd23f8",
-        redirect: "www.whitelabel.com"
-      }
+      portalProviderUUID: this.$route.query.portalProviderUUID,
+      portalProviderUserID: this.$route.query.portalProviderUserID,
+      balance: this.$route.query.balance,
+      userData: [],
+      messageError: []      
     };
   },
-  mounted() {    
-    console.log(this.referrer);
-    let objJsonStr = JSON.stringify(this.userData);
-    let buff = new Buffer(objJsonStr);
-    let base64data = buff.toString("base64");
+  mounted() {
+    if (!this.portalProviderUUID) {
+      const error = "portalProviderUUID field is Missing";
+      this.messageError.push(error);
+    }
+    if (!this.portalProviderUserID) {
+      const error = "portalProviderUserID field is Missing";
+      this.messageError.push(error);
+    }
+    if (!this.balance) {
+      const error = "balance field is Missing";
+      this.messageError.push(error);
+    }
+    if (!this.referrerURL) {
+      const error = "Somthing Wrong.";
+      this.messageError.push(error);
+    }
+    this.error = true;
+    if (this.error == true) {
+      console.log("true");
+      this.checlUserAuth();      
 
-    if (this.userData.authUser && this.userData.authPassword) {
-      if (this.userData.portalProviderUUID && this.userData.userId) {
-        let buffDecode = new Buffer(base64data, "base64");
-        let authData = buffDecode.toString("ascii");
-        this.setAuth(authData);
-        sessionStorage.setItem("AUTH", JSON.stringify(base64data));
-        this.getProgress();
-        this.linkto = isMobile
-          ? "/modern"
-          : "/modern/desktop/" + this.stockname;
-      } else {
-        console.log("Portal Provider OR userID is Missing..");
-      }
-    } else {
-      console.log("Authication authUser & authPassword is Missing.");
     }
   },
-  // created() {
-  //   this.stockname = window.location.search 
-  //     .split("?")[1]  // if run on the production will be have the api_key from url 
-  //     .split("=")[1] // find the spit the url 
-  //     .split("&")[0]; //  get data from split 
-  // },
   watch: {
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
@@ -78,6 +77,63 @@ export default {
     }
   },
   methods: {
+    async checlUserAuth() {
+      try{
+      const userData = {
+        portalProviderUUID: this.portalProviderUUID,
+        portalProviderUserID: this.portalProviderUserID,
+        version: 0.1,
+        ip: "225.457.454.123",
+        domain: this.referrerURL,
+        balance: this.balance
+      };    
+      console.log(userData);
+      const { data } = await this.$axios.post(
+        config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
+        userData, // data object
+        {
+          headers: config.header
+        }
+      );      
+      console.log("checking");
+      console.log(data);
+      if(data.status == true){
+          const userInfo =  {
+            authUser: config.authUser,
+            authPassword: config.authPassword,
+            portalProviderUUID: this.portalProviderUUID,
+            userId: data.data[0].userUUID,
+            redirect:this.referrerURL
+          }
+      // let objJsonStr = JSON.stringify(userInfo);
+      // let buff = new Buffer(objJsonStr);
+      // let base64data = buff.toString("base64");
+      // if (userInfo.authUser && userInfo.authPassword) {
+      //   if (userInfo.portalProviderUUID && userInfo.userId) {
+      //     let buffDecode = new Buffer(base64data, "base64");
+      //     let authData = buffDecode.toString("ascii");
+      //     this.setAuth(authData);
+      //     sessionStorage.setItem("AUTH", JSON.stringify(base64data));
+      //     this.getProgress();
+      //     this.linkto = isMobile
+      //       ? "/modern"
+      //       : "/modern/desktop/" + this.stockname;
+      //   } else {
+      //     console.log("Portal Provider OR userID is Missing..");
+      //   }
+      // } else {
+      //   console.log("Authication authUser & authPassword is Missing.");
+      // }
+
+      }else{
+          console.log(data.message);
+      }
+      
+      
+      } catch(error){
+        console.log(error);
+      }
+    },
     ...mapMutations(["setAuth"]),
     getProgress() {
       let seft = this;
@@ -137,3 +193,13 @@ export default {
   }
 };
 </script>
+<style scoped>
+.errorBox {
+  background-color: #fff;
+
+  margin-bottom: 20px;
+}
+.errorBox h2 {
+  color: #333;
+}
+</style>
