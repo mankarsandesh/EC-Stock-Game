@@ -129,7 +129,7 @@ export default {
             headers: config.header
           }
         );
-        if (res.code === 200) {
+        if (res.code == 200) {
            this.$swal.fire({
             position: "top",
             type: "success",
