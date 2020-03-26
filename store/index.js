@@ -301,7 +301,7 @@ const createStore = () => {
               portalProviderUUID: context.state.portalProviderUUID,
               userUUID: context.state.userUUID,
               version: config.version,
-              betData: betData
+              betData: betDatas
             },
             {
               headers: config.header

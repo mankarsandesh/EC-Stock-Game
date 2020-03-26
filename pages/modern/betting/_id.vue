@@ -91,7 +91,7 @@
               :trendType="trendType"
               :isFullscreen="false"
               :key="
-                getRoadMap[getRoadMap.length - 1].stockTimeStamp + trendType
+                getRoadMap[getRoadMap.length - 1].stockTimestamp + trendType
               "
               :rowTable="4"
               :lop="30"
@@ -104,9 +104,9 @@
                 {{ $t("stockname." + $route.params.id) }}
               </h3>
               <span class="text-primary">
-                <span>{{ getStockLoop(this.$route.params.id) }}</span>
+                <span>{{ getStockLoop($route.params.id) }}</span>
                 {{ $t("msg.minute game") }} | ID:
-                <span>0909090</span>
+                <span>{{ getGameUUIDByStockName($route.params.id) }}</span>
               </span>
             </span>
             <v-flex pa-2 xs12 class="chartDesgin">
@@ -950,7 +950,9 @@
               </tr>
               <tr>
                 <td class="text-right">Game ID:</td>
-                <td class="text-left pl-2 text-color-blue">0909090</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{ getGameUUIDByStockName($route.params.id) }}
+                </td>
               </tr>
               <tr>
                 <td class="text-right">Game Type:</td>
@@ -1353,10 +1355,17 @@ export default {
       confirmDisabled: false
     };
   },
-  mounted() {
-    this.stockID = this.$route.params.id;
+  beforeDestroy() {
+    this.stopListenSocket(
+      `roadMap.${this.getStockUUIDByStockName(this.routeParams)}.${
+        this.getPortalProviderUUID
+      }`
+    );
+  },
+  created(){
+    // get road map data from API
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
-    // socket new api
+     // live road map from socket
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -1365,12 +1374,15 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        // console.log("new socket success");
-        // console.log(data.data.roadMap);
+        console.log('live road map')
         this.setLiveRoadMap(data.data.roadMap[0]);
-        // console.log("new socket success");
       }
     );
+  },
+  mounted() {
+    this.stockID = this.$route.params.id;
+    
+   
   },
   components: {
     chartMobile,
@@ -1383,6 +1395,7 @@ export default {
       "getUserUUID",
       "getTimerByStockName",
       "getStockLoop",
+      "getGameUUIDByStockName",
       "getStockById",
       "getLiveTime",
       "getCheckStock",
@@ -1396,39 +1409,36 @@ export default {
       "getPortalProviderUUID"
     ]),
     // check bet close using stockOpenOrClosed and timer
-    checkBetClose() {
+     checkBetClose() {
       if (
-        this.getTimerByStockName(this.$route.params.id) &&
-        this.getTimerByStockName(this.$route.params.id).stockOpenOrClosed === "Closed!"
+        this.getTimerByStockName(this.stockID) &&
+        this.getTimerByStockName(this.stockID).stockOpenOrClosed === "Closed!"
       ) {
         return true;
       }
       // check 1 or 5 loop
-      if (this.getStockLoop(this.$route.params.id) === 5) {
+      if (this.getStockLoop(this.stockID) === 5) {
         if (
-          this.getTimerByStockName(this.$route.params.id) &&
-          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec ==
+          this.getTimerByStockName(this.stockID) &&
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec ==
             240
         ) {
           this.clearDataMultiGameBet();
         }
         return (
-          this.getTimerByStockName(this.$route.params.id) &&
-          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec <=
-            60
+          this.getTimerByStockName(this.stockID) &&
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60
         );
       } else {
         if (
-          this.getTimerByStockName(this.$route.params.id) &&
-          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec ==
-            40
+          this.getTimerByStockName(this.stockID) &&
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 40
         ) {
           this.clearDataMultiGameBet();
         }
         return (
-          this.getTimerByStockName(this.$route.params.id) &&
-          this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec <=
-            20
+          this.getTimerByStockName(this.stockID) &&
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
         );
       }
     }
@@ -1444,6 +1454,10 @@ export default {
 
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
+    },
+     stopListenSocket(channel) {
+       alert("stopListenSocket")
+      window.Echo.leave(channel);
     },
     tabChanged(e) {
       switch (e) {
@@ -1488,14 +1502,13 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
-      console.log(data, "bet dattaaa");
       // console.warn(this.getOnBetting);
     },
     async sendBetting(betData) {
       let finalData = betData;
       try {
         const res = await this.$axios.$post(
-          config.storeBet.url,
+          "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
@@ -1503,12 +1516,9 @@ export default {
             betData: [finalData]
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            }
+            headers: config.header
           }
         );
-        console.log(res, "betting placed response");
         if (res.status) {
           // console.warn(res.data[0]);
           this.bettingDialog = false;
