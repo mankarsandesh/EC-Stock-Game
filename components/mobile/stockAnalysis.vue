@@ -164,11 +164,7 @@
                   <span style="margin-right:10px">{{ stock }}</span>
                 </span>
               </div>
-              <apexchart
-                type="bar"
-                height="480vh"
-                :options="chartOptions"
-                :series="series"
+              <apexchart type="bar" height="360vh" :options="chartOptions" :series="series"
               ></apexchart>
             </div>
           </v-flex>
@@ -189,9 +185,8 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
 import config from '../../config/config.global';
-// set color win and lose color in bar chart
+// set win and lose color in bar chart
 let index = 0;
-let stocklist = ["SH000001", "SH000300", "USDINDEX", "BTC5", "BTC1"];
 let barColor = [
   ["#67c9d3", "#f75b54", "#fcc624", "#1a237e", "#d81b60", "#ff6f00", "#01579b"], // win color
   ["#81eaf5", "#f9a5a3", "#fddf84", "#7986cb", "#f06292", "#ffb74d", "#90caf9"] // loss color
@@ -204,25 +199,10 @@ export default {
         return {
             stockAnalysis: [],
             colors: barColor,
-            // match with color by index
-            // 'barColor' variable above
             isShowDateStart: false,
             isShowDateEnd: false,
             startDate: "",
             endDate: "",
-            items: [{
-                    title: "Click Me"
-                },
-                {
-                    title: "Click Me"
-                },
-                {
-                    title: "Click Me"
-                },
-                {
-                    title: "Click Me 2"
-                }
-            ],
             chartOptions: {
                 colors: [
                     function({ value, seriesIndex, dataPointIndex, w }) {
@@ -239,43 +219,12 @@ export default {
                     horizontal: false
                 }
             },
-        // grid: {
-        //   show: true,
-        //   borderColor: "#90A4AE",
-        //   strokeDashArray: 0,
-        //   position: "back",
-        //   xaxis: {
-        //     lines: {
-        //       show: false
-        //     }
-        //   },
-        //   yaxis: {
-        //     lines: {
-        //       show: true
-        //     }
-        //   },
-        //   row: {
-        //     colors: undefined,
-        //     opacity: 0.5
-        //   },
-        //   column: {
-        //     colors: undefined,
-        //     opacity: 0.5
-        //   },
-        //   padding: {
-        //     top: 0,
-        //     right: 0,
-        //     bottom: 0,
-        //     left: 0
-        //   }
-        // },
             dataLabels: {
                 enabled: false
             },
             chart: {
                 type: "bar",
                 stacked: true,
-                //stackType: '100%',
                 toolbar: {
                     show: false
                 },
@@ -294,11 +243,11 @@ export default {
                     show: false
                 },
                 y: {
-                    formatter: function(val, { series, seriesIndex, dataPointIndex }) {
+                    formatter: (val, { series, seriesIndex, dataPointIndex }) => {
                     return (
                         '<div class="arrow_box ">' +
                         "<span> " +
-                        stocklist[dataPointIndex] +
+                        this.stockAnalysis[dataPointIndex].stockName.toUpperCase() +
                         " </span>" +
                         "<span> " +
                         series[seriesIndex][dataPointIndex] +
@@ -313,55 +262,6 @@ export default {
                     }
                 }
             },
-        // responsive: [
-        //   {
-        //     breakpoint: 480,
-        //     options: {
-        //       legend: {
-        //         position: "bottom",
-        //         offsetX: -10,
-        //         offsetY: 0
-        //       }
-        //     }
-        //   }
-        // ],
-        // plotOptions: {
-        //   bar: {
-        //     horizontal: false,
-        //     // distributed: true
-        //   }
-        // },
-        // xaxis: {
-        //   labels: {
-        //     show: false
-        //   }
-        //   // type: "datetime",
-        //   // categories: [
-        //   //   "01/01/2011 GMT",
-        //   //   "01/02/2011 GMT",
-        //   //   "01/03/2011 GMT",
-        //   //   "01/04/2011 GMT",
-        //   //   "01/05/2011 GMT",
-        //   //   "01/06/2011 GMT",
-        //   //   "01/07/2011 GMT",
-        //   //   "01/08/2011 GMT",
-        //   //   "01/09/2011 GMT",
-        //   //   "01/10/2011 GMT"
-        //   // ]
-        // },
-        // legend: {
-        //   // itemMargin: {
-        //   //   horizontal: -100,
-        //   //   vertical: -100
-        //   // },
-        //   show: false,
-        //   // position: "top",
-        //   // horizontalAlign: "right",
-        //   // offsetX: 40
-        // },
-        // fill: {
-        //   opacity: 100
-        // },
             xaxis: {
                 labels: {
                 offsetX: 0
@@ -385,8 +285,8 @@ export default {
                     config.getUserBetAnalysis.url, {
                         portalProviderUUID: this.getPortalProviderUUID,
                         userUUID: this.getUserUUID,
-                        dateRangeFrom: "2020-02-02",
-                        dateRangeTo: "2020-03-25",
+                        dateRangeFrom: this.startDate,
+                        dateRangeTo: this.endDate,
                         version: config.version
                     }, {
                         headers: {
@@ -396,7 +296,7 @@ export default {
                 );
                 if (res.code === 200) {
                     this.stockAnalysis = res.data;
-                    console.log(res.data, 'ayayayayayay');
+                    console.log(res.data, 'User bet analysis response');
                 } else {
                     console.log(res);
                     // alert(res.message);
