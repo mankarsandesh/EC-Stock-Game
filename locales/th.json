@@ -238,7 +238,8 @@
     },
     "useraction": {
         "followbet": "ทำตามการพนัน",
-        "unfollow": "เลิก"
+        "unfollow": "เลิก",
+        "yourself": "ด้วยตัวคุณเอง"
     },
     "leaderboard": {
         "user":"ผู้ใช้งาน",

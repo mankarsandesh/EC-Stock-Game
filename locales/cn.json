@@ -238,7 +238,8 @@
     },
     "useraction": {
         "followbet": "跟进",
-        "unfollow": "取消关注"
+        "unfollow": "取消关注",
+        "yourself": "你自己"
     },
     "leaderboard": {
         "user":"用户",

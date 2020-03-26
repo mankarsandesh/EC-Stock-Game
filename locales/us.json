@@ -240,7 +240,8 @@
     },
     "useraction": {
         "followbet": "FOLLOW BET",
-        "unfollow": "UNFOLLOW"
+        "unfollow": "UNFOLLOW",
+        "yourself": "YOURSELF"
     },
     "leaderboard": {
         "user":"user",
