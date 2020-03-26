@@ -55,7 +55,6 @@ export default {
       .split("?")[1]
       .split("=")[1]
       .split("&")[0];
-    // console.log(this.stockname)
   },
   watch: {
     "$screen.width"() {

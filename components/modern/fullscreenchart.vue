@@ -129,6 +129,7 @@ export default {
       eventName: "liveBetCounts" 
     },
      ({ data }) => {
+       console.log("live game");
       console.log(data.data);
       this.series = data.data;
       this.componentKey += 1;
