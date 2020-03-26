@@ -57,14 +57,14 @@
           >{{ $t("useraction.unfollow") }}</v-btn>
         </th>
         <th v-if="data.isFollowing == -1" style="width:20%;">
-          <v-btn class="buttonGreensmall">Yourself</v-btn>
+          <v-btn class="buttonGreensmall">{{ $t("useraction.yourself") }}</v-btn>
         </th>
       </div>
     </v-flex>
 
-    <v-dialog v-model="dialog" width="600" style="border:radius:20px; !important">
+    <v-dialog v-model="dialog" width="600" style="border-radius:20px; !important">
       <v-card class="followup">
-        <h3 class="title font-weight-bold" style="text-align:center;color:#0b2a68;">FOLLOW BET</h3>
+        <h3 class="title font-weight-bold" style="text-align:center;color:#0b2a68;">{{ $t("useraction.followbet") }}</h3>
 
         <v-card-text style="text-align:center;">
           <img class="pimage" v-bind:src="this.userImage" width="140px" />

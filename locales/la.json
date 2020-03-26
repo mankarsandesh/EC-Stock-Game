@@ -238,7 +238,8 @@
     },
     "useraction": {
         "followbet": "ປະຕິບັດຕາມ BET",
-        "unfollow": "UNFOLLOW"
+        "unfollow": "ບໍ່ສົມບູນ",
+        "yourself": "ຕົວທ່ານເອງ"
     },
     "leaderboard": {
         "user":"ຜູ້ໃຊ້",

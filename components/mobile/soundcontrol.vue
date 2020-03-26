@@ -6,7 +6,7 @@
                 <v-flex class="setting_container">
                     <span class="pt-1">{{$t('msg.music')}}</span>
                     <label class="switch">
-                        <input @change="updateSetting" type="checkbox" />
+                        <input  type="checkbox" ref="isSound" :checked="getUserInfo.isSound"/>
                         <span class="slider round"></span>
                     </label>
                 </v-flex>
@@ -14,7 +14,7 @@
         </v-layout>
         <!-- <v-slider v-model="length" color="#003e70" min="1" max="15" :label="$t('msg.customlength')"></v-slider> -->
         <v-layout row wrap justify-center>
-            <v-btn class="my-btn buttonGreensmall">{{$t('msg.save')}}</v-btn>
+            <v-btn class="my-btn buttonGreensmall" @click="updateSetting"  >{{$t('msg.save')}}</v-btn>
             <v-btn class="my-btn buttonCancel">{{$t('msg.cancel')}}</v-btn>
         </v-layout>
     </v-card>
@@ -22,24 +22,55 @@
 </template>
 
 <script>
-import {
-    Howl,
-    Howler
-} from 'howler';
-export default {
-    data() {
-        return {
-            switch1: true,
-            length: 5
-        };
-    },
-    watch: {
+import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
+import config from "../../config/config.global";
 
-    },
-    mounted() {
-        Howler.volume(0.1);
+export default {
+  computed: {
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+  },
+  methods: {
+    ...mapActions(["asynUserInfo"]),
+    async updateSetting() {
+      let isSound = this.$refs.isSound.checked ? 1 : 0;
+    
+    try{
+      let userSetting = {
+        portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
+        version: config.version,
+        isSound
+      };
+      const res =await this.$axios.$post(
+        config.updateUserSetting.url,
+        userSetting,
+        {
+          headers: config.header
+        }
+      );
+      if (res.code == 200) {
+        this.$swal.fire({
+          position: "top",
+          type: "success",
+          title: "Changes saved",
+          showConfirmButton: "false",
+          timer:1000
+        });
+        this.asynUserInfo();
+        // console.log(res);
+      } else {
+        // console.log(res);
+        // this.$alert("Alert message.");
+      }
+    } catch (ex) {
+      console.log(ex);
+      alert(ex.message);
     }
+    },
+  }
 };
+    
 </script>
 
 <style scoped>
