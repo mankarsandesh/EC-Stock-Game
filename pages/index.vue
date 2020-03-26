@@ -94,42 +94,40 @@ export default {
         {
           headers: config.header
         }
-      );      
-      console.log("checking");
-      console.log(data);
+      );
       if(data.status == true){
-          const userInfo =  {
-            authUser: config.authUser,
-            authPassword: config.authPassword,
-            portalProviderUUID: this.portalProviderUUID,
-            userId: data.data[0].userUUID,
-            redirect:this.referrerURL
-          }
-      // let objJsonStr = JSON.stringify(userInfo);
-      // let buff = new Buffer(objJsonStr);
-      // let base64data = buff.toString("base64");
-      // if (userInfo.authUser && userInfo.authPassword) {
-      //   if (userInfo.portalProviderUUID && userInfo.userId) {
-      //     let buffDecode = new Buffer(base64data, "base64");
-      //     let authData = buffDecode.toString("ascii");
-      //     this.setAuth(authData);
-      //     sessionStorage.setItem("AUTH", JSON.stringify(base64data));
-      //     this.getProgress();
-      //     this.linkto = isMobile
-      //       ? "/modern"
-      //       : "/modern/desktop/" + this.stockname;
-      //   } else {
-      //     console.log("Portal Provider OR userID is Missing..");
-      //   }
-      // } else {
-      //   console.log("Authication authUser & authPassword is Missing.");
-      // }
-
-      }else{
-          console.log(data.message);
+        const userInfo =  {
+          authUser: config.authUser,
+          authPassword: config.authPassword,
+          portalProviderUUID: this.portalProviderUUID,
+          userId: data.data[0].userUUID,
+          redirect:this.referrerURL
+        }
+      let objJsonStr = JSON.stringify(userInfo);
+      let buff = new Buffer(objJsonStr);
+      let base64data = buff.toString("base64");
+      if (userInfo.authUser && userInfo.authPassword) {
+        if (userInfo.portalProviderUUID && userInfo.userId) {
+          let buffDecode = new Buffer(base64data, "base64");
+          let authData = buffDecode.toString("ascii");
+          this.setAuth(authData);
+          sessionStorage.setItem("AUTH", JSON.stringify(base64data));
+          this.getProgress();
+          this.linkto = isMobile
+            ? "/modern"
+            : "/modern/desktop/" + this.stockname;
+        } else {          
+           const error = "Portal Provider OR userID is Missing...";
+           this.messageError.push(error);
+        }
+      }else {
+         const error = "Authication authUser & authPassword is Missing.";
+         this.messageError.push(error);
       }
-      
-      
+      }else{
+        const error = "Somthing Wrong Please check.";
+        this.messageError.push(error);
+      }
       } catch(error){
         console.log(error);
       }
@@ -141,7 +139,6 @@ export default {
         perfData = window.performance.timing, // The PerformanceTiming interface represents timing-related performance information for the given page.
         EstimatedTime = -(perfData.loadEventEnd - perfData.navigationStart),
         time = parseInt((EstimatedTime / 1000) % 60) * 100;
-
       // Loadbar Animation
       $(".loadbar").animate(
         {
@@ -149,7 +146,6 @@ export default {
         },
         time
       );
-
       // Loadbar Glow Animation
       $(".glow").animate(
         {
