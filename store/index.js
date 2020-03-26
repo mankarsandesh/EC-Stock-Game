@@ -296,7 +296,7 @@ const createStore = () => {
             return;
           }
           const res = await this.$axios.$post(
-            "http://uattesting.equitycapitalgaming.com/webApi/storeBet",
+            config.storeBet.url,
             {
               portalProviderUUID: context.state.portalProviderUUID,
               userUUID: context.state.userUUID,

@@ -1,8 +1,9 @@
 const config = {
   version: "1",
-  authUser : `${process.env.AUTHUSER}`,
-  authPassword : `${process.env.AUTHPASS}`,
-  apiDomain: "http://uattesting.equitycapitalgaming.com",
+  authUser : process.env.AUTHUSER,
+  authPassword : process.env.AUTHPASS,
+  apiDomain: process.env.API_DOMIAN,
+  secretKey:"gyXMakgdYawDw4k1c6hwWqHxh2Wr2Tzn",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
