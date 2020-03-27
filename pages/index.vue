@@ -30,8 +30,7 @@ export default {
 
   data() {
     return {
-      getUserAuthInfo : "",
-      error: false,
+      getUserAuthInfo: "",
       authUser: "",
       referrerURL: document.referrer.match(/:\/\/(.[^/]+)/)[1],
       stockname: "btc1",
@@ -40,10 +39,10 @@ export default {
       portalProviderUserID: this.$route.query.portalProviderUserID,
       balance: this.$route.query.balance,
       userData: [],
-      messageError: []      
+      messageError: []
     };
   },
-  mounted(){
+  mounted() {
     if (!this.portalProviderUUID) {
       const error = "portalProviderUUID field is Missing";
       this.messageError.push(error);
@@ -60,12 +59,7 @@ export default {
       const error = "Somthing Wrong.";
       this.messageError.push(error);
     }
-    this.error = true;
-    if (this.error == true) {
-      console.log("true");
-      this.checlUserAuth();      
-
-    }
+    this.checlUserAuth();
   },
   watch: {
     "$screen.width"() {
@@ -76,71 +70,76 @@ export default {
       }
     }
   },
-  computed:{
-    ...mapGetters(['getPortalProviderUUID','getUserUUID'])
+  computed: {
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
-  methods: {   
+  methods: {
     async checlUserAuth() {
-      try{
-      const userData = {
-        portalProviderUUID: this.portalProviderUUID,
-        portalProviderUserID: this.portalProviderUserID,
-        version: 0.1,
-        ip: "225.457.454.123",
-        domain: this.referrerURL,
-        balance: this.balance
-      };    
-     console.log("Send Data",userData);
-      const { data } = await this.$axios.post(
-        config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
-        userData, // data object
-        {
-          headers: config.header
-        }
-      );
-      console.log("Respo nse Data",data);
-      if(data.status){
-        const userInfo =  {
-          authUser: config.authUser,
-          authPassword: config.authPassword,
+      try {
+        const userData = {
           portalProviderUUID: this.portalProviderUUID,
-          userId: data.data[0].userUUID,
-          redirect:this.referrerURL
-      }
+          portalProviderUserID: this.portalProviderUserID,
+          version: 0.1,
+          ip: "225.457.454.123",
+          domain: this.referrerURL,
+          balance: this.balance
+        };
 
-      this.SET_PROTAL_PROVIDER(userInfo.portalProviderUUID);   
-      this.SET_USERUUID(userInfo.userId);       
-     console.log("this is USER UUID",this.getUserUUID);
-      let objJsonStr = JSON.stringify(userInfo);
-      let buff = new Buffer(objJsonStr);
-      let base64data = buff.toString("base64");
-      if (userInfo.authUser && userInfo.authPassword) {
-        if (userInfo.portalProviderUUID && userInfo.userId) {
-          let buffDecode = new Buffer(base64data, "base64");
-          let authData = buffDecode.toString("ascii");
-          this.setAuth(authData);
-          sessionStorage.setItem("AUTH", JSON.stringify(base64data));
-          this.getProgress();
-          this.linkto = isMobile
-            ? "/modern"
-            : "/modern/desktop/" + this.stockname;
-        } else {          
-           const error = "Portal Provider OR userID is Missing...";
-           this.messageError.push(error);
+        const { data } = await this.$axios.post(
+          config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
+          userData, // data object
+          {
+            headers: config.header
+          }
+        );
+        if (data.status) {
+          const userInfo = {
+            authUser: config.authUser,
+            authPassword: config.authPassword,
+            portalProviderUUID: this.portalProviderUUID,
+            userId: data.data[0].userUUID,
+            redirect: this.referrerURL
+          };
+          this.SET_PORTAL_PROVIDERUUID(userInfo.portalProviderUUID);
+          this.SET_USER_UUID(userInfo.userId);
+          localStorage.setItem(
+            "PORTAL_PROVIDERUUID",
+            userInfo.portalProviderUUID
+          );
+          localStorage.setItem("USER_UUID", userInfo.userId);
+          let objJsonStr = JSON.stringify(userInfo);
+          let buff = new Buffer(objJsonStr);
+          let base64data = buff.toString("base64");
+          if (userInfo.authUser && userInfo.authPassword) {
+            if (userInfo.portalProviderUUID && userInfo.userId) {
+              let buffDecode = new Buffer(base64data, "base64");
+              let authData = buffDecode.toString("ascii");
+              this.setAuth(authData);
+              localStorage.setItem("AUTH", JSON.stringify(base64data));
+              this.getProgress();
+              this.linkto = isMobile
+                ? "/modern"
+                : "/modern/desktop/" + this.stockname;
+              // location.reload(true);
+            } else {
+              const error = "Portal Provider OR userID is Missing...";
+              this.messageError.push(error);
+            }
+          } else {
+            const error = "Authication authUser & authPassword is Missing.";
+            this.messageError.push(error);
+          }
+        } else {
+          const error = "Somthing Wrong Please check.";
+          this.messageError.push(error);
         }
-      }else {
-         const error = "Authication authUser & authPassword is Missing.";
-         this.messageError.push(error);
-      }
-      }else{
-        const error = "Somthing Wrong Please check.";
-        this.messageError.push(error);
-      }
-      } catch(error){
+        // location.reload(true);
+      } catch (error) {
         console.log(error);
       }
-    },    
-    ...mapMutations(["setAuth","SET_PROTAL_PROVIDER","SET_USERUUID"]),
+    },
+    ...mapMutations(["setAuth", "SET_PORTAL_PROVIDERUUID", "SET_USER_UUID"]),
+
     getProgress() {
       let seft = this;
       let width = 100,
@@ -183,7 +182,8 @@ export default {
           obj.innerHTML = current;
           if (current == end) {
             clearInterval(timer);
-            seft.$router.push("/modern/desktop/btc1");
+            window.location = "/modern/desktop/btc1";
+            // seft.$router.push("/modern/desktop/btc1");
             // seft.$router.push("/dashboard?stockname=" + seft.stockname);
           }
         }, stepTime);

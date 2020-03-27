@@ -1,7 +1,7 @@
 const config = {
   version: "1",
-  authUser : process.env.AUTHUSER,
-  authPassword : process.env.AUTHPASS,
+  authUser : `${process.env.AUTHUSER}`,
+  authPassword : `${process.env.AUTHPASS}`,
   apiDomain: process.env.API_DOMIAN,
   secretKey:"GYXMAKGDYAWDW4K1C6HWWQHXH2W",
   header: {

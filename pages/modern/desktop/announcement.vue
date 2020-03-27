@@ -8,7 +8,7 @@
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 md12>
-          <announcement :head="head" :desserts="desserts" />
+          <announcement :head="head" :announcementData="announcementData" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -35,7 +35,7 @@ export default {
         { text: "date", value: "createdAt" },
         { text: "preview", value: "message" }
       ],
-      desserts: []
+      announcementData: []
     };
   },
   created() {
@@ -58,7 +58,7 @@ export default {
             headers: config.header
           }
         );
-        this.desserts = data;
+        this.announcementData = data;
       } catch (error) {
         console.log(error);
       }

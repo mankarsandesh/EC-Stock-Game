@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap class="select-stock mt-2">
-    <v-flex md3>
+    <v-flex md2>
       <v-select
         v-model="stock"
         :items="items"
@@ -9,14 +9,13 @@
         hide-details
         class="selectStock"
         color="blue"
-        label="select stock"
-        prepend-icon="bar_chart"
+        label="select stock"       
         item-text="type"
         item-value="name"
         return-object
       ></v-select>
     </v-flex>
-    <v-flex md3>
+    <v-flex md2>
       <v-select
         v-model="stockName"
         :items="stockNames"
@@ -62,7 +61,7 @@
         </template>
       </v-select>
     </v-flex>
-    <v-flex md3>
+    <v-flex md5>
       <v-text-field
         v-model="gameId"
         label="game id"
@@ -96,6 +95,14 @@ export default {
   },
   watch: {
     stock(value) {
+      let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+      if (value.type === GET_STOCK_TYPE) {
+        // this.stockName = ""; // after value is not empty we clear the value is first
+        this.stockNames = [];
+        this.stockNames = value.stocks;
+        $("#stockName").click();
+        this.stockSocket = true;
+      }
       // when value is changed this value will do the list
       if (this.stockSocket) {
         // check the stockSocket is come or not
@@ -103,24 +110,33 @@ export default {
       } else {
         // after value is false the logic will be come in this case
         if (value !== "") {
-          // after reveide the value we have to check the value is not empty
-          this.stockName = ""; // after value is not empty we clear the value is first
-          this.stockNames = value.stocks; // after clear the push the array into the items
-          $("#stockName").click(); // after have the value we have to click the box
+          // this.stockName = "";
+          this.stockNames = value.stocks;
+          $("#stockName").click();
         }
         this.stockSocket = true;
       }
     },
     stockName(value) {
-      if (this.stockSocket) {
-        if (value !== "") {
-          this.minute = "";
-          this.minutes = value.loops;
-          $("#minute").click();
-        }
+      let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+      if (this.stock.type === GET_STOCK_TYPE) {
+        console.log("The same stock", value);
+        this.minute = "";
+        this.minutes = value.loops;
+        $("#minute").click();
       } else {
-        this.stockSocket = false;
+        console.log("Is not the same stock", value);
+        if (this.stockSocket) {
+          if (value !== "") {
+            this.minute = "";
+            this.minutes = value.loops;
+            $("#minute").click();
+          }
+        } else {
+          this.stockSocket = false;
+        }
       }
+      // this.stockSocket = true;
     },
     minute(value) {
       if (this.stockSocket) {
@@ -157,6 +173,15 @@ export default {
               this.addStockMultigame(this.stockName.stockName);
             }
           }
+
+          // Vong code
+          // if (this.stock.type == "crypto") {
+          //   this.$router.replace(
+          //     `/modern/desktop/${this.stockName.stockName}${this.minute.loopName}`
+          //   );
+          // } else {
+          //   this.$router.replace(`/modern/desktop/${this.stockName.stockName}`);
+          // }
         }
       } else {
         this.stockSocket = false;
@@ -188,7 +213,7 @@ export default {
           {
             headers: config.header
           }
-        );      
+        );
         this.getGameUUID(data);
         this.SET_STOCK_CATEGORY(data);
         this.items = data;
@@ -204,6 +229,7 @@ export default {
         if (item.type === "crypto") {
           if (item.stocks.find(({ stockName }) => stockName === stockURLName)) {
             this.stock = item.type;
+            sessionStorage.setItem("STOCK_TYPE", item.type);
             item.stocks.map(stockN => {
               this.stockName = stockN.stockName;
               this.stockNames.push(stockN.stockName);
@@ -219,6 +245,7 @@ export default {
         } else {
           if (item.stocks.find(({ stockName }) => stockName === stockURL)) {
             this.stock = item.type;
+            sessionStorage.setItem("STOCK_TYPE", item.type);
             item.stocks.map(stockN => {
               if (stockN.stockName == stockURL) {
                 this.stockName = stockN.stockName;

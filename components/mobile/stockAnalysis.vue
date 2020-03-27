@@ -123,7 +123,9 @@
               <div class="title_date_picker">
                 <span></span>
               </div>
-              <button @click="getStockAnalysis" class="buttonGreen btn-go">GO</button>
+              <button @click="getStockAnalysis" class="buttonGreen btn-go">
+                GO
+              </button>
             </div>
           </v-flex>
           <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
@@ -166,7 +168,7 @@
               </div>
               <apexchart
                 type="bar"
-                height="480vh"
+                height="360vh"
                 :options="chartOptions"
                 :series="series"
               ></apexchart>
@@ -180,279 +182,190 @@
 
 <script>
 import apexchart from "vue-apexcharts";
-import {
-    mapGetters,
-    mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
-import config from '../../config/config.global';
-// set color win and lose color in bar chart
+import config from "../../config/config.global";
+import date from "date-and-time";
+
+// set win and lose color in bar chart
 let index = 0;
-let stocklist = ["SH000001", "SH000300", "USDINDEX", "BTC5", "BTC1"];
 let barColor = [
   ["#67c9d3", "#f75b54", "#fcc624", "#1a237e", "#d81b60", "#ff6f00", "#01579b"], // win color
   ["#81eaf5", "#f9a5a3", "#fddf84", "#7986cb", "#f06292", "#ffb74d", "#90caf9"] // loss color
 ];
 export default {
-    components: {
-        apexchart: apexchart
-    },
-    data() {
-        return {
-            stockAnalysis: [],
-            colors: barColor,
-            // match with color by index
-            // 'barColor' variable above
-            isShowDateStart: false,
-            isShowDateEnd: false,
-            startDate: "",
-            endDate: "",
-            items: [{
-                    title: "Click Me"
-                },
-                {
-                    title: "Click Me"
-                },
-                {
-                    title: "Click Me"
-                },
-                {
-                    title: "Click Me 2"
-                }
-            ],
-            chartOptions: {
-                colors: [
-                    function({ value, seriesIndex, dataPointIndex, w }) {
-                        if (seriesIndex == 0) {
-                            return barColor[0][dataPointIndex];
-                        }
-                        if (seriesIndex == 1) {
-                            return barColor[1][dataPointIndex];
-                        }
-                    }
-                ],
-            plotOptions: {
-                bar: {
-                    horizontal: false
-                }
-            },
-        // grid: {
-        //   show: true,
-        //   borderColor: "#90A4AE",
-        //   strokeDashArray: 0,
-        //   position: "back",
-        //   xaxis: {
-        //     lines: {
-        //       show: false
-        //     }
-        //   },
-        //   yaxis: {
-        //     lines: {
-        //       show: true
-        //     }
-        //   },
-        //   row: {
-        //     colors: undefined,
-        //     opacity: 0.5
-        //   },
-        //   column: {
-        //     colors: undefined,
-        //     opacity: 0.5
-        //   },
-        //   padding: {
-        //     top: 0,
-        //     right: 0,
-        //     bottom: 0,
-        //     left: 0
-        //   }
-        // },
-            dataLabels: {
-                enabled: false
-            },
-            chart: {
-                type: "bar",
-                stacked: true,
-                //stackType: '100%',
-                toolbar: {
-                    show: false
-                },
-                zoom: {
-                    enabled: false
-                }
-            },
-            tooltip: {
-                enabled: true,
-                followCursor: true,
-                intersect: true,
-                onDataSetHover: {
-                    highlightDataSeries: false
-                },
-                x: {
-                    show: false
-                },
-                y: {
-                    formatter: function(val, { series, seriesIndex, dataPointIndex }) {
-                    return (
-                        '<div class="arrow_box ">' +
-                        "<span> " +
-                        stocklist[dataPointIndex] +
-                        " </span>" +
-                        "<span> " +
-                        series[seriesIndex][dataPointIndex] +
-                        "</span>" +
-                        "</div>"
-                    );
-                    },
-                    title: {
-                    formatter: function(seriesName) {
-                        return seriesName.toUpperCase();
-                    }
-                    }
-                }
-            },
-        // responsive: [
-        //   {
-        //     breakpoint: 480,
-        //     options: {
-        //       legend: {
-        //         position: "bottom",
-        //         offsetX: -10,
-        //         offsetY: 0
-        //       }
-        //     }
-        //   }
-        // ],
-        // plotOptions: {
-        //   bar: {
-        //     horizontal: false,
-        //     // distributed: true
-        //   }
-        // },
-        // xaxis: {
-        //   labels: {
-        //     show: false
-        //   }
-        //   // type: "datetime",
-        //   // categories: [
-        //   //   "01/01/2011 GMT",
-        //   //   "01/02/2011 GMT",
-        //   //   "01/03/2011 GMT",
-        //   //   "01/04/2011 GMT",
-        //   //   "01/05/2011 GMT",
-        //   //   "01/06/2011 GMT",
-        //   //   "01/07/2011 GMT",
-        //   //   "01/08/2011 GMT",
-        //   //   "01/09/2011 GMT",
-        //   //   "01/10/2011 GMT"
-        //   // ]
-        // },
-        // legend: {
-        //   // itemMargin: {
-        //   //   horizontal: -100,
-        //   //   vertical: -100
-        //   // },
-        //   show: false,
-        //   // position: "top",
-        //   // horizontalAlign: "right",
-        //   // offsetX: 40
-        // },
-        // fill: {
-        //   opacity: 100
-        // },
-            xaxis: {
-                labels: {
-                offsetX: 0
-                }
+  components: {
+    apexchart: apexchart
+  },
+  data() {
+    return {
+      stockAnalysis: [],
+      colors: barColor,
+      isShowDateStart: false,
+      isShowDateEnd: false,
+      startDate: "",
+      endDate: "",
+      chartOptions: {
+        colors: [
+          function({ value, seriesIndex, dataPointIndex, w }) {
+            if (seriesIndex == 0) {
+              return barColor[0][dataPointIndex];
             }
-        },
-            dialogStockAnalysis: false
-        };
-    },
-    methods: {
-        showDialogStockAnalysis() {
-            this.dialogStockAnalysis = true;
-        },
-        ...mapActions(["asynUserInfo"]),
-        showDialogOnlineHistory() {
-            this.dialogOnlineHistory = true;
-        },
-        async getStockAnalysis() {
-            try {
-                const res = await this.$axios.$post(
-                    config.getUserBetAnalysis.url, {
-                        portalProviderUUID: this.getPortalProviderUUID,
-                        userUUID: this.getUserUUID,
-                        dateRangeFrom: "2020-02-02",
-                        dateRangeTo: "2020-03-25",
-                        version: config.version
-                    }, {
-                        headers: {
-                            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                        }
-                    }
-                );
-                if (res.code === 200) {
-                    this.stockAnalysis = res.data;
-                    console.log(res.data, 'ayayayayayay');
-                } else {
-                    console.log(res);
-                    // alert(res.message);
-                }
-            } catch (ex) {
-                console.error(ex);
-                // alert(ex.message);
+            if (seriesIndex == 1) {
+              return barColor[1][dataPointIndex];
             }
+          }
+        ],
+        plotOptions: {
+          bar: {
+            horizontal: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        chart: {
+          type: "bar",
+          stacked: true,
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: false
+          }
+        },
+        tooltip: {
+          enabled: true,
+          followCursor: true,
+          intersect: true,
+          onDataSetHover: {
+            highlightDataSeries: false
+          },
+          x: {
+            show: false
+          },
+          y: {
+            formatter: (val, { series, seriesIndex, dataPointIndex }) => {
+              return (
+                '<div class="arrow_box ">' +
+                "<span> " +
+                this.stockAnalysis[dataPointIndex].stockName.toUpperCase() +
+                " </span>" +
+                "<span> " +
+                series[seriesIndex][dataPointIndex] +
+                "</span>" +
+                "</div>"
+              );
+            },
+            title: {
+              formatter: function(seriesName) {
+                return seriesName.toUpperCase();
+              }
+            }
+          }
+        },
+        xaxis: {
+          labels: {
+            offsetX: 0
+          }
         }
+      },
+      dialogStockAnalysis: false
+    };
+  },
+  methods: {
+    showDialogStockAnalysis() {
+      this.dialogStockAnalysis = true;
     },
-    created() {
-        const now = date.format(new Date(), "YYYY-MM-DD");
-        const lastWeek = date.addDays(new Date(), -7);
-        this.startDate = date.format(lastWeek, "YYYY-MM-DD");
-        this.endDate = now;
-        this.getStockAnalysis();
+    ...mapActions(["asynUserInfo"]),
+    showDialogOnlineHistory() {
+      this.dialogOnlineHistory = true;
     },
-    computed: {
-        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
-        stocks() {
-            let stocks = [];
-            this.stockAnalysis.forEach((element) => {
-                stocks.push(element.stockName);
-            });
-            return stocks;
+    async getStockAnalysis() {
+      try {
+        const res = await this.$axios.$post(
+          config.getUserBetAnalysis.url,
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
+            dateRangeFrom: this.startDate,
+            dateRangeTo: this.endDate,
+            version: config.version
+          },
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+            }
+          }
+        );
+        if (res.code === 200) {
+          this.stockAnalysis = res.data;
+          console.log(res.data, "User bet analysis response");
+        } else {
+          console.log(res);
+          // alert(res.message);
+        }
+      } catch (ex) {
+        console.error(ex);
+        // alert(ex.message);
+      }
+    }
+  },
+  created() {
+    const now = date.format(new Date(), "YYYY-MM-DD");
+    const lastWeek = date.addDays(new Date(), -7);
+    this.startDate = date.format(lastWeek, "YYYY-MM-DD");
+    this.endDate = now;
+    this.getStockAnalysis();
+  },
+  computed: {
+    ...mapGetters([
+      "getUserInfo",
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getUserInfo"
+    ]),
+    stocks() {
+      let stocks = [];
+      this.stockAnalysis.forEach(element => {
+        stocks.push(element.stockName);
+      });
+      return stocks;
+    },
+    series() {
+      let win = [];
+      let loss = [];
+      this.stockAnalysis.forEach(element => {
+        win.push(element.winCount);
+        loss.push(element.lossCount);
+      });
+      return [
+        {
+          name: "win",
+          data: win
         },
-        series() {
-            let win = [];
-            let loss = [];
-            this.stockAnalysis.forEach(element => {
-                win.push(element.winCount);
-                loss.push(element.lossCount);
-            });
-            return [
-                {
-                    name: "win",
-                    data: win
-                },
-                {
-                    name: "loss",
-                    data: loss
-                }
-            ];
-        },
-        imgProfile() {
-            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ? "/user.png" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-        },
+        {
+          name: "loss",
+          data: loss
+        }
+      ];
     },
-    destroyed() {
-        index = 0; // reset index
-    },
-    updated() {
-        index = 0; // reset index
-    },
-
-
+    imgProfile() {
+      return this.getUserInfo.profileImage == "" ||
+        this.getUserInfo.profileImage == undefined
+        ? "/user.png"
+        : `${config.apiDomain}/` + this.getUserInfo.profileImage;
+    }
+  },
+  destroyed() {
+    index = 0; // reset index
+  },
+  updated() {
+    index = 0; // reset index
+  }
 };
 </script>
 

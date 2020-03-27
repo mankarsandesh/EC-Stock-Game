@@ -21,12 +21,6 @@ export default {
       tabs: ["history", "current bet"],
       active: null
     };    
-  },
-  mounted(){
-
-  },
-  methods:{
-   
   }
 };
 </script>

@@ -6,21 +6,20 @@ const createStore = () => {
   return new Vuex.Store({
     state: () => ({
       clearRoadMap: false,
-
       stockCategory: [],
       gameStockId: null,
       authUser: {},
       activeGameChannel: true,
       loader: false,
-      userLoginData: {},
+      userLoginData: {},  
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
       isLoadingAnnoucement: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "",
-      userUUID: "",
+      portalProviderUUID: localStorage.getItem("PORTAL_PROVIDERUUID"),
+      userUUID: localStorage.getItem("USER_UUID"),
       // end set portal provider and user UUID for authentication
       roadMap: [],
       userData: {},
@@ -111,12 +110,10 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
-      SET_PROTAL_PROVIDER(state, payload) {
-        console.log("Set Protal provider11111111",payload);
+      SET_PORTAL_PROVIDERUUID(state, payload) {
         state.portalProviderUUID = payload;
       },
-      SET_USERUUID(state, payload) {
-        console.log("Set user IDdddddddd",payload);
+      SET_USER_UUID(state, payload) {
         state.userUUID = payload;
       },
       SET_CLEAR_ROAD_MAP(state, payload) {
@@ -197,7 +194,7 @@ const createStore = () => {
           state.locale = locale;
         }
         localStorage.setItem("lang", locale);
-      },      
+      },
       setFooterBetAmount(state, payload) {
         state.footerBetAmount = parseInt(payload);
       },
@@ -285,7 +282,7 @@ const createStore = () => {
           // alert(ex)
         }
       },
-      // end new api  
+      // end new api
       // send bet data for multigame and footer bet on full screen
       async sendBetting(context) {
         // set sendbetting = true
@@ -508,13 +505,13 @@ const createStore = () => {
 
       getIsSendBetting(state) {
         return state.isSendbetting;
-      },    
+      },
       getPortalProviderUser(state) {
         if (sessionStorage.getItem("userData") !== null) {
           const formData = JSON.parse(sessionStorage.getItem("userData"));
         }
         return state.formData;
-      },     
+      },
       getAuth_token(state) {
         return state.auth_token;
       },
@@ -571,6 +568,9 @@ const createStore = () => {
           return parseInt(result);
         }
         return getAmount(state.multiGameBet);
+      },
+      getBetAmountRuleID: state => data => {
+        return 0
       },
       // get bet amount for ech game rule to show on chip
       getAmountMultiGameBet: state => data => {

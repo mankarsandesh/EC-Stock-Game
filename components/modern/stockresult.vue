@@ -20,9 +20,10 @@
               v-show="getStockResult.length > 0"
             >
               <td>
-                <nuxt-link
-                  :to="'/modern/desktop/' + data.stockName"
-                >{{ $t(`stockname.${data.stockName}`) }} {{ data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
+                <nuxt-link :to="'/modern/desktop/' + data.stockName"
+                  >{{ $t(`stockname.${data.stockName}`) }}
+                  {{ data.stockName == "btc5" ? "5" : "" }}</nuxt-link
+                >
               </td>
               <td class="text-xs-center">{{ data.stockTimeStamp }}</td>
               <td class="text-xs-center">{{ roundValue(data.stockValue) }}</td>
@@ -52,30 +53,29 @@ export default {
 
   methods: {
     roundValue(value) {
-      return `${Number(value)
-        .toFixed(2)
-}`;
+      return `${Number(value).toFixed(2)}`;
     },
     onlyTime(value) {
       let d = value.split(" ");
       return d[1];
     },
     async stockResult() {
-      const dataSend = {
-        portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-        version: config.version // version of API
-      };
-      const { data } = await this.$axios.post(
-        config.getAllStock.url, // after finish crawl the every API will the the baseURL from AXIOS
-        dataSend, // data object
-        {
-          headers: config.header
-        }
-      );
-      console.log( this.portalProviderUUID);
+      try {
+        const dataSend = {
+          portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
+          version: config.version // version of API
+        };
+        const { data } = await this.$axios.post(
+          config.getAllStock.url, // after finish crawl the every API will the the baseURL from AXIOS
+          dataSend, // data object
+          {
+            headers: config.header
+          }
+        );        
+        this.getStockResult = data.data;
+      } catch (error) {
         console.log(data);
-      console.log("Stock Resdult");
-      this.getStockResult = data.data;
+      }
     }
   }
 };

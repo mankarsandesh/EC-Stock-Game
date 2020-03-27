@@ -1,6 +1,5 @@
 <template>
-  <div>
-    
+  <div>    
     <bethistory :head="head" :userBetHistory="userBetHistory" />
   </div>
 </template>
