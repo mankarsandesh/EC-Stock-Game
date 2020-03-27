@@ -19,8 +19,8 @@ const createStore = () => {
       isLoadingAnnoucement: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
-      userUUID: "dfdcb1e4-2275-4026-8efd-cafc79cc6f44",
+      portalProviderUUID: "",
+      userUUID: "",
       // end set portal provider and user UUID for authentication
       roadMap: [],
       userData: {},
@@ -111,6 +111,14 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      SET_PROTAL_PROVIDER(state, payload) {
+        console.log("Set Protal provider11111111",payload);
+        state.portalProviderUUID = payload;
+      },
+      SET_USERUUID(state, payload) {
+        console.log("Set user IDdddddddd",payload);
+        state.userUUID = payload;
+      },
       SET_CLEAR_ROAD_MAP(state, payload) {
         state.clearRoadMap = payload;
       },
@@ -456,6 +464,7 @@ const createStore = () => {
         return state.activeGameChannel;
       },
       getPortalProviderUUID(state) {
+        console.log("check SocketID",state.portalProviderUUID);
         return state.portalProviderUUID;
       },
       getUserUUID(state) {

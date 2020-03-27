@@ -43,7 +43,7 @@ export default {
       messageError: []      
     };
   },
-  mounted() {
+  mounted(){
     if (!this.portalProviderUUID) {
       const error = "portalProviderUUID field is Missing";
       this.messageError.push(error);
@@ -76,7 +76,10 @@ export default {
       }
     }
   },
-  methods: {
+  computed:{
+    ...mapGetters(['getPortalProviderUUID','getUserUUID'])
+  },
+  methods: {   
     async checlUserAuth() {
       try{
       const userData = {
@@ -87,7 +90,7 @@ export default {
         domain: this.referrerURL,
         balance: this.balance
       };    
-      console.log(userData);
+     console.log("Send Data",userData);
       const { data } = await this.$axios.post(
         config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
         userData, // data object
@@ -95,14 +98,19 @@ export default {
           headers: config.header
         }
       );
-      if(data.status == true){
+      console.log("Respo nse Data",data);
+      if(data.status){
         const userInfo =  {
           authUser: config.authUser,
           authPassword: config.authPassword,
           portalProviderUUID: this.portalProviderUUID,
           userId: data.data[0].userUUID,
           redirect:this.referrerURL
-        }
+      }
+
+      this.SET_PROTAL_PROVIDER(userInfo.portalProviderUUID);   
+      this.SET_USERUUID(userInfo.userId);       
+     console.log("this is USER UUID",this.getUserUUID);
       let objJsonStr = JSON.stringify(userInfo);
       let buff = new Buffer(objJsonStr);
       let base64data = buff.toString("base64");
@@ -131,8 +139,8 @@ export default {
       } catch(error){
         console.log(error);
       }
-    },
-    ...mapMutations(["setAuth"]),
+    },    
+    ...mapMutations(["setAuth","SET_PROTAL_PROVIDER","SET_USERUUID"]),
     getProgress() {
       let seft = this;
       let width = 100,

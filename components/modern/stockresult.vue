@@ -72,7 +72,8 @@ export default {
           headers: config.header
         }
       );
-      console.log(data);
+      console.log( this.portalProviderUUID);
+        console.log(data);
       console.log("Stock Resdult");
       this.getStockResult = data.data;
     }

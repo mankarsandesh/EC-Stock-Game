@@ -1456,7 +1456,6 @@ export default {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
      stopListenSocket(channel) {
-       alert("stopListenSocket")
       window.Echo.leave(channel);
     },
     tabChanged(e) {
