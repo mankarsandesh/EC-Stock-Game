@@ -3,7 +3,7 @@ const config = {
   authUser : `${process.env.AUTHUSER}`,
   authPassword : `${process.env.AUTHPASS}`,
   apiDomain: process.env.API_DOMIAN,
-  secretKey:"CC21128A312FAF7817C93D1B51CB9",
+  secretKey:"GYXMAKGDYAWDW4K1C6HWWQHXH2W",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },

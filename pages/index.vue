@@ -42,7 +42,7 @@ export default {
       messageError: []
     };
   },
-  created() {
+  mounted() {
     if (!this.portalProviderUUID) {
       const error = "portalProviderUUID field is Missing";
       this.messageError.push(error);
@@ -69,6 +69,9 @@ export default {
         this.linkto = "/modern/desktop/" + stockname;
       }
     }
+  },
+  computed: {
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
     async checlUserAuth() {
@@ -136,6 +139,7 @@ export default {
       }
     },
     ...mapMutations(["setAuth", "SET_PORTAL_PROVIDERUUID", "SET_USER_UUID"]),
+
     getProgress() {
       let seft = this;
       let width = 100,
@@ -177,8 +181,8 @@ export default {
           $(obj).text("lOADING..."); // SHOW BY LOADING
           obj.innerHTML = current;
           if (current == end) {
-            clearInterval(timer);        
-            window.location = "/modern/desktop/btc1"
+            clearInterval(timer);
+            window.location = "/modern/desktop/btc1";
             // seft.$router.push("/modern/desktop/btc1");
             // seft.$router.push("/dashboard?stockname=" + seft.stockname);
           }

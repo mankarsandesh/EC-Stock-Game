@@ -1474,8 +1474,12 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
+<<<<<<< HEAD
     stopListenSocket(channel) {
       console.log("stopListenSocket");
+=======
+     stopListenSocket(channel) {
+>>>>>>> Avengers
       window.Echo.leave(channel);
     },
     tabChanged(e) {

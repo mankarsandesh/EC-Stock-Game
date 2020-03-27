@@ -1,4 +1,3 @@
-
 const config = {
   version: "1",
   authUser : `${process.env.AUTHUSER}`,
