@@ -84,7 +84,7 @@ export default {
           domain: this.referrerURL,
           balance: this.balance
         };
-
+        console.log(userData);
         const { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
           userData, // data object
@@ -92,6 +92,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(data);
         if (data.status) {
           const userInfo = {
             authUser: config.authUser,

@@ -73,7 +73,7 @@
           <v-flex xs5 sm3 mr-1 ml-1>
             <div
               class="date_picker_container"
-              @click="isShowDateStart = !isShowDateStart"
+              @click="startDateClick"
             >
               <div class="title_date_picker">
                 <span>{{ $t("msg.from") }}</span>
@@ -97,7 +97,7 @@
           <v-flex xs5 sm3 mr-1>
             <div
               class="date_picker_container"
-              @click="isShowDateEnd = !isShowDateEnd"
+              @click="endDateClick"
             >
               <div class="title_date_picker">
                 <span>{{ $t("msg.to") }}</span>
@@ -152,7 +152,8 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs12 sm12 md10 lg10 mt-4>
+      <p v-if="!isDataValid"><strong>No data to display</strong></p>
+      <v-flex v-if="isDataValid" xs12 sm12 md10 lg10 mt-4>
         <v-layout row>
           <v-flex xs1 sm2> </v-flex>
           <v-flex xs10 sm8>
@@ -168,7 +169,7 @@
               </div>
               <apexchart
                 type="bar"
-                height="360vh"
+                height="350vh"
                 :options="chartOptions"
                 :series="series"
               ></apexchart>
@@ -203,6 +204,7 @@ export default {
   data() {
     return {
       stockAnalysis: [],
+      isDataValid: false,
       colors: barColor,
       isShowDateStart: false,
       isShowDateEnd: false,
@@ -284,8 +286,26 @@ export default {
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },
+    checkValidDate (startDate, endDate) {
+      const now = date.format(new Date(), "YYYY-MM-DD");
+      if(endDate > now || !(endDate >= startDate)) {
+        return false;
+      }
+      return true;
+    },
+    startDateClick() {
+      this.isShowDateStart = !this.isShowDateStart;
+      this.isShowDateEnd = false;
+    },
+    endDateClick() {
+      this.isShowDateEnd = !this.isShowDateEnd;
+      this.isShowDateStart = false;
+    },
     async getStockAnalysis() {
       try {
+        if(!this.checkValidDate(this.startDate, this.endDate)) {
+          throw new Error('Please select a valid date');
+        }
         const res = await this.$axios.$post(
           config.getUserBetAnalysis.url,
           {
@@ -302,14 +322,23 @@ export default {
           }
         );
         if (res.code === 200) {
-          this.stockAnalysis = res.data;
-          console.log(res.data, "User bet analysis response");
+          if(res.data.length) {
+            this.isDataValid = true;
+            this.stockAnalysis = res.data;
+          } else {
+            this.isDataValid = false;
+          }
+          
         } else {
           console.log(res);
           // alert(res.message);
         }
       } catch (ex) {
         console.error(ex);
+        if(ex.message == 'Please select a valid date') {
+          alert('Please select a valid date');
+          this.isDataValid = false;
+        }
         // alert(ex.message);
       }
     }
