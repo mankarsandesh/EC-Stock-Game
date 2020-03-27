@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-            betId.split("-")[1] >= 0
-            ? $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            betId.split("-")[1]
-            : $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            $t("gamemsg." + betId.split("-")[1])
+              betId.split("-")[1] >= 0
+                ? $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  betId.split("-")[1]
+                : $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  $t("gamemsg." + betId.split("-")[1])
             }}
           </span>
         </h3>
@@ -31,7 +31,12 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="coinClick(getCoins_modern[key])"
                 :src="item.img"
@@ -52,7 +57,13 @@
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
           <v-flex style="align-self:center">
-            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -69,8 +80,11 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-        >{{ $t("msg.confirm") }}</v-btn>
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{ $t("msg.cancel") }}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn
+        >
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{
+          $t("msg.cancel")
+        }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -164,7 +178,6 @@ export default {
       this.betValue = this.betValue + amount;
     },
     async sendBetting(betData) {
-      let finalData = betData;
       try {
         const res = await this.$axios.$post(
           config.storeBet.url,
@@ -172,16 +185,13 @@ export default {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             version: config.version,
-            betData: [finalData]
+            betData: [betData]
           },
           {
             headers: config.header
           }
         );
-        if (res.status == true) {
-          console.log("bet success...")
-          console.log(res)
-          console.log("bet success...")
+        if (res.status && res.data[0].status) {
           this.asynUserInfo();
           this.closePopper();
           let OnGoingdata = {
@@ -202,7 +212,11 @@ export default {
             timer: 1500
           });
         } else {
-          throw new Error(res.messgae);
+          if (res.status) {
+            throw new Error(res.res.data[0].message);
+          } else {
+            throw new Error(res.message);
+          }
         }
       } catch (ex) {
         this.confirmDisabled = false;

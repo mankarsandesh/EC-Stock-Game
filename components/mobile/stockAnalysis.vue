@@ -123,7 +123,9 @@
               <div class="title_date_picker">
                 <span></span>
               </div>
-              <button @click="getStockAnalysis" class="buttonGreen btn-go">GO</button>
+              <button @click="getStockAnalysis" class="buttonGreen btn-go">
+                GO
+              </button>
             </div>
           </v-flex>
           <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
@@ -164,7 +166,11 @@
                   <span style="margin-right:10px">{{ stock }}</span>
                 </span>
               </div>
-              <apexchart type="bar" height="360vh" :options="chartOptions" :series="series"
+              <apexchart
+                type="bar"
+                height="360vh"
+                :options="chartOptions"
+                :series="series"
               ></apexchart>
             </div>
           </v-flex>
@@ -176,15 +182,14 @@
 
 <script>
 import apexchart from "vue-apexcharts";
-import {
-    mapGetters,
-    mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
-import config from '../../config/config.global';
+import config from "../../config/config.global";
+import date from "date-and-time";
+
 // set win and lose color in bar chart
 let index = 0;
 let barColor = [
@@ -192,167 +197,175 @@ let barColor = [
   ["#81eaf5", "#f9a5a3", "#fddf84", "#7986cb", "#f06292", "#ffb74d", "#90caf9"] // loss color
 ];
 export default {
-    components: {
-        apexchart: apexchart
-    },
-    data() {
-        return {
-            stockAnalysis: [],
-            colors: barColor,
-            isShowDateStart: false,
-            isShowDateEnd: false,
-            startDate: "",
-            endDate: "",
-            chartOptions: {
-                colors: [
-                    function({ value, seriesIndex, dataPointIndex, w }) {
-                        if (seriesIndex == 0) {
-                            return barColor[0][dataPointIndex];
-                        }
-                        if (seriesIndex == 1) {
-                            return barColor[1][dataPointIndex];
-                        }
-                    }
-                ],
-            plotOptions: {
-                bar: {
-                    horizontal: false
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            chart: {
-                type: "bar",
-                stacked: true,
-                toolbar: {
-                    show: false
-                },
-                zoom: {
-                    enabled: false
-                }
-            },
-            tooltip: {
-                enabled: true,
-                followCursor: true,
-                intersect: true,
-                onDataSetHover: {
-                    highlightDataSeries: false
-                },
-                x: {
-                    show: false
-                },
-                y: {
-                    formatter: (val, { series, seriesIndex, dataPointIndex }) => {
-                    return (
-                        '<div class="arrow_box ">' +
-                        "<span> " +
-                        this.stockAnalysis[dataPointIndex].stockName.toUpperCase() +
-                        " </span>" +
-                        "<span> " +
-                        series[seriesIndex][dataPointIndex] +
-                        "</span>" +
-                        "</div>"
-                    );
-                    },
-                    title: {
-                    formatter: function(seriesName) {
-                        return seriesName.toUpperCase();
-                    }
-                    }
-                }
-            },
-            xaxis: {
-                labels: {
-                offsetX: 0
-                }
+  components: {
+    apexchart: apexchart
+  },
+  data() {
+    return {
+      stockAnalysis: [],
+      colors: barColor,
+      isShowDateStart: false,
+      isShowDateEnd: false,
+      startDate: "",
+      endDate: "",
+      chartOptions: {
+        colors: [
+          function({ value, seriesIndex, dataPointIndex, w }) {
+            if (seriesIndex == 0) {
+              return barColor[0][dataPointIndex];
             }
-        },
-            dialogStockAnalysis: false
-        };
-    },
-    methods: {
-        showDialogStockAnalysis() {
-            this.dialogStockAnalysis = true;
-        },
-        ...mapActions(["asynUserInfo"]),
-        showDialogOnlineHistory() {
-            this.dialogOnlineHistory = true;
-        },
-        async getStockAnalysis() {
-            try {
-                const res = await this.$axios.$post(
-                    config.getUserBetAnalysis.url, {
-                        portalProviderUUID: this.getPortalProviderUUID,
-                        userUUID: this.getUserUUID,
-                        dateRangeFrom: this.startDate,
-                        dateRangeTo: this.endDate,
-                        version: config.version
-                    }, {
-                        headers: {
-                            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-                        }
-                    }
-                );
-                if (res.code === 200) {
-                    this.stockAnalysis = res.data;
-                    console.log(res.data, 'User bet analysis response');
-                } else {
-                    console.log(res);
-                    // alert(res.message);
-                }
-            } catch (ex) {
-                console.error(ex);
-                // alert(ex.message);
+            if (seriesIndex == 1) {
+              return barColor[1][dataPointIndex];
             }
+          }
+        ],
+        plotOptions: {
+          bar: {
+            horizontal: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        chart: {
+          type: "bar",
+          stacked: true,
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: false
+          }
+        },
+        tooltip: {
+          enabled: true,
+          followCursor: true,
+          intersect: true,
+          onDataSetHover: {
+            highlightDataSeries: false
+          },
+          x: {
+            show: false
+          },
+          y: {
+            formatter: (val, { series, seriesIndex, dataPointIndex }) => {
+              return (
+                '<div class="arrow_box ">' +
+                "<span> " +
+                this.stockAnalysis[dataPointIndex].stockName.toUpperCase() +
+                " </span>" +
+                "<span> " +
+                series[seriesIndex][dataPointIndex] +
+                "</span>" +
+                "</div>"
+              );
+            },
+            title: {
+              formatter: function(seriesName) {
+                return seriesName.toUpperCase();
+              }
+            }
+          }
+        },
+        xaxis: {
+          labels: {
+            offsetX: 0
+          }
         }
+      },
+      dialogStockAnalysis: false
+    };
+  },
+  methods: {
+    showDialogStockAnalysis() {
+      this.dialogStockAnalysis = true;
     },
-    created() {
-        const now = date.format(new Date(), "YYYY-MM-DD");
-        const lastWeek = date.addDays(new Date(), -7);
-        this.startDate = date.format(lastWeek, "YYYY-MM-DD");
-        this.endDate = now;
-        this.getStockAnalysis();
+    ...mapActions(["asynUserInfo"]),
+    showDialogOnlineHistory() {
+      this.dialogOnlineHistory = true;
     },
-    computed: {
-        ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserInfo"]),
-        stocks() {
-            let stocks = [];
-            this.stockAnalysis.forEach((element) => {
-                stocks.push(element.stockName);
-            });
-            return stocks;
+    async getStockAnalysis() {
+      try {
+        const res = await this.$axios.$post(
+          config.getUserBetAnalysis.url,
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
+            dateRangeFrom: this.startDate,
+            dateRangeTo: this.endDate,
+            version: config.version
+          },
+          {
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
+            }
+          }
+        );
+        if (res.code === 200) {
+          this.stockAnalysis = res.data;
+          console.log(res.data, "User bet analysis response");
+        } else {
+          console.log(res);
+          // alert(res.message);
+        }
+      } catch (ex) {
+        console.error(ex);
+        // alert(ex.message);
+      }
+    }
+  },
+  created() {
+    const now = date.format(new Date(), "YYYY-MM-DD");
+    const lastWeek = date.addDays(new Date(), -7);
+    this.startDate = date.format(lastWeek, "YYYY-MM-DD");
+    this.endDate = now;
+    this.getStockAnalysis();
+  },
+  computed: {
+    ...mapGetters([
+      "getUserInfo",
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getUserInfo"
+    ]),
+    stocks() {
+      let stocks = [];
+      this.stockAnalysis.forEach(element => {
+        stocks.push(element.stockName);
+      });
+      return stocks;
+    },
+    series() {
+      let win = [];
+      let loss = [];
+      this.stockAnalysis.forEach(element => {
+        win.push(element.winCount);
+        loss.push(element.lossCount);
+      });
+      return [
+        {
+          name: "win",
+          data: win
         },
-        series() {
-            let win = [];
-            let loss = [];
-            this.stockAnalysis.forEach(element => {
-                win.push(element.winCount);
-                loss.push(element.lossCount);
-            });
-            return [
-                {
-                    name: "win",
-                    data: win
-                },
-                {
-                    name: "loss",
-                    data: loss
-                }
-            ];
-        },
-        imgProfile() {
-            return this.getUserInfo.profileImage == "" || this.getUserInfo.profileImage == undefined ? "/user.png" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-        },
+        {
+          name: "loss",
+          data: loss
+        }
+      ];
     },
-    destroyed() {
-        index = 0; // reset index
-    },
-    updated() {
-        index = 0; // reset index
-    },
-
-
+    imgProfile() {
+      return this.getUserInfo.profileImage == "" ||
+        this.getUserInfo.profileImage == undefined
+        ? "/user.png"
+        : `${config.apiDomain}/` + this.getUserInfo.profileImage;
+    }
+  },
+  destroyed() {
+    index = 0; // reset index
+  },
+  updated() {
+    index = 0; // reset index
+  }
 };
 </script>
 
