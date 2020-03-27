@@ -1,9 +1,9 @@
 <template>
   <div>
     <breadcrumbs
-      :title=" $t('breadcrumbs.betHistory')"
+      :title="$t('breadcrumbs.betHistory')"
       linkItem="current-bet"
-      :titlebtn=" $t('breadcrumbs.currentBet')"
+      :titlebtn="$t('breadcrumbs.currentBet')"
     />
     <section class="filter">
       <v-container>
@@ -217,26 +217,29 @@ export default {
       }
     },
     async fetch() {
-      const userData = {
-        portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-        userUUID: this.userUUID, // get the userUUID with the this object
-        version: config.version, // version of API
-        betResult: [0, 1], // -1= pending, 0= lose , 1 = win
-        limit: "50",
-        offset: "0", // offset or skip the data,
-        dateRangeFrom: this.dateFrom,
-        dateRangeTo: this.dateTo
-      };
-      const { data } = await this.$axios.post(
-        config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
-        userData, // data object
-        {
-          headers: config.header
-        }
-      );
-      this.userBetHistory = data.data;
-      console.log(this.userBetHistory);
-      this.loadingImage = false;
+      try {
+        const userData = {
+          portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
+          userUUID: this.userUUID, // get the userUUID with the this object
+          version: config.version, // version of API
+          betResult: [0, 1], // -1= pending, 0= lose , 1 = win
+          limit: "50",
+          offset: "0", // offset or skip the data,
+          dateRangeFrom: this.dateFrom,
+          dateRangeTo: this.dateTo
+        };
+        const { data } = await this.$axios.post(
+          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
+          userData, // data object
+          {
+            headers: config.header
+          }
+        );
+        this.userBetHistory = data.data;      
+        this.loadingImage = false;
+      } catch (error) {
+        console.log(data);
+      }
     }
   }
 };

@@ -64,8 +64,7 @@ export default {
             headers: config.header
           }
         );
-        this.currentBets = data.data;
-        console.log(this.currentBets);
+        this.currentBets = data.data;      
       } catch (error) {
         console.log(data);
       }
