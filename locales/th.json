@@ -278,5 +278,10 @@
         "losingbets":"สูญเสียเดิมพัน",
         "usersfollwme":"ผู้ใช้ติดตามฉัน",
         "amountcreditedordebitedtoanaccount":"จำนวนเงินที่เครดิตหรือหักเข้าบัญชี"
+    },
+    "bethistory": {
+      "betdraw" : "投注",
+      "yourloosingamount" : "จำนวนเงินที่คุณสูญเสีย",
+      "yourwinningamount" : "จำนวนเงินที่ชนะของคุณ"
     }
 }

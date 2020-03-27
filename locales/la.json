@@ -278,5 +278,10 @@
         "losingbets":"ການສູນເສຍການເດີມພັນ",
         "usersfollwme":"ຜູ້ໃຊ້ຕິດຕາມຂ້ອຍ",
         "amountcreditedordebitedtoanaccount":"ຈຳ ນວນເງິນທີ່ຝາກຫຼື debited ເຂົ້າບັນຊີ"
+    },
+    "bethistory": {
+      "betdraw" : "BET DRAW",
+      "yourloosingamount" : "ຈໍານວນເງິນທີ່ຫລຸດລົງຂອງທ່ານ",
+      "yourwinningamount" : "ຈຳ ນວນເງິນທີ່ຊະນະຂອງທ່ານ"
     }
 }

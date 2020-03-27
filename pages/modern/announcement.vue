@@ -10,12 +10,7 @@
 </template>
 
 <script>
-import {
-    mapGetters,
-    mapActions
-} from "vuex";
 import announcement from "~/components/mobile/announcement";
-
 export default {
     components: {
         announcement

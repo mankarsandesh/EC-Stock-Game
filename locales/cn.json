@@ -278,5 +278,10 @@
         "losingbets":"下注",
         "usersfollwme":"用户关注我",
         "amountcreditedordebitedtoanaccount":"贷记或借记到帐户的金额"
+    },
+    "bethistory": {
+      "betdraw" : "投注",
+      "yourloosingamount" : "您的欠款额",
+      "yourwinningamount" : "您的中奖金额"
     }
 }
