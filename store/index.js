@@ -282,7 +282,7 @@ const createStore = () => {
           // alert(ex)
         }
       },
-      // end new api  
+      // end new api
       // send bet data for multigame and footer bet on full screen
       async sendBetting(context) {
         // set sendbetting = true
@@ -567,6 +567,9 @@ const createStore = () => {
           return parseInt(result);
         }
         return getAmount(state.multiGameBet);
+      },
+      getBetAmountRuleID: state => data => {
+        return 0
       },
       // get bet amount for ech game rule to show on chip
       getAmountMultiGameBet: state => data => {
