@@ -148,9 +148,7 @@ export default {
           config.updateUserProfile.url,
           formData,
           {
-            headers: {
-              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
-            },
+            headers: config.header,
 
             onUploadProgress: progressEvent => {
               console.log("process......");

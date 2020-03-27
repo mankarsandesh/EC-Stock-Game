@@ -46,9 +46,6 @@ export default {
       active: null
     };
   },
-   mounted(){
-
-  },
   methods:{
     ...mapMutations([
       "setIsLoadingStockGame"

@@ -20,19 +20,19 @@
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
         <th>
-          <h3 class="header">{{$t('leaderboard.winningrate')}}</h3>
+          <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
           <h4 class="green--text titleText">
             {{ Math.round(data.winRate, 1) }} %
           </h4>
         </th>
         <th>
-          <h3 class="header">{{$t('leaderboard.bets')}}</h3>
+          <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
           <H4 style="color:#eb0b6e;" class="titleText">{{
             data.totalWinBets
           }}</H4>
         </th>
         <th>
-          <h3 class="header">{{$t('leaderboard.winningamount')}}</h3>
+          <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
           <h4 style="color:#0b2a68;" class="titleText">
             {{ Math.round(data.totalWinAmount, 1) }}
           </h4>
@@ -86,7 +86,12 @@
           </h3>
         </v-card-text>
         <v-flex>
-          <p v-if="FollwingError" v-bind:class="{ 'text-danger':hasError,'text-sucess' : hasSucess }">{{ errorMessage }}</p>
+          <p
+            v-if="FollwingError"
+            v-bind:class="{ 'text-danger': hasError, 'text-sucess': hasSucess }"
+          >
+            {{ errorMessage }}
+          </p>
         </v-flex>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -137,8 +142,8 @@ import config from "../../../config/config.global";
 export default {
   data() {
     return {
-      hasError : false,
-      hasSucess : false,
+      hasError: false,
+      hasSucess: false,
       FollwingError: false,
       errorMessage: "",
       FollowName: "Follow",
@@ -219,73 +224,74 @@ export default {
       } else if (this.FolloworNot == 1) {
         this.FollowMethod = "unfollow";
       }
-      
+
       if (this.selectedFollow && this.BetValue) {
-        if(this.selectedFollow == "Amount"){
-          if(this.BetValue < 1000 && this.BetValue > 10 ){
-             console.log("yesss");
-             // Code Run 
-             this.follwingBetting();
-          }else{
-             this.FollwingError = true;
-             this.hasError = true;   
-             this.hasSucess = false;        
-             this.errorMessage = "Amount should be Lower then 1000 & Grater then 10";
-             console.log(this.BetValue+"no");          
-          }
-        }else if(this.selectedFollow == "Rate"){
-          
-          if(this.BetValue < 100 && this.BetValue > 10){
-             // Code Run 
-             this.follwingBetting();
-          }else{
+        if (this.selectedFollow == "Amount") {
+          if (this.BetValue < 1000 && this.BetValue > 10) {
+            console.log("yesss");
+            // Code Run
+            this.follwingBetting();
+          } else {
             this.FollwingError = true;
-            this.hasError = true; 
-            this.hasSucess = false;   
-            this.errorMessage = "Bet Rate Should be Lower then 100 & Grater then 10";           
+            this.hasError = true;
+            this.hasSucess = false;
+            this.errorMessage =
+              "Amount should be Lower then 1000 & Grater then 10";
+            console.log(this.BetValue + "no");
+          }
+        } else if (this.selectedFollow == "Rate") {
+          if (this.BetValue < 100 && this.BetValue > 10) {
+            // Code Run
+            this.follwingBetting();
+          } else {
+            this.FollwingError = true;
+            this.hasError = true;
+            this.hasSucess = false;
+            this.errorMessage =
+              "Bet Rate Should be Lower then 100 & Grater then 10";
           }
         }
       } else {
         this.FollwingError = true;
-        this.hasError = true; 
-        this.hasSucess = false;   
+        this.hasError = true;
+        this.hasSucess = false;
         this.errorMessage = "Follwing type is not selected.";
       }
     },
-   async  follwingBetting(){
+    async follwingBetting() {
       const LeaderBoardData = {
-              portalProviderUUID: this.portalProviderUUID,
-              userUUID: this.userUUID,
-              followToID: this.FollowUserUUID,
-              method: this.FollowMethod,
-              followType: this.selectedFollow,
-              value: this.BetValue,
-              version: 1
-            };
-            try {
-              const { data } = await this.$axios.post(
-                config.followUser.url,
-                LeaderBoardData,
-                {
-                  headers: config.header
-                }
-              );
-              this.followData = data;
-              console.log(this.followData);
-             
-              if (data.status = 200) {
-                this.FollwingError = true;
-                this.hasSucess = true;
-                this.hasError = false;
-                this.errorMessage = data.message;
-                this.FollowName = "Following";
-                window.setTimeout(function(){location.reload()},3000)
-              } else {
-                console.log(this.followData);
-              }
-            } catch (error) {
-              console.log(error);
-            }
+        portalProviderUUID: this.portalProviderUUID,
+        userUUID: this.userUUID,
+        followToID: this.FollowUserUUID,
+        method: this.FollowMethod,
+        followType: this.selectedFollow,
+        value: this.BetValue,
+        version: 1
+      };
+      try {
+        const { data } = await this.$axios.post(
+          config.followUser.url,
+          LeaderBoardData,
+          {
+            headers: config.header
+          }
+        );
+        this.followData = data;
+        if ((data.status = 200)) {
+          this.FollwingError = true;
+          this.hasSucess = true;
+          this.hasError = false;
+          this.errorMessage = data.message;
+          this.FollowName = "Following";
+          window.setTimeout(function() {
+            location.reload();
+          }, 3000);
+        } else {
+          console.log(this.followData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
@@ -305,12 +311,12 @@ export default {
       this.dialog = true;
     },
     async leaderBoard() {
-      const LeaderBoardData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        version: config.version
-      };
       try {
+        const LeaderBoardData = {
+          portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
+          version: config.version
+        };
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
           LeaderBoardData,
@@ -318,7 +324,6 @@ export default {
             headers: config.header
           }
         );
-
         this.topPlayerData = data.data;
       } catch (error) {
         console.log(error);

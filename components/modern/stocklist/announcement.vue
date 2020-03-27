@@ -3,7 +3,7 @@
     <v-flex xs12 md12>
       <v-data-table
         :headers="head"
-        :items="desserts"
+        :items="announcementData"
         :items-per-page="5"
         ref="table"      
         class="current-bet"
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  props: ["head", "desserts"],
+  props: ["head", "announcementData"],
 };
 </script>
 
