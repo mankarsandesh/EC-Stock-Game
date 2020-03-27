@@ -35,36 +35,36 @@
             </tr>
             <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
               <td colspan="2">
-                <span class="betDraw">BET DRAW :</span>
+                <span class="betDraw">{{$t('bethistory.betdraw')}} :</span>
                 <span
                   class="gameDraw"
                   v-html="$options.filters.lastDraw(item.item.gameDraw)"
                 ></span>
               </td>
               <td colspan="2" class="allDigit">
-                First Digit
+                {{$t('gamemsg.firstdigit')}}
                 <span
                   v-html="$options.filters.firstDigit(item.item.gameDraw)"
                 ></span>
-                Last Digit
+                {{$t('gamemsg.lastdigit')}}
                 <span
                   v-html="$options.filters.lastDigit(item.item.gameDraw)"
                 ></span>
-                Both Digit
+                {{$t('gamemsg.bothdigit')}}
                 <span
                   v-html="$options.filters.bothDigit(item.item.gameDraw)"
                 ></span>
-                Two Digit
+                {{$t('gamemsg.twodigit')}}
                 <span
                   v-html="$options.filters.twoDigit(item.item.gameDraw)"
                 ></span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount == 0">
-                <span class="betDraw"> Your Loosing Amount : </span
+                <span class="betDraw"> {{$t('bethistory.yourloosingamount')}} : </span
                 ><span class="lossAmount"> {{ item.item.betAmount }} </span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount != 0">
-                <span class="betDraw"> Your Winning Amount : </span
+                <span class="betDraw"> {{$t('bethistory.yourwinningamount')}} : </span
                 ><span class="winAmount"> {{ item.item.rollingAmount }} </span>
               </td>
             </tr>

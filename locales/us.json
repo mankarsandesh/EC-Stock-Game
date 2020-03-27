@@ -272,7 +272,7 @@
         "sound":"Sound",
         "allowtolocation":"Allow To Location"
     },
-    "notification":{
+    "notification": {
         "mynotification":"my notification",
         "receivebyemail":"receive by email",
         "receivebymessage":"receive by message",
@@ -281,5 +281,10 @@
         "losingbets":"losing bets",
         "usersfollwme":"users follw me",
         "amountcreditedordebitedtoanaccount":"amount credited or debited to an account"
+    },
+    "bethistory": {
+        "betdraw" : "BET DRAW",
+        "yourloosingamount" : "Your Loosing Amount",
+        "yourwinningamount" : "Your Winning Amount"
     }
 }

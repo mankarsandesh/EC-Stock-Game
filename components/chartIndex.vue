@@ -49,6 +49,10 @@ export default {
       ];
     },
     chartOptions() {
+      let newTime = [];
+      this.chartData.forEach(element => {
+        newTime.push(element.stockTimeStamp);
+      });
       return {
         zoom: {
           enabled: true,

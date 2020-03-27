@@ -17,23 +17,31 @@
               <span class="current-bet">
                 <table>
                   <tr>
-                    <td><label>Bet ID</label></td>
+                    <td>
+                      <label>Bet ID</label>
+                    </td>
                     <td>{{ data.betUUID }}</td>
                   </tr>
                   <tr>
-                    <td><label>Date & Time</label></td>
+                    <td>
+                      <label>Date & Time</label>
+                    </td>
                     <td>{{data.betDate}} {{data.betTime}}</td>
                   </tr>
                   <tr>
-                    <td><label>Bet</label></td>
+                    <td>
+                      <label>Bet</label>
+                    </td>
                     <td>{{data.betAmount}} on {{data.ruleName}}</td>
                   </tr>
                   <tr>
-                    <td><label>Stock name:</label></td>
+                    <td>
+                      <label>Stock name:</label>
+                    </td>
                     <td>{{data.stockName}}</td>
                   </tr>
                 </table>
-              </span>            
+              </span>
             </v-list-tile-content>
           </v-list-tile>
         </template>
@@ -64,11 +72,11 @@ export default {
   padding: 10px 0px;
   width: 100%;
 }
-.current-bet label{
-  color:#333;
+.current-bet label {
+  color: #333;
   font-weight: 500;
 }
-.listBet{
+.listBet {
   padding: 5px 0px;
 }
 table {
