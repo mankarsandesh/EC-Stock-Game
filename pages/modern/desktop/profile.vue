@@ -47,13 +47,12 @@
                         : 'menu_title'
                     "
                   >
-                    {{ menu.title }}
+                   {{ menu.title }}
                   </li>
                 </nuxt-link>
               </ul>
             </div>
           </v-flex>
-
           <!-- change component here when click menu  -->
           <v-flex xs8 sm9 lg10 xl10>
             <nuxt-child />
@@ -68,7 +67,6 @@ import { mapMutations, mapActions, mapGetters } from "vuex";
 import config from "../../../config/config.global";
 export default {
   layout: "desktopModern",
-
   data() {
     return {
       currentChild: "basicinfo",
@@ -113,6 +111,7 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
+      console.log("profile",config.apiDomain);
       return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
   },
@@ -149,9 +148,7 @@ export default {
           formData,
           {
             headers: config.header,
-
             onUploadProgress: progressEvent => {
-              console.log("process......");
               const totalLength = progressEvent.lengthComputable
                 ? progressEvent.total
                 : progressEvent.target.getResponseHeader("content-length") ||

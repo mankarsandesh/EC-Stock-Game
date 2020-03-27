@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap class="select-stock mt-2">
-    <v-flex md3>
+    <v-flex md2>
       <v-select
         v-model="stock"
         :items="items"
@@ -9,14 +9,13 @@
         hide-details
         class="selectStock"
         color="blue"
-        label="select stock"
-        prepend-icon="bar_chart"
+        label="select stock"       
         item-text="type"
         item-value="name"
         return-object
       ></v-select>
     </v-flex>
-    <v-flex md3>
+    <v-flex md2>
       <v-select
         v-model="stockName"
         :items="stockNames"
@@ -62,7 +61,7 @@
         </template>
       </v-select>
     </v-flex>
-    <v-flex md3>
+    <v-flex md5>
       <v-text-field
         v-model="gameId"
         label="game id"
