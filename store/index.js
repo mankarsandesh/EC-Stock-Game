@@ -20,7 +20,7 @@ const createStore = () => {
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
       portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
-      userUUID: "dfdcb1e4-2275-4026-8efd-cafc79cc6f44",
+      userUUID: "84f07062-c61d-447d-82d8-cc64d63260a8",
       // end set portal provider and user UUID for authentication
       roadMap: [],
       userData: {},
@@ -189,7 +189,7 @@ const createStore = () => {
           state.locale = locale;
         }
         localStorage.setItem("lang", locale);
-      },      
+      },
       setFooterBetAmount(state, payload) {
         state.footerBetAmount = parseInt(payload);
       },
@@ -277,7 +277,7 @@ const createStore = () => {
           // alert(ex)
         }
       },
-      // end new api  
+      // end new api
       // send bet data for multigame and footer bet on full screen
       async sendBetting(context) {
         // set sendbetting = true
@@ -499,13 +499,13 @@ const createStore = () => {
 
       getIsSendBetting(state) {
         return state.isSendbetting;
-      },    
+      },
       getPortalProviderUser(state) {
         if (sessionStorage.getItem("userData") !== null) {
           const formData = JSON.parse(sessionStorage.getItem("userData"));
         }
         return state.formData;
-      },     
+      },
       getAuth_token(state) {
         return state.auth_token;
       },
@@ -562,6 +562,9 @@ const createStore = () => {
           return parseInt(result);
         }
         return getAmount(state.multiGameBet);
+      },
+      getBetAmountRuleID: state => data => {
+        return 0
       },
       // get bet amount for ech game rule to show on chip
       getAmountMultiGameBet: state => data => {
