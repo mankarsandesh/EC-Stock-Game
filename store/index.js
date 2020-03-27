@@ -6,21 +6,20 @@ const createStore = () => {
   return new Vuex.Store({
     state: () => ({
       clearRoadMap: false,
-
       stockCategory: [],
       gameStockId: null,
       authUser: {},
       activeGameChannel: true,
       loader: false,
-      userLoginData: {},
+      userLoginData: {},  
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
       isLoadingAnnoucement: [],
       isLoadingHistory: [],
       // set portal provider and user UUID for authentication
-      portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
-      userUUID: "dfdcb1e4-2275-4026-8efd-cafc79cc6f44",
+      portalProviderUUID: localStorage.getItem("PORTAL_PROVIDERUUID"),
+      userUUID: localStorage.getItem("USER_UUID"),
       // end set portal provider and user UUID for authentication
       roadMap: [],
       userData: {},
@@ -111,6 +110,12 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      SET_PORTAL_PROVIDERUUID(state, payload) {
+        state.portalProviderUUID = payload;
+      },
+      SET_USER_UUID(state, payload) {
+        state.userUUID = payload;
+      },
       SET_CLEAR_ROAD_MAP(state, payload) {
         state.clearRoadMap = payload;
       },
@@ -189,7 +194,7 @@ const createStore = () => {
           state.locale = locale;
         }
         localStorage.setItem("lang", locale);
-      },      
+      },
       setFooterBetAmount(state, payload) {
         state.footerBetAmount = parseInt(payload);
       },
@@ -499,13 +504,13 @@ const createStore = () => {
 
       getIsSendBetting(state) {
         return state.isSendbetting;
-      },    
+      },
       getPortalProviderUser(state) {
         if (sessionStorage.getItem("userData") !== null) {
           const formData = JSON.parse(sessionStorage.getItem("userData"));
         }
         return state.formData;
-      },     
+      },
       getAuth_token(state) {
         return state.auth_token;
       },
