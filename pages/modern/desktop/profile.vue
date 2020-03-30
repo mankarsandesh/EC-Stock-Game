@@ -47,7 +47,7 @@
                         : 'menu_title'
                     "
                   >
-                   {{ menu.title }}
+                    {{ menu.title }}
                   </li>
                 </nuxt-link>
               </ul>
@@ -111,8 +111,10 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      console.log("profile",config.apiDomain);
-      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      console.log("profile", config.apiDomain);
+      return this.getUserInfo.profileImage === ""
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
   },
   watch: {
