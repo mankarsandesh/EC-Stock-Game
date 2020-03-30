@@ -112,7 +112,8 @@ module.exports = {
     "@/plugins/sweetAlert",
     "@/plugins/vueScreen",
     "@/plugins/socketio",
-    { src: "@/plugins/vChart", mode: "client" }
+    { src: "@/plugins/vChart", mode: "client" },
+    { src: "@/plugins/ga", mode: "client" }
   ],
   router: {
     middleware: ["auth", "showLoading"]
