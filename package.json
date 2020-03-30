@@ -39,6 +39,7 @@
         "lottie-web": "^5.5.9",
         "mobile-device-detect": "^0.3.3",
         "nuxt": "^2.3.4",
+        "nuxt-winston-log": "^1.0.2",
         "pusher-js": "^5.1.1",
         "secure-web-storage": "^1.0.2",
         "serve-static": "^1.14.1",
@@ -60,7 +61,8 @@
         "vue-sweetalert2": "^2.1.4",
         "vuetify": "^1.0.0",
         "vuetify-loader": "^1.0.8",
-        "winston": "^3.2.1"
+        "winston": "^3.2.1",
+        "winston-loggly-bulk": "^3.0.1"
     },
     "devDependencies": {
         "node-sass": "^4.12.0",

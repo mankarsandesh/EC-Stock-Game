@@ -1,5 +1,6 @@
 const winston = require('winston');
 const config = require('../config/config.global');
+const Loggly = require('winston-loggly-bulk').Loggly;
 
 const dateFormat = () => {
     return new Date(Date.now()).toString();
@@ -12,7 +13,8 @@ export default class LoggerService {
 
         const logger = winston.createLogger({
             transports: [
-                new winston.transports.Console,
+                // new winston.transports.Console,
+                new Loggly(config.loggly)
                 // new winston.transports.File({
                 //     filename: `./logs/${route}.log`,
                 //     maxsize: 5242880,
@@ -26,6 +28,11 @@ export default class LoggerService {
                 return message; 
             })
         });
+        logger.stream = {
+            write: (info) => {
+                logger.info
+            }
+        }
         this.logger = logger;
     }
 

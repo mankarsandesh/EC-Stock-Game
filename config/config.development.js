@@ -56,9 +56,12 @@ const config = {
     port: 8000,
     host: "0.0.0.0"
   },
-  path: {
-    logFilePath: `./logs`
-  }
+  // loggly: {
+  //   token: '852204e4-2752-4d9c-9b1c-f9f2152c2f40',
+  //   subdomain: 'localhost',
+  //   tags: ["Winston-VueJs"]
+  // }
+
 };
 
 export default config;

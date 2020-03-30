@@ -4,8 +4,8 @@ const reqLogger = new LoggerService('request');
 
 export default function ({ $axios, redirect }) {
     $axios.onRequest(config => {
-        reqLogger(` | config.url`);
-        console.log('Making request to ' + config);
+        reqLogger.info(` | config.url`);
+        console.log('Making request to ' + config.url);
     });
 
     $axios.onError(error => {
