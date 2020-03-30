@@ -92,7 +92,6 @@
         </v-layout>
       </v-container>
     </section>
-    <!-- <fillterHistory /> -->
     <bethistory :search="search" :userBetHistory="userBetHistory" />
   </div>
 </template>
@@ -100,14 +99,12 @@
 <script>
 import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
-import fillterHistory from "~/components/modern/fillterHistory";
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
 export default {
   layout: "desktopModern",
   components: {
     breadcrumbs,
-    fillterHistory,
     bethistory
   },
   data() {
