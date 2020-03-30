@@ -98,14 +98,14 @@
                 </v-flex>
             </v-layout>
         </v-flex>
-        <p v-if="!dataReady"><strong>No data to display</strong></p>
-        <v-flex v-if="dataReady" xs12 sm12 md10 lg10 :class="$vuetify.breakpoint.xs ? 'mt-4':''">
+        <v-flex xs12 sm12 md10 lg10 :class="$vuetify.breakpoint.xs ? 'mt-4':''">
             <v-layout row>
                 <v-flex xs1 sm2>
                 </v-flex>
                 <v-flex xs10 sm8>
                     <div class="chart_container">
-                        <VueApexCharts type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
+                        <p class="no-data" v-if="!dataReady"><strong>No data to display</strong></p>
+                        <VueApexCharts v-if="dataReady" type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
                     </div>
                 </v-flex>
             </v-layout>
@@ -384,5 +384,10 @@ button:focus {
 
 .select_date {
     text-transform: uppercase;
+}
+.no-data {
+    color: red;
+    align-content: center;
+    text-align: center;
 }
 </style>
