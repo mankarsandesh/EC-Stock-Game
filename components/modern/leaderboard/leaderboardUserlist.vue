@@ -207,17 +207,16 @@ export default {
       console.log(userImage);
       if (userImage != null) {
         const ImageSrc = `${config.apiDomain}/` + userImage;
-        imageExists(ImageSrc, function(exists) {    
+        imageExists(ImageSrc, function(exists) {
           if (exists) {
             return ImageSrc;
-          } else {          
+          } else {
             return "/no-profile-pic.jpg";
           }
         });
-      } else {       
+      } else {
         return "/no-profile-pic.jpg";
       }
-
       // return userImage === null
       //   ? "/no-profile-pic.jpg"
       //   : `${config.apiDomain}/` + userImage;

@@ -103,7 +103,6 @@
         </v-layout>
       </v-container>
     </section>
-    <!-- <fillterHistory /> -->
     <bethistory
       :head="head"
       :search="search"
@@ -115,14 +114,12 @@
 <script>
 import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
-import fillterHistory from "~/components/modern/fillterHistory";
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
 export default {
   layout: "desktopModern",
   components: {
     breadcrumbs,
-    fillterHistory,
     bethistory
   },
   data() {
@@ -235,7 +232,7 @@ export default {
             headers: config.header
           }
         );
-        this.userBetHistory = data.data;      
+        this.userBetHistory = data.data;
         this.loadingImage = false;
       } catch (error) {
         console.log(data);
