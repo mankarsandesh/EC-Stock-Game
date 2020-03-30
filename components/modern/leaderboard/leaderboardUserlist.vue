@@ -38,7 +38,7 @@
         <div class="userRow">
           <th style="vertical-align:top;">
             <div>
-              <img class="pimage" :src="getImgUrl(data.userImage)" />
+              <img class="pimage" :src="imgProfile(data.userImage)" />
             </div>
 
             <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
@@ -203,23 +203,8 @@ export default {
     ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   methods: {
-    getImgUrl(userImage) {
-      console.log(userImage);
-      if (userImage != null) {
-        const ImageSrc = `${config.apiDomain}/` + userImage;
-        imageExists(ImageSrc, function(exists) {
-          if (exists) {
-            return ImageSrc;
-          } else {
-            return "/no-profile-pic.jpg";
-          }
-        });
-      } else {
-        return "/no-profile-pic.jpg";
-      }
-      // return userImage === null
-      //   ? "/no-profile-pic.jpg"
-      //   : `${config.apiDomain}/` + userImage;
+    imgProfile(userImage) {
+      return userImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + userImage;
     },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -348,7 +333,7 @@ export default {
       this.username = username;
       this.FollowUserUUID = userUUID;
       this.FolloworNot = method;
-      this.userImage = this.getImgUrl(userImage);
+      this.userImage = this.imgProfile(userImage);
       this.dialog = true;
     },
     async leaderBoard() {

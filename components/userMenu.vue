@@ -7,7 +7,7 @@
         </v-btn>
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="40">
-            <img :src="imgProfile" />
+            <img  :src="imgProfile" />          
           </v-avatar>          
           <div class="userLogoutMenu">
             <span>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</span>
@@ -63,6 +63,7 @@ export default {
   },
   data() {
     return {
+      profileImage: "",
       dialogprofile: false,
       isShow: ""
     };
@@ -71,12 +72,12 @@ export default {
     ...mapGetters(["getUserInfo"]),
     imgProfile() {
       return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-    }
-  },
-  mounted() {
+    }      
+  },  
+  mounted() {   
     this.isShow = location.pathname.split("/")[1];
   },
-  methods: {
+  methods: {  
     formatToPrice(value) {
       return `${Number(value)
         .toFixed(2)
