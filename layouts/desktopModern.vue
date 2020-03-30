@@ -19,18 +19,7 @@
       <v-flex xs1 class="text-xs-right closeNotification">
         <i class="fa fa-close fa-2x" @click="showNotification = false" />
       </v-flex>
-    </v-toolbar>
-    <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
-      <div class="text-xs-center loading">
-        <v-progress-circular
-          style="top: calc(100% - 68%);"
-          :size="100"
-          :width="10"
-          color="#ffffff"
-          indeterminate
-        ></v-progress-circular>
-      </div>
-    </div> -->
+    </v-toolbar>  
     <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
       <v-progress-circular
         style="top: calc(100% - 68%);"

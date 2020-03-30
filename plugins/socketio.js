@@ -12,7 +12,7 @@ export default ({ store }) => {
       window.Echo = new Echo({
         broadcaster: "pusher",
         key: config.secretKey, // check on Config File.
-        wsHost: config.apiDomain,
+        wsHost: config.socketUrl,
         wsPort: port,
         disableStats: true,
         auth: {
@@ -32,8 +32,7 @@ export default ({ store }) => {
       channelName: `stockList.${store.getters.getPortalProviderUUID}`,
       eventName: "stockList"
     },
-    ({ data }) => {
-      console.log(data,"Stock timer");
+    ({ data }) => {     
       store.commit("setStockListTimer", data.data.stockData);
     }
   );

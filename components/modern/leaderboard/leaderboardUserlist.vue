@@ -1,97 +1,110 @@
 <template>
-  <div v-if="topPlayerData.length > 0">
-    <v-flex
-      xs12
-      md10
-      lg10
-      xl8
-      style="margin:0 auto;"
-      v-for="(data, index) in topPlayerData"
-      :key="index"
-      id="userRow"
-    >
-      <div class="userRow">
-        <th style="vertical-align:top;">
-          <div>
-            <img class="pimage" :src="getImgUrl(data.userImage)" />
-          </div>
-
-          <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
-          <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
-        </th>
-        <th>
-          <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
-          <h4 class="green--text titleText">
-            {{ Math.round(data.winRate, 1) }} %
-          </h4>
-        </th>
-        <th>
-          <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
-          <H4 style="color:#eb0b6e;" class="titleText">{{
-            data.totalWinBets
-          }}</H4>
-        </th>
-        <th>
-          <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
-          <h4 style="color:#0b2a68;" class="titleText">
-            {{ Math.round(data.totalWinAmount, 1) }}
-          </h4>
-        </th>
-        <th v-if="data.isFollowing == 0" style="width:20%;">
-          <v-btn
-            class="buttonGreensmall"
-            v-on:click="
-              followUser(
-                data.username,
-                data.userImage,
-                data.userUUID,
-                data.isFollowing
-              )
-            "
-            dark
-            >{{ $t("useraction.followbet") }}
-          </v-btn>
-        </th>
-        <th v-if="data.isFollowing == 1" style="width:20%;">
-          <v-btn
-            class="buttonCancel "
-            v-on:click="unfollowUser(data.userUUID)"
-            dark
-            >{{ $t("useraction.unfollow") }}</v-btn
-          >
-        </th>
-        <th v-if="data.isFollowing == -1" style="width:20%;">
-          <v-btn class="buttonGreensmall ">Yourself </v-btn>
-        </th>
-      </div>
+  <div>
+    <v-flex xs12 md10 lg10 style="margin:0 auto;">
+      <v-layout row>
+        <v-flex grow pa-1>
+          <p class="float-left md6 lg8">
+            <span class="title">Top {{ topPlayerData.length }} Leaders </span>
+            (last updated 10 minutes ago)
+          </p>
+        </v-flex>
+        <v-flex grow pa-1 class="text-lg-right ranking">
+          <span class="text-uppercase font-weight-bold">
+            <v-icon small>event</v-icon> {{ $t("leaderboard.weeklyrankings") }}
+          </span>
+          <span class="text-uppercase font-weight-bold">
+            <v-icon small>event</v-icon> {{ $t("leaderboard.monthlyrankings") }}
+          </span>
+        </v-flex>
+      </v-layout>
     </v-flex>
 
-    <v-dialog
-      v-model="dialog"
-      width="600"
-      style="border:radius:20px; !important"
-    >
+    <v-flex v-if="topPlayerData.length == 0">
+      <h2 class="text-center" style="color:#a3a3a3;">
+        There are no top users in Leaderboard.
+      </h2>
+    </v-flex>
+    <v-flex v-if="topPlayerData.length > 0">
+      <v-flex
+        xs12
+        md10
+        lg10
+        xl8
+        style="margin:0 auto;"
+        v-for="(data, index) in topPlayerData"
+        :key="index"
+        id="userRow"
+      >
+        <div class="userRow">
+          <th style="vertical-align:top;">
+            <div>
+              <img class="pimage" :src="imgProfile(data.userImage)" />
+            </div>
+
+            <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
+            <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
+          </th>
+          <th>
+            <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
+            <h4 class="green--text titleText">
+              {{ Math.round(data.winRate, 1) }} %
+            </h4>
+          </th>
+          <th>
+            <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
+            <H4 style="color:#eb0b6e;" class="titleText">{{
+              data.totalWinBets
+            }}</H4>
+          </th>
+          <th>
+            <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
+            <h4 style="color:#0b2a68;" class="titleText">
+              {{ Math.round(data.totalWinAmount, 1) }}
+            </h4>
+          </th>
+          <th v-if="data.isFollowing == 0" style="width:20%;">
+            <v-btn
+              class="buttonGreensmall"
+              v-on:click="
+                followUser(
+                  data.username,
+                  data.userImage,
+                  data.userUUID,
+                  data.isFollowing
+                )
+              "
+              dark
+              >{{ $t("useraction.followbet") }}
+            </v-btn>
+          </th>
+          <th v-if="data.isFollowing == 1" style="width:20%;">
+            <v-btn
+              class="buttonCancel "
+              v-on:click="unfollowUser(data.userUUID)"
+              dark
+              >{{ $t("useraction.unfollow") }}</v-btn
+            >
+          </th>
+          <th v-if="data.isFollowing == -1" style="width:20%;">
+            <v-btn class="buttonGreensmall">{{$t('useraction.yourself')}}</v-btn>
+          </th>
+        </div>
+      </v-flex>
+    </v-flex>
+
+    <v-dialog v-model="dialog" width="600" style="border:radius:20px; !important">
       <v-card class="followup">
-        <h3
-          class="title font-weight-bold"
-          style="text-align:center;color:#0b2a68;"
-        >
-          FOLLOW BET
-        </h3>
+        <h3 class="title font-weight-bold" style="text-align:center;color:#0b2a68;">FOLLOW BET</h3>
 
         <v-card-text style="text-align:center;">
           <img class="pimage" v-bind:src="this.userImage" width="140px" />
-          <h3 class="subtitle-1 text-uppercase text-center pt-2">
-            {{ this.username }}
-          </h3>
+          <h3 class="subtitle-1 text-uppercase text-center pt-2">{{ this.username }}</h3>
         </v-card-text>
         <v-flex>
           <p
             v-if="FollwingError"
             v-bind:class="{ 'text-danger': hasError, 'text-sucess': hasSucess }"
-          >
-            {{ errorMessage }}
-          </p>
+          >{{ errorMessage }}</p>
         </v-flex>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -124,12 +137,7 @@
             ></v-text-field>
           </v-flex>
           <v-flex lg3 pl-3 pb-3>
-            <v-btn
-              color="buttonGreensmall"
-              text
-              v-on:click="followThisUser()"
-              >{{ FollowName }}</v-btn
-            >
+            <v-btn color="buttonGreensmall" text v-on:click="followThisUser()">{{ FollowName }}</v-btn>
           </v-flex>
         </v-card-actions>
       </v-card>
@@ -139,6 +147,7 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import config from "../../../config/config.global";
+var imageExists = require("image-exists");
 export default {
   data() {
     return {
@@ -167,6 +176,7 @@ export default {
         { id: 2, name: "Follow by Rate", value: "Rate" }
       ]
     };
+    props: ["linkItem"];
   },
   mounted() {
     this.leaderBoard();
@@ -175,10 +185,8 @@ export default {
     ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
   },
   methods: {
-    getImgUrl(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + userImage;
+    imgProfile(userImage) {
+      return userImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + userImage;
     },
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
@@ -307,7 +315,7 @@ export default {
       this.username = username;
       this.FollowUserUUID = userUUID;
       this.FolloworNot = method;
-      this.userImage = this.getImgUrl(userImage);
+      this.userImage = this.imgProfile(userImage);
       this.dialog = true;
     },
     async leaderBoard() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout class="mx-5 my-3 bettingModel" column>
+    <v-layout class="mx-5 my-3 bettingModel" column >
       <v-flex>
         <h3>
           {{ $t("msg.bettingon") }}

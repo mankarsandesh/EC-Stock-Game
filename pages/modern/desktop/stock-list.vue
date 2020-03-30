@@ -25,7 +25,7 @@
       </v-layout>
       <v-layout row wrap>
         <v-flex xs12>
-          <sotkclist1 :item="itemss" />
+          <stocklist :item="itemss" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -34,11 +34,11 @@
 <script>
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapMutations, mapGetters } from "vuex";
-import sotkclist1 from "~/components/modern/stocklist/stocklist1";  
+import stocklist from "~/components/modern/stocklist/stocklist";  
 export default {
   layout: "desktopModern",
   components: {
-    sotkclist1,
+    stocklist,
     breadcrumbs
   },
   data() {
