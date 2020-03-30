@@ -41,7 +41,7 @@ const createStore = () => {
       stocks2: [
         {
           stockName: "btc1",
-          stockUUID: "88778f4f-610b-4ec3-937d-65ef7bf24af5",
+          stockUUID: "1cc1cbdd-0463-42d6-8831-def52a266de0",
           reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
           type: "crypto",
           loop: 1,
@@ -50,7 +50,7 @@ const createStore = () => {
         },
         {
           stockName: "sh000001",
-          stockUUID: "e9543b3d-7870-4a5e-975e-fbe228b50f49",
+          stockUUID: "30507a80-359e-4ad5-8b5c-11f5c2c178d2",
           reference:
             "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
           type: "china",
@@ -60,7 +60,7 @@ const createStore = () => {
         },
         {
           stockName: "sh000300",
-          stockUUID: "56f0d2d4-4d9b-4cfc-bd76-97375b451d7d",
+          stockUUID: "7149d366-370f-47bc-a681-c07a23320055",
           reference:
             "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml",
           type: "china",
@@ -70,7 +70,7 @@ const createStore = () => {
         },
         {
           stockName: "sz399415",
-          stockUUID: "0ecce345-8d3b-4fee-bf57-f1bdd6eaa373",
+          stockUUID: "2706fabc-98c0-43cd-b5c0-49cc71e8d417",
           reference:
             "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml",
           type: "china",
@@ -80,7 +80,7 @@ const createStore = () => {
         },
         {
           stockName: "sz399001",
-          stockUUID: "636115a3-11cb-4498-a699-1e8ef6d90bce",
+          stockUUID: "23facce3-3994-4605-9593-2913bf0ee4e5",
           reference:
             "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml",
           type: "china",
@@ -90,7 +90,7 @@ const createStore = () => {
         },
         {
           stockName: "usindex",
-          stockUUID: "6503b060-414e-4749-bf73-a6b46b488d0d",
+          stockUUID: "c58f20a4-6280-4758-b182-5ec87bec2dd1",
           reference: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml",
           type: "usa",
           loop: 5,
@@ -99,7 +99,7 @@ const createStore = () => {
         },
         {
           stockName: "btc5",
-          stockUUID: "6231bf0c-2a93-4325-8b42-b7bfcfaaab93",
+          stockUUID: "6311006c-bfd3-4217-8ce9-a9550698355d",
           reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
           type: "crypto",
           loop: 5,
