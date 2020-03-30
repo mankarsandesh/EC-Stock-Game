@@ -143,7 +143,7 @@
                   </template>
                   <v-list>
                     <v-list-tile v-for="(item, index) in items" :key="index">
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                      <v-list-tile-title >{{ item.title }}</v-list-tile-title>
                     </v-list-tile>
                   </v-list>
                 </v-menu>
@@ -152,13 +152,12 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <p v-if="!isDataValid"><strong>No data to display</strong></p>
-      <v-flex v-if="isDataValid" xs12 sm12 md10 lg10 mt-4>
+      <v-flex xs12 sm12 md10 lg10 mt-4>
         <v-layout row>
           <v-flex xs1 sm2> </v-flex>
           <v-flex xs10 sm8>
             <div class="chart_container">
-              <div class="chart-map-color">
+              <div v-if="isDataValid" class="chart-map-color">
                 <span v-for="(stock, index) in stocks" :key="index">
                   <span
                     class="circle-color"
@@ -167,7 +166,9 @@
                   <span style="margin-right:10px">{{ stock }}</span>
                 </span>
               </div>
+              <p class="no-data" v-if="!isDataValid"><strong>{{ error }}</strong></p>
               <apexchart
+                v-if="isDataValid" 
                 type="bar"
                 height="350vh"
                 :options="chartOptions"
@@ -205,6 +206,7 @@ export default {
     return {
       stockAnalysis: [],
       isDataValid: false,
+      error: '',
       colors: barColor,
       isShowDateStart: false,
       isShowDateEnd: false,
@@ -324,9 +326,11 @@ export default {
         if (res.code === 200) {
           if(res.data.length) {
             this.isDataValid = true;
+            this.error = '';
             this.stockAnalysis = res.data;
           } else {
             this.isDataValid = false;
+            this.error = 'No data to display';
           }
           
         } else {
@@ -336,7 +340,7 @@ export default {
       } catch (ex) {
         console.error(ex);
         if(ex.message == 'Please select a valid date') {
-          alert('Please select a valid date');
+          this.error = 'Please select a valid date';
           this.isDataValid = false;
         }
         // alert(ex.message);
@@ -456,7 +460,7 @@ button:focus {
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
   border-radius: 10px;
   width: 100%;
-  min-height: 320px;
+  min-height: 415px;
 }
 
 .date_picker {
@@ -484,5 +488,11 @@ button:focus {
 
 .select_date {
   text-transform: uppercase;
+}
+
+.no-data {
+  color: red;
+  text-align: center;
+  align-content: center;
 }
 </style>
