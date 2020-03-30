@@ -181,9 +181,9 @@ Vue.filter("livePriceColor", (current, previous) => {
   current = current.replace(",", "");
   previous = previous.replace(",", "");
   if (parseFloat(current) > parseFloat(previous)) {
-    color = "red";
-  } else if (parseFloat(current) < parseFloat(previous)) {
     color = "green";
+  } else if (parseFloat(current) < parseFloat(previous)) {
+    color = "red";
   }
   return `<span style="color:${color}">${current}<span hidden>${color}</span></span>`;
 });
