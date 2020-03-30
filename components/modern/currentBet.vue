@@ -9,7 +9,7 @@
         class="current-bet"
       >
         <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
-        <template v-slot:headers="head">
+        <template v-slot:headers="headers">
           <tr>
             <th scope="col">{{$t('msg.BetId')}}</th>
             <th scope="col">{{$t('msg.gameid')}}</th>
@@ -30,8 +30,26 @@
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
           <td>{{ item.item.payout }}</td>
+          <td v-if="item.item.betResult == 'win'">
+            <v-chip
+              color="green"
+              text-color="white"
+              class="text-uppercase betresult"
+            >{{ $t('msg.win') }}</v-chip>
+          </td>
+          <td v-if="item.item.betResult == 'lose'">
+            <v-chip
+              color="red"
+              text-color="white"
+              class="text-uppercase betresult"
+            >{{ $t('msg.lose') }}</v-chip>
+          </td>
           <td v-if="item.item.betResult == 'pending'">
-            <span class="pending">{{ $t('msg.pending') }}...</span>
+            <v-chip
+              color="yellow "
+              text-color="black"
+              class="text-uppercase betresult"
+            >{{ $t('msg.pending') }}...</v-chip>
           </td>
         </template>
         <template slot="footer">
