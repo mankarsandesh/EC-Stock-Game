@@ -2,14 +2,24 @@
   <v-layout row class="justify-center">
     <v-flex xs12 md12>
       <v-data-table
-        :headers="head"
         :items="currentBets"
-        :items-per-page="5"        
+        :items-per-page="5"
         ref="table"
         :search="search"
         class="current-bet"
       >
-      <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
+        <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
+        <template v-slot:headers="head">
+          <tr>
+            <th scope="col">{{$t('msg.BetId')}}</th>
+            <th scope="col">{{$t('msg.gameid')}}</th>
+            <th scope="col">{{$t('msg.Betdetail')}}</th>
+            <th scope="col">{{$t('msg.Time')}}</th>
+            <th scope="col">{{$t('msg.amount')}}</th>
+            <th scope="col">{{$t('msg.payout')}}</th>
+            <th scope="col">{{$t('msg.Bet Status')}}</th>
+          </tr>
+        </template>
         <template v-slot:items="item">
           <td>{{ item.item.betUUID }}</td>
           <td>{{ item.item.gameUUID }}</td>
@@ -17,18 +27,17 @@
             {{ item.item.ruleName }} - ({{ item.item.payout }})
             {{ item.item.stockName }} / {{ item.item.loop }}
           </td>
-          <td>{{ item.item.createdDate }} {{ item.item.createdTime }} </td>
+          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
-          <td>{{ item.item.payout }}</td>        
+          <td>{{ item.item.payout }}</td>
           <td v-if="item.item.betResult == 'pending'">
-            <span  class="pending"
-              >{{ item.item.betResult }}...</span>            
+            <span class="pending">{{ $t('msg.pending') }}...</span>
           </td>
         </template>
         <template slot="footer">
           <tr>
             <td>{{ $t("msg.Total") }}</td>
-            <td colspan="3">{{ currentBets.length }} bets</td>
+            <td colspan="3">{{ currentBets.length }} {{$t('leaderboard.bets')}}</td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>
             </td>
@@ -42,7 +51,7 @@
 
 <script>
 export default {
-  props: ["head", "currentBets"],
+  props: ["currentBets"],
   data: () => ({
     search: ""
   }),
@@ -76,31 +85,31 @@ export default {
 };
 </script>
 <style scoped>
-.lose{
- border-radius:15px;
+.lose {
+  border-radius: 15px;
   padding: 4px 10px;
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 600;
   background-color: #e05858;
 }
-.win{
- border-radius:15px;
+.win {
+  border-radius: 15px;
   padding: 4px 16px;
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 600;
   background-color: #2bb13b;
 }
-.pending{
-  border-radius:15px;
+.pending {
+  border-radius: 15px;
   padding: 4px 16px;
   color: #333;
   font-size: 14px;
-  text-transform:uppercase;
+  text-transform: uppercase;
   font-weight: 600;
-  background-color:#fec623;
+  background-color: #fec623;
 }
 </style>

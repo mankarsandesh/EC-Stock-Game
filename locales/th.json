@@ -156,7 +156,10 @@
         "ModernVersion": "รุ่นทันสมัย",
         "ChooseTheVersionToPlay": "เลือกรุ่นที่จะเล่น",
         "introduction":"บทนำ",
-        "accept":"ฉันยอมรับ"
+        "accept":"ฉันยอมรับ",
+        "pending":"อยู่ระหว่างดำเนินการ",
+        "win":"ชนะ",
+        "lose":"แพ้"
     },
     "navlist": {
         "live Stock": "หุ้นที่เปิดอยู่",
@@ -234,7 +237,10 @@
         "stockanalysis": "การวิเคราะห์หุ้น",
         "onlinetime":"เวลาออนไลน์",
         "totalonline":"ออนไลน์ทั้งหมด",
-        "signout":"ออกจากระบบ"
+        "signout":"ออกจากระบบ",
+        "myfollowers":"ผู้ติดตามของฉัน",
+        "mynotification":"การแจ้งเตือนของฉัน",
+        "setting":"การตั้งค่า"
     },
     "useraction": {
         "followbet": "ทำตามการพนัน",
