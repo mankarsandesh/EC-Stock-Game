@@ -9,13 +9,13 @@
         hide-details
         class="selectStock"
         color="blue"
-        label="select stock"       
+        label="select stock"
         item-text="type"
         item-value="name"
         return-object
       ></v-select>
     </v-flex>
-    <v-flex md2>
+    <v-flex md3>
       <v-select
         v-model="stockName"
         :items="stockNames"
@@ -61,7 +61,7 @@
         </template>
       </v-select>
     </v-flex>
-    <v-flex md5>
+    <v-flex md4>
       <v-text-field
         v-model="gameId"
         label="game id"
@@ -71,7 +71,6 @@
         solo
         hide-details
         disabled
-        id="gameId"
       />
     </v-flex>
   </v-layout>
@@ -119,13 +118,14 @@ export default {
     },
     stockName(value) {
       let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+      if (value.stockName !== undefined) {
+        sessionStorage.setItem("STOCK_NAME", this.stockName.stockName);
+      }
       if (this.stock.type === GET_STOCK_TYPE) {
-        console.log("The same stock", value);
         this.minute = "";
         this.minutes = value.loops;
         $("#minute").click();
       } else {
-        console.log("Is not the same stock", value);
         if (this.stockSocket) {
           if (value !== "") {
             this.minute = "";
@@ -136,20 +136,34 @@ export default {
           this.stockSocket = false;
         }
       }
-      // this.stockSocket = true;
     },
     minute(value) {
-      if (this.stockSocket) {
-        if (value !== "") {
-          this.gameId = "";
-          this.gameId = value.gameID;
-          $("#gameId").click();
+      if (value.loopName !== undefined) {
+        sessionStorage.setItem("STOCK_LOOP", value.loopName);
+        sessionStorage.setItem(
+          "STOCK_URL",
+          this.stockName.stockName + value.loopName
+        );
+      }
+      if (value !== "") {
+        this.gameId = "";
+        this.gameId = value.gameID;
+        const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_TYPE");
+        const GET_STOCK_URL = sessionStorage.getItem("STOCK_URL");
+        if (value.loopName !== GET_STOCK_LOOP) {
+          if (GET_STOCK_LOOP === "crypto") {
+            if (this.$route.name === "modern-desktop-id") {
+              this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+            } else {
+              // if is multi game then add selected game
+              this.addStockMultigame(GET_STOCK_URL);
+            }
+          }
         }
-      } else {
-        this.stockSocket = false;
       }
     },
     gameId(value) {
+      const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       if (this.stockSocket) {
         if (value !== "") {
           if (this.stock.type == "crypto") {
@@ -195,8 +209,7 @@ export default {
   created() {
     this.getActiveGamesByCategory();
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
