@@ -158,7 +158,10 @@
         "ModernVersion": "Modern Version",
         "ChooseTheVersionToPlay": "Choose The Version To Play",
         "introduction":"Introduction",
-        "accept":"I accept"
+        "accept":"I accept",
+        "pending":"Pending",
+        "win":"Win",
+        "lose":"Lose"
     },
     "navlist": {
         "live Stock": "live Stock",
@@ -230,13 +233,16 @@
         "female":"female",
         "email":"email",
         "country":"country",
-        "onlinestatus":"online status",
+        "onlinestatus":"Online Status",
         "basicinfo": "basic information",
         "onlinehistory": "online history",
         "stockanalysis": "stock analysis",
         "onlinetime":"online time",
         "totalonline":"total online",
-        "signout":"Sign Out"
+        "signout":"Sign Out",
+        "myfollowers":"My Followers",
+        "mynotification":"My Notification",
+        "setting":"Setting"
     },
     "useraction": {
         "followbet": "FOLLOW BET",
