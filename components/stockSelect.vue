@@ -15,7 +15,7 @@
         return-object
       ></v-select>
     </v-flex>
-    <v-flex md2>
+    <v-flex md3>
       <v-select
         v-model="stockName"
         :items="stockNames"
@@ -48,26 +48,20 @@
         return-object
         id="minute"
       >
-        <template slot="selection" slot-scope="data"
-          >{{ data.item.loopName }} Minutes</template
-        >
+        <template slot="selection" slot-scope="data">{{ data.item.loopName }} Minutes</template>
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content
-              >{{ data.loopName }} Minutes</v-list-tile-content
-            >
+            <v-list-tile-content>{{ data.loopName }} Minutes</v-list-tile-content>
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title
-                >{{ data.item.loopName }} Minutes</v-list-tile-title
-              >
+              <v-list-tile-title>{{ data.item.loopName }} Minutes</v-list-tile-title>
             </v-list-tile-content>
           </template>
         </template>
       </v-select>
     </v-flex>
-    <v-flex md5>
+    <v-flex md4>
       <v-text-field
         v-model="gameId"
         label="game id"
@@ -77,7 +71,6 @@
         solo
         hide-details
         disabled
-        id="gameId"
       />
     </v-flex>
   </v-layout>
@@ -103,12 +96,13 @@ export default {
     stock(value) {
       let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       if (value.type === GET_STOCK_TYPE) {
+        this.stockSocket = true;
         // this.stockName = ""; // after value is not empty we clear the value is first
         this.stockNames = [];
         this.stockNames = value.stocks;
         $("#stockName").click();
-        this.stockSocket = true;
       }
+
       // when value is changed this value will do the list
       if (this.stockSocket) {
         // check the stockSocket is come or not
@@ -116,6 +110,7 @@ export default {
       } else {
         // after value is false the logic will be come in this case
         if (value !== "") {
+          sessionStorage.setItem("STOCK_TYPE", value.type);
           // this.stockName = "";
           this.stockNames = value.stocks;
           $("#stockName").click();
@@ -125,24 +120,14 @@ export default {
     },
     stockName(value) {
       let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+      if (value.stockName !== undefined) {
+        sessionStorage.setItem("STOCK_NAME", this.stockName.stockName);
+      }
       if (this.stock.type === GET_STOCK_TYPE) {
-        console.log("The same stock", value);
         this.minute = "";
         this.minutes = value.loops;
         $("#minute").click();
-      } else {
-        console.log("Is not the same stock", value);
-        if (this.stockSocket) {
-          if (value !== "") {
-            this.minute = "";
-            this.minutes = value.loops;
-            $("#minute").click();
-          }
-        } else {
-          this.stockSocket = false;
-        }
       }
-      // this.stockSocket = true;
     },
     minute(value) {
       if (value.loopName !== undefined) {
@@ -162,7 +147,7 @@ export default {
         this.gameId = value.gameID;
       }
     },
-     gameId(value) {
+    gameId(value) {
       const GET_STOCK_URL = sessionStorage.getItem("STOCK_URL");
       const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       const GET_STOCK_NAME = sessionStorage.getItem("STOCK_NAME");
