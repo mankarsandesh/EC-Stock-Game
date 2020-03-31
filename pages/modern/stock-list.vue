@@ -16,7 +16,7 @@
     <!-- end serach -->
     <v-layout row wrap mt-2> 
         <v-flex xs12>
-            <sotkclist1 />
+            <stocklist1 />
         </v-flex>
     </v-layout>
     <v-layout row wrap pb-3 justify-center>
@@ -36,11 +36,11 @@ import {
     mapGetters
 } from "vuex";
 import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
-import sotkclist1 from "~/components/mobile/stocklist1";
+import stocklist1 from "~/components/mobile/stocklist1";
 export default {
     components: {
         breadcrumbs,
-        sotkclist1
+        stocklist1
     },
     data() {
         return {
