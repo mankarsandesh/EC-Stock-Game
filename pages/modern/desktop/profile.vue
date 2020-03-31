@@ -23,8 +23,9 @@
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h1>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
-              <p>{{$t('profile.onlinestatus')}} : 2hours</p>
+              <h2 v-if="getUserInfo.firstName == null " >{{ getUserInfo.userName }} </h2>
+              <h1 v-if="getUserInfo.firstName" >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
+              <p>{{$t('profile.onlinestatus')}} : 2 hours</p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
@@ -98,7 +99,7 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
       console.log("profile", config.apiDomain);
-      return this.getUserInfo.profileImage === ""
+      return this.getUserInfo.profileImage === null
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
@@ -149,15 +150,17 @@ export default {
             }
           }
         );
+        console.log("res......")
+        console.log(res)
+        console.log("res.......")
         if (res.code === 200) {
           this.blurValue = 0;
         } else {
-          console.log(res.message);
-          this.imageBase64 = "";
+          throw new Error(res.message);
         }
       } catch (ex) {
-        console.error(ex);
-        alert(ex.message);
+        this.imageBase64 = "";
+        console.error(ex.message);
       }
     },
     ...mapMutations(["setIsLoadingStockGame"])

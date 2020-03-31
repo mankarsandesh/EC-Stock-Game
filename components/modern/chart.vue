@@ -74,14 +74,14 @@ export default {
       },
       ({ data }) => {
         let dataIndex = data.data.roadMap[0];    
+        console
         let readyData = {
           stockValue: dataIndex.stockValue.replace(",", ""),
           stockTimeStamp: dataIndex.stockTimeStamp,
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
-        if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {
-          console.log('RoadMap data', readyData);
+        if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {          
            this.SET_CLEAR_ROAD_MAP(true);
           this.setLiveChart(readyData);
           setTimeout(() => {

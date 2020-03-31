@@ -32,7 +32,7 @@ export default ({ store }) => {
       channelName: `stockList.${store.getters.getPortalProviderUUID}`,
       eventName: "stockList"
     },
-    ({ data }) => {     
+    ({ data }) => {
       store.commit("setStockListTimer", data.data.stockData);
     }
   );

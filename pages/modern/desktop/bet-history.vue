@@ -5,12 +5,12 @@
       linkItem="current-bet"
       :titlebtn="$t('breadcrumbs.currentBet')"
     />
-    <section class="filter">
+    <section class="filter"  >
       <v-container>
-        <v-layout class="filter-history">
+        <v-layout class="filter-history" >
           <v-flex xs12 sm12 md6>
             <v-layout>
-              <v-flex xs12 sm12 md5>
+              <v-flex xs12 sm12 md3>
                 <v-menu
                   v-model="from"
                   :close-on-content-click="false"
@@ -34,7 +34,7 @@
                   <v-date-picker color="#1db42f" v-model="dateFrom" @input="from = false"></v-date-picker>
                 </v-menu>
               </v-flex>
-              <v-flex xs12 sm12 md5>
+              <v-flex xs12 sm12 md3>
                 <v-menu
                   v-model="to"
                   :close-on-content-click="false"
@@ -66,19 +66,20 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs12 sm12 md6>
+           <v-flex xs12 sm12 md2></v-flex>
+          <v-flex xs12 sm12 md4>
             <v-layout>
-              <v-flex xs6>
+              <v-flex xs6 md8>
                 <v-text-field
                   v-model="search"
                   append-icon="search"
                   label="Search"
-                  placeholder="Search"
+                  placeholder="Search by Name"
                   single-line
                   hide-details
                 ></v-text-field>
               </v-flex>
-              <v-flex xs6>
+              <v-flex xs6 md4>
                 <v-select
                   @change="sortingBy"
                   v-model="sortby"
@@ -215,7 +216,8 @@ export default {
 
 <style scoped>
 .filter {
-  padding: 10px;
+  background-color: #fff;
+  padding:25px;
 }
 .goButton {
   background-color: #1db42f;

@@ -40,7 +40,7 @@ import sotkclist from "~/components/mobile/stocklist";
 export default {
     components: {
         breadcrumbs,
-        sotkclist1
+        stocklist1
     },
     data() {
         return {
