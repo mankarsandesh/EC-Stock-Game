@@ -8,11 +8,7 @@
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img
-                    v-if="imageBase64 == ''"
-                    :src="imgProfile"
-                    alt="img-profile"
-                  />
+                  <img v-if="imageBase64 == ''" :src="imgProfile" alt="img-profile" />
                   <img
                     :style="{ filter: `blur(${blurValue}px)` }"
                     v-else
@@ -22,33 +18,47 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="cameraClick"
-                      >photo_camera</v-icon
-                    >
+                    <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
                   </button>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h1>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
-              <p>Online Status : 2hours</p>
+              <h2 v-if="getUserInfo.firstName == null " >{{ getUserInfo.userName }} </h2>
+              <h1 v-if="getUserInfo.firstName" >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
+              <p>{{$t('profile.onlinestatus')}} : 2 hours</p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
               <ul class="pa-3">
-                <nuxt-link
-                  v-for="(menu, index) in profileMenu"
-                  :key="index"
-                  :to="menu.path"
-                >
+                <nuxt-link to="/modern/desktop/profile/">
                   <li
-                    :class="
-                      menu.path.toLowerCase() === currentChild.toLowerCase()
-                        ? ' menu_title_active'
-                        : 'menu_title'
-                    "
-                  >
-                   {{ menu.title }}
-                  </li>
+                    :class="'/modern/desktop/profile/' === currentChild ? 'menu_title_active' : 'menu_title'"
+                  >{{ $t('profile.basicinfo') }}</li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/onlinehistory/">
+                  <li
+                    :class=" '/modern/desktop/profile/onlinehistory/' === currentChild ? 'menu_title_active' : 'menu_title'"
+                  >{{ $t('profile.onlinehistory') }}</li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/stockanalysis/">
+                  <li
+                    :class=" '/modern/desktop/profile/stockanalysis/' === currentChild ? 'menu_title_active' : 'menu_title'"
+                  >{{ $t('profile.stockanalysis') }}</li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/follower/">
+                  <li
+                    :class=" '/modern/desktop/profile/follower/' === currentChild ? 'menu_title_active' : 'menu_title'"
+                  >{{ $t('profile.myfollowers') }}</li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/notification/">
+                  <li
+                    :class=" '/modern/desktop/profile/notification/' === currentChild ? 'menu_title_active' : 'menu_title'"
+                  >{{ $t('profile.mynotification') }}</li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/setting/">
+                  <li
+                    :class=" '/modern/desktop/profile/setting/' === currentChild ? 'menu_title_active' : 'menu_title'"
+                  >{{ $t('profile.setting') }}</li>
                 </nuxt-link>
               </ul>
             </div>
@@ -73,29 +83,6 @@ export default {
       blurValue: 5,
       imageBase64: "",
       activeMenu: "online history",
-      profileMenu: [
-        {
-          title: "basic information",
-          path: "/modern/desktop/profile/"
-        },
-        {
-          title: "online history",
-          path: "/modern/desktop/profile/onlinehistory/"
-        },
-        {
-          title: "stock analysis",
-          path: "/modern/desktop/profile/stockanalysis/"
-        },
-        {
-          title: "my followers",
-          path: "/modern/desktop/profile/follower/"
-        },
-        {
-          title: "my notification",
-          path: "/modern/desktop/profile/notification/"
-        },
-        { title: "setting", path: "/modern/desktop/profile/setting/" }
-      ],
       window: 0,
       active: null
     };
@@ -111,8 +98,10 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      console.log("profile",config.apiDomain);
-      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      console.log("profile", config.apiDomain);
+      return this.getUserInfo.profileImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
   },
   watch: {
@@ -161,15 +150,17 @@ export default {
             }
           }
         );
+        console.log("res......")
+        console.log(res)
+        console.log("res.......")
         if (res.code === 200) {
           this.blurValue = 0;
         } else {
-          console.log(res.message);
-          this.imageBase64 = "";
+          throw new Error(res.message);
         }
       } catch (ex) {
-        console.error(ex);
-        alert(ex.message);
+        this.imageBase64 = "";
+        console.error(ex.message);
       }
     },
     ...mapMutations(["setIsLoadingStockGame"])

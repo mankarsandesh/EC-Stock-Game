@@ -6,8 +6,7 @@
     <v-layout>
       <!-- bet result -->
       <v-flex xs12>
-        <div class="table-responsive">
-          <!-- <h3 class="title" v-show="getStockResult.code == 500">There are no Data</h3> -->
+        <div class="table-responsive">          
           <table class="table">
             <tr>
               <th>{{ $t("msg.Stock Name") }}</th>

@@ -31,7 +31,10 @@
         ></v-progress-circular>
       </div>
     </div> -->
-    <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
+    <div
+      class="text-xs-center container-loading loading"
+      v-if="getIsLoadingStockGame"
+    >
       <v-progress-circular
         style="top: calc(100% - 68%);"
         :size="100"
@@ -43,26 +46,34 @@
     <v-toolbar class="toolbarMenu">
       <v-container fluid class="navbar">
         <v-toolbar-title>
-          <v-img          
+          <v-img
             src="/logo.png"
             @click="$router.push('/modern/desktop/btc1')"
             class="logoStyle"
           ></v-img>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-xs-only text-s1 toolBar" >
-          <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem" >
-              <i :class="item.icon"  />
-              <span>&nbsp;{{$t(`menu.${item.title}`)}}</span>
+        <v-toolbar-items class="hidden-xs-only text-s1 toolBar">
+          <v-btn
+            flat
+            v-for="item in menu"
+            :key="item.title"
+            :to="item.to"
+            class="menuItem"
+          >
+            <i :class="item.icon" />
+            <span>&nbsp;{{ $t(`menu.${item.title}`) }}</span>
           </v-btn>
           <div class="layout-btn">
-            <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
-              <countryFlag :country="countryflag" size="normal"  />
-              <span >&nbsp;{{$t('msg.chooselanguage')}}</span>
-              <i
-                class="fa fa-caret-down"
-                style="margin: 0 -6px 0px 8px;"
-              />
+            <v-btn
+              class="btn-langage"
+              text
+              flat
+              @click="$refs.language.showDialog()"
+            >
+              <countryFlag :country="countryflag" size="normal" />
+              <span>&nbsp;{{ $t("msg.chooselanguage") }}</span>
+              <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
             </v-btn>
           </div>
           <userMenu class="layout-logout" />
@@ -73,19 +84,23 @@
             class="menuItemNotification"
           >
             <i class="fa fa-bell-o fa-2x" />
-            <span class="badge">{{messagesCount}}</span>
+            <span class="badge">{{ messagesCount }}</span>
           </span>
         </v-toolbar-items>
       </v-container>
     </v-toolbar>
 
     <languageDialog ref="language" />
-    <v-content  >
+    <v-content>
       <nuxt />
     </v-content>
 
     <!-- Chat Windows-->
-    <chatWindow />
+    <chatWindow
+      :gameUUID="getGameUUIDByStockName($route.params.id)"
+      :key="$route.name"
+    />
+    <!-- <chatWindow /> -->
   </v-app>
 </template>
 <script>
@@ -101,7 +116,7 @@ import i18n from "vue-i18n";
 import lottie from "lottie-web";
 import chatWindow from "~/components/chatWindow";
 import userMenu from "../components/userMenu";
-import config from '../config/config.global';
+import config from "../config/config.global";
 export default {
   components: {
     chatWindow,
@@ -214,6 +229,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getGameUUIDByStockName",
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID
       "getGameChannel",
@@ -229,7 +245,6 @@ export default {
 </script>
 
 <style scoped>
-
 .winnerText {
   margin-top: -30px;
   font-weight: 800;

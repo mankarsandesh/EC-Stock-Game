@@ -15,8 +15,6 @@ const createStore = () => {
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
-      isLoadingAnnoucement: [],
-      isLoadingHistory: [],
       // set portal provider and user UUID for authentication
       portalProviderUUID: localStorage.getItem("PORTAL_PROVIDERUUID"),
       userUUID: localStorage.getItem("USER_UUID"),
@@ -139,7 +137,7 @@ const createStore = () => {
         state.roadMap.push(payload);
       },
       // end new api
-      setUserData(state, payload) {
+      setUserData(state, payload) {      
         state.userData = payload;
       },
       setGameChannelShow(state, value) {
@@ -197,12 +195,6 @@ const createStore = () => {
       },
       setFooterBetAmount(state, payload) {
         state.footerBetAmount = parseInt(payload);
-      },
-      setAnouncement(state, payload) {
-        state.isLoadingAnnoucement = payload;
-      },
-      setHistory(state, payload) {
-        state.isLoadingHistory = payload;
       },
       setTopPlayer(state, payload) {
         state.isLoadingTopPlayer = payload;
@@ -271,8 +263,9 @@ const createStore = () => {
               headers: config.header
             }
           );
+         
           if (res.code === 200) {
-            let userInfo = res.data;
+            let userInfo = res.data;          
             context.commit("setUserData", userInfo);
           } else {
             console.log(res);
@@ -334,34 +327,6 @@ const createStore = () => {
         } catch (ex) {
           console.error(ex);
           context.commit("setIsSendBetting", false);
-        }
-      },
-      // to get Annoucement
-      async asyannoucement(context) {
-        try {
-          // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
-          const res = await this.$axios.$get(
-            `/announcements?apikey=${context.getters.getAuth_token}`
-          );
-          // console.log(res);
-          context.commit("setAnouncement", res.data);
-          // console.log("Sandesh");
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      // to get User bet History
-      async asyhistory(context) {
-        try {
-          // const res = await this.$axios.$post(`/api/storebet?apikey=${context.getters.getAuth_token}`, betData)
-          const res = await this.$axios.$get(
-            `/fetchHistoryBet?apikey=${context.getters.getAuth_token}`
-          );
-          // console.log(res);
-          // console.log("SANDESH");
-          context.commit("setHistory", res.data);
-        } catch (error) {
-          console.log(error);
         }
       }
     },
@@ -485,20 +450,14 @@ const createStore = () => {
           return true;
         }
       },
-      getHistory(state) {
-        return state.isLoadingHistory;
-      },
       // get user info
-      getUserInfo(state) {
+      getUserInfo(state) {        
         return state.userData;
       },
       // get user name
       getUserName(state) {
         return state.userData;
-      },
-      getAnnoucement(state) {
-        return state.isLoadingAnnoucement;
-      },
+      },      
       getIsLoadingStockGame(state) {
         return state.isLoadingStockGame;
       },

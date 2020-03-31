@@ -35,6 +35,7 @@
         "fs": "0.0.1-security",
         "hchs-vue-charts": "^1.2.8",
         "howler": "^2.1.2",
+        "image-exists": "^1.1.0",
         "laravel-echo": "^1.6.1",
         "lottie-web": "^5.5.9",
         "mobile-device-detect": "^0.3.3",

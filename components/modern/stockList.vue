@@ -4,7 +4,7 @@
       <v-flex pa-2 class="headerStockBar">{{$t('menu.stock list')}}</v-flex>
     </v-layout>
 
-    <div class="table-responsive">
+    <div class="table-responsive">     
       <table class="table" v-if="getStockListTimer.length===2">
         <tr>
           <th>{{$t('msg.Stock Name')}}</th>
@@ -44,9 +44,6 @@ export default {
       "getLivePrice",
       "getPreviousPrice"
     ])
-  },
-  data() {
-    return {};
   },
   created() {},
   methods: {

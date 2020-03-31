@@ -7,8 +7,8 @@
     />
     <v-container>
       <v-layout row wrap>
-        <v-flex xs12 md12>
-          <announcement :head="head" :announcementData="announcementData" />
+        <v-flex xs12 md12 mt-5>
+          <announcement :announcementData="announcementData" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -30,11 +30,7 @@ export default {
       window: 0,
       tabs: ["announcement"],
       active: null,
-      head: [
-        { text: "title", value: "title" },
-        { text: "date", value: "createdAt" },
-        { text: "preview", value: "message" }
-      ],
+
       announcementData: []
     };
   },
