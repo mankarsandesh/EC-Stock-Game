@@ -45,9 +45,6 @@ export default {
       "getPreviousPrice"
     ])
   },
-  data() {
-    return {};
-  },
   created() {},
   methods: {
     ...mapMutations(["setStockListTimer"])

@@ -705,6 +705,7 @@ export default {
 }
 
 .sidebar-close {
+  font-size: 16px;
   cursor: pointer;
   background-color: #ffffff !important;
   border-radius: 180px;

@@ -64,9 +64,9 @@
                     class="text-xs-center1"
                     style="width:100%;align-self: center;"
                   >
-                    <span class="stockname">
+                    <div class="stockname">
                       {{ $t(`stockname.${$route.params.id}`) }}
-                    </span>
+                    </div>
                     <span class="gameid">
                       {{ getGameUUIDByStockName($route.params.id) }}
                     </span>
@@ -77,14 +77,14 @@
                       >1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
                     >
                     <v-btn
-                      color="buttonGreensmall"
+                      color="buttonGreen"
                       @click="dialogOtherstock = true"
                       >{{ $t("msg.otherstock") }}</v-btn
                     >
                   </v-flex>
                 </v-layout>
               </v-flex>
-              <v-flex xs12 sm12 md8 lg12 class="pt-2 chartDesgin">
+              <v-flex xs12 sm12 md8 lg12 class="chartDesgin">
                 <chartApp :stockName="$route.params.id"></chartApp>
               </v-flex>
             </div>
@@ -222,7 +222,7 @@
 
         <!-- live Chart -->
 
-        <v-flex xs12 class="text-xs-center">
+        <v-flex xs12 class="text-xs-center" mt-3>
           <footerBet lg12 md12></footerBet>
           <v-layout class="fullroadMap elevation-4" style="margin-top:-40px;">
             <v-flex xs12 sm12 md12 lg12 wrap pt-2 id="roadmapGuidelines">
@@ -426,7 +426,6 @@ export default {
   },
   created() {
     this.getActiveGamesByCategory();
-    this.getSotckId();
     this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
   },
   beforeDestroy() {
@@ -449,21 +448,6 @@ export default {
         this.setLiveRoadMap(data.data.roadMap[0]);
       }
     );
-    // // this.getwinuser();
-    // setTimeout(() => {
-    //   // this.getliveBetCount();
-    //   this.getliveAll();
-    // }, 1000);
-
-    // setInterval(() => {
-    //   // this.getliveBetCount();
-    //   this.getliveAll();
-    // }, 1000);
-    // console.log(
-    //   // this.getLotteryDraw($route.params.id)
-    //   //   |
-    //   this.getStockLoop("btc1")
-    // );
     this.setNextstepstart();
   },
 
@@ -653,108 +637,6 @@ export default {
       $("#livebetGuidelines").css("border-style", "none");
       $("#roadmapGuidelines").css("border-style", "none");
       localStorage.valTutorial = 1;
-    },
-    async getSotckId() {
-      try {
-        let stcokId = await this.$axios.$get(
-          `/api/fetchStockOnly?apikey=${this.$store.state.auth_token}`
-        );
-        stcokId.data.forEach(element => {
-          if (element.stockName == "btc1") {
-            this.stockId = element.stockId;
-          }
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    // async getliveBetCount() {
-    //   try {
-    //     const res = await this.$axios.$get(
-    //       `/api/liveBetCount?stock=${this.stockId}&loop=${this.getLoop(
-    //         "btc1"
-    //       )}&apikey=${this.$store.state.auth_token}`
-    //     );
-    //     if (res.status == false) {
-    //       console.log("No Data");
-    //       return;
-    //     }
-    //     for (let i = 0; i < res.data.length; i++) {
-    //       this.rulenew = res.data[i].totalUsers;
-    //     }
-    //     if (
-    //       res.data.length != 0 ||
-    //       res.data.length > this.chartData.length ||
-    //       this.rulenew > this.ruleold
-    //     ) {
-    //       // console.log("Okkk");
-    //       // this.msg = this.$root.$t('msg.betting');
-    //       if (this.rulenew == undefined) return;
-    //       if (
-    //         (this.isShow == true && res.data.length > this.chartData.length) ||
-    //         this.rulenew > this.ruleold
-    //       ) {
-    //         this.chartData = res.data;
-    //         this.isShow = false;
-    //         for (let i = 0; i < res.data.length; i++) {
-    //           this.ruleold = res.data[i].totalUsers;
-    //         }
-    //       } else {
-    //         this.chartData = res.data;
-    //         this.isShow = true;
-    //       }
-    //     } else {
-    //       // console.log("Nooo");
-    //       // this.msg = this.$root.$t('msg.nobetting');
-    //       // this.chartData = []
-
-    //       if (this.chartData.length != 4 || this.chartData.length == null) {
-    //         this.isShow = false;
-    //       } else {
-    //         this.isShow = true;
-    //       }
-    //       this.chartData = [
-    //         {
-    //           rule: "bothdigit-big",
-    //           totalAmount: "1",
-    //           totalUsers: 1
-    //         },
-    //         {
-    //           rule: "firstdigit-big",
-    //           totalAmount: "2",
-    //           totalUsers: 1
-    //         },
-    //         {
-    //           rule: "lastdigit-big",
-    //           totalAmount: "3",
-    //           totalUsers: 1
-    //         },
-    //         {
-    //           rule: "twodigit-big",
-    //           totalAmount: "4",
-    //           totalUsers: 1
-    //         }
-    //       ];
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
-    async getliveAll() {
-      try {
-        const res = await this.$axios.$get(
-          `/api/liveBetAll?stock=${this.stockId}&loop=1
-          )}&apikey=${this.$store.state.auth_token}`
-        );
-        if (res.status == false) {
-          console.log("No Data");
-          return;
-        }
-        this.dataliveBetAll = res.data[0];
-        // console.log(res.data)
-      } catch (error) {
-        console.log(error);
-      }
     }
   }
 };

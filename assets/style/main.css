@@ -514,6 +514,9 @@ nav.modal-bet.v-toolbar.theme--light p {
   font-size: 12px;
 }
 
+
+
+
 .buttonCancel {
   color: #fff !important;
   border-radius: 10px;
@@ -622,7 +625,7 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
-  min-width: 100%;
+  min-width: 88%;
   border-radius: 6px;
   padding: 0;
   margin: 4px;
@@ -638,7 +641,7 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
-  min-width: 100%;
+  min-width: 88%;
   border-radius: 6px;
   padding: 0;
   margin: 4px;
