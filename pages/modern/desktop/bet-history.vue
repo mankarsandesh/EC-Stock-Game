@@ -66,15 +66,15 @@
               </v-flex>
             </v-layout>
           </v-flex>
-           <v-flex xs12 sm12 md3></v-flex>
-          <v-flex xs12 sm12 md3>
+           <v-flex xs12 sm12 md2></v-flex>
+          <v-flex xs12 sm12 md4>
             <v-layout>
               <v-flex xs6 md8>
                 <v-text-field
                   v-model="search"
                   append-icon="search"
                   label="Search"
-                  placeholder="Search"
+                  placeholder="Search by Name"
                   single-line
                   hide-details
                 ></v-text-field>

@@ -32,14 +32,14 @@ Big Screen
     font-size: 18px;
   }
 
-  .stockname {
-    font-size: 22px;
+  .stockname {   
+    font-size: 20px;
     font-weight: 600;
     color: #4b65ff;
   }
 
   .gameid {
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
     font-weight: 500;
   }
@@ -60,14 +60,14 @@ Big Screen
   }
   /* game Rule Category Button */
   .btnHeight {
-    width: 80px;
-    height: 80px;
+    width: 85px;
+    height: 85px;
 
   }
   .align_button4 {
     box-shadow: none !important;
     border: 2px solid #e8e8e8;
-    height: 80px;
+    height: 85px;
   }
   .big-digit {
     font-size: 14px;
