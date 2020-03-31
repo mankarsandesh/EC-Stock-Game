@@ -657,8 +657,8 @@ export default {
 .fullscreenclose {
   position: fixed !important;
   border-radius: 180px;
-  bottom: 18px;
-  right: 30px;
+  bottom: 77px;
+  right: 0px;
   width: 40px;
   height: 40px;
   color: #fff;
