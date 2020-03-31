@@ -1,90 +1,34 @@
 <template>
-  <popper
-    trigger="click"
-    :options="{
-      placement: 'bottom-end',
-      modifiers: { offset: { offset: '65px' } }
-    }"
-  >
-    <div class="popper">
-      <div id="headerChat">
-        <span
-          class="tabs"
-          @click="activeTab('world')"
-          :class="{ active: tabActiveName === 'world' }"
-        >
-          <a href="#">EC World</a>
-        </span>
-        <span
-          class="tabs"
-          @click="activeTab('chanel')"
-          v-if="isShowChanel"
-          :class="{ active: tabActiveName === 'chanel' }"
-        >
-          <a href="#">Game Channel</a>
-        </span>
-      </div>
-      <!-- conversation area -->
-      <div class="chatRoom">
-        <!-- for EC World -->
-        <div v-if="tabActiveName === 'world'">
-          <div class="conve-container">
-            <div class="bodyChat">
-              <div
-                v-for="data in conversationWorld"
-                :key="data.index"
-                class="msgUser"
-              >
-                <div class="messageChatView">
-                  <a href="#">{{ data.name }}</a>
-                  <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
-                  <p class="msgBody">{{ data.message }}</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="messageChat">
-              <input
-                resize="none"
-                v-model="messageInput"
-                placeholder="Say Somthing..."
-                @keyup.enter="sendMsgWorld()"
-              />
-              <span @click="sendMsgWorld" class="btn">
-                <i class="fa fa-paper-plane"></i>
-              </span>
-            </div>
-          </div>
+  <div class="conve-container">
+    <div class="bodyChat">
+      <div v-for="data in conversationChanel" :key="data.index" class="msgUser">
+        <div class="messageChatView">
+          <a href="#">{{ data.name }}</a>
+          <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
+          <p class="msgBody">{{ data.message }}</p>
         </div>
-        <!-- for game chanel  -->
-        <chanelChat
-          v-show="tabActiveName === 'chanel'"
-          :gameUUID="gameUUID"
-          :key="gameUUID"
-        ></chanelChat>
       </div>
     </div>
-    <v-btn rigth fab slot="reference" class="liveChat">
-      <v-icon>chat</v-icon>
-    </v-btn>
-  </popper>
+
+    <div class="messageChat">
+      <input
+        resize="none"
+        v-model="messageInput"
+        placeholder="Say Somthing..."
+        @keyup.enter="sendMsgChanel"
+      />
+      <span @click="sendMsgChanel" class="btn">
+        <i class="fa fa-paper-plane"></i>
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
-import popper from "vue-popperjs";
-import "vue-popperjs/dist/vue-popper.css";
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
-import io from "socket.io-client";
-import moment from "moment";
 import config from "../config/config.global";
-import chanelChat from "./chanelChat";
-let name = "btc5";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+
 export default {
-  components: {
-    chanelChat,
-    popper,
-    config
-  },
   props: {
     gameUUID: {
       type: String,
@@ -93,64 +37,9 @@ export default {
   },
   data() {
     return {
-      currentRoute: "",
       messageInput: "",
-      pageActiveChanel: [
-        "modern-desktop-id",
-        "modern-multigame-id",
-        "modern-fullscreen-id"
-      ],
-      tabActiveName: "chanel",
-      conversationWorld: [],
-      connectClient: [],
-      totoalUserCount: 0,
-      userId: 0
+      conversationChanel: []
     };
-  },
-  computed: {
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getUserUUID",
-      "getUserName",
-      "getStockType",
-      "getStockGameId"
-    ]),
-    isShowChanel() {
-      if (this.pageActiveChanel.includes(this.$route.name)) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  },
-  mounted() {
-    // Game Channel Game ID wise
-    this.listenForBroadcast(
-      {
-        channelName: `messageSend.${this.getPortalProviderUUID}.global`,
-        eventName: "messageSend"
-      },
-      ({ data }) => {
-        console.log("world Listing");
-        console.log(data);
-        data.data.forEach(element => {
-          this.conversationWorld.push({
-            name: element.userName,
-            userUUID: element.getUserUUID,
-            message: element.message,
-            date: element.date
-          });
-        });
-      }
-    );
-  },
-  updated() {
-    this.scrollDown();
-  },
-  created() {
-    this.currentRoute = this.$route.name;
-    //reset chat messgae
-    this.messageInput = "";
   },
   methods: {
     scrollDown() {
@@ -165,36 +54,6 @@ export default {
     },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
-    },
-    activeTab(value) {
-      this.tabActiveName = value;
-    },
-    // Global Channel for all Ssers
-    async sendMsgWorld() {
-      try {
-        if (this.messageInput !== "") {
-          const res = await this.$axios.$post(
-            config.sendMessage.url,
-            {
-              portalProviderUUID: this.getPortalProviderUUID,
-              userUUID: this.getUserUUID,
-              chatType: 2,
-              message: this.messageInput,
-              version: config.version
-            },
-            {
-              headers: config.header
-            }
-          );
-          console.log(res);
-          if (res.status) {
-            this.messageInput = "";
-          }
-        }
-      } catch (ex) {
-        this.sendMsgWorld();
-        console.log(ex.message);
-      }
     },
     // Channel for gameUUDI
     async sendMsgChanel() {
@@ -221,6 +80,41 @@ export default {
       } catch (ex) {
         this.sendMsgChanel();
         console.log(ex.message);
+      }
+    }
+  },
+  mounted() {
+    this.scrollDown();
+    this.listenForBroadcast(
+      {
+        channelName: `messageSend.${this.getPortalProviderUUID}.${this.gameUUID}`,
+        eventName: "messageSend"
+      },
+      ({ data }) => {
+        data.data.forEach(element => {
+          this.conversationChanel.push({
+            name: element.userName,
+            userUUID: element.getUserUUID,
+            message: element.message,
+            date: element.date
+          });
+        });
+      }
+    );
+  },
+  computed: {
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getUserName",
+      "getStockType",
+      "getStockGameId"
+    ]),
+    isShowChanel() {
+      if (this.pageActiveChanel.includes(this.$route.name)) {
+        return true;
+      } else {
+        return false;
       }
     }
   }
