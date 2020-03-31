@@ -56,7 +56,7 @@ export default {
 
 .table-scroll {
   position: relative;
-  min-width: 290px;
+  min-width: 350px;
   margin: auto;
   overflow: auto;
   max-height: 350px;

@@ -73,7 +73,7 @@
           <v-flex xs5 sm3 mr-1 ml-1>
             <div
               class="date_picker_container"
-              @click="isShowDateStart = !isShowDateStart"
+              @click="startDateClick"
             >
               <div class="title_date_picker">
                 <span>{{ $t("msg.from") }}</span>
@@ -97,7 +97,7 @@
           <v-flex xs5 sm3 mr-1>
             <div
               class="date_picker_container"
-              @click="isShowDateEnd = !isShowDateEnd"
+              @click="endDateClick"
             >
               <div class="title_date_picker">
                 <span>{{ $t("msg.to") }}</span>
@@ -143,7 +143,7 @@
                   </template>
                   <v-list>
                     <v-list-tile v-for="(item, index) in items" :key="index">
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                      <v-list-tile-title >{{ item.title }}</v-list-tile-title>
                     </v-list-tile>
                   </v-list>
                 </v-menu>
@@ -157,7 +157,7 @@
           <v-flex xs1 sm2> </v-flex>
           <v-flex xs10 sm8>
             <div class="chart_container">
-              <div class="chart-map-color">
+              <div v-if="isDataValid" class="chart-map-color">
                 <span v-for="(stock, index) in stocks" :key="index">
                   <span
                     class="circle-color"
@@ -166,9 +166,11 @@
                   <span style="margin-right:10px">{{ stock }}</span>
                 </span>
               </div>
+              <p class="no-data" v-if="!isDataValid"><strong>{{ error }}</strong></p>
               <apexchart
+                v-if="isDataValid" 
                 type="bar"
-                height="360vh"
+                height="350vh"
                 :options="chartOptions"
                 :series="series"
               ></apexchart>
@@ -203,6 +205,8 @@ export default {
   data() {
     return {
       stockAnalysis: [],
+      isDataValid: false,
+      error: '',
       colors: barColor,
       isShowDateStart: false,
       isShowDateEnd: false,
@@ -284,8 +288,26 @@ export default {
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },
+    checkValidDate (startDate, endDate) {
+      const now = date.format(new Date(), "YYYY-MM-DD");
+      if(endDate > now || !(endDate >= startDate)) {
+        return false;
+      }
+      return true;
+    },
+    startDateClick() {
+      this.isShowDateStart = !this.isShowDateStart;
+      this.isShowDateEnd = false;
+    },
+    endDateClick() {
+      this.isShowDateEnd = !this.isShowDateEnd;
+      this.isShowDateStart = false;
+    },
     async getStockAnalysis() {
       try {
+        if(!this.checkValidDate(this.startDate, this.endDate)) {
+          throw new Error('Please select a valid date');
+        }
         const res = await this.$axios.$post(
           config.getUserBetAnalysis.url,
           {
@@ -302,14 +324,25 @@ export default {
           }
         );
         if (res.code === 200) {
-          this.stockAnalysis = res.data;
-          console.log(res.data, "User bet analysis response");
+          if(res.data.length) {
+            this.isDataValid = true;
+            this.error = '';
+            this.stockAnalysis = res.data;
+          } else {
+            this.isDataValid = false;
+            this.error = 'No data to display';
+          }
+          
         } else {
           console.log(res);
           // alert(res.message);
         }
       } catch (ex) {
         console.error(ex);
+        if(ex.message == 'Please select a valid date') {
+          this.error = 'Please select a valid date';
+          this.isDataValid = false;
+        }
         // alert(ex.message);
       }
     }
@@ -427,7 +460,7 @@ button:focus {
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
   border-radius: 10px;
   width: 100%;
-  min-height: 320px;
+  min-height: 415px;
 }
 
 .date_picker {
@@ -455,5 +488,11 @@ button:focus {
 
 .select_date {
   text-transform: uppercase;
+}
+
+.no-data {
+  color: red;
+  text-align: center;
+  align-content: center;
 }
 </style>

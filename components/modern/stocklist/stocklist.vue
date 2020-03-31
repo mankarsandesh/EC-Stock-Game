@@ -1,56 +1,108 @@
 <template>
-  <div>
-    <v-layout row wrap justify-end>
-      <v-flex xs2 class="main-select">
-        <v-select hide-details :items="items" label="Sort By :" solo></v-select>
-      </v-flex>
-      <v-btn class="main-btn back mt-3">Go</v-btn>
-    </v-layout>
-
-    <v-flex xs12>
-      <table class="table">
-        <thead class="thead-dark">
+  <v-flex xs12 class="mt-3">
+    <div class="v-table__overflow">
+      <table class="v-datatable v-table theme--light">
+        <thead>
           <tr>
-            <th scope="col" class="bg-colors">{{$t('msg.Stock Name')}}</th>
-            <th scope="col" class="bg-colors">{{$t("msg.liveprice")}}</th>
-            <th scope="col" class="bg-colors">{{$t("msg.reference")}}</th>
+            <th>{{$t('msg.Stock Name')}}</th>
+            <th>{{$t("msg.liveprice")}}</th>
+            <th class="text-left">{{$t("msg.reference")}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,index) in getStockList" :key="index">
-            <td>{{$t(`stockname.${item.stockname}`)}} {{ item.stockname == 'btc1' ? ' 1':item.stockname == 'btc5' ? ' 5':'' }}</td>
+          <tr v-for="(item,index) in stocklist" :key="index">
+            <td>{{item.stockName}}</td>
             <td
-              v-html="$options.filters.livePriceColor(getLivePrice(item.id),getPreviousPrice(item.id))"
-            ></td>
-            <td>
-              <a :href="item.urlRef" target="_blank" style="overflow-y: auto; white-space: nowrap;">
-                <b>{{item.urlRef}}</b>
+              :class="{'text-red': currentPrice,'text-green': !currentPrice}"
+            >{{checkStock(item.stockPrice)}}</td>
+            <td class="text-left">
+              <a
+                :href="item.referenceUrl"
+                target="_blank"
+                style="overflow-y: auto; white-space: nowrap;"
+              >
+                <b>{{item.referenceUrl}}</b>
               </a>
-            </td>
-          </tr>
+            </td>            
+          </tr>  
         </tbody>
       </table>
-    </v-flex>
-    <v-btn class="main-btn back">
-      <v-icon>arrow_back_ios</v-icon>back
-    </v-btn>
-  </div>
+    </div>
+  </v-flex>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters,mapState} from "vuex";
+import config from '../../../config/config.global';
 export default {
+  props: ["item"],
   data() {
     return {
-      items: ["day", "weeks", "months", "years"]
+      items: ["day", "weeks", "months", "years"],
+      last_price: 0,
+      stockStatus: false,
+      currentPrice: null,
+      head: [
+        { text: "stock name", value: "stockName" },
+        { text: "live price", value: "stockOpenOrClosed" },
+        { text: "reference", value: "referenceUrl" }
+      ],
+      stocklist: []
     };
   },
+  mounted() {
+    this.listenForBroadcast(
+      {
+        channelName: `stockList.${this.portalProviderUUID}`,
+        eventName: "stockList"
+      },
+      ({ data }) => {
+        this.stocklist = data.data.stockData;
+      }
+    );
+  },
+  watch: {
+    item(val) {
+      function compare(a, b) {
+        if (val == "ascending") {
+          if (a.stockName < b.stockName) return -1;
+          if (a.stockName > b.stockName) return 1;
+          return 0;
+        } else {
+          if (a.stockName < b.stockName) return 1;
+          if (a.stockName > b.stockName) return -1;
+          return 1;
+        }
+      }
+      return this.stocklist.sort(compare);
+    }
+  },
   computed: {
-    ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
+    ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"]),
+     ...mapState(["portalProviderUUID"])
+  },
+  methods: {  
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
+
+    checkStock(value) {
+      let close = {};
+      if (value == "") {
+        close = "Close";
+        this.stockStatus = true;
+      } else if (value) {
+        if (this.last_price > value) {
+          this.currentPrice = false;
+        } else {         
+          this.currentPrice = true;
+        }
+        this.last_price = value;
+        close = value;
+      } else {
+        close = "NO DATA";
+      }
+      return close;
+    }
   }
 };
 </script>
-<style scoped>
-.bg-colors{
-  background-color: #003e70 !important;
-}
-</style>

@@ -7,10 +7,11 @@
         </v-btn>
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="40">
-            <img :src="imgProfile" />
+            <img  :src="imgProfile" />          
           </v-avatar>          
           <div class="userLogoutMenu">
-            <span>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</span>
+            <span v-if="getUserInfo.firstName == null">{{getUserInfo.userName}} </span>
+            <span v-if="getUserInfo.firstName">{{getUserInfo.firstName}} {{getUserInfo.lastName}}</span>
             <span>            
               <animated-number
                 :value="getUserInfo.balance"
@@ -63,24 +64,25 @@ export default {
   },
   data() {
     return {
+      profileImage: "",
       dialogprofile: false,
       isShow: ""
     };
   },
   computed: {
     ...mapGetters(["getUserInfo"]),
-    imgProfile() {
-      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-    }
-  },
-  mounted() {
+    imgProfile() {      
+      return this.getUserInfo.profileImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
+    }      
+  },  
+  mounted() {   
     this.isShow = location.pathname.split("/")[1];
   },
-  methods: {
+  methods: {  
     formatToPrice(value) {
       return `${Number(value)
         .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "1,")}`;
+        .toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
     },
     getLogout() {
       this.$swal({

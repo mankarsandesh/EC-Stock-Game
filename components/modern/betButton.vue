@@ -6,7 +6,7 @@
       <p>{{ $t("msg.betclosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row>
+    <v-layout row > 
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
@@ -32,7 +32,7 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn
+        <v-btn        
           class="align_button4 "
           :id="'firstdigit-' + data.rule"
           slot="reference"
@@ -545,7 +545,7 @@ export default {
   position: relative;
 }
 .btn-digit {
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
   font-weight: bold;
   white-space: pre-line;

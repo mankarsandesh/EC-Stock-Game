@@ -32,14 +32,14 @@ Big Screen
     font-size: 18px;
   }
 
-  .stockname {
-    font-size: 22px;
+  .stockname {   
+    font-size: 20px;
     font-weight: 600;
     color: #4b65ff;
   }
 
   .gameid {
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
     font-weight: 500;
   }
@@ -56,24 +56,23 @@ Big Screen
   }
 
   .buttonbtn {
-    width: 100px;
+    width: 80px;
   }
-
   /* game Rule Category Button */
   .btnHeight {
-    height: 80px;
-  }
+    width: 85px;
+    height: 85px;
 
+  }
   .align_button4 {
     box-shadow: none !important;
     border: 2px solid #e8e8e8;
     height: 85px;
   }
-
-
   .big-digit {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
+    /* color:#6e6d6d; */
   }
 
   .big-number {
@@ -185,8 +184,9 @@ Big Screen
     padding: 0px;
   }
 
-
+  .firstDigit span{color:#FFF;}
   .firstDigit {
+    color:#FFF;
     font-weight: bolder;
     border-radius: 10px;
     white-space: pre-line !important;
