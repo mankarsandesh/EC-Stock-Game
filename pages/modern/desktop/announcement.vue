@@ -7,7 +7,7 @@
     />
     <v-container>
       <v-layout row wrap>
-        <v-flex xs12 md12>
+        <v-flex xs12 md12 mt-5>
           <announcement :announcementData="announcementData" />
         </v-flex>
       </v-layout>

@@ -8,7 +8,7 @@
       :titlebtn2=" $t('breadcrumbs.gamerule')"
     />
     <v-container>
-      <v-layout row wrap>
+      <v-layout row wrap mt-3>
         <v-flex xs3 class="d-flex">
           <v-select
             class="border-round"

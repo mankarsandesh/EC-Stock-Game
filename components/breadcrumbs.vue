@@ -1,7 +1,7 @@
 <template>
-  <section class="breadcrumbs">
-    <v-container>
-      <v-parallax dark height="150">
+  <section class="breadcrumbs" >
+    <v-container >
+      <v-parallax dark height="150" >
         <v-layout align-center row>
           <v-flex xs6>
             <h3 class="display-2 font-weight-thick mb-3 ">{{title}}</h3>

@@ -1,6 +1,6 @@
 <template>
   <v-layout row class="justify-center">
-    <v-flex xs12 md12>
+    <v-flex xs12 md12 mt-5>
       <v-data-table
         :items="currentBets"
         :items-per-page="5"
