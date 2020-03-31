@@ -6,7 +6,7 @@
     <!-- Chat Windows-->
     <chatWindow
       :gameUUID="getGameUUIDByStockName($route.params.id)"
-      :key="$route.name + '' + getGameUUIDByStockName($route.params.id)"
+      :key="$route.name"
     />
     <!-- <chatWindow /> -->
   </v-app>
