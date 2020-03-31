@@ -147,7 +147,6 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
 import config from "../../../config/config.global";
-var imageExists = require("image-exists");
 export default {
   data() {
     return {
