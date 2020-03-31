@@ -141,8 +141,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.getStockGameId);
-    console.log("Hello");
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
@@ -150,7 +148,6 @@ export default {
       },
       ({ data }) => {
         data.data.forEach(element => {
-          console.log("Socket Listing");
           this.getMessagesGame.push({
             name: element.userName,
             userId: element.userUUID,
@@ -233,7 +230,6 @@ export default {
       }
     },
     sendMsgGame: function(event) {
-      console.log(this.getStockGameId);
       if (this.messageGame) {
         this.$axios
           .$post(

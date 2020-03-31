@@ -71,8 +71,7 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserInfo"]),
-    imgProfile() {
-      console.log(this.getUserInfo,"User Info");
+    imgProfile() {      
       return this.getUserInfo.profileImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     }      
   },  
