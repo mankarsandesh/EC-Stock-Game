@@ -163,15 +163,17 @@ export default {
             }
           }
         );
+        console.log("res......")
+        console.log(res)
+        console.log("res.......")
         if (res.code === 200) {
           this.blurValue = 0;
         } else {
-          console.log(res.message);
-          this.imageBase64 = "";
+          throw new Error(res.message);
         }
       } catch (ex) {
-        console.error(ex);
-        alert(ex.message);
+        this.imageBase64 = "";
+        console.error(ex.message);
       }
     },
     ...mapMutations(["setIsLoadingStockGame"])

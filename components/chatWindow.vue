@@ -10,76 +10,80 @@
       <div id="headerChat">
         <span
           class="tabs"
-          v-on:click="tab1"
-          v-bind:class="{ active: isActiveTab1 }"
+          @click="activeTab('world')"
+          :class="{ active: tabActiveName === 'world' }"
         >
           <a href="#">EC World</a>
         </span>
         <span
           class="tabs"
-          v-on:click="tab2"
-          v-show="getGameChannel"
-          v-bind:class="{ active: isActiveTab2 }"
+          @click="activeTab('chanel')"
+          v-if="isShowChanel"
+          :class="{ active: tabActiveName === 'chanel' }"
         >
           <a href="#">Game Channel</a>
         </span>
       </div>
-
+      <!-- conversation area -->
       <div class="chatRoom">
-        <div v-if="allChannel">
-          <div id="bodyChat" class="messages">
-            <div
-              id="messageChannel"
-              v-for="data in getMessages"
-              :key="data.index"
-              class="msgUser"
-            >
-              <div class="messageChatView">
-                <a href="#">{{ data.name }}</a>
-                <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
-                <p class="msgBody">{{ data.message }}</p>
+        <!-- for EC World -->
+        <div v-if="tabActiveName === 'world'">
+          <div class="conve-container">
+            <div class="bodyChat">
+              <div
+                v-for="data in conversationWorld"
+                :key="data.index"
+                class="msgUser"
+              >
+                <div class="messageChatView">
+                  <a href="#">{{ data.name }}</a>
+                  <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
+                  <p class="msgBody">{{ data.message }}</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div id="messageChat">
-            <input
-              resize="none"
-              v-model="message"
-              placeholder="Say Somthing..."
-              v-on:keyup.enter="sendMsg"
-            />
-            <span v-on:click="sendMsg" class="btn">
-              <i class="fa fa-paper-plane"></i>
-            </span>
+            <div class="messageChat">
+              <input
+                resize="none"
+                v-model="messageInput"
+                placeholder="Say Somthing..."
+                @keyup.enter="sendMsgWorld()"
+              />
+              <span @click="sendMsgWorld" class="btn">
+                <i class="fa fa-paper-plane"></i>
+              </span>
+            </div>
           </div>
         </div>
-
-        <div v-if="betChannel">
-          <div id="bodyChat">
-            <div
-              class="msgUser"
-              v-for="data in getMessagesGame"
-              :key="data.index"
-            >
-              <div class="messageChatView">
-                <a href="#">{{ data.name }}</a>
-                <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
-                <p class="msgBody">{{ data.message }}</p>
+        <!-- for game chanel  -->
+        <div v-if="tabActiveName === 'chanel'">
+          <div class="conve-container">
+            <div class="bodyChat">
+              <div
+                v-for="data in conversationChanel"
+                :key="data.index"
+                class="msgUser"
+              >
+                <div class="messageChatView">
+                  <a href="#">{{ data.name }}</a>
+                  <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
+                  <p class="msgBody">{{ data.message }}</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div id="messageChat">
-            <input
-              resize="none"
-              v-model="messageGame"
-              placeholder="Say Somthing..."
-              v-on:keyup.enter="sendMsgGame"
-            />
-            <span v-on:click="sendMsgGame" class="btn">
-              <i class="fa fa-paper-plane"></i>
-            </span>
+            <div class="messageChat">
+              <input
+                resize="none"
+                v-model="messageInput"
+                placeholder="Say Somthing..."
+                @keyup.enter="sendMsgChanel"
+              />
+              <span @click="sendMsgChanel" class="btn">
+                <i class="fa fa-paper-plane"></i>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -105,22 +109,24 @@ export default {
     VueChatScroll,
     config
   },
+  props: {
+    gameUUID: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      getGameChannel: false,
-      newMessages: [],
-      urlName: this.$route,
-      activeUrl: ["modern-desktop-id", "modern-multigame-id", "modern-fullscreen-id"],
-      gameUUID: "b78548b9-05a1-4a9a-826e-288010df28d0",     
-      isActiveTab1: true,
-      isActiveTab2: false,
-      allChannel: true,
-      betChannel: false,
-      messageData: [],
-      message: null,
-      messageGame: null,
-      getMessages: [],
-      getMessagesGame: [],
+      currentRoute: "",
+      messageInput: "",
+      pageActiveChanel: [
+        "modern-desktop-id",
+        "modern-multigame-id",
+        "modern-fullscreen-id"
+      ],
+      tabActiveName: "chanel",
+      conversationWorld: [],
+      conversationChanel: [],
       allMessageGame: [],
       connectClient: [],
       totoalUserCount: 0,
@@ -128,32 +134,33 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserName", "getStockType","getStockGameId"]),
-    ...mapState(["portalProviderUUID", "headers", "userUUID"])
-  },
-  watch: {
-    urlName: function () {
-      if(this.activeUrl.includes(this.$route.name)) {
-      this.getGameChannel = true;
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getUserName",
+      "getStockType",
+      "getStockGameId"
+    ]),
+    isShowChanel() {
+      if (this.pageActiveChanel.includes(this.$route.name)) {
+        return true;
       } else {
-        this.getGameChannel = false;
+        return false;
       }
     }
   },
   mounted() {
-    console.log(this.getStockGameId);
-    console.log("Hello");
+    this.scrollDown();
     this.listenForBroadcast(
       {
-        channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
+        channelName: `messageSend.${this.getPortalProviderUUID}.${this.gameUUID}`,
         eventName: "messageSend"
       },
       ({ data }) => {
         data.data.forEach(element => {
-          console.log("Socket Listing");
-          this.getMessagesGame.push({
+          this.conversationChanel.push({
             name: element.userName,
-            userId: element.userUUID,
+            userUUID: element.getUserUUID,
             message: element.message,
             date: element.date
           });
@@ -163,14 +170,16 @@ export default {
     // Game Channel Game ID wise
     this.listenForBroadcast(
       {
-        channelName: `messageSend.${this.portalProviderUUID}.global`,
+        channelName: `messageSend.${this.getPortalProviderUUID}.global`,
         eventName: "messageSend"
       },
       ({ data }) => {
+        console.log("world Listing");
+        console.log(data);
         data.data.forEach(element => {
-          this.getMessages.push({
+          this.conversationWorld.push({
             name: element.userName,
-            userId: element.userUUID,
+            userUUID: element.getUserUUID,
             message: element.message,
             date: element.date
           });
@@ -179,81 +188,82 @@ export default {
     );
   },
   updated() {
-    $("#bodyChat")
-      .stop()
-      .animate(
-        {
-          scrollTop: $("#bodyChat")[0].scrollHeight
-        },
-        1000
-      );
+    this.scrollDown();
   },
   created() {
-    if(this.activeUrl.includes(this.$route.name)) {
-      this.getGameChannel = true;
-    }
+    this.currentRoute = this.$route.name;
+    //reset chat messgae
+    this.messageInput = "";
   },
   methods: {
+    scrollDown() {
+      $(".bodyChat")
+        .stop()
+        .animate(
+          {
+            scrollTop: $(".bodyChat")[0].scrollHeight
+          },
+          1000
+        );
+    },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
-    tab1: function(event) {
-      this.betChannel = false;
-      this.allChannel = true;
-      this.isActiveTab1 = true;
-      this.isActiveTab2 = false;
-    },
-    tab2: function(event) {
-      this.allChannel = false;
-      this.betChannel = true;
-      this.isActiveTab2 = true;
-      this.isActiveTab1 = false;
+    activeTab(value) {
+      this.tabActiveName = value;
     },
     // Global Channel for all Ssers
-    sendMsg: function(event) {
-      if (this.message) {
-        this.$axios
-          .$post(
+    async sendMsgWorld() {
+      try {
+        if (this.messageInput !== "") {
+          const res = await this.$axios.$post(
             config.sendMessage.url,
             {
-              portalProviderUUID: this.portalProviderUUID,
-              userUUID: this.userUUID,
+              portalProviderUUID: this.getPortalProviderUUID,
+              userUUID: this.getUserUUID,
               chatType: 2,
-              message: this.message,
-              version: config.version
-            },
-            {
-               headers: config.header
-            }
-          )
-          .then(response => {
-            console.log(response.data);
-          });
-        this.message = "";
-      }
-    },
-    sendMsgGame: function(event) {
-      console.log(this.getStockGameId);
-      if (this.messageGame) {
-        this.$axios
-          .$post(
-            config.sendMessage.url,
-            {
-              portalProviderUUID: this.portalProviderUUID,
-              userUUID: this.userUUID,
-              gameUUID: this.getStockGameId,
-              chatType: 1,
-              message: this.messageGame,
+              message: this.messageInput,
               version: config.version
             },
             {
               headers: config.header
             }
-          )
-          .then(response => {
-            console.log(response.data);
-          });
-        this.messageGame = "";
+          );
+          console.log(res);
+          if (res.status) {
+            this.messageInput = "";
+          }
+        }
+      } catch (ex) {
+        this.sendMsgWorld();
+        console.log(ex.message);
+      }
+    },
+    // Channel for gameUUDI
+    async sendMsgChanel() {
+      try {
+        if (this.messageInput !== "") {
+          const res = await this.$axios.$post(
+            config.sendMessage.url,
+            {
+              portalProviderUUID: this.getPortalProviderUUID,
+              userUUID: this.getUserUUID,
+              gameUUID: this.gameUUID,
+              chatType: 1,
+              message: this.messageInput,
+              version: config.version
+            },
+            {
+              headers: config.header
+            }
+          );
+          if (res.status) {
+            this.messageInput = "";
+          }
+        }
+      } catch (ex) {
+        this.sendMsgChanel();
+        console.log(ex.message);
       }
     }
   }
@@ -261,13 +271,18 @@ export default {
 </script>
 
 <style scoped>
+.conve-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
 .liveChat {
   z-index: 999;
   position: fixed;
   right: 12px;
   bottom: 20px;
   width: 50px;
-  height:50px;
+  height: 50px;
   color: #fff;
   background-color: #2aaf3e !important;
 }
@@ -347,8 +362,8 @@ export default {
   background-color: #003e70 !important;
 }
 
-#bodyChat {
-  background-color: #fff;
+.bodyChat {
+  background-color: redff;
   height: 350px;
   text-align: left;
   overflow: scroll;
@@ -395,17 +410,19 @@ export default {
 .msgBody {
   color: #7f7e7e;
 }
-#messageChat {
+.messageChat {
+  position: fixed;
+  bottom: 7px;
   background-color: #fff;
   height: 35px;
   padding: 0px 10px;
-  width: 100%;
+  width: 97%;
   display: inline-flex;
   border-radius: 5px;
   border: 1px solid #d3d2d2;
 }
 
-#messageChat input {
+.messageChat input {
   float: left;
   width: 100%;
   padding: 5px;
@@ -416,18 +433,18 @@ export default {
   color: #003e70;
 }
 
-#messageChat input:focus {
+.messageChat input:focus {
   outline: none;
 }
 
-#messageChat .btn {
+.messageChat .btn {
   padding: 5px 10px;
   color: #d3d2d2;
   cursor: pointer;
   font-size: 16px;
   margin-top: 0px;
 }
-#messageChat .btn:hover {
+.messageChat .btn:hover {
   color: #003e70;
 }
 
