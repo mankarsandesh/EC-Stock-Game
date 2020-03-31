@@ -10,7 +10,7 @@
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
+          <div class="date_picker_container" @click="startDateClick">
             <div class="title_date_picker">
               <span>{{$t('msg.from')}}</span>
             </div>
@@ -31,7 +31,7 @@
         </v-flex>
         <!-- select end date -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
+          <div class="date_picker_container" @click="endDateClick">
             <div class="title_date_picker">
               <span>{{$t('msg.to')}}</span>
             </div>
@@ -59,11 +59,12 @@
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5" >
       <div class="chart_container">
-        <VueApexCharts type="bar" height="350" v-if="dataReady" :options="chartOptions" :series="series" :key="componentKey" />
+        <p v-if="!dataReady" class='no-data'><strong>{{ error }}</strong></p>
+        <VueApexCharts v-if="dataReady" type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
       </div>
     </v-flex>
     <v-flex xs12 class="pt-3 pl-5">
-      <div>
+      <div v-if="dataReady">
         <span style="margin-right:30px">
           {{$t('profile.onlinetime')}} : <b>{{currentActiveTime}}</b>
         </span>
@@ -93,6 +94,7 @@ export default {
       totalOnlineTime: "",
       currentActiveTime: "",
       dataReady: false,
+      error: '',
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
@@ -170,8 +172,26 @@ export default {
   },
   methods: {
     ...mapActions(["asynUserInfo"]),
+    startDateClick() {
+      this.isShowDateStart = !this.isShowDateStart;
+      this.isShowDateEnd = false;
+    },
+    endDateClick() {
+      this.isShowDateEnd = !this.isShowDateEnd;
+      this.isShowDateStart = false;
+    },
+    checkValidDate(startDate, endDate) {
+      const now = date.format(new Date(), "YYYY-MM-DD");
+      if(endDate > now || !(endDate >= startDate)) {
+        return false
+      }
+      return true;
+    },
     async getOnlineHistory() {
       try {
+        if(!this.checkValidDate(this.startDate, this.endDate)) {
+          throw new Error('Please select a valid date');
+        }
         const res = await this.$axios.$post(
           config.getUserProfile.url,
           {
@@ -186,30 +206,46 @@ export default {
           }
         );
         if (res.code === 200) {
-          this.dataReady = true;
-          let result = res.data.activeTimeDateWise;
-          this.currentActiveTime = res.data.currentActiveTime;
-          let totalActiveTime = 0;
-          let xAxis = [];
-          let chartData = []; 
-          result.forEach(element => {
-            totalActiveTime += parseInt(element.activeTimeInMins);
-            chartData.push(parseInt(element.activeTimeInMins));
-            xAxis.push(element.Date);
-          });
-          let days = Math.floor(totalActiveTime/(24 * 60));
-          let hours = (parseInt(totalActiveTime/60) % 24);
-          let minutes = totalActiveTime%60;
-          this.totalOnlineTime = `${days ? `${days} days, ` : ``}${hours} hours and ${minutes} minutes`;
-          this.series = [{ data: chartData }];
-          this.chartOptions.xaxis.categories = xAxis;
-          this.componentKey++;
+          if(res.data.activeTimeDateWise.length) {
+            this.dataReady = true;
+            let result = res.data.activeTimeDateWise;
+            this.currentActiveTime = res.data.currentActiveTime;
+            let totalActiveTime = 0;
+            let xAxis = [];
+            let chartData = []; 
+            result.forEach(element => {
+              totalActiveTime += parseInt(element.activeTimeInMins);
+              chartData.push(parseInt(element.activeTimeInMins));
+              xAxis.push(element.Date);
+            });
+            let days = Math.floor(totalActiveTime/(24 * 60));
+            let hours = (parseInt(totalActiveTime/60) % 24);
+            let minutes = totalActiveTime%60;
+            this.totalOnlineTime = `${days ? `${days} days, ` : ``}${hours} hours and ${minutes} minutes`;
+            this.series = [{ data: chartData }];
+            this.chartOptions.xaxis.categories = xAxis;
+            this.componentKey++;
+          } else {
+            this.error = 'No data to display';
+            this.dataReady = false;
+          }
         } else {
           console.log(res);
+          this.error = 'Something went wrong';
+          this.dataReady = false;
           //alert(res.message);
         }
       } catch (ex) {
         console.error(ex.message);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          showConfirmButton: true
+        });
+        if(ex.message == 'Please select a valid date') {
+          this.error = 'Please select a valid date';
+          this.dataReady = false;
+        }
       }
     }
   }
@@ -267,5 +303,10 @@ button:focus {
 }
 .select_date {
   text-transform: uppercase;
+}
+.no-data {
+  color: red;
+  align-content: center;
+  text-align: center;
 }
 </style>
