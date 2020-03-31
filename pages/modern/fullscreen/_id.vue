@@ -192,9 +192,7 @@
             <v-flex xs3 sm3 md3 lg3 pt-2>
               <span class="seticon">
                 <i class="fa fa-gamepad fa-2x iconcolor" />
-                <span>{{
-                  dataliveBetAll.totalBets ? dataliveBetAll.totalBets : 35
-                }}</span>
+                <span>{{ dataliveBetAll.totalBetCount ? dataliveBetAll.totalBetCount : 35 }}</span>
               </span>
             </v-flex>
             <v-flex xs3 sm3 md3 lg3 pt-2>
@@ -202,9 +200,9 @@
                 <i class="fa fa-money fa-2x iconcolor" />
                 <span>
                   {{
-                    dataliveBetAll.totalAmount
-                      ? dataliveBetAll.totalAmount
-                      : 5500
+                  dataliveBetAll.totalAmountPlaced
+                  ? dataliveBetAll.totalAmountPlaced
+                  : 5500
                   }}
                 </span>
               </span>
@@ -386,7 +384,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
@@ -437,6 +435,7 @@ export default {
   },
   mounted() {
     // socket new api
+    console.log('gamne stock id', this.gameStockId);
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -445,9 +444,17 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
+        console.log('gamne stock id', this.gameStockId);
         this.setLiveRoadMap(data.data.roadMap[0]);
       }
     );
+    this.listenForBroadcast({
+      channelName: `LiveTotalBetData.${this.gameStockId}`,
+      eventName: "LiveTotalBetData"
+    }, ({ data }) => {
+      this.dataliveBetAll = data.data;
+      console.log('data', data);
+    });
     this.setNextstepstart();
   },
 
@@ -489,6 +496,9 @@ export default {
       "getLivePrice",
       "headers",
       "getUserUUID"
+    ]),
+    ...mapState([
+      "gameStockId"
     ])
   },
   methods: {
