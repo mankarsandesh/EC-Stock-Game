@@ -48,20 +48,14 @@
         return-object
         id="minute"
       >
-        <template slot="selection" slot-scope="data"
-          >{{ data.item.loopName }} Minutes</template
-        >
+        <template slot="selection" slot-scope="data">{{ data.item.loopName }} Minutes</template>
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content
-              >{{ data.loopName }} Minutes</v-list-tile-content
-            >
+            <v-list-tile-content>{{ data.loopName }} Minutes</v-list-tile-content>
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title
-                >{{ data.item.loopName }} Minutes</v-list-tile-title
-              >
+              <v-list-tile-title>{{ data.item.loopName }} Minutes</v-list-tile-title>
             </v-list-tile-content>
           </template>
         </template>
@@ -102,12 +96,13 @@ export default {
     stock(value) {
       let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       if (value.type === GET_STOCK_TYPE) {
+        this.stockSocket = true;
         // this.stockName = ""; // after value is not empty we clear the value is first
         this.stockNames = [];
         this.stockNames = value.stocks;
         $("#stockName").click();
-        this.stockSocket = true;
       }
+
       // when value is changed this value will do the list
       if (this.stockSocket) {
         // check the stockSocket is come or not
@@ -115,6 +110,7 @@ export default {
       } else {
         // after value is false the logic will be come in this case
         if (value !== "") {
+          sessionStorage.setItem("STOCK_TYPE", value.type);
           // this.stockName = "";
           this.stockNames = value.stocks;
           $("#stockName").click();
@@ -131,16 +127,6 @@ export default {
         this.minute = "";
         this.minutes = value.loops;
         $("#minute").click();
-      } else {
-        if (this.stockSocket) {
-          if (value !== "") {
-            this.minute = "";
-            this.minutes = value.loops;
-            $("#minute").click();
-          }
-        } else {
-          this.stockSocket = false;
-        }
       }
     },
     minute(value) {
@@ -154,57 +140,29 @@ export default {
       if (value !== "") {
         this.gameId = "";
         this.gameId = value.gameID;
-        const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_TYPE");
-        const GET_STOCK_URL = sessionStorage.getItem("STOCK_URL");
-        if (value.loopName !== GET_STOCK_LOOP) {
-          if (GET_STOCK_LOOP === "crypto") {
-            if (this.$route.name === "modern-desktop-id") {
-              this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
-            } else {
-              // if is multi game then add selected game
-              this.addStockMultigame(GET_STOCK_URL);
-            }
-          }
-        }
       }
     },
     gameId(value) {
+      const GET_STOCK_URL = sessionStorage.getItem("STOCK_URL");
       const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
-      if (this.stockSocket) {
-        if (value !== "") {
-          if (this.stock.type == "crypto") {
-            let routeName =
-              this.stockName.stockName + "" + this.minute.loopName;
-            // check is multi game or not
-            if (this.$route.name === "modern-desktop-id") {
-              this.$router.replace(`/modern/desktop/${routeName}`);
-            } else {
-              // if is multi game then add selected game
-              this.addStockMultigame(routeName);
-            }
-          } else {
-            // check is multi game or not
-            if (this.$route.name === "modern-desktop-id") {
-              this.$router.replace(
-                `/modern/desktop/${this.stockName.stockName}`
-              );
-              // if is multi game then add selected game
-            } else {
-              this.addStockMultigame(this.stockName.stockName);
-            }
-          }
+      const GET_STOCK_NAME = sessionStorage.getItem("STOCK_NAME");
+      const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_LOOP");
 
-          // Vong code
-          // if (this.stock.type == "crypto") {
-          //   this.$router.replace(
-          //     `/modern/desktop/${this.stockName.stockName}${this.minute.loopName}`
-          //   );
-          // } else {
-          //   this.$router.replace(`/modern/desktop/${this.stockName.stockName}`);
-          // }
+      if (GET_STOCK_TYPE == "crypto") {
+        if (this.$route.name === "modern-desktop-id") {
+          this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+        } else {
+          // if is multi game then add selected game
+          this.addStockMultigame(GET_STOCK_URL);
         }
       } else {
-        this.stockSocket = false;
+        // check is multi game or not
+        if (this.$route.name === "modern-desktop-id") {
+          this.$router.replace(`/modern/desktop/${GET_STOCK_NAME}`);
+          // if is multi game then add selected game
+        } else {
+          this.addStockMultigame(GET_STOCK_NAME);
+        }
       }
     },
     getStockCategory(val) {
