@@ -12,7 +12,7 @@ export default ({ store }) => {
       window.Echo = new Echo({
         broadcaster: "pusher",
         key: config.secretKey, // check on Config File.
-        wsHost: config.apiDomain,
+        wsHost: config.socketUrl,
         wsPort: port,
         disableStats: true,
         auth: {

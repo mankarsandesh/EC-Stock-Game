@@ -1,6 +1,7 @@
 const pkg = require("./package");
 
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
+import fs from "fs";
 
 import config from "./config/config.global";
 
@@ -105,6 +106,7 @@ module.exports = {
    */
   plugins: [
     "@/plugins/vuetify",
+    // "~/plugins/axios",
     "@/plugins/filters",
     "@/plugins/callApi",
     "@/plugins/i18n",
@@ -112,7 +114,8 @@ module.exports = {
     "@/plugins/sweetAlert",
     "@/plugins/vueScreen",
     "@/plugins/socketio",
-    { src: "@/plugins/vChart", mode: "client" }
+    { src: "@/plugins/vChart", mode: "client" },
+    { src: "@/plugins/ga", mode: "client" }
   ],
   router: {
     middleware: ["auth", "showLoading"]

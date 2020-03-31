@@ -3,6 +3,8 @@ const config = {
   authUser : `${process.env.AUTHUSER}`,
   authPassword : `${process.env.AUTHPASS}`,
   apiDomain: process.env.API_DOMIAN,
+  socketUrl: process.env.SOCKETURL,
+  baseUrl: process.env.BASE_URL,
   secretKey:"GYXMAKGDYAWDW4K1C6HWWQHXH2W",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"

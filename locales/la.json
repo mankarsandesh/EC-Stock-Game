@@ -156,7 +156,10 @@
         "ModernVersion": "ລຸ້ນທັນສະໃໝ",
         "ChooseTheVersionToPlay": "ເລືອກລຸ້ນທີ່ຈະຫລິ້ນ",
         "introduction":"ການແນະ ນຳ",
-        "accept":"ຂ້ອຍ​ຍອມ​ຮັບ"
+        "accept":"ຂ້ອຍ​ຍອມ​ຮັບ",
+        "pending":"ທີ່ຍັງຄ້າງ",
+        "win":"ຊະນະ",
+        "lose":"ສູນເສຍ"
     },
     "navlist": {
         "live Stock": "ຫຸ້ນເປີດ",
@@ -234,7 +237,10 @@
         "stockanalysis": "ການວິເຄາະຫຼັກຊັບ",
         "onlinetime":"ເວລາ ອອນລາຍ",
         "totalonline":"ທັງ ໝົດ ອອນລາຍ",
-        "signout":"ອອກ​ຈາກ​ລະ​ບົບ"
+        "signout":"ອອກ​ຈາກ​ລະ​ບົບ",
+        "myfollowers":"ຜູ້ຕິດຕາມຂອງຂ້ອຍ",
+        "mynotification":"ແຈ້ງການຂອງຂ້ອຍ",
+        "setting":"ການຕັ້ງຄ່າ"
     },
     "useraction": {
         "followbet": "ປະຕິບັດຕາມ BET",
