@@ -132,7 +132,7 @@ export default {
     ...mapState(["portalProviderUUID", "headers", "userUUID"])
   },
   watch: {
-    urlName: function () {
+    '$route'(to, from) {
       if(this.activeUrl.includes(this.$route.name)) {
       this.getGameChannel = true;
       } else {
