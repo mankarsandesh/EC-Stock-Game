@@ -132,10 +132,15 @@ export default {
     minute(value) {
       if (value.loopName !== undefined) {
         sessionStorage.setItem("STOCK_LOOP", value.loopName);
-        sessionStorage.setItem(
-          "STOCK_URL",
-          this.stockName.stockName + value.loopName
-        );
+        const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+        if (GET_STOCK_TYPE == "crypto") {
+          sessionStorage.setItem(
+            "STOCK_URL",
+            this.stockName.stockName + value.loopName
+          );
+        } else {
+          sessionStorage.setItem("STOCK_URL", this.stockName.stockName);
+        }
       }
       if (value !== "") {
         this.gameId = "";
