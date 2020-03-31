@@ -1,15 +1,15 @@
 <template>
   <v-layout wrap class="select-stock mt-2">
-    <v-flex md2>
+    <v-flex md3>
       <v-select
         v-model="stock"
         :items="items"
         full-width
         solo
         hide-details
-        class="selectStock"
         color="blue"
         label="select stock"
+        prepend-icon="bar_chart"
         item-text="type"
         item-value="name"
         return-object
@@ -20,9 +20,8 @@
         v-model="stockName"
         :items="stockNames"
         label="Stock Name"
-        class="selectStock"
         prepend-icon="navigate_next"
-        color="blue"
+        color="green"
         full-width
         solo
         hide-details
@@ -37,9 +36,8 @@
         v-model="minute"
         :items="minutes"
         label="Minute"
-        class="selectStock"
         prepend-icon="navigate_next"
-        color="blue"
+        color="red"
         full-width
         solo
         hide-details
@@ -51,17 +49,17 @@
         <template slot="selection" slot-scope="data">{{ data.item.loopName }} Minutes</template>
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content>{{ data.loopName }} Minutes</v-list-tile-content>
+            <v-list-tile-content>{{data.loopName}} Minutes</v-list-tile-content>
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title>{{ data.item.loopName }} Minutes</v-list-tile-title>
+              <v-list-tile-title>{{data.item.loopName}} Minutes</v-list-tile-title>
             </v-list-tile-content>
           </template>
         </template>
       </v-select>
     </v-flex>
-    <v-flex md4>
+    <v-flex md3>
       <v-text-field
         v-model="gameId"
         label="game id"
@@ -71,6 +69,7 @@
         solo
         hide-details
         disabled
+        id="gameId"
       />
     </v-flex>
   </v-layout>
@@ -78,7 +77,6 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
-import config from "../config/config.global";
 export default {
   data() {
     return {
@@ -94,24 +92,11 @@ export default {
   },
   watch: {
     stock(value) {
-      let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
-      if (value.type === GET_STOCK_TYPE) {
-        this.stockSocket = true;
-        // this.stockName = ""; // after value is not empty we clear the value is first
-        this.stockNames = [];
-        this.stockNames = value.stocks;
-        $("#stockName").click();
-      }
-
-      // when value is changed this value will do the list
       if (this.stockSocket) {
-        // check the stockSocket is come or not
-        this.stockSocket = false; // after value is come we set value of stickSocket is flase
+        this.stockSocket = false;
       } else {
-        // after value is false the logic will be come in this case
         if (value !== "") {
-          sessionStorage.setItem("STOCK_TYPE", value.type);
-          // this.stockName = "";
+          this.stockName = "";
           this.stockNames = value.stocks;
           $("#stockName").click();
         }
@@ -119,50 +104,40 @@ export default {
       }
     },
     stockName(value) {
-      let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
-      if (value.stockName !== undefined) {
-        sessionStorage.setItem("STOCK_NAME", this.stockName.stockName);
-      }
-      if (this.stock.type === GET_STOCK_TYPE) {
-        this.minute = "";
-        this.minutes = value.loops;
-        $("#minute").click();
+      if (this.stockSocket) {
+        if (value !== "") {
+          this.minute = "";
+          this.minutes = value.loops;
+          $("#minute").click();
+        }
+      } else {
+        this.stockSocket = false;
       }
     },
     minute(value) {
-      if (value.loopName !== undefined) {
-        sessionStorage.setItem("STOCK_LOOP", value.loopName);
-        sessionStorage.setItem(
-          "STOCK_URL",
-          this.stockName.stockName + value.loopName
-        );
-      }
-      if (value !== "") {
-        this.gameId = "";
-        this.gameId = value.gameID;
+      if (this.stockSocket) {
+        if (value !== "") {
+          this.gameId = "";
+          this.gameId = value.gameID;
+          $("#gameId").click();
+        }
+      } else {
+        this.stockSocket = false;
       }
     },
     gameId(value) {
-      const GET_STOCK_URL = sessionStorage.getItem("STOCK_URL");
-      const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
-      const GET_STOCK_NAME = sessionStorage.getItem("STOCK_NAME");
-      const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_LOOP");
-
-      if (GET_STOCK_TYPE == "crypto") {
-        if (this.$route.name === "modern-desktop-id") {
-          this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
-        } else {
-          // if is multi game then add selected game
-          this.addStockMultigame(GET_STOCK_URL);
+      if (this.stockSocket) {
+        if (value !== "") {
+          if (this.stock.type == "crypto") {
+            this.$router.replace(
+              `/modern/desktop/${this.stockName.stockName}${this.minute.loopName}`
+            );
+          } else {
+            this.$router.replace(`/modern/desktop/${this.stockName.stockName}`);
+          }
         }
       } else {
-        // check is multi game or not
-        if (this.$route.name === "modern-desktop-id") {
-          this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
-          // if is multi game then add selected game
-        } else {
-          this.addStockMultigame(GET_STOCK_URL);
-        }
+        this.stockSocket = false;
       }
     },
     getStockCategory(val) {
@@ -171,34 +146,26 @@ export default {
     }
   },
   created() {
-    const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
-    sessionStorage.setItem("STOCK_URL", this.$route.params.id);
-    if (GET_STOCK_TYPE !== "crypto") {
-      sessionStorage.setItem("STOCK_LOOP", 5);
-    } else {
-      let stockURL = this.$route.params.id;
-      let stockURLName = stockURL.substring(0, stockURL.length - 1);
-      let stockURLLoop = stockURL.substr(stockURL.length - 1);
-      sessionStorage.setItem("STOCK_LOOP", stockURLLoop);
-    }
     this.getActiveGamesByCategory();
   },
   mounted() {},
   computed: {
-    ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
+    ...mapGetters(["getStockCategory"])
   },
   methods: {
-    ...mapMutations(["addStockMultigame", "setGameID", "SET_STOCK_CATEGORY"]),
+    ...mapMutations(["setGameID", "SET_STOCK_CATEGORY"]),
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
-          config.getActiveGamesByCategory.url,
+          "http://uattesting.equitycapitalgaming.com/webApi/getActiveGamesByCategory",
           {
-            portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version
+            portalProviderUUID: "ef60e64b-dc17-4ff1-9f22-a177c6f1c204",
+            version: 0.1
           },
           {
-            headers: config.header
+            headers: {
+              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
+            }
           }
         );
         this.getGameUUID(data);
@@ -216,7 +183,6 @@ export default {
         if (item.type === "crypto") {
           if (item.stocks.find(({ stockName }) => stockName === stockURLName)) {
             this.stock = item.type;
-            sessionStorage.setItem("STOCK_TYPE", item.type);
             item.stocks.map(stockN => {
               this.stockName = stockN.stockName;
               this.stockNames.push(stockN.stockName);
@@ -232,7 +198,6 @@ export default {
         } else {
           if (item.stocks.find(({ stockName }) => stockName === stockURL)) {
             this.stock = item.type;
-            sessionStorage.setItem("STOCK_TYPE", item.type);
             item.stocks.map(stockN => {
               if (stockN.stockName == stockURL) {
                 this.stockName = stockN.stockName;
@@ -294,11 +259,6 @@ export default {
   }
 };
 </script>
-<style scoped>
-.selectStock {
-  font-size: 14px;
-}
-.v-list {
-  font-size: 12px;
-}
+
+<style>
 </style>
