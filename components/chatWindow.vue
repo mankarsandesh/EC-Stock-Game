@@ -124,6 +124,22 @@ export default {
     }
   },
   mounted() {
+    this.listenForBroadcast(
+      {
+        channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
+        eventName: "messageSend"
+      },
+      ({ data }) => {
+        data.data.forEach(element => {
+          this.getMessagesGame.push({
+            name: element.userName,
+            userId: element.userUUID,
+            message: element.message,
+            date: element.date
+          });
+        });
+      }
+    );
     // Game Channel Game ID wise
     this.listenForBroadcast(
       {

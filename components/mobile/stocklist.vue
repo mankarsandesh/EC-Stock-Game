@@ -10,7 +10,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,index) in desserts" :key="index">
+          <tr v-for="(item,index) in stocks" :key="index">
             <td>{{item.stockName}}</td>
             <td
               :class="{'text-red': currentPrice,'text-green': !currentPrice}"
@@ -45,7 +45,7 @@ export default {
         { text: "live price", value: "stockOpenOrClosed" },
         { text: "reference", value: "referenceUrl" }
       ],
-      desserts: []
+      stocks: []
     };
   },
   mounted() {
@@ -55,7 +55,7 @@ export default {
         eventName: "stockList"
       },
       ({ data }) => {
-        this.desserts = data.data.stockData;
+        this.stocks = data.data.stockData;
       }
     );
   },
@@ -72,13 +72,13 @@ export default {
           return 1;
         }
       }
-      return this.desserts.sort(compare);
+      return this.stocks.sort(compare);
     }
   },
   computed: {
     ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
   },
-  methods: {  
+  methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },

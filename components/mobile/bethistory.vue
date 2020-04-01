@@ -78,7 +78,6 @@
     </v-layout>
 
     <v-data-table
-      :headers="head"
       hide-actions
       :items="userBetHistory"
       :pagination.sync="pagination"
@@ -87,6 +86,17 @@
       class="bg-colors"
       scope="col"
     >
+      <template v-slot:headers="headers">
+        <tr class="text-uppercase">
+          <th scope="col">{{$t('msg.BetId')}}</th>
+          <th scope="col">{{$t('msg.gameid')}}</th>
+          <th scope="col">{{$t('msg.Betdetail')}}</th>
+          <th scope="col">{{$t('msg.Time')}}</th>
+          <th scope="col">{{$t('msg.amount')}}</th>
+          <th scope="col">{{$t('msg.payout')}}</th>
+          <th scope="col">{{$t('msg.Bet Status')}}</th>
+        </tr>
+      </template>
       <template v-slot:items="item">
         <tr @click="clicked(item.item.betUUID)" class="selectRow">
           <td>{{ item.item.betUUID }}</td>
@@ -163,7 +173,7 @@
 
 <script>
 export default {
-  props: ["head", "userBetHistory"],
+  props: ["userBetHistory"],
   data() {
     return {
       dateTo: new Date().toISOString().substr(0, 10),

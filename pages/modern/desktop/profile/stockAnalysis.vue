@@ -12,7 +12,7 @@
         <v-flex xs6 sm6 md3 lg3 pr-5>
           <div
             class="date_picker_container"
-            @click="isShowDateStart = !isShowDateStart"
+            @click="startDateClick"
           >
             <div class="title_date_picker">
               <span>{{$t('msg.from')}}</span>
@@ -36,7 +36,7 @@
         <v-flex xs6 sm6 md3 lg3 pr-5>
           <div
             class="date_picker_container"
-            @click="isShowDateEnd = !isShowDateEnd"
+            @click="endDateClick"
           >
             <div class="title_date_picker">
               <span>{{$t('msg.to')}}</span>
@@ -69,7 +69,7 @@
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
-        <div class="chart-map-color">
+        <div v-if="isDataValid" class="chart-map-color">
           <span v-for="(stock, index) in stocks" :key="index">
             <span
               class="circle-color"
@@ -80,7 +80,9 @@
             }}</span>
           </span>
         </div>
+        <p class='no-data' v-if="!isDataValid"><strong>{{ error }}</strong></p>
         <apexchart
+          v-if="isDataValid"
           type="bar"
           height="480vh"
           :options="chartOptions"
@@ -111,8 +113,8 @@ export default {
   },
   created() {
     const now = date.format(new Date(), "YYYY-MM-DD");
-    const last2week = date.addDays(new Date(), -14);
-    this.startDate = date.format(last2week, "YYYY-MM-DD");
+    const lastWeek = date.addDays(new Date(), -7);
+    this.startDate = date.format(lastWeek, "YYYY-MM-DD");
     this.endDate = now;
     this.getStockAnalysis();
   },
@@ -132,6 +134,7 @@ export default {
       isShowDateEnd: false,
       startDate: "",
       endDate: "",
+      isDataValid: false,
       chartOptions: {
         colors: [
           function({ value, seriesIndex, dataPointIndex, w }) {
@@ -308,8 +311,18 @@ export default {
     }
   },
   methods: {
+    checkValidDate(startDate, endDate) {
+      const now = date.format(new Date(), 'YYYY-MM-DD');
+      if(endDate > now || !(endDate >= startDate)) {
+        return false;
+      }
+      return true;
+    },
     async getStockAnalysis() {
       try {
+        if(!this.checkValidDate(this.startDate, this.endDate)) {
+          throw new Error('Please select a valid date');
+        }
         const res = await this.$axios.$post(
           config.getUserBetAnalysis.url,
           {
@@ -326,8 +339,14 @@ export default {
           }
         );
         if (res.code === 200) {
-          this.stockAnalysis = res.data;
-          console.log(res.data, 'ayayayayayayayyayayya');
+          if(res.data.length) {
+            this.isDataValid = true;
+            this.error = '';
+            this.stockAnalysis = res.data;
+          } else {
+            this.isDataValid = false;
+            this.error = 'No data to display';
+          }
         } else {
           throw new Error(res.message.dateRangeTo[0]);
         }
@@ -337,8 +356,20 @@ export default {
           type: "error",
           showConfirmButton: true
         });
+        if(ex.message == 'Please select a valid date') {
+          this.error = 'Please select a valid date';
+          this.isDataValid = false;
+        }
         console.log(ex.message);
       }
+    },
+    startDateClick() {
+      this.isShowDateStart = !this.isShowDateStart;
+      this.isShowDateEnd = false;
+    },
+    endDateClick() {
+      this.isShowDateEnd = !this.isShowDateEnd;
+      this.isShowDateStart = false;
     }
   }
 };
@@ -417,5 +448,10 @@ button:focus {
 }
 .select_date {
   text-transform: uppercase;
+}
+.no-data {
+  color: red;
+  text-align: center;
+  align-content: center;
 }
 </style>
