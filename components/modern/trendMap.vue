@@ -229,45 +229,12 @@ export default {
         }
       }
     },
-    // changeChartType(value) {
-    //   this.trendType = value;
-    //   this.clearTrendMap();
-    //   this.getTableChartBS();
-    // },
-    // autoScroll() {
-    //   let _this = this;
-    //   // setTimeout(function() {
-    //   let lop =
-    //     $(".my-coltabledivlast")
-    //       .first()
-    //       .width() - 30;
-    //   let valuebs = $(_this.$refs.tablebsTwo).find(".mystylelast")[0]
-    //     .offsetLeft;
-    //   let valueoe = $(_this.$refs.tableOETwo).find(".oestylelast")[0]
-    //     .offsetLeft;
-    //   let valueuml = $(_this.$refs.tablebUMLTwo).find(".umlstylelast")[0]
-    //     .offsetLeft;
-    //   let valuenum = $(_this.$refs.tableNumberTwo).find(".numScroll")[0]
-    //     .offsetLeft;
-    //   $(_this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
-    //   $(_this.$refs.tableOETwo).scrollLeft(valueoe - lop);
-    //   $(_this.$refs.tablebUMLTwo).scrollLeft(valueuml - lop);
-    //   $(_this.$refs.tableNumberTwo).scrollLeft(valuenum - lop);
-    //   // }, 1000);
-    // },
-    // sleep(milliseconds) {
-    //   return new Promise(resolve => setTimeout(resolve, milliseconds));
-    // },
     getTableChartBS() {
       if (this.dataArray === "") return;
       this.clearTrendMap();
       let n = 0;
       let firstlast = "";
-
       var start = +new Date(); // log start timestamp
-      // console.log(`${start} good` );
-      // console.log(this.dataArray)
-
       this.dataArray.forEach(element => {
         n++;
         if (this.trendType === "firstDigit") {
@@ -495,10 +462,6 @@ export default {
             //  alert(valuebs + "valuebs")
 
             $(this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
-
-            // $(this.$refs.tablebsTwo)
-            //   .find(".mystylelast")[0]
-            //   .scrollIntoView({ inline: "end" });
           }
           // if loop all s it will render B&S and exit all loop
           if (s == this.trent.length) {

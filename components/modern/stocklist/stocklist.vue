@@ -34,7 +34,7 @@
 import { mapGetters,mapState} from "vuex";
 import config from '../../../config/config.global';
 export default {
-  props: ["item"],
+  props: ["itemss"],
   data() {
     return {
       items: ["day", "weeks", "months", "years"],
