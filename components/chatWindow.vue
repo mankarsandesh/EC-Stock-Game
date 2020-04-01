@@ -141,6 +141,7 @@ export default {
             date: element.date
           });
         });
+        this.scrollDown();
       }
     );
   },

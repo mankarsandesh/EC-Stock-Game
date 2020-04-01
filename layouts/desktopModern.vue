@@ -1,26 +1,50 @@
 <template>
-  <v-app style=" background-color: #f4f5fd;">
-    <v-toolbar class="notification" xs12 v-if="showNotification">
-      <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
-      <v-flex xs4 class="text-xs-right">
-        <winnerMarquee
-          class="winnerText"
-          :scrollSpeed="scrollSpeed"
-          :showSpeed="showSpeed"
-          :pauseOnHover="pauseOnHover"
-          :pauseTime="pauseTime"
-          :marqueeList="winner"
-          height="30px"
-          width="100%"
-          color="#f76a24"
-          fontSize="13px"
-        ></winnerMarquee>
-      </v-flex>
-      <v-flex xs1 class="text-xs-right closeNotification">
-        <i class="fa fa-close fa-2x" @click="showNotification = false" />
-      </v-flex>
-    </v-toolbar>
-    <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
+  <div>
+    <h1>{{ getTutorialStepNumber }}</h1>
+    <!-- tutorial -->
+    <div id="tutorial-container" v-if="getIsShowTutorial">
+      <div id="background-tutorial"></div>
+      <div id="guide-container">
+        <!-- last draw -->
+        <div class="lastDrawDescription" v-if="getTutorialStepNumber === 1">
+          <span id="result-draw">{{ getLastDraw | lastDraw2 }}</span>
+          <span id="guide-description">Result of the DRAW</span>
+        </div>
+        <!-- bet close in  -->
+        <div class="betCloseIn" v-if="getTutorialStepNumber === 2">
+          <span
+            id="guide-description"
+            class="text-uppercase"
+            style="font-size:80px"
+            >calculation...</span
+          >
+        </div>
+      </div>
+    </div>
+    <!-- tutorial -->
+
+    <v-app style=" background-color: #f4f5fd;">
+      <v-toolbar class="notification" xs12 v-if="showNotification">
+        <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
+        <v-flex xs4 class="text-xs-right">
+          <winnerMarquee
+            class="winnerText"
+            :scrollSpeed="scrollSpeed"
+            :showSpeed="showSpeed"
+            :pauseOnHover="pauseOnHover"
+            :pauseTime="pauseTime"
+            :marqueeList="winner"
+            height="30px"
+            width="100%"
+            color="#f76a24"
+            fontSize="13px"
+          ></winnerMarquee>
+        </v-flex>
+        <v-flex xs1 class="text-xs-right closeNotification">
+          <i class="fa fa-close fa-2x" @click="showNotification = false" />
+        </v-flex>
+      </v-toolbar>
+      <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"
@@ -31,77 +55,78 @@
         ></v-progress-circular>
       </div>
     </div> -->
-    <div
-      class="text-xs-center container-loading loading"
-      v-if="getIsLoadingStockGame"
-    >
-      <v-progress-circular
-        style="top: calc(100% - 68%);"
-        :size="100"
-        :width="10"
-        color="#ffffff"
-        indeterminate
-      ></v-progress-circular>
-    </div>
-    <v-toolbar class="toolbarMenu">
-      <v-container fluid class="navbar">
-        <v-toolbar-title>
-          <v-img
-            src="/logo.png"
-            @click="$router.push('/modern/desktop/btc1')"
-            class="logoStyle"
-          ></v-img>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-xs-only text-s1 toolBar">
-          <v-btn
-            flat
-            v-for="item in menu"
-            :key="item.title"
-            :to="item.to"
-            class="menuItem"
-          >
-            <i :class="item.icon" />
-            <span>&nbsp;{{ $t(`menu.${item.title}`) }}</span>
-          </v-btn>
-          <div class="layout-btn">
+      <div
+        class="text-xs-center container-loading loading"
+        v-if="getIsLoadingStockGame"
+      >
+        <v-progress-circular
+          style="top: calc(100% - 68%);"
+          :size="100"
+          :width="10"
+          color="#ffffff"
+          indeterminate
+        ></v-progress-circular>
+      </div>
+      <v-toolbar class="toolbarMenu">
+        <v-container fluid class="navbar">
+          <v-toolbar-title>
+            <v-img
+              src="/logo.png"
+              @click="$router.push('/modern/desktop/btc1')"
+              class="logoStyle"
+            ></v-img>
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items class="hidden-xs-only text-s1 toolBar">
             <v-btn
-              class="btn-langage"
-              text
               flat
-              @click="$refs.language.showDialog()"
+              v-for="item in menu"
+              :key="item.title"
+              :to="item.to"
+              class="menuItem"
             >
-              <countryFlag :country="countryflag" size="normal" />
-              <span>&nbsp;{{ $t("msg.chooselanguage") }}</span>
-              <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
+              <i :class="item.icon" />
+              <span>&nbsp;{{ $t(`menu.${item.title}`) }}</span>
             </v-btn>
-          </div>
-          <userMenu class="layout-logout" />
-          <span
-            flat
-            @click="showNotification = true"
-            id="notification"
-            class="menuItemNotification"
-          >
-            <i class="fa fa-bell-o fa-2x" />
-            <span class="badge">{{ messagesCount }}</span>
-          </span>
-        </v-toolbar-items>
-      </v-container>
-    </v-toolbar>
+            <div class="layout-btn">
+              <v-btn
+                class="btn-langage"
+                text
+                flat
+                @click="$refs.language.showDialog()"
+              >
+                <countryFlag :country="countryflag" size="normal" />
+                <span>&nbsp;{{ $t("msg.chooselanguage") }}</span>
+                <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
+              </v-btn>
+            </div>
+            <userMenu class="layout-logout" />
+            <span
+              flat
+              @click="showNotification = true"
+              id="notification"
+              class="menuItemNotification"
+            >
+              <i class="fa fa-bell-o fa-2x" />
+              <span class="badge">{{ messagesCount }}</span>
+            </span>
+          </v-toolbar-items>
+        </v-container>
+      </v-toolbar>
 
-    <languageDialog ref="language" />
-    <v-content>
-      <nuxt />
-    </v-content>
+      <languageDialog ref="language" />
+      <v-content>
+        <nuxt />
+      </v-content>
 
-    <!-- Chat Windows-->
-    <chatWindow
-      :gameUUID="getGameUUIDByStockName($route.params.id)"
-      :key="$route.name"
-    />
-    <!-- <chatWindow /> -->
-  </v-app>
+      <!-- Chat Windows-->
+      <chatWindow
+        :gameUUID="getGameUUIDByStockName($route.params.id)"
+        :key="$route.name"
+      />
+      <!-- <chatWindow /> -->
+    </v-app>
+  </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
@@ -129,6 +154,7 @@ export default {
   },
   data() {
     return {
+      isShowTutorial: true,
       messagesCount: 2,
       activeClass: null,
       showNotification: false,
@@ -181,6 +207,7 @@ export default {
     // console.log("crearted");
   },
   mounted() {
+    // $("#lastDrawGuideline").css("position", "relative");
     this.fetchNotification();
     lottie.loadAnimation({
       container: this.$refs.svgContainer, // the dom element that will contain the animation
@@ -227,8 +254,18 @@ export default {
       }
     }
   },
+  watch: {
+    getTutorialStepNumber(newValue) {
+      if (newValue === 1) {
+        $("#lastDrawGuideline").css("z-index", "10001");
+      }
+    }
+  },
   computed: {
     ...mapGetters([
+      "getTutorialStepNumber",
+      "getIsShowTutorial",
+      "getLastDraw",
       "getGameUUIDByStockName",
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID

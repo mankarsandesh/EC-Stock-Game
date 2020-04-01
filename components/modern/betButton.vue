@@ -78,15 +78,15 @@
     <!-- Row betting button2 -->
     <v-layout row>
       <span class="w12 buttonbtn">
-        <v-btn class="bg-btn-last btnHeight">
+        <v-btn class="bg-btn-last btnHeight betButtonGuide">
           <span class="btn-digit">{{ $t("gamemsg.lastdigits") }}</span>
         </v-btn>
       </span>
 
       <popper
         :disabled="checkFooterBet"
-        v-for="data in lastDigit"
-        :key="data.rule"
+        v-for="(data, index) in lastDigit"
+        :key="index"
         class="w12"
         trigger="click"
         :options="{
@@ -103,7 +103,11 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          :class="
+            index == 3
+              ? 'align_button4 betButtonGuide BetButtonGuideEven'
+              : 'align_button4 betButtonGuide'
+          "
           :id="'lastdigit-' + data.rule"
           @click="betButtonClick(data.ruleid)"
           slot="reference"
@@ -128,7 +132,11 @@
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4" id="last" @click="btnNumber('last')">
+        <v-btn
+          class="align_button4 betButtonGuide"
+          id="last"
+          @click="btnNumber('last')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -408,7 +416,7 @@ import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
-import gameRule from "../../data/gameRule"
+import gameRule from "../../data/gameRule";
 export default {
   props: {
     isFullscreen: {
