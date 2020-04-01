@@ -7,8 +7,8 @@
         </v-btn>
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="40">
-            <img  :src="imgProfile" />          
-          </v-avatar>          
+            <img :src="imgProfile" />
+          </v-avatar>
           <div class="userLogoutMenu">
             <span v-if="getUserInfo.firstName == null">{{getUserInfo.userName}} </span>
             <span v-if="getUserInfo.firstName">{{getUserInfo.firstName}} {{getUserInfo.lastName}}</span>
@@ -24,10 +24,7 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-tile
-          @click="$router.push('/modern/desktop/profile/');"
-          v-show="isShow == 'modern'"
-        >
+        <v-list-tile @click="$router.push('/modern/desktop/profile/');" v-show="isShow == 'modern'">
           <i class="fa fa-user fa-2x margin-right-5" />
           <v-list-tile-title>{{$t('menu.profile')}}</v-list-tile-title>
         </v-list-tile>
@@ -52,18 +49,27 @@
         </v-list-tile>
       </v-list>
     </v-menu>
+    <app-dialogs-confirm
+      v-on:dialogStatus="dialogStatus"
+      :dialogConfirm="dialogConfirm"
+      title="Are you sure to logout?"
+      content="Hope to see you as soon, BYE BYE"
+    />
   </div>
 </template>
 <script>
 import AnimatedNumber from "animated-number-vue";
+import AppDialogsConfirm from "~/components/dialogsConfirm";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import config from '../config/config.global';
+import config from "../config/config.global";
 export default {
   components: {
-    AnimatedNumber
+    AnimatedNumber,
+    AppDialogsConfirm
   },
   data() {
     return {
+      dialogConfirm: false,
       profileImage: "",
       dialogprofile: false,
       isShow: ""
@@ -78,44 +84,24 @@ export default {
   mounted() {   
     this.isShow = location.pathname.split("/")[1];
   },
-  methods: {  
+  methods: {
+    getLogout() {
+      this.dialogConfirm = true;
+    },
+    async dialogStatus(value) {
+      if (value) {
+        await localStorage.removeItem("AUTH");
+        const URL = await localStorage.getItem("REFERERN_URL");
+        location.href = "http://" + URL;
+        this.dialogConfirm = false;
+      }
+      this.dialogConfirm = false;
+    },
     formatToPrice(value) {
       return `${Number(value)
         .toFixed(2)
-        .toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
-    },
-    getLogout() {
-      this.$swal({
-        title: "Are you sure?",
-        text: "Did you leave the EC Gaming page?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, Logout!",
-        cancelButtonText: "No, Cancel Logout!",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      }).then(isConfirm => {
-        if (isConfirm.value) {
-          this.$swal({
-            title: "Good Bye EC Gaming!",
-            type: "success",
-            showConfirmButton: false,
-            timer: 1500
-          }).then(Confirm => {
-            this.$store.state.auth_token = [];
-            localStorage.apikey = [];
-            window.close();
-          });
-        } else {
-          this.$swal({
-            title: "Cancelled Logout",
-            type: "error",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
-      });
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     }
   }
 };

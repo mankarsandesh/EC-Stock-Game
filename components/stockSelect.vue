@@ -255,7 +255,6 @@ export default {
       this.stockSocket = true;
     },
     updateGameUUID(items) {
-      console.log("==============STOCK SOCKET===============");
       let stockURL = this.$route.params.id;
       let stockURLName = stockURL.substring(0, stockURL.length - 1);
       let stockURLLoop = stockURL.substr(stockURL.length - 1);
@@ -267,11 +266,6 @@ export default {
                 if (minute.loopName == stockURLLoop) {
                   this.gameId = minute.gameID;
                   this.setGameID(minute.gameID);
-                  console.log("STOCK TYPE : " + item.type);
-                  console.log("STOCK NAME : " + stockN.stockName);
-                  console.log("STOCK LOOP : " + minute.loopName);
-                  console.log("GAME STATUS : " + minute.gameStatus);
-                  console.log("GAME UUID : " + minute.gameID);
                 }
               });
             });
@@ -283,18 +277,12 @@ export default {
                 stockN.loops.map(minute => {
                   this.gameId = minute.gameID;
                   this.setGameID(minute.gameID);
-                  console.log("STOCK TYPE : " + item.type);
-                  console.log("STOCK NAME : " + stockN.stockName);
-                  console.log("STOCK LOOP : " + minute.loopName);
-                  console.log("GAME STATUS : " + minute.gameStatus);
-                  console.log("GAME UUID : " + minute.gameID);
                 });
               }
             });
           }
         }
       });
-      console.log("==============STOCK SOCKET===============");
     }
   }
 };
@@ -307,3 +295,14 @@ export default {
   font-size: 12px;
 }
 </style>
+
+
+
+composer install 
+php artisan key:generate
+php artisan jwt:secret
+php artisan migrate:fresh --seed
+npm install 
+
+change port 
+php artisan serve --port=8080
