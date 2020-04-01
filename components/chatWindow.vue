@@ -252,7 +252,7 @@ export default {
 .liveChat {
   z-index: 999;
   position: fixed;
-  right: 12px;
+  right: 0px;
   bottom: 20px;
   width: 50px;
   height: 50px;
