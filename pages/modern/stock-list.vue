@@ -44,7 +44,7 @@ export default {
     },
     data() {
         return {
-            items: ["day", "weeks", "months", "years", "all"],
+            items: ["ascending","descending"],
             itemss: ""
         };
     },
