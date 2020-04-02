@@ -69,8 +69,7 @@
           {{$t('profile.onlinetime')}} : <b>{{currentActiveTime}}</b>
         </span>
         <span style="margin-right:30px">
-          {{$t('profile.totalonline')}} 
-          <b> {{totalOnlineTime}} </b>
+          {{$t('profile.totalonline')}} : <b> {{totalOnlineTime}} </b>
         </span>
       </div>
     </v-flex>

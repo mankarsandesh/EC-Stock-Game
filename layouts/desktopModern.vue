@@ -1,26 +1,133 @@
 <template>
-  <v-app style=" background-color: #f4f5fd;">
-    <v-toolbar class="notification" xs12 v-if="showNotification">
-      <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
-      <v-flex xs4 class="text-xs-right">
-        <winnerMarquee
-          class="winnerText"
-          :scrollSpeed="scrollSpeed"
-          :showSpeed="showSpeed"
-          :pauseOnHover="pauseOnHover"
-          :pauseTime="pauseTime"
-          :marqueeList="winner"
-          height="30px"
-          width="100%"
-          color="#f76a24"
-          fontSize="13px"
-        ></winnerMarquee>
-      </v-flex>
-      <v-flex xs1 class="text-xs-right closeNotification">
-        <i class="fa fa-close fa-2x" @click="showNotification = false" />
-      </v-flex>
-    </v-toolbar>
-    <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
+  <div>
+    <!-- tutorial -->
+    <div id="tutorial-container" v-if="getIsShowTutorial">
+      <div id="background-tutorial"></div>
+      <div id="guide-container">
+        <!-- last draw -->
+        <div class="lastDrawDescription" v-if="getTutorialStepNumber === 1">
+          <span id="result-draw">{{ getLastDraw | lastDraw2 }}</span>
+          <span id="guide-description">Result of the DRAW</span>
+        </div>
+        <!-- bet close in  -->
+        <div class="betCloseIn" v-if="getTutorialStepNumber === 2">
+          <span
+            id="guide-description"
+            class="text-uppercase"
+            style="font-size:100px"
+            >calculation...</span
+          >
+        </div>
+        <!-- lottery  -->
+        <div class="lotteryDraw" v-if="getTutorialStepNumber === 3">
+          <span id="lottery-draw-guide-text">
+            {{
+              getTimerByStockName($route.params.id) &&
+                getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
+                  | lotterydraw(getStockLoop($route.params.id))
+            }}
+          </span>
+          <span id="guide-description">Lottery DRAW</span>
+        </div>
+        <!-- chart  -->
+        <div id="chart-guide-title" v-if="getTutorialStepNumber === 4">
+          <span
+            id="bet-on-digit"
+            class="text-uppercase"
+            style="font-size:130px"
+          >
+            analysis graph
+          </span>
+          <span id="guide-description">
+            You can analysis stock graph,the result of last draw
+          </span>
+        </div>
+        <!-- bet on digigt  -->
+        <div class="lotteryDraw" v-if="getTutorialStepNumber === 5">
+          <span id="bet-on-digit" class="text-uppercase">
+            bet on digits
+          </span>
+          <span id="guide-description">
+            Now you can select DIGIT
+          </span>
+        </div>
+        <!-- select chipcamount  -->
+        <div v-if="getTutorialStepNumber === 6">
+          <span id="bet-on-digit" class="text-uppercase">
+            bet confirm
+          </span>
+          <span id="guide-description">
+            Your BET place confirm on Last Digit EVEN</span
+          >
+        </div>
+        <!-- enter amount bet -->
+        <div
+          class="lotteryDraw"
+          v-if="getTutorialStepNumber === 7"
+          style="margin-top:700px"
+        >
+          <span id="bet-on-digit" class="text-uppercase">
+            bet on digits
+          </span>
+          <span id="guide-description">
+            Select CHIP or enter AMOUNT to CONFIRM bet</span
+          >
+        </div>
+        <!-- select stock to play -->
+        <div class="lotteryDraw" v-if="getTutorialStepNumber === 8">
+          <span id="bet-on-digit" class="text-uppercase">
+            stocks & game
+          </span>
+          <span id="guide-description">
+            You can choose your Stock,you want BET/PLAY</span
+          >
+        </div>
+        <!-- stock list -->
+        <div class="lotteryDraw" v-if="getTutorialStepNumber === 9">
+          <span id="bet-on-digit" class="text-uppercase">
+            stock analysis
+          </span>
+          <span id="guide-description">
+            Analysis current active Stock DATA update
+          </span>
+        </div>
+        <!-- stock result -->
+        <div
+          class="lotteryDraw"
+          v-if="getTutorialStepNumber === 10"
+          style="margin-top:700px"
+        >
+          <span id="bet-on-digit" class="text-uppercase">
+            stock result
+          </span>
+          <span id="guide-description"> Check update result of Stock</span>
+        </div>
+      </div>
+    </div>
+    <!-- tutorial -->
+
+    <v-app style=" background-color: #f4f5fd;">
+      <v-toolbar class="notification" xs12 v-if="showNotification">
+        <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
+        <v-flex xs4 class="text-xs-right">
+          <winnerMarquee
+            class="winnerText"
+            :scrollSpeed="scrollSpeed"
+            :showSpeed="showSpeed"
+            :pauseOnHover="pauseOnHover"
+            :pauseTime="pauseTime"
+            :marqueeList="winner"
+            height="30px"
+            width="100%"
+            color="#f76a24"
+            fontSize="13px"
+          ></winnerMarquee>
+        </v-flex>
+        <v-flex xs1 class="text-xs-right closeNotification">
+          <i class="fa fa-close fa-2x" @click="showNotification = false" />
+        </v-flex>
+      </v-toolbar>
+      <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
       <div class="text-xs-center loading">
         <v-progress-circular
           style="top: calc(100% - 68%);"
@@ -31,77 +138,78 @@
         ></v-progress-circular>
       </div>
     </div> -->
-    <div
-      class="text-xs-center container-loading loading"
-      v-if="getIsLoadingStockGame"
-    >
-      <v-progress-circular
-        style="top: calc(100% - 68%);"
-        :size="100"
-        :width="10"
-        color="#ffffff"
-        indeterminate
-      ></v-progress-circular>
-    </div>
-    <v-toolbar class="toolbarMenu">
-      <v-container fluid class="navbar">
-        <v-toolbar-title>
-          <v-img
-            src="/logo.png"
-            @click="$router.push('/modern/desktop/btc1')"
-            class="logoStyle"
-          ></v-img>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-toolbar-items class="hidden-xs-only text-s1 toolBar">
-          <v-btn
-            flat
-            v-for="item in menu"
-            :key="item.title"
-            :to="item.to"
-            class="menuItem"
-          >
-            <i :class="item.icon" />
-            <span>&nbsp;{{ $t(`menu.${item.title}`) }}</span>
-          </v-btn>
-          <div class="layout-btn">
+      <div
+        class="text-xs-center container-loading loading"
+        v-if="getIsLoadingStockGame"
+      >
+        <v-progress-circular
+          style="top: calc(100% - 68%);"
+          :size="100"
+          :width="10"
+          color="#ffffff"
+          indeterminate
+        ></v-progress-circular>
+      </div>
+      <v-toolbar class="toolbarMenu">
+        <v-container fluid class="navbar">
+          <v-toolbar-title>
+            <v-img
+              src="/logo.png"
+              @click="$router.push('/modern/desktop/btc1')"
+              class="logoStyle"
+            ></v-img>
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items class="hidden-xs-only text-s1 toolBar">
             <v-btn
-              class="btn-langage"
-              text
               flat
-              @click="$refs.language.showDialog()"
+              v-for="item in menu"
+              :key="item.title"
+              :to="item.to"
+              class="menuItem"
             >
-              <countryFlag :country="countryflag" size="normal" />
-              <span>&nbsp;{{ $t("msg.chooselanguage") }}</span>
-              <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
+              <i :class="item.icon" />
+              <span>&nbsp;{{ $t(`menu.${item.title}`) }}</span>
             </v-btn>
-          </div>
-          <userMenu class="layout-logout" />
-          <span
-            flat
-            @click="showNotification = true"
-            id="notification"
-            class="menuItemNotification"
-          >
-            <i class="fa fa-bell-o fa-2x" />
-            <span class="badge">{{ messagesCount }}</span>
-          </span>
-        </v-toolbar-items>
-      </v-container>
-    </v-toolbar>
+            <div class="layout-btn">
+              <v-btn
+                class="btn-langage"
+                text
+                flat
+                @click="$refs.language.showDialog()"
+              >
+                <countryFlag :country="countryflag" size="normal" />
+                <span>&nbsp;{{ $t("msg.chooselanguage") }}</span>
+                <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
+              </v-btn>
+            </div>
+            <userMenu class="layout-logout" />
+            <span
+              flat
+              @click="showNotification = true"
+              id="notification"
+              class="menuItemNotification"
+            >
+              <i class="fa fa-bell-o fa-2x" />
+              <span class="badge">{{ messagesCount }}</span>
+            </span>
+          </v-toolbar-items>
+        </v-container>
+      </v-toolbar>
 
-    <languageDialog ref="language" />
-    <v-content>
-      <nuxt />
-    </v-content>
+      <languageDialog ref="language" />
+      <v-content>
+        <nuxt />
+      </v-content>
 
-    <!-- Chat Windows-->
-    <chatWindow
-      :gameUUID="getGameUUIDByStockName($route.params.id)"
-      :key="$route.name"
-    />
-    <!-- <chatWindow /> -->
-  </v-app>
+      <!-- Chat Windows-->
+      <chatWindow
+        :gameUUID="getGameUUIDByStockName($route.params.id)"
+        :key="$route.name"
+      />
+      <!-- <chatWindow /> -->
+    </v-app>
+  </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
@@ -130,6 +238,7 @@ export default {
   },
   data() {
     return {
+      isShowTutorial: true,
       messagesCount: 2,
       activeClass: null,
       showNotification: false,
@@ -182,6 +291,7 @@ export default {
     // console.log("crearted");
   },
   mounted() {
+    // $("#lastDrawGuideline").css("position", "relative");
     this.fetchNotification();
     lottie.loadAnimation({
       container: this.$refs.svgContainer, // the dom element that will contain the animation
@@ -192,7 +302,7 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setGameChannelShow"]),
+    ...mapMutations(["setGameChannelShow","setIsShowTutorial"]),
     async fetchNotification() {
       const betData = {
         portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
@@ -228,8 +338,61 @@ export default {
       }
     }
   },
+  watch: {
+    getTutorialStepNumber(newValue) {
+      switch (newValue) {
+        case 1:
+          $("#lastDrawGuideline").css("z-index", "10001");
+          break;
+        case 2:
+          $("#lastDrawGuideline").css("z-index", "1");
+          $("#betCloseInGuideline").css("z-index", "10001");
+          break;
+        case 3:
+          $("#betCloseInGuideline").css("z-index", "1");
+          $("#lotteryDrawGuidelines").css("z-index", "10001");
+          break;
+        case 4:
+          $("#lotteryDrawGuidelines").css("z-index", "1");
+          $("#chartGuideline").css("z-index", "10001");
+          break;
+        case 5:
+          $("#chartGuideline").css("z-index", "1");
+          $(".betButtonGuide").css("z-index", "10001");
+          break;
+        case 6:
+          $(".betButtonGuide").css("z-index", "1");
+          $(".BetButtonGuideEven").css("z-index", "10001");
+          break;
+        case 7:
+          $(".BetButtonGuideEven").click();
+          break;
+        case 8:
+          $(".BetButtonGuideEven").css("z-index", "1");
+          $("#background-tutorial").click();
+          $("#selectstockGuideline").css("z-index", "10001");
+          break;
+        case 9:
+          $("#selectstockGuideline").css("z-index", "1");
+          $("#stocklistGuidelines").css("z-index", "10001");
+          break;
+        case 10:
+          $("#stocklistGuidelines").css("z-index", "1");
+          $("#betresultGuidelines").css("z-index", "10001");
+          break;
+        default:
+         $("#betresultGuidelines").css("z-index", "1");
+         this.setIsShowTutorial(false)
+      }
+    }
+  },
   computed: {
     ...mapGetters([
+      "getTimerByStockName",
+      "getStockLoop",
+      "getTutorialStepNumber",
+      "getIsShowTutorial",
+      "getLastDraw",
       "getGameUUIDByStockName",
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID

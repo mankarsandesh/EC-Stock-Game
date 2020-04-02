@@ -55,7 +55,10 @@
                 <span>{{ $t("msg.Lastdraw") }}</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
-                    <span class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></span>
+                    <span
+                      class="text-black"
+                      v-html="$options.filters.lastDraw(getLastDraw)"
+                    ></span>
                   </v-flex>
                 </div>
               </v-flex>
@@ -73,16 +76,16 @@
                       class="text-black"
                     >
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      "close" | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          "close" | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                     <span v-else class="text-black">
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -95,10 +98,10 @@
                   <v-flex class="lottery">
                     <span class="text-black">
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | lotterydraw(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | lotterydraw(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -112,7 +115,7 @@
                   dark
                   small
                   class="helpButton"
-                  @click="setNextstep(), getopen()"
+                  @click="openTutorial()"
                   title="Help"
                 >
                   <v-icon dark size="25">fa-question</v-icon>
@@ -124,11 +127,19 @@
             </div>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getRoadMap.length > 0" >
-          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
+        <v-flex xs12 v-if="getRoadMap.length > 0">
+          <div
+            class="trendmap-container"
+            v-for="(trendType, index) in trendTypes"
+            :key="index"
+          >
             <hr v-if="index > 0" />
-            <div id="trendmapGuidelines" >
-              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index"></tableTrendMap>
+            <div id="trendmapGuidelines">
+              <tableTrendMap
+                :index="index"
+                :dataArray="getRoadMap"
+                :isShowMultigameButton="index"
+              ></tableTrendMap>
             </div>
             <span
               class="addChart"
@@ -143,13 +154,25 @@
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius:10px;">
-          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
+          <v-icon
+            class="closePopup"
+            color="#333 !important"
+            @click="dialog = false"
+            >close</v-icon
+          >
+          <v-card-title class="title" primary-title
+            >TOP 10 LEADERS</v-card-title
+          >
           <v-card-text>
             <leaderboardUserlist />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
+            <v-btn
+              class="buttonGreensmall"
+              to="/modern/desktop/leaderboard"
+              dark
+              >Go to Leaderboard</v-btn
+            >
           </v-flex>
         </v-card>
       </v-dialog>
@@ -212,7 +235,11 @@
       </div>
 
       <!-- bet close in 4 -->
-      <div ref="betCloseInGuideline" style="position:fixed" v-show="isStep == 4">
+      <div
+        ref="betCloseInGuideline"
+        style="position:fixed"
+        v-show="isStep == 4"
+      >
         <div class="d-block">
           <div style="position: relative">
             <p class="float-right guideline" @click="setNextstep">
@@ -224,7 +251,11 @@
         </div>
       </div>
       <!-- lottery draw 5 -->
-      <div ref="lotteryDrawGuideline" style="position:fixed" v-show="isStep == 5">
+      <div
+        ref="lotteryDrawGuideline"
+        style="position:fixed"
+        v-show="isStep == 5"
+      >
         <div class="d-flex">
           <div class="arrow float-left line-my">&#8630;</div>
           <div>
@@ -268,7 +299,11 @@
       </div>
 
       <!-- fullscreen 9-->
-      <div ref="fullScreenGuideline" style="position:fixed" v-show="isStep == 9">
+      <div
+        ref="fullScreenGuideline"
+        style="position:fixed"
+        v-show="isStep == 9"
+      >
         <div class="d-flex">
           <p class="float-right guideline" @click="setNextstep">
             Click to enter full screen mode
@@ -439,6 +474,8 @@ export default {
   methods: {
     ...mapActions(["asyncRoadMap"]),
     ...mapMutations([
+      "setTutorialStepNumber",
+      "setIsShowTutorial",
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
@@ -488,10 +525,21 @@ export default {
     loaded() {
       this.isLoad = true;
     },
-    getopen() {
+    openTutorial() {
+      this.setTutorialStepNumber(1);
+      this.setIsShowTutorial(true);
+      let step = 1;
+      this.setTutorialStepNumber(step);
+      let stepGo = setInterval(() => {
+        step++;
+        this.setTutorialStepNumber(step);
+        if (step === 11) {
+          clearInterval(stepGo);
+        }
+      }, 3000);
       // open Next step start
-      localStorage.valTutorial = 0;
-      this.setNextstepstart();
+      // localStorage.valTutorial = 0;
+      // this.setNextstepstart();
     },
     setNextstepstart() {
       // Run Timer Next step
@@ -525,12 +573,12 @@ export default {
 
       if (isStep == 1) {
         // stock list
-        let stockG = $("#stocklistGuidelines").offset();
-        $("#stocklistGuidelines").css("border-style", "solid");
-        $("#stocklistGuidelines").css("border-color", "coral");
-        $(this.$refs.stocklistGuideline).css("right", w - stockG.left - 60);
-        $(this.$refs.stocklistGuideline).css("top", stockG.top - 35);
-        $("#trendmapGuidelines").css("border-style", "none");
+        // let stockG = $("#stocklistGuidelines").offset();
+        // $("#stocklistGuidelines").css("border-style", "solid");
+        // $("#stocklistGuidelines").css("border-color", "coral");
+        // $(this.$refs.stocklistGuideline).css("right", w - stockG.left - 60);
+        // $(this.$refs.stocklistGuideline).css("top", stockG.top - 35);
+        // $("#trendmapGuidelines").css("border-style", "none");
       } else if (isStep == 2) {
         // select stock
         let selectG = $("#selectstockGuideline").offset();
@@ -653,6 +701,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getIsShowTutorial",
       "getStockLoop",
       "getTimerByStockName",
       "getStockUUIDByStockName",
