@@ -101,7 +101,7 @@ export default {
             userId: data.data[0].userUUID,
             redirect: this.referrerURL
           };
-          this.SET_PORTAL_PROVIDERUUID(userInfo.portalProviderUUID);
+          this.SET_PORTAL_PROVIDER_UUID(userInfo.portalProviderUUID);
           this.SET_USER_UUID(userInfo.userId);
           localStorage.setItem(
             "PORTAL_PROVIDERUUID",
@@ -140,7 +140,7 @@ export default {
         console.log(error);
       }
     },
-    ...mapMutations(["setAuth", "SET_PORTAL_PROVIDERUUID", "SET_USER_UUID"]),
+    ...mapMutations(["setAuth", "SET_PORTAL_PROVIDER_UUID", "SET_USER_UUID"]),
 
     getProgress() {
       let seft = this;
