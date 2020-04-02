@@ -235,6 +235,7 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
+      console.log("betting Data",data);
       $("#" + this.betId).addClass(this.betId.split("-")[0]);
     },
     closePopper() {

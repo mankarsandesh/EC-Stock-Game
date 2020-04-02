@@ -1,5 +1,5 @@
-<template>
-  <v-container fluid mt-2 class="containerNew pa-3">
+<template>  
+  <v-container fluid mt-2 class="containerNew pa-2">   
     <v-layout style="background-color:#f4f5fd; ">
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
@@ -19,7 +19,7 @@
           </v-flex>
           <v-flex xs12 pt-2>
             <div id="bettingGuidelines">
-              <onBetting></onBetting>
+            <onBetting></onBetting>
             </div>
           </v-flex>
         </v-layout>
@@ -30,9 +30,8 @@
         </span>
       </v-flex>
       <!-- </v-flex> -->
-
       <v-flex :xs10="!isHidden" :xs12="isHidden">
-        <v-layout xs12 pt-2>
+        <v-layout xs12 pl-3>
           <v-flex xs6 md6 lg6 pt-2>
             <v-layout column>
               <v-flex xs12>
@@ -104,6 +103,7 @@
                     </span>
                   </v-flex>
                 </div>
+                  <!-- <lotteryDraw > </lotteryDraw>   -->
               </v-flex>
 
               <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
@@ -124,10 +124,10 @@
             </div>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getRoadMap.length > 0" mt-3 >
+        <v-flex xs12 v-if="getRoadMap.length > 0" >
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
-            <div id="trendmapGuidelines">
+            <div id="trendmapGuidelines" >
               <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index"></tableTrendMap>
             </div>
             <span
@@ -324,6 +324,7 @@ import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "../../../config/config.global";
+import lotteryDraw from "~/components/modern/lotteryDraw";
 
 export default {
   async validate({ params, store }) {
@@ -339,7 +340,8 @@ export default {
     tableTrendMap,
     onlyrules,
     stockSelect,
-    leaderboardUserlist
+    leaderboardUserlist,
+    lotteryDraw
   },
   data() {
     return {
