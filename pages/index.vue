@@ -108,6 +108,7 @@ export default {
             userInfo.portalProviderUUID
           );
           localStorage.setItem("USER_UUID", userInfo.userId);
+          localStorage.setItem("REFERERN_URL", userInfo.redirect);
           let objJsonStr = JSON.stringify(userInfo);
           let buff = new Buffer(objJsonStr);
           let base64data = buff.toString("base64");
@@ -208,3 +209,4 @@ export default {
   color: #333;
 }
 </style>
+

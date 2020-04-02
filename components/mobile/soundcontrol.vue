@@ -33,7 +33,7 @@ export default {
   methods: {
     ...mapActions(["asynUserInfo"]),
     async updateSetting() {
-      let isSound = this.$refs.isSound.checked ? 1 : 0;
+      let isSound = this.$refs.isSound.checked ? true : false;
     
     try{
       let userSetting = {

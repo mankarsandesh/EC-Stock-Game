@@ -124,6 +124,22 @@ export default {
     }
   },
   mounted() {
+    this.listenForBroadcast(
+      {
+        channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
+        eventName: "messageSend"
+      },
+      ({ data }) => {
+        data.data.forEach(element => {
+          this.getMessagesGame.push({
+            name: element.userName,
+            userId: element.userUUID,
+            message: element.message,
+            date: element.date
+          });
+        });
+      }
+    );
     // Game Channel Game ID wise
     this.listenForBroadcast(
       {
@@ -237,7 +253,7 @@ export default {
 .liveChat {
   z-index: 999;
   position: fixed;
-  right: 12px;
+  right: 0px;
   bottom: 20px;
   width: 50px;
   height: 50px;
