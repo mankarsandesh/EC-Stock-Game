@@ -225,7 +225,7 @@ import lottie from "lottie-web";
 import chatWindow from "~/components/chatWindow";
 import userMenu from "../components/userMenu";
 import config from "../config/config.global";
-import VueToast from 'vue-toast-notification';
+
 export default {
   components: {
     chatWindow,
