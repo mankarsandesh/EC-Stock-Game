@@ -14,7 +14,7 @@ Vue.filter("lastDigit", value => {
   if (!value) return "";
   value = value.toString();
   let last = value[value.length - 1];
-  return `<span >${last}</span>`; 
+  return `<span >${last}</span>`;
 });
 
 //Both Digit
@@ -24,7 +24,7 @@ Vue.filter("bothDigit", value => {
   let first = value[value.length - 2];
   let last = value[value.length - 1];
   let result = Number(first) + Number(last);
-  return `<span >${result}</span>`; 
+  return `<span >${result}</span>`;
 });
 
 //Two Digit
@@ -32,8 +32,15 @@ Vue.filter("twoDigit", value => {
   if (!value) return "";
   value = value.toString();
   let first = value[value.length - 2];
-  let last = value[value.length - 1];  
-  return `<span >${first}${last}</span>`; 
+  let last = value[value.length - 1];
+  return `<span >${first}${last}</span>`;
+});
+// set color for lottery draw
+Vue.filter("lastDraw2", value => {
+  if (!value) return "";
+  value = value.toString();
+  let result = "." + value.split(".")[1];
+  return result;
 });
 
 // set color for lottery draw

@@ -11,7 +11,7 @@ const createStore = () => {
       authUser: {},
       activeGameChannel: true,
       loader: false,
-      userLoginData: {},  
+      userLoginData: {},
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
@@ -36,6 +36,8 @@ const createStore = () => {
       // multi game
       isSendBetting: false,
       payout: payouts,
+      isShowTutorial: false,
+      tutorialStepNumber: 0,
       stocks2: [
         {
           stockName: "btc1",
@@ -108,6 +110,12 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      setTutorialStepNumber(state, payload) {
+        state.tutorialStepNumber = payload;
+      },
+      setIsShowTutorial(state, payload) {
+        state.isShowTutorial = payload;
+      },
       SET_PORTAL_PROVIDERUUID(state, payload) {
         state.portalProviderUUID = payload;
       },
@@ -137,7 +145,7 @@ const createStore = () => {
         state.roadMap.push(payload);
       },
       // end new api
-      setUserData(state, payload) {      
+      setUserData(state, payload) {
         state.userData = payload;
       },
       setGameChannelShow(state, value) {
@@ -263,9 +271,9 @@ const createStore = () => {
               headers: config.header
             }
           );
-         
+
           if (res.code === 200) {
-            let userInfo = res.data;          
+            let userInfo = res.data;
             context.commit("setUserData", userInfo);
           } else {
             console.log(res);
@@ -331,6 +339,12 @@ const createStore = () => {
       }
     },
     getters: {
+      getTutorialStepNumber(state) {
+        return state.tutorialStepNumber;
+      },
+      getIsShowTutorial(state) {
+        return state.isShowTutorial;
+      },
       clearRoadMap: state => state.clearRoadMap,
       getGameUUIDByStockName: state => stockName => {
         let loopIndex = 0;
@@ -426,7 +440,7 @@ const createStore = () => {
         return state.activeGameChannel;
       },
       getPortalProviderUUID(state) {
-        console.log("check SocketID",state.portalProviderUUID);
+        console.log("check SocketID", state.portalProviderUUID);
         return state.portalProviderUUID;
       },
       getUserUUID(state) {
@@ -451,13 +465,13 @@ const createStore = () => {
         }
       },
       // get user info
-      getUserInfo(state) {        
+      getUserInfo(state) {
         return state.userData;
       },
       // get user name
       getUserName(state) {
         return state.userData;
-      },      
+      },
       getIsLoadingStockGame(state) {
         return state.isLoadingStockGame;
       },
@@ -529,7 +543,7 @@ const createStore = () => {
         return getAmount(state.multiGameBet);
       },
       getBetAmountRuleID: state => data => {
-        return 0
+        return 0;
       },
       // get bet amount for ech game rule to show on chip
       getAmountMultiGameBet: state => data => {
