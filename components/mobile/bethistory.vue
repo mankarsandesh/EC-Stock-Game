@@ -180,7 +180,7 @@ export default {
       dateFrom: new Date().toISOString().substr(0, 10),
       from: false,
       to: false,
-      items: ["day", "weeks", "months", "years", "all"],
+      items: ["Today","This Week","This Month"],
       itemss: "",
       itemspage: [5, 10, 25, 50, 100],
       itemspages: 5,

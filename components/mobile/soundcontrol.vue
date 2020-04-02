@@ -51,11 +51,11 @@ export default {
       );
       if (res.code == 200) {
         this.$swal.fire({
-          position: "top",
+          position: "middle",
           type: "success",
           title: "Changes saved",
           showConfirmButton: "false",
-          timer:1000
+          timer:1500
         });
         this.asynUserInfo();
         // console.log(res);
