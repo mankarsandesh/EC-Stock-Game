@@ -1,5 +1,5 @@
-<template>
-  <v-container fluid mt-2 class="containerNew pa-3">
+<template>  
+  <v-container fluid mt-2 class="containerNew pa-2">   
     <v-layout style="background-color:#f4f5fd; ">
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
@@ -19,7 +19,7 @@
           </v-flex>
           <v-flex xs12 pt-2>
             <div id="bettingGuidelines">
-              <onBetting></onBetting>
+            <onBetting></onBetting>
             </div>
           </v-flex>
         </v-layout>
@@ -30,9 +30,8 @@
         </span>
       </v-flex>
       <!-- </v-flex> -->
-
       <v-flex :xs10="!isHidden" :xs12="isHidden">
-        <v-layout xs12 pt-2>
+        <v-layout xs12 pl-3>
           <v-flex xs6 md6 lg6 pt-2>
             <v-layout column>
               <v-flex xs12>
@@ -40,7 +39,7 @@
                   <stockSelect />
                 </div>
               </v-flex>
-              <v-flex>
+              <v-flex mt-1>
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
                     <chartApp :stockName="routeParams" />
@@ -107,6 +106,7 @@
                     </span>
                   </v-flex>
                 </div>
+                  <!-- <lotteryDraw > </lotteryDraw>   -->
               </v-flex>
 
               <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
@@ -359,6 +359,7 @@ import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "../../../config/config.global";
+import lotteryDraw from "~/components/modern/lotteryDraw";
 
 export default {
   async validate({ params, store }) {
@@ -374,7 +375,8 @@ export default {
     tableTrendMap,
     onlyrules,
     stockSelect,
-    leaderboardUserlist
+    leaderboardUserlist,
+    lotteryDraw
   },
   data() {
     return {
@@ -731,7 +733,6 @@ export default {
 .fullscreen .v-icon {
   font-size: 40px;
 }
-
 /* left side corner toggle functionality in desktop  */
 .helpButton {
   background-color: #4464ff !important;
@@ -747,16 +748,19 @@ export default {
   box-shadow: 0 0 2px grey;
   right: 5px;
 }
-
 .sidebar-close {
+  padding:3px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #ffffff !important;
+  background-color: #4464ff !important;
   border-radius: 180px;
   position: absolute;
-  top: -10px;
-  right: 0px;
+  top: -15px;
+  right:-8px;
   transition: none !important;
+}
+.sidebar-close .v-icon{
+  color:#FFF !important;
 }
 
 .sidebar-toggle {

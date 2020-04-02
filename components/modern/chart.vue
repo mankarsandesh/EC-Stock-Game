@@ -2,16 +2,15 @@
   <div class="v-card-style">
     <v-layout px-1>
       <v-flex xs6 class="text-xs-left stockTimer">
-        {{ $t("msg.livetime") }}:
-        <!-- <span class="stockTimer">{{ getLiveTime(stockid) }}</span> -->
+        <label>{{ $t("msg.livetime") }}:</label>
+        <span class="stockTimer">{{ getStockLiveTime(stockName).split(" ")[1] }}</span>
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
-        {{ $t("msg.liveprice") }}:
-        <span>{{ getStockLivePrice(stockName) }}</span>
+        <!-- <label>{{ $t("msg.liveprice") }}:</label> -->
+        <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
-    <apexchart
-      class="chartDesgin"
+    <apexchart     
       type="area"
       :height="chartHeight"
       width="99.5%"
@@ -98,6 +97,7 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getStockLivePrice",
+      "getStockLiveTime",
       "getStockUUIDByStockName",
       "getLiveTime"
     ]),
@@ -137,7 +137,7 @@ export default {
             enabled: false
           },
           toolbar: {
-            shared: false,
+            shared: false,           
             y: {
               formatter: function(val) {
                 return (val / 1000000).toFixed(0);
@@ -248,10 +248,14 @@ export default {
 };
 </script>
 <style>
+.stockTimer label{
+  font-size: 16px;
+  font-weight: 800;
+}
 .stockPrice span {
   padding-right: 14px;
   color: green;
-  font-size: 16px;
+  font-size: 20px;
   margin: 0px;
   font-weight: 600;
 }

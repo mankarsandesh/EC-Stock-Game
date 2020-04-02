@@ -60,8 +60,9 @@ Big Screen
   }
   /* game Rule Category Button */
   .btnHeight {
-    width: 85px;
-    height: 85px;
+   
+    width: 80px;
+    height: 80px;
 
   }
   .align_button4 {
@@ -137,14 +138,14 @@ Big Screen
     display: flex;
     justify-content: center;
     border-radius: 50%;
-    height: 47px;
-    width: 47px;
+    height: 45px;
+    width: 45px;
     padding: 10px !important;
     color: #ffffff !important;
     background-color: #4464ff !important;
     position: absolute;
-    left: 49%;
-    top: 46%;
+    left: 53%;
+    top: 45%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
