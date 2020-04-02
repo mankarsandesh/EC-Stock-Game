@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>{{ getTutorialStepNumber }}</h1>
     <!-- tutorial -->
     <div id="tutorial-container" v-if="getIsShowTutorial">
       <div id="background-tutorial"></div>
@@ -15,9 +14,93 @@
           <span
             id="guide-description"
             class="text-uppercase"
-            style="font-size:80px"
+            style="font-size:100px"
             >calculation...</span
           >
+        </div>
+        <!-- lottery  -->
+        <div class="lotteryDraw" v-if="getTutorialStepNumber === 3">
+          <span id="lottery-draw-guide-text">
+            {{
+              getTimerByStockName($route.params.id) &&
+                getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
+                  | lotterydraw(getStockLoop($route.params.id))
+            }}
+          </span>
+          <span id="guide-description">Lottery DRAW</span>
+        </div>
+        <!-- chart  -->
+        <div id="chart-guide-title" v-if="getTutorialStepNumber === 4">
+          <span
+            id="bet-on-digit"
+            class="text-uppercase"
+            style="font-size:130px"
+          >
+            analysis graph
+          </span>
+          <span id="guide-description">
+            You can analysis stock graph,the result of last draw
+          </span>
+        </div>
+        <!-- bet on digigt  -->
+        <div class="lotteryDraw" v-if="getTutorialStepNumber === 5">
+          <span id="bet-on-digit" class="text-uppercase">
+            bet on digits
+          </span>
+          <span id="guide-description">
+            Now you can select DIGIT
+          </span>
+        </div>
+        <!-- select chipcamount  -->
+        <div v-if="getTutorialStepNumber === 6">
+          <span id="bet-on-digit" class="text-uppercase">
+            bet confirm
+          </span>
+          <span id="guide-description">
+            Your BET place confirm on Last Digit EVEN</span
+          >
+        </div>
+        <!-- enter amount bet -->
+        <div
+          class="lotteryDraw"
+          v-if="getTutorialStepNumber === 7"
+          style="margin-top:700px"
+        >
+          <span id="bet-on-digit" class="text-uppercase">
+            bet on digits
+          </span>
+          <span id="guide-description">
+            Select CHIP or enter AMOUNT to CONFIRM bet</span
+          >
+        </div>
+        <!-- select stock to play -->
+        <div class="lotteryDraw" v-if="getTutorialStepNumber === 8">
+          <span id="bet-on-digit" class="text-uppercase">
+            stocks & game
+          </span>
+          <span id="guide-description">
+            You can choose your Stock,you want BET/PLAY</span
+          >
+        </div>
+        <!-- stock list -->
+        <div class="lotteryDraw" v-if="getTutorialStepNumber === 9">
+          <span id="bet-on-digit" class="text-uppercase">
+            stock analysis
+          </span>
+          <span id="guide-description">
+            Analysis current active Stock DATA update
+          </span>
+        </div>
+        <!-- stock result -->
+        <div
+          class="lotteryDraw"
+          v-if="getTutorialStepNumber === 10"
+          style="margin-top:700px"
+        >
+          <span id="bet-on-digit" class="text-uppercase">
+            stock result
+          </span>
+          <span id="guide-description"> Check update result of Stock</span>
         </div>
       </div>
     </div>
@@ -218,7 +301,7 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setGameChannelShow"]),
+    ...mapMutations(["setGameChannelShow","setIsShowTutorial"]),
     async fetchNotification() {
       const betData = {
         portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
@@ -256,13 +339,56 @@ export default {
   },
   watch: {
     getTutorialStepNumber(newValue) {
-      if (newValue === 1) {
-        $("#lastDrawGuideline").css("z-index", "10001");
+      switch (newValue) {
+        case 1:
+          $("#lastDrawGuideline").css("z-index", "10001");
+          break;
+        case 2:
+          $("#lastDrawGuideline").css("z-index", "1");
+          $("#betCloseInGuideline").css("z-index", "10001");
+          break;
+        case 3:
+          $("#betCloseInGuideline").css("z-index", "1");
+          $("#lotteryDrawGuidelines").css("z-index", "10001");
+          break;
+        case 4:
+          $("#lotteryDrawGuidelines").css("z-index", "1");
+          $("#chartGuideline").css("z-index", "10001");
+          break;
+        case 5:
+          $("#chartGuideline").css("z-index", "1");
+          $(".betButtonGuide").css("z-index", "10001");
+          break;
+        case 6:
+          $(".betButtonGuide").css("z-index", "1");
+          $(".BetButtonGuideEven").css("z-index", "10001");
+          break;
+        case 7:
+          $(".BetButtonGuideEven").click();
+          break;
+        case 8:
+          $(".BetButtonGuideEven").css("z-index", "1");
+          $("#background-tutorial").click();
+          $("#selectstockGuideline").css("z-index", "10001");
+          break;
+        case 9:
+          $("#selectstockGuideline").css("z-index", "1");
+          $("#stocklistGuidelines").css("z-index", "10001");
+          break;
+        case 10:
+          $("#stocklistGuidelines").css("z-index", "1");
+          $("#betresultGuidelines").css("z-index", "10001");
+          break;
+        default:
+         $("#betresultGuidelines").css("z-index", "1");
+         this.setIsShowTutorial(false)
       }
     }
   },
   computed: {
     ...mapGetters([
+      "getTimerByStockName",
+      "getStockLoop",
       "getTutorialStepNumber",
       "getIsShowTutorial",
       "getLastDraw",

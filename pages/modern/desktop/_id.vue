@@ -529,13 +529,14 @@ export default {
       this.isLoad = true;
     },
     openTutorial() {
+      this.setTutorialStepNumber(1);
       this.setIsShowTutorial(true);
       let step = 1;
       this.setTutorialStepNumber(step);
       let stepGo = setInterval(() => {
         step++;
         this.setTutorialStepNumber(step);
-        if (step === 5) {
+        if (step === 11) {
           clearInterval(stepGo);
         }
       }, 3000);
