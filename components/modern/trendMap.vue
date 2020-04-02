@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout wrap>
-      <v-flex
+      <v-flex 
         :class="setClass(' pl-3 pb-5')"
         style="margin-top:10px;"
         v-show="which_one == 'B/S' || which_one == !isFullscreen"
@@ -11,7 +11,7 @@
           <span class="countSmall text-grey"></span>
         </div>
         <div class="bs-coltabledivlast">
-          <table class="table-responsive RoadMapTable" ref="tablebsTwo">
+          <table class="table-responsive RoadMapTable" ref="tablebsTwo" >
             <tr v-for="(tr,index) in rowTable" :key="index">
               <td v-for="(td,index) in BSLength" :key="index"></td>
             </tr>
@@ -1151,4 +1151,5 @@ p {
 .padding {
   padding-top: 10px;
 }
+
 </style>

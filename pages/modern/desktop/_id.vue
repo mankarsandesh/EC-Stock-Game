@@ -39,7 +39,7 @@
                   <stockSelect />
                 </div>
               </v-flex>
-              <v-flex>
+              <v-flex mt-1>
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
                     <chartApp :stockName="routeParams" />
@@ -684,7 +684,6 @@ export default {
 .fullscreen .v-icon {
   font-size: 40px;
 }
-
 /* left side corner toggle functionality in desktop  */
 .helpButton {
   background-color: #4464ff !important;
@@ -700,16 +699,19 @@ export default {
   box-shadow: 0 0 2px grey;
   right: 5px;
 }
-
 .sidebar-close {
+  padding:3px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #ffffff !important;
+  background-color: #4464ff !important;
   border-radius: 180px;
   position: absolute;
-  top: -10px;
-  right: 0px;
+  top: -15px;
+  right:-8px;
   transition: none !important;
+}
+.sidebar-close .v-icon{
+  color:#FFF !important;
 }
 
 .sidebar-toggle {
