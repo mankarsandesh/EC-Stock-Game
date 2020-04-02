@@ -246,6 +246,7 @@
     },
     "useraction": {
         "followbet": "FOLLOW BET",
+        "follow":"FOLLOW",
         "unfollow": "UNFOLLOW",
         "yourself": "YOURSELF"
     },
