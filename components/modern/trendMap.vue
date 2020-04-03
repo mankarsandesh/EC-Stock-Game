@@ -1129,6 +1129,7 @@ table {
 table td {
   border: 1px solid #dddddd;
   border-radius: 5px;
+  cursor: pointer;
 }
 td,
 tr {

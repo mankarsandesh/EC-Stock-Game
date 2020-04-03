@@ -666,6 +666,10 @@ export default {
     }
   },
   computed: {
+    vueVersion(){
+      console.log(Vue.version,"Version");
+      return Vue.version
+    },
     ...mapGetters([
       "getIsShowTutorial",
       "getStockLoop",
@@ -715,7 +719,8 @@ export default {
   right: 5px;
 }
 .sidebar-close {
-  padding: 3px;
+  z-index: 999;
+  padding:3px;
   font-size: 16px;
   cursor: pointer;
   background-color: #4464ff !important;

@@ -85,7 +85,6 @@
 #lotteryDrawGuidelines,
 #selectstockGuideline {
   position: relative;
-  background-color: white;
   border-radius: 8px;
   /* z-index: 10001; */
 }
@@ -700,12 +699,14 @@ table.result-table tr {
 }
 
 .firstdigit {
-  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+  background: rgb(13,204,255);
+  background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
   color: #fff !important;
 }
 
 .bg-btn-first {
-  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+  background: rgb(13,204,255);
+  background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
   font-weight: 400;
   color: #ffffff !important;
   min-width: 88%;
@@ -715,12 +716,14 @@ table.result-table tr {
 }
 
 .lastdigit {
-  background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+  background: rgb(250,209,38);
+  background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
   color: #fff !important;
 }
 
 .bg-btn-last {
-  background: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+  background: rgb(250,209,38);
+  background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -731,12 +734,14 @@ table.result-table tr {
 }
 
 .bothdigit {
-  background: linear-gradient(to right, #be3095 20%, #e71275 51%);
+  background: rgb(182,53,156);
+  background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
   color: #fff !important;
 }
 
 .bg-btn-both {
-  background: linear-gradient(to right, #be3095 20%, #e71275 51%);
+  background: rgb(182,53,156);
+  background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -747,12 +752,14 @@ table.result-table tr {
 }
 
 .twodigit {
-  background: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+  background: rgb(1,233,189);
+  background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
   color: #fff !important;
 }
 
 .bg-btn-two {
-  background: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+  background: rgb(1,233,189);
+  background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
