@@ -37,9 +37,7 @@
                 </v-card-text>
               </v-card>
               <div class="pt-2" style="color: white;">
-                <h3 class="text-uppercase">
-                  {{ $t("stockname." + data.stockName) }}
-                </h3>
+                <h3 class="text-uppercase">{{ $t("stockname." + data.stockName) }}</h3>
                 <h4 style="line-height: 1">
                   <em>{{ data.loop }} minute game</em>
                 </h4>
@@ -64,23 +62,16 @@
                     class="text-xs-center1"
                     style="width:100%;align-self: center;"
                   >
-                    <div class="stockname">
-                      {{ $t(`stockname.${$route.params.id}`) }}
-                    </div>
-                    <span class="gameid">
-                      {{ getGameUUIDByStockName($route.params.id) }}
-                    </span>
+                    <div class="stockname">{{ $t(`stockname.${$route.params.id}`) }}</div>
+                    <span class="gameid">{{ getGameUUIDByStockName($route.params.id) }}</span>
                   </v-flex>
 
                   <v-flex xs12 md6 lg6 class="text-xs-right topHeader">
-                    <v-btn color="buttonRed"
-                      >1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
-                    >
+                    <v-btn color="buttonRed">1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn>
                     <v-btn
                       color="buttonGreen"
                       @click="dialogOtherstock = true"
-                      >{{ $t("msg.otherstock") }}</v-btn
-                    >
+                    >{{ $t("msg.otherstock") }}</v-btn>
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -97,10 +88,7 @@
                 <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
                 <div id="lastDrawGuidelines">
                   <v-flex flex-style class="lastdraw">
-                    <h4
-                      class="text-black"
-                      v-html="$options.filters.lastDraw(getLastDraw)"
-                    ></h4>
+                    <h4 class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></h4>
                   </v-flex>
                 </div>
               </v-flex>
@@ -117,16 +105,16 @@
                       class="text-black"
                     >
                       {{
-                        getTimerByStockName($route.params.id) &&
-                          "close" | betclosein(getStockLoop($route.params.id))
+                      getTimerByStockName($route.params.id) &&
+                      "close" | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                     <span v-else class="text-black">
                       {{
-                        getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id)
-                            .gameEndTimeCountDownInSec
-                            | betclosein(getStockLoop($route.params.id))
+                      getTimerByStockName($route.params.id) &&
+                      getTimerByStockName($route.params.id)
+                      .gameEndTimeCountDownInSec
+                      | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -138,10 +126,10 @@
                   <v-flex flex-style class="lottery">
                     <span class="text-black">
                       {{
-                        getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id)
-                            .gameEndTimeCountDownInSec
-                            | lotterydraw(getStockLoop($route.params.id))
+                      getTimerByStockName($route.params.id) &&
+                      getTimerByStockName($route.params.id)
+                      .gameEndTimeCountDownInSec
+                      | lotterydraw(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -162,17 +150,11 @@
             </v-layout>
           </v-flex>
           <v-flex id="betButtonGuidelines" xs4 sm12 md12 lg12>
-            <betButton
-              :isFullscreen="true"
-              :stockName="$route.params.id"
-              :loop="1"
-            ></betButton>
+            <betButton :isFullscreen="true" :stockName="$route.params.id" :loop="1"></betButton>
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3>
-          <h3 class="balanceUser">
-            Acc : {{ getUserInfo.balance | currency }}
-          </h3>
+          <h3 class="balanceUser">Acc : {{ getUserInfo.balance | currency }}</h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-if="!isHidden"></fullscreenchart>
@@ -184,7 +166,7 @@
                 <i class="fa fa-user fa-2x iconcolor" />
                 <span>
                   {{
-                    dataliveBetAll.totalUsers ? dataliveBetAll.totalUsers : 15
+                  dataliveBetAll.totalUsers ? dataliveBetAll.totalUsers : 15
                   }}
                 </span>
               </span>
@@ -212,8 +194,7 @@
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
                 class="curretbet-btn"
-                >{{ $t("menu.current bet") }}</v-btn
-              >
+              >{{ $t("menu.current bet") }}</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -226,30 +207,18 @@
             <v-flex xs12 sm12 md12 lg12 wrap pt-2 id="roadmapGuidelines">
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen
-                    :index="0"
-                    :dataArray="getRoadMap"
-                  ></trendMapFullScreen>
+                  <trendMapFullScreen :index="0" :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen
-                    :index="1"
-                    :dataArray="getRoadMap"
-                  ></trendMapFullScreen>
+                  <trendMapFullScreen :index="1" :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen
-                    :index="2"
-                    :dataArray="getRoadMap"
-                  ></trendMapFullScreen>
+                  <trendMapFullScreen :index="2" :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen
-                    :index="3"
-                    :dataArray="getRoadMap"
-                  ></trendMapFullScreen>
+                  <trendMapFullScreen :index="3" :dataArray="getRoadMap"></trendMapFullScreen>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -281,11 +250,7 @@
       </div>
       <div hidden ref="guidelineContent" class="overlay-content">
         <!-- 1)Live chart -->
-        <div
-          ref="livechartGuidelines"
-          style="position:fixed;"
-          v-show="isStep == 1"
-        >
+        <div ref="livechartGuidelines" style="position:fixed;" v-show="isStep == 1">
           <div class="d-flex">
             <p class="float-right guideline" @click="setNextstep">
               The live chart
@@ -295,11 +260,7 @@
           </div>
         </div>
         <!-- 2) Last draw -->
-        <div
-          ref="lastDrawGuidelines"
-          style="position:fixed;"
-          v-show="isStep == 2"
-        >
+        <div ref="lastDrawGuidelines" style="position:fixed;" v-show="isStep == 2">
           <div class="d-flex">
             <p class="float-right guideline" @click="setNextstep">
               The last draw price of stock
@@ -309,11 +270,7 @@
           </div>
         </div>
         <!-- 3) Bet close -->
-        <div
-          ref="betCloseInGuidelines"
-          style="position:fixed;"
-          v-show="isStep == 3"
-        >
+        <div ref="betCloseInGuidelines" style="position:fixed;" v-show="isStep == 3">
           <div class="d-flex">
             <p class="float-right guideline" @click="setNextstep">
               Bet close time
@@ -323,11 +280,7 @@
           </div>
         </div>
         <!-- 4) Lottery draw -->
-        <div
-          ref="lotteryDrawGuidelines"
-          style="position:fixed;"
-          v-show="isStep == 4"
-        >
+        <div ref="lotteryDrawGuidelines" style="position:fixed;" v-show="isStep == 4">
           <div class="d-flex">
             <p class="float-right guideline" @click="setNextstep">
               Time left for lottery draw
@@ -337,11 +290,7 @@
           </div>
         </div>
         <!-- 5) Betting button -->
-        <div
-          ref="betButtonGuidelines"
-          style="position:fixed;"
-          v-show="isStep == 5"
-        >
+        <div ref="betButtonGuidelines" style="position:fixed;" v-show="isStep == 5">
           <div class="d-flex">
             <p class="float-right guideline" @click="setNextstep">
               Choose any option to place a bet
@@ -351,11 +300,7 @@
           </div>
         </div>
         <!-- 6) Live bet data -->
-        <div
-          ref="livebetGuidelines"
-          style="position:fixed;"
-          v-show="isStep == 6"
-        >
+        <div ref="livebetGuidelines" style="position:fixed;" v-show="isStep == 6">
           <div class="d-flex">
             <p class="float-right guideline" @click="setNextstep">
               Live bet data
@@ -365,11 +310,7 @@
           </div>
         </div>
         <!-- 7) Roadmap data-->
-        <div
-          ref="roadmapGuidelines"
-          style="position:fixed;"
-          v-show="isStep == 7"
-        >
+        <div ref="roadmapGuidelines" style="position:fixed;" v-show="isStep == 7">
           <div class="d-flex">
             <p class="float-right guideline" @click="setNextstep">
               Road map of previous games
@@ -435,7 +376,7 @@ export default {
   },
   mounted() {
     // socket new api
-    console.log('gamne stock id', this.gameStockId);
+    console.log("gamne stock id", this.gameStockId);
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -444,17 +385,20 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        console.log('gamne stock id', this.gameStockId);
+        console.log("gamne stock id", this.gameStockId);
         this.setLiveRoadMap(data.data.roadMap[0]);
       }
     );
-    this.listenForBroadcast({
-      channelName: `LiveTotalBetData.${this.gameStockId}`,
-      eventName: "LiveTotalBetData"
-    }, ({ data }) => {
-      this.dataliveBetAll = data.data;
-      console.log('data', data);
-    });
+    this.listenForBroadcast(
+      {
+        channelName: `LiveTotalBetData.${this.gameStockId}`,
+        eventName: "LiveTotalBetData"
+      },
+      ({ data }) => {
+        this.dataliveBetAll = data.data;
+        console.log("data", data);
+      }
+    );
     this.setNextstepstart();
   },
 
@@ -478,6 +422,7 @@ export default {
       return `/modern/${fullscreenClose}/${this.$route.params.id}`;
     },
     ...mapGetters([
+      "getStockGameId",
       "getGameUUIDByStockName",
       "getAllStocks",
       "getTimerByStockName",
@@ -497,9 +442,7 @@ export default {
       "headers",
       "getUserUUID"
     ]),
-    ...mapState([
-      "gameStockId"
-    ])
+    ...mapState(["gameStockId"])
   },
   methods: {
     ...mapMutations(["setLiveRoadMap", "SET_STOCK_CATEGORY"]),

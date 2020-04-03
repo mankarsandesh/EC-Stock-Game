@@ -1,18 +1,18 @@
 <template>
   <div>
-    <v-layout class="mx-5 my-3 bettingModel" column >
+    <v-layout class="mx-5 my-3 bettingModel" column>
       <v-flex>
         <h3>
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-              betId.split("-")[1] >= 0
-                ? $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  betId.split("-")[1]
-                : $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  $t("gamemsg." + betId.split("-")[1])
+            betId.split("-")[1] >= 0
+            ? $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            betId.split("-")[1]
+            : $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            $t("gamemsg." + betId.split("-")[1])
             }}
           </span>
         </h3>
@@ -31,12 +31,7 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar
-              size="70"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
-            >
+            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
               <v-img
                 @click="coinClick(getCoins_modern[key])"
                 :src="item.img"
@@ -57,13 +52,7 @@
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
           <v-flex style="align-self:center">
-            <input
-              type="number"
-              readonly
-              :min="1"
-              v-model="betValue"
-              class="input-bet"
-            />
+            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -80,11 +69,12 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-          >{{ $t("msg.confirm") }}</v-btn
-        >
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{
+        >{{ $t("msg.confirm") }}</v-btn>
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
+          {{
           $t("msg.cancel")
-        }}</v-btn>
+          }}
+        </v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -202,7 +192,7 @@ export default {
             betDate: res.data[0].createdDate,
             betTime: res.data[0].createdTime,
             betAmount: res.data[0].betAmount,
-            stockName: this.$props.stockName
+            stockName: this.$props.stockName  
           };
           this.pushDataOnGoingBet(OnGoingdata);
           this.$swal({
@@ -235,6 +225,8 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
+      console.log("This is the Place bet funtions");
+      console.log(data);
       $("#" + this.betId).addClass(this.betId.split("-")[0]);
     },
     closePopper() {

@@ -11,7 +11,7 @@ const createStore = () => {
       authUser: {},
       activeGameChannel: true,
       loader: false,
-      userLoginData: {},  
+      userLoginData: {},
       isLoadingStockGame: false,
       auth_token: (localStorage.apikey =
         "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
@@ -137,7 +137,7 @@ const createStore = () => {
         state.roadMap.push(payload);
       },
       // end new api
-      setUserData(state, payload) {      
+      setUserData(state, payload) {
         state.userData = payload;
       },
       setGameChannelShow(state, value) {
@@ -263,9 +263,9 @@ const createStore = () => {
               headers: config.header
             }
           );
-         
+
           if (res.code === 200) {
-            let userInfo = res.data;          
+            let userInfo = res.data;
             context.commit("setUserData", userInfo);
           } else {
             console.log(res);
@@ -357,9 +357,7 @@ const createStore = () => {
       getStockCategory(state) {
         return state.stockCategory;
       },
-      getStockGameId(state) {
-        return state.gameStockId;
-      },
+      getStockGameId: state => state.gameStockId,
       // new api
       getAllStocks(state) {
         return state.stocks2;
@@ -426,7 +424,7 @@ const createStore = () => {
         return state.activeGameChannel;
       },
       getPortalProviderUUID(state) {
-        console.log("check SocketID",state.portalProviderUUID);
+        console.log("check SocketID", state.portalProviderUUID);
         return state.portalProviderUUID;
       },
       getUserUUID(state) {
@@ -451,13 +449,13 @@ const createStore = () => {
         }
       },
       // get user info
-      getUserInfo(state) {        
+      getUserInfo(state) {
         return state.userData;
       },
       // get user name
       getUserName(state) {
         return state.userData;
-      },      
+      },
       getIsLoadingStockGame(state) {
         return state.isLoadingStockGame;
       },

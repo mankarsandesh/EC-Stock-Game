@@ -192,7 +192,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setGameChannelShow"]),
-    async fetchNotification() {
+    async fetchNotification() {  
       const betData = {
         portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
         userUUID: this.getUserUUID, // get the userUUID with the this object
