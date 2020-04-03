@@ -3,7 +3,7 @@
     <v-layout px-1>
       <v-flex xs6 class="text-xs-left stockTimer">
         <label>{{ $t("msg.livetime") }}:</label>
-        <span class="stockTimer">{{ getStockLiveTime(stockName).split(" ")[1] }}</span>
+        <span class="stockTimer" v-if="getStockLiveTime(stockName)">{{ getStockLiveTime(stockName).split(" ")[1] }}</span>
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
         <!-- <label>{{ $t("msg.liveprice") }}:</label> -->

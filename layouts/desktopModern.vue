@@ -150,7 +150,7 @@
           indeterminate
         ></v-progress-circular>
       </div>
-      <v-toolbar class="toolbarMenu">
+      <v-toolbar class="toolbarMenu" style="background-color:#FFF;"> 
         <v-container fluid class="navbar">
           <v-toolbar-title>
             <v-img
