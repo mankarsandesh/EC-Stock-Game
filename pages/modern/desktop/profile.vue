@@ -23,8 +23,10 @@
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h2 v-if="getUserInfo.firstName == null " >{{ getUserInfo.userName }} </h2>
-              <h1 v-if="getUserInfo.firstName" >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
+              <h2 v-if="getUserInfo.firstName == null ">{{ getUserInfo.userName }}</h2>
+              <h1
+                v-if="getUserInfo.firstName"
+              >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
               <p>{{$t('profile.onlinestatus')}} : 2 hours</p>
             </div>
             <div class="profile_menu">
@@ -98,7 +100,7 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      console.log("profile", config.apiDomain);
+      // console.log("profile", config.apiDomain);
       return this.getUserInfo.profileImage === null
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
@@ -150,9 +152,9 @@ export default {
             }
           }
         );
-        console.log("res......")
-        console.log(res)
-        console.log("res.......")
+        console.log("res......");
+        console.log(res);
+        console.log("res.......");
         if (res.code === 200) {
           this.blurValue = 0;
         } else {
