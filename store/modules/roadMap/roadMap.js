@@ -24,7 +24,7 @@ const actions = {
           const res = await this.$axios.$post(
             config.getRoadMap.url,
             {
-              portalProviderUUID: context.state.portalProviderUUID,
+              portalProviderUUID: context.rootState.portalProviderUUID,
               limit: 50,
               stockUUID: [stockUUID],
               version: config.version

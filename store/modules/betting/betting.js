@@ -74,8 +74,8 @@ const actions = {
           const res = await this.$axios.$post(
             config.storeBet.url,
             {
-              portalProviderUUID: context.state.portalProviderUUID,
-              userUUID: context.state.userUUID,
+              portalProviderUUID: context.rootState.portalProviderUUID,
+              userUUID: context.rootState.userUUID,
               version: config.version,
               betData: betDatas
             },
@@ -84,7 +84,7 @@ const actions = {
             }
           );
           if (res.status && res.code == 200) {
-            context.dispatch("asynUserInfo");
+            context.dispatch("SET_USER_DATA");
             console.log(res);
             context.commit("SET_IS_SEND_BETTING", false);
             context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");

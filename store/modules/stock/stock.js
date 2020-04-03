@@ -95,7 +95,7 @@ const actions = {
           const res = await this.$axios.$post(
             config.getStock.url,
             {
-              portalProviderUUID: context.state.portalProviderUUID,
+              portalProviderUUID: context.rootState.portalProviderUUID,
               version: config.version
             },
             {
