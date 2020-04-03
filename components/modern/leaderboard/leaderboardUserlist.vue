@@ -40,14 +40,14 @@
            <img class="pimage" :src="imgProfile(data.userImage)" />
            <span class="subtitle-1 text-uppercase ">
               <name class="name">
-                  <span># {{ data.Rank }} </span>
+                  <span>#{{ data.Rank }}</span>
                   {{ data.username }}
               </name>
            </span>
             <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
           </div>
-          <div>
-            <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
+          <div >
+            <h3 class="header" >{{ $t("leaderboard.winningrate") }}</h3>
             <h4 class="green--text titleText">
               {{ Math.round(data.winRate, 1) }} %
             </h4>
@@ -64,7 +64,7 @@
               {{ Math.round(data.totalWinAmount, 1) }}
             </h4>
           </div>
-          <div v-if="data.isFollowing == 0" style="width:20%;">
+          <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
             <v-btn
               class="buttonGreensmall"
               v-on:click="
@@ -79,7 +79,7 @@
               >{{ $t("useraction.followbet") }}
             </v-btn>
           </div>
-          <div v-if="data.isFollowing == 1" style="width:20%;">
+          <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
             <v-btn
               class="buttonCancel "
               v-on:click="unfollowUser(data.userUUID)"
@@ -87,9 +87,10 @@
               >{{ $t("useraction.unfollow") }}</v-btn
             >
           </div>
-          <div v-if="data.isFollowing == -1" style="width:20%;">
+          <div v-if="data.isFollowing == -1" style="width:20%;padding-top:30px;">
             <v-btn class="buttonGreensmall">{{$t('useraction.yourself')}}</v-btn>
           </div>
+          
         </div>
       </v-flex>
     </v-flex>
@@ -423,6 +424,8 @@ export default {
   border: 1px solid;
 }
 .header {
+  font-size: 20px;
+  margin-top:30px;
   color: #6c6c6c;
 }
 #userRow {
@@ -433,28 +436,37 @@ export default {
   border: 1px solid #dddddd;
   border-radius: 10px;
   background-color: #ffffff;
-  margin: 10px 0px;
+  margin: 5px 0px;
   float: left;
 }
 .userRow:hover {
   background-color: #f7f7f7;
   cursor: pointer;
 }
-.userRow div {
+.userRow div{
   text-align: center;
   height: 120px;
   border-right: 1px solid #dddddd;
   width: 20%;
-  padding: 5px;
+  padding:5px;
   float: left;
 }
 .userRow div:first-child .name {
-
-width: 100%;
+ width: 100%;
+ float: left;
+ color:#333;
+ text-align: center;
+ font-size: 14px;
+ font-weight: 800;
+}
+.userRow div:first-child .name span {  
+  color:#333;
+  border-radius: 180px;
+  padding:3px;
+  font-size: 14px;
 }
 .userRow div:first-child img {
-  margin-top:10px;
-  
+  margin-top:10px; 
 }
 .userRow div:first-child i {
   vertical-align: middle;
