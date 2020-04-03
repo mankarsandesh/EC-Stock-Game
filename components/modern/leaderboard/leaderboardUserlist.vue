@@ -1,19 +1,19 @@
 <template>
   <div>
-    <v-flex xs12 md10 lg10 mt-3 style="margin:0 auto;">
+    <v-flex xs12 md8 lg8 mt-3 style="margin:0 auto;">
       <v-layout row>
         <v-flex grow pa-1>
           <p class="float-left md6 lg8">
             <span class="title">Top {{ topPlayerData.length }} Leaders </span>
-            (last updated 10 minutes ago)
+            ({{this.sortbyName}}) <i v-if="loadingImage"  class="fa fa-circle-o-notch fa-spin" style="font-size:20px;"></i>
           </p>
         </v-flex>
         <v-flex grow pa-1 class="text-lg-right ranking">
-          <span class="text-uppercase font-weight-bold">
+          <span class="text-uppercase font-weight-bold"  v-bind:class="{ active: isActiveWeek}"  v-on:click="sortingBy('weekly')">
             <v-icon small>event</v-icon> {{ $t("leaderboard.weeklyrankings") }}
           </span>
-          <span class="text-uppercase font-weight-bold">
-            <v-icon small>event</v-icon> {{ $t("leaderboard.monthlyrankings") }}
+          <span class="text-uppercase font-weight-bold"  v-bind:class="{ active: isActiveMonth}"  v-on:click="sortingBy('monthly')" >
+            <v-icon small>event</v-icon> {{ $t("leaderboard.monthlyrankings") }} 
           </span>
         </v-flex>
       </v-layout>
@@ -23,7 +23,7 @@
       <h2 class="text-center" style="color:#a3a3a3;">
         There are no top users in Leaderboard.
       </h2>
-    </v-flex>
+    </v-flex>   
     <v-flex v-if="topPlayerData.length > 0">
       <v-flex
         xs12
@@ -34,35 +34,37 @@
         v-for="(data, index) in topPlayerData"
         :key="index"
         id="userRow"
-      >
-        <div class="userRow">
-          <th style="vertical-align:top;">
-            <div>
-              <img class="pimage" :src="imgProfile(data.userImage)" />
-            </div>
-
-            <span class="subtitle-1 text-uppercase ">{{ data.username }}</span>
+      >       
+        <div class="userRow">         
+          <div>           
+           <img class="pimage" :src="imgProfile(data.userImage)" />
+           <span class="subtitle-1 text-uppercase ">
+              <name class="name">
+                  <span># {{ data.Rank }} </span>
+                  {{ data.username }}
+              </name>
+           </span>
             <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
-          </th>
-          <th>
+          </div>
+          <div>
             <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
             <h4 class="green--text titleText">
               {{ Math.round(data.winRate, 1) }} %
             </h4>
-          </th>
-          <th>
+          </div>
+          <div>
             <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
             <H4 style="color:#eb0b6e;" class="titleText">{{
               data.totalWinBets
             }}</H4>
-          </th>
-          <th>
+          </div>
+          <div>
             <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
             <h4 style="color:#0b2a68;" class="titleText">
               {{ Math.round(data.totalWinAmount, 1) }}
             </h4>
-          </th>
-          <th v-if="data.isFollowing == 0" style="width:20%;">
+          </div>
+          <div v-if="data.isFollowing == 0" style="width:20%;">
             <v-btn
               class="buttonGreensmall"
               v-on:click="
@@ -76,18 +78,18 @@
               dark
               >{{ $t("useraction.followbet") }}
             </v-btn>
-          </th>
-          <th v-if="data.isFollowing == 1" style="width:20%;">
+          </div>
+          <div v-if="data.isFollowing == 1" style="width:20%;">
             <v-btn
               class="buttonCancel "
               v-on:click="unfollowUser(data.userUUID)"
               dark
               >{{ $t("useraction.unfollow") }}</v-btn
             >
-          </th>
-          <th v-if="data.isFollowing == -1" style="width:20%;">
+          </div>
+          <div v-if="data.isFollowing == -1" style="width:20%;">
             <v-btn class="buttonGreensmall">{{$t('useraction.yourself')}}</v-btn>
-          </th>
+          </div>
         </div>
       </v-flex>
     </v-flex>
@@ -150,7 +152,13 @@ import config from "../../../config/config.global";
 var imageExists = require("image-exists");
 export default {
   data() {
-    return {
+    return {    
+      isActiveWeek : true,
+      isActiveMonth : false,
+      sortbyName:"Weekly Ranking", 
+      loadingImage : false,
+      dateFrom: "",
+      dateTo: "",
       hasError: false,
       hasSucess: false,
       FollwingError: false,
@@ -179,12 +187,57 @@ export default {
     props: ["linkItem"];
   },
   mounted() {
+     const today = new Date();
+        const lastWeek = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 7
+        )
+          .toISOString()
+          .substr(0, 10);
+    this.dateFrom = lastWeek;
+    this.dateTo = today.toISOString().substring(0, 10);
     this.leaderBoard();
   },
   computed: {
     ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
   },
-  methods: {
+  methods: {   
+    sortingBy(sort){      
+     if (sort == "monthly") {
+        const today = new Date();
+        const monthly = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 30
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = monthly;
+        this.dateTo = today.toISOString().substring(0, 10);
+        console.log(this.dateFrom,"datefrom"+this.dateTo);
+        this.sortbyName = "Monthly Ranking";
+        this.isActiveMonth = true;
+        this.isActiveWeek = false;
+        this.leaderBoard();
+      }else {
+        const today = new Date();
+        const lastWeek = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 7
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = lastWeek;
+        this.dateTo = today.toISOString().substring(0, 10);
+        console.log(this.dateFrom,"datefrom"+this.dateTo);
+        this.sortbyName = "Weekly Ranking";
+        this.isActiveMonth = false;
+        this.isActiveWeek = true;
+        this.leaderBoard();
+      }
+    },
     imgProfile(userImage) {
       return userImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + userImage;
     },
@@ -232,7 +285,6 @@ export default {
       } else if (this.FolloworNot == 1) {
         this.FollowMethod = "unfollow";
       }
-
       if (this.selectedFollow && this.BetValue) {
         if (this.selectedFollow == "Amount") {
           if (this.BetValue < 1000 && this.BetValue > 10) {
@@ -319,12 +371,16 @@ export default {
       this.dialog = true;
     },
     async leaderBoard() {
+      this.loadingImage = true;  
       try {
         const LeaderBoardData = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
+          dateRangeFrom : this.dateFrom,
+	        dateRangeTo:this.dateTo,
           version: config.version
-        };
+        };    
+        console.log(LeaderBoardData);   
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
           LeaderBoardData,
@@ -333,6 +389,7 @@ export default {
           }
         );
         this.topPlayerData = data.data;
+        this.loadingImage = false;  
       } catch (error) {
         console.log(error);
       }
@@ -358,6 +415,10 @@ export default {
   color: green;
   cursor: pointer;
 }
+.ranking span.active {
+  color: green;
+}
+
 .topHeader p:first-child {
   border: 1px solid;
 }
@@ -368,24 +429,34 @@ export default {
   border-radius: 10px;
 }
 .userRow {
+  width: 100%;
   border: 1px solid #dddddd;
   border-radius: 10px;
   background-color: #ffffff;
   margin: 10px 0px;
+  float: left;
 }
 .userRow:hover {
   background-color: #f7f7f7;
   cursor: pointer;
 }
-.userRow th {
+.userRow div {
+  text-align: center;
+  height: 120px;
   border-right: 1px solid #dddddd;
-  width: 25%;
+  width: 20%;
   padding: 5px;
+  float: left;
 }
-.userRow th:first-child span {
-  vertical-align: middle;
+.userRow div:first-child .name {
+
+width: 100%;
 }
-.userRow th:first-child i {
+.userRow div:first-child img {
+  margin-top:10px;
+  
+}
+.userRow div:first-child i {
   vertical-align: middle;
   /* border-radius:10px; */
 }
