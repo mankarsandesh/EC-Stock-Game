@@ -1,5 +1,7 @@
+import config from "../../../config/config.global";
+
 const state = {
-    stocks2: [
+    stocks: [
         {
           stockName: "btc1",
           stockUUID: "88778f4f-610b-4ec3-937d-65ef7bf24af5",
@@ -70,7 +72,6 @@ const state = {
     ],
     stockCategory: [],
     stockListTimer: [],
-    gameStockId: null,
 }
 
 const mutations = {
@@ -83,18 +84,13 @@ const mutations = {
           state.stockListTimer.pop();
         }
     },
-    // add more stock to multi game
-    ADD_STOCK_MULTI_GAME(state, stockId) {
-        if (state.stockMultigame.includes(stockId)) return;
-        state.stockMultigame.push(stockId);
-    },
     SET_STOCKS_DATA(state, payload) {
-        state.stocks2 = payload;
+        state.stocks = payload;
     }
 }
 
 const actions = {
-    async setStocks({ commit }) {
+    async setStocks(context) {
         try {
           const res = await this.$axios.$post(
             config.getStock.url,
@@ -107,7 +103,7 @@ const actions = {
             }
           );
           if (res.code === 200) {
-            commit('SET_STOCKS_DATA', res.data);
+            context.commit('SET_STOCKS_DATA', res.data);
           } else {
             throw new Error();
           }
@@ -122,9 +118,6 @@ const actions = {
     setStockListTimer({ commit }, payload) {
         commit('SET_STOCK_LIST_TIMER', payload);
     },
-    addStockMultiGame({ commit }, payload) {
-        commit('ADD_STOCK_MULTI_GAME', payload);
-    }
 }
 
 const getters = {
@@ -153,17 +146,14 @@ const getters = {
     getStockCategory(state) {
       return state.stockCategory;
     },
-    getStockGameId(state) {
-      return state.gameStockId;
-    },
     getAllStocks(state) {
-      return state.stocks2;
+      return state.stocks;
     },
     getStockLoop: state => stockName => {
       let result = null;
-      for (let i = 0; i < state.stocks2.length; i++) {
-        if (state.stocks2[i].stockName === stockName) {
-          result = state.stocks2[i].loop;
+      for (let i = 0; i < state.stocks.length; i++) {
+        if (state.stocks[i].stockName === stockName) {
+          result = state.stocks[i].loop;
           break;
         }
       }
@@ -200,9 +190,9 @@ const getters = {
     },
     getStockUUIDByStockName: state => stockName => {
       let result = null;
-      for (let i = 0; i < state.stocks2.length; i++) {
-        if (state.stocks2[i].stockName === stockName) {
-          result = state.stocks2[i].stockUUID;
+      for (let i = 0; i < state.stocks.length; i++) {
+        if (state.stocks[i].stockName === stockName) {
+          result = state.stocks[i].stockUUID;
           break;
         }
       }
@@ -210,7 +200,7 @@ const getters = {
     },
     getCheckStock: state => stockname => {
       let result = false;
-      state.stocks2.forEach(element => {
+      state.stocks.forEach(element => {
         if (element.stockName === stockname) {
           result = true;
         }
