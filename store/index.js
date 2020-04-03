@@ -387,9 +387,7 @@ const createStore = () => {
       getStockCategory(state) {
         return state.stockCategory;
       },
-      getStockGameId(state) {
-        return state.gameStockId;
-      },
+      getStockGameId: state => state.gameStockId,
       // new api
       getAllStocks(state) {
         return state.stocks2;
