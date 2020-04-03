@@ -47,7 +47,7 @@
               )
             "
             dark
-          >{{ $t("useraction.followbet") }}</v-btn>
+          >{{ $t("useraction.follow") }}</v-btn>
         </th>
         <th v-if="data.isFollowing == 1" style="width:20%;">
           <v-btn
@@ -64,7 +64,7 @@
 
     <v-dialog v-model="dialog" width="600" style="border-radius:20px; !important">
       <v-card class="followup">
-        <h3 class="title font-weight-bold" style="text-align:center;color:#0b2a68;">{{ $t("useraction.followbet") }}</h3>
+        <h3 class="title font-weight-bold" style="text-align:center;color:#0b2a68;">{{ $t('useraction.follow') }}</h3>
 
         <v-card-text style="text-align:center;">
           <img class="pimage" v-bind:src="this.userImage" width="140px" />
@@ -270,7 +270,7 @@ export default {
   color: green;
 }
 .titleText {
-  font-size: 24px;
+  font-size: 14px;
 }
 .followup {
   padding: 10px;

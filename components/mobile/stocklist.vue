@@ -36,7 +36,7 @@ export default {
   props: ["item"],
   data() {
     return {
-      items: ["day", "weeks", "months", "years"],
+      items: ["ascending","descending"],
       last_price: 0,
       stockStatus: false,
       currentPrice: null,

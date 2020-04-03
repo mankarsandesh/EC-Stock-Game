@@ -36,6 +36,8 @@ const createStore = () => {
       // multi game
       isSendBetting: false,
       payout: payouts,
+      isShowTutorial: false,
+      tutorialStepNumber: 0,
       stocks2: [
         {
           stockName: "btc1",
@@ -108,6 +110,12 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      setTutorialStepNumber(state, payload) {
+        state.tutorialStepNumber = payload;
+      },
+      setIsShowTutorial(state, payload) {
+        state.isShowTutorial = payload;
+      },
       SET_PORTAL_PROVIDERUUID(state, payload) {
         state.portalProviderUUID = payload;
       },
@@ -331,28 +339,50 @@ const createStore = () => {
       }
     },
     getters: {
+      getTutorialStepNumber(state) {
+        return state.tutorialStepNumber;
+      },
+      getIsShowTutorial(state) {
+        return state.isShowTutorial;
+      },
       clearRoadMap: state => state.clearRoadMap,
       getGameUUIDByStockName: state => stockName => {
-        let loopIndex = 0;
+        // check is it a btc stock
+        let loop = "";
         if (stockName === "btc5") {
-          loopIndex = 1;
+          loop = 5;
+        } else {
+          loop = 1;
         }
         if (stockName === "btc1" || stockName === "btc5") {
           stockName = "btc";
         }
-        let result = "suss";
         if (state.stockCategory.length > 0) {
           for (let i = 0; i < state.stockCategory.length; i++) {
             for (let j = 0; j < state.stockCategory[i].stocks.length; j++) {
               if (state.stockCategory[i].stocks[j].stockName === stockName) {
-                return state.stockCategory[i].stocks[j].loops[loopIndex].gameID;
+                if (stockName !== "btc") {
+                  return state.stockCategory[i].stocks[j].loops[0].gameID;
+                } else {
+                  for (
+                    let a = 0;
+                    a < state.stockCategory[i].stocks[j].loops.length;
+                    a++
+                  ) {
+                    if (
+                      state.stockCategory[i].stocks[j].loops[a].loopName ===
+                      loop
+                    ) {
+                      return state.stockCategory[i].stocks[j].loops[a].gameID;
+                    }
+                  }
+                }
               }
             }
           }
         } else {
-          result = "....";
+          return "....";
         }
-        return result;
       },
       getStockCategory(state) {
         return state.stockCategory;
@@ -379,7 +409,20 @@ const createStore = () => {
         let result = 0;
         for (let i = 0; i < state.stockListTimer[0].length; i++) {
           if (state.stockListTimer[0][i].stockName === stockName) {
-            result = state.stockListTimer[0][i].stockPrice;
+            result = state.stockListTimer[0][i].stockPrice; 
+            break;
+          }
+        }
+        return result;
+      },
+      getStockLiveTime: state => stockName => {
+        if (!stockName || state.stockListTimer.length <= 0) {
+          return null;
+        }
+        let result = 0;
+        for (let i = 0; i < state.stockListTimer[0].length; i++) {
+          if (state.stockListTimer[0][i].stockName === stockName) {
+            result = state.stockListTimer[0][i].stockTimestamp; 
             break;
           }
         }
@@ -527,7 +570,7 @@ const createStore = () => {
         return getAmount(state.multiGameBet);
       },
       getBetAmountRuleID: state => data => {
-        return 0
+        return 0;
       },
       // get bet amount for ech game rule to show on chip
       getAmountMultiGameBet: state => data => {

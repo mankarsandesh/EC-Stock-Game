@@ -154,7 +154,12 @@
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3>
-          <h3 class="balanceUser">Acc : {{ getUserInfo.balance | currency }}</h3>
+          <h3 class="balanceUser" v-if="getUserInfo.balance > 0" >
+            Acc : {{ getUserInfo.balance | currency }}
+          </h3>
+          <h3 class="balanceUser" v-if="getUserInfo.balance == 0" >
+            Acc : 0000.00
+          </h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-if="!isHidden"></fullscreenchart>
@@ -610,10 +615,10 @@ export default {
 .fullscreenclose {
   position: fixed !important;
   border-radius: 180px;
-  bottom: 77px;
+  bottom: 80px;
   right: 0px;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   color: #fff;
   background: linear-gradient(
     215deg,

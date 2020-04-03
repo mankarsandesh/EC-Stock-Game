@@ -21,12 +21,7 @@
         </div>
       </v-flex>
 
-      <v-flex
-        xs12
-        md12
-        v-if="$vuetify.breakpoint.xs"
-        class="profile_head text-xs-center"
-      >
+      <v-flex xs12 md12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
         <div class="image_container">
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
@@ -37,28 +32,18 @@
           <!-- <span class="blur-img">uploading</span> -->
         </div>
         <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
-        <p>
-          {{ $t("profile.onlinestatus") }} : {{ getUserInfo.currentActiveTime }}
-        </p>
+        <p>{{ $t("profile.onlinestatus") }} : {{ getUserInfo.currentActiveTime }}</p>
         <v-divider></v-divider>
       </v-flex>
 
       <v-flex xs12 pt-3>
         <v-layout row>
-          <v-flex
-            xs2
-            md2
-            v-if="!$vuetify.breakpoint.xs"
-            class="profile_head text-xs-center"
-          >
+          <v-flex xs2 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
             <div class="image_container">
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
-              <span
-                class="camera_container"
-                style="position: absolute;top: 32%;left: 12%;"
-              >
+              <span class="camera_container" style="position: absolute;top: 32%;left: 12%;">
                 <v-icon color="black" :size="20">photo_camera</v-icon>
               </span>
               <!-- <span class="blur-img">uploading</span> -->
@@ -71,10 +56,7 @@
           </v-flex>
           <!-- select start date  -->
           <v-flex xs5 sm3 mr-1 ml-1>
-            <div
-              class="date_picker_container"
-              @click="startDateClick"
-            >
+            <div class="date_picker_container" @click="startDateClick">
               <div class="title_date_picker">
                 <span>{{ $t("msg.from") }}</span>
               </div>
@@ -95,10 +77,7 @@
           </v-flex>
           <!-- select end date -->
           <v-flex xs5 sm3 mr-1>
-            <div
-              class="date_picker_container"
-              @click="endDateClick"
-            >
+            <div class="date_picker_container" @click="endDateClick">
               <div class="title_date_picker">
                 <span>{{ $t("msg.to") }}</span>
               </div>
@@ -110,11 +89,7 @@
               </div>
             </div>
             <div style="position:absolute;z-index:1">
-              <v-date-picker
-                v-if="isShowDateEnd"
-                v-model="endDate"
-                @input="isShowDateEnd = false"
-              ></v-date-picker>
+              <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
             </div>
           </v-flex>
 
@@ -123,9 +98,7 @@
               <div class="title_date_picker">
                 <span></span>
               </div>
-              <button @click="getStockAnalysis" class="buttonGreen btn-go">
-                GO
-              </button>
+              <button @click="getStockAnalysis" class="buttonGreen btn-go">GO</button>
             </div>
           </v-flex>
           <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
@@ -143,7 +116,7 @@
                   </template>
                   <v-list>
                     <v-list-tile v-for="(item, index) in items" :key="index">
-                      <v-list-tile-title >{{ item.title }}</v-list-tile-title>
+                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                     </v-list-tile>
                   </v-list>
                 </v-menu>
@@ -154,21 +127,20 @@
       </v-flex>
       <v-flex xs12 sm12 md10 lg10 mt-4>
         <v-layout row>
-          <v-flex xs1 sm2> </v-flex>
+          <v-flex xs1 sm2></v-flex>
           <v-flex xs10 sm8>
             <div class="chart_container">
               <div v-if="isDataValid" class="chart-map-color">
                 <span v-for="(stock, index) in stocks" :key="index">
-                  <span
-                    class="circle-color"
-                    :style="{ backgroundColor: colors[0][index] }"
-                  ></span>
+                  <span class="circle-color" :style="{ backgroundColor: colors[0][index] }"></span>
                   <span style="margin-right:10px">{{ stock }}</span>
                 </span>
               </div>
-              <p class="no-data" v-if="!isDataValid"><strong>{{ error }}</strong></p>
+              <p class="no-data" v-if="!isDataValid">
+                <strong>{{ error }}</strong>
+              </p>
               <apexchart
-                v-if="isDataValid" 
+                v-if="isDataValid"
                 type="bar"
                 height="350vh"
                 :options="chartOptions"
@@ -206,7 +178,7 @@ export default {
     return {
       stockAnalysis: [],
       isDataValid: false,
-      error: '',
+      error: "",
       colors: barColor,
       isShowDateStart: false,
       isShowDateEnd: false,
@@ -288,9 +260,9 @@ export default {
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },
-    checkValidDate (startDate, endDate) {
+    checkValidDate(startDate, endDate) {
       const now = date.format(new Date(), "YYYY-MM-DD");
-      if(endDate > now || !(endDate >= startDate)) {
+      if (endDate > now || !(endDate >= startDate)) {
         return false;
       }
       return true;
@@ -305,8 +277,8 @@ export default {
     },
     async getStockAnalysis() {
       try {
-        if(!this.checkValidDate(this.startDate, this.endDate)) {
-          throw new Error('Please select a valid date');
+        if (!this.checkValidDate(this.startDate, this.endDate)) {
+          throw new Error("Please select a valid date");
         }
         const res = await this.$axios.$post(
           config.getUserBetAnalysis.url,
@@ -324,23 +296,22 @@ export default {
           }
         );
         if (res.code === 200) {
-          if(res.data.length) {
+          if (res.data.length) {
             this.isDataValid = true;
-            this.error = '';
+            this.error = "";
             this.stockAnalysis = res.data;
           } else {
             this.isDataValid = false;
-            this.error = 'No data to display';
+            this.error = "No data to display";
           }
-          
         } else {
-          console.log(res);
+          // console.log(res);
           // alert(res.message);
         }
       } catch (ex) {
         console.error(ex);
-        if(ex.message == 'Please select a valid date') {
-          this.error = 'Please select a valid date';
+        if (ex.message == "Please select a valid date") {
+          this.error = "Please select a valid date";
           this.isDataValid = false;
         }
         // alert(ex.message);
