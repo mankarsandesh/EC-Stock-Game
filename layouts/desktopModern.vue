@@ -1,25 +1,22 @@
 <template>
   <div>
-    <!-- tutorial -->
+    <!-- tutorial v-if="getIsShowTutorial" -->
     <div id="tutorial-container" v-if="getIsShowTutorial">
       <div id="background-tutorial"></div>
       <div id="guide-container">
-        <!-- last draw -->
-        <div class="lastDrawDescription" v-if="getTutorialStepNumber === 1">
+        <!-- last draw v-if="getTutorialStepNumber === 1" -->
+        <div class="guide-top" v-if="getTutorialStepNumber === 1">
           <span id="result-draw">{{ getLastDraw | lastDraw2 }}</span>
-          <span id="guide-description">Result of the DRAW</span>
+          <span class="guide-description">Result of the DRAW</span>
         </div>
         <!-- bet close in  -->
-        <div class="betCloseIn" v-if="getTutorialStepNumber === 2">
-          <span
-            id="guide-description"
-            class="text-uppercase"
-            style="font-size:100px"
-            >calculation...</span
-          >
+        <div class="guide-top" v-if="getTutorialStepNumber === 2">
+          <span class="guide-description text-uppercase" style="font-size:100px"
+            >calculation...
+          </span>
         </div>
         <!-- lottery  -->
-        <div class="lotteryDraw" v-if="getTutorialStepNumber === 3">
+        <div class="guide-top" v-if="getTutorialStepNumber === 3">
           <span id="lottery-draw-guide-text">
             {{
               getTimerByStockName($route.params.id) &&
@@ -27,80 +24,123 @@
                   | lotterydraw(getStockLoop($route.params.id))
             }}
           </span>
-          <span id="guide-description">Lottery DRAW</span>
+          <span class="guide-description">Lottery DRAW</span>
         </div>
         <!-- chart  -->
-        <div id="chart-guide-title" v-if="getTutorialStepNumber === 4">
-          <span
-            id="bet-on-digit"
-            class="text-uppercase"
-            style="font-size:130px"
-          >
+        <!-- has scroll -->
+        <div
+          class="guide-chart-has-scroll"
+          v-if="getTutorialStepNumber === 4 && getIsWindowsHasScroll"
+        >
+          <span class="guide-title text-uppercase">
             analysis graph
           </span>
-          <span id="guide-description">
+          <span class="guide-description">
             You can analysis stock graph,the result of last draw
           </span>
         </div>
+        <!-- no scroll -->
+        <div
+          class="guide-chart-no-scroll"
+          v-if="getTutorialStepNumber === 4 && !getIsWindowsHasScroll"
+        >
+          <span class="guide-title text-uppercase">
+            analysis graph
+          </span>
+          <span class="guide-description">
+            You can analysis stock graph,the result of last draw
+          </span>
+        </div>
+
         <!-- bet on digigt  -->
-        <div class="lotteryDraw" v-if="getTutorialStepNumber === 5">
-          <span id="bet-on-digit" class="text-uppercase">
+        <div
+          class="guide-top "
+          style="margin-right: 90px;"
+          v-if="getTutorialStepNumber === 5"
+        >
+          <span class="guide-title text-uppercase">
             bet on digits
           </span>
-          <span id="guide-description">
+          <span class="guide-description">
             Now you can select DIGIT
           </span>
         </div>
         <!-- select chipcamount  -->
-        <div v-if="getTutorialStepNumber === 6">
-          <span id="bet-on-digit" class="text-uppercase">
+        <div
+          class="guide-top "
+          style="margin-right: 90px;"
+          v-if="getTutorialStepNumber === 6"
+        >
+          <span class="guide-title text-uppercase">
             bet confirm
           </span>
-          <span id="guide-description">
+          <span class="guide-description">
             Your BET place confirm on Last Digit EVEN</span
           >
         </div>
         <!-- enter amount bet -->
+        <!-- has scroll   v-if="getTutorialStepNumber === 7 && getIsWindowsHasScroll"-->
         <div
-          class="lotteryDraw"
-          v-if="getTutorialStepNumber === 7"
-          style="margin-top:700px"
+          class="guide-bottom-has-scroll"
+          id="enter-bet-guide"
+          v-if="getTutorialStepNumber === 7 && getIsWindowsHasScroll"
         >
-          <span id="bet-on-digit" class="text-uppercase">
+          <span class="guide-title text-uppercase">
             bet on digits
           </span>
-          <span id="guide-description">
+          <span class="guide-description">
             Select CHIP or enter AMOUNT to CONFIRM bet</span
           >
         </div>
+        <!-- no scroll -->
+        <div
+          class="guide-bottom-no-scroll"
+          id="enter-bet-guide"
+          v-if="getTutorialStepNumber === 7 && !getIsWindowsHasScroll"
+        >
+          <span class="guide-title text-uppercase">
+            bet on digits
+          </span>
+          <span class="guide-description">
+            Select CHIP or enter AMOUNT to CONFIRM bet</span
+          >
+        </div>
+        <!-- to scroll here -->
+        <div id="enter-amount-to-bet" hidden>hidden</div>
+        <!-- to scroll here -->
+
         <!-- select stock to play -->
-        <div class="lotteryDraw" v-if="getTutorialStepNumber === 8">
-          <span id="bet-on-digit" class="text-uppercase">
+        <div class="guide-top " v-if="getTutorialStepNumber === 8">
+          <span class="guide-title text-uppercase">
             stocks & game
           </span>
-          <span id="guide-description">
+          <span class="guide-description">
             You can choose your Stock,you want BET/PLAY</span
           >
         </div>
         <!-- stock list -->
-        <div class="lotteryDraw" v-if="getTutorialStepNumber === 9">
-          <span id="bet-on-digit" class="text-uppercase">
+        <div
+          class="guide-top "
+          v-if="getTutorialStepNumber === 9"
+          style="margin-left: 100px;"
+        >
+          <span class="guide-title text-uppercase">
             stock analysis
           </span>
-          <span id="guide-description">
+          <span class="guide-description">
             Analysis current active Stock DATA update
           </span>
         </div>
         <!-- stock result -->
         <div
-          class="lotteryDraw"
+          class="guide-top "
+          style="margin-left: 100px;"
           v-if="getTutorialStepNumber === 10"
-          style="margin-top:700px"
         >
-          <span id="bet-on-digit" class="text-uppercase">
+          <span class="guide-title text-uppercase">
             stock result
           </span>
-          <span id="guide-description"> Check update result of Stock</span>
+          <span class="guide-description"> Check update result of Stock</span>
         </div>
       </div>
     </div>
@@ -290,7 +330,6 @@ export default {
     // console.log("crearted");
   },
   mounted() {
-    // $("#lastDrawGuideline").css("position", "relative");
     this.fetchNotification();
     lottie.loadAnimation({
       container: this.$refs.svgContainer, // the dom element that will contain the animation
@@ -301,7 +340,11 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setGameChannelShow","setIsShowTutorial"]),
+    ...mapMutations([
+      "setGameChannelShow",
+      "setIsShowTutorial",
+      "setIsWindowsHasScroll"
+    ]),
     async fetchNotification() {
       const betData = {
         portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
@@ -354,6 +397,11 @@ export default {
         case 4:
           $("#lotteryDrawGuidelines").css("z-index", "1");
           $("#chartGuideline").css("z-index", "10001");
+          if ($(document).height() > $(window).height()) {
+            this.setIsWindowsHasScroll(true);
+          } else {
+            this.setIsWindowsHasScroll(false);
+          }
           break;
         case 5:
           $("#chartGuideline").css("z-index", "1");
@@ -365,6 +413,10 @@ export default {
           break;
         case 7:
           $(".BetButtonGuideEven").click();
+          $("html, body").animate(
+            { scrollTop: $("#enter-amount-to-bet").scrollTop() },
+            1000
+          );
           break;
         case 8:
           $(".BetButtonGuideEven").css("z-index", "1");
@@ -380,13 +432,14 @@ export default {
           $("#betresultGuidelines").css("z-index", "10001");
           break;
         default:
-         $("#betresultGuidelines").css("z-index", "1");
-         this.setIsShowTutorial(false)
+          $("#betresultGuidelines").css("z-index", "1");
+          this.setIsShowTutorial(false);
       }
     }
   },
   computed: {
     ...mapGetters([
+      "getIsWindowsHasScroll",
       "getTimerByStockName",
       "getStockLoop",
       "getTutorialStepNumber",

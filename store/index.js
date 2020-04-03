@@ -37,6 +37,7 @@ const createStore = () => {
       isSendBetting: false,
       payout: payouts,
       isShowTutorial: false,
+      isWindowsHasScroll: false,
       tutorialStepNumber: 0,
       stocks2: [
         {
@@ -110,6 +111,9 @@ const createStore = () => {
       stockListTimer: []
     }),
     mutations: {
+      setIsWindowsHasScroll(state, payload) {
+        state.isWindowsHasScroll = payload;
+      },
       setTutorialStepNumber(state, payload) {
         state.tutorialStepNumber = payload;
       },
@@ -339,6 +343,9 @@ const createStore = () => {
       }
     },
     getters: {
+      getIsWindowsHasScroll(state) {
+        return state.isWindowsHasScroll;
+      },
       getTutorialStepNumber(state) {
         return state.tutorialStepNumber;
       },
