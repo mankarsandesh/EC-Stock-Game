@@ -79,7 +79,7 @@ export default {
     },
     methods: {
         async getChart() {
-            let dataGet = await this.$axios.$post('/api/me/betAnalysis?apikey=' + this.$store.state.auth_token)
+            let dataGet = await this.$axios.$post('/api/me/betAnalysis?apikey=' + this.$store.state.provider.auth_token)
             // console.log(dataGet.data)
 
             dataGet.data.forEach(element => {

@@ -170,7 +170,7 @@ export default {
             showConfirmButton: false,
             timer: 1500
           }).then(Confirm => {
-            this.$store.state.auth_token = [];
+            this.$store.state.provider.auth_token = [];
             localStorage.apikey = [];
             window.close();
           });
