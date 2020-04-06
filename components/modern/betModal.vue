@@ -138,16 +138,40 @@ export default {
   watch: {
     getLastDraw(val) {
       const lastDraw = val.substr(val.length - 2);
-      const first = lastDraw.slice(0, 1);
-      const last = lastDraw.slice(1, 2);
+      const first = parseInt(lastDraw.slice(0, 1));
+      const last = parseInt(lastDraw.slice(1, 2));
+      const twoDigit = first + last;
       result.rule_data.map((items, index) => {
-        const className = $("#" + this.betId).hasClass(items.type);
-        if (className) {
-          const getClass = $("#" + this.betId).attr("class");
-          console.log(getClass);
+        if ($("#" + this.betId).hasClass(items.type)) {
+          items.rules.map((item, index) => {
+            if ($("#" + this.betId).hasClass(item.name)) {
+              if (items.type === "firstdigit") {
+                const result = item.rule.includes(first);
+                if (result) {
+                  console.log("You Win :" + item.name + ":" + first);
+                  $("#" + this.betId).addClass(
+                    this.betId.split("-")[0] + "-animation"
+                  );
+                  setTimeout(() => {
+                    console.log("wait for 5 second");
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betId).removeClass(
+                      this.betId.split("-")[0] + "-animation"
+                    );
+                  }, 5000);
+                } else {
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  console.log("====You====lose====" + item.name + " =====");
+                }
+              }
+            }
+          });
         }
       });
     }
+    //  if (item.rule == first) {
+    //             // console.log("This is the First :" + item.name);
+    //           }
     // clearRoadMap(val) {
     //   if (!val) {
     //     $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
@@ -238,7 +262,9 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
-      $("#" + this.betId).addClass(this.betId.split("-")[0] + " " + this.betId);
+      $("#" + this.betId).addClass(
+        this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+      );
     },
     closePopper() {
       $(".closepopper").click();

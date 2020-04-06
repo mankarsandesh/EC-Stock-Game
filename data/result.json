@@ -11,7 +11,7 @@
                         8,
                         9
                     ],
-                    "name": "FD_BIG"
+                    "name": "big"
                 },
                 {
                     "rule": [
@@ -21,7 +21,7 @@
                         3,
                         4
                     ],
-                    "name": "FD_SMALL"
+                    "name": "small"
                 },
                 {
                     "rule": [
@@ -31,7 +31,7 @@
                         7,
                         9
                     ],
-                    "name": "FD_ODD"
+                    "name": "odd"
                 },
                 {
                     "rule": [
@@ -41,7 +41,7 @@
                         6,
                         8
                     ],
-                    "name": "FD_EVEN"
+                    "name": "even"
                 },
                 {
                     "rule": [
@@ -50,7 +50,7 @@
                         2,
                         3
                     ],
-                    "name": "FD_HIGH"
+                    "name": "high"
                 },
                 {
                     "rule": [
@@ -58,7 +58,7 @@
                         5,
                         6
                     ],
-                    "name": "FD_MID"
+                    "name": "mid"
                 },
                 {
                     "rule": [
@@ -66,7 +66,7 @@
                         8,
                         9
                     ],
-                    "name": "FD_LOW"
+                    "name": "low"
                 },
                 {
                     "rule": [
@@ -141,7 +141,7 @@
                         8,
                         9
                     ],
-                    "name": "LD_BIG"
+                    "name": "big"
                 },
                 {
                     "rule": [
@@ -151,7 +151,7 @@
                         3,
                         4
                     ],
-                    "name": "LD_SMALL"
+                    "name": "small"
                 },
                 {
                     "rule": [
@@ -161,7 +161,7 @@
                         7,
                         9
                     ],
-                    "name": "LD_ODD"
+                    "name": "odd"
                 },
                 {
                     "rule": [
@@ -171,7 +171,7 @@
                         6,
                         8
                     ],
-                    "name": "LD_EVEN"
+                    "name": "even"
                 },
                 {
                     "rule": [
@@ -180,7 +180,7 @@
                         2,
                         3
                     ],
-                    "name": "LD_HIGH"
+                    "name": "high"
                 },
                 {
                     "rule": [
@@ -188,7 +188,7 @@
                         5,
                         6
                     ],
-                    "name": "LD_MID"
+                    "name": "mid"
                 },
                 {
                     "rule": [
@@ -196,7 +196,7 @@
                         8,
                         9
                     ],
-                    "name": "LD_LOW"
+                    "name": "low"
                 },
                 {
                     "rule": [
@@ -271,13 +271,13 @@
                         8,
                         9
                     ],
-                    "name": "BD_BIG"
+                    "name": "big"
                 },
                 {
                     "rule": [
                         0
                     ],
-                    "name": "BD_TIE"
+                    "name": "tie"
                 },
                 {
                     "rule": [
@@ -287,7 +287,7 @@
                         3,
                         4
                     ],
-                    "name": "BD_SMALL"
+                    "name": "small"
                 },
                 {
                     "rule": [
@@ -297,7 +297,7 @@
                         7,
                         9
                     ],
-                    "name": "BD_ODD"
+                    "name": "odd"
                 },
                 {
                     "rule": [
@@ -307,7 +307,7 @@
                         6,
                         8
                     ],
-                    "name": "BD_EVEN"
+                    "name": "even"
                 },
                 {
                     "rule": [
@@ -316,7 +316,7 @@
                         2,
                         3
                     ],
-                    "name": "BD_HIGH"
+                    "name": "high"
                 },
                 {
                     "rule": [
@@ -324,7 +324,7 @@
                         5,
                         6
                     ],
-                    "name": "BD_MID"
+                    "name": "mid"
                 },
                 {
                     "rule": [
@@ -332,7 +332,7 @@
                         8,
                         9
                     ],
-                    "name": "BD_LOW"
+                    "name": "low"
                 },
                 {
                     "rule": [

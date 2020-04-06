@@ -2,121 +2,121 @@ const gamerule = {
   firstDigit: [
     {
       ruleid: 1,
-      rule: "FD_BIG",
+      rule: "big",
       payout: 0
     },
     {
       ruleid: 2,
-      rule: "FD_SMALL",
+      rule: "small",
       payout: 1
     },
     {
       ruleid: 3,
-      rule: "FD_ODD",
+      rule: "odd",
       payout: 2
     },
     {
       ruleid: 4,
-      rule: "FD_EVEN",
+      rule: "even",
       payout: 3
     },
     {
       ruleid: 5,
-      rule: "FD_HIGH",
+      rule: "high",
       payout: 4
     },
     {
       ruleid: 6,
-      rule: "FD_MID",
+      rule: "mid",
       payout: 5
     },
     {
       ruleid: 7,
-      rule: "FD_LOW",
+      rule: "low",
       payout: 6
     }
   ],
   lastDigit: [
     {
       ruleid: 18,
-      rule: "LD_BIG",
+      rule: "big",
       payout: 7
     },
     {
       ruleid: 19,
-      rule: "LD_SMALL",
+      rule: "small",
       payout: 8
     },
     {
       ruleid: 20,
-      rule: "LD_ODD",
+      rule: "odd",
       payout: 9
     },
     {
       ruleid: 21,
-      rule: "LD_EVEN",
+      rule: "even",
       payout: 10
     },
     {
       ruleid: 22,
-      rule: "LD_HIGH",
+      rule: "high",
       payout: 11
     },
     {
       ruleid: 23,
-      rule: "LD_MID",
+      rule: "mid",
       payout: 12
     },
     {
       ruleid: 24,
-      rule: "LD_LOW",
+      rule: "low",
       payout: 13
     }
   ],
-
+ 
   bothDigit: [
     {
       ruleid: 142,
-      rule: "BD_BIG",
+      rule: "big",
       payout: 14
     },
     {
       ruleid: 169,
-      rule: "BD_TIE",
+      rule: "tie",
       payout: 15
     },
     {
       ruleid: 143,
-      rule: "BD_SMALL",
+      rule: "small",
       payout: 16
     },
     {
       ruleid: 144,
-      rule: "BD_ODD",
+      rule: "odd",
       payout: 17
     },
     {
       ruleid: 145,
-      rule: "BD_EVEN",
+      rule: "even",
       payout: 18
     },
     {
       ruleid: 146,
-      rule: "BD_HIGH",
+      rule: "high",
       payout: 19
     },
     {
       ruleid: 147,
-      rule: "BD_MID",
+      rule: "mid",
       payout: 20
     },
     {
       ruleid: 148,
-      rule: "BD_LOW",
+      rule: "low",
       payout: 21
     }
   ],
-
+ 
   twoDigit: [
     {
       ruleid: 35,
