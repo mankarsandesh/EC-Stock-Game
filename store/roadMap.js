@@ -1,9 +1,9 @@
-import config from "../../../config/config.global";
+import config from "../config/config.global";
 
-const state = {
+const state = () => ({
     clearRoadMap: false,
     roadMap: [],
-}
+})
 
 const mutations = {
     SET_CLEAR_ROAD_MAP(state, payload) {
@@ -19,12 +19,12 @@ const mutations = {
 }
 
 const actions = {
-    async asyncRoadMap(context, stockUUID) {
+    async setRoadMap(context, stockUUID) {
         try {
           const res = await this.$axios.$post(
             config.getRoadMap.url,
             {
-              portalProviderUUID: context.rootState.portalProviderUUID,
+              portalProviderUUID: context.rootGetters.getPortalProviderUUID,
               limit: 50,
               stockUUID: [stockUUID],
               version: config.version
@@ -37,14 +37,18 @@ const actions = {
             let readyData = res.data[0].roadMap.reverse();
             context.commit('SET_ROAD_MAP', readyData);
           } else {
+            console.log(context);
             throw new Error();
           }
         } catch (ex) {
-          console.log(ex.message);
+          console.log(ex);
         }
     },
     setLiveRoadMap({ commit }, payload) {
         commit('SET_LIVE_ROAD_MAP', payload);
+    },
+    setClearRoadMap({ commit }, payload) {
+      commit('SET_CLEAR_ROAD_MAP', payload);
     }
 }
 

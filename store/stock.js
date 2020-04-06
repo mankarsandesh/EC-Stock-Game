@@ -1,6 +1,6 @@
-import config from "../../../config/config.global";
+import config from "../config/config.global";
 
-const state = {
+const state = () => ({
     stocks: [
         {
           stockName: "btc1",
@@ -72,7 +72,7 @@ const state = {
     ],
     stockCategory: [],
     stockListTimer: [],
-}
+});
 
 const mutations = {
     SET_STOCK_CATEGORY(state, payload) {
@@ -90,7 +90,7 @@ const mutations = {
 }
 
 const actions = {
-    async setStocks(context) {
+    async setStocksData(context) {
         try {
           const res = await this.$axios.$post(
             config.getStock.url,
@@ -176,7 +176,7 @@ const getters = {
       if (!stockName || state.stockListTimer.length <= 0) {
         return null;
       }
-      let result = 0;
+      let result = 0;    
       for (let i = 0; i < state.stockListTimer[0].length; i++) {
         if (state.stockListTimer[0][i].stockName === stockName) {
           result = state.stockListTimer[0][i];

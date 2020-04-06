@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import config from "../config/config.global";
 import { isMobile } from "mobile-device-detect";
 export default {
@@ -101,8 +101,8 @@ export default {
             userId: data.data[0].userUUID,
             redirect: this.referrerURL
           };
-          this.SET_PORTAL_PROVIDER_UUID(userInfo.portalProviderUUID);
-          this.SET_USER_UUID(userInfo.userId);
+          this.setPortalProviderUUID(userInfo.portalProviderUUID);
+          this.setUserUUID(userInfo.userId);
           localStorage.setItem(
             "PORTAL_PROVIDERUUID",
             userInfo.portalProviderUUID
@@ -140,7 +140,7 @@ export default {
         console.log(error);
       }
     },
-    ...mapMutations(["setAuth", "SET_PORTAL_PROVIDER_UUID", "SET_USER_UUID"]),
+    ...mapActions(["setAuth", "setPortalProviderUUID", "setUserUUID"]),
 
     getProgress() {
       let seft = this;

@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters([
@@ -45,9 +45,12 @@ export default {
       "getPreviousPrice"
     ])
   },
-  created() {},
+  created() {
+  },
   methods: {
-    ...mapMutations(["setStockListTimer"])
+    ...mapActions([
+      'setStockListTimer'
+    ])
   }
 };
 </script>

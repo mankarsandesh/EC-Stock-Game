@@ -93,7 +93,7 @@
         </span>
         <span style="margin-right:30px">
           online time : {{getUserInfo.currentActiveTime}}
-          <b>{{asynUserInfo.currentActiveTime}}</b>
+          <b>{{setUserData.currentActiveTime}}</b>
         </span>
         <span style="margin-right:30px">
           total online :
@@ -141,7 +141,7 @@ export default {
     this.endDate = yyyy + "-" + mm + "-" + dd;
   },
   mounted() {
-    // this.asynUserInfo();
+    // this.setUserData();
     this.getOnlineHistory();
   },
 
@@ -149,7 +149,7 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     async getOnlineHistory() {
       try {
         const res = await this.$axios.$post(

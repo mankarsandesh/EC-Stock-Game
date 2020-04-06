@@ -222,7 +222,7 @@ export default {
         this.endDate = now;
     },
     async mounted() {
-        // this.asynUserInfo();
+        // this.setUserData();
         await this.getOnlineHistory();
     },
 
@@ -234,7 +234,7 @@ export default {
         
     },
     methods: {
-        ...mapActions(["asynUserInfo"]),
+        ...mapActions(["setUserData"]),
         showDialogOnlineHistory() {
             this.dialogOnlineHistory = true;
         },

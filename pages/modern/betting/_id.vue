@@ -888,10 +888,10 @@
               size="60"
               v-for="(item, key) in imgChip"
               :key="key"
-              @click="shipClick(getCoins_modern[key])"
+              @click="shipClick(getCoinsModern[key])"
             >
               <v-img class="ma-4" :src="item.img" :alt="item.title">
-                <span class="setpricechip">{{ getCoins_modern[key] }}</span>
+                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
               </v-img>
             </v-avatar>
           </v-flex>
@@ -1304,7 +1304,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import chartMobile from "~/components/chartMobile";
 import payout from "~/data/payout";
 import showChipAmount from "~/components/modern/showChipAmount";
@@ -1385,7 +1385,7 @@ export default {
   },
   created() {
     // get road map data from API
-    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // live road map from socket
     this.listenForBroadcast(
       {
@@ -1418,10 +1418,10 @@ export default {
       "getStockById",
       "getLiveTime",
       "getCheckStock",
-      "getCoins_modern",
+      "getCoinsModern",
       "getStockCrawlerData",
       "getAllBettingAmount",
-      "getAuth_token",
+      "getAuthToken",
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",
@@ -1463,12 +1463,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asyncRoadMap", "asynUserInfo"]),
-    ...mapMutations([
+    ...mapActions([
       "setFooterBetAmount",
       "pushDataOnGoingBet",
       "clearDataMultiGameBet",
-      "setLiveRoadMap"
+      "setLiveRoadMap",
+      "setRoadMap",
+      "setUserData"
     ]),
 
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -1541,7 +1542,7 @@ export default {
         );
         console.log(res);
         if (res.status && res.data[0].status) {
-          this.asynUserInfo();
+          this.setUserData();
           this.betAmount = 0;
           this.bettingDialog = false;
           this.reviewbetDialog = false;

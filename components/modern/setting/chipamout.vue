@@ -5,7 +5,7 @@
             <v-flex xs6 md3 lg2 v-for="(item,key) in imgChip" :key="key" class="chipdiv">
                 <div class="d-block">
                     <v-img width="100" :src="item.img" >
-                        <v-text-field :style="isfullscreen ? 'margin-left: 31%;':''" text-center outlined v-model="getCoins_modern[key]" :class="item.color" :ref="item.id"></v-text-field>
+                        <v-text-field :style="isfullscreen ? 'margin-left: 31%;':''" text-center outlined v-model="getCoinsModern[key]" :class="item.color" :ref="item.id"></v-text-field>
                     </v-img>
                     <v-card-actions>
                         <v-btn text @click="conOrEClick">{{$t('msg.'+conOrE)}}</v-btn>
@@ -31,7 +31,7 @@
 <script>
 import {
     mapGetters,
-    mapMutations
+    mapActions
 } from "vuex";
 
 export default {
@@ -70,7 +70,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getCoins_modern"])
+        ...mapGetters(["getCoinsModern"])
     },
     created(){
       // check is full screen or not
@@ -83,7 +83,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(["setCoins_modern"]),
+        ...mapActions(["setCoinsModern"]),
         conOrEClick() {
             if (this.conOrE == 'edit') {
                 this.conOrE = 'confirm';
@@ -105,7 +105,7 @@ export default {
             let ship5 = this.$refs.ship5[0].value
             let new_amount = `["${ship1}", "${ship2}", "${ship3}", "${ship4}", "${ship5}"]`;
             localStorage.setItem("coinModern", new_amount);
-            this.setCoins_modern();
+            this.setCoinsModern();
         }
     }
 };

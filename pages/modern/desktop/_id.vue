@@ -313,7 +313,7 @@
   </v-container>
 </template>
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import stockList from "~/components/modern/stockList";
 import stockResult from "~/components/modern/stockresult";
 import onBetting from "~/components/modern/onBetting";
@@ -393,7 +393,7 @@ export default {
     );
   },
   mounted() {
-    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // live road map from socket
     this.listenForBroadcast(
       {
@@ -435,8 +435,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asyncRoadMap"]),
-    ...mapMutations([
+    ...mapActions([
+      "setRoadMap",
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
@@ -518,6 +518,7 @@ export default {
     },
     setTutorial(isStep) {
       // open Tutorial
+      console.log('guidelineContent', this.$refs);
       this.$refs.guidelineContent.hidden = false;
       let w = window.innerWidth;
 

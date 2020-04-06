@@ -23,9 +23,7 @@
 </template>
 
 <script>
-import {
-    mapState
-} from "vuex";
+import { mapGetters } from "vuex";
 import config from "../../config/config.global";
 export default {
     data() {
@@ -34,7 +32,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(["portalProviderUUID", "headers"])
+        ...mapGetters(["getPortalProviderUUID"])
     },
     mounted() {
         this.callApi()
@@ -43,7 +41,7 @@ export default {
         async callApi() {
             const {data} = await this.$axios.$post(
                 config.getAllAnnouncements.url,
-                { portalProviderUUID: this.portalProviderUUID, version: config.version }, 
+                { portalProviderUUID: this.getPortalProviderUUID, version: config.version }, 
                 {
                     headers: config.header
                 }

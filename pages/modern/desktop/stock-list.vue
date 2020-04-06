@@ -31,7 +31,7 @@
 </template>
 <script>
 import breadcrumbs from "~/components/breadcrumbs";
-import { mapMutations, mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import stocklist from "~/components/modern/stocklist/stocklist";  
 export default {
   layout: "desktopModern",
@@ -49,7 +49,7 @@ export default {
     ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
   },
   methods: {
-    ...mapMutations(["setIsLoadingStockGame"]),
+    ...mapActions(["setIsLoadingStockGame"]),
     goSearch() {
       console.log("You press search button");
     },  

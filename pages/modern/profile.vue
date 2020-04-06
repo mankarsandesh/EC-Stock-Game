@@ -204,7 +204,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["asynUserInfo"]),
+        ...mapActions(["setUserData"]),
         iconClick(e) {
             e.target.parentElement.parentElement.firstElementChild.focus();
         },
@@ -234,7 +234,7 @@ export default {
                 );
                 
                 if (res.code === 200) {
-                    this.asynUserInfo();
+                    this.setUserData();
                     this.updating = false;
                     
                 } else {

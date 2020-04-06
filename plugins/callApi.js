@@ -6,7 +6,7 @@ export default ({ store }) => {
   initLocalStorageCoin(store);
   // set language
   setLanguage(store);
-  store.dispatch("asynUserInfo");
+  store.dispatch("setUserData");
   getActiveGamesByCategory(store);
 };
 
@@ -23,7 +23,7 @@ async function getActiveGamesByCategory(store) {
       }
     );
     if (res.status) {
-      store.commit("SET_STOCK_CATEGORY", res.data.data);
+      store.dispatch("setStockCategory", res.data.data);
     } else {
       throw new Error(res.message);
     }
@@ -36,8 +36,8 @@ async function getActiveGamesByCategory(store) {
 function setLanguage(store) {
   let lang = localStorage.getItem("lang");
   if (lang == null) {
-    store.commit("SET_LANG", "cn");
-    localStorage.setItem("lang", store.getters.getlocale);
+    store.commit("setLanguage", "cn");
+    localStorage.setItem("lang", store.getters.getLocale);
   }
 }
 
@@ -48,5 +48,5 @@ function initLocalStorageCoin(store) {
     let defaultCoin = '["100", "500", "1000", "5000", "10000"]';
     localStorage.setItem("coinModern", defaultCoin);
   }
-  store.commit("setCoins_modern");
+  store.dispatch('setCoinsModern');
 }

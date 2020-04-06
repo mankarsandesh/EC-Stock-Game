@@ -25,7 +25,7 @@
         |
         <span>
           {{ $t("msg.payout") }}:
-          {{ $store.state.payout[parseInt(payout)].dynamicOdds }}
+          {{ $store.state.game.payout[parseInt(payout)].dynamicOdds }}
         </span>
       </v-flex>
       <v-flex>
@@ -38,14 +38,14 @@
               class="chips"
             >
               <v-img
-                @click="coinClick(getCoins_modern[key])"
+                @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
                 :width="item.width"
                 :alt="item.title"
                 :class="item.color"
                 class="chipImg"
               >
-                <span class="setpricechip">{{ getCoins_modern[key] }}</span>
+                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
               </v-img>
             </v-avatar>
           </v-flex>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import config from "../../config/config.global";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
@@ -133,9 +133,9 @@ export default {
     ...mapGetters([
       "getStockLoop",
       "getGameUUIDByStockName",
-      "getCoins_modern",
+      "getCoinsModern",
       "getOnBetting",
-      "getAuth_token",
+      "getAuthToken",
       "getStockId",
       "getStockGameId",
       "getPortalProviderUUID",
@@ -171,8 +171,7 @@ export default {
     //  this.getwinuser()
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
-    ...mapMutations(["pushDataOnGoingBet", "setGameID"]),
+    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
@@ -192,7 +191,7 @@ export default {
           }
         );
         if (res.status && res.data[0].status) {
-          this.asynUserInfo();
+          this.setUserData();
           this.closePopper();
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,

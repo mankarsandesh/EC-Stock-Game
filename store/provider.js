@@ -1,6 +1,6 @@
-import config from "../../../config/config.global";
+import config from "../config/config.global";
 
-const state = {
+const state = () => ({
     authUser: {},
     userLoginData: {},  
     auth_token: (localStorage.apikey = "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
@@ -12,7 +12,7 @@ const state = {
     locales: ["cn", "us", "th", "la"],
     locale: localStorage.getItem("lang"),
     coins_modern: [],
-}
+});
 
 const mutations = {
     SET_PORTAL_PROVIDER_UUID(state, payload) {
@@ -83,7 +83,7 @@ const actions = {
     setPortalProviderUUID({ commit }, payload) {
         commit('SET_PORTAL_PROVIDER_UUID', payload);
     },
-    setUserUUID({ context }, payload) {
+    setUserUUID({ commit }, payload) {
         commit('SET_USER_UUID', payload);
     },
     setUserLoginData({ commit }, payload) {

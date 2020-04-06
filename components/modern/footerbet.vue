@@ -14,14 +14,14 @@
               class="chips"
             >
               <v-img
-                @click="setFooterBetAmount(getCoins_modern[key])"
+                @click="setFooterBetAmount(getCoinsModern[key])"
                 :src="item.img"
                 :width="item.width"
                 :alt="item.title"
                 :class="item.color"
                 class="chipImg"
               >
-                <span class="setpricechip">{{ getCoins_modern[key] }}</span>
+                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
               </v-img>
             </v-avatar>
           </v-flex>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import setting from "../modern/setting/chipamout";
 export default {
   components: {
@@ -83,8 +83,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["sendBetting"]),
-    ...mapMutations(["setFooterBetAmount", "clearDataMultiGameBet"]),
+    ...mapActions(["setFooterBetAmount", "clearDataMultiGameBet", "sendBetting"]),
     getSending() {
       this.isSending = true;
       this.texts = "sending";
@@ -96,7 +95,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getCoins_modern", "checkFooterBet", "getAllBettingAmount"])
+    ...mapGetters(["getCoinsModern", "checkFooterBet", "getAllBettingAmount"])
   }
 };
 </script>

@@ -104,7 +104,7 @@
   </v-app>
 </template>
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
@@ -191,7 +191,7 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["setGameChannelShow"]),
+    ...mapActions(["setGameChannelShow"]),
     async fetchNotification() {
       const betData = {
         portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
@@ -233,12 +233,12 @@ export default {
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID
       "getGameChannel",
-      "getlocale",
+      "getLocale",
       "getIsLoadingStockGame",
       "getStockCrawlerData"
     ]),
     countryflag() {
-      return this.getlocale;
+      return this.getLocale;
     }
   }
 };

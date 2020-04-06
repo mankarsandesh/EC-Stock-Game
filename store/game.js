@@ -1,12 +1,12 @@
-import payouts from "../../../data/json/payout.json";
+import payouts from "../data/json/payout.json";
 
-const state = {
+const state = () => ({
     activeGameChannel: true,
     isLoadingStockGame: false,
     gameStockId: null,
     stockMultigame: [],
     payout: payouts,
-}
+});
 
 const mutations = {
     SET_GAME_ID(state, payload) {
@@ -48,21 +48,21 @@ const getters = {
         return state.isLoadingStockGame;
     },
     // get stock id to show in multi game
-    getStockMultigame(state) {
+    getStockMultiGame(state) {
         return state.stockMultigame;
     },
     getStockGameId(state) {
         return state.gameStockId;
     },
     // check stock in multi game if exits disable button
-    checkMultigameExistAndDisable: state => data => {
+    checkMultiGameExistAndDisable: state => data => {
         if (!data.isMultigame) return "";
         const result = state.stockMultigame.includes(data.stockId);
         if (result) return "pointer-events: none";
         else return "";
     },
     // check stock in multi game if exits show icon "check"
-    checkMultigameExistAndShowIcon: state => data => {
+    checkMultiGameExistAndShowIcon: state => data => {
         if (!data.isMultigame) return false;
         const result = state.stockMultigame.includes(data.stockId);
         if (result) return true;

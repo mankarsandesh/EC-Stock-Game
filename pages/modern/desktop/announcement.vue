@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import announcement from "~/components/modern/stocklist/announcement";
 import config from "../../../config/config.global";
@@ -38,10 +38,12 @@ export default {
     this.fetch();
   },
   computed: {
-    ...mapState(["portalProviderUUID"])
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID
+    }),
   },
   methods: {
-    ...mapMutations(["setIsLoadingStockGame"]),
+    ...mapActions(["setIsLoadingStockGame"]),
     async fetch() {
       try {
         const { data } = await this.$axios.$post(

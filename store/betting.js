@@ -1,13 +1,13 @@
-import config from "../../../config/config.global";
+import config from "../config/config.global";
 
-const state = {
+const state = () => ({
     multiGameBet: [],
     multiGameBetsend: [],
     footerBetAmount: 0,
     // store data betting
     onGoingBet: [],
     isSendBetting: false,
-}
+});
 
 const mutations = {
     PUSH_DATA_MULTI_GAME_BET(state, payload) {
@@ -54,6 +54,9 @@ const actions = {
     pushDataOnGoingBet({ commit }, payload) {
         commit('PUSH_DATA_ON_GOING_BET', payload);
     },
+    clearDataMultiGameBetSend({ commit }) {
+      commit('CLEAR_DATA_MULTI_GAME_BET_SEND');
+    },
     // send bet data for multigame and footer bet on full screen
     async sendBetting(context) {
         // set sendbetting = true
@@ -84,7 +87,7 @@ const actions = {
             }
           );
           if (res.status && res.code == 200) {
-            context.dispatch("SET_USER_DATA");
+            context.dispatch("SET_USER_DATA", null, 'provider/SET_USER_DATA');
             console.log(res);
             context.commit("SET_IS_SEND_BETTING", false);
             context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
@@ -144,8 +147,9 @@ const getters = {
         // get total bottom bet amount
         function getAmount(object) {
           // check gameUUID is exist or not,if not return 0
-          if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1)
+          if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1) {
             return 0;
+          }
           // get data by gameUUID and store in 'oneGameUUID'
           let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
           // check there is ruleid in gameUUID or not,if no has return 0
