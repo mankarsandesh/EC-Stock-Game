@@ -99,7 +99,7 @@ export default {
         "modern-multigame-id",
         "modern-fullscreen-id",
       ],
-      tabActiveName: "chanel",
+      tabActiveName: "world",
       conversationWorld: [],
       connectClient: [],
       totoalUserCount: 0,
