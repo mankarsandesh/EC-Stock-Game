@@ -30,34 +30,81 @@
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
             <div class="bodyChat">
-              <div
-                v-for="data in conversationWorld"
-                :key="data.index"
-                class="msgUser"
-              >
+              <div class="msgUser">
                 <div class="messageChatView">
-                  <a href="#">{{ data.name }}</a>
-                  <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
-                  <p class="msgBody">{{ data.message }}</p>
+                  <div>
+                    <v-img
+                      class="userImage"
+                      :src="profilePic"
+                      aspect-ratio="1"
+                      max-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </div>
+                  <div>
+                    <span class="userStatus">Winning Rank</span>
+                  </div>
+                  <div>
+                    <span class="ranking">1</span>
+                  </div>
+                  <div>
+                    <v-btn class="view">View</v-btn>
+                  </div>
+                  <div>
+                    <v-btn class="follow">Follow</v-btn>
+                  </div>
+                </div>
+              </div>
+               <div class="msgUser">
+                <div class="messageChatView">
+                  <div>
+                    <v-img
+                      class="userImage"
+                      :src="profilePic"
+                      aspect-ratio="1"
+                      max-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </div>
+                  <div>
+                    <span class="userStatus">Winning Rank</span>
+                  </div>
+                  <div>
+                    <span class="ranking">1</span>
+                  </div>
+                  <div>
+                    <v-btn class="view">View</v-btn>
+                  </div>
+                  <div>
+                    <v-btn class="follow">Follow</v-btn>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="messageChat" >
-                <v-flex col-md-6>
-                <v-btn class="buttonInvitation"              
-                >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
-              ></v-btn>
-             </v-flex> 
-             
-              <v-flex col-md-6>         
-              
-                <v-btn class="buttonInvitation"              
-                >Select Category
-                </v-btn>
-
+            <div class="messageChat">
+              <v-flex col-md-6>
+                <div id="categoryShow" v-if="showCategory == true">
+                  <span>
+                    <v-checkbox
+                      v-for="n in items1"
+                      :key="n"
+                      v-model="checkbox"
+                      :label="`${n.toString()}`"
+                    ></v-checkbox>
+                  </span>
+                </div>
+                <v-btn class="buttonInvitation"
+                  >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
+                ></v-btn>
               </v-flex>
-                          
+              <v-flex col-md-6>
+                <v-btn class="buttonInvitation">
+                  Select Category
+                </v-btn>
+              </v-flex>
             </div>
           </div>
         </div>
@@ -98,8 +145,11 @@ export default {
   },
   data() {
     return {
+      profilePic: "/no-profile-pic.jpg",
+      checkbox: "",
       selectedFruits: [],
-      fruits: ["Winning Rank", "Winning Rate", " Total followers"],
+      showCategory: false,
+      items1: ["Winning Rank", "Winning Rate", " Total followers"],
       currentRoute: "",
       messageInput: "",
       pageActiveChanel: [
@@ -182,6 +232,10 @@ export default {
     this.messageInput = "";
   },
   methods: {
+    clickCategory() {
+      console.log("hello");
+      this.showCategory = true;
+    },
     toggle() {
       this.$nextTick(() => {
         if (this.likesAllFruit) {
@@ -266,7 +320,6 @@ export default {
 </script>
 
 <style scoped>
-
 .conve-container {
   position: relative;
   display: flex;
@@ -278,7 +331,7 @@ export default {
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 12px;
-  float:right;
+  float: right;
 }
 .liveChat {
   z-index: 999;
@@ -290,7 +343,7 @@ export default {
   color: #fff;
   background-color: #2aaf3e !important;
 }
-.popper {  
+.popper {
   width: 400px;
   border-radius: 10px;
   border: 1px solid #dddddd;
@@ -322,6 +375,62 @@ export default {
   background-color: #fff;
 }
 
+.msgUser {
+  border: 1px solid #cecece;
+  background-color: #f5f4f4;
+  padding: 5px;
+  overflow: auto;
+  border-radius: 8px;
+  max-width: 370px;
+  text-align: justify;
+  margin:5px 0px;
+}
+
+.messageChatView div {
+  float: left;
+}
+.messageChatView .userImage {
+  border-radius: 180px;
+  width: 40px;
+  height: 40px;
+  float: left;
+}
+.messageChatView .userStatus {
+  float: left;
+  margin: 10px 5px;
+}
+.messageChatView .ranking {
+  float: left;
+  margin: 10px 3px;
+  border-radius: 180px;
+  background-color: #333;
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+.messageChatView .view {
+  float: left;
+  background-image: linear-gradient(to right, #888787 30%, #626161 51%);
+  border-radius: 6px;
+  color: #fff;
+  box-shadow: none;
+  height: 25px;
+  width: 30px;
+  font-size: 12px;
+  margin: 10px 4px;
+}
+.messageChatView .follow {
+  float: left;
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  border-radius: 6px;
+  color: #fff;
+  box-shadow: none;
+  height: 25px;
+  width: 30px;
+  font-size: 12px;
+  margin: 10px 4px;
+}
 #headerChat {
   height: 45px;
 }
@@ -376,47 +485,12 @@ export default {
   margin-bottom: 10px;
 }
 
-.msgUser {
-  border: 1px solid #cecece;
-  background-color: #f5f4f4;
-  padding: 5px 8px 0px;
-  overflow: auto;
-  border-radius: 8px;
-  max-width: 350px;
-  margin: 10px 10px;
-  text-align: justify;
-}
-.msgUser span {
-  background-color: #ced1d0;
-  border-radius: 20px;
-  padding: 2px 8px;
-  float: right;
-  font-size: 10px;
-}
-.msgUser p {
-  text-align: justify;
-  float: left;
-  width: 100%;
-  margin-top: 2px;
-  margin-bottom: 5px;
-  font-size: 11px;
-}
-
-.msgUser a {
-  width: 50%;
-  text-transform: capitalize;
-  font-weight: 600;
-  float: left;
-  color: #003e70;
-  font-size: 12px;
-}
-
 .msgBody {
   color: #7f7e7e;
 }
 .messageChat {
   width: 92%;
-  bottom: 7px;  
+  bottom: 7px;
   background-color: #fff;
 }
 
