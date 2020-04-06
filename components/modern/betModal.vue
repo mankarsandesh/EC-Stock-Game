@@ -82,6 +82,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import result from "~/data/result";
 import config from "../../config/config.global";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
@@ -135,19 +136,31 @@ export default {
     ])
   },
   watch: {
-    clearRoadMap(val) {
-      if (!val) {
-        $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
-        setTimeout(() => {
-          console.log("wait for 5 second");
-          $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-          $("#" + this.betId).removeClass(
-            this.betId.split("-")[0] + "-animation"
-          );
-        }, 5000);
-      }
-      // $("#" + this.betId).removeClass("bet-animation");
+    getLastDraw(val) {
+      const lastDraw = val.substr(val.length - 2);
+      const first = lastDraw.slice(0, 1);
+      const last = lastDraw.slice(1, 2);
+      result.rule_data.map((items, index) => {
+        const className = $("#" + this.betId).hasClass(items.type);
+        if (className) {
+          const getClass = $("#" + this.betId).attr("class");
+          console.log(getClass);
+        }
+      });
     }
+    // clearRoadMap(val) {
+    //   if (!val) {
+    //     $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
+    //     setTimeout(() => {
+    //       console.log("wait for 5 second");
+    //       $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+    //       $("#" + this.betId).removeClass(
+    //         this.betId.split("-")[0] + "-animation"
+    //       );
+    //     }, 5000);
+    //   }
+    //   // $("#" + this.betId).removeClass("bet-animation");
+    // }
   },
   created() {
     // check is full screen or not
@@ -192,7 +205,7 @@ export default {
             betDate: res.data[0].createdDate,
             betTime: res.data[0].createdTime,
             betAmount: res.data[0].betAmount,
-            stockName: this.$props.stockName  
+            stockName: this.$props.stockName
           };
           this.pushDataOnGoingBet(OnGoingdata);
           this.$swal({
@@ -225,9 +238,7 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
-      console.log("This is the Place bet funtions");
-      console.log(data);
-      $("#" + this.betId).addClass(this.betId.split("-")[0]);
+      $("#" + this.betId).addClass(this.betId.split("-")[0] + " " + this.betId);
     },
     closePopper() {
       $(".closepopper").click();

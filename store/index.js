@@ -354,6 +354,7 @@ const createStore = () => {
       },
       clearRoadMap: state => state.clearRoadMap,
       getGameUUIDByStockName: state => stockName => {
+        // console.log("i am here :" + stockName)
         // check is it a btc stock
         let loop = "";
         if (stockName === "btc5") {
@@ -416,7 +417,7 @@ const createStore = () => {
         let result = 0;
         for (let i = 0; i < state.stockListTimer[0].length; i++) {
           if (state.stockListTimer[0][i].stockName === stockName) {
-            result = state.stockListTimer[0][i].stockPrice; 
+            result = state.stockListTimer[0][i].stockPrice;
             break;
           }
         }
@@ -429,7 +430,7 @@ const createStore = () => {
         let result = 0;
         for (let i = 0; i < state.stockListTimer[0].length; i++) {
           if (state.stockListTimer[0][i].stockName === stockName) {
-            result = state.stockListTimer[0][i].stockTimestamp; 
+            result = state.stockListTimer[0][i].stockTimestamp;
             break;
           }
         }
@@ -474,7 +475,6 @@ const createStore = () => {
         return state.activeGameChannel;
       },
       getPortalProviderUUID(state) {
-        console.log("check SocketID", state.portalProviderUUID);
         return state.portalProviderUUID;
       },
       getUserUUID(state) {
