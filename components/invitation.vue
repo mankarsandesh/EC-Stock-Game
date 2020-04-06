@@ -29,13 +29,54 @@
         <!-- for EC World -->
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
+               <div class="filter">
+                  <b>Filter</b> 
+                  <span class="rank">
+                      Winning Rank
+                  </span>
+                   <span class="rate">
+                      Winning Rate
+                   </span>
+                    <span class="follow">
+                      Winning Followers
+                   </span>
+              </div> 
+              
             <div class="bodyChat">
-              <div class="msgUser">
+              
+              <div class="msgUser follow">
                 <div class="messageChatView">
                   <div>
                     <v-img
                       class="userImage"
                       :src="profilePic"
+                      aspect-ratio="1"
+                      max-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </div>
+                  <div>
+                    <span class="userStatus">Total Follower</span>
+                  </div>
+                  <div>
+                    <span class="ranking">951</span>
+                  </div>
+                  <div>
+                    <v-btn class="view">View</v-btn>
+                  </div>
+                  <div>
+                    <v-btn class="following">Follow</v-btn>
+                  </div>
+                </div>
+              </div>
+
+              <div class="msgUser rank">
+                <div class="messageChatView">
+                  <div>
+                    <v-img
+                      class="userImage"
+                      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
                       aspect-ratio="1"
                       max-height="100"
                       max-width="100"
@@ -52,11 +93,66 @@
                     <v-btn class="view">View</v-btn>
                   </div>
                   <div>
-                    <v-btn class="follow">Follow</v-btn>
+                    <v-btn class="following">Follow</v-btn>
                   </div>
                 </div>
               </div>
-               <div class="msgUser">
+
+              <div class="msgUser rate">
+                <div class="messageChatView">
+                  <div>
+                    <v-img
+                      class="userImage"
+                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
+                      aspect-ratio="1"
+                      max-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </div>
+                  <div>
+                    <span class="userStatus">Winning Rate</span>
+                  </div>
+                  <div>
+                    <span class="ranking">95%</span>
+                  </div>
+                  <div>
+                    <v-btn class="view">View</v-btn>
+                  </div>
+                  <div>
+                    <v-btn class="following">Follow</v-btn>
+                  </div>
+                </div>
+              </div>
+
+               <div class="msgUser rate">
+                <div class="messageChatView">
+                  <div>
+                    <v-img
+                      class="userImage"
+                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
+                      aspect-ratio="1"
+                      max-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </div>
+                  <div>
+                    <span class="userStatus">Winning Rate</span>
+                  </div>
+                  <div>
+                    <span class="ranking">95%</span>
+                  </div>
+                  <div>
+                    <v-btn class="view">View</v-btn>
+                  </div>
+                  <div>
+                    <v-btn class="following">Follow</v-btn>
+                  </div>
+                </div>
+              </div>
+
+                 <div class="msgUser follow">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -69,19 +165,73 @@
                     </v-img>
                   </div>
                   <div>
-                    <span class="userStatus">Winning Rank</span>
+                    <span class="userStatus">Total Follower</span>
                   </div>
                   <div>
-                    <span class="ranking">1</span>
+                    <span class="ranking">951</span>
                   </div>
                   <div>
                     <v-btn class="view">View</v-btn>
                   </div>
                   <div>
-                    <v-btn class="follow">Follow</v-btn>
+                    <v-btn class="following">Follow</v-btn>
                   </div>
                 </div>
               </div>
+
+               <div class="msgUser follow">
+                <div class="messageChatView">
+                  <div>
+                    <v-img
+                      class="userImage"
+                      :src="profilePic"
+                      aspect-ratio="1"
+                      max-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </div>
+                  <div>
+                    <span class="userStatus">Total Follower</span>
+                  </div>
+                  <div>
+                    <span class="ranking">951</span>
+                  </div>
+                  
+                  <div>
+                    <v-btn class="following">Follow</v-btn>
+                  </div>
+                </div>
+              </div>
+
+               <div class="msgUser rate">
+                <div class="messageChatView">
+                  <div>
+                    <v-img
+                      class="userImage"
+                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
+                      aspect-ratio="1"
+                      max-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </div>
+                  <div>
+                    <span class="userStatus">Winning Rate</span>
+                  </div>
+                  <div>
+                    <span class="ranking">95%</span>
+                  </div>
+                  <div>
+                    <v-btn class="view">View</v-btn>
+                  </div>
+                  <div>
+                    <v-btn class="following">Follow</v-btn>
+                  </div>
+                </div>
+              </div>
+
+
             </div>
 
             <div class="messageChat">
@@ -369,44 +519,84 @@ export default {
 .chatRoom {
   height: 500px;
   width: 100%;
-  /* margin-r: 300px; */
   padding: 2px 3px;
   border-radius: 5px;
   background-color: #fff;
 }
 
 .msgUser {
-  border: 1px solid #cecece;
-  background-color: #f5f4f4;
-  padding: 5px;
+  padding: 4px;
   overflow: auto;
   border-radius: 8px;
   max-width: 370px;
   text-align: justify;
-  margin:5px 0px;
+  margin: 5px 0px;
 }
-
+.filter{
+    margin-top:10px;
+}
+.filter span{
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;  
+    padding: 5px;
+    margin:10px 5px;
+    font-size: 12px;
+    color: #8d8c8c;
+}
+.follow {
+  border: 1px solid orange;
+}
+.rank {
+  border: 1px solid #c6b2f0;
+}
+.rate {
+  border: 1px solid green;
+}
 .messageChatView div {
   float: left;
 }
 .messageChatView .userImage {
   border-radius: 180px;
+  cursor: pointer;
   width: 40px;
   height: 40px;
   float: left;
+  border: 1px solid #dddddd;
 }
 .messageChatView .userStatus {
   float: left;
-  margin: 10px 5px;
+  margin: 12px 5px;
+  font-size: 13px;
+  color: #8d8c8c;
+  font-weight: 800;
 }
-.messageChatView .ranking {
+.follow .ranking {
   float: left;
-  margin: 10px 3px;
+  font-size: 14px;
+  margin: 12px 6px;
+  color: green;
+  font-weight: 800;
+  text-align: center;
+}
+.rank .ranking {
+  float: left;
+  text-align: center;
+  font-size: 14px;
+  margin: 12px 6px;
+  background-color: yellowgreen;
+  color: #333;
+  width: 25px;
+  height: 25px;
   border-radius: 180px;
-  background-color: #333;
-  color: #fff;
-  width: 20px;
-  height: 20px;
+  font-weight: 800;
+}
+.rate .ranking {
+  float: left;
+  font-size: 14px;
+  margin: 12px 6px;
+  color: orange;
+  font-weight: 800;
   text-align: center;
 }
 .messageChatView .view {
@@ -418,9 +608,9 @@ export default {
   height: 25px;
   width: 30px;
   font-size: 12px;
-  margin: 10px 4px;
+  margin: 10px 3px;
 }
-.messageChatView .follow {
+.messageChatView .following {
   float: left;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   border-radius: 6px;
@@ -429,7 +619,7 @@ export default {
   height: 25px;
   width: 30px;
   font-size: 12px;
-  margin: 10px 4px;
+  margin: 10px 3px;
 }
 #headerChat {
   height: 45px;
@@ -477,12 +667,13 @@ export default {
 
 .bodyChat {
   background-color: redff;
-  height: 430px;
+  height: 400px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;
   border-radius: 4px;
   margin-bottom: 10px;
+  margin-top:10px;
 }
 
 .msgBody {
