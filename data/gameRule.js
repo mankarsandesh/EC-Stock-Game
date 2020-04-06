@@ -121,7 +121,7 @@ const gamerule = {
     {
       ruleid: 35,
       rule: "big",
-      payout: 22
+      payout: 22  
     },
     {
       ruleid: 168,

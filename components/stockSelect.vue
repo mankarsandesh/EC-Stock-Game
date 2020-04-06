@@ -272,7 +272,7 @@ export default {
                   this.gameId = minute.gameID;
                   this.setGameID(minute.gameID);
                 }
-              });
+              }); 
             });
           }
         } else {
@@ -302,12 +302,3 @@ export default {
 </style>
 
 
-
-composer install 
-php artisan key:generate
-php artisan jwt:secret
-php artisan migrate:fresh --seed
-npm install 
-
-change port 
-php artisan serve --port=8080

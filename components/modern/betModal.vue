@@ -153,7 +153,6 @@ export default {
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    console.log("wait for 5 second");
                     $("#" + this.betId).removeClass(this.betId.split("-")[0]);
                     $("#" + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
@@ -161,7 +160,7 @@ export default {
                   }, 5000);
                 } else {
                   $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-                  console.log("====You====lose====" + item.name + " =====");
+                  console.log("====You====lose====" + item.name + " ====");
                 }
               }
             }
