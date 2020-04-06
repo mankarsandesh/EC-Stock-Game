@@ -303,11 +303,3 @@ export default {
 
 
 
-composer install 
-php artisan key:generate
-php artisan jwt:secret
-php artisan migrate:fresh --seed
-npm install 
-
-change port 
-php artisan serve --port=8080

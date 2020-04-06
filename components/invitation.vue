@@ -2,8 +2,8 @@
   <popper
     trigger="click"
     :options="{
-      placement: 'bottom-end',
-      modifiers: { offset: { offset: '65px' } }
+      placement: 'bottom-top',
+      modifiers: { offset: { offset: '65px' } },
     }"
   >
     <div class="popper">
@@ -43,16 +43,21 @@
               </div>
             </div>
 
-            <div class="messageChat">
-              <input
-                resize="none"
-                v-model="messageInput"
-                placeholder="Say Somthing..."
-                @keyup.enter="sendMsgWorld()"
-              />
-              <span @click="sendMsgWorld" class="btn">
-                <i class="fa fa-paper-plane"></i>
-              </span>
+            <div class="messageChat" >
+                <v-flex col-md-6>
+                <v-btn class="buttonInvitation"              
+                >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
+              ></v-btn>
+             </v-flex> 
+             
+              <v-flex col-md-6>         
+              
+                <v-btn class="buttonInvitation"              
+                >Select Category
+                </v-btn>
+
+              </v-flex>
+                          
             </div>
           </div>
         </div>
@@ -83,37 +88,44 @@ export default {
   components: {
     chanelChat,
     popper,
-    config
+    config,
   },
   props: {
     gameUUID: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
+      selectedFruits: [],
+      fruits: ["Winning Rank", "Winning Rate", " Total followers"],
       currentRoute: "",
       messageInput: "",
       pageActiveChanel: [
         "modern-desktop-id",
         "modern-multigame-id",
-        "modern-fullscreen-id"
+        "modern-fullscreen-id",
       ],
       tabActiveName: "world",
       conversationWorld: [],
       connectClient: [],
       totoalUserCount: 0,
-      userId: 0
+      userId: 0,
     };
   },
   computed: {
+    icon() {
+      if (this.likesAllFruit) return "mdi-close-box";
+      if (this.likesSomeFruit) return "mdi-minus-box";
+      return "mdi-checkbox-blank-outline";
+    },
     ...mapGetters([
       "getPortalProviderUUID",
       "getUserUUID",
       "getUserName",
       "getStockType",
-      "getStockGameId"
+      "getStockGameId",
     ]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
@@ -121,21 +133,21 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   },
   mounted() {
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
-        eventName: "messageSend"
+        eventName: "messageSend",
       },
       ({ data }) => {
-        data.data.forEach(element => {
+        data.data.forEach((element) => {
           this.getMessagesGame.push({
             name: element.userName,
             userId: element.userUUID,
             message: element.message,
-            date: element.date
+            date: element.date,
           });
         });
       }
@@ -144,17 +156,17 @@ export default {
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
-        eventName: "messageSend"
+        eventName: "messageSend",
       },
       ({ data }) => {
         console.log("world Listing");
         console.log(data);
-        data.data.forEach(element => {
+        data.data.forEach((element) => {
           this.conversationWorld.push({
             name: element.userName,
             userUUID: element.getUserUUID,
             message: element.message,
-            date: element.date
+            date: element.date,
           });
         });
         this.scrollDown();
@@ -170,12 +182,21 @@ export default {
     this.messageInput = "";
   },
   methods: {
+    toggle() {
+      this.$nextTick(() => {
+        if (this.likesAllFruit) {
+          this.selectedFruits = [];
+        } else {
+          this.selectedFruits = this.fruits.slice();
+        }
+      });
+    },
     scrollDown() {
       $(".bodyChat")
         .stop()
         .animate(
           {
-            scrollTop: $(".bodyChat")[0].scrollHeight
+            scrollTop: $(".bodyChat")[0].scrollHeight,
           },
           1000
         );
@@ -197,10 +218,10 @@ export default {
               userUUID: this.getUserUUID,
               chatType: 2,
               message: this.messageInput,
-              version: config.version
+              version: config.version,
             },
             {
-              headers: config.header
+              headers: config.header,
             }
           );
           console.log(res);
@@ -225,10 +246,10 @@ export default {
               gameUUID: this.gameUUID,
               chatType: 1,
               message: this.messageInput,
-              version: config.version
+              version: config.version,
             },
             {
-              headers: config.header
+              headers: config.header,
             }
           );
           if (res.status) {
@@ -239,16 +260,25 @@ export default {
         this.sendMsgChanel();
         console.log(ex.message);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
+
 .conve-container {
   position: relative;
   display: flex;
   flex-direction: column;
+}
+.buttonInvitation {
+  color: #fff !important;
+  border-radius: 10px;
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+  font-size: 12px;
+  float:right;
 }
 .liveChat {
   z-index: 999;
@@ -260,8 +290,8 @@ export default {
   color: #fff;
   background-color: #2aaf3e !important;
 }
-.popper {
-  width: 300px;
+.popper {  
+  width: 400px;
   border-radius: 10px;
   border: 1px solid #dddddd;
 }
@@ -284,7 +314,7 @@ export default {
 }
 
 .chatRoom {
-  height: 400px;
+  height: 500px;
   width: 100%;
   /* margin-r: 300px; */
   padding: 2px 3px;
@@ -338,7 +368,7 @@ export default {
 
 .bodyChat {
   background-color: redff;
-  height: 350px;
+  height: 430px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;
@@ -385,41 +415,9 @@ export default {
   color: #7f7e7e;
 }
 .messageChat {
-  position: fixed;
-  bottom: 7px;
+  width: 92%;
+  bottom: 7px;  
   background-color: #fff;
-  height: 35px;
-  padding: 0px 10px;
-  width: 97%;
-  display: inline-flex;
-  border-radius: 5px;
-  border: 1px solid #d3d2d2;
-}
-
-.messageChat input {
-  float: left;
-  width: 100%;
-  padding: 5px;
-  margin-right: 0px;
-  font-size: 12px;
-  height: 30px;
-  resize: none;
-  color: #003e70;
-}
-
-.messageChat input:focus {
-  outline: none;
-}
-
-.messageChat .btn {
-  padding: 5px 10px;
-  color: #d3d2d2;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 0px;
-}
-.messageChat .btn:hover {
-  color: #003e70;
 }
 
 /* width */
