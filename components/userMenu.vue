@@ -1,5 +1,5 @@
 <template>
-  <div style="z-index:100">
+  <div style="z-index: 100;">
     <v-menu offset-y :close-on-content-click="false" :min-width="180">
       <template v-slot:activator="{ on }">
         <v-btn flat v-on="on" v-show="isShow == 'classic'">
@@ -10,9 +10,13 @@
             <img :src="imgProfile" />
           </v-avatar>
           <div class="userLogoutMenu">
-            <span v-if="getUserInfo.firstName == null">{{getUserInfo.userName}} </span>
-            <span v-if="getUserInfo.firstName">{{getUserInfo.firstName}} {{getUserInfo.lastName}}</span>
-            <span>            
+            <span v-if="getUserInfo.firstName == null"
+              >{{ getUserInfo.userName }}
+            </span>
+            <span v-if="getUserInfo.firstName"
+              >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</span
+            >
+            <span>
               <animated-number
                 :value="getUserInfo.balance"
                 :formatValue="formatToPrice"
@@ -24,28 +28,35 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-tile @click="$router.push('/modern/desktop/profile/');" v-show="isShow == 'modern'">
+        <v-list-tile
+          @click="$router.push('/modern/desktop/dashboardprofile/')"
+          v-show="isShow == 'modern'"
+        >
           <i class="fa fa-user fa-2x margin-right-5" />
-          <v-list-tile-title>{{$t('menu.profile')}}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("menu.profile") }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
-          @click="$router.push('/modern/desktop/profile/onlinehistory/');"
+          @click="$router.push('/modern/desktop/profile/onlinehistory/')"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.onlinehistory')}}</v-list-tile-title>
+          <v-list-tile-title>{{
+            $t("profile.onlinehistory")
+          }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
-          @click="$router.push('/modern/desktop/profile/stockanalysis/');"
+          @click="$router.push('/modern/desktop/profile/stockanalysis/')"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-line-chart fa-15x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.stockanalysis')}}</v-list-tile-title>
+          <v-list-tile-title>{{
+            $t("profile.stockanalysis")
+          }}</v-list-tile-title>
         </v-list-tile>
 
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.signout')}}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -65,23 +76,25 @@ import config from "../config/config.global";
 export default {
   components: {
     AnimatedNumber,
-    AppDialogsConfirm
+    AppDialogsConfirm,
   },
   data() {
     return {
       dialogConfirm: false,
       profileImage: "",
       dialogprofile: false,
-      isShow: ""
+      isShow: "",
     };
   },
   computed: {
     ...mapGetters(["getUserInfo"]),
-    imgProfile() {      
-      return this.getUserInfo.profileImage === null ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-    }      
-  },  
-  mounted() {   
+    imgProfile() {
+      return this.getUserInfo.profileImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/` + this.getUserInfo.profileImage;
+    },
+  },
+  mounted() {
     this.isShow = location.pathname.split("/")[1];
   },
   methods: {
@@ -102,8 +115,8 @@ export default {
         .toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
-    }
-  }
+    },
+  },
 };
 </script>
 
