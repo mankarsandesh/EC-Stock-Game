@@ -26,9 +26,7 @@
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
           </v-avatar>
-          <span class="camera_container" style="position: absolute; top: 23%;">
-            <v-icon color="black" :size="20">photo_camera</v-icon>
-          </span>
+
           <!-- <span class="blur-img">uploading</span> -->
         </div>
         <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
@@ -43,9 +41,7 @@
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
-              <span class="camera_container" style="position: absolute;top: 32%;left: 12%;">
-                <v-icon color="black" :size="20">photo_camera</v-icon>
-              </span>
+
               <!-- <span class="blur-img">uploading</span> -->
             </div>
             <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
@@ -114,11 +110,6 @@
                       <v-icon v-on="on">arrow_drop_down</v-icon>
                     </span>
                   </template>
-                  <v-list>
-                    <v-list-tile v-for="(item, index) in items" :key="index">
-                      <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    </v-list-tile>
-                  </v-list>
                 </v-menu>
               </div>
             </div>

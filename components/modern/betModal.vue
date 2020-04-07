@@ -84,40 +84,14 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import result from "~/data/result";
 import config from "../../config/config.global";
+import chips from "../../data/chips";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
   data() {
     return {
       confirmDisabled: false,
       betValue: 0,
-      imgChip: [
-        {
-          title: "Danger",
-          img: "/chip/danger.png",
-          width: "55"
-        },
-        {
-          title: "Primary",
-          img: "/chip/primary.png",
-          width: "55"
-        },
-        {
-          title: "success",
-          img: "/chip/success.png",
-          width: "60"
-        },
-        {
-          title: "warning",
-          img: "/chip/warning.png",
-          width: "60"
-        },
-        {
-          title: "black",
-          img: "/chip/black.png",
-          width: "70",
-          color: "text-white"
-        }
-      ]
+      imgChip: chips.chipsData
     };
   },
   computed: {

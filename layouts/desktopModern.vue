@@ -190,7 +190,7 @@
           indeterminate
         ></v-progress-circular>
       </div>
-      <v-toolbar class="toolbarMenu">
+      <v-toolbar class="toolbarMenu" style="background-color:#FFF;"> 
         <v-container fluid class="navbar">
           <v-toolbar-title>
             <v-img
@@ -243,7 +243,7 @@
       </v-content>
 
       <!-- Chat Windows-->
-      <chatWindow
+      <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :key="$route.name"
       />
@@ -262,13 +262,13 @@ import welcomeUser from "~/components/welcomeUser";
 import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
-import chatWindow from "~/components/chatWindow";
+import invitation from "~/components/invitation";
 import userMenu from "../components/userMenu";
 import config from "../config/config.global";
 
 export default {
   components: {
-    chatWindow,
+    invitation,
     countryFlag,
     languageDialog,
     winnerMarquee,
