@@ -6,7 +6,7 @@
 
 <script>
 import VueApexCharts from "vue-apexcharts";
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import openSocket from "socket.io-client";
 export default {
   props: ["StockData"],
@@ -116,12 +116,9 @@ export default {
     };
   },  
   computed: {
-    ...mapGetters([
-      ""
-    ]),
-    ...mapState([
-      "gameStockId"
-    ])
+    ...mapState({
+      gameStockId: state => state.game.gameStockId
+  })
   },
   mounted() {
     this.listenForBroadcast({ 

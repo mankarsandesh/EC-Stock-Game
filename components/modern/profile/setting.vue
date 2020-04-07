@@ -101,7 +101,7 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     async updateSetting() {
       // set value to 1 or 0 true==1 false==0
       let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
@@ -136,7 +136,7 @@ export default {
           }
         );
         if (res.code === 200) {
-          this.asynUserInfo();
+          this.setUserData();
         } else {
           console.log(res.message);
           alert(res.message);

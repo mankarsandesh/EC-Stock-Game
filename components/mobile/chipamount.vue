@@ -17,7 +17,7 @@
               <v-text-field
                 class="setpricechip"
                 outlined
-                v-model="getCoins_modern[key]"
+                v-model="getCoinsModern[key]"
                 :class="item.color"
                 :ref="item.id"
               ></v-text-field>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import chips from '../../data/chips';
 export default {
   data() {
@@ -65,10 +65,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getCoins_modern"])
+    ...mapGetters(["getCoinsModern"])
   },
   methods: {
-    ...mapMutations(["setCoins_modern"]),
+    ...mapActions(["setCoinsModern"]),
     conOrEClick() {
       if (this.conOrE == "edit") {
         this.conOrE = "confirm";
@@ -95,7 +95,7 @@ export default {
       let ship5 = this.$refs.ship5[0].value;
       let new_amount = `["${ship1}", "${ship2}", "${ship3}", "${ship4}", "${ship5}"]`;
       localStorage.setItem("coinModern", new_amount);
-      this.setCoins_modern();
+      this.setCoinsModern();
       if (this.conOrE == "confirm") {
         this.conOrE = "edit";
       }

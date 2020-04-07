@@ -1,7 +1,6 @@
 const pkg = require("./package");
 
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
-import fs from "fs";
 
 import config from "./config/config.global";
 

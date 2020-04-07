@@ -6,7 +6,7 @@
       <p>{{ $t("msg.betclosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row > 
+    <v-layout row>
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
@@ -15,7 +15,7 @@
       <popper
         :disabled="checkFooterBet"
         v-for="data in firstDigit"
-        :key="data.ruleid"
+        :key="data.rule"
         class="w12"
         trigger="click"
         :options="{
@@ -32,7 +32,7 @@
             :payout="data.payout"
           ></betModal>
         </div>
-        <v-btn        
+        <v-btn
           class="align_button4 "
           :id="'firstdigit-' + data.rule"
           slot="reference"
@@ -51,7 +51,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -126,7 +126,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -201,7 +201,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -273,7 +273,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -409,7 +409,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 import betModal from "~/components/modern/betModal";
 import showChipAmount from "~/components/modern/showChipAmount";
@@ -459,10 +459,8 @@ export default {
       "getStockLoop",
       "checkFooterBet",
       "getFooterBetAmount",
-      "getMultiGameBet",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "getPayout"
     ]),
     stockID() {
       if (this.stockName == null) {
@@ -506,9 +504,10 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
-    ...mapMutations(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
+    ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
     betButtonClick(ruleID) {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBet) {
@@ -553,7 +552,7 @@ export default {
   position: relative;
 }
 .btn-digit {
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
   font-weight: bold;
   white-space: pre-line;

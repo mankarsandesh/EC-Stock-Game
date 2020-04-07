@@ -66,9 +66,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getlocale", "getUserName"]),
+    ...mapGetters(["getLocale", "getUserName"]),
     countryflag() {
-      return this.getlocale;
+      return this.getLocale;
     }
   },
   methods: {}

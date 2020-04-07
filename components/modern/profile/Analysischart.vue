@@ -51,7 +51,7 @@ export default {
             this.stockname = []
             this.betlose = []
             this.betwon = []
-            let dataGet = await this.$axios.$post('/api/me/betAnalysis?apikey=' + this.$store.state.auth_token)
+            let dataGet = await this.$axios.$post('/api/me/betAnalysis?apikey=' + this.$store.state.provider.auth_token)
             if (dataGet.data == "") return this.load = false;
 
             dataGet.data.forEach(element => {

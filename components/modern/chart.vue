@@ -26,7 +26,7 @@ import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Echo from "laravel-echo";
 export default {
   props: {
@@ -81,10 +81,10 @@ export default {
           number2: dataIndex.number2
         };
         if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {          
-           this.SET_CLEAR_ROAD_MAP(true);
+           this.setClearRoadMap(true);
           this.setLiveChart(readyData);
           setTimeout(() => {
-            this.SET_CLEAR_ROAD_MAP(false);
+            this.setClearRoadMap(false);
           }, 1000);
         }
       }
@@ -98,8 +98,7 @@ export default {
       "getPortalProviderUUID",
       "getStockLivePrice",
       "getStockLiveTime",
-      "getStockUUIDByStockName",
-      "getLiveTime"
+      "getStockUUIDByStockName"
     ]),
     chartOptions() {
       let newTime = [];
@@ -198,7 +197,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-    ...mapMutations(["SET_CLEAR_ROAD_MAP"]),
+    ...mapActions(["setClearRoadMap"]),
     setLiveChart(payload) {
       this.chartData.push(payload);
     },

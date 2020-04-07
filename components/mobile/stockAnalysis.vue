@@ -247,7 +247,7 @@ export default {
     showDialogStockAnalysis() {
       this.dialogStockAnalysis = true;
     },
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },

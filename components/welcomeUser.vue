@@ -70,7 +70,7 @@ export default {
             });
         },
         async alertOutCome() {
-            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.auth_token)
+            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.provider.auth_token)
             // console.log(totalPayout)
             if (totalPayout.status == false) return;
             this.snackbar = true;

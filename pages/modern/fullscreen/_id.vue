@@ -330,7 +330,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
@@ -370,7 +370,7 @@ export default {
   },
   created() {
     this.getActiveGamesByCategory();
-    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
   },
   beforeDestroy() {
     window.Echo.leave(
@@ -444,14 +444,16 @@ export default {
       "getStockChart",
       "getLiveTime",
       "getLivePrice",
-      "headers",
       "getUserUUID"
     ]),
-    ...mapState(["gameStockId"])
+    ...mapState({
+      gameStockId: state => state.game.gameStockId
+    })
   },
   methods: {
-    ...mapMutations(["setLiveRoadMap", "SET_STOCK_CATEGORY"]),
-    ...mapActions(["asyncRoadMap"]),
+    ...mapActions([
+      'setRoadMap', 'setLiveRoadMap', 'setStockCategory'
+    ]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
@@ -467,7 +469,7 @@ export default {
             headers: config.header
           }
         );
-        this.SET_STOCK_CATEGORY(data);
+        this.setStockCategory(data);
         this.items = data;
       } catch (error) {
         console.log(error);

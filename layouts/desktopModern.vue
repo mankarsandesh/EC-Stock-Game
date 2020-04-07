@@ -252,7 +252,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
@@ -341,7 +341,7 @@ export default {
     });
   },
   methods: {
-    ...mapMutations([
+    ...mapActions([
       "setGameChannelShow",
       "setIsShowTutorial",
       "setIsWindowsHasScroll"
@@ -450,12 +450,12 @@ export default {
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID
       "getGameChannel",
-      "getlocale",
+      "getLocale",
       "getIsLoadingStockGame",
       "getStockCrawlerData"
     ]),
     countryflag() {
-      return this.getlocale;
+      return this.getLocale;
     }
   }
 };
