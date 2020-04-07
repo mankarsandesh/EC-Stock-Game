@@ -83,7 +83,6 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
-
     checkStock(value) {
       let close = {};
       if (value == "") {
