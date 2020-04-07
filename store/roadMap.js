@@ -1,8 +1,8 @@
 import config from "../config/config.global";
 
 const state = () => ({
-    clearRoadMap: false,
-    roadMap: [],
+    clearRoadMap: false,           // Store clear road map status
+    roadMap: [],                   // Store road map data
 })
 
 const mutations = {
@@ -19,6 +19,7 @@ const mutations = {
 }
 
 const actions = {
+    // Set road map data from api
     async setRoadMap(context, stockUUID) {
         try {
           const res = await this.$axios.$post(
@@ -44,21 +45,26 @@ const actions = {
           console.log(ex);
         }
     },
+    // Set live road map data
     setLiveRoadMap({ commit }, payload) {
         commit('SET_LIVE_ROAD_MAP', payload);
     },
+    // Set clear road map status
     setClearRoadMap({ commit }, payload) {
       commit('SET_CLEAR_ROAD_MAP', payload);
     }
 }
 
 const getters = {
+    // Get clear road map status
     clearRoadMap: state => {
         return state.clearRoadMap
     },
+    // Get road map data
     getRoadMap(state) {
         return state.roadMap;
     },
+    // Get last draw data
     getLastDraw(state) {
         return state.roadMap.length > 0
             ? state.roadMap[state.roadMap.length - 1].stockValue

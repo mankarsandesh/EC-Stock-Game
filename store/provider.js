@@ -1,20 +1,18 @@
 import config from "../config/config.global";
 
 const state = () => ({
-    authUser: {},
-    userLoginData: {},  
-    auth_token: (localStorage.apikey = "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),
-    // set portal provider and user UUID for authentication
-    portalProviderUUID: localStorage.getItem("PORTAL_PROVIDERUUID"),
-    userUUID: localStorage.getItem("USER_UUID"),
-    // end set portal provider and user UUID for authentication
-    userData: {},
-    locales: ["cn", "us", "th", "la"],
-    locale: localStorage.getItem("lang"),
-    coins_modern: [],
-    isShowTutorial: false,
-    isWindowsHasScroll: false,
-    tutorialStepNumber: 0,
+    authUser: {},                  // store auth user data
+    userLoginData: {},             // Store user login data
+    authToken: (localStorage.apikey = "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"),  // Store auth token
+    portalProviderUUID: localStorage.getItem("PORTAL_PROVIDERUUID"),           // Store portal provider UUID
+    userUUID: localStorage.getItem("USER_UUID"),                               // Store user UUID
+    userData: {},                                     // Store user data
+    locales: ["cn", "us", "th", "la"],                // Store language locales
+    locale: localStorage.getItem("lang"),             // Store locale
+    coinsModern: [],                                  // Store coins modern
+    isShowTutorial: false,                            
+    isWindowsHasScroll: false,  
+    tutorialStepNumber: 0,                            // Store tutorial step number
 });
 
 const mutations = {
@@ -34,13 +32,13 @@ const mutations = {
     SET_USER_LOGIN_DATA(state, payload) {
         state.userLoginData = payload;
     },
-    // store api_token in vuex auth_token
+    // store api_token in vuex auth Token
     SET_AUTH_TOKEN(state, token) {
-        state.auth_token = token;
+        state.authToken = token;
     },
     // store coin in localStorage payload must be "String array" '["100", "500", "1000", "5000", "10000"]'
     SET_COINS_MODERN(state) {
-        state.coins_modern = JSON.parse(localStorage.getItem("coinModern"));
+        state.coinsModern = JSON.parse(localStorage.getItem("coinModern"));
     },
     // set language
     SET_LANGUAGE(state, locale) {
@@ -64,7 +62,7 @@ const mutations = {
 }
 
 const actions = {
-    // get user info from api
+    // Set user data from api
     async setUserData(context) {
         try {
           const res = await this.$axios.$post(
@@ -89,68 +87,83 @@ const actions = {
           // alert(ex)
         }
     },
+    // Set user auth data
     setAuth({ commit }, payload) {
         commit('SET_AUTH', payload);
     },
+    // Set portal provider UUID
     setPortalProviderUUID({ commit }, payload) {
         commit('SET_PORTAL_PROVIDER_UUID', payload);
     },
+    // Set user UUID
     setUserUUID({ commit }, payload) {
         commit('SET_USER_UUID', payload);
     },
+    // Set user login data
     setUserLoginData({ commit }, payload) {
         commit('SET_USER_LOGIN_DATA', payload);
     },
+    // Set auth token
     setAuthToken({ commit }, payload) {
         commit('SET_AUTH_TOKEN', payload);
     },
+    // Set coins modern
     setCoinsModern({ commit }) {
         commit('SET_COINS_MODERN');
     },
+    // Set language locale
     setLanguage({ commit }, payload) {
         commit('SET_LANGUAGE', payload);
     },
+    // Set is loading top player
     setTopPlayer({ commit }, payload) {
         commit('SET_TOP_PLAYER', payload);
     },
+    // Set is show tutorial
     setIsShowTutorial({ commit }, payload) {
         commit('SET_IS_SHOW_TUTORIAL', payload);
     },
+    // Set is windows scroll
     setIsWindowsHasScroll({ commit }, payload) {
         commit('SET_IS_WINDOWS_HAS_SCROLL', payload);
     },
+    // Set tutorial's step number
     setTutorialStepNumber({ commit }, payload) {
         commit('SET_TUTORIAL_STEP_NUMBER', payload);
     }
 }
 
 const getters = {
+    // Get portal provider UUID
     getPortalProviderUUID(state) {
         console.log("check SocketID",state.portalProviderUUID);
         return state.portalProviderUUID;
     },
+    // Get user UUID
     getUserUUID(state) {
         return state.userUUID;
     },
+    // Check authToken
     checkAuth(state) {
         if (
-          state.auth_token === "" ||
-          state.auth_token == null ||
-          state.auth_token == undefined
+          state.authToken === "" ||
+          state.authToken == null ||
+          state.authToken == undefined
         ) {
           return false;
         } else {
           return true;
         }
     },
-    // get user info
+    // Get user info
     getUserInfo(state) {        
         return state.userData;
     },
-    // get user name
+    // Get user name
     getUserName(state) {
-        return state.userData;
+        return state.userData.name;
     }, 
+    // Get portal provider user data
     getPortalProviderUser(state) {
         if (sessionStorage.getItem("userData") !== null) {
           const formData = JSON.parse(sessionStorage.getItem("userData"));
@@ -158,22 +171,25 @@ const getters = {
         return state.formData;
     },
     getAuthToken(state) {
-        return state.auth_token;
+        return state.authToken;
     },
     // get chip amount
     getCoinsModern(state) {
-        return state.coins_modern;
+        return state.coinsModern;
     },
       // get current language
     getLocale(state) {
         return state.locale;
     },
+    // Get is show tutorial status
     getIsShowTutorial(state) {
         return state.isShowTutorial;
     },
+    // Get is window has scroll status
     getIsWindowsHasScroll(state) {
         return state.isWindowsHasScroll;
-    },
+    }, 
+    // Get Tutorial step number
     getTutorialStepNumber(state) {
         return state.tutorialStepNumber;
     }

@@ -159,7 +159,7 @@ export default {
             this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
           } else {
             // if is multi game then add selected game
-            this.addStockMultigame(GET_STOCK_URL);
+            this.addStockMultiGame(GET_STOCK_URL);
           }
         } else {
           // check is multi game or not
@@ -167,7 +167,7 @@ export default {
             this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
             // if is multi game then add selected game
           } else {
-            this.addStockMultigame(GET_STOCK_URL);
+            this.addStockMultiGame(GET_STOCK_URL);
           }
         }
       }

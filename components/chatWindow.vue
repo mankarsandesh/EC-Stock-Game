@@ -110,7 +110,6 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getUserUUID",
-      "getUserName",
       "getStockType",
       "getStockGameId",
     ]),

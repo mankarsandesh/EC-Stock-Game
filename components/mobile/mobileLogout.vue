@@ -10,7 +10,7 @@
             <img :src="imgProfile" alt />
           </v-avatar>
           <div class="userLogoutMenu">
-            <span>{{getUserName.name}}</span>
+            <span>{{ getUserName }}</span>
             <span>
               {{$t('msg.acc')}}:
               <animated-number
@@ -170,7 +170,7 @@ export default {
             showConfirmButton: false,
             timer: 1500
           }).then(Confirm => {
-            this.$store.state.provider.auth_token = [];
+            this.$store.state.provider.authToken = [];
             localStorage.apikey = [];
             window.close();
           });

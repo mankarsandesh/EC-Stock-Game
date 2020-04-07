@@ -99,7 +99,6 @@ export default {
       "getStockLoop",
       "getGameUUIDByStockName",
       "getCoinsModern",
-      "getOnBetting",
       "getAuthToken",
       "getStockId",
       "getStockGameId",
