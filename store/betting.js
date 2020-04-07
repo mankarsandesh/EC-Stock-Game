@@ -1,27 +1,25 @@
 import config from "../config/config.global";
 
 const state = () => ({
-    multiGameBet: [],
-    multiGameBetsend: [],
-    footerBetAmount: 0,
-    // store data betting
-    onGoingBet: [],
-    isSendBetting: false,
+    multiGameBet: [],             // Store multi game bet
+    multiGameBetSend: [],         // Store multi game bet send
+    footerBetAmount: 0,           // Store footer bet amount
+    onGoingBet: [],               // store data betting
+    isSendBetting: false,         
 });
 
 const mutations = {
     PUSH_DATA_MULTI_GAME_BET(state, payload) {
         state.multiGameBet.push(payload);
-        state.multiGameBetsend.push(payload);
+        state.multiGameBetSend.push(payload);
     },
     CLEAR_DATA_MULTI_GAME_BET_SEND(state) {
-        state.multiGameBetsend = [];
+        state.multiGameBetSend = [];
     },
     CLEAR_DATA_MULTI_GAME_BET(state) {
         state.multiGameBet = [];
         state.footerBetAmount = 0;
         state.onGoingBet = [];
-        // console.warn(state.multiGameBet);
     },
     REMOVE_ALL_FOOTER_BET(state) {
         state.multiGameBet = [];
@@ -29,7 +27,6 @@ const mutations = {
     SET_FOOTER_BET_AMOUNT(state, payload) {
         state.footerBetAmount = parseInt(payload);
     },
-    // push data to on going bet
     PUSH_DATA_ON_GOING_BET(state, payload) {
         state.onGoingBet.splice(0, 0, payload);
     },
@@ -39,31 +36,35 @@ const mutations = {
 }
 
 const actions = {
+    // Push data to multi game bet
     pushDataMultiGameBet({ commit }, payload) {
         commit('PUSH_DATA_MULTI_GAME_BET', payload);
     },
+    // Clear data from multi game bet
     clearDataMultiGameBet({ commit }) {
         commit('CLEAR_DATA_MULTI_GAME_BET');
     },
+    // Clear data from footer bet
     removeAllFooterBet({ commit }) {
         commit('REMOVE_ALL_FOOTER_BET');
     },
+    // Set the footer bet amount
     setFooterBetAmount({ commit }, payload) {
         commit('SET_FOOTER_BET_AMOUNT', payload);
     },
+    // Push data to ongoing bet
     pushDataOnGoingBet({ commit }, payload) {
         commit('PUSH_DATA_ON_GOING_BET', payload);
     },
+    // Clear data from multi game bet send
     clearDataMultiGameBetSend({ commit }) {
       commit('CLEAR_DATA_MULTI_GAME_BET_SEND');
     },
-    // send bet data for multigame and footer bet on full screen
+    // Send bet data for multi game and footer bet on full screen
     async sendBetting(context) {
-        // set sendbetting = true
-        // to show loading
         try {
           context.commit("SET_IS_SEND_BETTING", true);
-          const betDatas = context.state.multiGameBetsend;
+          const betDatas = context.state.multiGameBetSend;
           if (betDatas.length == 0) {
             context.commit("SET_IS_SEND_BETTING", false);
             this._vm.$swal({
@@ -113,14 +114,15 @@ const actions = {
 }
 
 const getters = {
+    // Get multi game bet
     getMultiGameBet(state) {
         return state.multiGameBet;
     },
-    // get multiGameBet length
+    // Get multi game bet length
     getMultiGameBetLength(state) {
         return state.multiGameBet.length;
     },
-    // get amount of betting already confirmed and not confirm show on multi game and full screen
+    // Get amount of betting that has been confirmed
     getAllBettingAmount(state) {
         let amount1 = state.onGoingBet
           .map(x => x.betAmount)
@@ -130,9 +132,10 @@ const getters = {
           .reduce((a, b) => a + b, 0);
         return amount1 + amount2;
     },
+    // Get amount of betting by stock Id
     getAmountBettingByStockId: state => gameUUID => {
         function getAmount(object) {
-          // find stockname
+          // find stock name
           if (object.findIndex(x => x.gameUUID === gameUUID) == -1) return 0;
           let result = object
             .filter(x => x.gameUUID === gameUUID)
@@ -142,7 +145,7 @@ const getters = {
         }
         return getAmount(state.multiGameBet);
     },
-    // get bet amount for ech game rule to show on chip
+    // Get bet amount for ech game rule to show on chip
     getAmountMultiGameBet: state => data => {
         // get total bottom bet amount
         function getAmount(object) {
@@ -152,10 +155,10 @@ const getters = {
           }
           // get data by gameUUID and store in 'oneGameUUID'
           let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
-          // check there is ruleid in gameUUID or not,if no has return 0
+          // check there is rule id in gameUUID or not,if no has return 0
           if (oneGameUUID.findIndex(x => x.ruleID === data.ruleID) == -1)
             return 0;
-          // get gameUUID by from 'oneGameUUID'
+          // get gameUUID from 'oneGameUUID'
           let result = oneGameUUID
             .filter(x => x.ruleID === data.ruleID)
             .map(x => x.betAmount)
@@ -179,6 +182,7 @@ const getters = {
         }
         return getAmount(state.multiGameBet);
     },
+    // Get amount of specific bet number
     getAmountBetSpecificNumber: state => data => {
         let start = 2000;
         let end = 2000;
@@ -219,6 +223,7 @@ const getters = {
         return getAmount(state.multiGameBet);
         //  + getAmount(state.onGoingBet);
     },
+    // check the footer bet amount
     checkFooterBet(state) {
         if (state.footerBetAmount == 0) {
           return false;
@@ -226,29 +231,28 @@ const getters = {
           return true;
         }
     },
+    // Get the footer bet amount
     getFooterBetAmount(state) {
         return state.footerBetAmount;
     },
-    // get amount of betting that already confirm
+    // Get amount of betting that has already been confirm
     getBettingAmount(state) {
         return state.onGoingBet
           .map(x => x.betAmount)
           .reduce((a, b) => a + b, 0);
       },
       
-    // get data betting
+    // Get on going bet data
     getOnGoingBet(state) {
         return state.onGoingBet;
     },
-    //get betting data
-    getOnBetting(state) {
-        return state.onGoingBet;
-    },
+    // Get Is send betting status
     getIsSendBetting(state) {
-        return state.isSendbetting;
+        return state.isSendBetting;
     },
+    // Get amount by rule id
     getBetAmountRuleID: state => data => {
-        return 0
+        return 0;
     },
 }
 

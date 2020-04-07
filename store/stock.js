@@ -1,7 +1,7 @@
 import config from "../config/config.global";
 
 const state = () => ({
-    stocks: [
+    stocks: [           // Store stocks data
         {
           stockName: "btc1",
           stockUUID: "88778f4f-610b-4ec3-937d-65ef7bf24af5",
@@ -70,8 +70,8 @@ const state = () => ({
           crawlData: []
         }
     ],
-    stockCategory: [],
-    stockListTimer: [],
+    stockCategory: [],             // Store Stocks category
+    stockListTimer: [],            // Store stock list timer
 });
 
 const mutations = {
@@ -90,6 +90,7 @@ const mutations = {
 }
 
 const actions = {
+    // Set Stocks data
     async setStocksData(context) {
         try {
           const res = await this.$axios.$post(
@@ -109,18 +110,20 @@ const actions = {
           }
         } catch (ex) {
           console.log(ex);
-          // this.$router.push("/error");
         }
     },
+    // Set stocks category
     setStockCategory ({ commit }, payload) {
         commit('SET_STOCK_CATEGORY', payload);
     },
+    // Set stock list timer
     setStockListTimer({ commit }, payload) {
         commit('SET_STOCK_LIST_TIMER', payload);
     },
 }
 
 const getters = {
+    // Get game UUID by stock name
     getGameUUIDByStockName: state => stockName => {
         let loopIndex = 0;
         if (stockName === "btc5") {
@@ -143,12 +146,15 @@ const getters = {
         }
         return result;
     },
+    // Get stock category
     getStockCategory(state) {
       return state.stockCategory;
     },
+    // Get all stocks data
     getAllStocks(state) {
       return state.stocks;
     },
+    // get stock loop by stock name
     getStockLoop: state => stockName => {
       let result = null;
       for (let i = 0; i < state.stocks.length; i++) {
@@ -159,6 +165,7 @@ const getters = {
       }
       return result;
     },
+    // Get stock live price by stock name
     getStockLivePrice: state => stockName => {
       if (!stockName || state.stockListTimer.length <= 0) {
         return null;
@@ -172,6 +179,7 @@ const getters = {
       }
       return result;
     },
+    // Get stock live time by stock name
     getStockLiveTime: state => stockName => {
       if (!stockName || state.stockListTimer.length <= 0) {
         return null;
@@ -185,6 +193,7 @@ const getters = {
       }
       return result;
     },
+    // Get timer by stock name
     getTimerByStockName: state => stockName => {
       if (!stockName || state.stockListTimer.length <= 0) {
         return null;
@@ -198,9 +207,11 @@ const getters = {
       }
       return result;
     },
+    // Get the stock list timer
     getStockListTimer(state) {
       return state.stockListTimer;
     },
+    // Get stock UUID by stock name
     getStockUUIDByStockName: state => stockName => {
       let result = null;
       for (let i = 0; i < state.stocks.length; i++) {
@@ -211,6 +222,7 @@ const getters = {
       }
       return result;
     },
+    // Check if the stock(by stock name) exists in the stocks data
     getCheckStock: state => stockname => {
       let result = false;
       state.stocks.forEach(element => {

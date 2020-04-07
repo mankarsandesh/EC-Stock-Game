@@ -66,7 +66,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getLocale", "getUserName"]),
+    ...mapGetters(["getLocale"]),
     countryflag() {
       return this.getLocale;
     }
