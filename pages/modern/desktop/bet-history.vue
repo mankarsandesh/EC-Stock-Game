@@ -143,8 +143,7 @@ export default {
   methods: {
     sortingBy() {
       console.log(this.sortby);
-      if (this.sortby == "Today") {
-        console.log(this.sortby);
+      if (this.sortby == "Today") {      
         const today = new Date();
         const lastWeek = new Date(
           today.getFullYear(),

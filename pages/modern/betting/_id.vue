@@ -1311,7 +1311,7 @@ import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
 import config from "../../../config/config.global";
 import gameRule from "../../../data/gameRule";
-
+import chips from '../../../data/chips';
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -1347,28 +1347,7 @@ export default {
       drawerderlast: null,
       drawerder018: null,
       drawerder099: null,
-      imgChip: [
-        {
-          title: "Danger",
-          img: "/chip/danger.png"
-        },
-        {
-          title: "Primary",
-          img: "/chip/primary.png"
-        },
-        {
-          title: "success",
-          img: "/chip/success.png"
-        },
-        {
-          title: "warning",
-          img: "/chip/warning.png"
-        },
-        {
-          title: "black",
-          img: "/chip/black.png"
-        }
-      ],
+      imgChip: chips.chipsDataMobile,
       odd: null,
       gameRule: "null",
       confirmDisabled: false,

@@ -12,6 +12,9 @@ const state = () => ({
     locales: ["cn", "us", "th", "la"],
     locale: localStorage.getItem("lang"),
     coins_modern: [],
+    isShowTutorial: false,
+    isWindowsHasScroll: false,
+    tutorialStepNumber: 0,
 });
 
 const mutations = {
@@ -48,6 +51,15 @@ const mutations = {
     },
     SET_TOP_PLAYER(state, payload) {
         state.isLoadingTopPlayer = payload;
+    },
+    SET_IS_SHOW_TUTORIAL(state, payload) {
+        state.isShowTutorial = payload;
+    },
+    SET_IS_WINDOWS_HAS_SCROLL(state, payload) {
+        state.isWindowsHasScroll = payload;
+    },
+    SET_TUTORIAL_STEP_NUMBER(state, payload) {
+        state.tutorialStepNumber = payload
     }
 }
 
@@ -100,6 +112,15 @@ const actions = {
     },
     setTopPlayer({ commit }, payload) {
         commit('SET_TOP_PLAYER', payload);
+    },
+    setIsShowTutorial({ commit }, payload) {
+        commit('SET_IS_SHOW_TUTORIAL', payload);
+    },
+    setIsWindowsHasScroll({ commit }, payload) {
+        commit('SET_IS_WINDOWS_HAS_SCROLL', payload);
+    },
+    setTutorialStepNumber({ commit }, payload) {
+        commit('SET_TUTORIAL_STEP_NUMBER', payload);
     }
 }
 
@@ -146,6 +167,15 @@ const getters = {
       // get current language
     getLocale(state) {
         return state.locale;
+    },
+    getIsShowTutorial(state) {
+        return state.isShowTutorial;
+    },
+    getIsWindowsHasScroll(state) {
+        return state.isWindowsHasScroll;
+    },
+    getTutorialStepNumber(state) {
+        return state.tutorialStepNumber;
     }
 }
 

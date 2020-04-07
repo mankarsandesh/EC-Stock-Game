@@ -172,6 +172,19 @@ const getters = {
       }
       return result;
     },
+    getStockLiveTime: state => stockName => {
+      if (!stockName || state.stockListTimer.length <= 0) {
+        return null;
+      }
+      let result = 0;
+      for (let i = 0; i < state.stockListTimer[0].length; i++) {
+        if (state.stockListTimer[0][i].stockName === stockName) {
+          result = state.stockListTimer[0][i].stockTimestamp; 
+          break;
+        }
+      }
+      return result;
+    },
     getTimerByStockName: state => stockName => {
       if (!stockName || state.stockListTimer.length <= 0) {
         return null;

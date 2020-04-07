@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-3">
+  <v-container fluid mt-2 class="containerNew pa-2">
     <v-layout style="background-color:#f4f5fd; ">
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
@@ -7,7 +7,7 @@
           <v-icon color="#0b2968">close</v-icon>
         </span>
         <v-layout column>
-          <v-flex xs12 pt-2>
+          <v-flex xs12 pt-3>
             <div id="stocklistGuidelines">
               <stockList></stockList>
             </div>
@@ -30,9 +30,8 @@
         </span>
       </v-flex>
       <!-- </v-flex> -->
-
       <v-flex :xs10="!isHidden" :xs12="isHidden">
-        <v-layout xs12 pt-2>
+        <v-layout xs12 pl-3>
           <v-flex xs6 md6 lg6 pt-2>
             <v-layout column>
               <v-flex xs12>
@@ -40,7 +39,7 @@
                   <stockSelect />
                 </div>
               </v-flex>
-              <v-flex>
+              <v-flex mt-1>
                 <div id="chartGuideline" class="chartDesgin">
                   <v-flex>
                     <chartApp :stockName="routeParams" />
@@ -104,17 +103,11 @@
                     </span>
                   </v-flex>
                 </div>
+                <!-- <lotteryDraw > </lotteryDraw>   -->
               </v-flex>
 
               <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn
-                  fab
-                  dark
-                  small
-                  class="helpButton"
-                  @click="setNextstep(), getopen()"
-                  title="Help"
-                >
+                <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
               </v-flex>
@@ -124,7 +117,7 @@
             </div>
           </v-flex>
         </v-layout>
-        <v-flex xs12 v-if="getRoadMap.length > 0" mt-3 >
+        <v-flex xs12 v-if="getRoadMap.length > 0">
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
@@ -139,7 +132,7 @@
             </span>
           </div>
         </v-flex>
-      </v-flex>     
+      </v-flex>
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius:10px;">
@@ -324,6 +317,7 @@ import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "../../../config/config.global";
+import lotteryDraw from "~/components/modern/lotteryDraw";
 
 export default {
   async validate({ params, store }) {
@@ -339,7 +333,8 @@ export default {
     tableTrendMap,
     onlyrules,
     stockSelect,
-    leaderboardUserlist
+    leaderboardUserlist,
+    lotteryDraw
   },
   data() {
     return {
@@ -424,7 +419,7 @@ export default {
     // });
     this.setNextstepstart();
   },
-  watch: {
+  watch: {  
     // check size screen
     // change to mobile component
     "$screen.width"() {
@@ -432,11 +427,21 @@ export default {
         let linkto = `/modern/betting/btc1`;
         this.$router.push(linkto);
       }
+    },
+    getLastDraw(val) {
+      const lastDraw = val.substr(val.length - 2);
+      const first = lastDraw.slice(0, 1);
+      const last = lastDraw.slice(1, 2);
+      
+      console.log("This is the first  draw :" + first);
+      console.log("This is the  last draw :" + last);
     }
   },
   methods: {
     ...mapActions([
       "setRoadMap",
+      "setTutorialStepNumber",
+      "setIsShowTutorial",
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
@@ -486,10 +491,21 @@ export default {
     loaded() {
       this.isLoad = true;
     },
-    getopen() {
+    openTutorial() {
+      this.setTutorialStepNumber(1);
+      this.setIsShowTutorial(true);
+      let step = 1;
+      this.setTutorialStepNumber(step);
+      let stepGo = setInterval(() => {
+        step++;
+        this.setTutorialStepNumber(step);
+        if (step === 11) {
+          clearInterval(stepGo);
+        }
+      }, 3000);
       // open Next step start
-      localStorage.valTutorial = 0;
-      this.setNextstepstart();
+      // localStorage.valTutorial = 0;
+      // this.setNextstepstart();
     },
     setNextstepstart() {
       // Run Timer Next step
@@ -524,12 +540,12 @@ export default {
 
       if (isStep == 1) {
         // stock list
-        let stockG = $("#stocklistGuidelines").offset();
-        $("#stocklistGuidelines").css("border-style", "solid");
-        $("#stocklistGuidelines").css("border-color", "coral");
-        $(this.$refs.stocklistGuideline).css("right", w - stockG.left - 60);
-        $(this.$refs.stocklistGuideline).css("top", stockG.top - 35);
-        $("#trendmapGuidelines").css("border-style", "none");
+        // let stockG = $("#stocklistGuidelines").offset();
+        // $("#stocklistGuidelines").css("border-style", "solid");
+        // $("#stocklistGuidelines").css("border-color", "coral");
+        // $(this.$refs.stocklistGuideline).css("right", w - stockG.left - 60);
+        // $(this.$refs.stocklistGuideline).css("top", stockG.top - 35);
+        // $("#trendmapGuidelines").css("border-style", "none");
       } else if (isStep == 2) {
         // select stock
         let selectG = $("#selectstockGuideline").offset();
@@ -651,7 +667,12 @@ export default {
     }
   },
   computed: {
+    vueVersion(){
+      console.log(Vue.version,"Version");
+      return Vue.version
+    },
     ...mapGetters([
+      "getIsShowTutorial",
       "getStockLoop",
       "getTimerByStockName",
       "getStockUUIDByStockName",
@@ -683,7 +704,6 @@ export default {
 .fullscreen .v-icon {
   font-size: 40px;
 }
-
 /* left side corner toggle functionality in desktop  */
 .helpButton {
   background-color: #4464ff !important;
@@ -699,16 +719,20 @@ export default {
   box-shadow: 0 0 2px grey;
   right: 5px;
 }
-
 .sidebar-close {
+  z-index: 999;
+  padding:3px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #ffffff !important;
+  background-color: #4464ff !important;
   border-radius: 180px;
   position: absolute;
-  top: -10px;
-  right: 0px;
+  top: -15px;
+  right: -8px;
   transition: none !important;
+}
+.sidebar-close .v-icon {
+  color: #fff !important;
 }
 
 .sidebar-toggle {

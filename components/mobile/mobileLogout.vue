@@ -73,7 +73,7 @@
 import OnlineHistory from "~/components/mobile/onlineHistory";
 import StockAnalysis from "~/components/mobile/stockAnalysis";
 import AnimatedNumber from "animated-number-vue";
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 import profile from "~/pages/modern/desktop/profile";
 import config from "../../config/config.global";
 export default {

@@ -152,21 +152,23 @@ export default {
       const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       const GET_STOCK_NAME = sessionStorage.getItem("STOCK_NAME");
       const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_LOOP");
-
-      if (GET_STOCK_TYPE == "crypto") {
-        if (this.$route.name === "modern-desktop-id") {
-          this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+      const GET_STOCK_FULL_URL = sessionStorage.getItem("STOCK_FULL_URL");
+      if (GET_STOCK_FULL_URL !== `/modern/desktop/${GET_STOCK_URL}`) {
+        if (GET_STOCK_TYPE == "crypto") {
+          if (this.$route.name === "modern-desktop-id") {
+            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+          } else {
+            // if is multi game then add selected game
+            this.addStockMultigame(GET_STOCK_URL);
+          }
         } else {
-          // if is multi game then add selected game
-          this.addStockMultiGame(GET_STOCK_URL);
-        }
-      } else {
-        // check is multi game or not
-        if (this.$route.name === "modern-desktop-id") {
-          this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
-          // if is multi game then add selected game
-        } else {
-          this.addStockMultiGame(GET_STOCK_URL);
+          // check is multi game or not
+          if (this.$route.name === "modern-desktop-id") {
+            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+            // if is multi game then add selected game
+          } else {
+            this.addStockMultigame(GET_STOCK_URL);
+          }
         }
       }
     },
@@ -176,6 +178,7 @@ export default {
     }
   },
   created() {
+    sessionStorage.setItem("STOCK_FULL_URL", this.$route.path);
     const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
     sessionStorage.setItem("STOCK_URL", this.$route.params.id);
     if (GET_STOCK_TYPE !== "crypto") {
@@ -232,6 +235,7 @@ export default {
                 if (minute.loopName == stockURLLoop) {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
+                  this.setGameID(minute.gameID);
                   this.gameId = minute.gameID;
                 }
               });
@@ -248,6 +252,7 @@ export default {
                 stockN.loops.map(minute => {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
+                  this.setGameID(minute.gameID);
                   this.gameId = minute.gameID;
                 });
               }
@@ -301,11 +306,3 @@ export default {
 
 
 
-composer install 
-php artisan key:generate
-php artisan jwt:secret
-php artisan migrate:fresh --seed
-npm install 
-
-change port 
-php artisan serve --port=8080

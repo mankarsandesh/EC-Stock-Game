@@ -43,7 +43,6 @@ export default {
           userUUID: this.userUUID,
           version: config.version,
           betResult: [-1],
-          limit: "20",
           offset: "0"
         };
         const { data } = await this.$axios.post(

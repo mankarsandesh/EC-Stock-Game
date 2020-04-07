@@ -1,0 +1,29 @@
+{
+    "userResult": [
+        {
+            "gameUUID": "abcd-zzz-xxxxxxx",
+            "ruleID": 1,
+            "name": "FD_BIG"
+        },
+        {
+            "gameUUID": "abcd-zzz-xxxxxxx",
+            "ruleID": 2,
+            "name": "FD_SMALL"
+        },
+        {
+            "gameUUID": "abcd-zzz-xxxxxxx",
+            "ruleID": 3,
+            "name": "FD_ODD"
+        },
+        {
+            "gameUUID": "abcd-zzz-xxxxxxx",
+            "ruleID": 4,
+            "name": "FD_EVEN"
+        },
+        {
+            "gameUUID": "abcd-zzz-xxxxxxx",
+            "ruleID": 5,
+            "name": "FD_HIGH"
+        }
+    ]
+}

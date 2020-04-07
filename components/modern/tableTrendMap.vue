@@ -1,6 +1,7 @@
 <template>
   <div v-if="dataArray.length > 0">
-    <v-layout wrap row >      
+    <v-layout wrap row class="justify-center" >  
+     
       <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" mt-5>
         <v-layout>
           <v-flex xs9>
@@ -54,7 +55,7 @@
       </v-flex>
       <v-flex xs9 md10 lg10 xl10>
         <v-layout row wrap>
-          <v-flex xs12 lg12 md12>
+          <v-flex xs12 lg12 md12 >
             <trendMap
               :dataArray="dataArray"
               :trendType="activeType"
@@ -64,7 +65,9 @@
           </v-flex>
         </v-layout>
       </v-flex>
+     
     </v-layout>
+    
     <v-tooltip>
       <template v-slot:activator="{ on }">
         <v-btn
@@ -85,7 +88,6 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
 import trendMap from "~/components/modern/trendMap";
 export default {
   data() {
