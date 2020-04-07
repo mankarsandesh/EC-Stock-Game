@@ -235,7 +235,7 @@ export default {
                 if (minute.loopName == stockURLLoop) {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
-                  this.setGameID(minute.gameID);
+                  this.setGameId(minute.gameID);
                   this.gameId = minute.gameID;
                 }
               });
@@ -252,7 +252,7 @@ export default {
                 stockN.loops.map(minute => {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
-                  this.setGameID(minute.gameID);
+                  this.setGameId(minute.gameID);
                   this.gameId = minute.gameID;
                 });
               }
