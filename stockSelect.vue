@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
+import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
 export default {
   data() {
     return {
@@ -153,7 +153,7 @@ export default {
     ...mapGetters(["getStockCategory"])
   },
   methods: {
-    ...mapMutations(["setGameID", "SET_STOCK_CATEGORY"]),
+    ...mapActions(["setStockCategory"]),
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
@@ -169,7 +169,7 @@ export default {
           }
         );
         this.getGameUUID(data);
-        this.SET_STOCK_CATEGORY(data);
+        this.setStockCategory(data);
         this.items = data;
       } catch (error) {
         console.log(error);
@@ -226,7 +226,7 @@ export default {
               stockN.loops.map(minute => {
                 if (minute.loopName == stockURLLoop) {
                   this.gameId = minute.gameID;
-                  this.setGameID(minute.gameID);
+                  this.setGameId(minute.gameID);
                   console.log("STOCK TYPE : " + item.type);
                   console.log("STOCK NAME : " + stockN.stockName);
                   console.log("STOCK LOOP : " + minute.loopName);
@@ -242,7 +242,7 @@ export default {
               if (stockN.stockName == stockURL) {
                 stockN.loops.map(minute => {
                   this.gameId = minute.gameID;
-                  this.setGameID(minute.gameID);
+                  this.setGameId(minute.gameID);
                   console.log("STOCK TYPE : " + item.type);
                   console.log("STOCK NAME : " + stockN.stockName);
                   console.log("STOCK LOOP : " + minute.loopName);

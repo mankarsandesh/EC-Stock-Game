@@ -31,7 +31,7 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     async updateSetting() {
       let isSound = this.$refs.isSound.checked ? true : false;
     
@@ -57,7 +57,7 @@ export default {
           showConfirmButton: "false",
           timer:1500
         });
-        this.asynUserInfo();
+        this.setUserData();
         // console.log(res);
       } else {
         // console.log(res);

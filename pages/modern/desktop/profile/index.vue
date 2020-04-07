@@ -177,7 +177,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
@@ -211,7 +211,7 @@ export default {
             showConfirmButton: false,
             timer: 1500
           });          
-          this.asynUserInfo();
+          this.setUserData();
           this.updating = false;         
           this.error = '';
         } else {         

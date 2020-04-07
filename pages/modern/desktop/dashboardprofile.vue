@@ -106,7 +106,6 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapGetters } from "vuex";
 import Button from "~/components/Button";
 import VueApexCharts from "vue-apexcharts";
 

@@ -250,7 +250,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },

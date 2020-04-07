@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import {mapMutations} from 'vuex'
+import { mapActions } from 'vuex'
 import announcement from "~/components/modern/stocklist/announcement";
 import rules from "~/components/modern/stocklist/rules";
 
@@ -49,7 +49,7 @@ export default {
 
   },
   methods:{
-    ...mapMutations([
+    ...mapActions([
       "setIsLoadingStockGame"
     ])
   }

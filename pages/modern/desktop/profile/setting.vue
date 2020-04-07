@@ -97,7 +97,7 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
   }, 
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     async updateSetting() {
       // set value to 1 or 0 true==1 false==0
       let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked ? true : false;
@@ -133,7 +133,7 @@ export default {
             showConfirmButton: false,
             timer: 1000
           });
-          this.asynUserInfo();
+          this.setUserData();
         } else {
           console.log(res.message);
           this.$alert("Alert Message.");
