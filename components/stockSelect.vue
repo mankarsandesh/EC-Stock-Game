@@ -275,7 +275,7 @@ export default {
                   this.gameId = minute.gameID;
                   this.setGameId(minute.gameID);
                 }
-              });
+              }); 
             });
           }
         } else {
@@ -303,6 +303,4 @@ export default {
   font-size: 12px;
 }
 </style>
-
-
 

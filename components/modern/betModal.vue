@@ -82,6 +82,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import result from "~/data/result";
 import config from "../../config/config.global";
 import chips from "../../data/chips";
 export default {
@@ -109,19 +110,54 @@ export default {
     ])
   },
   watch: {
-    clearRoadMap(val) {
-      if (!val) {
-        $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
-        setTimeout(() => {
-          console.log("wait for 5 second");
-          $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-          $("#" + this.betId).removeClass(
-            this.betId.split("-")[0] + "-animation"
-          );
-        }, 5000);
-      }
-      // $("#" + this.betId).removeClass("bet-animation");
+    getLastDraw(val) {
+      const lastDraw = val.substr(val.length - 2);
+      const first = parseInt(lastDraw.slice(0, 1));
+      const last = parseInt(lastDraw.slice(1, 2));
+      const twoDigit = first + last;
+      result.rule_data.map((items, index) => {
+        if ($("#" + this.betId).hasClass(items.type)) {
+          items.rules.map((item, index) => {
+            if ($("#" + this.betId).hasClass(item.name)) {
+              if (items.type === "firstdigit") {
+                const result = item.rule.includes(first);
+                if (result) {
+                  console.log("You Win :" + item.name + ":" + first);
+                  $("#" + this.betId).addClass(
+                    this.betId.split("-")[0] + "-animation"
+                  );
+                  setTimeout(() => {
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betId).removeClass(
+                      this.betId.split("-")[0] + "-animation"
+                    );
+                  }, 5000);
+                } else {
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  console.log("====You====lose====" + item.name + " ====");
+                }
+              }
+            }
+          });
+        }
+      });
     }
+    //  if (item.rule == first) {
+    //             // console.log("This is the First :" + item.name);
+    //           }
+    // clearRoadMap(val) {
+    //   if (!val) {
+    //     $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
+    //     setTimeout(() => {
+    //       console.log("wait for 5 second");
+    //       $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+    //       $("#" + this.betId).removeClass(
+    //         this.betId.split("-")[0] + "-animation"
+    //       );
+    //     }, 5000);
+    //   }
+    //   // $("#" + this.betId).removeClass("bet-animation");
+    // }
   },
   created() {
     // check is full screen or not
@@ -165,7 +201,7 @@ export default {
             betDate: res.data[0].createdDate,
             betTime: res.data[0].createdTime,
             betAmount: res.data[0].betAmount,
-            stockName: this.$props.stockName  
+            stockName: this.$props.stockName
           };
           this.pushDataOnGoingBet(OnGoingdata);
           this.$swal({
@@ -198,9 +234,9 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
-      console.log("This is the Place bet funtions");
-      console.log(data);
-      $("#" + this.betId).addClass(this.betId.split("-")[0]);
+      $("#" + this.betId).addClass(
+        this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+      );
     },
     closePopper() {
       $(".closepopper").click();

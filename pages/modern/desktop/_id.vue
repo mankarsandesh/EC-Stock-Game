@@ -427,14 +427,6 @@ export default {
         let linkto = `/modern/betting/btc1`;
         this.$router.push(linkto);
       }
-    },
-    getLastDraw(val) {
-      const lastDraw = val.substr(val.length - 2);
-      const first = lastDraw.slice(0, 1);
-      const last = lastDraw.slice(1, 2);
-      
-      console.log("This is the first  draw :" + first);
-      console.log("This is the  last draw :" + last);
     }
   },
   methods: {

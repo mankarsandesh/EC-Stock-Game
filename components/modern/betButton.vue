@@ -499,7 +499,7 @@ export default {
         }
         return (
           this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20  
         );
       }
     }
