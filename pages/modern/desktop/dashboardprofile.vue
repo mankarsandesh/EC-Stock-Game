@@ -1,7 +1,7 @@
 <template>
   <div xs2>
     <section class="breadcrumbs">
-      <v-container>
+      <v-container md10>
         <v-parallax dark height="150">
           <v-layout align-center row>
             <v-flex xs6>
@@ -135,8 +135,8 @@ export default {
   },
   data() {
     return {
-      filter: "1 week",
-      items: ["1 week", "1 month", "2 month", "3 month"],
+      filter: "1 Week",
+      items: ["1 Week", "1 Month", "3 Month", "6 Month"],
       series: [
         {
           data: [21, 22, 10, 28, 16, 0, 0, 0, 0],

@@ -39,10 +39,10 @@
           <div>           
            <img class="pimage" :src="imgProfile(data.userImage)" />
            <span class="subtitle-1 text-uppercase ">
-              <name class="name">
+              <span class="name">
                   <span>#{{ data.Rank }}</span>
                   {{ data.username }}
-              </name>
+              </span>
            </span>
             <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
           </div>

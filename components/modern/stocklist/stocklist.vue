@@ -89,26 +89,5 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
-
-    // checkStock(value) {
-
-    //   let close = {};
-    //   if (value == "") {
-    //     close = "Close";
-    //     this.stockStatus = true;
-    //   } else if (value) {
-    //     if (this.last_price > value) {
-    //       this.currentPrice = false;
-    //     } else {         
-    //       this.currentPrice = true;
-    //     }
-    //     this.last_price = value;
-    //     close = value;
-    //   } else {
-    //     close = "NO DATA";
-    //   }
-    //   return close;
-    // }
-  }
 };
 </script>
