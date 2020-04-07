@@ -29,21 +29,20 @@
         <!-- for EC World -->
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
-               <div class="filter">
-                  <b>Filter</b> 
-                  <span class="rank">
-                      Winning Rank
-                  </span>
-                   <span class="rate">
-                      Winning Rate
-                   </span>
-                    <span class="follow">
-                      Winning Followers
-                   </span>
-              </div> 
-              
+            <div class="filter">
+              <b>Filter</b>
+              <span class="rank">
+                Winning Rank
+              </span>
+              <span class="rate">
+                Winning Rate
+              </span>
+              <span class="follow">
+                Winning Followers
+              </span>
+            </div>
+
             <div class="bodyChat">
-              
               <div class="msgUser follow">
                 <div class="messageChatView">
                   <div>
@@ -66,7 +65,9 @@
                     <v-btn class="view">View</v-btn>
                   </div>
                   <div>
-                    <v-btn class="following">Follow</v-btn>
+                    <v-btn class="following" v-on:click="followUser()"
+                      >Follow</v-btn
+                    >
                   </div>
                 </div>
               </div>
@@ -125,7 +126,7 @@
                 </div>
               </div>
 
-               <div class="msgUser rate">
+              <div class="msgUser rate">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -152,7 +153,7 @@
                 </div>
               </div>
 
-                 <div class="msgUser follow">
+              <div class="msgUser follow">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -179,7 +180,7 @@
                 </div>
               </div>
 
-               <div class="msgUser follow">
+              <div class="msgUser follow">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -197,14 +198,14 @@
                   <div>
                     <span class="ranking">951</span>
                   </div>
-                  
+
                   <div>
                     <v-btn class="following">Follow</v-btn>
                   </div>
                 </div>
               </div>
 
-               <div class="msgUser rate">
+              <div class="msgUser rate">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -230,8 +231,6 @@
                   </div>
                 </div>
               </div>
-
-
             </div>
 
             <div class="messageChat">
@@ -258,6 +257,81 @@
             </div>
           </div>
         </div>
+
+        <v-dialog v-model="dialog" width="500" class="followDialog">
+          <v-card class="followup">
+            <h3 class="title" style="text-align: center; color: #0b2a68;">
+              FOLLOW BET
+            </h3>
+            <h4 class="subtitle-1 text-uppercase pt-2">Follow By</h4>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-flex lg8 pr-4>
+                <v-select
+                  :items="followby"
+                  label="Select Follow type"
+                  v-model="selectedFollow"
+                  item-text="name"
+                  item-value="value"
+                  v-on:change="changeAmountRate($event)"
+                  solo
+                ></v-select>
+              </v-flex>
+              <v-flex lg3 pr-2>
+                <v-text-field
+                  solo
+                  label="10%"
+                  v-if="selectRate"
+                  append-icon="money"
+                  v-model="rateValue"
+                  @keypress="onlyNumber"
+                ></v-text-field>
+                <v-text-field
+                  solo
+                  label="100"
+                  v-if="selectAmount"
+                  @keypress="onlyNumber"
+                  v-model="amountValue"
+                  append-icon="money"
+                ></v-text-field>
+              </v-flex>
+            </v-card-actions>
+
+            <h4 class="subtitle-1 text-uppercase pt-2">Auto Stop Follow</h4>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-radio-group v-model="autoStop" :mandatory="false">
+
+                <v-radio 
+                label="Stop by Winning" 
+                value="stopWin"
+                ></v-radio>
+                <v-radio label="Stop by Losing" value="stopLoss"></v-radio>
+                <v-radio label="Stop by Timing" value="stopTime"></v-radio>
+                <v-radio label="Stop by Bets" value="stopBets"></v-radio>
+
+                <v-slider
+                  v-model="slider"
+                  class="align-center"
+                   thumb-label="always"
+                  :max="max"
+                  :min="min"
+                  hide-details
+                > </v-slider>
+
+                <v-flex lg3>
+                  <v-btn
+                    color="buttonGreensmall"
+                    text
+                    v-on:click="followThisUser()"
+                    >Follow</v-btn
+                  >
+                </v-flex>
+              </v-radio-group>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <!-- for game chanel  -->
         <chanelChat
           v-show="tabActiveName === 'chanel'"
@@ -295,6 +369,23 @@ export default {
   },
   data() {
     return {
+      min: 1,
+      max: 10,
+      slider: 4,
+      selectAmount: false,
+      selectTime: false,
+      selectBets: false,
+      autoStop: "stopWin",
+      dialog: false,
+      amountValue: 100,
+      rateValue: 10,
+      selectRate: false,
+      selectAmount: true,
+      selectedFollow: "",     
+      followby: [
+        { id: 1, name: "Follow by Amount", value: "Amount" },
+        { id: 2, name: "Follow by Rate", value: "Rate" },
+      ],
       profilePic: "/no-profile-pic.jpg",
       checkbox: "",
       selectedFruits: [],
@@ -382,6 +473,26 @@ export default {
     this.messageInput = "";
   },
   methods: {
+    changeAmountRate() {
+      this.UserfollowType = this.selectedFollow;
+      if (this.selectedFollow == "Amount") {
+        this.selectAmount = true;
+        this.selectRate = false;
+      } else {
+        this.selectAmount = false;
+        this.selectRate = true;
+      }
+    },
+    followUser() {
+      this.dialog = true;
+    },
+    onlyNumber($event) {
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+    },
     clickCategory() {
       console.log("hello");
       this.showCategory = true;
@@ -470,6 +581,18 @@ export default {
 </script>
 
 <style scoped>
+.followDialog {
+  width: 600px;
+  border-radius: 10px;
+  padding: 10px;
+}
+.followup {
+  padding: 15px 30px;
+  border-radius: 20px;
+}
+.followup h4 {
+  color: #65686f;
+}
 .conve-container {
   position: relative;
   display: flex;
@@ -532,17 +655,17 @@ export default {
   text-align: justify;
   margin: 5px 0px;
 }
-.filter{
-    margin-top:10px;
+.filter {
+  margin-top: 10px;
 }
-.filter span{
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 4px;  
-    padding: 5px;
-    margin:10px 5px;
-    font-size: 12px;
-    color: #8d8c8c;
+.filter span {
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 10px 5px;
+  font-size: 12px;
+  color: #8d8c8c;
 }
 .follow {
   border: 1px solid orange;
@@ -673,7 +796,7 @@ export default {
   overflow-x: hidden;
   border-radius: 4px;
   margin-bottom: 10px;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .msgBody {
