@@ -86,7 +86,7 @@ import result from "~/data/result";
 import config from "../../config/config.global";
 import chips from "../../data/chips";
 export default {
-  props: ["stockName", "ruleid", "loop", "betId", "payout"],
+  props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   data() {
     return {
       confirmDisabled: false,
@@ -119,21 +119,68 @@ export default {
         if ($("#" + this.betId).hasClass(items.type)) {
           items.rules.map((item, index) => {
             if ($("#" + this.betId).hasClass(item.name)) {
+              // First digit
               if (items.type === "firstdigit") {
                 const result = item.rule.includes(first);
                 if (result) {
                   console.log("You Win :" + item.name + ":" + first);
+                  $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
                     $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betWin).removeClass(this.betWin);
                     $("#" + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
                   $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.betWin).removeClass(this.betWin);
+                }
+              }
+              // First digit
+              if (items.type === "lastdigit") {
+                const result = item.rule.includes(last);
+                if (result) {
+                  console.log("You Win :" + item.name + ":" + last);
+                  $("#" + this.betWin).addClass(this.betWin);                
+                  $("#" + this.betId).addClass(
+                    this.betId.split("-")[0] + "-animation"
+                  );
+                  setTimeout(() => {
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betWin).removeClass(this.betWin);
+                    $("#" + this.betId).removeClass(
+                      this.betId.split("-")[0] + "-animation"
+                    );
+                  }, 5000);
+                } else {
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.betWin).removeClass(this.betWin);
+                  console.log("====You====lose====" + item.name + " ====");
+                }
+              }
+              if (items.type === "bothdigit") {
+                const result = item.rule.includes(twoDigit);
+                if (result) {
+                  console.log("You Win :" + item.name + ":" + twoDigit);
+                  $("#" + this.betWin).addClass(this.betWin);
+                  $("#" + this.betWin).removeClass(this.betWin);
+                  $("#" + this.betId).addClass(
+                    this.betId.split("-")[0] + "-animation"
+                  );
+                  setTimeout(() => {
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betWin).removeClass(this.betWin);
+                    $("#" + this.betId).removeClass(
+                      this.betId.split("-")[0] + "-animation"
+                    );
+                  }, 5000);
+                } else {
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.betWin).removeClass(this.betWin);
                   console.log("====You====lose====" + item.name + " ====");
                 }
               }
@@ -300,3 +347,4 @@ input[type="number"] {
   cursor: pointer;
 }
 </style>
+
