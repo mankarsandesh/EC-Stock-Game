@@ -66,28 +66,29 @@ export default {
       }
     );
   },
-  watch: {
-    item(val) {
-      function compare(a, b) {
-        if (val == "ascending") {
-          if (a.stockName < b.stockName) return -1;
-          if (a.stockName > b.stockName) return 1;
-          return 0;
-        } else {
-          if (a.stockName < b.stockName) return 1;
-          if (a.stockName > b.stockName) return -1;
-          return 1;
-        }
-      }
-      return this.stocklist.sort(compare);
-    }
-  },
+  // watch: {
+  //   item(val) {
+  //     function compare(a, b) {
+  //       if (val == "ascending") {
+  //         if (a.stockName < b.stockName) return -1;
+  //         if (a.stockName > b.stockName) return 1;
+  //         return 0;
+  //       } else {
+  //         if (a.stockName < b.stockName) return 1;
+  //         if (a.stockName > b.stockName) return -1;
+  //         return 1;
+  //       }
+  //     }
+  //     return this.stocklist.sort(compare);
+  //   }
+  // },
   computed: {
     ...mapGetters(["getPortalProviderUUID", "getStockListTimer"])
   },
   methods: {  
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
-    },
-};
+    }
+  }
+}
 </script>
