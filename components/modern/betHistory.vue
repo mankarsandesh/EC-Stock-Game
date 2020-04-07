@@ -94,7 +94,7 @@
       </v-flex>
     </v-layout>
     <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
-      <v-pagination v-model="pagination.page" color="#1db42f" :length="10"></v-pagination>
+      <v-pagination v-model="pagination.page" color="#1db42f" :length="5"></v-pagination>
     </div>
   </v-container>
 </template>

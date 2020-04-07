@@ -79,7 +79,7 @@ const mutations = {
         state.stockCategory = payload;
     },
     SET_STOCK_LIST_TIMER(state, payload) {
-        state.stockListTimer.splice(0, 0, payload);
+        state.stockListTimer.unshift(payload);
         if (state.stockListTimer.length === 3) {
           state.stockListTimer.pop();
         }
