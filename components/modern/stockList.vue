@@ -48,9 +48,6 @@ export default {
   created() {
   },
   methods: {
-    ...mapActions([
-      'setStockListTimer'
-    ])
   }
 };
 </script>
