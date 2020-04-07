@@ -15,6 +15,7 @@
         "heroku-postbuild": "npm run build"
     },
     "dependencies": {
+        "@fortawesome/free-solid-svg-icons": "^5.13.0",
         "@nuxtjs/auth": "^4.8.4",
         "@nuxtjs/axios": "^5.8.0",
         "@nuxtjs/dotenv": "^1.4.1",
@@ -40,6 +41,7 @@
         "lottie-web": "^5.5.9",
         "mobile-device-detect": "^0.3.3",
         "nuxt": "^2.3.4",
+        "nuxt-fontawesome": "^0.4.0",
         "nuxt-winston-log": "^1.0.2",
         "pusher-js": "^5.1.1",
         "secure-web-storage": "^1.0.2",

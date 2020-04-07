@@ -11,7 +11,8 @@
                   @click="$router.push('/modern/desktop/profile/')"
                 >
                   <div class="profile-crowd">
-                    <v-icon dark>home</v-icon>
+                    <!-- <v-icon dark>home</v-icon> -->
+                    <fa icon="crown" style="font-size: 17px; color: orange;" />
                   </div>
                   <img
                     width="100%"
@@ -68,22 +69,39 @@
           <div class="container-content">
             <div class="box-container">
               <div class="cul-box" style="color: #7e57c2;">
-                <v-icon color="#7e57c2" :size="50">home</v-icon>
+                <span>
+                  <fa
+                    icon="percentage"
+                    style="font-size: 40px; color: #7e57c2;"
+                  />
+                </span>
                 <span class="number-box">95%</span>
                 <span class="des-title text-uppercase">wining rate</span>
               </div>
               <div class="cul-box cul-box-green">
-                <v-icon color="#ace6af" :size="50">home</v-icon>
+                <span>
+                  <fa
+                    icon="money-bill-wave"
+                    style="font-size: 40px; color: #ace6af;"
+                  />
+                </span>
                 <span class="number-box">1200</span>
                 <span class="des-title text-uppercase">total bets</span>
               </div>
               <div class="cul-box cul-box-red">
-                <v-icon color="#f28691" :size="50">home</v-icon>
+                <span>
+                  <fa icon="users" style="font-size: 40px; color: #f28691;" />
+                </span>
                 <span class="number-box">995</span>
                 <span class="des-title text-uppercase">followers</span>
               </div>
               <div class="cul-box cul-box-yellow">
-                <v-icon color="#ffd682" :size="50">home</v-icon>
+                <span>
+                  <fa
+                    icon="money-bill-alt"
+                    style="font-size: 40px; color: #ffd682;"
+                  />
+                </span>
                 <span class="number-box">100000</span>
                 <span class="des-title text-uppercase">wining amount</span>
               </div>
@@ -235,7 +253,7 @@ export default {
   background-color: #8b4448;
   top: -12px;
   right: -9px;
-  padding: 2px;
+  padding: 4px;
 }
 .profile-img-container {
   cursor: pointer;
