@@ -235,16 +235,6 @@
 
             <div class="messageChat">
               <v-flex col-md-6>
-                <div id="categoryShow" v-if="showCategory == true">
-                  <span>
-                    <v-checkbox
-                      v-for="n in items1"
-                      :key="n"
-                      v-model="checkbox"
-                      :label="`${n.toString()}`"
-                    ></v-checkbox>
-                  </span>
-                </div>
                 <v-btn class="buttonInvitation"
                   >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
                 ></v-btn>
@@ -301,24 +291,23 @@
             <v-divider></v-divider>
             <v-card-actions>
               <v-radio-group v-model="autoStop" :mandatory="false">
-
-                <v-radio 
-                label="Stop by Winning" 
-                value="stopWin"
+                <v-radio
+                  v-for="n in autoStopFollow"
+                  :key="n.id"
+                  :label="`${n.name}`"
+                  :value="n.value"
+                  v-on:change="changeAmount(n.value)"
                 ></v-radio>
-                <v-radio label="Stop by Losing" value="stopLoss"></v-radio>
-                <v-radio label="Stop by Timing" value="stopTime"></v-radio>
-                <v-radio label="Stop by Bets" value="stopBets"></v-radio>
 
-                <v-slider
-                  v-model="slider"
-                  class="align-center"
-                   thumb-label="always"
-                  :max="max"
-                  :min="min"
-                  hide-details
-                > </v-slider>
-
+                <v-text-field
+                  style="width: 200px;"
+                  solo
+                  label="100"
+                  @keypress="onlyNumber"
+                  v-model="unfollowValue"
+                >
+                  <span slot="append" color="red"> {{ unfollowSign }}</span>
+                </v-text-field>
                 <v-flex lg3>
                   <v-btn
                     color="buttonGreensmall"
@@ -369,9 +358,8 @@ export default {
   },
   data() {
     return {
-      min: 1,
-      max: 10,
-      slider: 4,
+      unfollowSign: "USD",
+      unfollowValue: "100",
       selectAmount: false,
       selectTime: false,
       selectBets: false,
@@ -381,16 +369,19 @@ export default {
       rateValue: 10,
       selectRate: false,
       selectAmount: true,
-      selectedFollow: "",     
+      selectedFollow: "",
       followby: [
         { id: 1, name: "Follow by Amount", value: "Amount" },
         { id: 2, name: "Follow by Rate", value: "Rate" },
       ],
+      autoStopFollow: [
+        { id: 1, name: "Stop by Winning", value: "stopWin" },
+        { id: 2, name: "Stop by Losing", value: "stopLoss" },
+        { id: 3, name: "Stop by Timing", value: "stopTime" },
+        { id: 4, name: "Stop by Bets", value: "stopBets" },
+      ],
       profilePic: "/no-profile-pic.jpg",
-      checkbox: "",
       selectedFruits: [],
-      showCategory: false,
-      items1: ["Winning Rank", "Winning Rate", " Total followers"],
       currentRoute: "",
       messageInput: "",
       pageActiveChanel: [
@@ -483,6 +474,18 @@ export default {
         this.selectRate = true;
       }
     },
+    changeAmount(value) {
+      if (value == "stopWin" || value == "stopLoss") {
+        this.unfollowValue = "100";
+        this.unfollowSign = "USD";
+      } else if (value == "stopTime") {
+        this.unfollowValue = "1";
+        this.unfollowSign = "Days";
+      } else {
+        this.unfollowValue = "3";
+        this.unfollowSign = "Bets";
+      }
+    },
     followUser() {
       this.dialog = true;
     },
@@ -492,10 +495,6 @@ export default {
         // 46 is dot
         $event.preventDefault();
       }
-    },
-    clickCategory() {
-      console.log("hello");
-      this.showCategory = true;
     },
     toggle() {
       this.$nextTick(() => {
