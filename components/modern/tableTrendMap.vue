@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
 import trendMap from "~/components/modern/trendMap";
 export default {
   data() {

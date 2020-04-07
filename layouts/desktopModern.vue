@@ -243,7 +243,7 @@
       </v-content>
 
       <!-- Chat Windows-->
-      <chatWindow
+      <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :key="$route.name"
       />
@@ -252,7 +252,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
@@ -262,13 +262,13 @@ import welcomeUser from "~/components/welcomeUser";
 import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
-import chatWindow from "~/components/chatWindow";
+import invitation from "~/components/invitation";
 import userMenu from "../components/userMenu";
 import config from "../config/config.global";
 
 export default {
   components: {
-    chatWindow,
+    invitation,
     countryFlag,
     languageDialog,
     winnerMarquee,
@@ -341,7 +341,7 @@ export default {
     });
   },
   methods: {
-    ...mapMutations([
+    ...mapActions([
       "setGameChannelShow",
       "setIsShowTutorial",
       "setIsWindowsHasScroll"
@@ -450,12 +450,12 @@ export default {
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID
       "getGameChannel",
-      "getlocale",
+      "getLocale",
       "getIsLoadingStockGame",
       "getStockCrawlerData"
     ]),
     countryflag() {
-      return this.getlocale;
+      return this.getLocale;
     }
   }
 };

@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
+import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
 import config from "../config/config.global";
 export default {
   data() {
@@ -196,7 +196,10 @@ export default {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
   methods: {
-    ...mapMutations(["addStockMultigame", "setGameID", "SET_STOCK_CATEGORY"]),
+
+    ...mapActions([
+      'addStockMultiGame', 'setGameId', 'setStockCategory' 
+    ]),
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
@@ -210,7 +213,7 @@ export default {
           }
         );
         this.getGameUUID(data);
-        this.SET_STOCK_CATEGORY(data);
+        this.setStockCategory(data);
         this.items = data;
       } catch (error) {
         console.log(error);
@@ -232,7 +235,7 @@ export default {
                 if (minute.loopName == stockURLLoop) {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
-                  this.setGameID(minute.gameID);
+                  this.setGameId(minute.gameID);
                   this.gameId = minute.gameID;
                 }
               });
@@ -249,7 +252,7 @@ export default {
                 stockN.loops.map(minute => {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
-                  this.setGameID(minute.gameID);
+                  this.setGameId(minute.gameID);
                   this.gameId = minute.gameID;
                 });
               }
@@ -270,9 +273,9 @@ export default {
               stockN.loops.map(minute => {
                 if (minute.loopName == stockURLLoop) {
                   this.gameId = minute.gameID;
-                  this.setGameID(minute.gameID);
+                  this.setGameId(minute.gameID);
                 }
-              });
+              }); 
             });
           }
         } else {
@@ -281,7 +284,7 @@ export default {
               if (stockN.stockName == stockURL) {
                 stockN.loops.map(minute => {
                   this.gameId = minute.gameID;
-                  this.setGameID(minute.gameID);
+                  this.setGameId(minute.gameID);
                 });
               }
             });
@@ -301,13 +304,3 @@ export default {
 }
 </style>
 
-
-
-composer install 
-php artisan key:generate
-php artisan jwt:secret
-php artisan migrate:fresh --seed
-npm install 
-
-change port 
-php artisan serve --port=8080

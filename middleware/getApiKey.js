@@ -8,6 +8,6 @@ export default function({ isHMR, app, store, route, error, redirect }) {
         // location.href = "http://" + location.hostname + ":8001"
         return
     }
-    store.commit("setAuth_token", apiKey)
-    store.dispatch("asynUserInfo")
+    store.dispatch("setAuthToken", apiKey)
+    store.dispatch("setUserData")
 }

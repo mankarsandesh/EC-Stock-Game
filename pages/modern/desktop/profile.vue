@@ -75,7 +75,7 @@
   </v-container>
 </template>
 <script>
-import { mapMutations, mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import config from "../../../config/config.global";
 export default {
   layout: "desktopModern",
@@ -112,7 +112,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData", "setIsLoadingStockGame"]),
     readFile(e) {
       let self = this;
       console.log(e.target);
@@ -165,7 +165,6 @@ export default {
         console.error(ex.message);
       }
     },
-    ...mapMutations(["setIsLoadingStockGame"])
   }
 };
 </script>

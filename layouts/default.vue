@@ -110,9 +110,9 @@ export default {
     },
     methods: {},
     computed: {
-        ...mapGetters(["getlocale"]),
+        ...mapGetters(["getLocale"]),
         countryflag() {
-            return this.getlocale;
+            return this.getLocale;
         }
     }
 };

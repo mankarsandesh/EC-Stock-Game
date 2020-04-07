@@ -148,9 +148,8 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
 import config from "../../../config/config.global";
-var imageExists = require("image-exists");
 export default {
   data() {
     return {    
@@ -201,7 +200,10 @@ export default {
     this.leaderBoard();
   },
   computed: {
-    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+      }) //get 2 data from vuex first, in the computed
   },
   methods: {   
     sortingBy(sort){      

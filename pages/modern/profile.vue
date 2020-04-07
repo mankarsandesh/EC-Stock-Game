@@ -242,8 +242,7 @@ export default {
     ...mapGetters([
       "getUserInfo",
       "getPortalProviderUUID",
-      "getUserUUID",
-      "getUserInfo"
+      "getUserUUID"
     ]),
     imgProfile() {
       return this.getUserInfo.profileImage == "" ||
@@ -257,7 +256,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
@@ -287,7 +286,7 @@ export default {
         );
 
         if (res.code === 200) {
-          this.asynUserInfo();
+          this.setUserData();
           this.updating = false;
         } else {
           alert(res.message);

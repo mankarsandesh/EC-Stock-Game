@@ -56,7 +56,7 @@
                       <a
                         href="#"
                         :style="
-                          checkMultigameExistAndDisable({
+                          checkMultiGameExistAndDisable({
                             stockId: stockLoop.stockId,
                             isMultigame: isMultigame
                           })
@@ -70,7 +70,7 @@
                         <span
                           class="show-icon"
                           v-show="
-                            checkMultigameExistAndShowIcon({
+                            checkMultiGameExistAndShowIcon({
                               stockId: stockLoop.stockId,
                               isMultigame: isMultigame
                             })
@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   props: {
     isMultigame: {
@@ -197,14 +197,14 @@ export default {
   computed: {
     ...mapGetters([
       "getStockType",
-      "checkMultigameExistAndDisable",
-      "checkMultigameExistAndShowIcon",
+      "checkMultiGameExistAndDisable",
+      "checkMultiGameExistAndShowIcon",
       "getAllStockByType",
       "getStockCrawlerData"
     ])
   },
   methods: {
-    ...mapMutations(["addStockMultigame"]),
+    ...mapActions(["addStockMultiGame"]),
     selectedtockID(stockId) {
       if (this.isMultigame) {
         this.addStockMultigame(stockId);
