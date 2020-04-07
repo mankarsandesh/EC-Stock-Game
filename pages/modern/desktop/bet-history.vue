@@ -193,8 +193,7 @@ export default {
           portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
           userUUID: this.userUUID, // get the userUUID with the this object
           version: config.version, // version of API
-          betResult: [0, 1], // -1= pending, 0= lose , 1 = win
-          limit: "50",
+          betResult: [0, 1], // -1= pending, 0= lose , 1 = win         
           offset: "0", // offset or skip the data,
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo
