@@ -5,6 +5,6 @@ export default function ({ isHMR, store, route }) {
     if (isHMR) { return }
     if (route.params.id !== undefined) {
         
-        store.commit("setIsLoadingStockGame",true)
+        store.dispatch("setIsLoadingStockGame",true);
     }
 }

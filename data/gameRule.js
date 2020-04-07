@@ -73,7 +73,7 @@ const gamerule = {
       payout: 13
     }
   ],
-
+ 
   bothDigit: [
     {
       ruleid: 142,
@@ -116,12 +116,12 @@ const gamerule = {
       payout: 21
     }
   ],
-
+ 
   twoDigit: [
     {
       ruleid: 35,
       rule: "big",
-      payout: 22
+      payout: 22  
     },
     {
       ruleid: 168,

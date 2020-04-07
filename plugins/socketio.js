@@ -33,7 +33,7 @@ export default ({ store }) => {
       eventName: "stockList"
     },
     ({ data }) => {
-      store.commit("setStockListTimer", data.data.stockData);
+      store.dispatch("setStockListTimer", data.data.stockData);
     }
   );
 
@@ -47,7 +47,7 @@ export default ({ store }) => {
       eventName: "getActiveGamesByCategory"
     },
     ({ data }) => {
-      store.commit("SET_STOCK_CATEGORY", data.res.data);
+      store.dispatch("setStockCategory", data.res.data);
     }
   );
 };

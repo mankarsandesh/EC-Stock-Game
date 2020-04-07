@@ -97,18 +97,14 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
   }, 
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     async updateSetting() {
       // set value to 1 or 0 true==1 false==0
-      let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
-        ? 1
-        : 0;
-      let isAllowToFollow = this.$refs.isAllowToFollow.checked ? 1 : 0;
-      let isAllowToDirectMessage = this.$refs.isAllowToDirectMessage.checked
-        ? 1
-        : 0;
-      let isSound = this.$refs.isSound.checked ? 1 : 0;
-      let isAllowToLocation = this.$refs.isAllowToLocation.checked ? 1 : 0;
+      let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked ? true : false;
+      let isAllowToFollow = this.$refs.isAllowToFollow.checked ? true : false;
+      let isAllowToDirectMessage = this.$refs.isAllowToDirectMessage.checked ? true : false;
+      let isSound = this.$refs.isSound.checked ? true : false;
+      let isAllowToLocation = this.$refs.isAllowToLocation.checked ? true : false;
       // end set value to 1 or 0 true==1 false==0
 
       try {
@@ -137,7 +133,7 @@ export default {
             showConfirmButton: false,
             timer: 1000
           });
-          this.asynUserInfo();
+          this.setUserData();
         } else {
           console.log(res.message);
           this.$alert("Alert Message.");

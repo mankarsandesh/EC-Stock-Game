@@ -139,7 +139,10 @@ export default {
     this.leaderBoard();
   },
   computed: {
-    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+    }),
   },
   methods: {
     getImgUrl(userImage) {

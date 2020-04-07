@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
+import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
 import config from "../config/config.global";
 export default {
   data() {
@@ -152,21 +152,23 @@ export default {
       const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       const GET_STOCK_NAME = sessionStorage.getItem("STOCK_NAME");
       const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_LOOP");
-
-      if (GET_STOCK_TYPE == "crypto") {
-        if (this.$route.name === "modern-desktop-id") {
-          this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+      const GET_STOCK_FULL_URL = sessionStorage.getItem("STOCK_FULL_URL");
+      if (GET_STOCK_FULL_URL !== `/modern/desktop/${GET_STOCK_URL}`) {
+        if (GET_STOCK_TYPE == "crypto") {
+          if (this.$route.name === "modern-desktop-id") {
+            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+          } else {
+            // if is multi game then add selected game
+            this.addStockMultiGame(GET_STOCK_URL);
+          }
         } else {
-          // if is multi game then add selected game
-          this.addStockMultigame(GET_STOCK_URL);
-        }
-      } else {
-        // check is multi game or not
-        if (this.$route.name === "modern-desktop-id") {
-          this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
-          // if is multi game then add selected game
-        } else {
-          this.addStockMultigame(GET_STOCK_URL);
+          // check is multi game or not
+          if (this.$route.name === "modern-desktop-id") {
+            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+            // if is multi game then add selected game
+          } else {
+            this.addStockMultiGame(GET_STOCK_URL);
+          }
         }
       }
     },
@@ -176,6 +178,7 @@ export default {
     }
   },
   created() {
+    sessionStorage.setItem("STOCK_FULL_URL", this.$route.path);
     const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
     sessionStorage.setItem("STOCK_URL", this.$route.params.id);
     if (GET_STOCK_TYPE !== "crypto") {
@@ -193,7 +196,10 @@ export default {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
   methods: {
-    ...mapMutations(["addStockMultigame", "setGameID", "SET_STOCK_CATEGORY"]),
+
+    ...mapActions([
+      'addStockMultiGame', 'setGameId', 'setStockCategory' 
+    ]),
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
@@ -207,7 +213,7 @@ export default {
           }
         );
         this.getGameUUID(data);
-        this.SET_STOCK_CATEGORY(data);
+        this.setStockCategory(data);
         this.items = data;
       } catch (error) {
         console.log(error);
@@ -229,6 +235,7 @@ export default {
                 if (minute.loopName == stockURLLoop) {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
+                  this.setGameId(minute.gameID);
                   this.gameId = minute.gameID;
                 }
               });
@@ -245,6 +252,7 @@ export default {
                 stockN.loops.map(minute => {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
+                  this.setGameId(minute.gameID);
                   this.gameId = minute.gameID;
                 });
               }
@@ -255,7 +263,6 @@ export default {
       this.stockSocket = true;
     },
     updateGameUUID(items) {
-      console.log("==============STOCK SOCKET===============");
       let stockURL = this.$route.params.id;
       let stockURLName = stockURL.substring(0, stockURL.length - 1);
       let stockURLLoop = stockURL.substr(stockURL.length - 1);
@@ -266,14 +273,9 @@ export default {
               stockN.loops.map(minute => {
                 if (minute.loopName == stockURLLoop) {
                   this.gameId = minute.gameID;
-                  this.setGameID(minute.gameID);
-                  console.log("STOCK TYPE : " + item.type);
-                  console.log("STOCK NAME : " + stockN.stockName);
-                  console.log("STOCK LOOP : " + minute.loopName);
-                  console.log("GAME STATUS : " + minute.gameStatus);
-                  console.log("GAME UUID : " + minute.gameID);
+                  this.setGameId(minute.gameID);
                 }
-              });
+              }); 
             });
           }
         } else {
@@ -282,19 +284,13 @@ export default {
               if (stockN.stockName == stockURL) {
                 stockN.loops.map(minute => {
                   this.gameId = minute.gameID;
-                  this.setGameID(minute.gameID);
-                  console.log("STOCK TYPE : " + item.type);
-                  console.log("STOCK NAME : " + stockN.stockName);
-                  console.log("STOCK LOOP : " + minute.loopName);
-                  console.log("GAME STATUS : " + minute.gameStatus);
-                  console.log("GAME UUID : " + minute.gameID);
+                  this.setGameId(minute.gameID);
                 });
               }
             });
           }
         }
       });
-      console.log("==============STOCK SOCKET===============");
     }
   }
 };
@@ -307,3 +303,4 @@ export default {
   font-size: 12px;
 }
 </style>
+

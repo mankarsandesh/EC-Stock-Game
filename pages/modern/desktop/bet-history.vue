@@ -122,7 +122,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+      }) //get 2 data from vuex first, in the computed
   },
   mounted() {
     const today = new Date();
@@ -140,8 +143,7 @@ export default {
   methods: {
     sortingBy() {
       console.log(this.sortby);
-      if (this.sortby == "Today") {
-        console.log(this.sortby);
+      if (this.sortby == "Today") {      
         const today = new Date();
         const lastWeek = new Date(
           today.getFullYear(),

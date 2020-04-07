@@ -151,36 +151,6 @@ export default {
             horizontal: false
           }
         },
-        // grid: {
-        //   show: true,
-        //   borderColor: "#90A4AE",
-        //   strokeDashArray: 0,
-        //   position: "back",
-        //   xaxis: {
-        //     lines: {
-        //       show: false
-        //     }
-        //   },
-        //   yaxis: {
-        //     lines: {
-        //       show: true
-        //     }
-        //   },
-        //   row: {
-        //     colors: undefined,
-        //     opacity: 0.5
-        //   },
-        //   column: {
-        //     colors: undefined,
-        //     opacity: 0.5
-        //   },
-        //   padding: {
-        //     top: 0,
-        //     right: 0,
-        //     bottom: 0,
-        //     left: 0
-        //   }
-        // },
         dataLabels: {
           enabled: false
         },
@@ -225,55 +195,6 @@ export default {
             }
           }
         },
-        // responsive: [
-        //   {
-        //     breakpoint: 480,
-        //     options: {
-        //       legend: {
-        //         position: "bottom",
-        //         offsetX: -10,
-        //         offsetY: 0
-        //       }
-        //     }
-        //   }
-        // ],
-        // plotOptions: {
-        //   bar: {
-        //     horizontal: false,
-        //     // distributed: true
-        //   }
-        // },
-        // xaxis: {
-        //   labels: {
-        //     show: false
-        //   }
-        //   // type: "datetime",
-        //   // categories: [
-        //   //   "01/01/2011 GMT",
-        //   //   "01/02/2011 GMT",
-        //   //   "01/03/2011 GMT",
-        //   //   "01/04/2011 GMT",
-        //   //   "01/05/2011 GMT",
-        //   //   "01/06/2011 GMT",
-        //   //   "01/07/2011 GMT",
-        //   //   "01/08/2011 GMT",
-        //   //   "01/09/2011 GMT",
-        //   //   "01/10/2011 GMT"
-        //   // ]
-        // },
-        // legend: {
-        //   // itemMargin: {
-        //   //   horizontal: -100,
-        //   //   vertical: -100
-        //   // },
-        //   show: false,
-        //   // position: "top",
-        //   // horizontalAlign: "right",
-        //   // offsetX: 40
-        // },
-        // fill: {
-        //   opacity: 100
-        // },
         xaxis: {
           labels: {
             offsetX: 0

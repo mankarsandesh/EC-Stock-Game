@@ -2,16 +2,15 @@
   <div class="v-card-style">
     <v-layout px-1>
       <v-flex xs6 class="text-xs-left stockTimer">
-        {{ $t("msg.livetime") }}:
-        <!-- <span class="stockTimer">{{ getLiveTime(stockid) }}</span> -->
+        <label>{{ $t("msg.livetime") }}:</label>
+        <span class="stockTimer" v-if="getStockLiveTime(stockName)">{{ getStockLiveTime(stockName).split(" ")[1] }}</span>
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
-        {{ $t("msg.liveprice") }}:
-        <span>{{ getStockLivePrice(stockName) }}</span>
+        <!-- <label>{{ $t("msg.liveprice") }}:</label> -->
+        <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
-    <apexchart
-      class="chartDesgin"
+    <apexchart     
       type="area"
       :height="chartHeight"
       width="99.5%"
@@ -27,7 +26,7 @@ import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Echo from "laravel-echo";
 export default {
   props: {
@@ -82,10 +81,10 @@ export default {
           number2: dataIndex.number2
         };
         if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {          
-           this.SET_CLEAR_ROAD_MAP(true);
+           this.setClearRoadMap(true);
           this.setLiveChart(readyData);
           setTimeout(() => {
-            this.SET_CLEAR_ROAD_MAP(false);
+            this.setClearRoadMap(false);
           }, 1000);
         }
       }
@@ -98,8 +97,8 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getStockLivePrice",
-      "getStockUUIDByStockName",
-      "getLiveTime"
+      "getStockLiveTime",
+      "getStockUUIDByStockName"
     ]),
     chartOptions() {
       let newTime = [];
@@ -137,7 +136,7 @@ export default {
             enabled: false
           },
           toolbar: {
-            shared: false,
+            shared: false,           
             y: {
               formatter: function(val) {
                 return (val / 1000000).toFixed(0);
@@ -198,7 +197,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-    ...mapMutations(["SET_CLEAR_ROAD_MAP"]),
+    ...mapActions(["setClearRoadMap"]),
     setLiveChart(payload) {
       this.chartData.push(payload);
     },
@@ -248,10 +247,14 @@ export default {
 };
 </script>
 <style>
+.stockTimer label{
+  font-size: 16px;
+  font-weight: 800;
+}
 .stockPrice span {
   padding-right: 14px;
   color: green;
-  font-size: 16px;
+  font-size: 20px;
   margin: 0px;
   font-weight: 600;
 }

@@ -888,10 +888,10 @@
               size="60"
               v-for="(item, key) in imgChip"
               :key="key"
-              @click="shipClick(getCoins_modern[key])"
+              @click="shipClick(getCoinsModern[key])"
             >
               <v-img class="ma-4" :src="item.img" :alt="item.title">
-                <span class="setpricechip">{{ getCoins_modern[key] }}</span>
+                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
               </v-img>
             </v-avatar>
           </v-flex>
@@ -1304,14 +1304,14 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import chartMobile from "~/components/chartMobile";
 import payout from "~/data/payout";
 import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
 import config from "../../../config/config.global";
 import gameRule from "../../../data/gameRule";
-
+import chips from '../../../data/chips';
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -1347,28 +1347,7 @@ export default {
       drawerderlast: null,
       drawerder018: null,
       drawerder099: null,
-      imgChip: [
-        {
-          title: "Danger",
-          img: "/chip/danger.png"
-        },
-        {
-          title: "Primary",
-          img: "/chip/primary.png"
-        },
-        {
-          title: "success",
-          img: "/chip/success.png"
-        },
-        {
-          title: "warning",
-          img: "/chip/warning.png"
-        },
-        {
-          title: "black",
-          img: "/chip/black.png"
-        }
-      ],
+      imgChip: chips.chipsDataMobile,
       odd: null,
       gameRule: "null",
       confirmDisabled: false,
@@ -1385,7 +1364,7 @@ export default {
   },
   created() {
     // get road map data from API
-    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // live road map from socket
     this.listenForBroadcast(
       {
@@ -1418,10 +1397,10 @@ export default {
       "getStockById",
       "getLiveTime",
       "getCheckStock",
-      "getCoins_modern",
+      "getCoinsModern",
       "getStockCrawlerData",
       "getAllBettingAmount",
-      "getAuth_token",
+      "getAuthToken",
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",
@@ -1463,12 +1442,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asyncRoadMap", "asynUserInfo"]),
-    ...mapMutations([
+    ...mapActions([
       "setFooterBetAmount",
       "pushDataOnGoingBet",
       "clearDataMultiGameBet",
-      "setLiveRoadMap"
+      "setLiveRoadMap",
+      "setRoadMap",
+      "setUserData"
     ]),
 
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -1523,7 +1503,6 @@ export default {
       console.log(data);
       this.confirmDisabled = true;
       this.sendBetting(data);
-      // console.warn(this.getOnBetting);
     },
     async sendBetting(betData) {
       try {
@@ -1541,12 +1520,11 @@ export default {
         );
         console.log(res);
         if (res.status && res.data[0].status) {
-          this.asynUserInfo();
+          this.setUserData();
           this.betAmount = 0;
           this.bettingDialog = false;
           this.reviewbetDialog = false;
           this.pushDataOnGoingBet(res.data[0]);
-          // console.warn(this.getOnBetting);
           this.$swal({
             type: "success",
             title: "Confirm!",

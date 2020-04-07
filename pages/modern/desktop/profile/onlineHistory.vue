@@ -6,22 +6,22 @@
         <v-divider></v-divider>
       </div>
     </v-flex>
-    <v-flex xs12 pt-3 pl-5 >
+    <v-flex xs12 pt-3 pl-5>
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
           <div class="date_picker_container" @click="startDateClick">
             <div class="title_date_picker">
-              <span>{{$t('msg.from')}}</span>
+              <span>{{ $t("msg.from") }}</span>
             </div>
             <div class="date_picker">
-              <span class="select_date">{{startDate}}</span>
+              <span class="select_date">{{ startDate }}</span>
               <span class="icon_date">
                 <v-icon>date_range</v-icon>
               </span>
             </div>
           </div>
-          <div style="position:absolute;z-index:1">
+          <div style="position: absolute; z-index: 1;">
             <v-date-picker
               v-if="isShowDateStart"
               v-model="startDate"
@@ -33,17 +33,21 @@
         <v-flex xs6 sm6 md3 lg3 pr-5>
           <div class="date_picker_container" @click="endDateClick">
             <div class="title_date_picker">
-              <span>{{$t('msg.to')}}</span>
+              <span>{{ $t("msg.to") }}</span>
             </div>
             <div class="date_picker">
-              <span class="select_date">{{endDate}}</span>
+              <span class="select_date">{{ endDate }}</span>
               <span class="icon_date">
                 <v-icon>date_range</v-icon>
               </span>
             </div>
           </div>
-          <div style="position:absolute;z-index:1">
-            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+          <div style="position: absolute; z-index: 1;">
+            <v-date-picker
+              v-if="isShowDateEnd"
+              v-model="endDate"
+              @input="isShowDateEnd = false"
+            ></v-date-picker>
           </div>
         </v-flex>
         <!-- go button -->
@@ -52,25 +56,33 @@
             <div class="title_date_picker">
               <span></span>
             </div>
-            <button @click="getOnlineHistory">{{$t('msg.go')}}</button>
+            <button @click="getOnlineHistory">{{ $t("msg.go") }}</button>
           </div>
         </v-flex>
       </v-layout>
     </v-flex>
-    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5" >
+    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
-        <p v-if="!dataReady" class='no-data'><strong>{{ error }}</strong></p>
-        <VueApexCharts v-if="dataReady" type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
+        <p v-if="!dataReady" class="no-data">
+          <strong>{{ error }}</strong>
+        </p>
+        <VueApexCharts
+          v-if="dataReady"
+          type="bar"
+          height="350"
+          :options="chartOptions"
+          :series="series"
+          :key="componentKey"
+        />
       </div>
     </v-flex>
     <v-flex xs12 class="pt-3 pl-5">
       <div v-if="dataReady">
-        <span style="margin-right:30px">
-          {{$t('profile.onlinetime')}} : <b>{{currentActiveTime}}</b>
+        <span style="margin-right: 30px;">
+          {{ $t("profile.onlinetime") }} : <b>{{ currentActiveTime }}</b>
         </span>
-        <span style="margin-right:30px">
-          {{$t('profile.totalonline')}} 
-          <b> {{totalOnlineTime}} </b>
+        <span style="margin-right: 30px;">
+          {{ $t("profile.totalonline") }} : <b> {{ totalOnlineTime }} </b>
         </span>
       </div>
     </v-flex>
@@ -85,7 +97,7 @@ import config from "../../../../config/config.global";
 import VueApexCharts from "vue-apexcharts";
 export default {
   components: {
-    VueApexCharts
+    VueApexCharts,
   },
   data() {
     return {
@@ -94,7 +106,7 @@ export default {
       totalOnlineTime: "",
       currentActiveTime: "",
       dataReady: false,
-      error: '',
+      error: "",
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
@@ -102,32 +114,32 @@ export default {
       chartOptions: {
         chart: {
           height: 350,
-          type: 'bar',
+          type: "bar",
           // events: {
           //   click: function (chart, w, e) {
           //     console.log(chart, e);
           //   }
           // }
-          },
+        },
         plotOptions: {
           bar: {
-            columnWidth: '45%',
-            distributed: true
-          }
+            columnWidth: "45%",
+            distributed: true,
+          },
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         legend: {
-          show: false
+          show: false,
         },
         xaxis: {
           categories: [],
           labels: {
             style: {
-              fontSize: '12px'
-            }
-          }
+              fontSize: "12px",
+            },
+          },
         },
         // tootltip: {
         //   enabled: false,
@@ -171,7 +183,7 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     startDateClick() {
       this.isShowDateStart = !this.isShowDateStart;
       this.isShowDateEnd = false;
@@ -182,15 +194,15 @@ export default {
     },
     checkValidDate(startDate, endDate) {
       const now = date.format(new Date(), "YYYY-MM-DD");
-      if(endDate > now || !(endDate >= startDate)) {
-        return false
+      if (endDate > now || !(endDate >= startDate)) {
+        return false;
       }
       return true;
     },
     async getOnlineHistory() {
       try {
-        if(!this.checkValidDate(this.startDate, this.endDate)) {
-          throw new Error('Please select a valid date');
+        if (!this.checkValidDate(this.startDate, this.endDate)) {
+          throw new Error("Please select a valid date");
         }
         const res = await this.$axios.$post(
           config.getUserProfile.url,
@@ -199,39 +211,41 @@ export default {
             userUUID: this.getUserUUID,
             dateRangeFrom: this.startDate,
             dateRangeTo: this.endDate,
-            version: config.version
+            version: config.version,
           },
           {
-            headers: config.header
+            headers: config.header,
           }
         );
         if (res.code === 200) {
-          if(res.data.activeTimeDateWise.length) {
+          if (res.data.activeTimeDateWise.length) {
             this.dataReady = true;
             let result = res.data.activeTimeDateWise;
             this.currentActiveTime = res.data.currentActiveTime;
             let totalActiveTime = 0;
             let xAxis = [];
-            let chartData = []; 
-            result.forEach(element => {
+            let chartData = [];
+            result.forEach((element) => {
               totalActiveTime += parseInt(element.activeTimeInMins);
               chartData.push(parseInt(element.activeTimeInMins));
               xAxis.push(element.Date);
             });
-            let days = Math.floor(totalActiveTime/(24 * 60));
-            let hours = (parseInt(totalActiveTime/60) % 24);
-            let minutes = totalActiveTime%60;
-            this.totalOnlineTime = `${days ? `${days} days, ` : ``}${hours} hours and ${minutes} minutes`;
+            let days = Math.floor(totalActiveTime / (24 * 60));
+            let hours = parseInt(totalActiveTime / 60) % 24;
+            let minutes = totalActiveTime % 60;
+            this.totalOnlineTime = `${
+              days ? `${days} days, ` : ``
+            }${hours} hours and ${minutes} minutes`;
             this.series = [{ data: chartData }];
             this.chartOptions.xaxis.categories = xAxis;
             this.componentKey++;
           } else {
-            this.error = 'No data to display';
+            this.error = "No data to display";
             this.dataReady = false;
           }
         } else {
           console.log(res);
-          this.error = 'Something went wrong';
+          this.error = "Something went wrong";
           this.dataReady = false;
           //alert(res.message);
         }
@@ -240,15 +254,15 @@ export default {
         this.$swal({
           title: ex.message,
           type: "error",
-          showConfirmButton: true
+          showConfirmButton: true,
         });
-        if(ex.message == 'Please select a valid date') {
-          this.error = 'Please select a valid date';
+        if (ex.message == "Please select a valid date") {
+          this.error = "Please select a valid date";
           this.dataReady = false;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

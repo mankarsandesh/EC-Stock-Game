@@ -17,7 +17,7 @@
 <script>
 import {
     mapGetters,
-    mapMutations
+    mapActions
 } from "vuex";
 
 import countryFlag from "vue-country-flag";
@@ -49,21 +49,21 @@ export default {
     },
     created() {},
     computed: {
-        ...mapGetters(["getlocale"]),
+        ...mapGetters(["getLocale"]),
         value() {
-            return this.getlocale;
+            return this.getLocale;
         }
     },
     methods: {
-        ...mapMutations(["SET_LANG"]),
+        ...mapActions(["setLanguage"]),
         showDialog() {
             this.dialog = true;
 
         },
         changeLange(value) {
-            this.SET_LANG(value);
+            this.setLanguage(value);
             this.dialog = false;
-            this.$i18n.locale = this.getlocale
+            this.$i18n.locale = this.getLocale
         }
     }
 };

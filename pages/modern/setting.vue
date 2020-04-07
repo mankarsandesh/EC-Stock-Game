@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-import {mapMutations} from 'vuex'
+import { mapActions } from 'vuex'
 import chipamount from "~/components/mobile/chipamount";
 import soundcontrol from "~/components/mobile/soundcontrol";
 
@@ -47,7 +47,7 @@ export default {
     };
   },
   methods:{
-    ...mapMutations([
+    ...mapActions([
       "setIsLoadingStockGame"
     ])
   }

@@ -1,18 +1,18 @@
 <template>
   <div>
-    <v-layout class="mx-5 my-3 bettingModel" column >
+    <v-layout class="mx-5 my-3 bettingModel" column>
       <v-flex>
         <h3>
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-              betId.split("-")[1] >= 0
-                ? $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  betId.split("-")[1]
-                : $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  $t("gamemsg." + betId.split("-")[1])
+            betId.split("-")[1] >= 0
+            ? $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            betId.split("-")[1]
+            : $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            $t("gamemsg." + betId.split("-")[1])
             }}
           </span>
         </h3>
@@ -25,27 +25,22 @@
         |
         <span>
           {{ $t("msg.payout") }}:
-          {{ $store.state.payout[parseInt(payout)].dynamicOdds }}
+          {{ $store.state.game.payout[parseInt(payout)].dynamicOdds }}
         </span>
       </v-flex>
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar
-              size="70"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
-            >
+            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
               <v-img
-                @click="coinClick(getCoins_modern[key])"
+                @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
                 :width="item.width"
                 :alt="item.title"
                 :class="item.color"
                 class="chipImg"
               >
-                <span class="setpricechip">{{ getCoins_modern[key] }}</span>
+                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
               </v-img>
             </v-avatar>
           </v-flex>
@@ -57,13 +52,7 @@
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
           <v-flex style="align-self:center">
-            <input
-              type="number"
-              readonly
-              :min="1"
-              v-model="betValue"
-              class="input-bet"
-            />
+            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -80,62 +69,37 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-          >{{ $t("msg.confirm") }}</v-btn
-        >
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{
+        >{{ $t("msg.confirm") }}</v-btn>
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
+          {{
           $t("msg.cancel")
-        }}</v-btn>
+          }}
+        </v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import result from "~/data/result";
 import config from "../../config/config.global";
+import chips from "../../data/chips";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout"],
   data() {
     return {
       confirmDisabled: false,
       betValue: 0,
-      imgChip: [
-        {
-          title: "Danger",
-          img: "/chip/danger.png",
-          width: "55"
-        },
-        {
-          title: "Primary",
-          img: "/chip/primary.png",
-          width: "55"
-        },
-        {
-          title: "success",
-          img: "/chip/success.png",
-          width: "60"
-        },
-        {
-          title: "warning",
-          img: "/chip/warning.png",
-          width: "60"
-        },
-        {
-          title: "black",
-          img: "/chip/black.png",
-          width: "70",
-          color: "text-white"
-        }
-      ]
+      imgChip: chips.chipsData
     };
   },
   computed: {
     ...mapGetters([
       "getStockLoop",
       "getGameUUIDByStockName",
-      "getCoins_modern",
-      "getOnBetting",
-      "getAuth_token",
+      "getCoinsModern",
+      "getAuthToken",
       "getStockId",
       "getStockGameId",
       "getPortalProviderUUID",
@@ -145,19 +109,54 @@ export default {
     ])
   },
   watch: {
-    clearRoadMap(val) {
-      if (!val) {
-        $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
-        setTimeout(() => {
-          console.log("wait for 5 second");
-          $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-          $("#" + this.betId).removeClass(
-            this.betId.split("-")[0] + "-animation"
-          );
-        }, 5000);
-      }
-      // $("#" + this.betId).removeClass("bet-animation");
+    getLastDraw(val) {
+      const lastDraw = val.substr(val.length - 2);
+      const first = parseInt(lastDraw.slice(0, 1));
+      const last = parseInt(lastDraw.slice(1, 2));
+      const twoDigit = first + last;
+      result.rule_data.map((items, index) => {
+        if ($("#" + this.betId).hasClass(items.type)) {
+          items.rules.map((item, index) => {
+            if ($("#" + this.betId).hasClass(item.name)) {
+              if (items.type === "firstdigit") {
+                const result = item.rule.includes(first);
+                if (result) {
+                  console.log("You Win :" + item.name + ":" + first);
+                  $("#" + this.betId).addClass(
+                    this.betId.split("-")[0] + "-animation"
+                  );
+                  setTimeout(() => {
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betId).removeClass(
+                      this.betId.split("-")[0] + "-animation"
+                    );
+                  }, 5000);
+                } else {
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  console.log("====You====lose====" + item.name + " ====");
+                }
+              }
+            }
+          });
+        }
+      });
     }
+    //  if (item.rule == first) {
+    //             // console.log("This is the First :" + item.name);
+    //           }
+    // clearRoadMap(val) {
+    //   if (!val) {
+    //     $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
+    //     setTimeout(() => {
+    //       console.log("wait for 5 second");
+    //       $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+    //       $("#" + this.betId).removeClass(
+    //         this.betId.split("-")[0] + "-animation"
+    //       );
+    //     }, 5000);
+    //   }
+    //   // $("#" + this.betId).removeClass("bet-animation");
+    // }
   },
   created() {
     // check is full screen or not
@@ -171,8 +170,7 @@ export default {
     //  this.getwinuser()
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
-    ...mapMutations(["pushDataOnGoingBet", "setGameID"]),
+    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
@@ -192,7 +190,7 @@ export default {
           }
         );
         if (res.status && res.data[0].status) {
-          this.asynUserInfo();
+          this.setUserData();
           this.closePopper();
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
@@ -235,7 +233,9 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
-      $("#" + this.betId).addClass(this.betId.split("-")[0]);
+      $("#" + this.betId).addClass(
+        this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+      );
     },
     closePopper() {
       $(".closepopper").click();

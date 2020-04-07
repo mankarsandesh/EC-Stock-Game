@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import {mapMutations} from 'vuex'
+import { mapActions } from 'vuex'
 import chipamount from "~/components/modern/setting/chipamout";
 import soundcontrol from "~/components/modern/setting/soundcontrol";
 
@@ -49,7 +49,7 @@ export default {
 
   },
   methods:{
-    ...mapMutations([
+    ...mapActions([
       "setIsLoadingStockGame"
     ])
   }

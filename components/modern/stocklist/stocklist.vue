@@ -34,7 +34,7 @@
 import { mapGetters,mapState} from "vuex";
 import config from '../../../config/config.global';
 export default {
-  props: ["item"],
+  props: ["itemss"],
   data() {
     return {
       items: ["day", "weeks", "months", "years"],
@@ -52,7 +52,7 @@ export default {
   mounted() {
     this.listenForBroadcast(
       {
-        channelName: `stockList.${this.portalProviderUUID}`,
+        channelName: `stockList.${this.getPortalProviderUUID}`,
         eventName: "stockList"
       },
       ({ data }) => {
@@ -77,8 +77,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"]),
-     ...mapState(["portalProviderUUID"])
+    ...mapGetters(["getLivePrice", "getPreviousPrice", "getPortalProviderUUID"])
   },
   methods: {  
     listenForBroadcast({ channelName, eventName }, callback) {

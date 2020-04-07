@@ -99,6 +99,7 @@ export default {
             date: element.date
           });
         });
+        this.scrollDown();
       }
     );
   },
@@ -106,7 +107,6 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getUserUUID",
-      "getUserName",
       "getStockType",
       "getStockGameId"
     ]),

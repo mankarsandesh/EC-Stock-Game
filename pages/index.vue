@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import config from "../config/config.global";
 import { isMobile } from "mobile-device-detect";
 export default {
@@ -101,13 +101,14 @@ export default {
             userId: data.data[0].userUUID,
             redirect: this.referrerURL
           };
-          this.SET_PORTAL_PROVIDERUUID(userInfo.portalProviderUUID);
-          this.SET_USER_UUID(userInfo.userId);
+          this.setPortalProviderUUID(userInfo.portalProviderUUID);
+          this.setUserUUID(userInfo.userId);
           localStorage.setItem(
             "PORTAL_PROVIDERUUID",
             userInfo.portalProviderUUID
           );
           localStorage.setItem("USER_UUID", userInfo.userId);
+          localStorage.setItem("REFERERN_URL", userInfo.redirect);
           let objJsonStr = JSON.stringify(userInfo);
           let buff = new Buffer(objJsonStr);
           let base64data = buff.toString("base64");
@@ -139,7 +140,7 @@ export default {
         console.log(error);
       }
     },
-    ...mapMutations(["setAuth", "SET_PORTAL_PROVIDERUUID", "SET_USER_UUID"]),
+    ...mapActions(["setAuth", "setPortalProviderUUID", "setUserUUID"]),
 
     getProgress() {
       let seft = this;
@@ -208,3 +209,4 @@ export default {
   color: #333;
 }
 </style>
+
