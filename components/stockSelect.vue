@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap class="select-stock mt-2">
-    <v-flex md3>
+    <v-flex md2>
       <v-select
         v-model="stock"
         :items="items"
@@ -10,7 +10,6 @@
         class="selectStock"
         color="blue"
         label="select stock"
-        prepend-icon="bar_chart"
         item-text="type"
         item-value="name"
         return-object
@@ -62,7 +61,7 @@
         </template>
       </v-select>
     </v-flex>
-    <v-flex md3>
+    <v-flex md4>
       <v-text-field
         v-model="gameId"
         label="game id"
@@ -72,14 +71,13 @@
         solo
         hide-details
         disabled
-        id="gameId"
       />
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"; // impor the vuex library frist, before use vuex
+import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
 import config from "../config/config.global";
 export default {
   data() {
@@ -96,6 +94,15 @@ export default {
   },
   watch: {
     stock(value) {
+      let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+      if (value.type === GET_STOCK_TYPE) {
+        this.stockSocket = true;
+        // this.stockName = ""; // after value is not empty we clear the value is first
+        this.stockNames = [];
+        this.stockNames = value.stocks;
+        $("#stockName").click();
+      }
+
       // when value is changed this value will do the list
       if (this.stockSocket) {
         // check the stockSocket is come or not
@@ -103,63 +110,66 @@ export default {
       } else {
         // after value is false the logic will be come in this case
         if (value !== "") {
-          // after reveide the value we have to check the value is not empty
-          this.stockName = ""; // after value is not empty we clear the value is first
-          this.stockNames = value.stocks; // after clear the push the array into the items
-          $("#stockName").click(); // after have the value we have to click the box
+          sessionStorage.setItem("STOCK_TYPE", value.type);
+          // this.stockName = "";
+          this.stockNames = value.stocks;
+          $("#stockName").click();
         }
         this.stockSocket = true;
       }
     },
     stockName(value) {
-      if (this.stockSocket) {
-        if (value !== "") {
-          this.minute = "";
-          this.minutes = value.loops;
-          $("#minute").click();
-        }
-      } else {
-        this.stockSocket = false;
+      let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+      if (value.stockName !== undefined) {
+        sessionStorage.setItem("STOCK_NAME", this.stockName.stockName);
+      }
+      if (this.stock.type === GET_STOCK_TYPE) {
+        this.minute = "";
+        this.minutes = value.loops;
+        $("#minute").click();
       }
     },
     minute(value) {
-      if (this.stockSocket) {
-        if (value !== "") {
-          this.gameId = "";
-          this.gameId = value.gameID;
-          $("#gameId").click();
+      if (value.loopName !== undefined) {
+        sessionStorage.setItem("STOCK_LOOP", value.loopName);
+        const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+        if (GET_STOCK_TYPE == "crypto") {
+          sessionStorage.setItem(
+            "STOCK_URL",
+            this.stockName.stockName + value.loopName
+          );
+        } else {
+          sessionStorage.setItem("STOCK_URL", this.stockName.stockName);
         }
-      } else {
-        this.stockSocket = false;
+      }
+      if (value !== "") {
+        this.gameId = "";
+        this.gameId = value.gameID;
       }
     },
     gameId(value) {
-      if (this.stockSocket) {
-        if (value !== "") {
-          if (this.stock.type == "crypto") {
-            let routeName =
-              this.stockName.stockName + "" + this.minute.loopName;
-            // check is multi game or not
-            if (this.$route.name === "modern-desktop-id") {
-              this.$router.replace(`/modern/desktop/${routeName}`);
-            } else {
-              // if is multi game then add selected game
-              this.addStockMultigame(routeName);
-            }
+      const GET_STOCK_URL = sessionStorage.getItem("STOCK_URL");
+      const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+      const GET_STOCK_NAME = sessionStorage.getItem("STOCK_NAME");
+      const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_LOOP");
+      const GET_STOCK_FULL_URL = sessionStorage.getItem("STOCK_FULL_URL");
+      if (GET_STOCK_FULL_URL !== `/modern/desktop/${GET_STOCK_URL}`) {
+        if (GET_STOCK_TYPE == "crypto") {
+          if (this.$route.name === "modern-desktop-id") {
+            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
           } else {
-            // check is multi game or not
-            if (this.$route.name === "modern-desktop-id") {
-              this.$router.replace(
-                `/modern/desktop/${this.stockName.stockName}`
-              );
-              // if is multi game then add selected game
-            } else {
-              this.addStockMultigame(this.stockName.stockName);
-            }
+            // if is multi game then add selected game
+            this.addStockMultiGame(GET_STOCK_URL);
+          }
+        } else {
+          // check is multi game or not
+          if (this.$route.name === "modern-desktop-id") {
+            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+            // if is multi game then add selected game
+          } else {
+            this.addStockMultiGame(GET_STOCK_URL);
           }
         }
-      } else {
-        this.stockSocket = false;
       }
     },
     getStockCategory(val) {
@@ -168,15 +178,28 @@ export default {
     }
   },
   created() {
+    sessionStorage.setItem("STOCK_FULL_URL", this.$route.path);
+    const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+    sessionStorage.setItem("STOCK_URL", this.$route.params.id);
+    if (GET_STOCK_TYPE !== "crypto") {
+      sessionStorage.setItem("STOCK_LOOP", 5);
+    } else {
+      let stockURL = this.$route.params.id;
+      let stockURLName = stockURL.substring(0, stockURL.length - 1);
+      let stockURLLoop = stockURL.substr(stockURL.length - 1);
+      sessionStorage.setItem("STOCK_LOOP", stockURLLoop);
+    }
     this.getActiveGamesByCategory();
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
   methods: {
-    ...mapMutations(["addStockMultigame", "setGameID", "SET_STOCK_CATEGORY"]),
+
+    ...mapActions([
+      'addStockMultiGame', 'setGameId', 'setStockCategory' 
+    ]),
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
@@ -188,9 +211,9 @@ export default {
           {
             headers: config.header
           }
-        );      
+        );
         this.getGameUUID(data);
-        this.SET_STOCK_CATEGORY(data);
+        this.setStockCategory(data);
         this.items = data;
       } catch (error) {
         console.log(error);
@@ -204,6 +227,7 @@ export default {
         if (item.type === "crypto") {
           if (item.stocks.find(({ stockName }) => stockName === stockURLName)) {
             this.stock = item.type;
+            sessionStorage.setItem("STOCK_TYPE", item.type);
             item.stocks.map(stockN => {
               this.stockName = stockN.stockName;
               this.stockNames.push(stockN.stockName);
@@ -211,6 +235,7 @@ export default {
                 if (minute.loopName == stockURLLoop) {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
+                  this.setGameId(minute.gameID);
                   this.gameId = minute.gameID;
                 }
               });
@@ -219,6 +244,7 @@ export default {
         } else {
           if (item.stocks.find(({ stockName }) => stockName === stockURL)) {
             this.stock = item.type;
+            sessionStorage.setItem("STOCK_TYPE", item.type);
             item.stocks.map(stockN => {
               if (stockN.stockName == stockURL) {
                 this.stockName = stockN.stockName;
@@ -226,6 +252,7 @@ export default {
                 stockN.loops.map(minute => {
                   this.minute = minute.loopName;
                   this.minutes.push(minute);
+                  this.setGameId(minute.gameID);
                   this.gameId = minute.gameID;
                 });
               }
@@ -236,7 +263,6 @@ export default {
       this.stockSocket = true;
     },
     updateGameUUID(items) {
-      console.log("==============STOCK SOCKET===============");
       let stockURL = this.$route.params.id;
       let stockURLName = stockURL.substring(0, stockURL.length - 1);
       let stockURLLoop = stockURL.substr(stockURL.length - 1);
@@ -247,14 +273,9 @@ export default {
               stockN.loops.map(minute => {
                 if (minute.loopName == stockURLLoop) {
                   this.gameId = minute.gameID;
-                  this.setGameID(minute.gameID);
-                  console.log("STOCK TYPE : " + item.type);
-                  console.log("STOCK NAME : " + stockN.stockName);
-                  console.log("STOCK LOOP : " + minute.loopName);
-                  console.log("GAME STATUS : " + minute.gameStatus);
-                  console.log("GAME UUID : " + minute.gameID);
+                  this.setGameId(minute.gameID);
                 }
-              });
+              }); 
             });
           }
         } else {
@@ -263,19 +284,13 @@ export default {
               if (stockN.stockName == stockURL) {
                 stockN.loops.map(minute => {
                   this.gameId = minute.gameID;
-                  this.setGameID(minute.gameID);
-                  console.log("STOCK TYPE : " + item.type);
-                  console.log("STOCK NAME : " + stockN.stockName);
-                  console.log("STOCK LOOP : " + minute.loopName);
-                  console.log("GAME STATUS : " + minute.gameStatus);
-                  console.log("GAME UUID : " + minute.gameID);
+                  this.setGameId(minute.gameID);
                 });
               }
             });
           }
         }
       });
-      console.log("==============STOCK SOCKET===============");
     }
   }
 };
@@ -288,3 +303,4 @@ export default {
   font-size: 12px;
 }
 </style>
+

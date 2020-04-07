@@ -4,7 +4,7 @@
       <v-flex pa-2 class="headerStockBar">{{$t('menu.stock list')}}</v-flex>
     </v-layout>
 
-    <div class="table-responsive">
+    <div class="table-responsive">     
       <table class="table" v-if="getStockListTimer.length===2">
         <tr>
           <th>{{$t('msg.Stock Name')}}</th>
@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters([
@@ -45,12 +45,12 @@ export default {
       "getPreviousPrice"
     ])
   },
-  data() {
-    return {};
+  created() {
   },
-  created() {},
   methods: {
-    ...mapMutations(["setStockListTimer"])
+    ...mapActions([
+      'setStockListTimer'
+    ])
   }
 };
 </script>

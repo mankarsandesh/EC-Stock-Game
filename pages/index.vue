@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import config from "../config/config.global";
 import { isMobile } from "mobile-device-detect";
 export default {
@@ -30,8 +30,7 @@ export default {
 
   data() {
     return {
-      getUserAuthInfo : "",
-      error: false,
+      getUserAuthInfo: "",
       authUser: "",
       referrerURL: document.referrer.match(/:\/\/(.[^/]+)/)[1],
       stockname: "btc1",
@@ -40,7 +39,7 @@ export default {
       portalProviderUserID: this.$route.query.portalProviderUserID,
       balance: this.$route.query.balance,
       userData: [],
-      messageError: []      
+      messageError: []
     };
   },
   mounted() {
@@ -60,12 +59,7 @@ export default {
       const error = "Somthing Wrong.";
       this.messageError.push(error);
     }
-    this.error = true;
-    if (this.error == true) {
-      console.log("true");
-      this.checlUserAuth();      
-
-    }
+    this.checlUserAuth();
   },
   watch: {
     "$screen.width"() {
@@ -76,63 +70,78 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+  },
   methods: {
     async checlUserAuth() {
-      try{
-      const userData = {
-        portalProviderUUID: this.portalProviderUUID,
-        portalProviderUserID: this.portalProviderUserID,
-        version: 0.1,
-        ip: "225.457.454.123",
-        domain: this.referrerURL,
-        balance: this.balance
-      };    
-      console.log(userData);
-      const { data } = await this.$axios.post(
-        config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
-        userData, // data object
-        {
-          headers: config.header
-        }
-      );
-      if(data.status == true){
-        const userInfo =  {
-          authUser: config.authUser,
-          authPassword: config.authPassword,
+      try {
+        const userData = {
           portalProviderUUID: this.portalProviderUUID,
-          userId: data.data[0].userUUID,
-          redirect:this.referrerURL
+          portalProviderUserID: this.portalProviderUserID,
+          version: 0.1,
+          ip: "225.457.454.123",
+          domain: this.referrerURL,
+          balance: this.balance
+        };
+        console.log(userData);
+        const { data } = await this.$axios.post(
+          config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
+          userData, // data object
+          {
+            headers: config.header
+          }
+        );
+        console.log(data);
+        if (data.status) {
+          const userInfo = {
+            authUser: config.authUser,
+            authPassword: config.authPassword,
+            portalProviderUUID: this.portalProviderUUID,
+            userId: data.data[0].userUUID,
+            redirect: this.referrerURL
+          };
+          this.setPortalProviderUUID(userInfo.portalProviderUUID);
+          this.setUserUUID(userInfo.userId);
+          localStorage.setItem(
+            "PORTAL_PROVIDERUUID",
+            userInfo.portalProviderUUID
+          );
+          localStorage.setItem("USER_UUID", userInfo.userId);
+          localStorage.setItem("REFERERN_URL", userInfo.redirect);
+          let objJsonStr = JSON.stringify(userInfo);
+          let buff = new Buffer(objJsonStr);
+          let base64data = buff.toString("base64");
+          if (userInfo.authUser && userInfo.authPassword) {
+            if (userInfo.portalProviderUUID && userInfo.userId) {
+              let buffDecode = new Buffer(base64data, "base64");
+              let authData = buffDecode.toString("ascii");
+              this.setAuth(authData);
+              localStorage.setItem("AUTH", JSON.stringify(base64data));
+              this.getProgress();
+              this.linkto = isMobile
+                ? "/modern"
+                : "/modern/desktop/" + this.stockname;
+              // location.reload(true);
+            } else {
+              const error = "Portal Provider OR userID is Missing...";
+              this.messageError.push(error);
+            }
+          } else {
+            const error = "Authication authUser & authPassword is Missing.";
+            this.messageError.push(error);
+          }
+        } else {
+          const error = "Somthing Wrong Please check.";
+          this.messageError.push(error);
         }
-      let objJsonStr = JSON.stringify(userInfo);
-      let buff = new Buffer(objJsonStr);
-      let base64data = buff.toString("base64");
-      if (userInfo.authUser && userInfo.authPassword) {
-        if (userInfo.portalProviderUUID && userInfo.userId) {
-          let buffDecode = new Buffer(base64data, "base64");
-          let authData = buffDecode.toString("ascii");
-          this.setAuth(authData);
-          sessionStorage.setItem("AUTH", JSON.stringify(base64data));
-          this.getProgress();
-          this.linkto = isMobile
-            ? "/modern"
-            : "/modern/desktop/" + this.stockname;
-        } else {          
-           const error = "Portal Provider OR userID is Missing...";
-           this.messageError.push(error);
-        }
-      }else {
-         const error = "Authication authUser & authPassword is Missing.";
-         this.messageError.push(error);
-      }
-      }else{
-        const error = "Somthing Wrong Please check.";
-        this.messageError.push(error);
-      }
-      } catch(error){
+        // location.reload(true);
+      } catch (error) {
         console.log(error);
       }
     },
-    ...mapMutations(["setAuth"]),
+    ...mapActions(["setAuth", "setPortalProviderUUID", "setUserUUID"]),
+
     getProgress() {
       let seft = this;
       let width = 100,
@@ -175,7 +184,8 @@ export default {
           obj.innerHTML = current;
           if (current == end) {
             clearInterval(timer);
-            seft.$router.push("/modern/desktop/btc1");
+            window.location = "/modern/desktop/btc1";
+            // seft.$router.push("/modern/desktop/btc1");
             // seft.$router.push("/dashboard?stockname=" + seft.stockname);
           }
         }, stepTime);
@@ -199,3 +209,4 @@ export default {
   color: #333;
 }
 </style>
+

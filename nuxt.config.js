@@ -8,7 +8,7 @@ module.exports = {
   mode: "spa",
   buildModules: [
     // Simple usage
-    "@nuxtjs/dotenv"
+    "@nuxtjs/dotenv",
 
     // With options
     // ['@nuxtjs/dotenv', { /* module options */ }]
@@ -22,26 +22,27 @@ module.exports = {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: pkg.description }
+      { hid: "description", name: "description", content: pkg.description },
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.png" },
       {
         rel: "stylesheet",
         href:
-          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
+          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons",
       },
       {
         rel: "stylesheet",
         href:
-          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&display=swap"
-      }
+          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&display=swap",
+      },
     ],
     script: [
       {
-        src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
-      }
-    ]
+        src:
+          "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js",
+      },
+    ],
   },
   generate: {
     routes: [
@@ -83,8 +84,8 @@ module.exports = {
       "/modern/desktop/profile/stockanalysis",
       "/modern/desktop/profile/follower",
       "/modern/desktop/profile/notification",
-      "/modern/desktop/profile/setting"
-    ]
+      "/modern/desktop/profile/setting",
+    ],
   },
 
   /*
@@ -98,13 +99,14 @@ module.exports = {
     "~/assets/style/media-query.css",
     "~/assets/style/main.css",
     "~/assets/style/main.scss",
-    "~/assets/style/app.styl"
+    "~/assets/style/app.styl",
   ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
     "@/plugins/vuetify",
+    // "~/plugins/axios",
     "@/plugins/filters",
     "@/plugins/callApi",
     "@/plugins/i18n",
@@ -112,10 +114,11 @@ module.exports = {
     "@/plugins/sweetAlert",
     "@/plugins/vueScreen",
     "@/plugins/socketio",
-    { src: "@/plugins/vChart", mode: "client" }
+    { src: "@/plugins/vChart", mode: "client" },
+    { src: "@/plugins/ga", mode: "client" },
   ],
   router: {
-    middleware: ["auth", "showLoading"]
+    middleware: ["auth", "showLoading"],
   },
   /*
    ** Nuxt.js modules
@@ -124,7 +127,20 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
-    "@nuxtjs/moment"
+    "@nuxtjs/moment",
+    [
+      "nuxt-fontawesome",
+      {
+        component: "fa",
+        imports: [
+          //import whole set
+          {
+            set: "@fortawesome/free-solid-svg-icons",
+            icons: ["fas"],
+          },
+        ],
+      },
+    ],
   ],
   /*
    ** Axios module configuration
@@ -142,21 +158,21 @@ module.exports = {
     plugins: [new VuetifyLoaderPlugin()],
     loaders: {
       stylus: {
-        import: ["~assets/style/variables.styl"]
-      }
+        import: ["~assets/style/variables.styl"],
+      },
     },
 
     /*
      ** You can extend webpack config here
      */
-    extend: function(config, { isDev, isClient }) {
+    extend: function (config, { isDev, isClient }) {
       if (isClient) {
         config.devtool = "#source-map";
       }
       config.node = {
-        fs: "empty"
+        fs: "empty",
       };
-    }
+    },
   },
-  // server: config.serverConfig
+  server: config.serverConfig,
 };

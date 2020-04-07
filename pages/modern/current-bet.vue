@@ -1,7 +1,7 @@
 <template>
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <currentbet :head="head" :currentBets="currentBets"></currentbet>
+    <currentbet :currentBets="currentBets"></currentbet>
   </div>
 </template>
 
@@ -16,25 +16,14 @@ export default {
   },
   data() {
     return {
-      head: [
-        {
-          text: "bet ID",
-          value: "betID",
-          sortable: false,
-          value: "createdTime"
-        },
-        { text: "game ID", value: "gameID" },
-        { text: "bet detail", value: "ruleName" },
-        { text: "time", value: "createdTime" },
-        { text: "amount", value: "betAmount" },
-        { text: "payout", value: "payout" },
-        { text: "bet status", value: "gameStatus" }
-      ],
       currentBets: []
     };
   },
   computed: {
-    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+    }) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.fetch();

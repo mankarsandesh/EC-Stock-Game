@@ -7,15 +7,15 @@
     />
     <v-container>
       <v-layout row wrap>
-        <v-flex xs12 md12>
-          <announcement :head="head" :desserts="desserts" />
+        <v-flex xs12 md12 mt-5>
+          <announcement :announcementData="announcementData" />
         </v-flex>
       </v-layout>
     </v-container>
   </div>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import announcement from "~/components/modern/stocklist/announcement";
 import config from "../../../config/config.global";
@@ -30,22 +30,20 @@ export default {
       window: 0,
       tabs: ["announcement"],
       active: null,
-      head: [
-        { text: "title", value: "title" },
-        { text: "date", value: "createdAt" },
-        { text: "preview", value: "message" }
-      ],
-      desserts: []
+
+      announcementData: []
     };
   },
   created() {
     this.fetch();
   },
   computed: {
-    ...mapState(["portalProviderUUID"])
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID
+    }),
   },
   methods: {
-    ...mapMutations(["setIsLoadingStockGame"]),
+    ...mapActions(["setIsLoadingStockGame"]),
     async fetch() {
       try {
         const { data } = await this.$axios.$post(
@@ -58,7 +56,7 @@ export default {
             headers: config.header
           }
         );
-        this.desserts = data;
+        this.announcementData = data;
       } catch (error) {
         console.log(error);
       }

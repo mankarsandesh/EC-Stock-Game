@@ -2,7 +2,7 @@
 <div>
     <h4>
         {{$t('home.welcome')}}
-        <span class="warning--text">{{getUserName.name}},</span> {{$t('home.yourcurrentbalanceis')}}
+        <span class="warning--text">{{ getUserName }},</span> {{$t('home.yourcurrentbalanceis')}}
         <span class="warning--text">
             <animated-number value="15000" :formatValue="formatToPrice" />
         </span>
@@ -70,7 +70,7 @@ export default {
             });
         },
         async alertOutCome() {
-            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.auth_token)
+            let totalPayout = await this.$axios.$get('/api/me/totalPayout?apikey=' + this.$store.state.provider.authToken)
             // console.log(totalPayout)
             if (totalPayout.status == false) return;
             this.snackbar = true;

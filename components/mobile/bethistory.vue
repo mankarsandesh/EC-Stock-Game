@@ -78,7 +78,6 @@
     </v-layout>
 
     <v-data-table
-      :headers="head"
       hide-actions
       :items="userBetHistory"
       :pagination.sync="pagination"
@@ -87,6 +86,17 @@
       class="bg-colors"
       scope="col"
     >
+      <template v-slot:headers="headers">
+        <tr class="text-uppercase">
+          <th scope="col">{{$t('msg.BetId')}}</th>
+          <th scope="col">{{$t('msg.gameid')}}</th>
+          <th scope="col">{{$t('msg.Betdetail')}}</th>
+          <th scope="col">{{$t('msg.Time')}}</th>
+          <th scope="col">{{$t('msg.amount')}}</th>
+          <th scope="col">{{$t('msg.payout')}}</th>
+          <th scope="col">{{$t('msg.Bet Status')}}</th>
+        </tr>
+      </template>
       <template v-slot:items="item">
         <tr @click="clicked(item.item.betUUID)" class="selectRow">
           <td>{{ item.item.betUUID }}</td>
@@ -99,36 +109,44 @@
           <td>{{ item.item.betAmount | toCurrency }}</td>
           <td>{{ item.item.payout }}</td>
           <td v-if="item.item.betResult == 'win'" class="text-uppercase">
-            <span class="win">{{ item.item.betResult }}</span>
+            <span class="win">{{ $t('msg.win') }}</span>
           </td>
           <td v-if="item.item.betResult == 'lose'">
-            <span class="lose">{{ item.item.betResult }}</span>
+            <span class="lose">{{ $t('msg.lose') }}</span>
           </td>
           <td v-if="item.item.betResult == 'pending'">
-            <span class="pending">{{ item.item.betResult }}...</span>
+            <span class="pending">{{ $t('msg.pending') }}...</span>
           </td>
         </tr>
         <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
           <td colspan="2">
-            <span class="betDraw">BET DRAW :</span>
+            <span class="betDraw">{{$t('bethistory.betdraw')}} :</span>
             <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
           </td>
           <td colspan="2" class="allDigit">
-            First Digit
-            <span v-html="$options.filters.firstDigit(item.item.gameDraw)"></span>
-            Last Digit
-            <span v-html="$options.filters.lastDigit(item.item.gameDraw)"></span>
-            Both Digit
-            <span v-html="$options.filters.bothDigit(item.item.gameDraw)"></span>
-            Two Digit
-            <span v-html="$options.filters.twoDigit(item.item.gameDraw)"></span>
+            {{$t('gamemsg.firstdigit')}}
+            <span
+              v-html="$options.filters.firstDigit(item.item.gameDraw)"
+            ></span>
+            {{$t('gamemsg.lastdigit')}}
+            <span
+              v-html="$options.filters.lastDigit(item.item.gameDraw)"
+            ></span>
+            {{$t('gamemsg.bothdigit')}}
+            <span
+              v-html="$options.filters.bothDigit(item.item.gameDraw)"
+            ></span>
+            {{$t('gamemsg.twodigit')}}
+            <span
+              v-html="$options.filters.twoDigit(item.item.gameDraw)"
+            ></span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount == 0">
-            <span class="betDraw">Your Loosing Amount :</span>
+            <span class="betDraw">{{$t('bethistory.yourloosingamount')}} :</span>
             <span class="lossAmount">{{ item.item.betAmount }}</span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount != 0">
-            <span class="betDraw">Your Winning Amount :</span>
+            <span class="betDraw">{{$t('bethistory.yourwinningamount')}} :</span>
             <span class="winAmount">{{ item.item.rollingAmount }}</span>
           </td>
         </tr>
@@ -155,14 +173,14 @@
 
 <script>
 export default {
-  props: ["head", "userBetHistory"],
+  props: ["userBetHistory"],
   data() {
     return {
       dateTo: new Date().toISOString().substr(0, 10),
       dateFrom: new Date().toISOString().substr(0, 10),
       from: false,
       to: false,
-      items: ["day", "weeks", "months", "years", "all"],
+      items: ["Today","This Week","This Month"],
       itemss: "",
       itemspage: [5, 10, 25, 50, 100],
       itemspages: 5,

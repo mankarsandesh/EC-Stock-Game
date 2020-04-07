@@ -51,7 +51,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -78,15 +78,15 @@
     <!-- Row betting button2 -->
     <v-layout row>
       <span class="w12 buttonbtn">
-        <v-btn class="bg-btn-last btnHeight">
+        <v-btn class="bg-btn-last btnHeight betButtonGuide">
           <span class="btn-digit">{{ $t("gamemsg.lastdigits") }}</span>
         </v-btn>
       </span>
 
       <popper
         :disabled="checkFooterBet"
-        v-for="data in lastDigit"
-        :key="data.rule"
+        v-for="(data, index) in lastDigit"
+        :key="index"
         class="w12"
         trigger="click"
         :options="{
@@ -103,7 +103,11 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          :class="
+            index == 3
+              ? 'align_button4 betButtonGuide BetButtonGuideEven'
+              : 'align_button4 betButtonGuide'
+          "
           :id="'lastdigit-' + data.rule"
           @click="betButtonClick(data.ruleid)"
           slot="reference"
@@ -122,13 +126,17 @@
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4" id="last" @click="btnNumber('last')">
+        <v-btn
+          class="align_button4 betButtonGuide"
+          id="last"
+          @click="btnNumber('last')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -193,7 +201,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -265,7 +273,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -401,13 +409,14 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 import betModal from "~/components/modern/betModal";
 import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
+import gameRule from "../../data/gameRule";
 export default {
   props: {
     isFullscreen: {
@@ -430,224 +439,10 @@ export default {
       payout_18: payout._18,
       payout_99: payout._99,
       // games rules
-      firstDigit: [
-        {
-          ruleid: 1,
-          rule: "big",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 0
-        },
-        {
-          ruleid: 2,
-          rule: "small",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 1
-        },
-        {
-          ruleid: 3,
-          rule: "odd",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 2
-        },
-        {
-          ruleid: 4,
-          rule: "even",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 3
-        },
-        {
-          ruleid: 5,
-          rule: "high",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 4
-        },
-        {
-          ruleid: 6,
-          rule: "mid",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 5
-        },
-        {
-          ruleid: 7,
-          rule: "low",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 6
-        }
-      ],
-      lastDigit: [
-        {
-          ruleid: 18,
-          rule: "big",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 7
-        },
-        {
-          ruleid: 19,
-          rule: "small",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 8
-        },
-        {
-          ruleid: 20,
-          rule: "odd",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 9
-        },
-        {
-          ruleid: 21,
-          rule: "even",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 10
-        },
-        {
-          ruleid: 22,
-          rule: "high",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 11
-        },
-        {
-          ruleid: 23,
-          rule: "mid",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 12
-        },
-        {
-          ruleid: 24,
-          rule: "low",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 13
-        }
-      ],
-      bothDigit: [
-        {
-          ruleid: 142,
-          rule: "big",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 14
-        },
-        {
-          ruleid: 169,
-          rule: "tie",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 15
-        },
-        {
-          ruleid: 143,
-          rule: "small",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 16
-        },
-        {
-          ruleid: 144,
-          rule: "odd",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 17
-        },
-        {
-          ruleid: 145,
-          rule: "even",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 18
-        },
-        {
-          ruleid: 146,
-          rule: "high",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 19
-        },
-        {
-          ruleid: 147,
-          rule: "mid",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 20
-        },
-        {
-          ruleid: 148,
-          rule: "low",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 21
-        }
-      ],
-      twoDigit: [
-        {
-          ruleid: 35,
-          rule: "big",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 22
-        },
-        {
-          ruleid: 168,
-          rule: "tie",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 23
-        },
-        {
-          ruleid: 36,
-          rule: "small",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 24
-        },
-        {
-          ruleid: 37,
-          rule: "odd",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 25
-        },
-        {
-          ruleid: 38,
-          rule: "even",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 26
-        },
-        {
-          ruleid: 39,
-          rule: "high",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 27
-        },
-        {
-          ruleid: 40,
-          rule: "mid",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 28
-        },
-        {
-          ruleid: 71,
-          rule: "low",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 29
-        }
-      ]
+      firstDigit: gameRule.firstDigit,
+      lastDigit: gameRule.lastDigit,
+      bothDigit: gameRule.bothDigit,
+      twoDigit: gameRule.twoDigit
     };
   },
   components: {
@@ -664,10 +459,8 @@ export default {
       "getStockLoop",
       "checkFooterBet",
       "getFooterBetAmount",
-      "getMultiGameBet",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "getPayout"
     ]),
     stockID() {
       if (this.stockName == null) {
@@ -706,14 +499,15 @@ export default {
         }
         return (
           this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20  
         );
       }
     }
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
-    ...mapMutations(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
+    ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
     betButtonClick(ruleID) {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBet) {

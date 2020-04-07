@@ -32,14 +32,14 @@ Big Screen
     font-size: 18px;
   }
 
-  .stockname {
-    font-size: 22px;
+  .stockname {   
+    font-size: 20px;
     font-weight: 600;
     color: #4b65ff;
   }
 
   .gameid {
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
     font-weight: 500;
   }
@@ -56,24 +56,24 @@ Big Screen
   }
 
   .buttonbtn {
-    width: 100px;
+    width: 80px;
   }
-
   /* game Rule Category Button */
   .btnHeight {
+   
+    width: 80px;
     height: 80px;
-  }
 
+  }
   .align_button4 {
     box-shadow: none !important;
     border: 2px solid #e8e8e8;
     height: 85px;
   }
-
-
   .big-digit {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
+    /* color:#6e6d6d; */
   }
 
   .big-number {
@@ -138,14 +138,14 @@ Big Screen
     display: flex;
     justify-content: center;
     border-radius: 50%;
-    height: 47px;
-    width: 47px;
+    height: 45px;
+    width: 45px;
     padding: 10px !important;
     color: #ffffff !important;
     background-color: #4464ff !important;
     position: absolute;
-    left: 49%;
-    top: 46%;
+    left: 53%;
+    top: 45%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
@@ -185,14 +185,16 @@ Big Screen
     padding: 0px;
   }
 
-
+  .firstDigit span{color:#FFF;}
   .firstDigit {
+    color:#FFF;
     font-weight: bolder;
     border-radius: 10px;
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+    background: rgb(13,204,255);
+    background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
   }
 
   .lastDigit {
@@ -201,8 +203,9 @@ Big Screen
     font-weight: bolder;
     white-space: pre-line !important;
     height: 60px;
-    font-size: 12p14pxx;
-    background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+    font-size: 14px;
+    background: rgb(250,209,38);
+    background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
   }
 
   .bothDigit {
@@ -211,7 +214,8 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
+    background: rgb(182,53,156);
+    background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
   }
 
   .twoDigit {
@@ -220,7 +224,8 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+    background: rgb(1,233,189);
+    background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
   }
 
   .RoadMapTable tr td {
@@ -249,16 +254,15 @@ Big Screen
     margin-top: -10px;
   }
 
-  .menuItem {
-    /* border:1px solid red; */
+  .menuItem { 
     border-right: 1px solid #dddddd;
     height: 55px !important;
     padding: 5px 10px;
   }
 
   .toolbarMenu {
-    /* border:1px solid red; */
-    height: 55px;
+   background-color: #FFF !important;
+   height: 55px;
   }
 
   .menuItem span {
@@ -429,7 +433,8 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+    background: rgb(13,204,255);
+    background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
   }
 
   .lastDigit {
@@ -439,7 +444,8 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 12p14pxx;
-    background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+    background: rgb(250,209,38);
+    background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
   }
 
   .bothDigit {
@@ -448,7 +454,8 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
+    background: rgb(182,53,156);
+    background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
   }
 
   .twoDigit {
@@ -457,7 +464,8 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+    background: rgb(1,233,189);
+    background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
   }
 
   .RoadMapTable tr td {

@@ -10,7 +10,7 @@
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
+          <div class="date_picker_container" @click="startDateClick">
             <div class="title_date_picker">
               <span>from</span>
             </div>
@@ -25,13 +25,13 @@
             <v-date-picker
               v-if="isShowDateStart"
               v-model="startDate"
-              @input="isShowDateStart = false"
+              @input="startDateClick"
             ></v-date-picker>
           </div>
         </v-flex>
         <!-- select end date -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
+          <div class="date_picker_container" @click="endDateClick">
             <div class="title_date_picker">
               <span>to</span>
             </div>
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="endDateClick"></v-date-picker>
           </div>
         </v-flex>
         <!-- go button -->
@@ -126,7 +126,16 @@ export default {
   updated() {
     index = 0; // reset index
   },
-
+  methods: {
+    startDateClick() {
+      this.isShowDateStart = !this.isShowDateStart;
+      this.isShowDateEnd = false;
+    },
+    endDateClick() {
+      this.isShowDateEnd = !this.isShowDateEnd;
+      this.isShowDateStart = false;
+    }
+  },
   data() {
     return {
       colors: barColor,
