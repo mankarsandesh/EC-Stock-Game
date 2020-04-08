@@ -30,18 +30,12 @@
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
             <div class="filter">
-              <b>Filter</b>
-              <span class="rank">
-                Winning Rank
-              </span>
-              <span class="rate">
-                Winning Rate
-              </span>
-              <span class="follow">
-                Winning Followers
+              <span v-for="item in filterNames" :key="item">
+                <span class="rank filterSpan">
+                  {{ item.value }}
+                </span>
               </span>
             </div>
-
             <div class="bodyChat">
               <div class="msgUser follow">
                 <div class="messageChatView">
@@ -303,6 +297,12 @@ export default {
   },
   data() {
     return {
+      filterNames: [
+        { name: "", value: "Filter" },
+        { name: "rank", value: "Winning Rank" },
+        { name: "rate", value: "Winning Rate" },
+        { name: "follow", value: "Winning Followers" }
+      ],
       FolloworNot: "",
       FollowUserUUID: "",
       username: "",
@@ -565,7 +565,8 @@ export default {
 .filter {
   margin-top: 10px;
 }
-.filter span {
+
+.filter .filterSpan {
   font-weight: 600;
   cursor: pointer;
   border-radius: 4px;
