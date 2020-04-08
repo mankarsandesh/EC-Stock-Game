@@ -3,7 +3,7 @@
     trigger="click"
     :options="{
       placement: 'bottom-top',
-      modifiers: { offset: { offset: '65px' } },
+      modifiers: { offset: { offset: '65px' } }
     }"
   >
     <div class="popper">
@@ -65,7 +65,16 @@
                     <v-btn class="view">View</v-btn>
                   </div>
                   <div>
-                    <v-btn class="following" v-on:click="followUser()"
+                    <v-btn
+                      class="following"
+                      v-on:click="
+                        followUser(
+                          null,
+                          null,
+                          'ef60e64b-dc17-4ff1-9f22-a177c6f1c204',
+                          '0'
+                        )
+                      "
                       >Follow</v-btn
                     >
                   </div>
@@ -249,9 +258,13 @@
         </div>
 
         <v-dialog v-model="dialog" width="500" class="followDialog">
-          <followBet/>
+          <followBet
+            :username="this.username"
+            :userImage="this.userImage"
+            :FollowerUserUUID="this.FollowUserUUID"
+            :isFollowing="this.FolloworNot"
+          />
         </v-dialog>
-
         <!-- for game chanel  -->
         <chanelChat
           v-show="tabActiveName === 'chanel'"
@@ -265,7 +278,6 @@
     </v-btn>
   </popper>
 </template>
-
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
@@ -274,7 +286,7 @@ import io from "socket.io-client";
 import moment from "moment";
 import config from "../config/config.global";
 import chanelChat from "./chanelChat";
-import followBet from '../components/modern/follow/followBet';
+import followBet from "../components/modern/follow/followBet";
 let name = "btc5";
 export default {
   components: {
@@ -286,12 +298,16 @@ export default {
   props: {
     gameUUID: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
-    return {     
-      dialog: false,     
+    return {
+      FolloworNot: "",
+      FollowUserUUID: "",
+      username: "",
+      userImage: "",
+      dialog: false,
       profilePic: "/no-profile-pic.jpg",
       selectedFruits: [],
       currentRoute: "",
@@ -299,13 +315,13 @@ export default {
       pageActiveChanel: [
         "modern-desktop-id",
         "modern-multigame-id",
-        "modern-fullscreen-id",
+        "modern-fullscreen-id"
       ],
       tabActiveName: "world",
       conversationWorld: [],
       connectClient: [],
       totoalUserCount: 0,
-      userId: 0,
+      userId: 0
     };
   },
   computed: {
@@ -318,7 +334,7 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getStockType",
-      "getStockGameId",
+      "getStockGameId"
     ]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
@@ -326,21 +342,21 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   },
   mounted() {
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
-        eventName: "messageSend",
+        eventName: "messageSend"
       },
       ({ data }) => {
-        data.data.forEach((element) => {
+        data.data.forEach(element => {
           this.getMessagesGame.push({
             name: element.userName,
             userId: element.userUUID,
             message: element.message,
-            date: element.date,
+            date: element.date
           });
         });
       }
@@ -349,17 +365,17 @@ export default {
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
-        eventName: "messageSend",
+        eventName: "messageSend"
       },
       ({ data }) => {
         console.log("world Listing");
         console.log(data);
-        data.data.forEach((element) => {
+        data.data.forEach(element => {
           this.conversationWorld.push({
             name: element.userName,
             userUUID: element.getUserUUID,
             message: element.message,
-            date: element.date,
+            date: element.date
           });
         });
         this.scrollDown();
@@ -374,8 +390,18 @@ export default {
     //reset chat messgae
     this.messageInput = "";
   },
-  methods: {    
-    followUser() {
+  methods: {
+    // fetch default image or from server image
+    imgProfile(userImage) {
+      return userImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/` + userImage;
+    },
+    followUser(username, userImage, userUUID, method) {
+      this.username = username;
+      this.FollowUserUUID = userUUID;
+      this.FolloworNot = method;
+      this.userImage = this.imgProfile(userImage);
       this.dialog = true;
     },
     toggle() {
@@ -392,7 +418,7 @@ export default {
         .stop()
         .animate(
           {
-            scrollTop: $(".bodyChat")[0].scrollHeight,
+            scrollTop: $(".bodyChat")[0].scrollHeight
           },
           1000
         );
@@ -414,10 +440,10 @@ export default {
               userUUID: this.getUserUUID,
               chatType: 2,
               message: this.messageInput,
-              version: config.version,
+              version: config.version
             },
             {
-              headers: config.header,
+              headers: config.header
             }
           );
           console.log(res);
@@ -442,10 +468,10 @@ export default {
               gameUUID: this.gameUUID,
               chatType: 1,
               message: this.messageInput,
-              version: config.version,
+              version: config.version
             },
             {
-              headers: config.header,
+              headers: config.header
             }
           );
           if (res.status) {
@@ -456,8 +482,8 @@ export default {
         this.sendMsgChanel();
         console.log(ex.message);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

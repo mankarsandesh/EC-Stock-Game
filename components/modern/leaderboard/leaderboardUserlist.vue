@@ -111,17 +111,16 @@
         </div>
       </v-flex>
     </v-flex>
-    
+
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
         :username="this.username"
         :userImage="this.userImage"
-        :userUUID="this.FollowUserUUID"
+        :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
       />
     </v-dialog>
-
   </div>
 </template>
 <script>
@@ -139,8 +138,7 @@ export default {
       sortbyName: "Weekly Ranking",
       loadingImage: false,
       dateFrom: "",
-      dateTo: "",   
-      FollowName: "Follow",
+      dateTo: "",
       selectRate: false,
       selectAmount: true,
       topPlayerData: [],
@@ -148,10 +146,6 @@ export default {
       FollowMethod: "",
       FollowUserUUID: "",
       method: "",
-      UserfollowType: "",
-      amountValue: 100,
-      rateValue: 10,
-      BetValue: "",
       username: "",
       userImage: "",
       dialog: false
@@ -178,18 +172,7 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
-    changeAmount(value) {
-      if (value == "stopWin" || value == "stopLoss") {
-        this.unfollowValue = "100";
-        this.unfollowSign = "USD";
-      } else if (value == "stopTime") {
-        this.unfollowValue = "1";
-        this.unfollowSign = "Days";
-      } else {
-        this.unfollowValue = "3";
-        this.unfollowSign = "Bets";
-      }
-    },
+    //sorting weekly and Monthly
     sortingBy(sort) {
       if (sort == "monthly") {
         const today = new Date();
@@ -223,17 +206,11 @@ export default {
         this.leaderBoard();
       }
     },
+    // fetch default image or from server image
     imgProfile(userImage) {
       return userImage === null
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/` + userImage;
-    },
-    onlyNumber($event) {
-      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
-      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
-        // 46 is dot
-        $event.preventDefault();
-      }
     },
     // Unfollow User
     async unfollowUser(FollowUserUUID) {
@@ -257,17 +234,8 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },    
-    changeAmountRate() {
-      this.UserfollowType = this.selectedFollow;
-      if (this.selectedFollow == "Amount") {
-        this.selectAmount = true;
-        this.selectRate = false;
-      } else {
-        this.selectAmount = false;
-        this.selectRate = true;
-      }
     },
+    // Open Dialog box When User Click on Follow Button
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
@@ -275,6 +243,7 @@ export default {
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
     },
+    // fetch leaderboard Top Player
     async leaderBoard() {
       this.loadingImage = true;
       try {
