@@ -43,7 +43,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import chips from '../../data/chips';
+import chips from "../../data/chips";
 export default {
   data() {
     return {
@@ -53,7 +53,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setFooterBetAmount", "clearDataMultiGameBet", "sendBetting"]),
+    ...mapActions([
+      "setFooterBetAmount",
+      "clearDataMultiGameBet",
+      "sendBetting"
+    ]),
     formatToPrice(value) {
       return `$ ${Number(value)
         .toFixed(2)

@@ -6,7 +6,7 @@
     <v-layout>
       <!-- bet result -->
       <v-flex xs12>
-        <div class="table-responsive">          
+        <div class="table-responsive">
           <table class="table">
             <tr>
               <th>{{ $t("msg.Stock Name") }}</th>
@@ -47,7 +47,7 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-      }) //get 2 data from vuex first, in the computed
+    }) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.stockResult();
@@ -73,7 +73,7 @@ export default {
           {
             headers: config.header
           }
-        );        
+        );
         this.getStockResult = data.data;
       } catch (error) {
         console.log(data);

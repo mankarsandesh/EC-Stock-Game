@@ -20,7 +20,7 @@
         trigger="click"
         :options="{
           placement: 'bottom-end',
-          modifiers: { offset: { offset: '25px' } },
+          modifiers: { offset: { offset: '25px' } }
         }"
       >
         <div class="popper">
@@ -43,7 +43,7 @@
             :amount="
               getAmountMultiGameBet({
                 gameUUID: getGameUUIDByStockName(stockID),
-                ruleID: data.ruleid,
+                ruleID: data.ruleid
               })
             "
           ></showChipAmount>
@@ -63,7 +63,7 @@
             :amount="
               getAmountBetSpecificNumber({
                 gameUUID: getGameUUIDByStockName(stockID),
-                ruleID: 'firstdigit',
+                ruleID: 'firstdigit'
               })
             "
           ></showChipAmount>
@@ -91,7 +91,7 @@
         trigger="click"
         :options="{
           placement: 'bottom-end',
-          modifiers: { offset: { offset: '25px' } },
+          modifiers: { offset: { offset: '25px' } }
         }"
       >
         <div class="popper">
@@ -117,7 +117,7 @@
             :amount="
               getAmountMultiGameBet({
                 gameUUID: getGameUUIDByStockName(stockID),
-                ruleID: data.ruleid,
+                ruleID: data.ruleid
               })
             "
           ></showChipAmount>
@@ -142,7 +142,7 @@
             :amount="
               getAmountBetSpecificNumber({
                 gameUUID: getGameUUIDByStockName(stockID),
-                ruleID: 'lastdigit',
+                ruleID: 'lastdigit'
               })
             "
           ></showChipAmount>
@@ -170,7 +170,7 @@
         trigger="click"
         :options="{
           placement: 'bottom-end',
-          modifiers: { offset: { offset: '25px' } },
+          modifiers: { offset: { offset: '25px' } }
         }"
       >
         <div class="popper">
@@ -192,7 +192,7 @@
             :amount="
               getAmountMultiGameBet({
                 gameUUID: getGameUUIDByStockName(stockID),
-                ruleID: data.ruleid,
+                ruleID: data.ruleid
               })
             "
           ></showChipAmount>
@@ -213,7 +213,7 @@
             :amount="
               getAmountBetSpecificNumber({
                 gameUUID: getGameUUIDByStockName(stockID),
-                ruleID: 'bothdigit',
+                ruleID: 'bothdigit'
               })
             "
           ></showChipAmount>
@@ -242,7 +242,7 @@
         trigger="click"
         :options="{
           placement: 'bottom-end',
-          modifiers: { offset: { offset: '25px' } },
+          modifiers: { offset: { offset: '25px' } }
         }"
       >
         <div class="popper">
@@ -264,7 +264,7 @@
             :amount="
               getAmountMultiGameBet({
                 gameUUID: getGameUUIDByStockName(stockID),
-                ruleID: data.ruleid,
+                ruleID: data.ruleid
               })
             "
           ></showChipAmount>
@@ -285,7 +285,7 @@
             :amount="
               getAmountBetSpecificNumber({
                 gameUUID: getGameUUIDByStockName(stockID),
-                ruleID: 'twodigit',
+                ruleID: 'twodigit'
               })
             "
           ></showChipAmount>
@@ -307,7 +307,7 @@
         trigger="click"
         :options="{
           placement: 'bottom-end',
-          modifiers: { offset: { offset: '25px' } },
+          modifiers: { offset: { offset: '25px' } }
         }"
       >
         <div class="popper">
@@ -333,7 +333,7 @@
         trigger="click"
         :options="{
           placement: 'bottom-end',
-          modifiers: { offset: { offset: '25px' } },
+          modifiers: { offset: { offset: '25px' } }
         }"
       >
         <div class="popper">
@@ -359,7 +359,7 @@
         trigger="click"
         :options="{
           placement: 'bottom-end',
-          modifiers: { offset: { offset: '25px' } },
+          modifiers: { offset: { offset: '25px' } }
         }"
       >
         <div class="popper">
@@ -385,7 +385,7 @@
         trigger="click"
         :options="{
           placement: 'bottom-end',
-          modifiers: { offset: { offset: '25px' } },
+          modifiers: { offset: { offset: '25px' } }
         }"
       >
         <div class="popper">
@@ -421,12 +421,12 @@ export default {
   props: {
     isFullscreen: {
       type: Boolean,
-      default: false,
+      default: false
     },
     //  for multi game
     stockName: {
-      type: String,
-    },
+      type: String
+    }
   },
   data() {
     return {
@@ -442,7 +442,7 @@ export default {
       firstDigit: gameRule.firstDigit,
       lastDigit: gameRule.lastDigit,
       bothDigit: gameRule.bothDigit,
-      twoDigit: gameRule.twoDigit,
+      twoDigit: gameRule.twoDigit
     };
   },
   components: {
@@ -450,7 +450,7 @@ export default {
     popper,
     // this component display the modal,the modal let users choose amount they want to bet
     betModal,
-    showChipAmount,
+    showChipAmount
   },
   computed: {
     ...mapGetters([
@@ -460,7 +460,7 @@ export default {
       "checkFooterBet",
       "getFooterBetAmount",
       "getAmountMultiGameBet",
-      "getAmountBetSpecificNumber",
+      "getAmountBetSpecificNumber"
     ]),
     stockID() {
       if (this.stockName == null) {
@@ -502,7 +502,7 @@ export default {
           this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
         );
       }
-    },
+    }
   },
   mounted() {},
   methods: {
@@ -513,7 +513,7 @@ export default {
         let betData = {
           gameUUID: this.getGameUUIDByStockName(this.stockID),
           ruleID: ruleID,
-          betAmount: this.getFooterBetAmount,
+          betAmount: this.getFooterBetAmount
         };
         this.pushDataMultiGameBet(betData);
         // console.warn(this.getMultiGameBet);
@@ -522,8 +522,8 @@ export default {
     // the btnNumber methods use to switch specific number first,last,both and two
     btnNumber(value) {
       value == this.number ? (this.number = null) : (this.number = value);
-    },
-  },
+    }
+  }
 };
 </script>
 

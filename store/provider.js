@@ -13,7 +13,7 @@ const state = () => ({
   coinsModern: [], // Store coins modern
   isShowTutorial: false,
   isWindowsHasScroll: false,
-  tutorialStepNumber: 0, // Store tutorial step number
+  tutorialStepNumber: 0 // Store tutorial step number
 });
 
 const mutations = {
@@ -59,7 +59,7 @@ const mutations = {
   },
   SET_TUTORIAL_STEP_NUMBER(state, payload) {
     state.tutorialStepNumber = payload;
-  },
+  }
 };
 
 const actions = {
@@ -71,10 +71,10 @@ const actions = {
         {
           portalProviderUUID: context.state.portalProviderUUID,
           userUUID: context.state.userUUID,
-          version: config.version,
+          version: config.version
         },
         {
-          headers: config.header,
+          headers: config.header
         }
       );
       if (res.code === 200) {
@@ -131,7 +131,7 @@ const actions = {
   // Set tutorial's step number
   setTutorialStepNumber({ commit }, payload) {
     commit("SET_TUTORIAL_STEP_NUMBER", payload);
-  },
+  }
 };
 
 const getters = {
@@ -193,12 +193,12 @@ const getters = {
   // Get Tutorial step number
   getTutorialStepNumber(state) {
     return state.tutorialStepNumber;
-  },
+  }
 };
 
 export default {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };

@@ -9,10 +9,14 @@
               class="text-white"
               color="#003e70"
               @click="changeChartType('firstDigit')"
-            >{{$t('gamemsg.firstdigit')}}</v-btn>
+              >{{ $t("gamemsg.firstdigit") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="text-xs-center triangle-right" v-show="trendType=='firstDigit'"></v-flex>
+          <v-flex
+            class="text-xs-center triangle-right"
+            v-show="trendType == 'firstDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -21,10 +25,14 @@
               class="text-white"
               color="#003e70"
               @click="changeChartType('lastDigit')"
-            >{{$t('gamemsg.lastdigit')}}</v-btn>
+              >{{ $t("gamemsg.lastdigit") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="trendType=='lastDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="trendType == 'lastDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -33,11 +41,15 @@
               class="text-white"
               color="#003e70"
               @click="changeChartType('bothDigit')"
-            >{{$t('gamemsg.bothdigit')}}</v-btn>
+              >{{ $t("gamemsg.bothdigit") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
 
-          <v-flex class="triangle-right" v-show="trendType=='bothDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="trendType == 'bothDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -46,10 +58,14 @@
               class="text-white"
               color="#003e70"
               @click="changeChartType('twoDigit')"
-            >{{$t('gamemsg.twodigit')}}</v-btn>
+              >{{ $t("gamemsg.twodigit") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="trendType=='twoDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="trendType == 'twoDigit'"
+          ></v-flex>
         </v-layout>
       </v-flex>
       <v-flex xs10>
@@ -57,7 +73,7 @@
           <v-flex xs6 pb-5 pr-3>
             <div
               class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-              v-show="which_one=='B/S' || which_one==true "
+              v-show="which_one == 'B/S' || which_one == true"
             >
               <div v-show="isFullScreen">
                 <span class="countBigBoth text-white"></span>
@@ -65,8 +81,12 @@
               </div>
               <div class="my-coltabledivlast">
                 <table class="table-responsive" ref="tablebsTwo">
-                  <tr v-for="tr in rowTable">
-                    <td v-for="td in 500" style="border:1px solid #000000;"></td>
+                  <tr v-for="tr in rowTable" :key="tr">
+                    <td
+                      v-for="td in 500"
+                      :key="td"
+                      style="border:1px solid #000000;"
+                    ></td>
                   </tr>
                 </table>
               </div>
@@ -76,7 +96,7 @@
           <v-flex xs6 pl-3 pb-5>
             <div
               class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-              v-show="which_one=='O/E' || which_one==true "
+              v-show="which_one == 'O/E' || which_one == true"
             >
               <div v-show="isFullScreen">
                 <span class="countOddBoth text-white"></span>
@@ -84,8 +104,11 @@
               </div>
               <div class="my-coltabledivlast">
                 <table class="table-responsive" ref="tableOETwo">
-                  <tr v-for="tr in rowTable">
-                    <td v-for="td in 300" style="border:1px solid #000000;"></td>
+                  <tr v-for="(tr, index) in rowTable" :key="index">
+                    <td
+                      v-for="(td, i) in 300" :key="i"
+                      style="border:1px solid #000000;"
+                    ></td>
                   </tr>
                 </table>
               </div>
@@ -94,7 +117,7 @@
           <v-flex xs6 pb-5 pr-3>
             <div
               class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-              v-show="which_one=='U/L' || which_one==true "
+              v-show="which_one == 'U/L' || which_one == true"
             >
               <div v-show="isFullScreen">
                 <span class="countUpperBoth text-white"></span>
@@ -104,7 +127,10 @@
               <div class="my-coltabledivlast">
                 <table class="table-responsive" ref="tablebUMLTwo">
                   <tr v-for="tr in rowTable">
-                    <td v-for="td in 900" style="border:1px solid #000000;"></td>
+                    <td
+                      v-for="td in 900"
+                      style="border:1px solid #000000;"
+                    ></td>
                   </tr>
                 </table>
               </div>
@@ -113,7 +139,7 @@
           <v-flex xs6 pl-3 pb-5>
             <div
               class="col-12 col-md-12 col-lg-6 col-sm-12 full-screen col-mobile"
-              v-show="which_one=='NUM' || which_one==true "
+              v-show="which_one == 'NUM' || which_one == true"
             >
               <div v-show="isFullScreen" ref="sortNumber">
                 <span class="text-white"></span>
@@ -126,7 +152,10 @@
               <div class="my-coltabledivlast">
                 <table class="table-responsive" ref="tableNumberTwo">
                   <tr v-for="tr in rowTable">
-                    <td v-for="td in 100" style="border:1px solid #000000;"></td>
+                    <td
+                      v-for="td in 100"
+                      style="border:1px solid #000000;"
+                    ></td>
                   </tr>
                 </table>
               </div>
@@ -969,9 +998,9 @@ export default {
               // console.log(sortable);
               for (let k = 0; k < 6; k++) {
                 // console.log(
-                  (this.$refs.sortNumber.children[k].textContent = `${
-                    sortable[k][0]
-                  } = ${sortable[k][1]}`)
+                this.$refs.sortNumber.children[
+                  k
+                ].textContent = `${sortable[k][0]} = ${sortable[k][1]}`;
                 // );
               }
             }
@@ -1019,7 +1048,7 @@ export default {
   }
 };
 </script>
- <style scoped>
+<style scoped>
 .line-through {
   background: transparent url("http://davidrhysthomas.co.uk/linked/strike.png")
     0 50% repeat-x;
