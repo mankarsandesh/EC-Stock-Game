@@ -311,8 +311,7 @@
                 <v-flex lg3>
                   <v-btn
                     color="buttonGreensmall"
-                    text
-                    v-on:click="followThisUser()"
+                    text                   
                     >Follow</v-btn
                   >
                 </v-flex>
