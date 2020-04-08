@@ -112,16 +112,9 @@
       </v-flex>
     </v-flex>
 
-    <v-dialog
-      v-model="dialog"
-      width="600"
-      style="border:radius:20px; !important"
-    >
+    <v-dialog v-model="dialog" width="600" class="followDialog">
       <v-card class="followup">
-        <h3
-          class="title font-weight-bold"
-          style="text-align:center;color:#0b2a68;"
-        >
+        <h3>
           FOLLOW BET
         </h3>
 
@@ -139,6 +132,8 @@
             {{ errorMessage }}
           </p>
         </v-flex>
+        <h4 class="subtitle-1 text-uppercase pt-2">Follow By</h4>
+        <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
             <v-select
@@ -169,14 +164,35 @@
               append-icon="money"
             ></v-text-field>
           </v-flex>
-          <v-flex lg3 pl-3 pb-3>
-            <v-btn
-              color="buttonGreensmall"
-              text
-              v-on:click="followThisUser()"
-              >{{ FollowName }}</v-btn
+        </v-card-actions>
+
+        <h4 class="subtitle-1 text-uppercase pt-2">Auto Stop Follow</h4>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-radio-group v-model="autoStop" :mandatory="false">
+            <v-radio
+              v-for="n in autoStopFollow"
+              :key="n.id"
+              :label="`${n.name}`"
+              :value="n.value"
+              v-on:change="changeAmount(n.value)"
+            ></v-radio>
+
+            <v-text-field
+              style="width: 200px;"
+              solo
+              label="100"
+              @keypress="onlyNumber"
+              v-model="unfollowValue"
             >
-          </v-flex>
+              <span slot="append" color="red"> {{ unfollowSign }}</span>
+            </v-text-field>
+            <v-flex lg3>
+              <v-btn color="buttonGreensmall" text v-on:click="followThisUser()"
+                >Follow</v-btn
+              >
+            </v-flex>
+          </v-radio-group>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -217,6 +233,15 @@ export default {
       followby: [
         { id: 1, name: "Follow by Amount", value: "Amount" },
         { id: 2, name: "Follow by Rate", value: "Rate" }
+      ],
+      unfollowSign: "USD",
+      unfollowValue: "100",
+      autoStop: "stopWin",
+      autoStopFollow: [
+        { id: 1, name: "Stop by Winning", value: "stopWin" },
+        { id: 2, name: "Stop by Losing", value: "stopLoss" },
+        { id: 3, name: "Stop by Timing", value: "stopTime" },
+        { id: 4, name: "Stop by Bets", value: "stopBets" }
       ]
     };
     props: ["linkItem"];
@@ -241,6 +266,18 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
+    changeAmount(value) {
+      if (value == "stopWin" || value == "stopLoss") {
+        this.unfollowValue = "100";
+        this.unfollowSign = "USD";
+      } else if (value == "stopTime") {
+        this.unfollowValue = "1";
+        this.unfollowSign = "Days";
+      } else {
+        this.unfollowValue = "3";
+        this.unfollowSign = "Bets";
+      }
+    },
     sortingBy(sort) {
       if (sort == "monthly") {
         const today = new Date();
@@ -252,7 +289,7 @@ export default {
           .toISOString()
           .substr(0, 10);
         this.dateFrom = monthly;
-        this.dateTo = today.toISOString().substring(0, 10);       
+        this.dateTo = today.toISOString().substring(0, 10);
         this.sortbyName = "Monthly Ranking";
         this.isActiveMonth = true;
         this.isActiveWeek = false;
@@ -378,7 +415,7 @@ export default {
           window.setTimeout(function() {
             location.reload();
           }, 3000);
-        } 
+        }
       } catch (error) {
         console.log(error);
       }
@@ -409,7 +446,7 @@ export default {
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo,
           version: config.version
-        };       
+        };
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
           LeaderBoardData,
@@ -427,6 +464,11 @@ export default {
 };
 </script>
 <style scoped>
+.followDialog {
+  width: 600px;
+  border-radius: 10px;
+  padding: 10px;
+}
 .successful {
   width: 10%;
   border: 1px solid;
@@ -439,6 +481,10 @@ export default {
 .followup {
   padding: 10px;
   border-radius: 20px;
+}
+.followup h3{
+  text-align: center;
+  color:#0b2968;
 }
 .ranking span:hover {
   color: green;
