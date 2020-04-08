@@ -34,7 +34,7 @@
         </div>
         <v-btn
           class="align_button4"
-          :id="'firstdigit-' + data.rule"
+          :id="stockID + 'firstdigit-' + data.rule"
           slot="reference"
           @click="betButtonClick(data.ruleid)"
         >
@@ -108,7 +108,7 @@
               ? 'align_button4 betButtonGuide BetButtonGuideEven'
               : 'align_button4 betButtonGuide'
           "
-          :id="'lastdigit-' + data.rule"
+          :id="stockID + 'lastdigit-' + data.rule"
           @click="betButtonClick(data.ruleid)"
           slot="reference"
         >
@@ -183,7 +183,7 @@
         </div>
         <v-btn
           class="align_button4"
-          :id="'bothdigit-' + data.rule"
+          :id="stockID + 'bothdigit-' + data.rule"
           @click="betButtonClick(data.ruleid)"
           slot="reference"
         >
@@ -255,7 +255,7 @@
         </div>
         <v-btn
           class="align_button4"
-          :id="'twodigit-' + data.rule"
+          :id="stockID + 'twodigit-' + data.rule"
           @click="betButtonClick(data.ruleid)"
           slot="reference"
         >

@@ -125,24 +125,28 @@ export default {
       const last = parseInt(lastDraw.slice(1, 2));
       const twoDigit = first + last;
       result.rule_data.map((items, index) => {
-        if ($("#" + this.betId).hasClass(items.type)) {
+        if ($("#" + this.stockName + this.betId).hasClass(items.type)) {
           items.rules.map((item, index) => {
-            if ($("#" + this.betId).hasClass(item.name)) {
+            if ($("#" + this.stockName + this.betId).hasClass(item.name)) {
               if (items.type === "firstdigit") {
                 const result = item.rule.includes(first);
                 if (result) {
                   console.log("You Win :" + item.name + ":" + first);
-                  $("#" + this.betId).addClass(
+                  $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-                    $("#" + this.betId).removeClass(
+                    $("#" + this.stockName + this.betId).removeClass(
+                      this.betId.split("-")[0]
+                    );
+                    $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(
+                    this.betId.split("-")[0]
+                  );
                   console.log("====You====lose====" + item.name + " ====");
                 }
               }
@@ -156,16 +160,16 @@ export default {
     //           }
     // clearRoadMap(val) {
     //   if (!val) {
-    //     $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
+    //     $("#" + this.stockName + this.betId).addClass(this.betId.split("-")[0] + "-animation");
     //     setTimeout(() => {
     //       console.log("wait for 5 second");
-    //       $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-    //       $("#" + this.betId).removeClass(
+    //       $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+    //       $("#" + this.stockName + this.betId).removeClass(
     //         this.betId.split("-")[0] + "-animation"
     //       );
     //     }, 5000);
     //   }
-    //   // $("#" + this.betId).removeClass("bet-animation");
+    //   // $("#" + this.stockName + this.betId).removeClass("bet-animation");
     // }
   },
   created() {
@@ -243,7 +247,7 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
-      $("#" + this.betId).addClass(
+      $("#" + this.stockName + this.betId).addClass(
         this.betId.split("-")[0] + " " + this.betId.split("-")[1]
       );
     },
