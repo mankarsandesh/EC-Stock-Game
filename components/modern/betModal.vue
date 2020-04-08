@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-            betId.split("-")[1] >= 0
-            ? $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            betId.split("-")[1]
-            : $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            $t("gamemsg." + betId.split("-")[1])
+              betId.split("-")[1] >= 0
+                ? $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  betId.split("-")[1]
+                : $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  $t("gamemsg." + betId.split("-")[1])
             }}
           </span>
         </h3>
@@ -31,7 +31,12 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -52,7 +57,13 @@
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
           <v-flex style="align-self:center">
-            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -69,11 +80,10 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-        >{{ $t("msg.confirm") }}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn
+        >
         <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{
-          $t("msg.cancel")
-          }}
+          {{ $t("msg.cancel") }}
         </v-btn>
       </v-flex>
     </v-layout>
@@ -115,24 +125,28 @@ export default {
       const last = parseInt(lastDraw.slice(1, 2));
       const twoDigit = first + last;
       result.rule_data.map((items, index) => {
-        if ($("#" + this.betId).hasClass(items.type)) {
+        if ($("#" + this.stockName + this.betId).hasClass(items.type)) {
           items.rules.map((item, index) => {
-            if ($("#" + this.betId).hasClass(item.name)) {
+            if ($("#" + this.stockName + this.betId).hasClass(item.name)) {
               if (items.type === "firstdigit") {
                 const result = item.rule.includes(first);
                 if (result) {
                   console.log("You Win :" + item.name + ":" + first);
-                  $("#" + this.betId).addClass(
+                  $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-                    $("#" + this.betId).removeClass(
+                    $("#" + this.stockName + this.betId).removeClass(
+                      this.betId.split("-")[0]
+                    );
+                    $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(
+                    this.betId.split("-")[0]
+                  );
                   console.log("====You====lose====" + item.name + " ====");
                 }
               }
@@ -146,16 +160,16 @@ export default {
     //           }
     // clearRoadMap(val) {
     //   if (!val) {
-    //     $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
+    //     $("#" + this.stockName + this.betId).addClass(this.betId.split("-")[0] + "-animation");
     //     setTimeout(() => {
     //       console.log("wait for 5 second");
-    //       $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-    //       $("#" + this.betId).removeClass(
+    //       $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+    //       $("#" + this.stockName + this.betId).removeClass(
     //         this.betId.split("-")[0] + "-animation"
     //       );
     //     }, 5000);
     //   }
-    //   // $("#" + this.betId).removeClass("bet-animation");
+    //   // $("#" + this.stockName + this.betId).removeClass("bet-animation");
     // }
   },
   created() {
@@ -233,7 +247,7 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
-      $("#" + this.betId).addClass(
+      $("#" + this.stockName + this.betId).addClass(
         this.betId.split("-")[0] + " " + this.betId.split("-")[1]
       );
     },
