@@ -22,7 +22,7 @@ export default {
   // },
   components: {
     maintenance
-  },
+  }
   // data() {
   //   return {
   //     pageNotFound: "Sorry, we're down for scheduled maintenance",

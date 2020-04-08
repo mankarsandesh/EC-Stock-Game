@@ -19,18 +19,18 @@ export default {
   layout: "desktopModern",
   components: {
     currentBet,
-    breadcrumbs,
+    breadcrumbs
   },
   data() {
     return {
-      currentBets: [],
+      currentBets: []
     };
   },
   computed: {
     ...mapState({
-      portalProviderUUID: (state) => state.provider.portalProviderUUID,
-      userUUID: (state) => state.provider.userUUID,
-    }), //get 2 data from vuex first, in the computed
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+    }) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.fetch();
@@ -43,10 +43,10 @@ export default {
           userUUID: this.userUUID,
           version: config.version,
           betResult: [-1],
-          offset: "0",
+          offset: "0"
         };
         const res = await this.$axios.post(config.getAllBets.url, userData, {
-          headers: config.header,
+          headers: config.header
         });
         console.log(res);
         if (res.data.message === "success") {
@@ -58,7 +58,7 @@ export default {
         this.fetch();
         console.error(ex.message);
       }
-    },
-  },
+    }
+  }
 };
 </script>

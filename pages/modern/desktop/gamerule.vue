@@ -2,15 +2,15 @@
   <div xs2>
     <breadcrumbs
       :title="$t('breadcrumbs.rule')"
-      linkItem2="announcement"     
+      linkItem2="announcement"
       :titlebtn2="$t('breadcrumbs.announcement')"
     />
-    <v-container>      
+    <v-container>
       <v-layout row wrap>
         <v-flex xs12 mt-3>
           <rules />
         </v-flex>
-      </v-layout>     
+      </v-layout>
     </v-container>
   </div>
 </template>

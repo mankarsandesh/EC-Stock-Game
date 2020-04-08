@@ -70,22 +70,22 @@
                     <span
                       v-if="
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .stockOpenOrClosed === 'Closed!'
+                          getTimerByStockName($route.params.id)
+                            .stockOpenOrClosed === 'Closed!'
                       "
                       class="text-black"
                     >
                       {{
                         getTimerByStockName($route.params.id) &&
-                        "close" | betclosein(getStockLoop($route.params.id))
+                          "close" | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                     <span v-else class="text-black">
                       {{
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -99,9 +99,9 @@
                     <span class="text-black">
                       {{
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | lotterydraw(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | lotterydraw(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -229,7 +229,7 @@ export default {
     onlyrules,
     stockSelect,
     leaderboardUserlist,
-    lotteryDraw,
+    lotteryDraw
   },
   data() {
     return {
@@ -243,26 +243,26 @@ export default {
       fabActions: [
         {
           name: "cache",
-          icon: "cached",
-        },
+          icon: "cached"
+        }
       ],
       items: [
         {
-          title: "Click Me",
+          title: "Click Me"
         },
         {
-          title: "Click Me",
+          title: "Click Me"
         },
         {
-          title: "Click Me",
+          title: "Click Me"
         },
         {
-          title: "Click Me 2",
-        },
+          title: "Click Me 2"
+        }
       ],
       trendTypes: ["firstDigit"],
       isloading: false,
-      isStep: 0,
+      isStep: 0
     };
   },
   created() {
@@ -290,7 +290,7 @@ export default {
         channelName: `roadMap.${this.getStockUUIDByStockName(
           this.$route.params.id
         )}.${this.getPortalProviderUUID}`,
-        eventName: "roadMap",
+        eventName: "roadMap"
       },
       ({ data }) => {
         this.setLiveRoadMap(data.data.roadMap[0]);
@@ -320,7 +320,7 @@ export default {
 
       console.log("This is the first  draw :" + first);
       console.log("This is the  last draw :" + last);
-    },
+    }
   },
   methods: {
     ...mapActions([
@@ -330,7 +330,7 @@ export default {
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
-      "setIsLoadingStockGame",
+      "setIsLoadingStockGame"
     ]),
     setAfterFullScreenClosePage() {
       localStorage.setItem("fullscreenclosed", "desktop");
@@ -348,7 +348,7 @@ export default {
           config.getStock.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version,
+            version: config.version
           },
           { headers: config.header }
         );
@@ -388,7 +388,7 @@ export default {
           clearInterval(stepGo);
         }
       }, 3000);
-    },
+    }
   },
   computed: {
     vueVersion() {
@@ -403,9 +403,9 @@ export default {
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "getStockLoop",
-    ]),
-  },
+      "getStockLoop"
+    ])
+  }
 };
 </script>
 

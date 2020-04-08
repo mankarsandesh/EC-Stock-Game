@@ -3,4 +3,3 @@
     <nuxt />
   </v-content>
 </template>
-

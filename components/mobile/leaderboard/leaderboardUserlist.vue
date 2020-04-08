@@ -20,20 +20,22 @@
           <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
         </th>
         <th>
-          <h5 class="header">{{$t('leaderboard.winningrate')}}</h5>
-          <h6 class="green--text titleText">{{ Math.round(data.winRate, 1) }} %</h6>
-        </th>
-        <th>
-          <h5 class="header">{{$t('leaderboard.bets')}}</h5>
-          <h6 style="color:#eb0b6e;" class="titleText">
-            {{
-            data.totalWinBets
-            }}
+          <h5 class="header">{{ $t("leaderboard.winningrate") }}</h5>
+          <h6 class="green--text titleText">
+            {{ Math.round(data.winRate, 1) }} %
           </h6>
         </th>
         <th>
-          <h5 class="header">{{$t('leaderboard.winningamount')}}</h5>
-          <h6 style="color:#0b2a68;" class="titleText">{{ Math.round(data.totalWinAmount, 1) }}</h6>
+          <h5 class="header">{{ $t("leaderboard.bets") }}</h5>
+          <h6 style="color:#eb0b6e;" class="titleText">
+            {{ data.totalWinBets }}
+          </h6>
+        </th>
+        <th>
+          <h5 class="header">{{ $t("leaderboard.winningamount") }}</h5>
+          <h6 style="color:#0b2a68;" class="titleText">
+            {{ Math.round(data.totalWinAmount, 1) }}
+          </h6>
         </th>
         <th v-if="data.isFollowing == 0" style="width:20%;">
           <v-btn
@@ -47,28 +49,43 @@
               )
             "
             dark
-          >{{ $t("useraction.followbet") }}</v-btn>
+            >{{ $t("useraction.followbet") }}</v-btn
+          >
         </th>
         <th v-if="data.isFollowing == 1" style="width:20%;">
           <v-btn
             class="buttonCancel"
             v-on:click="unfollowUser(data.userUUID)"
             dark
-          >{{ $t("useraction.unfollow") }}</v-btn>
+            >{{ $t("useraction.unfollow") }}</v-btn
+          >
         </th>
         <th v-if="data.isFollowing == -1" style="width:20%;">
-          <v-btn class="buttonGreensmall">{{ $t("useraction.yourself") }}</v-btn>
+          <v-btn class="buttonGreensmall">{{
+            $t("useraction.yourself")
+          }}</v-btn>
         </th>
       </div>
     </v-flex>
 
-    <v-dialog v-model="dialog" width="600" style="border-radius:20px; !important">
+    <v-dialog
+      v-model="dialog"
+      width="600"
+      style="border-radius:20px; !important"
+    >
       <v-card class="followup">
-        <h3 class="title font-weight-bold" style="text-align:center;color:#0b2a68;">{{ $t("useraction.followbet") }}</h3>
+        <h3
+          class="title font-weight-bold"
+          style="text-align:center;color:#0b2a68;"
+        >
+          {{ $t("useraction.followbet") }}
+        </h3>
 
         <v-card-text style="text-align:center;">
           <img class="pimage" v-bind:src="this.userImage" width="140px" />
-          <h3 class="subtitle-1 text-uppercase text-center pt-2">{{ this.username }}</h3>
+          <h3 class="subtitle-1 text-uppercase text-center pt-2">
+            {{ this.username }}
+          </h3>
         </v-card-text>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -100,7 +117,12 @@
             ></v-text-field>
           </v-flex>
           <v-flex lg3 pl-3 pb-3>
-            <v-btn color="buttonGreensmall" text v-on:click="followThisUser()">{{ FollowName }}</v-btn>
+            <v-btn
+              color="buttonGreensmall"
+              text
+              v-on:click="followThisUser()"
+              >{{ FollowName }}</v-btn
+            >
           </v-flex>
         </v-card-actions>
       </v-card>
@@ -142,7 +164,7 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }),
+    })
   },
   methods: {
     getImgUrl(userImage) {

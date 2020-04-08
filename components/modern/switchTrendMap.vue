@@ -106,7 +106,8 @@
                 <table class="table-responsive" ref="tableOETwo">
                   <tr v-for="(tr, index) in rowTable" :key="index">
                     <td
-                      v-for="(td, i) in 300" :key="i"
+                      v-for="(td, i) in 300"
+                      :key="i"
                       style="border:1px solid #000000;"
                     ></td>
                   </tr>
