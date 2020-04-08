@@ -30,7 +30,7 @@
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
             <div class="filter">
-              <span v-for="item in filterNames" :key="item">
+              <span v-for="item in filterNames" :key="item.name">
                 <span class="rank filterSpan">
                   {{ item.value }}
                 </span>
@@ -285,6 +285,7 @@ let name = "btc5";
 export default {
   components: {
     chanelChat,
+    followBet,
     popper,
     config
   },
