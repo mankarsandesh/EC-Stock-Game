@@ -286,8 +286,7 @@ export default {
   components: {
     chanelChat,
     popper,
-    config,
-    followBet
+    config
   },
   props: {
     gameUUID: {

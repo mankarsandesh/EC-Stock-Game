@@ -2,17 +2,25 @@
   <div xs12>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <!-- <breadcrumbs title="Rule" linkItem2="announcement" titlebtn2="announcement" /> -->
-    <h1 class="jumbotron-heading text-center">{{$t('msg.ecgamingrulesdescription')}}</h1>
-    <p class="lead text-muted text-center">{{$t('msg.textinfoule')}}</p>
+    <h1 class="jumbotron-heading text-center">
+      {{ $t("msg.ecgamingrulesdescription") }}
+    </h1>
+    <p class="lead text-muted text-center">{{ $t("msg.textinfoule") }}</p>
     <div class="text-xs-center">
       <v-dialog v-model="dialog">
         <template v-slot:activator="{ on }">
-          <v-btn color="buttonGreen" dark v-on="on">{{$t('msg.resultintroduction')}}</v-btn>
+          <v-btn color="buttonGreen" dark v-on="on">{{
+            $t("msg.resultintroduction")
+          }}</v-btn>
         </template>
 
         <v-card>
-          <v-card-title class="headline lighten-2" style="color:#0b2a68;" primary-title>
-            <b>{{$t('msg.introduction')}}</b>
+          <v-card-title
+            class="headline lighten-2"
+            style="color:#0b2a68;"
+            primary-title
+          >
+            <b>{{ $t("msg.introduction") }}</b>
           </v-card-title>
           <v-card-text>
             <!-- {{$t('msg.textresultintroduction')}} -->
@@ -21,28 +29,34 @@
               style="position:right;"
               color="#808080 !important"
               @click="dialog = false"
-            >close</v-icon>
+              >close</v-icon
+            >
             <p>
               e.g. Assuming a stock resulting in 1234.
-              <span class="text-red">56</span>, all our game types would only take decimal ‘56’ as result;In the case the result is now serving as
-              <span
-                class="text-red"
-              >‘56’</span>,we define decimal
+              <span class="text-red">56</span>, all our game types would only
+              take decimal ‘56’ as result;In the case the result is now serving
+              as <span class="text-red">‘56’</span>,we define decimal
               <span class="text-red">‘5’</span>, as
               <span class="text-red">‘first</span>, digit’ result;decimal
               <span class="text-red">‘6’</span>, as
               <span class="text-red">‘last’</span>,‘ digit’ result;decimals
               <span class="text-red">‘5’</span>, and
               <span class="text-red">‘6’</span>, together as
-              <span class="text-red">two</span>,
-              ‘-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as
+              <span class="text-red">two</span>, ‘-digit’ result; Other than
+              these, we are also appointing the outcome of ‘5 + 6’ as
               <span class="text-red">both</span>, digits’ result, which is
               <span class="text-red">‘11’</span>.
             </p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="accept" color="buttonGreensmall" dark @click="dialog = false">{{$t('msg.accept')}}</v-btn>
+            <v-btn
+              class="accept"
+              color="buttonGreensmall"
+              dark
+              @click="dialog = false"
+              >{{ $t("msg.accept") }}</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>

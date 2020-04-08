@@ -92,7 +92,7 @@ import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
-import config from '../../../config/config.global';
+import config from "../../../config/config.global";
 export default {
   data() {
     return {};

@@ -66,8 +66,8 @@ export default {};
 </script>
 
 <style scoped>
-.title_menu{
-    text-transform: uppercase
+.title_menu {
+  text-transform: uppercase;
 }
 .titile {
   padding-left: 5px;
@@ -88,7 +88,7 @@ export default {};
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  color: #353333
+  color: #353333;
 }
 
 .chart_container {
@@ -123,5 +123,4 @@ input[type="checkbox"] {
   text-transform: uppercase;
 }
 /* checkbox */
-
 </style>

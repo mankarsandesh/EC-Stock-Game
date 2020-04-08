@@ -10,7 +10,7 @@
       <v-toolbar>
         <v-layout row>
           <v-spacer></v-spacer>
-          <v-icon size="20" @click="dialogOnlineHistory=false">close</v-icon>
+          <v-icon size="20" @click="dialogOnlineHistory = false">close</v-icon>
         </v-layout>
       </v-toolbar>
 
@@ -18,35 +18,50 @@
         <v-layout row>
           <v-flex xs0 sm2></v-flex>
           <v-flex xs12 sm10 class="text-xs-center">
-            <h2 class="title_menu">{{$t('profile.onlinehistory')}}</h2>
+            <h2 class="title_menu">{{ $t("profile.onlinehistory") }}</h2>
             <v-divider></v-divider>
           </v-flex>
         </v-layout>
       </v-flex>
 
-      <v-flex xs12 md12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+      <v-flex
+        xs12
+        md12
+        v-if="$vuetify.breakpoint.xs"
+        class="profile_head text-xs-center"
+      >
         <div class="image_container">
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
           </v-avatar>
           <!-- <span class="blur-img">uploading</span> -->
         </div>
-        <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-        <p>{{$t('profile.onlinestatus')}} : {{getUserInfo.currentActiveTime}}</p>
+        <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+        <p>
+          {{ $t("profile.onlinestatus") }} : {{ getUserInfo.currentActiveTime }}
+        </p>
         <v-divider></v-divider>
       </v-flex>
 
       <v-flex xs12 sm12 pt-3>
         <v-layout row>
-          <v-flex xs2 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+          <v-flex
+            xs2
+            md2
+            v-if="!$vuetify.breakpoint.xs"
+            class="profile_head text-xs-center"
+          >
             <div class="image_container">
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
               <!-- <span class="blur-img">uploading</span> -->
             </div>
-            <h3>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</h3>
-            <p>{{$t('profile.onlinestatus')}} : {{getUserInfo.currentActiveTime}}</p>
+            <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+            <p>
+              {{ $t("profile.onlinestatus") }} :
+              {{ getUserInfo.currentActiveTime }}
+            </p>
           </v-flex>
           <v-flex xs12 sm10>
             <v-layout row>
@@ -54,10 +69,10 @@
               <v-flex xs5 sm5 mr-1 ml-1>
                 <div class="date_picker_container" @click="startDateClick">
                   <div class="title_date_picker">
-                    <span>{{$t('msg.from')}}</span>
+                    <span>{{ $t("msg.from") }}</span>
                   </div>
                   <div class="date_picker">
-                    <span class="select_date">{{startDate}}</span>
+                    <span class="select_date">{{ startDate }}</span>
                     <span class="icon_date">
                       <v-icon>date_range</v-icon>
                     </span>
@@ -75,10 +90,10 @@
               <v-flex xs5 sm5 mr-1>
                 <div class="date_picker_container" @click="endDateClick">
                   <div class="title_date_picker">
-                    <span>{{$t('msg.to')}}</span>
+                    <span>{{ $t("msg.to") }}</span>
                   </div>
                   <div class="date_picker">
-                    <span class="select_date">{{endDate}}</span>
+                    <span class="select_date">{{ endDate }}</span>
                     <span class="icon_date">
                       <v-icon>date_range</v-icon>
                     </span>
@@ -98,14 +113,16 @@
                   <div class="title_date_picker">
                     <span></span>
                   </div>
-                  <button @click="getOnlineHistory" class="buttonGreen btn-go">GO</button>
+                  <button @click="getOnlineHistory" class="buttonGreen btn-go">
+                    GO
+                  </button>
                 </div>
               </v-flex>
             </v-layout>
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs12 sm12 md10 lg10 :class="$vuetify.breakpoint.xs ? 'mt-4':''">
+      <v-flex xs12 sm12 md10 lg10 :class="$vuetify.breakpoint.xs ? 'mt-4' : ''">
         <v-layout row>
           <v-flex xs1 sm2></v-flex>
           <v-flex xs10 sm8>
