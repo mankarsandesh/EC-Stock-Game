@@ -190,7 +190,7 @@
           indeterminate
         ></v-progress-circular>
       </div>
-      <v-toolbar class="toolbarMenu" style="background-color:#FFF;"> 
+      <v-toolbar class="toolbarMenu" style="background-color:#FFF;">
         <v-container fluid class="navbar">
           <v-toolbar-title>
             <v-img
@@ -451,7 +451,7 @@ export default {
       "getUserUUID", // Get UserUUID
       "getGameChannel",
       "getLocale",
-      "getIsLoadingStockGame",
+      "getIsLoadingStockGame"
     ]),
     countryflag() {
       return this.getLocale;

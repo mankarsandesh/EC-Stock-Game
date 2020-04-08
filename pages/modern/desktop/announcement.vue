@@ -40,7 +40,7 @@ export default {
   computed: {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID
-    }),
+    })
   },
   methods: {
     ...mapActions(["setIsLoadingStockGame"]),

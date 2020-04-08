@@ -1,5 +1,10 @@
 <template>
-  <ul class="list" :style="stylesWrap" @mouseenter="mouseEnter()" @mouseleave="mouseLeave()">
+  <ul
+    class="list"
+    :style="stylesWrap"
+    @mouseenter="mouseEnter()"
+    @mouseleave="mouseLeave()"
+  >
     <li
       v-for="(item, index) in marqueeList"
       :key="index"
@@ -97,7 +102,7 @@ export default {
     let vm = this;
     // let li = this.$refs.li[this.current];
     window.addEventListener("resize", function(event) {
-       this.pause()
+      this.pause();
     });
 
     // $(document).ready(function() {
@@ -185,12 +190,12 @@ export default {
       //     });
       //   }, delay || 1000);
       // } else {
-        setTimeout(() => {
-          if (this.paused === true) return false;
+      setTimeout(() => {
+        if (this.paused === true) return false;
 
-          animate(li, { top: this.scrollHeight }, this.showSpeed, 0.01);
-          this.finish(li);
-        }, delay || this.pauseTime);
+        animate(li, { top: this.scrollHeight }, this.showSpeed, 0.01);
+        this.finish(li);
+      }, delay || this.pauseTime);
       // }
     },
     finish(li) {

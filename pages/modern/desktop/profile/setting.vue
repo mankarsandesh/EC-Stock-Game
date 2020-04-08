@@ -2,20 +2,20 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">{{$t('menu.setting')}}</h2>
+        <h2 class="title_menu">{{ $t("menu.setting") }}</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">{{$t('setting.account')}}</span>
+          <span class="group_title">{{ $t("setting.account") }}</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>{{$t('setting.usersallowtovisitmyprofile')}}</span>
+              <span>{{ $t("setting.usersallowtovisitmyprofile") }}</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"                
+                  @change="updateSetting"
                   type="checkbox"
                   ref="isAllowToVisitProfile"
                   :checked="getUserInfo.isAllowToVisitProfile"
@@ -24,10 +24,10 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>{{$t('setting.usersallowfollowme')}}</span>
+              <span>{{ $t("setting.usersallowfollowme") }}</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"                 
+                  @change="updateSetting"
                   type="checkbox"
                   ref="isAllowToFollow"
                   :checked="getUserInfo.isAllowToFollow"
@@ -36,7 +36,7 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>{{$t('setting.userallowtosenddirectmessage')}}</span>
+              <span>{{ $t("setting.userallowtosenddirectmessage") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -52,10 +52,10 @@
       </v-flex>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">{{$t('setting.gameoptions')}}</span>
+          <span class="group_title">{{ $t("setting.gameoptions") }}</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>{{$t('setting.sound')}}</span>
+              <span>{{ $t("setting.sound") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -67,7 +67,7 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>{{$t('setting.allowtolocation')}}</span>
+              <span>{{ $t("setting.allowtolocation") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -94,17 +94,23 @@ export default {
     // this.updateSetting();
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-  }, 
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+  },
   methods: {
     ...mapActions(["setUserData"]),
     async updateSetting() {
       // set value to 1 or 0 true==1 false==0
-      let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked ? true : false;
+      let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
+        ? true
+        : false;
       let isAllowToFollow = this.$refs.isAllowToFollow.checked ? true : false;
-      let isAllowToDirectMessage = this.$refs.isAllowToDirectMessage.checked ? true : false;
+      let isAllowToDirectMessage = this.$refs.isAllowToDirectMessage.checked
+        ? true
+        : false;
       let isSound = this.$refs.isSound.checked ? true : false;
-      let isAllowToLocation = this.$refs.isAllowToLocation.checked ? true : false;
+      let isAllowToLocation = this.$refs.isAllowToLocation.checked
+        ? true
+        : false;
       // end set value to 1 or 0 true==1 false==0
 
       try {
@@ -126,7 +132,7 @@ export default {
           }
         );
         if (res.code == 200) {
-           this.$swal.fire({
+          this.$swal.fire({
             position: "top",
             type: "success",
             title: "Changes saved",
@@ -142,7 +148,7 @@ export default {
         console.error(ex);
         alert(ex.message);
       }
-    },
+    }
   }
 };
 </script>

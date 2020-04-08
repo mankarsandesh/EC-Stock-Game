@@ -8,7 +8,9 @@
         justify="center"
         v-show="getOnGoingBet.length <= 0"
         class="nobetting"
-      >{{ $t("msg.nobetting") }}</h4>
+      >
+        {{ $t("msg.nobetting") }}
+      </h4>
       <table class="main-table" v-show="getOnGoingBet.length > 0">
         <tbody v-for="(item, index) in getOnGoingBet" :key="index">
           <tr class="table-rowheight">

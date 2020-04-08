@@ -3,7 +3,10 @@
     <v-container>
       <v-layout row wrap>
         <v-flex xs12>
-          <v-img src="\maintenance\under-maintenanceimg.png" class="mt-3 text-xs-center text-justify">
+          <v-img
+            src="\maintenance\under-maintenanceimg.png"
+            class="mt-3 text-xs-center text-justify"
+          >
           </v-img>
         </v-flex>
       </v-layout>

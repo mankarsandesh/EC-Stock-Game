@@ -83,7 +83,7 @@ export default {
           ip: "225.457.454.123",
           domain: this.referrerURL,
           balance: this.balance
-        };        
+        };
         const { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
           userData, // data object
@@ -200,13 +200,12 @@ export default {
 </script>
 <style scoped>
 .errorBox {
-    background-color: #fff;
-    margin-bottom: 20px;
-    padding: 5px;
-    font-size: 23px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 5px;
+  font-size: 23px;
 }
 .errorBox h2 {
   color: #333;
 }
 </style>
-

@@ -7,7 +7,7 @@
             <div class="decorator_card decorator_card_green"></div>
             <span>account balance</span>
             <br />
-            <span class="amount">{{userData.balance | currency}}</span>
+            <span class="amount">{{ userData.balance | currency }}</span>
             <span class="title_currentcy">kip</span>
           </div>
         </v-flex>
@@ -17,7 +17,7 @@
 
             <span>rolling amount</span>
             <br />
-            <span class="amount">{{161536 | currency}}</span>
+            <span class="amount">{{ 161536 | currency }}</span>
             <span class="title_currentcy">kip</span>
           </div>
         </v-flex>
@@ -33,7 +33,13 @@
                   <label for="fname">player ID</label>
                 </div>
                 <div class="col-85">
-                  <input disabled type="text" id="fname" name="firstname" :value="userData.PID" />
+                  <input
+                    disabled
+                    type="text"
+                    id="fname"
+                    name="firstname"
+                    :value="userData.PID"
+                  />
                 </div>
               </div>
               <div class="row">
@@ -50,7 +56,12 @@
                     placeholder="Your first name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -68,7 +79,12 @@
                     placeholder="Your last name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -125,7 +141,8 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                  >save</v-btn>
+                    >save</v-btn
+                  >
                   <v-btn class="btn_cancel">cancel</v-btn>
                 </div>
               </div>
@@ -143,7 +160,7 @@ import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
-import config from '../../../config/config.global';
+import config from "../../../config/config.global";
 export default {
   data() {
     return {

@@ -43,7 +43,11 @@
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="endDateClick"></v-date-picker>
+            <v-date-picker
+              v-if="isShowDateEnd"
+              v-model="endDate"
+              @input="endDateClick"
+            ></v-date-picker>
           </div>
         </v-flex>
         <!-- go button -->
@@ -83,12 +87,20 @@
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
       <div class="chart_container">
         <div class="chart-map-color">
-          <span v-for="(color,index) in colors[0]" :key="index">
-            <span class="circle-color" :style="{backgroundColor:color}"></span>
-            <span style="margin-right:10px">{{stocks[index]}}</span>
+          <span v-for="(color, index) in colors[0]" :key="index">
+            <span
+              class="circle-color"
+              :style="{ backgroundColor: color }"
+            ></span>
+            <span style="margin-right:10px">{{ stocks[index] }}</span>
           </span>
         </div>
-        <apexchart type="bar" height="480vh" :options="chartOptions" :series="series"></apexchart>
+        <apexchart
+          type="bar"
+          height="480vh"
+          :options="chartOptions"
+          :series="series"
+        ></apexchart>
       </div>
     </v-flex>
   </div>
@@ -288,7 +300,7 @@ li {
 .chart-map-color {
   position: relative;
   float: right;
-  margin-top:15px;
+  margin-top: 15px;
   display: inline-block;
 }
 .circle-color {

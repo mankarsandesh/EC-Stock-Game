@@ -48,14 +48,20 @@
         return-object
         id="minute"
       >
-        <template slot="selection" slot-scope="data">{{ data.item.loopName }} Minutes</template>
+        <template slot="selection" slot-scope="data"
+          >{{ data.item.loopName }} Minutes</template
+        >
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content>{{ data.loopName }} Minutes</v-list-tile-content>
+            <v-list-tile-content
+              >{{ data.loopName }} Minutes</v-list-tile-content
+            >
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title>{{ data.item.loopName }} Minutes</v-list-tile-title>
+              <v-list-tile-title
+                >{{ data.item.loopName }} Minutes</v-list-tile-title
+              >
             </v-list-tile-content>
           </template>
         </template>
@@ -196,10 +202,7 @@ export default {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
   methods: {
-
-    ...mapActions([
-      'addStockMultiGame', 'setGameId', 'setStockCategory' 
-    ]),
+    ...mapActions(["addStockMultiGame", "setGameId", "setStockCategory"]),
     async getActiveGamesByCategory() {
       try {
         const { data } = await this.$axios.$post(
@@ -275,7 +278,7 @@ export default {
                   this.gameId = minute.gameID;
                   this.setGameId(minute.gameID);
                 }
-              }); 
+              });
             });
           }
         } else {
@@ -303,4 +306,3 @@ export default {
   font-size: 12px;
 }
 </style>
-
