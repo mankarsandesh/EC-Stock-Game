@@ -8,16 +8,20 @@
         :search="search"
         class="current-bet"
       >
-        <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
+        <v-progress-linear
+          v-slot:progress
+          color="blue"
+          indeterminate
+        ></v-progress-linear>
         <template v-slot:headers="headers">
           <tr>
-            <th scope="col">{{$t('msg.BetId')}}</th>
-            <th scope="col">{{$t('msg.gameid')}}</th>
-            <th scope="col">{{$t('msg.Betdetail')}}</th>
-            <th scope="col">{{$t('msg.Time')}}</th>
-            <th scope="col">{{$t('msg.amount')}}</th>
-            <th scope="col">{{$t('msg.payout')}}</th>
-            <th scope="col">{{$t('msg.Bet Status')}}</th>
+            <th scope="col">{{ $t("msg.BetId") }}</th>
+            <th scope="col">{{ $t("msg.gameid") }}</th>
+            <th scope="col">{{ $t("msg.Betdetail") }}</th>
+            <th scope="col">{{ $t("msg.Time") }}</th>
+            <th scope="col">{{ $t("msg.amount") }}</th>
+            <th scope="col">{{ $t("msg.payout") }}</th>
+            <th scope="col">{{ $t("msg.Bet Status") }}</th>
           </tr>
         </template>
         <template v-slot:items="item">
@@ -35,27 +39,32 @@
               color="green"
               text-color="white"
               class="text-uppercase betresult"
-            >{{ $t('msg.win') }}</v-chip>
+              >{{ $t("msg.win") }}</v-chip
+            >
           </td>
           <td v-if="item.item.betResult == 'lose'">
             <v-chip
               color="red"
               text-color="white"
               class="text-uppercase betresult"
-            >{{ $t('msg.lose') }}</v-chip>
+              >{{ $t("msg.lose") }}</v-chip
+            >
           </td>
           <td v-if="item.item.betResult == 'pending'">
             <v-chip
               color="yellow "
               text-color="black"
               class="text-uppercase betresult"
-            >{{ $t('msg.pending') }}...</v-chip>
+              >{{ $t("msg.pending") }}...</v-chip
+            >
           </td>
         </template>
         <template slot="footer">
           <tr>
             <td>{{ $t("msg.Total") }}</td>
-            <td colspan="3">{{ currentBets.length }} {{$t('leaderboard.bets')}}</td>
+            <td colspan="3">
+              {{ currentBets.length }} {{ $t("leaderboard.bets") }}
+            </td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>
             </td>
@@ -71,7 +80,7 @@
 export default {
   props: ["currentBets"],
   data: () => ({
-    search: ""
+    search: "",
   }),
   filters: {
     toCurrency(value) {
@@ -84,22 +93,22 @@ export default {
         // if the value is number
         style: "currency", // you also can change the curreny to other curreny that you like
         currency: "USD", // in this case we choose the USD
-        minimumFractionDigits: 0 // minumum the value is not equal than 0
+        minimumFractionDigits: 0, // minumum the value is not equal than 0
       });
       return formatter.format(value); // after get the currency that you prefer, than we return out with value
-    }
+    },
   },
   computed: {
     TotalAmount() {
       // make the new value to make the frontend get this value from the computed
       let total = null; // create the new varible before return
-      this.currentBets.map(item => {
+      this.currentBets.map((item) => {
         // before loading component the computed we defind the value from props
         total += item.betAmount; // after get the value from props, you have the plus the value with the value with lenght
       });
       return total; // after get the value, return the value out.
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
