@@ -452,7 +452,6 @@ export default {
       "getGameChannel",
       "getLocale",
       "getIsLoadingStockGame",
-      "getStockCrawlerData"
     ]),
     countryflag() {
       return this.getLocale;

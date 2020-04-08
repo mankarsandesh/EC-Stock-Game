@@ -1398,7 +1398,6 @@ export default {
       "getLiveTime",
       "getCheckStock",
       "getCoinsModern",
-      "getStockCrawlerData",
       "getAllBettingAmount",
       "getAuthToken",
       "getBetAmountRuleID",

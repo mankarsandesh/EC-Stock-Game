@@ -403,10 +403,7 @@ export default {
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "lotterydraw",
       "getStockLoop",
-      "getStockLastDraw",
-      "getStockCrawlerData",
     ]),
   },
 };

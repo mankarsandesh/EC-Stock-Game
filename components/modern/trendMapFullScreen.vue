@@ -44,9 +44,7 @@ export default {
   components: {
     trendMap
   },
-  computed: {
-    ...mapGetters(["getStockCrawlerData"]),
-  },
+  computed: {},
   mounted() {
     this.trendType = this.typeItems[this.index]
   },

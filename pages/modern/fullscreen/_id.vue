@@ -490,8 +490,6 @@ export default {
       "getStockById",
       "lotterydraw",
       "getStockLoop",
-      "getStockLastDraw",
-      "getStockCrawlerData",
       "getStockChart",
       "getLiveTime",
       "getLivePrice",
