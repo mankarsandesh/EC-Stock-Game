@@ -29,7 +29,7 @@
             :stockName="stockID"
             :ruleid="data.ruleid"
             :betId="'firstdigit-' + data.rule"
-            :betWin="'betWin-' + data.rule"
+            :betWin="'firstdigitWin-' + data.rule"
             :payout="data.payout"
           ></betModal>
         </div>
@@ -48,7 +48,10 @@
               })
             "
           ></showChipAmount>
-          <span class="big-digit " :id="'betWin-' + data.rule">{{ $t("gamemsg." + data.rule) }}</span>
+          <span
+            class="big-digit"
+            :id="'firstdigitWin-' + data.rule"
+          >{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span
@@ -101,7 +104,7 @@
             :stockName="stockID"
             :ruleid="data.ruleid"
             :betId="'lastdigit-' + data.rule"
-            :betWin="'betWin-' + data.rule"
+            :betWin="'lastdigitWin-' + data.rule"
             :payout="data.payout"
           ></betModal>
         </div>
@@ -125,7 +128,7 @@
             "
           ></showChipAmount>
 
-          <span class="big-digit " :id="'betWin-' + data.rule">{{ $t("gamemsg." + data.rule) }}</span>
+          <span class="big-digit" :id="'lastdigitWin-' + data.rule">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span
@@ -178,7 +181,7 @@
             :stockName="stockID"
             :ruleid="data.ruleid"
             :betId="'bothdigit-' + data.rule"
-            :betWin="'betWin-' + data.rule"
+            :betWin="'bothdigitWin-' + data.rule"
             :payout="data.payout"
           ></betModal>
         </div>
@@ -198,7 +201,7 @@
             "
           ></showChipAmount>
 
-          <span class="big-digit " :id="'betWin-' + data.rule">{{ $t("gamemsg." + data.rule) }}</span>
+          <span class="big-digit" :id="'bothdigitWin-' + data.rule">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span
@@ -252,7 +255,7 @@
             :stockName="stockID"
             :ruleid="data.ruleid"
             :betId="'twodigit-' + data.rule"
-            :betWin="'betWin-' + data.rule"
+            :betWin="'twodigitWin-' + data.rule"
             :payout="data.payout"
           ></betModal>
         </div>
@@ -272,7 +275,7 @@
             "
           ></showChipAmount>
 
-          <span class="big-digit " :id="'betWin-' + data.rule">{{ $t("gamemsg." + data.rule) }}</span>
+          <span class="big-digit" :id="'twodigitWin-' + data.rule">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span
@@ -319,7 +322,7 @@
             :stockName="stockID"
             :ruleid="8 + index"
             :betId="'firstdigit-' + index"
-            :betWin="'betWin-' + index"
+            :betWin="'firstdigitWin-' + index"
             :payout="index + 30"
           ></betModal>
         </div>
@@ -345,7 +348,7 @@
             :stockName="stockID"
             :ruleid="25 + index"
             :betId="'lastdigit-' + index"
-            :betWin="'betWin-' + index"
+            :betWin="'lastdigitWin-' + index"
             :payout="index + 40"
           ></betModal>
         </div>
@@ -371,7 +374,7 @@
             :stockName="stockID"
             :ruleid="149 + index"
             :betId="'bothdigit-' + index"
-            :betWin="'betWin-' + index"
+            :betWin="'bothdigitWin-' + index"
             :payout="index + 50"
           ></betModal>
         </div>
@@ -397,7 +400,7 @@
             :stockName="stockID"
             :ruleid="42 + index"
             :betId="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
-            :betWin="'betWin-' + index"
+            :betWin="'twodigit-0Win-' + index"
             :payout="index + 69"
           ></betModal>
         </div>

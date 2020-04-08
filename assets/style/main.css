@@ -1333,18 +1333,44 @@ p.guideline {
     opacity: 1;
   }
 }
-.betWin-big,
-.betWin-small,
-.betWin-odd,
-.betWin-even,
-.betWin-high,
-.betWin-mid {
+
+.firstdigitWin-big,
+.firstdigitWin-odd,
+.firstdigitWin-small,
+.firstdigitWin-even,
+.firstdigitWin-high,
+.firstdigitWin-mid,
+.firstdigitWin-low,
+.lastdigitWin-small,
+.lastdigitWin-big,
+.lastdigitWin-odd,
+.lastdigitWin-even,
+.lastdigitWin-high,
+.lastdigitWin-low,
+.lastdigitWin-mid,
+.bothdigitWin-big,
+.bothdigitWin-even,
+.bothdigitWin-odd,
+.bothdigitWin-mid,
+.bothdigitWin-low,
+.bothdigitWin-high,
+.bothdigitWin-tie,
+.bothdigitWin-small,
+.twodigitWin-big,
+.twodigitWin-tie,
+.twodigitWin-small,
+.twodigitWin-odd,
+.twodigitWin-even,
+.twodigitWin-high,
+.twodigitWin-mid,
+.twodigitWin-low {
   background-size: 35px;
   height: 35px;
   background-position: center center;
   background-repeat: no-repeat;
   background-image: url("/bet/dollar.png");
 }
+
 .firstdigit.firstdigit-animation {
   animation: taadaa 1s infinite !important;
   background-color: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%) !important;
