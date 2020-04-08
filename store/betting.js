@@ -5,7 +5,7 @@ const state = () => ({
   multiGameBetSend: [], // Store multi game bet send
   footerBetAmount: 0, // Store footer bet amount
   onGoingBet: [], // store data betting
-  isSendBetting: false,
+  isSendBetting: false
 });
 
 const mutations = {
@@ -32,7 +32,7 @@ const mutations = {
   },
   SET_IS_SEND_BETTING(state, value) {
     state.isSendBetting = value;
-  },
+  }
 };
 
 const actions = {
@@ -72,7 +72,7 @@ const actions = {
           type: "error",
           title: `Sorry, No Betting...!`,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1500
         });
         return;
       }
@@ -82,10 +82,10 @@ const actions = {
           portalProviderUUID: context.rootState.provider.portalProviderUUID,
           userUUID: context.rootState.provider.userUUID,
           version: config.version,
-          betData: betDatas,
+          betData: betDatas
         },
         {
-          headers: config.header,
+          headers: config.header
         }
       );
       console.log(res);
@@ -96,9 +96,9 @@ const actions = {
         // check betting false or true
         let resultStatus = {
           success: 0,
-          failed: 0,
+          failed: 0
         };
-        res.data.forEach((element) => {
+        res.data.forEach(element => {
           if (element.status) {
             resultStatus.success++;
           } else {
@@ -109,7 +109,7 @@ const actions = {
           type:
             resultStatus.success >= resultStatus.failed ? "success" : "error",
           title: `<span style="color:green"> bet success ${resultStatus.success} </span> <span style="color:red;padding-left:10px"> bet failed ${resultStatus.failed} </span>`,
-          showConfirmButton: true,
+          showConfirmButton: true
         });
       } else {
         throw new Error(res.message);
@@ -118,12 +118,12 @@ const actions = {
       this._vm.$swal({
         type: "error",
         title: `${ex.message}`,
-        showConfirmButton: true,
+        showConfirmButton: true
       });
       console.error(ex);
       context.commit("SET_IS_SEND_BETTING", false);
     }
-  },
+  }
 };
 
 const getters = {
@@ -138,65 +138,63 @@ const getters = {
   // Get amount of betting that has been confirmed
   getAllBettingAmount(state) {
     let amount1 = state.onGoingBet
-      .map((x) => x.betAmount)
+      .map(x => x.betAmount)
       .reduce((a, b) => a + b, 0);
     let amount2 = state.multiGameBet
-      .map((x) => x.betAmount)
+      .map(x => x.betAmount)
       .reduce((a, b) => a + b, 0);
     return amount1 + amount2;
   },
   // Get amount of betting by stock Id
-  getAmountBettingByStockId: (state) => (gameUUID) => {
+  getAmountBettingByStockId: state => gameUUID => {
     function getAmount(object) {
       // find stock name
-      if (object.findIndex((x) => x.gameUUID === gameUUID) == -1) return 0;
+      if (object.findIndex(x => x.gameUUID === gameUUID) == -1) return 0;
       let result = object
-        .filter((x) => x.gameUUID === gameUUID)
-        .map((x) => x.betAmount)
+        .filter(x => x.gameUUID === gameUUID)
+        .map(x => x.betAmount)
         .reduce((a, b) => a + b, 0);
       return parseInt(result);
     }
     return getAmount(state.multiGameBet);
   },
   // Get bet amount for ech game rule to show on chip
-  getAmountMultiGameBet: (state) => (data) => {
+  getAmountMultiGameBet: state => data => {
     // get total bottom bet amount
     function getAmount(object) {
       // check gameUUID is exist or not,if not return 0
-      if (object.findIndex((x) => x.gameUUID == data.gameUUID) == -1) {
+      if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1) {
         return 0;
       }
       // get data by gameUUID and store in 'oneGameUUID'
-      let oneGameUUID = object.filter((x) => x.gameUUID === data.gameUUID);
+      let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
       // check there is rule id in gameUUID or not,if no has return 0
-      if (oneGameUUID.findIndex((x) => x.ruleID === data.ruleID) == -1)
-        return 0;
+      if (oneGameUUID.findIndex(x => x.ruleID === data.ruleID) == -1) return 0;
       // get gameUUID from 'oneGameUUID'
       let result = oneGameUUID
-        .filter((x) => x.ruleID === data.ruleID)
-        .map((x) => x.betAmount)
+        .filter(x => x.ruleID === data.ruleID)
+        .map(x => x.betAmount)
         .reduce((a, b) => a + b, 0);
       return parseInt(result);
     }
     function getAmounts(object) {
       // find stockId
-      if (object.findIndex((x) => x.stock === data.ruleID) == -1) return 0;
+      if (object.findIndex(x => x.stock === data.ruleID) == -1) return 0;
       // get data by stockId
-      let stockIdObject = object.filter((x) => x.stock === data.ruleID);
+      let stockIdObject = object.filter(x => x.stock === data.ruleID);
       // check rule in stockId
-      if (stockIdObject.findIndex((x) => x.rule === data.ruleID) == -1)
-        return 0;
+      if (stockIdObject.findIndex(x => x.rule === data.ruleID) == -1) return 0;
       // get amount by rule
       let result = stockIdObject
-        .filter((x) => x.rule === data.ruleID)
-        .map((x) => x.betAmount)
+        .filter(x => x.rule === data.ruleID)
+        .map(x => x.betAmount)
         .reduce((a, b) => a + b, 0);
       return parseInt(result);
     }
     return getAmount(state.multiGameBet);
   },
   // Get amount of specific bet number
-  getAmountBetSpecificNumber: (state) => (data) => {
+  getAmountBetSpecificNumber: state => data => {
     let start = 2000;
     let end = 2000;
     if (data.ruleID === "firstdigit") {
@@ -215,9 +213,9 @@ const getters = {
     function getAmount(object) {
       let count = 9;
       // find stockId
-      if (object.findIndex((x) => x.gameUUID === data.gameUUID) == -1) return 0;
+      if (object.findIndex(x => x.gameUUID === data.gameUUID) == -1) return 0;
       // get data by stockId
-      let stockIdObject = object.filter((x) => x.gameUUID === data.gameUUID);
+      let stockIdObject = object.filter(x => x.gameUUID === data.gameUUID);
       // check rule in stockId
       // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
       // get amount by rule
@@ -226,8 +224,8 @@ const getters = {
         result =
           result +
           stockIdObject
-            .filter((x) => x.ruleID >= start && x.ruleID <= end)
-            .map((x) => x.betAmount)
+            .filter(x => x.ruleID >= start && x.ruleID <= end)
+            .map(x => x.betAmount)
             .reduce((a, b) => a + b, 0);
       }
       return result;
@@ -249,7 +247,7 @@ const getters = {
   },
   // Get amount of betting that has already been confirm
   getBettingAmount(state) {
-    return state.onGoingBet.map((x) => x.betAmount).reduce((a, b) => a + b, 0);
+    return state.onGoingBet.map(x => x.betAmount).reduce((a, b) => a + b, 0);
   },
 
   // Get on going bet data
@@ -261,14 +259,14 @@ const getters = {
     return state.isSendBetting;
   },
   // Get amount by rule id
-  getBetAmountRuleID: (state) => (data) => {
+  getBetAmountRuleID: state => data => {
     return 0;
-  },
+  }
 };
 
 export default {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };
