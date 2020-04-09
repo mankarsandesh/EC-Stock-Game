@@ -54,6 +54,9 @@ const config = {
   getUserBetAnalysis: {
     url: `${process.env.BASE_URL}/getUserBetAnalysis`
   },
+  getVisitUserProfile: {
+    url: `${process.env.BASE_URL}/visitUserProfile`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
