@@ -179,8 +179,7 @@
               class="close-bet-chart"
               v-if="
                 getTimerByStockName(data.stockName) &&
-                  getTimerByStockName(data.stockName).stockOpenOrClosed ===
-                    'Closed!'
+                  getTimerByStockName(data.stockName).stockStatus === 'Closed'
               "
             >
               <span class="text-close-bet">market close</span>
@@ -255,7 +254,7 @@ export default {
   mounted() {},
   watch: {},
   computed: {
-    ...mapGetters(["getAllStocks", "getTimerByStockName","getStockLivePrice"])
+    ...mapGetters(["getAllStocks", "getTimerByStockName", "getStockLivePrice"])
   },
   methods: {
     filterClick() {

@@ -473,7 +473,7 @@ export default {
     checkBetClose() {
       if (
         this.getTimerByStockName(this.stockID) &&
-        this.getTimerByStockName(this.stockID).stockOpenOrClosed === "Closed!"
+        this.getTimerByStockName(this.stockID).stockStatus === "Closed"
       ) {
         return true;
       }

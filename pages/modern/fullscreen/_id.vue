@@ -25,8 +25,8 @@
                   class="close-bet-chart"
                   v-if="
                     getTimerByStockName(data.stockName) &&
-                    getTimerByStockName(data.stockName).stockOpenOrClosed ===
-                      'Closed!'
+                      getTimerByStockName(data.stockName).stockStatus ===
+                        'Closed'
                   "
                 >
                   <span class="text-close-bet">market close</span>
@@ -111,22 +111,22 @@
                     <span
                       v-if="
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .stockOpenOrClosed === 'Closed!'
+                          getTimerByStockName($route.params.id).stockStatus ===
+                            'Closed'
                       "
                       class="text-black"
                     >
                       {{
                         getTimerByStockName($route.params.id) &&
-                        "close" | betclosein(getStockLoop($route.params.id))
+                          "close" | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                     <span v-else class="text-black">
                       {{
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -139,9 +139,9 @@
                     <span class="text-black">
                       {{
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | lotterydraw(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | lotterydraw(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -419,7 +419,7 @@ export default {
       msg: "",
       dataliveBetAll: {},
       stockId: "",
-      isStep: 0,
+      isStep: 0
     };
   },
   created() {
@@ -440,7 +440,7 @@ export default {
         channelName: `roadMap.${this.getStockUUIDByStockName(
           this.$route.params.id
         )}.${this.getPortalProviderUUID}`,
-        eventName: "roadMap",
+        eventName: "roadMap"
       },
       ({ data }) => {
         console.log("gamne stock id", this.gameStockId);
@@ -450,7 +450,7 @@ export default {
     this.listenForBroadcast(
       {
         channelName: `LiveTotalBetData.${this.gameStockId}`,
-        eventName: "LiveTotalBetData",
+        eventName: "LiveTotalBetData"
       },
       ({ data }) => {
         this.dataliveBetAll = data.data;
@@ -464,7 +464,7 @@ export default {
     footerBet,
     trendMapFullScreen,
     fullscreenchart,
-    fullscreencurrentbet,
+    fullscreencurrentbet
   },
   computed: {
     closeFullscreen() {
@@ -493,11 +493,11 @@ export default {
       "getStockChart",
       "getLiveTime",
       "getLivePrice",
-      "getUserUUID",
+      "getUserUUID"
     ]),
     ...mapState({
-      gameStockId: (state) => state.game.gameStockId,
-    }),
+      gameStockId: state => state.game.gameStockId
+    })
   },
   methods: {
     ...mapActions(["setRoadMap", "setLiveRoadMap", "setStockCategory"]),
@@ -510,10 +510,10 @@ export default {
           config.getActiveGamesByCategory.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version,
+            version: config.version
           },
           {
-            headers: config.header,
+            headers: config.header
           }
         );
         this.setStockCategory(data);
@@ -526,8 +526,8 @@ export default {
       return `$ ${Number(value)
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
-    },
-  },
+    }
+  }
 };
 </script>
 
