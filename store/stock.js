@@ -134,26 +134,41 @@ const actions = {
 const getters = {
   // Get game UUID by stock name
   getGameUUIDByStockName: state => stockName => {
-    let loopIndex = 0;
+    // check is it a btc stock
+    let loop = "";
     if (stockName === "btc5") {
-      loopIndex = 1;
+      loop = 5;
+    } else {
+      loop = 1;
     }
     if (stockName === "btc1" || stockName === "btc5") {
       stockName = "btc";
     }
-    let result = "suss";
     if (state.stockCategory.length > 0) {
       for (let i = 0; i < state.stockCategory.length; i++) {
         for (let j = 0; j < state.stockCategory[i].stocks.length; j++) {
           if (state.stockCategory[i].stocks[j].stockName === stockName) {
-            return state.stockCategory[i].stocks[j].loops[loopIndex].gameID;
+            if (stockName !== "btc") {
+              return state.stockCategory[i].stocks[j].loops[0].gameID;
+            } else {
+              for (
+                let a = 0;
+                a < state.stockCategory[i].stocks[j].loops.length;
+                a++
+              ) {
+                if (
+                  state.stockCategory[i].stocks[j].loops[a].loopName === loop
+                ) {
+                  return state.stockCategory[i].stocks[j].loops[a].gameID;
+                }
+              }
+            }
           }
         }
       }
     } else {
-      result = "....";
+      return "....";
     }
-    return result;
   },
   // Get stock category
   getStockCategory(state) {

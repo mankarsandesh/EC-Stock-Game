@@ -435,6 +435,11 @@ export default {
   },
   mounted() {
     // socket new api
+    console.log(
+      `roadMap.${this.getStockUUIDByStockName(this.$route.params.id)}.${
+        this.getPortalProviderUUID
+      }`
+    );
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -443,7 +448,10 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        console.log("gamne stock id", this.gameStockId);
+        console.log(
+          "gamne stock id",
+          this.getStockUUIDByStockName(this.$route.params.id)
+        );
         this.setLiveRoadMap(data.data.roadMap[0]);
       }
     );
