@@ -88,7 +88,6 @@ const actions = {
           headers: config.header
         }
       );
-      console.log(res.data,"Helllllllllllloooooo");
       if (res.status && res.code == 200) {
         context.dispatch("setUserData", "provider");
         context.commit("SET_IS_SEND_BETTING", false);
