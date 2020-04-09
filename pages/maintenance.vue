@@ -1,16 +1,22 @@
 <template lang="html">
-<div class="content">
-  <div class="maintenance">
-    <h1> Maintenance Mode </h1>
-    <h1>Nuxt.js @code4mk</h1>
+ <div>
+    <maintenance />
   </div>
-</div>
 </template>
 <script>
+import maintenance from "~/components/maintenance";
 export default {
-mounted: function () {
-  console.log(this.$route.path)
-}
+layout: "nolayout",
+ props: {
+    error: {
+      type: Object,
+      default: null
+    }
+  },  
+  components: {
+    maintenance
+  }
+
 }
 </script>
 <style lang="css" scoped >
