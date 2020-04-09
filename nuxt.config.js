@@ -118,6 +118,7 @@ module.exports = {
   ],
   router: {
     middleware: ["auth", "showLoading"]
+    // middleware: 'maintenance'
   },
   /*
    ** Nuxt.js modules
