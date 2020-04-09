@@ -1,5 +1,10 @@
 <template>
-  <VueApexCharts type="area" height="200vh" :options="chartOptions" :series="series" />
+  <VueApexCharts
+    type="area"
+    height="200vh"
+    :options="chartOptions"
+    :series="series"
+  />
 </template>
 
 <script>
@@ -49,5 +54,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

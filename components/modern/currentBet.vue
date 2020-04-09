@@ -80,7 +80,7 @@
 export default {
   props: ["currentBets"],
   data: () => ({
-    search: "",
+    search: ""
   }),
   filters: {
     toCurrency(value) {
@@ -93,22 +93,22 @@ export default {
         // if the value is number
         style: "currency", // you also can change the curreny to other curreny that you like
         currency: "USD", // in this case we choose the USD
-        minimumFractionDigits: 0, // minumum the value is not equal than 0
+        minimumFractionDigits: 0 // minumum the value is not equal than 0
       });
       return formatter.format(value); // after get the currency that you prefer, than we return out with value
-    },
+    }
   },
   computed: {
     TotalAmount() {
       // make the new value to make the frontend get this value from the computed
       let total = null; // create the new varible before return
-      this.currentBets.map((item) => {
+      this.currentBets.map(item => {
         // before loading component the computed we defind the value from props
         total += item.betAmount; // after get the value from props, you have the plus the value with the value with lenght
       });
       return total; // after get the value, return the value out.
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

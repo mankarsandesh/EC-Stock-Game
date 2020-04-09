@@ -131,7 +131,7 @@ export default {
   layout: "desktopModern",
   components: {
     Button,
-    VueApexCharts,
+    VueApexCharts
   },
   data() {
     return {
@@ -139,31 +139,31 @@ export default {
       items: ["1 Week", "1 Month", "3 Month", "6 Month"],
       series: [
         {
-          data: [21, 22, 10, 28, 16, 0, 0, 0, 0],
-        },
+          data: [21, 22, 10, 28, 16, 0, 0, 0, 0]
+        }
       ],
       chartOptions: {
         chart: {
           height: 350,
           type: "bar",
           events: {
-            click: function (chart, w, e) {
+            click: function(chart, w, e) {
               // console.log(chart, w, e)
-            },
-          },
+            }
+          }
         },
         colors: ["#2E93fA", "#66DA26", "#546E7A", "#E91E63", "#FF9800"],
         plotOptions: {
           bar: {
             columnWidth: "45%",
-            distributed: true,
-          },
+            distributed: true
+          }
         },
         dataLabels: {
-          enabled: false,
+          enabled: false
         },
         legend: {
-          show: false,
+          show: false
         },
         xaxis: {
           categories: [
@@ -175,17 +175,17 @@ export default {
             "2020-04-04",
             "2020-04-05",
             "2020-04-06",
-            "2020-04-07",
+            "2020-04-07"
           ],
           labels: {
             style: {
-              fontSize: "12px",
-            },
-          },
-        },
-      },
+              fontSize: "12px"
+            }
+          }
+        }
+      }
     };
-  },
+  }
 };
 </script>
 <style scoped>

@@ -1,5 +1,11 @@
 <template>
-  <VueApexCharts type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
+  <VueApexCharts
+    type="bar"
+    height="350"
+    :options="chartOptions"
+    :series="series"
+    :key="componentKey"
+  />
 </template>
 
 <script>
@@ -9,32 +15,30 @@ export default {
   components: {
     VueApexCharts: VueApexCharts
   },
-  props: [
-"xaxis",
-"chartData",
-"componentKey"
-  ],
-  watch:{
+  props: ["xaxis", "chartData", "componentKey"],
+  watch: {
     chartData(val) {
-      console.log('chart data', val);
+      console.log("chart data", val);
     },
-    xaxis(val){
-     console.log(val)
+    xaxis(val) {
+      console.log(val);
     }
   },
   data() {
     return {
-      series: [{
-        data: this.chartData
-      }],
+      series: [
+        {
+          data: this.chartData
+        }
+      ],
       chartOptions: {
         chart: {
           height: 350,
-          type: 'bar',
-          },
+          type: "bar"
+        },
         plotOptions: {
           bar: {
-            columnWidth: '45%',
+            columnWidth: "45%",
             distributed: true
           }
         },
@@ -48,19 +52,14 @@ export default {
           categories: this.xaxis,
           labels: {
             style: {
-              fontSize: '12px'
+              fontSize: "12px"
             }
           }
         }
-      },
+      }
     };
   }
 };
 </script>
 
-<style>
-</style>
-
-
-
-    
+<style></style>

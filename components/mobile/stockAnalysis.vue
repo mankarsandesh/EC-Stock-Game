@@ -21,7 +21,12 @@
         </div>
       </v-flex>
 
-      <v-flex xs12 md12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+      <v-flex
+        xs12
+        md12
+        v-if="$vuetify.breakpoint.xs"
+        class="profile_head text-xs-center"
+      >
         <div class="image_container">
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
@@ -30,13 +35,20 @@
           <!-- <span class="blur-img">uploading</span> -->
         </div>
         <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
-        <p>{{ $t("profile.onlinestatus") }} : {{ getUserInfo.currentActiveTime }}</p>
+        <p>
+          {{ $t("profile.onlinestatus") }} : {{ getUserInfo.currentActiveTime }}
+        </p>
         <v-divider></v-divider>
       </v-flex>
 
       <v-flex xs12 pt-3>
         <v-layout row>
-          <v-flex xs2 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+          <v-flex
+            xs2
+            md2
+            v-if="!$vuetify.breakpoint.xs"
+            class="profile_head text-xs-center"
+          >
             <div class="image_container">
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
@@ -85,7 +97,11 @@
               </div>
             </div>
             <div style="position:absolute;z-index:1">
-              <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+              <v-date-picker
+                v-if="isShowDateEnd"
+                v-model="endDate"
+                @input="isShowDateEnd = false"
+              ></v-date-picker>
             </div>
           </v-flex>
 
@@ -94,7 +110,9 @@
               <div class="title_date_picker">
                 <span></span>
               </div>
-              <button @click="getStockAnalysis" class="buttonGreen btn-go">GO</button>
+              <button @click="getStockAnalysis" class="buttonGreen btn-go">
+                GO
+              </button>
             </div>
           </v-flex>
           <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
@@ -123,7 +141,10 @@
             <div class="chart_container">
               <div v-if="isDataValid" class="chart-map-color">
                 <span v-for="(stock, index) in stocks" :key="index">
-                  <span class="circle-color" :style="{ backgroundColor: colors[0][index] }"></span>
+                  <span
+                    class="circle-color"
+                    :style="{ backgroundColor: colors[0][index] }"
+                  ></span>
                   <span style="margin-right:10px">{{ stock }}</span>
                 </span>
               </div>

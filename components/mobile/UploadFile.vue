@@ -15,7 +15,13 @@
       @change="ResizeImage"
     />
 
-    <input type="button" value="Resize Image" hidden id="Submit" @click="ResizeImage" />
+    <input
+      type="button"
+      value="Resize Image"
+      hidden
+      id="Submit"
+      @click="ResizeImage"
+    />
     <br />
 
     <!-- {{message}} -->

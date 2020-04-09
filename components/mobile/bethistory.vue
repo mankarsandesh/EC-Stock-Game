@@ -2,7 +2,17 @@
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <v-layout row wrap id="history">
-      <v-flex xs4 sm2 md2 lg2 mr-1 mt-2 mb-2 style="float:left;" class="input-text">
+      <v-flex
+        xs4
+        sm2
+        md2
+        lg2
+        mr-1
+        mt-2
+        mb-2
+        style="float:left;"
+        class="input-text"
+      >
         <v-menu
           v-model="from"
           :close-on-content-click="false"
@@ -23,11 +33,25 @@
               hide-details
             ></v-text-field>
           </template>
-          <v-date-picker v-model="dateFrom" @input="from = false"></v-date-picker>
+          <v-date-picker
+            v-model="dateFrom"
+            @input="from = false"
+          ></v-date-picker>
         </v-menu>
       </v-flex>
 
-      <v-flex xs4 sm2 md2 lg2 mr-1 ml-1 mt-2 mb-2 style="float:left;" class="input-text">
+      <v-flex
+        xs4
+        sm2
+        md2
+        lg2
+        mr-1
+        ml-1
+        mt-2
+        mb-2
+        style="float:left;"
+        class="input-text"
+      >
         <v-menu
           v-model="to"
           :close-on-content-click="false"
@@ -88,13 +112,13 @@
     >
       <template v-slot:headers="headers">
         <tr class="text-uppercase">
-          <th scope="col">{{$t('msg.BetId')}}</th>
-          <th scope="col">{{$t('msg.gameid')}}</th>
-          <th scope="col">{{$t('msg.Betdetail')}}</th>
-          <th scope="col">{{$t('msg.Time')}}</th>
-          <th scope="col">{{$t('msg.amount')}}</th>
-          <th scope="col">{{$t('msg.payout')}}</th>
-          <th scope="col">{{$t('msg.Bet Status')}}</th>
+          <th scope="col">{{ $t("msg.BetId") }}</th>
+          <th scope="col">{{ $t("msg.gameid") }}</th>
+          <th scope="col">{{ $t("msg.Betdetail") }}</th>
+          <th scope="col">{{ $t("msg.Time") }}</th>
+          <th scope="col">{{ $t("msg.amount") }}</th>
+          <th scope="col">{{ $t("msg.payout") }}</th>
+          <th scope="col">{{ $t("msg.Bet Status") }}</th>
         </tr>
       </template>
       <template v-slot:items="item">
@@ -109,44 +133,49 @@
           <td>{{ item.item.betAmount | toCurrency }}</td>
           <td>{{ item.item.payout }}</td>
           <td v-if="item.item.betResult == 'win'" class="text-uppercase">
-            <span class="win">{{ $t('msg.win') }}</span>
+            <span class="win">{{ $t("msg.win") }}</span>
           </td>
           <td v-if="item.item.betResult == 'lose'">
-            <span class="lose">{{ $t('msg.lose') }}</span>
+            <span class="lose">{{ $t("msg.lose") }}</span>
           </td>
           <td v-if="item.item.betResult == 'pending'">
-            <span class="pending">{{ $t('msg.pending') }}...</span>
+            <span class="pending">{{ $t("msg.pending") }}...</span>
           </td>
         </tr>
         <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
           <td colspan="2">
-            <span class="betDraw">{{$t('bethistory.betdraw')}} :</span>
-            <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
+            <span class="betDraw">{{ $t("bethistory.betdraw") }} :</span>
+            <span
+              class="gameDraw"
+              v-html="$options.filters.lastDraw(item.item.gameDraw)"
+            ></span>
           </td>
           <td colspan="2" class="allDigit">
-            {{$t('gamemsg.firstdigit')}}
+            {{ $t("gamemsg.firstdigit") }}
             <span
               v-html="$options.filters.firstDigit(item.item.gameDraw)"
             ></span>
-            {{$t('gamemsg.lastdigit')}}
+            {{ $t("gamemsg.lastdigit") }}
             <span
               v-html="$options.filters.lastDigit(item.item.gameDraw)"
             ></span>
-            {{$t('gamemsg.bothdigit')}}
+            {{ $t("gamemsg.bothdigit") }}
             <span
               v-html="$options.filters.bothDigit(item.item.gameDraw)"
             ></span>
-            {{$t('gamemsg.twodigit')}}
-            <span
-              v-html="$options.filters.twoDigit(item.item.gameDraw)"
-            ></span>
+            {{ $t("gamemsg.twodigit") }}
+            <span v-html="$options.filters.twoDigit(item.item.gameDraw)"></span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount == 0">
-            <span class="betDraw">{{$t('bethistory.yourloosingamount')}} :</span>
+            <span class="betDraw"
+              >{{ $t("bethistory.yourloosingamount") }} :</span
+            >
             <span class="lossAmount">{{ item.item.betAmount }}</span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount != 0">
-            <span class="betDraw">{{$t('bethistory.yourwinningamount')}} :</span>
+            <span class="betDraw"
+              >{{ $t("bethistory.yourwinningamount") }} :</span
+            >
             <span class="winAmount">{{ item.item.rollingAmount }}</span>
           </td>
         </tr>
@@ -166,7 +195,11 @@
       </template>
     </v-data-table>
     <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
-      <v-pagination v-model="pagination.page" color="#1db42f" :length="10"></v-pagination>
+      <v-pagination
+        v-model="pagination.page"
+        color="#1db42f"
+        :length="10"
+      ></v-pagination>
     </div>
   </div>
 </template>
@@ -180,7 +213,7 @@ export default {
       dateFrom: new Date().toISOString().substr(0, 10),
       from: false,
       to: false,
-      items: ["Today","This Week","This Month"],
+      items: ["Today", "This Week", "This Month"],
       itemss: "",
       itemspage: [5, 10, 25, 50, 100],
       itemspages: 5,

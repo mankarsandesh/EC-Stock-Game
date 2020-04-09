@@ -122,8 +122,8 @@ export default {};
 .titile {
   padding-left: 5px;
 }
-.filter_container{
-    margin-bottom:30px
+.filter_container {
+  margin-bottom: 30px;
 }
 .filter-title {
   font-weight: bold;
