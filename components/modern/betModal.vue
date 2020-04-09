@@ -128,7 +128,7 @@ export default {
       result.rule_data.map((items, index) => {
         if ($("#" + this.stockName + this.betId).hasClass(items.type)) {
           items.rules.map((item, index) => {
-            if ($("#" + this.betId).hasClass(item.name)) {
+            if ($("#" + this.stockName + this.betId).hasClass(item.name)) {
               /* ----------------------------- // First digit ----------------------------- */
 
               if (items.type === "firstdigit") {
@@ -136,18 +136,18 @@ export default {
                 if (result) {
                   console.log("You Win first :" + item.name + ":" + first);
                   $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.betId).addClass(
+                  $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
                     $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.betId).removeClass(
+                    $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
                   $("#" + this.betWin).removeClass(this.betWin);
                   console.log("==You==lose==first==" + item.name + "==");
                 }
@@ -160,18 +160,18 @@ export default {
                 if (result) {
                   console.log("You Win last :" + item.name + ":" + last);
                   $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.betId).addClass(
+                  $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
                     $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.betId).removeClass(
+                    $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
                   $("#" + this.betWin).removeClass(this.betWin);
                   console.log("==You==lose==last==" + item.name + "==");
                 }
@@ -186,18 +186,18 @@ export default {
                     "You Win bothdigit:" + item.name + ":" + bothdigit
                   );
                   $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.betId).addClass(
+                  $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
                     $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.betId).removeClass(
+                    $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
                   $("#" + this.betWin).removeClass(this.betWin);
                   console.log("==You==lose==last==" + item.name + "==");
                 }
@@ -209,18 +209,18 @@ export default {
                 if (result) {
                   console.log("You Win twoDigit:" + item.name + ":" + twoDigit);
                   $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.betId).addClass(
+                  $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
                     $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.betId).removeClass(
+                    $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
                   $("#" + this.betWin).removeClass(this.betWin);
                   console.log("==You==lose==last==" + item.name + " ==");
                 }

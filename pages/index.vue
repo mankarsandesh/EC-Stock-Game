@@ -26,39 +26,16 @@ import config from "../config/config.global";
 import { isMobile } from "mobile-device-detect";
 export default {
   layout: "nolayout",
-  middleware: "getApiKey",
+  middleware: ["getApiKey", "checkAuth"],
 
   data() {
     return {
       getUserAuthInfo: "",
-      authUser: "",
-      referrerURL: document.referrer.match(/:\/\/(.[^/]+)/)[1],
       stockname: "btc1",
-      linkto: "",
-      portalProviderUUID: this.$route.query.portalProviderUUID,
-      portalProviderUserID: this.$route.query.portalProviderUserID,
-      balance: this.$route.query.balance,
-      userData: [],
-      messageError: []
+      linkto: ""
     };
   },
   mounted() {
-    if (!this.portalProviderUUID) {
-      const error = "portalProviderUUID field is Missing";
-      this.messageError.push(error);
-    }
-    if (!this.portalProviderUserID) {
-      const error = "portalProviderUserID field is Missing";
-      this.messageError.push(error);
-    }
-    if (!this.balance) {
-      const error = "balance field is Missing";
-      this.messageError.push(error);
-    }
-    if (!this.referrerURL) {
-      const error = "Somthing Wrong.";
-      this.messageError.push(error);
-    }
     this.checlUserAuth();
   },
   watch: {
@@ -71,22 +48,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "UserAuth",
+      "messageError"
+    ])
   },
   methods: {
     async checlUserAuth() {
       try {
-        const userData = {
-          portalProviderUUID: this.portalProviderUUID,
-          portalProviderUserID: this.portalProviderUserID,
-          version: 0.1,
-          ip: "225.457.454.123",
-          domain: this.referrerURL,
-          balance: this.balance
-        };
         const { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
-          userData, // data object
+          this.UserAuth, // data object
           {
             headers: config.header
           }
@@ -96,18 +70,12 @@ export default {
           const userInfo = {
             authUser: config.authUser,
             authPassword: config.authPassword,
-            portalProviderUUID: this.portalProviderUUID,
+            portalProviderUUID: this.UserAuth.portalProviderUUID,
             userId: data.data[0].userUUID,
-            redirect: this.referrerURL
+            redirect: this.UserAuth.referrerURL
           };
-          this.setPortalProviderUUID(userInfo.portalProviderUUID);
           this.setUserUUID(userInfo.userId);
-          localStorage.setItem(
-            "PORTAL_PROVIDERUUID",
-            userInfo.portalProviderUUID
-          );
           localStorage.setItem("USER_UUID", userInfo.userId);
-          localStorage.setItem("REFERERN_URL", userInfo.redirect);
           let objJsonStr = JSON.stringify(userInfo);
           let buff = new Buffer(objJsonStr);
           let base64data = buff.toString("base64");
@@ -139,7 +107,7 @@ export default {
         console.log(error);
       }
     },
-    ...mapActions(["setAuth", "setPortalProviderUUID", "setUserUUID"]),
+    ...mapActions(["setAuth", "setUserUUID"]),
 
     getProgress() {
       let seft = this;
