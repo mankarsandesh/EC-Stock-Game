@@ -291,8 +291,7 @@ export default {
   },
   props: {
     gameUUID: {
-      type: String,
-      required: true
+      type: String
     }
   },
   data() {
