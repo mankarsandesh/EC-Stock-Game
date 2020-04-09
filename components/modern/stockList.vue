@@ -35,14 +35,14 @@
 
           <td>
             <span
-              v-if="stock.stockOpenOrClosed === 'Closed!'"
+              v-if="stock.stockStatus === 'Closed'"
               :style="{ color: 'red' }"
             >
               Closed
             </span>
             <span
               v-if="
-                stock.stockOpenOrClosed !== 'Closed!' &&
+                stock.stockStatus !== 'Closed' &&
                   getStockListCountdown[index]
               "
               >{{

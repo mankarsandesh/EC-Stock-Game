@@ -70,7 +70,7 @@
                       v-if="
                         getTimerByStockName($route.params.id) &&
                           getTimerByStockName($route.params.id)
-                            .stockOpenOrClosed === 'Closed!'
+                            .stockStatus === 'Closed'
                       "                    
                     >
                       {{
