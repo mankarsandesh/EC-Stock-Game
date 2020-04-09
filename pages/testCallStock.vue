@@ -33,7 +33,7 @@ export default {
   computed: {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID
-      })
+    })
   },
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {

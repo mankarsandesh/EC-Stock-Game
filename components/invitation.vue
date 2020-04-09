@@ -3,7 +3,7 @@
     trigger="click"
     :options="{
       placement: 'bottom-top',
-      modifiers: { offset: { offset: '65px' } },
+      modifiers: { offset: { offset: '65px' } }
     }"
   >
     <div class="popper">
@@ -29,21 +29,14 @@
         <!-- for EC World -->
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
-               <div class="filter">
-                  <b>Filter</b> 
-                  <span class="rank">
-                      Winning Rank
-                  </span>
-                   <span class="rate">
-                      Winning Rate
-                   </span>
-                    <span class="follow">
-                      Winning Followers
-                   </span>
-              </div> 
-              
+            <div class="filter">
+              <span v-for="item in filterNames" :key="item.name">
+                <span class="rank filterSpan">
+                  {{ item.value }}
+                </span>
+              </span>
+            </div>
             <div class="bodyChat">
-              
               <div class="msgUser follow">
                 <div class="messageChatView">
                   <div>
@@ -66,7 +59,18 @@
                     <v-btn class="view">View</v-btn>
                   </div>
                   <div>
-                    <v-btn class="following">Follow</v-btn>
+                    <v-btn
+                      class="following"
+                      v-on:click="
+                        followUser(
+                          null,
+                          null,
+                          'ef60e64b-dc17-4ff1-9f22-a177c6f1c204',
+                          '0'
+                        )
+                      "
+                      >Follow</v-btn
+                    >
                   </div>
                 </div>
               </div>
@@ -125,7 +129,7 @@
                 </div>
               </div>
 
-               <div class="msgUser rate">
+              <div class="msgUser rate">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -152,7 +156,7 @@
                 </div>
               </div>
 
-                 <div class="msgUser follow">
+              <div class="msgUser follow">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -179,7 +183,7 @@
                 </div>
               </div>
 
-               <div class="msgUser follow">
+              <div class="msgUser follow">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -197,14 +201,14 @@
                   <div>
                     <span class="ranking">951</span>
                   </div>
-                  
+
                   <div>
                     <v-btn class="following">Follow</v-btn>
                   </div>
                 </div>
               </div>
 
-               <div class="msgUser rate">
+              <div class="msgUser rate">
                 <div class="messageChatView">
                   <div>
                     <v-img
@@ -230,22 +234,10 @@
                   </div>
                 </div>
               </div>
-
-
             </div>
 
             <div class="messageChat">
               <v-flex col-md-6>
-                <div id="categoryShow" v-if="showCategory == true">
-                  <span>
-                    <v-checkbox
-                      v-for="n in items1"
-                      :key="n"
-                      v-model="checkbox"
-                      :label="`${n.toString()}`"
-                    ></v-checkbox>
-                  </span>
-                </div>
                 <v-btn class="buttonInvitation"
                   >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
                 ></v-btn>
@@ -258,6 +250,15 @@
             </div>
           </div>
         </div>
+
+        <v-dialog v-model="dialog" width="500" class="followDialog">
+          <followBet
+            :username="this.username"
+            :userImage="this.userImage"
+            :FollowerUserUUID="this.FollowUserUUID"
+            :isFollowing="this.FolloworNot"
+          />
+        </v-dialog>
         <!-- for game chanel  -->
         <chanelChat
           v-show="tabActiveName === 'chanel'"
@@ -271,7 +272,6 @@
     </v-btn>
   </popper>
 </template>
-
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
@@ -280,38 +280,48 @@ import io from "socket.io-client";
 import moment from "moment";
 import config from "../config/config.global";
 import chanelChat from "./chanelChat";
+import followBet from "../components/modern/follow/followBet";
 let name = "btc5";
 export default {
   components: {
     chanelChat,
+    followBet,
     popper,
-    config,
+    config
   },
   props: {
     gameUUID: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
+      filterNames: [
+        { name: "", value: "Filter" },
+        { name: "rank", value: "Winning Rank" },
+        { name: "rate", value: "Winning Rate" },
+        { name: "follow", value: "Winning Followers" }
+      ],
+      FolloworNot: "",
+      FollowUserUUID: "",
+      username: "",
+      userImage: "",
+      dialog: false,
       profilePic: "/no-profile-pic.jpg",
-      checkbox: "",
       selectedFruits: [],
-      showCategory: false,
-      items1: ["Winning Rank", "Winning Rate", " Total followers"],
       currentRoute: "",
       messageInput: "",
       pageActiveChanel: [
         "modern-desktop-id",
         "modern-multigame-id",
-        "modern-fullscreen-id",
+        "modern-fullscreen-id"
       ],
       tabActiveName: "world",
       conversationWorld: [],
       connectClient: [],
       totoalUserCount: 0,
-      userId: 0,
+      userId: 0
     };
   },
   computed: {
@@ -323,9 +333,8 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getUserUUID",
-      "getUserName",
       "getStockType",
-      "getStockGameId",
+      "getStockGameId"
     ]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
@@ -333,21 +342,21 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   },
   mounted() {
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
-        eventName: "messageSend",
+        eventName: "messageSend"
       },
       ({ data }) => {
-        data.data.forEach((element) => {
+        data.data.forEach(element => {
           this.getMessagesGame.push({
             name: element.userName,
             userId: element.userUUID,
             message: element.message,
-            date: element.date,
+            date: element.date
           });
         });
       }
@@ -356,17 +365,17 @@ export default {
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
-        eventName: "messageSend",
+        eventName: "messageSend"
       },
       ({ data }) => {
         console.log("world Listing");
         console.log(data);
-        data.data.forEach((element) => {
+        data.data.forEach(element => {
           this.conversationWorld.push({
             name: element.userName,
             userUUID: element.getUserUUID,
             message: element.message,
-            date: element.date,
+            date: element.date
           });
         });
         this.scrollDown();
@@ -382,9 +391,18 @@ export default {
     this.messageInput = "";
   },
   methods: {
-    clickCategory() {
-      console.log("hello");
-      this.showCategory = true;
+    // fetch default image or from server image
+    imgProfile(userImage) {
+      return userImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/` + userImage;
+    },
+    followUser(username, userImage, userUUID, method) {
+      this.username = username;
+      this.FollowUserUUID = userUUID;
+      this.FolloworNot = method;
+      this.userImage = this.imgProfile(userImage);
+      this.dialog = true;
     },
     toggle() {
       this.$nextTick(() => {
@@ -400,7 +418,7 @@ export default {
         .stop()
         .animate(
           {
-            scrollTop: $(".bodyChat")[0].scrollHeight,
+            scrollTop: $(".bodyChat")[0].scrollHeight
           },
           1000
         );
@@ -422,10 +440,10 @@ export default {
               userUUID: this.getUserUUID,
               chatType: 2,
               message: this.messageInput,
-              version: config.version,
+              version: config.version
             },
             {
-              headers: config.header,
+              headers: config.header
             }
           );
           console.log(res);
@@ -450,10 +468,10 @@ export default {
               gameUUID: this.gameUUID,
               chatType: 1,
               message: this.messageInput,
-              version: config.version,
+              version: config.version
             },
             {
-              headers: config.header,
+              headers: config.header
             }
           );
           if (res.status) {
@@ -464,12 +482,24 @@ export default {
         this.sendMsgChanel();
         console.log(ex.message);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
+.followDialog {
+  width: 600px;
+  border-radius: 10px;
+  padding: 10px;
+}
+.followup {
+  padding: 15px 30px;
+  border-radius: 20px;
+}
+.followup h4 {
+  color: #65686f;
+}
 .conve-container {
   position: relative;
   display: flex;
@@ -532,17 +562,18 @@ export default {
   text-align: justify;
   margin: 5px 0px;
 }
-.filter{
-    margin-top:10px;
+.filter {
+  margin-top: 10px;
 }
-.filter span{
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 4px;  
-    padding: 5px;
-    margin:10px 5px;
-    font-size: 12px;
-    color: #8d8c8c;
+
+.filter .filterSpan {
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 10px 5px;
+  font-size: 12px;
+  color: #8d8c8c;
 }
 .follow {
   border: 1px solid orange;
@@ -673,7 +704,7 @@ export default {
   overflow-x: hidden;
   border-radius: 4px;
   margin-bottom: 10px;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .msgBody {

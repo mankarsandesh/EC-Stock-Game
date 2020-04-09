@@ -3,21 +3,25 @@
     <v-flex xs12 md12 mt-5>
       <v-data-table
         :items="currentBets"
-        :items-per-page="5"
+        :items-per-page="10"
         ref="table"
         :search="search"
         class="current-bet"
       >
-        <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
+        <v-progress-linear
+          v-slot:progress
+          color="blue"
+          indeterminate
+        ></v-progress-linear>
         <template v-slot:headers="headers">
           <tr>
-            <th scope="col">{{$t('msg.BetId')}}</th>
-            <th scope="col">{{$t('msg.gameid')}}</th>
-            <th scope="col">{{$t('msg.Betdetail')}}</th>
-            <th scope="col">{{$t('msg.Time')}}</th>
-            <th scope="col">{{$t('msg.amount')}}</th>
-            <th scope="col">{{$t('msg.payout')}}</th>
-            <th scope="col">{{$t('msg.Bet Status')}}</th>
+            <th scope="col">{{ $t("msg.BetId") }}</th>
+            <th scope="col">{{ $t("msg.gameid") }}</th>
+            <th scope="col">{{ $t("msg.Betdetail") }}</th>
+            <th scope="col">{{ $t("msg.Time") }}</th>
+            <th scope="col">{{ $t("msg.amount") }}</th>
+            <th scope="col">{{ $t("msg.payout") }}</th>
+            <th scope="col">{{ $t("msg.Bet Status") }}</th>
           </tr>
         </template>
         <template v-slot:items="item">
@@ -35,27 +39,32 @@
               color="green"
               text-color="white"
               class="text-uppercase betresult"
-            >{{ $t('msg.win') }}</v-chip>
+              >{{ $t("msg.win") }}</v-chip
+            >
           </td>
           <td v-if="item.item.betResult == 'lose'">
             <v-chip
               color="red"
               text-color="white"
               class="text-uppercase betresult"
-            >{{ $t('msg.lose') }}</v-chip>
+              >{{ $t("msg.lose") }}</v-chip
+            >
           </td>
           <td v-if="item.item.betResult == 'pending'">
             <v-chip
               color="yellow "
               text-color="black"
               class="text-uppercase betresult"
-            >{{ $t('msg.pending') }}...</v-chip>
+              >{{ $t("msg.pending") }}...</v-chip
+            >
           </td>
         </template>
         <template slot="footer">
           <tr>
             <td>{{ $t("msg.Total") }}</td>
-            <td colspan="3">{{ currentBets.length }} {{$t('leaderboard.bets')}}</td>
+            <td colspan="3">
+              {{ currentBets.length }} {{ $t("leaderboard.bets") }}
+            </td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>
             </td>

@@ -3,7 +3,7 @@
     trigger="click"
     :options="{
       placement: 'bottom-end',
-      modifiers: { offset: { offset: '65px' } },
+      modifiers: { offset: { offset: '65px' } }
     }"
   >
     <div class="popper">
@@ -83,12 +83,12 @@ export default {
   components: {
     chanelChat,
     popper,
-    config,
+    config
   },
   props: {
     gameUUID: {
-      type: String,
-    },
+      type: String
+    }
   },
   data() {
     return {
@@ -97,22 +97,21 @@ export default {
       pageActiveChanel: [
         "modern-desktop-id",
         "modern-multigame-id",
-        "modern-fullscreen-id",
+        "modern-fullscreen-id"
       ],
       tabActiveName: "world",
       conversationWorld: [],
       connectClient: [],
       totoalUserCount: 0,
-      userId: 0,
+      userId: 0
     };
   },
   computed: {
     ...mapGetters([
       "getPortalProviderUUID",
       "getUserUUID",
-      "getUserName",
       "getStockType",
-      "getStockGameId",
+      "getStockGameId"
     ]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
@@ -121,21 +120,21 @@ export default {
         this.tabActiveName = "world";
         return false;
       }
-    },
+    }
   },
   mounted() {
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
-        eventName: "messageSend",
+        eventName: "messageSend"
       },
       ({ data }) => {
-        data.data.forEach((element) => {
+        data.data.forEach(element => {
           this.getMessagesGame.push({
             name: element.userName,
             userId: element.userUUID,
             message: element.message,
-            date: element.date,
+            date: element.date
           });
         });
       }
@@ -144,17 +143,17 @@ export default {
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
-        eventName: "messageSend",
+        eventName: "messageSend"
       },
       ({ data }) => {
         console.log("world Listing");
         console.log(data);
-        data.data.forEach((element) => {
+        data.data.forEach(element => {
           this.conversationWorld.push({
             name: element.userName,
             userUUID: element.getUserUUID,
             message: element.message,
-            date: element.date,
+            date: element.date
           });
         });
         this.scrollDown();
@@ -175,7 +174,7 @@ export default {
         .stop()
         .animate(
           {
-            scrollTop: $(".bodyChat")[0].scrollHeight,
+            scrollTop: $(".bodyChat")[0].scrollHeight
           },
           1000
         );
@@ -197,10 +196,10 @@ export default {
               userUUID: this.getUserUUID,
               chatType: 2,
               message: this.messageInput,
-              version: config.version,
+              version: config.version
             },
             {
-              headers: config.header,
+              headers: config.header
             }
           );
           console.log(res);
@@ -225,10 +224,10 @@ export default {
               gameUUID: this.gameUUID,
               chatType: 1,
               message: this.messageInput,
-              version: config.version,
+              version: config.version
             },
             {
-              headers: config.header,
+              headers: config.header
             }
           );
           if (res.status) {
@@ -239,8 +238,8 @@ export default {
         this.sendMsgChanel();
         console.log(ex.message);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

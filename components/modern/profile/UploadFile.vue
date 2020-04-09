@@ -15,7 +15,13 @@
       @change="ResizeImage"
     />
 
-    <input type="button" value="Resize Image" hidden id="Submit" @click="ResizeImage" />
+    <input
+      type="button"
+      value="Resize Image"
+      hidden
+      id="Submit"
+      @click="ResizeImage"
+    />
     <br />
 
     <!-- {{message}} -->
@@ -86,7 +92,7 @@ export default {
             // this.imageUrl = dataurl
             // this.$refs.output.src = dataurl;
             console.log(dataurl);
-            // let res = await this.$axios.$post("/api/me/uploadImage?apikey=" + this.$store.state.auth_token, {
+            // let res = await this.$axios.$post("/api/me/uploadImage?apikey=" + this.$store.state.authToken, {
             //     image: dataurl
             // });
             // console.log(res)

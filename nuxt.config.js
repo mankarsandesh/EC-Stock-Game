@@ -126,7 +126,20 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
-    "@nuxtjs/moment"
+    "@nuxtjs/moment",
+    [
+      "nuxt-fontawesome",
+      {
+        component: "fa",
+        imports: [
+          //import whole set
+          {
+            set: "@fortawesome/free-solid-svg-icons",
+            icons: ["fas"]
+          }
+        ]
+      }
+    ]
   ],
   /*
    ** Axios module configuration
@@ -152,8 +165,8 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend: function(config, { isDev, isClient }) {
-      if (isClient) {
-        config.devtool = "#source-map";
+      if (isDev) {
+        config.devtool = isClient ? "source-map" : "inline-source-map";
       }
       config.node = {
         fs: "empty"

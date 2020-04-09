@@ -10,12 +10,15 @@
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateStart = !isShowDateStart">
+          <div
+            class="date_picker_container"
+            @click="isShowDateStart = !isShowDateStart"
+          >
             <div class="title_date_picker">
               <span>from</span>
             </div>
             <div class="date_picker">
-              <span class="select_date">{{startDate}}</span>
+              <span class="select_date">{{ startDate }}</span>
               <span class="icon_date">
                 <v-icon>date_range</v-icon>
               </span>
@@ -31,19 +34,26 @@
         </v-flex>
         <!-- select end date -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="isShowDateEnd = !isShowDateEnd">
+          <div
+            class="date_picker_container"
+            @click="isShowDateEnd = !isShowDateEnd"
+          >
             <div class="title_date_picker">
               <span>to</span>
             </div>
             <div class="date_picker">
-              <span class="select_date">{{endDate}}</span>
+              <span class="select_date">{{ endDate }}</span>
               <span class="icon_date">
                 <v-icon>date_range</v-icon>
               </span>
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+            <v-date-picker
+              v-if="isShowDateEnd"
+              v-model="endDate"
+              @input="isShowDateEnd = false"
+            ></v-date-picker>
           </div>
         </v-flex>
         <!-- go button -->
@@ -82,18 +92,22 @@
     </v-flex>
     <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5 pr-5">
       <div class="chart_container">
-        <onlineChart v-if="chartData.length>0" :chartData="chartData" :xaxis="xaxis" />
+        <onlineChart
+          v-if="chartData.length > 0"
+          :chartData="chartData"
+          :xaxis="xaxis"
+        />
       </div>
     </v-flex>
     <v-flex xs12 class="pt-3 pl-5">
       <div>
         <span style="margin-right:30px">
           player id :
-          <b>{{getUserInfo.PID}}</b>
+          <b>{{ getUserInfo.PID }}</b>
         </span>
         <span style="margin-right:30px">
-          online time : {{getUserInfo.currentActiveTime}}
-          <b>{{setUserData.currentActiveTime}}</b>
+          online time : {{ getUserInfo.currentActiveTime }}
+          <b>{{ setUserData.currentActiveTime }}</b>
         </span>
         <span style="margin-right:30px">
           total online :
@@ -111,7 +125,7 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import uploadprofile from "./UploadFile";
 import onlineChart from "./onlinechart";
-import config from '../../../config/config.global';
+import config from "../../../config/config.global";
 export default {
   components: {
     onlineChart

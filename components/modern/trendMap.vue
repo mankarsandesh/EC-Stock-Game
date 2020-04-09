@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout wrap>
-      <v-flex 
+      <v-flex
         :class="setClass(' pl-3 pb-5')"
         style="margin-top:10px;"
         v-show="which_one == 'B/S' || which_one == !isFullscreen"
@@ -11,9 +11,9 @@
           <span class="countSmall text-grey"></span>
         </div>
         <div class="bs-coltabledivlast">
-          <table class="table-responsive RoadMapTable" ref="tablebsTwo" >
-            <tr v-for="(tr,index) in rowTable" :key="index">
-              <td v-for="(td,index) in BSLength" :key="index"></td>
+          <table class="table-responsive RoadMapTable" ref="tablebsTwo">
+            <tr v-for="(tr, index) in rowTable" :key="index">
+              <td v-for="(td, index) in BSLength" :key="index"></td>
             </tr>
           </table>
         </div>
@@ -30,8 +30,8 @@
         </div>
         <div class="oe-coltabledivlast">
           <table class="table-responsive RoadMapTable" ref="tableOETwo">
-            <tr v-for="(tr,index) in rowTable" :key="index">
-              <td v-for="(td,index) in OELength" :key="index"></td>
+            <tr v-for="(tr, index) in rowTable" :key="index">
+              <td v-for="(td, index) in OELength" :key="index"></td>
             </tr>
           </table>
         </div>
@@ -49,8 +49,8 @@
         </div>
         <div class="ul-coltabledivlast">
           <table class="table-responsive RoadMapTable" ref="tablebUMLTwo">
-            <tr v-for="(tr,index) in rowTable" :key="index">
-              <td v-for="(td,index) in HMLLength" :key="index"></td>
+            <tr v-for="(tr, index) in rowTable" :key="index">
+              <td v-for="(td, index) in HMLLength" :key="index"></td>
             </tr>
           </table>
         </div>
@@ -71,8 +71,8 @@
         </div>
         <div class="num-coltabledivlast">
           <table class="table-responsive RoadMapTable" ref="tableNumberTwo">
-            <tr v-for="(tr,index) in rowTable" :key="index">
-              <td v-for="(td,index) in Numlength" :key="index"></td>
+            <tr v-for="(tr, index) in rowTable" :key="index">
+              <td v-for="(td, index) in Numlength" :key="index"></td>
             </tr>
           </table>
         </div>
@@ -1152,5 +1152,4 @@ p {
 .padding {
   padding-top: 10px;
 }
-
 </style>

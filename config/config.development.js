@@ -1,11 +1,11 @@
 const config = {
   version: "1",
-  authUser : `${process.env.AUTHUSER}`,
-  authPassword : `${process.env.AUTHPASS}`,
+  authUser: `${process.env.AUTHUSER}`,
+  authPassword: `${process.env.AUTHPASS}`,
   apiDomain: process.env.API_DOMIAN,
   socketUrl: process.env.SOCKETURL,
   baseUrl: process.env.BASE_URL,
-  secretKey:"CC21128A312FAF7817C93D1B51CB9",
+  secretKey: "CC21128A312FAF7817C93D1B51CB9",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
@@ -57,13 +57,12 @@ const config = {
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
-  },
+  }
   // loggly: {
   //   token: '852204e4-2752-4d9c-9b1c-f9f2152c2f40',
   //   subdomain: 'localhost',
   //   tags: ["Winston-VueJs"]
   // }
-
 };
 
 export default config;

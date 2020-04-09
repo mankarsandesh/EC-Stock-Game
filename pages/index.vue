@@ -84,7 +84,6 @@ export default {
           domain: this.referrerURL,
           balance: this.balance
         };
-        console.log(userData);
         const { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
           userData, // data object
@@ -132,7 +131,7 @@ export default {
             this.messageError.push(error);
           }
         } else {
-          const error = "Somthing Wrong Please check.";
+          const error = data.message;
           this.messageError.push(error);
         }
         // location.reload(true);
@@ -202,11 +201,11 @@ export default {
 <style scoped>
 .errorBox {
   background-color: #fff;
-
   margin-bottom: 20px;
+  padding: 5px;
+  font-size: 23px;
 }
 .errorBox h2 {
   color: #333;
 }
 </style>
-

@@ -255,7 +255,7 @@ export default {
   mounted() {},
   watch: {},
   computed: {
-    ...mapGetters(["getAllStocks", "getTimerByStockName","getStockLivePrice"])
+    ...mapGetters(["getAllStocks", "getTimerByStockName", "getStockLivePrice"])
   },
   methods: {
     filterClick() {

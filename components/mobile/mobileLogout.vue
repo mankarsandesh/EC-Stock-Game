@@ -10,9 +10,9 @@
             <img :src="imgProfile" alt />
           </v-avatar>
           <div class="userLogoutMenu">
-            <span>{{getUserName.name}}</span>
+            <span>{{ getUserName }}</span>
             <span>
-              {{$t('msg.acc')}}:
+              {{ $t("msg.acc") }}:
               <animated-number
                 :value="getUserInfo.balance"
                 :formatValue="formatToPrice"
@@ -27,27 +27,34 @@
         <v-list-tile @click="dialogprofile = true" v-show="isShow == 'classic'">
           <v-list-tile-title>Profile</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile @click="$router.push('/modern/profile');" v-show="isShow == 'modern'">
+        <v-list-tile
+          @click="$router.push('/modern/profile')"
+          v-show="isShow == 'modern'"
+        >
           <i class="fa fa-user fa-2x margin-right-5" />
-          <v-list-tile-title>{{$t('menu.profile')}}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("menu.profile") }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
           @click="$refs.onlineHistory.showDialogOnlineHistory()"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.onlinehistory')}}</v-list-tile-title>
+          <v-list-tile-title>{{
+            $t("profile.onlinehistory")
+          }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
           @click="$refs.stockAnalysis.showDialogStockAnalysis()"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-line-chart fa-15x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.stockanalysis')}}</v-list-tile-title>
+          <v-list-tile-title>{{
+            $t("profile.stockanalysis")
+          }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.signout')}}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -170,7 +177,7 @@ export default {
             showConfirmButton: false,
             timer: 1500
           }).then(Confirm => {
-            this.$store.state.provider.auth_token = [];
+            this.$store.state.provider.authToken = [];
             localStorage.apikey = [];
             window.close();
           });

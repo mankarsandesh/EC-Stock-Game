@@ -41,7 +41,7 @@
           </div>
         </v-flex>
         <v-flex xs3 pt-1>
-          <button class="btn_go">{{$t('msg.go')}}</button>
+          <button class="btn_go">{{ $t("msg.go") }}</button>
         </v-flex>
       </v-layout>
 
@@ -118,8 +118,8 @@ export default {};
 .titile {
   padding-left: 5px;
 }
-.filter_container{
-    margin-bottom:30px
+.filter_container {
+  margin-bottom: 30px;
 }
 .filter-title {
   font-weight: bold;

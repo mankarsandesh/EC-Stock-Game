@@ -10,12 +10,9 @@
       <v-layout row>
         <!-- select start date  -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div
-            class="date_picker_container"
-            @click="startDateClick"
-          >
+          <div class="date_picker_container" @click="startDateClick">
             <div class="title_date_picker">
-              <span>{{$t('msg.from')}}</span>
+              <span>{{ $t("msg.from") }}</span>
             </div>
             <div class="date_picker">
               <span class="select_date">{{ startDate }}</span>
@@ -34,12 +31,9 @@
         </v-flex>
         <!-- select end date -->
         <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div
-            class="date_picker_container"
-            @click="endDateClick"
-          >
+          <div class="date_picker_container" @click="endDateClick">
             <div class="title_date_picker">
-              <span>{{$t('msg.to')}}</span>
+              <span>{{ $t("msg.to") }}</span>
             </div>
             <div class="date_picker">
               <span class="select_date">{{ endDate }}</span>
@@ -62,7 +56,7 @@
             <div class="title_date_picker">
               <span></span>
             </div>
-            <button @click="getStockAnalysis">{{$t('msg.go')}}</button>
+            <button @click="getStockAnalysis">{{ $t("msg.go") }}</button>
           </div>
         </v-flex>
       </v-layout>
@@ -80,7 +74,9 @@
             }}</span>
           </span>
         </div>
-        <p class='no-data' v-if="!isDataValid"><strong>{{ error }}</strong></p>
+        <p class="no-data" v-if="!isDataValid">
+          <strong>{{ error }}</strong>
+        </p>
         <apexchart
           v-if="isDataValid"
           type="bar"
@@ -233,16 +229,16 @@ export default {
   },
   methods: {
     checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), 'YYYY-MM-DD');
-      if(endDate > now || !(endDate >= startDate)) {
+      const now = date.format(new Date(), "YYYY-MM-DD");
+      if (endDate > now || !(endDate >= startDate)) {
         return false;
       }
       return true;
     },
     async getStockAnalysis() {
       try {
-        if(!this.checkValidDate(this.startDate, this.endDate)) {
-          throw new Error('Please select a valid date');
+        if (!this.checkValidDate(this.startDate, this.endDate)) {
+          throw new Error("Please select a valid date");
         }
         const res = await this.$axios.$post(
           config.getUserBetAnalysis.url,
@@ -260,13 +256,13 @@ export default {
           }
         );
         if (res.code === 200) {
-          if(res.data.length) {
+          if (res.data.length) {
             this.isDataValid = true;
-            this.error = '';
+            this.error = "";
             this.stockAnalysis = res.data;
           } else {
             this.isDataValid = false;
-            this.error = 'No data to display';
+            this.error = "No data to display";
           }
         } else {
           throw new Error(res.message.dateRangeTo[0]);
@@ -277,8 +273,8 @@ export default {
           type: "error",
           showConfirmButton: true
         });
-        if(ex.message == 'Please select a valid date') {
-          this.error = 'Please select a valid date';
+        if (ex.message == "Please select a valid date") {
+          this.error = "Please select a valid date";
           this.isDataValid = false;
         }
         console.log(ex.message);

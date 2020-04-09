@@ -1,27 +1,40 @@
 <template>
-  <v-container grid-list-md text-xs-center fluid grid-list-lg fill-height class="bg-gmaeType">
+  <v-container
+    grid-list-md
+    text-xs-center
+    fluid
+    grid-list-lg
+    fill-height
+    class="bg-gmaeType"
+  >
     <v-container>
       <v-layout row wrap align-center justify-center>
         <v-flex xs12>
-          <h1 class="display-1">{{$t('msg.ChooseTheVersionToPlay')}}</h1>
+          <h1 class="display-1">{{ $t("msg.ChooseTheVersionToPlay") }}</h1>
         </v-flex>
         <v-flex xs12>
           <v-img src="/bg/gameType.png" />
           <v-layout row wrap align-end justify-space-around>
             <v-btn
-              :to="stockname == '' ? '/classic/l-btc1-live':'/classic/l-'+stockname+'-live'"
+              :to="
+                stockname == ''
+                  ? '/classic/l-btc1-live'
+                  : '/classic/l-' + stockname + '-live'
+              "
               :large="$vuetify.breakpoint.smAndUp"
               :small="$vuetify.breakpoint.smAndDown"
               color="red"
               class="white--text"
-            >{{$t('msg.ClassicVersion')}}</v-btn>
+              >{{ $t("msg.ClassicVersion") }}</v-btn
+            >
             <v-btn
               :to="linkto"
               :large="$vuetify.breakpoint.smAndUp"
               :small="$vuetify.breakpoint.smAndDown"
               color="green"
               class="white--text"
-            >{{$t('msg.ModernVersion')}}</v-btn>
+              >{{ $t("msg.ModernVersion") }}</v-btn
+            >
           </v-layout>
         </v-flex>
       </v-layout>
@@ -66,7 +79,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getLocale", "getUserName"]),
+    ...mapGetters(["getLocale"]),
     countryflag() {
       return this.getLocale;
     }
@@ -74,7 +87,6 @@ export default {
   methods: {}
 };
 </script>
-
 
 <style lang="scss">
 .bg-gmaeType {

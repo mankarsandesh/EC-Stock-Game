@@ -1,32 +1,48 @@
 <template>
   <div>
     <v-layout>
-      <v-flex pa-2 class="headerStockBar">{{$t('menu.stock list')}}</v-flex>
+      <v-flex pa-2 class="headerStockBar">{{ $t("menu.stock list") }}</v-flex>
     </v-layout>
 
-    <div class="table-responsive">     
-      <table class="table" v-if="getStockListTimer.length===2">
+    <div class="table-responsive">
+      <table class="table" v-if="getStockListTimer.length === 2">
         <tr>
-          <th>{{$t('msg.Stock Name')}}</th>
-          <th>{{$t("msg.liveprice")}}</th>
-          <th>{{$t("msg.Status")}}</th>
-          <th>{{$t("msg.Countdown")}}</th>
+          <th>{{ $t("msg.Stock Name") }}</th>
+          <th>{{ $t("msg.liveprice") }}</th>
+          <th>{{ $t("msg.Status") }}</th>
+          <th>{{ $t("msg.Countdown") }}</th>
         </tr>
-        <tr v-for="(data,index) in getStockListTimer[0]" :key="index">
+        <tr v-for="(data, index) in getStockListTimer[0]" :key="index">
           <td>
-            <nuxt-link
-              :to="'/modern/desktop/'+data.stockName"
-            >{{ $t(`stockname.${data.stockName}`) }}{{ data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
+            <nuxt-link :to="'/modern/desktop/' + data.stockName"
+              >{{ $t(`stockname.${data.stockName}`)
+              }}{{ data.stockName == "btc5" ? "5" : "" }}</nuxt-link
+            >
           </td>
           <td
-            v-html="$options.filters.livePriceColor(data.stockPrice ,getStockListTimer[1][index].stockPrice)"
+            v-html="
+              $options.filters.livePriceColor(
+                data.stockPrice,
+                getStockListTimer[1][index].stockPrice
+              )
+            "
           ></td>
-          <td v-if="data.stockOpenOrClosed==='Closed!'">{{data.stockOpenOrClosed}}</td>
+          <td v-if="data.stockOpenOrClosed === 'Closed!'">
+            {{ data.stockOpenOrClosed }}
+          </td>
 
           <td v-else>
-            <span>{{data.gameEndTimeCountDownInSec | betstatus(getStockLoop(data.stockName))}}</span>
+            <span>{{
+              data.gameEndTimeCountDownInSec
+                | betstatus(getStockLoop(data.stockName))
+            }}</span>
           </td>
-          <td>{{data.gameEndTimeCountDownInSec | lotterydraw(getStockLoop(data.stockName)) }}</td>        
+          <td>
+            {{
+              data.gameEndTimeCountDownInSec
+                | lotterydraw(getStockLoop(data.stockName))
+            }}
+          </td>
         </tr>
       </table>
     </div>
@@ -45,13 +61,8 @@ export default {
       "getPreviousPrice"
     ])
   },
-  created() {
-  },
-  methods: {
-    ...mapActions([
-      'setStockListTimer'
-    ])
-  }
+  created() {},
+  methods: {}
 };
 </script>
 <style scoped>

@@ -76,14 +76,14 @@ import config from "../config/config.global";
 export default {
   components: {
     AnimatedNumber,
-    AppDialogsConfirm,
+    AppDialogsConfirm
   },
   data() {
     return {
       dialogConfirm: false,
       profileImage: "",
       dialogprofile: false,
-      isShow: "",
+      isShow: ""
     };
   },
   computed: {
@@ -92,7 +92,7 @@ export default {
       return this.getUserInfo.profileImage === null
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-    },
+    }
   },
   mounted() {
     this.isShow = location.pathname.split("/")[1];
@@ -115,8 +115,8 @@ export default {
         .toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
-    },
-  },
+    }
+  }
 };
 </script>
 

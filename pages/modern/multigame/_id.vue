@@ -1,12 +1,24 @@
 <template>
   <div style="margin-bottom:250px">
     <v-layout wrap>
-      <v-flex xs6 d-flex v-for="(stockid,index) in getStockMultiGame" :key="stockid">
+      <v-flex
+        xs6
+        d-flex
+        v-for="(stockid, index) in getStockMultiGame"
+        :key="stockid"
+      >
         <div class="border-flex">
-          <multigame :class="index%2==0 ?'pl-0':'pr-0'" :stockid="stockid"></multigame>
+          <multigame
+            :class="index % 2 == 0 ? 'pl-0' : 'pr-0'"
+            :stockid="stockid"
+          ></multigame>
         </div>
       </v-flex>
-      <v-flex xs6 class="pt-5 d-flex align-center" v-if="getStockMultiGame.length < 4">
+      <v-flex
+        xs6
+        class="pt-5 d-flex align-center"
+        v-if="getStockMultiGame.length < 4"
+      >
         <div>
           <stockSelect />
         </div>
@@ -26,7 +38,7 @@ export default {
   components: {
     stockSelect,
     multigame,
-    bottomBetMultigame 
+    bottomBetMultigame
   },
   data() {
     return {};
@@ -35,7 +47,7 @@ export default {
   mounted() {
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
-    
+
     this.addStockMultiGame(this.$route.params.id);
   },
   methods: {

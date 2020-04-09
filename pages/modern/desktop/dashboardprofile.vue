@@ -1,7 +1,7 @@
 <template>
   <div xs2>
     <section class="breadcrumbs">
-      <v-container>
+      <v-container md10>
         <v-parallax dark height="150">
           <v-layout align-center row>
             <v-flex xs6>
@@ -11,7 +11,8 @@
                   @click="$router.push('/modern/desktop/profile/')"
                 >
                   <div class="profile-crowd">
-                    <v-icon dark>home</v-icon>
+                    <!-- <v-icon dark>home</v-icon> -->
+                    <fa icon="crown" style="font-size: 17px; color: orange;" />
                   </div>
                   <img
                     width="100%"
@@ -68,22 +69,39 @@
           <div class="container-content">
             <div class="box-container">
               <div class="cul-box" style="color: #7e57c2;">
-                <v-icon color="#7e57c2" :size="50">home</v-icon>
+                <span>
+                  <fa
+                    icon="percentage"
+                    style="font-size: 40px; color: #7e57c2;"
+                  />
+                </span>
                 <span class="number-box">95%</span>
                 <span class="des-title text-uppercase">wining rate</span>
               </div>
               <div class="cul-box cul-box-green">
-                <v-icon color="#ace6af" :size="50">home</v-icon>
+                <span>
+                  <fa
+                    icon="money-bill-wave"
+                    style="font-size: 40px; color: #ace6af;"
+                  />
+                </span>
                 <span class="number-box">1200</span>
                 <span class="des-title text-uppercase">total bets</span>
               </div>
               <div class="cul-box cul-box-red">
-                <v-icon color="#f28691" :size="50">home</v-icon>
+                <span>
+                  <fa icon="users" style="font-size: 40px; color: #f28691;" />
+                </span>
                 <span class="number-box">995</span>
                 <span class="des-title text-uppercase">followers</span>
               </div>
               <div class="cul-box cul-box-yellow">
-                <v-icon color="#ffd682" :size="50">home</v-icon>
+                <span>
+                  <fa
+                    icon="money-bill-alt"
+                    style="font-size: 40px; color: #ffd682;"
+                  />
+                </span>
                 <span class="number-box">100000</span>
                 <span class="des-title text-uppercase">wining amount</span>
               </div>
@@ -113,39 +131,39 @@ export default {
   layout: "desktopModern",
   components: {
     Button,
-    VueApexCharts,
+    VueApexCharts
   },
   data() {
     return {
-      filter: "1 week",
-      items: ["1 week", "1 month", "2 month", "3 month"],
+      filter: "1 Week",
+      items: ["1 Week", "1 Month", "3 Month", "6 Month"],
       series: [
         {
-          data: [21, 22, 10, 28, 16, 0, 0, 0, 0],
-        },
+          data: [21, 22, 10, 28, 16, 0, 0, 0, 0]
+        }
       ],
       chartOptions: {
         chart: {
           height: 350,
           type: "bar",
           events: {
-            click: function (chart, w, e) {
+            click: function(chart, w, e) {
               // console.log(chart, w, e)
-            },
-          },
+            }
+          }
         },
         colors: ["#2E93fA", "#66DA26", "#546E7A", "#E91E63", "#FF9800"],
         plotOptions: {
           bar: {
             columnWidth: "45%",
-            distributed: true,
-          },
+            distributed: true
+          }
         },
         dataLabels: {
-          enabled: false,
+          enabled: false
         },
         legend: {
-          show: false,
+          show: false
         },
         xaxis: {
           categories: [
@@ -157,17 +175,17 @@ export default {
             "2020-04-04",
             "2020-04-05",
             "2020-04-06",
-            "2020-04-07",
+            "2020-04-07"
           ],
           labels: {
             style: {
-              fontSize: "12px",
-            },
-          },
-        },
-      },
+              fontSize: "12px"
+            }
+          }
+        }
+      }
     };
-  },
+  }
 };
 </script>
 <style scoped>
@@ -235,7 +253,7 @@ export default {
   background-color: #8b4448;
   top: -12px;
   right: -9px;
-  padding: 2px;
+  padding: 4px;
 }
 .profile-img-container {
   cursor: pointer;

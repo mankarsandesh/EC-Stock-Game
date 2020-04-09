@@ -1398,7 +1398,6 @@ export default {
       "getLiveTime",
       "getCheckStock",
       "getCoinsModern",
-      "getStockCrawlerData",
       "getAllBettingAmount",
       "getAuthToken",
       "getBetAmountRuleID",
@@ -1503,7 +1502,6 @@ export default {
       console.log(data);
       this.confirmDisabled = true;
       this.sendBetting(data);
-      // console.warn(this.getOnBetting);
     },
     async sendBetting(betData) {
       try {
@@ -1526,7 +1524,6 @@ export default {
           this.bettingDialog = false;
           this.reviewbetDialog = false;
           this.pushDataOnGoingBet(res.data[0]);
-          // console.warn(this.getOnBetting);
           this.$swal({
             type: "success",
             title: "Confirm!",

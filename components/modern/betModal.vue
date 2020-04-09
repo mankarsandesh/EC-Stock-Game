@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-            betId.split("-")[1] >= 0
-            ? $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            betId.split("-")[1]
-            : $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            $t("gamemsg." + betId.split("-")[1])
+              betId.split("-")[1] >= 0
+                ? $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  betId.split("-")[1]
+                : $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  $t("gamemsg." + betId.split("-")[1])
             }}
           </span>
         </h3>
@@ -31,7 +31,12 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -52,7 +57,13 @@
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
           <v-flex style="align-self:center">
-            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -69,11 +80,10 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-        >{{ $t("msg.confirm") }}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn
+        >
         <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{
-          $t("msg.cancel")
-          }}
+          {{ $t("msg.cancel") }}
         </v-btn>
       </v-flex>
     </v-layout>
@@ -99,7 +109,6 @@ export default {
       "getStockLoop",
       "getGameUUIDByStockName",
       "getCoinsModern",
-      "getOnBetting",
       "getAuthToken",
       "getStockId",
       "getStockGameId",
@@ -117,7 +126,7 @@ export default {
       const bothdigit = first + last;
       const twoDigit = first + last;
       result.rule_data.map((items, index) => {
-        if ($("#" + this.betId).hasClass(items.type)) {
+        if ($("#" + this.stockName + this.betId).hasClass(items.type)) {
           items.rules.map((item, index) => {
             if ($("#" + this.betId).hasClass(item.name)) {
               /* ----------------------------- // First digit ----------------------------- */
@@ -221,22 +230,6 @@ export default {
         }
       });
     }
-    //  if (item.rule == first) {
-    //             // console.log("This is the First :" + item.name);
-    //           }
-    // clearRoadMap(val) {
-    //   if (!val) {
-    //     $("#" + this.betId).addClass(this.betId.split("-")[0] + "-animation");
-    //     setTimeout(() => {
-    //       console.log("wait for 5 second");
-    //       $("#" + this.betId).removeClass(this.betId.split("-")[0]);
-    //       $("#" + this.betId).removeClass(
-    //         this.betId.split("-")[0] + "-animation"
-    //       );
-    //     }, 5000);
-    //   }
-    //   // $("#" + this.betId).removeClass("bet-animation");
-    // }
   },
   created() {
     // check is full screen or not
@@ -313,7 +306,7 @@ export default {
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
-      $("#" + this.betId).addClass(
+      $("#" + this.stockName + this.betId).addClass(
         this.betId.split("-")[0] + " " + this.betId.split("-")[1]
       );
     },
@@ -379,4 +372,3 @@ input[type="number"] {
   cursor: pointer;
 }
 </style>
-

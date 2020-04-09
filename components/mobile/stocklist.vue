@@ -4,24 +4,26 @@
       <table class="v-datatable v-table theme--light">
         <thead>
           <tr>
-            <th>{{$t('msg.Stock Name')}}</th>
-            <th>{{$t("msg.liveprice")}}</th>
-            <th class="text-left">{{$t("msg.reference")}}</th>
+            <th>{{ $t("msg.Stock Name") }}</th>
+            <th>{{ $t("msg.liveprice") }}</th>
+            <th class="text-left">{{ $t("msg.reference") }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,index) in stocks" :key="index">
-            <td>{{item.stockName}}</td>
+          <tr v-for="(item, index) in stocks" :key="index">
+            <td>{{ item.stockName }}</td>
             <td
-              :class="{'text-red': currentPrice,'text-green': !currentPrice}"
-            >{{checkStock(item.stockPrice)}}</td>
+              :class="{ 'text-red': currentPrice, 'text-green': !currentPrice }"
+            >
+              {{ checkStock(item.stockPrice) }}
+            </td>
             <td class="text-left">
               <a
                 :href="item.referenceUrl"
                 target="_blank"
                 style="overflow-y: auto; white-space: nowrap;"
               >
-                <b>{{item.referenceUrl}}</b>
+                <b>{{ item.referenceUrl }}</b>
               </a>
             </td>
           </tr>
@@ -36,7 +38,7 @@ export default {
   props: ["item"],
   data() {
     return {
-      items: ["ascending","descending"],
+      items: ["ascending", "descending"],
       last_price: 0,
       stockStatus: false,
       currentPrice: null,
