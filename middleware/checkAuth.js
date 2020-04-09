@@ -3,9 +3,8 @@ export default function ({ query, store, redirect }) {
   if (referrerURL == undefined) {
     localStorage.setItem("referrerURL", document.referrer.match(/:\/\/(.[^/]+)/)[1]);
   }
-
   if (Object.keys(query).length !== 0) {
-    const messageError = []
+    let messageError = []
     if (!query.portalProviderUUID) {
       const error = "portalProviderUUID field is Missing";
       messageError.push(error);
@@ -34,7 +33,7 @@ export default function ({ query, store, redirect }) {
       store.commit("SET_USER_AUTH", UserAuth)
       store.dispatch("setPortalProviderUUID", UserAuth)
     }
-    store.commit("SET_USER_AUTH_ERROR", query.portalProviderUUID)
+    store.commit("SET_USER_AUTH_ERROR", query.messageError)
 
   } else {
     redirect(referrerURL)

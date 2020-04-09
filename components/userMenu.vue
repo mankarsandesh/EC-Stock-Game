@@ -104,7 +104,7 @@ export default {
     async dialogStatus(value) {
       if (value) {
         await localStorage.removeItem("AUTH");
-        const URL = await localStorage.getItem("REFERERN_URL");
+        const URL = await localStorage.getItem("referrerURL");
         location.href = "http://" + URL;
         this.dialogConfirm = false;
       }

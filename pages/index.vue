@@ -6,6 +6,9 @@
         <div class="errorBox" v-if="messageError">
           <h4 v-for="(data, index) in messageError" :key="index">{{ data }}</h4>
         </div>
+        <div class="errorBox" v-else>
+          <h4 v-for="(data, index) in error_spone" :key="index">{{ data }}</h4>
+        </div>
         <div class="preloader-wrap">
           <div class="percentage" id="precent"></div>
           <div class="loader">
@@ -32,10 +35,11 @@ export default {
     return {
       getUserAuthInfo: "",
       stockname: "btc1",
-      linkto: ""
+      linkto: "",
+      error_spone: []
     };
   },
-  mounted() {
+  created() {
     this.checlUserAuth();
   },
   watch: {
@@ -92,15 +96,15 @@ export default {
               // location.reload(true);
             } else {
               const error = "Portal Provider OR userID is Missing...";
-              this.messageError.push(error);
+              this.error_spone.push(error);
             }
           } else {
             const error = "Authication authUser & authPassword is Missing.";
-            this.messageError.push(error);
+            this.error_spone.push(error);
           }
         } else {
           const error = data.message;
-          this.messageError.push(error);
+          this.error_spone.push(error);
         }
         // location.reload(true);
       } catch (error) {
@@ -128,7 +132,7 @@ export default {
           width: width + "%"
         },
         time
-      );
+      );  
 
       // Percentage Increment Animation
       let PercentageID = $("#precent"),
