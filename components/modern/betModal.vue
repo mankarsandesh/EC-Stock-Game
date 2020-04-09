@@ -56,7 +56,7 @@
           <!-- <v-flex class="pr-1" style="align-self:center">
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
-          <v-flex style="align-self:center">
+          <v-flex style="align-self:center">           
             <input
               type="number"
               readonly
@@ -71,7 +71,7 @@
         </v-layout>
       </v-flex>
       <v-flex class="py-1 betHeading">
-        <span>{{ $t("msg.max") }} = $5000, {{ $t("msg.min") }} = $100</span>
+        <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $5000</span>
       </v-flex>
       <!-- <v-divider></v-divider> -->
       <v-flex xs-12 class="pt-2 text-uppercase">
@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       confirmDisabled: false,
-      betValue: 0,
+      betValue: 100,
       imgChip: chips.chipsData
     };
   },
@@ -245,11 +245,13 @@ export default {
         ruleID: this.ruleid,
         betAmount: this.betValue
       };
-      this.confirmDisabled = true;
-      this.sendBetting(data);
-      $("#" + this.stockName + this.betId).addClass(
-        this.betId.split("-")[0] + " " + this.betId.split("-")[1]
-      );
+      if (this.betValue > 0) {
+        this.confirmDisabled = true;
+        this.sendBetting(data);
+        $("#" + this.stockName + this.betId).addClass(
+          this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+        );
+      }
     },
     closePopper() {
       $(".closepopper").click();
@@ -287,9 +289,11 @@ export default {
 }
 .input-bet {
   border: 1px solid #dddddd;
-  font-size: 15px;
-  padding: 8px 10px;
+  font-size: 18px;
+  color:#545353;
+  font-weight: 800;
   width: 100px;
+  padding: 4px 5px;  
   text-align: center;
   border-radius: 8px;
 }

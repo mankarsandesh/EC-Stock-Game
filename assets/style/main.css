@@ -140,30 +140,31 @@ Home Page Component
 }
 
 .lastdraw {
-  font-size: 14px;
+  color: #4c4c4c !important;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
-  font-size: 22px;
+  font-size: 28px;
   padding: 2px 6px;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .betclose {
-  font-size: 14px;
+  color: #4c4c4c !important;
+  font-family: 'Arimo', sans-serif;
   border: 1.5px solid #ef076a;
   border-radius: 10px;
-  font-size: 22px;
+  font-size: 28px;
   padding: 2px 6px;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .lottery {
-  font-size: 14px;
+  color: #4c4c4c !important;
   border: 1.5px solid #01e3bf;
   border-radius: 10px;
-  font-size: 22px;
+  font-size: 28px;
   padding: 2px 6px;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .chartDesgin {

@@ -55,8 +55,7 @@
                 <span>{{ $t("msg.Lastdraw") }}</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
-                    <span
-                      class="text-black"
+                    <span                    
                       v-html="$options.filters.lastDraw(getLastDraw)"
                     ></span>
                   </v-flex>
@@ -72,15 +71,14 @@
                         getTimerByStockName($route.params.id) &&
                           getTimerByStockName($route.params.id)
                             .stockOpenOrClosed === 'Closed!'
-                      "
-                      class="text-black"
+                      "                    
                     >
                       {{
                         getTimerByStockName($route.params.id) &&
                           "close" | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
-                    <span v-else class="text-black">
+                    <span v-else >
                       {{
                         getTimerByStockName($route.params.id) &&
                           getTimerByStockName($route.params.id)
@@ -96,7 +94,7 @@
                 <span>{{ $t("msg.lotterydraw") }}</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
-                    <span class="text-black">
+                    <span >
                       {{
                         getTimerByStockName($route.params.id) &&
                           getTimerByStockName($route.params.id)
