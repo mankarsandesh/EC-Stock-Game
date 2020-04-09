@@ -37,12 +37,15 @@
               </span>
             </div>
             <div class="bodyChat">
-              <div class="msgUser follow">
+
+                  
+              <div class="msgUser follow" v-for="data in globalInvitation"
+                :key="data.index"> 
                 <div class="messageChatView">
                   <div>
                     <v-img
                       class="userImage"
-                      :src="profilePic"
+                      :src="data.userImage"
                       aspect-ratio="1"
                       max-height="100"
                       max-width="100"
@@ -53,7 +56,7 @@
                     <span class="userStatus">Total Follower</span>
                   </div>
                   <div>
-                    <span class="ranking">951</span>
+                    <span class="ranking">{{data.followerCount}}</span>
                   </div>
                   <div>
                     <v-btn class="view">View</v-btn>
@@ -75,170 +78,16 @@
                 </div>
               </div>
 
-              <div class="msgUser rank">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Winning Rank</span>
-                  </div>
-                  <div>
-                    <span class="ranking">1</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
+              
 
-              <div class="msgUser rate">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Winning Rate</span>
-                  </div>
-                  <div>
-                    <span class="ranking">95%</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
+              
+              
 
-              <div class="msgUser rate">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Winning Rate</span>
-                  </div>
-                  <div>
-                    <span class="ranking">95%</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser follow">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      :src="profilePic"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Total Follower</span>
-                  </div>
-                  <div>
-                    <span class="ranking">951</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser follow">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      :src="profilePic"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Total Follower</span>
-                  </div>
-                  <div>
-                    <span class="ranking">951</span>
-                  </div>
-
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser rate">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Winning Rate</span>
-                  </div>
-                  <div>
-                    <span class="ranking">95%</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div class="messageChat">
               <v-flex col-md-6>
-                <v-btn class="buttonInvitation"
+                <v-btn class="buttonInvitation" @click="sendInvitation()"
                   >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
                 ></v-btn>
               </v-flex>
@@ -317,7 +166,7 @@ export default {
         "modern-fullscreen-id"
       ],
       tabActiveName: "world",
-      conversationWorld: [],
+      globalInvitation:[],
       connectClient: [],
       totoalUserCount: 0,
       userId: 0
@@ -343,40 +192,20 @@ export default {
       }
     }
   },
-  mounted() {
-    this.listenForBroadcast(
-      {
-        channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
-        eventName: "messageSend"
-      },
-      ({ data }) => {
-        data.data.forEach(element => {
-          this.getMessagesGame.push({
-            name: element.userName,
-            userId: element.userUUID,
-            message: element.message,
-            date: element.date
-          });
-        });
-      }
-    );
-    // Game Channel Game ID wise
+  mounted() {   
+    // Global Wise
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
         eventName: "messageSend"
       },
       ({ data }) => {
-        console.log("world Listing");
-        console.log(data);
-        data.data.forEach(element => {
-          this.conversationWorld.push({
-            name: element.userName,
-            userUUID: element.getUserUUID,
-            message: element.message,
-            date: element.date
-          });
+       const objectArray = Object.entries(data.data);       
+       let newData = [];   
+        objectArray.forEach(([key, value]) => {          
+          newData[key] = value;          
         });
+          this.globalInvitation.push(newData);
         this.scrollDown();
       }
     );
@@ -390,20 +219,39 @@ export default {
     this.messageInput = "";
   },
   methods: {
+   // Send Invitation
+    async sendInvitation() {
+      try {
+          const sendData = {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,        
+            category:[1],
+            version: config.version
+          };
+          console.log(sendData,"Send Invitation");
+          const res = await this.$axios.$post(
+            config.getUserInvitation.url,sendData,{
+              headers: config.header
+           });
+          console.log(res,"Send Invitaion");                 
+      } catch (ex) {       
+        console.log(ex.message);
+      }
+    },    
     // fetch default image or from server image
-    imgProfile(userImage) {
+    imgProfile(userImage){
       return userImage === null
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/` + userImage;
     },
-    followUser(username, userImage, userUUID, method) {
+    followUser(username, userImage, userUUID,method){
       this.username = username;
       this.FollowUserUUID = userUUID;
       this.FolloworNot = method;
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
     },
-    toggle() {
+    toggle(){
       this.$nextTick(() => {
         if (this.likesAllFruit) {
           this.selectedFruits = [];
@@ -412,7 +260,7 @@ export default {
         }
       });
     },
-    scrollDown() {
+    scrollDown(){
       $(".bodyChat")
         .stop()
         .animate(
@@ -427,61 +275,7 @@ export default {
     },
     activeTab(value) {
       this.tabActiveName = value;
-    },
-    // Global Channel for all Ssers
-    async sendMsgWorld() {
-      try {
-        if (this.messageInput !== "") {
-          const res = await this.$axios.$post(
-            config.sendMessage.url,
-            {
-              portalProviderUUID: this.getPortalProviderUUID,
-              userUUID: this.getUserUUID,
-              chatType: 2,
-              message: this.messageInput,
-              version: config.version
-            },
-            {
-              headers: config.header
-            }
-          );
-          console.log(res);
-          if (res.status) {
-            this.messageInput = "";
-          }
-        }
-      } catch (ex) {
-        this.sendMsgWorld();
-        console.log(ex.message);
-      }
-    },
-    // Channel for gameUUDI
-    async sendMsgChanel() {
-      try {
-        if (this.messageInput !== "") {
-          const res = await this.$axios.$post(
-            config.sendMessage.url,
-            {
-              portalProviderUUID: this.getPortalProviderUUID,
-              userUUID: this.getUserUUID,
-              gameUUID: this.gameUUID,
-              chatType: 1,
-              message: this.messageInput,
-              version: config.version
-            },
-            {
-              headers: config.header
-            }
-          );
-          if (res.status) {
-            this.messageInput = "";
-          }
-        }
-      } catch (ex) {
-        this.sendMsgChanel();
-        console.log(ex.message);
-      }
-    }
+    }    
   }
 };
 </script>

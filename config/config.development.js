@@ -54,6 +54,9 @@ const config = {
   getUserBetAnalysis: {
     url: `${process.env.BASE_URL}/getUserBetAnalysis`
   },
+  getUserInvitation: {
+    url: `${process.env.BASE_URL}/sendInvitation`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
