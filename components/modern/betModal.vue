@@ -96,7 +96,7 @@ import result from "~/data/result";
 import config from "../../config/config.global";
 import chips from "../../data/chips";
 export default {
-  props: ["stockName", "ruleid", "loop", "betId", "payout"],
+  props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   data() {
     return {
       confirmDisabled: false,
@@ -123,31 +123,106 @@ export default {
       const lastDraw = val.substr(val.length - 2);
       const first = parseInt(lastDraw.slice(0, 1));
       const last = parseInt(lastDraw.slice(1, 2));
+      const bothdigit = first + last;
       const twoDigit = first + last;
       result.rule_data.map((items, index) => {
         if ($("#" + this.stockName + this.betId).hasClass(items.type)) {
           items.rules.map((item, index) => {
-            if ($("#" + this.stockName + this.betId).hasClass(item.name)) {
+            if ($("#" + this.betId).hasClass(item.name)) {
+              /* ----------------------------- // First digit ----------------------------- */
+
               if (items.type === "firstdigit") {
                 const result = item.rule.includes(first);
                 if (result) {
-                  console.log("You Win :" + item.name + ":" + first);
-                  $("#" + this.stockName + this.betId).addClass(
+                  console.log("You Win first :" + item.name + ":" + first);
+                  $("#" + this.betWin).addClass(this.betWin);
+                  $("#" + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.stockName + this.betId).removeClass(
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betWin).removeClass(this.betWin);
+                    $("#" + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.betWin).removeClass(this.betWin);
+                  console.log("==You==lose==first==" + item.name + "==");
+                }
+              }
+
+              /* ------------------------------ // Last digit ----------------------------- */
+
+              if (items.type === "lastdigit") {
+                const result = item.rule.includes(last);
+                if (result) {
+                  console.log("You Win last :" + item.name + ":" + last);
+                  $("#" + this.betWin).addClass(this.betWin);
+                  $("#" + this.betId).addClass(
+                    this.betId.split("-")[0] + "-animation"
                   );
-                  console.log("====You====lose====" + item.name + " ====");
+                  setTimeout(() => {
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betWin).removeClass(this.betWin);
+                    $("#" + this.betId).removeClass(
+                      this.betId.split("-")[0] + "-animation"
+                    );
+                  }, 5000);
+                } else {
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.betWin).removeClass(this.betWin);
+                  console.log("==You==lose==last==" + item.name + "==");
+                }
+              }
+
+              /* -------------------------------- bothdigit ------------------------------- */
+
+              if (items.type === "bothdigit") {
+                const result = item.rule.includes(bothdigit);
+                if (result) {
+                  console.log(
+                    "You Win bothdigit:" + item.name + ":" + bothdigit
+                  );
+                  $("#" + this.betWin).addClass(this.betWin);
+                  $("#" + this.betId).addClass(
+                    this.betId.split("-")[0] + "-animation"
+                  );
+                  setTimeout(() => {
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betWin).removeClass(this.betWin);
+                    $("#" + this.betId).removeClass(
+                      this.betId.split("-")[0] + "-animation"
+                    );
+                  }, 5000);
+                } else {
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.betWin).removeClass(this.betWin);
+                  console.log("==You==lose==last==" + item.name + "==");
+                }
+              }
+
+              /* -------------------------------- tow digit ------------------------------- */
+              if (items.type === "twodigit") {
+                const result = item.rule.includes(twoDigit);
+                if (result) {
+                  console.log("You Win twoDigit:" + item.name + ":" + twoDigit);
+                  $("#" + this.betWin).addClass(this.betWin);
+                  $("#" + this.betId).addClass(
+                    this.betId.split("-")[0] + "-animation"
+                  );
+                  setTimeout(() => {
+                    $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.betWin).removeClass(this.betWin);
+                    $("#" + this.betId).removeClass(
+                      this.betId.split("-")[0] + "-animation"
+                    );
+                  }, 5000);
+                } else {
+                  $("#" + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.betWin).removeClass(this.betWin);
+                  console.log("==You==lose==last==" + item.name + " ==");
                 }
               }
             }
@@ -155,22 +230,6 @@ export default {
         }
       });
     }
-    //  if (item.rule == first) {
-    //             // console.log("This is the First :" + item.name);
-    //           }
-    // clearRoadMap(val) {
-    //   if (!val) {
-    //     $("#" + this.stockName + this.betId).addClass(this.betId.split("-")[0] + "-animation");
-    //     setTimeout(() => {
-    //       console.log("wait for 5 second");
-    //       $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
-    //       $("#" + this.stockName + this.betId).removeClass(
-    //         this.betId.split("-")[0] + "-animation"
-    //       );
-    //     }, 5000);
-    //   }
-    //   // $("#" + this.stockName + this.betId).removeClass("bet-animation");
-    // }
   },
   created() {
     // check is full screen or not
