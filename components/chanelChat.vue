@@ -31,8 +31,7 @@ import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 export default {
   props: {
     gameUUID: {
-      type: String,
-      required: true
+      type: String
     }
   },
   data() {

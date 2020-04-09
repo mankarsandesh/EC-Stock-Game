@@ -74,8 +74,8 @@
                       "                    
                     >
                       {{
-                        getTimerByStockName($route.params.id) &&
-                          "close" | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id)
+                          | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                     <span v-else >

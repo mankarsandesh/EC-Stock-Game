@@ -3,21 +3,25 @@ import stock from '../data/stockList';
 const state = () => ({
   stocks: stock.stockList,
   stockCategory: [], // Store Stocks category
-  stockListTimer: [] // Store stock list timer
+  stockPrice: [], // Store stock list price
+  stockCountdown: [] // Store stock list Countdown
 });
 
 const mutations = {
   SET_STOCK_CATEGORY(state, payload) {
     state.stockCategory = payload;
   },
-  SET_STOCK_LIST_TIMER(state, payload) {
-    state.stockListTimer.unshift(payload);
-    if (state.stockListTimer.length === 3) {
-      state.stockListTimer.pop();
-    }
-  },
   SET_STOCKS_DATA(state, payload) {
     state.stocks = payload;
+  },
+  SET_STOCK_COUNTDOWN(state, payload) {
+    state.stockCountdown = payload;
+  },
+  SET_STOCK_PRICE(state, payload) {
+    state.stockPrice.unshift(payload);
+    if (state.stockPrice.length > 2) {
+      state.stockPrice.pop();
+    }
   }
 };
 
@@ -48,35 +52,54 @@ const actions = {
   setStockCategory({ commit }, payload) {
     commit("SET_STOCK_CATEGORY", payload);
   },
-  // Set stock list timer
-  setStockListTimer({ commit }, payload) {
-    commit("SET_STOCK_LIST_TIMER", payload);
+  // Set stock list price
+  setStockPrice({ commit }, payload) {
+    commit("SET_STOCK_PRICE", payload);
+  },
+  // Set stock list countdown
+  setStockCountdown({ commit }, payload) {
+    commit("SET_STOCK_COUNTDOWN", payload);
   }
 };
 
 const getters = {
   // Get game UUID by stock name
   getGameUUIDByStockName: state => stockName => {
-    let loopIndex = 0;
+    // check is it a btc stock
+    let loop = "";
     if (stockName === "btc5") {
-      loopIndex = 1;
+      loop = 5;
+    } else {
+      loop = 1;
     }
     if (stockName === "btc1" || stockName === "btc5") {
       stockName = "btc";
     }
-    let result = "suss";
     if (state.stockCategory.length > 0) {
       for (let i = 0; i < state.stockCategory.length; i++) {
         for (let j = 0; j < state.stockCategory[i].stocks.length; j++) {
           if (state.stockCategory[i].stocks[j].stockName === stockName) {
-            return state.stockCategory[i].stocks[j].loops[loopIndex].gameID;
+            if (stockName !== "btc") {
+              return state.stockCategory[i].stocks[j].loops[0].gameID;
+            } else {
+              for (
+                let a = 0;
+                a < state.stockCategory[i].stocks[j].loops.length;
+                a++
+              ) {
+                if (
+                  state.stockCategory[i].stocks[j].loops[a].loopName === loop
+                ) {
+                  return state.stockCategory[i].stocks[j].loops[a].gameID;
+                }
+              }
+            }
           }
         }
       }
     } else {
-      result = "....";
+      return "....";
     }
-    return result;
   },
   // Get stock category
   getStockCategory(state) {
@@ -99,49 +122,34 @@ const getters = {
   },
   // Get stock live price by stock name
   getStockLivePrice: state => stockName => {
-    if (!stockName || state.stockListTimer.length <= 0) {
+    if (!stockName || state.stockPrice.length == 0) {
       return null;
     }
-    let result = 0;
-    for (let i = 0; i < state.stockListTimer[0].length; i++) {
-      if (state.stockListTimer[0][i].stockName === stockName) {
-        result = state.stockListTimer[0][i].stockPrice;
-        break;
-      }
-    }
-    return result;
+    return state.stockPrice[0].find(stock => stock.stockName == stockName)
+      .stockPrice;
   },
   // Get stock live time by stock name
   getStockLiveTime: state => stockName => {
-    if (!stockName || state.stockListTimer.length <= 0) {
+    if (!stockName || state.stockCountdown.length == 0) {
       return null;
     }
-    let result = 0;
-    for (let i = 0; i < state.stockListTimer[0].length; i++) {
-      if (state.stockListTimer[0][i].stockName === stockName) {
-        result = state.stockListTimer[0][i].stockTimestamp;
-        break;
-      }
-    }
-    return result;
+    return state.stockCountdown.find(stock => stock.stockName == stockName)
+      .stockTimestamp;
   },
   // Get timer by stock name
   getTimerByStockName: state => stockName => {
-    if (!stockName || state.stockListTimer.length <= 0) {
+    if (!stockName || state.stockCountdown.length == 0) {
       return null;
     }
-    let result = 0;
-    for (let i = 0; i < state.stockListTimer[0].length; i++) {
-      if (state.stockListTimer[0][i].stockName === stockName) {
-        result = state.stockListTimer[0][i];
-        break;
-      }
-    }
-    return result;
+    return state.stockCountdown.find(stock => stock.stockName == stockName);
   },
-  // Get the stock list timer
-  getStockListTimer(state) {
-    return state.stockListTimer;
+  // Get stock list countdown
+  getStockListCountdown(state) {
+    return state.stockCountdown;
+  },
+  // Get stock price
+  getStockListPrice(state) {
+    return state.stockPrice;
   },
   // Get stock UUID by stock name
   getStockUUIDByStockName: state => stockName => {

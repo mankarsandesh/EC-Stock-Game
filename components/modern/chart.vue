@@ -74,24 +74,24 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
+        console.log(data.data);
         let dataIndex = data.data.roadMap[0];
-        console;
         let readyData = {
           stockValue: dataIndex.stockValue.replace(",", ""),
           stockTimeStamp: dataIndex.stockTimeStamp,
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
-        if (
-          dataIndex.stockTimeStamp !==
-          this.chartData[this.chartData.length - 1].stockTimeStamp
-        ) {
-          this.setClearRoadMap(true);
-          this.setLiveChart(readyData);
-          setTimeout(() => {
-            this.setClearRoadMap(false);
-          }, 1000);
-        }
+        // if (
+        //   dataIndex.stockTimeStamp !==
+        //   this.chartData[this.chartData.length - 1].stockTimeStamp
+        // ) {
+        this.setClearRoadMap(true);
+        this.setLiveChart(readyData);
+        setTimeout(() => {
+          this.setClearRoadMap(false);
+        }, 1000);
+        // }
       }
     );
   },
@@ -203,6 +203,7 @@ export default {
   },
   methods: {
     ...mapActions(["setClearRoadMap"]),
+    // live chart
     setLiveChart(payload) {
       this.chartData.push(payload);
     },
@@ -224,7 +225,7 @@ export default {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          throw new Error(res.message);
         }
       } catch (ex) {
         console.error(ex.message);
