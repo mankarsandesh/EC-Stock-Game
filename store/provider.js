@@ -137,7 +137,6 @@ const actions = {
 const getters = {
   // Get portal provider UUID
   getPortalProviderUUID(state) {
-    console.log("check SocketID", state.portalProviderUUID);
     return state.portalProviderUUID;
   },
   // Get user UUID

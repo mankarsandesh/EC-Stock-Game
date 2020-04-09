@@ -18,13 +18,13 @@
               <b>{{ item.stockName }}</b>
             </td>
             <td
-              v-if="item.stockOpenOrClosed == 'Closed!'"
+              v-if="item.stockStatus == 'Closed'"
               :style="{ color: 'red' }"
             >
               Closed
             </td>
             <td
-              v-if="item.stockOpenOrClosed !== 'Closed!'"
+              v-if="item.stockStatus !== 'Closed'"
               v-html="
                 getStockListPrice.length > 1
                   ? $options.filters.livePriceColor(
