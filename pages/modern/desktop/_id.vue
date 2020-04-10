@@ -80,10 +80,10 @@
                     </span>
                     <span v-else >
                       {{
-                        getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id)
-                            .gameEndTimeCountDownInSec
-                            | betclosein(getStockLoop($route.params.id))
+                      getTimerByStockName($route.params.id) &&
+                      getTimerByStockName($route.params.id)
+                      .gameEndTimeCountDownInSec
+                      | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -96,10 +96,10 @@
                   <v-flex class="lottery">
                     <span >
                       {{
-                        getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id)
-                            .gameEndTimeCountDownInSec
-                            | lotterydraw(getStockLoop($route.params.id))
+                      getTimerByStockName($route.params.id) &&
+                      getTimerByStockName($route.params.id)
+                      .gameEndTimeCountDownInSec
+                      | lotterydraw(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -108,14 +108,7 @@
               </v-flex>
 
               <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn
-                  fab
-                  dark
-                  small
-                  class="helpButton"
-                  @click="openTutorial()"
-                  title="Help"
-                >
+                <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
               </v-flex>
@@ -126,18 +119,10 @@
           </v-flex>
         </v-layout>
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div
-            class="trendmap-container"
-            v-for="(trendType, index) in trendTypes"
-            :key="index"
-          >
+          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap
-                :index="index"
-                :dataArray="getRoadMap"
-                :isShowMultigameButton="index"
-              ></tableTrendMap>
+              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index"></tableTrendMap>
             </div>
             <span
               class="addChart"
@@ -152,25 +137,13 @@
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius: 10px;">
-          <v-icon
-            class="closePopup"
-            color="#333 !important"
-            @click="dialog = false"
-            >close</v-icon
-          >
-          <v-card-title class="title" primary-title
-            >TOP 10 LEADERS</v-card-title
-          >
+          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
+          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
           <v-card-text>
             <leaderboardUserlist />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn
-              class="buttonGreensmall"
-              to="/modern/desktop/leaderboard"
-              dark
-              >Go to Leaderboard</v-btn
-            >
+            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
@@ -310,14 +283,6 @@ export default {
         let linkto = `/modern/betting/btc1`;
         this.$router.push(linkto);
       }
-    },
-    getLastDraw(val) {
-      const lastDraw = val.substr(val.length - 2);
-      const first = lastDraw.slice(0, 1);
-      const last = lastDraw.slice(1, 2);
-
-      console.log("This is the first  draw :" + first);
-      console.log("This is the  last draw :" + last);
     }
   },
   methods: {
