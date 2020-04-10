@@ -90,7 +90,16 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: false,
+  loading: '~/components/loaders/PageTransition.vue',
+  loadingIndicator: {
+    name: '~/components/loaders/PageLoader.html',
+    color: '#FDFEFE',
+    background: '#2980b9'
+  },
+  pageTransition: {
+    name: 'fade',
+    mode: 'out-in',
+  },
   /*
    ** Global CSS
    */
@@ -128,6 +137,7 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
     "@nuxtjs/moment",
+    //['vue-wait/nuxt', { useVuex: true }],
     [
       "nuxt-fontawesome",
       {

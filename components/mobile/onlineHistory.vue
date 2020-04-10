@@ -267,7 +267,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setUserData"]),
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },

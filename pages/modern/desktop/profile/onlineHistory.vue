@@ -183,7 +183,6 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    ...mapActions(["setUserData"]),
     startDateClick() {
       this.isShowDateStart = !this.isShowDateStart;
       this.isShowDateEnd = false;
