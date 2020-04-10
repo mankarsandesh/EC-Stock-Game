@@ -29,7 +29,7 @@
       </template>
       <v-list>
         <v-list-tile
-          @click="$router.push('/modern/desktop/dashboardprofile/')"
+          @click="$router.push('/modern/desktop/profile/')"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-user fa-2x margin-right-5" />
@@ -102,7 +102,7 @@ export default {
     async dialogStatus(value) {
       if (value) {
         await localStorage.removeItem("AUTH");
-        const URL = await localStorage.getItem("REFERERN_URL");
+        const URL = await localStorage.getItem("referrerURL");
         location.href = "http://" + URL;
         this.dialogConfirm = false;
       }

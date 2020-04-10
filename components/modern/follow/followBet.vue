@@ -4,9 +4,12 @@
       <h3 class="title" style="text-align: center; color: #0b2a68;">
         FOLLOW BET
       </h3>
-      <v-card-text style="text-align:center;" >
+      <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="this.userImage" width="140px" />
-        <h3 class="subtitle-1 text-uppercase text-center pt-2" v-if="this.username == null">
+        <h3
+          class="subtitle-1 text-uppercase text-center pt-2"
+          v-if="this.username == null"
+        >
           {{ this.username }}
         </h3>
       </v-card-text>
@@ -141,7 +144,7 @@ export default {
       userUUID: state => state.provider.userUUID
     }) //get 2 data from vuex first, in the computed
   },
-  methods: {
+  methods: {   
     // All User Validation
     async followThisUser(followerID, followMethod) {
       if (this.selectedFollow == "Amount") {
@@ -155,7 +158,6 @@ export default {
       } else if (this.FolloworNot == 1) {
         this.followingMethod = "unfollow";
       }
-
       if (this.selectedFollow && this.BetValue) {
         if (this.selectedFollow == "Amount") {
           if (this.BetValue < 1000 && this.BetValue > 10) {

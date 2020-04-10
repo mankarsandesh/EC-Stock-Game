@@ -1,0 +1,375 @@
+<template>
+  <div xs2>
+    <section class="breadcrumbs">
+      <v-container md10>
+        <v-parallax dark height="150">
+          <v-layout align-center row>
+            <v-flex xs6>
+              <div class="flex-container">
+                <div
+                  class="profile-img-container"
+                  @click="$router.push('/modern/desktop/profile/')"
+                >
+                  <div class="profile-crowd">
+                    <!-- <v-icon dark>home</v-icon> -->
+                    <fa icon="crown" style="font-size: 17px; color: orange;" />
+                  </div>
+                  <img
+                    width="100%"
+                    height="100%"
+                    :src="
+                      'http://159.138.47.250/' + visitProfileUserData.userImage
+                    "
+                    class="grey darken-4"
+                  />
+                </div>
+                <div
+                  class="profile-name-container"
+                  @click="$router.push('/modern/desktop/profile/')"
+                >
+                  <span class="profile-name-tittle">
+                    {{ visitProfileUserData.firstName }}
+                    {{ visitProfileUserData.lastName }}
+                  </span>
+                  <span
+                    v-if="visitProfileUserData.currentActiveTime === 'offline'"
+                  >
+                    {{ visitProfileUserData.currentActiveTime }}
+                  </span>
+                  <span v-else>
+                    Last active
+                    {{ visitProfileUserData.currentActiveTime }}
+                  </span>
+                </div>
+              </div>
+            </v-flex>
+            <v-flex xs8 class="text-end">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: flex-end;
+                "
+              >
+                <span style="flex-grow: wrap; font-weight: bold;">
+                  History period:
+                </span>
+                <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
+                  <v-select
+                    v-model="filter"
+                    height="15px"
+                    dense
+                    hide-details
+                    :items="items"
+                    solo
+                  ></v-select>
+                </div>
+
+                <Button
+                  style="flex-grow: wrap;"
+                  linkItem="linkItem2"
+                  @click.stop="
+                    visitProfileUserData.isFollowing === -1
+                      ? (visitProfileUserData.isFollowing = 0)
+                      : (visitProfileUserData.isFollowing = -1)
+                  "
+                  :btnTitle="
+                    visitProfileUserData.isFollowing == -1
+                      ? 'follow'
+                      : 'following'
+                  "
+                />
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-parallax>
+      </v-container>
+    </section>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12 mt-3>
+          <div class="container-content">
+            <div class="box-container">
+              <div class="cul-box" style="color: #7e57c2;">
+                <span>
+                  <fa
+                    icon="percentage"
+                    style="font-size: 40px; color: #7e57c2;"
+                  />
+                </span>
+                <span class="number-box"
+                  >{{ visitProfileUserData.winRate }}%</span
+                >
+                <span class="des-title text-uppercase">wining rate</span>
+              </div>
+              <div class="cul-box cul-box-green">
+                <span>
+                  <fa
+                    icon="money-bill-wave"
+                    style="font-size: 40px; color: #ace6af;"
+                  />
+                </span>
+                <span class="number-box">{{
+                  visitProfileUserData.totalBets
+                }}</span>
+                <span class="des-title text-uppercase">total bets</span>
+              </div>
+              <div class="cul-box cul-box-red">
+                <span>
+                  <fa icon="users" style="font-size: 40px; color: #f28691;" />
+                </span>
+                <span class="number-box">{{
+                  visitProfileUserData.followerCount
+                }}</span>
+                <span class="des-title text-uppercase">followers</span>
+              </div>
+              <div class="cul-box cul-box-yellow">
+                <span>
+                  <fa
+                    icon="money-bill-alt"
+                    style="font-size: 40px; color: #ffd682;"
+                  />
+                </span>
+                <span class="number-box">{{
+                  visitProfileUserData.totalWinBets
+                }}</span>
+                <span class="des-title text-uppercase">wining amount</span>
+              </div>
+            </div>
+            <div class="pt-5 stock-history">
+              <h2 class="text-uppercase">online history chart</h2>
+              <div class="stock-history-container">
+                <VueApexCharts
+                  v-if="series.length >= 0"
+                  type="bar"
+                  height="350"
+                  :options="chartOptions"
+                  :series="series"
+                  :key="series.length + '' + filter"
+                />
+              </div>
+            </div>
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
+</template>
+<script>
+import { mapGetters } from "vuex";
+import Button from "~/components/Button";
+import VueApexCharts from "vue-apexcharts";
+import config from "../../../../config/config.global";
+import date from "date-and-time";
+
+export default {
+  layout: "desktopModern",
+  components: {
+    Button,
+    VueApexCharts
+  },
+  data() {
+    return {
+      startDate: "",
+      endDate: "",
+      visitProfileUserData: "",
+      filter: 1,
+      items: [
+        {
+          text: "1 Month",
+          value: 1
+        },
+        {
+          text: "2 Month",
+          value: 2
+        },
+        {
+          text: "3 Month",
+          value: 3
+        }
+      ],
+      series: [],
+      chartOptions: {
+        chart: {
+          height: 350,
+          type: "bar",
+          events: {
+            click: function(chart, w, e) {}
+          }
+        },
+        colors: ["#2E93fA", "#66DA26", "#546E7A", "#E91E63", "#FF9800"],
+        plotOptions: {
+          bar: {
+            columnWidth: "45%",
+            distributed: true
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        xaxis: {
+          categories: [],
+          labels: {
+            style: {
+              fontSize: "12px"
+            }
+          }
+        }
+      }
+    };
+  },
+  created() {
+    this.setFilter(30);
+    this.getUserProfileByID();
+  },
+  computed: {
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+  },
+  watch: {
+    filter() {
+      this.setFilter(this.filter * 30);
+      this.getUserProfileByID();
+    }
+  },
+  methods: {
+    setFilter(duration) {
+      const now = date.format(new Date(), "YYYY-MM-DD");
+      const lastWeek = date.addDays(new Date(), -duration);
+      this.startDate = date.format(lastWeek, "YYYY-MM-DD");
+      this.endDate = now;
+    },
+    async getUserProfileByID() {
+      try {
+        const res = await this.$axios.$post(
+          config.getVisitUserProfile.url,
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
+            visitingUserUUID: this.$route.params.useruuid,
+            dateRangeFrom: this.startDate,
+            dateRangeTo: this.endDate,
+            version: config.version
+          },
+          {
+            headers: config.header
+          }
+        );
+        console.log(res);
+        if (res.code === 200 && res.status) {
+          this.visitProfileUserData = res.data;
+          //  series
+          let series = [];
+          let xaxis = [];
+          res.data.activeTimeDateWise.forEach(element => {
+            series.push(element.activeTimeInMins);
+            xaxis.push(element.Date);
+          });
+          this.series = [{ data: series }];
+          this.chartOptions.xaxis.categories = xaxis;
+        } else {
+          throw new Error(res.message);
+        }
+      } catch (ex) {
+        console.error(ex);
+      }
+    }
+  }
+};
+</script>
+<style scoped>
+.stock-history-container {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 3px gray;
+  border-radius: 5px;
+}
+.des-title {
+  color: black !important;
+  font-weight: 500;
+}
+.number-box {
+  font-size: 40px;
+  font-weight: bolder;
+}
+.box-container {
+  display: flex;
+  width: 100%;
+}
+.cul-box:first-child {
+  margin-left: 0;
+}
+.cul-box {
+  padding: 15px;
+  border-radius: 10px;
+  border: #c0acef solid 3px;
+  background-color: #fff;
+  margin: 15px;
+  width: 180px;
+  height: 180px;
+  box-shadow: 0 0 2px #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+}
+.cul-box-green {
+  border-color: #ace6af !important;
+  color: #ace6af;
+}
+.cul-box-yellow {
+  border-color: #ffd682 !important;
+  color: #ffd682;
+}
+.cul-box-red {
+  border-color: #f28691 !important;
+  color: #f28691;
+}
+.container-content {
+  padding-top: 25px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.profile-crowd {
+  position: absolute;
+  z-index: 1;
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 50%;
+  border: #fff solid 1px;
+  background-color: #8b4448;
+  top: -12px;
+  right: -9px;
+  padding: 4px;
+}
+.profile-img-container {
+  cursor: pointer;
+
+  position: relative;
+  border: gray solid 3px;
+  border-radius: 5px;
+  height: 100px;
+  width: 100px;
+  box-shadow: 0 0 5px #fff;
+}
+.profile-name-tittle {
+  font-weight: bolder;
+  font-size: 22px;
+}
+.flex-container {
+  display: flex;
+  align-items: center;
+}
+.profile-name-container {
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  position: relative;
+  top: -15px;
+  padding-left: 12px;
+}
+</style>
