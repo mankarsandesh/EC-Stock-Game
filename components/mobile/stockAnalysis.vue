@@ -268,7 +268,6 @@ export default {
     showDialogStockAnalysis() {
       this.dialogStockAnalysis = true;
     },
-    ...mapActions(["setUserData"]),
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },

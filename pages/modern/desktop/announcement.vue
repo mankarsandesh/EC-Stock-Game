@@ -30,7 +30,6 @@ export default {
       window: 0,
       tabs: ["announcement"],
       active: null,
-
       announcementData: []
     };
   },

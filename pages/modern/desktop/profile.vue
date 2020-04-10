@@ -156,7 +156,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setUserData", "setIsLoadingStockGame"]),
     readFile(e) {
       let self = this;
       console.log(e.target);
