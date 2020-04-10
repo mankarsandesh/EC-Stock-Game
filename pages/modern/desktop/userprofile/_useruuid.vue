@@ -146,7 +146,7 @@
               <h2 class="text-uppercase">online history chart</h2>
               <div class="stock-history-container">
                 <VueApexCharts
-                  v-if="series.length >= 0"
+                  v-if="series.length > 0"
                   type="bar"
                   height="350"
                   :options="chartOptions"
