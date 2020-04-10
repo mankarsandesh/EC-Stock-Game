@@ -92,13 +92,13 @@ const actions = {
         context.dispatch("setUserData", "provider");
         context.commit("SET_IS_SEND_BETTING", false);
         context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
-        let i=0;
-        let len=res.data.length;
+        let i = 0;
+        let len = res.data.length;
 
-        for( i; i < len ; i++){
-          console.log(res.data[i],"final data")
-          context.commit("PUSH_DATA_ON_GOING_BET",res.data[i]);
-        };
+        for (i; i < len; i++) {
+          console.log(res.data[i], "final data");
+          context.commit("PUSH_DATA_ON_GOING_BET", res.data[i]);
+        }
         // check betting false or true
         let resultStatus = {
           success: 0,

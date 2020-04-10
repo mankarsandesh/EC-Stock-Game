@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2">
+  <v-container fluid mt-2 class="containerNew pa-2" v-if="!isMobile">
     <v-layout style="background-color: #f4f5fd;">
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
@@ -55,7 +55,7 @@
                 <span>{{ $t("msg.Lastdraw") }}</span>
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
-                    <span                    
+                    <span
                       v-html="$options.filters.lastDraw(getLastDraw)"
                     ></span>
                   </v-flex>
@@ -69,16 +69,16 @@
                     <span
                       v-if="
                         getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id)
-                            .stockStatus === 'Closed'
-                      "                    
+                          getTimerByStockName($route.params.id).stockStatus ===
+                            'Closed'
+                      "
                     >
                       {{
                         getTimerByStockName($route.params.id)
                           | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
-                    <span v-else >
+                    <span v-else>
                       {{
                       getTimerByStockName($route.params.id) &&
                       getTimerByStockName($route.params.id)
@@ -94,7 +94,7 @@
                 <span>{{ $t("msg.lotterydraw") }}</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
-                    <span >
+                    <span>
                       {{
                       getTimerByStockName($route.params.id) &&
                       getTimerByStockName($route.params.id)
@@ -184,7 +184,7 @@ import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "../../../config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
-
+import { isMobile } from "mobile-device-detect";
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -237,6 +237,9 @@ export default {
     };
   },
   created() {
+    if (isMobile) {
+      window.location = `/modern/betting/${this.$route.params.id}`;
+    }
     this.getStock();
     // Game Rule Popup check and open Ne User
     // if (localStorage.getItem("gameRule") != "shown") {

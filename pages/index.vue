@@ -39,8 +39,25 @@ export default {
       error_spone: []
     };
   },
-  created() {
-    this.checlUserAuth();
+  mounted() {
+    this.linkto = isMobile ? "/modern" : "/modern/desktop/" + this.stockname;
+    if (!this.portalProviderUUID) {
+      const error = "portalProviderUUID field is Missing";
+      this.messageError.push(error);
+    }
+    if (!this.portalProviderUserID) {
+      const error = "portalProviderUserID field is Missing";
+      this.messageError.push(error);
+    }
+    if (!this.balance) {
+      const error = "balance field is Missing";
+      this.messageError.push(error);
+    }
+    if (!this.referrerURL) {
+      const error = "Somthing Wrong.";
+      this.messageError.push(error);
+    }
+    this.checkUserAuth();
   },
   watch: {
     "$screen.width"() {
@@ -60,7 +77,7 @@ export default {
     ])
   },
   methods: {
-    async checlUserAuth() {
+    async checkUserAuth() {
       try {
         const { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
@@ -90,9 +107,6 @@ export default {
               this.setAuth(authData);
               localStorage.setItem("AUTH", JSON.stringify(base64data));
               this.getProgress();
-              this.linkto = isMobile
-                ? "/modern"
-                : "/modern/desktop/" + this.stockname;
               // location.reload(true);
             } else {
               const error = "Portal Provider OR userID is Missing...";
@@ -155,7 +169,7 @@ export default {
           obj.innerHTML = current;
           if (current == end) {
             clearInterval(timer);
-            window.location = "/modern/desktop/btc1";
+            window.location = seft.linkto;
             // seft.$router.push("/modern/desktop/btc1");
             // seft.$router.push("/dashboard?stockname=" + seft.stockname);
           }

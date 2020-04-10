@@ -156,7 +156,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "Vuex";
+import { mapGetters } from "vuex";
 import Button from "~/components/Button";
 import VueApexCharts from "vue-apexcharts";
 import config from "../../../../config/config.global";
