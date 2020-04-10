@@ -1392,3 +1392,18 @@ p.guideline {
   background: linear-gradient(to right, #25dac2 20%, #0287db 51%) !important;
   color: #fff !important;
 }
+
+/* Page Transition */
+.fade-enter{
+  opacity: 0;
+}
+.fade-enter-active{
+  transition: opacity 0.5s;
+}
+.fade-leave{
+  /* opacity: 1; */
+}
+.fade-leave-active{
+  transition: opacity 0.5s;
+  opacity: 0;
+}

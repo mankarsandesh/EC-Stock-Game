@@ -210,6 +210,7 @@ export default {
       bgColor: "#778899",
       position: "top-right",
       isHidden: false,
+      isMobile: isMobile,
       firstPanelFocus: false,
       fabActions: [
         {
