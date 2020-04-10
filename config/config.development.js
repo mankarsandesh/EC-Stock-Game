@@ -54,6 +54,9 @@ const config = {
   getUserBetAnalysis: {
     url: `${process.env.BASE_URL}/getUserBetAnalysis`
   },
+  getUserInvitation: {
+    url: `${process.env.BASE_URL}/sendInvitation`
+  },
   getVisitUserProfile: {
     url: `${process.env.BASE_URL}/visitUserProfile`
   },

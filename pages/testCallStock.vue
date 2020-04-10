@@ -8,7 +8,7 @@
 import stockSelect from "~/components/stockSelect";
 import { mapActions, mapState } from "vuex";
 export default {
-  layout: "desktopModern",
+ 
   components: {
     stockSelect
   },
