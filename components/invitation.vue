@@ -29,47 +29,38 @@
         <!-- for EC World -->
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
-            <div class="filter">
+            <!-- <div class="filter">
               <span v-for="item in filterNames" :key="item.name">
                 <span class="rank filterSpan">
                   {{ item.value }}
                 </span>
               </span>
-            </div>
-            <v-snackbar
-              v-model="snackbar"
-              :bottom="y === 'bottom'"
-              :color="color"
-              :left="x === 'left'"
-              :multi-line="mode === 'multi-line'"
-              :right="x === 'right'"
-              :timeout="timeout"
-              :top="y === 'top'"
-              :vertical="mode === 'vertical'"
-            >
-              {{ text }}
-              <v-btn dark text @click="snackbar = false">
-                Close
-              </v-btn>
-            </v-snackbar>
+            </div>            -->
             <div class="bodyChat">
               <div
-                class="msgUser "
+                class="msgUser"
                 v-for="data in globalInvitation"
                 :key="data.index"
               >
-                <div class="messageChatView">
+               <div class="messageChatView" v-if="globalInvitation.length == 0" >
+                 <h1>There are no Invitaion</h1>
+               </div>
+                <div class="messageChatView" v-if="globalInvitation.length > 0" >
                   <div style="width:30%;">
-                    <v-img
-                      class="userImage"
-                      :src="imgProfile(data.userImage)"
-                      aspect-ratio="1"
-                      max-height="120"
-                      max-width="120"
+                    <nuxt-link
+                      :to="'/modern/desktop/userprofile/' + data.userUUID"
                     >
-                    </v-img>
+                      <v-img
+                        class="userImage"
+                        :src="imgProfile(data.userImage)"
+                        aspect-ratio="1"
+                        max-height="120"
+                        max-width="120"
+                      >
+                      </v-img>
+                    </nuxt-link>
                     <span class="ranking">
-                      <v-tooltip left>
+                      <v-tooltip top>
                         <template v-slot:activator="{ on }">
                           <span v-on="on">#{{ data.Rank }} </span>
                         </template>
@@ -77,9 +68,9 @@
                       </v-tooltip>
                     </span>
                   </div>
-                  <div style="width:20%;">
+                  <div style="width:15%;">
                     <span class="followcount">
-                      <v-tooltip bottom>
+                      <v-tooltip top>
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.followerCount }} </span>
                         </template>
@@ -87,11 +78,11 @@
                       </v-tooltip>
                     </span>
                   </div>
-                  <div style="width:50%;">
+                  <div style="width:55%;">
                     <span class="winRate">
-                      <v-tooltip right>
+                      <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                          <span v-on="on">{{ data.winRate }} </span>
+                          <span v-on="on">{{ data.winRate }}% </span>
                         </template>
                         <span>User Win Rate</span>
                       </v-tooltip>
@@ -100,19 +91,12 @@
                     <v-btn
                       v-if="getUserUUID != data.userUUID"
                       class="following"
-                      v-on:click="
-                        followUser(
-                          null,
-                          null,
-                          data.userUUID,
-                          '0'
-                        )
-                      "
-                      >Follow</v-btn>
-                       <v-btn
-                      v-if="getUserUUID == data.userUUID"
-                      class="following">Yourself</v-btn>
-
+                      v-on:click="followUser(null, null, data.userUUID, '0')"
+                      >Follow</v-btn
+                    >
+                    <v-btn v-if="getUserUUID == data.userUUID" class="following"
+                      >Yourself</v-btn
+                    >
                   </div>
                 </div>
               </div>
@@ -128,14 +112,6 @@
           </div>
         </div>
 
-        <v-dialog v-model="dialog" width="500" class="followDialog">
-          <followBet
-            :username="this.username"
-            :userImage="this.userImage"
-            :FollowerUserUUID="this.FollowUserUUID"
-            :isFollowing="this.FolloworNot"
-          />
-        </v-dialog>
         <!-- for game chanel  -->
         <chanelChat
           v-show="tabActiveName === 'chanel'"
@@ -144,6 +120,17 @@
         ></chanelChat>
       </div>
     </div>
+
+    <!-- Follow Dialog -->
+    <v-dialog v-model="dialog" width="500" class="followDialog">
+      <followBet
+        :username="this.username"
+        :userImage="this.userImage"
+        :FollowerUserUUID="this.FollowUserUUID"
+        :isFollowing="this.FolloworNot"
+      />
+    </v-dialog>
+
     <v-btn rigth fab slot="reference" class="liveChat">
       <v-icon>chat</v-icon>
     </v-btn>
@@ -228,9 +215,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.getUserUUID);
-     console.log(this.getPortalProviderUUID);
-    // Global Wise
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
@@ -273,8 +257,7 @@ export default {
           {
             headers: config.header
           }
-        );
-        this.snackbar = true;
+        );       
       } catch (ex) {
         console.log(ex.message);
       }
@@ -340,8 +323,9 @@ export default {
   flex-direction: column;
 }
 .buttonInvitation {
+  margin-top:-1px;
   color: #fff !important;
-  border-radius: 5px;
+  border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   font-size: 14px;
   width: 100%;
@@ -357,7 +341,7 @@ export default {
   background-color: #2aaf3e !important;
 }
 .popper {
-  width: 400px;
+  width: 370px;
   border-radius: 10px;
   border: 1px solid #dddddd;
 }
@@ -388,7 +372,7 @@ export default {
 }
 
 .msgUser {
-  padding: 2px 3px;
+  padding: 2px 0px;
   overflow: auto;
   border-radius: 8px;
   max-width: 375px;
@@ -449,23 +433,23 @@ export default {
 .msgUser .ranking {
   float: left;
   font-size: 20px;
-  margin: 6px 12px;
+  margin: 6px 8px;
   color: #42c851;
   font-weight: 800;
   text-align: center;
 }
-.msgUser .followcount {
-  float: left;
-  text-align: center;
+.msgUser .followcount {  
+   float: left;
   font-size: 20px;
-  margin: 6px 20px;
+  margin: 6px 10px;  
+  text-align: center;
   color: #5f70b1;
   font-weight: 800;
 }
 .msgUser .winRate {
   float: left;
   font-size: 20px;
-  margin: 6px;
+  margin: 6px 0px;
   color: #ed4560;
   font-weight: 800;
   text-align: center;
@@ -477,7 +461,7 @@ export default {
   color: #fff;
   box-shadow: none;
   height: 24px;
-  width: 30px;
+  width:28px;
   margin-top: 10px;
   font-size: 13px;
 }
@@ -529,7 +513,7 @@ export default {
   padding-top: 10px;
   border-bottom: 1px solid #dddddd;
   background-color: #f4f4f4;
-  height: 400px;
+  height: 435px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;
@@ -541,7 +525,7 @@ export default {
   color: #7f7e7e;
 }
 .messageChat {
-  width: 92%;
+  width: 95%;
   bottom: 7px;
   background-color: #fff;
 }
