@@ -30,7 +30,7 @@
             label="Select Follow type"
             v-model="selectedFollow"
             item-text="name"
-            item-value="value"
+            item-value="id"
             v-on:change="changeAmountRate($event)"
             solo
           ></v-select>
@@ -63,7 +63,7 @@
             v-for="n in autoStopFollow"
             :key="n.id"
             :label="`${n.name}`"
-            :value="n.value"
+            :value="n.id"
             v-on:change="changeAmount(n.value)"
           ></v-radio>
 
@@ -106,12 +106,12 @@ export default {
       selectAmount: false,
       selectTime: false,
       selectBets: false,
-      autoStop: "stopWin",
+      autoStop: 1,
       amountValue: 100,
       rateValue: 10,
       selectRate: false,
       selectAmount: true,
-      selectedFollow: "Amount",
+      selectedFollow: 1,
       followby: [
         { id: 1, name: "Follow by Amount", value: "Amount" },
         { id: 2, name: "Follow by Rate", value: "Rate" }
@@ -147,19 +147,14 @@ export default {
   methods: {   
     // All User Validation
     async followThisUser(followerID, followMethod) {
-      if (this.selectedFollow == "Amount") {
+      if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
-      } else if (this.selectedFollow == "Rate") {
+      } else if (this.selectedFollow == 2) {
         this.BetValue = this.rateValue;
-      }
+      }    
 
-      if (followMethod == 0) {
-        this.followingMethod = "follow";
-      } else if (this.FolloworNot == 1) {
-        this.followingMethod = "unfollow";
-      }
-      if (this.selectedFollow && this.BetValue) {
-        if (this.selectedFollow == "Amount") {
+      if(this.selectedFollow && this.BetValue) {
+        if (this.selectedFollow == 1) {
           if (this.BetValue < 1000 && this.BetValue > 10) {
             this.follwingBetting(followerID, followMethod);
             console.log(followMethod);
@@ -170,9 +165,8 @@ export default {
             this.errorMessage =
               "Amount should be Lower then 1000 & Grater then 10";
           }
-        } else if (this.selectedFollow == "Rate") {
-          if (this.BetValue < 100 && this.BetValue > 10) {
-            console.log(followMethod);
+        } else if (this.selectedFollow == 2) {
+          if (this.BetValue < 100 && this.BetValue > 10) {          
             this.follwingBetting(followerID, followMethod);
           } else {
             this.FollwingError = true;
@@ -188,18 +182,25 @@ export default {
         this.hasSucess = false;
         this.errorMessage = "Follwing type is not selected.";
       }
-    },
+    },    
     // Follow Users API call
     async follwingBetting(follwerUUID, method) {
       const LeaderBoardData = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
-        followToID: follwerUUID,
+        followToID: follwerUUID,     
+        followBetRule : {
+          'id' : this.selectedFollow,
+          'value' : this.BetValue
+        },   
+        unFollowBetRule:{
+            'id': this.autoStop,
+            'value': this.unfollowValue
+        },
         method: method,
-        followType: this.selectedFollow,
-        value: this.BetValue,
         version: 1
       };
+      console.log(LeaderBoardData, "Send Data Leaderboard");
       try {
         const { data } = await this.$axios.post(
           config.followUser.url,

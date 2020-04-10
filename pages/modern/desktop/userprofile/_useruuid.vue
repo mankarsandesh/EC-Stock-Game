@@ -73,8 +73,7 @@
                 </div>
 
                 <Button
-                  style="flex-grow: wrap;"
-                  linkItem="linkItem2"
+                  style="flex-grow: wrap;"                  
                   @click.stop="
                     visitProfileUserData.isFollowing === -1
                       ? (visitProfileUserData.isFollowing = 0)

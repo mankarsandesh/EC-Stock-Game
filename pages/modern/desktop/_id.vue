@@ -200,7 +200,8 @@ export default {
     onlyrules,
     stockSelect,
     leaderboardUserlist,
-    lotteryDraw
+    lotteryDraw,
+    isMobile : isMobile
   },
   data() {
     return {
