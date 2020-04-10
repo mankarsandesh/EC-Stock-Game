@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2" v-if="!isMobile">
+  <v-container fluid mt-2 class="containerNew pa-2">
     <v-layout style="background-color: #f4f5fd;">
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
@@ -40,7 +40,7 @@
                 </div>
               </v-flex>
               <v-flex mt-1>
-                <div id="chartGuideline" class="chartDesgin">
+                <div id="chartGuidelineNew" class="chartDesgin">
                   <v-flex>
                     <chartApp :stockName="routeParams" />
                   </v-flex>
@@ -377,18 +377,34 @@ export default {
     loaded() {
       this.isLoad = true;
     },
+    clearTutorialUI() {
+      $("#lastDrawGuideline").css("z-index", "1");
+      $("#betCloseInGuideline").css("z-index", "1");
+      $("#lotteryDrawGuidelines").css("z-index", "1");
+      $("#chartGuidelineNew").css("z-index", "1");
+      $(".betButtonGuide").css("z-index", "1");
+      $(".BetButtonGuideEven").css("z-index", "1");
+      $("#selectstockGuideline").css("z-index", "1");
+      $("#stocklistGuidelines").css("z-index", "1");
+    },
     openTutorial() {
-      this.setTutorialStepNumber(1);
-      this.setIsShowTutorial(true);
-      let step = 1;
-      this.setTutorialStepNumber(step);
-      let stepGo = setInterval(() => {
-        step++;
+      const _this = this;
+      let timeStart = this.getTutorialStepNumber === 0 ? 0 : 3000;
+      // setTimeout  to  resolve problems if user close tutorial and reopen
+      setTimeout(() => {
+        this.setIsShowTutorial(true);
+        let step = 1;
         this.setTutorialStepNumber(step);
-        if (step === 11) {
-          clearInterval(stepGo);
-        }
-      }, 3000);
+        let stepGo = setInterval(() => {
+          step++;
+          this.setTutorialStepNumber(step);
+          if (step == 11 || !_this.getIsShowTutorial) {
+            clearInterval(stepGo);
+            _this.clearTutorialUI();
+            this.setTutorialStepNumber(0);
+          }
+        }, 3000);
+      }, timeStart);
     }
   },
   computed: {
@@ -397,6 +413,7 @@ export default {
       return Vue.version;
     },
     ...mapGetters([
+      "getTutorialStepNumber",
       "getIsShowTutorial",
       "getStockLoop",
       "getTimerByStockName",

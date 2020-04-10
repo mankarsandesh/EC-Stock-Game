@@ -4,6 +4,11 @@
     <div id="tutorial-container" v-if="getIsShowTutorial">
       <div id="background-tutorial"></div>
       <div id="guide-container">
+        <div
+          style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer"
+        >
+          <v-icon @click="setIsShowTutorial(false)" color="#fff">close</v-icon>
+        </div>
         <!-- last draw v-if="getTutorialStepNumber === 1" -->
         <div class="guide-top" v-if="getTutorialStepNumber === 1">
           <span id="result-draw">{{ getLastDraw | lastDraw2 }}</span>
@@ -11,8 +16,11 @@
         </div>
         <!-- bet close in  -->
         <div class="guide-top" v-if="getTutorialStepNumber === 2">
-          <span class="guide-description text-uppercase" style="font-size:100px"
-            >calculation...
+          <span
+            class="guide-description text-uppercase"
+            style="font-size:100px"
+          >
+            calculation...
           </span>
         </div>
         <!-- lottery  -->
@@ -397,7 +405,7 @@ export default {
           break;
         case 4:
           $("#lotteryDrawGuidelines").css("z-index", "1");
-          $("#chartGuideline").css("z-index", "10001");
+          $("#chartGuidelineNew").css("z-index", "10001");
           if ($(document).height() > $(window).height()) {
             this.setIsWindowsHasScroll(true);
           } else {
@@ -405,7 +413,7 @@ export default {
           }
           break;
         case 5:
-          $("#chartGuideline").css("z-index", "1");
+          $("#chartGuidelineNew").css("z-index", "1");
           $(".betButtonGuide").css("z-index", "10001");
           break;
         case 6:
