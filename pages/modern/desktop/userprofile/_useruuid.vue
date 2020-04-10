@@ -11,15 +11,12 @@
                   @click="$router.push('/modern/desktop/profile/')"
                 >
                   <div class="profile-crowd">
-                    <!-- <v-icon dark>home</v-icon> -->
                     <fa icon="crown" style="font-size: 17px; color: orange;" />
                   </div>
                   <img
                     width="100%"
                     height="100%"
-                    :src="
-                      'http://159.138.47.250/' + visitProfileUserData.userImage
-                    "
+                    :src="imgProfile(visitProfileUserData.userImage)"
                     class="grey darken-4"
                   />
                 </div>
@@ -27,19 +24,29 @@
                   class="profile-name-container"
                   @click="$router.push('/modern/desktop/profile/')"
                 >
-                  <span class="profile-name-tittle">
+                 
+                  <span class="profile-name-tittle text-capitalize">                   
                     {{ visitProfileUserData.firstName }}
-                    {{ visitProfileUserData.lastName }}
+                    {{ visitProfileUserData.lastName }} 
                   </span>
+                 
+                  <span class="font-weight-medium" v-if="visitProfileUserData.username">                   
+                    {{ visitProfileUserData.username }}                   
+                  </span>
+
                   <span
                     v-if="visitProfileUserData.currentActiveTime === 'offline'"
                   >
                     {{ visitProfileUserData.currentActiveTime }}
                   </span>
                   <span v-else>
-                    Last active
+                    <b>Last active : </b>
                     {{ visitProfileUserData.currentActiveTime }}
                   </span>
+                   <span class="font-weight-medium" v-if="visitProfileUserData.userUUID == getUserUUID">  
+                     <a class="editButton"  href="/modern/desktop/profile/" >Edit Profile </a> 
+                  </span>
+
                 </div>
               </div>
             </v-flex>
@@ -156,7 +163,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "Vuex";
+import { mapGetters } from "vuex";
 import Button from "~/components/Button";
 import VueApexCharts from "vue-apexcharts";
 import config from "../../../../config/config.global";
@@ -235,6 +242,11 @@ export default {
     }
   },
   methods: {
+    imgProfile(userImage) {
+      return userImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/` + userImage;
+    },
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
       const lastWeek = date.addDays(new Date(), -duration);
@@ -280,6 +292,11 @@ export default {
 };
 </script>
 <style scoped>
+.editButton{
+  color:#FFF;
+  font-size: 16px;
+  font-weight: 800;
+}
 .stock-history-container {
   margin-top: 20px;
   padding: 15px;
@@ -369,7 +386,6 @@ export default {
   cursor: pointer;
   flex-direction: column;
   position: relative;
-  top: -15px;
   padding-left: 12px;
 }
 </style>
