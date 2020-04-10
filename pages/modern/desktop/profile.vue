@@ -144,7 +144,6 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      // console.log("profile", config.apiDomain);
       return this.getUserInfo.profileImage === null
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
