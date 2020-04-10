@@ -32,7 +32,6 @@ export default {
   computed: {
     ...mapGetters([
       "getPortalProviderUUID",
-      "getStockLivePrice",
       "getStockUUIDByStockName",
       "getLiveTime"
     ]),

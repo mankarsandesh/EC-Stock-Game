@@ -179,8 +179,7 @@
               class="close-bet-chart"
               v-if="
                 getTimerByStockName(data.stockName) &&
-                  getTimerByStockName(data.stockName).stockOpenOrClosed ===
-                    'Closed!'
+                  getTimerByStockName(data.stockName).stockStatus === 'Closed'
               "
             >
               <span class="text-close-bet">market close</span>

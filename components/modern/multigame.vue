@@ -40,13 +40,13 @@
               <span
                 v-if="
                   getTimerByStockName(stockid) &&
-                    getTimerByStockName(stockid).stockOpenOrClosed === 'Closed!'
+                    getTimerByStockName(stockid).stockStatus === 'Closed'
                 "
                 class="text-black"
               >
                 {{
-                  getTimerByStockName(stockid) &&
-                    "close" | betclosein(getStockLoop(stockid))
+                  getTimerByStockName(stockid)
+                    | betclosein(getStockLoop(stockid))
                 }}
               </span>
               <span v-else class="text-black">

@@ -23,24 +23,21 @@ export default ({ store }) => {
       console.log(error.message);
     }
   }
-  function listenForBroadcast({ channelName, eventName }, callback) {
-    window.Echo.channel(channelName).listen(eventName, callback);
-  }
-  // start listening socket stock live price
-  listenForBroadcast(
-    {
-      channelName: `stockList.${store.getters.getPortalProviderUUID}`,
-      eventName: "stockList"
-    },
-    ({ data }) => {
-      store.dispatch("setStockListTimer", data.data.stockData);
-    }
-  );
 
-  // get the stock category
   function listenStock({ channelName, eventName }, callback) {
     window.Echo.channel(channelName).listen(eventName, callback);
   }
+  // Get stock list countdown
+  listenStock(
+    {
+      channelName: `countdown.${store.getters.getPortalProviderUUID}`,
+      eventName: "countdown"
+    },
+    ({ data }) => {
+      store.dispatch("setStockCountdown", data.data.timeData);
+    }
+  );
+  // Get active games by category
   listenStock(
     {
       channelName: `getActiveGamesByCategory.${store.getters.getPortalProviderUUID}`,
@@ -48,6 +45,16 @@ export default ({ store }) => {
     },
     ({ data }) => {
       store.dispatch("setStockCategory", data.res.data);
+    }
+  );
+  // Get Stock list price
+  listenStock(
+    {
+      channelName: `stockListOnly.${store.getters.getPortalProviderUUID}`,
+      eventName: "stockListOnly"
+    },
+    ({ data }) => {
+      store.dispatch("setStockPrice", data.data.stockData);
     }
   );
 };

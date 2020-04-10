@@ -1311,7 +1311,7 @@ import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
 import config from "../../../config/config.global";
 import gameRule from "../../../data/gameRule";
-import chips from '../../../data/chips';
+import chips from "../../../data/chips";
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -1409,7 +1409,7 @@ export default {
     checkBetClose() {
       if (
         this.getTimerByStockName(this.stockID) &&
-        this.getTimerByStockName(this.stockID).stockOpenOrClosed === "Closed!"
+        this.getTimerByStockName(this.stockID).stockStatus === "Closed"
       ) {
         return true;
       }

@@ -7,7 +7,7 @@
         </v-btn>
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="40">
-            <img :src="imgProfile" />
+            <img :src="getUserInfo.profileImage ? imgProfile : `/no-profile-pic.jpg`" />
           </v-avatar>
           <div class="userLogoutMenu">
             <span v-if="getUserInfo.firstName == null"
@@ -29,7 +29,7 @@
       </template>
       <v-list>
         <v-list-tile
-          @click="$router.push('/modern/desktop/dashboardprofile/')"
+          @click="$router.push('/modern/desktop/profile/')"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-user fa-2x margin-right-5" />
@@ -89,9 +89,7 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + this.getUserInfo.profileImage;
+      return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
   },
   mounted() {
