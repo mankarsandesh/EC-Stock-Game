@@ -1,9 +1,9 @@
 const config = {
   version: "1",
-  authUser: `${process.env.AUTHUSER}`,
-  authPassword: `${process.env.AUTHPASS}`,
-  apiDomain: process.env.API_DOMIAN,
-  socketUrl: process.env.SOCKETURL,
+  authUser: `${process.env.AUTH_USER}`,
+  authPassword: `${process.env.AUTH_PASS}`,
+  apiDomain: process.env.API_DOMAIN,
+  socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
   secretKey: "GYXMAKGDYAWDW4K1C6HWWQHXH2W",
   header: {
@@ -56,6 +56,9 @@ const config = {
   },
   getUserInvitation: {
     url: `${process.env.BASE_URL}/sendInvitation`
+  },
+  getVisitUserProfile: {
+    url: `${process.env.BASE_URL}/visitUserProfile`
   },
   serverConfig: {
     port: 8000,
