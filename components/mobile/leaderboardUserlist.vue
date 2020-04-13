@@ -11,11 +11,17 @@
       </v-layout>
 
       <v-flex grow pa-1 class="text-lg-right ranking">
-        <span class="text-uppercase font-weight-bold">
+        <span class="text-uppercase font-weight-bold"
+        v-bind:class="{ active: isActiveWeek }"
+        v-on:click="sortingBy('weekly')"
+        >
           <v-icon small>event</v-icon>
           {{ $t("leaderboard.weeklyrankings") }}
         </span>
-        <span class="text-uppercase font-weight-bold">
+        <span class="text-uppercase font-weight-bold"
+          v-bind:class="{ active: isActiveMonth }"
+          v-on:click="sortingBy('monthly')"
+        >
           <v-icon small>event</v-icon>
           {{ $t("leaderboard.monthlyrankings") }}
         </span>
@@ -164,6 +170,8 @@ import config from "../../config/config.global";
 export default {
   data() {
     return {
+      isActiveWeek: true,
+      isActiveMonth: false,
       FollowName: "Follow",
       selectRate: false,
       selectAmount: true,
@@ -196,6 +204,40 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
+    //sorting weekly and Monthly
+    sortingBy(sort) {
+      if (sort == "monthly") {
+        const today = new Date();
+        const monthly = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 30
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = monthly;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.sortbyName = "Monthly Ranking";
+        this.isActiveMonth = true;
+        this.isActiveWeek = false;
+        this.leaderBoard();
+      } else {
+        const today = new Date();
+        const lastWeek = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 7
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = lastWeek;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.sortbyName = "Weekly Ranking";
+        this.isActiveMonth = false;
+        this.isActiveWeek = true;
+        this.leaderBoard();
+      }
+    },
     getImgUrl(userImage) {
       return userImage === null
         ? "/no-profile-pic.jpg"
@@ -293,12 +335,15 @@ export default {
       this.dialog = true;
     },
     async leaderBoard() {
-      const LeaderBoardData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        version: config.version
-      };
+      
       try {
+        const LeaderBoardData = {
+          portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
+          dateRangeFrom: this.dateFrom,
+          dateRangeTo: this.dateTo,
+          version: config.version
+        };
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
           LeaderBoardData,
@@ -311,7 +356,8 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    
   }
 };
 </script>

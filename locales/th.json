@@ -289,5 +289,12 @@
     "betdraw": "投注",
     "yourloosingamount": "จำนวนเงินที่คุณสูญเสีย",
     "yourwinningamount": "จำนวนเงินที่ชนะของคุณ"
+  },
+  "betting": {
+    "reviewBet" : "รีวิวพนัน",
+    "placeBet" : "วางเดิมพัน",
+    "cancelBet" :"ยกเลิกการเดิมพัน",
+    "reviewyourBet" : "ทบทวนการเดิมพันของคุณ",
+    "pleaseConfirm": "โปรดยืนยันการเดิมพันของคุณด้านล่าง"
   }
 }

@@ -289,5 +289,12 @@
     "betdraw": "BET DRAW",
     "yourloosingamount": "ຈໍານວນເງິນທີ່ຫລຸດລົງຂອງທ່ານ",
     "yourwinningamount": "ຈຳ ນວນເງິນທີ່ຊະນະຂອງທ່ານ"
+  },
+  "betting": {
+    "reviewBet" : "ທົບທວນ Bet",
+    "placeBet" : "ວາງເດີມພັນ",
+    "cancelBet" :"ຍົກເລີກການເດີມພັນ",
+    "reviewyourBet" : "ທົບທວນການເດີມພັນຂອງທ່ານ",
+    "pleaseConfirm": "ກະລຸນາຢືນຢັນການເດີມພັນຂອງທ່ານຂ້າງລຸ່ມນີ້"
   }
 }
