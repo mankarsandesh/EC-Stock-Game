@@ -1,37 +1,37 @@
 <template>
   <div xs2>
-    <section class="breadcrumbs">
+    <section class="breadcrumbs" v-if="messageError == false">
       <v-container md10>
         <v-parallax dark height="150">
           <v-layout align-center row>
             <v-flex xs6>
               <div class="flex-container">
-                <div
-                  class="profile-img-container"
-                  @click="$router.push('/modern/desktop/profile/')"
-                >
+                <div class="profile-img-container">
                   <div class="profile-crowd">
                     <fa icon="crown" style="font-size: 17px; color: orange;" />
                   </div>
                   <img
                     width="100%"
                     height="100%"
-                    :src="imgProfile(visitProfileUserData.userImage)"
+                    :src="
+                      visitProfileUserData.userImage
+                        ? imgProfile(visitProfileUserData.userImage)
+                        : defaultImage
+                    "
                     class="grey darken-4"
                   />
                 </div>
-                <div
-                  class="profile-name-container"
-                  @click="$router.push('/modern/desktop/profile/')"
-                >
-                 
-                  <span class="profile-name-tittle text-capitalize">                   
+                <div class="profile-name-container">
+                  <span class="profile-name-tittle text-capitalize">
                     {{ visitProfileUserData.firstName }}
-                    {{ visitProfileUserData.lastName }} 
+                    {{ visitProfileUserData.lastName }}
                   </span>
-                 
-                  <span class="font-weight-medium" v-if="visitProfileUserData.username">                   
-                    {{ visitProfileUserData.username }}                   
+
+                  <span
+                    class="font-weight-medium"
+                    v-if="visitProfileUserData.username"
+                  >
+                    {{ visitProfileUserData.username }}
                   </span>
 
                   <span
@@ -43,22 +43,20 @@
                     <b>Last active : </b>
                     {{ visitProfileUserData.currentActiveTime }}
                   </span>
-                   <span class="font-weight-medium" v-if="visitProfileUserData.userUUID == getUserUUID">  
-                     <a class="editButton"  href="/modern/desktop/profile/" >Edit Profile </a> 
+                  <span
+                    class="font-weight-medium"
+                    v-if="visitProfileUserData.userUUID == getUserUUID"
+                  >
+                    <a class="editButton" href="/modern/desktop/profile/"
+                      >Edit Profile
+                    </a>
                   </span>
-
                 </div>
               </div>
             </v-flex>
             <v-flex xs8 class="text-end">
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  justify-content: flex-end;
-                "
-              >
-                <span style="flex-grow: wrap; font-weight: bold;">
+              <div class="leftFollowDiv">
+                <span class="historyName">
                   History period:
                 </span>
                 <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
@@ -71,20 +69,12 @@
                     solo
                   ></v-select>
                 </div>
-
-                <Button
-                  style="flex-grow: wrap;"                  
-                  @click.stop="
-                    visitProfileUserData.isFollowing === -1
-                      ? (visitProfileUserData.isFollowing = 0)
-                      : (visitProfileUserData.isFollowing = -1)
-                  "
-                  :btnTitle="
-                    visitProfileUserData.isFollowing == -1
-                      ? 'follow'
-                      : 'following'
-                  "
-                />
+              <v-btn
+                      v-if="visitProfileUserData.userUUID != getUserUUID"
+                      class="buttonFollow"
+                      v-on:click="followUserBet(visitProfileUserData.username,visitProfileUserData.userImage,visitProfileUserData.userUUID,visitProfileUserData.isFollowing)"
+                      >Follow</v-btn
+                    >                
               </div>
             </v-flex>
           </v-layout>
@@ -93,7 +83,7 @@
     </section>
     <v-container>
       <v-layout row wrap>
-        <v-flex xs12 mt-3>
+        <v-flex xs12 mt-3 v-if="messageError == false">
           <div class="container-content">
             <div class="box-container">
               <div class="cul-box" style="color: #7e57c2;">
@@ -157,25 +147,59 @@
             </div>
           </div>
         </v-flex>
+        <v-flex v-if="messageError == true">
+          <div class="container-content">
+            <div class="box-error">
+              <h1>Sorry, this content isn't avaiable right now</h1>
+              <p>
+                The Link you followed have expired, or the page may only be
+                visiable to an audiencce you're not in.
+              </p>
+              <a @click="$router.push('/modern/desktop/userprofile/')">
+                Go back to the previous Page
+              </a>
+              <a @click="$router.push('/modern/desktop/btc1/')">
+                EC Game Home Page</a
+              >
+            </div>
+          </div>
+        </v-flex>
       </v-layout>
+
+      <!-- Follow Dialog -->
+      <v-dialog v-model="dialog" width="500" class="followDialog">
+        <followBet
+          :username="this.username"
+          :userImage="this.userImage"
+          :FollowerUserUUID="this.FollowUserUUID"
+          :isFollowing="this.FolloworNot"
+        />
+      </v-dialog>
     </v-container>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import Button from "~/components/Button";
 import VueApexCharts from "vue-apexcharts";
 import config from "../../../../config/config.global";
+import followBet from "../../../../components/modern/follow/followBet";
 import date from "date-and-time";
 
 export default {
   layout: "desktopModern",
   components: {
-    Button,
+    followBet,
     VueApexCharts
   },
   data() {
     return {
+      username: "",
+      FollowUserUUID: "",
+      FolloworNot: "",
+      userImage: "",
+      dialog: false,
+      defaultImage: "/no-profile-pic.jpg",
+      messageError: false,
       startDate: "",
       endDate: "",
       visitProfileUserData: "",
@@ -241,10 +265,16 @@ export default {
     }
   },
   methods: {
-    imgProfile(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + userImage;
+    followUserBet: function (username, userImg, userUUID, method) {
+      console.log(username);
+      this.username = username;
+      this.FollowUserUUID = userUUID;
+      this.FolloworNot = method;
+      this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
+      this.dialog = true;
+    },
+    imgProfile(userImg) {
+      return userImg === null ? this.defaultImage : `${config.apiDomain}/` + userImg;
     },
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
@@ -254,12 +284,17 @@ export default {
     },
     async getUserProfileByID() {
       try {
+        if (!this.$route.params.useruuid) {
+          this.userNew = this.getUserUUID;
+        } else {
+          this.userNew = this.$route.params.useruuid;
+        }
         const res = await this.$axios.$post(
           config.getVisitUserProfile.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
-            visitingUserUUID: this.$route.params.useruuid,
+            visitingUserUUID: this.userNew,
             dateRangeFrom: this.startDate,
             dateRangeTo: this.endDate,
             version: config.version
@@ -268,8 +303,8 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
-        if (res.code === 200 && res.status) {
+        if (res.code === 200) {
+          this.messageError = false;
           this.visitProfileUserData = res.data;
           //  series
           let series = [];
@@ -281,7 +316,7 @@ export default {
           this.series = [{ data: series }];
           this.chartOptions.xaxis.categories = xaxis;
         } else {
-          throw new Error(res.message);
+          this.messageError = true;
         }
       } catch (ex) {
         console.error(ex);
@@ -291,8 +326,34 @@ export default {
 };
 </script>
 <style scoped>
-.editButton{
-  color:#FFF;
+.leftFollowDiv {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.historyName {
+  flex-grow: wrap;
+  font-weight: bold;
+}
+.box-error {
+  border: 1px solid #dddddd;
+  background-color: #fff;
+  width: 40%;
+  margin: 10% auto;
+  padding: 40px;
+}
+.box-error h1 {
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 20px;
+  color: #003e70;
+}
+.box-error a {
+  color: #003e70;
+  font-weight: 500;
+  margin-right: 10px;
+}
+.editButton {
+  color: #fff;
   font-size: 16px;
   font-weight: 800;
 }
@@ -386,5 +447,14 @@ export default {
   flex-direction: column;
   position: relative;
   padding-left: 12px;
+}
+.buttonFollow {
+  color: #fff !important;
+  border-radius: 3px;
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  font-size: 14px;
+  width: 100px;
+  height: 48px;
+  flex-grow: wrap;
 }
 </style>

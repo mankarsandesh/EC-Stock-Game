@@ -178,7 +178,7 @@ export default {
       username: "",
       userImage: "",
       dialog: false,
-      profilePic: "/no-profile-pic.jpg",
+      defaultImage: "/no-profile-pic.jpg",
       selectedFruits: [],
       currentRoute: "",
       messageInput: "",
@@ -249,8 +249,7 @@ export default {
           userUUID: this.getUserUUID,
           category: [1],
           version: config.version
-        };
-        console.log(sendData, "Send Invitation");
+        };       
         const res = await this.$axios.$post(
           config.getUserInvitation.url,
           sendData,
@@ -263,10 +262,10 @@ export default {
       }
     },
     // fetch default image or from server image
-    imgProfile(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + userImage;
+    imgProfile(userImg) {
+      return userImg === null
+        ?  defaultImage
+        : `${config.apiDomain}/` + userImg;
     },
     followUser(username, userImage, userUUID, method) {
       this.username = username;

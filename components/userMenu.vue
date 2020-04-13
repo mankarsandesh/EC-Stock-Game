@@ -29,7 +29,7 @@
       </template>
       <v-list>
         <v-list-tile
-          @click="$router.push('/modern/desktop/profile/')"
+          @click="$router.push('/modern/desktop/userprofile/')"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-user fa-2x margin-right-5" />
