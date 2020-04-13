@@ -6,9 +6,6 @@
         <div class="errorBox" v-if="messageError">
           <h4 v-for="(data, index) in messageError" :key="index">{{ data }}</h4>
         </div>
-        <div class="errorBox" v-else>
-          <h4 v-for="(data, index) in error_spone" :key="index">{{ data }}</h4>
-        </div>
         <div class="preloader-wrap">
           <div class="percentage" id="precent"></div>
           <div class="loader">
@@ -33,29 +30,26 @@ export default {
 
   data() {
     return {
-      messageError : [],
-      getUserAuthInfo: "",
-      stockname: "btc1",
-      linkto: "",
-      error_spone: []
+      messageError: [],
+      stockName: "btc1",
+      linkto: ""
     };
   },
   mounted() {
-    this.linkto = isMobile ? "/modern" : "/modern/desktop/" + this.stockname;
-    if (!this.portalProviderUUID) {
+    if (!this.getUserAuth.portalProviderUUID) {
       const error = "portalProviderUUID field is Missing";
       this.messageError.push(error);
     }
-    if (!this.portalProviderUserID) {
+    if (!this.getUserAuth.portalProviderUserID) {
       const error = "portalProviderUserID field is Missing";
       this.messageError.push(error);
     }
-    if (!this.balance) {
+    if (!this.getUserAuth.balance) {
       const error = "balance field is Missing";
       this.messageError.push(error);
     }
-    if (!this.referrerURL) {
-      const error = "Somthing Wrong.";
+    if (!this.getUserAuth.domain) {
+      const error = "Referrer URL missing";
       this.messageError.push(error);
     }
     this.checkUserAuth();
@@ -65,7 +59,7 @@ export default {
       if (this.$screen.width <= 1204) {
         this.linkto = "modern";
       } else {
-        this.linkto = "/modern/desktop/" + stockname;
+        this.linkto = "/modern/desktop/" + stockName;
       }
     }
   },
@@ -73,8 +67,8 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getUserUUID",
-      "UserAuth",
-      "messageError"
+      "getUserAuth",
+      "getMessageError"
     ])
   },
   methods: {
@@ -82,7 +76,7 @@ export default {
       try {
         const { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
-          this.UserAuth, // data object
+          this.getUserAuth, // data object
           {
             headers: config.header
           }
@@ -92,34 +86,39 @@ export default {
           const userInfo = {
             authUser: config.authUser,
             authPassword: config.authPassword,
-            portalProviderUUID: this.UserAuth.portalProviderUUID,
+            portalProviderUUID: this.getUserAuth.portalProviderUUID,
             userId: data.data[0].userUUID,
-            redirect: this.UserAuth.referrerURL
+            redirect: this.getUserAuth.referrerURL
           };
           this.setUserUUID(userInfo.userId);
           localStorage.setItem("USER_UUID", userInfo.userId);
-          let objJsonStr = JSON.stringify(userInfo);
-          let buff = new Buffer(objJsonStr);
-          let base64data = buff.toString("base64");
+          // let objJsonStr = JSON.stringify(userInfo);
+          // console.log('stringify user info', objJsonStr)
+          // let buff = new Buffer(objJsonStr);
+          // let base64data = buff.toString("base64");
+          // console.log('base64 data', base64data)
           if (userInfo.authUser && userInfo.authPassword) {
             if (userInfo.portalProviderUUID && userInfo.userId) {
-              let buffDecode = new Buffer(base64data, "base64");
-              let authData = buffDecode.toString("ascii");
-              this.setAuth(authData);
-              localStorage.setItem("AUTH", JSON.stringify(base64data));
+              // let buffDecode = new Buffer(base64data, "base64");
+              // console.log('buffdecode', buffDecode)
+              // let authData = buffDecode.toString("ascii");
+              // console.log('buffauthdata', authData)
+              // this.setAuth(authData);
+              // localStorage.setItem("AUTH", JSON.stringify(base64data));
+              //window.location = this.linkto;
               this.getProgress();
               // location.reload(true);
             } else {
               const error = "Portal Provider OR userID is Missing...";
-              this.error_spone.push(error);
+              this.messageError.push(error);
             }
           } else {
-            const error = "Authication authUser & authPassword is Missing.";
-            this.error_spone.push(error);
+            const error = "Authentication authUser & authPassword is Missing.";
+            this.messageError.push(error);
           }
         } else {
           const error = data.message;
-          this.error_spone.push(error);
+          this.messageError.push(error);
         }
         // location.reload(true);
       } catch (error) {
@@ -129,7 +128,6 @@ export default {
     ...mapActions(["setAuth", "setUserUUID"]),
 
     getProgress() {
-      let seft = this;
       let width = 100,
         perfData = window.performance.timing, // The PerformanceTiming interface represents timing-related performance information for the given page.
         EstimatedTime = -(perfData.loadEventEnd - perfData.navigationStart),
@@ -147,40 +145,39 @@ export default {
           width: width + "%"
         },
         time
-      );  
+      );
 
       // Percentage Increment Animation
       let PercentageID = $("#precent"),
         start = 0,
         end = 100,
         durataion = time;
-      animateValue(PercentageID, start, end, durataion);
-
-      function animateValue(id, start, end, duration) {
-        let range = end - start,
-          current = start,
-          increment = end > start ? 1 : -1,
-          stepTime = Math.abs(Math.floor(duration / range)),
-          obj = $(id);
-
-        let timer = setInterval(function() {
-          current += increment;
-          //   $(obj).text(current + "%");  //sHOW BY %
-          $(obj).text("lOADING..."); // SHOW BY LOADING
-          obj.innerHTML = current;
-          if (current == end) {
-            clearInterval(timer);
-            window.location = seft.linkto;
-            // seft.$router.push("/modern/desktop/btc1");
-            // seft.$router.push("/dashboard?stockname=" + seft.stockname);
-          }
-        }, stepTime);
-      }
+      this.animateValue(PercentageID, start, end, durataion);
 
       // Fading Out Loadbar on Finised
       setTimeout(function() {
         $(".preloader-wrap").fadeOut(100);
       }, time);
+    },
+    animateValue(id, start, end, duration) {
+      let range = end - start,
+        current = start,
+        increment = end > start ? 1 : -1,
+        stepTime = Math.abs(Math.floor(duration / range)),
+        obj = $(id);
+
+      let timer = setInterval(() => {
+        current += increment;
+        //   $(obj).text(current + "%");  //sHOW BY %
+        $(obj).text("lOADING..."); // SHOW BY LOADING
+        obj.innerHTML = current;
+        if (current == end) {
+          clearInterval(timer);
+          window.location = isMobile
+            ? "/modern"
+            : "/modern/desktop/" + this.stockName;
+        }
+      }, stepTime);
     }
   }
 };

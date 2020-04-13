@@ -90,15 +90,15 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: '~/components/loaders/PageTransition.vue',
+  loading: "~/components/loaders/PageTransition.vue",
   loadingIndicator: {
-    name: '~/components/loaders/PageLoader.html',
-    color: '#FDFEFE',
-    background: '#2980b9'
+    name: "~/components/loaders/PageLoader.html",
+    color: "#FDFEFE",
+    background: "#2980b9"
   },
   pageTransition: {
-    name: 'fade',
-    mode: 'out-in',
+    name: "fade",
+    mode: "out-in"
   },
   /*
    ** Global CSS

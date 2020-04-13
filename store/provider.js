@@ -13,7 +13,9 @@ const state = () => ({
   coinsModern: [], // Store coins modern
   isShowTutorial: false,
   isWindowsHasScroll: false,
-  tutorialStepNumber: 0 // Store tutorial step number
+  tutorialStepNumber: 0, // Store tutorial step number
+  UserAuth: {},
+  messageError: []
 });
 
 const mutations = {
@@ -59,6 +61,12 @@ const mutations = {
   },
   SET_TUTORIAL_STEP_NUMBER(state, payload) {
     state.tutorialStepNumber = payload;
+  },
+  SET_USER_AUTH(state, payload) {
+    state.UserAuth = payload;
+  },
+  SET_USER_AUTH_ERROR(state, payload) {
+    state.messageError = payload;
   }
 };
 
@@ -131,6 +139,12 @@ const actions = {
   // Set tutorial's step number
   setTutorialStepNumber({ commit }, payload) {
     commit("SET_TUTORIAL_STEP_NUMBER", payload);
+  },
+  setUserAuth({ commit }, payload) {
+    commit("SET_USER_AUTH", payload);
+  },
+  setUserAuthError({ commit }, payload) {
+    commit("SET_USER_AUTH_ERROR", payload);
   }
 };
 
@@ -192,7 +206,9 @@ const getters = {
   // Get Tutorial step number
   getTutorialStepNumber(state) {
     return state.tutorialStepNumber;
-  }
+  },
+  getUserAuth: state => state.UserAuth,
+  getMessageError: state => state.messageError
 };
 
 export default {

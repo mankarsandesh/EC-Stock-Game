@@ -1,7 +1,6 @@
 <template>
   <transition name="fade" mode="out-in" appear>
-  <div v-if="loading" class="loading-page">
-  </div>
+    <div v-if="loading" class="loading-page"></div>
   </transition>
 </template>
 
@@ -15,9 +14,6 @@ export default {
       this.loading = true;
     },
     finish() {
-      // setTimeout(() => {
-      //   this.loading = false;
-      // },4000)
       this.loading = false;
     }
   }
@@ -39,5 +35,4 @@ export default {
   font-size: 30px;
   font-family: sans-serif;
 }
-
 </style>

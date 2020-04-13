@@ -38,7 +38,7 @@ const actions = {
         let readyData = res.data[0].roadMap.reverse();
         context.commit("SET_ROAD_MAP", readyData);
       } else {
-        console.log(context);
+        console.log(res);
         throw new Error();
       }
     } catch (ex) {

@@ -1,10 +1,13 @@
-export default function ({ query, store, redirect }) {
-  const referrerURL = localStorage.getItem("referrerURL")
+export default function({ query, store, redirect }) {
+  const referrerURL = localStorage.getItem("referrerURL");
   if (referrerURL == undefined) {
-    localStorage.setItem("referrerURL", document.referrer.match(/:\/\/(.[^/]+)/)[1]);
+    localStorage.setItem(
+      "referrerURL",
+      document.referrer.match(/:\/\/(.[^/]+)/)[1]
+    );
   }
   if (Object.keys(query).length !== 0) {
-    let messageError = []
+    let messageError = [];
     if (!query.portalProviderUUID) {
       const error = "portalProviderUUID field is Missing";
       messageError.push(error);
@@ -24,20 +27,15 @@ export default function ({ query, store, redirect }) {
         version: "0.1",
         ip: "225.457.454.123",
         domain: referrerURL,
-        balance: query.balance,
-      }
-      localStorage.setItem(
-        "PORTAL_PROVIDERUUID",
-        query.portalProviderUUID
-      );
-      store.commit("SET_USER_AUTH", UserAuth)
-      store.dispatch("setPortalProviderUUID", UserAuth)
+        balance: query.balance
+      };
+      localStorage.setItem("PORTAL_PROVIDERUUID", query.portalProviderUUID);
+      store.dispatch("setUserAuth", UserAuth);
+      store.dispatch("setPortalProviderUUID", UserAuth.portalProviderUUID);
     }
-    store.commit("SET_USER_AUTH_ERROR", query.messageError)
-
+    store.dispatch("setUserAuthError", query.messageError);
   } else {
-    redirect(referrerURL)
-    localStorage.removeItem("referrerURL")
-
+    redirect(referrerURL);
+    localStorage.removeItem("referrerURL");
   }
 }

@@ -5,9 +5,7 @@ const state = () => ({
   isLoadingStockGame: false,
   gameStockId: null, // Store game stock id
   stockMultiGame: [], // Store stocks of multi game
-  payout: payouts, // Store payouts
-  UserAuth: {},
-  messageError: []
+  payout: payouts // Store payouts
 });
 
 const mutations = {
@@ -24,12 +22,6 @@ const mutations = {
   ADD_STOCK_MULTI_GAME(state, stockId) {
     if (state.stockMultiGame.includes(stockId)) return;
     state.stockMultiGame.push(stockId);
-  },
-  SET_USER_AUTH(state, payload) {
-    state.UserAuth = payload
-  },
-  SET_USER_AUTH_ERROR(state, payload) {
-    state.messageError = payload
   }
 };
 
@@ -89,9 +81,7 @@ const getters = {
       // console.log(state.payout[gameRule])
       return state.payout[gameRule];
     }
-  },
-  UserAuth: state => state.UserAuth,
-  messageError: state => state.messageError
+  }
 };
 
 export default {
