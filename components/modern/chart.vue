@@ -221,7 +221,6 @@ export default {
             headers: config.header
           }
         );
-        console.log('chart.vue response',res.data);
         if (res.code === 200) {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
