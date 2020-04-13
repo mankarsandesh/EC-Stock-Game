@@ -1,6 +1,6 @@
 <template>
   <div xs2>
-    <section class="breadcrumbs">
+    <section class="breadcrumbs" v-if="messageError == false">
       <v-container md10>
         <v-parallax dark height="150">
           <v-layout align-center row>
@@ -16,7 +16,7 @@
                   <img
                     width="100%"
                     height="100%"
-                    :src="imgProfile(visitProfileUserData.userImage)"
+                    :src="visitProfileUserData.userImage ? imgProfile(visitProfileUserData.userImage) : defaultImage"
                     class="grey darken-4"
                   />
                 </div>
@@ -24,14 +24,16 @@
                   class="profile-name-container"
                   @click="$router.push('/modern/desktop/profile/')"
                 >
-                 
-                  <span class="profile-name-tittle text-capitalize">                   
+                  <span class="profile-name-tittle text-capitalize">
                     {{ visitProfileUserData.firstName }}
-                    {{ visitProfileUserData.lastName }} 
+                    {{ visitProfileUserData.lastName }}
                   </span>
-                 
-                  <span class="font-weight-medium" v-if="visitProfileUserData.username">                   
-                    {{ visitProfileUserData.username }}                   
+
+                  <span
+                    class="font-weight-medium"
+                    v-if="visitProfileUserData.username"
+                  >
+                    {{ visitProfileUserData.username }}
                   </span>
 
                   <span
@@ -43,10 +45,14 @@
                     <b>Last active : </b>
                     {{ visitProfileUserData.currentActiveTime }}
                   </span>
-                   <span class="font-weight-medium" v-if="visitProfileUserData.userUUID == getUserUUID">  
-                     <a class="editButton"  href="/modern/desktop/profile/" >Edit Profile </a> 
+                  <span
+                    class="font-weight-medium"
+                    v-if="visitProfileUserData.userUUID == getUserUUID"
+                  >
+                    <a class="editButton" href="/modern/desktop/profile/"
+                      >Edit Profile
+                    </a>
                   </span>
-
                 </div>
               </div>
             </v-flex>
@@ -73,7 +79,8 @@
                 </div>
 
                 <Button
-                  style="flex-grow: wrap;"                  
+                  v-if="visitProfileUserData.userUUID != getUserUUID"
+                  style="flex-grow: wrap;"
                   @click.stop="
                     visitProfileUserData.isFollowing === -1
                       ? (visitProfileUserData.isFollowing = 0)
@@ -93,7 +100,7 @@
     </section>
     <v-container>
       <v-layout row wrap>
-        <v-flex xs12 mt-3>
+        <v-flex xs12 mt-3 v-if="messageError == false">
           <div class="container-content">
             <div class="box-container">
               <div class="cul-box" style="color: #7e57c2;">
@@ -157,6 +164,19 @@
             </div>
           </div>
         </v-flex>
+        <v-flex v-if="messageError == true">
+          <div class="container-content">
+            <div class="box-error">
+              <h1>Sorry, this content isn't avaiable right now</h1>
+              <p>
+                The Link you followed have expired, or the page may only be
+                visiable to an audiencce you're not in.
+              </p>
+              <a @click="$router.push('/modern/desktop/userprofile/')"> Go back to the previous Page </a>
+              <a @click="$router.push('/modern/desktop/btc1/')" > EC Game Home Page</a>
+            </div>
+          </div>
+        </v-flex>
       </v-layout>
     </v-container>
   </div>
@@ -176,6 +196,8 @@ export default {
   },
   data() {
     return {
+      defaultImage : '/no-profile-pic.jpg',
+      messageError: false,
       startDate: "",
       endDate: "",
       visitProfileUserData: "",
@@ -242,9 +264,7 @@ export default {
   },
   methods: {
     imgProfile(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + userImage;
+        return `${config.apiDomain}/${userImage}`;     
     },
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
@@ -254,12 +274,17 @@ export default {
     },
     async getUserProfileByID() {
       try {
+        if (!this.$route.params.useruuid) {
+          this.userNew = this.getUserUUID;
+        } else {
+          this.userNew = this.$route.params.useruuid;
+        }
         const res = await this.$axios.$post(
           config.getVisitUserProfile.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
-            visitingUserUUID: this.$route.params.useruuid,
+            visitingUserUUID: this.userNew,
             dateRangeFrom: this.startDate,
             dateRangeTo: this.endDate,
             version: config.version
@@ -268,8 +293,8 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
-        if (res.code === 200 && res.status) {
+        if (res.code === 200) {
+          this.messageError = false;
           this.visitProfileUserData = res.data;
           //  series
           let series = [];
@@ -281,7 +306,7 @@ export default {
           this.series = [{ data: series }];
           this.chartOptions.xaxis.categories = xaxis;
         } else {
-          throw new Error(res.message);
+          this.messageError = true;        
         }
       } catch (ex) {
         console.error(ex);
@@ -291,8 +316,25 @@ export default {
 };
 </script>
 <style scoped>
-.editButton{
-  color:#FFF;
+.box-error {
+  border: 1px solid #dddddd;
+  background-color: #fff;
+  width: 40%;
+  margin: 10% auto;
+  padding: 40px;
+}
+.box-error h1 {
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 20px;
+  color: #003e70;
+}
+.box-error a {
+  color: #003e70;
+  font-weight: 500;
+  margin-right: 10px;
+}
+.editButton {
+  color: #fff;
   font-size: 16px;
   font-weight: 800;
 }
