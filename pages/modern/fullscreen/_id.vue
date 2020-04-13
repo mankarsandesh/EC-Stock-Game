@@ -1,5 +1,126 @@
 <template>
   <div>
+    <!-- tutorial -->
+    <!-- tutorial v-if="isShowTutorial" -->
+    <div id="tutorial-container" v-if="isShowTutorial">
+      <div id="background-tutorial"></div>
+      <div id="guide-container">
+        <div
+          style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer"
+        >
+          <v-icon @click="clearTutorialUI()" color="#fff">close</v-icon>
+        </div>
+        <!-- last draw v-if="tutorialStepNumber === 1" -->
+        <div class="guide-top" v-if="tutorialStepNumber === 1">
+          <span id="result-draw">{{ getLastDraw | lastDraw2 }}</span>
+          <span class="guide-description">Result of the DRAW</span>
+        </div>
+        <!-- bet close in  -->
+        <div class="guide-top" v-if="tutorialStepNumber === 2">
+          <span
+            class="guide-description text-uppercase"
+            style="font-size:100px"
+          >
+            calculation...
+          </span>
+        </div>
+        <!-- lottery  -->
+        <div class="guide-top" v-if="tutorialStepNumber === 3">
+          <span id="lottery-draw-guide-text">
+            {{
+              getTimerByStockName($route.params.id) &&
+                getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
+                  | lotterydraw(getStockLoop($route.params.id))
+            }}
+          </span>
+          <span class="guide-description">Lottery DRAW</span>
+        </div>
+        <!-- chart  -->
+        <!-- has scroll -->
+        <div
+          class="guide-chart-has-scroll"
+          v-if="tutorialStepNumber === 4 && getIsWindowsHasScroll"
+        >
+          <span class="guide-title text-uppercase">
+            analysis graph
+          </span>
+          <span class="guide-description">
+            You can analysis stock graph,the result of last draw
+          </span>
+        </div>
+        <!-- no scroll -->
+        <div
+          class="guide-chart-no-scroll"
+          v-if="tutorialStepNumber === 4 && !getIsWindowsHasScroll"
+        >
+          <span class="guide-title text-uppercase">
+            analysis graph
+          </span>
+          <span class="guide-description">
+            You can analysis stock graph,the result of last draw
+          </span>
+        </div>
+
+        <!-- bet on digigt  -->
+        <div
+          class="guide-top "
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 5"
+        >
+          <span class="guide-title text-uppercase">
+            bet on digits
+          </span>
+          <span class="guide-description">
+            Now you can select DIGIT
+          </span>
+        </div>
+        <!-- select chipcamount  -->
+        <div
+          class="guide-top "
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 6"
+        >
+          <span class="guide-title text-uppercase">
+            bet confirm
+          </span>
+          <span class="guide-description">
+            Your BET place confirm on Last Digit EVEN</span
+          >
+        </div>
+        <!-- enter amount bet -->
+        <!-- has scroll   v-if="tutorialStepNumber === 7 && getIsWindowsHasScroll"-->
+        <div
+          class="guide-bottom-has-scroll"
+          id="enter-bet-guide"
+          v-if="tutorialStepNumber === 7 && getIsWindowsHasScroll"
+        >
+          <span class="guide-title text-uppercase">
+            bet on digits
+          </span>
+          <span class="guide-description">
+            Select CHIP or enter AMOUNT to CONFIRM bet</span
+          >
+        </div>
+        <!-- no scroll -->
+        <div
+          class="guide-bottom-no-scroll"
+          id="enter-bet-guide"
+          v-if="tutorialStepNumber === 7 && !getIsWindowsHasScroll"
+        >
+          <span class="guide-title text-uppercase">
+            bet on digits
+          </span>
+          <span class="guide-description">
+            Select CHIP or enter AMOUNT to CONFIRM bet</span
+          >
+        </div>
+        <!-- to scroll here -->
+        <div id="enter-amount-to-bet" hidden>hidden</div>
+        <!-- to scroll here -->
+      </div>
+    </div>
+    <!-- tutorial -->
+    <!-- tutorial -->
     <!-- Other Stock List popup -->
     <v-dialog v-model="dialogOtherstock" style="position: fixed !important;">
       <v-card color="rgb(0, 62, 111, 0.8)">
@@ -31,7 +152,7 @@
                 >
                   <span class="text-close-bet">market close</span>
                 </div>
-
+                <!-- chart other stocks -->
                 <v-card-text class="pa-0" min-height="500">
                   <chartApp :stockName="data.stockName"></chartApp>
                 </v-card-text>
@@ -84,7 +205,14 @@
                   </v-flex>
                 </v-layout>
               </v-flex>
-              <v-flex xs12 sm12 md8 lg12 class="chartDesgin">
+              <v-flex
+                xs12
+                sm12
+                md8
+                lg12
+                class="chartDesgin"
+                id="chartGuidelineNew"
+              >
                 <chartApp :stockName="$route.params.id"></chartApp>
               </v-flex>
             </div>
@@ -95,7 +223,7 @@
             <v-layout>
               <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
-                <div id="lastDrawGuidelines">
+                <div id="lastDrawGuideline">
                   <v-flex flex-style class="lastdraw">
                     <h4
                       class="text-black"
@@ -106,7 +234,7 @@
               </v-flex>
               <v-flex class="text-xs-center" xs4 px-2>
                 <span class="text-black">{{ $t("msg.BetClosein") }}:</span>
-                <div id="betCloseInGuidelines">
+                <div id="betCloseInGuideline">
                   <v-flex flex-style class="betclose">
                     <span
                       v-if="
@@ -148,7 +276,14 @@
                 </div>
               </v-flex>
               <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn fab dark small class="helpButton" title="Help">
+                <v-btn
+                  @click="openTutorial()"
+                  fab
+                  dark
+                  small
+                  class="helpButton"
+                  title="Help"
+                >
                   <v-icon dark size="25">fa-question</v-icon>
                 </v-btn>
               </v-flex>
@@ -217,9 +352,7 @@
             </v-flex>
           </v-layout>
         </v-flex>
-
-        <!-- live Chart -->
-
+        <!-- live Chart road map -->
         <v-flex xs12 class="text-xs-center" mt-3>
           <footerBet lg12 md12></footerBet>
           <v-layout class="fullroadMap elevation-4" style="margin-top: -40px;">
@@ -274,111 +407,6 @@
           <span>Close Full Screen</span>
         </v-tooltip>
       </v-layout>
-      <!-- Tutorial component boxes -->
-
-      <div ref="guideline" class="overlay">
-        <a class="closebtn" @click="closeGuideline()">&times;</a>
-      </div>
-      <div hidden ref="guidelineContent" class="overlay-content">
-        <!-- 1)Live chart -->
-        <div
-          ref="livechartGuidelines"
-          style="position: fixed;"
-          v-show="isStep == 1"
-        >
-          <div class="d-flex">
-            <p class="float-right guideline">
-              The live chart
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-            <div class="arrow float-left line-my">&#8628;</div>
-          </div>
-        </div>
-        <!-- 2) Last draw -->
-        <div
-          ref="lastDrawGuidelines"
-          style="position: fixed;"
-          v-show="isStep == 2"
-        >
-          <div class="d-flex">
-            <p class="float-right guideline">
-              The last draw price of stock
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-            <div class="arrow float-left line-my">&#8605;</div>
-          </div>
-        </div>
-        <!-- 3) Bet close -->
-        <div
-          ref="betCloseInGuidelines"
-          style="position: fixed;"
-          v-show="isStep == 3"
-        >
-          <div class="d-flex">
-            <p class="float-right guideline">
-              Bet close time
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-            <div class="arrow float-left line-my">&#8628;</div>
-          </div>
-        </div>
-        <!-- 4) Lottery draw -->
-        <div
-          ref="lotteryDrawGuidelines"
-          style="position: fixed;"
-          v-show="isStep == 4"
-        >
-          <div class="d-flex">
-            <p class="float-right guideline">
-              Time left for lottery draw
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-            <div class="arrow float-left line-my">&#8628;</div>
-          </div>
-        </div>
-        <!-- 5) Betting button -->
-        <div
-          ref="betButtonGuidelines"
-          style="position: fixed;"
-          v-show="isStep == 5"
-        >
-          <div class="d-flex">
-            <p class="float-right guideline">
-              Choose any option to place a bet
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-            <div class="arrow float-left line-my">&#8628;</div>
-          </div>
-        </div>
-        <!-- 6) Live bet data -->
-        <div
-          ref="livebetGuidelines"
-          style="position: fixed;"
-          v-show="isStep == 6"
-        >
-          <div class="d-flex">
-            <p class="float-right guideline">
-              Live bet data
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-            <div class="arrow float-left line-my">&#8628;</div>
-          </div>
-        </div>
-        <!-- 7) Roadmap data-->
-        <div
-          ref="roadmapGuidelines"
-          style="position: fixed;"
-          v-show="isStep == 7"
-        >
-          <div class="d-flex">
-            <p class="float-right guideline">
-              Road map of previous games
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-            <div class="arrow float-left line-my">&#8628;</div>
-          </div>
-        </div>
-      </div>
     </v-container>
   </div>
 </template>
@@ -400,6 +428,8 @@ export default {
   layout: "fullscreen",
   data() {
     return {
+      isShowTutorial: false,
+      tutorialStepNumber: 0,
       routeParamID: this.$route.params.id,
       dialogOtherstock: false,
       //winner mqrquee
@@ -434,12 +464,6 @@ export default {
     );
   },
   mounted() {
-    // socket new api
-    console.log(
-      `roadMap.${this.getStockUUIDByStockName(this.$route.params.id)}.${
-        this.getPortalProviderUUID
-      }`
-    );
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -486,6 +510,7 @@ export default {
       return `/modern/${fullscreenClose}/${this.$route.params.id}`;
     },
     ...mapGetters([
+      "getIsWindowsHasScroll",
       "getStockGameId",
       "getGameUUIDByStockName",
       "getAllStocks",
@@ -507,8 +532,89 @@ export default {
       gameStockId: state => state.game.gameStockId
     })
   },
+  watch: {
+    tutorialStepNumber(newValue) {
+      switch (newValue) {
+        case 1:
+          $("#lastDrawGuideline").css("z-index", "10001");
+          break;
+        case 2:
+          $("#lastDrawGuideline").css("z-index", "1");
+          $("#betCloseInGuideline").css("z-index", "10001");
+          break;
+        case 3:
+          $("#betCloseInGuideline").css("z-index", "1");
+          $("#lotteryDrawGuidelines").css("z-index", "10001");
+          break;
+        case 4:
+          $("#lotteryDrawGuidelines").css("z-index", "1");
+          $("#chartGuidelineNew").css("z-index", "10001");
+          if ($(document).height() > $(window).height()) {
+            this.setIsWindowsHasScroll(true);
+          } else {
+            this.setIsWindowsHasScroll(false);
+          }
+          break;
+        case 5:
+          $("#chartGuidelineNew").css("z-index", "1");
+          $(".betButtonGuide").css("z-index", "10001");
+          break;
+        case 6:
+          $(".betButtonGuide").css("z-index", "1");
+          $(".BetButtonGuideEven").css("z-index", "10001");
+          break;
+        case 7:
+          $(".BetButtonGuideEven").click();
+          $("html, body").animate(
+            { scrollTop: $("#enter-amount-to-bet").scrollTop() },
+            1000
+          );
+          break;
+        case 8:
+          $(".BetButtonGuideEven").css("z-index", "1");
+          $("#background-tutorial").click();
+          this.isShowTutorial = false;
+          break;
+        default:
+          $("#betresultGuidelines").css("z-index", "1");
+          this.isShowTutorial = false;
+      }
+    }
+  },
   methods: {
-    ...mapActions(["setRoadMap", "setLiveRoadMap", "setStockCategory"]),
+    clearTutorialUI() {
+      this.tutorialStepNumber = 0;
+      this.isShowTutorial = false;
+      $("#lastDrawGuideline").css("z-index", "1");
+      $("#betCloseInGuideline").css("z-index", "1");
+      $("#lotteryDrawGuidelines").css("z-index", "1");
+      $("#chartGuidelineNew").css("z-index", "1");
+      $(".betButtonGuide").css("z-index", "1");
+      $(".BetButtonGuideEven").css("z-index", "1");
+      $("#selectstockGuideline").css("z-index", "1");
+      $("#stocklistGuidelines").css("z-index", "1");
+    },
+    openTutorial() {
+      const _this = this;
+      let time = this.tutorialStepNumber === 0 ? 0 : 3000;
+      setTimeout(() => {
+        this.isShowTutorial = true;
+        this.tutorialStepNumber++;
+        let stepGo = setInterval(() => {
+          this.tutorialStepNumber++;
+          if (this.tutorialStepNumber > 8 || !_this.isShowTutorial) {
+            clearInterval(stepGo);
+            this.clearTutorialUI();
+          }
+        }, 3000);
+      }, time);
+    },
+    ...mapActions([
+      "setIsWindowsHasScroll",
+      "setRoadMap",
+      "setLiveRoadMap",
+      "setStockCategory"
+    ]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
