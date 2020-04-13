@@ -33,6 +33,7 @@ export default {
 
   data() {
     return {
+      messageError : [],
       getUserAuthInfo: "",
       stockname: "btc1",
       linkto: "",
