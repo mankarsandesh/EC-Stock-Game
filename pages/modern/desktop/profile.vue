@@ -147,7 +147,6 @@ export default {
     ...mapActions(["setUserData"]),
     readFile(e) {
       let self = this;
-      console.log(e.target);
       if (e.target.files && e.target.files[0]) {
         let FR = new FileReader();
         FR.addEventListener("load", function(e) {
@@ -184,9 +183,6 @@ export default {
             // }
           }
         );
-        console.log("res......");
-        console.log(res);
-        console.log("res.......");
         if (res.code === 200) {
           this.blurValue = 0;
           this.setUserData();
