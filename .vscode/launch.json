@@ -11,6 +11,8 @@
             "port": 9222,
             //"url": "http://192.168.1.142:8000",
             "webRoot": "${workspaceFolder}",
+            "sourceMaps": "true",
+            "breakOnLoad": "true",
             "sourceMapPathOverrides": {
                 "webpack:///*": "${workspaceRoot}/*"
             }

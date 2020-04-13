@@ -8,17 +8,8 @@
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img
-                    v-if="imageBase64 == ''"
-                    :src="imgProfile"
-                    alt="img-profile"
-                  />
-                  <img
-                    :style="{ filter: `blur(${blurValue}px)` }"
-                    v-else
-                    :src="imageBase64"
-                    alt="img-profile"
-                  />
+                  
+                  <img :src="getUserInfo.profileImage ? imgProfile : `/no-profile-pic.jpg`" />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
@@ -144,9 +135,7 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
   },
   watch: {
@@ -155,9 +144,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setUserData"]),
     readFile(e) {
       let self = this;
-      console.log(e.target);
       if (e.target.files && e.target.files[0]) {
         let FR = new FileReader();
         FR.addEventListener("load", function(e) {
@@ -171,7 +160,7 @@ export default {
     },
     async updateProfile() {
       let formData = new FormData();
-      formData.append("profileImage", this.$refs.inputFile.files[0], "file");
+      formData.append("profileImage", this.$refs.inputFile.files[0]);
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("version", config.version);
@@ -181,24 +170,22 @@ export default {
           formData,
           {
             headers: config.header,
-            onUploadProgress: progressEvent => {
-              const totalLength = progressEvent.lengthComputable
-                ? progressEvent.total
-                : progressEvent.target.getResponseHeader("content-length") ||
-                  progressEvent.target.getResponseHeader(
-                    "x-decompressed-content-length"
-                  );
-              if (totalLength !== null) {
-                this.blurValue = Math.round(totalLength - progressEvent.loaded);
-              }
-            }
+            // onUploadProgress: progressEvent => {
+            //   const totalLength = progressEvent.lengthComputable
+            //     ? progressEvent.total
+            //     : progressEvent.target.getResponseHeader("content-length") ||
+            //       progressEvent.target.getResponseHeader(
+            //         "x-decompressed-content-length"
+            //       );
+            //   if (totalLength !== null) {
+            //     this.blurValue = Math.round(totalLength - progressEvent.loaded);
+            //   }
+            // }
           }
         );
-        console.log("res......");
-        console.log(res);
-        console.log("res.......");
         if (res.code === 200) {
           this.blurValue = 0;
+          this.setUserData();
         } else {
           throw new Error(res.message);
         }
