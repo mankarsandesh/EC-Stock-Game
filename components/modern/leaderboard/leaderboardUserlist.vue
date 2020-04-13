@@ -49,7 +49,10 @@
         id="userRow"
       >
         <div class="userRow">
-          <div>
+          <div >
+            <nuxt-link
+              :to="'/modern/desktop/userprofile/'+data.userUUID"
+            >
             <img class="pimage" :src="imgProfile(data.userImage)" />
             <span class="subtitle-1 text-uppercase ">
               <span class="name">
@@ -57,6 +60,7 @@
                 {{ data.username }}
               </span>
             </span>
+            </nuxt-link>
             <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
           </div>
           <div>
