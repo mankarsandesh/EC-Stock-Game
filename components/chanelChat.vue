@@ -154,8 +154,7 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getUserUUID",
-      "getStockType",
-      "getStockGameId"
+      "getStockType"
     ]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {

@@ -12,7 +12,7 @@
 
 <script>
 import VueApexCharts from "vue-apexcharts";
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import openSocket from "socket.io-client";
 export default {
   props: ["StockData"],
@@ -131,14 +131,14 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      gameStockId: state => state.game.gameStockId
-    })
+    ...mapGetters([
+      "getGameUUIDByStockName"
+    ])
   },
   mounted() {
     this.listenForBroadcast(
       {
-        channelName: "liveBetCounts." + this.gameStockId,
+        channelName: `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`,
         eventName: "liveBetCounts"
       },
       ({ data }) => {

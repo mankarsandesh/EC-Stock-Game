@@ -111,7 +111,6 @@ export default {
       "getCoinsModern",
       "getAuthToken",
       "getStockId",
-      "getStockGameId",
       "getPortalProviderUUID",
       "getUserUUID",
       "clearRoadMap",
