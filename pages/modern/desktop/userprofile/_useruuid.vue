@@ -72,26 +72,9 @@
               <v-btn
                       v-if="visitProfileUserData.userUUID != getUserUUID"
                       class="buttonFollow"
-                      v-on:click="followUserBet(null, null, visitProfileUserData.userUUID, '0')"
+                      v-on:click="followUserBet(visitProfileUserData.username,visitProfileUserData.userImage,visitProfileUserData.userUUID,visitProfileUserData.isFollowing)"
                       >Follow</v-btn
-                    >
-                <!-- <Button
-                  v-if="visitProfileUserData.userUUID != getUserUUID"
-                  style="flex-grow: wrap;"
-                  v-on:click="
-                    followUserBet(
-                      visitProfileUserData.username,
-                      visitProfileUserData.userImage,
-                      visitProfileUserData.userUUID,
-                      visitProfileUserData.isFollowing
-                    )
-                  "
-                  :btnTitle="
-                    visitProfileUserData.isFollowing == 1
-                      ? 'following'
-                      : 'follow'
-                  "
-                /> -->
+                    >                
               </div>
             </v-flex>
           </v-layout>
@@ -197,7 +180,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import Button from "~/components/Button";
 import VueApexCharts from "vue-apexcharts";
 import config from "../../../../config/config.global";
 import followBet from "../../../../components/modern/follow/followBet";
@@ -206,7 +188,6 @@ import date from "date-and-time";
 export default {
   layout: "desktopModern",
   components: {
-    Button,
     followBet,
     VueApexCharts
   },
@@ -284,12 +265,12 @@ export default {
     }
   },
   methods: {
-    followUserBet: function (username, userImage, userUUID, method) {
-      console.log("username");
+    followUserBet: function (username, userImg, userUUID, method) {
+      console.log(username);
       this.username = username;
       this.FollowUserUUID = userUUID;
       this.FolloworNot = method;
-      this.userImage = userImage ? imgProfile(userImage) : this.defaultImage;
+      this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
       this.dialog = true;
     },
     imgProfile(userImg) {

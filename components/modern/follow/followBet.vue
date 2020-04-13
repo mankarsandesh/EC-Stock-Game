@@ -144,20 +144,19 @@ export default {
       userUUID: state => state.provider.userUUID
     }) //get 2 data from vuex first, in the computed
   },
-  methods: {   
+  methods: {
     // All User Validation
     async followThisUser(followerID, followMethod) {
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
       } else if (this.selectedFollow == 2) {
         this.BetValue = this.rateValue;
-      }    
+      }
 
-      if(this.selectedFollow && this.BetValue) {
+      if (this.selectedFollow && this.BetValue) {
         if (this.selectedFollow == 1) {
           if (this.BetValue < 1000 && this.BetValue > 10) {
             this.follwingBetting(followerID, followMethod);
-            console.log(followMethod);
           } else {
             this.FollwingError = true;
             this.hasError = true;
@@ -166,7 +165,7 @@ export default {
               "Amount should be Lower then 1000 & Grater then 10";
           }
         } else if (this.selectedFollow == 2) {
-          if (this.BetValue < 100 && this.BetValue > 10) {          
+          if (this.BetValue < 100 && this.BetValue > 10) {
             this.follwingBetting(followerID, followMethod);
           } else {
             this.FollwingError = true;
@@ -182,25 +181,24 @@ export default {
         this.hasSucess = false;
         this.errorMessage = "Follwing type is not selected.";
       }
-    },    
+    },
     // Follow Users API call
     async follwingBetting(follwerUUID, method) {
       const LeaderBoardData = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
-        followToID: follwerUUID,     
-        followBetRule : {
-          'id' : this.selectedFollow,
-          'value' : this.BetValue
-        },   
-        unFollowBetRule:{
-            'id': this.autoStop,
-            'value': this.unfollowValue
+        followToID: follwerUUID,
+        followBetRule: {
+          id: this.selectedFollow,
+          value: this.BetValue
+        },
+        unFollowBetRule: {
+          id: this.autoStop,
+          value: this.unfollowValue
         },
         method: method,
-        version: 1
+        version: config.version
       };
-      console.log(LeaderBoardData, "Send Data Leaderboard");
       try {
         const { data } = await this.$axios.post(
           config.followUser.url,
@@ -210,15 +208,17 @@ export default {
           }
         );
         this.followData = data;
-        if ((data.status = 200)) {
+        console.log(LeaderBoardData);
+        console.log(data);
+        if (data.status == 200) {
           this.FollwingError = true;
           this.hasSucess = true;
           this.hasError = false;
           this.errorMessage = data.message;
           this.FollowName = "Following";
-          window.setTimeout(function() {
-            location.reload();
-          }, 3000);
+          // window.setTimeout(function() {
+          //   location.reload();
+          // }, 3000);
         }
       } catch (error) {
         console.log(error);
