@@ -18,7 +18,7 @@ export default function({ query, store, redirect }) {
       const error = "balance field is Missing";
       messageError.push(error);
     } else if (!referrerURL) {
-      const error = "Something Wrong.";
+      const error = "Reference URL missing";
       messageError.push(error);
     } else {
       const UserAuth = {

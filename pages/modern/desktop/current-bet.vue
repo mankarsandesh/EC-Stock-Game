@@ -49,7 +49,7 @@ export default {
           headers: config.header
         });
         console.log(res);
-        if (res.data.message === "success") {
+        if (res.data.code == 200) {
           this.currentBets = res.data.data;
         } else {
           throw new Error(res.message);
