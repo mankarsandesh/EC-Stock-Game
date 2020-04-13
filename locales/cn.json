@@ -289,5 +289,12 @@
     "betdraw": "开奖结果",
     "yourloosingamount": "您的欠款额",
     "yourwinningamount": "输赢数额"
+  },
+  "betting": {
+    "reviewBet" : "複習投注",
+    "placeBet" : "下注",
+    "cancelBet" :"取消投注",
+    "reviewyourBet" : "查看您的投注",
+    "pleaseConfirm": "請在下面確認您的投注"
   }
 }
