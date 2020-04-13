@@ -6,24 +6,22 @@
           <v-layout align-center row>
             <v-flex xs6>
               <div class="flex-container">
-                <div
-                  class="profile-img-container"
-                  @click="$router.push('/modern/desktop/profile/')"
-                >
+                <div class="profile-img-container">
                   <div class="profile-crowd">
                     <fa icon="crown" style="font-size: 17px; color: orange;" />
                   </div>
                   <img
                     width="100%"
                     height="100%"
-                    :src="visitProfileUserData.userImage ? imgProfile(visitProfileUserData.userImage) : defaultImage"
+                    :src="
+                      visitProfileUserData.userImage
+                        ? imgProfile(visitProfileUserData.userImage)
+                        : defaultImage
+                    "
                     class="grey darken-4"
                   />
                 </div>
-                <div
-                  class="profile-name-container"
-                  @click="$router.push('/modern/desktop/profile/')"
-                >
+                <div class="profile-name-container">
                   <span class="profile-name-tittle text-capitalize">
                     {{ visitProfileUserData.firstName }}
                     {{ visitProfileUserData.lastName }}
@@ -57,14 +55,8 @@
               </div>
             </v-flex>
             <v-flex xs8 class="text-end">
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  justify-content: flex-end;
-                "
-              >
-                <span style="flex-grow: wrap; font-weight: bold;">
+              <div class="leftFollowDiv">
+                <span class="historyName">
                   History period:
                 </span>
                 <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
@@ -77,21 +69,29 @@
                     solo
                   ></v-select>
                 </div>
-
-                <Button
+              <v-btn
+                      v-if="visitProfileUserData.userUUID != getUserUUID"
+                      class="buttonFollow"
+                      v-on:click="followUserBet(null, null, visitProfileUserData.userUUID, '0')"
+                      >Follow</v-btn
+                    >
+                <!-- <Button
                   v-if="visitProfileUserData.userUUID != getUserUUID"
                   style="flex-grow: wrap;"
-                  @click.stop="
-                    visitProfileUserData.isFollowing === -1
-                      ? (visitProfileUserData.isFollowing = 0)
-                      : (visitProfileUserData.isFollowing = -1)
+                  v-on:click="
+                    followUserBet(
+                      visitProfileUserData.username,
+                      visitProfileUserData.userImage,
+                      visitProfileUserData.userUUID,
+                      visitProfileUserData.isFollowing
+                    )
                   "
                   :btnTitle="
-                    visitProfileUserData.isFollowing == -1
-                      ? 'follow'
-                      : 'following'
+                    visitProfileUserData.isFollowing == 1
+                      ? 'following'
+                      : 'follow'
                   "
-                />
+                /> -->
               </div>
             </v-flex>
           </v-layout>
@@ -172,12 +172,26 @@
                 The Link you followed have expired, or the page may only be
                 visiable to an audiencce you're not in.
               </p>
-              <a @click="$router.push('/modern/desktop/userprofile/')"> Go back to the previous Page </a>
-              <a @click="$router.push('/modern/desktop/btc1/')" > EC Game Home Page</a>
+              <a @click="$router.push('/modern/desktop/userprofile/')">
+                Go back to the previous Page
+              </a>
+              <a @click="$router.push('/modern/desktop/btc1/')">
+                EC Game Home Page</a
+              >
             </div>
           </div>
         </v-flex>
       </v-layout>
+
+      <!-- Follow Dialog -->
+      <v-dialog v-model="dialog" width="500" class="followDialog">
+        <followBet
+          :username="this.username"
+          :userImage="this.userImage"
+          :FollowerUserUUID="this.FollowUserUUID"
+          :isFollowing="this.FolloworNot"
+        />
+      </v-dialog>
     </v-container>
   </div>
 </template>
@@ -186,17 +200,24 @@ import { mapGetters } from "vuex";
 import Button from "~/components/Button";
 import VueApexCharts from "vue-apexcharts";
 import config from "../../../../config/config.global";
+import followBet from "../../../../components/modern/follow/followBet";
 import date from "date-and-time";
 
 export default {
   layout: "desktopModern",
   components: {
     Button,
+    followBet,
     VueApexCharts
   },
   data() {
     return {
-      defaultImage : '/no-profile-pic.jpg',
+      username: "",
+      FollowUserUUID: "",
+      FolloworNot: "",
+      userImage: "",
+      dialog: false,
+      defaultImage: "/no-profile-pic.jpg",
       messageError: false,
       startDate: "",
       endDate: "",
@@ -263,8 +284,16 @@ export default {
     }
   },
   methods: {
-    imgProfile(userImage) {
-        return `${config.apiDomain}/${userImage}`;     
+    followUserBet: function (username, userImage, userUUID, method) {
+      console.log("username");
+      this.username = username;
+      this.FollowUserUUID = userUUID;
+      this.FolloworNot = method;
+      this.userImage = userImage ? imgProfile(userImage) : this.defaultImage;
+      this.dialog = true;
+    },
+    imgProfile(userImg) {
+      return userImg === null ? this.defaultImage : `${config.apiDomain}/` + userImg;
     },
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
@@ -306,7 +335,7 @@ export default {
           this.series = [{ data: series }];
           this.chartOptions.xaxis.categories = xaxis;
         } else {
-          this.messageError = true;        
+          this.messageError = true;
         }
       } catch (ex) {
         console.error(ex);
@@ -316,6 +345,15 @@ export default {
 };
 </script>
 <style scoped>
+.leftFollowDiv {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.historyName {
+  flex-grow: wrap;
+  font-weight: bold;
+}
 .box-error {
   border: 1px solid #dddddd;
   background-color: #fff;
@@ -428,5 +466,14 @@ export default {
   flex-direction: column;
   position: relative;
   padding-left: 12px;
+}
+.buttonFollow {
+  color: #fff !important;
+  border-radius: 3px;
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  font-size: 14px;
+  width: 100px;
+  height: 48px;
+  flex-grow: wrap;
 }
 </style>
