@@ -25,7 +25,7 @@
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">TIME</th>
-            <td>{{ item.betDate }} {{ item.betTime }}</td>
+            <td>{{ item.betDate }} {{ item.betTime }} {{item.createdDate}} {{item.createdTime}}</td>
           </tr>
           <tr class="table-rowheight">
             <th class="fixed-side table-headbg">AMOUNT</th>
@@ -44,7 +44,7 @@
 import { mapGetters } from "vuex";
 export default {
   computed: {
-    ...mapGetters(["getOnGoingBet"])
+    ...mapGetters(["getOnGoingBet", "getMultiGameBet"])
   }
 };
 </script>

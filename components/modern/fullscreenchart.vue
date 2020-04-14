@@ -1,12 +1,18 @@
 <template>
   <div class="text-xs-center">
-    <apexchart type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey"></apexchart>
+    <apexchart
+      type="bar"
+      height="350"
+      :options="chartOptions"
+      :series="series"
+      :key="componentKey"
+    ></apexchart>
   </div>
 </template>
 
 <script>
 import VueApexCharts from "vue-apexcharts";
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import openSocket from "socket.io-client";
 export default {
   props: ["StockData"],
@@ -57,7 +63,7 @@ export default {
           betCounts: [15, 14, 13, 12]
         },
         {
-          name : "TIE",
+          name: "TIE",
           data: [0, 9, 20, 0],
           betCounts: [15, 14, 13, 20]
         }
@@ -65,7 +71,7 @@ export default {
       componentKey: 0,
       chartOptions: {
         chart: {
-          toolbar : { show :false },     
+          toolbar: { show: false },
           type: "bar",
           height: 350,
           stacked: true,
@@ -94,13 +100,22 @@ export default {
             highlightDataSeries: false
           },
           y: {
-            formatter: function(val, { series, seriesIndex, dataPointIndex, w }) {
-              return '<div class="arrow_box">' +
-                 '<span> Amount: $' + series[seriesIndex][dataPointIndex] + ' </span>' +
-                '</div>' +
-                '<div class="arrow_box">' + 
-                '<span> BetCount:' + w.config.series[seriesIndex].betCounts[dataPointIndex] + '</span>' +
-                '</div>'
+            formatter: function(
+              val,
+              { series, seriesIndex, dataPointIndex, w }
+            ) {
+              return (
+                '<div class="arrow_box">' +
+                "<span> Amount: $" +
+                series[seriesIndex][dataPointIndex] +
+                " </span>" +
+                "</div>" +
+                '<div class="arrow_box">' +
+                "<span> BetCount:" +
+                w.config.series[seriesIndex].betCounts[dataPointIndex] +
+                "</span>" +
+                "</div>"
+              );
             }
           }
         },
@@ -114,31 +129,31 @@ export default {
         }
       }
     };
-  },  
+  },
   computed: {
-    ...mapState({
-      gameStockId: state => state.game.gameStockId
-  })
+    ...mapGetters([
+      "getGameUUIDByStockName"
+    ])
   },
   mounted() {
-    this.listenForBroadcast({ 
-      channelName: "liveBetCounts." + this.gameStockId,
-      eventName: "liveBetCounts" 
-    },
-     ({ data }) => {
-       console.log("live game");
-      console.log(data.data);
-      this.series = data.data;
-      this.componentKey += 1;
-    }
+    this.listenForBroadcast(
+      {
+        channelName: `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`,
+        eventName: "liveBetCounts"
+      },
+      ({ data }) => {
+        console.log("live game");
+        console.log(data.data);
+        this.series = data.data;
+        this.componentKey += 1;
+      }
     );
   },
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
-    window.Echo.channel(channelName).listen(eventName, callback);
+      window.Echo.channel(channelName).listen(eventName, callback);
     }
   }
-
 };
 </script>
 
@@ -151,4 +166,3 @@ export default {
   margin: 1rem;
 }
 </style>
-

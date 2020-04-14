@@ -1,10 +1,41 @@
-export default function ({ isHMR, app, store, route, error, redirect }) {
-
-    let getAuth = localStorage.getItem("AUTH")  //get the data from sessionStorage
-    let buffDecode = new Buffer(getAuth, "base64"); // decode the data from sessionStorage 
-    let authData = buffDecode.toString("ascii"); //convert data to normal data 
-    if (Object.keys(authData).length > 1) { // check data is not empty before send to center data 
-        store.commit("setAuth", authData)  // if the value is not empty, let's send it 
+export default function({ query, store, redirect }) {
+  const referrerURL = localStorage.getItem("referrerURL");
+  if (referrerURL == undefined) {
+    localStorage.setItem(
+      "referrerURL",
+      document.referrer.match(/:\/\/(.[^/]+)/)[1]
+    );
+  }
+  if (Object.keys(query).length !== 0) {
+    let messageError = [];
+    if (!query.portalProviderUUID) {
+      const error = "portalProviderUUID field is Missing";
+      messageError.push(error);
+    } else if (!query.portalProviderUserID) {
+      const error = "portalProviderUserID field is Missing";
+      messageError.push(error);
+    } else if (!query.balance) {
+      const error = "balance field is Missing";
+      messageError.push(error);
+    } else if (!referrerURL) {
+      const error = "Reference URL missing";
+      messageError.push(error);
+    } else {
+      const UserAuth = {
+        portalProviderUUID: query.portalProviderUUID,
+        portalProviderUserID: query.portalProviderUserID,
+        version: "0.1",
+        ip: "225.457.454.123",
+        domain: referrerURL,
+        balance: query.balance
+      };
+      localStorage.setItem("PORTAL_PROVIDERUUID", query.portalProviderUUID);
+      store.dispatch("setUserAuth", UserAuth);
+      store.dispatch("setPortalProviderUUID", UserAuth.portalProviderUUID);
     }
-
+    store.dispatch("setUserAuthError", query.messageError);
+  } else {
+    redirect(referrerURL);
+    localStorage.removeItem("referrerURL");
+  }
 }

@@ -1,8 +1,7 @@
 <template>
   <div>
     <breadcrumbs title="History" :linkItem="false" />
-    <v-container>
-    </v-container>
+    <v-container> </v-container>
   </div>
 </template>
 <script>

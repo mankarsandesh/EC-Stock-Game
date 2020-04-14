@@ -46,14 +46,20 @@
         return-object
         id="minute"
       >
-        <template slot="selection" slot-scope="data">{{ data.item.loopName }} Minutes</template>
+        <template slot="selection" slot-scope="data"
+          >{{ data.item.loopName }} Minutes</template
+        >
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content>{{data.loopName}} Minutes</v-list-tile-content>
+            <v-list-tile-content
+              >{{ data.loopName }} Minutes</v-list-tile-content
+            >
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title>{{data.item.loopName}} Minutes</v-list-tile-title>
+              <v-list-tile-title
+                >{{ data.item.loopName }} Minutes</v-list-tile-title
+              >
             </v-list-tile-content>
           </template>
         </template>
@@ -77,6 +83,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
+import config from "./config/config.global";
 export default {
   data() {
     return {
@@ -163,9 +170,7 @@ export default {
             version: 0.1
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
-            }
+            headers: config.header
           }
         );
         this.getGameUUID(data);
@@ -260,5 +265,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

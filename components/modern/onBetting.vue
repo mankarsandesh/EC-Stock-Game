@@ -1,16 +1,20 @@
 <template>
   <v-layout column wrap>
-    <v-btn class="buttonGreen" :to="'/modern/desktop/current-bet'">{{$t('msg.View All Results')}}</v-btn>
+    <v-btn class="buttonGreen" :to="'/modern/desktop/current-bet'">
+      {{
+      $t("msg.View All Results")
+      }}
+    </v-btn>
 
-    <v-flex pa-2 class="headerStockBar">{{$t('msg.betting')}}</v-flex>
+    <v-flex pa-2 class="headerStockBar">{{ $t("msg.betting") }}</v-flex>
 
     <v-flex class="text-xs-center" style="overflow-y: auto;height:200px">
-      <h3 v-show="getOnGoingBet.length<=0" class="pa-5">{{$t('msg.nobetting')}}</h3>
+      <h3 v-show="getOnGoingBet.length <= 0" class="pa-5">{{ $t("msg.nobetting") }}</h3>
       <!-- v-show="getOnGoingBet.length>0" -->
 
-      <v-list three-line class="pa-0" v-show="getOnGoingBet.length>0">
+      <v-list three-line class="pa-0" v-show="getOnGoingBet.length > 0">
         <template v-for="(data, index) in getOnGoingBet" class="pa-0">
-          <v-divider :key="index" v-if="index>0"></v-divider>
+          <v-divider :key="index" v-if="index > 0"></v-divider>
 
           <v-list-tile :key="data.index" avatar class="listBet">
             <v-list-tile-content>
@@ -26,19 +30,19 @@
                     <td>
                       <label>Date & Time</label>
                     </td>
-                    <td>{{data.betDate}} {{data.betTime}}</td>
+                    <td>{{ data.betDate }} {{ data.betTime }}</td>
                   </tr>
                   <tr>
                     <td>
                       <label>Bet</label>
                     </td>
-                    <td>{{data.betAmount}} on {{data.ruleName}}</td>
+                    <td>{{ data.betAmount }} on {{ data.ruleName }}</td>
                   </tr>
                   <tr>
                     <td>
                       <label>Stock name:</label>
                     </td>
-                    <td>{{data.stockName}}</td>
+                    <td>{{ data.stockName }}</td>
                   </tr>
                 </table>
               </span>
@@ -47,7 +51,7 @@
         </template>
       </v-list>
     </v-flex>
-    <v-flex pa-2 class="totalAmount">$ {{getBettingAmount}}</v-flex>
+    <v-flex pa-2 class="totalAmount">$ {{ getBettingAmount }}</v-flex>
   </v-layout>
 </template>
 
@@ -93,5 +97,23 @@ table tr td:first-child {
 .current-bet {
   font-size: 12px;
   color: #000;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 7px #acacac;
+  border-radius: 10px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #acacac;
+  border-radius: 15px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2c6b9e;
 }
 </style>

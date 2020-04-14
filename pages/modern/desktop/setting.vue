@@ -1,11 +1,22 @@
 <template>
   <div>
-    <v-layout row wrap > 
+    <v-layout row wrap>
       <v-flex xs12 md2>
-        <v-item-group v-model="window" class="shrink mr-4" mandatory tag="v-flex">
+        <v-item-group
+          v-model="window"
+          class="shrink mr-4"
+          mandatory
+          tag="v-flex"
+        >
           <v-item v-for="n in tabs" :key="n">
             <div slot-scope="{ active, toggle }">
-              <v-btn :input-value="active" block class="main-btn" @click="toggle">{{$t('menu.'+n)}}</v-btn>
+              <v-btn
+                :input-value="active"
+                block
+                class="main-btn"
+                @click="toggle"
+                >{{ $t("menu." + n) }}</v-btn
+              >
             </div>
           </v-item>
         </v-item-group>
@@ -13,7 +24,7 @@
       <v-flex xs12 md10>
         <v-window v-model="window" class="elevation-1" vertical>
           <!-- rules -->
-          <v-window-item >
+          <v-window-item>
             <chipamount />
           </v-window-item>
           <!-- rules -->
@@ -28,7 +39,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 import chipamount from "~/components/modern/setting/chipamout";
 import soundcontrol from "~/components/modern/setting/soundcontrol";
 
@@ -45,13 +56,9 @@ export default {
       active: null
     };
   },
-   mounted(){
-
-  },
-  methods:{
-    ...mapActions([
-      "setIsLoadingStockGame"
-    ])
+  mounted() {},
+  methods: {
+    ...mapActions(["setIsLoadingStockGame"])
   }
 };
 </script>

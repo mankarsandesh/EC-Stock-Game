@@ -1,11 +1,11 @@
 const config = {
   version: "1",
-  authUser : `${process.env.AUTHUSER}`,
-  authPassword : `${process.env.AUTHPASS}`,
-  apiDomain: process.env.API_DOMIAN,
-  socketUrl: process.env.SOCKETURL,
+  authUser: `${process.env.AUTH_USER}`,
+  authPassword: `${process.env.AUTH_PASS}`,
+  apiDomain: process.env.API_DOMAIN,
+  socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
-  secretKey:"GYXMAKGDYAWDW4K1C6HWWQHXH2W",
+  secretKey: "GYXMAKGDYAWDW4K1C6HWWQHXH2W",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
@@ -54,9 +54,21 @@ const config = {
   getUserBetAnalysis: {
     url: `${process.env.BASE_URL}/getUserBetAnalysis`
   },
+  getUserInvitation: {
+    url: `${process.env.BASE_URL}/sendInvitation`
+  },
+  getVisitUserProfile: {
+    url: `${process.env.BASE_URL}/visitUserProfile`
+  },
+  getUserFollower: {
+    url: `${process.env.BASE_URL}/followUserList`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
+  },
+  error: {
+    general: "Something went wrong!"
   }
 };
 

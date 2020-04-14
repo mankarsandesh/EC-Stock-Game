@@ -58,7 +58,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setFooterBetAmount", "clearDataMultiGameBet", "sendBetting"]),
+    ...mapActions([
+      "setFooterBetAmount",
+      "clearDataMultiGameBet",
+      "sendBetting"
+    ]),
     getSending() {
       this.isSending = true;
       this.texts = "sending";
@@ -70,7 +74,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getCoinsModern", "checkFooterBet", "getAllBettingAmount"])
+    ...mapGetters(["getCoinsModern", "getAllBettingAmount"])
   }
 };
 </script>

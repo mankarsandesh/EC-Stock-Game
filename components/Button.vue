@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  props: ["linkItem", "btnTitle"],
+  props: ["linkItem", "btnTitle"]
 };
 </script>
 

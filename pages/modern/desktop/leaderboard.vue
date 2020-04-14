@@ -1,9 +1,9 @@
 <template>
   <div>
     <breadcrumbs
-      :title=" $t('breadcrumbs.leaderboard')"
+      :title="$t('breadcrumbs.leaderboard')"
       linkItem="bet-history"
-      :titlebtn=" $t('breadcrumbs.betHistory')"
+      :titlebtn="$t('breadcrumbs.betHistory')"
     />
     <v-container mb-5>
       <leaderboardUserlist />
@@ -18,7 +18,7 @@ export default {
   layout: "desktopModern",
   components: {
     breadcrumbs,
-    'leaderboardUserlist': leaderboardUserlist
+    leaderboardUserlist: leaderboardUserlist
   },
   data() {
     return {

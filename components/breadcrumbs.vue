@@ -23,8 +23,8 @@
 import Button from "~/components/Button";
 export default {
   components: {
-    Button,
+    Button
   },
-  props: ["linkItem", "linkItem2", "title", "titlebtn", "titlebtn2"],
+  props: ["linkItem", "linkItem2", "title", "titlebtn", "titlebtn2"]
 };
 </script>
