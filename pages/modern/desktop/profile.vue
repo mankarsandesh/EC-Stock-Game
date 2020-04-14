@@ -261,7 +261,7 @@ li {
   font-weight: bold;
 }
 .menu_title_active {
-  background: linear-gradient(to right, #2e7d32 20%, #39b01e 51%);
+  background-color: #2cb038;
   margin: 10px;
   padding: 10px;
   padding-left: 20px;

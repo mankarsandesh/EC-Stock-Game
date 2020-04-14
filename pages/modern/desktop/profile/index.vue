@@ -215,8 +215,7 @@ export default {
             headers: config.header
           }
         );
-        if (res.code === 200) {
-          console.log("basic info", res);
+        if (res.code === 200) {          
           this.$swal({
             type: "success",
             title: "Successful Information Saved!",

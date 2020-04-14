@@ -60,6 +60,9 @@ const config = {
   getVisitUserProfile: {
     url: `${process.env.BASE_URL}/visitUserProfile`
   },
+  getUserFollower: {
+    url: `${process.env.BASE_URL}/followUserList`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
