@@ -70,7 +70,7 @@
                   ></v-select>
                 </div>
                 <v-btn
-                  v-if="visitProfileUserData.userUUID != getUserUUID"
+                  v-if="visitProfileUserData.userUUID != getUserUUID &&    visitProfileUserData.isFollowing == 0" 
                   class="buttonFollow"
                   v-on:click="
                     followUserBet(
@@ -82,11 +82,22 @@
                   "
                   >Follow</v-btn
                 >
-                <v-btn 
-                      v-if="visitProfileUserData.userUUID != getUserUUID && visitProfileUserData.isFollowing == 1"
-                      class="buttonunFollow"
-                      v-on:click="followUserBet(visitProfileUserData.username,visitProfileUserData.userImage,visitProfileUserData.userUUID,visitProfileUserData.isFollowing)"
-                      >unFollow</v-btn>  
+                <v-btn
+                  v-if="
+                    visitProfileUserData.userUUID != getUserUUID &&
+                      visitProfileUserData.isFollowing == 1
+                  "
+                  class="buttonunFollow"
+                  v-on:click="
+                    followUserBet(
+                      visitProfileUserData.username,
+                      visitProfileUserData.userImage,
+                      visitProfileUserData.userUUID,
+                      visitProfileUserData.isFollowing
+                    )
+                  "
+                  >unFollow</v-btn
+                >
               </div>
             </v-flex>
           </v-layout>
@@ -281,10 +292,10 @@ export default {
       console.log(username);
       this.username = username;
       this.FollowUserUUID = userUUID;
-      if(method == 0){
+      if (method == 0) {
         this.FolloworNot = 1;
-      }else{
-         this.FolloworNot = 2;
+      } else {
+        this.FolloworNot = 2;
       }
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
       this.dialog = true;
@@ -321,6 +332,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if (res.code === 200) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
@@ -335,7 +347,7 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
         } else {
           this.messageError = true;
-          throw new Error(Object.values(res.message)[0][0]);
+          // throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
         console.error(ex);
