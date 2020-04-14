@@ -332,6 +332,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if (res.code === 200) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
@@ -346,7 +347,7 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
         } else {
           this.messageError = true;
-          throw new Error(Object.values(res.message)[0][0]);
+          // throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
         console.error(ex);
