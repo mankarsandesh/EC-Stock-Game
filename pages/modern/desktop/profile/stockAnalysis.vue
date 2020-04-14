@@ -250,11 +250,10 @@ export default {
             dateRangeTo: this.endDate
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            }
+            headers: config.header
           }
         );
+        console.log("error aya", res);
         if (res.code === 200) {
           if (res.data.length) {
             this.isDataValid = true;
@@ -271,7 +270,8 @@ export default {
         this.$swal({
           title: ex.message,
           type: "error",
-          showConfirmButton: true
+          timer: 1000,
+          showConfirmButton: false
         });
         if (ex.message == "Please select a valid date") {
           this.error = "Please select a valid date";

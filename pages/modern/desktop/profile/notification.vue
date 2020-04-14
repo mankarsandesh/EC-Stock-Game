@@ -75,7 +75,7 @@ export default {
   methods: {
     showAlert() {
       this.$swal.fire({
-        positio: "top",
+        position: "top",
         type: "success",
         title: "Changes saved",
         showConfirmButton: false,

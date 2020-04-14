@@ -115,9 +115,9 @@ export default {
 
       try {
         let userSetting = {
-          portalProviderUUID: this.getPortalProviderUUID,
-          userUUID: this.getUserUUID,
-          version: config.version,
+          //portalProviderUUID: this.getPortalProviderUUID,
+          //userUUID: this.getUserUUID,
+          //version: config.version,
           isAllowToVisitProfile,
           isAllowToFollow,
           isAllowToDirectMessage,
@@ -131,6 +131,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if (res.code == 200) {
           this.$swal.fire({
             position: "top",
@@ -141,12 +142,15 @@ export default {
           });
           this.setUserData();
         } else {
-          console.log(res.message);
-          this.$alert("Alert Message.");
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
         console.error(ex);
-        alert(ex.message);
+        this.$swal({
+          type: "error",
+          title: ex.message,
+          timer: 1000
+        });
       }
     }
   }

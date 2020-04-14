@@ -75,8 +75,13 @@ export default {
           }
         );
         this.getStockResult = data.data;
-      } catch (error) {
-        console.log(data);
+      } catch (ex) {
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }

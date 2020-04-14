@@ -63,6 +63,9 @@ const config = {
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
+  },
+  error: {
+    general: "Something went wrong!"
   }
   // loggly: {
   //   token: '852204e4-2752-4d9c-9b1c-f9f2152c2f40',

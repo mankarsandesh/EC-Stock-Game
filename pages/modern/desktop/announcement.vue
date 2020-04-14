@@ -58,6 +58,11 @@ export default {
         this.announcementData = data;
       } catch (error) {
         console.log(error);
+        this.$swal({
+          title: error.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }
