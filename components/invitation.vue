@@ -3,7 +3,7 @@
     trigger="click"
     :options="{
       placement: 'bottom-top',
-      modifiers: { offset: { offset: '65px' } },
+      modifiers: { offset: { offset: '65px' } }
     }"
   >
     <div class="popper">
@@ -29,297 +29,91 @@
         <!-- for EC World -->
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
-            <div class="filter">
-              <b>Filter</b>
-              <span class="rank">
-                Winning Rank
+            <!-- <div class="filter">
+              <span v-for="item in filterNames" :key="item.name">
+                <span class="rank filterSpan">
+                  {{ item.value }}
+                </span>
               </span>
-              <span class="rate">
-                Winning Rate
-              </span>
-              <span class="follow">
-                Winning Followers
-              </span>
-            </div>
-
+            </div>            -->
             <div class="bodyChat">
-              <div class="msgUser follow">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      :src="profilePic"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
+              <div
+                class="msgUser"
+                v-for="data in globalInvitation"
+                :key="data.index"
+              >
+                <div
+                  class="messageChatView"
+                  v-if="globalInvitation.length == 0"
+                >
+                  <h1>There are no Invitaion</h1>
+                </div>
+                <div class="messageChatView" v-if="globalInvitation.length > 0">
+                  <div style="width:30%;">
+                    <nuxt-link
+                      :to="'/modern/desktop/userprofile/' + data.userUUID"
                     >
-                    </v-img>
+                      <v-img
+                        class="userImage"
+                        :src="imgProfile(data.userImage)"
+                        aspect-ratio="1"
+                        max-height="120"
+                        max-width="120"
+                      >
+                      </v-img>
+                    </nuxt-link>
+                    <span class="ranking">
+                      <v-tooltip top>
+                        <template v-slot:activator="{ on }">
+                          <span v-on="on">#{{ data.Rank }} </span>
+                        </template>
+                        <span>User Rank</span>
+                      </v-tooltip>
+                    </span>
                   </div>
-                  <div>
-                    <span class="userStatus">Total Follower</span>
+                  <div style="width:15%;">
+                    <span class="followcount">
+                      <v-tooltip top>
+                        <template v-slot:activator="{ on }">
+                          <span v-on="on">{{ data.followerCount }} </span>
+                        </template>
+                        <span>User Follow Count</span>
+                      </v-tooltip>
+                    </span>
                   </div>
-                  <div>
-                    <span class="ranking">951</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following" v-on:click="followUser()"
+                  <div style="width:55%;">
+                    <span class="winRate">
+                      <v-tooltip top>
+                        <template v-slot:activator="{ on }">
+                          <span v-on="on">{{ data.winRate }}% </span>
+                        </template>
+                        <span>User Win Rate</span>
+                      </v-tooltip>
+                    </span>
+
+                    <v-btn
+                      v-if="getUserUUID != data.userUUID"
+                      class="following"
+                      v-on:click="followUser(null, null, data.userUUID, '0')"
                       >Follow</v-btn
                     >
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser rank">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
+                    <v-btn v-if="getUserUUID == data.userUUID" class="following"
+                      >Yourself</v-btn
                     >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Winning Rank</span>
-                  </div>
-                  <div>
-                    <span class="ranking">1</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser rate">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Winning Rate</span>
-                  </div>
-                  <div>
-                    <span class="ranking">95%</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser rate">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Winning Rate</span>
-                  </div>
-                  <div>
-                    <span class="ranking">95%</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser follow">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      :src="profilePic"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Total Follower</span>
-                  </div>
-                  <div>
-                    <span class="ranking">951</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser follow">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      :src="profilePic"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Total Follower</span>
-                  </div>
-                  <div>
-                    <span class="ranking">951</span>
-                  </div>
-
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
-                  </div>
-                </div>
-              </div>
-
-              <div class="msgUser rate">
-                <div class="messageChatView">
-                  <div>
-                    <v-img
-                      class="userImage"
-                      src="https://avatars1.githubusercontent.com/u/5690050?s=400&u=c5f7fa635adf05ae5a0431d2518898a66f942662&v=4"
-                      aspect-ratio="1"
-                      max-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </div>
-                  <div>
-                    <span class="userStatus">Winning Rate</span>
-                  </div>
-                  <div>
-                    <span class="ranking">95%</span>
-                  </div>
-                  <div>
-                    <v-btn class="view">View</v-btn>
-                  </div>
-                  <div>
-                    <v-btn class="following">Follow</v-btn>
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="messageChat">
-              <v-flex col-md-6>
-                <v-btn class="buttonInvitation"
+              <v-flex col-md-12>
+                <v-btn class="buttonInvitation" @click="sendInvitation()"
                   >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
                 ></v-btn>
-              </v-flex>
-              <v-flex col-md-6>
-                <v-btn class="buttonInvitation">
-                  Select Category
-                </v-btn>
               </v-flex>
             </div>
           </div>
         </div>
-
-        <v-dialog v-model="dialog" width="500" class="followDialog">
-          <v-card class="followup">
-            <h3 class="title" style="text-align: center; color: #0b2a68;">
-              FOLLOW BET
-            </h3>
-            <h4 class="subtitle-1 text-uppercase pt-2">Follow By</h4>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-flex lg8 pr-4>
-                <v-select
-                  :items="followby"
-                  label="Select Follow type"
-                  v-model="selectedFollow"
-                  item-text="name"
-                  item-value="value"
-                  v-on:change="changeAmountRate($event)"
-                  solo
-                ></v-select>
-              </v-flex>
-              <v-flex lg3 pr-2>
-                <v-text-field
-                  solo
-                  label="10%"
-                  v-if="selectRate"
-                  append-icon="money"
-                  v-model="rateValue"
-                  @keypress="onlyNumber"
-                ></v-text-field>
-                <v-text-field
-                  solo
-                  label="100"
-                  v-if="selectAmount"
-                  @keypress="onlyNumber"
-                  v-model="amountValue"
-                  append-icon="money"
-                ></v-text-field>
-              </v-flex>
-            </v-card-actions>
-
-            <h4 class="subtitle-1 text-uppercase pt-2">Auto Stop Follow</h4>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-radio-group v-model="autoStop" :mandatory="false">
-                <v-radio
-                  v-for="n in autoStopFollow"
-                  :key="n.id"
-                  :label="`${n.name}`"
-                  :value="n.value"
-                  v-on:change="changeAmount(n.value)"
-                ></v-radio>
-
-                <v-text-field
-                  style="width: 200px;"
-                  solo
-                  label="100"
-                  @keypress="onlyNumber"
-                  v-model="unfollowValue"
-                >
-                  <span slot="append" color="red"> {{ unfollowSign }}</span>
-                </v-text-field>
-                <v-flex lg3>
-                  <v-btn
-                    color="buttonGreensmall"
-                    text
-                    v-on:click="followThisUser()"
-                    >Follow</v-btn
-                  >
-                </v-flex>
-              </v-radio-group>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
 
         <!-- for game chanel  -->
         <chanelChat
@@ -329,12 +123,22 @@
         ></chanelChat>
       </div>
     </div>
+
+    <!-- Follow Dialog -->
+    <v-dialog v-model="dialog" width="500" class="followDialog">
+      <followBet
+        :username="this.username"
+        :userImage="this.userImage"
+        :FollowerUserUUID="this.FollowUserUUID"
+        :isFollowing="this.FolloworNot"
+      />
+    </v-dialog>
+
     <v-btn rigth fab slot="reference" class="liveChat">
       <v-icon>chat</v-icon>
     </v-btn>
   </popper>
 </template>
-
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
@@ -343,57 +147,54 @@ import io from "socket.io-client";
 import moment from "moment";
 import config from "../config/config.global";
 import chanelChat from "./chanelChat";
+import followBet from "../components/modern/follow/followBet";
 let name = "btc5";
 export default {
   components: {
     chanelChat,
+    followBet,
     popper,
-    config,
+    config
   },
   props: {
     gameUUID: {
-      type: String,
-      required: true,
-    },
+      type: String
+    }
   },
   data() {
     return {
-      unfollowSign: "USD",
-      unfollowValue: "100",
-      selectAmount: false,
-      selectTime: false,
-      selectBets: false,
-      autoStop: "stopWin",
+      color: "",
+      mode: "",
+      snackbar: false,
+      text: "Send Invitation to users.",
+      timeout: 2000,
+      x: null,
+      y: "top",
+      filterNames: [
+        { name: "", value: "Filter" },
+        { name: "rank", value: "Winning Rank" },
+        { name: "rate", value: "Winning Rate" },
+        { name: "follow", value: "Winning Followers" }
+      ],
+      FolloworNot: "",
+      FollowUserUUID: "",
+      username: "",
+      userImage: "",
       dialog: false,
-      amountValue: 100,
-      rateValue: 10,
-      selectRate: false,
-      selectAmount: true,
-      selectedFollow: "",
-      followby: [
-        { id: 1, name: "Follow by Amount", value: "Amount" },
-        { id: 2, name: "Follow by Rate", value: "Rate" },
-      ],
-      autoStopFollow: [
-        { id: 1, name: "Stop by Winning", value: "stopWin" },
-        { id: 2, name: "Stop by Losing", value: "stopLoss" },
-        { id: 3, name: "Stop by Timing", value: "stopTime" },
-        { id: 4, name: "Stop by Bets", value: "stopBets" },
-      ],
-      profilePic: "/no-profile-pic.jpg",
+      defaultImage: "/no-profile-pic.jpg",
       selectedFruits: [],
       currentRoute: "",
       messageInput: "",
       pageActiveChanel: [
         "modern-desktop-id",
         "modern-multigame-id",
-        "modern-fullscreen-id",
+        "modern-fullscreen-id"
       ],
       tabActiveName: "world",
-      conversationWorld: [],
+      globalInvitation: [],
       connectClient: [],
       totoalUserCount: 0,
-      userId: 0,
+      userId: 0
     };
   },
   computed: {
@@ -406,7 +207,7 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getStockType",
-      "getStockGameId",
+      "getStockGameId"
     ]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
@@ -414,42 +215,21 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   },
   mounted() {
     this.listenForBroadcast(
       {
-        channelName: `messageSend.${this.portalProviderUUID}.${this.getStockGameId}`,
-        eventName: "messageSend",
-      },
-      ({ data }) => {
-        data.data.forEach((element) => {
-          this.getMessagesGame.push({
-            name: element.userName,
-            userId: element.userUUID,
-            message: element.message,
-            date: element.date,
-          });
-        });
-      }
-    );
-    // Game Channel Game ID wise
-    this.listenForBroadcast(
-      {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
-        eventName: "messageSend",
+        eventName: "messageSend"
       },
       ({ data }) => {
-        console.log("world Listing");
-        console.log(data);
-        data.data.forEach((element) => {
-          this.conversationWorld.push({
-            name: element.userName,
-            userUUID: element.getUserUUID,
-            message: element.message,
-            date: element.date,
-          });
+        const objectArray = Object.entries(data.data);
+        let newData = [];
+        objectArray.forEach(([key, value]) => {
+          newData[key] = value;
         });
+        this.globalInvitation.push(newData);      
         this.scrollDown();
       }
     );
@@ -463,37 +243,47 @@ export default {
     this.messageInput = "";
   },
   methods: {
-    changeAmountRate() {
-      this.UserfollowType = this.selectedFollow;
-      if (this.selectedFollow == "Amount") {
-        this.selectAmount = true;
-        this.selectRate = false;
-      } else {
-        this.selectAmount = false;
-        this.selectRate = true;
+    // Send Invitation
+    async sendInvitation() {
+      try {
+        const sendData = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          category: [1],
+          version: config.version
+        };
+        const res = await this.$axios.$post(
+          config.getUserInvitation.url,
+          sendData,
+          {
+            headers: config.header
+          }
+        );
+      } catch (ex) {
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     },
-    changeAmount(value) {
-      if (value == "stopWin" || value == "stopLoss") {
-        this.unfollowValue = "100";
-        this.unfollowSign = "USD";
-      } else if (value == "stopTime") {
-        this.unfollowValue = "1";
-        this.unfollowSign = "Days";
-      } else {
-        this.unfollowValue = "3";
-        this.unfollowSign = "Bets";
-      }
+    // fetch default image or from server image
+    imgProfile(userImg) {
+      return userImg === null
+        ?  this.defaultImage
+        : `${config.apiDomain}/` + userImg;
     },
-    followUser() {
+    followUser(username, userImage, userUUID, method) {
+      this.username = username;
+      this.FollowUserUUID = userUUID;
+      if(method == 0){
+        this.FolloworNot = 1;
+      }else{
+         this.FolloworNot = 2;
+      }
+      this.userImage = this.imgProfile(userImage);
       this.dialog = true;
-    },
-    onlyNumber($event) {
-      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
-      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
-        // 46 is dot
-        $event.preventDefault();
-      }
     },
     toggle() {
       this.$nextTick(() => {
@@ -509,7 +299,7 @@ export default {
         .stop()
         .animate(
           {
-            scrollTop: $(".bodyChat")[0].scrollHeight,
+            scrollTop: $(".bodyChat")[0].scrollHeight
           },
           1000
         );
@@ -519,62 +309,8 @@ export default {
     },
     activeTab(value) {
       this.tabActiveName = value;
-    },
-    // Global Channel for all Ssers
-    async sendMsgWorld() {
-      try {
-        if (this.messageInput !== "") {
-          const res = await this.$axios.$post(
-            config.sendMessage.url,
-            {
-              portalProviderUUID: this.getPortalProviderUUID,
-              userUUID: this.getUserUUID,
-              chatType: 2,
-              message: this.messageInput,
-              version: config.version,
-            },
-            {
-              headers: config.header,
-            }
-          );
-          console.log(res);
-          if (res.status) {
-            this.messageInput = "";
-          }
-        }
-      } catch (ex) {
-        this.sendMsgWorld();
-        console.log(ex.message);
-      }
-    },
-    // Channel for gameUUDI
-    async sendMsgChanel() {
-      try {
-        if (this.messageInput !== "") {
-          const res = await this.$axios.$post(
-            config.sendMessage.url,
-            {
-              portalProviderUUID: this.getPortalProviderUUID,
-              userUUID: this.getUserUUID,
-              gameUUID: this.gameUUID,
-              chatType: 1,
-              message: this.messageInput,
-              version: config.version,
-            },
-            {
-              headers: config.header,
-            }
-          );
-          if (res.status) {
-            this.messageInput = "";
-          }
-        }
-      } catch (ex) {
-        this.sendMsgChanel();
-        console.log(ex.message);
-      }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -597,12 +333,12 @@ export default {
   flex-direction: column;
 }
 .buttonInvitation {
+  margin-top: -1px;
   color: #fff !important;
-  border-radius: 10px;
+  border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
-  font-size: 12px;
-  float: right;
+  font-size: 14px;
+  width: 100%;
 }
 .liveChat {
   z-index: 999;
@@ -615,7 +351,7 @@ export default {
   background-color: #2aaf3e !important;
 }
 .popper {
-  width: 400px;
+  width: 370px;
   border-radius: 10px;
   border: 1px solid #dddddd;
 }
@@ -646,17 +382,20 @@ export default {
 }
 
 .msgUser {
-  padding: 4px;
+  padding: 2px 0px;
   overflow: auto;
   border-radius: 8px;
-  max-width: 370px;
+  max-width: 375px;
   text-align: justify;
   margin: 5px 0px;
+  background-color: #fff;
+  border: 1px solid #dddddd;
 }
 .filter {
   margin-top: 10px;
 }
-.filter span {
+
+.filter .filterSpan {
   font-weight: 600;
   cursor: pointer;
   border-radius: 4px;
@@ -674,9 +413,18 @@ export default {
 .rate {
   border: 1px solid green;
 }
-.messageChatView div {
-  float: left;
+.messageChatView div:first-child {
+  border: none;
 }
+.messageChatView div {
+  cursor: pointer;
+  float: left;
+  text-align: center;
+  border-left: 1px solid #dddddd;
+  height: 50px;
+  padding: 5px 4px;
+}
+
 .messageChatView .userImage {
   border-radius: 180px;
   cursor: pointer;
@@ -692,55 +440,40 @@ export default {
   color: #8d8c8c;
   font-weight: 800;
 }
-.follow .ranking {
+.msgUser .ranking {
   float: left;
-  font-size: 14px;
-  margin: 12px 6px;
-  color: green;
+  font-size: 20px;
+  margin: 6px 8px;
+  color: #42c851;
   font-weight: 800;
   text-align: center;
 }
-.rank .ranking {
+.msgUser .followcount {
   float: left;
+  font-size: 20px;
+  margin: 6px 10px;
   text-align: center;
-  font-size: 14px;
-  margin: 12px 6px;
-  background-color: yellowgreen;
-  color: #333;
-  width: 25px;
-  height: 25px;
-  border-radius: 180px;
+  color: #5f70b1;
   font-weight: 800;
 }
-.rate .ranking {
+.msgUser .winRate {
   float: left;
-  font-size: 14px;
-  margin: 12px 6px;
-  color: orange;
+  font-size: 20px;
+  margin: 6px 0px;
+  color: #ed4560;
   font-weight: 800;
   text-align: center;
-}
-.messageChatView .view {
-  float: left;
-  background-image: linear-gradient(to right, #888787 30%, #626161 51%);
-  border-radius: 6px;
-  color: #fff;
-  box-shadow: none;
-  height: 25px;
-  width: 30px;
-  font-size: 12px;
-  margin: 10px 3px;
 }
 .messageChatView .following {
-  float: left;
+  float: right;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   border-radius: 6px;
   color: #fff;
   box-shadow: none;
-  height: 25px;
-  width: 30px;
-  font-size: 12px;
-  margin: 10px 3px;
+  height: 24px;
+  width: 28px;
+  margin-top: 10px;
+  font-size: 13px;
 }
 #headerChat {
   height: 45px;
@@ -787,8 +520,10 @@ export default {
 }
 
 .bodyChat {
-  background-color: redff;
-  height: 400px;
+  padding-top: 10px;
+  border-bottom: 1px solid #dddddd;
+  background-color: #f4f4f4;
+  height: 435px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;
@@ -796,12 +531,11 @@ export default {
   margin-bottom: 10px;
   margin-top: 10px;
 }
-
 .msgBody {
   color: #7f7e7e;
 }
 .messageChat {
-  width: 92%;
+  width: 95%;
   bottom: 7px;
   background-color: #fff;
 }

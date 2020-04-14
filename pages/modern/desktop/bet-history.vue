@@ -5,9 +5,9 @@
       linkItem="current-bet"
       :titlebtn="$t('breadcrumbs.currentBet')"
     />
-    <section class="filter"  >
+    <section class="filter">
       <v-container>
-        <v-layout class="filter-history" >
+        <v-layout class="filter-history">
           <v-flex xs12 sm12 md6>
             <v-layout>
               <v-flex xs12 sm12 md3>
@@ -31,7 +31,11 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" v-model="dateFrom" @input="from = false"></v-date-picker>
+                  <v-date-picker
+                    color="#1db42f"
+                    v-model="dateFrom"
+                    @input="from = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md3>
@@ -55,18 +59,25 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" v-model="dateTo" @input="to = false"></v-date-picker>
+                  <v-date-picker
+                    color="#1db42f"
+                    v-model="dateTo"
+                    @input="to = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md2>
                 <v-btn class="goButton" @click="searchBetHistory()">
-                  <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
-                  &nbsp;{{$t('msg.go')}}
+                  <i
+                    v-if="loadingImage"
+                    class="fa fa-circle-o-notch fa-spin"
+                  ></i>
+                  &nbsp;{{ $t("msg.go") }}
                 </v-btn>
               </v-flex>
             </v-layout>
           </v-flex>
-           <v-flex xs12 sm12 md2></v-flex>
+          <v-flex xs12 sm12 md2></v-flex>
           <v-flex xs12 sm12 md4>
             <v-layout>
               <v-flex xs6 md8>
@@ -125,7 +136,7 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-      }) //get 2 data from vuex first, in the computed
+    }) //get 2 data from vuex first, in the computed
   },
   mounted() {
     const today = new Date();
@@ -143,7 +154,7 @@ export default {
   methods: {
     sortingBy() {
       console.log(this.sortby);
-      if (this.sortby == "Today") {      
+      if (this.sortby == "Today") {
         const today = new Date();
         const lastWeek = new Date(
           today.getFullYear(),
@@ -193,7 +204,7 @@ export default {
           portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
           userUUID: this.userUUID, // get the userUUID with the this object
           version: config.version, // version of API
-          betResult: [0, 1], // -1= pending, 0= lose , 1 = win         
+          betResult: [0, 1], // -1= pending, 0= lose , 1 = win
           offset: "0", // offset or skip the data,
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo
@@ -207,8 +218,13 @@ export default {
         );
         this.userBetHistory = data.data;
         this.loadingImage = false;
-      } catch (error) {
-        console.log(data);
+      } catch (ex) {
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }
@@ -218,7 +234,7 @@ export default {
 <style scoped>
 .filter {
   background-color: #fff;
-  padding:25px;
+  padding: 25px;
 }
 .goButton {
   background-color: #1db42f;

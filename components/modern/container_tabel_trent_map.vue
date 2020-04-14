@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="d-none d-xl-block">
-      <hr v-if="countTable>1" class="style-add" />
+      <hr v-if="countTable > 1" class="style-add" />
     </span>
     <div class="row">
       <span class="previou-stock" @click="backchart" v-if="!isShowTitle">
@@ -14,34 +14,42 @@
             <button
               @click="setSwichShowTable('first')"
               class="btn text-uppercase button_type"
-            >{{firstdigit}}</button>
-            <div class="arrow-right1" v-show="swichShowTable=='first'"></div>
+            >
+              {{ firstdigit }}
+            </button>
+            <div class="arrow-right1" v-show="swichShowTable == 'first'"></div>
           </div>
           <div class="d-flex">
             <button
               @click="setSwichShowTable('last')"
               class="btn text-uppercase button_type"
-            >{{lastdigit}}</button>
-            <div class="arrow-right2" v-show="swichShowTable=='last'"></div>
+            >
+              {{ lastdigit }}
+            </button>
+            <div class="arrow-right2" v-show="swichShowTable == 'last'"></div>
           </div>
           <div class="d-flex">
             <button
               @click="setSwichShowTable('both')"
               class="btn text-uppercase button_type"
-            >{{bothdigit}}</button>
-            <div class="arrow-right3" v-show="swichShowTable=='both'"></div>
+            >
+              {{ bothdigit }}
+            </button>
+            <div class="arrow-right3" v-show="swichShowTable == 'both'"></div>
           </div>
           <div class="d-flex">
             <button
               @click="setSwichShowTable('two')"
               class="btn text-uppercase button_type"
-            >{{twodigit}}</button>
-            <div class="arrow-right4" v-show="swichShowTable=='two'"></div>
+            >
+              {{ twodigit }}
+            </button>
+            <div class="arrow-right4" v-show="swichShowTable == 'two'"></div>
           </div>
         </div>
       </div>
       <div class="col-11 mobile-margin">
-        <div v-if="swichShowTable=='first'">
+        <div v-if="swichShowTable == 'first'">
           <tableTrentChartFirst
             :lastGameID="lastGameID"
             :timeGame="timeGame"
@@ -60,7 +68,7 @@
             :l="l"
           ></tableTrentChartFirst>
         </div>
-        <div id="last" v-if="swichShowTable=='last'">
+        <div id="last" v-if="swichShowTable == 'last'">
           <tableTrentChartLast
             :lastGameID="lastGameID"
             :timeGame="timeGame"
@@ -79,7 +87,7 @@
             :l="l"
           ></tableTrentChartLast>
         </div>
-        <div id="both" v-if="swichShowTable=='both'">
+        <div id="both" v-if="swichShowTable == 'both'">
           <tableTrentChartBoth
             :lastGameID="lastGameID"
             :timeGame="timeGame"
@@ -98,7 +106,7 @@
             :l="l"
           ></tableTrentChartBoth>
         </div>
-        <div id="two" v-if="swichShowTable=='two'">
+        <div id="two" v-if="swichShowTable == 'two'">
           <tableTrentChartTwo
             :lastGameID="lastGameID"
             :timeGame="timeGame"
@@ -170,7 +178,7 @@ export default {
       required: true
     }
   },
-   components: {
+  components: {
     tableTrentChartFirst,
     tableTrentChartLast,
     tableTrentChartBoth,
@@ -187,7 +195,7 @@ export default {
       this.swichShowTable = "two";
     }
   },
- 
+
   data() {
     return {
       swichShowTable: ""
@@ -208,4 +216,3 @@ export default {
   }
 };
 </script>
-

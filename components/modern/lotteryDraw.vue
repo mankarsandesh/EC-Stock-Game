@@ -1,13 +1,22 @@
 <template>
   <div class="base-timer">
-    <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      class="base-timer__svg"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g class="base-timer__circle">
-        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+        <circle
+          class="base-timer__path-elapsed"
+          cx="50"
+          cy="50"
+          r="45"
+        ></circle>
         <path
           :stroke-dasharray="circleDasharray"
           class="base-timer__path-remaining"
           :class="remainingPathColor"
-         d="M 10 10 H 90 V 90 H 10 L 10 10"
+          d="M 10 10 H 90 V 90 H 10 L 10 10"
         ></path>
       </g>
     </svg>

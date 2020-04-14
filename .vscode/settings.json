@@ -1,4 +1,7 @@
 {
     "i18n-ally.localesPaths": "locales",
-    "vue-i18n-ally.localesPaths": "locales"
+    "vue-i18n-ally.localesPaths": "locales",
+    "cSpell.words": [
+        "swal"
+    ]
 }

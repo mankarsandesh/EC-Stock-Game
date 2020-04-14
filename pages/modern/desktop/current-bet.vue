@@ -30,13 +30,13 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-      }) //get 2 data from vuex first, in the computed
+    }) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.fetch();
   },
   methods: {
-    async fetch() {
+    async fetch(){
       try {
         const userData = {
           portalProviderUUID: this.portalProviderUUID,
@@ -45,16 +45,21 @@ export default {
           betResult: [-1],
           offset: "0"
         };
-        const { data } = await this.$axios.post(
-          config.getAllBets.url,
-          userData,
-          {
-            headers: config.header
-          }
-        );
-        this.currentBets = data.data;
-      } catch (error) {
-        console.log(data);
+        const res = await this.$axios.post(config.getAllBets.url, userData, {
+          headers: config.header
+        });       
+        if (res.data.code == 200) {
+          this.currentBets = res.data.data;
+        } else {
+          throw new Error(Object.values(res.data.message)[0][0]);
+        }
+      } catch (ex) {
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }

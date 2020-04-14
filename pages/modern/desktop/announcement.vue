@@ -30,7 +30,6 @@ export default {
       window: 0,
       tabs: ["announcement"],
       active: null,
-
       announcementData: []
     };
   },
@@ -40,7 +39,7 @@ export default {
   computed: {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID
-    }),
+    })
   },
   methods: {
     ...mapActions(["setIsLoadingStockGame"]),
@@ -59,6 +58,11 @@ export default {
         this.announcementData = data;
       } catch (error) {
         console.log(error);
+        this.$swal({
+          title: error.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }

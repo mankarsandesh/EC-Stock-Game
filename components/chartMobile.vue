@@ -196,11 +196,15 @@ export default {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
-        console.error(ex.message);
-        console.error(ex.message);
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

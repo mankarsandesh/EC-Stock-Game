@@ -40,7 +40,7 @@
                 </div>
               </v-flex>
               <v-flex mt-1>
-                <div id="chartGuideline" class="chartDesgin">
+                <div id="chartGuidelineNew" class="chartDesgin">
                   <v-flex>
                     <chartApp :stockName="routeParams" />
                   </v-flex>
@@ -56,7 +56,6 @@
                 <div id="lastDrawGuideline">
                   <v-flex class="lastdraw">
                     <span
-                      class="text-black"
                       v-html="$options.filters.lastDraw(getLastDraw)"
                     ></span>
                   </v-flex>
@@ -70,22 +69,21 @@
                     <span
                       v-if="
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .stockOpenOrClosed === 'Closed!'
+                          getTimerByStockName($route.params.id).stockStatus ===
+                            'Closed'
                       "
-                      class="text-black"
                     >
                       {{
-                        getTimerByStockName($route.params.id) &&
-                        "close" | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id)
+                          | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
-                    <span v-else class="text-black">
+                    <span v-else>
                       {{
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -96,12 +94,12 @@
                 <span>{{ $t("msg.lotterydraw") }}</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex class="lottery">
-                    <span class="text-black">
+                    <span>
                       {{
                         getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | lotterydraw(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | lotterydraw(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -213,7 +211,7 @@ import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "../../../config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
-
+import { isMobile } from "mobile-device-detect";
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -230,6 +228,7 @@ export default {
     stockSelect,
     leaderboardUserlist,
     lotteryDraw,
+    isMobile: isMobile
   },
   data() {
     return {
@@ -239,33 +238,37 @@ export default {
       bgColor: "#778899",
       position: "top-right",
       isHidden: false,
+      isMobile: isMobile,
       firstPanelFocus: false,
       fabActions: [
         {
           name: "cache",
-          icon: "cached",
-        },
+          icon: "cached"
+        }
       ],
       items: [
         {
-          title: "Click Me",
+          title: "Click Me"
         },
         {
-          title: "Click Me",
+          title: "Click Me"
         },
         {
-          title: "Click Me",
+          title: "Click Me"
         },
         {
-          title: "Click Me 2",
-        },
+          title: "Click Me 2"
+        }
       ],
       trendTypes: ["firstDigit"],
       isloading: false,
-      isStep: 0,
+      isStep: 0
     };
   },
   created() {
+    if (isMobile) {
+      window.location = `/modern/betting/${this.$route.params.id}`;
+    }
     this.getStock();
     // Game Rule Popup check and open Ne User
     // if (localStorage.getItem("gameRule") != "shown") {
@@ -290,7 +293,7 @@ export default {
         channelName: `roadMap.${this.getStockUUIDByStockName(
           this.$route.params.id
         )}.${this.getPortalProviderUUID}`,
-        eventName: "roadMap",
+        eventName: "roadMap"
       },
       ({ data }) => {
         this.setLiveRoadMap(data.data.roadMap[0]);
@@ -312,15 +315,7 @@ export default {
         let linkto = `/modern/betting/btc1`;
         this.$router.push(linkto);
       }
-    },
-    getLastDraw(val) {
-      const lastDraw = val.substr(val.length - 2);
-      const first = lastDraw.slice(0, 1);
-      const last = lastDraw.slice(1, 2);
-
-      console.log("This is the first  draw :" + first);
-      console.log("This is the  last draw :" + last);
-    },
+    }
   },
   methods: {
     ...mapActions([
@@ -330,7 +325,7 @@ export default {
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
-      "setIsLoadingStockGame",
+      "setIsLoadingStockGame"
     ]),
     setAfterFullScreenClosePage() {
       localStorage.setItem("fullscreenclosed", "desktop");
@@ -348,7 +343,7 @@ export default {
           config.getStock.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version,
+            version: config.version
           },
           { headers: config.header }
         );
@@ -356,6 +351,11 @@ export default {
         this.stock = data;
       } catch (error) {
         console.log(error);
+        this.$swal({
+          title: error.message,
+          type: "error",
+          timer: 1000
+        });
       }
     },
     addTrendMap() {
@@ -376,19 +376,35 @@ export default {
     loaded() {
       this.isLoad = true;
     },
-    openTutorial() {
-      this.setTutorialStepNumber(1);
-      this.setIsShowTutorial(true);
-      let step = 1;
-      this.setTutorialStepNumber(step);
-      let stepGo = setInterval(() => {
-        step++;
-        this.setTutorialStepNumber(step);
-        if (step === 11) {
-          clearInterval(stepGo);
-        }
-      }, 3000);
+    clearTutorialUI() {
+      $("#lastDrawGuideline").css("z-index", "1");
+      $("#betCloseInGuideline").css("z-index", "1");
+      $("#lotteryDrawGuidelines").css("z-index", "1");
+      $("#chartGuidelineNew").css("z-index", "1");
+      $(".betButtonGuide").css("z-index", "1");
+      $(".BetButtonGuideEven").css("z-index", "1");
+      $("#selectstockGuideline").css("z-index", "1");
+      $("#stocklistGuidelines").css("z-index", "1");
     },
+    openTutorial() {
+      const _this = this;
+      let timeStart = this.getTutorialStepNumber === 0 ? 0 : 3000;
+      // setTimeout  to  resolve problems if user close tutorial and reopen
+      setTimeout(() => {
+        this.setIsShowTutorial(true);
+        let step = 1;
+        this.setTutorialStepNumber(step);
+        let stepGo = setInterval(() => {
+          step++;
+          this.setTutorialStepNumber(step);
+          if (step == 11 || !_this.getIsShowTutorial) {
+            clearInterval(stepGo);
+            _this.clearTutorialUI();
+            this.setTutorialStepNumber(0);
+          }
+        }, 3000);
+      }, timeStart);
+    }
   },
   computed: {
     vueVersion() {
@@ -396,6 +412,7 @@ export default {
       return Vue.version;
     },
     ...mapGetters([
+      "getTutorialStepNumber",
       "getIsShowTutorial",
       "getStockLoop",
       "getTimerByStockName",
@@ -403,12 +420,9 @@ export default {
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "lotterydraw",
-      "getStockLoop",
-      "getStockLastDraw",
-      "getStockCrawlerData",
-    ]),
-  },
+      "getStockLoop"
+    ])
+  }
 };
 </script>
 

@@ -3,14 +3,16 @@
     <v-layout px-1>
       <v-flex xs6 class="text-xs-left stockTimer">
         <label>{{ $t("msg.livetime") }}:</label>
-        <span class="stockTimer" v-if="getStockLiveTime(stockName)">{{ getStockLiveTime(stockName).split(" ")[1] }}</span>
+        <span class="stockTimer" v-if="getStockLiveTime(stockName)">{{
+          getStockLiveTime(stockName).split(" ")[1]
+        }}</span>
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
         <!-- <label>{{ $t("msg.liveprice") }}:</label> -->
         <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
-    <apexchart     
+    <apexchart
       type="area"
       :height="chartHeight"
       width="99.5%"
@@ -72,21 +74,23 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];    
-        console
+        let dataIndex = data.data.roadMap[0];
         let readyData = {
           stockValue: dataIndex.stockValue.replace(",", ""),
           stockTimeStamp: dataIndex.stockTimeStamp,
           number1: dataIndex.number1,
           number2: dataIndex.number2
         };
-        if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {          
-           this.setClearRoadMap(true);
-          this.setLiveChart(readyData);
-          setTimeout(() => {
-            this.setClearRoadMap(false);
-          }, 1000);
-        }
+        // if (
+        //   dataIndex.stockTimeStamp !==
+        //   this.chartData[this.chartData.length - 1].stockTimeStamp
+        // ) {
+        this.setClearRoadMap(true);
+        this.setLiveChart(readyData);
+        setTimeout(() => {
+          this.setClearRoadMap(false);
+        }, 1000);
+        // }
       }
     );
   },
@@ -136,7 +140,7 @@ export default {
             enabled: false
           },
           toolbar: {
-            shared: false,           
+            shared: false,
             y: {
               formatter: function(val) {
                 return (val / 1000000).toFixed(0);
@@ -198,6 +202,7 @@ export default {
   },
   methods: {
     ...mapActions(["setClearRoadMap"]),
+    // live chart
     setLiveChart(payload) {
       this.chartData.push(payload);
     },
@@ -219,10 +224,15 @@ export default {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
-        console.error(ex.message);
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -247,7 +257,7 @@ export default {
 };
 </script>
 <style>
-.stockTimer label{
+.stockTimer label {
   font-size: 16px;
   font-weight: 800;
 }

@@ -26,67 +26,57 @@ import config from "../config/config.global";
 import { isMobile } from "mobile-device-detect";
 export default {
   layout: "nolayout",
-  middleware: "getApiKey",
+  middleware: ["getApiKey", "checkAuth"],
 
   data() {
     return {
-      getUserAuthInfo: "",
-      authUser: "",
-      referrerURL: document.referrer.match(/:\/\/(.[^/]+)/)[1],
-      stockname: "btc1",
-      linkto: "",
-      portalProviderUUID: this.$route.query.portalProviderUUID,
-      portalProviderUserID: this.$route.query.portalProviderUserID,
-      balance: this.$route.query.balance,
-      userData: [],
-      messageError: []
+      messageError: [],
+      stockName: "btc1",
+      linkto: ""
     };
   },
   mounted() {
-    if (!this.portalProviderUUID) {
+    if (!this.getUserAuth.portalProviderUUID) {
       const error = "portalProviderUUID field is Missing";
       this.messageError.push(error);
     }
-    if (!this.portalProviderUserID) {
+    if (!this.getUserAuth.portalProviderUserID) {
       const error = "portalProviderUserID field is Missing";
       this.messageError.push(error);
     }
-    if (!this.balance) {
+    if (!this.getUserAuth.balance) {
       const error = "balance field is Missing";
       this.messageError.push(error);
     }
-    if (!this.referrerURL) {
-      const error = "Somthing Wrong.";
+    if (!this.getUserAuth.domain) {
+      const error = "Referrer URL missing";
       this.messageError.push(error);
     }
-    this.checlUserAuth();
+    this.checkUserAuth();
   },
   watch: {
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
         this.linkto = "modern";
       } else {
-        this.linkto = "/modern/desktop/" + stockname;
+        this.linkto = "/modern/desktop/" + stockName;
       }
     }
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getUserAuth",
+      "getMessageError"
+    ])
   },
   methods: {
-    async checlUserAuth() {
+    async checkUserAuth() {
       try {
-        const userData = {
-          portalProviderUUID: this.portalProviderUUID,
-          portalProviderUserID: this.portalProviderUserID,
-          version: 0.1,
-          ip: "225.457.454.123",
-          domain: this.referrerURL,
-          balance: this.balance
-        };        
         const { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
-          userData, // data object
+          this.getUserAuth, // data object
           {
             headers: config.header
           }
@@ -96,38 +86,34 @@ export default {
           const userInfo = {
             authUser: config.authUser,
             authPassword: config.authPassword,
-            portalProviderUUID: this.portalProviderUUID,
+            portalProviderUUID: this.getUserAuth.portalProviderUUID,
             userId: data.data[0].userUUID,
-            redirect: this.referrerURL
+            redirect: this.getUserAuth.referrerURL
           };
-          this.setPortalProviderUUID(userInfo.portalProviderUUID);
           this.setUserUUID(userInfo.userId);
-          localStorage.setItem(
-            "PORTAL_PROVIDERUUID",
-            userInfo.portalProviderUUID
-          );
           localStorage.setItem("USER_UUID", userInfo.userId);
-          localStorage.setItem("REFERERN_URL", userInfo.redirect);
-          let objJsonStr = JSON.stringify(userInfo);
-          let buff = new Buffer(objJsonStr);
-          let base64data = buff.toString("base64");
+          // let objJsonStr = JSON.stringify(userInfo);
+          // console.log('stringify user info', objJsonStr)
+          // let buff = new Buffer(objJsonStr);
+          // let base64data = buff.toString("base64");
+          // console.log('base64 data', base64data)
           if (userInfo.authUser && userInfo.authPassword) {
             if (userInfo.portalProviderUUID && userInfo.userId) {
-              let buffDecode = new Buffer(base64data, "base64");
-              let authData = buffDecode.toString("ascii");
-              this.setAuth(authData);
-              localStorage.setItem("AUTH", JSON.stringify(base64data));
+              // let buffDecode = new Buffer(base64data, "base64");
+              // console.log('buffdecode', buffDecode)
+              // let authData = buffDecode.toString("ascii");
+              // console.log('buffauthdata', authData)
+              // this.setAuth(authData);
+              // localStorage.setItem("AUTH", JSON.stringify(base64data));
+              //window.location = this.linkto;
               this.getProgress();
-              this.linkto = isMobile
-                ? "/modern"
-                : "/modern/desktop/" + this.stockname;
               // location.reload(true);
             } else {
               const error = "Portal Provider OR userID is Missing...";
               this.messageError.push(error);
             }
           } else {
-            const error = "Authication authUser & authPassword is Missing.";
+            const error = "Authentication authUser & authPassword is Missing.";
             this.messageError.push(error);
           }
         } else {
@@ -139,10 +125,9 @@ export default {
         console.log(error);
       }
     },
-    ...mapActions(["setAuth", "setPortalProviderUUID", "setUserUUID"]),
+    ...mapActions(["setAuth", "setUserUUID"]),
 
     getProgress() {
-      let seft = this;
       let width = 100,
         perfData = window.performance.timing, // The PerformanceTiming interface represents timing-related performance information for the given page.
         EstimatedTime = -(perfData.loadEventEnd - perfData.navigationStart),
@@ -167,46 +152,44 @@ export default {
         start = 0,
         end = 100,
         durataion = time;
-      animateValue(PercentageID, start, end, durataion);
-
-      function animateValue(id, start, end, duration) {
-        let range = end - start,
-          current = start,
-          increment = end > start ? 1 : -1,
-          stepTime = Math.abs(Math.floor(duration / range)),
-          obj = $(id);
-
-        let timer = setInterval(function() {
-          current += increment;
-          //   $(obj).text(current + "%");  //sHOW BY %
-          $(obj).text("lOADING..."); // SHOW BY LOADING
-          obj.innerHTML = current;
-          if (current == end) {
-            clearInterval(timer);
-            window.location = "/modern/desktop/btc1";
-            // seft.$router.push("/modern/desktop/btc1");
-            // seft.$router.push("/dashboard?stockname=" + seft.stockname);
-          }
-        }, stepTime);
-      }
+      this.animateValue(PercentageID, start, end, durataion);
 
       // Fading Out Loadbar on Finised
       setTimeout(function() {
         $(".preloader-wrap").fadeOut(100);
       }, time);
+    },
+    animateValue(id, start, end, duration) {
+      let range = end - start,
+        current = start,
+        increment = end > start ? 1 : -1,
+        stepTime = Math.abs(Math.floor(duration / range)),
+        obj = $(id);
+
+      let timer = setInterval(() => {
+        current += increment;
+        //   $(obj).text(current + "%");  //sHOW BY %
+        $(obj).text("lOADING..."); // SHOW BY LOADING
+        obj.innerHTML = current;
+        if (current == end) {
+          clearInterval(timer);
+          window.location = isMobile
+            ? "/modern"
+            : "/modern/desktop/" + this.stockName;
+        }
+      }, stepTime);
     }
   }
 };
 </script>
 <style scoped>
 .errorBox {
-    background-color: #fff;
-    margin-bottom: 20px;
-    padding: 5px;
-    font-size: 23px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 5px;
+  font-size: 23px;
 }
 .errorBox h2 {
   color: #333;
 }
 </style>
-

@@ -11,11 +11,17 @@
       </v-layout>
 
       <v-flex grow pa-1 class="text-lg-right ranking">
-        <span class="text-uppercase font-weight-bold">
+        <span class="text-uppercase font-weight-bold"
+        v-bind:class="{ active: isActiveWeek }"
+        v-on:click="sortingBy('weekly')"
+        >
           <v-icon small>event</v-icon>
           {{ $t("leaderboard.weeklyrankings") }}
         </span>
-        <span class="text-uppercase font-weight-bold">
+        <span class="text-uppercase font-weight-bold"
+          v-bind:class="{ active: isActiveMonth }"
+          v-on:click="sortingBy('monthly')"
+        >
           <v-icon small>event</v-icon>
           {{ $t("leaderboard.monthlyrankings") }}
         </span>
@@ -23,7 +29,9 @@
     </v-flex>
 
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">There are no top users in Leaderboard.</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">
+        There are no top users in Leaderboard.
+      </h2>
     </v-flex>
     <v-flex v-if="topPlayerData.length > 0">
       <v-flex
@@ -46,20 +54,22 @@
             <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
           </th>
           <th>
-            <h5 class="header">{{$t('leaderboard.winningrate')}}</h5>
-            <h6 class="green--text titleText">{{ Math.round(data.winRate, 1) }} %</h6>
-          </th>
-          <th>
-            <h5 class="header">{{$t('leaderboard.bets')}}</h5>
-            <h6 style="color:#eb0b6e;" class="titleText">
-              {{
-              data.totalWinBets
-              }}
+            <h5 class="header">{{ $t("leaderboard.winningrate") }}</h5>
+            <h6 class="green--text titleText">
+              {{ Math.round(data.winRate, 1) }} %
             </h6>
           </th>
           <th>
-            <h5 class="header">{{$t('leaderboard.winningamount')}}</h5>
-            <h6 style="color:#0b2a68;" class="titleText">{{ Math.round(data.totalWinAmount, 1) }}</h6>
+            <h5 class="header">{{ $t("leaderboard.bets") }}</h5>
+            <h6 style="color:#eb0b6e;" class="titleText">
+              {{ data.totalWinBets }}
+            </h6>
+          </th>
+          <th>
+            <h5 class="header">{{ $t("leaderboard.winningamount") }}</h5>
+            <h6 style="color:#0b2a68;" class="titleText">
+              {{ Math.round(data.totalWinAmount, 1) }}
+            </h6>
           </th>
           <th v-if="data.isFollowing == 0" style="width:20%;">
             <v-btn
@@ -73,31 +83,43 @@
                 )
               "
               dark
-            >{{ $t("useraction.follow") }}</v-btn>
+              >{{ $t("useraction.follow") }}</v-btn
+            >
           </th>
           <th v-if="data.isFollowing == 1" style="width:20%;">
             <v-btn
               class="buttonCancel"
               v-on:click="unfollowUser(data.userUUID)"
               dark
-            >{{ $t("useraction.unfollow") }}</v-btn>
+              >{{ $t("useraction.unfollow") }}</v-btn
+            >
           </th>
           <th v-if="data.isFollowing == -1" style="width:20%;">
-            <v-btn class="buttonGreensmall">{{ $t("useraction.yourself") }}</v-btn>
+            <v-btn class="buttonGreensmall">{{
+              $t("useraction.yourself")
+            }}</v-btn>
           </th>
         </div>
       </v-flex>
 
-      <v-dialog v-model="dialog" width="600" style="border-radius:20px; !important">
+      <v-dialog
+        v-model="dialog"
+        width="600"
+        style="border-radius:20px; !important"
+      >
         <v-card class="followup">
           <h3
             class="title font-weight-bold"
             style="text-align:center;color:#0b2a68;"
-          >{{ $t('useraction.follow') }}</h3>
+          >
+            {{ $t("useraction.follow") }}
+          </h3>
 
           <v-card-text style="text-align:center;">
             <img class="pimage" v-bind:src="this.userImage" width="140px" />
-            <h3 class="subtitle-1 text-uppercase text-center pt-2">{{ this.username }}</h3>
+            <h3 class="subtitle-1 text-uppercase text-center pt-2">
+              {{ this.username }}
+            </h3>
           </v-card-text>
           <v-card-actions>
             <v-flex lg6 pr-4>
@@ -129,7 +151,12 @@
               ></v-text-field>
             </v-flex>
             <v-flex lg3 pl-3 pb-3>
-              <v-btn color="buttonGreensmall" text v-on:click="followThisUser()">{{ FollowName }}</v-btn>
+              <v-btn
+                color="buttonGreensmall"
+                text
+                v-on:click="followThisUser()"
+                >{{ FollowName }}</v-btn
+              >
             </v-flex>
           </v-card-actions>
         </v-card>
@@ -143,6 +170,8 @@ import config from "../../config/config.global";
 export default {
   data() {
     return {
+      isActiveWeek: true,
+      isActiveMonth: false,
       FollowName: "Follow",
       selectRate: false,
       selectAmount: true,
@@ -172,9 +201,43 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-      }) //get 2 data from vuex first, in the computed
+    }) //get 2 data from vuex first, in the computed
   },
   methods: {
+    //sorting weekly and Monthly
+    sortingBy(sort) {
+      if (sort == "monthly") {
+        const today = new Date();
+        const monthly = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 30
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = monthly;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.sortbyName = "Monthly Ranking";
+        this.isActiveMonth = true;
+        this.isActiveWeek = false;
+        this.leaderBoard();
+      } else {
+        const today = new Date();
+        const lastWeek = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 7
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = lastWeek;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.sortbyName = "Weekly Ranking";
+        this.isActiveMonth = false;
+        this.isActiveWeek = true;
+        this.leaderBoard();
+      }
+    },
     getImgUrl(userImage) {
       return userImage === null
         ? "/no-profile-pic.jpg"
@@ -272,12 +335,15 @@ export default {
       this.dialog = true;
     },
     async leaderBoard() {
-      const LeaderBoardData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        version: config.version
-      };
+      
       try {
+        const LeaderBoardData = {
+          portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
+          dateRangeFrom: this.dateFrom,
+          dateRangeTo: this.dateTo,
+          version: config.version
+        };
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
           LeaderBoardData,
@@ -290,7 +356,8 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    
   }
 };
 </script>

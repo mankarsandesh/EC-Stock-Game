@@ -40,13 +40,13 @@
               <span
                 v-if="
                   getTimerByStockName(stockid) &&
-                    getTimerByStockName(stockid).stockOpenOrClosed === 'Closed!'
+                    getTimerByStockName(stockid).stockStatus === 'Closed'
                 "
                 class="text-black"
               >
                 {{
-                  getTimerByStockName(stockid) &&
-                    "close" | betclosein(getStockLoop(stockid))
+                  getTimerByStockName(stockid)
+                    | betclosein(getStockLoop(stockid))
                 }}
               </span>
               <span v-else class="text-black">
@@ -147,7 +147,6 @@ export default {
       "getPortalProviderUUID",
       "getTimerByStockName",
       "getStockLoop",
-      "lotterydraw",
       "getStockById",
       "getAmountBettingByStockId"
     ])
@@ -172,11 +171,16 @@ export default {
             .reverse()[0]
             .stockValue.replace(",", "");
         } else {
-          throw new Error();
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
         this.fetchChart(this.getStockUUIDByStockName(this.stockid));
-        console.error(ex.message);
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

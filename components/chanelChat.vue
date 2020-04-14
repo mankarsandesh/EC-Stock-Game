@@ -2,24 +2,71 @@
   <div class="conve-container">
     <div class="bodyChat">
       <div v-for="data in conversationChanel" :key="data.index" class="msgUser">
-        <div class="messageChatView">
-          <a href="#">{{ data.name }}</a>
-          <span>{{ new Date(data.date).toString().slice(4, 24) }}</span>
-          <p class="msgBody">{{ data.message }}</p>
-        </div>
+
+         <div class="messageChatView">
+                  <div style="width:30%;">
+                    <nuxt-link
+                      :to="'/modern/desktop/userprofile/' + data.userUUID"
+                    >
+                      <v-img
+                        class="userImage"
+                        :src="imgProfile(data.userImage)"
+                        aspect-ratio="1"
+                        max-height="120"
+                        max-width="120"
+                      >
+                      </v-img>
+                    </nuxt-link>
+                    <span class="ranking">
+                      <v-tooltip left>
+                        <template v-slot:activator="{ on }">
+                          <span v-on="on">#{{ data.Rank }} </span>
+                        </template>
+                        <span>User Rank</span>
+                      </v-tooltip>
+                    </span>
+                  </div>
+                  <div style="width:15%;">
+                    <span class="followcount">
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <span v-on="on">{{ data.followerCount }} </span>
+                        </template>
+                        <span>User Follow Count</span>
+                      </v-tooltip>
+                    </span>
+                  </div>
+                  <div style="width:55%;">
+                    <span class="winRate">
+                      <v-tooltip right>
+                        <template v-slot:activator="{ on }">
+                          <span v-on="on">{{ data.winRate }}% </span>
+                        </template>
+                        <span>User Win Rate</span>
+                      </v-tooltip>
+                    </span>
+
+                    <v-btn
+                      v-if="getUserUUID != data.userUUID"
+                      class="following"
+                      v-on:click="followUser(null, null, data.userUUID, '0')"
+                      >Follow</v-btn
+                    >
+                    <v-btn v-if="getUserUUID == data.userUUID" class="following"
+                      >Yourself</v-btn
+                    >
+                  </div>
+                </div>
+
       </div>
     </div>
 
     <div class="messageChat">
-      <input
-        resize="none"
-        v-model="messageInput"
-        placeholder="Say Somthing..."
-        @keyup.enter="sendMsgChanel"
-      />
-      <span @click="sendMsgChanel" class="btn">
-        <i class="fa fa-paper-plane"></i>
-      </span>
+      <v-flex col-md-12>
+        <v-btn class="buttonInvitation" @click="sendInvitation()"
+          >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
+        ></v-btn>
+      </v-flex>
     </div>
   </div>
 </template>
@@ -31,8 +78,7 @@ import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 export default {
   props: {
     gameUUID: {
-      type: String,
-      required: true
+      type: String
     }
   },
   data() {
@@ -42,6 +88,12 @@ export default {
     };
   },
   methods: {
+    // fetch default image or from server image
+    imgProfile(userImage) {
+      return userImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/` + userImage;
+    },
     scrollDown() {
       $(".bodyChat")
         .stop()
@@ -56,29 +108,25 @@ export default {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
     // Channel for gameUUDI
-    async sendMsgChanel() {
+    async sendInvitation() {
       try {
-        if (this.messageInput !== "") {
-          const res = await this.$axios.$post(
-            config.sendMessage.url,
-            {
-              portalProviderUUID: this.getPortalProviderUUID,
-              userUUID: this.getUserUUID,
-              gameUUID: this.gameUUID,
-              chatType: 1,
-              message: this.messageInput,
-              version: config.version
-            },
-            {
-              headers: config.header
-            }
-          );
-          if (res.status) {
-            this.messageInput = "";
+        const sendData = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          gameUUID: this.gameUUID,
+          category: [1, 2, 3],
+          version: config.version
+        };
+        console.log(sendData, "Send Invitation");
+        const res = await this.$axios.$post(
+          config.getUserInvitation.url,
+          sendData,
+          {
+            headers: config.header
           }
-        }
+        );
+        this.snackbar = true;
       } catch (ex) {
-        this.sendMsgChanel();
         console.log(ex.message);
       }
     }
@@ -90,15 +138,14 @@ export default {
         channelName: `messageSend.${this.getPortalProviderUUID}.${this.gameUUID}`,
         eventName: "messageSend"
       },
-      ({ data }) => {
-        data.data.forEach(element => {
-          this.conversationChanel.push({
-            name: element.userName,
-            userUUID: element.getUserUUID,
-            message: element.message,
-            date: element.date
-          });
+      ({ data }) => {        
+        const objectArray = Object.entries(data.data);
+        let newData = [];
+        objectArray.forEach(([key, value]) => {
+          newData[key] = value;
         });
+        this.conversationChanel.push(newData);
+        console.log(this.conversationChanel);
         this.scrollDown();
       }
     );
@@ -107,8 +154,7 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getUserUUID",
-      "getStockType",
-      "getStockGameId"
+      "getStockType"
     ]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
@@ -122,15 +168,35 @@ export default {
 </script>
 
 <style scoped>
+.followDialog {
+  width: 600px;
+  border-radius: 10px;
+  padding: 10px;
+}
+.followup {
+  padding: 15px 30px;
+  border-radius: 20px;
+}
+.followup h4 {
+  color: #65686f;
+}
 .conve-container {
   position: relative;
   display: flex;
   flex-direction: column;
 }
+.buttonInvitation {
+  margin-top:-1px;
+  color: #fff !important;
+  border-radius: 3px;
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  font-size: 14px;
+  width: 100%;
+}
 .liveChat {
   z-index: 999;
   position: fixed;
-  right: 12px;
+  right: 0px;
   bottom: 20px;
   width: 50px;
   height: 50px;
@@ -138,7 +204,7 @@ export default {
   background-color: #2aaf3e !important;
 }
 .popper {
-  width: 300px;
+  width: 370px;
   border-radius: 10px;
   border: 1px solid #dddddd;
 }
@@ -161,14 +227,107 @@ export default {
 }
 
 .chatRoom {
-  height: 400px;
+  height: 500px;
   width: 100%;
-  /* margin-r: 300px; */
   padding: 2px 3px;
   border-radius: 5px;
   background-color: #fff;
 }
 
+.msgUser {
+  padding: 2px 0px;
+  overflow: auto;
+  border-radius: 8px;
+  max-width: 375px;
+  text-align: justify;
+  margin: 5px 0px;
+  background-color: #fff;
+  border: 1px solid #dddddd;
+}
+.filter {
+  margin-top: 10px;
+}
+
+.filter .filterSpan {
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 10px 5px;
+  font-size: 12px;
+  color: #8d8c8c;
+}
+.follow {
+  border: 1px solid orange;
+}
+.rank {
+  border: 1px solid #c6b2f0;
+}
+.rate {
+  border: 1px solid green;
+}
+.messageChatView div:first-child {
+  border: none;
+}
+.messageChatView div {
+  cursor: pointer;
+  float: left;
+  text-align: center;
+  border-left: 1px solid #dddddd;
+  height: 50px;
+  padding: 5px 4px;
+}
+
+.messageChatView .userImage {
+  border-radius: 180px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  float: left;
+  border: 1px solid #dddddd;
+}
+.messageChatView .userStatus {
+  float: left;
+  margin: 12px 5px;
+  font-size: 13px;
+  color: #8d8c8c;
+  font-weight: 800;
+}
+.msgUser .ranking {
+  float: left;
+  font-size: 20px;
+  margin: 6px 8px;
+  color: #42c851;
+  font-weight: 800;
+  text-align: center;
+}
+.msgUser .followcount {
+  float: left;
+  text-align: center;
+  font-size: 20px;
+   margin: 6px 15px;  
+  color: #5f70b1;
+  font-weight: 800;
+}
+.msgUser .winRate {
+  float: left;
+  font-size: 20px;
+  margin: 6px 0px;
+  color: #ed4560;
+  font-weight: 800;
+  text-align: center;
+}
+.messageChatView .following {
+  float: right;
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  border-radius: 6px;
+  color: #fff;
+  box-shadow: none;
+  height: 24px;
+  width:28px;
+  margin-top: 10px;
+  font-size: 13px;
+}
 #headerChat {
   height: 45px;
 }
@@ -214,89 +373,24 @@ export default {
 }
 
 .bodyChat {
-  background-color: redff;
-  height: 350px;
+  padding-top: 10px;
+  border-bottom: 1px solid #dddddd;
+  background-color: #f4f4f4;
+  height: 435px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;
   border-radius: 4px;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
-
-.msgUser {
-  border: 1px solid #cecece;
-  background-color: #f5f4f4;
-  padding: 5px 8px 0px;
-  overflow: auto;
-  border-radius: 8px;
-  max-width: 350px;
-  margin: 10px 10px;
-  text-align: justify;
-}
-.msgUser span {
-  background-color: #ced1d0;
-  border-radius: 20px;
-  padding: 2px 8px;
-  float: right;
-  font-size: 10px;
-}
-.msgUser p {
-  text-align: justify;
-  float: left;
-  width: 100%;
-  margin-top: 2px;
-  margin-bottom: 5px;
-  font-size: 11px;
-}
-
-.msgUser a {
-  width: 50%;
-  text-transform: capitalize;
-  font-weight: 600;
-  float: left;
-  color: #003e70;
-  font-size: 12px;
-}
-
 .msgBody {
   color: #7f7e7e;
 }
 .messageChat {
-  position: fixed;
+  width: 95%;
   bottom: 7px;
   background-color: #fff;
-  height: 35px;
-  padding: 0px 10px;
-  width: 97%;
-  display: inline-flex;
-  border-radius: 5px;
-  border: 1px solid #d3d2d2;
-}
-
-.messageChat input {
-  float: left;
-  width: 100%;
-  padding: 5px;
-  margin-right: 0px;
-  font-size: 12px;
-  height: 30px;
-  resize: none;
-  color: #003e70;
-}
-
-.messageChat input:focus {
-  outline: none;
-}
-
-.messageChat .btn {
-  padding: 5px 10px;
-  color: #d3d2d2;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 0px;
-}
-.messageChat .btn:hover {
-  color: #003e70;
 }
 
 /* width */

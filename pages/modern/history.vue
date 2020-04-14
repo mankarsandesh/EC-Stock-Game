@@ -24,7 +24,7 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-      }) //get 2 data from vuex first, in the computed
+    }) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.fetch();
@@ -32,22 +32,33 @@ export default {
   methods: {
     async fetch() {
       // afer moumted call the functions this method will run the fetch the data from API
-      const sendData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        version: config.version,
-        betResult: [0, 1],
-        limit: "20",
-        offset: "0"
-      };
-      const { data } = await this.$axios.post(config.getAllBets.url, sendData, {
-        headers: config.header
-      });
-      this.userBetHistory = data.data;
+      try {
+        const sendData = {
+          portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
+          version: config.version,
+          betResult: [0, 1],
+          limit: "20",
+          offset: "0"
+        };
+        const { data } = await this.$axios.post(
+          config.getAllBets.url,
+          sendData,
+          {
+            headers: config.header
+          }
+        );
+        if (data.code == 200) {
+          this.userBetHistory = data.data;
+        } else {
+          throw new Error(Object.values(data.message)[0][0]);
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
     }
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>

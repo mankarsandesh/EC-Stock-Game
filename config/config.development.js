@@ -1,11 +1,11 @@
 const config = {
   version: "1",
-  authUser : `${process.env.AUTHUSER}`,
-  authPassword : `${process.env.AUTHPASS}`,
-  apiDomain: process.env.API_DOMIAN,
-  socketUrl: process.env.SOCKETURL,
+  authUser: `${process.env.AUTH_USER}`,
+  authPassword: `${process.env.AUTH_PASS}`,
+  apiDomain: process.env.API_DOMAIN,
+  socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
-  secretKey:"CC21128A312FAF7817C93D1B51CB9",
+  secretKey: "CC21128A312FAF7817C93D1B51CB9",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
@@ -54,16 +54,27 @@ const config = {
   getUserBetAnalysis: {
     url: `${process.env.BASE_URL}/getUserBetAnalysis`
   },
+  getUserInvitation: {
+    url: `${process.env.BASE_URL}/sendInvitation`
+  },
+  getVisitUserProfile: {
+    url: `${process.env.BASE_URL}/visitUserProfile`
+  },
+  getUserFollower: {
+    url: `${process.env.BASE_URL}/followUserList`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
   },
+  error: {
+    general: "Something went wrong!"
+  }
   // loggly: {
   //   token: '852204e4-2752-4d9c-9b1c-f9f2152c2f40',
   //   subdomain: 'localhost',
   //   tags: ["Winston-VueJs"]
   // }
-
 };
 
 export default config;

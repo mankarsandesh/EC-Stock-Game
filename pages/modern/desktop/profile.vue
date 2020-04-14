@@ -8,59 +8,99 @@
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img v-if="imageBase64 == ''" :src="imgProfile" alt="img-profile" />
                   <img
-                    :style="{ filter: `blur(${blurValue}px)` }"
-                    v-else
-                    :src="imageBase64"
-                    alt="img-profile"
+                    :src="
+                      getUserInfo.profileImage
+                        ? imgProfile
+                        : `/no-profile-pic.jpg`
+                    "
                   />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="cameraClick">photo_camera</v-icon>
+                    <v-icon color="black" :size="20" @click="cameraClick"
+                      >photo_camera</v-icon
+                    >
                   </button>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h2 v-if="getUserInfo.firstName == null ">{{ getUserInfo.userName }}</h2>
-              <h1
-                v-if="getUserInfo.firstName"
-              >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
-              <p>{{$t('profile.onlinestatus')}} : 2 hours</p>
+              <h2 v-if="getUserInfo.firstName == null">
+                {{ getUserInfo.userName }}
+              </h2>
+              <h1 v-if="getUserInfo.firstName">
+                {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+              </h1>
+              <p>{{ $t("profile.onlinestatus") }} : 2 hours</p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
               <ul class="pa-3">
                 <nuxt-link to="/modern/desktop/profile/">
                   <li
-                    :class="'/modern/desktop/profile/' === currentChild ? 'menu_title_active' : 'menu_title'"
-                  >{{ $t('profile.basicinfo') }}</li>
+                    :class="
+                      '/modern/desktop/profile/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.basicinfo") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/onlinehistory/">
                   <li
-                    :class=" '/modern/desktop/profile/onlinehistory/' === currentChild ? 'menu_title_active' : 'menu_title'"
-                  >{{ $t('profile.onlinehistory') }}</li>
+                    :class="
+                      '/modern/desktop/profile/onlinehistory/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.onlinehistory") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/stockanalysis/">
                   <li
-                    :class=" '/modern/desktop/profile/stockanalysis/' === currentChild ? 'menu_title_active' : 'menu_title'"
-                  >{{ $t('profile.stockanalysis') }}</li>
+                    :class="
+                      '/modern/desktop/profile/stockanalysis/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.stockanalysis") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/follower/">
                   <li
-                    :class=" '/modern/desktop/profile/follower/' === currentChild ? 'menu_title_active' : 'menu_title'"
-                  >{{ $t('profile.myfollowers') }}</li>
+                    :class="
+                      '/modern/desktop/profile/follower/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.myfollowers") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/notification/">
                   <li
-                    :class=" '/modern/desktop/profile/notification/' === currentChild ? 'menu_title_active' : 'menu_title'"
-                  >{{ $t('profile.mynotification') }}</li>
+                    :class="
+                      '/modern/desktop/profile/notification/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.mynotification") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/setting/">
                   <li
-                    :class=" '/modern/desktop/profile/setting/' === currentChild ? 'menu_title_active' : 'menu_title'"
-                  >{{ $t('profile.setting') }}</li>
+                    :class="
+                      '/modern/desktop/profile/setting/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.setting") }}
+                  </li>
                 </nuxt-link>
               </ul>
             </div>
@@ -100,10 +140,7 @@ export default {
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      // console.log("profile", config.apiDomain);
-      return this.getUserInfo.profileImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
     }
   },
   watch: {
@@ -112,10 +149,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setUserData", "setIsLoadingStockGame"]),
+    ...mapActions(["setUserData"]),
     readFile(e) {
       let self = this;
-      console.log(e.target);
       if (e.target.files && e.target.files[0]) {
         let FR = new FileReader();
         FR.addEventListener("load", function(e) {
@@ -129,7 +165,7 @@ export default {
     },
     async updateProfile() {
       let formData = new FormData();
-      formData.append("profileImage", this.$refs.inputFile.files[0], "file");
+      formData.append("profileImage", this.$refs.inputFile.files[0]);
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("version", config.version);
@@ -138,33 +174,36 @@ export default {
           config.updateUserProfile.url,
           formData,
           {
-            headers: config.header,
-            onUploadProgress: progressEvent => {
-              const totalLength = progressEvent.lengthComputable
-                ? progressEvent.total
-                : progressEvent.target.getResponseHeader("content-length") ||
-                  progressEvent.target.getResponseHeader(
-                    "x-decompressed-content-length"
-                  );
-              if (totalLength !== null) {
-                this.blurValue = Math.round(totalLength - progressEvent.loaded);
-              }
-            }
+            headers: config.header
+            // onUploadProgress: progressEvent => {
+            //   const totalLength = progressEvent.lengthComputable
+            //     ? progressEvent.total
+            //     : progressEvent.target.getResponseHeader("content-length") ||
+            //       progressEvent.target.getResponseHeader(
+            //         "x-decompressed-content-length"
+            //       );
+            //   if (totalLength !== null) {
+            //     this.blurValue = Math.round(totalLength - progressEvent.loaded);
+            //   }
+            // }
           }
         );
-        console.log("res......");
-        console.log(res);
-        console.log("res.......");
         if (res.code === 200) {
           this.blurValue = 0;
+          this.setUserData();
         } else {
-          throw new Error(res.message);
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
         this.imageBase64 = "";
-        console.error(ex.message);
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
-    },
+    }
   }
 };
 </script>
@@ -222,7 +261,7 @@ li {
   font-weight: bold;
 }
 .menu_title_active {
-  background: linear-gradient(to right, #2e7d32 20%, #39b01e 51%);
+  background-color: #2cb038;
   margin: 10px;
   padding: 10px;
   padding-left: 20px;

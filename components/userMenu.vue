@@ -7,7 +7,7 @@
         </v-btn>
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="40">
-            <img :src="imgProfile" />
+            <img :src="getUserInfo.profileImage ? imgProfile : `/no-profile-pic.jpg`" />
           </v-avatar>
           <div class="userLogoutMenu">
             <span v-if="getUserInfo.firstName == null"
@@ -29,7 +29,7 @@
       </template>
       <v-list>
         <v-list-tile
-          @click="$router.push('/modern/desktop/dashboardprofile/')"
+          @click="$router.push('/modern/desktop/userprofile/')"
           v-show="isShow == 'modern'"
         >
           <i class="fa fa-user fa-2x margin-right-5" />
@@ -76,23 +76,21 @@ import config from "../config/config.global";
 export default {
   components: {
     AnimatedNumber,
-    AppDialogsConfirm,
+    AppDialogsConfirm
   },
   data() {
     return {
       dialogConfirm: false,
       profileImage: "",
       dialogprofile: false,
-      isShow: "",
+      isShow: ""
     };
   },
   computed: {
     ...mapGetters(["getUserInfo"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-    },
+      return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+    }
   },
   mounted() {
     this.isShow = location.pathname.split("/")[1];
@@ -104,7 +102,7 @@ export default {
     async dialogStatus(value) {
       if (value) {
         await localStorage.removeItem("AUTH");
-        const URL = await localStorage.getItem("REFERERN_URL");
+        const URL = await localStorage.getItem("referrerURL");
         location.href = "http://" + URL;
         this.dialogConfirm = false;
       }
@@ -115,8 +113,8 @@ export default {
         .toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
-    },
-  },
+    }
+  }
 };
 </script>
 

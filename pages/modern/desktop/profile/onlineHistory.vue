@@ -97,7 +97,7 @@ import config from "../../../../config/config.global";
 import VueApexCharts from "vue-apexcharts";
 export default {
   components: {
-    VueApexCharts,
+    VueApexCharts
   },
   data() {
     return {
@@ -114,7 +114,7 @@ export default {
       chartOptions: {
         chart: {
           height: 350,
-          type: "bar",
+          type: "bar"
           // events: {
           //   click: function (chart, w, e) {
           //     console.log(chart, e);
@@ -124,23 +124,23 @@ export default {
         plotOptions: {
           bar: {
             columnWidth: "45%",
-            distributed: true,
-          },
+            distributed: true
+          }
         },
         dataLabels: {
-          enabled: false,
+          enabled: false
         },
         legend: {
-          show: false,
+          show: false
         },
         xaxis: {
           categories: [],
           labels: {
             style: {
-              fontSize: "12px",
-            },
-          },
-        },
+              fontSize: "12px"
+            }
+          }
+        }
         // tootltip: {
         //   enabled: false,
         //   followCurso: true,
@@ -166,7 +166,7 @@ export default {
         //     }
         //   }
         // },
-      },
+      }
     };
   },
   async created() {
@@ -180,10 +180,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    ...mapActions(["setUserData"]),
     startDateClick() {
       this.isShowDateStart = !this.isShowDateStart;
       this.isShowDateEnd = false;
@@ -211,10 +210,10 @@ export default {
             userUUID: this.getUserUUID,
             dateRangeFrom: this.startDate,
             dateRangeTo: this.endDate,
-            version: config.version,
+            version: config.version
           },
           {
-            headers: config.header,
+            headers: config.header
           }
         );
         if (res.code === 200) {
@@ -225,7 +224,7 @@ export default {
             let totalActiveTime = 0;
             let xAxis = [];
             let chartData = [];
-            result.forEach((element) => {
+            result.forEach(element => {
               totalActiveTime += parseInt(element.activeTimeInMins);
               chartData.push(parseInt(element.activeTimeInMins));
               xAxis.push(element.Date);
@@ -244,25 +243,24 @@ export default {
             this.dataReady = false;
           }
         } else {
-          console.log(res);
           this.error = "Something went wrong";
           this.dataReady = false;
-          //alert(res.message);
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
-        console.error(ex.message);
+        console.log(ex);
         this.$swal({
           title: ex.message,
           type: "error",
-          showConfirmButton: true,
+          showConfirmButton: true
         });
         if (ex.message == "Please select a valid date") {
           this.error = "Please select a valid date";
           this.dataReady = false;
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

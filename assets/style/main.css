@@ -86,17 +86,16 @@
 #selectstockGuideline {
   position: relative;
   border-radius: 8px;
-  /* z-index: 10001; */
+  background-color: white;
 }
 
 .betButtonGuide,
 .BetButtonGuideEven,
-#chartGuideline,
+#chartGuidelineNew,
 #stocklistGuidelines,
 #betresultGuidelines {
   position: relative;
   background-color: white;
-  /* z-index: 10001; */
 }
 
 /* tutorial */
@@ -140,30 +139,31 @@ Home Page Component
 }
 
 .lastdraw {
-  font-size: 14px;
+  color: #4c4c4c !important;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
-  font-size: 22px;
+  font-size: 28px;
   padding: 2px 6px;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .betclose {
-  font-size: 14px;
+  color: #4c4c4c !important;
+  font-family: "Arimo", sans-serif;
   border: 1.5px solid #ef076a;
   border-radius: 10px;
-  font-size: 22px;
+  font-size: 28px;
   padding: 2px 6px;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .lottery {
-  font-size: 14px;
+  color: #4c4c4c !important;
   border: 1.5px solid #01e3bf;
   border-radius: 10px;
-  font-size: 22px;
+  font-size: 28px;
   padding: 2px 6px;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .chartDesgin {
@@ -628,9 +628,6 @@ nav.modal-bet.v-toolbar.theme--light p {
   font-size: 12px;
 }
 
-
-
-
 .buttonCancel {
   color: #fff !important;
   border-radius: 10px;
@@ -699,14 +696,22 @@ table.result-table tr {
 }
 
 .firstdigit {
-  background: rgb(13,204,255);
-  background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
+  background: rgb(13, 204, 255);
+  background: linear-gradient(
+    22deg,
+    rgba(13, 204, 255, 1) 0%,
+    rgba(71, 96, 255, 1) 100%
+  );
   color: #fff !important;
 }
 
 .bg-btn-first {
-  background: rgb(13,204,255);
-  background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
+  background: rgb(13, 204, 255);
+  background: linear-gradient(
+    22deg,
+    rgba(13, 204, 255, 1) 0%,
+    rgba(71, 96, 255, 1) 100%
+  );
   font-weight: 400;
   color: #ffffff !important;
   min-width: 88%;
@@ -716,14 +721,22 @@ table.result-table tr {
 }
 
 .lastdigit {
-  background: rgb(250,209,38);
-  background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
+  background: rgb(250, 209, 38);
+  background: linear-gradient(
+    22deg,
+    rgba(250, 209, 38, 1) 0%,
+    rgba(255, 84, 79, 1) 100%
+  );
   color: #fff !important;
 }
 
 .bg-btn-last {
-  background: rgb(250,209,38);
-  background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
+  background: rgb(250, 209, 38);
+  background: linear-gradient(
+    22deg,
+    rgba(250, 209, 38, 1) 0%,
+    rgba(255, 84, 79, 1) 100%
+  );
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -734,14 +747,22 @@ table.result-table tr {
 }
 
 .bothdigit {
-  background: rgb(182,53,156);
-  background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
+  background: rgb(182, 53, 156);
+  background: linear-gradient(
+    22deg,
+    rgba(182, 53, 156, 1) 0%,
+    rgba(239, 10, 106, 1) 100%
+  );
   color: #fff !important;
 }
 
 .bg-btn-both {
-  background: rgb(182,53,156);
-  background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
+  background: rgb(182, 53, 156);
+  background: linear-gradient(
+    22deg,
+    rgba(182, 53, 156, 1) 0%,
+    rgba(239, 10, 106, 1) 100%
+  );
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -752,14 +773,22 @@ table.result-table tr {
 }
 
 .twodigit {
-  background: rgb(1,233,189);
-  background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
+  background: rgb(1, 233, 189);
+  background: linear-gradient(
+    22deg,
+    rgba(1, 233, 189, 1) 0%,
+    rgba(0, 124, 222, 1) 100%
+  );
   color: #fff !important;
 }
 
 .bg-btn-two {
-  background: rgb(1,233,189);
-  background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
+  background: rgb(1, 233, 189);
+  background: linear-gradient(
+    22deg,
+    rgba(1, 233, 189, 1) 0%,
+    rgba(0, 124, 222, 1) 100%
+  );
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -1416,9 +1445,51 @@ p.guideline {
     opacity: 1;
   }
 }
+
+.firstdigitWin-big,
+.firstdigitWin-odd,
+.firstdigitWin-small,
+.firstdigitWin-even,
+.firstdigitWin-high,
+.firstdigitWin-mid,
+.firstdigitWin-low,
+.lastdigitWin-small,
+.lastdigitWin-big,
+.lastdigitWin-odd,
+.lastdigitWin-even,
+.lastdigitWin-high,
+.lastdigitWin-low,
+.lastdigitWin-mid,
+.bothdigitWin-big,
+.bothdigitWin-even,
+.bothdigitWin-odd,
+.bothdigitWin-mid,
+.bothdigitWin-low,
+.bothdigitWin-high,
+.bothdigitWin-tie,
+.bothdigitWin-small,
+.twodigitWin-big,
+.twodigitWin-tie,
+.twodigitWin-small,
+.twodigitWin-odd,
+.twodigitWin-even,
+.twodigitWin-high,
+.twodigitWin-mid,
+.twodigitWin-low {
+  background-size: 35px;
+  height: 35px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url("/bet/dollar.png");
+}
+
 .firstdigit.firstdigit-animation {
   animation: taadaa 1s infinite !important;
-  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%) !important;
+  background-color: linear-gradient(
+    to right,
+    #19b9ff 20%,
+    #3a79ff 51%
+  ) !important;
   color: #fff !important;
 }
 .lastdigit.lastdigit-animation {
@@ -1435,4 +1506,19 @@ p.guideline {
   animation: taadaa 1s infinite !important;
   background: linear-gradient(to right, #25dac2 20%, #0287db 51%) !important;
   color: #fff !important;
+}
+
+/* Page Transition */
+.fade-enter{
+  opacity: 0;
+}
+.fade-enter-active{
+  transition: opacity 0.3s;
+}
+.fade-leave{
+  /* opacity: 1; */
+}
+.fade-leave-active{
+  transition: opacity 0.3s;
+  opacity: 0;
 }

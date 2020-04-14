@@ -1,7 +1,6 @@
 <template>
   <div v-if="dataArray.length > 0">
-    <v-layout wrap row class="justify-center" >  
-     
+    <v-layout wrap row class="justify-center">
       <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" mt-5>
         <v-layout>
           <v-flex xs9>
@@ -10,10 +9,14 @@
               class="text-white firstDigit"
               color="#003e70"
               @click="changeChartType('firstDigit')"
-            >{{ $t("gamemsg.firstdigit") }}</v-btn>
+              >{{ $t("gamemsg.firstdigit") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="text-xs-center triangle-right" v-show="activeType == 'firstDigit'"></v-flex>
+          <v-flex
+            class="text-xs-center triangle-right"
+            v-show="activeType == 'firstDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -22,10 +25,14 @@
               class="text-white lastDigit"
               color="#003e70"
               @click="changeChartType('lastDigit')"
-            >{{ $t("gamemsg.lastdigits") }}</v-btn>
+              >{{ $t("gamemsg.lastdigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="activeType == 'lastDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'lastDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -34,11 +41,15 @@
               class="text-white bothDigit"
               color="#003e70"
               @click="changeChartType('bothDigit')"
-            >{{ $t("gamemsg.bothdigits") }}</v-btn>
+              >{{ $t("gamemsg.bothdigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
 
-          <v-flex class="triangle-right" v-show="activeType == 'bothDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'bothDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9>
@@ -47,15 +58,19 @@
               class="text-white twoDigit"
               color="#003e70"
               @click="changeChartType('twoDigit')"
-            >{{ $t("gamemsg.twodigits") }}</v-btn>
+              >{{ $t("gamemsg.twodigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="activeType == 'twoDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'twoDigit'"
+          ></v-flex>
         </v-layout>
       </v-flex>
       <v-flex xs9 md10 lg10 xl10>
         <v-layout row wrap>
-          <v-flex xs12 lg12 md12 >
+          <v-flex xs12 lg12 md12>
             <trendMap
               :dataArray="dataArray"
               :trendType="activeType"
@@ -65,9 +80,8 @@
           </v-flex>
         </v-layout>
       </v-flex>
-     
     </v-layout>
-    
+
     <v-tooltip>
       <template v-slot:activator="{ on }">
         <v-btn
@@ -79,7 +93,11 @@
           dark
           v-on="on"
         >
-          <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
+          <i
+            style="font-size:26px;"
+            class="fa fa-gamepad"
+            aria-hidden="true"
+          ></i>
         </v-btn>
       </template>
       <span>Multiple Game</span>

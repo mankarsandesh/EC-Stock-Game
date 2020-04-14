@@ -8,7 +8,7 @@
 import stockSelect from "~/components/stockSelect";
 import { mapActions, mapState } from "vuex";
 export default {
-  layout: "desktopModern",
+ 
   components: {
     stockSelect
   },
@@ -33,7 +33,7 @@ export default {
   computed: {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID
-      })
+    })
   },
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
