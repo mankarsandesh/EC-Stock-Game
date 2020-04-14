@@ -62,7 +62,6 @@ const actions = {
   },
   // Send bet data for multi game and footer bet on full screen
   async sendBetting(context) {
-    console.log(context.state.multiGameBetSend);
     try {
       context.commit("SET_IS_SEND_BETTING", true);
       const betDatas = context.state.multiGameBetSend;

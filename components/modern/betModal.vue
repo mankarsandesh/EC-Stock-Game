@@ -258,7 +258,6 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
         if (res.status && res.data[0].status) {
           this.setUserData();
           this.closePopper();
