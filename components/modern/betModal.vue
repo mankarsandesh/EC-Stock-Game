@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <v-layout class="mx-5 my-3 bettingModel" column>
       <v-flex>
@@ -14,48 +15,37 @@
                   " - " +
                   betId.split("-")[1]
             }}
-          </span>
-        </h3>
-      </v-flex>
-      <v-flex class="pt-1 text-uppercase betHeading">
-        <span>
-          {{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
-          {{ getStockLoop(stockName) }} minute
         </span>
-        |
-        <span>
-          {{ $t("msg.payout") }}:
-          {{ $store.state.game.payout[parseInt(payout)].dynamicOdds }}
-        </span>
-      </v-flex>
-      <v-flex>
-        <v-layout row>
-          <v-flex class="py-3 text-center">
-            <v-avatar
-              size="70"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
-            >
-              <v-img
-                @click="coinClick(getCoinsModern[key])"
-                :src="item.img"
-                :width="item.width"
-                :alt="item.title"
-                :class="item.color"
-                class="chipImg"
-              >
-                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
-              </v-img>
-            </v-avatar>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex>
-        <v-layout row justify-center>
-          <!-- <v-flex class="pr-1" style="align-self:center">
+      </h3>
+    </v-flex>
+    <v-flex class="pt-1 text-uppercase betHeading">
+      <span>
+        {{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
+        {{ getStockLoop(stockName) }} minute
+      </span>
+      |
+      <span>
+        {{ $t("msg.payout") }}:
+        {{ $store.state.game.payout[parseInt(payout)].dynamicOdds }}
+      </span>
+    </v-flex>
+    <v-flex>
+      <v-layout row>
+        <v-flex class="py-3 text-center">
+          <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-img @click="coinClick(getCoinsModern[key])" :src="item.img" :width="item.width" :alt="item.title" :class="item.color" class="chipImg">
+              <span class="setpricechip">{{ getCoinsModern[key] }}</span>
+            </v-img>
+          </v-avatar>
+        </v-flex>
+      </v-layout>
+    </v-flex>
+    <v-flex>
+      <v-layout row justify-center>
+        <!-- <v-flex class="pr-1" style="align-self:center">
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
+
           <v-flex style="align-self:center">
             <input
               type="number"
@@ -91,7 +81,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {
+  mapGetters,
+  mapActions
+} from "vuex";
 import result from "~/data/result";
 import config from "../../config/config.global";
 import chips from "../../data/chips";
@@ -263,14 +256,12 @@ export default {
     async sendBetting(betData) {
       try {
         const res = await this.$axios.$post(
-          config.storeBet.url,
-          {
+          config.storeBet.url, {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             version: config.version,
             betData: [betData]
-          },
-          {
+          }, {
             headers: config.header
           }
         );
@@ -305,7 +296,7 @@ export default {
         this.confirmDisabled = false;
         this.$swal({
           type: "error",
-          title: `Error ${ex.message}`,
+          title: "OOPS! Something went wrong",
           showConfirmButton: true
         });
       }
@@ -342,22 +333,28 @@ export default {
   -webkit-transition: -webkit-transform 0.8s ease-in-out;
   transition: transform 0.8s ease-in-out;
 }
+
 .chips:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
-  -ms-transform: rotate(360deg); /* IE 9 */
+  -ms-transform: rotate(360deg);
+  /* IE 9 */
   transform: rotate(360deg);
 }
+
 .betHeading {
   font-weight: 500;
   color: #545353;
 }
+
 .bettingModel h3 {
   text-transform: capitalize;
   color: #0b2a68;
 }
+
 .input-bet:focus {
   outline: none;
 }
+
 .input-bet {
   border: 1px solid #dddddd;
   font-size: 18px;
@@ -373,6 +370,7 @@ export default {
   color: black;
   font-size: 0.85rem;
 }
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -384,6 +382,7 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
 .chipImg {
   cursor: pointer;
 }
