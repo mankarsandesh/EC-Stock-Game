@@ -33,10 +33,10 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   mounted() {
-    // this.fetch();
+    this.fetch();
   },
   methods: {
-    async fetch() {
+    async fetch(){
       try {
         const userData = {
           portalProviderUUID: this.portalProviderUUID,
@@ -54,8 +54,7 @@ export default {
         } else {
           throw new Error(res.message);
         }
-      } catch (ex) {
-        this.fetch();
+      } catch (ex) {     
         console.error(ex.message);
       }
     }

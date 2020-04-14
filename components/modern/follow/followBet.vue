@@ -106,7 +106,7 @@ export default {
       selectAmount: false,
       selectTime: false,
       selectBets: false,
-      autoStop: 1,
+      autoStop: 3,
       amountValue: 100,
       rateValue: 10,
       selectRate: false,
@@ -117,10 +117,10 @@ export default {
         { id: 2, name: "Follow by Rate", value: "Rate" }
       ],
       autoStopFollow: [
-        { id: 1, name: "Stop by Winning", value: "stopWin" },
-        { id: 2, name: "Stop by Losing", value: "stopLoss" },
-        { id: 3, name: "Stop by Timing", value: "stopTime" },
-        { id: 4, name: "Stop by Bets", value: "stopBets" }
+        { id: 3, name: "Stop by Winning", value: "stopWin" },
+        { id: 4, name: "Stop by Losing", value: "stopLoss" },
+        { id: 5, name: "Stop by Timing", value: "stopTime" },
+        { id: 6, name: "Stop by Bets", value: "stopBets" }
       ],
       profilePic: "/no-profile-pic.jpg",
       selectedFruits: [],
@@ -147,11 +147,12 @@ export default {
   methods: {
     // All User Validation
     async followThisUser(followerID, followMethod) {
+      console.log(followMethod);
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
       } else if (this.selectedFollow == 2) {
         this.BetValue = this.rateValue;
-      }
+      }   
 
       if (this.selectedFollow && this.BetValue) {
         if (this.selectedFollow == 1) {
@@ -187,15 +188,15 @@ export default {
       const LeaderBoardData = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
-        followToID: follwerUUID,
-        followBetRule: {
+        followToUUID: follwerUUID,
+        followBetRule: [{
           id: this.selectedFollow,
           value: this.BetValue
-        },
-        unFollowBetRule: {
+        }],
+        unFollowBetRule: [{
           id: this.autoStop,
           value: this.unfollowValue
-        },
+        }],
         method: method,
         version: config.version
       };
@@ -210,15 +211,20 @@ export default {
         this.followData = data;
         console.log(LeaderBoardData);
         console.log(data);
-        if (data.status == 200) {
+
+        if (data.code == 200) {
           this.FollwingError = true;
           this.hasSucess = true;
           this.hasError = false;
           this.errorMessage = data.message;
-          this.FollowName = "Following";
-          // window.setTimeout(function() {
-          //   location.reload();
-          // }, 3000);
+          window.setTimeout(function() {
+            location.reload();
+          }, 3000);
+        }else{
+          this.FollwingError = true;
+          this.hasSucess = false;
+          this.hasError = true;
+          this.errorMessage = data.message;         
         }
       } catch (error) {
         console.log(error);
