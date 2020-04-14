@@ -115,9 +115,9 @@ export default {
 
       try {
         let userSetting = {
-          //portalProviderUUID: this.getPortalProviderUUID,
-          //userUUID: this.getUserUUID,
-          //version: config.version,
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version,
           isAllowToVisitProfile,
           isAllowToFollow,
           isAllowToDirectMessage,
