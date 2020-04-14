@@ -99,6 +99,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if (res.code == 200) {
           this.$swal.fire({
             position: "top",
@@ -109,12 +110,15 @@ export default {
           });
           this.setUserData();
         } else {
-          console.log(res.message);
-          this.$alert("Alert Message.");
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
         console.error(ex);
-        alert(ex.message);
+        this.$swal({
+          type: "error",
+          title: ex.message,
+          timer: 1000
+        });
       }
     }
   }

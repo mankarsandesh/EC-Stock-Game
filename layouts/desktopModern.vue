@@ -367,9 +367,7 @@ export default {
         config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
         betData,
         {
-          headers: {
-            Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, becase the backend they will check
-          }
+          headers: config.header
         }
       );
       this.messagesCount = data.data.length;

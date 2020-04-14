@@ -83,6 +83,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
+import config from "./config/config.global";
 export default {
   data() {
     return {
@@ -169,9 +170,7 @@ export default {
             version: 0.1
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh" // basic AUTH before send, will be check from backend
-            }
+            headers: config.header
           }
         );
         this.getGameUUID(data);

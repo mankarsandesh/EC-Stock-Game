@@ -218,8 +218,13 @@ export default {
         );
         this.userBetHistory = data.data;
         this.loadingImage = false;
-      } catch (error) {
-        console.log(data);
+      } catch (ex) {
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }

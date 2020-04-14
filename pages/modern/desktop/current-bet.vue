@@ -52,10 +52,15 @@ export default {
         if (res.data.code == 200) {
           this.currentBets = res.data.data;
         } else {
-          throw new Error(res.message);
+          throw new Error(Object.values(res.data.message)[0][0]);
         }
-      } catch (ex) {     
-        console.error(ex.message);
+      } catch (ex) {
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }

@@ -301,9 +301,7 @@ export default {
             version: config.version
           },
           {
-            headers: {
-              Authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
-            }
+            headers: config.header
           }
         );
         if (res.code === 200) {

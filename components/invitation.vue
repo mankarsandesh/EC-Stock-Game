@@ -42,10 +42,13 @@
                 v-for="data in globalInvitation"
                 :key="data.index"
               >
-               <div class="messageChatView" v-if="globalInvitation.length == 0" >
-                 <h1>There are no Invitaion</h1>
-               </div>
-                <div class="messageChatView" v-if="globalInvitation.length > 0" >
+                <div
+                  class="messageChatView"
+                  v-if="globalInvitation.length == 0"
+                >
+                  <h1>There are no Invitaion</h1>
+                </div>
+                <div class="messageChatView" v-if="globalInvitation.length > 0">
                   <div style="width:30%;">
                     <nuxt-link
                       :to="'/modern/desktop/userprofile/' + data.userUUID"
@@ -248,16 +251,21 @@ export default {
           userUUID: this.getUserUUID,
           category: [1],
           version: config.version
-        };       
+        };
         const res = await this.$axios.$post(
           config.getUserInvitation.url,
           sendData,
           {
             headers: config.header
           }
-        );       
+        );
       } catch (ex) {
-        console.log(ex.message);
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     },
     // fetch default image or from server image
@@ -325,7 +333,7 @@ export default {
   flex-direction: column;
 }
 .buttonInvitation {
-  margin-top:-1px;
+  margin-top: -1px;
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
@@ -440,10 +448,10 @@ export default {
   font-weight: 800;
   text-align: center;
 }
-.msgUser .followcount {  
-   float: left;
+.msgUser .followcount {
+  float: left;
   font-size: 20px;
-  margin: 6px 10px;  
+  margin: 6px 10px;
   text-align: center;
   color: #5f70b1;
   font-weight: 800;
@@ -463,7 +471,7 @@ export default {
   color: #fff;
   box-shadow: none;
   height: 24px;
-  width:28px;
+  width: 28px;
   margin-top: 10px;
   font-size: 13px;
 }

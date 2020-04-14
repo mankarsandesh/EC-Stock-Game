@@ -69,18 +69,24 @@
                     solo
                   ></v-select>
                 </div>
-                      <v-btn 
-                      v-if="visitProfileUserData.userUUID != getUserUUID && getUserUUID && visitProfileUserData.isFollowing == 0"
-                      class="buttonFollow"
-                      v-on:click="followUserBet(visitProfileUserData.username,visitProfileUserData.userImage,visitProfileUserData.userUUID,visitProfileUserData.isFollowing)"
-                      >Follow</v-btn>  
-
-                      <v-btn 
+                <v-btn
+                  v-if="visitProfileUserData.userUUID != getUserUUID"
+                  class="buttonFollow"
+                  v-on:click="
+                    followUserBet(
+                      visitProfileUserData.username,
+                      visitProfileUserData.userImage,
+                      visitProfileUserData.userUUID,
+                      visitProfileUserData.isFollowing
+                    )
+                  "
+                  >Follow</v-btn
+                >
+                <v-btn 
                       v-if="visitProfileUserData.userUUID != getUserUUID && visitProfileUserData.isFollowing == 1"
                       class="buttonunFollow"
                       v-on:click="followUserBet(visitProfileUserData.username,visitProfileUserData.userImage,visitProfileUserData.userUUID,visitProfileUserData.isFollowing)"
                       >unFollow</v-btn>  
-
               </div>
             </v-flex>
           </v-layout>
@@ -271,7 +277,7 @@ export default {
     }
   },
   methods: {
-    followUserBet: function (username, userImg, userUUID, method) {
+    followUserBet: function(username, userImg, userUUID, method) {
       console.log(username);
       this.username = username;
       this.FollowUserUUID = userUUID;
@@ -284,7 +290,9 @@ export default {
       this.dialog = true;
     },
     imgProfile(userImg) {
-      return userImg === null ? this.defaultImage : `${config.apiDomain}/` + userImg;
+      return userImg === null
+        ? this.defaultImage
+        : `${config.apiDomain}/` + userImg;
     },
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
@@ -327,9 +335,15 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
         } else {
           this.messageError = true;
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
         console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }

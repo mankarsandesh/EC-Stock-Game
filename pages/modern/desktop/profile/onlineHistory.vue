@@ -243,13 +243,12 @@ export default {
             this.dataReady = false;
           }
         } else {
-          console.log(res);
           this.error = "Something went wrong";
           this.dataReady = false;
-          //alert(res.message);
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
-        console.error(ex.message);
+        console.log(ex);
         this.$swal({
           title: ex.message,
           type: "error",

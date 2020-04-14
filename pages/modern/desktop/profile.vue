@@ -8,8 +8,13 @@
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  
-                  <img :src="getUserInfo.profileImage ? imgProfile : `/no-profile-pic.jpg`" />
+                  <img
+                    :src="
+                      getUserInfo.profileImage
+                        ? imgProfile
+                        : `/no-profile-pic.jpg`
+                    "
+                  />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
@@ -169,7 +174,7 @@ export default {
           config.updateUserProfile.url,
           formData,
           {
-            headers: config.header,
+            headers: config.header
             // onUploadProgress: progressEvent => {
             //   const totalLength = progressEvent.lengthComputable
             //     ? progressEvent.total
@@ -187,11 +192,16 @@ export default {
           this.blurValue = 0;
           this.setUserData();
         } else {
-          throw new Error(res.message);
+          throw new Error(Object.values(res.message)[0][0]);
         }
       } catch (ex) {
         this.imageBase64 = "";
-        console.error(ex.message);
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }
