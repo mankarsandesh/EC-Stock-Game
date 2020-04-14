@@ -221,8 +221,8 @@ export default {
       const LeaderBoardData = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
-        followToID: FollowUserUUID,
-        method: "unfollow",
+        followToUUID: FollowUserUUID,
+        method: 2,
         version: config.version
       };
       try {
@@ -243,7 +243,11 @@ export default {
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      this.FolloworNot = method;
+      if(method == 0){
+        this.FolloworNot = 1;
+      }else{
+         this.FolloworNot = 2;
+      }
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
     },

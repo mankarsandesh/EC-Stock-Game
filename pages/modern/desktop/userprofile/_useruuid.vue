@@ -16,7 +16,7 @@
                     :src="
                       visitProfileUserData.userImage
                         ? imgProfile(visitProfileUserData.userImage)
-                        : defaultImage
+                        : this.defaultImage
                     "
                     class="grey darken-4"
                   />
@@ -276,7 +276,11 @@ export default {
       console.log(username);
       this.username = username;
       this.FollowUserUUID = userUUID;
-      this.FolloworNot = method;
+      if(method == 0){
+        this.FolloworNot = 1;
+      }else{
+         this.FolloworNot = 2;
+      }
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
       this.dialog = true;
     },
@@ -467,6 +471,17 @@ export default {
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+  font-size: 14px;
+  width: 100px;
+  height: 48px;
+  flex-grow: wrap;
+}
+.buttonunFollow {
+  color: #fff !important;
+  border-radius: 3px;
+  background-image: linear-gradient(to right, #888787 30%, #626161 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 14px;
   width: 100px;
   height: 48px;

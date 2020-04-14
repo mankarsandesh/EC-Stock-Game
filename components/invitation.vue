@@ -229,8 +229,7 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
-        this.globalInvitation.push(newData);
-        console.log(this.globalInvitation);
+        this.globalInvitation.push(newData);      
         this.scrollDown();
       }
     );
@@ -271,12 +270,18 @@ export default {
     },
     // fetch default image or from server image
     imgProfile(userImg) {
-      return userImg === null ? defaultImage : `${config.apiDomain}/` + userImg;
+      return userImg === null
+        ?  this.defaultImage
+        : `${config.apiDomain}/` + userImg;
     },
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      this.FolloworNot = method;
+      if(method == 0){
+        this.FolloworNot = 1;
+      }else{
+         this.FolloworNot = 2;
+      }
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
     },

@@ -36,7 +36,7 @@ export default {
     this.fetch();
   },
   methods: {
-    async fetch() {
+    async fetch(){
       try {
         const userData = {
           portalProviderUUID: this.portalProviderUUID,
