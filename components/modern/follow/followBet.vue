@@ -209,6 +209,9 @@ export default {
           }
         );
         this.followData = data;
+        console.log(LeaderBoardData);
+        console.log(data);
+
         if (data.code == 200) {
           this.FollwingError = true;
           this.hasSucess = true;
