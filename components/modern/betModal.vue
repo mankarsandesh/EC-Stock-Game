@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-              betId.split("-")[1] >= 0
+              isNaN(betId.split("-")[1])
                 ? $t("gamemsg." + betId.split("-")[0]) +
                   " - " +
-                  betId.split("-")[1]
+                  $t("gamemsg." + betId.split("-")[1])
                 : $t("gamemsg." + betId.split("-")[0]) +
                   " - " +
-                  $t("gamemsg." + betId.split("-")[1])
+                  betId.split("-")[1]
             }}
           </span>
         </h3>
@@ -56,7 +56,7 @@
           <!-- <v-flex class="pr-1" style="align-self:center">
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
-          <v-flex style="align-self:center">           
+          <v-flex style="align-self:center">
             <input
               type="number"
               readonly
@@ -109,11 +109,8 @@ export default {
       "getStockLoop",
       "getGameUUIDByStockName",
       "getCoinsModern",
-      "getAuthToken",
-      "getStockId",
       "getPortalProviderUUID",
       "getUserUUID",
-      "clearRoadMap",
       "getLastDraw"
     ])
   },
@@ -139,14 +136,18 @@ export default {
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.stockName + this.betId).removeClass(
+                      this.betId.split("-")[0]
+                    );
                     $("#" + this.betWin).removeClass(this.betWin);
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(
+                    this.betId.split("-")[0]
+                  );
                   $("#" + this.betWin).removeClass(this.betWin);
                   console.log("==You==lose==first==" + item.name + "==");
                 }
@@ -163,14 +164,18 @@ export default {
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.stockName + this.betId).removeClass(
+                      this.betId.split("-")[0]
+                    );
                     $("#" + this.betWin).removeClass(this.betWin);
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(
+                    this.betId.split("-")[0]
+                  );
                   $("#" + this.betWin).removeClass(this.betWin);
                   console.log("==You==lose==last==" + item.name + "==");
                 }
@@ -189,14 +194,18 @@ export default {
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.stockName + this.betId).removeClass(
+                      this.betId.split("-")[0]
+                    );
                     $("#" + this.betWin).removeClass(this.betWin);
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(
+                    this.betId.split("-")[0]
+                  );
                   $("#" + this.betWin).removeClass(this.betWin);
                   console.log("==You==lose==last==" + item.name + "==");
                 }
@@ -212,14 +221,18 @@ export default {
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+                    $("#" + this.stockName + this.betId).removeClass(
+                      this.betId.split("-")[0]
+                    );
                     $("#" + this.betWin).removeClass(this.betWin);
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0] + "-animation"
                     );
                   }, 5000);
                 } else {
-                  $("#" + this.stockName + this.betId).removeClass(this.betId.split("-")[0]);
+                  $("#" + this.stockName + this.betId).removeClass(
+                    this.betId.split("-")[0]
+                  );
                   $("#" + this.betWin).removeClass(this.betWin);
                   console.log("==You==lose==last==" + item.name + " ==");
                 }
@@ -279,11 +292,11 @@ export default {
             type: "success",
             title: "Confirm!",
             showConfirmButton: false,
-            timer: 1500
+            timer: 1000
           });
         } else {
           if (res.status) {
-            throw new Error(res.res.data[0].message);
+            throw new Error(res.data[0].message);
           } else {
             throw new Error(res.message);
           }
@@ -348,10 +361,10 @@ export default {
 .input-bet {
   border: 1px solid #dddddd;
   font-size: 18px;
-  color:#545353;
+  color: #545353;
   font-weight: 800;
   width: 100px;
-  padding: 4px 5px;  
+  padding: 4px 5px;
   text-align: center;
   border-radius: 8px;
 }

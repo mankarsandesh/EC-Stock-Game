@@ -32,8 +32,6 @@
           <div style="margin-top:20px">
             <form action="/action_page.php">
               <div class="row">
-                <p class="error-message" v-if="error">{{ error }}</p>
-
                 <div class="col-15">
                   <label for="username">{{ $t("profile.username") }}</label>
                 </div>
@@ -177,8 +175,7 @@ import config from "../../../../config/config.global";
 export default {
   data() {
     return {
-      updating: false,
-      error: ""
+      updating: false
     };
   },
   mounted() {
@@ -224,21 +221,23 @@ export default {
             type: "success",
             title: "Successful Information Saved!",
             showConfirmButton: false,
-            timer: 1500
+            timer: 1000
           });
           this.setUserData();
           this.updating = false;
-          this.error = "";
         } else {
           this.updating = false;
-          this.error = res.message;
-          this.msgError = true;
+          throw new Error(Object.values(res.message)[0][0]);
           console.log(res);
         }
       } catch (ex) {
         console.error(ex);
         this.updating = false;
-        alert(ex.message);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }
@@ -265,15 +264,6 @@ select {
 }
 select {
   cursor: pointer;
-}
-.error-message {
-  border: 1px solid red;
-  padding: 8px 10px;
-  color: red;
-  width: 40%;
-  text-transform: capitalize;
-  border-radius: 4px;
-  background-color: #fbd7d7;
 }
 input:focus,
 select:focus {

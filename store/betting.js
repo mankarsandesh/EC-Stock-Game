@@ -62,7 +62,6 @@ const actions = {
   },
   // Send bet data for multi game and footer bet on full screen
   async sendBetting(context) {
-    console.log(context.state.multiGameBetSend);
     try {
       context.commit("SET_IS_SEND_BETTING", true);
       const betDatas = context.state.multiGameBetSend;
@@ -183,20 +182,6 @@ const getters = {
         .reduce((a, b) => a + b, 0);
       return parseInt(result);
     }
-    function getAmounts(object) {
-      // find stockId
-      if (object.findIndex(x => x.stock === data.ruleID) == -1) return 0;
-      // get data by stockId
-      let stockIdObject = object.filter(x => x.stock === data.ruleID);
-      // check rule in stockId
-      if (stockIdObject.findIndex(x => x.rule === data.ruleID) == -1) return 0;
-      // get amount by rule
-      let result = stockIdObject
-        .filter(x => x.rule === data.ruleID)
-        .map(x => x.betAmount)
-        .reduce((a, b) => a + b, 0);
-      return parseInt(result);
-    }
     return getAmount(state.multiGameBet);
   },
   // Get amount of specific bet number
@@ -240,7 +225,7 @@ const getters = {
     //  + getAmount(state.onGoingBet);
   },
   // check the footer bet amount
-  checkFooterBet(state) {
+  checkFooterBetAmount(state) {
     if (state.footerBetAmount == 0) {
       return false;
     } else {

@@ -76,7 +76,6 @@ export default {
   computed: {
     ...mapGetters([
       "getCoinsModern",
-      "checkFooterBet",
       "getAllBettingAmount",
       "getMultiGameBetLength",
       "getIsSendBetting"

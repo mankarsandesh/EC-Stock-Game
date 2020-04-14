@@ -218,8 +218,13 @@ export default {
         this.getGameUUID(data);
         this.setStockCategory(data);
         this.items = data;
-      } catch (error) {
-        console.log(error);
+      } catch (ex) {
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     },
     getGameUUID(items) {

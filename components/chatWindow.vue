@@ -202,14 +202,17 @@ export default {
               headers: config.header
             }
           );
-          console.log(res);
           if (res.status) {
             this.messageInput = "";
           }
         }
       } catch (ex) {
-        this.sendMsgWorld();
-        console.log(ex.message);
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     },
     // Channel for gameUUDI
@@ -235,8 +238,12 @@ export default {
           }
         }
       } catch (ex) {
-        this.sendMsgChanel();
-        console.log(ex.message);
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
       }
     }
   }

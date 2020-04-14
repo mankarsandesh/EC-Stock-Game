@@ -74,7 +74,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getCoinsModern", "checkFooterBet", "getAllBettingAmount"])
+    ...mapGetters(["getCoinsModern", "getAllBettingAmount"])
   }
 };
 </script>
