@@ -47,8 +47,7 @@ export default {
         };
         const res = await this.$axios.post(config.getAllBets.url, userData, {
           headers: config.header
-        });
-        console.log(res);
+        });       
         if (res.data.code == 200) {
           this.currentBets = res.data.data;
         } else {
