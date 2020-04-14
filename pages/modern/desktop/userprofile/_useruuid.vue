@@ -82,6 +82,11 @@
                   "
                   >Follow</v-btn
                 >
+                <v-btn 
+                      v-if="visitProfileUserData.userUUID != getUserUUID && visitProfileUserData.isFollowing == 1"
+                      class="buttonunFollow"
+                      v-on:click="followUserBet(visitProfileUserData.username,visitProfileUserData.userImage,visitProfileUserData.userUUID,visitProfileUserData.isFollowing)"
+                      >unFollow</v-btn>  
               </div>
             </v-flex>
           </v-layout>
