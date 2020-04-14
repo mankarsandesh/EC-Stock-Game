@@ -57,6 +57,9 @@ const config = {
   getUserInvitation: {
     url: `${process.env.BASE_URL}/sendInvitation`
   },
+  getUserFollower: {
+    url: `${process.env.BASE_URL}/followUserList`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"

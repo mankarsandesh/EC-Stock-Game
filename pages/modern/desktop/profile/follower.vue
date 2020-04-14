@@ -2,101 +2,31 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">my followers</h2>
+        <h2 class="text-uppercase">my followers </h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
-      <v-layout row pb-4>
-        <v-flex xs3>
-          <div class="input-container">
-            <input type="text" placeholder="search by name" />
-            <span class="icon-container-search">
-              <v-icon :size="20" color="#bdbdbd">search</v-icon>
-            </span>
-          </div>
-        </v-flex>
-        <v-flex xs3>
-          <div class="input-container">
-            <select id="country" name="country">
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-            <span class="icon-container">
-              <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
-            </span>
-          </div>
-        </v-flex>
-        <v-flex xs3>
-          <div class="input-container">
-            <select id="country" name="country">
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-            <span class="icon-container">
-              <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
-            </span>
-          </div>
-        </v-flex>
-        <v-flex xs3 pt-1>
-          <button class="btn_go">{{ $t("msg.go") }}</button>
-        </v-flex>
-      </v-layout>
-
       <v-flex xs10>
-        <div class="filter_container">
-          <span class="filter-title">Filter by:</span>
-          <span class="tag">
-            5555
-            <span class="close-icon">X</span>
-          </span>
-          <span class="tag">5555</span>
-          <span class="tag">5555</span>
-          <span class="tag">5555</span>
-        </div>
         <div class="title_container">
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow">follow</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow">follow</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow btn_unfollow">unfollow</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow btn_following">following</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow">follow</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow btn_following">following</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
+          <div
+            class="follower_container"
+            v-for="(data, index) in followerList"
+            :key="index"
+          >
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
+              <img class="userImage" :src="imgProfile(data.profileImage)" />
+              <span v-if="data.fullName" class="name">{{ data.fullName }}</span>             
+              <span v-if="data.fullName == null" class="name" >{{ data.userName }}</span>                      
+            </nuxt-link>
+            <div class="followType">
+                  <span>
+                    <label>Follow by amount :</label>  USD 100
+                  </span>
+                   <span>
+                    <label>Auto Stop Follow winning :</label>  USD 150
+                  </span>
+              </div>     
             <button class="btn_follow">follow</button>
           </div>
         </div>
@@ -108,15 +38,78 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
-export default {};
+import config from "../../../../config/config.global";
+export default {
+  data() {
+    return {
+      followerList: []
+    };
+  },
+  mounted() {
+    this.getFolloweList();
+  },
+  computed: {
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+  },
+  methods: {
+    // fetch default image or from server image
+    imgProfile(userImage) {
+      return userImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/` + userImage;
+    },
+    async getFolloweList() {
+      try {
+        const res = await this.$axios.$post(
+          config.getUserFollower.url,
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
+            followersType: 1,
+            version: config.version
+          },
+          {
+            headers: config.header
+          }
+        );
+        console.log(res);
+        if (res.code == 200) {
+          this.followerList = res.data;
+        }
+        console.log(res);
+      } catch (ex) {
+        console.error(ex.message);
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
-.title_menu {
-  text-transform: uppercase;
+.followType span{
+  text-align: center;
+  width: 100%;
+  display:block;
 }
-.titile {
-  padding-left: 5px;
+.followType label{
+  width: 100%;
+  font-weight: 600;
+}
+.followType{
+  margin:15px 5px;
+}
+.userImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 180px;
+  margin: 0 auto;
+}
+.name {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #013f70;
+  display: block;
+  width: 100%;
 }
 .filter_container {
   margin-bottom: 30px;
@@ -132,21 +125,17 @@ export default {};
   text-transform: capitalize;
 }
 .follower_container {
+  border-radius: 4px;
+  border: 1px solid #dddddd;
   background-color: white;
-  margin-left: 5px;
-  margin-bottom: 15px;
-  position: relative;
-  width: 90%;
-  padding: 10px;
-  padding-left: 15px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #bdbec1;
-  border-radius: 10px;
+  width: 30%;
+  float: left;
+  margin: 5px;
+  padding: 15px 10px;
+  text-align: center;
 }
 .btn_follow {
-  position: relative;
-  float: right;
+  margin-top: 10px;
   font-weight: bold;
   bottom: 4px;
   width: 130px;
@@ -154,7 +143,6 @@ export default {};
   color: #fff;
   text-transform: uppercase;
   background: linear-gradient(to right, #25b175 19%, #2cb121 70%);
-
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
 }
