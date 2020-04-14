@@ -240,7 +240,7 @@ const getters = {
     //  + getAmount(state.onGoingBet);
   },
   // check the footer bet amount
-  checkFooterBet(state) {
+  checkFooterBetAmount(state) {
     if (state.footerBetAmount == 0) {
       return false;
     } else {

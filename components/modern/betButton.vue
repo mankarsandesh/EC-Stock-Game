@@ -13,9 +13,9 @@
         </v-btn>
       </span>
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="data in firstDigit"
-        :key="data.rule"
+        :key="data.ruleid"
         class="w12"
         trigger="click"
         :options="{
@@ -87,7 +87,7 @@
       </span>
 
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(data, index) in lastDigit"
         :key="index"
         class="w12"
@@ -169,7 +169,7 @@
       </span>
 
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="data in bothDigit"
         :key="data.rule"
         class="w12"
@@ -244,7 +244,7 @@
       </span>
 
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="data in twoDigit"
         :key="data.rule"
         class="w12"
@@ -313,7 +313,7 @@
     <!-- specific number bet button -->
     <v-layout row class="setlayuot">
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
         :key="'firstdigit-' + index"
         trigger="click"
@@ -340,7 +340,7 @@
         >
       </popper>
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
         :key="'lastdigit-' + index"
         trigger="click"
@@ -367,7 +367,7 @@
         >
       </popper>
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(n, index) in 19"
         :key="'bothdigit-' + index"
         trigger="click"
@@ -394,7 +394,7 @@
         >
       </popper>
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(n, index) in 100"
         :key="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
         trigger="click"
@@ -473,7 +473,7 @@ export default {
       "getGameUUIDByStockName",
       "getTimerByStockName",
       "getStockLoop",
-      "checkFooterBet",
+      "checkFooterBetAmount",
       "getFooterBetAmount",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber"
@@ -525,7 +525,7 @@ export default {
     ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
     betButtonClick(ruleID) {
       // $("#"+ruleID).addClass('bg-btn-first');
-      if (this.checkFooterBet) {
+      if (this.checkFooterBetAmount) {
         let betData = {
           gameUUID: this.getGameUUIDByStockName(this.stockID),
           ruleID: ruleID,

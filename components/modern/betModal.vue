@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-              betId.split("-")[1] >= 0
+              isNaN(betId.split("-")[1])
                 ? $t("gamemsg." + betId.split("-")[0]) +
                   " - " +
-                  betId.split("-")[1]
+                  $t("gamemsg." + betId.split("-")[1])  
                 : $t("gamemsg." + betId.split("-")[0]) +
                   " - " +
-                  $t("gamemsg." + betId.split("-")[1])
+                  betId.split("-")[1]
             }}
           </span>
         </h3>
@@ -109,11 +109,8 @@ export default {
       "getStockLoop",
       "getGameUUIDByStockName",
       "getCoinsModern",
-      "getAuthToken",
-      "getStockId",
       "getPortalProviderUUID",
       "getUserUUID",
-      "clearRoadMap",
       "getLastDraw"
     ])
   },
@@ -261,6 +258,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if (res.status && res.data[0].status) {
           this.setUserData();
           this.closePopper();
@@ -283,7 +281,7 @@ export default {
           });
         } else {
           if (res.status) {
-            throw new Error(res.res.data[0].message);
+            throw new Error(res.data[0].message);
           } else {
             throw new Error(res.message);
           }

@@ -33,7 +33,7 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   mounted() {
-    // this.fetch();
+    this.fetch();
   },
   methods: {
     async fetch() {
@@ -55,7 +55,6 @@ export default {
           throw new Error(res.message);
         }
       } catch (ex) {
-        this.fetch();
         console.error(ex.message);
       }
     }
