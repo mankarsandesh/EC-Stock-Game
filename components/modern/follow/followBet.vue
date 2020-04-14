@@ -152,7 +152,7 @@ export default {
         this.BetValue = this.amountValue;
       } else if (this.selectedFollow == 2) {
         this.BetValue = this.rateValue;
-      }
+      }   
 
       if (this.selectedFollow && this.BetValue) {
         if (this.selectedFollow == 1) {
@@ -209,18 +209,19 @@ export default {
           }
         );
         this.followData = data;
-        console.log(LeaderBoardData);
-        console.log(data);
         if (data.code == 200) {
           this.FollwingError = true;
           this.hasSucess = true;
           this.hasError = false;
           this.errorMessage = data.message;
-          this.FollowName = "Following";
-          // window.setTimeout(function() {
-          //   location.reload();
-          // }, 3000);
-          console.log("checking");
+          window.setTimeout(function() {
+            location.reload();
+          }, 3000);
+        }else{
+          this.FollwingError = true;
+          this.hasSucess = false;
+          this.hasError = true;
+          this.errorMessage = data.message;         
         }
       } catch (error) {
         console.log(error);

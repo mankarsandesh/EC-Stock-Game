@@ -250,7 +250,6 @@ export default {
       }
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
-      console.log(method);
     },
     // fetch leaderboard Top Player
     async leaderBoard() {
