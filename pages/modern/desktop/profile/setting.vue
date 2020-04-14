@@ -1,91 +1,64 @@
 <template>
-  <div>
-    <v-flex xs12 class="pt-5 pl-5">
-      <div>
-        <h2 class="title_menu">{{ $t("menu.setting") }}</h2>
-        <v-divider></v-divider>
+<div>
+  <v-flex xs12 class="pt-5 pl-5">
+    <div>
+      <h2 class="title_menu">{{ $t("menu.setting") }}</h2>
+      <v-divider></v-divider>
+    </div>
+  </v-flex>
+  <v-flex xs12 pt-5 pl-5>
+    <v-flex xs12>
+      <div class="group_container">
+        <span class="group_title">{{ $t("setting.account") }}</span>
+        <div class="title_container">
+          <div class="setting_container">
+            <span>{{ $t("setting.usersallowtovisitmyprofile") }}</span>
+            <label class="switch">
+              <input @change="updateSetting" type="checkbox" ref="isAllowToVisitProfile" :checked="getUserInfo.isAllowToVisitProfile" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="setting_container">
+            <span>{{ $t("setting.usersallowfollowme") }}</span>
+            <label class="switch">
+              <input @change="updateSetting" type="checkbox" ref="isAllowToFollow" :checked="getUserInfo.isAllowToFollow" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+        </div>
       </div>
     </v-flex>
-    <v-flex xs12 pt-5 pl-5>
-      <v-flex xs12>
-        <div class="group_container">
-          <span class="group_title">{{ $t("setting.account") }}</span>
-          <div class="title_container">
-            <div class="setting_container">
-              <span>{{ $t("setting.usersallowtovisitmyprofile") }}</span>
-              <label class="switch">
-                <input
-                  @change="updateSetting"
-                  type="checkbox"
-                  ref="isAllowToVisitProfile"
-                  :checked="getUserInfo.isAllowToVisitProfile"
-                />
-                <span class="slider round"></span>
-              </label>
-            </div>
-            <div class="setting_container">
-              <span>{{ $t("setting.usersallowfollowme") }}</span>
-              <label class="switch">
-                <input
-                  @change="updateSetting"
-                  type="checkbox"
-                  ref="isAllowToFollow"
-                  :checked="getUserInfo.isAllowToFollow"
-                />
-                <span class="slider round"></span>
-              </label>
-            </div>
-            <div class="setting_container">
-              <span>{{ $t("setting.userallowtosenddirectmessage") }}</span>
-              <label class="switch">
-                <input
-                  @change="updateSetting"
-                  type="checkbox"
-                  ref="isAllowToDirectMessage"
-                  :checked="getUserInfo.isAllowToDirectMessage"
-                />
-                <span class="slider round"></span>
-              </label>
-            </div>
+    <v-flex xs12>
+      <div class="group_container">
+        <span class="group_title">{{ $t("setting.gameoptions") }}</span>
+        <div class="title_container">
+          <div class="setting_container">
+            <span>{{ $t("setting.sound") }}</span>
+            <label class="switch">
+              <input @change="updateSetting" type="checkbox" ref="isSound" :checked="getUserInfo.isSound" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="setting_container">
+            <span>{{ $t("setting.allowtolocation") }}</span>
+            <label class="switch">
+              <input @change="updateSetting" type="checkbox" ref="isAllowToLocation" :checked="getUserInfo.isAllowToLocation" />
+              <span class="slider round"></span>
+            </label>
           </div>
         </div>
-      </v-flex>
-      <v-flex xs12>
-        <div class="group_container">
-          <span class="group_title">{{ $t("setting.gameoptions") }}</span>
-          <div class="title_container">
-            <div class="setting_container">
-              <span>{{ $t("setting.sound") }}</span>
-              <label class="switch">
-                <input
-                  @change="updateSetting"
-                  type="checkbox"
-                  ref="isSound"
-                  :checked="getUserInfo.isSound"
-                />
-                <span class="slider round"></span>
-              </label>
-            </div>
-            <div class="setting_container">
-              <span>{{ $t("setting.allowtolocation") }}</span>
-              <label class="switch">
-                <input
-                  @change="updateSetting"
-                  type="checkbox"
-                  ref="isAllowToLocation"
-                  :checked="getUserInfo.isAllowToLocation"
-                />
-                <span class="slider round"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </v-flex>
+      </div>
     </v-flex>
-  </div>
+  </v-flex>
+</div>
 </template>
+
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {
+  mapGetters,
+  mapActions
+} from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
 
@@ -100,17 +73,14 @@ export default {
     ...mapActions(["setUserData"]),
     async updateSetting() {
       // set value to 1 or 0 true==1 false==0
-      let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
-        ? true
-        : false;
+      let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked ?
+        true :
+        false;
       let isAllowToFollow = this.$refs.isAllowToFollow.checked ? true : false;
-      let isAllowToDirectMessage = this.$refs.isAllowToDirectMessage.checked
-        ? true
-        : false;
       let isSound = this.$refs.isSound.checked ? true : false;
-      let isAllowToLocation = this.$refs.isAllowToLocation.checked
-        ? true
-        : false;
+      let isAllowToLocation = this.$refs.isAllowToLocation.checked ?
+        true :
+        false;
       // end set value to 1 or 0 true==1 false==0
 
       try {
@@ -120,14 +90,12 @@ export default {
           version: config.version,
           isAllowToVisitProfile,
           isAllowToFollow,
-          isAllowToDirectMessage,
           isSound,
           isAllowToLocation
         };
         const res = await this.$axios.$post(
           config.updateUserSetting.url,
-          userSetting,
-          {
+          userSetting, {
             headers: config.header
           }
         );
@@ -157,19 +125,23 @@ export default {
 .title_menu {
   text-transform: uppercase;
 }
+
 .titile {
   padding-left: 5px;
 }
+
 .group_title {
   font-weight: bold;
   font-size: 18px;
   text-transform: uppercase;
 }
+
 .title_container {
   padding-top: 15px;
   padding-bottom: 15px;
   text-transform: capitalize;
 }
+
 .setting_container {
   margin-left: 5px;
   margin-bottom: 15px;
@@ -182,6 +154,7 @@ export default {
   border-color: #bdbec1;
   border-radius: 10px;
 }
+
 /* switch */
 .switch {
   position: relative;
@@ -223,18 +196,19 @@ export default {
   transition: 0.4s;
 }
 
-input:checked + .slider::before {
+input:checked+.slider::before {
   background-color: #38b062;
 }
-input:checked + .slider {
+
+input:checked+.slider {
   background-color: white;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px gra;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
