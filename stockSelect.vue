@@ -1,6 +1,6 @@
 <template>
-  <v-layout wrap class="select-stock mt-2">
-    <v-flex md3>
+  <v-layout wrap class="select-stock mt-2" >
+    <v-flex md3 >
       <v-select
         v-model="stock"
         :items="items"

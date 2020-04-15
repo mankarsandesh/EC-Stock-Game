@@ -19,14 +19,6 @@
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>             
               <span v-if="data.fullName == null" class="name" >{{ data.userName }}</span>                      
             </nuxt-link>
-            <div class="followType">
-                  <span>
-                    <label>Follow by amount :</label>  USD 100
-                  </span>
-                   <span>
-                    <label>Auto Stop Follow winning :</label>  USD 150
-                  </span>
-              </div>     
             <button class="btn_unfollow">unfollow</button>
           </div>
         </div>
