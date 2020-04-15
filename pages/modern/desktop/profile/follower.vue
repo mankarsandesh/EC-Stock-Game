@@ -2,7 +2,7 @@
   <div>
     <v-flex xs12 class=“pt-5 pl-5”>
       <div>
-        <h2 class=“text-uppercase”>my followers ({{this.countFollower}})</h2>
+        <h2 class="text-uppercase">my followers ({{this.countFollower}})</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -14,18 +14,18 @@
             v-for=“(data, index) in followerList”
             :key=“index”
           >
-            <nuxt-link :to=“‘/modern/desktop/userprofile/’ + data.UUID”>
-              <img class=“userImage” :src=“imgProfile(data.profileImage)” />
-              <span v-if=“data.fullName” class=“name”>{{ data.fullName }}</span>
-              <span v-if=“data.fullName == null” class=“name”>{{
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
+              <img class="userImage" :src="imgProfile(data.profileImage)" />
+              <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
+              <span v-if="data.fullName == null" class="name">{{
                 data.userName
               }}</span>
             </nuxt-link>
             <button
-              class=“btn_follow”
-              v-on:click=”
+              class="btn_follow"
+              v-on:click="
                 followUserBet(data.userName, data.userImage, data.UUID, 0)
-              ”
+              "
             >
               follow
             </button>
@@ -34,12 +34,12 @@
       </v-flex>
     </v-flex>
     <!-- Follow Dialog -->
-    <v-dialog v-model=“dialog” width=“500" class=“followDialog”>
+    <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
-        :username=“this.username”
-        :userImage=“this.userImage”
-        :FollowerUserUUID=“this.FollowUserUUID”
-        :isFollowing=“this.FolloworNot”
+        :username="this.username"
+        :userImage="this.userImage"
+        :FollowerUserUUID="this.FollowUserUUID"
+        :isFollowing="this.FolloworNot"
       />
     </v-dialog>
   </div>
@@ -54,7 +54,7 @@ export default {
       active: null,
       followerList: [],
       countFollower : 0,
-      defaultImage: “/no-profile-pic.jpg”
+      defaultImage: "/no-profile-pic.jpg"
     };
   },
   mounted() {
@@ -155,7 +155,7 @@ export default {
   padding: 4px 0px;
   color: #fff;
   text-transform: uppercase;
-  background: linear-gradient(to right, #25B175 19%, #2CB121 70%);
+  background: linear-gradient(to right, #25b175 19%, #2cb121 70%);
   border-radius: 15px;
 }
 .btn_unfollow {

@@ -231,7 +231,9 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
       } catch (ex) {
+        console.log(sendData);
         console.log(ex);
         this.$swal({
           title: ex.message,
