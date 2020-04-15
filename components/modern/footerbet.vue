@@ -18,7 +18,7 @@
     <v-flex lg3 md3 xs2 class="betButton">
       <div>
         <v-btn class="buttonGreensmall" dark @click="getSending()">{{
-            $t("msg." + texts)
+            $t("msg.confirm")
           }}</v-btn>
         <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
             $t("msg.cancel")
@@ -60,7 +60,6 @@ export default {
       // setTimeout(() => {
       this.sendBetting();
       this.isSending = false;
-      this.texts = this.$root.$t("msg.confirm");
       // }, 1000);
     }
   },

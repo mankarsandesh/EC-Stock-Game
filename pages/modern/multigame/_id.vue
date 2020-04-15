@@ -17,7 +17,6 @@
           <v-icon>close</v-icon>
         </v-btn>
       </template>
-      <span>Close Full Screen</span>
     </v-tooltip>
   </v-layout>
   <bottomBetMultigame></bottomBetMultigame>

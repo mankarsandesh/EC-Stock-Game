@@ -1,18 +1,14 @@
 <template>
-  <div class="text-xs-center">
-    <apexchart
-      type="bar"
-      height="350"
-      :options="chartOptions"
-      :series="series"
-      :key="componentKey"
-    ></apexchart>
-  </div>
+<div class="text-xs-center">
+  <apexchart type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey"></apexchart>
+</div>
 </template>
 
 <script>
 import VueApexCharts from "vue-apexcharts";
-import { mapGetters } from "vuex";
+import {
+  mapGetters
+} from "vuex";
 import openSocket from "socket.io-client";
 export default {
   props: ["StockData"],
@@ -21,49 +17,48 @@ export default {
   },
   data() {
     return {
-      series: [
-        {
-          name: "BIG",
+      series: [{
+          name: this.$root.$t('gamemsg.big'),
           data: [1, 2, 0, 15],
           betCounts: [15, 14, 13, 0]
         },
         {
-          name: "SMALL",
+          name: this.$root.$t('gamemsg.small'),
           data: [0, 10, 10, 0],
           betCounts: [15, 14, 13, 100]
         },
         {
-          name: "ODD",
+          name: this.$root.$t('gamemsg.odd'),
           data: [0, 0, 0, 10],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: "EVEN",
+          name: this.$root.$t('gamemsg.even'),
           data: [0, 0, 5, 15],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: "HIGH",
+          name: this.$root.$t('gamemsg.high'),
           data: [1, 5, 0, 1],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: "MID",
+          name: this.$root.$t('gamemsg.mid'),
           data: [1, 0, 0, 0],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: "LOW",
+          name: this.$root.$t('gamemsg.low'),
           data: [0, 20, 0, 15],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: "NUMBER",
+          name: this.$root.$t('gamemsg.number'),
           data: [1, 0, 10, 10],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: "TIE",
+          name: this.$root.$t('gamemsg.tie'),
           data: [0, 9, 20, 0],
           betCounts: [15, 14, 13, 20]
         }
@@ -71,7 +66,9 @@ export default {
       componentKey: 0,
       chartOptions: {
         chart: {
-          toolbar: { show: false },
+          toolbar: {
+            show: false
+          },
           type: "bar",
           height: 350,
           stacked: true,
@@ -90,7 +87,12 @@ export default {
         //   text: "Live Bet Data"
         // },
         xaxis: {
-          categories: ["First Digit", "Last Digit", "Both Digit", "Two Digit"]
+          categories: [
+            this.$root.$t("gamemsg.firstdigit"),
+            this.$root.$t("gamemsg.lastdigit"),
+            this.$root.$t("gamemsg.bothdigit"),
+            this.$root.$t("gamemsg.twodigit"),
+          ]
         },
         tooltip: {
           enabled: true,
@@ -100,9 +102,13 @@ export default {
             highlightDataSeries: false
           },
           y: {
-            formatter: function(
-              val,
-              { series, seriesIndex, dataPointIndex, w }
+            formatter: function (
+              val, {
+                series,
+                seriesIndex,
+                dataPointIndex,
+                w
+              }
             ) {
               return (
                 '<div class="arrow_box">' +
@@ -136,12 +142,13 @@ export default {
     ])
   },
   mounted() {
-    this.listenForBroadcast(
-      {
+    this.listenForBroadcast({
         channelName: `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`,
         eventName: "liveBetCounts"
       },
-      ({ data }) => {
+      ({
+        data
+      }) => {
         console.log("live game");
         console.log(data.data);
         this.series = data.data;
@@ -150,7 +157,10 @@ export default {
     );
   },
   methods: {
-    listenForBroadcast({ channelName, eventName }, callback) {
+    listenForBroadcast({
+      channelName,
+      eventName
+    }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     }
   }
