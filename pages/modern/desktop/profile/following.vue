@@ -2,7 +2,7 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">following {{this.countFollwing}}</h2>
+        <h2 class="text-uppercase">following ({{this.countFollwing}})</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -28,10 +28,8 @@
                     <label>Auto Stop Follow winning :</label>  USD 150
                   </span>
               </div>     
-            <button class="btn_follow">follow</button>
+            <button class="btn_unfollow">unfollow</button>
           </div>
-
-
         </div>
       </v-flex>
     </v-flex>
@@ -150,6 +148,17 @@ export default {
   background: linear-gradient(to right, #25b175 19%, #2cb121 70%);
   border-radius: 15px;
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
+}
+.btn_unfollow {
+  margin-top: 10px;
+  font-weight: bold;
+  bottom: 10px;
+  width: 130px;
+  padding: 4px 0px;
+  color: #fff;
+  text-transform: uppercase;
+   background-image: linear-gradient(to right, #888787 19%, #626161 70%);
+  border-radius: 15px;
 }
 
 
