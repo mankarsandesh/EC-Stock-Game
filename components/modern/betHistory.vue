@@ -24,7 +24,9 @@
           </template>
           <template v-slot:items="item">
             <tr @click="clicked(item.item.betUUID)" class="selectRow">
-              <td>{{ item.item.betUUID }}</td>
+              <td>
+                <a href="#">{{ item.item.betUUID }}</a>
+              </td>
               <td>{{ item.item.gameUUID }}</td>
               <td>
                 {{ item.item.ruleName }} - ({{ item.item.payout }})
@@ -32,15 +34,22 @@
               </td>
               <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
               <td>{{ item.item.betAmount | toCurrency }}</td>
-              <td>{{ item.item.payout }}</td>
-              <td v-if="item.item.betResult == 'win'" class="text-uppercase">
-                <span class="win">{{ $t("msg.win") }}</span>
+
+              <td v-if="item.item.betResult == 'win'">
+                <span class="winning"> {{ item.item.rollingAmount }} </span>
               </td>
               <td v-if="item.item.betResult == 'lose'">
-                <span class="lose">{{ $t("msg.lose") }}</span>
+                <span class="lossing"> {{ item.item.betAmount }} </span>
               </td>
-              <td v-if="item.item.betResult == 'pending'">
-                <span class="pending">{{ $t("msg.pending") }}...</span>
+
+              <td
+                v-if="item.item.isFollowBet == 1"
+                class="text-uppercase text-center"
+              >
+                <div class="following">by followers</div>
+              </td>
+              <td v-if="item.item.isFollowBet == 0" class="text-uppercase">
+                <div class="orignal">orignal</div>
               </td>
             </tr>
             <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
@@ -106,7 +115,7 @@
       <v-pagination
         v-model="pagination.page"
         color="#1db42f"
-        :length="5"
+        :length="Math.round(userBetHistory.length / 5)"
       ></v-pagination>
     </div>
   </v-container>
@@ -157,6 +166,14 @@ export default {
 };
 </script>
 <style scoped>
+.winning {
+  color: green;
+  font-weight: 800;
+}
+.lossing {
+  color: red;
+  font-weight: 800;
+}
 .selectRow {
   cursor: pointer;
 }
@@ -165,17 +182,21 @@ export default {
   height: 70px;
   background-color: #f3f3f3;
 }
-.lose {
-  border-radius: 15px;
+.orignal {
+  margin: 0 auto;
+  width: 150px;
+  border-radius: 5px;
   padding: 4px 10px;
-  color: #fff;
+  color: #333333;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 600;
-  background-color: #e05858;
+  background-color: #fec623;
 }
-.win {
-  border-radius: 15px;
+.following {
+  margin: 0 auto;
+  width: 150px;
+  border-radius: 5px;
   padding: 4px 16px;
   color: #fff;
   font-size: 14px;

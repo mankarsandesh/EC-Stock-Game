@@ -80,6 +80,17 @@
                     {{ $t("profile.myfollowers") }}
                   </li>
                 </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/following/">
+                  <li
+                    :class="
+                      '/modern/desktop/profile/following/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.myfollowing") }}
+                  </li>
+                </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/notification/">
                   <li
                     :class="

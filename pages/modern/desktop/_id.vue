@@ -246,20 +246,6 @@ export default {
           icon: "cached"
         }
       ],
-      items: [
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me 2"
-        }
-      ],
       trendTypes: ["firstDigit"],
       isloading: false,
       isStep: 0

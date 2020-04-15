@@ -406,6 +406,8 @@
           </template>
           <span>Close Full Screen</span>
         </v-tooltip>
+
+        
       </v-layout>
     </v-container>
   </div>
