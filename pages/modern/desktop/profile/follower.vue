@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-flex xs12 class="pt-5 pl-5">
+    <v-flex xs12 class=“pt-5 pl-5”>
       <div>
         <h2 class="text-uppercase">my followers ({{this.countFollower}})</h2>
         <v-divider></v-divider>
@@ -8,11 +8,11 @@
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs10>
-        <div class="title_container">
+        <div class=“title_container”>
           <div
-            class="follower_container"
-            v-for="(data, index) in followerList"
-            :key="index"
+            class=“follower_container”
+            v-for=“(data, index) in followerList”
+            :key=“index”
           >
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
               <img class="userImage" :src="imgProfile(data.profileImage)" />
@@ -33,7 +33,6 @@
         </div>
       </v-flex>
     </v-flex>
-
     <!-- Follow Dialog -->
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
@@ -45,11 +44,10 @@
     </v-dialog>
   </div>
 </template>
-
 <script>
-import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
-import config from "../../../../config/config.global";
+import { mapGetters, mapActions } from “vuex”;
+import axios from “axios”;
+import config from “../../../../config/config.global”;
 export default {
   data() {
     return {
@@ -63,7 +61,7 @@ export default {
     this.getFolloweList();
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters([“getPortalProviderUUID”, “getUserUUID”])
   },
   methods: {
     followUserBet: function(username, userImg, userUUID, method) {
@@ -108,7 +106,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .followType span {
   text-align: center;
@@ -131,7 +128,7 @@ export default {
 .name {
   margin-top: 10px;
   font-size: 18px;
-  color: #013f70;
+  color: #013F70;
   display: block;
   width: 100%;
   text-transform: capitalize;
@@ -142,7 +139,7 @@ export default {
 }
 .follower_container {
   border-radius: 4px;
-  border: 1px solid #dddddd;
+  border: 1px solid #DDDDDD;
   background-color: white;
   width: 30%;
   float: left;

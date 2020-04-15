@@ -27,7 +27,9 @@
     "live price": "ราคาสด",
     "reference": "การอ้างอิง",
     "load more": "โหลดเพิ่มเติม",
-    "search stock": "ค้นหาหุ้น"
+    "search stock": "ค้นหาหุ้น",
+    "ascending" : "จากน้อยไปมาก",
+    "descending" : "Descending"
   },
   "home": {
     "welcome": "ยินดีต้อนรับ",
@@ -255,7 +257,10 @@
     "weeklyrankings": "อันดับประจำสัปดาห์",
     "monthlyrankings": "อันดับรายเดือน",
     "Top10Leaders": "ผู้นำ 10 อันดับแรก",
-    "lastupdate": "อัปเดตล่าสุดเมื่อ 1 นาทีที่ผ่านมา"
+    "lastupdate": "อัปเดตล่าสุดเมื่อ 1 นาทีที่ผ่านมา",
+    "top" : "ด้านบน",
+    "leaders" : "ผู้นำ",
+    "nodata" : "ไม่มีผู้ใช้อันดับต้น ๆ ในกระดานผู้นำ"
   },
   "breadcrumbs": {
     "rule": "กฎ",
@@ -296,5 +301,10 @@
     "cancelBet" :"ยกเลิกการเดิมพัน",
     "reviewyourBet" : "ทบทวนการเดิมพันของคุณ",
     "pleaseConfirm": "โปรดยืนยันการเดิมพันของคุณด้านล่าง"
+  },
+  "invitation": {
+    "ecworld" : "EC โลก",
+    "gameChannel" : "ช่องเกม",
+    "sendInvitation": "ส่งคำเชิญ"
   }
 }
