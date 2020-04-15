@@ -1,12 +1,11 @@
 <template>
-
-  <div>
-    <v-layout class="mx-5 my-3 bettingModel" column>
-      <v-flex>
-        <h3>
-          {{ $t("msg.bettingon") }}
-          <span class="text-uppercase">
-            {{
+<div>
+  <v-layout class="mx-5 my-3 bettingModel" column>
+    <v-flex>
+      <h3>
+        {{ $t("msg.bettingon") }}
+        <span class="text-uppercase">
+          {{
               isNaN(betId.split("-")[1])
                 ? $t("gamemsg." + betId.split("-")[0]) +
                   " - " +
@@ -46,38 +45,26 @@
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
 
-          <v-flex style="align-self:center">
-            <input
-              type="number"
-              readonly
-              :min="1"
-              v-model="betValue"
-              class="input-bet"
-            />
-          </v-flex>
-          <v-flex style="align-self:center">
-            <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex class="py-1 betHeading">
-        <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $5000</span>
-      </v-flex>
-      <!-- <v-divider></v-divider> -->
-      <v-flex xs-12 class="pt-2 text-uppercase">
-        <v-btn
-          class="buttonGreen"
-          dark
-          @click="confirmBet()"
-          :disabled="confirmDisabled"
-          >{{ $t("msg.confirm") }}</v-btn
-        >
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{ $t("msg.cancel") }}
-        </v-btn>
-      </v-flex>
-    </v-layout>
-  </div>
+        <v-flex style="align-self:center">
+          <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+        </v-flex>
+        <v-flex style="align-self:center">
+          <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-flex>
+    <v-flex class="py-1 betHeading">
+      <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $5000</span>
+    </v-flex>
+    <!-- <v-divider></v-divider> -->
+    <v-flex xs-12 class="pt-2 text-uppercase">
+      <v-btn class="buttonGreen" dark @click="confirmBet()" :disabled="confirmDisabled">{{ $t("msg.confirm") }}</v-btn>
+      <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
+        {{ $t("msg.cancel") }}
+      </v-btn>
+    </v-flex>
+  </v-layout>
+</div>
 </template>
 
 <script>
@@ -281,7 +268,7 @@ export default {
           this.pushDataOnGoingBet(OnGoingdata);
           this.$swal({
             type: "success",
-            title: "Confirm!",
+            title: this.$root.$t('msg.confirm'),
             showConfirmButton: false,
             timer: 1000
           });
