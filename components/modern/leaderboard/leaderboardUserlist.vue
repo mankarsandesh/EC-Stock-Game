@@ -19,7 +19,6 @@
       </v-flex>
     </v-layout>
   </v-flex>
-
   <v-flex v-if="topPlayerData.length == 0">
     <h2 class="text-center" style="color:#a3a3a3;">
       {{$t('leaderboard.nodata')}}
@@ -80,7 +79,6 @@
       </div>
     </v-flex>
   </v-flex>
-
   <!-- Follow and UnFollow Dialog box-->
   <v-dialog v-model="dialog" width="500" class="followDialog">
     <followBet :username="this.username" :userImage="this.userImage" :FollowerUserUUID="this.FollowUserUUID" :isFollowing="this.FolloworNot" />

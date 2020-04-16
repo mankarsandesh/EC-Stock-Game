@@ -21,91 +21,89 @@
           {{ errorMessage }}
         </p>
       </v-flex>
-      
-      <div v-if="isFollowing == 1">      
-      
-      <h4 class="subtitle-1 text-uppercase ">Follow By</h4>
-      <v-divider></v-divider>
-      <v-card-actions>
-        <v-flex lg8 pr-4>
-          <v-select
-            :items="followby"
-            label="Select Follow type"
-            v-model="selectedFollow"
-            item-text="name"
-            item-value="id"
-            v-on:change="changeAmountRate($event)"
-            solo
-          ></v-select>
-        </v-flex>
-        <v-flex lg3 pr-2>
-          <v-text-field
-            solo
-            label="10%"
-            v-if="selectRate"
-            append-icon="money"
-            v-model="rateValue"
-            @keypress="onlyNumber"
-          ></v-text-field>
-          <v-text-field
-            solo
-            label="100"
-            v-if="selectAmount"
-            @keypress="onlyNumber"
-            v-model="amountValue"
-            append-icon="money"
-          ></v-text-field>
-        </v-flex>
-      </v-card-actions>
 
-      <h4 class="subtitle-1 text-uppercase pt-2">Auto Stop Follow</h4>
-      <v-divider></v-divider>
-      <v-card-actions>
-        <v-radio-group v-model="autoStop" :mandatory="false">
-          <v-radio
-            v-for="n in autoStopFollow"
-            :key="n.id"
-            :label="`${n.name}`"
-            :value="n.id"
-            v-on:change="changeAmount(n.value)"
-          ></v-radio>
-
-          <v-text-field
-            style="width: 200px;"
-            solo
-            label="100"
-            @keypress="onlyNumber"
-            v-model="unfollowValue"
-          >
-            <span slot="append" color="red"> {{ unfollowSign }}</span>
-          </v-text-field>
-          <v-flex lg3>
-            <v-btn
-              color="buttonGreensmall"
-              v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
-              text
-              >Follow</v-btn
-            >
+      <div v-if="isFollowing == 1">
+        <h4 class="subtitle-1 text-uppercase ">Follow By</h4>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-flex lg8 pr-4>
+            <v-select
+              :items="followby"
+              label="Select Follow type"
+              v-model="selectedFollow"
+              item-text="name"
+              item-value="id"
+              v-on:change="changeAmountRate($event)"
+              solo
+            ></v-select>
           </v-flex>
-        </v-radio-group>
-      </v-card-actions>
-      </div >
+          <v-flex lg3 pr-2>
+            <v-text-field
+              solo
+              label="10%"
+              v-if="selectRate"
+              append-icon="money"
+              v-model="rateValue"
+              @keypress="onlyNumber"
+            ></v-text-field>
+            <v-text-field
+              solo
+              label="100"
+              v-if="selectAmount"
+              @keypress="onlyNumber"
+              v-model="amountValue"
+              append-icon="money"
+            ></v-text-field>
+          </v-flex>
+        </v-card-actions>
+
+        <h4 class="subtitle-1 text-uppercase pt-2">Auto Stop Follow</h4>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-radio-group v-model="autoStop" :mandatory="false">
+            <v-radio
+              v-for="n in autoStopFollow"
+              :key="n.id"
+              :label="`${n.name}`"
+              :value="n.id"
+              v-on:change="changeAmount(n.value)"
+            ></v-radio>
+
+            <v-text-field
+              style="width: 200px;"
+              solo
+              label="100"
+              @keypress="onlyNumber"
+              v-model="unfollowValue"
+            >
+              <span slot="append" color="red"> {{ unfollowSign }}</span>
+            </v-text-field>
+            <v-flex lg12>
+              <v-btn
+                color="buttonGreensmall"
+                v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
+                text
+                >Follow</v-btn
+              >
+              <v-btn color="buttonCancel" text v-on:click="dialog = false"
+                >Cancel</v-btn
+              >
+            </v-flex>
+          </v-radio-group>
+        </v-card-actions>
+      </div>
       <div v-else>
-          <v-flex lg12 text-center>
-            <v-btn
-              color="buttonCancel"
-              v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
-              text
-              >unFollow</v-btn
-            >
-       
-            <v-btn
-              color="buttonCancel"             
-              text
-               @click="dialog = false"
-              >Cancel</v-btn
-            >
-          </v-flex>
+        <v-flex lg12 text-center>
+          <v-btn
+            color="buttonCancel"
+            v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
+            text
+            >unFollow</v-btn
+          >
+          <v-btn color="buttonCancel" text @click="dialog = false"
+            >Cancel</v-btn
+          >
+        </v-flex>
       </div>
     </v-card>
   </div>
@@ -168,40 +166,49 @@ export default {
     // All User Validation
     async followThisUser(followerID, followMethod) {
       console.log(followMethod);
-      if (this.selectedFollow == 1) {
-        this.BetValue = this.amountValue;
-      } else if (this.selectedFollow == 2) {
-        this.BetValue = this.rateValue;
-      }   
 
-      if (this.selectedFollow && this.BetValue) {
+      this.selectedFollow == 1
+        ? (this.BetValue = this.amountValue)
+        : (this.BetValue = this.rateValue);
+
+      if (
+        this.selectedFollow &&
+        this.BetValue &&
+        this.autoStop &&
+        this.unfollowValue
+      ) {
         if (this.selectedFollow == 1) {
-          if (this.BetValue < 1000 && this.BetValue > 10) {
-            this.follwingBetting(followerID, followMethod);
-          } else {
-            this.FollwingError = true;
-            this.hasError = true;
-            this.hasSucess = false;
-            this.errorMessage =
-              "Amount should be Lower then 1000 & Grater then 10";
-          }
+          this.BetValue <= 1000 && this.BetValue >= 10
+            ? this.follwingBetting(followerID, followMethod)
+            : this.errorShow(
+                true,
+                false,
+                true,
+                "Amount should be Lower then 1000 & Grater then 10"
+              );
         } else if (this.selectedFollow == 2) {
-          if (this.BetValue < 100 && this.BetValue > 10) {
-            this.follwingBetting(followerID, followMethod);
-          } else {
-            this.FollwingError = true;
-            this.hasError = true;
-            this.hasSucess = false;
-            this.errorMessage =
-              "Bet Rate Should be Lower then 100 & Grater then 10";
-          }
+          this.BetValue <= 100 && this.BetValue >= 10
+            ? this.follwingBetting(followerID, followMethod)
+            : this.errorShow(
+                true,
+                false,
+                true,
+                "Bet Rate Should be Lower then 100 & Grater then 10"
+              );
+        } else {
+          this.errorShow(true, false, true, "Somthing Wrong! Please check!");
         }
       } else {
-        this.FollwingError = true;
-        this.hasError = true;
-        this.hasSucess = false;
-        this.errorMessage = "Follwing type is not selected.";
+        this.errorShow(true, false, true, "Follwing type is not selected");
       }
+    },
+
+    // Error Function
+    errorShow(follingError, sucess, error, message) {
+      this.FollwingError = follingError;
+      this.hasError = error;
+      this.hasSucess = sucess;
+      this.errorMessage = message;
     },
     // Follow Users API call
     async follwingBetting(follwerUUID, method) {
@@ -210,14 +217,18 @@ export default {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
         followToUUID: follwerUUID,
-        followBetRule: [{
-          id: this.selectedFollow,
-          value: this.BetValue
-        }],
-        unFollowBetRule: [{
-          id: this.autoStop,
-          value: this.unfollowValue
-        }],
+        followBetRule: [
+          {
+            id: this.selectedFollow,
+            value: this.BetValue
+          }
+        ],
+        unFollowBetRule: [
+          {
+            id: this.autoStop,
+            value: this.unfollowValue
+          }
+        ],
         method: method,
         version: config.version
       };
@@ -229,21 +240,21 @@ export default {
             headers: config.header
           }
         );
-        this.followData = data;    
+        this.followData = data;
         console.log(data);
         if (data.code == 200) {
           this.FollwingError = true;
           this.hasSucess = true;
           this.hasError = false;
           this.errorMessage = data.message;
-          window.setTimeout(function() {
-            location.reload();
-          }, 3000);
-        }else{
+          // window.setTimeout(function() {
+          //   location.reload();
+          // }, 3000);
+        } else {
           this.FollwingError = true;
           this.hasSucess = false;
           this.hasError = true;
-          this.errorMessage = data.message.error[0];         
+          this.errorMessage = data.message.error[0];
         }
       } catch (error) {
         console.log(error);
