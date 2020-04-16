@@ -69,7 +69,8 @@ const config = {
   },
   error: {
     general: "Something went wrong!"
-  }
+  },
+  logDomain: process.env.LOG_DOMAIN || 'http://127.0.0.1:3003/log'
 };
 
 export default config;

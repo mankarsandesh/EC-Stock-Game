@@ -36,7 +36,7 @@ export default {
     this.fetch();
   },
   methods: {
-    async fetch(){
+    async fetch() {
       try {
         const userData = {
           portalProviderUUID: this.portalProviderUUID,
@@ -47,7 +47,7 @@ export default {
         };
         const res = await this.$axios.post(config.getAllBets.url, userData, {
           headers: config.header
-        });       
+        });
         if (res.data.code == 200) {
           this.currentBets = res.data.data;
         } else {
