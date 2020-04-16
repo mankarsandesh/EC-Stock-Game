@@ -205,8 +205,6 @@ export default {
           userUUID: this.userUUID, // get the userUUID with the this object
           version: config.version, // version of API
           betResult: [0, 1], // -1= pending, 0= lose , 1 = win   
-          offset : 0,
-          limit:50,     
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo
         };

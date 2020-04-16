@@ -42,8 +42,7 @@ export default {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           version: config.version,
-          betResult: [-1],
-          offset: "0"
+          betResult: [-1]
         };
         const res = await this.$axios.post(config.getAllBets.url, userData, {
           headers: config.header

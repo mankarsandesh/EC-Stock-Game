@@ -22,10 +22,10 @@
             </nuxt-link>
             <div class="followType">
                   <span>
-                    <label>Follow by amount :</label>  USD 100
+                    <label>Follow {{data.followRuleValue[0].name}} :</label>   {{data.followRuleValue[0].value}}
                   </span>
                    <span>
-                    <label>Auto Stop Follow winning :</label>  USD 150
+                    <label>Auto Stop {{data.unFollowRuleValue[0].name}}:</label>  {{data.unFollowRuleValue[0].value}}
                   </span>
               </div>     
             <button class="btn_unfollow">unfollow</button>
@@ -76,6 +76,7 @@ export default {
             headers: config.header
           }
         );       
+        console.log(res);
         if (res.code == 200) {
           this.followingList = res.data;
           this.countFollwing = res.data.length;

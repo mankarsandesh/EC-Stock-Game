@@ -6,6 +6,7 @@
           hide-actions
           :items="userBetHistory"
           :pagination.sync="pagination"
+          :rows-per-page-items="[rowPageCount]"
           ref="table"
           :search="search"
           class="current-bet"
@@ -115,7 +116,7 @@
       <v-pagination
         v-model="pagination.page"
         color="#1db42f"
-        :length="Math.round(userBetHistory.length / 5)"
+        :length="Math.round(userBetHistory.length / rowPageCount)"
       ></v-pagination>
     </div>
   </v-container>
@@ -124,6 +125,7 @@
 export default {
   props: ["userBetHistory", "search"],
   data: () => ({
+    rowPageCount : 10,
     pagination: {
       page: 1
     }
