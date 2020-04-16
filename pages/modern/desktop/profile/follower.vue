@@ -2,13 +2,16 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">my followers ({{this.countFollower}})</h2>
+        <h2 class="text-uppercase">my followers ({{ this.countFollower }})</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs10>
         <div class="title_container">
+          <h3 class="text-black" v-if="followerEmpty == true">
+            There are no followers user.
+          </h3>
           <div
             class="follower_container"
             v-for="(data, index) in followerList"
@@ -22,12 +25,22 @@
               }}</span>
             </nuxt-link>
             <button
+              v-if="data.isFollowing == 0"
               class="btn_follow"
               v-on:click="
                 followUserBet(data.userName, data.userImage, data.UUID, 0)
               "
             >
               follow
+            </button>
+            <button
+              v-if="data.isFollowing == 1"
+              class="btn_unfollow"
+              v-on:click="
+                followUserBet(data.userName, data.userImage, data.UUID, 1)
+              "
+            >
+              unfollow
             </button>
           </div>
         </div>
@@ -48,22 +61,23 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
-import followBet from '../../../../components/modern/follow/followBet';
+import followBet from "../../../../components/modern/follow/followBet";
 export default {
   data() {
     return {
-       username: "",
+      followerEmpty: false,
+      username: "",
       FollowUserUUID: "",
       FolloworNot: "",
       userImage: "",
       dialog: false,
       active: null,
       followerList: [],
-      countFollower : 0,
+      countFollower: 0,
       defaultImage: "/no-profile-pic.jpg"
     };
   },
-  components : {
+  components: {
     followBet
   },
   mounted() {
@@ -103,10 +117,18 @@ export default {
           {
             headers: config.header
           }
-        );
+        );       
+        console.log(res);
         if (res.code == 200) {
           this.followerList = res.data;
           this.countFollower = res.data.length;
+          if (this.countFollower == 0) {
+            this.followerEmpty = true;
+          } else {
+            this.followerEmpty = false;
+          }
+        } else {
+          this.followerEmpty = true;
         }
       } catch (ex) {
         console.error(ex.message);
@@ -137,7 +159,7 @@ export default {
 .name {
   margin-top: 10px;
   font-size: 18px;
-  color: #013F70;
+  color: #013f70;
   display: block;
   width: 100%;
   text-transform: capitalize;
@@ -148,7 +170,7 @@ export default {
 }
 .follower_container {
   border-radius: 4px;
-  border: 1px solid #DDDDDD;
+  border: 1px solid #dddddd;
   background-color: white;
   width: 30%;
   float: left;

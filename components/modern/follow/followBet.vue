@@ -8,7 +8,7 @@
         <img class="pimage" v-bind:src="this.userImage" width="140px" />
         <h3
           class="subtitle-1 text-uppercase text-center pt-2"
-          v-if="this.username == null"
+          v-if="this.username"
         >
           {{ this.username }}
         </h3>
@@ -21,6 +21,9 @@
           {{ errorMessage }}
         </p>
       </v-flex>
+      
+      <div v-if="isFollowing == 1">      
+      
       <h4 class="subtitle-1 text-uppercase ">Follow By</h4>
       <v-divider></v-divider>
       <v-card-actions>
@@ -86,10 +89,27 @@
           </v-flex>
         </v-radio-group>
       </v-card-actions>
+      </div >
+      <div v-else>
+          <v-flex lg12 text-center>
+            <v-btn
+              color="buttonCancel"
+              v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
+              text
+              >unFollow</v-btn
+            >
+       
+            <v-btn
+              color="buttonCancel"             
+              text
+               @click="dialog = false"
+              >Cancel</v-btn
+            >
+          </v-flex>
+      </div>
     </v-card>
   </div>
 </template>
-
 <script>
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
@@ -185,6 +205,7 @@ export default {
     },
     // Follow Users API call
     async follwingBetting(follwerUUID, method) {
+      console.log(method);
       const LeaderBoardData = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
