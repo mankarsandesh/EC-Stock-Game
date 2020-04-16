@@ -171,6 +171,7 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
+import log from "roarr";
 
 export default {
   data() {
@@ -194,7 +195,6 @@ export default {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
     async saveClick() {
-      console.log(this.$refs);
       this.updating = true;
       const ref = this.$refs;
       let formData = new FormData();
@@ -215,15 +215,15 @@ export default {
             headers: config.header
           }
         );
-        if (res.code === 200) {          
+        if (res.status) {          
+          this.setUserData();
+          this.updating = false;
           this.$swal({
             type: "success",
             title: "Successful Information Saved!",
             showConfirmButton: false,
             timer: 1000
           });
-          this.setUserData();
-          this.updating = false;
         } else {
           this.updating = false;
           throw new Error(Object.values(res.message)[0][0]);
@@ -237,6 +237,11 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error({
+          page: this.$options.name,
+          provider: localStorage.getItem('PORTAL_PROVIDERUUID'),
+          user: localStorage.getItem('USER_UUID')
+        }, ex.message);
       }
     }
   }

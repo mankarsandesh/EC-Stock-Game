@@ -83,6 +83,7 @@ import axios from "axios";
 import date from "date-and-time";
 import config from "../../../../config/config.global";
 import VueApexCharts from "vue-apexcharts";
+import log from "roarr";
 export default {
   components: {
     VueApexCharts
@@ -103,11 +104,6 @@ export default {
         chart: {
           height: 350,
           type: "bar"
-          // events: {
-          //   click: function (chart, w, e) {
-          //     console.log(chart, e);
-          //   }
-          // }
         },
         plotOptions: {
           bar: {
@@ -202,7 +198,7 @@ export default {
             headers: config.header
           }
         );
-        if (res.code === 200) {
+        if (res.status) {
           if (res.data.activeTimeDateWise.length) {
             this.dataReady = true;
             let result = res.data.activeTimeDateWise;
@@ -246,6 +242,11 @@ export default {
           this.error = "Please select a valid date";
           this.dataReady = false;
         }
+        log.error({
+          page: this.$options.name,
+          provider: localStorage.getItem('PORTAL_PROVIDERUUID'),
+          user: localStorage.getItem('USER_UUID')
+        }, ex.message);
       }
     }
   }
