@@ -27,7 +27,9 @@
     "live price": "ລາຄາສົດ",
     "reference": "ກະສານອ້າງອີງ",
     "load more": "ໂຫຼດເພີ່ມ",
-    "search stock": "ຄົ້ນຫາຫຸ້ນ"
+    "search stock": "ຄົ້ນຫາຫຸ້ນ",
+    "ascending" : "ຕັ້ງຊັນຂຶ້ນ",
+    "descending" : "ລົງ"
   },
   "home": {
     "welcome": "ຍິນດີຕ້ອນຮັບ",
@@ -255,7 +257,10 @@
     "weeklyrankings": "ການຈັດອັນດັບປະ ຈຳ ອາທິດ",
     "monthlyrankings": "ການຈັດອັນດັບປະ ຈຳ ເດືອນ",
     "Top10Leaders": "ຜູ້ ນຳ ສູງສຸດ 10 ຄົນ",
-    "lastupdate": "ອັບເດດຫຼ້າສຸດ 1 ນາທີທີ່ແລ້ວ"
+    "lastupdate": "ອັບເດດຫຼ້າສຸດ 1 ນາທີທີ່ແລ້ວ",
+    "top" : "ທາງເທີງ",
+    "leaders" : "ຜູ້ ນຳ",
+    "nodata" : "ບໍ່ມີຜູ້ ນຳ ໃຊ້ໃນ Leaderboard."
   },
   "breadcrumbs": {
     "rule": "ກົດລະບຽບ",
@@ -296,5 +301,10 @@
     "cancelBet" :"ຍົກເລີກການເດີມພັນ",
     "reviewyourBet" : "ທົບທວນການເດີມພັນຂອງທ່ານ",
     "pleaseConfirm": "ກະລຸນາຢືນຢັນການເດີມພັນຂອງທ່ານຂ້າງລຸ່ມນີ້"
+  },
+  "invitation": {
+    "ecworld" : "EC ໂລກ",
+    "gameChannel" : "ການຫຼິ້ນ ຊ່ອງທາງ",
+    "sendInvitation": "ສົ່ງການລົງທືນ"
   }
 }

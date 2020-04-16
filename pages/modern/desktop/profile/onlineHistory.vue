@@ -1,96 +1,84 @@
 <template>
-  <div>
-    <v-flex xs12 class="pt-5 pl-5">
-      <div>
-        <h2 class="title_menu">online history</h2>
-        <v-divider></v-divider>
-      </div>
-    </v-flex>
-    <v-flex xs12 pt-3 pl-5>
-      <v-layout row>
-        <!-- select start date  -->
-        <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="startDateClick">
-            <div class="title_date_picker">
-              <span>{{ $t("msg.from") }}</span>
-            </div>
-            <div class="date_picker">
-              <span class="select_date">{{ startDate }}</span>
-              <span class="icon_date">
-                <v-icon>date_range</v-icon>
-              </span>
-            </div>
+<div>
+  <v-flex xs12 class="pt-5 pl-5">
+    <div>
+      <h2 class="title_menu">{{$t('profile.onlinehistory')}}</h2>
+      <v-divider></v-divider>
+    </div>
+  </v-flex>
+  <v-flex xs12 pt-3 pl-5>
+    <v-layout row>
+      <!-- select start date  -->
+      <v-flex xs6 sm6 md3 lg3 pr-5>
+        <div class="date_picker_container" @click="startDateClick">
+          <div class="title_date_picker">
+            <span>{{ $t("msg.from") }}</span>
           </div>
-          <div style="position: absolute; z-index: 1;">
-            <v-date-picker
-              v-if="isShowDateStart"
-              v-model="startDate"
-              @input="isShowDateStart = false"
-            ></v-date-picker>
+          <div class="date_picker">
+            <span class="select_date">{{ startDate }}</span>
+            <span class="icon_date">
+              <v-icon>date_range</v-icon>
+            </span>
           </div>
-        </v-flex>
-        <!-- select end date -->
-        <v-flex xs6 sm6 md3 lg3 pr-5>
-          <div class="date_picker_container" @click="endDateClick">
-            <div class="title_date_picker">
-              <span>{{ $t("msg.to") }}</span>
-            </div>
-            <div class="date_picker">
-              <span class="select_date">{{ endDate }}</span>
-              <span class="icon_date">
-                <v-icon>date_range</v-icon>
-              </span>
-            </div>
+        </div>
+        <div style="position: absolute; z-index: 1;">
+          <v-date-picker v-if="isShowDateStart" v-model="startDate" @input="isShowDateStart = false"></v-date-picker>
+        </div>
+      </v-flex>
+      <!-- select end date -->
+      <v-flex xs6 sm6 md3 lg3 pr-5>
+        <div class="date_picker_container" @click="endDateClick">
+          <div class="title_date_picker">
+            <span>{{ $t("msg.to") }}</span>
           </div>
-          <div style="position: absolute; z-index: 1;">
-            <v-date-picker
-              v-if="isShowDateEnd"
-              v-model="endDate"
-              @input="isShowDateEnd = false"
-            ></v-date-picker>
+          <div class="date_picker">
+            <span class="select_date">{{ endDate }}</span>
+            <span class="icon_date">
+              <v-icon>date_range</v-icon>
+            </span>
           </div>
-        </v-flex>
-        <!-- go button -->
-        <v-flex xs6 sm6 md2 lg1>
-          <div class="date_picker_container">
-            <div class="title_date_picker">
-              <span></span>
-            </div>
-            <button @click="getOnlineHistory">{{ $t("msg.go") }}</button>
+        </div>
+        <div style="position: absolute; z-index: 1;">
+          <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+        </div>
+      </v-flex>
+      <!-- go button -->
+      <v-flex xs6 sm6 md2 lg1>
+        <div class="date_picker_container">
+          <div class="title_date_picker">
+            <span></span>
           </div>
-        </v-flex>
-      </v-layout>
-    </v-flex>
-    <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
-      <div class="chart_container">
-        <p v-if="!dataReady" class="no-data">
-          <strong>{{ error }}</strong>
-        </p>
-        <VueApexCharts
-          v-if="dataReady"
-          type="bar"
-          height="350"
-          :options="chartOptions"
-          :series="series"
-          :key="componentKey"
-        />
-      </div>
-    </v-flex>
-    <v-flex xs12 class="pt-3 pl-5">
-      <div v-if="dataReady">
-        <span style="margin-right: 30px;">
-          {{ $t("profile.onlinetime") }} : <b>{{ currentActiveTime }}</b>
-        </span>
-        <span style="margin-right: 30px;">
-          {{ $t("profile.totalonline") }} : <b> {{ totalOnlineTime }} </b>
-        </span>
-      </div>
-    </v-flex>
-  </div>
+          <button class="buttonGreen" @click="getOnlineHistory">{{ $t("msg.go") }}</button>
+        </div>
+      </v-flex>
+    </v-layout>
+  </v-flex>
+  <v-flex xs12 sm12 md10 lg10 class="pt-5 pl-5">
+    <div class="chart_container">
+      <p v-if="!dataReady" class="no-data">
+        <strong>{{ error }}</strong>
+      </p>
+      <VueApexCharts v-if="dataReady" type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey" />
+    </div>
+  </v-flex>
+  <v-flex xs12 class="pt-3 pl-5">
+    <div v-if="dataReady">
+      <span style="margin-right: 30px;">
+        {{ $t("profile.onlinetime") }} : <b>{{ currentActiveTime }}</b>
+      </span>
+      <span style="margin-right: 30px;">
+        {{ $t("profile.totalonline") }} : <b> {{ totalOnlineTime }} </b>
+      </span>
+    </div>
+  </v-flex>
+</div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {
+  mapGetters,
+  mapActions
+} from "vuex";
 import axios from "axios";
 import date from "date-and-time";
 import config from "../../../../config/config.global";
@@ -204,15 +192,13 @@ export default {
           throw new Error("Please select a valid date");
         }
         const res = await this.$axios.$post(
-          config.getUserProfile.url,
-          {
+          config.getUserProfile.url, {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             dateRangeFrom: this.startDate,
             dateRangeTo: this.endDate,
             version: config.version
-          },
-          {
+          }, {
             headers: config.header
           }
         );
@@ -235,7 +221,9 @@ export default {
             this.totalOnlineTime = `${
               days ? `${days} days, ` : ``
             }${hours} hours and ${minutes} minutes`;
-            this.series = [{ data: chartData }];
+            this.series = [{
+              data: chartData
+            }];
             this.chartOptions.xaxis.categories = xAxis;
             this.componentKey++;
           } else {
@@ -273,18 +261,22 @@ button {
   border-radius: 10px;
   font-weight: bold;
 }
+
 button:focus {
   outline: none;
 }
+
 .title_menu {
   padding-bottom: 15px;
   text-transform: capitalize;
   color: #353333;
 }
+
 .date_picker_container {
   text-transform: capitalize;
   cursor: pointer;
 }
+
 .chart_container {
   background-color: white;
   color: black;
@@ -294,6 +286,7 @@ button:focus {
   width: 100%;
   height: 420px;
 }
+
 .date_picker {
   background-color: white;
   color: black;
@@ -302,6 +295,7 @@ button:focus {
   border-radius: 10px;
   position: relative;
 }
+
 .title_date_picker {
   padding-left: 10px;
   padding-bottom: 5px;
@@ -309,13 +303,16 @@ button:focus {
   text-transform: uppercase;
   min-height: 30px;
 }
+
 .icon_date {
   float: right;
   margin-top: -2px;
 }
+
 .select_date {
   text-transform: uppercase;
 }
+
 .no-data {
   color: red;
   align-content: center;

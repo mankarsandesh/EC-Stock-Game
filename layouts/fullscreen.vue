@@ -3,21 +3,22 @@
     <div style="height:100%">
       <nuxt />
     </div>
-    <!-- Chat Windows-->
-    <chatWindow
-      :gameUUID="getGameUUIDByStockName($route.params.id)"
-      :key="$route.name"
-    />
-    <!-- <chatWindow /> -->
+    <!-- Chat Windows-->  
+   
+   <invitation
+        :gameUUID="getGameUUIDByStockName($route.params.id)"
+        :key="$route.name"
+      />
+
   </v-app>
 </template>
 
 <script>
-import chatWindow from "~/components/chatWindow";
+import invitation from "~/components/invitation";
 import { mapGetters } from "vuex";
 export default {
   components: {
-    chatWindow
+    invitation
   },
   computed: {
     ...mapGetters(["getGameUUIDByStockName"])
