@@ -253,7 +253,6 @@ export default {
             headers: config.header
           }
         );
-        console.log("error aya", res);
         if (res.code === 200) {
           if (res.data.length) {
             this.isDataValid = true;

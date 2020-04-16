@@ -34,6 +34,7 @@ export default ({ store }) => {
       eventName: "countdown"
     },
     ({ data }) => {
+      console.log('timer',data.data.timeData[6].stockTimestamp)
       store.dispatch("setStockCountdown", data.data.timeData);
     }
   );

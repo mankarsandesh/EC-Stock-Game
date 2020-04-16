@@ -69,7 +69,8 @@ const config = {
   },
   error: {
     general: "Something went wrong!"
-  }
+  },
+  logDomain: process.env.LOG_DOMAIN || 'http://127.0.0.1:3003/log'
   // loggly: {
   //   token: '852204e4-2752-4d9c-9b1c-f9f2152c2f40',
   //   subdomain: 'localhost',
