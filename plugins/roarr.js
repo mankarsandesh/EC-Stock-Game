@@ -6,8 +6,7 @@ globalThis.ROARR = globalThis.ROARR || {};
 
 // Send log to the server
 globalThis.ROARR.write = (message) => {
-    console.log(JSON.parse(message));
     axios.post(config.logDomain, JSON.parse(message)).then((done) => {
-    
+
     }).catch((e) => console.log(e));
 }

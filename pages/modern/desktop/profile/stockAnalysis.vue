@@ -245,7 +245,7 @@ export default {
             headers: config.header
           }
         );
-        if (res.code === 200) {
+        if (res.status) {
           if (res.data.length) {
             this.isDataValid = true;
             this.error = "";
@@ -258,6 +258,7 @@ export default {
           throw new Error(res.message.dateRangeTo[0]);
         }
       } catch (ex) {
+        console.log(ex.message);
         this.$swal({
           title: ex.message,
           type: "error",
@@ -268,7 +269,11 @@ export default {
           this.error = "Please select a valid date";
           this.isDataValid = false;
         }
-        console.log(ex.message);
+        log.error({
+          page: this.$options.name,
+          provider: localStorage.getItem('PORTAL_PROVIDERUUID'),
+          user: localStorage.getItem('USER_UUID')
+        }, ex.message);
       }
     },
     startDateClick() {

@@ -100,7 +100,7 @@ export default {
           }
         );
         console.log(res);
-        if (res.code == 200) {
+        if (res.status) {
           this.$swal.fire({
             position: "top",
             type: "success",
@@ -119,6 +119,11 @@ export default {
           title: ex.message,
           timer: 1000
         });
+        log.error({
+          page: this.$options.name,
+          provider: localStorage.getItem('PORTAL_PROVIDERUUID'),
+          user: localStorage.getItem('USER_UUID')
+        }, ex.message);
       }
     }
   }
