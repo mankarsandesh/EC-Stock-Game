@@ -48,14 +48,23 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
+import followBet from '../../../../components/modern/follow/followBet';
 export default {
   data() {
     return {
+       username: "",
+      FollowUserUUID: "",
+      FolloworNot: "",
+      userImage: "",
+      dialog: false,
       active: null,
       followerList: [],
       countFollower : 0,
       defaultImage: "/no-profile-pic.jpg"
     };
+  },
+  components : {
+    followBet
   },
   mounted() {
     this.getFolloweList();

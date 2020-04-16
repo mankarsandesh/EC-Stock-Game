@@ -208,10 +208,8 @@ export default {
             headers: config.header
           }
         );
-        this.followData = data;
-        console.log(LeaderBoardData);
+        this.followData = data;    
         console.log(data);
-
         if (data.code == 200) {
           this.FollwingError = true;
           this.hasSucess = true;
@@ -224,7 +222,7 @@ export default {
           this.FollwingError = true;
           this.hasSucess = false;
           this.hasError = true;
-          this.errorMessage = data.message;         
+          this.errorMessage = data.message.error[0];         
         }
       } catch (error) {
         console.log(error);
