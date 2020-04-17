@@ -213,6 +213,8 @@ import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUser
 import config from "../../../config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
+import log from "roarr";
+
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -326,25 +328,31 @@ export default {
     },
     async getStock() {
       try {
-        const data = await this.$axios.$post(
-          config.getStock.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-
-        this.stock = data;
-      } catch (error) {
-        console.log(error);
-        this.$swal({
-          title: error.message,
-          type: "error",
-          timer: 1000
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getStock.url, reqBody, {
+          headers: config.header
         });
+        if (res.status) {
+          this.stock = res.data;
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getStock.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     addTrendMap() {

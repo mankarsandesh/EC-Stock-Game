@@ -128,6 +128,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import config from "../../../config/config.global";
+import log from "roarr";
 export default {
   layout: "desktopModern",
   data() {
@@ -175,13 +176,13 @@ export default {
       this.$refs.inputFile.click();
     },
     async updateProfile() {
-      let formData = new FormData();
+      var formData = new FormData();
       formData.append("profileImage", this.$refs.inputFile.files[0]);
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("version", config.version);
       try {
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
           {
@@ -199,11 +200,11 @@ export default {
             // }
           }
         );
-        if (res.code === 200) {
+        if (res.status) {
           this.blurValue = 0;
           this.setUserData();
         } else {
-          throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         this.imageBase64 = "";
@@ -213,6 +214,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: formData,
+            res: res.data,
+            page: this.$options.name,
+            apiUrl: config.updateUserProfile.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

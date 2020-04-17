@@ -197,7 +197,7 @@ export default {
     async saveClick() {
       this.updating = true;
       const ref = this.$refs;
-      let formData = new FormData();
+      var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("email", ref.email.value);
@@ -208,14 +208,14 @@ export default {
       // formData.append("country", ref.country.value);
       formData.append("version", config.version);
       try {
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
           {
             headers: config.header
           }
         );
-        if (res.status) {          
+        if (res.status) {
           this.setUserData();
           this.updating = false;
           this.$swal({
@@ -226,8 +226,7 @@ export default {
           });
         } else {
           this.updating = false;
-          throw new Error(Object.values(res.message)[0][0]);
-          console.log(res);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
@@ -237,11 +236,17 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error({
-          page: this.$options.name,
-          provider: localStorage.getItem('PORTAL_PROVIDERUUID'),
-          user: localStorage.getItem('USER_UUID')
-        }, ex.message);
+        log.error(
+          {
+            req: formData,
+            res,
+            page: this.$options.name,
+            apiUrl: config.updateUserProfile.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

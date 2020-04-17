@@ -1,4 +1,5 @@
 import config from "../config/config.global";
+import log from "roarr";
 
 const state = () => ({
   multiGameBet: [], // Store multi game bet
@@ -75,18 +76,15 @@ const actions = {
         });
         return;
       }
-      const res = await this.$axios.$post(
-        config.storeBet.url,
-        {
-          portalProviderUUID: context.rootState.provider.portalProviderUUID,
-          userUUID: context.rootState.provider.userUUID,
-          version: config.version,
-          betData: betDatas
-        },
-        {
-          headers: config.header
-        }
-      );
+      var reqBody = {
+        portalProviderUUID: context.rootState.provider.portalProviderUUID,
+        userUUID: context.rootState.provider.userUUID,
+        version: config.version,
+        betData: betDatas
+      };
+      var res = await this.$axios.$post(config.storeBet.url, reqBody, {
+        headers: config.header
+      });
       if (res.status && res.code == 200) {
         context.dispatch("setUserData", "provider");
         context.commit("SET_IS_SEND_BETTING", false);
@@ -117,16 +115,27 @@ const actions = {
           showConfirmButton: true
         });
       } else {
-        throw new Error(res.message);
+        throw new Error(config.error.general);
       }
     } catch (ex) {
+      console.error(ex.message);
+      context.commit("SET_IS_SEND_BETTING", false);
       this._vm.$swal({
         type: "error",
         title: `${ex.message}`,
         showConfirmButton: true
       });
-      console.error(ex);
-      context.commit("SET_IS_SEND_BETTING", false);
+      log.error(
+        {
+          req: reqBody,
+          res,
+          page: "store/betting.js",
+          apiUrl: config.storeBet.url,
+          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: localStorage.getItem("USER_UUID")
+        },
+        ex.message
+      );
     }
   }
 };
