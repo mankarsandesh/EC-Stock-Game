@@ -5,9 +5,7 @@
     <div id="tutorial-container" v-if="isShowTutorial">
       <div id="background-tutorial"></div>
       <div id="guide-container">
-        <div
-          style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer"
-        >
+        <div class="close-icon">
           <v-icon @click="clearTutorialUI()" color="#fff">close</v-icon>
         </div>
         <!-- last draw v-if="tutorialStepNumber === 1" -->
@@ -406,8 +404,6 @@
           </template>
           <span>Close Full Screen</span>
         </v-tooltip>
-
-        
       </v-layout>
     </v-container>
   </div>
@@ -648,6 +644,13 @@ export default {
 </script>
 
 <style scoped>
+.close-icon {
+  z-index: 10028;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
+}
 .balanceUser {
   float: right;
   margin: 10px 20px;
