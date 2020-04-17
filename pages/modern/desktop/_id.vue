@@ -144,7 +144,7 @@
       <div id="fullscreenGuidelines">
         <v-tooltip left>
           <template v-slot:activator="{ on }">
-            <v-btn color="primary" rigth fab class="fullscreen" dark @click="setAfterFullScreenClosePage()" title="Full Screen">
+            <v-btn color="primary" right fab class="fullscreen" dark @click="setAfterFullScreenClosePage()" title="Full Screen">
               <v-icon>fullscreen</v-icon>
             </v-btn>
           </template>
