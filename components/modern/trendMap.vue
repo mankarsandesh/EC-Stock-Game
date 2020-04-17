@@ -1121,7 +1121,7 @@ table {
   border-collapse: collapse;
   background-color: #fff;
   display: block;
-  overflow-x: hidden;
+  overflow-x: auto;
   white-space: nowrap;
   border-collapse: separate;
   border-spacing: 3px 2px;
