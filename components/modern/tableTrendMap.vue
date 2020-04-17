@@ -82,26 +82,7 @@
       </v-flex>
     </v-layout>
 
-    <v-tooltip>
-      <template v-slot:activator="{ on }">
-        <v-btn
-          color="primary"
-          :to="'/modern/multigame/' + $route.params.id"
-          rigth
-          fab
-          class="multiGame"
-          dark
-          v-on="on"
-        >
-          <i
-            style="font-size:26px;"
-            class="fa fa-gamepad"
-            aria-hidden="true"
-          ></i>
-        </v-btn>
-      </template>
-      <span>Multiple Game</span>
-    </v-tooltip>
+    
   </div>
 </template>
 
@@ -153,19 +134,7 @@ export default {
 </script>
 
 <style scoped>
-.multiGame {
-  z-index: 999;
-  position: fixed;
-  right: 0px;
-  bottom: 80px;
-  color: #fff;
-  width: 50px;
-  height: 50px;
-  font-size: 12px !important;
-  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
-  padding: 0px 9px;
-}
+
 .triangle-right {
   width: 0;
   height: 0;
