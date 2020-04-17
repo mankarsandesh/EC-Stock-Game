@@ -175,7 +175,7 @@ export default {
         { id: 5, name: "Stop by Timing", value: "stopTime" },
         { id: 6, name: "Stop by Bets", value: "stopBets" }
       ],
-      profilePic: "/no-profile-pic.jpg",
+      defaultImage: "/no-profile-pic.jpg",
       selectedFruits: [],
       currentRoute: "",
       messageInput: "",

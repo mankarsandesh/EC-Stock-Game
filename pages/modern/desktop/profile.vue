@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <input @change="readFile($event)" type="file" ref="inputFile" hidden />
+    <input @change="uploadImage($event)" type="file" ref="inputFile" hidden />
     <v-layout pt-3 row wrap class="justify-center">
       <v-flex xs12 ms12 lg10 md10>
         <v-layout>
@@ -12,7 +12,7 @@
                     :src="
                       getUserInfo.profileImage
                         ? imgProfile
-                        : `/no-profile-pic.jpg`
+                        : defaultImage
                     "
                   />
                 </v-avatar>
@@ -31,7 +31,7 @@
               <h2 v-if="getUserInfo.firstName" class="text-capitalize">
                 {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
               </h2>
-              <p>{{ $t("profile.onlinestatus") }} : Online </p>
+              <p><b> {{ $t("profile.onlinestatus") }} </b>  : Available </p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
@@ -132,6 +132,7 @@ export default {
   layout: "desktopModern",
   data() {
     return {
+      defaultImage: `/no-profile-pic.jpg`,
       currentChild: "basicinfo",
       blurValue: 5,
       imageBase64: "",
@@ -161,7 +162,7 @@ export default {
   },
   methods: {
     ...mapActions(["setUserData"]),
-    readFile(e) {
+    uploadImage(e) {
       let self = this;
       if (e.target.files && e.target.files[0]) {
         let FR = new FileReader();
