@@ -199,7 +199,7 @@ export default {
             //   }
             // }
           }
-        );
+        );      
         if (res.code === 200) {
           this.blurValue = 0;
           this.setUserData();

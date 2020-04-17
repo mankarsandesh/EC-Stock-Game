@@ -186,7 +186,7 @@
             fab
             class="multiGame"
             dark
-            v-on="on"
+           
           >
             <i
               style="font-size:26px;"

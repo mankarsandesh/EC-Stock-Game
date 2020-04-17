@@ -56,6 +56,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if(res.status) {
           this.announcementData = res.data;
         } else {
