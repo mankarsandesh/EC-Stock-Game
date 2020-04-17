@@ -85,6 +85,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
 import config from "../config/config.global";
+import log from "roarr";
 export default {
   data() {
     return {
@@ -205,19 +206,24 @@ export default {
     ...mapActions(["addStockMultiGame", "setGameId", "setStockCategory"]),
     async getActiveGamesByCategory() {
       try {
-        const { data } = await this.$axios.$post(
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(
           config.getActiveGamesByCategory.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version
-          },
+          reqBody,
           {
             headers: config.header
           }
         );
-        this.getGameUUID(data);
-        this.setStockCategory(data);
-        this.items = data;
+        if (res.status) {
+          this.getGameUUID(res.data);
+          this.setStockCategory(res.data);
+          this.items = res.data;
+        } else {
+          throw new Error(Object.values(res.message)[0][0]);
+        }
       } catch (ex) {
         console.log(ex);
         this.$swal({
@@ -225,6 +231,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/stockSelect.vue",
+            apiUrl: config.getActiveGamesByCategory.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     getGameUUID(items) {

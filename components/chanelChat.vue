@@ -2,62 +2,58 @@
   <div class="conve-container">
     <div class="bodyChat">
       <div v-for="data in conversationChanel" :key="data.index" class="msgUser">
+        <div class="messageChatView">
+          <div style="width:30%;">
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+              <v-img
+                class="userImage"
+                :src="imgProfile(data.userImage)"
+                aspect-ratio="1"
+                max-height="120"
+                max-width="120"
+              >
+              </v-img>
+            </nuxt-link>
+            <span class="ranking">
+              <v-tooltip left>
+                <template v-slot:activator="{ on }">
+                  <span v-on="on">#{{ data.Rank }} </span>
+                </template>
+                <span>User Rank</span>
+              </v-tooltip>
+            </span>
+          </div>
+          <div style="width:15%;">
+            <span class="followcount">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span v-on="on">{{ data.followerCount }} </span>
+                </template>
+                <span>User Follow Count</span>
+              </v-tooltip>
+            </span>
+          </div>
+          <div style="width:55%;">
+            <span class="winRate">
+              <v-tooltip right>
+                <template v-slot:activator="{ on }">
+                  <span v-on="on">{{ data.winRate }}% </span>
+                </template>
+                <span>User Win Rate</span>
+              </v-tooltip>
+            </span>
 
-         <div class="messageChatView">
-                  <div style="width:30%;">
-                    <nuxt-link
-                      :to="'/modern/desktop/userprofile/' + data.userUUID"
-                    >
-                      <v-img
-                        class="userImage"
-                        :src="imgProfile(data.userImage)"
-                        aspect-ratio="1"
-                        max-height="120"
-                        max-width="120"
-                      >
-                      </v-img>
-                    </nuxt-link>
-                    <span class="ranking">
-                      <v-tooltip left>
-                        <template v-slot:activator="{ on }">
-                          <span v-on="on">#{{ data.Rank }} </span>
-                        </template>
-                        <span>User Rank</span>
-                      </v-tooltip>
-                    </span>
-                  </div>
-                  <div style="width:15%;">
-                    <span class="followcount">
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                          <span v-on="on">{{ data.followerCount }} </span>
-                        </template>
-                        <span>User Follow Count</span>
-                      </v-tooltip>
-                    </span>
-                  </div>
-                  <div style="width:55%;">
-                    <span class="winRate">
-                      <v-tooltip right>
-                        <template v-slot:activator="{ on }">
-                          <span v-on="on">{{ data.winRate }}% </span>
-                        </template>
-                        <span>User Win Rate</span>
-                      </v-tooltip>
-                    </span>
-
-                    <v-btn
-                      v-if="getUserUUID != data.userUUID"
-                      class="following"
-                      v-on:click="followUser(null, null, data.userUUID, '0')"
-                      >Follow</v-btn
-                    >
-                    <v-btn v-if="getUserUUID == data.userUUID" class="following"
-                      >Yourself</v-btn
-                    >
-                  </div>
-                </div>
-
+            <v-btn
+              v-if="getUserUUID != data.userUUID"
+              class="following"
+              v-on:click="followUser(null, null, data.userUUID, '0')"
+              >Follow</v-btn
+            >
+            <v-btn v-if="getUserUUID == data.userUUID" class="following"
+              >Yourself</v-btn
+            >
+          </div>
+        </div>
       </div>
     </div>
 
@@ -74,6 +70,7 @@
 <script>
 import config from "../config/config.global";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import log from "roarr";
 
 export default {
   props: {
@@ -110,24 +107,38 @@ export default {
     // Channel for gameUUDI
     async sendInvitation() {
       try {
-        const sendData = {
+        var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
           gameUUID: this.gameUUID,
           category: [1, 2, 3],
           version: config.version
         };
-        console.log(sendData, "Send Invitation");
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.getUserInvitation.url,
-          sendData,
+          reqBody,
           {
             headers: config.header
           }
         );
-        this.snackbar = true;
+        if (res.status) {
+          this.snackbar = true;
+        } else {
+          throw new Error(Object.values(res.message)[0][0]);
+        }
       } catch (ex) {
         console.log(ex.message);
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/channelChat.vue",
+            apiUrl: config.getUserInvitation.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   },
@@ -138,7 +149,7 @@ export default {
         channelName: `messageSend.${this.getPortalProviderUUID}.${this.gameUUID}`,
         eventName: "messageSend"
       },
-      ({ data }) => {        
+      ({ data }) => {
         const objectArray = Object.entries(data.data);
         let newData = [];
         objectArray.forEach(([key, value]) => {
@@ -151,11 +162,7 @@ export default {
     );
   },
   computed: {
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getUserUUID",
-      "getStockType"
-    ]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockType"]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
         return true;
@@ -186,7 +193,7 @@ export default {
   flex-direction: column;
 }
 .buttonInvitation {
-  margin-top:-1px;
+  margin-top: -1px;
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
@@ -305,7 +312,7 @@ export default {
   float: left;
   text-align: center;
   font-size: 20px;
-   margin: 6px 15px;  
+  margin: 6px 15px;
   color: #5f70b1;
   font-weight: 800;
 }
@@ -324,7 +331,7 @@ export default {
   color: #fff;
   box-shadow: none;
   height: 24px;
-  width:28px;
+  width: 28px;
   margin-top: 10px;
   font-size: 13px;
 }

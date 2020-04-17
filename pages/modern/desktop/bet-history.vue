@@ -113,6 +113,7 @@ import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
+import log from "roarr";
 export default {
   layout: "desktopModern",
   components: {
@@ -200,25 +201,25 @@ export default {
     },
     async fetch() {
       try {
-        const userData = {
+        var reqBody = {
           portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
           userUUID: this.userUUID, // get the userUUID with the this object
           version: config.version, // version of API
-          betResult: [0, 1], // -1= pending, 0= lose , 1 = win   
-          offset : 0,
-          limit:50,     
+          betResult: [0, 1], // -1= pending, 0= lose , 1 = win
+          offset: 0,
+          limit: 50,
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo
         };
-        const { data } = await this.$axios.post(
-          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
-          userData, // data object
-          {
-            headers: config.header
-          }
-        );
-        this.userBetHistory = data.data;
-        this.loadingImage = false;
+        var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
+          headers: config.header
+        });
+        if (data.status) {
+          this.userBetHistory = data.data;
+          this.loadingImage = false;
+        } else {
+          throw new Error(Object.values(data.message)[0][0]);
+        }
       } catch (ex) {
         console.log(ex);
         this.$swal({
@@ -226,6 +227,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res: data.data,
+            page: this.$options.name,
+            apiUrl: config.getAllBets.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

@@ -18,6 +18,7 @@ import Chart from "chart.js";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import Echo from "laravel-echo";
 import config from "../config/config.global";
+import log from "roarr";
 export default {
   props: {
     height: {
@@ -180,19 +181,16 @@ export default {
     },
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-        if (res.code === 200) {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });
+        if (res.status) {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
@@ -205,6 +203,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/chartMobile.vue",
+            apiUrl: config.getRoadMap.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
