@@ -32,10 +32,9 @@
           </div>
           <button class="btn_unfollow">unfollow</button>
         </div>
-      </div>
+      </v-flex>
     </v-flex>
-  </v-flex>
-</div>
+  </div>
 </template>
 
 <script>
