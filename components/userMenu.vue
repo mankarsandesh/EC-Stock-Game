@@ -80,6 +80,7 @@ export default {
   },
   data() {
     return {
+      defaultImage: "/no-profile-pic.jpg",
       dialogConfirm: false,
       profileImage: "",
       dialogprofile: false,

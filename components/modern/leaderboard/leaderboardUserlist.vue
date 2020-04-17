@@ -1,95 +1,141 @@
 <template>
-<div>
-  <v-flex xs12 md8 lg8 mt-3 style="margin:0 auto;">
-    <v-layout row>
-      <v-flex grow pa-1>
-        <p class="float-left md6 lg8">
-          <span class="title">{{$t('leaderboard.top')}} {{ topPlayerData.length }} {{$t('leaderboard.leaders')}} </span>
-          ({{ this.sortbyName }})
-          <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin" style="font-size:20px;"></i>
-        </p>
-      </v-flex>
-      <v-flex grow pa-1 class="text-lg-right ranking">
-        <span class="text-uppercase font-weight-bold" v-bind:class="{ active: isActiveWeek }" v-on:click="sortingBy('weekly')">
-          <v-icon small>event</v-icon> {{ $t("leaderboard.weeklyrankings") }}
-        </span>
-        <span class="text-uppercase font-weight-bold" v-bind:class="{ active: isActiveMonth }" v-on:click="sortingBy('monthly')">
-          <v-icon small>event</v-icon> {{ $t("leaderboard.monthlyrankings") }}
-        </span>
-      </v-flex>
-    </v-layout>
-  </v-flex>
-  <v-flex v-if="topPlayerData.length == 0">
-    <h2 class="text-center" style="color:#a3a3a3;">
-      {{$t('leaderboard.nodata')}}
-    </h2>
-  </v-flex>
-  <v-flex v-if="topPlayerData.length > 0">
-    <v-flex xs12 md10 lg10 xl8 style="margin:0 auto;" v-for="(data, index) in topPlayerData" :key="index" id="userRow">
-      <div class="userRow">
-        <div>
-          <nuxt-link :to="'/modern/desktop/userprofile/'+data.userUUID">
-            <img class="pimage" :src="imgProfile(data.userImage)" />
-            <span class="subtitle-1 text-uppercase ">
-              <span class="name">
-                <span>#{{ data.Rank }}</span>
-                {{ data.username }}
-              </span>
+  <div>
+    <v-flex xs12 md8 lg8 mt-3 style="margin:0 auto;">
+      <v-layout row>
+        <v-flex grow pa-1>
+          <p class="float-left md6 lg8">
+            <span class="title"
+              >{{ $t("leaderboard.top") }} {{ topPlayerData.length }}
+              {{ $t("leaderboard.leaders") }}
             </span>
-          </nuxt-link>
-          <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
-        </div>
-        <div>
-          <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
-          <h4 class="green--text titleText">
-            {{ Math.round(data.winRate, 1) }} %
-          </h4>
-        </div>
-        <div>
-          <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
-          <H4 style="color:#eb0b6e;" class="titleText">{{
+            ({{ this.sortbyName }})
+            <i
+              v-if="loadingImage"
+              class="fa fa-circle-o-notch fa-spin"
+              style="font-size:20px;"
+            ></i>
+          </p>
+        </v-flex>
+        <v-flex grow pa-1 class="text-lg-right ranking">
+          <span
+            class="text-uppercase font-weight-bold"
+            v-bind:class="{ active: isActiveWeek }"
+            v-on:click="sortingBy('weekly')"
+          >
+            <v-icon small>event</v-icon> {{ $t("leaderboard.weeklyrankings") }}
+          </span>
+          <span
+            class="text-uppercase font-weight-bold"
+            v-bind:class="{ active: isActiveMonth }"
+            v-on:click="sortingBy('monthly')"
+          >
+            <v-icon small>event</v-icon> {{ $t("leaderboard.monthlyrankings") }}
+          </span>
+        </v-flex>
+      </v-layout>
+    </v-flex>
+    <v-flex v-if="topPlayerData.length == 0">
+      <h2 class="text-center" style="color:#a3a3a3;">
+        {{ $t("leaderboard.nodata") }}
+      </h2>
+    </v-flex>
+    <v-flex v-if="topPlayerData.length > 0">
+      <v-flex
+        xs12
+        md10
+        lg10
+        xl8
+        style="margin:0 auto;"
+        v-for="(data, index) in topPlayerData"
+        :key="index"
+        id="userRow"
+      >
+        <div class="userRow">
+          <div>
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+              <img class="pimage" :src="imgProfile(data.userImage)" />
+              <span class="subtitle-1 text-uppercase ">
+                <span class="name">
+                  <span>#{{ data.Rank }}</span>
+                  {{ data.username }}
+                </span>
+              </span>
+            </nuxt-link>
+            <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
+          </div>
+          <div>
+            <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
+            <h4 class="green--text titleText">
+              {{ Math.round(data.winRate, 1) }} %
+            </h4>
+          </div>
+          <div>
+            <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
+            <H4 style="color:#eb0b6e;" class="titleText">{{
               data.totalWinBets
             }}</H4>
-        </div>
-        <div>
-          <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
-          <h4 style="color:#0b2a68;" class="titleText">
-            {{ Math.round(data.totalWinAmount, 1) }}
-          </h4>
-        </div>
-        <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
-          <v-btn class="buttonGreensmall" v-on:click="
+          </div>
+          <div>
+            <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
+            <h4 style="color:#0b2a68;" class="titleText">
+              {{ Math.round(data.totalWinAmount, 1) }}
+            </h4>
+          </div>
+          <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
+            <v-btn
+              class="buttonGreensmall"
+              v-on:click="
                 followUser(
                   data.username,
                   data.userImage,
                   data.userUUID,
                   data.isFollowing
                 )
-              " dark>{{ $t("useraction.followbet") }}
-          </v-btn>
-        </div>
-        <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
-          <v-btn class="buttonCancel " v-on:click="unfollowUser(data.userUUID)" dark>{{ $t("useraction.unfollow") }}</v-btn>
-        </div>
-        <div v-if="data.isFollowing == -1" style="width:20%;padding-top:30px;">
-          <v-btn class="buttonGreensmall">{{
+              "
+              dark
+              >{{ $t("useraction.followbet") }}
+            </v-btn>
+          </div>
+          <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
+            <v-btn
+              class="buttonCancel "
+              v-on:click="
+                followUser(
+                  data.username,
+                  data.userImage,
+                  data.userUUID,
+                  data.isFollowing
+                )
+              "
+              dark
+              >{{ $t("useraction.unfollow") }}</v-btn
+            >
+          </div>
+          <div
+            v-if="data.isFollowing == -1"
+            style="width:20%;padding-top:30px;"
+          >
+            <v-btn class="buttonGreensmall">{{
               $t("useraction.yourself")
             }}</v-btn>
+          </div>
         </div>
-      </div>
+      </v-flex>
     </v-flex>
-  </v-flex>
-  <!-- Follow and UnFollow Dialog box-->
-  <v-dialog v-model="dialog" width="500" class="followDialog">
-    <followBet :username="this.username" :userImage="this.userImage" :FollowerUserUUID="this.FollowUserUUID" :isFollowing="this.FolloworNot" />
-  </v-dialog>
-</div>
+    <!-- Follow and UnFollow Dialog box-->
+    <v-dialog v-model="dialog" width="500" class="followDialog">
+      <followBet
+        :username="this.username"
+        :userImage="this.userImage"
+        :FollowerUserUUID="this.FollowUserUUID"
+        :isFollowing="this.FolloworNot"
+      />
+    </v-dialog>
+  </div>
 </template>
 
 <script>
-import {
-  mapState
-} from "vuex";
+import { mapState } from "vuex";
 import config from "../../../config/config.global";
 import followBet from "../../modern/follow/followBet";
 export default {
@@ -120,10 +166,10 @@ export default {
   mounted() {
     const today = new Date();
     const lastWeek = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() - 7
-      )
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() - 7
+    )
       .toISOString()
       .substr(0, 10);
     this.dateFrom = lastWeek;
@@ -137,15 +183,19 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
+    closePopup() {
+      console.log("HELlo");
+      this.dialog = false;
+    },
     //sorting weekly and Monthly
     sortingBy(sort) {
       if (sort == "monthly") {
         const today = new Date();
         const monthly = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate() - 30
-          )
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 30
+        )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = monthly;
@@ -157,10 +207,10 @@ export default {
       } else {
         const today = new Date();
         const lastWeek = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate() - 7
-          )
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 7
+        )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
@@ -173,9 +223,9 @@ export default {
     },
     // fetch default image or from server image
     imgProfile(userImage) {
-      return userImage === null ?
-        "/no-profile-pic.jpg" :
-        `${config.apiDomain}/` + userImage;
+      return userImage === null
+        ? "/no-profile-pic.jpg"
+        : `${config.apiDomain}/` + userImage;
     },
     // Unfollow User
     async unfollowUser(FollowUserUUID) {
@@ -187,11 +237,10 @@ export default {
         version: config.version
       };
       try {
-        const {
-          data
-        } = await this.$axios.post(
+        const { data } = await this.$axios.post(
           config.followUser.url,
-          LeaderBoardData, {
+          LeaderBoardData,
+          {
             headers: config.header
           }
         );
@@ -224,11 +273,10 @@ export default {
           dateRangeTo: this.dateTo,
           version: config.version
         };
-        const {
-          data
-        } = await this.$axios.post(
+        const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
-          LeaderBoardData, {
+          LeaderBoardData,
+          {
             headers: config.header
           }
         );

@@ -40,7 +40,7 @@
                 <span class="winning"> {{ item.item.rollingAmount }} </span>
               </td>
               <td v-if="item.item.betResult == 'lose'">
-                <span class="lossing"> {{ item.item.betAmount }} </span>
+                <span class="lossing"> - {{ item.item.betAmount }} </span>
               </td>
 
               <td
@@ -104,7 +104,7 @@
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>
               <td>
-                <strong>{{ TotalRolling | toCurrency }}</strong>
+                <span class="totalRolling">{{ TotalRolling | toCurrency }}</span>
               </td>
               <td colspan="1"></td>
             </tr>
@@ -168,6 +168,10 @@ export default {
 };
 </script>
 <style scoped>
+.totalRolling{
+font-weight: 800;
+color:green;
+}
 .winning {
   color: green;
   font-weight: 800;
