@@ -246,7 +246,9 @@
     "lastActive" : "最后登录",
     "historyPeriod" : "历史时期",
     "followers" : "追随者",
-    "chart": "图表"
+    "chart": "图表",
+    "noFollowing" : "没有关注的用户。",
+    "noFollowers" : "没有追随者。"
   },
   "useraction": {
     "followbet": "跟进",

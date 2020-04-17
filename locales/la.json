@@ -246,7 +246,9 @@
     "lastActive" : "ມີການເຄື່ອນໄຫວສຸດທ້າຍ",
     "historyPeriod" : "ໄລຍະເວລາປະຫວັດສາດ",
     "followers" : "ຜູ້ຕິດຕາມ",
-    "chart": "ຕາຕະລາງ"
+    "chart": "ຕາຕະລາງ",
+    "noFollowing" : "ບໍ່ມີຜູ້ໃຊ້ຕິດຕາມ.",
+    "noFollowers" : "ບໍ່ມີຜູ້ຕິດຕາມ."
   },
   "useraction": {
     "followbet": "ປະຕິບັດຕາມ BET",
