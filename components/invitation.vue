@@ -89,7 +89,7 @@
     <followBet :username="this.username" :userImage="this.userImage" :FollowerUserUUID="this.FollowUserUUID" :isFollowing="this.FolloworNot" />
   </v-dialog>
 
-  <v-btn rigth fab slot="reference" class="liveChat">
+  <v-btn right fab slot="reference" class="liveChat">
     <v-icon>chat</v-icon>
   </v-btn>
 </popper>

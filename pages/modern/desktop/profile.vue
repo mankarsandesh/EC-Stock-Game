@@ -88,7 +88,7 @@
                         : 'menu_title'
                     "
                   >
-                    {{ $t("profile.myfollowing") }}
+                    {{ $t('profile.myfollowing') }}
                   </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/notification/">

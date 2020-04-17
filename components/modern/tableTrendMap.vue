@@ -91,7 +91,7 @@
         <v-btn
           color="primary"
           :to="'/modern/multigame/' + $route.params.id"
-          rigth
+          right
           fab
           class="multiGame"
           dark

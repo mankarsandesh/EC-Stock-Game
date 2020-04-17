@@ -174,7 +174,6 @@
           </v-flex>
         </v-card>
       </v-dialog>
-
       <v-flex class="layout-bottom">
         <div id="fullscreenGuidelines">
           <v-tooltip left>

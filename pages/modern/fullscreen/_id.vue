@@ -426,7 +426,7 @@
           <template v-slot:activator="{ on }">
             <v-btn
               color="primary"
-              rigth
+              right
               fab
               @click="$router.push(closeFullscreen)"
               class="fullscreenclose"
