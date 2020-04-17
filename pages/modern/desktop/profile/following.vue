@@ -50,7 +50,7 @@
           </div>
           <button class="btn_unfollow">unfollow</button>
         </div>
-      </div>
+      </v-flex>
     </v-flex>
     <!-- Follow Dialog -->
     <v-dialog v-model="dialog" width="500" class="followDialog">

@@ -44,9 +44,9 @@
             </button>
           </div>
         </div>
-      </div>
+      </v-flex>
     </v-flex>
-  </v-flex>
+  
   <!-- Follow Dialog -->
   <v-dialog v-model="dialog" width="500" class="followDialog">
     <followBet :username="this.username" :userImage="this.userImage" :FollowerUserUUID="this.FollowUserUUID" :isFollowing="this.FolloworNot" />
