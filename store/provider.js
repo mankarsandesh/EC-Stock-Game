@@ -85,6 +85,7 @@ const actions = {
           headers: config.header
         }
       );
+      console.log(res);
       if (res.code === 200) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);

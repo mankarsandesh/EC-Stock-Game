@@ -28,10 +28,10 @@
               <h2 v-if="getUserInfo.firstName == null">
                 {{ getUserInfo.userName }}
               </h2>
-              <h1 v-if="getUserInfo.firstName">
+              <h2 v-if="getUserInfo.firstName" class="text-capitalize">
                 {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-              </h1>
-              <p>{{ $t("profile.onlinestatus") }} : 2 hours</p>
+              </h2>
+              <p>{{ $t("profile.onlinestatus") }} : Online </p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
@@ -199,6 +199,7 @@ export default {
             // }
           }
         );
+        console.log(res);
         if (res.code === 200) {
           this.blurValue = 0;
           this.setUserData();
@@ -239,6 +240,7 @@ export default {
 }
 .image_container {
   position: relative;
+  margin-bottom: 10px;
 }
 .blur-img {
   position: absolute;

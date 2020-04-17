@@ -26,7 +26,7 @@
         <h4 class="subtitle-1 text-uppercase ">Follow By</h4>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-flex lg8 pr-4>
+          <v-flex lg6 pr-4>
             <v-select
               :items="followby"
               label="Select Follow type"
@@ -37,8 +37,12 @@
               solo
             ></v-select>
           </v-flex>
-          <v-flex lg3 pr-2>
+          <v-flex lg6 pr-2>
             <v-text-field
+              :rules="[
+                rules.min(10, rateValue, 'Rate'),
+                rules.max(100, rateValue, 'Rate')
+              ]"
               solo
               label="10%"
               v-if="selectRate"
@@ -47,6 +51,10 @@
               @keypress="onlyNumber"
             ></v-text-field>
             <v-text-field
+              :rules="[
+                rules.min(10, amountValue, 'Amount'),
+                rules.max(1000, amountValue, 'Amount')
+              ]"
               solo
               label="100"
               v-if="selectAmount"
@@ -70,9 +78,11 @@
             ></v-radio>
 
             <v-text-field
-              style="width: 200px;"
+              :rules="[
+                rulesNew.min(unfollowValue, autoStop),
+                rulesNew.max(unfollowValue, autoStop)
+              ]"
               solo
-              label="100"
               @keypress="onlyNumber"
               v-model="unfollowValue"
             >
@@ -84,9 +94,6 @@
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
                 >Follow</v-btn
-              >
-              <v-btn color="buttonCancel" text v-on:click="dialog = false"
-                >Cancel</v-btn
               >
             </v-flex>
           </v-radio-group>
@@ -100,9 +107,6 @@
             text
             >unFollow</v-btn
           >
-          <v-btn color="buttonCancel" text @click="dialog = false"
-            >Cancel</v-btn
-          >
         </v-flex>
       </div>
     </v-card>
@@ -115,6 +119,37 @@ export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
     return {
+      // AutoStop Follow Validation 
+      rulesNew: {
+        min(value, text) {         
+          if (text == 3 || text == 4)
+            return (value || "") >= 10 || `Amount must be at least 10 USD`;
+          else if (text == 5)
+            return (value || "") >= 1 || `Time must be at least 1 Days`;
+          else return (value || "") >= 1 || `Bet must be at least 1 Bet`;
+        },
+        max(value, text) {
+          if (text == 3 || text == 4)
+            return (
+              (value || "") <= 1000 || `Amount may not be greater than 1000 USD`
+            );
+          else if (text == 5)
+            return (
+              (value || "") <= 10 || `Time may not be greater than 10 Days`
+            );
+          else
+            return (value || "") <= 10 || `Bet may not be greater than 10 Bets`;
+        }
+      },
+      // Follow by Validation
+      rules: {
+        min(min, v, text) {
+          return (v || "") >= min || `${text} must be at least ${min}`;
+        },
+        max(max, v, text) {
+          return (v || "") <= max || `${text} may not be greater than ${max}.`;
+        }
+      },
       errorMessage: "",
       hasError: false,
       hasSucess: false,
@@ -163,14 +198,11 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
-    // All User Validation
+    // All Users Follow Bet Validation
     async followThisUser(followerID, followMethod) {
-      console.log(followMethod);
-
       this.selectedFollow == 1
         ? (this.BetValue = this.amountValue)
         : (this.BetValue = this.rateValue);
-
       if (
         this.selectedFollow &&
         this.BetValue &&
@@ -202,17 +234,15 @@ export default {
         this.errorShow(true, false, true, "Follwing type is not selected");
       }
     },
-
-    // Error Function
+    // Error Function Common
     errorShow(follingError, sucess, error, message) {
       this.FollwingError = follingError;
       this.hasError = error;
       this.hasSucess = sucess;
       this.errorMessage = message;
     },
-    // Follow Users API call
+    // Follow Users Bet API call
     async follwingBetting(follwerUUID, method) {
-      console.log(method);
       const LeaderBoardData = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
@@ -240,26 +270,25 @@ export default {
             headers: config.header
           }
         );
-        this.followData = data;
         console.log(data);
         if (data.code == 200) {
-          this.FollwingError = true;
-          this.hasSucess = true;
-          this.hasError = false;
-          this.errorMessage = data.message;
-          // window.setTimeout(function() {
-          //   location.reload();
-          // }, 3000);
+          this.errorShow(true, true, false, data.message);
+          window.setTimeout(function() {
+            location.reload();
+          }, 2000);
         } else {
-          this.FollwingError = true;
-          this.hasSucess = false;
-          this.hasError = true;
-          this.errorMessage = data.message.error[0];
+          this.errorShow(
+            true,
+            false,
+            true,
+            "Somthing Wrong. Please try Again!"
+          );
         }
       } catch (error) {
         console.log(error);
       }
     },
+    // Change Amount Rate Validation
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
       if (this.selectedFollow == "Amount") {
@@ -270,6 +299,7 @@ export default {
         this.selectRate = true;
       }
     },
+    // Change Amount Validation
     changeAmount(value) {
       if (value == "stopWin" || value == "stopLoss") {
         this.unfollowValue = "100";
@@ -282,6 +312,7 @@ export default {
         this.unfollowSign = "Bets";
       }
     },
+    // Number Validation
     onlyNumber($event) {
       let keyCode = $event.keyCode ? $event.keyCode : $event.which;
       if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
