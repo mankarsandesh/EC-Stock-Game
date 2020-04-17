@@ -254,13 +254,13 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
       this.demo = this.window.width;
-      if (this.window.width >= 1900) {
-        this.chartHeight = "320vh";
-        this.heightChart = 320;
+      if (this.window.width >= 2000) {
+        this.chartHeight = "420vh";
+        this.heightChart = 420;
       } else {
         this.chartHeight = "320vh";
         this.heightChart = 320;
-      }
+      }     
     }
   }
 };

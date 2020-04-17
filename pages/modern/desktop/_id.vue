@@ -149,6 +149,7 @@
           </div>
         </v-flex>
       </v-flex>
+
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius: 10px;">
@@ -174,26 +175,40 @@
           </v-flex>
         </v-card>
       </v-dialog>
+
+      <!-- Full Screen Float Button -->
       <v-flex class="layout-bottom">
         <div id="fullscreenGuidelines">
-          <v-tooltip left>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                color="primary"
-                rigth
-                fab
-                class="fullscreen"
-                dark
-                @click="setAfterFullScreenClosePage()"
-                title="Full Screen"
-              >
-                <v-icon>fullscreen</v-icon>
-              </v-btn>
-            </template>
-            <span>Full Screen</span>
-          </v-tooltip>
+          <v-btn
+            color="primary"
+            :to="'/modern/multigame/' + $route.params.id"
+            rigth
+            fab
+            class="multiGame"
+            dark
+           
+          >
+            <i
+              style="font-size:26px;"
+              class="fa fa-gamepad"
+              aria-hidden="true"
+            ></i>
+          </v-btn>
+
+          <v-btn
+            color="primary"
+            rigth
+            fab
+            class="fullscreen"
+            dark
+            @click="setAfterFullScreenClosePage()"
+            title="Full Screen"
+          >
+            <v-icon>fullscreen</v-icon>
+          </v-btn>
         </div>
       </v-flex>
+      <!-- End Multiple Screen Button Code -->
     </v-layout>
   </v-container>
 </template>
@@ -213,7 +228,6 @@ import config from "../../../config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
-
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -423,8 +437,20 @@ export default {
   }
 };
 </script>
-
 <style scoped>
+.multiGame {
+  z-index: 999;
+  position: fixed;
+  right: 0px;
+  bottom: 80px;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  font-size: 12px !important;
+  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+  padding: 0px 9px;
+}
 .fullscreen {
   position: fixed !important;
   bottom: 140px;
