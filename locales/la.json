@@ -241,7 +241,11 @@
     "signout": "ອອກ​ຈາກ​ລະ​ບົບ",
     "myfollowers": "ຜູ້ຕິດຕາມຂອງຂ້ອຍ",
     "mynotification": "ແຈ້ງການຂອງຂ້ອຍ",
-    "setting": "ການຕັ້ງຄ່າ"
+    "setting": "ການຕັ້ງຄ່າ",
+    "lastActive" : "ມີການເຄື່ອນໄຫວສຸດທ້າຍ",
+    "historyPeriod" : "ໄລຍະເວລາປະຫວັດສາດ",
+    "followers" : "ຜູ້ຕິດຕາມ",
+    "chart": "ຕາຕະລາງ"
   },
   "useraction": {
     "followbet": "ປະຕິບັດຕາມ BET",

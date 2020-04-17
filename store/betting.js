@@ -195,40 +195,23 @@ const getters = {
   },
   // Get amount of specific bet number
   getAmountBetSpecificNumber: state => data => {
-    let start = 2000;
-    let end = 2000;
-    if (data.ruleID === "firstdigit") {
-      start = 8;
-      end = 17;
-    } else if (data.ruleID === "lastdigit") {
-      start = 25;
-      end = 34;
-    } else if (data.ruleID === "bothdigit") {
-      start = 149;
-      end = 167;
-    } else {
-      start = 42;
-      end = 141;
-    }
+    // get total bottom bet amount
     function getAmount(object) {
-      let count = 9;
-      // find stockId
-      if (object.findIndex(x => x.gameUUID === data.gameUUID) == -1) return 0;
-      // get data by stockId
-      let stockIdObject = object.filter(x => x.gameUUID === data.gameUUID);
-      // check rule in stockId
-      // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
-      // get amount by rule
-      let result = 0;
-      for (let i = 0; i <= count; i++) {
-        result =
-          result +
-          stockIdObject
-            .filter(x => x.ruleID >= start && x.ruleID <= end)
-            .map(x => x.betAmount)
-            .reduce((a, b) => a + b, 0);
+      // check gameUUID is exist or not,if not return 0
+      if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1) {
+        return 0;
       }
-      return result;
+      // get data by gameUUID and store in 'oneGameUUID'
+      let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
+      // check there is rule id in gameUUID or not,if no has return 0
+      if (oneGameUUID.findIndex(x => x.specificNumber === data.ruleID) == -1)
+        return 0;
+      // get gameUUID from 'oneGameUUID'
+      let result = oneGameUUID
+        .filter(x => x.specificNumber === data.ruleID)
+        .map(x => x.betAmount)
+        .reduce((a, b) => a + b, 0);
+      return parseInt(result);
     }
     return getAmount(state.multiGameBet);
     //  + getAmount(state.onGoingBet);

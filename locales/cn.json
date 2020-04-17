@@ -241,7 +241,11 @@
     "signout": "登出",
     "myfollowers": "关注我的",
     "mynotification": "提醒权限",
-    "setting": "设置"
+    "setting": "设置",
+    "lastActive" : "最后登录",
+    "historyPeriod" : "历史时期",
+    "followers" : "追随者",
+    "chart": "图表"
   },
   "useraction": {
     "followbet": "跟进",
