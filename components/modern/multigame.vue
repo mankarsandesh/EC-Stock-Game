@@ -97,6 +97,7 @@ import { mapGetters } from "vuex";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import config from "../../config/config.global";
+import log from "roarr";
 // import livechart from "../modern/livechart"
 export default {
   data() {
@@ -154,33 +155,40 @@ export default {
   methods: {
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-        if (res.code === 200) {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });
+        if (res.status) {
           this.lastDraw = res.data[0].roadMap
             .reverse()[0]
             .stockValue.replace(",", "");
         } else {
-          throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
-        this.fetchChart(this.getStockUUIDByStockName(this.stockid));
         console.error(ex);
         this.$swal({
           title: ex.message,
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/modern/multigame.vue",
+            apiUrl: config.getRoadMap.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

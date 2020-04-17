@@ -75,18 +75,21 @@
               :dataArray="dataArray"
               :trendType="activeType"
               :isFullscreen="isFullscreen"
-              :key="dataArray[dataArray.length - 1].stockTimeStamp + activeType"
+              :key="
+                dataArray[dataArray.length - 1].stockTimeStamp +
+                  activeType +
+                  getLocale
+              "
             ></trendMap>
           </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
-
-    
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import trendMap from "~/components/modern/trendMap";
 export default {
   data() {
@@ -117,6 +120,7 @@ export default {
     trendMap
   },
   computed: {
+    ...mapGetters(["getLocale"]),
     activeType() {
       if (this.trendType === null) {
         return this.trendTypes[this.index];

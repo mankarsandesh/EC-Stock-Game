@@ -13,7 +13,7 @@
     </v-flex>
     <v-tooltip>
       <template v-slot:activator="{ on }">
-        <v-btn color="primary" rigth fab @click="$router.push(closeFullscreen)" class="fullscreenclose" dark v-on="on" title="Full Screen">
+        <v-btn color="primary" right fab @click="$router.push(closeFullscreen)" class="fullscreenclose" dark v-on="on" title="Full Screen">
           <v-icon>close</v-icon>
         </v-btn>
       </template>

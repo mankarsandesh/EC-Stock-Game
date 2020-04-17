@@ -64,7 +64,7 @@
         ></chanelChat>
       </div>
     </div>
-    <v-btn rigth fab slot="reference" class="liveChat">
+    <v-btn right fab slot="reference" class="liveChat">
       <v-icon>chat</v-icon>
     </v-btn>
   </popper>
@@ -204,6 +204,8 @@ export default {
           );
           if (res.status) {
             this.messageInput = "";
+          } else {
+            throw new Error(config.error.general);
           }
         }
       } catch (ex) {
@@ -235,6 +237,8 @@ export default {
           );
           if (res.status) {
             this.messageInput = "";
+          } else {
+            throw new Error(config.error.general);
           }
         }
       } catch (ex) {

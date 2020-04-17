@@ -46,12 +46,13 @@ export default {
     ...mapActions(["setIsLoadingStockGame"]),
     async fetch() {
       try {
-        const res = await this.$axios.$post(
+        var reqBody = {
+          portalProviderUUID: this.portalProviderUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(
           config.getAllAnnouncements.url,
-          {
-            portalProviderUUID: this.portalProviderUUID,
-            version: config.version
-          },
+          reqBody,
           {
             headers: config.header
           }
@@ -60,7 +61,7 @@ export default {
         if(res.status) {
           this.announcementData = res.data;
         } else {
-          throw new Error('Something went Wrong');
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.log(ex);
@@ -69,11 +70,17 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error({
-          page: this.$options.name,
-          provider: localStorage.getItem('PORTAL_PROVIDERUUID'),
-          user: localStorage.getItem('USER_UUID')
-        }, ex.message);
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getAllAnnouncements.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

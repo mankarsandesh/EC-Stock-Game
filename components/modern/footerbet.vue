@@ -1,39 +1,48 @@
 <template>
-<div>
-  <v-layout row justify-center class="footerBet">
-    <v-flex lg2 md2 xs2 class="amount">
-      <div>{{ getAllBettingAmount }}</div>
-    </v-flex>
-    <v-flex lg5 md5 xs3 class="chipsdiv">
-      <v-layout row>
-        <v-flex class="text-center">
-          <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
-            <v-img @click="setFooterBetAmount(getCoinsModern[key])" :src="item.img" :width="item.width" :alt="item.title" :class="item.color" class="chipImg">
-              <span class="setpricechip">{{ getCoinsModern[key] }}</span>
-            </v-img>
-          </v-avatar>
-        </v-flex>
-      </v-layout>
-    </v-flex>
-    <v-flex lg3 md3 xs2 class="betButton">
-      <div>
-        <v-btn class="buttonGreensmall" dark @click="getSending()">{{
+  <div>
+    <v-layout row justify-center id="footerBet-guide">
+      <v-flex lg2 md2 xs2 class="amount">
+        <div>{{ getAllBettingAmount }}</div>
+      </v-flex>
+      <v-flex lg5 md5 xs3 class="chipsdiv">
+        <v-layout row>
+          <v-flex class="text-center">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
+              <v-img
+                @click="setFooterBetAmount(getCoinsModern[key])"
+                :src="item.img"
+                :width="item.width"
+                :alt="item.title"
+                :class="item.color"
+                class="chipImg"
+              >
+                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
+              </v-img>
+            </v-avatar>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex lg3 md3 xs2 class="betButton">
+        <div>
+          <v-btn class="buttonGreensmall" dark @click="getSending()">{{
             $t("msg.confirm")
           }}</v-btn>
-        <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
+          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
             $t("msg.cancel")
           }}</v-btn>
-      </div>
-    </v-flex>
-  </v-layout>
-</div>
+        </div>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import setting from "../modern/setting/chipamout";
 import chips from "../../data/chips";
 export default {

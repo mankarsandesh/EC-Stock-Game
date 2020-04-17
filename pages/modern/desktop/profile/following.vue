@@ -48,10 +48,10 @@
               unfollow
             </button>
           </div>
+          <button class="btn_unfollow">unfollow</button>
         </div>
-      </v-flex>
+      </div>
     </v-flex>
-
     <!-- Follow Dialog -->
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
@@ -65,7 +65,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {
+  mapGetters,
+  mapActions
+} from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
 import followBet from "../../../../components/modern/follow/followBet";
@@ -88,7 +91,7 @@ export default {
     followBet
   },
   mounted() {
-    this.getFolloweList();
+    this.getFollowingList();
   },
   computed: {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
@@ -117,14 +120,12 @@ export default {
     async getFolloweList() {
       try {
         const res = await this.$axios.$post(
-          config.getUserFollower.url,
-          {
+          config.getUserFollower.url, {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             followersType: 2, // Follwing users List
             version: config.version
-          },
-          {
+          }, {
             headers: config.header
           }
         );
@@ -190,6 +191,7 @@ export default {
   padding: 15px 10px;
   text-align: center;
 }
+
 .btn_follow {
   margin-top: 10px;
   font-weight: bold;
@@ -202,6 +204,7 @@ export default {
   border-radius: 15px;
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
 }
+
 .btn_unfollow {
   margin-top: 10px;
   font-weight: bold;

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- tutorial start -->   
-    <DesktopTutorial/>
+    <!-- tutorial start -->
+    <DesktopTutorial />
     <!-- tutorial  end -->
 
     <v-app style=" background-color: #f4f5fd;">
@@ -112,6 +112,7 @@ import lottie from "lottie-web";
 import invitation from "~/components/invitation";
 import userMenu from "../components/userMenu";
 import config from "../config/config.global";
+import log from "roarr";
 
 import DesktopTutorial from "../components/desktopTutorial";
 
@@ -191,47 +192,64 @@ export default {
     });
   },
   methods: {
-    ...mapActions([
-      "setGameChannelShow",
-    ]),
+    ...mapActions(["setGameChannelShow"]),
     async fetchNotification() {
-      const betData = {
-        portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-        userUUID: this.getUserUUID, // get the userUUID with the this object
-        version: config.version, // version of API
-        betResult: [0, 1], // -1= pending, pending that mean is betting
-        limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
-        offset: "0" // offset or skip the data
-      };
-      const { data } = await this.$axios.post(
-        config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
-        betData,
-        {
-          headers: config.header
-        }
-      );
-      this.messagesCount = data.data.length;
-      for (let i = 0; i < data.data.length - 1; i++) {
-        let betID = data.data[i].betID;
-        let betResult = data.data[i].betResult;
-        let name = data.data[i].name;
-        let ruleName = data.data[i].ruleName;
-        let betAmount = data.data[i].betAmount;
-        let betTime = data.data[i].createdTime;
-        let stockName = data.data[i].stockName;
-        let win = `<span class="text-slide text-white"><span class="text-warning">
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
+          userUUID: this.getUserUUID, // get the userUUID with the this object
+          version: config.version, // version of API
+          betResult: [0, 1], // -1= pending, pending that mean is betting
+          limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
+          offset: "0" // offset or skip the data
+        };
+        var { data } = await this.$axios.post(
+          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+        if (data.status) {
+          this.messagesCount = data.data.length;
+          for (let i = 0; i < data.data.length - 1; i++) {
+            let betID = data.data[i].betID;
+            let betResult = data.data[i].betResult;
+            let name = data.data[i].name;
+            let ruleName = data.data[i].ruleName;
+            let betAmount = data.data[i].betAmount;
+            let betTime = data.data[i].createdTime;
+            let stockName = data.data[i].stockName;
+            let win = `<span class="text-slide text-white"><span class="text-warning">
                         <i class="fa fa-bell"></i>
                         </span>Player ${betResult}  ${betAmount} chips on,
                          ${stockName} stock ${ruleName}  ${betTime}</span>`;
-        this.winner.push(win);
+            this.winner.push(win);
+          }
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            req: reqBody,
+            res: data,
+            page: "layouts/desktopModern.vue",
+            apiUrl: config.getAllBets.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
-  },  
+  },
   computed: {
-    ...mapGetters([      
+    ...mapGetters([
       "getGameUUIDByStockName",
       "getPortalProviderUUID", // Get Portalprovider
-      "getUserUUID", // Get UserUUID 
+      "getUserUUID", // Get UserUUID
       "getLocale",
       "getIsLoadingStockGame"
     ]),

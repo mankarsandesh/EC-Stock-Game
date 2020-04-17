@@ -43,6 +43,15 @@
   align-items: center;
   height: 100%;
 }
+.guide-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  position: relative;
+  top: 150px;
+  height: 100%;
+}
 .guide-bottom-has-scroll {
   display: flex;
   flex-direction: column;
@@ -80,10 +89,15 @@
   z-index: 10001;
   height: 100%;
 }
+#footerBet-guide {
+  position: relative;
+  z-index: 2;
+}
 #lastDrawGuideline,
 #betCloseInGuideline,
 #lotteryDrawGuidelines,
-#selectstockGuideline {
+#selectstockGuideline,
+#fullscreen-roadmap-guide {
   position: relative;
   border-radius: 8px;
   background-color: white;
@@ -96,6 +110,10 @@
 #betresultGuidelines {
   position: relative;
   background-color: white;
+}
+#live-bet-guide,
+#trendmapGuidelines {
+  position: relative;
 }
 
 /* tutorial */
@@ -1509,16 +1527,16 @@ p.guideline {
 }
 
 /* Page Transition */
-.fade-enter{
+.fade-enter {
   opacity: 0;
 }
-.fade-enter-active{
+.fade-enter-active {
   transition: opacity 0.3s;
 }
-.fade-leave{
+.fade-leave {
   /* opacity: 1; */
 }
-.fade-leave-active{
+.fade-leave-active {
   transition: opacity 0.3s;
   opacity: 0;
 }

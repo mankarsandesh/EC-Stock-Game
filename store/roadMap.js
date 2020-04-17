@@ -1,4 +1,5 @@
 import config from "../config/config.global";
+import log from "roarr";
 
 const state = () => ({
   clearRoadMap: false, // Store clear road map status
@@ -22,27 +23,34 @@ const actions = {
   // Set road map data from api
   async setRoadMap(context, stockUUID) {
     try {
-      const res = await this.$axios.$post(
-        config.getRoadMap.url,
-        {
-          portalProviderUUID: context.rootGetters.getPortalProviderUUID,
-          limit: 50,
-          stockUUID: [stockUUID],
-          version: config.version
-        },
-        {
-          headers: config.header
-        }
-      );
-      if (res.code === 200) {
+      var reqBody = {
+        portalProviderUUID: context.rootGetters.getPortalProviderUUID,
+        limit: 50,
+        stockUUID: [stockUUID],
+        version: config.version
+      };
+      var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+        headers: config.header
+      });
+      if (res.status) {
         let readyData = res.data[0].roadMap.reverse();
         context.commit("SET_ROAD_MAP", readyData);
       } else {
-        console.log(res);
-        throw new Error();
+        throw new Error(config.error.general);
       }
     } catch (ex) {
       console.log(ex);
+      log.error(
+        {
+          req: reqBody,
+          res,
+          page: "store/roadMap.js",
+          apiUrl: config.getRoadMap.url,
+          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: localStorage.getItem("USER_UUID")
+        },
+        ex.message
+      );
     }
   },
   // Set live road map data
