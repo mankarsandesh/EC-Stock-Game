@@ -406,8 +406,6 @@
           </template>
           <span>Close Full Screen</span>
         </v-tooltip>
-
-        
       </v-layout>
     </v-container>
   </div>
@@ -422,6 +420,7 @@ import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
 import config from "../../../config/config.global";
+import log from "roarr";
 
 export default {
   async validate({ params, store }) {
@@ -616,26 +615,37 @@ export default {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
     async getActiveGamesByCategory() {
+      var reqBody = {
+        portalProviderUUID: this.getPortalProviderUUID,
+        version: config.version
+      };
       try {
-        const { data } = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.getActiveGamesByCategory.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version
-          },
+          reqBody,
           {
             headers: config.header
           }
         );
-        this.setStockCategory(data);
-        this.items = data;
+        if (res.status) {
+          this.setStockCategory(res.data);
+          this.items = res.data;
+        } else {
+          throw new Error(config.error.general);
+        }
       } catch (ex) {
         console.log(ex);
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000
-        });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getActiveGamesByCategory.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     formatToPrice(value) {

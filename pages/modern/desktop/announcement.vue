@@ -60,7 +60,7 @@ export default {
         if (res.status) {
           this.announcementData = res.data;
         } else {
-          throw new Error("Something went Wrong");
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.log(ex);

@@ -295,22 +295,22 @@ export default {
           });
         } else {
           if (res.status) {
-            throw new Error(res.data[0].message);
+            throw new Error(config.error.general);
           } else {
-            throw new Error(Object.values(res.message)[0][0]);
+            throw new Error(config.error.general);
           }
         }
       } catch (ex) {
         this.confirmDisabled = false;
         this.$swal({
           type: "error",
-          title: "OOPS! Something went wrong",
+          title: ex.message,
           showConfirmButton: true
         });
         log.error(
           {
             req: reqBody,
-            res: res.data,
+            res,
             page: "components/modern/betModal.vue",
             apiUrl: config.storeBet.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),

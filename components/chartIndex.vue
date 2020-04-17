@@ -178,7 +178,7 @@ export default {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
           limit: 50,
-          stockUUID: [stockUUID]
+          stockUUID: [stockUUID],
           version: config.version
         };
         var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
@@ -188,7 +188,7 @@ export default {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);

@@ -204,7 +204,7 @@ export default {
           this.blurValue = 0;
           this.setUserData();
         } else {
-          throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         this.imageBase64 = "";

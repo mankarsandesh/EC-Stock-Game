@@ -204,6 +204,8 @@ export default {
           );
           if (res.status) {
             this.messageInput = "";
+          } else {
+            throw new Error(config.error.general);
           }
         }
       } catch (ex) {
@@ -235,6 +237,8 @@ export default {
           );
           if (res.status) {
             this.messageInput = "";
+          } else {
+            throw new Error(config.error.general);
           }
         }
       } catch (ex) {

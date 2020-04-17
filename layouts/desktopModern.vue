@@ -227,7 +227,7 @@ export default {
             this.winner.push(win);
           }
         } else {
-          throw new Error(Object.values(data.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.log(ex);

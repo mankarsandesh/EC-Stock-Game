@@ -222,7 +222,7 @@ export default {
           this.setStockCategory(res.data);
           this.items = res.data;
         } else {
-          throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.log(ex);

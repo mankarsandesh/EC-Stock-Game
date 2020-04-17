@@ -70,7 +70,10 @@
                   ></v-select>
                 </div>
                 <v-btn
-                  v-if="visitProfileUserData.userUUID != getUserUUID &&    visitProfileUserData.isFollowing == 0" 
+                  v-if="
+                    visitProfileUserData.userUUID != getUserUUID &&
+                      visitProfileUserData.isFollowing == 0
+                  "
                   class="buttonFollow"
                   v-on:click="
                     followUserBet(
@@ -207,6 +210,7 @@ import VueApexCharts from "vue-apexcharts";
 import config from "../../../../config/config.global";
 import followBet from "../../../../components/modern/follow/followBet";
 import date from "date-and-time";
+import log from "roarr";
 
 export default {
   layout: "desktopModern",
@@ -318,22 +322,22 @@ export default {
         } else {
           this.userNew = this.$route.params.useruuid;
         }
-        const res = await this.$axios.$post(
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          visitingUserUUID: this.userNew,
+          dateRangeFrom: this.startDate,
+          dateRangeTo: this.endDate,
+          version: config.version
+        };
+        var res = await this.$axios.$post(
           config.getVisitUserProfile.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID: this.getUserUUID,
-            visitingUserUUID: this.userNew,
-            dateRangeFrom: this.startDate,
-            dateRangeTo: this.endDate,
-            version: config.version
-          },
+          reqBody,
           {
             headers: config.header
           }
         );
-        console.log(res);
-        if (res.code === 200) {
+        if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
           //  series
@@ -347,7 +351,7 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
         } else {
           this.messageError = true;
-          // throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
@@ -356,6 +360,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getVisitUserProfile.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

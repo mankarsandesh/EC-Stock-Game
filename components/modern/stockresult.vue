@@ -74,7 +74,7 @@ export default {
         if (data.status) {
           this.getStockResult = data.data;
         } else {
-          throw new Error(Object.values(data.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.log(ex);

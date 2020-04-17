@@ -169,10 +169,9 @@ export default {
             .reverse()[0]
             .stockValue.replace(",", "");
         } else {
-          throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
-        this.fetchChart(this.getStockUUIDByStockName(this.stockid));
         console.error(ex);
         this.$swal({
           title: ex.message,
