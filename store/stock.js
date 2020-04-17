@@ -1,5 +1,7 @@
 import config from "../config/config.global";
-import stock from '../data/stockList'; 
+import stock from "../data/stockList";
+import log from "roarr";
+
 const state = () => ({
   stocks: stock.stockList,
   stockCategory: [], // Store Stocks category
@@ -29,23 +31,31 @@ const actions = {
   // Set Stocks data
   async setStocksData(context) {
     try {
-      const res = await this.$axios.$post(
-        config.getStock.url,
-        {
-          portalProviderUUID: context.rootState.portalProviderUUID,
-          version: config.version
-        },
-        {
-          headers: config.header
-        }
-      );
-      if (res.code === 200) {
+      var reqBody = {
+        portalProviderUUID: context.rootState.portalProviderUUID,
+        version: config.version
+      };
+      var res = await this.$axios.$post(config.getStock.url, reqBody, {
+        headers: config.header
+      });
+      if (res.status) {
         context.commit("SET_STOCKS_DATA", res.data);
       } else {
-        throw new Error();
+        throw new Error(config.error.general);
       }
     } catch (ex) {
       console.log(ex);
+      log.error(
+        {
+          req: reqBody,
+          res,
+          page: "store/stock.js",
+          apiUrl: config.getStock.url,
+          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: localStorage.getItem("USER_UUID")
+        },
+        ex.message
+      );
     }
   },
   // Set stocks category

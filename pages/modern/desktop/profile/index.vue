@@ -125,6 +125,7 @@ import {
 } from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
+import log from "roarr";
 
 export default {
   data() {
@@ -148,10 +149,9 @@ export default {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
     async saveClick() {
-      console.log(this.$refs);
       this.updating = true;
       const ref = this.$refs;
-      let formData = new FormData();
+      var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("email", ref.email.value);
@@ -162,25 +162,24 @@ export default {
       formData.append("country", ref.country.value);
       formData.append("version", config.version);
       try {
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData, {
             headers: config.header
           }
         );
-        if (res.code === 200) {
+        if (res.status) {
+          this.setUserData();
+          this.updating = false;
           this.$swal({
             type: "success",
             title: "Successful Information Saved!",
             showConfirmButton: false,
             timer: 1000
           });
-          this.setUserData();
-          this.updating = false;
         } else {
           this.updating = false;
-          throw new Error(Object.values(res.message)[0][0]);
-          console.log(res);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
@@ -190,6 +189,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: formData,
+            res,
+            page: this.$options.name,
+            apiUrl: config.updateUserProfile.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

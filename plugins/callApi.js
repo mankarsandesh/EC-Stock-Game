@@ -1,6 +1,7 @@
-import openSocket from "socket.io-client";
 import config from "../config/config.global";
+import log from "roarr";
 import axios from "axios";
+
 export default ({ store }) => {
   //coin modern set and get from localStorage
   initLocalStorageCoin(store);
@@ -12,24 +13,31 @@ export default ({ store }) => {
 
 async function getActiveGamesByCategory(store) {
   try {
-    const res = await axios.post(
-      config.getActiveGamesByCategory.url,
-      {
-        portalProviderUUID: store.getters.getPortalProviderUUID,
-        version: config.version
-      },
-      {
-        headers: config.header
-      }
-    );
-    if (res.status) {
+    var reqBody = {
+      portalProviderUUID: store.getters.getPortalProviderUUID,
+      version: config.version
+    };
+    var res = await axios.post(config.getActiveGamesByCategory.url, reqBody, {
+      headers: config.header
+    });
+    if (res.data.status) {
       store.dispatch("setStockCategory", res.data.data);
     } else {
-      throw new Error(res.message);
+      throw new Error(config.error.general);
     }
   } catch (ex) {
-    getActiveGamesByCategory(store);
-    console.error(ex.message);
+    console.log(ex.message);
+    log.error(
+      {
+        req: reqBody,
+        res: res.data,
+        page: "plugins/callApi.js",
+        apiUrl: config.getActiveGamesByCategory.url,
+        provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+        user: localStorage.getItem("USER_UUID")
+      },
+      ex.message
+    );
   }
 }
 

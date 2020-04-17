@@ -1,28 +1,34 @@
 <template>
-<div>
-  <v-flex xs12 class="pt-5 pl-5">
-    <div>
-      <h2 class="text-uppercase">{{$t('profile.myfollowing')}} ({{this.countFollwing}})</h2>
-      <v-divider></v-divider>
-    </div>
-  </v-flex>
-  <v-flex xs12 pt-5 pl-5>
-    <v-flex xs10>
-      <div class="title_container">
-        <h3 class="text-black" v-if="followingListEmpty == true">{{$t('profile.noFollowing')}}</h3>
-        <div class="follower_container" v-for="(data, index) in followingList" :key="index">
-          <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
-            <img class="userImage" :src="imgProfile(data.profileImage)" />
-            <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
-            <span v-if="data.fullName == null" class="name">{{ data.userName }}</span>
-          </nuxt-link>
-          <div class="followType">
-            <span>
-              <label>Follow by amount :</label> USD 100
-            </span>
-            <span>
-              <label>Auto Stop Follow winning :</label> USD 150
-            </span>
+  <div>
+    <v-flex xs12 class="pt-5 pl-5">
+      <div>
+        <h2 class="text-uppercase">following ({{this.countFollwing}})</h2>
+        <v-divider></v-divider>
+      </div>
+    </v-flex>
+    <v-flex xs12 pt-5 pl-5>
+      <v-flex xs10>
+        <div class="title_container">
+          <h3 class="text-black" v-if="followingListEmpty == true">There are no follwing user.</h3>
+          <div
+            class="follower_container"
+            v-for="(data, index) in followingList"
+            :key="index"
+          >
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
+              <img class="userImage" :src="imgProfile(data.profileImage)" />
+              <span v-if="data.fullName" class="name">{{ data.fullName }}</span>             
+              <span v-if="data.fullName == null" class="name" >{{ data.userName }}</span>                      
+            </nuxt-link>
+            <div class="followType">
+                  <span>
+                    <label>Follow {{data.followRuleValue[0].name}} :</label>   {{data.followRuleValue[0].value}}
+                  </span>
+                   <span>
+                    <label>Auto Stop {{data.unFollowRuleValue[0].name}}:</label>  {{data.unFollowRuleValue[0].value}}
+                  </span>
+              </div>     
+            <button class="btn_unfollow">unfollow</button>
           </div>
           <button class="btn_unfollow">unfollow</button>
         </div>
@@ -72,7 +78,8 @@ export default {
           }, {
             headers: config.header
           }
-        );
+        );       
+        console.log(res);
         if (res.code == 200) {
           this.followingList = res.data;
           this.countFollwing = res.data.length;

@@ -1,4 +1,5 @@
 import config from "../config/config.global";
+import log from "roarr";
 
 const state = () => ({
   multiGameBet: [], // Store multi game bet
@@ -75,18 +76,15 @@ const actions = {
         });
         return;
       }
-      const res = await this.$axios.$post(
-        config.storeBet.url,
-        {
-          portalProviderUUID: context.rootState.provider.portalProviderUUID,
-          userUUID: context.rootState.provider.userUUID,
-          version: config.version,
-          betData: betDatas
-        },
-        {
-          headers: config.header
-        }
-      );
+      var reqBody = {
+        portalProviderUUID: context.rootState.provider.portalProviderUUID,
+        userUUID: context.rootState.provider.userUUID,
+        version: config.version,
+        betData: betDatas
+      };
+      var res = await this.$axios.$post(config.storeBet.url, reqBody, {
+        headers: config.header
+      });
       if (res.status && res.code == 200) {
         context.dispatch("setUserData", "provider");
         context.commit("SET_IS_SEND_BETTING", false);
@@ -117,16 +115,27 @@ const actions = {
           showConfirmButton: true
         });
       } else {
-        throw new Error(res.message);
+        throw new Error(config.error.general);
       }
     } catch (ex) {
+      console.error(ex.message);
+      context.commit("SET_IS_SEND_BETTING", false);
       this._vm.$swal({
         type: "error",
         title: `${ex.message}`,
         showConfirmButton: true
       });
-      console.error(ex);
-      context.commit("SET_IS_SEND_BETTING", false);
+      log.error(
+        {
+          req: reqBody,
+          res,
+          page: "store/betting.js",
+          apiUrl: config.storeBet.url,
+          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: localStorage.getItem("USER_UUID")
+        },
+        ex.message
+      );
     }
   }
 };
@@ -186,40 +195,23 @@ const getters = {
   },
   // Get amount of specific bet number
   getAmountBetSpecificNumber: state => data => {
-    let start = 2000;
-    let end = 2000;
-    if (data.ruleID === "firstdigit") {
-      start = 8;
-      end = 17;
-    } else if (data.ruleID === "lastdigit") {
-      start = 25;
-      end = 34;
-    } else if (data.ruleID === "bothdigit") {
-      start = 149;
-      end = 167;
-    } else {
-      start = 42;
-      end = 141;
-    }
+    // get total bottom bet amount
     function getAmount(object) {
-      let count = 9;
-      // find stockId
-      if (object.findIndex(x => x.gameUUID === data.gameUUID) == -1) return 0;
-      // get data by stockId
-      let stockIdObject = object.filter(x => x.gameUUID === data.gameUUID);
-      // check rule in stockId
-      // if (stockIdObject.findIndex(x => x.betId === data.betId) == -1) return 0
-      // get amount by rule
-      let result = 0;
-      for (let i = 0; i <= count; i++) {
-        result =
-          result +
-          stockIdObject
-            .filter(x => x.ruleID >= start && x.ruleID <= end)
-            .map(x => x.betAmount)
-            .reduce((a, b) => a + b, 0);
+      // check gameUUID is exist or not,if not return 0
+      if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1) {
+        return 0;
       }
-      return result;
+      // get data by gameUUID and store in 'oneGameUUID'
+      let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
+      // check there is rule id in gameUUID or not,if no has return 0
+      if (oneGameUUID.findIndex(x => x.specificNumber === data.ruleID) == -1)
+        return 0;
+      // get gameUUID from 'oneGameUUID'
+      let result = oneGameUUID
+        .filter(x => x.specificNumber === data.ruleID)
+        .map(x => x.betAmount)
+        .reduce((a, b) => a + b, 0);
+      return parseInt(result);
     }
     return getAmount(state.multiGameBet);
     //  + getAmount(state.onGoingBet);
