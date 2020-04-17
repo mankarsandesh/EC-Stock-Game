@@ -29,25 +29,6 @@
                 <span v-if="visitProfileUserData.currentActiveTime === 'offline'">
                   {{ visitProfileUserData.currentActiveTime }}
                 </span>
-<<<<<<< HEAD
-                <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
-                  <v-select
-                    v-model="filter"
-                    height="15px"
-                    dense
-                    hide-details
-                    :items="items"
-                    solo
-                  ></v-select>
-                </div>
-                <v-btn
-                  v-if="
-                    visitProfileUserData.userUUID != getUserUUID &&
-                      visitProfileUserData.isFollowing == 0
-                  "
-                  class="buttonFollow"
-                  v-on:click="
-=======
                 <span v-else>
                   <b>{{$t('profile.lastActive')}} : </b>
                   {{ visitProfileUserData.currentActiveTime }}
@@ -68,7 +49,6 @@
                 <v-select v-model="filter" height="15px" dense hide-details :items="items" solo></v-select>
               </div>
               <v-btn v-if="visitProfileUserData.userUUID != getUserUUID &&    visitProfileUserData.isFollowing == 0" class="buttonFollow" v-on:click="
->>>>>>> 7ab4a5924ffc83bfa5f7f49a65bde330f906dd40
                     followUserBet(
                       visitProfileUserData.username,
                       visitProfileUserData.userImage,

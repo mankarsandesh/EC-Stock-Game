@@ -172,15 +172,9 @@ import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "../../../config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
-<<<<<<< HEAD
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
 
-=======
-import {
-  isMobile
-} from "mobile-device-detect";
->>>>>>> 7ab4a5924ffc83bfa5f7f49a65bde330f906dd40
 export default {
   async validate({
     params,
