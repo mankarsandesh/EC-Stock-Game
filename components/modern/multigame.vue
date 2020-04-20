@@ -99,6 +99,7 @@ import chartApp from "~/components/modern/chart";
 import config from "../../config/config.global";
 import log from "roarr";
 // import livechart from "../modern/livechart"
+
 export default {
   data() {
     return {
@@ -121,8 +122,30 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
-        this.lastDraw = dataIndex.stockValue.replace(",", "");
+        try {
+          var logData = data;
+          if (data.status) {
+            let dataIndex = data.data.roadMap[0];
+            this.lastDraw = dataIndex.stockValue.replace(",", "");
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(this.stockid)}.${
+                this.getPortalProviderUUID
+              }`,
+              event: "roadMap",
+              res: logData,
+              page: "components/modern/multigame.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
   },

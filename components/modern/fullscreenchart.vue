@@ -1,15 +1,21 @@
 <template>
-<div class="text-xs-center">
-  <apexchart type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey"></apexchart>
-</div>
+  <div class="text-xs-center">
+    <apexchart
+      type="bar"
+      height="350"
+      :options="chartOptions"
+      :series="series"
+      :key="componentKey"
+    ></apexchart>
+  </div>
 </template>
 
 <script>
 import VueApexCharts from "vue-apexcharts";
-import {
-  mapGetters
-} from "vuex";
+import { mapGetters } from "vuex";
 import openSocket from "socket.io-client";
+import log from "roarr";
+
 export default {
   props: ["StockData"],
   components: {
@@ -17,48 +23,49 @@ export default {
   },
   data() {
     return {
-      series: [{
-          name: this.$root.$t('gamemsg.big'),
+      series: [
+        {
+          name: this.$root.$t("gamemsg.big"),
           data: [1, 2, 0, 15],
           betCounts: [15, 14, 13, 0]
         },
         {
-          name: this.$root.$t('gamemsg.small'),
+          name: this.$root.$t("gamemsg.small"),
           data: [0, 10, 10, 0],
           betCounts: [15, 14, 13, 100]
         },
         {
-          name: this.$root.$t('gamemsg.odd'),
+          name: this.$root.$t("gamemsg.odd"),
           data: [0, 0, 0, 10],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: this.$root.$t('gamemsg.even'),
+          name: this.$root.$t("gamemsg.even"),
           data: [0, 0, 5, 15],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: this.$root.$t('gamemsg.high'),
+          name: this.$root.$t("gamemsg.high"),
           data: [1, 5, 0, 1],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: this.$root.$t('gamemsg.mid'),
+          name: this.$root.$t("gamemsg.mid"),
           data: [1, 0, 0, 0],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: this.$root.$t('gamemsg.low'),
+          name: this.$root.$t("gamemsg.low"),
           data: [0, 20, 0, 15],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: this.$root.$t('gamemsg.number'),
+          name: this.$root.$t("gamemsg.number"),
           data: [1, 0, 10, 10],
           betCounts: [15, 14, 13, 12]
         },
         {
-          name: this.$root.$t('gamemsg.tie'),
+          name: this.$root.$t("gamemsg.tie"),
           data: [0, 9, 20, 0],
           betCounts: [15, 14, 13, 20]
         }
@@ -91,7 +98,7 @@ export default {
             this.$root.$t("gamemsg.firstdigit"),
             this.$root.$t("gamemsg.lastdigit"),
             this.$root.$t("gamemsg.bothdigit"),
-            this.$root.$t("gamemsg.twodigit"),
+            this.$root.$t("gamemsg.twodigit")
           ]
         },
         tooltip: {
@@ -102,13 +109,9 @@ export default {
             highlightDataSeries: false
           },
           y: {
-            formatter: function (
-              val, {
-                series,
-                seriesIndex,
-                dataPointIndex,
-                w
-              }
+            formatter: function(
+              val,
+              { series, seriesIndex, dataPointIndex, w }
             ) {
               return (
                 '<div class="arrow_box">' +
@@ -137,30 +140,46 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "getGameUUIDByStockName"
-    ])
+    ...mapGetters(["getGameUUIDByStockName", "getPortalProviderUUID"])
   },
   mounted() {
-    this.listenForBroadcast({
-        channelName: `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`,
+    this.listenForBroadcast(
+      {
+        channelName: `liveBetCounts.${this.getGameUUIDByStockName(
+          this.$route.params.id
+        )}`,
         eventName: "liveBetCounts"
       },
-      ({
-        data
-      }) => {
-        console.log("live game");
-        console.log(data.data);
-        this.series = data.data;
-        this.componentKey += 1;
+      ({ data }) => {
+        try {
+          var logData = data;
+          if (data.status) {
+            this.series = data.data;
+            this.componentKey += 1;
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `liveBetCounts.${this.getGameUUIDByStockName(
+                this.$route.params.id
+              )}`,
+              event: "liveBetCounts",
+              res: logData,
+              page: "components/modern/fullscreenchart.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
   },
   methods: {
-    listenForBroadcast({
-      channelName,
-      eventName
-    }, callback) {
+    listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     }
   }

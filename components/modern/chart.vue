@@ -31,6 +31,7 @@ import Chart from "chart.js";
 import { mapGetters, mapActions } from "vuex";
 import Echo from "laravel-echo";
 import log from "roarr";
+
 export default {
   props: {
     height: {
@@ -75,23 +76,45 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
-        let readyData = {
-          stockValue: dataIndex.stockValue.replace(",", ""),
-          stockTimeStamp: dataIndex.stockTimeStamp,
-          number1: dataIndex.number1,
-          number2: dataIndex.number2
-        };
-        // if (
-        //   dataIndex.stockTimeStamp !==
-        //   this.chartData[this.chartData.length - 1].stockTimeStamp
-        // ) {
-        this.setClearRoadMap(true);
-        this.setLiveChart(readyData);
-        setTimeout(() => {
-          this.setClearRoadMap(false);
-        }, 1000);
-        // }
+        try {
+          var logData = data;
+          if (data.status) {
+            let dataIndex = data.data.roadMap[0];
+            let readyData = {
+              stockValue: dataIndex.stockValue.replace(",", ""),
+              stockTimeStamp: dataIndex.stockTimeStamp,
+              number1: dataIndex.number1,
+              number2: dataIndex.number2
+            };
+            // if (
+            //   dataIndex.stockTimeStamp !==
+            //   this.chartData[this.chartData.length - 1].stockTimeStamp
+            // ) {
+            this.setClearRoadMap(true);
+            this.setLiveChart(readyData);
+            setTimeout(() => {
+              this.setClearRoadMap(false);
+            }, 1000);
+            // }
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.stockName
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "components/modern/chart.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
   },
@@ -260,7 +283,7 @@ export default {
       } else {
         this.chartHeight = "320vh";
         this.heightChart = 320;
-      }     
+      }
     }
   }
 };

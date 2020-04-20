@@ -122,8 +122,8 @@ export default {
           this.messageError.push(config.error.general);
           throw new Error(config.error.general);
         }
-      } catch (error) {
-        console.log(error);
+      } catch (ex) {
+        console.log(ex);
         log.error(
           {
             req: reqBody,
