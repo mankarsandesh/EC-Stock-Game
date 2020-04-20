@@ -1,43 +1,43 @@
 <template>
-  <div>
-    <v-layout row justify-center class="footerBet">
-      <v-flex xs2 class="amount">
-        <div>{{ formatToPrice(getAllBettingAmount) }}</div>
-      </v-flex>
-      <v-flex xs3 class="chipsdiv">
-        <v-layout row>
-          <v-flex class="text-center">
-            <v-avatar
-              size="70"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
-            >
-              <v-img
-                @click="setFooterBetAmount(getCoinsModern[key])"
-                :src="item.img"
-                :width="item.width"
-                :alt="item.title"
-                :class="item.color"
-                class="chipImg"
-              >
-                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
-              </v-img>
-            </v-avatar>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex xs2 class="betButton">
-        <div>
-          <v-btn class="buttonGreen" dark @click="getSending()">{{
-            $t("msg." + texts)
-          }}</v-btn>
-          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
-            $t("msg.cancel")
-          }}</v-btn>
-        </div>
-      </v-flex>
-    </v-layout>
+  <div class="footerBet">
+    <div class="total-bet-multigame">
+      <span>{{ formatToPrice(getAllBettingAmount) }}</span>
+    </div>
+    <div class="amount-multigame">
+      <span>$00000</span>
+    </div>
+    <div class="chips-multigame">
+      <v-avatar
+        size="70"
+        v-for="(item, key) in imgChip"
+        :key="key"
+        class="chips"
+      >
+        <v-img
+          @click="setFooterBetAmount(getCoinsModern[key])"
+          :src="item.img"
+          :width="item.width"
+          :alt="item.title"
+          :class="item.color"
+          class="chipImg"
+        >
+          <span class="setpricechip">{{ getCoinsModern[key] }}</span>
+        </v-img>
+      </v-avatar>
+    </div>
+    <div class="action-multigame">
+      <v-btn class="buttonGreen" dark @click="getSending()">{{
+        $t("msg." + texts)
+      }}</v-btn>
+      <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
+        $t("msg.cancel")
+      }}</v-btn>
+    </div>
+    <div class="max-min-multigame">
+      <span>
+        max = $1000, min = $500
+      </span>
+    </div>
   </div>
 </template>
 
@@ -86,48 +86,82 @@ export default {
 
 <style scoped>
 .footerBet {
-  box-shadow: 0 -5px 5px -5px #333;
-  background-color: #fff;
+  display: flex;
   position: fixed;
-  bottom: 0;
-  padding: 5px 10px;
+  bottom: 20px;
+  justify-content: center;
   width: 100%;
   z-index: 99;
+  align-items: center;
 }
-svg {
-  position: fixed;
-  z-index: 1000;
-  bottom: 0;
-  width: 60%;
-  align-self: center;
+.total-bet-multigame {
+  background-color: #fff;
+  border: #615f60 solid 2px;
+  padding: 5px 15px;
+  text-transform: uppercase;
+  min-width: 120px;
+  text-align: center;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.amount-multigame {
+  background-color: #fff;
+  border: #615f60 solid 2px;
+  padding: 5px 15px;
+  padding-right: 30px;
+  text-transform: uppercase;
+  min-width: 50px;
+  height: 60px;
+  text-align: center;
+  font-size: 22px;
+  display: flex;
+  margin-left: -2px;
+  align-items: center;
+}
+.chips-multigame {
+  background-color: #fff;
+  border: #615f60 solid 2px;
+  padding: 5px 15px;
+  text-transform: uppercase;
+  min-width: 350px;
+  height: 90px;
+  text-align: center;
+  border-radius: 50px;
+  margin-left: -13px;
+  z-index: 1;
+  align-items: center;
+}
+.action-multigame {
+  background-color: #fff;
+  border: #615f60 solid 2px;
+  display: flex;
+  height: 55px;
+  padding: 0px 15px;
+  margin-left: -10px;
+  align-items: center;
+}
+.max-min-multigame {
+  background-color: #fff;
+  border: #615f60 solid 2px;
+  padding: 5px 15px;
+  text-transform: uppercase;
+  min-width: 80px;
+  text-align: center;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  margin-left: -2px;
+  align-items: center;
 }
 
-.amount div {
-  margin: 10px -15px;
-  padding: 8px;
-  color: #615f60;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  font-size: 30px;
-  text-align: left;
-  vertical-align: center;
-  background-color: #fff;
-}
 .chipsdiv {
   padding: 5px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-
-  background-color: #fff;
-}
-.betButton div {
-  padding: 8px;
-  margin: 10px -18px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-
   background-color: #fff;
 }
 .chips {

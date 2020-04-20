@@ -501,11 +501,33 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        console.log(
-          "gamne stock id",
-          this.getStockUUIDByStockName(this.$route.params.id)
-        );
-        this.setLiveRoadMap(data.data.roadMap[0]);
+        try {
+          var logData = data;
+          if (data.status) {
+            console.log(
+              "gamne stock id",
+              this.getStockUUIDByStockName(this.$route.params.id)
+            );
+            this.setLiveRoadMap(data.data.roadMap[0]);
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.$route.params.id
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "pages/modern/fullscreen/_id.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
     this.listenForBroadcast(

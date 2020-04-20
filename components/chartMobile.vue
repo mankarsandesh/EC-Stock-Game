@@ -51,19 +51,41 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
-        let readyData = {
-          stockValue: dataIndex.stockValue.replace(",", ""),
-          stockTimeStamp: dataIndex.stockTimeStamp,
-          number1: dataIndex.number1,
-          number2: dataIndex.number2
-        };
+        try {
+          var logData = data;
+          if (data.status) {
+            let dataIndex = data.data.roadMap[0];
+            let readyData = {
+              stockValue: dataIndex.stockValue.replace(",", ""),
+              stockTimeStamp: dataIndex.stockTimeStamp,
+              number1: dataIndex.number1,
+              number2: dataIndex.number2
+            };
 
-        if (
-          dataIndex.stockTimeStamp !==
-          this.chartData[this.chartData.length - 1].stockTimeStamp
-        ) {
-          this.setLiveChart(readyData);
+            if (
+              dataIndex.stockTimeStamp !==
+              this.chartData[this.chartData.length - 1].stockTimeStamp
+            ) {
+              this.setLiveChart(readyData);
+            }
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.stockName
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "components/chartMobile.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
         }
       }
     );

@@ -34,6 +34,8 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import log from "roarr";
+
 export default {
   props: ["item"],
   data() {
@@ -53,11 +55,31 @@ export default {
   mounted() {
     this.listenForBroadcast(
       {
-        channelName: "stockList.0c0de128-e2bd-41f1-a8ec-40a57c72bae5",
+        channelName: `stockList.${getPortalProviderUUID}`,
         eventName: "stockList"
       },
       ({ data }) => {
-        this.stocks = data.data.stockData;
+        try {
+          var logData = data;
+          if (data.status) {
+            this.stocks = data.data.stockData;
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `stockList.${getPortalProviderUUID}`,
+              event: "stockList",
+              res: logData,
+              page: "components/mobile/stocklist.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
   },
@@ -78,7 +100,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice"])
+    ...mapGetters([
+      "getStockList",
+      "getLivePrice",
+      "getPreviousPrice",
+      "getPortalProviderUUID"
+    ])
   },
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {

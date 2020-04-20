@@ -53,6 +53,12 @@
                 v-for="data in globalInvitation"
                 :key="data.index"
               >
+                <div
+                  class="messageChatView"
+                  v-if="globalInvitation.length == 0"
+                >
+                  <h1>There are no Invitaion</h1>
+                </div>
                 <div class="messageChatView" v-if="globalInvitation.length > 0">
                   <div style="width:30%;">
                     <nuxt-link
@@ -157,6 +163,8 @@ import moment from "moment";
 import config from "../config/config.global";
 import chanelChat from "./chanelChat";
 import followBet from "../components/modern/follow/followBet";
+import log from "roarr";
+
 let name = "btc5";
 export default {
   components: {
