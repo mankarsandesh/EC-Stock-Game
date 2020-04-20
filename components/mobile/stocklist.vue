@@ -52,6 +52,14 @@ export default {
       stocks: []
     };
   },
+  computed: {
+    ...mapGetters([
+      "getStockList",
+      "getLivePrice",
+      "getPreviousPrice",
+      "getPortalProviderUUID"
+    ])
+  },
   mounted() {
     this.listenForBroadcast(
       {
@@ -99,14 +107,7 @@ export default {
       return this.stocks.sort(compare);
     }
   },
-  computed: {
-    ...mapGetters([
-      "getStockList",
-      "getLivePrice",
-      "getPreviousPrice",
-      "getPortalProviderUUID"
-    ])
-  },
+  
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
