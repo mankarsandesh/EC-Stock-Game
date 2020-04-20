@@ -93,8 +93,7 @@ export default {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    followUserBet: function(username, userImg, userUUID, method) {
-      console.log(userImg);
+    followUserBet: function(username, userImg, userUUID, method) {     
       this.username = username;
       this.FollowUserUUID = userUUID;
       if (method == 0) {
@@ -125,8 +124,7 @@ export default {
           {
             headers: config.header
           }
-        );
-        console.log(res);
+        );        
         if (res.code == 200) {
           this.followingList = res.data;
           this.countFollwing = res.data.length;
