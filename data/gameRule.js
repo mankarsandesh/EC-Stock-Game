@@ -154,7 +154,7 @@ const gamerule = {
       payout: 28
     },
     {
-      ruleid: 71,
+      ruleid: 41,
       rule: "low",
       payout: 29
     }

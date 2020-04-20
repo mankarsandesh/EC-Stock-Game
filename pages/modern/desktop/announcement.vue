@@ -19,6 +19,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import announcement from "~/components/modern/stocklist/announcement";
 import config from "../../../config/config.global";
+import log from "roarr";
 export default {
   layout: "desktopModern",
   components: {
@@ -45,24 +46,40 @@ export default {
     ...mapActions(["setIsLoadingStockGame"]),
     async fetch() {
       try {
-        const { data } = await this.$axios.$post(
+        var reqBody = {
+          portalProviderUUID: this.portalProviderUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(
           config.getAllAnnouncements.url,
-          {
-            portalProviderUUID: this.portalProviderUUID,
-            version: config.version
-          },
+          reqBody,
           {
             headers: config.header
           }
         );
-        this.announcementData = data;
-      } catch (error) {
-        console.log(error);
+        if (res.status) {
+          this.announcementData = res.data;
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
         this.$swal({
-          title: error.message,
+          title: ex.message,
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getAllAnnouncements.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

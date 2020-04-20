@@ -15,6 +15,7 @@ import currentBet from "~/components/modern/currentBet";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
+import log from "roarr";
 export default {
   layout: "desktopModern",
   components: {
@@ -36,22 +37,21 @@ export default {
     this.fetch();
   },
   methods: {
-    async fetch(){
+    async fetch() {
       try {
-        const userData = {
+        var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           version: config.version,
-          betResult: [-1],
-          offset: "0"
+          betResult: [-1]
         };
-        const res = await this.$axios.post(config.getAllBets.url, userData, {
+        var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
-        });       
-        if (res.data.code == 200) {
-          this.currentBets = res.data.data;
+        });
+        if (data.status) {
+          this.currentBets = data.data;
         } else {
-          throw new Error(Object.values(res.data.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
@@ -60,6 +60,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res: data.data,
+            page: this.$options.name,
+            apiUrl: config.getAllBets.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

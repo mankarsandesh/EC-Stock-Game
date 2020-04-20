@@ -2,7 +2,7 @@
   <div v-if="stockAnalysis.length > 0">
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">stock analysis</h2>
+        <h2 class="title_menu">{{ $t("profile.stockanalysis") }}</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -56,7 +56,9 @@
             <div class="title_date_picker">
               <span></span>
             </div>
-            <button @click="getStockAnalysis">{{ $t("msg.go") }}</button>
+            <button class="buttonGreen" @click="getStockAnalysis">
+              {{ $t("msg.go") }}
+            </button>
           </div>
         </v-flex>
       </v-layout>
@@ -94,6 +96,7 @@ import apexchart from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
+import log from "roarr";
 import config from "../../../../config/config.global";
 
 // set color win and lose color in bar chart
@@ -217,11 +220,11 @@ export default {
       });
       return [
         {
-          name: "win",
+          name: this.$root.$t("msg.win"),
           data: win
         },
         {
-          name: "loss",
+          name: this.$root.$t("msg.lose"),
           data: loss
         }
       ];
@@ -240,21 +243,21 @@ export default {
         if (!this.checkValidDate(this.startDate, this.endDate)) {
           throw new Error("Please select a valid date");
         }
-        const res = await this.$axios.$post(
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version,
+          dateRangeFrom: this.startDate,
+          dateRangeTo: this.endDate
+        };
+        var res = await this.$axios.$post(
           config.getUserBetAnalysis.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID: this.getUserUUID,
-            version: config.version,
-            dateRangeFrom: this.startDate,
-            dateRangeTo: this.endDate
-          },
+          reqBody,
           {
             headers: config.header
           }
         );
-        console.log("error aya", res);
-        if (res.code === 200) {
+        if (res.status) {
           if (res.data.length) {
             this.isDataValid = true;
             this.error = "";
@@ -264,9 +267,10 @@ export default {
             this.error = "No data to display";
           }
         } else {
-          throw new Error(res.message.dateRangeTo[0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
+        console.log(ex.message);
         this.$swal({
           title: ex.message,
           type: "error",
@@ -277,7 +281,17 @@ export default {
           this.error = "Please select a valid date";
           this.isDataValid = false;
         }
-        console.log(ex.message);
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getUserBetAnalysis.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     startDateClick() {
@@ -297,9 +311,11 @@ export default {
   color: blue;
   background-color: red;
 }
+
 li {
   list-style-type: none;
 }
+
 .chart-map-color {
   position: relative;
   float: right;
@@ -315,6 +331,7 @@ li {
   height: 15px;
   border-radius: 50%;
 }
+
 button {
   background-color: green;
   padding: 10px;
@@ -323,18 +340,22 @@ button {
   border-radius: 10px;
   font-weight: bold;
 }
+
 button:focus {
   outline: none;
 }
+
 .title_menu {
   padding-bottom: 15px;
   text-transform: capitalize;
   color: #353333;
 }
+
 .date_picker_container {
   text-transform: capitalize;
   cursor: pointer;
 }
+
 .chart_container {
   background-color: white;
   color: black;
@@ -344,6 +365,7 @@ button:focus {
   width: 100%;
   min-height: 550px;
 }
+
 .date_picker {
   background-color: white;
   color: black;
@@ -352,6 +374,7 @@ button:focus {
   border-radius: 10px;
   position: relative;
 }
+
 .title_date_picker {
   padding-left: 10px;
   padding-bottom: 5px;
@@ -359,13 +382,16 @@ button:focus {
   text-transform: uppercase;
   min-height: 30px;
 }
+
 .icon_date {
   float: right;
   margin-top: -2px;
 }
+
 .select_date {
   text-transform: uppercase;
 }
+
 .no-data {
   color: red;
   text-align: center;

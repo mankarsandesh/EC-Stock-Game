@@ -23,6 +23,22 @@
           <stockSelect />
         </div>
       </v-flex>
+      <v-tooltip>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            color="primary"
+            rigth
+            fab
+            @click="$router.push(closeFullscreen)"
+            class="fullscreenclose"
+            dark
+            v-on="on"
+            title="Full Screen"
+          >
+            <v-icon>close</v-icon>
+          </v-btn>
+        </template>
+      </v-tooltip>
     </v-layout>
     <bottomBetMultigame></bottomBetMultigame>
   </div>
@@ -54,6 +70,16 @@ export default {
     ...mapActions(["addStockMultiGame", "setIsLoadingStockGame"])
   },
   computed: {
+    closeFullscreen() {
+      let fullscreenClose = localStorage.getItem("fullscreenclosed");
+      if (
+        localStorage.getItem("fullscreenclosed") == null ||
+        localStorage.getItem("fullscreenclosed") == "undefined"
+      ) {
+        fullscreenClose = "desktop";
+      }
+      return `/modern/${fullscreenClose}/${this.$route.params.id}`;
+    },
     ...mapGetters(["getStockMultiGame"])
   }
 };
@@ -63,5 +89,25 @@ export default {
 .border-flex {
   padding: 15px;
   min-height: 550px;
+}
+
+.fullscreenclose {
+  position: fixed !important;
+  border-radius: 180px;
+  bottom: 100px;
+  right: 0px;
+  width: 50px;
+  height: 50px;
+  color: #fff;
+  background: linear-gradient(
+    215deg,
+    rgba(156, 44, 205, 1) 35%,
+    rgba(121, 59, 204, 1) 100%
+  );
+}
+
+.fullscreenclose .v-icon {
+  font-weight: 800;
+  font-size: 30px;
 }
 </style>

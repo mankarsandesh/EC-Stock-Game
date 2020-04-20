@@ -149,6 +149,7 @@
           </div>
         </v-flex>
       </v-flex>
+
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius: 10px;">
@@ -175,29 +176,42 @@
         </v-card>
       </v-dialog>
 
+      <!-- Full Screen Float Button -->
       <v-flex class="layout-bottom">
         <div id="fullscreenGuidelines">
-          <v-tooltip left>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                color="primary"
-                rigth
-                fab
-                class="fullscreen"
-                dark
-                @click="setAfterFullScreenClosePage()"
-                title="Full Screen"
-              >
-                <v-icon>fullscreen</v-icon>
-              </v-btn>
-            </template>
-            <span>Full Screen</span>
-          </v-tooltip>
+          <v-btn
+            color="primary"
+            :to="'/modern/multigame/' + $route.params.id"
+            rigth
+            fab
+            class="multiGame"
+            dark
+          >
+            <i
+              style="font-size:26px;"
+              class="fa fa-gamepad"
+              aria-hidden="true"
+            ></i>
+          </v-btn>
+
+          <v-btn
+            color="primary"
+            rigth
+            fab
+            class="fullscreen"
+            dark
+            @click="setAfterFullScreenClosePage()"
+            title="Full Screen"
+          >
+            <v-icon>fullscreen</v-icon>
+          </v-btn>
         </div>
       </v-flex>
+      <!-- End Multiple Screen Button Code -->
     </v-layout>
   </v-container>
 </template>
+
 <script>
 import { mapActions, mapGetters } from "vuex";
 import stockList from "~/components/modern/stockList";
@@ -212,6 +226,8 @@ import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUser
 import config from "../../../config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
+import log from "roarr";
+
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -244,20 +260,6 @@ export default {
         {
           name: "cache",
           icon: "cached"
-        }
-      ],
-      items: [
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me 2"
         }
       ],
       trendTypes: ["firstDigit"],
@@ -296,7 +298,29 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        this.setLiveRoadMap(data.data.roadMap[0]);
+        try {
+          var logData = data;
+          if (data.status) {
+            this.setLiveRoadMap(data.data.roadMap[0]);
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.$route.params.id
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "pages/modern/desktop/_id.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
     // call this every page that used "dekstopModern" layout to hide loading
@@ -339,23 +363,31 @@ export default {
     },
     async getStock() {
       try {
-        const data = await this.$axios.$post(
-          config.getStock.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version
-          },
-          { headers: config.header }
-        );
-
-        this.stock = data;
-      } catch (error) {
-        console.log(error);
-        this.$swal({
-          title: error.message,
-          type: "error",
-          timer: 1000
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getStock.url, reqBody, {
+          headers: config.header
         });
+        if (res.status) {
+          this.stock = res.data;
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getStock.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     addTrendMap() {
@@ -385,6 +417,8 @@ export default {
       $(".BetButtonGuideEven").css("z-index", "1");
       $("#selectstockGuideline").css("z-index", "1");
       $("#stocklistGuidelines").css("z-index", "1");
+      $("#trendmapGuidelines").css("z-index", "1");
+      $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
     },
     openTutorial() {
       const _this = this;
@@ -397,7 +431,7 @@ export default {
         let stepGo = setInterval(() => {
           step++;
           this.setTutorialStepNumber(step);
-          if (step == 11 || !_this.getIsShowTutorial) {
+          if (step === 12 || !_this.getIsShowTutorial) {
             clearInterval(stepGo);
             _this.clearTutorialUI();
             this.setTutorialStepNumber(0);
@@ -425,8 +459,20 @@ export default {
   }
 };
 </script>
-
 <style scoped>
+.multiGame {
+  z-index: 999;
+  position: fixed;
+  right: 0px;
+  bottom: 80px;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  font-size: 12px !important;
+  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+  padding: 0px 9px;
+}
 .fullscreen {
   position: fixed !important;
   bottom: 140px;
@@ -442,6 +488,7 @@ export default {
 .fullscreen .v-icon {
   font-size: 40px;
 }
+
 /* left side corner toggle functionality in desktop  */
 .helpButton {
   background-color: #4464ff !important;
@@ -449,6 +496,7 @@ export default {
   padding: 5px;
   font-size: 22px;
 }
+
 .leftStocklist {
   background-color: #fff;
   border-radius: 20px;
@@ -457,8 +505,9 @@ export default {
   box-shadow: 0 0 2px grey;
   right: 5px;
 }
+
 .sidebar-close {
-  z-index: 999;
+  /* z-index: 999; */
   padding: 3px;
   font-size: 16px;
   cursor: pointer;
@@ -469,6 +518,7 @@ export default {
   right: -8px;
   transition: none !important;
 }
+
 .sidebar-close .v-icon {
   color: #fff !important;
 }

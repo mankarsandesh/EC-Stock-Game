@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row justify-center class="footerBet">
+    <v-layout row justify-center id="footerBet-guide">
       <v-flex lg2 md2 xs2 class="amount">
         <div>{{ getAllBettingAmount }}</div>
       </v-flex>
@@ -30,7 +30,7 @@
       <v-flex lg3 md3 xs2 class="betButton">
         <div>
           <v-btn class="buttonGreensmall" dark @click="getSending()">{{
-            $t("msg." + texts)
+            $t("msg.confirm")
           }}</v-btn>
           <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
             $t("msg.cancel")
@@ -53,7 +53,7 @@ export default {
     return {
       isSending: false,
       dialog: false,
-      texts: "confirm",
+      texts: this.$root.$t("msg.confirm"),
       imgChip: chips.chipsData
     };
   },
@@ -65,11 +65,10 @@ export default {
     ]),
     getSending() {
       this.isSending = true;
-      this.texts = "sending";
+      this.texts = this.$root.$t("msg.sending");
       // setTimeout(() => {
       this.sendBetting();
       this.isSending = false;
-      this.texts = "confirm";
       // }, 1000);
     }
   },
@@ -94,6 +93,7 @@ export default {
   vertical-align: center;
   background-color: #fff;
 }
+
 .chipsdiv {
   padding: 5px;
   border-top-left-radius: 50px;
@@ -106,6 +106,7 @@ export default {
   border-bottom: 3px solid #aeadad;
   background-color: #fff;
 }
+
 .betButton div {
   padding: 8px;
   margin: 10px -18px;
@@ -116,6 +117,7 @@ export default {
   border-bottom: 3px solid #aeadad;
   background-color: #fff;
 }
+
 .chips {
   cursor: pointer;
   margin: 2px 5px;
@@ -123,11 +125,14 @@ export default {
   -webkit-transition: -webkit-transform 0.8s ease-in-out;
   transition: transform 0.8s ease-in-out;
 }
+
 .chips:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
-  -ms-transform: rotate(360deg); /* IE 9 */
+  -ms-transform: rotate(360deg);
+  /* IE 9 */
   transform: rotate(360deg);
 }
+
 .chipImg {
   color: #333;
   font-size: 24px;

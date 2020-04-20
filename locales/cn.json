@@ -27,7 +27,9 @@
     "live price": "实时报价",
     "reference": "参考网址",
     "load more": "更多",
-    "search stock": "搜索库存"
+    "search stock": "搜索库存",
+    "ascending" : "上升",
+    "descending" : "降序"
   },
   "home": {
     "welcome": "欢迎",
@@ -238,8 +240,15 @@
     "totalonline": "总在线",
     "signout": "登出",
     "myfollowers": "关注我的",
+    "myfollowing": "以下",
     "mynotification": "提醒权限",
-    "setting": "设置"
+    "setting": "设置",
+    "lastActive" : "最后登录",
+    "historyPeriod" : "历史时期",
+    "followers" : "追随者",
+    "chart": "图表",
+    "noFollowing" : "没有关注的用户。",
+    "noFollowers" : "没有追随者。"
   },
   "useraction": {
     "followbet": "跟进",
@@ -255,7 +264,10 @@
     "weeklyrankings": "每周排名",
     "monthlyrankings": "每月排名",
     "Top10Leaders": "十大领袖",
-    "lastupdate": "最近更新1分钟前"
+    "lastupdate": "最近更新1分钟前",
+    "top" : "最佳",
+    "leaders" : "领导者",
+    "nodata" : "排行榜中没有顶级用户。"
   },
   "breadcrumbs": {
     "rule": "规则",
@@ -296,5 +308,10 @@
     "cancelBet" :"取消投注",
     "reviewyourBet" : "查看您的投注",
     "pleaseConfirm": "請在下面確認您的投注"
+  },
+  "invitation": {
+    "ecworld" : "EC 世界",
+    "gameChannel" : "游戏频道",
+    "sendInvitation": "发送邀请"
   }
 }
