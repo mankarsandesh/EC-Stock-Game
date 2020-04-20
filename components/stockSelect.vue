@@ -322,9 +322,11 @@ export default {
 </script>
 <style scoped>
 .selectStock {
+  
   font-size: 14px;
 }
 .v-list {
   font-size: 12px;
 }
+
 </style>

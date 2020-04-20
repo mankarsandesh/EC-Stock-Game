@@ -18,7 +18,7 @@
             :key="index"
           >
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
-              <img class="userImage" :src="imgProfile(data.profileImage)" />
+              <img class="userImage" :src="defaultImage" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">{{
                 data.userName
@@ -46,19 +46,21 @@
         </div>
       </v-flex>
     </v-flex>
-  
-  <!-- Follow Dialog -->
-  <v-dialog v-model="dialog" width="500" class="followDialog">
-    <followBet :username="this.username" :userImage="this.userImage" :FollowerUserUUID="this.FollowUserUUID" :isFollowing="this.FolloworNot" />
-  </v-dialog>
-</div>
+
+    <!-- Follow Dialog -->
+    <v-dialog v-model="dialog" width="500" class="followDialog">
+      <followBet
+        :username="this.username"
+        :userImage="this.userImage"
+        :FollowerUserUUID="this.FollowUserUUID"
+        :isFollowing="this.FolloworNot"
+      />
+    </v-dialog>
+  </div>
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
 import followBet from "../../../../components/modern/follow/followBet";
@@ -87,7 +89,7 @@ export default {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    followUserBet: function (username, userImg, userUUID, method) {
+    followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       if (method == 0) {
@@ -100,22 +102,24 @@ export default {
     },
     // fetch default image or from server image
     imgProfile(userImg) {
-      return userImg === null ?
-        this.defaultImage :
-        `${config.apiDomain}/` + userImg;
+      return userImg === null
+        ? this.defaultImage
+        : `${config.apiDomain}/` + userImg;
     },
     async getFollowerList() {
       try {
         const res = await this.$axios.$post(
-          config.getUserFollower.url, {
+          config.getUserFollower.url,
+          {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             followersType: 1,
             version: config.version
-          }, {
+          },
+          {
             headers: config.header
           }
-        );       
+        );
         console.log(res);
         if (res.code == 200) {
           this.followerList = res.data;

@@ -1,13 +1,21 @@
 <template>
   <div class="conve-container">
     <div class="bodyChat">
+      <div
+        class="messageChatView noRecord"
+        v-if="conversationChanel.length == 0"
+      >
+        <i class="fa fa-bell"></i>
+        <p>There are no users Invitaion in {{ stockName }} Channel.</p>
+      </div>
+
       <div v-for="data in conversationChanel" :key="data.index" class="msgUser">
         <div class="messageChatView">
           <div style="width:30%;">
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
               <v-img
                 class="userImage"
-                :src="imgProfile(data.userImage)"
+                :src="defaultImage"
                 aspect-ratio="1"
                 max-height="120"
                 max-width="120"
@@ -46,7 +54,7 @@
             <v-btn
               v-if="getUserUUID != data.userUUID"
               class="following"
-              v-on:click="followUser(null, null, data.userUUID, '0')"
+              v-on:click="followUser(null, null, data.userUUID, 0)"
               >Follow</v-btn
             >
             <v-btn v-if="getUserUUID == data.userUUID" class="following"
@@ -64,27 +72,60 @@
         ></v-btn>
       </v-flex>
     </div>
+    <!-- Follow Dialog -->
+    <v-dialog v-model="dialog" width="500" class="followDialog">
+      <followBet
+        :username="this.username"
+        :userImage="defaultImage"
+        :FollowerUserUUID="this.FollowUserUUID"
+        :isFollowing="this.FolloworNot"
+      />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import config from "../config/config.global";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
+import followBet from "../components/modern/follow/followBet";
 import log from "roarr";
 
 export default {
+  components: {
+    followBet
+  },
   props: {
     gameUUID: {
+      type: String
+    },
+    stockName: {
       type: String
     }
   },
   data() {
     return {
+      FolloworNot: "",
+      FollowUserUUID: "",
+      username: "",
+      userImage: "",
+      dialog: false,
+      defaultImage: "/no-profile-pic.jpg",
       messageInput: "",
       conversationChanel: []
     };
   },
   methods: {
+    followUser(username, userImage, userUUID, method) {
+      this.username = username;
+      this.FollowUserUUID = userUUID;
+      if (method == 0) {
+        this.FolloworNot = 1;
+      } else {
+        this.FolloworNot = 2;
+      }
+      this.userImage = this.imgProfile(userImage);
+      this.dialog = true;
+    },
     // fetch default image or from server image
     imgProfile(userImage) {
       return userImage === null
@@ -175,6 +216,15 @@ export default {
 </script>
 
 <style scoped>
+.noRecord {
+  text-align: center;
+  font-size: 16px;
+  padding-top: 50%;
+  color: #777777;
+}
+.noRecord i {
+  font-size: 24px;
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;

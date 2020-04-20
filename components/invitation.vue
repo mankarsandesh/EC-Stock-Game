@@ -13,7 +13,10 @@
           @click="activeTab('world')"
           :class="{ active: tabActiveName === 'world' }"
         >
-          <a href="#">{{ $t("invitation.ecworld") }}</a>
+          <a href="#"
+            >{{ $t("invitation.ecworld") }}
+            <span class="count"> {{ globalInvitation.length }} </span>
+          </a>
         </span>
         <span
           class="tabs"
@@ -21,7 +24,7 @@
           v-if="isShowChanel"
           :class="{ active: tabActiveName === 'chanel' }"
         >
-          <a href="#">{{ $t("invitation.gameChannel") }}</a>
+          <a href="#">{{ stockName }} Channel</a>
         </span>
       </div>
       <!-- conversation area -->
@@ -37,6 +40,14 @@
               </span>
             </div>            -->
             <div class="bodyChat">
+              <div
+                class="messageChatView noRecord"
+                v-if="globalInvitation.length == 0"
+              >
+                <i class="fa fa-bell"></i>
+                <p>There are no users Invitaion.</p>
+              </div>
+
               <div
                 class="msgUser"
                 v-for="data in globalInvitation"
@@ -55,7 +66,7 @@
                     >
                       <v-img
                         class="userImage"
-                        :src="imgProfile(data.userImage)"
+                        :src="defaultImage"
                         aspect-ratio="1"
                         max-height="120"
                         max-width="120"
@@ -121,6 +132,7 @@
         <chanelChat
           v-show="tabActiveName === 'chanel'"
           :gameUUID="gameUUID"
+          :stockName="stockName"
           :key="gameUUID"
         ></chanelChat>
       </div>
@@ -130,7 +142,7 @@
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
         :username="this.username"
-        :userImage="this.userImage"
+        :userImage="defaultImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
       />
@@ -163,6 +175,9 @@ export default {
   },
   props: {
     gameUUID: {
+      type: String
+    },
+    stockName: {
       type: String
     }
   },
@@ -241,33 +256,13 @@ export default {
         eventName: "messageSend"
       },
       ({ data }) => {
-        try {
-          var logData = data;
-          if (data.status) {
-            const objectArray = Object.entries(data.data);
-            let newData = [];
-            objectArray.forEach(([key, value]) => {
-              newData[key] = value;
-            });
-            this.globalInvitation.push(newData);
-            this.scrollDown();
-          } else {
-            throw new Error(config.error.general);
-          }
-        } catch (ex) {
-          console.log(ex);
-          log.error(
-            {
-              channel: `messageSend.${this.getPortalProviderUUID}.global`,
-              event: "messageSend",
-              res: logData,
-              page: "components/invitation.vue",
-              provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
-        }
+        const objectArray = Object.entries(data.data);
+        let newData = [];
+        objectArray.forEach(([key, value]) => {
+          newData[key] = value;
+        });
+        this.globalInvitation.push(newData);
+        this.scrollDown();
       }
     );
   },
@@ -296,10 +291,7 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
       } catch (ex) {
-        console.log(sendData);
-        console.log(ex);
         this.$swal({
           title: ex.message,
           type: "error",
@@ -354,6 +346,23 @@ export default {
 </script>
 
 <style scoped>
+.count {
+  background-color: #fff;
+  border-radius: 180px;
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  text-align: center;
+}
+.noRecord {
+  text-align: center;
+  font-size: 16px;
+  padding-top: 50%;
+  color: #777777;
+}
+.noRecord i {
+  font-size: 24px;
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;

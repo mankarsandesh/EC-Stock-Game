@@ -18,7 +18,7 @@
             :key="index"
           >
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
-              <img class="userImage" :src="imgProfile(data.profileImage)" />
+              <img class="userImage" :src="defaultImage" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">{{
                 data.userName
@@ -47,7 +47,7 @@
             >
               unfollow
             </button>
-          </div>         
+          </div>
         </div>
       </v-flex>
     </v-flex>
@@ -64,10 +64,7 @@
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
 import followBet from "../../../../components/modern/follow/followBet";
@@ -106,7 +103,6 @@ export default {
         this.FolloworNot = 2;
       }
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
-      console.log(this.userImage);
       this.dialog = true;
     },
     // fetch default image or from server image
@@ -119,12 +115,14 @@ export default {
     async getFollowingList() {
       try {
         const res = await this.$axios.$post(
-          config.getUserFollower.url, {
+          config.getUserFollower.url,
+          {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             followersType: 2, // Follwing users List
             version: config.version
-          }, {
+          },
+          {
             headers: config.header
           }
         );

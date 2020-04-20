@@ -7,7 +7,7 @@
         </v-btn>
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="40">
-            <img :src="getUserInfo.profileImage ? imgProfile : `/no-profile-pic.jpg`" />
+            <img :src="defaultImage" />
           </v-avatar>
           <div class="userLogoutMenu">
             <span v-if="getUserInfo.firstName == null"

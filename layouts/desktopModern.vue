@@ -88,10 +88,11 @@
       <v-content>
         <nuxt />
       </v-content>
-
+      
       <!-- invitation Windows-->
       <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
+        :stockName="$route.params.id"
         :key="$route.name"
       />
       <!-- <chatWindow /> -->

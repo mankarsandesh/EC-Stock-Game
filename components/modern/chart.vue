@@ -21,7 +21,6 @@
     />
   </div>
 </template>
-
 <script>
 import config from "../../config/config.global";
 import VueApexCharts from "vue-apexcharts";
@@ -134,6 +133,15 @@ export default {
         newTime.push(element.stockTimeStamp);
       });
       return {
+        tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            return (
+              '<div class="arrow_box"> $' +
+              series[seriesIndex][dataPointIndex].toFixed(2) +
+              "</div>"
+            );
+          }
+        },
         zoom: {
           enabled: true,
           type: "x",
@@ -164,6 +172,9 @@ export default {
             enabled: false
           },
           toolbar: {
+            tools: {
+              download: false
+            },
             shared: false,
             y: {
               formatter: function(val) {
@@ -174,7 +185,7 @@ export default {
         },
         brush: {
           target: "chartArea",
-          enabled: true
+          enabled: false
         },
         dataLabels: {
           enabled: false
@@ -241,6 +252,7 @@ export default {
         var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
           headers: config.header
         });
+
         if (res.status) {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
@@ -289,6 +301,26 @@ export default {
 };
 </script>
 <style>
+.arrow_box {
+  font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid #003f70;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  font-size: 20px;
+  background: #003f70 !important  ;
+}
+.arrow_box:after {
+  border-color: rgba(0, 63, 112, 0);
+  border-left-color: #003f70;
+  border-width: 30px;
+  margin-top: -30px;
+}
+
+.apexcharts-tooltip {
+  background: #003f70 !important  ;
+  color: #fff;
+}
 .stockTimer label {
   font-size: 16px;
   font-weight: 800;

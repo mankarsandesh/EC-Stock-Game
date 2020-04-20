@@ -32,8 +32,9 @@ const actions = {
       var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
         headers: config.header
       });
+    
       if (res.status) {
-        let readyData = res.data[0].roadMap.reverse();
+        let readyData = res.data[0].roadMap.reverse();      
         context.commit("SET_ROAD_MAP", readyData);
       } else {
         throw new Error(config.error.general);
