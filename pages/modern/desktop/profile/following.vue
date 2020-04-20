@@ -47,8 +47,7 @@
             >
               unfollow
             </button>
-          </div>
-          <button class="btn_unfollow">unfollow</button>
+          </div>         
         </div>
       </v-flex>
     </v-flex>
@@ -117,7 +116,7 @@ export default {
         : `${config.apiDomain}/` + userImg;
     },
     // fetch default image or from server image
-    async getFolloweList() {
+    async getFollowingList() {
       try {
         const res = await this.$axios.$post(
           config.getUserFollower.url, {
