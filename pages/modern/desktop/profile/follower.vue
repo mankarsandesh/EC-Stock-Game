@@ -46,19 +46,19 @@
         </div>
       </v-flex>
     </v-flex>
-    <!-- Follow Dialog -->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
-      <followBet
-        :username="this.username"
-        :userImage="this.userImage"
-        :FollowerUserUUID="this.FollowUserUUID"
-        :isFollowing="this.FolloworNot"
-      />
-    </v-dialog>
-  </div>
+  
+  <!-- Follow Dialog -->
+  <v-dialog v-model="dialog" width="500" class="followDialog">
+    <followBet :username="this.username" :userImage="this.userImage" :FollowerUserUUID="this.FollowUserUUID" :isFollowing="this.FolloworNot" />
+  </v-dialog>
+</div>
 </template>
+
 <script>
-import { mapGetters, mapActions } from "vuex";
+import {
+  mapGetters,
+  mapActions
+} from "vuex";
 import axios from "axios";
 import config from "../../../../config/config.global";
 import followBet from "../../../../components/modern/follow/followBet";
@@ -81,13 +81,13 @@ export default {
     followBet
   },
   mounted() {
-    this.getFolloweList();
+    this.getFollowerList();
   },
   computed: {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    followUserBet: function(username, userImg, userUUID, method) {
+    followUserBet: function (username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       if (method == 0) {
@@ -100,21 +100,19 @@ export default {
     },
     // fetch default image or from server image
     imgProfile(userImg) {
-      return userImg === null
-        ? this.defaultImage
-        : `${config.apiDomain}/` + userImg;
+      return userImg === null ?
+        this.defaultImage :
+        `${config.apiDomain}/` + userImg;
     },
-    async getFolloweList() {
+    async getFollowerList() {
       try {
         const res = await this.$axios.$post(
-          config.getUserFollower.url,
-          {
+          config.getUserFollower.url, {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             followersType: 1,
             version: config.version
-          },
-          {
+          }, {
             headers: config.header
           }
         );       
@@ -122,6 +120,7 @@ export default {
         if (res.code == 200) {
           this.followerList = res.data;
           this.countFollower = res.data.length;
+
           if (this.countFollower == 0) {
             this.followerEmpty = true;
           } else {
@@ -137,25 +136,30 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .followType span {
   text-align: center;
   width: 100%;
   display: block;
 }
+
 .followType label {
   width: 100%;
   font-weight: 600;
 }
+
 .followType {
   margin: 15px 5px;
 }
+
 .userImage {
   width: 100px;
   height: 100px;
   border-radius: 180px;
   margin: 0 auto;
 }
+
 .name {
   margin-top: 10px;
   font-size: 18px;
@@ -164,10 +168,12 @@ export default {
   width: 100%;
   text-transform: capitalize;
 }
+
 .title_container {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
 .follower_container {
   border-radius: 4px;
   border: 1px solid #dddddd;
@@ -178,6 +184,7 @@ export default {
   padding: 15px 10px;
   text-align: center;
 }
+
 .btn_follow {
   margin-top: 10px;
   font-weight: bold;
@@ -189,6 +196,7 @@ export default {
   background: linear-gradient(to right, #25b175 19%, #2cb121 70%);
   border-radius: 15px;
 }
+
 .btn_unfollow {
   margin-top: 10px;
   font-weight: bold;

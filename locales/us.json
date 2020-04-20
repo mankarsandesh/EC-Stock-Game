@@ -249,7 +249,9 @@
     "lastActive" : "Last active",
     "historyPeriod" : "History period",
     "followers" : "Followers",
-    "chart": "chart"
+    "chart": "chart",
+    "noFollowing" : "There are no follwing user.",
+    "noFollowers" : "There are no followers."
   },
   "useraction": {
     "followbet": "FOLLOW BET",

@@ -115,6 +115,38 @@
         <!-- to scroll here -->
         <div id="enter-amount-to-bet" hidden>hidden</div>
         <!-- to scroll here -->
+
+        <!-- select chipcamount for multi game rules  -->
+        <div class="guide-bottom " v-if="tutorialStepNumber === 8">
+          <span class="guide-title text-uppercase">
+            select amount
+          </span>
+          <span class="guide-description">
+            You Select amount and Bet Multi Game Rule</span
+          >
+        </div>
+        <!-- road map  -->
+        <div class="guide-bottom " v-if="tutorialStepNumber === 9">
+          <span class="guide-title text-uppercase">
+            road map
+          </span>
+          <span class="guide-description">
+            You can analysis stock graph,the result of last draw
+          </span>
+        </div>
+        <!-- live betting  -->
+        <div
+          class="guide-top "
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 10"
+        >
+          <span class="guide-title text-uppercase">
+            live bet
+          </span>
+          <span class="guide-description">
+            You can see the whole bets for this game
+          </span>
+        </div>
       </div>
     </div>
     <!-- tutorial -->
@@ -295,7 +327,7 @@
             ></betButton>
           </v-flex>
         </v-flex>
-        <v-flex xs12 sm12 md3 lg3>
+        <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
           <h3 class="balanceUser" v-if="getUserInfo.balance > 0">
             Acc : {{ getUserInfo.balance | currency }}
           </h3>
@@ -353,7 +385,10 @@
         <!-- live Chart road map -->
         <v-flex xs12 class="text-xs-center" mt-3>
           <footerBet lg12 md12></footerBet>
-          <v-layout class="fullroadMap elevation-4" style="margin-top: -40px;">
+          <v-layout
+            class="fullroadMap elevation-4"
+            id="fullscreen-roadmap-guide"
+          >
             <v-flex xs12 sm12 md12 lg12 wrap pt-2 id="roadmapGuidelines">
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
@@ -391,7 +426,7 @@
           <template v-slot:activator="{ on }">
             <v-btn
               color="primary"
-              rigth
+              right
               fab
               @click="$router.push(closeFullscreen)"
               class="fullscreenclose"
@@ -411,13 +446,14 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import config from "../../../config/config.global";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
-import config from "../../../config/config.global";
+import log from "roarr";
 
 export default {
   async validate({ params, store }) {
@@ -465,11 +501,33 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        console.log(
-          "gamne stock id",
-          this.getStockUUIDByStockName(this.$route.params.id)
-        );
-        this.setLiveRoadMap(data.data.roadMap[0]);
+        try {
+          var logData = data;
+          if (data.status) {
+            console.log(
+              "gamne stock id",
+              this.getStockUUIDByStockName(this.$route.params.id)
+            );
+            this.setLiveRoadMap(data.data.roadMap[0]);
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.$route.params.id
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "pages/modern/fullscreen/_id.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
     this.listenForBroadcast(
@@ -566,10 +624,19 @@ export default {
         case 8:
           $(".BetButtonGuideEven").css("z-index", "1");
           $("#background-tutorial").click();
-          this.isShowTutorial = false;
+          $("#footerBet-guide").css("z-index", "10001");
+          break;
+        case 9:
+          $("#footerBet-guide").css("z-index", "2");
+          $("#fullscreen-roadmap-guide").css("z-index", "10001");
+          break;
+        case 10:
+          $("#fullscreen-roadmap-guide").css("z-index", "1");
+          $("#live-bet-guide").css("z-index", "10001");
+          $("#live-bet-guide").css("backgroundColor", "#fff");
           break;
         default:
-          $("#betresultGuidelines").css("z-index", "1");
+          this.clearTutorialUI();
           this.isShowTutorial = false;
       }
     }
@@ -586,6 +653,11 @@ export default {
       $(".BetButtonGuideEven").css("z-index", "1");
       $("#selectstockGuideline").css("z-index", "1");
       $("#stocklistGuidelines").css("z-index", "1");
+      $("#background-tutorial").click();
+      $("#fullscreen-roadmap-guide").css("z-index", "1");
+      $("#footerBet-guide").css("z-index", "2");
+      $("#live-bet-guide").css("z-index", "1");
+      $("#live-bet-guide").css("backgroundColor", "#f2f4ff");
     },
     openTutorial() {
       const _this = this;
@@ -595,7 +667,7 @@ export default {
         this.tutorialStepNumber++;
         let stepGo = setInterval(() => {
           this.tutorialStepNumber++;
-          if (this.tutorialStepNumber > 8 || !_this.isShowTutorial) {
+          if (this.tutorialStepNumber > 10 || !_this.isShowTutorial) {
             clearInterval(stepGo);
             this.clearTutorialUI();
           }
@@ -612,26 +684,37 @@ export default {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
     async getActiveGamesByCategory() {
+      var reqBody = {
+        portalProviderUUID: this.getPortalProviderUUID,
+        version: config.version
+      };
       try {
-        const { data } = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.getActiveGamesByCategory.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version
-          },
+          reqBody,
           {
             headers: config.header
           }
         );
-        this.setStockCategory(data);
-        this.items = data;
+        if (res.status) {
+          this.setStockCategory(res.data);
+          this.items = res.data;
+        } else {
+          throw new Error(config.error.general);
+        }
       } catch (ex) {
         console.log(ex);
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000
-        });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getActiveGamesByCategory.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     formatToPrice(value) {
@@ -742,6 +825,7 @@ export default {
   border-left: 2px solid #dddddd;
   border-right: 2px solid #dddddd;
   border-radius: 10px;
+  margin-top: -40px;
 }
 
 .helpButton {

@@ -36,6 +36,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import config from "../../config/config.global";
+import log from "roarr";
 export default {
   data() {
     return {
@@ -63,18 +64,18 @@ export default {
     },
     async stockResult() {
       try {
-        const dataSend = {
-          portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-          version: config.version // version of API
+        var reqBody = {
+          portalProviderUUID: this.portalProviderUUID,
+          version: config.version
         };
-        const { data } = await this.$axios.post(
-          config.getAllStock.url, // after finish crawl the every API will the the baseURL from AXIOS
-          dataSend, // data object
-          {
-            headers: config.header
-          }
-        );
-        this.getStockResult = data.data;
+        var { data } = await this.$axios.post(config.getAllStock.url, reqBody, {
+          headers: config.header
+        });
+        if (data.status) {
+          this.getStockResult = data.data;
+        } else {
+          throw new Error(config.error.general);
+        }
       } catch (ex) {
         console.log(ex);
         this.$swal({
@@ -82,6 +83,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res: data,
+            page: "components/modern/stockresult.vue",
+            apiUrl: config.getAllStock.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

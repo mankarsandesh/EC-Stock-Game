@@ -240,12 +240,15 @@
     "totalonline": "ออนไลน์ทั้งหมด",
     "signout": "ออกจากระบบ",
     "myfollowers": "ผู้ติดตามของฉัน",
+    "myfollowing": "ดังต่อไปนี้",
     "mynotification": "การแจ้งเตือนของฉัน",
     "setting": "การตั้งค่า",
     "lastActive" : "ใช้งานล่าสุด",
     "historyPeriod" : "ประวัติศาสตร์ช่วงเวลา",
     "followers" : "สมัครพรรคพวก",
-    "chart": "แผนภูมิ"
+    "chart": "แผนภูมิ",
+    "noFollowing" : "ไม่มีผู้ใช้งาน follwing",
+    "noFollowers" : "ไม่มีผู้ติดตาม"
     
   },
   "useraction": {

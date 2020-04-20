@@ -240,12 +240,15 @@
     "totalonline": "总在线",
     "signout": "登出",
     "myfollowers": "关注我的",
+    "myfollowing": "以下",
     "mynotification": "提醒权限",
     "setting": "设置",
     "lastActive" : "最后登录",
     "historyPeriod" : "历史时期",
     "followers" : "追随者",
-    "chart": "图表"
+    "chart": "图表",
+    "noFollowing" : "没有关注的用户。",
+    "noFollowers" : "没有追随者。"
   },
   "useraction": {
     "followbet": "跟进",

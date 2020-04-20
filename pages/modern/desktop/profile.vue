@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <input @change="readFile($event)" type="file" ref="inputFile" hidden />
+    <input @change="uploadImage($event)" type="file" ref="inputFile" hidden />
     <v-layout pt-3 row wrap class="justify-center">
       <v-flex xs12 ms12 lg10 md10>
         <v-layout>
@@ -12,7 +12,7 @@
                     :src="
                       getUserInfo.profileImage
                         ? imgProfile
-                        : `/no-profile-pic.jpg`
+                        : defaultImage
                     "
                   />
                 </v-avatar>
@@ -28,10 +28,10 @@
               <h2 v-if="getUserInfo.firstName == null">
                 {{ getUserInfo.userName }}
               </h2>
-              <h1 v-if="getUserInfo.firstName">
+              <h2 v-if="getUserInfo.firstName" class="text-capitalize">
                 {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-              </h1>
-              <p>{{ $t("profile.onlinestatus") }} : 2 hours</p>
+              </h2>
+              <p><b> {{ $t("profile.onlinestatus") }} </b>  : Available </p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
@@ -88,7 +88,7 @@
                         : 'menu_title'
                     "
                   >
-                    {{ $t("profile.myfollowing") }}
+                    {{ $t('profile.myfollowing') }}
                   </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/notification/">
@@ -128,10 +128,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import config from "../../../config/config.global";
+import log from "roarr";
 export default {
   layout: "desktopModern",
   data() {
     return {
+      defaultImage: `/no-profile-pic.jpg`,
       currentChild: "basicinfo",
       blurValue: 5,
       imageBase64: "",
@@ -161,7 +163,7 @@ export default {
   },
   methods: {
     ...mapActions(["setUserData"]),
-    readFile(e) {
+    uploadImage(e) {
       let self = this;
       if (e.target.files && e.target.files[0]) {
         let FR = new FileReader();
@@ -175,13 +177,13 @@ export default {
       this.$refs.inputFile.click();
     },
     async updateProfile() {
-      let formData = new FormData();
+      var formData = new FormData();
       formData.append("profileImage", this.$refs.inputFile.files[0]);
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("version", config.version);
       try {
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
           {
@@ -199,11 +201,11 @@ export default {
             // }
           }
         );
-        if (res.code === 200) {
+        if (res.status) {
           this.blurValue = 0;
           this.setUserData();
         } else {
-          throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         this.imageBase64 = "";
@@ -213,6 +215,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: formData,
+            res: res.data,
+            page: this.$options.name,
+            apiUrl: config.updateUserProfile.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }
@@ -239,6 +252,7 @@ export default {
 }
 .image_container {
   position: relative;
+  margin-bottom: 10px;
 }
 .blur-img {
   position: absolute;

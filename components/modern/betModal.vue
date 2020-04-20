@@ -1,11 +1,11 @@
 <template>
-<div>
-  <v-layout class="mx-5 my-3 bettingModel" column>
-    <v-flex>
-      <h3>
-        {{ $t("msg.bettingon") }}
-        <span class="text-uppercase">
-          {{
+  <div>
+    <v-layout class="mx-5 my-3 bettingModel" column>
+      <v-flex>
+        <h3>
+          {{ $t("msg.bettingon") }}
+          <span class="text-uppercase">
+            {{
               isNaN(betId.split("-")[1])
                 ? $t("gamemsg." + betId.split("-")[0]) +
                   " - " +
@@ -14,67 +14,89 @@
                   " - " +
                   betId.split("-")[1]
             }}
+          </span>
+        </h3>
+      </v-flex>
+      <v-flex class="pt-1 text-uppercase betHeading">
+        <span>
+          {{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
+          {{ getStockLoop(stockName) }} minute
         </span>
-      </h3>
-    </v-flex>
-    <v-flex class="pt-1 text-uppercase betHeading">
-      <span>
-        {{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
-        {{ getStockLoop(stockName) }} minute
-      </span>
-      |
-      <span>
-        {{ $t("msg.payout") }}:
-        {{ $store.state.game.payout[parseInt(payout)].dynamicOdds }}
-      </span>
-    </v-flex>
-    <v-flex>
-      <v-layout row>
-        <v-flex class="py-3 text-center">
-          <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
-            <v-img @click="coinClick(getCoinsModern[key])" :src="item.img" :width="item.width" :alt="item.title" :class="item.color" class="chipImg">
-              <span class="setpricechip">{{ getCoinsModern[key] }}</span>
-            </v-img>
-          </v-avatar>
-        </v-flex>
-      </v-layout>
-    </v-flex>
-    <v-flex>
-      <v-layout row justify-center>
-        <!-- <v-flex class="pr-1" style="align-self:center">
+        |
+        <span>
+          {{ $t("msg.payout") }}:
+          {{ $store.state.game.payout[parseInt(payout)].dynamicOdds }}
+        </span>
+      </v-flex>
+      <v-flex>
+        <v-layout row>
+          <v-flex class="py-3 text-center">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
+              <v-img
+                @click="coinClick(getCoinsModern[key])"
+                :src="item.img"
+                :width="item.width"
+                :alt="item.title"
+                :class="item.color"
+                class="chipImg"
+              >
+                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
+              </v-img>
+            </v-avatar>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex>
+        <v-layout row justify-center>
+          <!-- <v-flex class="pr-1" style="align-self:center">
                     <span>{{$t('msg.amount')}}</span>
           </v-flex>-->
 
-        <v-flex style="align-self:center">
-          <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
-        </v-flex>
-        <v-flex style="align-self:center">
-          <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-flex>
-    <v-flex class="py-1 betHeading">
-      <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $5000</span>
-    </v-flex>
-    <!-- <v-divider></v-divider> -->
-    <v-flex xs-12 class="pt-2 text-uppercase">
-      <v-btn class="buttonGreen" dark @click="confirmBet()" :disabled="confirmDisabled">{{ $t("msg.confirm") }}</v-btn>
-      <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-        {{ $t("msg.cancel") }}
-      </v-btn>
-    </v-flex>
-  </v-layout>
-</div>
+          <v-flex style="align-self:center">
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
+          </v-flex>
+          <v-flex style="align-self:center">
+            <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex class="py-1 betHeading">
+        <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $5000</span>
+      </v-flex>
+      <!-- <v-divider></v-divider> -->
+      <v-flex xs-12 class="pt-2 text-uppercase">
+        <v-btn
+          class="buttonGreen"
+          dark
+          @click="confirmBet()"
+          :disabled="confirmDisabled"
+          >{{ $t("msg.confirm") }}</v-btn
+        >
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
+          {{ $t("msg.cancel") }}
+        </v-btn>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import result from "~/data/result";
 import config from "../../config/config.global";
 import chips from "../../data/chips";
+import log from "roarr";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   data() {
@@ -242,16 +264,15 @@ export default {
     },
     async sendBetting(betData) {
       try {
-        const res = await this.$axios.$post(
-          config.storeBet.url, {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID: this.getUserUUID,
-            version: config.version,
-            betData: [betData]
-          }, {
-            headers: config.header
-          }
-        );
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version,
+          betData: [betData]
+        };
+        var res = await this.$axios.$post(config.storeBet.url, reqBody, {
+          headers: config.header
+        });
         if (res.status && res.data[0].status) {
           this.setUserData();
           this.closePopper();
@@ -268,24 +289,35 @@ export default {
           this.pushDataOnGoingBet(OnGoingdata);
           this.$swal({
             type: "success",
-            title: this.$root.$t('msg.confirm'),
+            title: this.$root.$t("msg.confirm"),
             showConfirmButton: false,
             timer: 1000
           });
         } else {
           if (res.status) {
-            throw new Error(res.data[0].message);
+            throw new Error(config.error.general);
           } else {
-            throw new Error(res.message);
+            throw new Error(config.error.general);
           }
         }
       } catch (ex) {
         this.confirmDisabled = false;
         this.$swal({
           type: "error",
-          title: "OOPS! Something went wrong",
+          title: ex.message,
           showConfirmButton: true
         });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/modern/betModal.vue",
+            apiUrl: config.storeBet.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     confirmBet() {
