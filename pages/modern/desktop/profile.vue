@@ -8,13 +8,7 @@
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img
-                    :src="
-                      getUserInfo.profileImage
-                        ? imgProfile
-                        : defaultImage
-                    "
-                  />
+                  <img :src="defaultImage" />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
@@ -31,7 +25,9 @@
               <h2 v-if="getUserInfo.firstName" class="text-capitalize">
                 {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
               </h2>
-              <p><b> {{ $t("profile.onlinestatus") }} </b>  : Available </p>
+              <p>
+                <b> {{ $t("profile.onlinestatus") }} </b> : Available
+              </p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
@@ -88,7 +84,7 @@
                         : 'menu_title'
                     "
                   >
-                    {{ $t('profile.myfollowing') }}
+                    {{ $t("profile.myfollowing") }}
                   </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/notification/">

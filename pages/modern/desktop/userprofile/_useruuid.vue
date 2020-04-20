@@ -1,156 +1,218 @@
 <template>
-<div xs2>
-  <section class="breadcrumbs" v-if="messageError == false">
-    <v-container md10>
-      <v-parallax dark height="150">
-        <v-layout align-center row>
-          <v-flex xs6>
-            <div class="flex-container">
-              <div class="profile-img-container">
-                <div class="profile-crowd">
-                  <fa icon="crown" style="font-size: 17px; color: orange;" />
+  <div xs2>
+    <section class="breadcrumbs" v-if="messageError == false">
+      <v-container md10>
+        <v-parallax dark height="150">
+          <v-layout align-center row>
+            <v-flex xs6>
+              <div class="flex-container">
+                <div class="profile-img-container">
+                  <div class="profile-crowd">
+                    <fa icon="crown" style="font-size: 17px; color: orange;" />
+                  </div>
+                  <img
+                    width="100%"
+                    height="100%"
+                    :src="this.defaultImage"
+                    class="grey darken-4"
+                  />
                 </div>
-                <img width="100%" height="100%" :src="
-                      visitProfileUserData.userImage
-                        ? imgProfile(visitProfileUserData.userImage)
-                        : this.defaultImage
-                    " class="grey darken-4" />
-              </div>
-              <div class="profile-name-container">
-                <span class="profile-name-tittle text-capitalize">
-                  {{ visitProfileUserData.firstName }}
-                  {{ visitProfileUserData.lastName }}
-                </span>
+                <div class="profile-name-container">
+                  <span class="profile-name-tittle text-capitalize">
+                    {{ visitProfileUserData.firstName }}
+                    {{ visitProfileUserData.lastName }}
+                  </span>
 
-                <span class="font-weight-medium" v-if="visitProfileUserData.username">
-                  {{ visitProfileUserData.username }}
-                </span>
+                  <span
+                    class="font-weight-medium"
+                    v-if="visitProfileUserData.username"
+                  >
+                    {{ visitProfileUserData.username }}
+                  </span>
 
-                <span v-if="visitProfileUserData.currentActiveTime === 'offline'">
-                  {{ visitProfileUserData.currentActiveTime }}
-                </span>
-                <span v-else>
-                  <b>{{$t('profile.lastActive')}} : </b>
-                  {{ visitProfileUserData.currentActiveTime }}
-                </span>
-                <span class="font-weight-medium" v-if="visitProfileUserData.userUUID == getUserUUID">
-                  <a class="editButton" href="/modern/desktop/profile/">{{$t('msg.edit')}} {{$t('menu.profile')}}
-                  </a>
-                </span>
+                  <span
+                    v-if="visitProfileUserData.currentActiveTime === 'offline'"
+                  >
+                    {{ visitProfileUserData.currentActiveTime }}
+                  </span>
+                  <span v-else>
+                    <b>{{ $t("profile.lastActive") }} : </b>
+                    {{ visitProfileUserData.currentActiveTime }}
+                  </span>
+                  <span
+                    class="font-weight-medium"
+                    v-if="visitProfileUserData.userUUID == getUserUUID"
+                  >
+                    <a class="editButton" href="/modern/desktop/profile/"
+                      >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
+                    </a>
+                  </span>
+                </div>
               </div>
-            </div>
-          </v-flex>
-          <v-flex xs8 class="text-end">
-            <div class="leftFollowDiv">
-              <span class="historyName">
-                {{$t('profile.historyPeriod')}}:
-              </span>
-              <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
-                <v-select v-model="filter" height="15px" dense hide-details :items="items" solo></v-select>
-              </div>
-              <v-btn v-if="visitProfileUserData.userUUID != getUserUUID &&    visitProfileUserData.isFollowing == 0" class="buttonFollow" v-on:click="
+            </v-flex>
+            <v-flex xs8 class="text-end">
+              <div class="leftFollowDiv">
+                <span class="historyName">
+                  {{ $t("profile.historyPeriod") }}:
+                </span>
+                <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
+                  <v-select
+                    v-model="filter"
+                    height="15px"
+                    dense
+                    hide-details
+                    :items="items"
+                    solo
+                  ></v-select>
+                </div>
+                <v-btn
+                  v-if="
+                    visitProfileUserData.userUUID != getUserUUID &&
+                      visitProfileUserData.isFollowing == 0
+                  "
+                  class="buttonFollow"
+                  v-on:click="
                     followUserBet(
                       visitProfileUserData.username,
                       visitProfileUserData.userImage,
                       visitProfileUserData.userUUID,
                       visitProfileUserData.isFollowing
                     )
-                  ">Follow</v-btn>
-              <v-btn v-if="
+                  "
+                  >Follow</v-btn
+                >
+                <v-btn
+                  v-if="
                     visitProfileUserData.userUUID != getUserUUID &&
                       visitProfileUserData.isFollowing == 1
-                  " class="buttonunFollow" v-on:click="
+                  "
+                  class="buttonunFollow"
+                  v-on:click="
                     followUserBet(
                       visitProfileUserData.username,
                       visitProfileUserData.userImage,
                       visitProfileUserData.userUUID,
                       visitProfileUserData.isFollowing
                     )
-                  ">unFollow</v-btn>
-            </div>
-          </v-flex>
-        </v-layout>
-      </v-parallax>
-    </v-container>
-  </section>
-  <v-container>
-    <v-layout row wrap>
-      <v-flex xs12 mt-3 v-if="messageError == false">
-        <div class="container-content">
-          <div class="box-container">
-            <div class="cul-box" style="color: #7e57c2;">
-              <span>
-                <fa icon="percentage" style="font-size: 40px; color: #7e57c2;" />
-              </span>
-              <span class="number-box">{{ visitProfileUserData.winRate }}%</span>
-              <span class="des-title text-uppercase">{{$t('leaderboard.winningrate')}}</span>
-            </div>
-            <div class="cul-box cul-box-green">
-              <span>
-                <fa icon="money-bill-wave" style="font-size: 40px; color: #ace6af;" />
-              </span>
-              <span class="number-box">{{
+                  "
+                  >unFollow</v-btn
+                >
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-parallax>
+      </v-container>
+    </section>
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12 mt-3 v-if="messageError == false">
+          <div class="container-content">
+            <div class="box-container">
+              <div class="cul-box" style="color: #7e57c2;">
+                <span>
+                  <fa
+                    icon="percentage"
+                    style="font-size: 40px; color: #7e57c2;"
+                  />
+                </span>
+                <span class="number-box"
+                  >{{ visitProfileUserData.winRate }}%</span
+                >
+                <span class="des-title text-uppercase">{{
+                  $t("leaderboard.winningrate")
+                }}</span>
+              </div>
+              <div class="cul-box cul-box-green">
+                <span>
+                  <fa
+                    icon="money-bill-wave"
+                    style="font-size: 40px; color: #ace6af;"
+                  />
+                </span>
+                <span class="number-box">{{
                   visitProfileUserData.totalBets
                 }}</span>
-              <span class="des-title text-uppercase">{{$t('msg.totalbet')}}</span>
-            </div>
-            <div class="cul-box cul-box-red">
-              <span>
-                <fa icon="users" style="font-size: 40px; color: #f28691;" />
-              </span>
-              <span class="number-box">{{
+                <span class="des-title text-uppercase">{{
+                  $t("msg.totalbet")
+                }}</span>
+              </div>
+              <div class="cul-box cul-box-red">
+                <span>
+                  <fa icon="users" style="font-size: 40px; color: #f28691;" />
+                </span>
+                <span class="number-box">{{
                   visitProfileUserData.followerCount
                 }}</span>
-              <span class="des-title text-uppercase">{{$t('profile.followers')}}</span>
-            </div>
-            <div class="cul-box cul-box-yellow">
-              <span>
-                <fa icon="money-bill-alt" style="font-size: 40px; color: #ffd682;" />
-              </span>
-              <span class="number-box">{{
+                <span class="des-title text-uppercase">{{
+                  $t("profile.followers")
+                }}</span>
+              </div>
+              <div class="cul-box cul-box-yellow">
+                <span>
+                  <fa
+                    icon="money-bill-alt"
+                    style="font-size: 40px; color: #ffd682;"
+                  />
+                </span>
+                <span class="number-box">{{
                   visitProfileUserData.totalWinBets
                 }}</span>
-              <span class="des-title text-uppercase">{{$t('leaderboard.winningamount')}}</span>
+                <span class="des-title text-uppercase">{{
+                  $t("leaderboard.winningamount")
+                }}</span>
+              </div>
+            </div>
+            <div class="pt-5 stock-history">
+              <h2 class="text-uppercase">
+                {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
+              </h2>
+              <div class="stock-history-container">
+                <VueApexCharts
+                  v-if="series.length > 0"
+                  type="bar"
+                  height="350"
+                  :options="chartOptions"
+                  :series="series"
+                  :key="series.length + '' + filter"
+                />
+              </div>
             </div>
           </div>
-          <div class="pt-5 stock-history">
-            <h2 class="text-uppercase">{{$t('profile.onlinehistory')}} {{$t('profile.chart')}}</h2>
-            <div class="stock-history-container">
-              <VueApexCharts v-if="series.length > 0" type="bar" height="350" :options="chartOptions" :series="series" :key="series.length + '' + filter" />
+        </v-flex>
+        <v-flex v-if="messageError == true">
+          <div class="container-content">
+            <div class="box-error">
+              <h1>Sorry, this content isn't avaiable right now</h1>
+              <p>
+                The Link you followed have expired, or the page may only be
+                visiable to an audiencce you're not in.
+              </p>
+              <a @click="$router.push('/modern/desktop/userprofile/')">
+                Go back to the previous Page
+              </a>
+              <a @click="$router.push('/modern/desktop/btc1/')">
+                EC Game Home Page</a
+              >
             </div>
           </div>
-        </div>
-      </v-flex>
-      <v-flex v-if="messageError == true">
-        <div class="container-content">
-          <div class="box-error">
-            <h1>Sorry, this content isn't avaiable right now</h1>
-            <p>
-              The Link you followed have expired, or the page may only be
-              visiable to an audiencce you're not in.
-            </p>
-            <a @click="$router.push('/modern/desktop/userprofile/')">
-              Go back to the previous Page
-            </a>
-            <a @click="$router.push('/modern/desktop/btc1/')">
-              EC Game Home Page</a>
-          </div>
-        </div>
-      </v-flex>
-    </v-layout>
+        </v-flex>
+      </v-layout>
 
-    <!-- Follow Dialog -->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
-      <followBet :username="this.username" :userImage="this.userImage" :FollowerUserUUID="this.FollowUserUUID" :isFollowing="this.FolloworNot" />
-    </v-dialog>
-  </v-container>
-</div>
+      <!-- Follow Dialog -->
+      <v-dialog v-model="dialog" width="500" class="followDialog">
+        <followBet
+          :username="this.username"
+          :userImage="this.userImage"
+          :FollowerUserUUID="this.FollowUserUUID"
+          :isFollowing="this.FolloworNot"
+        />
+      </v-dialog>
+    </v-container>
+  </div>
 </template>
 
 <script>
-import {
-  mapGetters
-} from "vuex";
+import { mapGetters } from "vuex";
 import VueApexCharts from "vue-apexcharts";
 import config from "../../../../config/config.global";
 import followBet from "../../../../components/modern/follow/followBet";
@@ -176,7 +238,8 @@ export default {
       endDate: "",
       visitProfileUserData: "",
       filter: 1,
-      items: [{
+      items: [
+        {
           text: "1 Month",
           value: 1
         },
@@ -195,7 +258,7 @@ export default {
           height: 350,
           type: "bar",
           events: {
-            click: function (chart, w, e) {}
+            click: function(chart, w, e) {}
           }
         },
         colors: ["#2E93fA", "#66DA26", "#546E7A", "#E91E63", "#FF9800"],
@@ -236,7 +299,7 @@ export default {
     }
   },
   methods: {
-    followUserBet: function (username, userImg, userUUID, method) {
+    followUserBet: function(username, userImg, userUUID, method) {
       console.log(username);
       this.username = username;
       this.FollowUserUUID = userUUID;
@@ -249,9 +312,9 @@ export default {
       this.dialog = true;
     },
     imgProfile(userImg) {
-      return userImg === null ?
-        this.defaultImage :
-        `${config.apiDomain}/` + userImg;
+      return userImg === null
+        ? this.defaultImage
+        : `${config.apiDomain}/` + userImg;
     },
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
@@ -291,9 +354,11 @@ export default {
             series.push(element.activeTimeInMins);
             xaxis.push(element.Date);
           });
-          this.series = [{
-            data: series
-          }];
+          this.series = [
+            {
+              data: series
+            }
+          ];
           this.chartOptions.xaxis.categories = xaxis;
         } else {
           this.messageError = true;

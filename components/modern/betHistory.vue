@@ -42,7 +42,6 @@
               <td v-if="item.item.betResult == 'lose'">
                 <span class="lossing"> - {{ item.item.betAmount }} </span>
               </td>
-
               <td
                 v-if="item.item.isFollowBet == 1"
                 class="text-uppercase text-center"

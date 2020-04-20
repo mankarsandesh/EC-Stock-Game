@@ -107,7 +107,6 @@
     <bethistory :search="search" :userBetHistory="userBetHistory" />
   </div>
 </template>
-
 <script>
 import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";

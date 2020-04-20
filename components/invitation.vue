@@ -13,7 +13,10 @@
           @click="activeTab('world')"
           :class="{ active: tabActiveName === 'world' }"
         >
-          <a href="#">{{ $t("invitation.ecworld") }} <span class="count"> {{globalInvitation.length}} </span>  </a>
+          <a href="#"
+            >{{ $t("invitation.ecworld") }}
+            <span class="count"> {{ globalInvitation.length }} </span>
+          </a>
         </span>
         <span
           class="tabs"
@@ -37,11 +40,11 @@
               </span>
             </div>            -->
             <div class="bodyChat">
-              <div class="messageChatView noRecord" v-if="globalInvitation.length == 0">
-               <i
-                    class="fa fa-bell"
-                  ></i
-                >
+              <div
+                class="messageChatView noRecord"
+                v-if="globalInvitation.length == 0"
+              >
+                <i class="fa fa-bell"></i>
                 <p>There are no users Invitaion.</p>
               </div>
 
@@ -57,7 +60,7 @@
                     >
                       <v-img
                         class="userImage"
-                        :src="imgProfile(data.userImage)"
+                        :src="defaultImage"
                         aspect-ratio="1"
                         max-height="120"
                         max-width="120"
@@ -133,7 +136,7 @@
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
         :username="this.username"
-        :userImage="this.userImage"
+        :userImage="defaultImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
       />
@@ -280,10 +283,7 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
       } catch (ex) {
-        console.log(sendData);
-        console.log(ex);
         this.$swal({
           title: ex.message,
           type: "error",
@@ -338,21 +338,21 @@ export default {
 </script>
 
 <style scoped>
-.count { 
-  background-color: #FFF;
+.count {
+  background-color: #fff;
   border-radius: 180px;
   width: 30px;
   height: 30px;
   font-size: 12px;
   text-align: center;
 }
-.noRecord{
+.noRecord {
   text-align: center;
   font-size: 16px;
-  padding-top:50%;
+  padding-top: 50%;
   color: #777777;
 }
-.noRecord i{
+.noRecord i {
   font-size: 24px;
 }
 .followDialog {
