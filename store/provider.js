@@ -1,4 +1,5 @@
 import config from "../config/config.global";
+import log from "roarr";
 
 const state = () => ({
   authUser: {}, // store auth user data
@@ -74,26 +75,33 @@ const actions = {
   // Set user data from api
   async setUserData(context) {
     try {
-      const res = await this.$axios.$post(
-        config.getUserProfile.url,
-        {
-          portalProviderUUID: context.state.portalProviderUUID,
-          userUUID: context.state.userUUID,
-          version: config.version
-        },
-        {
-          headers: config.header
-        }
-      );
-      if (res.code === 200) {
+      var reqBody = {
+        portalProviderUUID: context.state.portalProviderUUID,
+        userUUID: context.state.userUUID,
+        version: config.version
+      };
+      var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
+        headers: config.header
+      });
+      if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);
       } else {
-        console.log(res);
+        throw new Error(config.error.general);
       }
     } catch (ex) {
       console.error(ex);
-      // alert(ex)
+      log.error(
+        {
+          req: reqBody,
+          res,
+          page: "store/provider.js",
+          apiUrl: config.getUserProfile.url,
+          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: localStorage.getItem("USER_UUID")
+        },
+        ex.message
+      );
     }
   },
   // Set user auth data

@@ -18,6 +18,7 @@ import Chart from "chart.js";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import Echo from "laravel-echo";
 import config from "../config/config.global";
+import log from "roarr";
 export default {
   props: {
     height: {
@@ -50,19 +51,41 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
-        let readyData = {
-          stockValue: dataIndex.stockValue.replace(",", ""),
-          stockTimeStamp: dataIndex.stockTimeStamp,
-          number1: dataIndex.number1,
-          number2: dataIndex.number2
-        };
+        try {
+          var logData = data;
+          if (data.status) {
+            let dataIndex = data.data.roadMap[0];
+            let readyData = {
+              stockValue: dataIndex.stockValue.replace(",", ""),
+              stockTimeStamp: dataIndex.stockTimeStamp,
+              number1: dataIndex.number1,
+              number2: dataIndex.number2
+            };
 
-        if (
-          dataIndex.stockTimeStamp !==
-          this.chartData[this.chartData.length - 1].stockTimeStamp
-        ) {
-          this.setLiveChart(readyData);
+            if (
+              dataIndex.stockTimeStamp !==
+              this.chartData[this.chartData.length - 1].stockTimeStamp
+            ) {
+              this.setLiveChart(readyData);
+            }
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.stockName
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "components/chartMobile.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
         }
       }
     );
@@ -180,23 +203,20 @@ export default {
     },
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-        if (res.code === 200) {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });
+        if (res.status) {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
@@ -205,6 +225,17 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/chartMobile.vue",
+            apiUrl: config.getRoadMap.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

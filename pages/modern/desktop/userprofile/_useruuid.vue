@@ -13,11 +13,7 @@
                   <img
                     width="100%"
                     height="100%"
-                    :src="
-                      visitProfileUserData.userImage
-                        ? imgProfile(visitProfileUserData.userImage)
-                        : this.defaultImage
-                    "
+                    :src="this.defaultImage"
                     class="grey darken-4"
                   />
                 </div>
@@ -40,7 +36,7 @@
                     {{ visitProfileUserData.currentActiveTime }}
                   </span>
                   <span v-else>
-                    <b>Last active : </b>
+                    <b>{{ $t("profile.lastActive") }} : </b>
                     {{ visitProfileUserData.currentActiveTime }}
                   </span>
                   <span
@@ -48,7 +44,7 @@
                     v-if="visitProfileUserData.userUUID == getUserUUID"
                   >
                     <a class="editButton" href="/modern/desktop/profile/"
-                      >Edit Profile
+                      >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
                     </a>
                   </span>
                 </div>
@@ -57,7 +53,7 @@
             <v-flex xs8 class="text-end">
               <div class="leftFollowDiv">
                 <span class="historyName">
-                  History period:
+                  {{ $t("profile.historyPeriod") }}:
                 </span>
                 <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
                   <v-select
@@ -70,7 +66,10 @@
                   ></v-select>
                 </div>
                 <v-btn
-                  v-if="visitProfileUserData.userUUID != getUserUUID &&    visitProfileUserData.isFollowing == 0" 
+                  v-if="
+                    visitProfileUserData.userUUID != getUserUUID &&
+                      visitProfileUserData.isFollowing == 0
+                  "
                   class="buttonFollow"
                   v-on:click="
                     followUserBet(
@@ -119,7 +118,9 @@
                 <span class="number-box"
                   >{{ visitProfileUserData.winRate }}%</span
                 >
-                <span class="des-title text-uppercase">wining rate</span>
+                <span class="des-title text-uppercase">{{
+                  $t("leaderboard.winningrate")
+                }}</span>
               </div>
               <div class="cul-box cul-box-green">
                 <span>
@@ -131,7 +132,9 @@
                 <span class="number-box">{{
                   visitProfileUserData.totalBets
                 }}</span>
-                <span class="des-title text-uppercase">total bets</span>
+                <span class="des-title text-uppercase">{{
+                  $t("msg.totalbet")
+                }}</span>
               </div>
               <div class="cul-box cul-box-red">
                 <span>
@@ -140,7 +143,9 @@
                 <span class="number-box">{{
                   visitProfileUserData.followerCount
                 }}</span>
-                <span class="des-title text-uppercase">followers</span>
+                <span class="des-title text-uppercase">{{
+                  $t("profile.followers")
+                }}</span>
               </div>
               <div class="cul-box cul-box-yellow">
                 <span>
@@ -152,11 +157,15 @@
                 <span class="number-box">{{
                   visitProfileUserData.totalWinBets
                 }}</span>
-                <span class="des-title text-uppercase">wining amount</span>
+                <span class="des-title text-uppercase">{{
+                  $t("leaderboard.winningamount")
+                }}</span>
               </div>
             </div>
             <div class="pt-5 stock-history">
-              <h2 class="text-uppercase">online history chart</h2>
+              <h2 class="text-uppercase">
+                {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
+              </h2>
               <div class="stock-history-container">
                 <VueApexCharts
                   v-if="series.length > 0"
@@ -201,12 +210,14 @@
     </v-container>
   </div>
 </template>
+
 <script>
 import { mapGetters } from "vuex";
 import VueApexCharts from "vue-apexcharts";
 import config from "../../../../config/config.global";
 import followBet from "../../../../components/modern/follow/followBet";
 import date from "date-and-time";
+import log from "roarr";
 
 export default {
   layout: "desktopModern",
@@ -318,22 +329,22 @@ export default {
         } else {
           this.userNew = this.$route.params.useruuid;
         }
-        const res = await this.$axios.$post(
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          visitingUserUUID: this.userNew,
+          dateRangeFrom: this.startDate,
+          dateRangeTo: this.endDate,
+          version: config.version
+        };
+        var res = await this.$axios.$post(
           config.getVisitUserProfile.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID: this.getUserUUID,
-            visitingUserUUID: this.userNew,
-            dateRangeFrom: this.startDate,
-            dateRangeTo: this.endDate,
-            version: config.version
-          },
+          reqBody,
           {
             headers: config.header
           }
         );
-        console.log(res);
-        if (res.code === 200) {
+        if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
           //  series
@@ -343,11 +354,15 @@ export default {
             series.push(element.activeTimeInMins);
             xaxis.push(element.Date);
           });
-          this.series = [{ data: series }];
+          this.series = [
+            {
+              data: series
+            }
+          ];
           this.chartOptions.xaxis.categories = xaxis;
         } else {
           this.messageError = true;
-          // throw new Error(Object.values(res.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
@@ -356,21 +371,35 @@ export default {
           type: "error",
           timer: 1000
         });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: this.$options.name,
+            apiUrl: config.getVisitUserProfile.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }
 };
 </script>
+
 <style scoped>
 .leftFollowDiv {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
+
 .historyName {
   flex-grow: wrap;
   font-weight: bold;
 }
+
 .box-error {
   border: 1px solid #dddddd;
   background-color: #fff;
@@ -378,21 +407,25 @@ export default {
   margin: 10% auto;
   padding: 40px;
 }
+
 .box-error h1 {
   border-bottom: 1px solid #dddddd;
   margin-bottom: 20px;
   color: #003e70;
 }
+
 .box-error a {
   color: #003e70;
   font-weight: 500;
   margin-right: 10px;
 }
+
 .editButton {
   color: #fff;
   font-size: 16px;
   font-weight: 800;
 }
+
 .stock-history-container {
   margin-top: 20px;
   padding: 15px;
@@ -400,21 +433,26 @@ export default {
   box-shadow: 0 0 3px gray;
   border-radius: 5px;
 }
+
 .des-title {
   color: black !important;
   font-weight: 500;
 }
+
 .number-box {
   font-size: 40px;
   font-weight: bolder;
 }
+
 .box-container {
   display: flex;
   width: 100%;
 }
+
 .cul-box:first-child {
   margin-left: 0;
 }
+
 .cul-box {
   padding: 15px;
   border-radius: 10px;
@@ -429,24 +467,29 @@ export default {
   justify-content: space-around;
   text-align: center;
 }
+
 .cul-box-green {
   border-color: #ace6af !important;
   color: #ace6af;
 }
+
 .cul-box-yellow {
   border-color: #ffd682 !important;
   color: #ffd682;
 }
+
 .cul-box-red {
   border-color: #f28691 !important;
   color: #f28691;
 }
+
 .container-content {
   padding-top: 25px;
   display: flex;
   width: 100%;
   flex-direction: column;
 }
+
 .profile-crowd {
   position: absolute;
   z-index: 1;
@@ -459,6 +502,7 @@ export default {
   right: -9px;
   padding: 4px;
 }
+
 .profile-img-container {
   cursor: pointer;
 
@@ -469,14 +513,17 @@ export default {
   width: 100px;
   box-shadow: 0 0 5px #fff;
 }
+
 .profile-name-tittle {
   font-weight: bolder;
   font-size: 22px;
 }
+
 .flex-container {
   display: flex;
   align-items: center;
 }
+
 .profile-name-container {
   display: flex;
   cursor: pointer;
@@ -484,6 +531,7 @@ export default {
   position: relative;
   padding-left: 12px;
 }
+
 .buttonFollow {
   color: #fff !important;
   border-radius: 3px;
@@ -494,6 +542,7 @@ export default {
   height: 48px;
   flex-grow: wrap;
 }
+
 .buttonunFollow {
   color: #fff !important;
   border-radius: 3px;

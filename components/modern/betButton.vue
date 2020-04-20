@@ -333,7 +333,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(8 + index)"
+          @click="betButtonClick(8 + index,'firstdigit')"
           v-show="number == 'first'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -360,7 +360,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(25 + index)"
+          @click="betButtonClick(25 + index,'lastdigit')"
           v-show="number == 'last'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -387,7 +387,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(149 + index)"
+          @click="betButtonClick(149 + index,'bothdigit')"
           v-show="number == 'both'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -414,7 +414,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(42 + index)"
+          @click="betButtonClick(42 + index,'twodigit')"
           v-show="number == 'two'"
           class="btn-small"
           >{{ index < 10 ? "0" + index : index }}</v-btn
@@ -523,10 +523,11 @@ export default {
   mounted() {},
   methods: {
     ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
-    betButtonClick(ruleID) {
+    betButtonClick(ruleID,specificNumber='') {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
         let betData = {
+          specificNumber:specificNumber,
           gameUUID: this.getGameUUIDByStockName(this.stockID),
           ruleID: ruleID,
           betAmount: this.getFooterBetAmount

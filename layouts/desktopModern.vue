@@ -1,158 +1,8 @@
 <template>
   <div>
-    <!-- tutorial v-if="getIsShowTutorial" -->
-    <div id="tutorial-container" v-if="getIsShowTutorial">
-      <div id="background-tutorial"></div>
-      <div id="guide-container">
-        <div
-          style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer"
-        >
-          <v-icon @click="setIsShowTutorial(false)" color="#fff">close</v-icon>
-        </div>
-        <!-- last draw v-if="getTutorialStepNumber === 1" -->
-        <div class="guide-top" v-if="getTutorialStepNumber === 1">
-          <span id="result-draw">{{ getLastDraw | lastDraw2 }}</span>
-          <span class="guide-description">Result of the DRAW</span>
-        </div>
-        <!-- bet close in  -->
-        <div class="guide-top" v-if="getTutorialStepNumber === 2">
-          <span
-            class="guide-description text-uppercase"
-            style="font-size:100px"
-          >
-            calculation...
-          </span>
-        </div>
-        <!-- lottery  -->
-        <div class="guide-top" v-if="getTutorialStepNumber === 3">
-          <span id="lottery-draw-guide-text">
-            {{
-              getTimerByStockName($route.params.id) &&
-                getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
-                  | lotterydraw(getStockLoop($route.params.id))
-            }}
-          </span>
-          <span class="guide-description">Lottery DRAW</span>
-        </div>
-        <!-- chart  -->
-        <!-- has scroll -->
-        <div
-          class="guide-chart-has-scroll"
-          v-if="getTutorialStepNumber === 4 && getIsWindowsHasScroll"
-        >
-          <span class="guide-title text-uppercase">
-            analysis graph
-          </span>
-          <span class="guide-description">
-            You can analysis stock graph,the result of last draw
-          </span>
-        </div>
-        <!-- no scroll -->
-        <div
-          class="guide-chart-no-scroll"
-          v-if="getTutorialStepNumber === 4 && !getIsWindowsHasScroll"
-        >
-          <span class="guide-title text-uppercase">
-            analysis graph
-          </span>
-          <span class="guide-description">
-            You can analysis stock graph,the result of last draw
-          </span>
-        </div>
-
-        <!-- bet on digigt  -->
-        <div
-          class="guide-top "
-          style="margin-right: 90px;"
-          v-if="getTutorialStepNumber === 5"
-        >
-          <span class="guide-title text-uppercase">
-            bet on digits
-          </span>
-          <span class="guide-description">
-            Now you can select DIGIT
-          </span>
-        </div>
-        <!-- select chipcamount  -->
-        <div
-          class="guide-top "
-          style="margin-right: 90px;"
-          v-if="getTutorialStepNumber === 6"
-        >
-          <span class="guide-title text-uppercase">
-            bet confirm
-          </span>
-          <span class="guide-description">
-            Your BET place confirm on Last Digit EVEN</span
-          >
-        </div>
-        <!-- enter amount bet -->
-        <!-- has scroll   v-if="getTutorialStepNumber === 7 && getIsWindowsHasScroll"-->
-        <div
-          class="guide-bottom-has-scroll"
-          id="enter-bet-guide"
-          v-if="getTutorialStepNumber === 7 && getIsWindowsHasScroll"
-        >
-          <span class="guide-title text-uppercase">
-            bet on digits
-          </span>
-          <span class="guide-description">
-            Select CHIP or enter AMOUNT to CONFIRM bet</span
-          >
-        </div>
-        <!-- no scroll -->
-        <div
-          class="guide-bottom-no-scroll"
-          id="enter-bet-guide"
-          v-if="getTutorialStepNumber === 7 && !getIsWindowsHasScroll"
-        >
-          <span class="guide-title text-uppercase">
-            bet on digits
-          </span>
-          <span class="guide-description">
-            Select CHIP or enter AMOUNT to CONFIRM bet</span
-          >
-        </div>
-        <!-- to scroll here -->
-        <div id="enter-amount-to-bet" hidden>hidden</div>
-        <!-- to scroll here -->
-
-        <!-- select stock to play -->
-        <div class="guide-top " v-if="getTutorialStepNumber === 8">
-          <span class="guide-title text-uppercase">
-            stocks & game
-          </span>
-          <span class="guide-description">
-            You can choose your Stock,you want BET/PLAY</span
-          >
-        </div>
-        <!-- stock list -->
-        <div
-          class="guide-top "
-          v-if="getTutorialStepNumber === 9"
-          style="margin-left: 100px;"
-        >
-          <span class="guide-title text-uppercase">
-            stock analysis
-          </span>
-          <span class="guide-description">
-            Analysis current active Stock DATA update
-          </span>
-        </div>
-        <!-- stock result -->
-        <div
-          class="guide-top "
-          style="margin-left: 100px;"
-          v-if="getTutorialStepNumber === 10"
-        >
-          <span class="guide-title text-uppercase">
-            stock result
-          </span>
-          <span class="guide-description"> Check update result of Stock</span>
-        </div>
-      </div>
-    </div>
-    <!-- tutorial -->
+    <!-- tutorial start -->
+    <DesktopTutorial />
+    <!-- tutorial  end -->
 
     <v-app style=" background-color: #f4f5fd;">
       <v-toolbar class="notification" xs12 v-if="showNotification">
@@ -175,17 +25,6 @@
           <i class="fa fa-close fa-2x" @click="showNotification = false" />
         </v-flex>
       </v-toolbar>
-      <!-- <div v-if="getStockCrawlerData('btc1').length == ''" class="container-loading">
-      <div class="text-xs-center loading">
-        <v-progress-circular
-          style="top: calc(100% - 68%);"
-          :size="100"
-          :width="10"
-          color="#ffffff"
-          indeterminate
-        ></v-progress-circular>
-      </div>
-    </div> -->
       <div
         class="text-xs-center container-loading loading"
         v-if="getIsLoadingStockGame"
@@ -249,10 +88,11 @@
       <v-content>
         <nuxt />
       </v-content>
-
-      <!-- Chat Windows-->
+      
+      <!-- invitation Windows-->
       <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
+        :stockName="$route.params.id"
         :key="$route.name"
       />
       <!-- <chatWindow /> -->
@@ -273,9 +113,13 @@ import lottie from "lottie-web";
 import invitation from "~/components/invitation";
 import userMenu from "../components/userMenu";
 import config from "../config/config.global";
+import log from "roarr";
+
+import DesktopTutorial from "../components/desktopTutorial";
 
 export default {
   components: {
+    DesktopTutorial,
     invitation,
     countryFlag,
     languageDialog,
@@ -349,113 +193,64 @@ export default {
     });
   },
   methods: {
-    ...mapActions([
-      "setGameChannelShow",
-      "setIsShowTutorial",
-      "setIsWindowsHasScroll"
-    ]),
+    ...mapActions(["setGameChannelShow"]),
     async fetchNotification() {
-      const betData = {
-        portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-        userUUID: this.getUserUUID, // get the userUUID with the this object
-        version: config.version, // version of API
-        betResult: [0, 1], // -1= pending, pending that mean is betting
-        limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
-        offset: "0" // offset or skip the data
-      };
-      const { data } = await this.$axios.post(
-        config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
-        betData,
-        {
-          headers: config.header
-        }
-      );
-      this.messagesCount = data.data.length;
-      for (let i = 0; i < data.data.length - 1; i++) {
-        let betID = data.data[i].betID;
-        let betResult = data.data[i].betResult;
-        let name = data.data[i].name;
-        let ruleName = data.data[i].ruleName;
-        let betAmount = data.data[i].betAmount;
-        let betTime = data.data[i].createdTime;
-        let stockName = data.data[i].stockName;
-        let win = `<span class="text-slide text-white"><span class="text-warning">
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
+          userUUID: this.getUserUUID, // get the userUUID with the this object
+          version: config.version, // version of API
+          betResult: [0, 1], // -1= pending, pending that mean is betting
+          limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
+          offset: "0" // offset or skip the data
+        };
+        var { data } = await this.$axios.post(
+          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+        if (data.status) {
+          this.messagesCount = data.data.length;
+          for (let i = 0; i < data.data.length - 1; i++) {
+            let betID = data.data[i].betID;
+            let betResult = data.data[i].betResult;
+            let name = data.data[i].name;
+            let ruleName = data.data[i].ruleName;
+            let betAmount = data.data[i].betAmount;
+            let betTime = data.data[i].createdTime;
+            let stockName = data.data[i].stockName;
+            let win = `<span class="text-slide text-white"><span class="text-warning">
                         <i class="fa fa-bell"></i>
                         </span>Player ${betResult}  ${betAmount} chips on,
                          ${stockName} stock ${ruleName}  ${betTime}</span>`;
-        this.winner.push(win);
-      }
-    }
-  },
-  watch: {
-    getTutorialStepNumber(newValue) {
-      switch (newValue) {
-        case 1:
-          $("#lastDrawGuideline").css("z-index", "10001");
-          break;
-        case 2:
-          $("#lastDrawGuideline").css("z-index", "1");
-          $("#betCloseInGuideline").css("z-index", "10001");
-          break;
-        case 3:
-          $("#betCloseInGuideline").css("z-index", "1");
-          $("#lotteryDrawGuidelines").css("z-index", "10001");
-          break;
-        case 4:
-          $("#lotteryDrawGuidelines").css("z-index", "1");
-          $("#chartGuidelineNew").css("z-index", "10001");
-          if ($(document).height() > $(window).height()) {
-            this.setIsWindowsHasScroll(true);
-          } else {
-            this.setIsWindowsHasScroll(false);
+            this.winner.push(win);
           }
-          break;
-        case 5:
-          $("#chartGuidelineNew").css("z-index", "1");
-          $(".betButtonGuide").css("z-index", "10001");
-          break;
-        case 6:
-          $(".betButtonGuide").css("z-index", "1");
-          $(".BetButtonGuideEven").css("z-index", "10001");
-          break;
-        case 7:
-          $(".BetButtonGuideEven").click();
-          $("html, body").animate(
-            { scrollTop: $("#enter-amount-to-bet").scrollTop() },
-            1000
-          );
-          break;
-        case 8:
-          $(".BetButtonGuideEven").css("z-index", "1");
-          $("#background-tutorial").click();
-          $("#selectstockGuideline").css("z-index", "10001");
-          break;
-        case 9:
-          $("#selectstockGuideline").css("z-index", "1");
-          $("#stocklistGuidelines").css("z-index", "10001");
-          break;
-        case 10:
-          $("#stocklistGuidelines").css("z-index", "1");
-          $("#betresultGuidelines").css("z-index", "10001");
-          break;
-        default:
-          $("#betresultGuidelines").css("z-index", "1");
-          this.setIsShowTutorial(false);
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            req: reqBody,
+            res: data,
+            page: "layouts/desktopModern.vue",
+            apiUrl: config.getAllBets.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   },
   computed: {
     ...mapGetters([
-      "getIsWindowsHasScroll",
-      "getTimerByStockName",
-      "getStockLoop",
-      "getTutorialStepNumber",
-      "getIsShowTutorial",
-      "getLastDraw",
       "getGameUUIDByStockName",
       "getPortalProviderUUID", // Get Portalprovider
       "getUserUUID", // Get UserUUID
-      "getGameChannel",
       "getLocale",
       "getIsLoadingStockGame"
     ]),
@@ -465,7 +260,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .winnerText {
   margin-top: -30px;

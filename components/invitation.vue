@@ -13,7 +13,10 @@
           @click="activeTab('world')"
           :class="{ active: tabActiveName === 'world' }"
         >
-          <a href="#">EC World</a>
+          <a href="#"
+            >{{ $t("invitation.ecworld") }}
+            <span class="count"> {{ globalInvitation.length }} </span>
+          </a>
         </span>
         <span
           class="tabs"
@@ -21,7 +24,7 @@
           v-if="isShowChanel"
           :class="{ active: tabActiveName === 'chanel' }"
         >
-          <a href="#">Game Channel</a>
+          <a href="#">{{ stockName }} Channel</a>
         </span>
       </div>
       <!-- conversation area -->
@@ -37,6 +40,14 @@
               </span>
             </div>            -->
             <div class="bodyChat">
+              <div
+                class="messageChatView noRecord"
+                v-if="globalInvitation.length == 0"
+              >
+                <i class="fa fa-bell"></i>
+                <p>There are no users Invitaion.</p>
+              </div>
+
               <div
                 class="msgUser"
                 v-for="data in globalInvitation"
@@ -55,7 +66,7 @@
                     >
                       <v-img
                         class="userImage"
-                        :src="imgProfile(data.userImage)"
+                        :src="defaultImage"
                         aspect-ratio="1"
                         max-height="120"
                         max-width="120"
@@ -108,7 +119,9 @@
             <div class="messageChat">
               <v-flex col-md-12>
                 <v-btn class="buttonInvitation" @click="sendInvitation()"
-                  >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
+                  >{{ $t("invitation.sendInvitation") }} &nbsp;<i
+                    class="fa fa-paper-plane"
+                  ></i
                 ></v-btn>
               </v-flex>
             </div>
@@ -119,6 +132,7 @@
         <chanelChat
           v-show="tabActiveName === 'chanel'"
           :gameUUID="gameUUID"
+          :stockName="stockName"
           :key="gameUUID"
         ></chanelChat>
       </div>
@@ -128,17 +142,18 @@
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
         :username="this.username"
-        :userImage="this.userImage"
+        :userImage="defaultImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
       />
     </v-dialog>
 
-    <v-btn rigth fab slot="reference" class="liveChat">
+    <v-btn right fab slot="reference" class="liveChat">
       <v-icon>chat</v-icon>
     </v-btn>
   </popper>
 </template>
+
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
@@ -148,6 +163,8 @@ import moment from "moment";
 import config from "../config/config.global";
 import chanelChat from "./chanelChat";
 import followBet from "../components/modern/follow/followBet";
+import log from "roarr";
+
 let name = "btc5";
 export default {
   components: {
@@ -158,6 +175,9 @@ export default {
   },
   props: {
     gameUUID: {
+      type: String
+    },
+    stockName: {
       type: String
     }
   },
@@ -171,10 +191,22 @@ export default {
       x: null,
       y: "top",
       filterNames: [
-        { name: "", value: "Filter" },
-        { name: "rank", value: "Winning Rank" },
-        { name: "rate", value: "Winning Rate" },
-        { name: "follow", value: "Winning Followers" }
+        {
+          name: "",
+          value: "Filter"
+        },
+        {
+          name: "rank",
+          value: "Winning Rank"
+        },
+        {
+          name: "rate",
+          value: "Winning Rate"
+        },
+        {
+          name: "follow",
+          value: "Winning Followers"
+        }
       ],
       FolloworNot: "",
       FollowUserUUID: "",
@@ -229,7 +261,7 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
-        this.globalInvitation.push(newData);      
+        this.globalInvitation.push(newData);
         this.scrollDown();
       }
     );
@@ -260,7 +292,6 @@ export default {
           }
         );
       } catch (ex) {
-        console.log(ex);
         this.$swal({
           title: ex.message,
           type: "error",
@@ -271,16 +302,16 @@ export default {
     // fetch default image or from server image
     imgProfile(userImg) {
       return userImg === null
-        ?  this.defaultImage
+        ? this.defaultImage
         : `${config.apiDomain}/` + userImg;
     },
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      if(method == 0){
+      if (method == 0) {
         this.FolloworNot = 1;
-      }else{
-         this.FolloworNot = 2;
+      } else {
+        this.FolloworNot = 2;
       }
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
@@ -315,23 +346,44 @@ export default {
 </script>
 
 <style scoped>
+.count {
+  background-color: #fff;
+  border-radius: 180px;
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  text-align: center;
+}
+.noRecord {
+  text-align: center;
+  font-size: 16px;
+  padding-top: 50%;
+  color: #777777;
+}
+.noRecord i {
+  font-size: 24px;
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;
   padding: 10px;
 }
+
 .followup {
   padding: 15px 30px;
   border-radius: 20px;
 }
+
 .followup h4 {
   color: #65686f;
 }
+
 .conve-container {
   position: relative;
   display: flex;
   flex-direction: column;
 }
+
 .buttonInvitation {
   margin-top: -1px;
   color: #fff !important;
@@ -340,6 +392,7 @@ export default {
   font-size: 14px;
   width: 100%;
 }
+
 .liveChat {
   z-index: 999;
   position: fixed;
@@ -350,11 +403,13 @@ export default {
   color: #fff;
   background-color: #2aaf3e !important;
 }
+
 .popper {
   width: 370px;
   border-radius: 10px;
   border: 1px solid #dddddd;
 }
+
 .liveChatImg {
   text-align: center;
   border-radius: 6px;
@@ -391,6 +446,7 @@ export default {
   background-color: #fff;
   border: 1px solid #dddddd;
 }
+
 .filter {
   margin-top: 10px;
 }
@@ -404,18 +460,23 @@ export default {
   font-size: 12px;
   color: #8d8c8c;
 }
+
 .follow {
   border: 1px solid orange;
 }
+
 .rank {
   border: 1px solid #c6b2f0;
 }
+
 .rate {
   border: 1px solid green;
 }
+
 .messageChatView div:first-child {
   border: none;
 }
+
 .messageChatView div {
   cursor: pointer;
   float: left;
@@ -433,6 +494,7 @@ export default {
   float: left;
   border: 1px solid #dddddd;
 }
+
 .messageChatView .userStatus {
   float: left;
   margin: 12px 5px;
@@ -440,6 +502,7 @@ export default {
   color: #8d8c8c;
   font-weight: 800;
 }
+
 .msgUser .ranking {
   float: left;
   font-size: 20px;
@@ -448,6 +511,7 @@ export default {
   font-weight: 800;
   text-align: center;
 }
+
 .msgUser .followcount {
   float: left;
   font-size: 20px;
@@ -456,6 +520,7 @@ export default {
   color: #5f70b1;
   font-weight: 800;
 }
+
 .msgUser .winRate {
   float: left;
   font-size: 20px;
@@ -464,6 +529,7 @@ export default {
   font-weight: 800;
   text-align: center;
 }
+
 .messageChatView .following {
   float: right;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
@@ -475,12 +541,15 @@ export default {
   margin-top: 10px;
   font-size: 13px;
 }
+
 #headerChat {
   height: 45px;
 }
+
 #headerChat span:first-child a {
   border-top-left-radius: 15px;
 }
+
 #headerChat span:last-child a {
   border-top-right-radius: 15px;
 }
@@ -531,9 +600,11 @@ export default {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+
 .msgBody {
   color: #7f7e7e;
 }
+
 .messageChat {
   width: 95%;
   bottom: 7px;

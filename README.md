@@ -20,3 +20,16 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+
+Latest Version Features (1.0) 
+
+1. User Profile
+2. User can Bet Stock Wise 
+3. Full Screen Mode
+4. Multiple Screen User can Bets 
+5. User can Send invitation to Chat ECWORLD
+6. In Game Channel User can Send Invitation Stock Game Wise
+7. Leaderboard (Top Users List With Bet Info)
+8. User can Follow Top Player in EC Game.
+9. User Stock Anaysis
+10. User Online History 

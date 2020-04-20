@@ -115,6 +115,7 @@ module.exports = {
   plugins: [
     "@/plugins/vuetify",
     // "~/plugins/axios",
+    "@/plugins/roarr",
     "@/plugins/filters",
     "@/plugins/callApi",
     "@/plugins/i18n",

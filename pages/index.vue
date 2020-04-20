@@ -24,6 +24,8 @@
 import { mapActions, mapGetters } from "vuex";
 import config from "../config/config.global";
 import { isMobile } from "mobile-device-detect";
+import log from "roarr";
+
 export default {
   layout: "nolayout",
   middleware: ["getApiKey", "checkAuth"],
@@ -74,14 +76,14 @@ export default {
   methods: {
     async checkUserAuth() {
       try {
-        const { data } = await this.$axios.post(
+        var reqBody = this.getUserAuth;
+        var { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
-          this.getUserAuth, // data object
+          reqBody, // data object
           {
             headers: config.header
           }
         );
-        console.log(data);
         if (data.status) {
           const userInfo = {
             authUser: config.authUser,
@@ -117,12 +119,22 @@ export default {
             this.messageError.push(error);
           }
         } else {
-          const error = data.message;
-          this.messageError.push(error);
+          this.messageError.push(config.error.general);
+          throw new Error(config.error.general);
         }
-        // location.reload(true);
-      } catch (error) {
-        console.log(error);
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            req: reqBody,
+            res: data,
+            page: this.$options.name,
+            apiUrl: config.userLoginAuth.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     ...mapActions(["setAuth", "setUserUUID"]),

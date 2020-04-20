@@ -9,6 +9,8 @@ import bethistory from "~/components/mobile/bethistory";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "../../config/config.global";
+import log from "roarr";
+
 export default {
   layout: "default",
   components: {
@@ -33,7 +35,7 @@ export default {
     async fetch() {
       // afer moumted call the functions this method will run the fetch the data from API
       try {
-        const sendData = {
+        var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           version: config.version,
@@ -41,20 +43,27 @@ export default {
           limit: "20",
           offset: "0"
         };
-        const { data } = await this.$axios.post(
-          config.getAllBets.url,
-          sendData,
-          {
-            headers: config.header
-          }
-        );
-        if (data.code == 200) {
+        var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
+          headers: config.header
+        });
+        if (data.status) {
           this.userBetHistory = data.data;
         } else {
-          throw new Error(Object.values(data.message)[0][0]);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.log(ex);
+        log.error(
+          {
+            req: reqBody,
+            res: data,
+            page: this.$options.name,
+            apiUrl: config.getAllBets.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }

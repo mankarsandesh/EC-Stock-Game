@@ -272,6 +272,7 @@ import { mapGetters, mapActions } from "vuex";
 import OnlineHistory from "~/components/mobile/onlineHistory";
 import StockAnalysis from "~/components/mobile/stockAnalysis";
 import config from "../../config/config.global";
+import log from "roarr";
 
 export default {
   data() {
@@ -308,7 +309,7 @@ export default {
     async saveClick() {
       this.updating = true;
       const ref = this.$refs;
-      let formData = new FormData();
+      var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("email", ref.email.value);
@@ -319,7 +320,7 @@ export default {
       // formData.append("country", ref.country.value);
       formData.append("version", config.version);
       try {
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
           {
@@ -329,22 +330,29 @@ export default {
             }
           }
         );
-
-        if (res.code === 200) {
+        if (res.status) {
           this.setUserData();
           this.updating = false;
         } else {
-          alert(res.message);
           this.updating = false;
           this.error = res.message;
-          console.log(res);
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
         this.updating = false;
-        alert(ex.message);
+        log.error(
+          {
+            req: formData,
+            res,
+            page: this.$options.name,
+            apiUrl: config.updateUserProfile.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
-      console.log(res);
     }
   }
 };

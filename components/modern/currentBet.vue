@@ -3,7 +3,7 @@
     <v-flex xs12 md12 mt-5>
       <v-data-table
         :items="currentBets"
-        :items-per-page="10"
+        :rows-per-page-items="[10]"
         ref="table"
         :search="search"
         class="current-bet"

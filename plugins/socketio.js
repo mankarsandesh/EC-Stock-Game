@@ -1,5 +1,7 @@
 import Echo from "laravel-echo";
 import config from "../config/config.global";
+import log from "roarr";
+
 export default ({ store }) => {
   const port = 6001;
 
@@ -34,7 +36,27 @@ export default ({ store }) => {
       eventName: "countdown"
     },
     ({ data }) => {
-      store.dispatch("setStockCountdown", data.data.timeData);
+      try {
+        var logData = data;
+        if (data.status) {
+          store.dispatch("setStockCountdown", data.data.timeData);
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            channel: `countdown.${store.getters.getPortalProviderUUID}`,
+            event: "countdown",
+            res: logData,
+            page: "plugins/socketio.js",
+            provider: store.getters.getPortalProviderUUID,
+            user: store.getters.getUserUUID
+          },
+          ex.message
+        );
+      }
     }
   );
   // Get active games by category
@@ -44,7 +66,27 @@ export default ({ store }) => {
       eventName: "getActiveGamesByCategory"
     },
     ({ data }) => {
-      store.dispatch("setStockCategory", data.res.data);
+      try {
+        var logData = data.res;
+        if (data.res.status) {
+          store.dispatch("setStockCategory", data.res.data);
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            channel: `getActiveGamesByCategory.${store.getters.getPortalProviderUUID}`,
+            event: "getActiveGamesByCategory",
+            res: logData,
+            page: "plugins/socketio.js",
+            provider: store.getters.getPortalProviderUUID,
+            user: store.getters.getUserUUID
+          },
+          ex.message
+        );
+      }
     }
   );
   // Get Stock list price
@@ -54,7 +96,27 @@ export default ({ store }) => {
       eventName: "stockListOnly"
     },
     ({ data }) => {
-      store.dispatch("setStockPrice", data.data.stockData);
+      try {
+        var logData = data.data;
+        if (data.status) {
+          store.dispatch("setStockPrice", data.data.stockData);
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            channel: `stockListOnly.${store.getters.getPortalProviderUUID}`,
+            event: "stockListOnly",
+            res: logData,
+            page: "plugins/socketio.js",
+            provider: store.getters.getPortalProviderUUID,
+            user: store.getters.getUserUUID
+          },
+          ex.message
+        );
+      }
     }
   );
 };

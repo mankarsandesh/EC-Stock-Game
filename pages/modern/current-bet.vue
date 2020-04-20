@@ -9,6 +9,8 @@
 import currentbet from "~/components/mobile/currentbet";
 import config from "../../config/config.global";
 import { mapState } from "vuex";
+import log from "roarr";
+
 export default {
   layout: "",
   components: {
@@ -30,18 +32,37 @@ export default {
   },
   methods: {
     async fetch() {
-      const sendData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        version: config.version,
-        betResult: [-1],
-        limit: "20",
-        offset: "0"
-      };
-      const { data } = await this.$axios.post(config.getAllBets.url, sendData, {
-        headers: config.header
-      });
-      this.currentBets = data.data;
+      try {
+        var reqBody = {
+          portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
+          version: config.version,
+          betResult: [-1],
+          limit: "20",
+          offset: "0"
+        };
+        var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
+          headers: config.header
+        });
+        if (data.status) {
+          this.currentBets = data.data;
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            req: reqBody,
+            res: data,
+            page: this.$options.name,
+            apiUrl: config.getAllBets.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
+      }
     }
   }
 };
