@@ -8,11 +8,14 @@
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img :src="defaultImage" />
+                  <img :src="newImage ? newImage : defaultImage" />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="cameraClick"
+                    <!-- <v-icon color="black" :size="20" @click="cameraClick"
+                      >photo_camera</v-icon
+                    > -->
+                    <v-icon color="black" :size="20" @click="dialog = true"
                       >photo_camera</v-icon
                     >
                   </button>
@@ -118,6 +121,135 @@
           </v-flex>
         </v-layout>
       </v-flex>
+
+      <v-dialog v-model="dialog" width="900" class="followDialog">
+        <v-card class="followup">
+          <h3 class="title" style="text-align: center; color: #0b2a68;">
+            Choose your Avatar
+          </h3>
+          <v-card-text style="text-align:center;">
+            <div class="avatarImage">
+              <v-img class="img" src="/avatar/Avatar-2.jpg"></v-img>
+              <span
+                href=""
+                class="userAvatar"
+                @click="useAvatar('/avatar/Avatar-2.jpg')"
+                >Use Avatar</span
+              >
+            </div>
+            <div class="avatarImage">
+              <v-img
+                class="img"
+                src="/avatar/Avatar-3.jpg"
+                aspect-ratio="1.7"
+              ></v-img>
+              <span
+                class="userAvatar"
+                @click="useAvatar('/avatar/Avatar-3.jpg')"
+                >Use Avatar</span
+              >
+            </div>
+            <div class="avatarImage">
+              <v-img
+                class="img"
+                src="/avatar/Avatar-4.jpg"
+                aspect-ratio="1.7"
+              ></v-img>
+              <span
+                class="userAvatar"
+                @click="useAvatar('/avatar/Avatar-4.jpg')"
+                >Use Avatar</span
+              >
+            </div>
+            <div class="avatarImage">
+              <v-img
+                class="img"
+                src="/avatar/Avatar-5.jpg"
+                aspect-ratio="1.7"
+              ></v-img>
+              <span
+                class="userAvatar"
+                @click="useAvatar('/avatar/Avatar-5.jpg')"
+                >Use Avatar</span
+              >
+            </div>
+            <div class="avatarImage">
+              <v-img
+                class="img"
+                src="/avatar/Avatar-6.jpg"
+                aspect-ratio="1.7"
+              ></v-img>
+              <span
+                class="userAvatar"
+                @click="useAvatar('/avatar/Avatar-6.jpg')"
+                >Use Avatar</span
+              >
+            </div>
+            <div class="avatarImage">
+              <v-img
+                class="img"
+                src="/avatar/Avatar-7.jpg"
+                aspect-ratio="1.7"
+              ></v-img>
+              <span
+                class="userAvatar"
+                @click="useAvatar('/avatar/Avatar-7.jpg')"
+                >Use Avatar</span
+              >
+            </div>
+            <div class="avatarImage">
+              <v-img
+                class="img"
+                src="/avatar/Avatar-8.jpg"
+                aspect-ratio="1.7"
+              ></v-img>
+              <span
+                class="userAvatar"
+                @click="useAvatar('/avatar/Avatar-8.jpg')"
+                >Use Avatar</span
+              >
+            </div>
+            <div class="avatarImage">
+              <v-img
+                class="img"
+                src="/avatar/Avatar-9.jpg"
+                aspect-ratio="1.7"
+              ></v-img>
+              <span
+                class="userAvatar"
+                @click="useAvatar('/avatar/Avatar-9.jpg')"
+                >Use Avatar</span
+              >
+            </div>
+          </v-card-text>
+          <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="dialog = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+        
+        </v-card>
+
+        
+
+
+      </v-dialog>
+
+      <v-snackbar v-model="snackbar">
+        Sucessfully Avatar Updated.
+        <v-btn color="pink" text @click="snackbar = false">
+          Close
+        </v-btn>
+      </v-snackbar>
+
+
     </v-layout>
   </v-container>
 </template>
@@ -129,6 +261,9 @@ export default {
   layout: "desktopModern",
   data() {
     return {
+      snackbar: false,
+      newImage: "",
+      dialog: false,
       defaultImage: `/no-profile-pic.jpg`,
       currentChild: "basicinfo",
       blurValue: 5,
@@ -158,6 +293,12 @@ export default {
     }
   },
   methods: {
+    useAvatar(image) {
+      this.newImage = image;
+      console.log(image);
+      this.snackbar = true;
+      // this.updateProfile();
+    },
     ...mapActions(["setUserData"]),
     uploadImage(e) {
       let self = this;
@@ -173,30 +314,22 @@ export default {
       this.$refs.inputFile.click();
     },
     async updateProfile() {
-      var formData = new FormData();
-      formData.append("profileImage", this.$refs.inputFile.files[0]);
-      formData.append("portalProviderUUID", this.getPortalProviderUUID);
-      formData.append("userUUID", this.getUserUUID);
-      formData.append("version", config.version);
+      var reqBody = {
+        profileImage: this.newImage,
+        portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
+        version: config.version
+      };
       try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
-          formData,
+          reqBody,
           {
             headers: config.header
-            // onUploadProgress: progressEvent => {
-            //   const totalLength = progressEvent.lengthComputable
-            //     ? progressEvent.total
-            //     : progressEvent.target.getResponseHeader("content-length") ||
-            //       progressEvent.target.getResponseHeader(
-            //         "x-decompressed-content-length"
-            //       );
-            //   if (totalLength !== null) {
-            //     this.blurValue = Math.round(totalLength - progressEvent.loaded);
-            //   }
-            // }
           }
         );
+        console.log(reqBody);
+        console.log(res);
         if (res.status) {
           this.blurValue = 0;
           this.setUserData();
@@ -213,7 +346,7 @@ export default {
         });
         log.error(
           {
-            req: formData,
+            req: reqBody,
             res: res.data,
             page: this.$options.name,
             apiUrl: config.updateUserProfile.url,
@@ -229,6 +362,43 @@ export default {
 </script>
 
 <style scoped>
+.userAvatar {
+  background-color: #0c2a69;
+  padding: 6px 12px;
+  margin-top: 10px;
+  color: #ffffff;
+  border: 1px solid;
+  width: 100%;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.avatarImage {
+  height: 200px;
+  /* border: 1px solid ; */
+  text-align: center;
+  margin: 10px;
+  width: 20%;
+  padding: 5px;
+  display: inline-block;
+}
+.avatarImage .img {
+  margin: 15px auto;
+  border-radius: 180px;
+  width: 120px;
+  height: 120px;
+  border: 2px solid #dddddd;
+}
+.followDialog {
+  width: 800px;
+  border-radius: 10px;
+  padding: 15px;
+}
+.followup {
+  padding: 15px 30px;
+  border-radius: 20px;
+}
 .display_component {
   position: absolute;
   height: 550px;
