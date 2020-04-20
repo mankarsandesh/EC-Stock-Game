@@ -186,7 +186,6 @@
             fab
             class="multiGame"
             dark
-           
           >
             <i
               style="font-size:26px;"
@@ -228,6 +227,7 @@ import config from "../../../config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
+
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -298,7 +298,29 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        this.setLiveRoadMap(data.data.roadMap[0]);
+        try {
+          var logData = data;
+          if (data.status) {
+            this.setLiveRoadMap(data.data.roadMap[0]);
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.$route.params.id
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "pages/modern/desktop/_id.vue",
+              provider: this.getPortalProviderUUID,
+              user: localStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
     // call this every page that used "dekstopModern" layout to hide loading
