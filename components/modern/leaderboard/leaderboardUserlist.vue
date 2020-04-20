@@ -53,10 +53,10 @@
         <div class="userRow">
           <div>
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+              <span class="rank">  <i class="fas fa-crown"></i>   </span>
               <img class="pimage" :src="defaultImage" />
               <span class="subtitle-1 text-uppercase ">
-                <span class="name">
-                  <span>#{{ data.Rank }}</span>
+                <span class="name">                 
                   {{ data.username }}
                 </span>
               </span>
@@ -291,6 +291,9 @@ export default {
 </script>
 
 <style scoped>
+.rank{
+
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;
@@ -391,8 +394,8 @@ export default {
 
 .pimage {
   margin-right: 10px;
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   border: 2px solid #dddddd;
   border-radius: 180px;
 }
