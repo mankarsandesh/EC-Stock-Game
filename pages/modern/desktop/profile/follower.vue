@@ -119,8 +119,7 @@ export default {
           {
             headers: config.header
           }
-        );
-        console.log(res);
+        );       
         if (res.code == 200) {
           this.followerList = res.data;
           this.countFollower = res.data.length;
