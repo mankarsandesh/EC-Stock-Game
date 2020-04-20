@@ -1,7 +1,16 @@
 <template>
   <div class="conve-container">
     <div class="bodyChat">
-      <div v-for="data in conversationChanel" :key="data.index" class="msgUser">
+      <div class="messageChatView noRecord" v-if="conversationChanel.length == 0">
+               <i
+                    class="fa fa-bell"
+                  ></i
+                >
+                <p>There are no users Invitaion in {{stockName}} Channel.</p>
+              </div>
+
+      <div v-for="data in conversationChanel" :key="data.index" class="msgUser">       
+
         <div class="messageChatView">
           <div style="width:30%;">
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
@@ -76,6 +85,9 @@ export default {
   props: {
     gameUUID: {
       type: String
+    },
+    stockName:{
+      type : String
     }
   },
   data() {
@@ -175,6 +187,15 @@ export default {
 </script>
 
 <style scoped>
+.noRecord{
+  text-align: center;
+  font-size: 16px;
+  padding-top:50%;
+  color: #777777;
+}
+.noRecord i{
+  font-size: 24px;
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;
