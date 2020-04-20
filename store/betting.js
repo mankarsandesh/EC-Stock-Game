@@ -93,7 +93,6 @@ const actions = {
         let len = res.data.length;
 
         for (i; i < len; i++) {
-          console.log(res.data[i], "final data");
           context.commit("PUSH_DATA_ON_GOING_BET", res.data[i]);
         }
         // check betting false or true
