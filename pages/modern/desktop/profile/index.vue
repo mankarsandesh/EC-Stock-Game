@@ -193,7 +193,7 @@ export default {
           {
             req: formData,
             res,
-            page: this.$options.name,
+            page: 'pages/modern/desktop/profile/index.vue',
             apiUrl: config.updateUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
