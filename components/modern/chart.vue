@@ -292,10 +292,13 @@ export default {
       if (this.window.width >= 2000) {
         this.chartHeight = "420vh";
         this.heightChart = 420;
-      } else {
+      } else if(this.window.width > 1400){
         this.chartHeight = "320vh";
         this.heightChart = 320;
-      }
+      }else{
+          this.chartHeight = "250vh";
+          this.heightChart = 250;
+      }    
     }
   }
 };
