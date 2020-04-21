@@ -348,7 +348,7 @@ export default {
           {
             req: reqBody,
             res: res.data,
-            page: this.$options.name,
+            page: 'pages/modern/desktop/profile.vue',
             apiUrl: config.updateUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
