@@ -118,7 +118,7 @@
           stocks & game
         </span>
         <span class="guide-description">
-          You can choose your Stock,you want BET/PLAY</span
+          You can choose your Stock and Time,you want BET/PLAY</span
         >
       </div>
       <!-- stock list -->

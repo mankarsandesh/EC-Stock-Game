@@ -76,7 +76,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 
 export default {

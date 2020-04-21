@@ -43,7 +43,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import chips from "../../data/chips";
+import chips from "~/data/chips";
 export default {
   data() {
     return {

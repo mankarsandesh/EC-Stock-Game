@@ -94,8 +94,8 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import result from "~/data/result";
-import config from "../../config/config.global";
-import chips from "../../data/chips";
+import config from "~/config/config.global";
+import chips from "~/data/chips";
 import log from "roarr";
 
 export default {

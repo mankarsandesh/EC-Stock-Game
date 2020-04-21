@@ -35,7 +35,7 @@
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   data() {

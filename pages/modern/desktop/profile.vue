@@ -255,7 +255,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   layout: "desktopModern",

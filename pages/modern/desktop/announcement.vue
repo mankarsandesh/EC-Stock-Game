@@ -18,7 +18,7 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import announcement from "~/components/modern/stocklist/announcement";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   layout: "desktopModern",

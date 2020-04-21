@@ -85,9 +85,9 @@
 </template>
 
 <script>
-import config from "../config/config.global";
+import config from "~/config/config.global";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
-import followBet from "../components/modern/follow/followBet";
+import followBet from "~/components/modern/follow/followBet";
 import log from "roarr";
 
 export default {
