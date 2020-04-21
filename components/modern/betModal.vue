@@ -97,6 +97,7 @@ import result from "~/data/result";
 import config from "../../config/config.global";
 import chips from "../../data/chips";
 import log from "roarr";
+
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   data() {

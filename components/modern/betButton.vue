@@ -333,7 +333,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(8 + index,'firstdigit')"
+          @click="betButtonClick(8 + index, 'firstdigit')"
           v-show="number == 'first'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -360,7 +360,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(25 + index,'lastdigit')"
+          @click="betButtonClick(25 + index, 'lastdigit')"
           v-show="number == 'last'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -387,7 +387,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(149 + index,'bothdigit')"
+          @click="betButtonClick(149 + index, 'bothdigit')"
           v-show="number == 'both'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -414,7 +414,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(42 + index,'twodigit')"
+          @click="betButtonClick(42 + index, 'twodigit')"
           v-show="number == 'two'"
           class="btn-small"
           >{{ index < 10 ? "0" + index : index }}</v-btn
@@ -497,8 +497,7 @@ export default {
       if (this.getStockLoop(this.stockID) === 5) {
         if (
           this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec ==
-            240
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
         ) {
           this.clearDataMultiGameBet(5);
         }
@@ -509,7 +508,7 @@ export default {
       } else {
         if (
           this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 40
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
         ) {
           this.clearDataMultiGameBet(1);
         }
@@ -523,11 +522,11 @@ export default {
   mounted() {},
   methods: {
     ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
-    betButtonClick(ruleID,specificNumber='') {
+    betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
         let betData = {
-          specificNumber:specificNumber,
+          specificNumber: specificNumber,
           gameUUID: this.getGameUUIDByStockName(this.stockID),
           ruleID: ruleID,
           betAmount: this.getFooterBetAmount

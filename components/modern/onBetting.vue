@@ -1,15 +1,15 @@
 <template>
   <v-layout column wrap>
     <v-btn class="buttonGreen" :to="'/modern/desktop/current-bet'">
-      {{
-      $t("msg.View All Results")
-      }}
+      {{ $t("msg.View All Results") }}
     </v-btn>
 
     <v-flex pa-2 class="headerStockBar">{{ $t("msg.betting") }}</v-flex>
 
     <v-flex class="text-xs-center" style="overflow-y: auto;height:200px">
-      <h3 v-show="getOnGoingBet.length <= 0" class="pa-5">{{ $t("msg.nobetting") }}</h3>
+      <h3 v-show="getOnGoingBet.length <= 0" class="pa-5">
+        {{ $t("msg.nobetting") }}
+      </h3>
       <!-- v-show="getOnGoingBet.length>0" -->
 
       <v-list three-line class="pa-0" v-show="getOnGoingBet.length > 0">
@@ -62,11 +62,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters([
-      "getOnGoingBet",
-      "getBettingAmount",
-      "getStockIdtoStockName"
-    ])
+    ...mapGetters(["getOnGoingBet", "getBettingAmount"])
   }
 };
 </script>
