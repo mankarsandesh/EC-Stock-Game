@@ -2,7 +2,7 @@
   <div>
     <v-layout row justify-center id="footerBet-guide">
       <v-flex lg2 md2 xs2 class="amount">
-        <div>{{ getAllBettingAmount }}</div>
+        <div>{{ getFooterBetAmount }}</div>
       </v-flex>
       <v-flex lg5 md5 xs3 class="chipsdiv">
         <v-layout row>
@@ -29,10 +29,10 @@
       </v-flex>
       <v-flex lg3 md3 xs2 class="betButton">
         <div>
-          <v-btn class="buttonGreensmall" dark @click="getSending()">{{
+          <v-btn class="buttonGreensmall" dark @click="confirmBet()">{{
             $t("msg.confirm")
           }}</v-btn>
-          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
+          <v-btn class="buttonCancel" @click="setFooterBetAmount(0)">{{
             $t("msg.cancel")
           }}</v-btn>
         </div>
@@ -47,7 +47,7 @@ import setting from "../modern/setting/chipamout";
 import chips from "../../data/chips";
 export default {
   components: {
-    setting
+    //setting
   },
   data() {
     return {
@@ -63,17 +63,22 @@ export default {
       "clearDataMultiGameBet",
       "sendBetting"
     ]),
-    getSending() {
+    confirmBet() {
       this.isSending = true;
       this.texts = this.$root.$t("msg.sending");
       // setTimeout(() => {
       this.sendBetting();
+      this.setFooterBetAmount(0);
       this.isSending = false;
       // }, 1000);
     }
   },
   computed: {
-    ...mapGetters(["getCoinsModern", "getAllBettingAmount"])
+    ...mapGetters([
+      "getCoinsModern",
+      "getAllBettingAmount",
+      "getFooterBetAmount"
+    ])
   }
 };
 </script>

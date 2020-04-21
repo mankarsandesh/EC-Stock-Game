@@ -171,7 +171,6 @@ export default {
       "getPortalProviderUUID",
       "getTimerByStockName",
       "getStockLoop",
-      "getStockById",
       "getAmountBettingByStockId"
     ])
   },

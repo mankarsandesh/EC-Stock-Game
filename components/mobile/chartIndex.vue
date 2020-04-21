@@ -31,11 +31,7 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getStockUUIDByStockName",
-      "getLiveTime"
-    ]),
+    ...mapGetters(["getPortalProviderUUID", "getStockUUIDByStockName"]),
     series() {
       let newData = [];
       this.chartData.forEach(element => {

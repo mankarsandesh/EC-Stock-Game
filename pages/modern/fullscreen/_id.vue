@@ -504,10 +504,6 @@ export default {
         try {
           var logData = data;
           if (data.status) {
-            console.log(
-              "gamne stock id",
-              this.getStockUUIDByStockName(this.$route.params.id)
-            );
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
             throw new Error(config.error.general);
@@ -562,7 +558,6 @@ export default {
     },
     ...mapGetters([
       "getIsWindowsHasScroll",
-      "getStockGameId",
       "getGameUUIDByStockName",
       "getAllStocks",
       "getTimerByStockName",
@@ -571,13 +566,7 @@ export default {
       "getUserInfo",
       "getLastDraw",
       "getRoadMap",
-      "getStockById",
-      "lotterydraw",
-      "getStockLoop",
-      "getStockChart",
-      "getLiveTime",
-      "getLivePrice",
-      "getUserUUID"
+      "getStockLoop"
     ]),
     ...mapState({
       gameStockId: state => state.game.gameStockId

@@ -1426,8 +1426,6 @@ export default {
       "getTimerByStockName",
       "getStockLoop",
       "getGameUUIDByStockName",
-      "getStockById",
-      "getLiveTime",
       "getCheckStock",
       "getCoinsModern",
       "getAllBettingAmount",
