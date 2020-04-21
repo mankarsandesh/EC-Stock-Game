@@ -24,17 +24,17 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex v-if="isHidden" @click="isHidden = false">
+      <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
           <v-icon color="#FFF">list</v-icon>
         </span>
       </v-flex>
       <!-- </v-flex> -->
       <v-flex :xs10="!isHidden" :xs12="isHidden"   >
-        <v-flex md12 lg12 pl-3>
+        <v-flex md12 lg12 pl-3 >
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
-            <v-flex md7 lg6>
+            <v-flex md7 lg6 pt-2 >
               <div id="selectstockGuideline">
                 <stockSelect />
               </div>
@@ -42,8 +42,8 @@
             <!-- Stock Select End -->
 
             <!-- Stock Last Draw Start -->
-            <v-flex xs6 md5 lg6 >
-              <v-layout mb-3 class="justify-center" >
+            <v-flex xs6 md5 lg6 pt-1>
+              <v-layout mb-3 >
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.Lastdraw") }}</span>
                   <div id="lastDrawGuideline">
@@ -113,7 +113,7 @@
                     @click="openTutorial()"
                     title="Help"
                   >
-                    <v-icon dark size="25">fa-question</v-icon>
+                    <v-icon dark size="22">fa-question</v-icon>
                   </v-btn>
                 </v-flex>
               </v-layout>
@@ -128,7 +128,7 @@
                 </v-flex>
               </div>
             </v-flex>
-            <v-flex  md7 lg6 ml-4 pt-2>
+            <v-flex  md7 lg6 ml-3 pt-2>
               <div id="betRuleButton">
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
@@ -506,8 +506,8 @@ export default {
 .helpButton {
   background-color: #4464ff !important;
   color: #fff;
-  padding: 5px;
-  font-size: 22px;
+  padding: 3px;
+
 }
 
 .leftStocklist {

@@ -147,7 +147,7 @@ Big Screen
     color: #ffffff !important;
     background-color: #4464ff !important;
     position: absolute;
-    left: 53%;
+    left: 49%;
     top: 45%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
@@ -275,13 +275,13 @@ Big Screen
      min-width:60px !important;
   }
   .lastdraw {
-    font-size: 13px !important;
+    font-size: 14px !important;
   }
   .betclose {
-    font-size: 13px !important;
+    font-size: 14px !important;
   }
   .lottery {
-    font-size: 13px !important;
+    font-size: 14px !important;
   }
   .selectStock {
     font-size: 12px !important;
@@ -474,6 +474,7 @@ Big Screen
     font-weight: bolder;
     white-space: pre-line !important;
     height: 55px;
+    width: 55px;
     font-size: 12px;
     background: rgb(13,204,255);
     background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
@@ -485,6 +486,7 @@ Big Screen
     font-weight: bolder;
     white-space: pre-line !important;
     height: 55px;
+    width: 60px;
     font-size: 12px;
     background: rgb(250,209,38);
     background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
@@ -495,6 +497,7 @@ Big Screen
     border-radius: 10px;
     white-space: pre-line !important;
     height: 55px;
+    width: 60px;
     font-size: 12px;
     background: rgb(182,53,156);
     background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
@@ -505,6 +508,7 @@ Big Screen
     border-radius: 10px;
     white-space: pre-line !important;
     height: 55px;
+    width: 60px;
     font-size: 12px;
     background: rgb(1,233,189);
     background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);

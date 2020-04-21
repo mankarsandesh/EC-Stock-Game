@@ -1,9 +1,9 @@
 <template>
   <div v-if="dataArray.length > 0">
-    <v-layout wrap row pl-4 >
+    <v-layout wrap row  pl-3  pa-2>
       <v-flex xs1 md1 lg2 xl1 v-if="!isFullscreen" mt-4 >
         <v-layout>
-          <v-flex xs8 lg8>
+          <v-flex>
             <v-btn
               block
               class="text-white firstDigit"
@@ -67,8 +67,8 @@
             v-show="activeType == 'twoDigit'"
           ></v-flex>
         </v-layout>
-      </v-flex>
-      <v-flex xs9 md9 lg9 xl10>
+      </v-flex>     
+      <v-flex xs9 md9 lg9 xl10 >
         <v-layout row wrap>
           <v-flex xs12 lg12 md12>
             <trendMap
