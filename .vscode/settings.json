@@ -3,6 +3,7 @@
     "vue-i18n-ally.localesPaths": "locales",
     "cSpell.words": [
         "Roarr",
+        "axios",
         "swal"
     ]
 }
