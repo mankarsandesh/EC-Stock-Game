@@ -13,7 +13,7 @@
 import VueApexCharts from "vue-apexcharts";
 import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 
 export default {

@@ -446,7 +446,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
@@ -651,7 +651,6 @@ export default {
       $("#chartGuidelineNew").css("z-index", "1");
       $(".betButtonGuide").css("z-index", "1");
       $(".BetButtonGuideEven").css("z-index", "1");
-      $("#selectstockGuideline").css("z-index", "1");
       $("#stocklistGuidelines").css("z-index", "1");
       $("#background-tutorial").click();
       $("#fullscreen-roadmap-guide").css("z-index", "1");

@@ -51,7 +51,7 @@
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 export default {
   props: ["itemss"],
   computed: {

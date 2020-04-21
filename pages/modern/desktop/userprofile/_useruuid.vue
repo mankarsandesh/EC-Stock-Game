@@ -214,8 +214,8 @@
 <script>
 import { mapGetters } from "vuex";
 import VueApexCharts from "vue-apexcharts";
-import config from "../../../../config/config.global";
-import followBet from "../../../../components/modern/follow/followBet";
+import config from "~/config/config.global";
+import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
 import log from "roarr";
 

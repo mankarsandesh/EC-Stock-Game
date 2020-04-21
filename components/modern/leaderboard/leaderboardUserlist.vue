@@ -136,8 +136,8 @@
 
 <script>
 import { mapState } from "vuex";
-import config from "../../../config/config.global";
-import followBet from "../../modern/follow/followBet";
+import config from "~/config/config.global";
+import followBet from "~/components/modern/follow/followBet";
 export default {
   components: {
     followBet

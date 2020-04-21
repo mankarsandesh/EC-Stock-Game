@@ -82,7 +82,7 @@ import StockAnalysis from "~/components/mobile/stockAnalysis";
 import AnimatedNumber from "animated-number-vue";
 import { mapGetters } from "vuex";
 import profile from "~/pages/modern/desktop/profile";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 export default {
   components: {
     profile,

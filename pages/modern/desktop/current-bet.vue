@@ -14,7 +14,7 @@
 import currentBet from "~/components/modern/currentBet";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   layout: "desktopModern",

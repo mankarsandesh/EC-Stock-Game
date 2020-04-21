@@ -1,4 +1,4 @@
-import config from "../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 
 const state = () => ({

@@ -43,8 +43,8 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import setting from "../modern/setting/chipamout";
-import chips from "../../data/chips";
+import setting from "~/components/modern/setting/chipamout";
+import chips from "~/data/chips";
 export default {
   components: {
     setting
