@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap class="select-stock mt-2">
-    <v-flex md2>
+    <v-flex md3>
       <v-select
         v-model="stock"
         :items="items"
@@ -36,7 +36,7 @@
       <v-select
         v-model="minute"
         :items="minutes"
-        label="Minute"
+        label="min"
         class="selectStock"
         prepend-icon="navigate_next"
         color="blue"
@@ -49,25 +49,25 @@
         id="minute"
       >
         <template slot="selection" slot-scope="data"
-          >{{ data.item.loopName }} Minutes</template
+          >{{ data.item.loopName }} min</template
         >
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
             <v-list-tile-content
-              >{{ data.loopName }} Minutes</v-list-tile-content
+              >{{ data.loopName }} min</v-list-tile-content
             >
           </template>
           <template v-else>
             <v-list-tile-content>
               <v-list-tile-title
-                >{{ data.item.loopName }} Minutes</v-list-tile-title
+                >{{ data.item.loopName }} min</v-list-tile-title
               >
             </v-list-tile-content>
           </template>
         </template>
       </v-select>
     </v-flex>
-    <v-flex md4>
+    <v-flex md3>
       <v-text-field
         v-model="gameId"
         label="game id"
@@ -321,10 +321,6 @@ export default {
 };
 </script>
 <style scoped>
-.selectStock {
-  
-  font-size: 14px;
-}
 .v-list {
   font-size: 12px;
 }

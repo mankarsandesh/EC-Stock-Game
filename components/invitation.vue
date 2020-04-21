@@ -3,7 +3,7 @@
     trigger="click"
     :options="{
       placement: 'bottom-top',
-      modifiers: { offset: { offset: '65px' } }
+      modifiers: { offset: { offset: '95px' } }
     }"
   >
     <div class="popper">
@@ -405,6 +405,7 @@ export default {
 }
 
 .popper {
+  right: 20px;
   width: 370px;
   border-radius: 10px;
   border: 1px solid #dddddd;
