@@ -22,7 +22,7 @@ export default {
     apexchart: VueApexCharts
   },
   data() {
-    return {
+    return {    
       series: [
         {
           name: this.$root.$t("gamemsg.big"),
@@ -89,10 +89,7 @@ export default {
         stroke: {
           width: 1,
           colors: ["#fff"]
-        },
-        // title: {
-        //   text: "Live Bet Data"
-        // },
+        },       
         xaxis: {
           categories: [
             this.$root.$t("gamemsg.firstdigit"),
@@ -187,6 +184,7 @@ export default {
 </script>
 
 <style scoped>
+
 .set-height {
   height: 300px;
 }
