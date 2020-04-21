@@ -14,6 +14,7 @@
 import VueApexCharts from "vue-apexcharts";
 import { mapGetters } from "vuex";
 import openSocket from "socket.io-client";
+import config from "../../config/config.global";
 import log from "roarr";
 
 export default {
@@ -140,9 +141,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getGameUUIDByStockName", "getPortalProviderUUID"])
+    ...mapGetters(["getGameUUIDByStockName", "getPortalProviderUUID"]),
+    
   },
   mounted() {
+    console.log('mount hua chart')
     this.listenForBroadcast(
       {
         channelName: `liveBetCounts.${this.getGameUUIDByStockName(
