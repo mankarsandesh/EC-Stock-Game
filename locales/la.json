@@ -300,7 +300,11 @@
   "bethistory": {
     "betdraw": "BET DRAW",
     "yourloosingamount": "ຈໍານວນເງິນທີ່ຫລຸດລົງຂອງທ່ານ",
-    "yourwinningamount": "ຈຳ ນວນເງິນທີ່ຊະນະຂອງທ່ານ"
+    "yourwinningamount": "ຈຳ ນວນເງິນທີ່ຊະນະຂອງທ່ານ",
+    "searchbyName" : "ຄົ້ນຫາຕາມຊື່",
+    "today":"ມື້​ນີ້",
+    "thisWeek":"ອາ​ທິດ​ນີ້",
+    "thisMonth":"ເດືອນ​ນີ້"
   },
   "betting": {
     "reviewBet" : "ທົບທວນ Bet",

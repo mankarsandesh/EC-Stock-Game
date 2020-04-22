@@ -147,7 +147,7 @@ export default {
           enabled: false
         },
         title: {
-          text: "User Online History",
+          text: this.$root.$t('leaderboard.user')+' '+this.$root.$t('profile.onlinehistory'),
           align: "center",
           margin: 10,
           offsetX: 2,

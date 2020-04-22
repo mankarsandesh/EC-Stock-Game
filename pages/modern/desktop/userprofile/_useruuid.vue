@@ -259,6 +259,9 @@ export default {
           type: "bar",
           events: {
             click: function(chart, w, e) {}
+          },
+          toolbar: {
+            show: false
           }
         },
         colors: ["#2E93fA", "#66DA26", "#546E7A", "#E91E63", "#FF9800"],

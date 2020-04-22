@@ -260,7 +260,7 @@
     "yourself": "YOURSELF"
   },
   "leaderboard": {
-    "user": "user",
+    "user": "User",
     "winningrate": "Winning rate",
     "bets": "Bets",
     "winningamount": "Winning amount",
@@ -304,7 +304,11 @@
   "bethistory": {
     "betdraw": "BET DRAW",
     "yourloosingamount": "Your Loosing Amount",
-    "yourwinningamount": "Your Winning Amount"
+    "yourwinningamount": "Your Winning Amount",
+    "searchbyName" : "Search by Name",
+    "today":"Today",
+    "thisWeek":"This Week",
+    "thisMonth":"This Month"
   },
   "betting": {
     "reviewBet" : "Review Bet",
