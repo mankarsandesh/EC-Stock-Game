@@ -6,7 +6,8 @@ const state = () => ({
   multiGameBetSend: [], // Store multi game bet send
   footerBetAmount: 0, // Store footer bet amount
   onGoingBet: [], // store data betting
-  isSendBetting: false
+  isSendBetting: false,
+  tempMultiGameBetData: []  // Store temp bet data of multi game until the bet is ent to the server
 });
 
 const mutations = {
@@ -33,6 +34,17 @@ const mutations = {
   },
   SET_IS_SEND_BETTING(state, value) {
     state.isSendBetting = value;
+  },
+  SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
+    state.tempMultiGameBetData.push(payload);
+  },
+  CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
+    state.multiGameBetSend.push(...state.tempMultiGameBetData);
+    state.multiGameBet.push(...state.tempMultiGameBetData);
+    state.tempMultiGameBetData = [];
+  },
+  CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
+    state.tempMultiGameBetData = [];
   }
 };
 
@@ -60,6 +72,17 @@ const actions = {
   // Clear data from multi game bet send
   clearDataMultiGameBetSend({ commit }) {
     commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
+  },
+  // Set temporary multi game bet data
+  setTempMultiGameBetData({ commit }, payload) {
+    commit('SET_TEMP_MULTI_GAME_BET_DATA', payload);
+  },
+  // Move temporary multi game bet data to multi game bet
+  confirmTempMultiGameBetData({ commit }) {
+    commit('CONFIRM_TEMP_MULTI_GAME_BET_DATA');
+  },
+  clearTempMultiGameBetData({ commit }) {
+    commit('CLEAR_TEMP_MULTI_GAME_BET_DATA');
   },
   // Send bet data for multi game and footer bet on full screen
   async sendBetting(context) {

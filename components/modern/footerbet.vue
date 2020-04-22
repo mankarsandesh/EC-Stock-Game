@@ -32,7 +32,7 @@
           <v-btn class="buttonGreensmall" dark @click="confirmBet()">{{
             $t("msg.confirm")
           }}</v-btn>
-          <v-btn class="buttonCancel" @click="setFooterBetAmount(0)">{{
+          <v-btn class="buttonCancel" @click="cancelBet()">{{
             $t("msg.cancel")
           }}</v-btn>
         </div>
@@ -61,16 +61,24 @@ export default {
     ...mapActions([
       "setFooterBetAmount",
       "clearDataMultiGameBet",
-      "sendBetting"
+      "sendBetting",
+      "confirmTempMultiGameBetData",
+      "clearTempMultiGameBetData"
     ]),
     confirmBet() {
       this.isSending = true;
       this.texts = this.$root.$t("msg.sending");
+      this.confirmTempMultiGameBetData();
       // setTimeout(() => {
       this.sendBetting();
       this.setFooterBetAmount(0);
       this.isSending = false;
       // }, 1000);
+    },
+    cancelBet() {
+      this.isSending = false;
+      this.clearTempMultiGameBetData();
+      this.setFooterBetAmount(0);
     }
   },
   computed: {
