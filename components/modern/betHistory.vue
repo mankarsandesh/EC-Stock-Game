@@ -60,7 +60,7 @@
                   v-html="$options.filters.lastDraw(item.item.gameDraw)"
                 ></span>
               </td>
-              <td colspan="2" class="allDigit">
+              <td colspan="3" class="allDigit">
                 {{ $t("gamemsg.firstdigit") }}
                 <span
                   v-html="$options.filters.firstDigit(item.item.gameDraw)"
@@ -78,7 +78,7 @@
                   v-html="$options.filters.twoDigit(item.item.gameDraw)"
                 ></span>
               </td>
-              <td colspan="3" v-if="item.item.rollingAmount == 0">
+              <td colspan="2" v-if="item.item.rollingAmount == 0">
                 <span class="betDraw"
                   >{{ $t("bethistory.yourloosingamount") }} :</span
                 >

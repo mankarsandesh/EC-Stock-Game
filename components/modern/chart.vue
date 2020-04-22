@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
@@ -136,7 +136,7 @@ export default {
         tooltip: {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             return (
-              '<div class="arrow_box"> $' +
+              '<div class="arrow_boxChart"> $' +
               series[seriesIndex][dataPointIndex].toFixed(2) +
               "</div>"
             );
@@ -292,35 +292,29 @@ export default {
       if (this.window.width >= 2000) {
         this.chartHeight = "420vh";
         this.heightChart = 420;
-      } else {
+      } else if(this.window.width > 1400){
         this.chartHeight = "320vh";
         this.heightChart = 320;
-      }
+      }else{
+          this.chartHeight = "250vh";
+          this.heightChart = 250;
+      }    
     }
   }
 };
 </script>
-<style>
-.arrow_box {
+<style >
+.arrow_boxChart {
   font-family: Arial, Helvetica, sans-serif;
   border: 1px solid #003f70;
   border-radius: 5px;
   font-weight: 600;
   padding: 3px 10px;
   font-size: 20px;
+  color: #FFF;
   background: #003f70 !important  ;
-}
-.arrow_box:after {
-  border-color: rgba(0, 63, 112, 0);
-  border-left-color: #003f70;
-  border-width: 30px;
-  margin-top: -30px;
 }
 
-.apexcharts-tooltip {
-  background: #003f70 !important  ;
-  color: #fff;
-}
 .stockTimer label {
   font-size: 16px;
   font-weight: 800;

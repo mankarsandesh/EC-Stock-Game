@@ -8,7 +8,7 @@
 import bethistory from "~/components/mobile/bethistory";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 
 export default {

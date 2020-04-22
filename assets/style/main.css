@@ -106,7 +106,8 @@
 .BetButtonGuideEven,
 #chartGuidelineNew,
 #stocklistGuidelines,
-#betresultGuidelines {
+#betresultGuidelines,
+#selectstockGuideline {
   position: relative;
   background-color: white;
 }
@@ -731,7 +732,6 @@ table.result-table tr {
   );
   font-weight: 400;
   color: #ffffff !important;
-  min-width: 88%;
   border-radius: 6px;
   padding: 0;
   margin: 4px;
@@ -757,7 +757,6 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
-  min-width: 88%;
   border-radius: 6px;
   padding: 0;
   margin: 4px;
@@ -783,7 +782,6 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
-  min-width: 88%;
   border-radius: 6px;
   padding: 0;
   margin: 4px;
@@ -809,7 +807,6 @@ table.result-table tr {
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
-  min-width: 88%;
   border-radius: 6px;
   padding: 0;
   margin: 4px;

@@ -6,7 +6,7 @@
       <p>{{ $t("msg.betclosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row>
+    <v-layout row  md10>
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
@@ -59,7 +59,7 @@
         </v-btn>
       </popper>
 
-      <span class="w12">
+      <span class="w10">
         <v-btn class="align_button4" id="first" @click="btnNumber('first')">
           <showChipAmount
             size="45px"
@@ -426,13 +426,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import gameRule from "~/data/gameRule";
 
 import betModal from "~/components/modern/betModal";
 import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
-import gameRule from "../../data/gameRule";
 export default {
   props: {
     isFullscreen: {

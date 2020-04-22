@@ -171,7 +171,11 @@
                 <v-card
                   class="box-click"
                   @click="
-                    showBetDialog('firstdigit-small', firstDigit[1].ruleid)
+                    showBetDialog(
+                      $t('gamemsg.firstdigit'),
+                      'firstdigit-' + firstDigit[0].rule,
+                      firstDigit[0].ruleid
+                    )
                   "
                 >
                   <showChipAmount
@@ -191,7 +195,12 @@
                 </v-card>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('firstdigit-big', firstDigit[0].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'firstdigit-' + firstDigit[1].rule,
+                      firstDigit[1].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -213,7 +222,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('firstdigit-odd', firstDigit[2].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'firstdigit-' + firstDigit[2].rule,
+                      firstDigit[2].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -233,7 +247,10 @@
                 <v-card
                   class="box-click"
                   @click="
-                    showBetDialog('firstdigit-even', firstDigit[3].ruleid)
+                    showBetDialog(
+                      'firstdigit-' + firstDigit[3].rule,
+                      firstDigit[3].ruleid
+                    )
                   "
                 >
                   <showChipAmount
@@ -264,7 +281,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('firstdigit-low', firstDigit[6].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'firstdigit-' + firstDigit[6].rule,
+                      firstDigit[6].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -284,7 +306,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('firstdigit-mid', firstDigit[5].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'firstdigit-' + firstDigit[5].rule,
+                      firstDigit[5].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -305,7 +332,10 @@
                 <v-card
                   class="box-click"
                   @click="
-                    showBetDialog('firstdigit-high', firstDigit[4].ruleid)
+                    showBetDialog(
+                      'firstdigit-' + firstDigit[4].rule,
+                      firstDigit[4].ruleid
+                    )
                   "
                 >
                   <showChipAmount
@@ -331,7 +361,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('lastdigit-small', lastDigit[1].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'lastdigit-' + lastDigit[1].rule,
+                      lastDigit[1].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -351,7 +386,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('lastdigit-big', lastDigit[0].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'lastdigit-' + lastDigit[0].rule,
+                      lastDigit[0].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -373,7 +413,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('lastdigit-odd', lastDigit[2].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'lastdigit-' + lastDigit[2].rule,
+                      lastDigit[2].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -392,7 +437,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('lastdigit-even', lastDigit[3].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'lastdigit-' + lastDigit[3].rule,
+                      lastDigit[3].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -422,7 +472,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('lastdigit-low', lastDigit[6].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'lastdigit-' + lastDigit[6].rule,
+                      lastDigit[6].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -442,7 +497,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('lastdigit-mid', lastDigit[5].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'lastdigit-' + lastDigit[5].rule,
+                      lastDigit[5].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -462,7 +522,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('lastdigit-high', lastDigit[4].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'lastdigit-' + lastDigit[4].rule,
+                      lastDigit[4].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -487,7 +552,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('bothdigit-small', bothDigit[2].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'bothdigit-' + bothDigit[2].rule,
+                      bothDigit[2].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -507,7 +577,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('bothdigit-tie', bothDigit[1].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'bothdigit-' + bothDigit[1].rule,
+                      bothDigit[1].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -527,7 +602,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('bothdigit-big', bothDigit[0].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'bothdigit-' + bothDigit[0].rule,
+                      bothDigit[0].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -549,7 +629,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('bothdigit-odd', bothDigit[3].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'bothdigit-' + bothDigit[3].rule,
+                      bothDigit[3].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -568,7 +653,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('bothdigit-even', bothDigit[4].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'bothdigit-' + bothDigit[4].rule,
+                      bothDigit[4].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -598,7 +688,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('bothdigit-low', bothDigit[7].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'bothdigit-' + bothDigit[7].rule,
+                      bothDigit[7].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -618,7 +713,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('bothdigit-mid', bothDigit[6].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'bothdigit-' + bothDigit[6].rule,
+                      bothDigit[6].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -638,7 +738,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('bothdigit-high', bothDigit[5].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'bothdigit-' + bothDigit[5].rule,
+                      bothDigit[5].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -665,7 +770,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('twodigit-small', twoDigit[2].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + bothDigit[2].rule,
+                      twoDigit[2].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -685,7 +795,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('twodigit-tie', twoDigit[1].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + twoDigit[1].rule,
+                      twoDigit[1].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -705,7 +820,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('twodigit-big', twoDigit[0].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + twoDigit[0].rule,
+                      twoDigit[0].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -726,7 +846,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('twodigit-odd', twoDigit[3].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + twoDigit[3].rule,
+                      twoDigit[3].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -745,7 +870,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('twodigit-even', twoDigit[4].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + twoDigit[4].rule,
+                      twoDigit[4].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -775,7 +905,12 @@
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('twodigit-low', twoDigit[8].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + twoDigit[8].rule,
+                      twoDigit[8].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -795,7 +930,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('twodigit-mid', twoDigit[7].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + twoDigit[7].rule,
+                      twoDigit[7].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -815,7 +955,12 @@
 
                 <v-card
                   class="box-click"
-                  @click="showBetDialog('twodigit-high', twoDigit[6].ruleid)"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + twoDigit[6].rule,
+                      twoDigit[6].ruleid
+                    )
+                  "
                 >
                   <showChipAmount
                     text-center
@@ -847,7 +992,7 @@
         </div>
       </v-flex>
     </v-layout>
-
+    <!-- dialog chip amount -->
     <v-dialog
       v-model="bettingDialog"
       fullscreen
@@ -1313,13 +1458,14 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
+import gameRule from "~/data/gameRule";
+
 import chartMobile from "~/components/chartMobile";
 import payout from "~/data/payout";
 import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
-import config from "../../../config/config.global";
-import gameRule from "../../../data/gameRule";
-import chips from "../../../data/chips";
+import config from "~/config/config.global";
+import chips from "~/data/chips";
 import log from "roarr";
 
 export default {

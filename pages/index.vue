@@ -22,7 +22,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import config from "../config/config.global";
+import config from "~/config/config.global";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
 

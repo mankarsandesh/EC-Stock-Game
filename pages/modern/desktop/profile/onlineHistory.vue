@@ -95,7 +95,7 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import log from "roarr";
 

@@ -51,7 +51,6 @@ function setLanguage(store) {
 
 function initLocalStorageCoin(store) {
   let coins = localStorage.getItem("coinModern");
-  // alert(coins)
   if (coins == null) {
     let defaultCoin = '["100", "500", "1000", "5000", "10000"]';
     localStorage.setItem("coinModern", defaultCoin);

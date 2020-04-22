@@ -3,7 +3,7 @@
     trigger="click"
     :options="{
       placement: 'bottom-top',
-      modifiers: { offset: { offset: '65px' } }
+      modifiers: { offset: { offset: '95px' } }
     }"
   >
     <div class="popper">
@@ -160,9 +160,9 @@ import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import io from "socket.io-client";
 import moment from "moment";
-import config from "../config/config.global";
+import config from "~/config/config.global";
 import chanelChat from "./chanelChat";
-import followBet from "../components/modern/follow/followBet";
+import followBet from "~/components/modern/follow/followBet";
 import log from "roarr";
 
 let name = "btc5";
@@ -400,6 +400,7 @@ export default {
 }
 
 .popper {
+  right: 20px;
   width: 370px;
   border-radius: 10px;
   border: 1px solid #dddddd;

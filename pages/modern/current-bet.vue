@@ -7,7 +7,7 @@
 
 <script>
 import currentbet from "~/components/mobile/currentbet";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import { mapState } from "vuex";
 import log from "roarr";
 

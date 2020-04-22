@@ -142,7 +142,7 @@ import languageDialog from "~/components/mobile/LanguageDialog";
 import welcomeUser from "~/components/welcomeUser";
 
 import openSocket from "socket.io-client";
-import Logout from "../components/mobile/mobileLogout";
+import Logout from "~/components/mobile/mobileLogout";
 
 import i18n from "vue-i18n";
 

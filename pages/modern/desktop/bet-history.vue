@@ -8,9 +8,9 @@
     <section class="filter">
       <v-container>
         <v-layout class="filter-history">
-          <v-flex xs12 sm12 md6>
+          <v-flex xs12 sm12 md6 lg6 >
             <v-layout>
-              <v-flex xs12 sm12 md3>
+              <v-flex xs12 sm12 md4>
                 <v-menu
                   v-model="from"
                   :close-on-content-click="false"
@@ -38,7 +38,7 @@
                   ></v-date-picker>
                 </v-menu>
               </v-flex>
-              <v-flex xs12 sm12 md3>
+              <v-flex xs12 sm12 md4>
                 <v-menu
                   v-model="to"
                   :close-on-content-click="false"
@@ -80,7 +80,7 @@
           <v-flex xs12 sm12 md2></v-flex>
           <v-flex xs12 sm12 md4>
             <v-layout>
-              <v-flex xs6 md8>
+              <v-flex xs6 md6>
                 <v-text-field
                   v-model="search"
                   append-icon="search"
@@ -90,7 +90,7 @@
                   hide-details
                 ></v-text-field>
               </v-flex>
-              <v-flex xs6 md4>
+              <v-flex xs6 md>
                 <v-select
                   @change="sortingBy"
                   v-model="sortby"
