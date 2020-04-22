@@ -261,6 +261,7 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
+        console.log(this.globalInvitation);
         this.globalInvitation.push(newData);
         this.scrollDown();
       }
@@ -524,7 +525,7 @@ export default {
 
 .msgUser .winRate {
   float: left;
-  font-size: 20px;
+  font-size: 18px;
   margin: 6px 0px;
   color: #ed4560;
   font-weight: 800;

@@ -19,7 +19,6 @@
     </v-fade-transition>
   </v-container>
 </template>
-
 <script>
 import { mapActions, mapGetters } from "vuex";
 import config from "../config/config.global";
@@ -32,28 +31,36 @@ export default {
 
   data() {
     return {
+      getUserAuthInfo: "",
+      authUser: "",
+      stockname: "btc1",
+      referrerURL: document.referrer.match(/:\/\/(.[^/]+)/)[1],
+      portalProviderUUID: this.$route.query.portalProviderUUID,
+      portalProviderUserID: this.$route.query.portalProviderUserID,
+      balance: this.$route.query.balance,
       messageError: [],
       stockName: "btc1",
       linkto: ""
     };
   },
   mounted() {
-    if (!this.getUserAuth.portalProviderUUID) {
+    if (!this.portalProviderUUID) {
       const error = "portalProviderUUID field is Missing";
       this.messageError.push(error);
     }
-    if (!this.getUserAuth.portalProviderUserID) {
+    if (!this.portalProviderUserID) {
       const error = "portalProviderUserID field is Missing";
       this.messageError.push(error);
     }
-    if (!this.getUserAuth.balance) {
+    if (!this.balance) {
       const error = "balance field is Missing";
       this.messageError.push(error);
     }
-    if (!this.getUserAuth.domain) {
-      const error = "Referrer URL missing";
+    if (!this.referrerURL) {
+      const error = "Somthing Wrong.";
       this.messageError.push(error);
     }
+    this.setLanguage("cn");
     this.checkUserAuth();
   },
   watch: {
@@ -76,24 +83,33 @@ export default {
   methods: {
     async checkUserAuth() {
       try {
-        var reqBody = this.getUserAuth;
+        var reqBody = {
+          portalProviderUUID: this.portalProviderUUID,
+          portalProviderUserID: this.portalProviderUserID,
+          version: config.version,
+          ip: "225.457.454.123",
+          domain: this.referrerURL,
+          balance: this.balance
+        };
         var { data } = await this.$axios.post(
           config.userLoginAuth.url, // after finish crawl the every API will the the baseURL from AXIOS
           reqBody, // data object
           {
             headers: config.header
           }
-        );
+        );       
         if (data.status) {
           const userInfo = {
             authUser: config.authUser,
             authPassword: config.authPassword,
-            portalProviderUUID: this.getUserAuth.portalProviderUUID,
+            portalProviderUUID: this.portalProviderUUID,
             userId: data.data[0].userUUID,
-            redirect: this.getUserAuth.referrerURL
+            redirect: this.referrerURL
           };
+          this.setPortalProviderUUID(userInfo.portalProviderUUID);
           this.setUserUUID(userInfo.userId);
           localStorage.setItem("USER_UUID", userInfo.userId);
+          localStorage.setItem("PORTAL_PROVIDERUUID", userInfo.portalProviderUUID);
           // let objJsonStr = JSON.stringify(userInfo);
           // console.log('stringify user info', objJsonStr)
           // let buff = new Buffer(objJsonStr);
@@ -137,7 +153,7 @@ export default {
         );
       }
     },
-    ...mapActions(["setAuth", "setUserUUID"]),
+    ...mapActions(["setAuth", "setUserUUID","setPortalProviderUUID","setLanguage"]),
 
     getProgress() {
       let width = 100,

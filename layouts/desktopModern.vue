@@ -64,6 +64,7 @@
                 </span>
               </template>
               <v-list id="notificationTab">
+                <v-list-tile v-if="winnerList.length == 0" class="noNotification"> There are no Notification.</v-list-tile>
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
@@ -146,8 +147,6 @@ export default {
       bottom: true,
       left: false,
       transition: "slide-y-reverse-transition",
-      //winner mqrquee
-      winner: [],
       winnerList: [],
       pauseTime: 2000,
       pauseOnHover: false,
@@ -214,21 +213,12 @@ export default {
             headers: config.header
           }
         );
+        console.log(reqBody);
+          console.log(data);
         if (data.status) {
           this.messagesCount = data.data.length;
-          this.winnerList = data.data;
-          for (let i = 0; i < data.data.length - 1; i++) {
-            let betID = data.data[i].betID;
-            let betResult = data.data[i].betResult;
-            let name = data.data[i].name;
-            let ruleName = data.data[i].ruleName;
-            let betAmount = data.data[i].betAmount;
-            let betTime = data.data[i].createdTime;
-            let stockName = data.data[i].stockName;
-            let win = `Player ${betResult}  ${betAmount} chips on,
-                         ${stockName} stock ${ruleName}  ${betTime}`;
-            this.winner.push(win);
-          }
+          this.winnerList = data.data;       
+         
         } else {
           throw new Error(config.error.general);
         }
@@ -263,6 +253,9 @@ export default {
 };
 </script>
 <style scoped>
+.noNotification{
+  color:#333;
+}
 #notificationTab{
   z-index: 9999;
   height: 250px;

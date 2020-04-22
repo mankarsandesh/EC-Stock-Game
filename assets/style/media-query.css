@@ -2,10 +2,10 @@
   ##Device = Desktops
   ##Screen = 1281px to higher resolution desktops
 */
+
 /*
 Big Screen 
 */
-
 @media (min-width: 1281px) {
   .selectStock {
     font-size: 14px ;
@@ -13,28 +13,23 @@ Big Screen
   .btn-langage span {
     font-size: 14px;
   }
-  
   .menuItem {
     border-right: 2px solid #dddddd;
     height: 60px !important;
     padding: 15px;
   }
-
   .logoStyle {
     width: 150px;
     cursor: pointer;
     margin-left: 15px;
   }
-
   .menuItem span {
     font-size: 14px;
   }
-
   .menuItem i {
     margin-right: 5px;
     font-size: 18px;
   }
-
   .stockname {   
     font-size: 20px;
     font-weight: 600;
@@ -53,20 +48,16 @@ Big Screen
     padding: 0px;
     margin: 0px;
   }
-
   .containerNew {
-    width: 95% !important;
+    width: 100% !important;
   }
-
   .buttonbtn {
     width: 80px;
   }
   /* game Rule Category Button */
   .btnHeight {
-   
     width: 80px;
     height: 80px;
-
   }
   .align_button4 {
     box-shadow: none !important;
@@ -116,7 +107,6 @@ Big Screen
     background-color: #f7d0e3;
     border: 1px solid #fc4181 !important;
   }
-
   .rs0,
   .rs-o,
   .rs-l {
@@ -127,7 +117,6 @@ Big Screen
     background-color: #d0dafd;
     border: 1px solid #4b72ff !important;
   }
-
   .rs-m {
     font-size: 15px;
     font-weight: bolder;
@@ -135,7 +124,6 @@ Big Screen
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
   }
-
   span.addChart i {
     cursor: pointer;
     display: flex;
@@ -241,17 +229,21 @@ Big Screen
     z-index: 50;
     text-transform: capitalize;
   }
-  .bg-btn-first{
+  .bg-btn-first{   
     min-width: 88% !important;
+    width: 90% !important;
   }
   .bg-btn-last{
     min-width: 88% !important;
+    width: 90% !important;
   }
   .bg-btn-both{
     min-width: 88% !important;
+    width: 100% !important;
   }
   .bg-btn-two{
     min-width: 88% !important;
+    width: 100% !important;
   }
 
 }
