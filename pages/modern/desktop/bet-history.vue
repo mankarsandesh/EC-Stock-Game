@@ -230,7 +230,7 @@ export default {
           {
             req: reqBody,
             res: data.data,
-            page: this.$options.name,
+            page: "pages/modern/desktop/bet-history.vue",
             apiUrl: config.getAllBets.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

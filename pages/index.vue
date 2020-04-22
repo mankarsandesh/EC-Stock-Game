@@ -128,7 +128,7 @@ export default {
           {
             req: reqBody,
             res: data,
-            page: this.$options.name,
+            page: "pages/index.vue",
             apiUrl: config.userLoginAuth.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
