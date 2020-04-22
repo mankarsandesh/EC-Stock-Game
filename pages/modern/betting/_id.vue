@@ -172,7 +172,6 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      $t('gamemsg.firstdigit'),
                       'firstdigit-' + firstDigit[0].rule,
                       firstDigit[0].ruleid
                     )
@@ -992,7 +991,7 @@
         </div>
       </v-flex>
     </v-layout>
-    <!-- dialog chip amount -->
+    <!-- dialog chip amount come here -->
     <v-dialog
       v-model="bettingDialog"
       fullscreen
@@ -1000,72 +999,76 @@
       transition="dialog-bottom-transition"
       light
     >
-      <v-card tile color="#f4f6fd">
-        <v-toolbar flat>
-          <v-layout row>
-            <v-spacer></v-spacer>
-            <v-icon size="30" @click="bettingDialog = false">close</v-icon>
-          </v-layout>
-        </v-toolbar>
+      <div class="header-dialog">
+        <span></span>
+        <v-icon size="30" @click="bettingDialog = false">
+          close
+        </v-icon>
+      </div>
+      <v-flex
+        xs12
+        class="text-center mx-auto pa-2 round-3"
+        :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
+      >
+        <div class="d-block text-center" style="color:#000">
+          <p class="text-uppercase">
+            {{ $t("msg.Stock Name") }} :
+            {{ $t(`stockname.${$route.params.id}`) }}
+            {{ $t("msg.payout") }}:
+            {{ odd }}
+          </p>
+          <p class="text-uppercase test-time-loop">
+            {{ getStockLoop(this.$route.params.id) }}
+            {{ $t("msg.minute game") }}
+          </p>
+          <p class="text-uppercase test-rule-betting">
+            {{ $t("msg.bettingon") }}
+            {{
+              isNaN(gameRule.split("-")[1])
+                ? $t("gamemsg." + gameRule.split("-")[0]) +
+                  "-" +
+                  $t("gamemsg." + gameRule.split("-")[1])
+                : $t("gamemsg." + gameRule.split("-")[0]) +
+                  "-" +
+                  gameRule.split("-")[1]
+            }}
+          </p>
+        </div>
+      </v-flex>
 
-        <v-card
-          class="mx-auto pa-2 round-3"
-          :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
-          color="#ffffff"
+      <v-flex xs12 class="text-center">
+        <v-avatar
+          size="60"
+          v-for="(item, key) in imgChip"
+          :key="key"
+          @click="shipClick(getCoinsModern[key])"
         >
-          <v-flex xs12 class="text-center">
-            <div class="d-block text-center" style="color:#000">
-              <p class="text-uppercase">
-                {{ $t("msg.Stock Name") }} :
-                {{ $t(`stockname.${$route.params.id}`) }}
-                {{ $t("msg.payout") }}:
-                {{ odd }}
-              </p>
-              <p class="text-uppercase test-time-loop">
-                {{ getStockLoop(this.$route.params.id) }}
-                {{ $t("msg.minute game") }}
-              </p>
-              <p class="text-uppercase test-rule-betting">
-                {{ $t("msg.bettingon") }} {{ gameRule }}
-              </p>
-            </div>
-          </v-flex>
+          <v-img class="ma-4" :src="item.img" :alt="item.title">
+            <span class="setpricechip">{{ getCoinsModern[key] }}</span>
+          </v-img>
+        </v-avatar>
+      </v-flex>
 
-          <v-flex xs12 class="text-center">
-            <v-avatar
-              size="60"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              @click="shipClick(getCoinsModern[key])"
-            >
-              <v-img class="ma-4" :src="item.img" :alt="item.title">
-                <span class="setpricechip">{{ getCoinsModern[key] }}</span>
-              </v-img>
-            </v-avatar>
-          </v-flex>
+      <v-flex xs10 class="px-2 text-center ml-4 mt-3">
+        <input
+          class="round-2 text-input"
+          type="number"
+          readonly
+          label="$0"
+          v-model="betAmount"
+        />
+        <br />
+        {{ $t("msg.min") }} = $100 ;{{ $t("msg.max") }} = $5000
+      </v-flex>
 
-          <v-flex xs10 class="px-2 text-center ml-4 mt-3">
-            <input
-              class="round-2 text-input"
-              type="number"
-              readonly
-              label="$0"
-              v-model="betAmount"
-            />
-            <br />
-            {{ $t("msg.min") }} = $100 ;{{ $t("msg.max") }} = $5000
-          </v-flex>
-
-          <v-flex xs12 class="px-2 text-center mt-3">
-            <v-btn class="buttonGreen" @click="reviewbet()">{{
-              $t("betting.reviewBet")
-            }}</v-btn>
-            <v-btn class="btn_cancel" @click="bettingDialog = false">{{
-              $t("betting.cancelBet")
-            }}</v-btn>
-          </v-flex>
-        </v-card>
-      </v-card>
+      <v-flex xs12 class="px-2 text-center mt-3">
+        <v-btn class="buttonGreen" @click="reviewbet()">{{
+          $t("betting.reviewBet")
+        }}</v-btn>
+        <v-btn class="btn_cancel" @click="bettingDialog = false">{{
+          $t("betting.cancelBet")
+        }}</v-btn>
+      </v-flex>
     </v-dialog>
     <!-- price: "200" -->
     <!-- Review bet  -->
@@ -1076,76 +1079,85 @@
       transition="dialog-bottom-transition"
       light
     >
-      <v-card tile color="#f4f6fd">
-        <v-toolbar flat>
-          <v-layout row>
-            <v-spacer></v-spacer>
-            <v-icon size="30" @click="reviewbetDialog = false">close</v-icon>
-          </v-layout>
-        </v-toolbar>
+      <div class="header-dialog">
+        <span></span>
+        <v-icon size="30" @click="reviewbetDialog = false">
+          close
+        </v-icon>
+      </div>
+      <div
+        class="mx-auto pa-2 round-3"
+        :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
+        color="#ffffff"
+      >
+        <v-flex xs12 class="text-center">
+          <div class="d-block text-center" style="color:#000">
+            <h2 class="text-color-blue">{{ $t("betting.reviewyourBet") }}</h2>
+            <p>{{ $t("betting.pleaseConfirm") }}</p>
+          </div>
+        </v-flex>
+        <hr />
+        <v-flex xs12 class="text-center">
+          <table class="table-review">
+            <tr>
+              <td class="text-right">{{ $t("msg.Stock Name") }}:</td>
+              <td class="text-left pl-2 text-color-blue">
+                {{ $t(`stockname.${$route.params.id}`) }}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-right">{{ $t("msg.gameid") }}:</td>
+              <td class="text-left pl-2 text-color-blue">
+                {{ getGameUUIDByStockName(this.$route.params.id) }}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-right">{{ $t("game type") }}:</td>
+              <td class="text-left pl-2 text-color-blue">
+                {{ getStockLoop(this.$route.params.id) }}
+                {{ $t("msg.minute game") }}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-right">{{ $t("msg.bettingon") }}:</td>
+              <td class="text-left pl-2 text-color-blue">
+                {{
+                  isNaN(gameRule.split("-")[1])
+                    ? $t("gamemsg." + gameRule.split("-")[0]) +
+                      "-" +
+                      $t("gamemsg." + gameRule.split("-")[1])
+                    : $t("gamemsg." + gameRule.split("-")[0]) +
+                      "-" +
+                      gameRule.split("-")[1]
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-right">{{ $t("msg.payout") }}:</td>
+              <td class="text-left pl-2 text-color-blue">1.95</td>
+            </tr>
+            <tr>
+              <td class="text-right">{{ $t("msg.amount") }}:</td>
+              <td class="text-left pl-2 text-color-green">{{ betAmount }}</td>
+            </tr>
+          </table>
+        </v-flex>
 
-        <v-card
-          class="mx-auto pa-2 round-3"
-          :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
-          color="#ffffff"
-        >
-          <v-flex xs12 class="text-center">
-            <div class="d-block text-center" style="color:#000">
-              <h2 class="text-color-blue">{{ $t("betting.reviewyourBet") }}</h2>
-              <p>{{ $t("betting.pleaseConfirm") }}</p>
-            </div>
-          </v-flex>
-          <hr />
-          <v-flex xs12 class="text-center">
-            <table class="table-review">
-              <tr>
-                <td class="text-right">{{ $t("msg.Stock Name") }}:</td>
-                <td class="text-left pl-2 text-color-blue">
-                  {{ $t(`stockname.${$route.params.id}`) }}
-                </td>
-              </tr>
-              <tr>
-                <td class="text-right">{{ $t("msg.gameid") }}:</td>
-                <td class="text-left pl-2 text-color-blue">
-                  {{ getGameUUIDByStockName(this.$route.params.id) }}
-                </td>
-              </tr>
-              <tr>
-                <td class="text-right">{{ $t("game type") }}:</td>
-                <td class="text-left pl-2 text-color-blue">
-                  {{ getStockLoop(this.$route.params.id) }} Minute game
-                </td>
-              </tr>
-              <tr>
-                <td class="text-right">{{ $t("msg.bettingon") }}:</td>
-                <td class="text-left pl-2 text-color-blue">{{ gameRule }}</td>
-              </tr>
-              <tr>
-                <td class="text-right">{{ $t("msg.payout") }}:</td>
-                <td class="text-left pl-2 text-color-blue">1.95</td>
-              </tr>
-              <tr>
-                <td class="text-right">{{ $t("msg.amount") }}:</td>
-                <td class="text-left pl-2 text-color-green">{{ betAmount }}</td>
-              </tr>
-            </table>
-          </v-flex>
-
-          <v-flex xs12 class="px-2 text-center mt-3">
-            <v-btn class="buttonGreen" @click="placeBet">{{
-              $t("betting.placeBet")
-            }}</v-btn>
-            <v-btn class="btn_cancel" @click="reviewbetDialog = false">{{
-              $t("betting.cancelBet")
-            }}</v-btn>
-          </v-flex>
-        </v-card>
-      </v-card>
+        <v-flex xs12 class="px-2 text-center mt-3">
+          <v-btn class="buttonGreen" @click="placeBet">{{
+            $t("betting.placeBet")
+          }}</v-btn>
+          <v-btn class="btn_cancel" @click="reviewbetDialog = false">{{
+            $t("betting.cancelBet")
+          }}</v-btn>
+        </v-flex>
+      </div>
     </v-dialog>
     <!-- price: "200" -->
     <!-- End review bet -->
     <!-- Test -->
 
+    <!-- specific number first digit -->
     <v-navigation-drawer
       class="drawer-asidebar"
       right
@@ -1153,20 +1165,18 @@
       fixed
       temporary
     >
-      <v-layout row mt-4>
-        <div class="d-block">
-          <h3 class="text-uppercase">
-            {{ $t(`stockname.${$route.params.id}`) }}
-          </h3>
-          <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
-        </div>
-        <v-btn class="close" flat @click="drawerderfirst = !drawerderfirst">
-          <v-icon size="30">close</v-icon>
-        </v-btn>
-      </v-layout>
+      <div class="header-dialog">
+        <h3 class="text-uppercase">
+          {{ $t("gamemsg.firstdigit") }}
+        </h3>
+        <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
+        <v-icon size="30" @click="drawerderfirst = !drawerderfirst">
+          close
+        </v-icon>
+      </div>
       <hr class="head-jumbothron" />
-      <!-- specific number first digit -->
-      <v-container>
+
+      <v-container pa-1>
         <v-layout row wrap>
           <v-flex
             xs3
@@ -1191,7 +1201,7 @@
         </v-layout>
       </v-container>
     </v-navigation-drawer>
-
+    <!-- specific number last digit -->
     <v-navigation-drawer
       class="drawer-asidebar"
       right
@@ -1199,17 +1209,17 @@
       fixed
       temporary
     >
-      <v-layout row mt-5>
-        <div class="d-block">
-          <!-- <h3 class="text-uppercase">{{getStockById(this.$route.params.id).stockname}}</h3>
-          <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p>-->
-        </div>
-        <v-btn class="close" flat @click="drawerderlast = !drawerderlast">
-          <v-icon size="30">close</v-icon>
-        </v-btn>
-      </v-layout>
+      <div class="header-dialog">
+        <h3 class="text-uppercase">
+          {{ $t("gamemsg.lastdigit") }}
+        </h3>
+        <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
+        <v-icon size="30" @click="drawerderlast = !drawerderlast">
+          close
+        </v-icon>
+      </div>
       <hr class="head-jumbothron" />
-      <v-container>
+      <v-container pa-1>
         <v-layout row wrap>
           <v-flex
             xs3
@@ -1234,6 +1244,7 @@
         </v-layout>
       </v-container>
     </v-navigation-drawer>
+    <!-- both digit -->
 
     <v-navigation-drawer
       class="drawer-asidebar"
@@ -1242,17 +1253,17 @@
       fixed
       temporary
     >
-      <v-layout row mt-5>
-        <div class="d-block">
-          <!-- <h3 class="text-uppercase">{{getStockById(this.$route.params.id).stockname}}</h3>
-          <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p>-->
-        </div>
-        <v-btn class="close" flat @click="drawerder018 = !drawerder018">
-          <v-icon size="30">close</v-icon>
-        </v-btn>
-      </v-layout>
+      <div class="header-dialog">
+        <h3 class="text-uppercase">
+          {{ $t("gamemsg.bothdigit") }}
+        </h3>
+        <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
+        <v-icon size="30" @click="drawerder018 = !drawerder018">
+          close
+        </v-icon>
+      </div>
       <hr class="head-jumbothron" />
-      <v-container>
+      <v-container pa-1>
         <v-layout row wrap>
           <v-flex
             xs3
@@ -1277,9 +1288,9 @@
         </v-layout>
       </v-container>
     </v-navigation-drawer>
-
-    <!-- Test -->
     <!-- 0 -99 -->
+    <!-- two digit -->
+
     <v-navigation-drawer
       class="drawer-asidebar"
       right
@@ -1287,169 +1298,182 @@
       fixed
       temporary
     >
-      <v-layout row mt-4>
-        <v-tabs slider-color="#003e70" grow centered>
-          <v-tab>00 - 19</v-tab>
-          <v-tab>20 - 39</v-tab>
-          <v-tab>40 - 59</v-tab>
-          <v-tab>60 - 79</v-tab>
-          <v-tab>80 - 99</v-tab>
-          <!-- 0 19 -->
-          <v-tab-item>
-            <v-container>
-              <v-layout row wrap>
-                <v-flex
-                  xs3
-                  v-for="(item, index) in twoDigitNumber"
-                  :key="index"
-                  v-show="index < 20"
-                  @click="
-                    showBetDialog(
-                      `twodigit-${index < 10 ? '0' + index : index}`,
-                      item.ruleid
-                    )
-                  "
-                >
-                  <showChipAmount
-                    text-center
-                    size="35px"
-                    :amount="
-                      getBetAmountRuleID({
-                        gameUUID: getGameUUIDByStockName($route.params.id),
-                        gameRule: `twodigit-${index < 10 ? '0' + index : index}`
-                      })
+      <div style="display:flex;flex-direction:column">
+        <div class="header-dialog">
+          <h3 class="text-uppercase">
+            {{ $t("gamemsg.twodigit") }}
+          </h3>
+          <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
+          <v-icon size="30" @click="drawerder099 = !drawerder099">
+            close
+          </v-icon>
+        </div>
+        <v-layout row>
+          <v-tabs slider-color="#003e70" grow centered>
+            <v-tab>00 - 19</v-tab>
+            <v-tab>20 - 39</v-tab>
+            <v-tab>40 - 59</v-tab>
+            <v-tab>60 - 79</v-tab>
+            <v-tab>80 - 99</v-tab>
+            <!-- 0 19 -->
+            <v-tab-item>
+              <v-container pa-1>
+                <v-layout row wrap>
+                  <v-flex
+                    xs3
+                    v-for="(item, index) in twoDigitNumber"
+                    :key="index"
+                    v-show="index < 20"
+                    @click="
+                      showBetDialog(
+                        `twodigit-${index < 10 ? '0' + index : index}`,
+                        item.ruleid
+                      )
                     "
-                  />
-                  <v-card-title class="box-click-modal o-even">
-                    <h5>{{ index < 10 ? "0" + index : index }}</h5>
-                  </v-card-title>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-tab-item>
-          <!-- 0 19 -->
+                  >
+                    <showChipAmount
+                      text-center
+                      size="35px"
+                      :amount="
+                        getBetAmountRuleID({
+                          gameUUID: getGameUUIDByStockName($route.params.id),
+                          gameRule: `twodigit-${
+                            index < 10 ? '0' + index : index
+                          }`
+                        })
+                      "
+                    />
+                    <v-card-title class="box-click-modal o-even">
+                      <h5>{{ index < 10 ? "0" + index : index }}</h5>
+                    </v-card-title>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-tab-item>
+            <!-- 0 19 -->
 
-          <!-- 20 39 -->
-          <v-tab-item>
-            <v-container>
-              <v-layout row wrap>
-                <v-flex
-                  xs3
-                  v-for="(item, index) in twoDigitNumber"
-                  :key="index"
-                  v-show="index > 19 && index < 40"
-                  @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
-                >
-                  <showChipAmount
-                    text-center
-                    size="35px"
-                    :amount="
-                      getBetAmountRuleID({
-                        gameUUID: getGameUUIDByStockName($route.params.id),
-                        gameRule: `twodigit-${index}`
-                      })
-                    "
-                  />
-                  <v-card-title class="box-click-modal o-even">
-                    <h5>{{ index }}</h5>
-                  </v-card-title>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-tab-item>
-          <!-- 20 39 -->
+            <!-- 20 39 -->
+            <v-tab-item>
+              <v-container pa-1>
+                <v-layout row wrap>
+                  <v-flex
+                    xs3
+                    v-for="(item, index) in twoDigitNumber"
+                    :key="index"
+                    v-show="index > 19 && index < 40"
+                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                  >
+                    <showChipAmount
+                      text-center
+                      size="35px"
+                      :amount="
+                        getBetAmountRuleID({
+                          gameUUID: getGameUUIDByStockName($route.params.id),
+                          gameRule: `twodigit-${index}`
+                        })
+                      "
+                    />
+                    <v-card-title class="box-click-modal o-even">
+                      <h5>{{ index }}</h5>
+                    </v-card-title>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-tab-item>
+            <!-- 20 39 -->
 
-          <!--40 59 -->
-          <v-tab-item>
-            <v-container>
-              <v-layout row wrap>
-                <v-flex
-                  xs3
-                  v-for="(item, index) in twoDigitNumber"
-                  :key="index"
-                  v-show="index > 39 && index < 60"
-                  @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
-                >
-                  <showChipAmount
-                    text-center
-                    size="35px"
-                    :amount="
-                      getBetAmountRuleID({
-                        gameUUID: getGameUUIDByStockName($route.params.id),
-                        gameRule: `twodigit-${index}`
-                      })
-                    "
-                  />
-                  <v-card-title class="box-click-modal o-even">
-                    <h5>{{ index }}</h5>
-                  </v-card-title>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-tab-item>
-          <!--40 59 -->
+            <!--40 59 -->
+            <v-tab-item>
+              <v-container pa-1>
+                <v-layout row wrap>
+                  <v-flex
+                    xs3
+                    v-for="(item, index) in twoDigitNumber"
+                    :key="index"
+                    v-show="index > 39 && index < 60"
+                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                  >
+                    <showChipAmount
+                      text-center
+                      size="35px"
+                      :amount="
+                        getBetAmountRuleID({
+                          gameUUID: getGameUUIDByStockName($route.params.id),
+                          gameRule: `twodigit-${index}`
+                        })
+                      "
+                    />
+                    <v-card-title class="box-click-modal o-even">
+                      <h5>{{ index }}</h5>
+                    </v-card-title>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-tab-item>
+            <!--40 59 -->
 
-          <!--60 79 -->
-          <v-tab-item>
-            <v-container>
-              <v-layout row wrap>
-                <v-flex
-                  xs3
-                  v-for="(item, index) in twoDigitNumber"
-                  :key="index"
-                  v-show="index > 59 && index < 80"
-                  @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
-                >
-                  <showChipAmount
-                    text-center
-                    size="35px"
-                    :amount="
-                      getBetAmountRuleID({
-                        gameUUID: getGameUUIDByStockName($route.params.id),
-                        gameRule: `twodigit-${index}`
-                      })
-                    "
-                  />
-                  <v-card-title class="box-click-modal o-even">
-                    <h5>{{ index }}</h5>
-                  </v-card-title>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-tab-item>
-          <!--60 79 -->
+            <!--60 79 -->
+            <v-tab-item>
+              <v-container pa-1>
+                <v-layout row wrap>
+                  <v-flex
+                    xs3
+                    v-for="(item, index) in twoDigitNumber"
+                    :key="index"
+                    v-show="index > 59 && index < 80"
+                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                  >
+                    <showChipAmount
+                      text-center
+                      size="35px"
+                      :amount="
+                        getBetAmountRuleID({
+                          gameUUID: getGameUUIDByStockName($route.params.id),
+                          gameRule: `twodigit-${index}`
+                        })
+                      "
+                    />
+                    <v-card-title class="box-click-modal o-even">
+                      <h5>{{ index }}</h5>
+                    </v-card-title>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-tab-item>
+            <!--60 79 -->
 
-          <!-- 80 99 -->
-          <v-tab-item>
-            <v-container>
-              <v-layout row wrap>
-                <v-flex
-                  xs3
-                  v-for="(item, index) in twoDigitNumber"
-                  :key="index"
-                  v-show="index > 79"
-                  @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
-                >
-                  <showChipAmount
-                    text-center
-                    size="35px"
-                    :amount="
-                      getBetAmountRuleID({
-                        gameUUID: getGameUUIDByStockName($route.params.id),
-                        gameRule: `twodigit-${index}`
-                      })
-                    "
-                  />
-                  <v-card-title class="box-click-modal o-even">
-                    <h5>{{ index }}</h5>
-                  </v-card-title>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-tab-item>
-          <!-- 80 99 -->
-        </v-tabs>
-      </v-layout>
+            <!-- 80 99 -->
+            <v-tab-item>
+              <v-container pa-1>
+                <v-layout row wrap>
+                  <v-flex
+                    xs3
+                    v-for="(item, index) in twoDigitNumber"
+                    :key="index"
+                    v-show="index > 79"
+                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                  >
+                    <showChipAmount
+                      text-center
+                      size="35px"
+                      :amount="
+                        getBetAmountRuleID({
+                          gameUUID: getGameUUIDByStockName($route.params.id),
+                          gameRule: `twodigit-${index}`
+                        })
+                      "
+                    />
+                    <v-card-title class="box-click-modal o-even">
+                      <h5>{{ index }}</h5>
+                    </v-card-title>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-tab-item>
+            <!-- 80 99 -->
+          </v-tabs>
+        </v-layout>
+      </div>
     </v-navigation-drawer>
 
     <!-- 0 -99 -->
@@ -1787,6 +1811,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.header-dialog {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5px;
+}
 h4 {
   font-size: 16px;
 }
