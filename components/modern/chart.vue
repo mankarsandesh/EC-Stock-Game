@@ -1,14 +1,12 @@
 <template>
   <div class="v-card-style">
-    <v-layout px-1>
-      <v-flex xs6 class="text-xs-left stockTimer">
-        <label>{{ $t("msg.livetime") }}:</label>
-        <span class="stockTimer" v-if="getStockLiveTime(stockName)">{{
+    <v-layout px-1 mt-1 >
+      <v-flex xs6 class="text-xs-left stockTimer">      
+        <span  v-if="getStockLiveTime(stockName)">{{
           getStockLiveTime(stockName).split(" ")[1]
         }}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right stockPrice">
-        <!-- <label>{{ $t("msg.liveprice") }}:</label> -->
+      <v-flex xs6 class="text-xs-right stockPrice">      
         <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
@@ -289,12 +287,13 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
       this.demo = this.window.width;
+      // Chart Size Change According Desktop and Laptop Size
       if (this.window.width >= 2000) {
         this.chartHeight = "420vh";
         this.heightChart = 420;
       } else if(this.window.width > 1400){
-        this.chartHeight = "320vh";
-        this.heightChart = 320;
+        this.chartHeight = "330vh";
+        this.heightChart = 330;
       }else{
           this.chartHeight = "250vh";
           this.heightChart = 250;
@@ -314,22 +313,19 @@ export default {
   color: #FFF;
   background: #003f70 !important  ;
 }
-
-.stockTimer label {
-  font-size: 16px;
-  font-weight: 800;
+.stockTimer{
+  margin-left: 10px;
 }
 .stockPrice span {
   padding-right: 14px;
   color: green;
-  font-size: 20px;
+  font-size: 18px;
   margin: 0px;
   font-weight: 600;
 }
 .stockTimer span {
-  padding-left: 20px;
-  color: #333;
-  font-size: 16px;
+  color: #585858;
+  font-size: 18px;
   margin: 0px;
   font-weight: 600;
 }

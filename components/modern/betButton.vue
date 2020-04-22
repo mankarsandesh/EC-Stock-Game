@@ -1,12 +1,12 @@
 <template>
-  <div class="p-relative">
+  <div class="p-relative" >
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
       <p>{{ $t("msg.betclosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row  md10>
+    <v-layout row  md10 >
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>

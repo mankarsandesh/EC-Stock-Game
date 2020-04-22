@@ -4,27 +4,7 @@
     <DesktopTutorial />
     <!-- tutorial  end -->
 
-    <v-app style=" background-color: #f4f5fd;">
-      <v-toolbar class="notification" xs12 v-if="showNotification">
-        <v-flex xs8 class="text-xs-right" style="margin:0px;"></v-flex>
-        <v-flex xs4 class="text-xs-right">
-          <winnerMarquee
-            class="winnerText"
-            :scrollSpeed="scrollSpeed"
-            :showSpeed="showSpeed"
-            :pauseOnHover="pauseOnHover"
-            :pauseTime="pauseTime"
-            :marqueeList="winner"
-            height="30px"
-            width="100%"
-            color="#f76a24"
-            fontSize="13px"
-          ></winnerMarquee>
-        </v-flex>
-        <v-flex xs1 class="text-xs-right closeNotification">
-          <i class="fa fa-close fa-2x" @click="showNotification = false" />
-        </v-flex>
-      </v-toolbar>
+    <v-app style=" background-color: #f4f5fd;">     
       <div
         class="text-xs-center container-loading loading"
         v-if="getIsLoadingStockGame"
@@ -71,15 +51,39 @@
               </v-btn>
             </div>
             <userMenu class="layout-logout" />
-            <span
-              flat
-              @click="showNotification = true"
-              id="notification"
-              class="menuItemNotification"
-            >
-              <i class="fa fa-bell-o fa-2x" />
-              <span class="badge">{{ messagesCount }}</span>
-            </span>
+            <v-menu bottom offset-y>
+              <template v-slot:activator="{ on }">
+                <span
+                  v-on="on"
+                  flat
+                  id="notification"
+                  class="menuItemNotification"
+                >
+                  <i class="fa fa-bell-o fa-2x" />
+                  <span class="badge">{{ messagesCount }}</span>
+                </span>
+              </template>
+              <v-list id="notificationTab">
+                <v-list-tile v-if="winnerList.length == 0" class="noNotification"> There are no Notification.</v-list-tile>
+                <v-list-tile
+                  v-for="(item, i) in winnerList"
+                  :key="i"
+                  class="mainNotification"
+                >
+                  <div class="userNotification">
+                    <div class="userNoti">
+                      <i class="fa fa-user-o fa-1x" /> player
+                      {{ item.betResult }} {{ item.betAmount }} chips on
+                      {{ item.stockName }} stock {{ item.ruleName }}
+                    </div>
+                    <div class="dateTime">
+                      {{ item.createdDate }} {{ item.createdTime }} 1 Hour Ago
+                    </div>
+                  </div>
+                </v-list-tile>
+               
+              </v-list>
+            </v-menu>
           </v-toolbar-items>
         </v-container>
       </v-toolbar>
@@ -88,7 +92,7 @@
       <v-content>
         <nuxt />
       </v-content>
-      
+
       <!-- invitation Windows-->
       <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
@@ -129,11 +133,10 @@ export default {
     AnimatedNumber
   },
   data() {
-    return {
+    return {      
       isShowTutorial: true,
       messagesCount: 2,
       activeClass: null,
-      showNotification: false,
       direction: "top",
       fab: true,
       fling: true,
@@ -144,8 +147,7 @@ export default {
       bottom: true,
       left: false,
       transition: "slide-y-reverse-transition",
-      //winner mqrquee
-      winner: [],
+      winnerList: [],
       pauseTime: 2000,
       pauseOnHover: false,
       scrollSpeed: 30,
@@ -211,22 +213,12 @@ export default {
             headers: config.header
           }
         );
+        console.log(reqBody);
+          console.log(data);
         if (data.status) {
           this.messagesCount = data.data.length;
-          for (let i = 0; i < data.data.length - 1; i++) {
-            let betID = data.data[i].betID;
-            let betResult = data.data[i].betResult;
-            let name = data.data[i].name;
-            let ruleName = data.data[i].ruleName;
-            let betAmount = data.data[i].betAmount;
-            let betTime = data.data[i].createdTime;
-            let stockName = data.data[i].stockName;
-            let win = `<span class="text-slide text-white"><span class="text-warning">
-                        <i class="fa fa-bell"></i>
-                        </span>Player ${betResult}  ${betAmount} chips on,
-                         ${stockName} stock ${ruleName}  ${betTime}</span>`;
-            this.winner.push(win);
-          }
+          this.winnerList = data.data;       
+         
         } else {
           throw new Error(config.error.general);
         }
@@ -261,6 +253,42 @@ export default {
 };
 </script>
 <style scoped>
+.noNotification{
+  color:#333;
+}
+#notificationTab{
+  z-index: 9999;
+  height: 250px;
+  background-color: #fff;
+}
+.v-menu__content{
+z-index: 9999 !important;
+}
+
+.mainNotification {
+  background-color: #fff;
+  cursor: pointer;
+  padding:5px 2px;
+  border-bottom: 1px solid #dddddd;
+}
+.mainNotification :hover {
+  background-color: #dddddd;
+}
+.userNotification {  
+  z-index: 9999 !important;  
+  width: 100%;
+}
+.userNoti {
+  font-weight: 600;
+  color: #484848;
+  font-size: 14px;
+  width: 100%;
+}
+.dateTime {
+  font-size: 12px;
+  color: #585454;
+  width: 100%;
+}
 .winnerText {
   margin-top: -30px;
   font-weight: 800;

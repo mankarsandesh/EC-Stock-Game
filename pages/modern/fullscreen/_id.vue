@@ -207,7 +207,7 @@
           <v-layout column>
             <div id="livechartGuidelines">
               <v-flex>
-                <v-layout xs12>
+                <v-layout xs12 >
                   <v-flex
                     xs12
                     lg6
