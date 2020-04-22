@@ -1,7 +1,7 @@
 <template>
   <v-flex xs12 class="mt-3">
     <div class="v-table__overflow">
-      <table class="v-datatable v-table theme--light">
+      <table>
         <thead>
           <tr>
             <th>{{ $t("msg.Stock Name") }}</th>
@@ -17,10 +17,7 @@
             <td>
               <b>{{ item.stockName }}</b>
             </td>
-            <td
-              v-if="item.stockStatus == 'Closed'"
-              :style="{ color: 'red' }"
-            >
+            <td v-if="item.stockStatus == 'Closed'" :style="{ color: 'red' }">
               Closed
             </td>
             <td
@@ -59,4 +56,23 @@ export default {
   }
 };
 </script>
+<style scoped>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  text-align: center;
+  padding: 15px 10px;
+  border: 1px solid #dddddd;
+  background-color: #fff;
+}
 
+th {
+  background-color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  color: #8c8c8c;
+}
+</style>
