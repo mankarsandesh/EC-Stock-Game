@@ -184,8 +184,7 @@ export default {
             }
           }
         },
-        title: {
-          text: "Stock Analysis",
+        title: {          
           align: "left",
           margin: 10,
           offsetX: 2,

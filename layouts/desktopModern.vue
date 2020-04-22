@@ -275,7 +275,7 @@ z-index: 9999 !important;
 .mainNotification {
   background-color: #fff;
   cursor: pointer;
-  padding:3px 2px;
+  padding:5px 2px;
   border-bottom: 1px solid #dddddd;
 }
 .mainNotification :hover {

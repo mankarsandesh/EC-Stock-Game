@@ -146,8 +146,7 @@ export default {
         dataLabels: {
           enabled: false
         },
-        title: {
-          text: "User Online History",
+        title: {          
           align: "center",
           margin: 10,
           offsetX: 2,
