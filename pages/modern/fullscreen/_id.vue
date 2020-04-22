@@ -207,13 +207,13 @@
           <v-layout column>
             <div id="livechartGuidelines">
               <v-flex>
-                <v-layout xs12 style="border:1px solid;">
+                <v-layout xs12 >
                   <v-flex
                     xs12
                     lg6
                     md6
                     class="text-xs-center1"
-                    style="width: 100%; align-self: center;border:1px solid red;"
+                    style="width: 100%; align-self: center;"
                   >
                     <div class="stockname">
                       {{ $t(`stockname.${$route.params.id}`) }}
