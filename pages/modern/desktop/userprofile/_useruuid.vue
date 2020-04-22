@@ -214,8 +214,8 @@
 <script>
 import { mapGetters } from "vuex";
 import VueApexCharts from "vue-apexcharts";
-import config from "../../../../config/config.global";
-import followBet from "../../../../components/modern/follow/followBet";
+import config from "~/config/config.global";
+import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
 import log from "roarr";
 
@@ -259,6 +259,9 @@ export default {
           type: "bar",
           events: {
             click: function(chart, w, e) {}
+          },
+          toolbar: {
+            show: false
           }
         },
         colors: ["#2E93fA", "#66DA26", "#546E7A", "#E91E63", "#FF9800"],
@@ -375,7 +378,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/desktop/userprofile/_useruuid.vue",
             apiUrl: config.getVisitUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

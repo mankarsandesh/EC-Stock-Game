@@ -97,7 +97,7 @@ import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
 import log from "roarr";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
 
 // set color win and lose color in bar chart
 let index = 0;
@@ -331,7 +331,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/desktop/profile/stockAnalysis.vue",
             apiUrl: config.getUserBetAnalysis.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

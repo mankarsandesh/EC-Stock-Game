@@ -8,7 +8,7 @@
     <section class="filter">
       <v-container>
         <v-layout class="filter-history">
-          <v-flex xs12 sm12 md6 lg6 >
+          <v-flex xs12 sm12 md6 lg6>
             <v-layout>
               <v-flex xs12 sm12 md4>
                 <v-menu
@@ -31,11 +31,7 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker
-                    color="#1db42f"
-                    v-model="dateFrom"
-                    @input="from = false"
-                  ></v-date-picker>
+                  <v-date-picker color="#1db42f" v-model="dateFrom" @input="from = false"></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md4>
@@ -59,19 +55,12 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker
-                    color="#1db42f"
-                    v-model="dateTo"
-                    @input="to = false"
-                  ></v-date-picker>
+                  <v-date-picker color="#1db42f" v-model="dateTo" @input="to = false"></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md2>
                 <v-btn class="goButton" @click="searchBetHistory()">
-                  <i
-                    v-if="loadingImage"
-                    class="fa fa-circle-o-notch fa-spin"
-                  ></i>
+                  <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
                   &nbsp;{{ $t("msg.go") }}
                 </v-btn>
               </v-flex>
@@ -85,7 +74,7 @@
                   v-model="search"
                   append-icon="search"
                   label="Search"
-                  placeholder="Search by Name"
+                  :placeholder="$t('bethistory.searchbyName')"
                   single-line
                   hide-details
                 ></v-text-field>
@@ -96,7 +85,7 @@
                   v-model="sortby"
                   hide-details
                   :items="dropdown_font"
-                  placeholder="Sort By"
+                  :placeholder="$t('msg.sortby')"
                 ></v-select>
               </v-flex>
             </v-layout>
@@ -128,7 +117,11 @@ export default {
       from: false,
       dateTo: "",
       to: false,
-      dropdown_font: ["Today", "This Week", "This Month"],
+      dropdown_font: [
+        this.$root.$t("bethistory.today"),
+        this.$root.$t("bethistory.thisWeek"),
+        this.$root.$t("bethistory.thisMonth")
+      ],
       userBetHistory: []
     };
   },
@@ -230,7 +223,7 @@ export default {
           {
             req: reqBody,
             res: data.data,
-            page: this.$options.name,
+            page: "pages/modern/desktop/bet-history.vue",
             apiUrl: config.getAllBets.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

@@ -124,7 +124,7 @@ import {
   mapActions
 } from "vuex";
 import axios from "axios";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 
 export default {
@@ -193,7 +193,7 @@ export default {
           {
             req: formData,
             res,
-            page: this.$options.name,
+            page: 'pages/modern/desktop/profile/index.vue',
             apiUrl: config.updateUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

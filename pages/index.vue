@@ -21,7 +21,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import config from "../config/config.global";
+import config from "~/config/config.global";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
 
@@ -144,7 +144,7 @@ export default {
           {
             req: reqBody,
             res: data,
-            page: this.$options.name,
+            page: "pages/index.vue",
             apiUrl: config.userLoginAuth.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

@@ -95,7 +95,7 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import log from "roarr";
 
@@ -146,7 +146,8 @@ export default {
         dataLabels: {
           enabled: false
         },
-        title: {          
+        title: {
+          text: this.$root.$t('leaderboard.user')+' '+this.$root.$t('profile.onlinehistory'),
           align: "center",
           margin: 10,
           offsetX: 2,
@@ -305,7 +306,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/desktop/profile/onlineHistory.vue",
             apiUrl: config.getUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

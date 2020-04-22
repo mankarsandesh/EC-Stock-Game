@@ -160,9 +160,9 @@ import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import io from "socket.io-client";
 import moment from "moment";
-import config from "../config/config.global";
+import config from "~/config/config.global";
 import chanelChat from "./chanelChat";
-import followBet from "../components/modern/follow/followBet";
+import followBet from "~/components/modern/follow/followBet";
 import log from "roarr";
 
 let name = "btc5";
@@ -235,12 +235,7 @@ export default {
       if (this.likesSomeFruit) return "mdi-minus-box";
       return "mdi-checkbox-blank-outline";
     },
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getUserUUID",
-      "getStockType",
-      "getStockGameId"
-    ]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
         return true;

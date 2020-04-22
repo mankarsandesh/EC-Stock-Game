@@ -426,13 +426,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import gameRule from "~/data/gameRule";
 
 import betModal from "~/components/modern/betModal";
 import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
-import gameRule from "../../data/gameRule";
 export default {
   props: {
     isFullscreen: {
@@ -521,7 +521,7 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
+    ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet", "setTempMultiGameBetData"]),
     betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
@@ -531,7 +531,8 @@ export default {
           ruleID: ruleID,
           betAmount: this.getFooterBetAmount
         };
-        this.pushDataMultiGameBet(betData);
+        this.setTempMultiGameBetData(betData);
+        // this.pushDataMultiGameBet(betData);
         // console.warn(this.getMultiGameBet);
       }
     },

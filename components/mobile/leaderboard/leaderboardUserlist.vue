@@ -131,7 +131,7 @@
 </template>
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 export default {
   data() {
     return {

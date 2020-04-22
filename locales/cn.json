@@ -300,7 +300,11 @@
   "bethistory": {
     "betdraw": "开奖结果",
     "yourloosingamount": "您的欠款额",
-    "yourwinningamount": "输赢数额"
+    "yourwinningamount": "输赢数额",
+    "searchbyName" : "按名称搜索",
+    "today":"今天",
+    "thisWeek":"本星期",
+    "thisMonth":"这个月"
   },
   "betting": {
     "reviewBet" : "複習投注",

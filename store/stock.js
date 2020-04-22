@@ -1,5 +1,5 @@
-import config from "../config/config.global";
-import stock from "../data/stockList";
+import config from "~/config/config.global";
+import stock from "~/data/stockList";
 import log from "roarr";
 
 const state = () => ({

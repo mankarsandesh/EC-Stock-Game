@@ -14,7 +14,7 @@
 import currentBet from "~/components/modern/currentBet";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   layout: "desktopModern",
@@ -64,7 +64,7 @@ export default {
           {
             req: reqBody,
             res: data.data,
-            page: this.$options.name,
+            page: "pages/modern/desktop/current-bet.vue",
             apiUrl: config.getAllBets.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

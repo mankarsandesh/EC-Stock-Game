@@ -115,11 +115,11 @@ import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
 import invitation from "~/components/invitation";
-import userMenu from "../components/userMenu";
-import config from "../config/config.global";
+import userMenu from "~/components/userMenu";
+import config from "~/config/config.global";
 import log from "roarr";
 
-import DesktopTutorial from "../components/desktopTutorial";
+import DesktopTutorial from "~/components/desktopTutorial";
 
 export default {
   components: {

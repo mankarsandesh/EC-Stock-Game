@@ -301,7 +301,11 @@
   "bethistory": {
     "betdraw": "投注",
     "yourloosingamount": "จำนวนเงินที่คุณสูญเสีย",
-    "yourwinningamount": "จำนวนเงินที่ชนะของคุณ"
+    "yourwinningamount": "จำนวนเงินที่ชนะของคุณ",
+    "searchbyName" : "ค้นหาตามชื่อ",
+    "today":"ในวันนี้",
+    "thisWeek":"ในสัปดาห์นี้",
+    "thisMonth":"เดือนนี้"
   },
   "betting": {
     "reviewBet" : "รีวิวพนัน",

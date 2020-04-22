@@ -255,7 +255,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   layout: "desktopModern",
@@ -348,7 +348,7 @@ export default {
           {
             req: reqBody,
             res: res.data,
-            page: this.$options.name,
+            page: 'pages/modern/desktop/profile.vue',
             apiUrl: config.updateUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

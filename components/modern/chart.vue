@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
