@@ -381,7 +381,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/desktop/_id.vue",
             apiUrl: config.getStock.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

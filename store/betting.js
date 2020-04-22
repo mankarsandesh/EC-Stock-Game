@@ -85,7 +85,6 @@ const actions = {
       var res = await this.$axios.$post(config.storeBet.url, reqBody, {
         headers: config.header
       });
-      console.log(res, 'bet response')
       if (res.status && res.code == 200) {
         context.dispatch("setUserData", "provider");
         context.commit("SET_IS_SEND_BETTING", false);

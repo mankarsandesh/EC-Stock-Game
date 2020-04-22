@@ -203,7 +203,7 @@ export default {
     );
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockType"]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
         return true;

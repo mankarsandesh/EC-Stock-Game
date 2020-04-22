@@ -55,7 +55,7 @@ export default {
           {
             req: reqBody,
             res: data,
-            page: this.$options.name,
+            page: "pages/modern/current-bet.vue",
             apiUrl: config.getAllBets.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

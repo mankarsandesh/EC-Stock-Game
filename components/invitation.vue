@@ -235,12 +235,7 @@ export default {
       if (this.likesSomeFruit) return "mdi-minus-box";
       return "mdi-checkbox-blank-outline";
     },
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getUserUUID",
-      "getStockType",
-      "getStockGameId"
-    ]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
         return true;
