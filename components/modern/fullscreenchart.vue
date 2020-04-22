@@ -142,7 +142,6 @@ export default {
     
   },
   mounted() {
-    console.log('mount hua chart')
     this.listenForBroadcast(
       {
         channelName: `liveBetCounts.${this.getGameUUIDByStockName(
