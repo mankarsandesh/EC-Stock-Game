@@ -20,8 +20,8 @@ export default {
     this.listenForBroadcast(
       {
         channelName:
-          "getActiveGamesByCategory.0c0de128-e2bd-41f1-a8ec-40a57c72bae5",
-        eventName: "getActiveGamesByCategory"
+          "roadMap.88778f4f-610b-4ec3-937d-65ef7bf24af5",
+        eventName: "roadMap"
       },
       ({ data }) => {
         this.SelectStockItems = data;
