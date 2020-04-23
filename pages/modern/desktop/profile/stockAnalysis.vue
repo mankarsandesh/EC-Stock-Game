@@ -185,7 +185,8 @@ export default {
             }
           }
         },
-        title: {          
+        title: {
+          text: this.$root.$t('profile.stockanalysis'),
           align: "left",
           margin: 10,
           offsetX: 2,
@@ -201,7 +202,7 @@ export default {
           curve: "smooth"
         },
         noData: {
-          text: "No Data to display"
+          text: this.$root.$t('leaderboard.nodata')
         },
         tooltip: {
           enabled: true,

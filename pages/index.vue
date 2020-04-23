@@ -1,28 +1,33 @@
 <template>
-  <v-container fluid grid-list-lg fill-height class="image-bg">
-    <v-fade-transition mode="out-in">
-      <v-layout align-center column>
-        <v-img src="/bg/group33.png" width="500" height="100" />
-        <div class="errorBox" v-if="messageError">
-          <h4 v-for="(data, index) in messageError" :key="index">{{ data }}</h4>
-        </div>
-        <div class="preloader-wrap">
-          <div class="percentage" id="precent"></div>
-          <div class="loader">
-            <div class="trackbar">
-              <div class="loadbar"></div>
-            </div>
-            <div class="glow"></div>
+<v-container fluid grid-list-lg fill-height class="image-bg">
+  <v-fade-transition mode="out-in">
+    <v-layout align-center column>
+      <v-img src="/bg/group33.png" width="500" height="100" />
+      <div class="errorBox" v-if="messageError">
+        <h4 v-for="(data, index) in messageError" :key="index">{{ data }}</h4>
+      </div>
+      <div class="preloader-wrap">
+        <div class="percentage" id="precent"></div>
+        <div class="loader">
+          <div class="trackbar">
+            <div class="loadbar"></div>
           </div>
+          <div class="glow"></div>
         </div>
-      </v-layout>
-    </v-fade-transition>
-  </v-container>
+      </div>
+    </v-layout>
+  </v-fade-transition>
+</v-container>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {
+  mapActions,
+  mapGetters
+} from "vuex";
 import config from "~/config/config.global";
-import { isMobile } from "mobile-device-detect";
+import {
+  isMobile
+} from "mobile-device-detect";
 import log from "roarr";
 
 export default {
@@ -102,9 +107,9 @@ export default {
           const userInfo = {
             authUser: config.authUser,
             authPassword: config.authPassword,
-            portalProviderUUID: this.portalProviderUUID,
-            userId: data.data[0].userUUID,
-            redirect: this.referrerURL
+            portalProviderUUID: this.getUserAuth.portalProviderUUID,
+            userId: data.data.userUUID,
+            redirect: this.getUserAuth.referrerURL
           };
           this.setPortalProviderUUID(userInfo.portalProviderUUID);
           this.setUserUUID(userInfo.userId);
@@ -140,8 +145,7 @@ export default {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
+        log.error({
             req: reqBody,
             res: data,
             page: "pages/index.vue",
@@ -161,15 +165,13 @@ export default {
         EstimatedTime = -(perfData.loadEventEnd - perfData.navigationStart),
         time = parseInt((EstimatedTime / 1000) % 60) * 100;
       // Loadbar Animation
-      $(".loadbar").animate(
-        {
+      $(".loadbar").animate({
           width: width + "%"
         },
         time
       );
       // Loadbar Glow Animation
-      $(".glow").animate(
-        {
+      $(".glow").animate({
           width: width + "%"
         },
         time
@@ -183,7 +185,7 @@ export default {
       this.animateValue(PercentageID, start, end, durataion);
 
       // Fading Out Loadbar on Finised
-      setTimeout(function() {
+      setTimeout(function () {
         $(".preloader-wrap").fadeOut(100);
       }, time);
     },
@@ -201,15 +203,16 @@ export default {
         obj.innerHTML = current;
         if (current == end) {
           clearInterval(timer);
-          window.location = isMobile
-            ? "/modern"
-            : "/modern/desktop/" + this.stockName;
+          window.location = isMobile ?
+            "/modern" :
+            "/modern/desktop/" + this.stockName;
         }
       }, stepTime);
     }
   }
 };
 </script>
+
 <style scoped>
 .errorBox {
   background-color: #fff;
@@ -217,6 +220,7 @@ export default {
   padding: 5px;
   font-size: 23px;
 }
+
 .errorBox h2 {
   color: #333;
 }
