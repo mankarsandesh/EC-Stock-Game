@@ -106,8 +106,7 @@
 .BetButtonGuideEven,
 #chartGuidelineNew,
 #stocklistGuidelines,
-#betresultGuidelines,
-#selectstockGuideline {
+#betresultGuidelines {
   position: relative;
   background-color: white;
 }
@@ -1448,10 +1447,12 @@ p.guideline {
 
 .text-sucess {
   border-radius: 4px;
-  color: green;
-  border: 1px dotted greenyellow;
+  color: #0c440c;
+  border: 1px solid #b2e463;
   padding: 6px 8px;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #d0f1d1;
 }
 @keyframes taadaa {
   0% {

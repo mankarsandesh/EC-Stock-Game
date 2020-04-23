@@ -4,7 +4,7 @@
     <DesktopTutorial />
     <!-- tutorial  end -->
 
-    <v-app style=" background-color: #f4f5fd;">     
+    <v-app style=" background-color: #f4f5fd;">
       <div
         class="text-xs-center container-loading loading"
         v-if="getIsLoadingStockGame"
@@ -64,24 +64,30 @@
                 </span>
               </template>
               <v-list id="notificationTab">
-                <v-list-tile v-if="winnerList.length == 0" class="noNotification"> There are no Notification.</v-list-tile>
+                <v-list-tile
+                  v-if="winnerList.length == 0"
+                  class="noNotification"
+                >
+                  There are no Notification.</v-list-tile
+                >
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
                   class="mainNotification"
                 >
-                  <div class="userNotification">
-                    <div class="userNoti">
-                      <i class="fa fa-user-o fa-1x" /> player
-                      {{ item.betResult }} {{ item.betAmount }} chips on
-                      {{ item.stockName }} stock {{ item.ruleName }}
+                  <div class="userImage">
+                    <i class="fa fa-user-o fa-1x" />
+                  </div>
+                  <div class="messageBody">
+                    <div class="title">
+                      {{ item.title }}
                     </div>
-                    <div class="dateTime">
-                      {{ item.createdDate }} {{ item.createdTime }} 1 Hour Ago
+                    <div class="description">
+                      {{ item.message }}
                     </div>
+                    <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
-               
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -133,7 +139,7 @@ export default {
     AnimatedNumber
   },
   data() {
-    return {      
+    return {
       isShowTutorial: true,
       messagesCount: 2,
       activeClass: null,
@@ -199,26 +205,20 @@ export default {
     async fetchNotification() {
       try {
         var reqBody = {
-          portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-          userUUID: this.getUserUUID, // get the userUUID with the this object
-          version: config.version, // version of API
-          betResult: [0, 1], // -1= pending, pending that mean is betting
-          limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
-          offset: "0" // offset or skip the data
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version
         };
         var { data } = await this.$axios.post(
-          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
+          config.getUserNotification.url,
           reqBody,
           {
             headers: config.header
           }
         );
-        console.log(reqBody);
-          console.log(data);
         if (data.status) {
           this.messagesCount = data.data.length;
-          this.winnerList = data.data;       
-         
+          this.winnerList = data.data;
         } else {
           throw new Error(config.error.general);
         }
@@ -253,42 +253,62 @@ export default {
 };
 </script>
 <style scoped>
-.noNotification{
-  color:#333;
+.noNotification {
+  color: #333;
 }
-#notificationTab{
+#notificationTab {  
+  padding:10px 10px 0px  10px;
+  overflow:scroll;
   z-index: 9999;
-  height: 250px;
+  height: 320px;
+  width: 350px;
   background-color: #fff;
 }
-.v-menu__content{
-z-index: 9999 !important;
-}
-
 .mainNotification {
   background-color: #fff;
   cursor: pointer;
-  padding:5px 2px;
+  padding: 15px 0px;
+  float: left;
+  width: 100%;
   border-bottom: 1px solid #dddddd;
 }
-.mainNotification :hover {
-  background-color: #dddddd;
+.userImage {
+  float: left;
+  width: 10%;
+  font-size: 18px;
 }
-.userNotification {  
-  z-index: 9999 !important;  
-  width: 100%;
+.userImage i {
+  margin: 10px -8px;
+  width: 30px;
+  height: 30px;
+  background-color: #d1ecf1;
+  border-radius: 180px;
+  padding: 5px;
+  text-align: center;
 }
-.userNoti {
-  font-weight: 600;
-  color: #484848;
-  font-size: 14px;
+.messageBody {
+  padding: 0px 6px;
+  /* border:1px solid; */
+  float: left;
+  width: 90%;
+}
+.title {
+  font-size: 14px !important;
   width: 100%;
+  color: #003f70;
+}
+.description {
+  font-size: 12px;
+  color: #333;
 }
 .dateTime {
   font-size: 12px;
-  color: #585454;
-  width: 100%;
+  color: #636363;
 }
+.v-menu__content {
+  z-index: 9999 !important;
+}
+
 .winnerText {
   margin-top: -30px;
   font-weight: 800;
