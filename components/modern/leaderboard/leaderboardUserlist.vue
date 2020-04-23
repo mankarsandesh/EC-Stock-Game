@@ -52,8 +52,9 @@
       >
         <div class="userRow">
           <div>
+              <!-- <span class="rank">  <i class="fas fa-crown"></i>   </span> -->
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
-              <span class="rank">  <i class="fas fa-crown"></i>   </span>
+            
               <img class="pimage" :src="defaultImage" />
               <span class="subtitle-1 text-uppercase ">
                 <span class="name">                 
@@ -178,16 +179,17 @@ export default {
     this.leaderBoard();
   },
   computed: {
+    // Get 2 data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }) 
   },
   methods: {
     closePopup() {    
       this.dialog = false;
     },
-    //sorting weekly and Monthly
+    // Sorting Weekly and Monthly
     sortingBy(sort) {
       if (sort == "monthly") {
         const today = new Date();
@@ -226,30 +228,7 @@ export default {
       return userImage === null
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/` + userImage;
-    },
-    // Unfollow User
-    async unfollowUser(FollowUserUUID) {
-      const LeaderBoardData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        followToUUID: FollowUserUUID,
-        method: 2,
-        version: config.version
-      };
-      try {
-        const { data } = await this.$axios.post(
-          config.followUser.url,
-          LeaderBoardData,
-          {
-            headers: config.header
-          }
-        );
-        this.unfollowUser = data;
-        location.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    },   
     // Open Dialog box When User Click on Follow Button
     followUser(username, userImage, userUUID, method) {
       this.username = username;
@@ -266,7 +245,7 @@ export default {
     async leaderBoard() {
       this.loadingImage = true;
       try {
-        const LeaderBoardData = {
+        const reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           dateRangeFrom: this.dateFrom,
@@ -275,7 +254,7 @@ export default {
         };
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
-          LeaderBoardData,
+          reqBody,
           {
             headers: config.header
           }

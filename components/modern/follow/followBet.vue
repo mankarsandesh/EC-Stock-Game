@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-card class="followup">
-      <h3 class="title" style="text-align: center; color: #0b2a68;">
-        FOLLOW BET
+      <h3 class="title">
+        {{ isFollowing == 1 ? "Follow Bet " : "UnFollow Bet" }}
       </h3>
       <v-card-text style="text-align:center;">
-        <img class="pimage" v-bind:src="this.userImage" width="140px" />
+        <img class="pimage" v-bind:src="this.defaultImage" width="140px" />
         <h3
           class="subtitle-1 text-uppercase text-center pt-2"
           v-if="this.username"
@@ -115,15 +115,17 @@
 <script>
 import { mapState } from "vuex";
 import config from "~/config/config.global";
+import log from "roarr";
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
     return {
       // AutoStop Follow Validation
       rulesNew: {
+        // Min Value
         min(value, text) {
           if (text == 4 || text == 5)
-            return (value || "") >= 100 || `Amount must be at least 10 USD`;
+            return (value || "") >= 100 || `Amount must be at least 100 USD`;
           else if (text == 3)
             return (value || "") >= 1 || `Time must be at least 1 Days`;
           else return (value || "") >= 1 || `Bet must be at least 1 Bet`;
@@ -139,7 +141,9 @@ export default {
               (value || "") <= 10 || `Time may not be greater than 10 Days`
             );
           else
-            return (value || "") <= 10 || `Bet may not be greater than 10 Bets`;
+            return (
+              (value || "") <= 10 || `Bet may not be greater than 100 Bets`
+            );
         }
       },
       // Follow by Validation
@@ -166,10 +170,12 @@ export default {
       selectRate: false,
       selectAmount: true,
       selectedFollow: 1,
+      // Default Follow By List
       followby: [
         { id: 1, name: "Follow by Amount", value: "Amount" },
         { id: 2, name: "Follow by Rate", value: "Rate" }
       ],
+      // Default AUto Stop Follow
       autoStopFollow: [
         { id: 4, name: "Stop by Winning", value: "stopWin" },
         { id: 5, name: "Stop by Losing", value: "stopLoss" },
@@ -193,10 +199,11 @@ export default {
     };
   },
   computed: {
+    // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    })
   },
   methods: {
     // Users Follow Bet Validation
@@ -242,9 +249,9 @@ export default {
       this.hasSucess = sucess;
       this.errorMessage = message;
     },
-    // Follow Users Bet API call
+    // Follow Users Bet API Call
     async follwingBetting(follwerUUID, method) {
-      const LeaderBoardData = {
+      const reqBody = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
         followToUUID: follwerUUID,
@@ -257,32 +264,44 @@ export default {
         unFollowBetRule: [
           {
             id: this.autoStop,
-            value: this.autoStop == 3 ? this.unfollowValue * 1440 : this.unfollowValue
+            value:
+              this.autoStop == 3
+                ? this.unfollowValue * 1440
+                : this.unfollowValue // Day Convert to Minutes 1 Day = 1440 min
           }
         ],
         method: method,
         version: config.version
       };
       try {
-        console.log(LeaderBoardData);
-        const { data } = await this.$axios.post(
+        var { data } = await this.$axios.post(
           config.followUser.url,
-          LeaderBoardData,
+          reqBody,
           {
             headers: config.header
           }
         );
-        console.log(data);
         if (data.code == 200) {
           this.errorShow(true, true, false, data.message[0]);
-          // window.setTimeout(function() {
-          //   location.reload();
-          // }, 2000);
+          window.setTimeout(function() {
+            location.reload();
+          }, 2000);
         } else {
           this.errorShow(true, false, true, data.message[0]);
         }
       } catch (error) {
         console.log(error);
+        log.error(
+          {
+            req: reqBody,
+            res: data.data,
+            page: "pages/modern/follow/followBet.vue",
+            apiUrl: config.followUser.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     // Change Amount Rate Validation
@@ -322,6 +341,10 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  text-align: center;
+  color: #0b2a68;
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;

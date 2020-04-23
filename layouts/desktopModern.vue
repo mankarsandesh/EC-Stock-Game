@@ -75,11 +75,11 @@
                   :key="i"
                   class="mainNotification"
                 >
-                  <div class="userNotification">
+                  
+
                     <div class="userImage">
                       <i class="fa fa-user-o fa-1x" />
                     </div>
-
                     <div class="messageBody">
                       <div class="title">
                         {{item.title}}
@@ -89,7 +89,8 @@
                       </div>
                       <div class="dateTime">{{item.createdAt}}</div>
                     </div>
-                  </div>
+
+                  
                 </v-list-tile>
               </v-list>
             </v-menu>
@@ -264,6 +265,14 @@ export default {
   height: 350px;
   background-color: #fff;
 }
+.mainNotification {
+  background-color: #fff;
+  cursor: pointer;
+  padding: 15px 0px;
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #dddddd;
+}
 .userImage {
   float: left;
   width: 10%;
@@ -273,12 +282,14 @@ export default {
   margin: 10px -8px;
   width: 30px;
   height: 30px;
-  background-color: #dddddd;
+  background-color:#d1ecf1;
   border-radius: 180px;
   padding: 5px;
   text-align: center;
 }
 .messageBody {
+  padding: 0px 6px;
+  /* border:1px solid; */
   float: left;
   width: 90%;
 }
@@ -299,13 +310,7 @@ export default {
   z-index: 9999 !important;
 }
 
-.mainNotification {
-  background-color: #fff;
-  cursor: pointer;
-  padding: 12px 0px;
-  margin: 5px 0px;
-  border-bottom: 1px solid #dddddd;
-}
+
 
 .winnerText {
   margin-top: -30px;
