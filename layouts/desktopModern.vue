@@ -4,7 +4,7 @@
     <DesktopTutorial />
     <!-- tutorial  end -->
 
-    <v-app style=" background-color: #f4f5fd;">     
+    <v-app style=" background-color: #f4f5fd;">
       <div
         class="text-xs-center container-loading loading"
         v-if="getIsLoadingStockGame"
@@ -64,24 +64,33 @@
                 </span>
               </template>
               <v-list id="notificationTab">
-                <v-list-tile v-if="winnerList.length == 0" class="noNotification"> There are no Notification.</v-list-tile>
+                <v-list-tile
+                  v-if="winnerList.length == 0"
+                  class="noNotification"
+                >
+                  There are no Notification.</v-list-tile
+                >
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
                   class="mainNotification"
                 >
                   <div class="userNotification">
-                    <div class="userNoti">
-                      <i class="fa fa-user-o fa-1x" /> player
-                      {{ item.betResult }} {{ item.betAmount }} chips on
-                      {{ item.stockName }} stock {{ item.ruleName }}
+                    <div class="userImage">
+                      <i class="fa fa-user-o fa-1x" />
                     </div>
-                    <div class="dateTime">
-                      {{ item.createdDate }} {{ item.createdTime }} 1 Hour Ago
+
+                    <div class="messageBody">
+                      <div class="title">
+                        Welcome to EC Gaming
+                      </div>
+                      <div class="description">
+                        Get started with game which can make you win money.
+                      </div>
+                      <div class="dateTime">20 Nov 2020 06:30 PM</div>
                     </div>
                   </div>
                 </v-list-tile>
-               
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -133,7 +142,7 @@ export default {
     AnimatedNumber
   },
   data() {
-    return {      
+    return {
       isShowTutorial: true,
       messagesCount: 2,
       activeClass: null,
@@ -212,13 +221,10 @@ export default {
           {
             headers: config.header
           }
-        );
-        console.log(reqBody);
-          console.log(data);
+        );      
         if (data.status) {
           this.messagesCount = data.data.length;
-          this.winnerList = data.data;       
-         
+          this.winnerList = data.data;
         } else {
           throw new Error(config.error.general);
         }
@@ -253,42 +259,57 @@ export default {
 };
 </script>
 <style scoped>
-.noNotification{
-  color:#333;
+.noNotification {
+  color: #333;
 }
-#notificationTab{
+#notificationTab {
   z-index: 9999;
-  height: 250px;
+  height: 350px;
   background-color: #fff;
 }
-.v-menu__content{
-z-index: 9999 !important;
+.userImage {
+  float: left;
+  width: 10%;
+  font-size: 18px;
+}
+.userImage i {
+  margin: 10px -8px;
+  width: 30px;
+  height: 30px;
+  background-color: #dddddd;
+  border-radius: 180px;
+  padding: 5px;
+  text-align: center;
+}
+.messageBody {
+  float: left;
+  width: 90%;
+}
+.title {
+  font-size: 14px !important;
+  width: 100%;
+  color: #003f70;
+}
+.description {
+  font-size: 12px;
+  color: #333;
+}
+.dateTime {
+  font-size: 12px;
+  color: #636363;
+}
+.v-menu__content {
+  z-index: 9999 !important;
 }
 
 .mainNotification {
   background-color: #fff;
   cursor: pointer;
-  padding:5px 2px;
+  padding: 12px 0px;
+  margin: 5px 0px;
   border-bottom: 1px solid #dddddd;
 }
-.mainNotification :hover {
-  background-color: #dddddd;
-}
-.userNotification {  
-  z-index: 9999 !important;  
-  width: 100%;
-}
-.userNoti {
-  font-weight: 600;
-  color: #484848;
-  font-size: 14px;
-  width: 100%;
-}
-.dateTime {
-  font-size: 12px;
-  color: #585454;
-  width: 100%;
-}
+
 .winnerText {
   margin-top: -30px;
   font-weight: 800;

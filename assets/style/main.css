@@ -106,8 +106,7 @@
 .BetButtonGuideEven,
 #chartGuidelineNew,
 #stocklistGuidelines,
-#betresultGuidelines,
-#selectstockGuideline {
+#betresultGuidelines {
   position: relative;
   background-color: white;
 }
