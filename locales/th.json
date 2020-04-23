@@ -12,7 +12,8 @@
     "current bet": "เดิมพันปัจจุบัน",
     "history": "ประวัติศาสตร์",
     "stock list": "รายการหุ้น",
-    "announcement": "การประกาศ",
+    "announcement": "การประกาศ",   
+    "notification": "การแจ้งเตือน",
     "rule": "กฎระเบียบ",
     "gamerule": "กฎของเกม",
     "setting": "การตั้งค่า",
@@ -279,7 +280,8 @@
     "betHistory": "ประวัติการเดิมพัน",
     "currentBet": "เดิมพันปัจจุบัน",
     "stockList": "รายการสินค้า",
-    "announcement": "การประกาศ"
+    "announcement": "การประกาศ",
+    "notification": "การแจ้งเตือน"
   },
   "setting": {
     "account": "บัญชีผู้ใช้",

@@ -13,6 +13,7 @@
     "history": "ປະຫວັດການຫຼີ້ນ",
     "stock list": "ບັນຊີລາຍຊື່",
     "announcement": "ການປະກາດ",
+    "notification": "ແຈ້ງການ",
     "rule": "ກົດລະບຽບ",
     "gamerule": "ກົດລະບຽບ",
     "setting": "ການຕັ້ງຄ່າ",
@@ -278,7 +279,8 @@
     "betHistory": "ປະຫວັດການເດີມພັນ",
     "currentBet": "ເດີມພັນໃນປະຈຸບັນ",
     "stockList": "ລາຍການຫຸ້ນ",
-    "announcement": "ປະກາດ"
+    "announcement": "ປະກາດ",
+    "notification": "ແຈ້ງການ"
   },
   "setting": {
     "account": "ບັນຊີ",

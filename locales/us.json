@@ -13,6 +13,7 @@
     "history": "history",
     "stock list": "stock list",
     "announcement": "announcement",
+    "notification": "notification",
     "rule": "rule",
     "gamerule": "Game Rule",
     "setting": "setting",
@@ -281,7 +282,8 @@
     "betHistory": "Bet History",
     "currentBet": "Current Bet",
     "stockList": "Stock List",
-    "announcement": "Announcement"
+    "announcement": "Announcement",
+    "notification": "Notification"
   },
   "setting": {
     "account": "Account",

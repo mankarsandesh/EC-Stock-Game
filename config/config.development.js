@@ -42,8 +42,8 @@ const config = {
   getActiveGamesByCategory: {
     url: `${process.env.BASE_URL}/getActiveGamesByCategory`
   },
-  getAllAnnouncements: {
-    url: `${process.env.BASE_URL}/getAllAnnouncements`
+  getNotification: {
+    url: `${process.env.BASE_URL}/getNotification`
   },
   followUser: {
     url: `${process.env.BASE_URL}/followUser`
