@@ -1,12 +1,12 @@
 <template>
-  <div class="p-relative">
+  <div class="p-relative" >
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
       <p>{{ $t("msg.betclosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row  md10>
+    <v-layout row  md10 >
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
@@ -521,7 +521,7 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
+    ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet", "setTempMultiGameBetData"]),
     betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
@@ -531,7 +531,8 @@ export default {
           ruleID: ruleID,
           betAmount: this.getFooterBetAmount
         };
-        this.pushDataMultiGameBet(betData);
+        this.setTempMultiGameBetData(betData);
+        // this.pushDataMultiGameBet(betData);
         // console.warn(this.getMultiGameBet);
       }
     },

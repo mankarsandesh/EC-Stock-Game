@@ -2,10 +2,7 @@
   <div style="z-index: 100;">
     <v-menu offset-y :close-on-content-click="false" :min-width="180">
       <template v-slot:activator="{ on }">
-        <v-btn flat v-on="on" v-show="isShow == 'classic'">
-          <v-icon size="30">account_circle</v-icon>
-        </v-btn>
-        <v-btn flat v-on="on" v-show="isShow == 'modern'">
+        <v-btn flat v-on="on">
           <v-avatar size="40">
             <img :src="defaultImage" />
           </v-avatar>
@@ -28,16 +25,12 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-tile
-          @click="$router.push('/modern/desktop/userprofile/')"
-          v-show="isShow == 'modern'"
-        >
+        <v-list-tile @click="$router.push('/modern/desktop/userprofile/')">
           <i class="fa fa-user fa-2x margin-right-5" />
           <v-list-tile-title>{{ $t("menu.profile") }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
           @click="$router.push('/modern/desktop/profile/onlinehistory/')"
-          v-show="isShow == 'modern'"
         >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
           <v-list-tile-title>{{
@@ -46,7 +39,6 @@
         </v-list-tile>
         <v-list-tile
           @click="$router.push('/modern/desktop/profile/stockanalysis/')"
-          v-show="isShow == 'modern'"
         >
           <i class="fa fa-line-chart fa-15x margin-right-5" />
           <v-list-tile-title>{{
