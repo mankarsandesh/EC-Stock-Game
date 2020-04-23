@@ -253,6 +253,8 @@
   },
   "useraction": {
     "followbet": "ทำตามการพนัน",
+    "unfollowBet": "ยกเลิกการเดิมพัน",
+    "follow": "ติดตาม",
     "unfollow": "เลิก",
     "yourself": "ด้วยตัวคุณเอง"
   },
@@ -261,7 +263,7 @@
     "winningrate": "อัตราการชนะ",
     "bets": "เดิมพัน",
     "winningamount": "จำนวนเงินที่ชนะ",
-    "follow": "ปฏิบัติตาม",
+    "follow": "ติดตาม",
     "weeklyrankings": "อันดับประจำสัปดาห์",
     "monthlyrankings": "อันดับรายเดือน",
     "Top10Leaders": "ผู้นำ 10 อันดับแรก",

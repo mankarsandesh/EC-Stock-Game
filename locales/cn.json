@@ -252,6 +252,8 @@
   },
   "useraction": {
     "followbet": "跟进",
+    "unfollowBet": "取消投注",
+    "follow": "跟随",
     "unfollow": "取消关注",
     "yourself": "我"
   },

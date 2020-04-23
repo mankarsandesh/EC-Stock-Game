@@ -254,7 +254,8 @@
     "noFollowers" : "There are no followers."
   },
   "useraction": {
-    "followbet": "FOLLOW BET",
+    "followBet": "FOLLOW BET",
+    "unfollowBet": "UNFOLLOW BET",
     "follow": "FOLLOW",
     "unfollow": "UNFOLLOW",
     "yourself": "YOURSELF"

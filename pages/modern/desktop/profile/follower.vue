@@ -2,7 +2,7 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">my followers ({{ this.countFollower }})</h2>
+        <h2 class="text-uppercase">{{$t('profile.myfollowers')}} ({{ this.countFollower }})</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -10,7 +10,7 @@
       <v-flex xs10>
         <div class="title_container">
           <h3 class="text-black" v-if="followerEmpty == true">
-            There are no followers user.
+            {{$t('profile.noFollowers')}}
           </h3>
           <div
             class="follower_container"
@@ -31,7 +31,7 @@
                 followUserBet(data.userName, data.userImage, data.UUID, 0)
               "
             >
-              follow
+              {{$t('leaderboard.follow')}}
             </button>
             <button
               v-if="data.isFollowing == 1"
