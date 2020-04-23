@@ -2,7 +2,7 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">following ({{ this.countFollwing }})</h2>
+        <h2 class="text-uppercase">{{$t('profile.myfollowing')}} ({{ this.countFollwing }})</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -10,7 +10,7 @@
       <v-flex xs10>
         <div class="title_container">
           <h3 class="text-black" v-if="followingListEmpty == true">
-            There are no follwing user.
+            {{$t('profile.noFollowing')}}
           </h3>
           <div
             class="follower_container"
@@ -45,7 +45,7 @@
                 )
               "
             >
-              unfollow
+              {{$t('useraction.unfollow')}}
             </button>
           </div>
         </div>

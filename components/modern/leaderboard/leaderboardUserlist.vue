@@ -4,8 +4,8 @@
       <v-layout row>
         <v-flex grow pa-1>
           <p class="float-left md6 lg8">
-            <span class="title"
-              >{{ $t("leaderboard.top") }} {{ topPlayerData.length }}
+            <span class="title">
+              {{ $t("leaderboard.top") }} {{ topPlayerData.length }}
               {{ $t("leaderboard.leaders") }}
             </span>
             ({{ this.sortbyName }})
@@ -22,24 +22,24 @@
             v-bind:class="{ active: isActiveWeek }"
             v-on:click="sortingBy('weekly')"
           >
-            <v-icon small>event</v-icon> {{ $t("leaderboard.weeklyrankings") }}
+            <v-icon small>event</v-icon>
+            {{ $t("leaderboard.weeklyrankings") }}
           </span>
           <span
             class="text-uppercase font-weight-bold"
             v-bind:class="{ active: isActiveMonth }"
             v-on:click="sortingBy('monthly')"
           >
-            <v-icon small>event</v-icon> {{ $t("leaderboard.monthlyrankings") }}
+            <v-icon small>event</v-icon>
+            {{ $t("leaderboard.monthlyrankings") }}
           </span>
         </v-flex>
       </v-layout>
     </v-flex>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">
-        {{ $t("leaderboard.nodata") }}
-      </h2>
+      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.nodata") }}</h2>
     </v-flex>
-    <v-flex v-if="topPlayerData.length > 0" >
+    <v-flex v-if="topPlayerData.length > 0">
       <v-flex
         xs12
         md10
@@ -54,33 +54,28 @@
           <div>
               <!-- <span class="rank">  <i class="fas fa-crown"></i>   </span> -->
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
-            
               <img class="pimage" :src="defaultImage" />
-              <span class="subtitle-1 text-uppercase ">
-                <span class="name">                 
-                  {{ data.username }}
-                </span>
+              <span class="subtitle-1 text-uppercase">
+                <span class="name">{{ data.username }}</span>
               </span>
             </nuxt-link>
             <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
-            <h4 class="green--text titleText">
-              {{ Math.round(data.winRate, 1) }} %
-            </h4>
+            <h4 class="green--text titleText">{{ Math.round(data.winRate, 1) }} %</h4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
-            <H4 style="color:#eb0b6e;" class="titleText">{{
+            <H4 style="color:#eb0b6e;" class="titleText">
+              {{
               data.totalWinBets
-            }}</H4>
+              }}
+            </H4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
-            <h4 style="color:#0b2a68;" class="titleText">
-              {{ Math.round(data.totalWinAmount, 1) }}
-            </h4>
+            <h4 style="color:#0b2a68;" class="titleText">{{ Math.round(data.totalWinAmount, 1) }}</h4>
           </div>
           <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
             <v-btn
@@ -94,12 +89,11 @@
                 )
               "
               dark
-              >{{ $t("useraction.followbet") }}
-            </v-btn>
+            >{{ $t("useraction.followBet") }}</v-btn>
           </div>
           <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
             <v-btn
-              class="buttonCancel "
+              class="buttonCancel"
               v-on:click="
                 followUser(
                   data.username,
@@ -109,16 +103,14 @@
                 )
               "
               dark
-              >{{ $t("useraction.unfollow") }}</v-btn
-            >
+            >{{ $t("useraction.unfollow") }}</v-btn>
           </div>
-          <div
-            v-if="data.isFollowing == -1"
-            style="width:20%;padding-top:30px;"
-          >
-            <v-btn class="buttonGreensmall">{{
+          <div v-if="data.isFollowing == -1" style="width:20%;padding-top:30px;">
+            <v-btn class="buttonGreensmall">
+              {{
               $t("useraction.yourself")
-            }}</v-btn>
+              }}
+            </v-btn>
           </div>
         </div>
       </v-flex>
@@ -145,7 +137,7 @@ export default {
   },
   data() {
     return {
-      defaultImage : '/no-profile-pic.jpg',
+      defaultImage: "/no-profile-pic.jpg",
       isActiveWeek: true,
       isActiveMonth: false,
       sortbyName: this.$root.$t("leaderboard.weeklyrankings"),
@@ -186,7 +178,7 @@ export default {
     }) 
   },
   methods: {
-    closePopup() {    
+    closePopup() {
       this.dialog = false;
     },
     // Sorting Weekly and Monthly

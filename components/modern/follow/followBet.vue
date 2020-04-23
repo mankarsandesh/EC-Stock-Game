@@ -93,7 +93,7 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-                >Follow</v-btn
+                >{{$t('useraction.follow')}}</v-btn
               >
             </v-flex>
           </v-radio-group>
@@ -105,7 +105,7 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-            >unFollow</v-btn
+            >{{$t('useraction.unfollow')}}</v-btn
           >
         </v-flex>
       </div>
