@@ -119,21 +119,22 @@ export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
     return {
-      // AutoStop Follow Validation 
+      // AutoStop Follow Validation
       rulesNew: {
-        min(value, text) {         
-          if (text == 3 || text == 4)
-            return (value || "") >= 10 || `Amount must be at least 10 USD`;
-          else if (text == 5)
+        min(value, text) {
+          if (text == 4 || text == 5)
+            return (value || "") >= 100 || `Amount must be at least 10 USD`;
+          else if (text == 3)
             return (value || "") >= 1 || `Time must be at least 1 Days`;
           else return (value || "") >= 1 || `Bet must be at least 1 Bet`;
         },
+        // Max value
         max(value, text) {
-          if (text == 3 || text == 4)
+          if (text == 4 || text == 5)
             return (
               (value || "") <= 1000 || `Amount may not be greater than 1000 USD`
             );
-          else if (text == 5)
+          else if (text == 3)
             return (
               (value || "") <= 10 || `Time may not be greater than 10 Days`
             );
@@ -159,7 +160,7 @@ export default {
       selectAmount: false,
       selectTime: false,
       selectBets: false,
-      autoStop: 3,
+      autoStop: 4, // Select default Auto Stop Follow
       amountValue: 100,
       rateValue: 10,
       selectRate: false,
@@ -170,9 +171,9 @@ export default {
         { id: 2, name: "Follow by Rate", value: "Rate" }
       ],
       autoStopFollow: [
-        { id: 3, name: "Stop by Winning", value: "stopWin" },
-        { id: 4, name: "Stop by Losing", value: "stopLoss" },
-        { id: 5, name: "Stop by Timing", value: "stopTime" },
+        { id: 4, name: "Stop by Winning", value: "stopWin" },
+        { id: 5, name: "Stop by Losing", value: "stopLoss" },
+        { id: 3, name: "Stop by Timing", value: "stopTime" },
         { id: 6, name: "Stop by Bets", value: "stopBets" }
       ],
       defaultImage: "/no-profile-pic.jpg",
@@ -198,7 +199,7 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
-    // All Users Follow Bet Validation
+    // Users Follow Bet Validation
     async followThisUser(followerID, followMethod) {
       this.selectedFollow == 1
         ? (this.BetValue = this.amountValue)
@@ -256,13 +257,14 @@ export default {
         unFollowBetRule: [
           {
             id: this.autoStop,
-            value: this.unfollowValue
+            value: this.autoStop == 3 ? this.unfollowValue * 1440 : this.unfollowValue
           }
         ],
         method: method,
         version: config.version
       };
       try {
+        console.log(LeaderBoardData);
         const { data } = await this.$axios.post(
           config.followUser.url,
           LeaderBoardData,
@@ -272,17 +274,12 @@ export default {
         );
         console.log(data);
         if (data.code == 200) {
-          this.errorShow(true, true, false, data.message);
-          window.setTimeout(function() {
-            location.reload();
-          }, 2000);
+          this.errorShow(true, true, false, data.message[0]);
+          // window.setTimeout(function() {
+          //   location.reload();
+          // }, 2000);
         } else {
-          this.errorShow(
-            true,
-            false,
-            true,
-            "Somthing Wrong. Please try Again!"
-          );
+          this.errorShow(true, false, true, data.message[0]);
         }
       } catch (error) {
         console.log(error);

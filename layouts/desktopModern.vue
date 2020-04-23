@@ -82,12 +82,12 @@
 
                     <div class="messageBody">
                       <div class="title">
-                        Welcome to EC Gaming
+                        {{item.title}}
                       </div>
                       <div class="description">
-                        Get started with game which can make you win money.
+                         {{item.message}}
                       </div>
-                      <div class="dateTime">20 Nov 2020 06:30 PM</div>
+                      <div class="dateTime">{{item.createdAt}}</div>
                     </div>
                   </div>
                 </v-list-tile>
@@ -208,20 +208,17 @@ export default {
     async fetchNotification() {
       try {
         var reqBody = {
-          portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-          userUUID: this.getUserUUID, // get the userUUID with the this object
-          version: config.version, // version of API
-          betResult: [0, 1], // -1= pending, pending that mean is betting
-          limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
-          offset: "0" // offset or skip the data
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version      
         };
         var { data } = await this.$axios.post(
-          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
+          config.getUserNotification.url,
           reqBody,
           {
             headers: config.header
           }
-        );      
+        );
         if (data.status) {
           this.messagesCount = data.data.length;
           this.winnerList = data.data;

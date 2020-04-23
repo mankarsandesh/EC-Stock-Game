@@ -291,9 +291,6 @@ export default {
 </script>
 
 <style scoped>
-.rank{
-
-}
 .followDialog {
   width: 600px;
   border-radius: 10px;

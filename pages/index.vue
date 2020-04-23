@@ -98,12 +98,13 @@ export default {
             headers: config.header
           }
         );       
+        console.log(data);
         if (data.status) {
           const userInfo = {
             authUser: config.authUser,
             authPassword: config.authPassword,
             portalProviderUUID: this.portalProviderUUID,
-            userId: data.data[0].userUUID,
+            userId: data.data.userUUID,
             redirect: this.referrerURL
           };
           this.setPortalProviderUUID(userInfo.portalProviderUUID);
