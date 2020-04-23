@@ -75,22 +75,18 @@
                   :key="i"
                   class="mainNotification"
                 >
-                  
-
-                    <div class="userImage">
-                      <i class="fa fa-user-o fa-1x" />
+                  <div class="userImage">
+                    <i class="fa fa-user-o fa-1x" />
+                  </div>
+                  <div class="messageBody">
+                    <div class="title">
+                      {{ item.title }}
                     </div>
-                    <div class="messageBody">
-                      <div class="title">
-                        {{item.title}}
-                      </div>
-                      <div class="description">
-                         {{item.message}}
-                      </div>
-                      <div class="dateTime">{{item.createdAt}}</div>
+                    <div class="description">
+                      {{ item.message }}
                     </div>
-
-                  
+                    <div class="dateTime">{{ item.createdAt }}</div>
+                  </div>
                 </v-list-tile>
               </v-list>
             </v-menu>
@@ -211,7 +207,7 @@ export default {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
-          version: config.version      
+          version: config.version
         };
         var { data } = await this.$axios.post(
           config.getUserNotification.url,
@@ -260,9 +256,12 @@ export default {
 .noNotification {
   color: #333;
 }
-#notificationTab {
+#notificationTab {  
+  padding:10px 10px 0px  10px;
+  overflow:scroll;
   z-index: 9999;
-  height: 350px;
+  height: 320px;
+  width: 350px;
   background-color: #fff;
 }
 .mainNotification {
@@ -282,7 +281,7 @@ export default {
   margin: 10px -8px;
   width: 30px;
   height: 30px;
-  background-color:#d1ecf1;
+  background-color: #d1ecf1;
   border-radius: 180px;
   padding: 5px;
   text-align: center;
@@ -309,8 +308,6 @@ export default {
 .v-menu__content {
   z-index: 9999 !important;
 }
-
-
 
 .winnerText {
   margin-top: -30px;
