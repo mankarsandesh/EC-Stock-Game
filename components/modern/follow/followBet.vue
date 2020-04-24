@@ -93,7 +93,7 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-                >{{$t('useraction.follow')}}</v-btn
+                >{{ $t("useraction.follow") }}</v-btn
               >
             </v-flex>
           </v-radio-group>
@@ -105,7 +105,7 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-            >{{$t('useraction.unfollow')}}</v-btn
+            >{{ $t("useraction.unfollow") }}</v-btn
           >
         </v-flex>
       </div>
@@ -186,11 +186,6 @@ export default {
       selectedFruits: [],
       currentRoute: "",
       messageInput: "",
-      pageActiveChanel: [
-        "modern-desktop-id",
-        "modern-multigame-id",
-        "modern-fullscreen-id"
-      ],
       tabActiveName: "world",
       conversationWorld: [],
       connectClient: [],
@@ -207,40 +202,51 @@ export default {
   },
   methods: {
     // Users Follow Bet Validation
-    async followThisUser(followerID, followMethod) {
-      this.selectedFollow == 1
-        ? (this.BetValue = this.amountValue)
-        : (this.BetValue = this.rateValue);
-      if (
-        this.selectedFollow &&
-        this.BetValue &&
-        this.autoStop &&
-        this.unfollowValue
-      ) {
-        if (this.selectedFollow == 1) {
-          this.BetValue <= 1000 && this.BetValue >= 10
-            ? this.follwingBetting(followerID, followMethod)
-            : this.errorShow(
-                true,
-                false,
-                true,
-                "Amount should be Lower then 1000 & Grater then 10"
-              );
-        } else if (this.selectedFollow == 2) {
-          this.BetValue <= 100 && this.BetValue >= 10
-            ? this.follwingBetting(followerID, followMethod)
-            : this.errorShow(
-                true,
-                false,
-                true,
-                "Bet Rate Should be Lower then 100 & Grater then 10"
-              );
-        } else {
-          this.errorShow(true, false, true, "Somthing Wrong! Please check!");
-        }
-      } else {
-        this.errorShow(true, false, true, "Follwing type is not selected");
+    async followThisUser(followerID, followMethod) {      
+      
+      // Check Empty Filed
+      if (!this.selectedFollow && !this.BetValue && !this.autoStop && !this.unfollowValue) {
+           return this.errorShow(true, false, true, "Follwing type is not selected");
       }
+      // Check Amount Value or Bet Value
+      if(this.selectedFollow == 1){ 
+          this.BetValue = this.amountValue;
+          if(this.BetValue >= 1000 || this.BetValue <= 10){            
+             return this.errorShow(true,false,true,"Amount should be Lower then 1000 & Grater then 10");
+          }
+      }else{ 
+          this.BetValue = this.rateValue; 
+          if(this.BetValue >= 100 && this.BetValue <= 10)
+            return this.errorShow(true,false,true,"Bet Rate Should be Lower then 100 & Grater then 10");
+      }    
+      
+      // Auto Stop follow 
+      console.log(this.autoStop);
+      console.log(this.unfollowValue);
+      switch(this.autoStop){
+        case 4 :
+        case 5 :
+           console.log("case1");
+           if(this.unfollowValue >= 1000 || this.unfollowValue <= 10){            
+             return this.errorShow(true,false,true,"Amount should be Lower then 1000 & Grater then 10");
+            }
+          break;
+        case  3 :
+          console.log("case3");
+          if(this.unfollowValue >= 10 || this.unfollowValue <= 1){            
+             return this.errorShow(true,false,true,"Days should be Lower then 10 & Grater then 1");
+            }
+          break;
+         case  6 :
+           console.log("case6");
+          if(this.unfollowValue >= 100 || this.unfollowValue <= 1){            
+             return this.errorShow(true,false,true,"Bets should be Lower then 100 & Grater then 1");
+            }
+          break;          
+      }
+        
+      return this.follwingBetting(followerID, followMethod);
+      
     },
     // Error Function Common
     errorShow(follingError, sucess, error, message) {
@@ -250,7 +256,7 @@ export default {
       this.errorMessage = message;
     },
     // Follow Users Bet API Call
-    async follwingBetting(follwerUUID, method) {
+    async follwingBetting(follwerUUID, method){
       const reqBody = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
@@ -274,13 +280,9 @@ export default {
         version: config.version
       };
       try {
-        var { data } = await this.$axios.post(
-          config.followUser.url,
-          reqBody,
-          {
-            headers: config.header
-          }
-        );
+        var { data } = await this.$axios.post(config.followUser.url, reqBody, {
+          headers: config.header
+        });
         if (data.code == 200) {
           this.errorShow(true, true, false, data.message[0]);
           window.setTimeout(function() {

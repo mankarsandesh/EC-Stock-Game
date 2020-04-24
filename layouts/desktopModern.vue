@@ -183,6 +183,7 @@ export default {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
     let isFullscreen = path[1];
+    console.log(isFullscreen);
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
