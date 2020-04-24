@@ -33,7 +33,7 @@
           <form action="/action_page.php">
             <div class="row">
               <div class="col-15">
-                <label for="username">{{ $t("profile.username") }}</label>
+                <label for="username">{{ $t("profile.username") }} <span class="required">*</span></label>
               </div>
               <div class="col-85">
                 <input ref="username" type="text" :value="userData.userName" id="username" name="username" placeholder="Type your Username" />
@@ -66,7 +66,7 @@
             </div>
             <div class="row">
               <div class="col-15">
-                <label for="gender">{{ $t("profile.gender") }}</label>
+                <label for="gender">{{ $t("profile.gender") }} <span class="required">*</span></label>
               </div>
               <div class="col-85">
                 <select ref="gender" id="gender" name="gender" :value="userData.gender">
@@ -88,7 +88,7 @@
             </div>
             <div class="row">
               <div class="col-15">
-                <label for="country">{{ $t("profile.country") }}</label>
+                <label for="country">{{ $t("profile.country") }} <span class="required">*</span> </label>
               </div>
               <div class="col-85">
                 <select ref="country" id="country" name="country" :value="userData.country">
@@ -207,8 +207,11 @@ export default {
 </script>
 
 <style scoped>
-/* .......form....... */
+.required{
+  color:red;
+}
 label {
+  font-weight: 600;
   text-transform: capitalize;
 }
 

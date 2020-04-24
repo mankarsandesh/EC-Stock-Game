@@ -146,7 +146,6 @@ export default {
   },
   methods: {
     sortingBy() {
-      console.log(this.sortby);
       if (this.sortby == "Today") {
         const today = new Date();
         const lastWeek = new Date(
@@ -205,12 +204,13 @@ export default {
         };
         var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
-        });
+        });       
         if (data.status) {
           this.userBetHistory = data.data;
           this.loadingImage = false;
         } else {
-          throw new Error(config.error.general);
+          throw new Error(data.message);
+          this.loadingImage = false;
         }
       } catch (ex) {
         console.log(ex);
@@ -219,6 +219,7 @@ export default {
           type: "error",
           timer: 1000
         });
+        this.loadingImage = false;
         log.error(
           {
             req: reqBody,
