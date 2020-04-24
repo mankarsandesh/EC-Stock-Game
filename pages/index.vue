@@ -16,15 +16,22 @@
             </div>
             <div class="glow"></div>
           </div>
+          <div class="glow"></div>
         </div>
-      </v-layout>
-    </v-fade-transition>
-  </v-container>
+      </div>
+    </v-layout>
+  </v-fade-transition>
+</v-container>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {
+  mapActions,
+  mapGetters
+} from "vuex";
 import config from "~/config/config.global";
-import { isMobile } from "mobile-device-detect";
+import {
+  isMobile
+} from "mobile-device-detect";
 import log from "roarr";
 
 export default {
@@ -81,7 +88,7 @@ export default {
       this.animateValue(PercentageID, start, end, duration);
 
       // Fading Out Loadbar on Finised
-      setTimeout(function() {
+      setTimeout(function () {
         $(".preloader-wrap").fadeOut(100);
       }, time);
     },
@@ -108,6 +115,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .errorBox {
   background-color: #fff;
@@ -115,6 +123,7 @@ export default {
   padding: 5px;
   font-size: 23px;
 }
+
 .errorBox h2 {
   color: #333;
 }

@@ -129,7 +129,7 @@
         </div>
 
         <!-- for game chanel  -->
-        <chanelChat
+        <chanelChat          
           v-show="tabActiveName === 'chanel'"
           :gameUUID="gameUUID"
           :stockName="stockName"
@@ -218,8 +218,7 @@ export default {
       currentRoute: "",
       messageInput: "",
       pageActiveChanel: [
-        "modern-desktop-id",
-        "modern-multigame-id",
+        "modern-desktop-id",       
         "modern-fullscreen-id"
       ],
       tabActiveName: "world",
@@ -236,7 +235,7 @@ export default {
       return "mdi-checkbox-blank-outline";
     },
     ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
-    isShowChanel() {
+    isShowChanel() {      
       if (this.pageActiveChanel.includes(this.$route.name)) {
         return true;
       } else {
@@ -244,7 +243,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted() {    
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
@@ -256,7 +255,6 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
-        console.log(this.globalInvitation);
         this.globalInvitation.push(newData);
         this.scrollDown();
       }
@@ -267,7 +265,7 @@ export default {
   },
   created() {
     this.currentRoute = this.$route.name;
-    //reset chat messgae
+    //reset chat messgae    
     this.messageInput = "";
   },
   methods: {

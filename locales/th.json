@@ -12,7 +12,8 @@
     "current bet": "เดิมพันปัจจุบัน",
     "history": "ประวัติศาสตร์",
     "stock list": "รายการหุ้น",
-    "announcement": "การประกาศ",
+    "announcement": "การประกาศ",   
+    "notification": "การแจ้งเตือน",
     "rule": "กฎระเบียบ",
     "gamerule": "กฎของเกม",
     "setting": "การตั้งค่า",
@@ -252,7 +253,9 @@
     
   },
   "useraction": {
-    "followbet": "ทำตามการพนัน",
+    "followBet": "ทำตามการพนัน",
+    "unfollowBet": "ยกเลิกการเดิมพัน",
+    "follow": "ติดตาม",
     "unfollow": "เลิก",
     "yourself": "ด้วยตัวคุณเอง"
   },
@@ -261,7 +264,7 @@
     "winningrate": "อัตราการชนะ",
     "bets": "เดิมพัน",
     "winningamount": "จำนวนเงินที่ชนะ",
-    "follow": "ปฏิบัติตาม",
+    "follow": "ติดตาม",
     "weeklyrankings": "อันดับประจำสัปดาห์",
     "monthlyrankings": "อันดับรายเดือน",
     "Top10Leaders": "ผู้นำ 10 อันดับแรก",
@@ -277,7 +280,8 @@
     "betHistory": "ประวัติการเดิมพัน",
     "currentBet": "เดิมพันปัจจุบัน",
     "stockList": "รายการสินค้า",
-    "announcement": "การประกาศ"
+    "announcement": "การประกาศ",
+    "notification": "การแจ้งเตือน"
   },
   "setting": {
     "account": "บัญชีผู้ใช้",

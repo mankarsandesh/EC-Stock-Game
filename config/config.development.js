@@ -42,8 +42,8 @@ const config = {
   getActiveGamesByCategory: {
     url: `${process.env.BASE_URL}/getActiveGamesByCategory`
   },
-  getAllAnnouncements: {
-    url: `${process.env.BASE_URL}/getAllAnnouncements`
+  getNotification: {
+    url: `${process.env.BASE_URL}/getNotification`
   },
   followUser: {
     url: `${process.env.BASE_URL}/followUser`
@@ -62,6 +62,9 @@ const config = {
   },
   getUserFollower: {
     url: `${process.env.BASE_URL}/followUserList`
+  },
+  getUserNotification: {
+    url: `${process.env.BASE_URL}/getNotification`
   },
   serverConfig: {
     port: 8000,

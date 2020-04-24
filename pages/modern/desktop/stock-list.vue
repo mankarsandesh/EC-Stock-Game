@@ -2,9 +2,9 @@
   <div>
     <breadcrumbs
       :title="$t('breadcrumbs.stockList')"
-      linkItem="announcement"
+      linkItem="notification"
       linkItem2="gamerule"
-      :titlebtn="$t('breadcrumbs.announcement')"
+      :titlebtn="$t('breadcrumbs.notification')"
       :titlebtn2="$t('breadcrumbs.gamerule')"
     />
     <v-container>
@@ -18,9 +18,11 @@
           ></v-select>
         </v-flex>
         <v-flex xs1 class="d-flex mx-3">
-          <v-btn @click="goSearch" class="buttonGreen">{{
+          <v-btn @click="goSearch" class="buttonGreen">
+            {{
             $t("msg.go")
-          }}</v-btn>
+            }}
+          </v-btn>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
@@ -42,7 +44,10 @@ export default {
   },
   data() {
     return {
-      items: [this.$root.$t('stock-list.ascending'), this.$root.$t('stock-list.descending')],
+      items: [
+        this.$root.$t("stock-list.ascending"),
+        this.$root.$t("stock-list.descending")
+      ],
       itemss: ""
     };
   },

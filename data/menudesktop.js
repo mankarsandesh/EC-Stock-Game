@@ -21,8 +21,8 @@ const Menu = [
   },
   {
     icon: "fa fa-bullhorn fa-2x",
-    title: "announcement",
-    to: "/modern/desktop/announcement"
+    title: "notification",
+    to: "/modern/desktop/notification"
   }
 ];
 export default Menu;

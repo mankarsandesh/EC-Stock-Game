@@ -75,15 +75,17 @@
                   :key="i"
                   class="mainNotification"
                 >
-                  <div class="userNotification">
-                    <div class="userNoti">
-                      <i class="fa fa-user-o fa-1x" /> player
-                      {{ item.betResult }} {{ item.betAmount }} chips on
-                      {{ item.stockName }} stock {{ item.ruleName }}
+                  <div class="userImage">
+                    <i class="fa fa-user-o fa-1x" />
+                  </div>
+                  <div class="messageBody">
+                    <div class="title">
+                      {{ item.title }}
                     </div>
-                    <div class="dateTime">
-                      {{ item.createdDate }} {{ item.createdTime }} 1 Hour Ago
+                    <div class="description">
+                      {{ item.message }}
                     </div>
+                    <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
               </v-list>
@@ -181,6 +183,7 @@ export default {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
     let isFullscreen = path[1];
+    console.log(isFullscreen);
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
@@ -203,15 +206,12 @@ export default {
     async fetchNotification() {
       try {
         var reqBody = {
-          portalProviderUUID: this.getPortalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-          userUUID: this.getUserUUID, // get the userUUID with the this object
-          version: config.version, // version of API
-          betResult: [0, 1], // -1= pending, pending that mean is betting
-          limit: "5", // limit the data we the data come will come only the 20 that we limit in this case
-          offset: "0" // offset or skip the data
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version
         };
         var { data } = await this.$axios.post(
-          config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
+          config.getUserNotification.url,
           reqBody,
           {
             headers: config.header
@@ -219,7 +219,7 @@ export default {
         );
         if (data.status) {
           this.messagesCount = data.data.length;
-          this.winnerList = data.data;
+          this.winnerList = data.data.reverse();
         } else {
           throw new Error(config.error.general);
         }
@@ -257,39 +257,59 @@ export default {
 .noNotification {
   color: #333;
 }
-#notificationTab {
+#notificationTab {  
+  padding:10px 10px 0px  10px;
+  overflow:scroll;
   z-index: 9999;
-  height: 250px;
+  height: 320px;
+  width: 350px;
   background-color: #fff;
+}
+.mainNotification {
+  background-color: #fff;
+  cursor: pointer;
+  padding: 15px 0px;
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #dddddd;
+}
+.userImage {
+  float: left;
+  width: 10%;
+  font-size: 18px;
+}
+.userImage i {
+  margin: 10px -8px;
+  width: 30px;
+  height: 30px;
+  background-color: #d1ecf1;
+  border-radius: 180px;
+  padding: 5px;
+  text-align: center;
+}
+.messageBody {
+  padding: 0px 6px;
+  /* border:1px solid; */
+  float: left;
+  width: 90%;
+}
+.title {
+  font-size: 14px !important;
+  width: 100%;
+  color: #003f70;
+}
+.description {
+  font-size: 12px;
+  color: #333;
+}
+.dateTime {
+  font-size: 12px;
+  color: #636363;
 }
 .v-menu__content {
   z-index: 9999 !important;
 }
 
-.mainNotification {
-  background-color: #fff;
-  cursor: pointer;
-  padding: 5px 2px;
-  border-bottom: 1px solid #dddddd;
-}
-.mainNotification :hover {
-  background-color: #dddddd;
-}
-.userNotification {
-  z-index: 9999 !important;
-  width: 100%;
-}
-.userNoti {
-  font-weight: 600;
-  color: #484848;
-  font-size: 14px;
-  width: 100%;
-}
-.dateTime {
-  font-size: 12px;
-  color: #585454;
-  width: 100%;
-}
 .winnerText {
   margin-top: -30px;
   font-weight: 800;
