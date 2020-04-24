@@ -106,8 +106,7 @@
 .BetButtonGuideEven,
 #chartGuidelineNew,
 #stocklistGuidelines,
-#betresultGuidelines,
-#selectstockGuideline {
+#betresultGuidelines {
   position: relative;
   background-color: white;
 }
@@ -399,7 +398,7 @@ nav.total-bet.v-toolbar.theme--light p {
 }
 
 .drawer-asidebar.v-navigation-drawer.v-navigation-drawer--fixed.v-navigation-drawer--open.v-navigation-drawer--right.v-navigation-drawer--temporary.theme--light {
-  width: 50% !important;
+  min-width: 50% !important;
 }
 
 hr.head-jumbothron {
@@ -429,6 +428,9 @@ hr.head-jumbothron {
 .drawer-asidebar .row .box-click-modal .o-even {
   text-align: center;
   justify-content: center;
+}
+.drawer-asidebar {
+  z-index: 101 !important;
 }
 
 .round-1 {
@@ -1445,10 +1447,12 @@ p.guideline {
 
 .text-sucess {
   border-radius: 4px;
-  color: green;
-  border: 1px dotted greenyellow;
+  color: #0c440c;
+  border: 1px solid #b2e463;
   padding: 6px 8px;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #d0f1d1;
 }
 @keyframes taadaa {
   0% {

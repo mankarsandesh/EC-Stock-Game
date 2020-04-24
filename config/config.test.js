@@ -60,6 +60,9 @@ const config = {
   getUserFollower: {
     url: `${process.env.BASE_URL}/followUserList`
   },
+  getUserNotification: {
+    url: `${process.env.BASE_URL}/getNotification`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"

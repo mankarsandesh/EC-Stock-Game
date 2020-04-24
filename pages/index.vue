@@ -103,13 +103,14 @@ export default {
             headers: config.header
           }
         );       
+        console.log(data);
         if (data.status) {
           const userInfo = {
             authUser: config.authUser,
             authPassword: config.authPassword,
-            portalProviderUUID: this.getUserAuth.portalProviderUUID,
+            portalProviderUUID: this.portalProviderUUID,
             userId: data.data.userUUID,
-            redirect: this.getUserAuth.referrerURL
+            redirect: this.referrerURL
           };
           this.setPortalProviderUUID(userInfo.portalProviderUUID);
           this.setUserUUID(userInfo.userId);

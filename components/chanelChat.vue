@@ -197,7 +197,6 @@ export default {
           newData[key] = value;
         });
         this.conversationChanel.push(newData);
-        console.log(this.conversationChanel);
         this.scrollDown();
       }
     );

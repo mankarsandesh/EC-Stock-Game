@@ -150,7 +150,6 @@ export default {
       ({ data }) => {
         try {
           var logData = data.data;
-          console.log(data);
           if (data.status) {
             let dataIndex = data.data.roadMap[0];
             let readyData = {
