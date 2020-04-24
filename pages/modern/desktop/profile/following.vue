@@ -11,8 +11,9 @@
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs10>
         <div class="title_container">
-          <h3 class="text-black" v-if="followingListEmpty == true">
-            {{ $t("profile.noFollowing") }}
+          <h3 class="text-black onFollower" v-if="followingListEmpty == true">
+              <i class="fa fa-user-o fa-2x" />
+              <div>{{ $t("profile.noFollowing") }}</div>
           </h3>
           <div
             class="follower_container"
@@ -148,6 +149,13 @@ export default {
 </script>
 
 <style scoped>
+.onFollower{
+  color: #aeafb0;
+  text-align: center;
+  font-size: 28px;
+  width: 500px;
+  margin:20% auto;
+}
 .followType span {
   text-align: center;
   width: 100%;
