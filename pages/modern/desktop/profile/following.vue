@@ -2,7 +2,9 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">{{$t('profile.myfollowing')}} ({{ this.countFollwing }})</h2>
+        <h2 class="text-uppercase">
+          {{ $t("profile.myfollowing") }} ({{ this.countFollwing }})
+        </h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -10,7 +12,7 @@
       <v-flex xs10>
         <div class="title_container">
           <h3 class="text-black" v-if="followingListEmpty == true">
-            {{$t('profile.noFollowing')}}
+            {{ $t("profile.noFollowing") }}
           </h3>
           <div
             class="follower_container"
@@ -45,7 +47,7 @@
                 )
               "
             >
-              {{$t('useraction.unfollow')}}
+              {{ $t("useraction.unfollow") }}
             </button>
           </div>
         </div>
@@ -93,7 +95,7 @@ export default {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    followUserBet: function(username, userImg, userUUID, method) {     
+    followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       if (method == 0) {
@@ -124,7 +126,7 @@ export default {
           {
             headers: config.header
           }
-        );        
+        );
         if (res.code == 200) {
           this.followingList = res.data;
           this.countFollwing = res.data.length;

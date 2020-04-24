@@ -2,7 +2,9 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">{{$t('profile.myfollowers')}} ({{ this.countFollower }})</h2>
+        <h2 class="text-uppercase">
+          {{ $t("profile.myfollowers") }} ({{ this.countFollower }})
+        </h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -10,7 +12,7 @@
       <v-flex xs10>
         <div class="title_container">
           <h3 class="text-black" v-if="followerEmpty == true">
-            {{$t('profile.noFollowers')}}
+            {{ $t("profile.noFollowers") }}
           </h3>
           <div
             class="follower_container"
@@ -28,19 +30,29 @@
               v-if="data.isFollowing == 0"
               class="btn_follow"
               v-on:click="
-                followUserBet(data.userName, data.userImage, data.UUID, 0)
+                followUserBet(
+                  data.userName,
+                  data.userImage,
+                  data.UUID,
+                  data.isFollowing
+                )
               "
             >
-              {{$t('leaderboard.follow')}}
+              {{ $t("leaderboard.follow") }}
             </button>
             <button
               v-if="data.isFollowing == 1"
               class="btn_unfollow"
               v-on:click="
-                followUserBet(data.userName, data.userImage, data.UUID, 1)
+                followUserBet(
+                  data.userName,
+                  data.userImage,
+                  data.UUID,
+                  data.isFollowing
+                )
               "
             >
-              unfollow
+              {{ $t("useraction.unfollow") }}
             </button>
           </div>
         </div>
@@ -48,15 +60,14 @@
     </v-flex>
 
     <!-- Follow Dialog -->
-  <v-dialog v-model="dialog" width="500" class="followDialog">
-      <followBet      
+    <v-dialog v-model="dialog" width="500" class="followDialog">
+      <followBet
         :username="this.username"
         :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
       />
-  </v-dialog>
-
+    </v-dialog>
   </div>
 </template>
 
@@ -94,7 +105,7 @@ export default {
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2;     
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
       this.dialog = true;
     },
@@ -117,7 +128,7 @@ export default {
           {
             headers: config.header
           }
-        );       
+        );
         if (res.code == 200) {
           this.followerList = res.data;
           this.countFollower = res.data.length;
