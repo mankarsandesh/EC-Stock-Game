@@ -253,7 +253,7 @@
     
   },
   "useraction": {
-    "followbet": "ทำตามการพนัน",
+    "followBet": "ทำตามการพนัน",
     "unfollowBet": "ยกเลิกการเดิมพัน",
     "follow": "ติดตาม",
     "unfollow": "เลิก",

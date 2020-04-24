@@ -252,7 +252,7 @@
     "noFollowers" : "ບໍ່ມີຜູ້ຕິດຕາມ."
   },
   "useraction": {
-    "followbet": "ປະຕິບັດຕາມ BET",
+    "followBet": "ປະຕິບັດຕາມ BET",
     "unfollowBet": "UNFOLLOW BET",
     "follow": "ປະຕິບັດຕາມ",
     "unfollow": "ບໍ່ສົມບູນ",
