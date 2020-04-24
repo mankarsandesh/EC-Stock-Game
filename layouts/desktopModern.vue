@@ -4,7 +4,7 @@
     <DesktopTutorial />
     <!-- tutorial  end -->
 
-    <v-app style=" background-color: #f4f5fd;">     
+    <v-app style=" background-color: #f4f5fd;">
       <div
         class="text-xs-center container-loading loading"
         v-if="getIsLoadingStockGame"
@@ -64,7 +64,12 @@
                 </span>
               </template>
               <v-list id="notificationTab">
-                <v-list-tile v-if="winnerList.length == 0" class="noNotification"> There are no Notification.</v-list-tile>
+                <v-list-tile
+                  v-if="winnerList.length == 0"
+                  class="noNotification"
+                >
+                  There are no Notification.</v-list-tile
+                >
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
@@ -81,7 +86,6 @@
                     </div>
                   </div>
                 </v-list-tile>
-               
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -133,7 +137,7 @@ export default {
     AnimatedNumber
   },
   data() {
-    return {      
+    return {
       isShowTutorial: true,
       messagesCount: 2,
       activeClass: null,
@@ -213,12 +217,9 @@ export default {
             headers: config.header
           }
         );
-        console.log(reqBody);
-          console.log(data);
         if (data.status) {
           this.messagesCount = data.data.length;
-          this.winnerList = data.data;       
-         
+          this.winnerList = data.data;
         } else {
           throw new Error(config.error.general);
         }
@@ -253,29 +254,29 @@ export default {
 };
 </script>
 <style scoped>
-.noNotification{
-  color:#333;
+.noNotification {
+  color: #333;
 }
-#notificationTab{
+#notificationTab {
   z-index: 9999;
   height: 250px;
   background-color: #fff;
 }
-.v-menu__content{
-z-index: 9999 !important;
+.v-menu__content {
+  z-index: 9999 !important;
 }
 
 .mainNotification {
   background-color: #fff;
   cursor: pointer;
-  padding:5px 2px;
+  padding: 5px 2px;
   border-bottom: 1px solid #dddddd;
 }
 .mainNotification :hover {
   background-color: #dddddd;
 }
-.userNotification {  
-  z-index: 9999 !important;  
+.userNotification {
+  z-index: 9999 !important;
   width: 100%;
 }
 .userNoti {
