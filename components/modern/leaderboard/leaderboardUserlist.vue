@@ -177,10 +177,7 @@ export default {
       userUUID: state => state.provider.userUUID
     }) 
   },
-  methods: {
-    closePopup() {
-      this.dialog = false;
-    },
+  methods: {    
     // Sorting Weekly and Monthly
     sortingBy(sort) {
       if (sort == "monthly") {

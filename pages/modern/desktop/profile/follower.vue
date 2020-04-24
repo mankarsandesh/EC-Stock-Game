@@ -48,14 +48,15 @@
     </v-flex>
 
     <!-- Follow Dialog -->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
-      <followBet
+  <v-dialog v-model="dialog" width="500" class="followDialog">
+      <followBet      
         :username="this.username"
         :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
       />
-    </v-dialog>
+  </v-dialog>
+
   </div>
 </template>
 
@@ -89,14 +90,11 @@ export default {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
+    // Follow User Bet
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      if (method == 0) {
-        this.FolloworNot = 1;
-      } else {
-        this.FolloworNot = 2;
-      }
+      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2;     
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
       this.dialog = true;
     },
