@@ -7,12 +7,7 @@
       <span>$00000</span>
     </div>
     <div class="chips-multigame">
-      <v-avatar
-        size="70"
-        v-for="(item, key) in imgChip"
-        :key="key"
-        class="chips"
-      >
+      <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
         <v-img
           @click="setFooterBetAmount(getCoinsModern[key])"
           :src="item.img"
@@ -26,17 +21,19 @@
       </v-avatar>
     </div>
     <div class="action-multigame">
-      <v-btn class="buttonGreen" dark @click="getSending()">{{
+      <v-btn class="buttonGreen" dark @click="getSending()">
+        {{
         $t("msg." + texts)
-      }}</v-btn>
-      <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
+        }}
+      </v-btn>
+      <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">
+        {{
         $t("msg.cancel")
-      }}</v-btn>
+        }}
+      </v-btn>
     </div>
     <div class="max-min-multigame">
-      <span>
-        max = $1000, min = $500
-      </span>
+      <span>min = $100, max = $10000</span>
     </div>
   </div>
 </template>
