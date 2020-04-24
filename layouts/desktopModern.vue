@@ -219,7 +219,7 @@ export default {
         );
         if (data.status) {
           this.messagesCount = data.data.length;
-          this.winnerList = data.data;
+          this.winnerList = data.data.reverse();
         } else {
           throw new Error(config.error.general);
         }

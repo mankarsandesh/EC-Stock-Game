@@ -43,20 +43,16 @@
               )
             "
             dark
-          >{{ $t("useraction.followBet") }}</v-btn>
-        </th>
-        <th v-if="data.isFollowing == 1" style="width:20%;">
-          <v-btn
-            class="buttonCancel"
-            v-on:click="unfollowUser(data.userUUID)"
-            dark
-          >{{ $t("useraction.unfollow") }}</v-btn>
-        </th>
-        <th v-if="data.isFollowing == -1" style="width:20%;">
-          <v-btn class="buttonGreensmall">
-            {{
-            $t("useraction.yourself")
-            }}
+          >
+            <span v-if="data.isFollowing == 0">
+              {{ $t("useraction.followbet") }}
+            </span>
+            <span v-if="data.isFollowing == 1">
+              {{ $t("useraction.unfollowBet") }}
+            </span>
+            <span v-if="data.isFollowing == -1">
+              {{ $t("useraction.yourself") }}
+            </span>
           </v-btn>
         </th>
       </div>
@@ -170,7 +166,6 @@ export default {
         method: "unfollow",
         version: config.version
       };
-      console.log(LeaderBoardData);
       try {
         const { data } = await this.$axios.post(
           "http://uattesting.equitycapitalgaming.com/webApi/followUser",
