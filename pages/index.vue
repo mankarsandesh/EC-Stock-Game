@@ -16,12 +16,10 @@
             </div>
             <div class="glow"></div>
           </div>
-          <div class="glow"></div>
         </div>
-      </div>
-    </v-layout>
-  </v-fade-transition>
-</v-container>
+      </v-layout>
+    </v-fade-transition>
+  </v-container>
 </template>
 <script>
 import {
