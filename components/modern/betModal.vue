@@ -387,8 +387,9 @@ export default {
 }
 
 .setpricechip {
-  color: black;
-  font-size: 0.85rem;
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 /* Chrome, Safari, Edge, Opera */

@@ -124,7 +124,6 @@ import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
 import log from "roarr";
-
 import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
 
 export default {
@@ -182,8 +181,7 @@ export default {
   created() {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];
-    console.log(isFullscreen);
+    let isFullscreen = path[1];   
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
