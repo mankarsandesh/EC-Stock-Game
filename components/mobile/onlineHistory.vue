@@ -168,7 +168,7 @@ import uploadprofile from "./UploadFile";
 import onlineChart from "./onlinechart";
 import VueApexCharts from "vue-apexcharts";
 import date from "date-and-time";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 export default {
   components: {
     VueApexCharts

@@ -60,7 +60,7 @@
                   v-html="$options.filters.lastDraw(item.item.gameDraw)"
                 ></span>
               </td>
-              <td colspan="2" class="allDigit">
+              <td colspan="3" class="allDigit">
                 {{ $t("gamemsg.firstdigit") }}
                 <span
                   v-html="$options.filters.firstDigit(item.item.gameDraw)"
@@ -78,7 +78,7 @@
                   v-html="$options.filters.twoDigit(item.item.gameDraw)"
                 ></span>
               </td>
-              <td colspan="3" v-if="item.item.rollingAmount == 0">
+              <td colspan="2" v-if="item.item.rollingAmount == 0">
                 <span class="betDraw"
                   >{{ $t("bethistory.yourloosingamount") }} :</span
                 >
@@ -103,7 +103,8 @@
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>
               <td>
-                <span class="totalRolling">{{ TotalRolling | toCurrency }}</span>
+                <span class="totalRollingWin" v-if="TotalAmount < TotalRolling" >{{ TotalRolling | toCurrency }}</span>
+                <span class="totalRollingLoss" v-if="TotalAmount  > TotalRolling" >{{ TotalRolling | toCurrency }}</span>
               </td>
               <td colspan="1"></td>
             </tr>
@@ -167,10 +168,15 @@ export default {
 };
 </script>
 <style scoped>
-.totalRolling{
+.totalRollingWin{
 font-weight: 800;
 color:green;
 }
+.totalRollingLoss{
+font-weight: 800;
+color:red;
+}
+
 .winning {
   color: green;
   font-weight: 800;

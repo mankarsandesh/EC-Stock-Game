@@ -1,14 +1,14 @@
 <template>
   <div>
     <breadcrumbs
-      :title="$t('breadcrumbs.announcement')"
+      :title="$t('breadcrumbs.notification')"
       linkItem="gamerule"
       :titlebtn="$t('breadcrumbs.gamerule')"
     />
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 md12 mt-5>
-          <announcement :announcementData="announcementData" />
+          <notification :notificationData="notificationData" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -17,21 +17,21 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
-import announcement from "~/components/modern/stocklist/announcement";
-import config from "../../../config/config.global";
+import notification from "~/components/modern/stocklist/notification";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   layout: "desktopModern",
   components: {
-    announcement,
+    notification,
     breadcrumbs
   },
   data() {
     return {
       window: 0,
-      tabs: ["announcement"],
+      tabs: ["notification"],
       active: null,
-      announcementData: []
+      notificationData: []
     };
   },
   created() {
@@ -39,7 +39,8 @@ export default {
   },
   computed: {
     ...mapState({
-      portalProviderUUID: state => state.provider.portalProviderUUID
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
     })
   },
   methods: {
@@ -48,17 +49,14 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(
-          config.getAllAnnouncements.url,
-          reqBody,
-          {
-            headers: config.header
-          }
-        );
+        var res = await this.$axios.$post(config.getUserNotification.url, reqBody, {
+          headers: config.header
+        });       
         if (res.status) {
-          this.announcementData = res.data;
+          this.notificationData = res.data;
         } else {
           throw new Error(config.error.general);
         }
@@ -73,8 +71,8 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
-            apiUrl: config.getAllAnnouncements.url,
+            page: "pages/modern/desktop/notification.vue",
+            apiUrl: config.getUserNotification.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
           },

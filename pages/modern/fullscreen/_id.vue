@@ -207,11 +207,11 @@
           <v-layout column>
             <div id="livechartGuidelines">
               <v-flex>
-                <v-layout xs12>
+                <v-layout xs12 >
                   <v-flex
                     xs12
-                    lg6
-                    md6
+                    lg4
+                    md4
                     class="text-xs-center1"
                     style="width: 100%; align-self: center;"
                   >
@@ -223,7 +223,7 @@
                     }}</span>
                   </v-flex>
 
-                  <v-flex xs12 md6 lg6 class="text-xs-right topHeader">
+                  <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed"
                       >1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
                     >
@@ -319,7 +319,7 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex id="betButtonGuidelines" xs4 sm12 md12 lg12>
+          <v-flex id="betButtonGuidelines" xs4 sm12 md12 lg12 mt-4>
             <betButton
               :isFullscreen="true"
               :stockName="$route.params.id"
@@ -340,7 +340,7 @@
             <fullscreencurrentbet v-else></fullscreencurrentbet>
           </div>
           <v-layout pa-3>
-            <v-flex xs3 sm3 md3 lg3 pt-2>
+            <v-flex md3 lg3 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-user fa-2x iconcolor" />
                 <span>
@@ -350,7 +350,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3 pt-2>
+            <v-flex  md3 lg3 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-gamepad fa-2x iconcolor" />
                 <span>{{
@@ -360,7 +360,7 @@
                 }}</span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3 pt-2>
+            <v-flex md4 lg4 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-money fa-2x iconcolor" />
                 <span>
@@ -372,7 +372,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3 mb-1>
+            <v-flex  sm4 md4 lg4 mb-1 style="text-align:center;">
               <v-btn
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
@@ -383,7 +383,7 @@
           </v-layout>
         </v-flex>
         <!-- live Chart road map -->
-        <v-flex xs12 class="text-xs-center" mt-3>
+        <v-flex xs12 class="text-xs-center">
           <footerBet lg12 md12></footerBet>
           <v-layout
             class="fullroadMap elevation-4"
@@ -446,7 +446,7 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import footerBet from "~/components/modern/footerbet";
@@ -504,10 +504,6 @@ export default {
         try {
           var logData = data;
           if (data.status) {
-            console.log(
-              "gamne stock id",
-              this.getStockUUIDByStockName(this.$route.params.id)
-            );
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
             throw new Error(config.error.general);
@@ -562,7 +558,6 @@ export default {
     },
     ...mapGetters([
       "getIsWindowsHasScroll",
-      "getStockGameId",
       "getGameUUIDByStockName",
       "getAllStocks",
       "getTimerByStockName",
@@ -571,13 +566,7 @@ export default {
       "getUserInfo",
       "getLastDraw",
       "getRoadMap",
-      "getStockById",
-      "lotterydraw",
-      "getStockLoop",
-      "getStockChart",
-      "getLiveTime",
-      "getLivePrice",
-      "getUserUUID"
+      "getStockLoop"
     ]),
     ...mapState({
       gameStockId: state => state.game.gameStockId
@@ -651,7 +640,6 @@ export default {
       $("#chartGuidelineNew").css("z-index", "1");
       $(".betButtonGuide").css("z-index", "1");
       $(".BetButtonGuideEven").css("z-index", "1");
-      $("#selectstockGuideline").css("z-index", "1");
       $("#stocklistGuidelines").css("z-index", "1");
       $("#background-tutorial").click();
       $("#fullscreen-roadmap-guide").css("z-index", "1");
@@ -708,7 +696,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/fullscreen/_id.vue",
             apiUrl: config.getActiveGamesByCategory.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
@@ -766,7 +754,7 @@ export default {
 }
 
 .lastdraw {
-  font-size: 14px;
+  font-size: 12px;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
   font-size: 22px;
@@ -775,7 +763,7 @@ export default {
 }
 
 .betclose {
-  font-size: 14px;
+  font-size: 12px;
   border: 1.5px solid #ef076a;
   border-radius: 10px;
   font-size: 22px;
@@ -784,7 +772,7 @@ export default {
 }
 
 .lottery {
-  font-size: 14px;
+  font-size: 12px;
   border: 1.5px solid #01e3bf;
   border-radius: 10px;
   font-size: 22px;
@@ -804,14 +792,15 @@ export default {
 .seticon {
   border: 2px solid #b4b2b2;
   border-radius: 10px;
-  padding: 8px 10px;
+  padding: 5px 6px;
+  text-align: center;
   /*height: 25px;
   min-width: 25px !important; */
 }
 
 .seticon i {
   color: #545352;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .seticon span {

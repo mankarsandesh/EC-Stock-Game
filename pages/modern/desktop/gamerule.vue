@@ -2,8 +2,8 @@
   <div xs2>
     <breadcrumbs
       :title="$t('breadcrumbs.rule')"
-      linkItem2="announcement"
-      :titlebtn2="$t('breadcrumbs.announcement')"
+      linkItem2="notification"
+      :titlebtn2="$t('breadcrumbs.notification')"
     />
     <v-container>
       <v-layout row wrap>

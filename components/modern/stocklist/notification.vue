@@ -1,12 +1,7 @@
 <template>
   <v-layout row class="justify-center">
     <v-flex xs12 md12>
-      <v-data-table
-        :items="announcementData"
-        :items-per-page="5"
-        ref="table"
-        class="current-bet"
-      >
+      <v-data-table :items="notificationData" :items-per-page="5" ref="table" class="current-bet">
         <template v-slot:headers="head">
           <tr>
             <th scope="col">{{ $t("msg.titles") }}</th>
@@ -26,6 +21,6 @@
 
 <script>
 export default {
-  props: ["announcementData"]
+  props: ["notificationData"]
 };
 </script>

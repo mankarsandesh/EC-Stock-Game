@@ -95,7 +95,7 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import log from "roarr";
 
@@ -118,7 +118,24 @@ export default {
       chartOptions: {
         chart: {
           height: 350,
-          type: "bar"
+          type: "bar",
+          stacked: true,
+          toolbar: {
+            show: false
+          },
+          animations: {
+            enabled: true,
+            easing: "easeinout",
+            speed: 800,
+            animateGradually: {
+              enabled: true,
+              delay: 150
+            },
+            dynamicAnimation: {
+              enabled: true,
+              speed: 350
+            }
+          }
         },
         plotOptions: {
           bar: {
@@ -129,8 +146,60 @@ export default {
         dataLabels: {
           enabled: false
         },
+        title: {
+          text: this.$root.$t('leaderboard.user')+' '+this.$root.$t('profile.onlinehistory'),
+          align: "center",
+          margin: 10,
+          offsetX: 2,
+          offsetY: -5,
+          style: {
+            fontSize: "20px",
+            fontWeight: "bold"
+          }
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          curve: "smooth"
+        },
         legend: {
           show: false
+          //       tooltipHoverFormatter: function(seriesName, opts) {
+          //         console.log(seriesName, opts)
+          //     return seriesName + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>'
+          // }
+        },
+        tootltip: {
+          //shared: true,
+          // enabled: true,
+          // followCurso: true,
+          // intersect: true,
+          // onDataSetHover: {
+          //   highlightDataSeries: false
+          // },
+          // x: {
+          //   // show: true,
+          //   formatter: function (val, {series, seriesIndex, dataPointIndex, w}) {
+          //     console.log('ayaayaaaaaaaaa yyyyyyyyy');
+          //     return '<div class="arrow-box">' +
+          //         '<span> Active minutes: ' + series[seriesIndex] + '</span>'
+          //       '</div>'
+          //   }
+          // },
+          // custom: function({series, seriesIndex, dataPointIndex, w}) {
+          //   console.log('ayaaaaaaaaa xxxxxxxxxxxxxxxxx');
+          //   return '<div class="arrow_box">' +
+          //       '<span>' + series[seriesIndex][dataPointIndex] + '</span>' +
+          //     '</div>'
+          // },
+          y: {
+            formatter: val => {},
+            title: {
+              formatter: function(seriesName) {
+                return seriesName.toUpperCase();
+              }
+            }
+          }
         },
         xaxis: {
           categories: [],
@@ -140,31 +209,6 @@ export default {
             }
           }
         }
-        // tootltip: {
-        //   enabled: false,
-        //   followCurso: true,
-        //   intersect: true,
-        //   onDataSetHover: {
-        //     highlightDataSeries: false
-        //   },
-        //   x: {
-        //     show: false
-        //   },
-        //   custom: function({series, seriesIndex, dataPointIndex, w}) {
-        //     console.log('ayaaaaaaaaa');
-        //     return '<div class="arrow_box">' +
-        //         '<span>' + series[seriesIndex][dataPointIndex] + '</span>' +
-        //       '</div>'
-        //   },
-        //   y: {
-        //     formatter: function (val, {series, seriesIndex, dataPointIndex, w}) {
-        //       console.log('ayaayaaaaaaaaa');
-        //       return '<div class="arrow-box">' +
-        //           '<span> Active minutes: ' + series[seriesIndex] + '</span>'
-        //         '</div>'
-        //     }
-        //   }
-        // },
       }
     };
   },
@@ -262,7 +306,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/desktop/profile/onlineHistory.vue",
             apiUrl: config.getUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

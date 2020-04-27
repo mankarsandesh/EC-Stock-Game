@@ -1,15 +1,12 @@
 <template>
   <div>
     <v-card class="followup">
-      <h3 class="title" style="text-align: center; color: #0b2a68;">
-        FOLLOW BET
+      <h3 class="title">
+        {{ isFollowing == 1 ? "Follow Bet " : "UnFollow Bet" }}
       </h3>
       <v-card-text style="text-align:center;">
-        <img class="pimage" v-bind:src="this.userImage" width="140px" />
-        <h3
-          class="subtitle-1 text-uppercase text-center pt-2"
-          v-if="this.username"
-        >
+        <img class="pimage" v-bind:src="this.defaultImage" width="140px" />
+        <h3 class="subtitle-1  text-center pt-2" v-if="this.username">
           {{ this.username }}
         </h3>
       </v-card-text>
@@ -93,8 +90,11 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-                >Follow</v-btn
+                >{{ $t("useraction.follow") }}</v-btn
               >
+              <!-- <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
+                $t("msg.cancel")
+              }}</v-btn> -->
             </v-flex>
           </v-radio-group>
         </v-card-actions>
@@ -105,7 +105,7 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-            >unFollow</v-btn
+            >{{ $t("useraction.unfollow") }}</v-btn
           >
         </v-flex>
       </div>
@@ -114,31 +114,36 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
+import log from "roarr";
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
     return {
-      // AutoStop Follow Validation 
+      // AutoStop Follow Validation
       rulesNew: {
-        min(value, text) {         
-          if (text == 3 || text == 4)
-            return (value || "") >= 10 || `Amount must be at least 10 USD`;
-          else if (text == 5)
+        // Min Value
+        min(value, text) {
+          if (text == 4 || text == 5)
+            return (value || "") >= 100 || `Amount must be at least 100 USD`;
+          else if (text == 3)
             return (value || "") >= 1 || `Time must be at least 1 Days`;
           else return (value || "") >= 1 || `Bet must be at least 1 Bet`;
         },
+        // Max value
         max(value, text) {
-          if (text == 3 || text == 4)
+          if (text == 4 || text == 5)
             return (
               (value || "") <= 1000 || `Amount may not be greater than 1000 USD`
             );
-          else if (text == 5)
+          else if (text == 3)
             return (
               (value || "") <= 10 || `Time may not be greater than 10 Days`
             );
           else
-            return (value || "") <= 10 || `Bet may not be greater than 10 Bets`;
+            return (
+              (value || "") <= 10 || `Bet may not be greater than 10 Bets`
+            );
         }
       },
       // Follow by Validation
@@ -159,31 +164,28 @@ export default {
       selectAmount: false,
       selectTime: false,
       selectBets: false,
-      autoStop: 3,
+      autoStop: 4, // Select default Auto Stop Follow
       amountValue: 100,
       rateValue: 10,
       selectRate: false,
       selectAmount: true,
       selectedFollow: 1,
+      // Default Follow By List
       followby: [
         { id: 1, name: "Follow by Amount", value: "Amount" },
         { id: 2, name: "Follow by Rate", value: "Rate" }
       ],
+      // Default AUto Stop Follow
       autoStopFollow: [
-        { id: 3, name: "Stop by Winning", value: "stopWin" },
-        { id: 4, name: "Stop by Losing", value: "stopLoss" },
-        { id: 5, name: "Stop by Timing", value: "stopTime" },
+        { id: 4, name: "Stop by Winning", value: "stopWin" },
+        { id: 5, name: "Stop by Losing", value: "stopLoss" },
+        { id: 3, name: "Stop by Timing", value: "stopTime" },
         { id: 6, name: "Stop by Bets", value: "stopBets" }
       ],
       defaultImage: "/no-profile-pic.jpg",
       selectedFruits: [],
       currentRoute: "",
       messageInput: "",
-      pageActiveChanel: [
-        "modern-desktop-id",
-        "modern-multigame-id",
-        "modern-fullscreen-id"
-      ],
       tabActiveName: "world",
       conversationWorld: [],
       connectClient: [],
@@ -192,47 +194,86 @@ export default {
     };
   },
   computed: {
+    // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    })
   },
   methods: {
-    // All Users Follow Bet Validation
+    // Users Follow Bet Validation
     async followThisUser(followerID, followMethod) {
-      this.selectedFollow == 1
-        ? (this.BetValue = this.amountValue)
-        : (this.BetValue = this.rateValue);
+      // Check Empty Filed
       if (
-        this.selectedFollow &&
-        this.BetValue &&
-        this.autoStop &&
-        this.unfollowValue
+        !this.selectedFollow &&
+        !this.BetValue &&
+        !this.autoStop &&
+        !this.unfollowValue
       ) {
-        if (this.selectedFollow == 1) {
-          this.BetValue <= 1000 && this.BetValue >= 10
-            ? this.follwingBetting(followerID, followMethod)
-            : this.errorShow(
-                true,
-                false,
-                true,
-                "Amount should be Lower then 1000 & Grater then 10"
-              );
-        } else if (this.selectedFollow == 2) {
-          this.BetValue <= 100 && this.BetValue >= 10
-            ? this.follwingBetting(followerID, followMethod)
-            : this.errorShow(
-                true,
-                false,
-                true,
-                "Bet Rate Should be Lower then 100 & Grater then 10"
-              );
-        } else {
-          this.errorShow(true, false, true, "Somthing Wrong! Please check!");
-        }
-      } else {
-        this.errorShow(true, false, true, "Follwing type is not selected");
+        return this.errorShow(
+          true,
+          false,
+          true,
+          "Follwing type is not selected"
+        );
       }
+
+      // Check Amount Value or Bet Value
+      if (this.selectedFollow == 1) {
+        this.BetValue = this.amountValue;
+        if (this.BetValue >= 1000 || this.BetValue <= 10)
+          return this.errorShow(
+            true,
+            false,
+            true,
+            "Amount should be Lower then 1001 & Grater then 10"
+          );
+      } else {
+        this.BetValue = this.rateValue;
+        if (this.BetValue >= 100 && this.BetValue <= 10)
+          return this.errorShow(
+            true,
+            false,
+            true,
+            "Bet Rate Should be Lower then 101 & Grater then 10"
+          );
+      }
+
+      // Auto Stop Follow
+      switch (this.autoStop) {
+        case 4:
+        case 5:
+          if (this.unfollowValue >= 1000 || this.unfollowValue <= 10) {
+            return this.errorShow(
+              true,
+              false,
+              true,
+              "Amount should be Lower then 1001 & Grater then 10"
+            );
+          }
+          break;
+        case 3:
+          if (this.unfollowValue >= 10 || this.unfollowValue <= 1) {
+            return this.errorShow(
+              true,
+              false,
+              true,
+              "Days should be Lower then 11 & Grater then 0"
+            );
+          }
+          break;
+        case 6:
+          if (this.unfollowValue >= 100 || this.unfollowValue <= 1) {
+            return this.errorShow(
+              true,
+              false,
+              true,
+              "Bets should be Lower then 101 & Grater then 0"
+            );
+          }
+          break;
+      }
+      return this.follwingBetting(followerID, followMethod);
     },
     // Error Function Common
     errorShow(follingError, sucess, error, message) {
@@ -241,9 +282,9 @@ export default {
       this.hasSucess = sucess;
       this.errorMessage = message;
     },
-    // Follow Users Bet API call
+    // Follow Users Bet API Call
     async follwingBetting(follwerUUID, method) {
-      const LeaderBoardData = {
+      const reqBody = {
         portalProviderUUID: this.portalProviderUUID,
         userUUID: this.userUUID,
         followToUUID: follwerUUID,
@@ -256,36 +297,40 @@ export default {
         unFollowBetRule: [
           {
             id: this.autoStop,
-            value: this.unfollowValue
+            value:
+              this.autoStop == 3
+                ? this.unfollowValue * 1440
+                : this.unfollowValue // Day Convert to Minutes 1 Day = 1440 min
           }
         ],
         method: method,
         version: config.version
       };
       try {
-        const { data } = await this.$axios.post(
-          config.followUser.url,
-          LeaderBoardData,
-          {
-            headers: config.header
-          }
-        );
-        console.log(data);
+        var { data } = await this.$axios.post(config.followUser.url, reqBody, {
+          headers: config.header
+        });
         if (data.code == 200) {
-          this.errorShow(true, true, false, data.message);
+          this.errorShow(true, true, false, data.message[0]);
           window.setTimeout(function() {
             location.reload();
           }, 2000);
         } else {
-          this.errorShow(
-            true,
-            false,
-            true,
-            "Somthing Wrong. Please try Again!"
-          );
+          this.errorShow(true, false, true, data.message[0]);
         }
       } catch (error) {
         console.log(error);
+        log.error(
+          {
+            req: reqBody,
+            res: data.data,
+            page: "pages/modern/follow/followBet.vue",
+            apiUrl: config.followUser.url,
+            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: localStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     // Change Amount Rate Validation
@@ -325,6 +370,10 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  text-align: center;
+  color: #0b2a68;
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;

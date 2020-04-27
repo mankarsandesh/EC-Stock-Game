@@ -20,7 +20,7 @@
       <v-flex class="pt-1 text-uppercase betHeading">
         <span>
           {{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
-          {{ getStockLoop(stockName) }} minute
+          {{ getStockLoop(stockName) }} {{ $t("msg.minute") }}
         </span>
         |
         <span>
@@ -94,9 +94,10 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import result from "~/data/result";
-import config from "../../config/config.global";
-import chips from "../../data/chips";
+import config from "~/config/config.global";
+import chips from "~/data/chips";
 import log from "roarr";
+
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   data() {
@@ -386,8 +387,9 @@ export default {
 }
 
 .setpricechip {
-  color: black;
-  font-size: 0.85rem;
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 /* Chrome, Safari, Edge, Opera */

@@ -1,14 +1,12 @@
 <template>
   <div class="v-card-style">
-    <v-layout px-1>
-      <v-flex xs6 class="text-xs-left stockTimer">
-        <label>{{ $t("msg.livetime") }}:</label>
-        <span class="stockTimer" v-if="getStockLiveTime(stockName)">{{
+    <v-layout px-1 mt-1 >
+      <v-flex xs6 class="text-xs-left stockTimer">      
+        <span  v-if="getStockLiveTime(stockName)">{{
           getStockLiveTime(stockName).split(" ")[1]
         }}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right stockPrice">
-        <!-- <label>{{ $t("msg.liveprice") }}:</label> -->
+      <v-flex xs6 class="text-xs-right stockPrice">      
         <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
@@ -22,7 +20,7 @@
   </div>
 </template>
 <script>
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
@@ -136,7 +134,7 @@ export default {
         tooltip: {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             return (
-              '<div class="arrow_box"> $' +
+              '<div class="arrow_boxChart"> $' +
               series[seriesIndex][dataPointIndex].toFixed(2) +
               "</div>"
             );
@@ -289,53 +287,45 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
       this.demo = this.window.width;
+      // Chart Size Change According Desktop and Laptop Size
       if (this.window.width >= 2000) {
         this.chartHeight = "420vh";
         this.heightChart = 420;
-      } else {
-        this.chartHeight = "320vh";
-        this.heightChart = 320;
-      }
+      } else if(this.window.width > 1400){
+        this.chartHeight = "330vh";
+        this.heightChart = 330;
+      }else{
+          this.chartHeight = "250vh";
+          this.heightChart = 250;
+      }    
     }
   }
 };
 </script>
-<style>
-.arrow_box {
+<style >
+.arrow_boxChart {
   font-family: Arial, Helvetica, sans-serif;
   border: 1px solid #003f70;
   border-radius: 5px;
   font-weight: 600;
   padding: 3px 10px;
   font-size: 20px;
+  color: #FFF;
   background: #003f70 !important  ;
 }
-.arrow_box:after {
-  border-color: rgba(0, 63, 112, 0);
-  border-left-color: #003f70;
-  border-width: 30px;
-  margin-top: -30px;
-}
-
-.apexcharts-tooltip {
-  background: #003f70 !important  ;
-  color: #fff;
-}
-.stockTimer label {
-  font-size: 16px;
-  font-weight: 800;
+.stockTimer{
+  margin-left: 10px;
 }
 .stockPrice span {
   padding-right: 14px;
   color: green;
-  font-size: 20px;
+  font-size: 18px;
   margin: 0px;
   font-weight: 600;
 }
 .stockTimer span {
-  padding-left: 20px;
-  color: #333;
-  font-size: 16px;
+  color: #585858;
+  font-size: 18px;
   margin: 0px;
   font-weight: 600;
 }

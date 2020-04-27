@@ -96,9 +96,9 @@
 import { mapGetters } from "vuex";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
-// import livechart from "../modern/livechart"
+// import livechart from "~/modern/livechart"
 
 export default {
   data() {
@@ -171,7 +171,6 @@ export default {
       "getPortalProviderUUID",
       "getTimerByStockName",
       "getStockLoop",
-      "getStockById",
       "getAmountBettingByStockId"
     ])
   },

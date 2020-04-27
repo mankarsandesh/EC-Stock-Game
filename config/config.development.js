@@ -5,6 +5,7 @@ const config = {
   apiDomain: process.env.API_DOMAIN,
   socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
+  whitelabelUrl: process.env.WHITELABEL_URL,
   secretKey: "CC21128A312FAF7817C93D1B51CB9",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
@@ -42,8 +43,8 @@ const config = {
   getActiveGamesByCategory: {
     url: `${process.env.BASE_URL}/getActiveGamesByCategory`
   },
-  getAllAnnouncements: {
-    url: `${process.env.BASE_URL}/getAllAnnouncements`
+  getNotification: {
+    url: `${process.env.BASE_URL}/getNotification`
   },
   followUser: {
     url: `${process.env.BASE_URL}/followUser`
@@ -63,6 +64,9 @@ const config = {
   getUserFollower: {
     url: `${process.env.BASE_URL}/followUserList`
   },
+  getUserNotification: {
+    url: `${process.env.BASE_URL}/getNotification`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
@@ -70,12 +74,16 @@ const config = {
   error: {
     general: "Something went wrong!"
   },
-  logDomain: process.env.LOG_DOMAIN || 'http://127.0.0.1:3003/log'
-  // loggly: {
-  //   token: '852204e4-2752-4d9c-9b1c-f9f2152c2f40',
-  //   subdomain: 'localhost',
-  //   tags: ["Winston-VueJs"]
-  // }
+  loginError: {
+    portalProvider: "Portal Provider UUID is invalid",
+    portalProviderUserId: "Portal Provider User Id is invalid",
+    balance: "Balance is invalid",
+    authError: "Authentication authUser & authPassword is Missing."
+  },
+  logDomain: process.env.LOG_DOMAIN,
+  defaultLanguageLocale: "cn",
+  defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
+  homePageStockName: "btc1"
 };
 
 export default config;

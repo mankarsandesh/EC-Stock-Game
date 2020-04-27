@@ -7,7 +7,7 @@
 
 <script>
 import currentbet from "~/components/mobile/currentbet";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import { mapState } from "vuex";
 import log from "roarr";
 
@@ -55,7 +55,7 @@ export default {
           {
             req: reqBody,
             res: data,
-            page: this.$options.name,
+            page: "pages/modern/current-bet.vue",
             apiUrl: config.getAllBets.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

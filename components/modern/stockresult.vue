@@ -5,7 +5,10 @@
     </v-layout>
     <v-layout>
       <!-- bet result -->
-      <v-flex xs12>
+      <v-flex v-if="showStockresult == true">
+        <h4 class='text-center'>Please Wait...</h4>
+      </v-flex>
+      <v-flex v-if="showStockresult == false" >
         <div class="table-responsive">
           <table class="table">
             <tr>
@@ -35,11 +38,12 @@
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   data() {
     return {
+      showStockresult : true,
       selected: 1,
       getStockResult: []
     };
@@ -72,6 +76,7 @@ export default {
           headers: config.header
         });
         if (data.status) {
+          this.showStockresult = false;
           this.getStockResult = data.data;
         } else {
           throw new Error(config.error.general);

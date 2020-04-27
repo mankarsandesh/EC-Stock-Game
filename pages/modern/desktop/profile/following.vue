@@ -2,15 +2,18 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">following ({{ this.countFollwing }})</h2>
+        <h2 class="text-uppercase">
+          {{ $t("profile.myfollowing") }} ({{ this.countFollwing }})
+        </h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs10>
         <div class="title_container">
-          <h3 class="text-black" v-if="followingListEmpty == true">
-            There are no follwing user.
+          <h3 class="text-black onFollower" v-if="followingListEmpty == true">
+              <i class="fa fa-user-o fa-2x" />
+              <div>{{ $t("profile.noFollowing") }}</div>
           </h3>
           <div
             class="follower_container"
@@ -45,7 +48,7 @@
                 )
               "
             >
-              unfollow
+              {{ $t("useraction.unfollow") }}
             </button>
           </div>
         </div>
@@ -66,8 +69,8 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
-import config from "../../../../config/config.global";
-import followBet from "../../../../components/modern/follow/followBet";
+import config from "~/config/config.global";
+import followBet from "~/components/modern/follow/followBet";
 export default {
   data() {
     return {
@@ -93,7 +96,7 @@ export default {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-    followUserBet: function(username, userImg, userUUID, method) {     
+    followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       if (method == 0) {
@@ -124,7 +127,7 @@ export default {
           {
             headers: config.header
           }
-        );        
+        );
         if (res.code == 200) {
           this.followingList = res.data;
           this.countFollwing = res.data.length;
@@ -146,6 +149,13 @@ export default {
 </script>
 
 <style scoped>
+.onFollower{
+  color: #aeafb0;
+  text-align: center;
+  font-size: 28px;
+  width: 500px;
+  margin:20% auto;
+}
 .followType span {
   text-align: center;
   width: 100%;

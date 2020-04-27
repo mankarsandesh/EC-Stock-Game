@@ -1,5 +1,5 @@
 <template>
-  <div v-if="stockAnalysis.length > 0">
+  <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
         <h2 class="title_menu">{{ $t("profile.stockanalysis") }}</h2>
@@ -97,11 +97,10 @@ import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
 import log from "roarr";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
 
 // set color win and lose color in bar chart
 let index = 0;
-let stocklist = ["SH000001", "SH000300", "USDINDEX", "BTC5", "BTC1"];
 let barColor = [
   ["#67c9d3", "#f75b54", "#fcc624", "#1a237e", "#d81b60", "#ff6f00", "#01579b"], // win color
   ["#81eaf5", "#f9a5a3", "#fddf84", "#7986cb", "#f06292", "#ffb74d", "#90caf9"] // loss color
@@ -117,7 +116,6 @@ export default {
     this.endDate = now;
     this.getStockAnalysis();
   },
-  computed: {},
   destroyed() {
     index = 0; // reset index
   },
@@ -133,6 +131,7 @@ export default {
       isShowDateEnd: false,
       startDate: "",
       endDate: "",
+      error: '',
       isDataValid: false,
       chartOptions: {
         colors: [
@@ -147,7 +146,16 @@ export default {
         ],
         plotOptions: {
           bar: {
-            horizontal: false
+            horizontal: false,
+            columnWidth: "50%",
+            startingShape: "rounded",
+            rangeBarOverlap: true,
+            barHeight: "100%"
+            // dataLabels: {
+            //   position: 'top'
+            // }
+            //endingShape: 'rounded'
+            // distributed: true
           }
         },
         dataLabels: {
@@ -162,7 +170,39 @@ export default {
           },
           zoom: {
             enabled: false
+          },
+          animations: {
+            enabled: true,
+            easing: "easeinout",
+            speed: 800,
+            animateGradually: {
+              enabled: true,
+              delay: 150
+            },
+            dynamicAnimation: {
+              enabled: true,
+              speed: 350
+            }
           }
+        },
+        title: {
+          text: this.$root.$t('profile.stockanalysis'),
+          align: "left",
+          margin: 10,
+          offsetX: 2,
+          offsetY: -5,
+          style: {
+            fontSize: "20px",
+            fontWeight: "bold"
+          }
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          curve: "smooth"
+        },
+        noData: {
+          text: this.$root.$t('leaderboard.nodata')
         },
         tooltip: {
           enabled: true,
@@ -175,11 +215,11 @@ export default {
             show: false
           },
           y: {
-            formatter: function(val, { series, seriesIndex, dataPointIndex }) {
+            formatter: (val, { series, seriesIndex, dataPointIndex }) => {
               return (
-                '<div class="arrow_box ">' +
+                '<div class="arrow_box">' +
                 "<span> " +
-                stocklist[dataPointIndex] +
+                this.stockAnalysis[dataPointIndex].stockName +
                 " </span>" +
                 "<span> " +
                 series[seriesIndex][dataPointIndex] +
@@ -196,7 +236,15 @@ export default {
         },
         xaxis: {
           labels: {
-            offsetX: 0
+            offsetX: 10,
+            offsetY: 10,
+            formatter: function(value) {
+              return "";
+            },
+            axisBorder: {
+              show: true,
+              width: "10%"
+            }
           }
         }
       }
@@ -285,7 +333,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/desktop/profile/stockAnalysis.vue",
             apiUrl: config.getUserBetAnalysis.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
@@ -318,7 +366,7 @@ li {
 
 .chart-map-color {
   position: relative;
-  float: right;
+  float: right ;
   margin-top: 15px;
   display: inline-block;
 }

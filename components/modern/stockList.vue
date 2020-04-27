@@ -3,65 +3,65 @@
     <v-layout>
       <v-flex pa-2 class="headerStockBar">{{ $t("menu.stock list") }}</v-flex>
     </v-layout>
-
-    <div class="table-responsive">
-      <table class="table">
-        <tr>
-          <th>{{ $t("msg.Stock Name") }}</th>
-          <th>{{ $t("msg.liveprice") }}</th>
-          <th>{{ $t("msg.Status") }}</th>
-          <th>{{ $t("msg.Countdown") }}</th>
-        </tr>
-        <tr
-          v-for="(stock, index) in getStockListPrice[0]"
-          :key="stock.stockUUID"
-        >
-          <td>
-            <nuxt-link :to="'/modern/desktop/' + stock.stockName"
-              >{{ $t(`stockname.${stock.stockName}`)
-              }}{{ stock.stockName == "btc5" ? "5" : "" }}</nuxt-link
-            >
-          </td>
-          <td
-            v-html="
-              getStockListPrice.length > 1
-                ? $options.filters.livePriceColor(
-                    stock.stockPrice,
-                    getStockListPrice[1][index].stockPrice
-                  )
-                : stock.stockPrice
-            "
-          ></td>
-
-          <td>
-            <span
-              v-if="stock.stockStatus === 'Closed'"
-              :style="{ color: 'red' }"
-            >
-              Closed
-            </span>
-            <span
-              v-if="
-                stock.stockStatus !== 'Closed' &&
-                  getStockListCountdown[index]
+    <v-flex>
+      <div class="table-responsive">
+        <table class="table">
+          <tr>
+            <th>{{ $t("msg.Stock Name") }}</th>
+            <th>{{ $t("msg.liveprice") }}</th>
+            <th>{{ $t("msg.Status") }}</th>
+            <th>{{ $t("msg.Countdown") }}</th>
+          </tr>
+          <tr
+            v-for="(stock, index) in getStockListPrice[0]"
+            :key="stock.stockUUID"
+          >
+            <td>
+              <nuxt-link :to="'/modern/desktop/' + stock.stockName"
+                >{{ $t(`stockname.${stock.stockName}`)
+                }}{{ stock.stockName == "btc5" ? "5" : "" }}</nuxt-link
+              >
+            </td>
+            <td
+              v-html="
+                getStockListPrice.length > 1
+                  ? $options.filters.livePriceColor(
+                      stock.stockPrice,
+                      getStockListPrice[1][index].stockPrice
+                    )
+                  : stock.stockPrice
               "
-              >{{
-                getStockListCountdown[index].gameEndTimeCountDownInSec
-                  | betstatus(getStockLoop(stock.stockName))
-              }}</span
-            >
-          </td>
-          <td>
-            <span v-if="getStockListCountdown[index]">
-              {{
-                getStockListCountdown[index].gameEndTimeCountDownInSec
-                  | lotterydraw(getStockLoop(stock.stockName))
-              }}
-            </span>
-          </td>
-        </tr>
-      </table>
-    </div>
+            ></td>
+
+            <td>
+              <span
+                v-if="stock.stockStatus === 'Closed'"
+                :style="{ color: 'red' }"
+              >
+                Closed
+              </span>
+              <span
+                v-if="
+                  stock.stockStatus !== 'Closed' && getStockListCountdown[index]
+                "
+                >{{
+                  getStockListCountdown[index].gameEndTimeCountDownInSec
+                    | betstatus(getStockLoop(stock.stockName))
+                }}</span
+              >
+            </td>
+            <td>
+              <span v-if="getStockListCountdown[index]">
+                {{
+                  getStockListCountdown[index].gameEndTimeCountDownInSec
+                    | lotterydraw(getStockLoop(stock.stockName))
+                }}
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </v-flex>
   </div>
 </template>
 <script>
@@ -73,9 +73,7 @@ export default {
       "getStockListPrice",
       "getStockListCountdown"
     ])
-  },
-  created() {},
-  methods: {}
+  }
 };
 </script>
 <style scoped>

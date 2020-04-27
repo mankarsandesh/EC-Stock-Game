@@ -107,12 +107,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getUserUUID",
-      "getStockType",
-      "getStockGameId"
-    ]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
     isShowChanel() {
       if (this.pageActiveChanel.includes(this.$route.name)) {
         return true;
