@@ -17,7 +17,7 @@ import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import Echo from "laravel-echo";
-import config from "../config/config.global";
+import config from "~/config/config.global";
 export default {
   props: {
     height: {
@@ -71,12 +71,7 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getStockUUIDByStockName",
-      "getLiveTime",
-      "getLivePrice"
-    ]),
+    ...mapGetters(["getPortalProviderUUID", "getStockUUIDByStockName"]),
     chartOptions() {
       let newTime = [];
       this.chartData.forEach(element => {

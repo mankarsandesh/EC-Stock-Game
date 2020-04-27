@@ -1,4 +1,4 @@
-import config from "../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 
 const state = () => ({
@@ -16,7 +16,8 @@ const state = () => ({
   isWindowsHasScroll: false,
   tutorialStepNumber: 0, // Store tutorial step number
   UserAuth: {},
-  messageError: []
+  messageError: [],
+  loginError: [] // Error occurred on the login screen
 });
 
 const mutations = {
@@ -29,22 +30,18 @@ const mutations = {
   SET_AUTH(state, payload) {
     state.authUser = payload;
   },
-  // end new api
   SET_USER_DATA(state, payload) {
     state.userData = payload;
   },
   SET_USER_LOGIN_DATA(state, payload) {
     state.userLoginData = payload;
   },
-  // store api_token in vuex auth Token
   SET_AUTH_TOKEN(state, token) {
     state.authToken = token;
   },
-  // store coin in localStorage payload must be "String array" '["100", "500", "1000", "5000", "10000"]'
-  SET_COINS_MODERN(state) {
-    state.coinsModern = JSON.parse(localStorage.getItem("coinModern"));
+  SET_COINS_MODERN(state, payload) {
+    state.coinsModern = payload;
   },
-  // set language
   SET_LANGUAGE(state, locale) {
     if (state.locales.includes(locale)) {
       state.locale = locale;
@@ -68,6 +65,9 @@ const mutations = {
   },
   SET_USER_AUTH_ERROR(state, payload) {
     state.messageError = payload;
+  },
+  SET_LOGIN_ERROR(state, payload) {
+    state.loginError.push(...payload);
   }
 };
 
@@ -97,8 +97,8 @@ const actions = {
           res,
           page: "store/provider.js",
           apiUrl: config.getUserProfile.url,
-          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: localStorage.getItem("USER_UUID")
+          provider: this.portalProviderUUID,
+          user: this.userUUID
         },
         ex.message
       );
@@ -125,8 +125,8 @@ const actions = {
     commit("SET_AUTH_TOKEN", payload);
   },
   // Set coins modern
-  setCoinsModern({ commit }) {
-    commit("SET_COINS_MODERN");
+  setCoinsModern({ commit }, payload) {
+    commit("SET_COINS_MODERN", payload);
   },
   // Set language locale
   setLanguage({ commit }, payload) {
@@ -153,6 +153,9 @@ const actions = {
   },
   setUserAuthError({ commit }, payload) {
     commit("SET_USER_AUTH_ERROR", payload);
+  },
+  setLoginError({ commit }, payload) {
+    commit("SET_LOGIN_ERROR", payload);
   }
 };
 
@@ -216,7 +219,14 @@ const getters = {
     return state.tutorialStepNumber;
   },
   getUserAuth: state => state.UserAuth,
-  getMessageError: state => state.messageError
+  getMessageError: state => state.messageError,
+  getLoginError: state => {
+    if (state.loginError.length > 0) {
+      return state.loginError;
+    } else {
+      return false;
+    }
+  }
 };
 
 export default {

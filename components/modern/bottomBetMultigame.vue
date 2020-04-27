@@ -7,12 +7,7 @@
       <span>$00000</span>
     </div>
     <div class="chips-multigame">
-      <v-avatar
-        size="70"
-        v-for="(item, key) in imgChip"
-        :key="key"
-        class="chips"
-      >
+      <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
         <v-img
           @click="setFooterBetAmount(getCoinsModern[key])"
           :src="item.img"
@@ -26,24 +21,26 @@
       </v-avatar>
     </div>
     <div class="action-multigame">
-      <v-btn class="buttonGreen" dark @click="getSending()">{{
+      <v-btn class="buttonGreen" dark @click="getSending()">
+        {{
         $t("msg." + texts)
-      }}</v-btn>
-      <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
+        }}
+      </v-btn>
+      <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">
+        {{
         $t("msg.cancel")
-      }}</v-btn>
+        }}
+      </v-btn>
     </div>
     <div class="max-min-multigame">
-      <span>
-        max = $1000, min = $500
-      </span>
+      <span>min = $100, max = $10000</span>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import chips from "../../data/chips";
+import chips from "~/data/chips";
 export default {
   data() {
     return {
@@ -95,8 +92,10 @@ export default {
   align-items: center;
 }
 .total-bet-multigame {
+   border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   padding: 5px 15px;
   text-transform: uppercase;
   min-width: 120px;
@@ -107,8 +106,10 @@ export default {
   align-items: center;
 }
 .amount-multigame {
+    border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   padding: 5px 15px;
   padding-right: 30px;
   text-transform: uppercase;
@@ -120,9 +121,9 @@ export default {
   margin-left: -2px;
   align-items: center;
 }
-.chips-multigame {
+.chips-multigame {  
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   padding: 5px 15px;
   text-transform: uppercase;
   min-width: 350px;
@@ -134,8 +135,10 @@ export default {
   align-items: center;
 }
 .action-multigame {
+   border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   display: flex;
   height: 55px;
   padding: 0px 15px;
@@ -143,8 +146,10 @@ export default {
   align-items: center;
 }
 .max-min-multigame {
+   border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   padding: 5px 15px;
   text-transform: uppercase;
   min-width: 80px;

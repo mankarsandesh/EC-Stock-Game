@@ -1,12 +1,12 @@
 <template>
-  <div class="p-relative">
+  <div class="p-relative" >
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
       <p>{{ $t("msg.betclosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row>
+    <v-layout row  md10 >
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
@@ -59,7 +59,7 @@
         </v-btn>
       </popper>
 
-      <span class="w12">
+      <span class="w10">
         <v-btn class="align_button4" id="first" @click="btnNumber('first')">
           <showChipAmount
             size="45px"
@@ -333,7 +333,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(8 + index,'firstdigit')"
+          @click="betButtonClick(8 + index, 'firstdigit')"
           v-show="number == 'first'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -360,7 +360,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(25 + index,'lastdigit')"
+          @click="betButtonClick(25 + index, 'lastdigit')"
           v-show="number == 'last'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -387,7 +387,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(149 + index,'bothdigit')"
+          @click="betButtonClick(149 + index, 'bothdigit')"
           v-show="number == 'both'"
           class="btn-small"
           >{{ index }}</v-btn
@@ -414,7 +414,7 @@
         </div>
         <v-btn
           slot="reference"
-          @click="betButtonClick(42 + index,'twodigit')"
+          @click="betButtonClick(42 + index, 'twodigit')"
           v-show="number == 'two'"
           class="btn-small"
           >{{ index < 10 ? "0" + index : index }}</v-btn
@@ -426,13 +426,13 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import gameRule from "~/data/gameRule";
 
 import betModal from "~/components/modern/betModal";
 import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
-import gameRule from "../../data/gameRule";
 export default {
   props: {
     isFullscreen: {
@@ -497,8 +497,7 @@ export default {
       if (this.getStockLoop(this.stockID) === 5) {
         if (
           this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec ==
-            240
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
         ) {
           this.clearDataMultiGameBet(5);
         }
@@ -509,7 +508,7 @@ export default {
       } else {
         if (
           this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 40
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
         ) {
           this.clearDataMultiGameBet(1);
         }
@@ -522,17 +521,18 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
-    betButtonClick(ruleID,specificNumber='') {
+    ...mapActions(["pushDataMultiGameBet", "clearDataMultiGameBet", "setTempMultiGameBetData"]),
+    betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
         let betData = {
-          specificNumber:specificNumber,
+          specificNumber: specificNumber,
           gameUUID: this.getGameUUIDByStockName(this.stockID),
           ruleID: ruleID,
           betAmount: this.getFooterBetAmount
         };
-        this.pushDataMultiGameBet(betData);
+        this.setTempMultiGameBetData(betData);
+        // this.pushDataMultiGameBet(betData);
         // console.warn(this.getMultiGameBet);
       }
     },

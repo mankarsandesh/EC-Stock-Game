@@ -2,7 +2,7 @@
   <div class="text-xs-center">
     <apexchart
       type="bar"
-      height="350"
+      :height="chartHeight"
       :options="chartOptions"
       :series="series"
       :key="componentKey"
@@ -14,6 +14,7 @@
 import VueApexCharts from "vue-apexcharts";
 import { mapGetters } from "vuex";
 import openSocket from "socket.io-client";
+import config from "../../config/config.global";
 import log from "roarr";
 
 export default {
@@ -22,7 +23,12 @@ export default {
     apexchart: VueApexCharts
   },
   data() {
-    return {
+    return {    
+      chartHeight: "350vh",
+      window: {
+        width: 0,
+        height: 0
+      },
       series: [
         {
           name: this.$root.$t("gamemsg.big"),
@@ -77,7 +83,7 @@ export default {
             show: false
           },
           type: "bar",
-          height: 350,
+          height:250,
           stacked: true,
           stackType: "100%"
         },
@@ -89,10 +95,7 @@ export default {
         stroke: {
           width: 1,
           colors: ["#fff"]
-        },
-        // title: {
-        //   text: "Live Bet Data"
-        // },
+        },       
         xaxis: {
           categories: [
             this.$root.$t("gamemsg.firstdigit"),
@@ -139,8 +142,16 @@ export default {
       }
     };
   },
+  created(){
+     window.addEventListener("resize", this.handleResize);
+     this.handleResize();
+  },
+   destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   computed: {
-    ...mapGetters(["getGameUUIDByStockName", "getPortalProviderUUID"])
+    ...mapGetters(["getGameUUIDByStockName", "getPortalProviderUUID"]),
+    
   },
   mounted() {
     this.listenForBroadcast(
@@ -181,17 +192,22 @@ export default {
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
+    },
+     handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;    
+      // Chart Size Change According Desktop and Laptop Size
+      if (this.window.width >= 2000) {
+        this.chartHeight = "420vh";
+        this.heightChart = 420;
+      } else if(this.window.width > 1400){
+        this.chartHeight = "380vh";
+        this.heightChart = 380;
+      }else{
+          this.chartHeight = "300vh";
+          this.heightChart = 300;
+      }
     }
   }
 };
 </script>
-
-<style scoped>
-.set-height {
-  height: 300px;
-}
-
-.v-progress-circular {
-  margin: 1rem;
-}
-</style>

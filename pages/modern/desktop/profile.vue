@@ -15,9 +15,7 @@
                     <!-- <v-icon color="black" :size="20" @click="cameraClick"
                       >photo_camera</v-icon
                     > -->
-                    <v-icon color="black" :size="20" @click="dialog = true"
-                      >photo_camera</v-icon
-                    >
+                    <v-icon color="black" :size="20">photo_camera</v-icon>
                   </button>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
@@ -224,22 +222,13 @@
           </v-card-text>
           <v-divider></v-divider>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-        </v-card-actions>
-        
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="dialog = false">
+              Close
+            </v-btn>
+          </v-card-actions>
         </v-card>
-
-        
-
-
       </v-dialog>
 
       <v-snackbar v-model="snackbar">
@@ -248,14 +237,12 @@
           Close
         </v-btn>
       </v-snackbar>
-
-
     </v-layout>
   </v-container>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 export default {
   layout: "desktopModern",
@@ -348,7 +335,7 @@ export default {
           {
             req: reqBody,
             res: res.data,
-            page: this.$options.name,
+            page: "pages/modern/desktop/profile.vue",
             apiUrl: config.updateUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

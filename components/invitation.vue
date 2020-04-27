@@ -3,7 +3,7 @@
     trigger="click"
     :options="{
       placement: 'bottom-top',
-      modifiers: { offset: { offset: '65px' } }
+      modifiers: { offset: { offset: '95px' } }
     }"
   >
     <div class="popper">
@@ -129,7 +129,7 @@
         </div>
 
         <!-- for game chanel  -->
-        <chanelChat
+        <chanelChat          
           v-show="tabActiveName === 'chanel'"
           :gameUUID="gameUUID"
           :stockName="stockName"
@@ -160,9 +160,9 @@ import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import io from "socket.io-client";
 import moment from "moment";
-import config from "../config/config.global";
+import config from "~/config/config.global";
 import chanelChat from "./chanelChat";
-import followBet from "../components/modern/follow/followBet";
+import followBet from "~/components/modern/follow/followBet";
 import log from "roarr";
 
 let name = "btc5";
@@ -218,8 +218,7 @@ export default {
       currentRoute: "",
       messageInput: "",
       pageActiveChanel: [
-        "modern-desktop-id",
-        "modern-multigame-id",
+        "modern-desktop-id",       
         "modern-fullscreen-id"
       ],
       tabActiveName: "world",
@@ -235,13 +234,8 @@ export default {
       if (this.likesSomeFruit) return "mdi-minus-box";
       return "mdi-checkbox-blank-outline";
     },
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getUserUUID",
-      "getStockType",
-      "getStockGameId"
-    ]),
-    isShowChanel() {
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
+    isShowChanel() {      
       if (this.pageActiveChanel.includes(this.$route.name)) {
         return true;
       } else {
@@ -249,7 +243,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted() {    
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
@@ -261,6 +255,7 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
+         console.log(newData);
         this.globalInvitation.push(newData);
         this.scrollDown();
       }
@@ -271,7 +266,7 @@ export default {
   },
   created() {
     this.currentRoute = this.$route.name;
-    //reset chat messgae
+    //reset chat messgae    
     this.messageInput = "";
   },
   methods: {
@@ -392,7 +387,6 @@ export default {
   font-size: 14px;
   width: 100%;
 }
-
 .liveChat {
   z-index: 999;
   position: fixed;
@@ -403,8 +397,8 @@ export default {
   color: #fff;
   background-color: #2aaf3e !important;
 }
-
 .popper {
+  right: 20px;
   width: 370px;
   border-radius: 10px;
   border: 1px solid #dddddd;
@@ -523,7 +517,7 @@ export default {
 
 .msgUser .winRate {
   float: left;
-  font-size: 20px;
+  font-size: 18px;
   margin: 6px 0px;
   color: #ed4560;
   font-weight: 800;

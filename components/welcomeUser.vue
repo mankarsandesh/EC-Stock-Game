@@ -71,8 +71,7 @@ export default {
     async alertOutCome() {
       let totalPayout = await this.$axios.$get(
         "/api/me/totalPayout?apikey=" + this.$store.state.provider.authToken
-      );
-      // console.log(totalPayout)
+      );     
       if (totalPayout.status == false) return;
       this.snackbar = true;
       this.betPrice = totalPayout.data;

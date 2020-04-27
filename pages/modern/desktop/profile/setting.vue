@@ -76,7 +76,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
 import log from "roarr";
 
 export default {
@@ -140,7 +140,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/desktop/profile/setting.vue",
             apiUrl: config.updateUserSetting.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

@@ -62,7 +62,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getStockList", "getLivePrice", "getPreviousPrice","getPortalProviderUUID"]),
+    ...mapGetters([
+      "getStockList",
+      "getPreviousPrice",
+      "getPortalProviderUUID"
+    ]),
     isHorizontal() {
       let w = window.innerWidth;
       let h = window.innerHeight;

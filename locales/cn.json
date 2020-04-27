@@ -13,6 +13,7 @@
     "history": "历史",
     "stock list": "股票信息",
     "announcement": "公告",
+    "notification": "通知",
     "rule": "游戏规则",
     "gamerule": "游戏规则",
     "setting": "设置",
@@ -251,7 +252,9 @@
     "noFollowers" : "没有追随者。"
   },
   "useraction": {
-    "followbet": "跟进",
+    "followBet": "跟进",
+    "unfollowBet": "取消投注",
+    "follow": "跟随",
     "unfollow": "取消关注",
     "yourself": "我"
   },
@@ -276,7 +279,8 @@
     "betHistory": "投注历史",
     "currentBet": "当前投注",
     "stockList": "库存清单",
-    "announcement": "公告"
+    "announcement": "公告",
+    "notification": "通知"
   },
   "setting": {
     "account": "帐户",
@@ -300,7 +304,11 @@
   "bethistory": {
     "betdraw": "开奖结果",
     "yourloosingamount": "您的欠款额",
-    "yourwinningamount": "输赢数额"
+    "yourwinningamount": "输赢数额",
+    "searchbyName" : "按名称搜索",
+    "today":"今天",
+    "thisWeek":"本星期",
+    "thisMonth":"这个月"
   },
   "betting": {
     "reviewBet" : "複習投注",

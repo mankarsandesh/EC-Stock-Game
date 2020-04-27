@@ -2,36 +2,36 @@
   ##Device = Desktops
   ##Screen = 1281px to higher resolution desktops
 */
+
 /*
 Big Screen 
 */
-
 @media (min-width: 1281px) {
+
+  
+  .selectStock {
+    font-size: 14px ;
+  }
   .btn-langage span {
     font-size: 14px;
   }
-  
   .menuItem {
     border-right: 2px solid #dddddd;
     height: 60px !important;
     padding: 15px;
   }
-
   .logoStyle {
     width: 150px;
     cursor: pointer;
     margin-left: 15px;
   }
-
   .menuItem span {
     font-size: 14px;
   }
-
   .menuItem i {
     margin-right: 5px;
     font-size: 18px;
   }
-
   .stockname {   
     font-size: 20px;
     font-weight: 600;
@@ -50,20 +50,16 @@ Big Screen
     padding: 0px;
     margin: 0px;
   }
-
   .containerNew {
-    width: 95% !important;
+    width: 100% !important;
   }
-
   .buttonbtn {
     width: 80px;
   }
   /* game Rule Category Button */
   .btnHeight {
-   
     width: 80px;
     height: 80px;
-
   }
   .align_button4 {
     box-shadow: none !important;
@@ -113,7 +109,6 @@ Big Screen
     background-color: #f7d0e3;
     border: 1px solid #fc4181 !important;
   }
-
   .rs0,
   .rs-o,
   .rs-l {
@@ -124,7 +119,6 @@ Big Screen
     background-color: #d0dafd;
     border: 1px solid #4b72ff !important;
   }
-
   .rs-m {
     font-size: 15px;
     font-weight: bolder;
@@ -132,7 +126,6 @@ Big Screen
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
   }
-
   span.addChart i {
     cursor: pointer;
     display: flex;
@@ -144,7 +137,7 @@ Big Screen
     color: #ffffff !important;
     background-color: #4464ff !important;
     position: absolute;
-    left: 53%;
+    left: 49%;
     top: 45%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
@@ -238,6 +231,22 @@ Big Screen
     z-index: 50;
     text-transform: capitalize;
   }
+  .bg-btn-first{   
+    min-width: 88% !important;
+    width: 90% !important;
+  }
+  .bg-btn-last{
+    min-width: 88% !important;
+    width: 90% !important;
+  }
+  .bg-btn-both{
+    min-width: 88% !important;
+    width: 100% !important;
+  }
+  .bg-btn-two{
+    min-width: 88% !important;
+    width: 100% !important;
+  }
 
 }
 
@@ -246,10 +255,34 @@ Big Screen
   ##Screen = B/w 1025px to 1280px
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
+
+  .bg-btn-first{
+    min-width:60px !important;
+  }
+  .bg-btn-last{
+    min-width:60px !important;
+  }
+  .bg-btn-both{
+    min-width:60px !important;
+  }
+  .bg-btn-two{
+     min-width:60px !important;
+  }
+  .lastdraw {
+    font-size: 14px !important;
+  }
+  .betclose {
+    font-size: 14px !important;
+  }
+  .lottery {
+    font-size: 14px !important;
+  }
+  .selectStock {
+    font-size: 12px !important;
+  }
   .btn-langage span {
     font-size: 12px;
   }
-
   .toolBar {
     margin-top: -10px;
   }
@@ -299,18 +332,20 @@ Big Screen
   }
 
   .containerNew {
+    /* border:1px solid red; */
     width: 100% !important;
   }
 
   /* game Rule Category Button */
   .btnHeight {
     height: 65px;
+    
   }
 
   .align_button4 {
     box-shadow: none !important;
-    border: 1px solid #e8e8e8;
     height: 65px;
+    border: 1px solid #e8e8e8;
   }
 
   .big-digit {
@@ -387,7 +422,7 @@ Big Screen
     background-color: #4464ff !important;
     position: absolute;
     left: 49%;
-    top: 46%;
+    top: 43%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
@@ -428,11 +463,13 @@ Big Screen
   }
 
   .firstDigit {
-    font-weight: bolder;
+    text-align: center;
     border-radius: 10px;
+    font-weight: bolder;
     white-space: pre-line !important;
-    height: 60px;
-    font-size: 14px;
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
     background: rgb(13,204,255);
     background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
   }
@@ -442,8 +479,9 @@ Big Screen
     border-radius: 10px;
     font-weight: bolder;
     white-space: pre-line !important;
-    height: 60px;
-    font-size: 12p14pxx;
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
     background: rgb(250,209,38);
     background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
   }
@@ -452,8 +490,9 @@ Big Screen
     font-weight: bolder;
     border-radius: 10px;
     white-space: pre-line !important;
-    height: 60px;
-    font-size: 14px;
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
     background: rgb(182,53,156);
     background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
   }
@@ -462,8 +501,9 @@ Big Screen
     font-weight: bolder;
     border-radius: 10px;
     white-space: pre-line !important;
-    height: 60px;
-    font-size: 14px;
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
     background: rgb(1,233,189);
     background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
   }

@@ -2,13 +2,13 @@
   <div>
     <v-layout row justify-center id="footerBet-guide">
       <v-flex lg2 md2 xs2 class="amount">
-        <div>{{ getAllBettingAmount }}</div>
+        <div>{{ getFooterBetAmount }}</div>
       </v-flex>
       <v-flex lg5 md5 xs3 class="chipsdiv">
         <v-layout row>
           <v-flex class="text-center">
             <v-avatar
-              size="70"
+              size="65"
               v-for="(item, key) in imgChip"
               :key="key"
               class="chips"
@@ -29,10 +29,10 @@
       </v-flex>
       <v-flex lg3 md3 xs2 class="betButton">
         <div>
-          <v-btn class="buttonGreensmall" dark @click="getSending()">{{
+          <v-btn class="buttonGreensmall" dark @click="confirmBet()">{{
             $t("msg.confirm")
           }}</v-btn>
-          <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">{{
+          <v-btn class="buttonCancel" @click="cancelBet()">{{
             $t("msg.cancel")
           }}</v-btn>
         </div>
@@ -43,11 +43,11 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import setting from "../modern/setting/chipamout";
-import chips from "../../data/chips";
+import setting from "~/components/modern/setting/chipamout";
+import chips from "~/data/chips";
 export default {
   components: {
-    setting
+    //setting
   },
   data() {
     return {
@@ -61,19 +61,32 @@ export default {
     ...mapActions([
       "setFooterBetAmount",
       "clearDataMultiGameBet",
-      "sendBetting"
+      "sendBetting",
+      "confirmTempMultiGameBetData",
+      "clearTempMultiGameBetData"
     ]),
-    getSending() {
+    confirmBet() {
       this.isSending = true;
       this.texts = this.$root.$t("msg.sending");
+      this.confirmTempMultiGameBetData();
       // setTimeout(() => {
       this.sendBetting();
+      this.setFooterBetAmount(0);
       this.isSending = false;
       // }, 1000);
+    },
+    cancelBet() {
+      this.isSending = false;
+      this.clearTempMultiGameBetData();
+      this.setFooterBetAmount(0);
     }
   },
   computed: {
-    ...mapGetters(["getCoinsModern", "getAllBettingAmount"])
+    ...mapGetters([
+      "getCoinsModern",
+      "getAllBettingAmount",
+      "getFooterBetAmount"
+    ])
   }
 };
 </script>

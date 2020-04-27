@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2">
+  <v-container fluid mt-2 class="containerNew pa-2 ">
     <v-layout style="background-color: #f4f5fd;">
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
@@ -24,114 +24,126 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex v-if="isHidden" @click="isHidden = false">
+      <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
           <v-icon color="#FFF">list</v-icon>
         </span>
       </v-flex>
       <!-- </v-flex> -->
       <v-flex :xs10="!isHidden" :xs12="isHidden">
-        <v-layout xs12 pl-3>
-          <v-flex xs6 md6 lg6 pt-2>
-            <v-layout column>
-              <v-flex xs12>
-                <div id="selectstockGuideline">
-                  <stockSelect />
-                </div>
-              </v-flex>
-              <v-flex mt-1>
-                <div id="chartGuidelineNew" class="chartDesgin">
-                  <v-flex>
-                    <chartApp :stockName="routeParams" />
-                  </v-flex>
-                </div>
-              </v-flex>
-            </v-layout>
-          </v-flex>
+        <v-flex md12 lg12 pl-3>
+          <v-layout row wrap md12>
+            <!-- Stock Select Start -->
+            <v-flex md7 lg6 pt-2>
+              <div id="selectstockGuideline">
+                <stockSelect />
+              </div>
+            </v-flex>
+            <!-- Stock Select End -->
 
-          <v-flex xs6 md6 lg6 class="mx-2">
-            <v-layout mb-3>
-              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
-                <span>{{ $t("msg.Lastdraw") }}</span>
-                <div id="lastDrawGuideline">
-                  <v-flex class="lastdraw">
-                    <span
-                      v-html="$options.filters.lastDraw(getLastDraw)"
-                    ></span>
-                  </v-flex>
-                </div>
-              </v-flex>
-              <!-- <v-spacer></v-spacer> -->
-              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
-                <span>{{ $t("msg.BetClosein") }}</span>
-                <div id="betCloseInGuideline">
-                  <v-flex class="betclose">
-                    <span
-                      v-if="
-                        getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id).stockStatus ===
-                            'Closed'
-                      "
-                    >
-                      {{
-                        getTimerByStockName($route.params.id)
-                          | betclosein(getStockLoop($route.params.id))
-                      }}
-                    </span>
-                    <span v-else>
-                      {{
-                        getTimerByStockName($route.params.id) &&
+            <!-- Stock Last Draw Start -->
+            <v-flex xs6 md5 lg6 pt-1>
+              <v-layout mb-3>
+                <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
+                  <span>{{ $t("msg.Lastdraw") }}</span>
+                  <div id="lastDrawGuideline">
+                    <v-flex class="lastdraw">
+                      <span
+                        v-html="$options.filters.lastDraw(getLastDraw)"
+                      ></span>
+                    </v-flex>
+                  </div>
+                </v-flex>
+                <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
+                  <span>{{ $t("msg.BetClosein") }}</span>
+                  <div id="betCloseInGuideline">
+                    <v-flex class="betclose">
+                      <span
+                        v-if="
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .stockStatus === 'Closed'
+                        "
+                      >
+                        {{
                           getTimerByStockName($route.params.id)
-                            .gameEndTimeCountDownInSec
                             | betclosein(getStockLoop($route.params.id))
-                      }}
-                    </span>
-                  </v-flex>
-                </div>
-              </v-flex>
+                        }}
+                      </span>
+                      <span v-else>
+                        {{
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | betclosein(getStockLoop($route.params.id))
+                        }}
+                      </span>
+                    </v-flex>
+                  </div>
+                </v-flex>
 
-              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
-                <span>{{ $t("msg.lotterydraw") }}</span>
-                <div id="lotteryDrawGuidelines">
-                  <v-flex class="lottery">
-                    <span>
-                      {{
-                        getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id)
-                            .gameEndTimeCountDownInSec
-                            | lotterydraw(getStockLoop($route.params.id))
-                      }}
-                    </span>
-                  </v-flex>
-                </div>
-                <!-- <lotteryDraw > </lotteryDraw>   -->
-              </v-flex>
+                <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
+                  <span>{{ $t("msg.lotterydraw") }}</span>
+                  <div id="lotteryDrawGuidelines">
+                    <v-flex class="lottery">
+                      <span>
+                        {{
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | lotterydraw(getStockLoop($route.params.id))
+                        }}
+                      </span>
+                    </v-flex>
+                  </div>
+                  <!-- <lotteryDraw > </lotteryDraw>   -->
+                </v-flex>
 
-              <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn
-                  fab
-                  dark
-                  small
-                  class="helpButton"
-                  @click="openTutorial()"
-                  title="Help"
+                <v-flex
+                  xs2
+                  md1
+                  class="text-xs-right"
+                  style="align-self: flex-end;"
                 >
-                  <v-icon dark size="25">fa-question</v-icon>
-                </v-btn>
-              </v-flex>
-            </v-layout>
-            <div id="betRuleButton">
-              <betButton :stockName="$route.params.id" :loop="1"></betButton>
-            </div>
-          </v-flex>
-        </v-layout>
+                  <v-btn
+                    fab
+                    dark
+                    small
+                    class="helpButton"
+                    @click="openTutorial()"
+                    title="Help"
+                  >
+                    <v-icon dark size="22">fa-question</v-icon>
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <!-- Stock Last Draw End -->
+          </v-layout>
+          <v-layout style="margin-top:-10px;">
+            <v-flex md5 lg5>
+              <div id="chartGuidelineNew" class="chartDesgin">
+                <v-flex>
+                  <chartApp :stockName="routeParams" />
+                </v-flex>
+              </div>
+            </v-flex>
+            <v-flex md7 lg6 ml-3 pt-2>
+              <div id="betRuleButton">
+                <betButton :stockName="$route.params.id" :loop="1"></betButton>
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+
+        <!-- Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
           <div
-            class="trendmap-container"
+            class="trendmap-container" 
             v-for="(trendType, index) in trendTypes"
             :key="index"
           >
-            <hr v-if="index > 0" />
+          
             <div id="trendmapGuidelines">
               <tableTrendMap
                 :index="index"
@@ -139,6 +151,12 @@
                 :isShowMultigameButton="index"
               ></tableTrendMap>
             </div>
+            <span
+              class="addChart"   
+              @click="removeTradMap(index)"            
+            >
+              <v-icon>close</v-icon>
+            </span>
             <span
               class="addChart"
               @click="addTrendMap()"
@@ -148,6 +166,7 @@
             </span>
           </div>
         </v-flex>
+        <!-- Road Map End -->
       </v-flex>
 
       <!-- Game Rule Popup -->
@@ -223,7 +242,7 @@ import tableTrendMap from "~/components/modern/tableTrendMap";
 import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
@@ -381,7 +400,7 @@ export default {
           {
             req: reqBody,
             res,
-            page: this.$options.name,
+            page: "pages/modern/desktop/_id.vue",
             apiUrl: config.getStock.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
@@ -390,6 +409,7 @@ export default {
         );
       }
     },
+    // Add TrendMap
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -404,7 +424,17 @@ export default {
           break;
       }
     },
-
+    // Remove trendMap 
+    removeTradMap(index){   
+      console.log(index);  
+      var indexValue = this.trendTypes[index];
+      console.log(indexValue);  
+      var newData =  this.trendTypes.filter(function(data) {       
+          return data != indexValue;
+        });
+      this.trendTypes = newData;
+       console.log(this.trendTypes);  
+    },
     loaded() {
       this.isLoad = true;
     },
@@ -493,8 +523,7 @@ export default {
 .helpButton {
   background-color: #4464ff !important;
   color: #fff;
-  padding: 5px;
-  font-size: 22px;
+  padding: 3px;
 }
 
 .leftStocklist {
@@ -503,7 +532,6 @@ export default {
   position: relative;
   top: 0;
   box-shadow: 0 0 2px grey;
-  right: 5px;
 }
 
 .sidebar-close {
