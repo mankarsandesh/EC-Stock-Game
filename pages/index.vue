@@ -45,7 +45,11 @@ export default {
     };
   },
   mounted() {
-    this.getProgress();
+    if(this.getLoginError.length > 0) {
+
+    } else {
+      this.getProgress();
+    }
   },
   watch: {
     "$screen.width"() {

@@ -30,22 +30,18 @@ const mutations = {
   SET_AUTH(state, payload) {
     state.authUser = payload;
   },
-  // end new api
   SET_USER_DATA(state, payload) {
     state.userData = payload;
   },
   SET_USER_LOGIN_DATA(state, payload) {
     state.userLoginData = payload;
   },
-  // store api_token in vuex auth Token
   SET_AUTH_TOKEN(state, token) {
     state.authToken = token;
   },
-  // store coin in localStorage payload must be "String array" '["100", "500", "1000", "5000", "10000"]'
   SET_COINS_MODERN(state, payload) {
     state.coinsModern = payload;
   },
-  // set language
   SET_LANGUAGE(state, locale) {
     if (state.locales.includes(locale)) {
       state.locale = locale;
