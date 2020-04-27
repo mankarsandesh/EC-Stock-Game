@@ -92,8 +92,10 @@ export default {
   align-items: center;
 }
 .total-bet-multigame {
+   border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   padding: 5px 15px;
   text-transform: uppercase;
   min-width: 120px;
@@ -104,8 +106,10 @@ export default {
   align-items: center;
 }
 .amount-multigame {
+    border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   padding: 5px 15px;
   padding-right: 30px;
   text-transform: uppercase;
@@ -117,9 +121,9 @@ export default {
   margin-left: -2px;
   align-items: center;
 }
-.chips-multigame {
+.chips-multigame {  
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   padding: 5px 15px;
   text-transform: uppercase;
   min-width: 350px;
@@ -131,8 +135,10 @@ export default {
   align-items: center;
 }
 .action-multigame {
+   border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   display: flex;
   height: 55px;
   padding: 0px 15px;
@@ -140,8 +146,10 @@ export default {
   align-items: center;
 }
 .max-min-multigame {
+   border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   background-color: #fff;
-  border: #615f60 solid 2px;
+  border: #aeadad solid 2px;
   padding: 5px 15px;
   text-transform: uppercase;
   min-width: 80px;

@@ -13,7 +13,6 @@
 
   </v-app>
 </template>
-
 <script>
 import invitation from "~/components/invitation";
 import { mapGetters } from "vuex";
