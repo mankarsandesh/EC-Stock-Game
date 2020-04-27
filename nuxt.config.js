@@ -117,7 +117,7 @@ module.exports = {
     // "~/plugins/axios",
     "@/plugins/roarr",
     "@/plugins/filters",
-    "@/plugins/login.js",
+    "@/plugins/callApi",
     "@/plugins/i18n",
     "@/plugins/chart",
     "@/plugins/sweetAlert",

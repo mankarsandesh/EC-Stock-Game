@@ -73,16 +73,7 @@ const config = {
   error: {
     general: "Something went wrong!"
   },
-  loginError: {
-    portalProvider: "Portal Provider UUID is invalid",
-    portalProviderUserID: "Portal Provider User Id is invalid",
-    balance: "Balance is invalid",
-    authError: "Authentication authUser & authPassword is Missing."
-  },
-  logDomain: process.env.LOG_DOMAIN || "http://127.0.0.1:3003/log",
-  defaultLanguageLocale: "cn",
-  defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
-  homePageStockName: "btc1"
+  logDomain: process.env.LOG_DOMAIN || 'http://127.0.0.1:3003/log'
 };
 
 export default config;
