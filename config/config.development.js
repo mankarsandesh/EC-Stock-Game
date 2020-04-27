@@ -83,7 +83,13 @@ const config = {
   logDomain: process.env.LOG_DOMAIN || "http://127.0.0.1:3003/log",
   defaultLanguageLocale: "cn",
   defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
-  homePageStockName: "btc1"
+  homePageStockName: "btc1",
+  language: {
+    cn: 'Chinese',
+    us: 'English',
+    th: 'Thai',
+    la: "Lao"
+  }
 };
 
 export default config;
