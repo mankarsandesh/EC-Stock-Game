@@ -1,5 +1,5 @@
 <template>
-  <div v-if="stockAnalysis.length > 0">
+  <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
         <h2 class="title_menu">{{ $t("profile.stockanalysis") }}</h2>
@@ -133,6 +133,7 @@ export default {
       isShowDateEnd: false,
       startDate: "",
       endDate: "",
+      error: "",
       isDataValid: false,
       chartOptions: {
         colors: [

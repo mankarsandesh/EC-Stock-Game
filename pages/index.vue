@@ -61,7 +61,9 @@ export default {
       const error = "Somthing Wrong.";
       this.messageError.push(error);
     }
+    this.setLanguage("cn");
     this.checkUserAuth();
+    
   },
   watch: {
     "$screen.width"() {
@@ -154,7 +156,7 @@ export default {
         );
       }
     },
-    ...mapActions(["setAuth", "setUserUUID","setPortalProviderUUID"]),
+    ...mapActions(["setAuth", "setUserUUID","setPortalProviderUUID", "setLanguage"]),
 
     getProgress() {
       let width = 100,
