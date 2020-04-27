@@ -11,7 +11,7 @@ const stock = {
     },
     {
       stockName: "sh000001",
-      stockUUID: "451e6bcf-b564-41da-be3f-dc622c633109",
+      stockUUID: "c4d8832d-6853-47b8-84df-9ac446cb5770",
       reference:
         "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
       type: "china",
