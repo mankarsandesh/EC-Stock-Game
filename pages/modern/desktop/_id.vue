@@ -139,11 +139,11 @@
         <!-- Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
           <div
-            class="trendmap-container"
+            class="trendmap-container" 
             v-for="(trendType, index) in trendTypes"
             :key="index"
           >
-            <hr v-if="index > 0" />
+          
             <div id="trendmapGuidelines">
               <tableTrendMap
                 :index="index"
@@ -151,6 +151,12 @@
                 :isShowMultigameButton="index"
               ></tableTrendMap>
             </div>
+            <span
+              class="addChart"   
+              @click="removeTradMap(index)"            
+            >
+              <v-icon>close</v-icon>
+            </span>
             <span
               class="addChart"
               @click="addTrendMap()"
@@ -403,6 +409,7 @@ export default {
         );
       }
     },
+    // Add TrendMap
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -417,7 +424,17 @@ export default {
           break;
       }
     },
-
+    // Remove trendMap 
+    removeTradMap(index){   
+      console.log(index);  
+      var indexValue = this.trendTypes[index];
+      console.log(indexValue);  
+      var newData =  this.trendTypes.filter(function(data) {       
+          return data != indexValue;
+        });
+      this.trendTypes = newData;
+       console.log(this.trendTypes);  
+    },
     loaded() {
       this.isLoad = true;
     },
