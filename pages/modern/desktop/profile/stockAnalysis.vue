@@ -366,7 +366,7 @@ li {
 
 .chart-map-color {
   position: relative;
-  float: right;
+  float: right ;
   margin-top: 15px;
   display: inline-block;
 }
