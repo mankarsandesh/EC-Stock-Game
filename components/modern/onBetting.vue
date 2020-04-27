@@ -68,6 +68,9 @@ export default {
 </script>
 
 <style scoped>
+.totalAmount{
+  font-size:30px;
+}
 .current-bet {
   padding: 10px 0px;
   width: 100%;

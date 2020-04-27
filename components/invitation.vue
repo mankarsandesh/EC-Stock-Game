@@ -255,6 +255,7 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
+         console.log(newData);
         this.globalInvitation.push(newData);
         this.scrollDown();
       }

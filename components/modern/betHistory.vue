@@ -103,7 +103,8 @@
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>
               <td>
-                <span class="totalRolling">{{ TotalRolling | toCurrency }}</span>
+                <span class="totalRollingWin" v-if="TotalAmount < TotalRolling" >{{ TotalRolling | toCurrency }}</span>
+                <span class="totalRollingLoss" v-if="TotalAmount  > TotalRolling" >{{ TotalRolling | toCurrency }}</span>
               </td>
               <td colspan="1"></td>
             </tr>
@@ -167,10 +168,15 @@ export default {
 };
 </script>
 <style scoped>
-.totalRolling{
+.totalRollingWin{
 font-weight: 800;
 color:green;
 }
+.totalRollingLoss{
+font-weight: 800;
+color:red;
+}
+
 .winning {
   color: green;
   font-weight: 800;
