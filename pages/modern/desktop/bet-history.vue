@@ -31,7 +31,11 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" v-model="dateFrom" @input="from = false"></v-date-picker>
+                  <v-date-picker
+                    color="#1db42f"
+                    v-model="dateFrom"
+                    @input="from = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md4>
@@ -55,12 +59,19 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" v-model="dateTo" @input="to = false"></v-date-picker>
+                  <v-date-picker
+                    color="#1db42f"
+                    v-model="dateTo"
+                    @input="to = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md2>
                 <v-btn class="goButton" @click="searchBetHistory()">
-                  <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
+                  <i
+                    v-if="loadingImage"
+                    class="fa fa-circle-o-notch fa-spin"
+                  ></i>
                   &nbsp;{{ $t("msg.go") }}
                 </v-btn>
               </v-flex>
@@ -110,6 +121,7 @@ export default {
   },
   data() {
     return {
+      today : new Date(),
       sortby: "",
       search: "",
       loadingImage: false,
@@ -132,79 +144,73 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   mounted() {
-    const today = new Date();
     const lastWeek = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() - 7
+      this.today.getFullYear(),
+      this.today.getMonth(),
+      this.today.getDate() - 7
     )
       .toISOString()
       .substr(0, 10);
     this.dateFrom = lastWeek;
-    this.dateTo = today.toISOString().substring(0, 10);
-    this.fetch();
+    this.dateTo =  this.today.toISOString().substring(0, 10);
+    this.fetchBetHsitory();
   },
   methods: {
     sortingBy() {
       if (this.sortby == "Today") {
-        const today = new Date();
         const lastWeek = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate() + 1
+           this.today.getFullYear(),
+           this.today.getMonth(),
+           this.today.getDate() + 1
         )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
-        this.dateTo = today.toISOString().substring(0, 10);
-        this.fetch();
+        this.dateTo =  this.today.toISOString().substring(0, 10);
+        this.fetchBetHsitory();
       } else if (this.sortby == "This Week") {
-        const today = new Date();
         const lastWeek = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate() - 5
+           this.today.getFullYear(),
+           this.today.getMonth(),
+           this.today.getDate() - 5
         )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
-        this.dateTo = today.toISOString().substring(0, 10);
-        this.fetch();
+        this.dateTo =  this.today.toISOString().substring(0, 10);
+        this.fetchBetHsitory();
       } else if (this.sortby == "This Month") {
-        const today = new Date();
         const lastWeek = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate() - 30
+          this.today.getFullYear(),
+          this.today.getMonth(),
+          this.today.getDate() - 30
         )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
-        this.dateTo = today.toISOString().substring(0, 10);
-        this.fetch();
+        this.dateTo = this.today.toISOString().substring(0, 10);
+        this.fetchBetHsitory();
       }
     },
     searchBetHistory() {
       this.loadingImage = true;
       if (this.dateFrom && this.dateTo) {
-        this.fetch();
+        this.fetchBetHsitory();
       }
     },
-    async fetch() {
+    async fetchBetHsitory() {
       try {
         var reqBody = {
-          portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-          userUUID: this.userUUID, // get the userUUID with the this object
-          version: config.version, // version of API
-          betResult: [0, 1], // -1= pending, 0= lose , 1 = win
-          offset: 0,
-          limit: 50,
+          portalProviderUUID: this.portalProviderUUID, 
+          userUUID: this.userUUID, 
+          version: config.version, 
+          betResult: [0, 1],      
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo
         };
         var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
-        });       
+        });
         if (data.status) {
           this.userBetHistory = data.data;
           this.loadingImage = false;

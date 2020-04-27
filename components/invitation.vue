@@ -255,6 +255,7 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
+         console.log(newData);
         this.globalInvitation.push(newData);
         this.scrollDown();
       }
@@ -386,7 +387,6 @@ export default {
   font-size: 14px;
   width: 100%;
 }
-
 .liveChat {
   z-index: 999;
   position: fixed;
@@ -397,7 +397,6 @@ export default {
   color: #fff;
   background-color: #2aaf3e !important;
 }
-
 .popper {
   right: 20px;
   width: 370px;

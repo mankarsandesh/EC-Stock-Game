@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2 " >
-    <v-layout style="background-color: #f4f5fd;" >
+  <v-container fluid mt-2 class="containerNew pa-2 ">
+    <v-layout style="background-color: #f4f5fd;">
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
@@ -30,11 +30,11 @@
         </span>
       </v-flex>
       <!-- </v-flex> -->
-      <v-flex :xs10="!isHidden" :xs12="isHidden"   >
-        <v-flex md12 lg12 pl-3 >
+      <v-flex :xs10="!isHidden" :xs12="isHidden">
+        <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
-            <v-flex md7 lg6 pt-2 >
+            <v-flex md7 lg6 pt-2>
               <div id="selectstockGuideline">
                 <stockSelect />
               </div>
@@ -43,7 +43,7 @@
 
             <!-- Stock Last Draw Start -->
             <v-flex xs6 md5 lg6 pt-1>
-              <v-layout mb-3 >
+              <v-layout mb-3>
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.Lastdraw") }}</span>
                   <div id="lastDrawGuideline">
@@ -53,9 +53,9 @@
                       ></span>
                     </v-flex>
                   </div>
-                </v-flex>               
+                </v-flex>
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span >{{ $t("msg.BetClosein") }}</span>
+                  <span>{{ $t("msg.BetClosein") }}</span>
                   <div id="betCloseInGuideline">
                     <v-flex class="betclose">
                       <span
@@ -121,14 +121,14 @@
             <!-- Stock Last Draw End -->
           </v-layout>
           <v-layout style="margin-top:-10px;">
-            <v-flex  md5 lg5 >
+            <v-flex md5 lg5>
               <div id="chartGuidelineNew" class="chartDesgin">
                 <v-flex>
                   <chartApp :stockName="routeParams" />
                 </v-flex>
               </div>
             </v-flex>
-            <v-flex  md7 lg6 ml-3 pt-2>
+            <v-flex md7 lg6 ml-3 pt-2>
               <div id="betRuleButton">
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
@@ -139,11 +139,11 @@
         <!-- Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
           <div
-            class="trendmap-container"
+            class="trendmap-container" 
             v-for="(trendType, index) in trendTypes"
             :key="index"
           >
-            <hr v-if="index > 0" />
+          
             <div id="trendmapGuidelines">
               <tableTrendMap
                 :index="index"
@@ -151,6 +151,12 @@
                 :isShowMultigameButton="index"
               ></tableTrendMap>
             </div>
+            <span
+              class="addChart"   
+              @click="removeTradMap(index)"            
+            >
+              <v-icon>close</v-icon>
+            </span>
             <span
               class="addChart"
               @click="addTrendMap()"
@@ -403,6 +409,7 @@ export default {
         );
       }
     },
+    // Add TrendMap
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -417,7 +424,17 @@ export default {
           break;
       }
     },
-
+    // Remove trendMap 
+    removeTradMap(index){   
+      console.log(index);  
+      var indexValue = this.trendTypes[index];
+      console.log(indexValue);  
+      var newData =  this.trendTypes.filter(function(data) {       
+          return data != indexValue;
+        });
+      this.trendTypes = newData;
+       console.log(this.trendTypes);  
+    },
     loaded() {
       this.isLoad = true;
     },
@@ -507,7 +524,6 @@ export default {
   background-color: #4464ff !important;
   color: #fff;
   padding: 3px;
-
 }
 
 .leftStocklist {
