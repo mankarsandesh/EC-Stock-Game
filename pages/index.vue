@@ -16,12 +16,10 @@
             </div>
             <div class="glow"></div>
           </div>
-          <div class="glow"></div>
         </div>
-      </div>
-    </v-layout>
-  </v-fade-transition>
-</v-container>
+      </v-layout>
+    </v-fade-transition>
+  </v-container>
 </template>
 <script>
 import {
@@ -45,7 +43,11 @@ export default {
     };
   },
   mounted() {
-    this.getProgress();
+    if(this.getLoginError.length > 0) {
+
+    } else {
+      this.getProgress();
+    }
   },
   watch: {
     "$screen.width"() {

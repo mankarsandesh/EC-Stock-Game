@@ -5,6 +5,7 @@ const config = {
   apiDomain: process.env.API_DOMAIN,
   socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
+  whitelabelUrl: process.env.WHITELABEL_URL,
   secretKey: "CC21128A312FAF7817C93D1B51CB9",
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
@@ -75,7 +76,7 @@ const config = {
   },
   loginError: {
     portalProvider: "Portal Provider UUID is invalid",
-    portalProviderUserID: "Portal Provider User Id is invalid",
+    portalProviderUserId: "Portal Provider User Id is invalid",
     balance: "Balance is invalid",
     authError: "Authentication authUser & authPassword is Missing."
   },
