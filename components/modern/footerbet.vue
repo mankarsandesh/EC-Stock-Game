@@ -8,7 +8,7 @@
         <v-layout row>
           <v-flex class="text-center">
             <v-avatar
-              size="70"
+              size="65"
               v-for="(item, key) in imgChip"
               :key="key"
               class="chips"

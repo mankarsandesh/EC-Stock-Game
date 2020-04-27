@@ -319,7 +319,7 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex id="betButtonGuidelines" xs4 sm12 md12 lg12>
+          <v-flex id="betButtonGuidelines" xs4 sm12 md12 lg12 mt-4>
             <betButton
               :isFullscreen="true"
               :stockName="$route.params.id"
@@ -340,7 +340,7 @@
             <fullscreencurrentbet v-else></fullscreencurrentbet>
           </div>
           <v-layout pa-3>
-            <v-flex md2 lg2 pt-2>
+            <v-flex md3 lg3 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-user fa-2x iconcolor" />
                 <span>
@@ -350,7 +350,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex  md3 lg3 pt-2>
+            <v-flex  md3 lg3 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-gamepad fa-2x iconcolor" />
                 <span>{{
@@ -360,7 +360,7 @@
                 }}</span>
               </span>
             </v-flex>
-            <v-flex md4 lg4 pt-2>
+            <v-flex md4 lg4 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-money fa-2x iconcolor" />
                 <span>
@@ -372,7 +372,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex  sm4 md4 lg4 mb-1>
+            <v-flex  sm4 md4 lg4 mb-1 style="text-align:center;">
               <v-btn
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
@@ -383,7 +383,7 @@
           </v-layout>
         </v-flex>
         <!-- live Chart road map -->
-        <v-flex xs12 class="text-xs-center" mt-3>
+        <v-flex xs12 class="text-xs-center">
           <footerBet lg12 md12></footerBet>
           <v-layout
             class="fullroadMap elevation-4"
@@ -754,7 +754,7 @@ export default {
 }
 
 .lastdraw {
-  font-size: 14px;
+  font-size: 12px;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
   font-size: 22px;
@@ -763,7 +763,7 @@ export default {
 }
 
 .betclose {
-  font-size: 14px;
+  font-size: 12px;
   border: 1.5px solid #ef076a;
   border-radius: 10px;
   font-size: 22px;
@@ -772,7 +772,7 @@ export default {
 }
 
 .lottery {
-  font-size: 14px;
+  font-size: 12px;
   border: 1.5px solid #01e3bf;
   border-radius: 10px;
   font-size: 22px;
