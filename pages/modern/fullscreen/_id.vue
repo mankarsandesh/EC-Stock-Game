@@ -210,8 +210,8 @@
                 <v-layout xs12 >
                   <v-flex
                     xs12
-                    lg6
-                    md6
+                    lg4
+                    md4
                     class="text-xs-center1"
                     style="width: 100%; align-self: center;"
                   >
@@ -223,7 +223,7 @@
                     }}</span>
                   </v-flex>
 
-                  <v-flex xs12 md6 lg6 class="text-xs-right topHeader">
+                  <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed"
                       >1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
                     >
@@ -340,7 +340,7 @@
             <fullscreencurrentbet v-else></fullscreencurrentbet>
           </div>
           <v-layout pa-3>
-            <v-flex xs3 sm3 md3 lg3 pt-2>
+            <v-flex md2 lg2 pt-2>
               <span class="seticon">
                 <i class="fa fa-user fa-2x iconcolor" />
                 <span>
@@ -350,7 +350,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3 pt-2>
+            <v-flex  md3 lg3 pt-2>
               <span class="seticon">
                 <i class="fa fa-gamepad fa-2x iconcolor" />
                 <span>{{
@@ -360,7 +360,7 @@
                 }}</span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3 pt-2>
+            <v-flex md4 lg4 pt-2>
               <span class="seticon">
                 <i class="fa fa-money fa-2x iconcolor" />
                 <span>
@@ -372,7 +372,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex xs3 sm3 md3 lg3 mb-1>
+            <v-flex  sm4 md4 lg4 mb-1>
               <v-btn
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
@@ -792,14 +792,15 @@ export default {
 .seticon {
   border: 2px solid #b4b2b2;
   border-radius: 10px;
-  padding: 8px 10px;
+  padding: 5px 6px;
+  text-align: center;
   /*height: 25px;
   min-width: 25px !important; */
 }
 
 .seticon i {
   color: #545352;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .seticon span {

@@ -125,7 +125,7 @@ import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
 import log from "roarr";
 
-import DesktopTutorial from "~/components/desktopTutorial";
+import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
 
 export default {
   components: {

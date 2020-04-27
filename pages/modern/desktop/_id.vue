@@ -1,6 +1,6 @@
 <template>
   <v-container fluid mt-2 class="containerNew pa-2 " >
-    <v-layout style="background-color: #f4f5fd;" >
+    <v-layout style="background-color: #f4f5fd;">    
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
@@ -30,7 +30,7 @@
         </span>
       </v-flex>
       <!-- </v-flex> -->
-      <v-flex :xs10="!isHidden" :xs12="isHidden"   >
+      <v-flex :xs10="!isHidden" :xs12="isHidden"    >
         <v-flex md12 lg12 pl-3 >
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
