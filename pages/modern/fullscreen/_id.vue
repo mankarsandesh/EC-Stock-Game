@@ -528,7 +528,7 @@ export default {
     );
     this.listenForBroadcast(
       {
-        channelName: `LiveTotalBetData.${this.gameStockId}`,
+        channelName: `LiveTotalBetData.${this.getGameUUIDByStockName(this.$route.params.id)}`,
         eventName: "LiveTotalBetData"
       },
       ({ data }) => {

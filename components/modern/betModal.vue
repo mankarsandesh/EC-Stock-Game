@@ -114,7 +114,8 @@ export default {
       "getCoinsModern",
       "getPortalProviderUUID",
       "getUserUUID",
-      "getLastDraw"
+      "getLastDraw",
+      "getUserInfo"
     ])
   },
   watch: {
@@ -322,17 +323,29 @@ export default {
       }
     },
     confirmBet() {
-      let data = {
-        gameUUID: this.getGameUUIDByStockName(this.stockName),
-        ruleID: this.ruleid,
-        betAmount: this.betValue
-      };
-      if (this.betValue > 0) {
-        this.confirmDisabled = true;
-        this.sendBetting(data);
-        $("#" + this.stockName + this.betId).addClass(
-          this.betId.split("-")[0] + " " + this.betId.split("-")[1]
-        );
+      if (
+        parseInt(this.getUserInfo.balance) <= 0 ||
+        parseInt(this.betValue) >= parseInt(this.getUserInfo.balance)
+      ) {
+        this.$swal({
+          type: "error",
+          title: config.error.lowBalance,
+          timer: 1500,
+          showConfirmButton: true
+        });
+      } else {
+        let data = {
+          gameUUID: this.getGameUUIDByStockName(this.stockName),
+          ruleID: this.ruleid,
+          betAmount: this.betValue
+        };
+        if (this.betValue > 0) {
+          this.confirmDisabled = true;
+          this.sendBetting(data);
+          $("#" + this.stockName + this.betId).addClass(
+            this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+          );
+        }
       }
     },
     closePopper() {

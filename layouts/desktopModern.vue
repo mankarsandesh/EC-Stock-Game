@@ -46,7 +46,7 @@
                 @click="$refs.language.showDialog()"
               >
                 <countryFlag :country="countryflag" size="normal" />
-                <span>&nbsp;{{ $t("msg.chooselanguage") }}</span>
+                <span>&nbsp;{{ $t(`msg.${language[getLocale]}`) }}</span>
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>
@@ -166,7 +166,8 @@ export default {
       rightDrawer: false,
       title: "EC gaming",
       isFullscreen: null,
-      timeout: 3000
+      timeout: 3000,
+      language: config.language
     };
   },
   updated() {

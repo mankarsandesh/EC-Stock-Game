@@ -66,6 +66,7 @@
         "vue-toast-notification": "^0.2.0",
         "vuetify": "^1.0.0",
         "vuetify-loader": "^1.0.8",
+        "vuex-persist": "^2.2.0",
         "winston": "^3.2.1",
         "winston-loggly-bulk": "^3.0.1"
     },
