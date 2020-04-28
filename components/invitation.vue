@@ -268,8 +268,7 @@ export default {
         let newData = [];
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
-        });
-        console.log(newData);
+        });       
         this.globalInvitation.push(newData);
         this.scrollDown();
       }
@@ -292,8 +291,7 @@ export default {
           userUUID: this.getUserUUID,
           category: this.selectCategory,
           version: config.version
-        };
-        console.log(sendData);
+        };      
         const res = await this.$axios.$post(
           config.getUserInvitation.url,
           sendData,
