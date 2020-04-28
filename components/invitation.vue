@@ -302,8 +302,6 @@ export default {
           timer: 1000
         });
       }
-      }else{
-        alert("Empty");
       }
     },
     // fetch default image or from server image
