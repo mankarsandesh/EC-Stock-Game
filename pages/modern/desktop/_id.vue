@@ -144,12 +144,12 @@
             :key="index"
           >
           
-            <div id="trendmapGuidelines">
+            <div id="trendmapGuidelines">              
               <tableTrendMap
                 :index="index"
                 :dataArray="getRoadMap"
                 :isShowMultigameButton="index"
-              ></tableTrendMap>
+              ></tableTrendMap>              
             </div>
             <span
               class="addChart"   
@@ -266,7 +266,7 @@ export default {
     isMobile: isMobile
   },
   data() {
-    return {
+    return {     
       routeParams: this.$route.params.id,
       stock: [],
       dialog: false,
@@ -286,7 +286,11 @@ export default {
       isStep: 0
     };
   },
-  created() {
+  updated(){
+   
+  },
+  created() {    
+   
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }
@@ -307,6 +311,7 @@ export default {
     );
   },
   mounted() {
+   
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // live road map from socket
     this.listenForBroadcast(
@@ -350,7 +355,7 @@ export default {
     this.setFooterBetAmount(0);
     this.removeAllFooterBet();
   },
-  watch: {
+  watch: {  
     // check size screen
     // change to mobile component
     "$screen.width"() {
