@@ -52,7 +52,7 @@ export default {
           userUUID: this.userUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(config.getNotification.url, reqBody, {
+        var res = await this.$axios.$post(config.getUserNotification.url, reqBody, {
           headers: config.header
         });
         if (res.status) {
@@ -72,7 +72,7 @@ export default {
             req: reqBody,
             res,
             page: "pages/modern/desktop/notification.vue",
-            apiUrl: config.getNotification.url,
+            apiUrl: config.getUserNotification.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
           },
