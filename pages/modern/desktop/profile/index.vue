@@ -167,7 +167,7 @@ export default {
           formData, {
             headers: config.header
           }
-        );
+        );       
         if (res.status) {
           this.setUserData();
           this.updating = false;
@@ -179,7 +179,7 @@ export default {
           });
         } else {
           this.updating = false;
-          throw new Error(config.error.general);
+          throw new Error(res.message[0]);
         }
       } catch (ex) {
         console.error(ex);
