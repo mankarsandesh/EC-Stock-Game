@@ -53,12 +53,6 @@
                 v-for="data in globalInvitation"
                 :key="data.index"
               >
-                <div
-                  class="messageChatView"
-                  v-if="globalInvitation.length == 0"
-                >
-                  <h1>There are no Invitaion</h1>
-                </div>
                 <div class="messageChatView" v-if="globalInvitation.length > 0">
                   <div style="width:30%;">
                     <nuxt-link
@@ -133,7 +127,7 @@
                     item-text="value"
                     item-value="id"
                     v-model="selectCategory"
-                    :items="categoryName"
+                   :items="categoryName"
                     multiple
                     label="Select Category"
                   ></v-select>
@@ -284,14 +278,16 @@ export default {
   },
   methods: {
     // Send Invitation
-    async sendInvitation() {
+    async sendInvitation() {         
+      if(this.selectCategory.length > 0){
       try {
         const sendData = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
           category: this.selectCategory,
           version: config.version
-        };      
+        };
+        console.log(sendData);
         const res = await this.$axios.$post(
           config.getUserInvitation.url,
           sendData,
@@ -305,6 +301,9 @@ export default {
           type: "error",
           timer: 1000
         });
+      }
+      }else{
+        alert("Empty");
       }
     },
     // fetch default image or from server image
@@ -358,7 +357,7 @@ export default {
   color: #fff !important;
 }
 .selectCategory {
-  width: 150px;
+  width: 120px !important;
   font-size: 14px;
   color: #fff !important;
 }
@@ -400,16 +399,21 @@ export default {
   flex-direction: column;
 }
 
-.buttonInvitation { 
+.buttonInvitation {
+  padding: 10px;
   margin-top:-8px;
   width: 100%;
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   text-align: center;
+  height: 50px;
 }
 .buttonInvitation i {
-  margin-top: -15px;
+  padding: 12px;
+  font-size: 25px;
+  border-left: 2px solid;
+  margin-top: -27px;
 }
 .liveChat {
   z-index: 999;
@@ -610,7 +614,7 @@ export default {
   padding-top: 10px;
   border-bottom: 1px solid #dddddd;
   background-color: #f4f4f4;
-  height: 430px;
+  height: 415px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;
