@@ -69,7 +69,8 @@ const config = {
     host: "0.0.0.0"
   },
   error: {
-    general: "Something went wrong!"
+    general: "Something went wrong!",
+    lowBalance: "Insufficient Balance. Please topup your balance"
   },
   loginError: {
     portalProvider: "Portal Provider UUID is invalid",
