@@ -92,9 +92,9 @@
                 text
                 >{{ $t("useraction.follow") }}</v-btn
               >
-              <!-- <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
+              <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
                 $t("msg.cancel")
-              }}</v-btn> -->
+              }}</v-btn>
             </v-flex>
           </v-radio-group>
         </v-card-actions>
