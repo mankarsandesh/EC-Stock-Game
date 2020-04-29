@@ -10,16 +10,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in getStockListPrice[0]"
-            :key="item.stockUUID"
-          >
+          <tr v-for="(item, index) in getStockListPrice[0]" :key="item.stockUUID">
             <td>
               <b>{{ item.stockName }}</b>
             </td>
-            <td v-if="item.stockStatus == 'Closed'" :style="{ color: 'red' }">
-              Closed
-            </td>
+            <td v-if="item.stockStatus == 'Closed'" :style="{ color: 'red' }">Closed</td>
             <td
               v-if="item.stockStatus !== 'Closed'"
               v-html="
@@ -50,7 +45,6 @@
 import { mapGetters, mapState } from "vuex";
 import config from "~/config/config.global";
 export default {
-  props: ["itemss"],
   computed: {
     ...mapGetters(["getStockListPrice"])
   }
