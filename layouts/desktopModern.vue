@@ -228,7 +228,7 @@ export default {
             req: reqBody,
             res: data,
             page: "layouts/desktopModern.vue",
-            apiUrl: config.getAllBets.url,
+            apiUrl: config.getUserNotification.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
           },
