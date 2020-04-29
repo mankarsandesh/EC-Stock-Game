@@ -116,6 +116,7 @@ module.exports = {
     "@/plugins/vuetify",
     // "~/plugins/axios",
     "@/plugins/roarr",
+    "@plugins/secure-storage",
     "@/plugins/filters",
     "@/plugins/login.js",
     { src: '~/plugins/vuex-persist', ssr: false },

@@ -1,7 +1,8 @@
 import VuexPersistence from "vuex-persist";
+import secureStorage from "./secure-storage";
 
 export default ({ store }) => {
   new VuexPersistence({
-    storage: window.localStorage
+    storage: secureStorage
   }).plugin(store);
 };
