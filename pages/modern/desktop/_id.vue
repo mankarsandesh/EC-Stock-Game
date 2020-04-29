@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2 ">
-    <v-layout style="background-color: #f4f5fd;">
-      <!-- <v-flex md3 lg3 mt-3 > -->
+  <v-container fluid mt-2 class="containerNew pa-2 " style="text-align:center;">
+    <v-layout style="background-color: #f4f5fd;width:100%;">
+      <!-- <v-flex md3 lg3 mt-3 > -->     
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
