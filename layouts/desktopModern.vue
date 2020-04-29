@@ -274,6 +274,7 @@ export default {
   width: 100%;
   border-bottom: 1px solid #dddddd;
 }
+
 .userImage {
   float: left;
   width: 10%;
