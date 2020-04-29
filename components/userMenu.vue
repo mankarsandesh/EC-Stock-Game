@@ -36,13 +36,13 @@
           <v-list-tile-title>{{
             $t("profile.onlinehistory")
           }}</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile
-          @click="$router.push('/modern/desktop/profile/stockanalysis/')"
+        </v-list-tile>      
+          <v-list-tile
+          @click="$router.push('/modern/desktop/profile/follower/')"
         >
-          <i class="fa fa-line-chart fa-15x margin-right-5" />
+          <i class="fa fa-user fa-2x margin-right-5" />
           <v-list-tile-title>{{
-            $t("profile.stockanalysis")
+            $t("profile.myfollowers")        
           }}</v-list-tile-title>
         </v-list-tile>
 

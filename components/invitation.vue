@@ -203,7 +203,6 @@ export default {
       timeout: 2000,
       x: null,
       y: "top",
-      category: ["Rank", "Rate", "Followers"],
       selectCategory: [],
       categoryName: [
         {
@@ -216,7 +215,7 @@ export default {
         },
         {
           id: "3",
-          value: "Rate"
+          value: "User Rank"
         }
       ],
       FolloworNot: "",
@@ -281,16 +280,15 @@ export default {
     async sendInvitation() {         
       if(this.selectCategory.length > 0){
       try {
-        const sendData = {
+        const reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
           category: this.selectCategory,
           version: config.version
         };
-        console.log(sendData);
         const res = await this.$axios.$post(
           config.getUserInvitation.url,
-          sendData,
+          reqBody,
           {
             headers: config.header
           }

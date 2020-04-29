@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2 ">
-    <v-layout style="background-color: #f4f5fd;">
-      <!-- <v-flex md3 lg3 mt-3 > -->
+  <v-container fluid mt-2 class="containerNew pa-2 " style="text-align:center;">
+    <v-layout style="background-color: #f4f5fd;width:100%;">
+      <!-- <v-flex md3 lg3 mt-3 > -->     
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
@@ -139,22 +139,18 @@
         <!-- Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
           <div
-            class="trendmap-container" 
+            class="trendmap-container"
             v-for="(trendType, index) in trendTypes"
             :key="index"
           >
-          
-            <div id="trendmapGuidelines">              
+            <div id="trendmapGuidelines">
               <tableTrendMap
                 :index="index"
                 :dataArray="getRoadMap"
                 :isShowMultigameButton="index"
-              ></tableTrendMap>              
+              ></tableTrendMap>
             </div>
-            <span
-              class="addChart"   
-              @click="removeTradMap(index)"            
-            >
+            <span class="addChart" @click="removeTradMap(index)">
               <v-icon>close</v-icon>
             </span>
             <span
@@ -205,6 +201,7 @@
             fab
             class="multiGame"
             dark
+            title="Multiple Game"
           >
             <i
               style="font-size:26px;"
@@ -266,7 +263,7 @@ export default {
     isMobile: isMobile
   },
   data() {
-    return {     
+    return {
       routeParams: this.$route.params.id,
       stock: [],
       dialog: false,
@@ -286,11 +283,8 @@ export default {
       isStep: 0
     };
   },
-  updated(){
-   
-  },
-  created() {    
-   
+  updated() {},
+  created() {
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }
@@ -311,7 +305,6 @@ export default {
     );
   },
   mounted() {
-   
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     // live road map from socket
     this.listenForBroadcast(
@@ -355,7 +348,7 @@ export default {
     this.setFooterBetAmount(0);
     this.removeAllFooterBet();
   },
-  watch: {  
+  watch: {
     // check size screen
     // change to mobile component
     "$screen.width"() {
@@ -429,16 +422,16 @@ export default {
           break;
       }
     },
-    // Remove trendMap 
-    removeTradMap(index){   
-      console.log(index);  
+    // Remove trendMap
+    removeTradMap(index) {
+      console.log(index);
       var indexValue = this.trendTypes[index];
-      console.log(indexValue);  
-      var newData =  this.trendTypes.filter(function(data) {       
-          return data != indexValue;
-        });
+      console.log(indexValue);
+      var newData = this.trendTypes.filter(function(data) {
+        return data != indexValue;
+      });
       this.trendTypes = newData;
-       console.log(this.trendTypes);  
+      console.log(this.trendTypes);
     },
     loaded() {
       this.isLoad = true;
