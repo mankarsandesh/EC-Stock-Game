@@ -74,18 +74,35 @@
               v-on:change="changeAmount(n.value)"
             ></v-radio>
 
-            <v-text-field
-              :rules="[
-                rulesNew.min(unfollowValue, autoStop),
-                rulesNew.max(unfollowValue, autoStop)
-              ]"
-              solo
-              @keypress="onlyNumber"
-              v-model="unfollowValue"
-            >
-              <span slot="append" color="red"> {{ unfollowSign }}</span>
-            </v-text-field>
-            <v-flex lg12>
+            <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
+              <v-text-field
+                :rules="[
+                  rulesNew.min(unfollowValue, autoStop),
+                  rulesNew.max(unfollowValue, autoStop)
+                ]"
+                solo
+                @keypress="onlyNumber"
+                v-model="unfollowValue"
+              >
+                <span slot="append" color="red"> {{ unfollowSign }}</span>
+              </v-text-field>
+            </v-flex>
+            <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
+              <v-slider
+                v-model="unfollowValue"
+                class="align-center"
+                :max="unFollowValueMax"
+                :min="unFollowValueMin"
+                color="green"
+                thumb-color="green"
+                hide-details
+                inverse-label
+               track-fill-color="green"
+               :label="`${unfollowValue} ${unfollowSign}`"
+              >
+              </v-slider>
+            </v-flex>
+            <v-flex lg12 mt-2>
               <v-btn
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
@@ -120,6 +137,9 @@ export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
     return {
+      // Unfollow Default Value Min and Max
+      unFollowValueMin: 3,
+      unFollowValueMax: 10,     
       // AutoStop Follow Validation
       rulesNew: {
         // Min Value
@@ -141,9 +161,7 @@ export default {
               (value || "") <= 10 || `Time may not be greater than 10 Days`
             );
           else
-            return (
-              (value || "") <= 10 || `Bet may not be greater than 10 Bets`
-            );
+            return (value || "") <= 10 || `Bet may not be greater than 10 Bets`;
         }
       },
       // Follow by Validation
@@ -160,7 +178,7 @@ export default {
       hasSucess: false,
       FollwingError: false,
       unfollowSign: "USD",
-      unfollowValue: "100",
+      unfollowValue: 100,
       selectAmount: false,
       selectTime: false,
       selectBets: false,
@@ -305,7 +323,7 @@ export default {
         ],
         method: method,
         version: config.version
-      };
+      };     
       try {
         var { data } = await this.$axios.post(config.followUser.url, reqBody, {
           headers: config.header
@@ -347,14 +365,18 @@ export default {
     // Change Amount Validation
     changeAmount(value) {
       if (value == "stopWin" || value == "stopLoss") {
-        this.unfollowValue = "100";
+        this.unfollowValue = 100;
         this.unfollowSign = "USD";
       } else if (value == "stopTime") {
-        this.unfollowValue = "1";
-        this.unfollowSign = "Days";
+        this.unFollowValueMax = 10;
+        this.unFollowValueMin = 1;
+        this.unfollowValue = 2;
+        this.unfollowSign = "Days";        
       } else {
-        this.unfollowValue = "3";
-        this.unfollowSign = "Bets";
+        this.unFollowValueMax = 100;
+        this.unFollowValueMin = 1;
+        this.unfollowValue = 3;
+        this.unfollowSign = "Bets";        
       }
     },
     // Number Validation
