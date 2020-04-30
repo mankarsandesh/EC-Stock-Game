@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2 " style="text-align:center;">
+  <v-container fluid mt-2 class="containerNew pa-2 ">
     <v-layout style="background-color: #f4f5fd;width:100%;">
       <!-- <v-flex md3 lg3 mt-3 > -->     
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>

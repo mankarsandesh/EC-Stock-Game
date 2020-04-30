@@ -158,6 +158,7 @@
         :userImage="defaultImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
+        @followBetClose="closeFollowBet"
       />
     </v-dialog>
 
@@ -215,7 +216,7 @@ export default {
         },
         {
           id: "3",
-          value: "User Rank"
+          value: "Rank"
         }
       ],
       FolloworNot: "",
@@ -276,7 +277,11 @@ export default {
     this.messageInput = "";
   },
   methods: {
-    // Send Invitation
+    // Close Follow Bet Popup
+    closeFollowBet(){
+      this.dialog = false;
+    },
+    // Send Top Player Users Invitation
     async sendInvitation() {         
       if(this.selectCategory.length > 0){
       try {
