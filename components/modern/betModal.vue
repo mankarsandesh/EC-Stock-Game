@@ -323,10 +323,7 @@ export default {
       }
     },
     confirmBet() {
-      if (
-        parseInt(this.getUserInfo.balance) <= 0 ||
-        parseInt(this.betValue) >= parseInt(this.getUserInfo.balance)
-      ) {
+      if (parseInt(this.betValue) > parseInt(this.getUserInfo.balance)) {
         this.$swal({
           type: "error",
           title: config.error.lowBalance,
