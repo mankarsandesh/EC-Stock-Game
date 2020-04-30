@@ -34,8 +34,8 @@ export default {
       notificationData: []
     };
   },
-  created() {
-    this.fetch();
+  async created() {
+    await this.fetch();
   },
   computed: {
     ...mapState({
@@ -52,9 +52,13 @@ export default {
           userUUID: this.userUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(config.getUserNotification.url, reqBody, {
-          headers: config.header
-        });
+        var res = await this.$axios.$post(
+          config.getUserNotification.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
         if (res.status) {
           this.notificationData = res.data;
         } else {
