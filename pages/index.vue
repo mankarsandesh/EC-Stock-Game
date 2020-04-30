@@ -22,14 +22,9 @@
   </v-container>
 </template>
 <script>
-import {
-  mapActions,
-  mapGetters
-} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
-import {
-  isMobile
-} from "mobile-device-detect";
+import { isMobile } from "mobile-device-detect";
 import log from "roarr";
 
 export default {
@@ -43,9 +38,14 @@ export default {
     };
   },
   mounted() {
-    if(this.getLoginError.length > 0) {
-
+    if (this.getLoginError.length > 0) {
     } else {
+      // Set referrer Url
+      localStorage.setItem(
+        "referrerUrl",
+        document.referrer.match(/:\/\/(.[^/]+)/)[1]
+      );
+      this.setReferrer(document.referrer.match(/:\/\/(.[^/]+)/)[1]);
       this.getProgress();
     }
   },
@@ -62,6 +62,7 @@ export default {
     ...mapGetters(["getLoginError"])
   },
   methods: {
+    ...mapActions(["setReferrer"]),
     getProgress() {
       let width = 100,
         perfData = window.performance.timing, // The PerformanceTiming interface represents timing-related performance information for the given page.
@@ -90,7 +91,7 @@ export default {
       this.animateValue(PercentageID, start, end, duration);
 
       // Fading Out Loadbar on Finised
-      setTimeout(function () {
+      setTimeout(function() {
         $(".preloader-wrap").fadeOut(100);
       }, time);
     },

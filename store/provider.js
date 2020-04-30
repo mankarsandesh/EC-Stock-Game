@@ -17,7 +17,8 @@ const state = () => ({
   tutorialStepNumber: 0, // Store tutorial step number
   UserAuth: {},
   messageError: [],
-  loginError: [] // Error occurred on the login screen
+  loginError: [], // Error occurred on the login screen
+  referrer: ""
 });
 
 const mutations = {
@@ -68,6 +69,9 @@ const mutations = {
   },
   SET_LOGIN_ERROR(state, payload) {
     state.loginError.push(...payload);
+  },
+  SET_REFERRER(state, payload) {
+    state.referrer = payload;
   }
 };
 
@@ -76,8 +80,10 @@ const actions = {
   async setUserData(context) {
     try {
       var reqBody = {
-        portalProviderUUID: context.state.portalProviderUUID,
-        userUUID: context.state.userUUID,
+        portalProviderUUID:
+          context.state.portalProviderUUID ||
+          localStorage.getItem("PORTAL_PROVIDERUUID"),
+        userUUID: context.state.userUUID || localStorage.getItem("USER_UUID"),
         version: config.version
       };
       var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
@@ -156,6 +162,10 @@ const actions = {
   },
   setLoginError({ commit }, payload) {
     commit("SET_LOGIN_ERROR", payload);
+  },
+  // Set portal provider's whitelabel Url
+  setReferrer({ commit }, payload) {
+    commit("SET_REFERRER", payload);
   }
 };
 
@@ -226,6 +236,9 @@ const getters = {
     } else {
       return false;
     }
+  },
+  getReferrer(state) {
+    return state.referrer;
   }
 };
 
