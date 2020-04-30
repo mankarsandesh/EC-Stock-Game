@@ -6,7 +6,6 @@
       :titlebtn2="$t('breadcrumbs.notification')"
     />
     <v-container>
-      <tester />
       <v-layout row wrap>
         <v-flex xs12 mt-3>
           <rules />
@@ -18,14 +17,12 @@
 <script>
 import { mapMutations, mapGetters } from "vuex";
 import rules from "~/components/modern/stocklist/rules";
-import tester from "~/components/tester";
 import breadcrumbs from "~/components/breadcrumbs";
 export default {
   layout: "desktopModern",
   components: {
     rules,
-    breadcrumbs,
-    tester
+    breadcrumbs
   }
 };
 </script>

@@ -1424,30 +1424,3 @@ p.guideline {
   transition: opacity 0.3s;
   opacity: 0;
 }
-.coin {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: yellow;
-  border: 1px dotted #333;
-  -webkit-animation: 1s animateOpacity;
-}
-
-@-webkit-keyframes animateOpacity {
-  from {
-    opacity: 0;
-  }
-  5% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-  95% {
-    opacity: 0.6;
-  }
-  to {
-    opacity: 0;
-  }
-}

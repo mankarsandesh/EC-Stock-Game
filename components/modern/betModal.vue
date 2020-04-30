@@ -121,12 +121,13 @@ export default {
               if (items.type === "firstdigit") {
                 const result = item.rule.includes(first);
                 if (result) {
-                  console.log("You Win first :" + item.name + ":" + first);
+                  Sound.winBet();
                   $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
+                    Sound.winBet();
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0]
                     );
@@ -140,7 +141,6 @@ export default {
                     this.betId.split("-")[0]
                   );
                   $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==first==" + item.name + "==");
                 }
               }
 
@@ -149,12 +149,13 @@ export default {
               if (items.type === "lastdigit") {
                 const result = item.rule.includes(last);
                 if (result) {
-                  console.log("You Win last :" + item.name + ":" + last);
+                  Sound.winBet();
                   $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
+                    Sound.winBet();
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0]
                     );
@@ -168,7 +169,6 @@ export default {
                     this.betId.split("-")[0]
                   );
                   $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + "==");
                 }
               }
 
@@ -177,14 +177,13 @@ export default {
               if (items.type === "bothdigit") {
                 const result = item.rule.includes(bothdigit);
                 if (result) {
-                  console.log(
-                    "You Win bothdigit:" + item.name + ":" + bothdigit
-                  );
+                  Sound.winBet();
                   $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
+                    Sound.winBet();
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0]
                     );
@@ -198,7 +197,6 @@ export default {
                     this.betId.split("-")[0]
                   );
                   $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + "==");
                 }
               }
 
@@ -206,12 +204,13 @@ export default {
               if (items.type === "twodigit") {
                 const result = item.rule.includes(twoDigit);
                 if (result) {
-                  console.log("You Win twoDigit:" + item.name + ":" + twoDigit);
+                  Sound.winBet();
                   $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
+                    Sound.winBet();
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0]
                     );
@@ -225,7 +224,6 @@ export default {
                     this.betId.split("-")[0]
                   );
                   $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + " ==");
                 }
               }
             }
