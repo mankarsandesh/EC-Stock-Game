@@ -216,7 +216,7 @@ export default {
         },
         {
           id: "3",
-          value: "User Rank"
+          value: "Rank"
         }
       ],
       FolloworNot: "",
