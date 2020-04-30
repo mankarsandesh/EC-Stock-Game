@@ -6,7 +6,7 @@
       :clipped="clipped"
       fixed
       right
-      style="z-index:101"
+      class="side-bar"
     >
       <v-list>
         <!-- Close button cross mark for mobile responsive side bar -->
@@ -201,5 +201,9 @@ export default {
   width: 100%;
   color: white;
   padding: 5px 0px 0px 45px;
+}
+.side-bar{
+  z-index:101;
+  width:150px !important;
 }
 </style>
