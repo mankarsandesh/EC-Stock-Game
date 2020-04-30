@@ -1,6 +1,7 @@
 <template>
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <!-- image profile  display on mobile -->
     <v-flex xs12 mt-2 mb-2 v-if="$vuetify.breakpoint.xs">
       <v-layout row>
         <v-flex xs12 sm2 md4 lg3>
@@ -27,6 +28,7 @@
       </v-layout>
     </v-flex>
 
+    <!-- image profile display on bigger device than mobile -->
     <v-flex xs12 :class="!$vuetify.breakpoint.xs ? 'mt-2' : ''">
       <v-layout row class="text-xs-center">
         <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
@@ -76,6 +78,7 @@
       <v-layout>
         <v-flex xs12 pt-0 pl-1>
           <div>
+            <!-- form profile -->
             <form
               :style="
                 $vuetify.breakpoint.xs
@@ -89,7 +92,7 @@
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                   <input
-                    ref="userName"
+                    ref="username"
                     type="text"
                     :value="userData.userName"
                     id="userName"
@@ -200,10 +203,10 @@
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                   <select ref="country" id="country" name="country">
-                    <option value="china">China</option>
-                    <option value="usa">USA</option>
-                    <option value="thailand">Thailand</option>
-                    <option value="laos">Laos</option>
+                    <option value="CHN">China</option>
+                    <option value="USA">USA</option>
+                    <option value="THA">Thailand</option>
+                    <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
@@ -215,7 +218,6 @@
                 <div class="col-15"></div>
                 <div class="col-85">
                   <v-btn
-                    ref="submitButton"
                     :loading="updating"
                     :disabled="updating"
                     class="btn_save"
@@ -314,38 +316,45 @@ export default {
       formData.append("userUUID", this.getUserUUID);
       formData.append("email", ref.email.value);
       formData.append("userName", ref.username.value);
-      formData.append("firstName", ref.firstname.value);
-      formData.append("lastName", ref.lastname.value);
+      formData.append("firstName", ref.firstName.value);
+      formData.append("lastName", ref.lastName.value);
       formData.append("gender", ref.gender.value);
-      // formData.append("country", ref.country.value);
+      formData.append("country", ref.country.value);
       formData.append("version", config.version);
       try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
           {
-            headers: {
-              ContentType: "application/json",
-              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE=z"
-            }
+            headers: config.header
           }
         );
         if (res.status) {
           this.setUserData();
           this.updating = false;
+          this.$swal({
+            type: "success",
+            title: "Successful Information Saved!",
+            showConfirmButton: false,
+            timer: 1000
+          });
         } else {
           this.updating = false;
-          this.error = res.message;
-          throw new Error(config.error.general);
+          throw new Error(res.message[0]);
         }
       } catch (ex) {
         console.error(ex);
         this.updating = false;
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
         log.error(
           {
             req: formData,
             res,
-            page: 'pages/modern/profile.vue',
+            page: "pages/modern/desktop/profile/index.vue",
             apiUrl: config.updateUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")

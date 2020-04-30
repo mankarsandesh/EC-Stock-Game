@@ -1,128 +1,192 @@
 <template>
-<div>
-  <v-flex xs12 class="pt-5">
-    <v-layout row>
-      <v-flex xs6 sm6 md6 lg4>
-        <div class="amount_container">
-          <div class="decorator_card decorator_card_green"></div>
-          <span>{{ $t("msg.accountbalance") }}</span>
-          <br />
-          <span class="amount" v-if="userData.balance != 0">{{
+  <div>
+    <v-flex xs12 class="pt-5">
+      <v-layout row>
+        <v-flex xs6 sm6 md6 lg4>
+          <div class="amount_container">
+            <div class="decorator_card decorator_card_green"></div>
+            <span>{{ $t("msg.accountbalance") }}</span>
+            <br />
+            <span class="amount" v-if="userData.balance != 0">{{
               userData.balance | currency
             }}</span>
-          <span class="amount" v-if="userData.balance == 0">00.00</span>
-          <!-- <span class="title_currentcy">USD</span> -->
-        </div>
-      </v-flex>
-      <v-flex xs6 sm6 md6 lg4>
-        <div class="amount_container">
-          <div class="decorator_card decorator_card_blue"></div>
+            <span class="amount" v-if="userData.balance == 0">00.00</span>
+            <!-- <span class="title_currentcy">USD</span> -->
+          </div>
+        </v-flex>
+        <v-flex xs6 sm6 md6 lg4>
+          <div class="amount_container">
+            <div class="decorator_card decorator_card_blue"></div>
 
-          <span>{{ $t("msg.rollingamount") }}</span>
-          <br />
-          <span class="amount">{{ 161536 | currency }}</span>
-          <!-- <span class="title_currentcy">USD</span> -->
-        </div>
-      </v-flex>
-    </v-layout>
-  </v-flex>
-  <v-flex xs12 pt-3>
-    <v-layout>
-      <v-flex xs12 pt-2 pl-5>
-        <div style="margin-top:20px">
-          <form action="/action_page.php">
-            <div class="row">
-              <div class="col-15">
-                <label for="username">{{ $t("profile.username") }} <span class="required">*</span></label>
+            <span>{{ $t("msg.rollingamount") }}</span>
+            <br />
+            <span class="amount">{{ 161536 | currency }}</span>
+            <!-- <span class="title_currentcy">USD</span> -->
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-flex>
+    <v-flex xs12 pt-3>
+      <v-layout>
+        <v-flex xs12 pt-2 pl-5>
+          <div style="margin-top:20px">
+            <form action="/action_page.php">
+              <div class="row">
+                <div class="col-15">
+                  <label for="username"
+                    >{{ $t("profile.username") }}
+                    <span class="required">*</span></label
+                  >
+                </div>
+                <div class="col-85">
+                  <input
+                    ref="username"
+                    type="text"
+                    :value="userData.userName"
+                    id="username"
+                    name="username"
+                    placeholder="Type your Username"
+                  />
+                  <span class="icon-container">
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
+                  </span>
+                </div>
               </div>
-              <div class="col-85">
-                <input ref="username" type="text" :value="userData.userName" id="username" name="username" placeholder="Type your Username" />
-                <span class="icon-container">
-                  <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
-                </span>
+              <div class="row">
+                <div class="col-15">
+                  <label for="first-name">{{ $t("profile.firstname") }}</label>
+                </div>
+                <div class="col-85">
+                  <input
+                    ref="firstName"
+                    type="text"
+                    :value="userData.firstName"
+                    id="first-name"
+                    name="first-name"
+                    placeholder="Your first name"
+                  />
+                  <span class="icon-container">
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
+                  </span>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-15">
-                <label for="first-name">{{ $t("profile.firstname") }}</label>
+              <div class="row">
+                <div class="col-15">
+                  <label for="last-name">{{ $t("profile.lastname") }}</label>
+                </div>
+                <div class="col-85">
+                  <input
+                    ref="lastName"
+                    type="text"
+                    :value="userData.lastName"
+                    id="last-name"
+                    name="last-name"
+                    placeholder="Your Last Name"
+                  />
+                  <span class="icon-container">
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
+                  </span>
+                </div>
               </div>
-              <div class="col-85">
-                <input ref="firstName" type="text" :value="userData.firstName" id="first-name" name="first-name" placeholder="Your first name" />
-                <span class="icon-container">
-                  <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
-                </span>
+              <div class="row">
+                <div class="col-15">
+                  <label for="gender"
+                    >{{ $t("profile.gender") }}
+                    <span class="required">*</span></label
+                  >
+                </div>
+                <div class="col-85">
+                  <select
+                    ref="gender"
+                    id="gender"
+                    name="gender"
+                    :value="userData.gender"
+                  >
+                    <option value="male">{{ $t("profile.male") }}</option>
+                    <option value="female">{{ $t("profile.female") }}</option>
+                  </select>
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                  </span>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-15">
-                <label for="last-name">{{ $t("profile.lastname") }}</label>
+              <div class="row">
+                <div class="col-15">
+                  <label for="email">{{ $t("profile.email") }}</label>
+                </div>
+                <div class="col-85">
+                  <input
+                    ref="email"
+                    type="text"
+                    :value="userData.email"
+                    id="email"
+                    name="email"
+                    placeholder="example@gmail.com"
+                  />
+                </div>
               </div>
-              <div class="col-85">
-                <input ref="lastName" type="text" :value="userData.lastName" id="last-name" name="last-name" placeholder="Your Last Name" />
-                <span class="icon-container">
-                  <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
-                </span>
+              <div class="row">
+                <div class="col-15">
+                  <label for="country"
+                    >{{ $t("profile.country") }} <span class="required">*</span>
+                  </label>
+                </div>
+                <div class="col-85">
+                  <select
+                    ref="country"
+                    id="country"
+                    name="country"
+                    :value="userData.country"
+                  >
+                    <option value="CHN">China</option>
+                    <option value="USA">USA</option>
+                    <option value="THA">Thailand</option>
+                    <option value="LAO">LAOS</option>
+                  </select>
+                  <span class="icon-container">
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                  </span>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-15">
-                <label for="gender">{{ $t("profile.gender") }} <span class="required">*</span></label>
-              </div>
-              <div class="col-85">
-                <select ref="gender" id="gender" name="gender" :value="userData.gender">
-                  <option value="male">{{ $t("profile.male") }}</option>
-                  <option value="female">{{ $t("profile.female") }}</option>
-                </select>
-                <span class="icon-container">
-                  <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
-                </span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-15">
-                <label for="email">{{ $t("profile.email") }}</label>
-              </div>
-              <div class="col-85">
-                <input ref="email" type="text" :value="userData.email" id="email" name="email" placeholder="example@gmail.com" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-15">
-                <label for="country">{{ $t("profile.country") }} <span class="required">*</span> </label>
-              </div>
-              <div class="col-85">
-                <select ref="country" id="country" name="country" :value="userData.country">
-                  <option value="CHN">China</option>
-                  <option value="USA">USA</option>
-                  <option value="THA">Thailand</option>
-                  <option value="LAO">LAOS</option>
-                </select>
-                <span class="icon-container">
-                  <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
-                </span>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-15"></div>
-              <div class="col-85">
-                <v-btn :loading="updating" :disabled="updating" class="btn_save" @click="saveClick()">{{ $t("msg.save") }}</v-btn>
-                <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
+              <div class="row">
+                <div class="col-15"></div>
+                <div class="col-85">
+                  <v-btn
+                    :loading="updating"
+                    :disabled="updating"
+                    class="btn_save"
+                    @click="saveClick()"
+                    >{{ $t("msg.save") }}</v-btn
+                  >
+                  <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
-      </v-flex>
-    </v-layout>
-  </v-flex>
-</div>
+            </form>
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-flex>
+  </div>
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapActions
-} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "~/config/config.global";
 import log from "roarr";
@@ -164,10 +228,11 @@ export default {
       try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
-          formData, {
+          formData,
+          {
             headers: config.header
           }
-        );       
+        );
         if (res.status) {
           this.setUserData();
           this.updating = false;
@@ -193,7 +258,7 @@ export default {
           {
             req: formData,
             res,
-            page: 'pages/modern/desktop/profile/index.vue',
+            page: "pages/modern/desktop/profile/index.vue",
             apiUrl: config.updateUserProfile.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
@@ -207,8 +272,8 @@ export default {
 </script>
 
 <style scoped>
-.required{
-  color:red;
+.required {
+  color: red;
 }
 label {
   font-weight: 600;
