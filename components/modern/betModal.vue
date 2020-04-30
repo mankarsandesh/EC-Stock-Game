@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-              isNaN(betId.split("-")[1])
-                ? $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  $t("gamemsg." + betId.split("-")[1])
-                : $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  betId.split("-")[1]
+            isNaN(betId.split("-")[1])
+            ? $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            $t("gamemsg." + betId.split("-")[1])
+            : $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            betId.split("-")[1]
             }}
           </span>
         </h3>
@@ -31,12 +31,7 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar
-              size="70"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
-            >
+            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -58,13 +53,7 @@
           </v-flex>-->
 
           <v-flex style="align-self:center">
-            <input
-              type="number"
-              readonly
-              :min="1"
-              v-model="betValue"
-              class="input-bet"
-            />
+            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -81,17 +70,15 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-          >{{ $t("msg.confirm") }}</v-btn
-        >
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{ $t("msg.cancel") }}
-        </v-btn>
+        >{{ $t("msg.confirm") }}</v-btn>
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{ $t("msg.cancel") }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
+import Sound from "~/helpers/sound";
 import { mapGetters, mapActions } from "vuex";
 import result from "~/data/result";
 import config from "~/config/config.global";
@@ -340,6 +327,7 @@ export default {
           betAmount: this.betValue
         };
         if (this.betValue > 0) {
+          Sound.betTing();
           this.confirmDisabled = true;
           this.sendBetting(data);
           $("#" + this.stockName + this.betId).addClass(

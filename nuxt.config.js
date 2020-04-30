@@ -119,7 +119,7 @@ module.exports = {
     "@plugins/secure-storage",
     "@/plugins/filters",
     "@/plugins/login.js",
-    { src: '~/plugins/vuex-persist', ssr: false },
+    // { src: '~/plugins/vuex-persist', ssr: false },
     "@/plugins/i18n",
     "@/plugins/chart",
     "@/plugins/sweetAlert",
