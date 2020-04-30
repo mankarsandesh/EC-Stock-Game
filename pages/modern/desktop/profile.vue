@@ -276,7 +276,7 @@ export default {
   },
   watch: {
     imageBase64() {
-      this.updateProfile();
+      this.updateImageProfile();
     }
   },
   methods: {
@@ -284,7 +284,7 @@ export default {
       this.newImage = image;
       console.log(image);
       this.snackbar = true;
-      // this.updateProfile();
+      // this.updateImageProfile();
     },
     ...mapActions(["setUserData"]),
     uploadImage(e) {
@@ -300,7 +300,7 @@ export default {
     cameraClick() {
       this.$refs.inputFile.click();
     },
-    async updateProfile() {
+    async updateImageProfile() {
       var reqBody = {
         profileImage: this.newImage,
         portalProviderUUID: this.getPortalProviderUUID,
