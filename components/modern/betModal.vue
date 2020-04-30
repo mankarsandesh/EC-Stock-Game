@@ -80,7 +80,7 @@
           class="buttonGreen"
           dark
           @click="confirmBet()"
-          :disabled="confirmDisabled"
+          :disabled="(!parseInt(betValue) || confirmDisabled)"
           >{{ $t("msg.confirm") }}</v-btn
         >
         <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
