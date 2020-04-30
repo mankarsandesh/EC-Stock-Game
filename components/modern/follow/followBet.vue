@@ -95,10 +95,12 @@
                 :min="unFollowValueMin"
                 color="green"
                 thumb-color="green"
+                track-color="green"
                 hide-details
+                thumb-size=50
                 inverse-label
-               track-fill-color="green"
-               :label="`${unfollowValue} ${unfollowSign}`"
+                track-fill-color="green"
+                :label="`${unfollowValue} ${unfollowSign}`"
               >
               </v-slider>
             </v-flex>
@@ -109,7 +111,7 @@
                 text
                 >{{ $t("useraction.follow") }}</v-btn
               >
-              <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
+              <v-btn color="buttonCancel" v-on:click="closePopup" text>{{
                 $t("msg.cancel")
               }}</v-btn>
             </v-flex>
@@ -124,6 +126,9 @@
             text
             >{{ $t("useraction.unfollow") }}</v-btn
           >
+           <v-btn color="buttonCancel" v-on:click="closePopup" text>{{
+                $t("msg.cancel")
+              }}</v-btn>
         </v-flex>
       </div>
     </v-card>
@@ -139,7 +144,7 @@ export default {
     return {
       // Unfollow Default Value Min and Max
       unFollowValueMin: 3,
-      unFollowValueMax: 10,     
+      unFollowValueMax: 10,
       // AutoStop Follow Validation
       rulesNew: {
         // Min Value
@@ -219,6 +224,10 @@ export default {
     })
   },
   methods: {
+    // Send to Parent Components
+    async closePopup(){
+      this.$emit("followBetClose");
+    },
     // Users Follow Bet Validation
     async followThisUser(followerID, followMethod) {
       // Check Empty Filed
@@ -323,7 +332,7 @@ export default {
         ],
         method: method,
         version: config.version
-      };     
+      };
       try {
         var { data } = await this.$axios.post(config.followUser.url, reqBody, {
           headers: config.header
@@ -371,12 +380,12 @@ export default {
         this.unFollowValueMax = 10;
         this.unFollowValueMin = 1;
         this.unfollowValue = 2;
-        this.unfollowSign = "Days";        
+        this.unfollowSign = "Days";
       } else {
-        this.unFollowValueMax = 100;
+        this.unFollowValueMax = 10;
         this.unFollowValueMin = 1;
         this.unfollowValue = 3;
-        this.unfollowSign = "Bets";        
+        this.unfollowSign = "Bets";
       }
     },
     // Number Validation
@@ -392,6 +401,9 @@ export default {
 </script>
 
 <style scoped>
+.v-slider  .v-label{
+  color:green !important;
+}
 .title {
   text-align: center;
   color: #0b2a68;
