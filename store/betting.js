@@ -88,8 +88,8 @@ const actions = {
   async sendBetting(context) {
     try {
       context.commit("SET_IS_SEND_BETTING", true);
-      const betDatas = context.state.multiGameBetSend;
-      if (betDatas.length == 0) {
+      const betDataFinal = context.state.multiGameBetSend;
+      if (betDataFinal.length == 0) {
         context.commit("SET_IS_SEND_BETTING", false);
         this._vm.$swal({
           type: "error",
@@ -103,7 +103,7 @@ const actions = {
         portalProviderUUID: context.rootState.provider.portalProviderUUID,
         userUUID: context.rootState.provider.userUUID,
         version: config.version,
-        betData: betDatas
+        betData: betDataFinal
       };
       var res = await this.$axios.$post(config.storeBet.url, reqBody, {
         headers: config.header

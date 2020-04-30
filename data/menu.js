@@ -26,8 +26,8 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
-    title: "announcement",
-    to: "/modern/announcement"
+    title: "notification",
+    to: "/modern/notification"
   },
   {
     icon: "bubble_chart",

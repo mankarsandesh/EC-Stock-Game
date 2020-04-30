@@ -73,8 +73,8 @@
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
-                  class="mainNotification"
-                >
+                  class="mainNotification"  
+                  @click="$router.push(pageLink(item.type))" >  
                   <div class="userImage">
                     <i class="fa fa-user-o fa-1x" />
                   </div>
@@ -98,7 +98,6 @@
       <v-content>
         <nuxt />
       </v-content>
-
       <!-- invitation Windows-->
       <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
@@ -201,6 +200,9 @@ export default {
     });
   },
   methods: {
+    pageLink(type){
+      return type == 3 ? '/modern/desktop/profile/follower/' : '/modern/desktop/notification'
+    },
     ...mapActions(["setGameChannelShow"]),
     async fetchNotification() {
       try {
@@ -215,7 +217,7 @@ export default {
           {
             headers: config.header
           }
-        );
+        );       
         if (data.status) {
           this.messagesCount = data.data.length;
           this.winnerList = data.data.reverse();
@@ -229,7 +231,7 @@ export default {
             req: reqBody,
             res: data,
             page: "layouts/desktopModern.vue",
-            apiUrl: config.getAllBets.url,
+            apiUrl: config.getUserNotification.url,
             provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
             user: localStorage.getItem("USER_UUID")
           },
@@ -272,6 +274,7 @@ export default {
   width: 100%;
   border-bottom: 1px solid #dddddd;
 }
+
 .userImage {
   float: left;
   width: 10%;

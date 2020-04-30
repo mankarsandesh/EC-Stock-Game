@@ -1073,22 +1073,29 @@ export default {
   }
 };
 </script>
-
 <style scoped>
+/* tr td[title]:hover:after {
+  width: 100%;
+  content: attr(title);
+  padding: 3px 6px;
+  position: absolute;
+  float: left;
+  top : -10px;
+  left: 0%;
+  background-color:#FFF;
+  border-radius: 4px;
+} */
 .line-through {
   background: transparent url("http://davidrhysthomas.co.uk/linked/strike.png") 0 50% repeat-x;
 }
-
 .tooltip-inner {
   text-align: left;
 }
-
 .table-responsive {
   border: 1px solid #dddddd;
   border-radius: 7px;
   padding: 5px;
 }
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -1099,13 +1106,11 @@ table {
   border-collapse: separate;
   border-spacing: 3px 2px;
 }
-
 table td {
   border: 1px solid #dddddd;
   border-radius: 5px;
   cursor: pointer;
 }
-
 td,
 tr {
   text-align: center;

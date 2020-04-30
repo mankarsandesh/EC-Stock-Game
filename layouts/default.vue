@@ -60,7 +60,7 @@
         isShow == 'history' ||
           isShow == 'stock-list' ||
           isShow == 'current-bet' ||
-          isShow == 'announcement' ||
+          isShow == 'notification' ||
           isShow == 'rule' ||
           isShow == 'leaderboard' ||
           isShow == 'setting'
@@ -75,8 +75,8 @@
       <h2 class="text-uppercase" v-show="isShow == 'current-bet'">
         {{ $t("menu.current bet") }}
       </h2>
-      <h2 class="text-uppercase" v-show="isShow == 'announcement'">
-        {{ $t("menu.announcement") }}
+      <h2 class="text-uppercase" v-show="isShow == 'notification'">
+        {{ $t("menu.notification") }}
       </h2>
       <h2 class="text-uppercase" v-show="isShow == 'rule'">
         {{ $t("menu.rule") }}
@@ -101,10 +101,10 @@
         style="float: right; top: -98%;"
         >{{ $t("menu.current bet") }}</v-btn
       >
-      <!-- <v-btn to="/modern/announcement" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.announcement')}}</v-btn> -->
+      <!-- <v-btn to="/modern/notification" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.notification')}}</v-btn> -->
       <v-btn
         to="/modern/rule"
-        v-show="isShow == 'announcement'"
+        v-show="isShow == 'notification'"
         class="buttonGreen"
         style="float: right; top: -98%;"
         >{{ $t("menu.rule") }}</v-btn

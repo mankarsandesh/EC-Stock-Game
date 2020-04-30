@@ -154,7 +154,7 @@ export default {
           gameUUID: this.gameUUID,
           category: [1, 2, 3],
           version: config.version
-        };
+        };       
         var res = await this.$axios.$post(
           config.getUserInvitation.url,
           reqBody,

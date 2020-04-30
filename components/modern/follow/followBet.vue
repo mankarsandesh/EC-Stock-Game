@@ -92,9 +92,9 @@
                 text
                 >{{ $t("useraction.follow") }}</v-btn
               >
-              <!-- <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
+              <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
                 $t("msg.cancel")
-              }}</v-btn> -->
+              }}</v-btn>
             </v-flex>
           </v-radio-group>
         </v-card-actions>
@@ -221,21 +221,21 @@ export default {
       // Check Amount Value or Bet Value
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
-        if (this.BetValue >= 1000 || this.BetValue <= 10)
+        if (this.BetValue > 1000 || this.BetValue < 100)
           return this.errorShow(
             true,
             false,
             true,
-            "Amount should be Lower then 1001 & Grater then 10"
+            "Amount should be Lower then 1001 & Grater then 101"
           );
       } else {
         this.BetValue = this.rateValue;
-        if (this.BetValue >= 100 && this.BetValue <= 10)
+        if (this.BetValue > 100 || this.BetValue < 10)
           return this.errorShow(
             true,
             false,
             true,
-            "Bet Rate Should be Lower then 101 & Grater then 10"
+            "Bet Rate Should be Lower then 101 & Grater then 11"
           );
       }
 
@@ -243,32 +243,32 @@ export default {
       switch (this.autoStop) {
         case 4:
         case 5:
-          if (this.unfollowValue >= 1000 || this.unfollowValue <= 10) {
+          if (this.unfollowValue > 1000 || this.unfollowValue < 100) {
             return this.errorShow(
               true,
               false,
               true,
-              "Amount should be Lower then 1001 & Grater then 10"
+              "Auto Stop Amount should Between 100 to 1000"
             );
           }
           break;
         case 3:
-          if (this.unfollowValue >= 10 || this.unfollowValue <= 1) {
+          if (this.unfollowValue > 10 || this.unfollowValue < 1) {
             return this.errorShow(
               true,
               false,
               true,
-              "Days should be Lower then 11 & Grater then 0"
+              "Days should be Between 1 to 10."
             );
           }
           break;
         case 6:
-          if (this.unfollowValue >= 100 || this.unfollowValue <= 1) {
+          if (this.unfollowValue > 100 || this.unfollowValue < 1) {
             return this.errorShow(
               true,
               false,
               true,
-              "Bets should be Lower then 101 & Grater then 0"
+              "Bets should be Between 1 to 100"
             );
           }
           break;
