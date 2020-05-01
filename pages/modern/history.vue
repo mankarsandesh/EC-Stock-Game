@@ -1,7 +1,17 @@
 <template>
   <div>
     <v-layout row wrap id="history">
-      <v-flex xs4 sm2 md2 lg2 mr-1 mt-2 mb-2 style="float:left;" class="input-text">
+      <v-flex
+        xs4
+        sm2
+        md2
+        lg2
+        mr-1
+        mt-2
+        mb-2
+        style="float:left;"
+        class="input-text"
+      >
         <v-menu
           v-model="from"
           :close-on-content-click="false"
@@ -22,11 +32,26 @@
               hide-details
             ></v-text-field>
           </template>
-          <v-date-picker color="#1db42f" v-model="dateFrom" @input="from = false"></v-date-picker>
+          <v-date-picker
+            color="#1db42f"
+            v-model="dateFrom"
+            @input="from = false"
+          ></v-date-picker>
         </v-menu>
       </v-flex>
 
-      <v-flex xs4 sm2 md2 lg2 mr-1 ml-1 mt-2 mb-2 style="float:left;" class="input-text">
+      <v-flex
+        xs4
+        sm2
+        md2
+        lg2
+        mr-1
+        ml-1
+        mt-2
+        mb-2
+        style="float:left;"
+        class="input-text"
+      >
         <v-menu
           v-model="to"
           :close-on-content-click="false"
@@ -46,7 +71,11 @@
               hide-details
             ></v-text-field>
           </template>
-          <v-date-picker color="#1db42f" v-model="dateTo" @input="to = false"></v-date-picker>
+          <v-date-picker
+            color="#1db42f"
+            v-model="dateTo"
+            @input="to = false"
+          ></v-date-picker>
         </v-menu>
       </v-flex>
 
@@ -88,6 +117,7 @@ import bethistory from "~/components/mobile/bethistory";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "~/config/config.global";
+import secureStorage from "../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -209,8 +239,8 @@ export default {
             res: data.data,
             page: "pages/modern/history.vue",
             apiUrl: config.getAllBets.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

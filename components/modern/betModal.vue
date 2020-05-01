@@ -80,7 +80,7 @@
           class="buttonGreen"
           dark
           @click="confirmBet()"
-          :disabled="confirmDisabled"
+          :disabled="!parseInt(betValue) || confirmDisabled"
           >{{ $t("msg.confirm") }}</v-btn
         >
         <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
@@ -97,6 +97,7 @@ import result from "~/data/result";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
 import log from "roarr";
+import secureStorage from "../../plugins/secure-storage";
 
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
@@ -315,8 +316,8 @@ export default {
             res,
             page: "components/modern/betModal.vue",
             apiUrl: config.storeBet.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
