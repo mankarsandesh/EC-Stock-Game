@@ -270,7 +270,15 @@
     "lastupdate": "最近更新1分钟前",
     "top" : "最佳",
     "leaders" : "领导者",
-    "nodata" : "排行榜中没有顶级用户。"
+    "nodata" : "排行榜中没有顶级用户。",
+    "followBy": "其次是",
+    "autoStop":"自动停止跟随",
+    "followbyAmount":"跟随金额",
+    "followbyRate":"跟随率",
+    "stopbyWinning":"止赢",
+    "stopbyLosing":"迷路了",
+    "stopbyTiming":"按时停下来",
+    "stopbyBets":"停止投注"
   },
   "breadcrumbs": {
     "rule": "规则",

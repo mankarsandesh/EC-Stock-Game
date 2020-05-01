@@ -273,7 +273,15 @@
     "lastupdate": "last updated 1 minutes ago",
     "top" : "Top",
     "leaders" : "Leaders",
-    "nodata" : "There are no top users in Leaderboard."
+    "nodata" : "There are no top users in Leaderboard.",
+    "followBy": "Follow By",
+    "autoStop":"Auto Stop Follow",
+    "followbyAmount":"Follow by Amount",
+    "followbyRate":"Follow by Rate",
+    "stopbyWinning":"Stop by Winning",
+    "stopbyLosing":"Stop by Losing",
+    "stopbyTiming":"Stop by Timing",
+    "stopbyBets":"Stop by Bets"
   },
   "breadcrumbs": {
     "rule": "Rule",

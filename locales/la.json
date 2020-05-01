@@ -270,7 +270,15 @@
     "lastupdate": "ອັບເດດຫຼ້າສຸດ 1 ນາທີທີ່ແລ້ວ",
     "top" : "ທາງເທີງ",
     "leaders" : "ຜູ້ ນຳ",
-    "nodata" : "ບໍ່ມີຜູ້ ນຳ ໃຊ້ໃນ Leaderboard."
+    "nodata" : "ບໍ່ມີຜູ້ ນຳ ໃຊ້ໃນ Leaderboard.",
+    "followBy": "ຕິດຕາມດ້ວຍ",
+    "autoStop":"ລົດຢຸດຕິດຕາມ",
+    "followbyAmount":"ຕິດຕາມດ້ວຍ ຈຳ ນວນເງິນ",
+    "followbyRate":"ປະຕິບັດຕາມໂດຍອັດຕາ",
+    "stopbyWinning":"ຢຸດໂດຍການຊະນະ",
+    "stopbyLosing":"ຢຸດໂດຍການສູນເສຍ",
+    "stopbyTiming":"ຢຸດເຊົາໂດຍເວລາ",
+    "stopbyBets":"ຢຸດໂດຍການເດີມພັນ"
   },
   "breadcrumbs": {
     "rule": "ກົດລະບຽບ",
