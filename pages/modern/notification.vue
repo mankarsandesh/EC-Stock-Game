@@ -38,7 +38,6 @@ export default {
     })
   },
   methods: {
-
     async fetch() {
       try {
         var reqBody = {
@@ -46,13 +45,17 @@ export default {
           userUUID: this.userUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(config.getUserNotification.url, reqBody, {
-          headers: config.header
-        });
-        
+        var res = await this.$axios.$post(
+          config.getUserNotification.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+
         if (res.status) {
           this.notificationData = res.data;
-          console.log(this.notificationData,"Notification response");
+          // console.log(this.notificationData,"Notification response");
         } else {
           throw new Error(config.error.general);
         }
