@@ -56,7 +56,7 @@ export default {
 
         if (res.status) {
           this.notificationData = res.data;
-          console.log(this.notificationData, "Notification response");
+          // console.log(this.notificationData,"Notification response");
         } else {
           throw new Error(config.error.general);
         }
