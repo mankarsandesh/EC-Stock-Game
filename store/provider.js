@@ -1,23 +1,25 @@
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 
 const state = () => ({
   authUser: {}, // store auth user data
   userLoginData: {}, // Store user login data
-  authToken: (localStorage.apikey =
+  authToken: (secureStorage.apikey =
     "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"), // Store auth token
-  portalProviderUUID: localStorage.getItem("PORTAL_PROVIDERUUID"), // Store portal provider UUID
-  userUUID: localStorage.getItem("USER_UUID"), // Store user UUID
+  portalProviderUUID: secureStorage.getItem("PORTAL_PROVIDERUUID"), // Store portal provider UUID
+  userUUID: secureStorage.getItem("USER_UUID"), // Store user UUID
   userData: {}, // Store user data
   locales: ["cn", "us", "th", "la"], // Store language locales
-  locale: localStorage.getItem("lang"), // Store locale
+  locale: secureStorage.getItem("lang"), // Store locale
   coinsModern: [], // Store coins modern
   isShowTutorial: false,
   isWindowsHasScroll: false,
   tutorialStepNumber: 0, // Store tutorial step number
   UserAuth: {},
   messageError: [],
-  loginError: [] // Error occurred on the login screen
+  loginError: [], // Error occurred on the login screen
+  referrer: ""
 });
 
 const mutations = {
@@ -46,7 +48,7 @@ const mutations = {
     if (state.locales.includes(locale)) {
       state.locale = locale;
     }
-    localStorage.setItem("lang", locale);
+    secureStorage.setItem("lang", locale);
   },
   SET_TOP_PLAYER(state, payload) {
     state.isLoadingTopPlayer = payload;
@@ -68,6 +70,9 @@ const mutations = {
   },
   SET_LOGIN_ERROR(state, payload) {
     state.loginError.push(...payload);
+  },
+  SET_REFERRER(state, payload) {
+    state.referrer = payload;
   }
 };
 
@@ -76,8 +81,10 @@ const actions = {
   async setUserData(context) {
     try {
       var reqBody = {
-        portalProviderUUID: context.state.portalProviderUUID,
-        userUUID: context.state.userUUID,
+        portalProviderUUID:
+          context.state.portalProviderUUID ||
+          secureStorage.getItem("PORTAL_PROVIDERUUID"),
+        userUUID: context.state.userUUID || secureStorage.getItem("USER_UUID"),
         version: config.version
       };
       var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
@@ -156,6 +163,10 @@ const actions = {
   },
   setLoginError({ commit }, payload) {
     commit("SET_LOGIN_ERROR", payload);
+  },
+  // Set portal provider's whitelabel Url
+  setReferrer({ commit }, payload) {
+    commit("SET_REFERRER", payload);
   }
 };
 
@@ -226,6 +237,9 @@ const getters = {
     } else {
       return false;
     }
+  },
+  getReferrer(state) {
+    return state.referrer;
   }
 };
 

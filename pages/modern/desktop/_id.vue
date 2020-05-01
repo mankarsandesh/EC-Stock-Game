@@ -1,6 +1,6 @@
 <template>
   <v-container fluid mt-2 class="containerNew pa-2 ">
-    <v-layout style="background-color: #f4f5fd;">
+    <v-layout style="background-color: #f4f5fd;width:100%;">
       <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
@@ -139,11 +139,10 @@
         <!-- Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
           <div
-            class="trendmap-container" 
+            class="trendmap-container"
             v-for="(trendType, index) in trendTypes"
             :key="index"
           >
-          
             <div id="trendmapGuidelines">
               <tableTrendMap
                 :index="index"
@@ -151,10 +150,7 @@
                 :isShowMultigameButton="index"
               ></tableTrendMap>
             </div>
-            <span
-              class="addChart"   
-              @click="removeTradMap(index)"            
-            >
+            <span class="addChart" @click="removeTradMap(index)">
               <v-icon>close</v-icon>
             </span>
             <span
@@ -205,6 +201,7 @@
             fab
             class="multiGame"
             dark
+            title="Multiple Game"
           >
             <i
               style="font-size:26px;"
@@ -246,6 +243,7 @@ import config from "~/config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
 
 export default {
   async validate({ params, store }) {
@@ -286,15 +284,16 @@ export default {
       isStep: 0
     };
   },
+  updated() {},
   created() {
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }
     this.getStock();
     // Game Rule Popup check and open Ne User
-    // if (localStorage.getItem("gameRule") != "shown") {
+    // if (secureStorage.getItem("gameRule") != "shown") {
     //   this.dialog = true;
-    //   localStorage.setItem("gameRule", "shown");
+    //   secureStorage.setItem("gameRule", "shown");
     // } else {
     //   this.dialog = false;
     // }
@@ -335,7 +334,7 @@ export default {
               res: logData,
               page: "pages/modern/desktop/_id.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -371,7 +370,7 @@ export default {
       "setIsLoadingStockGame"
     ]),
     setAfterFullScreenClosePage() {
-      localStorage.setItem("fullscreenclosed", "desktop");
+      secureStorage.setItem("fullscreenclosed", "desktop");
       this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
     },
     stopListenSocket(channel) {
@@ -402,8 +401,8 @@ export default {
             res,
             page: "pages/modern/desktop/_id.vue",
             apiUrl: config.getStock.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -424,16 +423,16 @@ export default {
           break;
       }
     },
-    // Remove trendMap 
-    removeTradMap(index){   
-      console.log(index);  
+    // Remove trendMap
+    removeTradMap(index) {
+      console.log(index);
       var indexValue = this.trendTypes[index];
-      console.log(indexValue);  
-      var newData =  this.trendTypes.filter(function(data) {       
-          return data != indexValue;
-        });
+      console.log(indexValue);
+      var newData = this.trendTypes.filter(function(data) {
+        return data != indexValue;
+      });
       this.trendTypes = newData;
-       console.log(this.trendTypes);  
+      console.log(this.trendTypes);
     },
     loaded() {
       this.isLoad = true;

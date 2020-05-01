@@ -207,7 +207,7 @@
           <v-layout column>
             <div id="livechartGuidelines">
               <v-flex>
-                <v-layout xs12 >
+                <v-layout xs12>
                   <v-flex
                     xs12
                     lg4
@@ -350,7 +350,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex  md3 lg3 pt-2 style="text-align:center;">
+            <v-flex md3 lg3 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-gamepad fa-2x iconcolor" />
                 <span>{{
@@ -372,7 +372,7 @@
                 </span>
               </span>
             </v-flex>
-            <v-flex  sm4 md4 lg4 mb-1 style="text-align:center;">
+            <v-flex sm4 md4 lg4 mb-1 style="text-align:center;">
               <v-btn
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
@@ -453,6 +453,7 @@ import footerBet from "~/components/modern/footerbet";
 import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
+import secureStorage from "../../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -519,7 +520,7 @@ export default {
               res: logData,
               page: "pages/modern/fullscreen/_id.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -528,7 +529,9 @@ export default {
     );
     this.listenForBroadcast(
       {
-        channelName: `LiveTotalBetData.${this.gameStockId}`,
+        channelName: `LiveTotalBetData.${this.getGameUUIDByStockName(
+          this.$route.params.id
+        )}`,
         eventName: "LiveTotalBetData"
       },
       ({ data }) => {
@@ -547,10 +550,10 @@ export default {
   },
   computed: {
     closeFullscreen() {
-      let fullscreenClose = localStorage.getItem("fullscreenclosed");
+      let fullscreenClose = secureStorage.getItem("fullscreenclosed");
       if (
-        localStorage.getItem("fullscreenclosed") == null ||
-        localStorage.getItem("fullscreenclosed") == "undefined"
+        secureStorage.getItem("fullscreenclosed") == null ||
+        secureStorage.getItem("fullscreenclosed") == "undefined"
       ) {
         fullscreenClose = "desktop";
       }
@@ -698,8 +701,8 @@ export default {
             res,
             page: "pages/modern/fullscreen/_id.vue",
             apiUrl: config.getActiveGamesByCategory.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

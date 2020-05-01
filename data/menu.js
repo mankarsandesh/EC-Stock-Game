@@ -16,18 +16,13 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
-    title: "history",
-    to: "/modern/history"
-  },
-  {
-    icon: "bubble_chart",
     title: "stock list",
     to: "/modern/stock-list"
   },
   {
     icon: "bubble_chart",
-    title: "announcement",
-    to: "/modern/announcement"
+    title: "notification",
+    to: "/modern/notification"
   },
   {
     icon: "bubble_chart",

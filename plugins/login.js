@@ -1,37 +1,47 @@
 import config from "../config/config.global";
 import log from "roarr";
 import axios from "axios";
+import secureStorage from "./secure-storage";
 
 export default async context => {
   try {
     document.referrer.match(/:\/\/(.[^/]+)/)[1];
-
     // Set Initial storage coins
     initLocalStorageCoin(context.store);
 
-    // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
-    const portalProviderUUID = context.query.portalProviderUUID
-      ? context.query.portalProviderUUID
-      : undefined;
-    const portalProviderUserId = context.query.portalProviderUserID
-      ? context.query.portalProviderUserID
-      : undefined;
-    const balance = context.query.balance ? context.query.balance : undefined;
-
-    // Validate Login values in URL
-    const isError = validateLoginValues(
-      portalProviderUUID,
-      portalProviderUserId,
-      balance,
-      context.store
-    );
-
-    if (isError) {
+    if (performance.navigation.type == 1) {
+      // If User reloads the page
       // Set user data in vuex store
       context.store.dispatch("setUserData");
       // Set default language in vuex store
-      context.store.dispatch("setLanguage", localStorage.getItem("lang"));
+      context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+    } else if (
+      performance.navigation.type == 0 &&
+      document.referrer.match(/:\/\/(.[^/]+)/)[1] == window.location.host
+    ) {
+      // If user opens a new tab by right click
+      // Set default language in vuex store
+      context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+      // Set user data in vuex store
+      context.store.dispatch("setUserData");
     } else {
+      // If the user gets redirected from portal provider page
+      // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
+      const portalProviderUUID = context.query.portalProviderUUID
+        ? context.query.portalProviderUUID
+        : undefined;
+      const portalProviderUserId = context.query.portalProviderUserID
+        ? context.query.portalProviderUserID
+        : undefined;
+      const balance = context.query.balance ? context.query.balance : undefined;
+
+      // Validate Login values in URL
+      validateLoginValues(
+        portalProviderUUID,
+        portalProviderUserId,
+        balance,
+        context.store
+      );
       // Check User Login
       await checkUserLogin(
         portalProviderUUID,
@@ -39,6 +49,7 @@ export default async context => {
         balance,
         context.store
       );
+
       // Set default language
       setLanguage(context.store);
       // Set user data in vuex store
@@ -46,7 +57,7 @@ export default async context => {
     }
   } catch (ex) {
     console.log(ex);
-    window.location.replace(config.whitelabelUrl);
+    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
   }
 };
 
@@ -118,8 +129,8 @@ const checkUserLogin = async (
         var userUUID = data.data.userUUID;
         store.dispatch("setPortalProviderUUID", portalProviderUUID);
         store.dispatch("setUserUUID", userUUID);
-        localStorage.setItem("USER_UUID", userUUID); // Set User UUID in local Storage
-        localStorage.setItem("PORTAL_PROVIDERUUID", portalProviderUUID); // Set portal provider UUID in local storage
+        secureStorage.setItem("USER_UUID", userUUID); // Set User UUID in local Storage
+        secureStorage.setItem("PORTAL_PROVIDERUUID", portalProviderUUID); // Set portal provider UUID in local storage
       } else {
         store.dispatch("setLoginError", [config.error.general]);
         throw new Error(config.error.general);
@@ -151,7 +162,7 @@ const checkUserLogin = async (
  */
 const setLanguage = store => {
   store.dispatch("setLanguage", config.defaultLanguageLocale);
-  localStorage.setItem("lang", config.defaultLanguageLocale);
+  secureStorage.setItem("lang", config.defaultLanguageLocale);
 };
 
 /**
@@ -161,5 +172,5 @@ const setLanguage = store => {
  */
 const initLocalStorageCoin = store => {
   store.dispatch("setCoinsModern", config.defaultCoinsModern);
-  localStorage.setItem("coinModern", config.defaultCoinsModern);
+  secureStorage.setItem("coinsModern", config.defaultCoinsModern);
 };

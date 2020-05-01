@@ -1,6 +1,7 @@
 <template>
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <!-- image profile  display on mobile -->
     <v-flex xs12 mt-2 mb-2 v-if="$vuetify.breakpoint.xs">
       <v-layout row>
         <v-flex xs12 sm2 md4 lg3>
@@ -10,23 +11,21 @@
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
-              <span
-                class="camera_container"
-                style=" position: absolute; top: 9%;"
-              >
+              <span class="camera_container" style=" position: absolute; top: 9%;">
                 <v-icon color="black" :size="20">photo_camera</v-icon>
               </span>
             </div>
             <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
-            <span
-              >{{ $t("profile.onlinestatus") }} :
-              {{ getUserInfo.currentActiveTime }}</span
-            >
+            <span>
+              {{ $t("profile.onlinestatus") }} :
+              {{ getUserInfo.currentActiveTime }}
+            </span>
           </div>
         </v-flex>
       </v-layout>
     </v-flex>
 
+    <!-- image profile display on bigger device than mobile -->
     <v-flex xs12 :class="!$vuetify.breakpoint.xs ? 'mt-2' : ''">
       <v-layout row class="text-xs-center">
         <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
@@ -36,10 +35,7 @@
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
-              <span
-                class="camera_container"
-                style="position: absolute;top: 5%;"
-              >
+              <span class="camera_container" style="position: absolute;top: 5%;">
                 <v-icon color="black" :size="20">photo_camera</v-icon>
               </span>
             </div>
@@ -76,6 +72,7 @@
       <v-layout>
         <v-flex xs12 pt-0 pl-1>
           <div>
+            <!-- form profile -->
             <form
               :style="
                 $vuetify.breakpoint.xs
@@ -85,11 +82,14 @@
             >
               <v-layout pt-3>
                 <v-flex xs2 sm2 md2 lg2 pr-2 class="text-xs-center">
-                  <label for="userName">{{ $t("profile.username") }}</label>
+                  <label for="userName">
+                    {{ $t("profile.username") }}
+                    <span style="color:red;">*</span>
+                  </label>
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                   <input
-                    ref="userName"
+                    ref="username"
                     type="text"
                     :value="userData.userName"
                     id="userName"
@@ -97,12 +97,7 @@
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -121,12 +116,7 @@
                     placeholder="Your First Name"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -145,27 +135,25 @@
                     placeholder="Your Last Name"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
 
               <v-layout pt-2>
                 <v-flex xs2 sm2 md2 lg2 pt2 class="text-xs-center">
-                  <label for="gender">{{ $t("profile.gender") }}</label>
+                  <label for="gender">
+                    {{ $t("profile.gender") }}
+                    <span style="color:red;">*</span>
+                  </label>
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="gender" id="gender" name="gender">
+                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="15" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -184,29 +172,27 @@
                     placeholder="mackychinma@gmail.com"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="15"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
 
               <v-layout pt-3>
                 <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
-                  <label for="country">{{ $t("profile.country") }}</label>
+                  <label for="country">
+                    {{ $t("profile.country") }}
+                    <span style="color:red;">*</span>
+                  </label>
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="country" id="country" name="country">
-                    <option value="china">China</option>
-                    <option value="usa">USA</option>
-                    <option value="thailand">Thailand</option>
-                    <option value="laos">Laos</option>
+                  <select ref="country" id="country" name="country" :value="userData.country">
+                    <option value="CHN">China</option>
+                    <option value="USA">USA</option>
+                    <option value="THA">Thailand</option>
+                    <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -215,13 +201,11 @@
                 <div class="col-15"></div>
                 <div class="col-85">
                   <v-btn
-                    ref="submitButton"
                     :loading="updating"
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                    >{{ $t("msg.save") }}</v-btn
-                  >
+                  >{{ $t("msg.save") }}</v-btn>
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>
@@ -237,9 +221,11 @@
                 class="btn_save width-50"
                 block
               >
-                <span class="padding-right-60">{{
+                <span class="padding-right-60">
+                  {{
                   $t("profile.onlinehistory")
-                }}</span>
+                  }}
+                </span>
                 <i class="fa fa-plus"></i>
               </v-btn>
               <v-btn
@@ -251,9 +237,11 @@
                 "
                 block
               >
-                <span class="padding-right-60">{{
+                <span class="padding-right-60">
+                  {{
                   $t("profile.stockanalysis")
-                }}</span>
+                  }}
+                </span>
                 <i class="fa fa-plus"></i>
               </v-btn>
             </div>
@@ -272,6 +260,7 @@ import { mapGetters, mapActions } from "vuex";
 import OnlineHistory from "~/components/mobile/onlineHistory";
 import StockAnalysis from "~/components/mobile/stockAnalysis";
 import config from "../../config/config.global";
+import secureStorage from "../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -314,41 +303,48 @@ export default {
       formData.append("userUUID", this.getUserUUID);
       formData.append("email", ref.email.value);
       formData.append("userName", ref.username.value);
-      formData.append("firstName", ref.firstname.value);
-      formData.append("lastName", ref.lastname.value);
+      formData.append("firstName", ref.firstName.value);
+      formData.append("lastName", ref.lastName.value);
       formData.append("gender", ref.gender.value);
-      // formData.append("country", ref.country.value);
+      formData.append("country", ref.country.value);
       formData.append("version", config.version);
       try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
           {
-            headers: {
-              ContentType: "application/json",
-              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE=z"
-            }
+            headers: config.header
           }
         );
         if (res.status) {
           this.setUserData();
           this.updating = false;
+          this.$swal({
+            type: "success",
+            title: "Successful Information Saved!",
+            showConfirmButton: false,
+            timer: 1000
+          });
         } else {
           this.updating = false;
-          this.error = res.message;
-          throw new Error(config.error.general);
+          throw new Error(res.message[0]);
         }
       } catch (ex) {
         console.error(ex);
         this.updating = false;
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
         log.error(
           {
             req: formData,
             res,
-            page: 'pages/modern/profile.vue',
+            page: "pages/modern/profile.vue",
             apiUrl: config.updateUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

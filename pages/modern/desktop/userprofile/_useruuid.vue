@@ -217,6 +217,7 @@ import VueApexCharts from "vue-apexcharts";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
+import secureStorage from "../../../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -380,8 +381,8 @@ export default {
             res,
             page: "pages/modern/desktop/userprofile/_useruuid.vue",
             apiUrl: config.getVisitUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

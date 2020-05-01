@@ -29,9 +29,13 @@
       </v-flex>
       <v-flex lg3 md3 xs2 class="betButton">
         <div>
-          <v-btn class="buttonGreensmall" dark @click="confirmBet()">{{
-            $t("msg.confirm")
-          }}</v-btn>
+          <v-btn
+            :disabled="!parseInt(this.getTempMultiGameBetAmount)"
+            class="buttonGreensmall"
+            dark
+            @click="confirmBet()"
+            >{{ $t("msg.confirm") }}</v-btn
+          >
           <v-btn class="buttonCancel" @click="cancelBet()">{{
             $t("msg.cancel")
           }}</v-btn>
@@ -45,6 +49,8 @@
 import { mapGetters, mapActions } from "vuex";
 import setting from "~/components/modern/setting/chipamout";
 import chips from "~/data/chips";
+import config from "../../config/config.global";
+
 export default {
   components: {
     //setting
@@ -66,14 +72,27 @@ export default {
       "clearTempMultiGameBetData"
     ]),
     confirmBet() {
-      this.isSending = true;
-      this.texts = this.$root.$t("msg.sending");
-      this.confirmTempMultiGameBetData();
-      // setTimeout(() => {
-      this.sendBetting();
-      this.setFooterBetAmount(0);
-      this.isSending = false;
-      // }, 1000);
+      if (
+        parseInt(this.getTempMultiGameBetAmount) <=
+          parseInt(this.getUserInfo.balance) &&
+        parseInt(this.getTempMultiGameBetAmount) > 0
+      ) {
+        this.isSending = true;
+        this.texts = this.$root.$t("msg.sending");
+        this.confirmTempMultiGameBetData();
+        // setTimeout(() => {
+        this.sendBetting();
+        this.setFooterBetAmount(0);
+        this.isSending = false;
+        // }, 1000);
+      } else {
+        this.clearTempMultiGameBetData();
+        this.$swal({
+          type: "error",
+          title: config.error.lowBalance,
+          timer: 1500
+        });
+      }
     },
     cancelBet() {
       this.isSending = false;
@@ -84,8 +103,9 @@ export default {
   computed: {
     ...mapGetters([
       "getCoinsModern",
-      "getAllBettingAmount",
-      "getFooterBetAmount"
+      "getFooterBetAmount",
+      "getTempMultiGameBetAmount",
+      "getUserInfo"
     ])
   }
 };

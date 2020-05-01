@@ -83,6 +83,8 @@ import AnimatedNumber from "animated-number-vue";
 import { mapGetters } from "vuex";
 import profile from "~/pages/modern/desktop/profile";
 import config from "~/config/config.global";
+import secureStorage from "../../plugins/secure-storage";
+
 export default {
   components: {
     profile,
@@ -178,7 +180,7 @@ export default {
             timer: 1500
           }).then(Confirm => {
             this.$store.state.provider.authToken = [];
-            localStorage.apikey = [];
+            secureStorage.apikey = [];
             window.close();
           });
         } else {
