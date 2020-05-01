@@ -25,6 +25,7 @@
 import { mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import { isMobile } from "mobile-device-detect";
+import secureStorage from "../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -41,7 +42,7 @@ export default {
     if (this.getLoginError.length > 0) {
     } else {
       // Set referrer Url
-      localStorage.setItem(
+      secureStorage.setItem(
         "referrerUrl",
         document.referrer.match(/:\/\/(.[^/]+)/)[1]
       );

@@ -36,14 +36,10 @@
           <v-list-tile-title>{{
             $t("profile.onlinehistory")
           }}</v-list-tile-title>
-        </v-list-tile>      
-          <v-list-tile
-          @click="$router.push('/modern/desktop/profile/follower/')"
-        >
+        </v-list-tile>
+        <v-list-tile @click="$router.push('/modern/desktop/profile/follower/')">
           <i class="fa fa-user fa-2x margin-right-5" />
-          <v-list-tile-title>{{
-            $t("profile.myfollowers")        
-          }}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("profile.myfollowers") }}</v-list-tile-title>
         </v-list-tile>
 
         <v-list-tile @click="getLogout()">
@@ -65,6 +61,8 @@ import AnimatedNumber from "animated-number-vue";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import config from "../config/config.global";
+import secureStorage from "../plugins/secure-storage";
+
 export default {
   components: {
     AnimatedNumber,
@@ -92,10 +90,10 @@ export default {
     getLogout() {
       this.dialogConfirm = true;
     },
-    async dialogStatus(value) {
+    dialogStatus(value) {
       if (value) {
-        await localStorage.removeItem("AUTH");
-        const URL = await localStorage.getItem("referrerURL");
+        secureStorage.removeItem("AUTH");
+        const URL = secureStorage.getItem("referrerURL");
         location.href = "http://" + URL;
         this.dialogConfirm = false;
       }

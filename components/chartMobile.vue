@@ -19,6 +19,8 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import Echo from "laravel-echo";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
+
 export default {
   props: {
     height: {
@@ -82,7 +84,7 @@ export default {
               res: logData,
               page: "components/chartMobile.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -226,8 +228,8 @@ export default {
             res,
             page: "components/chartMobile.vue",
             apiUrl: config.getRoadMap.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

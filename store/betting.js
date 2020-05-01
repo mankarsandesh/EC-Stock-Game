@@ -1,4 +1,5 @@
 import config from "../config/config.global";
+import secureStorage from "../plugins/secure-storage";
 import log from "roarr";
 
 const state = () => ({
@@ -153,8 +154,8 @@ const actions = {
           res,
           page: "store/betting.js",
           apiUrl: config.storeBet.url,
-          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: localStorage.getItem("USER_UUID")
+          provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: secureStorage.getItem("USER_UUID")
         },
         ex.message
       );

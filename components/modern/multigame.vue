@@ -97,6 +97,7 @@ import { mapGetters } from "vuex";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import config from "~/config/config.global";
+import secureStorage from "../../plugins/secure-storage";
 import log from "roarr";
 // import livechart from "~/modern/livechart"
 
@@ -141,7 +142,7 @@ export default {
               res: logData,
               page: "components/modern/multigame.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -206,8 +207,8 @@ export default {
             res,
             page: "components/modern/multigame.vue",
             apiUrl: config.getRoadMap.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -217,7 +218,7 @@ export default {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
     setAfterFullScreenClosePage() {
-      localStorage.setItem("fullscreenclosed", "multigame");
+      secureStorage.setItem("fullscreenclosed", "multigame");
       this.$router.push(`/modern/fullscreen/${this.stockid}`);
     },
     formatToPrice(value) {

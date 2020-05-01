@@ -1,7 +1,7 @@
 <template>
   <v-container fluid mt-2 class="containerNew pa-2 " style="text-align:center;">
     <v-layout style="background-color: #f4f5fd;width:100%;">
-      <!-- <v-flex md3 lg3 mt-3 > -->     
+      <!-- <v-flex md3 lg3 mt-3 > -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
@@ -243,6 +243,7 @@ import config from "~/config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
 
 export default {
   async validate({ params, store }) {
@@ -290,9 +291,9 @@ export default {
     }
     this.getStock();
     // Game Rule Popup check and open Ne User
-    // if (localStorage.getItem("gameRule") != "shown") {
+    // if (secureStorage.getItem("gameRule") != "shown") {
     //   this.dialog = true;
-    //   localStorage.setItem("gameRule", "shown");
+    //   secureStorage.setItem("gameRule", "shown");
     // } else {
     //   this.dialog = false;
     // }
@@ -333,7 +334,7 @@ export default {
               res: logData,
               page: "pages/modern/desktop/_id.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -369,7 +370,7 @@ export default {
       "setIsLoadingStockGame"
     ]),
     setAfterFullScreenClosePage() {
-      localStorage.setItem("fullscreenclosed", "desktop");
+      secureStorage.setItem("fullscreenclosed", "desktop");
       this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
     },
     stopListenSocket(channel) {
@@ -400,8 +401,8 @@ export default {
             res,
             page: "pages/modern/desktop/_id.vue",
             apiUrl: config.getStock.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

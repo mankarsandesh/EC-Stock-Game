@@ -89,6 +89,7 @@ import config from "~/config/config.global";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import followBet from "~/components/modern/follow/followBet";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 
 export default {
   components: {
@@ -154,7 +155,7 @@ export default {
           gameUUID: this.gameUUID,
           category: [1, 2, 3],
           version: config.version
-        };       
+        };
         var res = await this.$axios.$post(
           config.getUserInvitation.url,
           reqBody,
@@ -175,8 +176,8 @@ export default {
             res,
             page: "components/channelChat.vue",
             apiUrl: config.getUserInvitation.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

@@ -274,6 +274,7 @@ import { mapGetters, mapActions } from "vuex";
 import OnlineHistory from "~/components/mobile/onlineHistory";
 import StockAnalysis from "~/components/mobile/stockAnalysis";
 import config from "../../config/config.global";
+import secureStorage from "../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -356,8 +357,8 @@ export default {
             res,
             page: "pages/modern/desktop/profile/index.vue",
             apiUrl: config.updateUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

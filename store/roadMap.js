@@ -1,4 +1,5 @@
 import config from "../config/config.global";
+import secureStorage from "../plugins/secure-storage";
 import log from "roarr";
 
 const state = () => ({
@@ -32,9 +33,9 @@ const actions = {
       var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
         headers: config.header
       });
-    
+
       if (res.status) {
-        let readyData = res.data[0].roadMap.reverse();      
+        let readyData = res.data[0].roadMap.reverse();
         context.commit("SET_ROAD_MAP", readyData);
       } else {
         throw new Error(config.error.general);
@@ -47,8 +48,8 @@ const actions = {
           res,
           page: "store/roadMap.js",
           apiUrl: config.getRoadMap.url,
-          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: localStorage.getItem("USER_UUID")
+          provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: secureStorage.getItem("USER_UUID")
         },
         ex.message
       );

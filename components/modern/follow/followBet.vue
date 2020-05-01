@@ -116,6 +116,8 @@
 import { mapState } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
@@ -141,9 +143,7 @@ export default {
               (value || "") <= 10 || `Time may not be greater than 10 Days`
             );
           else
-            return (
-              (value || "") <= 10 || `Bet may not be greater than 10 Bets`
-            );
+            return (value || "") <= 10 || `Bet may not be greater than 10 Bets`;
         }
       },
       // Follow by Validation
@@ -326,8 +326,8 @@ export default {
             res: data.data,
             page: "pages/modern/follow/followBet.vue",
             apiUrl: config.followUser.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
