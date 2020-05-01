@@ -1,26 +1,22 @@
 <template>
   <div>
     <v-card class="followup">
-      <h3 class="title">
-        {{ isFollowing == 1 ? "Follow Bet " : "UnFollow Bet" }}
-      </h3>
+      <h3
+        class="title"
+      >{{ isFollowing == 1 ? $t("useraction.followBet") : $t("useraction.unfollowBet") }}</h3>
       <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="this.defaultImage" width="140px" />
-        <h3 class="subtitle-1  text-center pt-2" v-if="this.username">
-          {{ this.username }}
-        </h3>
+        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
       </v-card-text>
       <v-flex>
         <p
           v-if="FollwingError"
           v-bind:class="{ 'text-danger': hasError, 'text-sucess': hasSucess }"
-        >
-          {{ errorMessage }}
-        </p>
+        >{{ errorMessage }}</p>
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase ">Follow By</h4>
+        <h4 class="subtitle-1 text-uppercase">{{$t("leaderboard.followBy")}}</h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -62,7 +58,7 @@
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">Auto Stop Follow</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderboard.autoStop")}}</h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
@@ -73,7 +69,6 @@
               :value="n.id"
               v-on:change="changeAmount(n.value)"
             ></v-radio>
-
             <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
               <v-text-field
                 :rules="[
@@ -197,15 +192,39 @@ export default {
       selectedFollow: 1,
       // Default Follow By List
       followby: [
-        { id: 1, name: "Follow by Amount", value: "Amount" },
-        { id: 2, name: "Follow by Rate", value: "Rate" }
+        {
+          id: 1,
+          name: this.$root.$t("leaderboard.vue translate followbyAmount"),
+          value: "Amount"
+        },
+        {
+          id: 2,
+          name: this.$root.$t("leaderboard.followbyRate"),
+          value: "Rate"
+        }
       ],
       // Default AUto Stop Follow
       autoStopFollow: [
-        { id: 4, name: "Stop by Winning", value: "stopWin" },
-        { id: 5, name: "Stop by Losing", value: "stopLoss" },
-        { id: 3, name: "Stop by Timing", value: "stopTime" },
-        { id: 6, name: "Stop by Bets", value: "stopBets" }
+        {
+          id: 4,
+          name: this.$root.$t("leaderboard.stopbyWinning"),
+          value: "stopWin"
+        },
+        {
+          id: 5,
+          name: this.$root.$t("leaderboard.stopbyLosing"),
+          value: "stopLoss"
+        },
+        {
+          id: 3,
+          name: this.$root.$t("leaderboard.stopbyTiming"),
+          value: "stopTime"
+        },
+        {
+          id: 6,
+          name: this.$root.$t("leaderboard.stopbyBets"),
+          value: "stopBets"
+        }
       ],
       defaultImage: "/no-profile-pic.jpg",
       selectedFruits: [],
