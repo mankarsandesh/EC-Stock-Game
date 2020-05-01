@@ -20,6 +20,7 @@ import breadcrumbs from "~/components/breadcrumbs";
 import notification from "~/components/modern/stocklist/notification";
 import config from "~/config/config.global";
 import log from "roarr";
+
 export default {
   layout: "desktopModern",
   components: {
