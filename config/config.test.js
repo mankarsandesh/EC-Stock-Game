@@ -6,6 +6,7 @@ const config = {
   socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
   secretKey: "GYXMAKGDYAWDW4K1C6HWWQHXH2W",
+  secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },

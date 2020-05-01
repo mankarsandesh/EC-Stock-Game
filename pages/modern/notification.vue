@@ -14,6 +14,7 @@ import { mapState } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
 import notification from "~/components/mobile/notification";
+import secureStorage from "../../plugins/secure-storage";
 
 export default {
   layout: "default",
@@ -71,8 +72,8 @@ export default {
             req: reqBody,
             res,
             page: "pages/modern/notification",
-            apiUrl: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            apiUrl: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

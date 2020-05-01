@@ -1,7 +1,9 @@
+import config from "../config/config.global";
+
 const CryptoJS = require("crypto-js");
 const SecureStorage = require("secure-web-storage");
 
-const SECRET_KEY = "123456";
+const SECRET_KEY = config.secureStorageSecretKey;
 
 const secureStorage = new SecureStorage(localStorage, {
   hash: function hash(key) {

@@ -99,6 +99,7 @@ import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
 import log from "roarr";
+import secureStorage from "../../../../plugins/secure-storage";
 import config from "~/config/config.global";
 
 // set color win and lose color in bar chart
@@ -133,7 +134,7 @@ export default {
       isShowDateEnd: false,
       startDate: "",
       endDate: "",
-      error: '',
+      error: "",
       isDataValid: false,
       chartOptions: {
         colors: [
@@ -150,7 +151,7 @@ export default {
           bar: {
             horizontal: false,
             columnWidth: "50%",
-            startingShape: "rounded",
+            // startingShape: "rounded",
             rangeBarOverlap: true,
             barHeight: "100%"
             // dataLabels: {
@@ -188,7 +189,7 @@ export default {
           }
         },
         title: {
-          text: this.$root.$t('profile.stockanalysis'),
+          text: this.$root.$t("profile.stockanalysis"),
           align: "left",
           margin: 10,
           offsetX: 2,
@@ -204,7 +205,7 @@ export default {
           curve: "smooth"
         },
         noData: {
-          text: this.$root.$t('leaderboard.nodata')
+          text: this.$root.$t("msg.nodata")
         },
         tooltip: {
           enabled: true,
@@ -337,8 +338,8 @@ export default {
             res,
             page: "pages/modern/desktop/profile/stockAnalysis.vue",
             apiUrl: config.getUserBetAnalysis.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -368,7 +369,7 @@ li {
 
 .chart-map-color {
   position: relative;
-  float: right ;
+  float: right;
   margin-top: 15px;
   display: inline-block;
 }

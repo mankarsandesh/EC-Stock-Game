@@ -95,6 +95,7 @@ import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
 
 export default {
@@ -206,8 +207,8 @@ export default {
             res: data,
             page: "layouts/desktopModern.vue",
             apiUrl: config.getUserNotification.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

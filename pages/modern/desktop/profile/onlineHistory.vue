@@ -99,6 +99,7 @@ import axios from "axios";
 import date from "date-and-time";
 import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
+import secureStorage from "../../../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -149,7 +150,10 @@ export default {
           enabled: false
         },
         title: {
-          text: this.$root.$t('leaderboard.user')+' '+this.$root.$t('profile.onlinehistory'),
+          text:
+            this.$root.$t("leaderboard.user") +
+            " " +
+            this.$root.$t("profile.onlinehistory"),
           align: "center",
           margin: 10,
           offsetX: 2,
@@ -310,8 +314,8 @@ export default {
             res,
             page: "pages/modern/desktop/profile/onlineHistory.vue",
             apiUrl: config.getUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
