@@ -79,6 +79,7 @@
         :userImage="defaultImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
+        @followBetClose="closeFollowBet"
       />
     </v-dialog>
   </div>
@@ -116,6 +117,11 @@ export default {
     };
   },
   methods: {
+     // Close Follow Bet Popup
+    closeFollowBet(){
+      this.dialog = false;
+    },
+    // Send follow user Data and Open Popup
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
@@ -127,7 +133,7 @@ export default {
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
     },
-    // fetch default image or from server image
+    // Fetch default image or from server image
     imgProfile(userImage) {
       return userImage === null
         ? "/no-profile-pic.jpg"

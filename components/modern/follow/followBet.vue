@@ -74,25 +74,44 @@
               v-on:change="changeAmount(n.value)"
             ></v-radio>
 
-            <v-text-field
-              :rules="[
-                rulesNew.min(unfollowValue, autoStop),
-                rulesNew.max(unfollowValue, autoStop)
-              ]"
-              solo
-              @keypress="onlyNumber"
-              v-model="unfollowValue"
-            >
-              <span slot="append" color="red"> {{ unfollowSign }}</span>
-            </v-text-field>
-            <v-flex lg12>
+            <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
+              <v-text-field
+                :rules="[
+                  rulesNew.min(unfollowValue, autoStop),
+                  rulesNew.max(unfollowValue, autoStop)
+                ]"
+                solo
+                @keypress="onlyNumber"
+                v-model="unfollowValue"
+              >
+                <span slot="append" color="red"> {{ unfollowSign }}</span>
+              </v-text-field>
+            </v-flex>
+            <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
+              <v-slider
+                v-model="unfollowValue"
+                class="align-center"
+                :max="unFollowValueMax"
+                :min="unFollowValueMin"
+                color="green"
+                thumb-color="green"
+                track-color="green"
+                hide-details
+                thumb-size=50
+                inverse-label
+                track-fill-color="green"
+                :label="`${unfollowValue} ${unfollowSign}`"
+              >
+              </v-slider>
+            </v-flex>
+            <v-flex lg12 mt-2>
               <v-btn
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
                 >{{ $t("useraction.follow") }}</v-btn
               >
-              <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
+              <v-btn color="buttonCancel" v-on:click="closePopup" text>{{
                 $t("msg.cancel")
               }}</v-btn>
             </v-flex>
@@ -107,6 +126,9 @@
             text
             >{{ $t("useraction.unfollow") }}</v-btn
           >
+           <v-btn color="buttonCancel" v-on:click="closePopup" text>{{
+                $t("msg.cancel")
+              }}</v-btn>
         </v-flex>
       </div>
     </v-card>
@@ -122,6 +144,9 @@ export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
     return {
+      // Unfollow Default Value Min and Max
+      unFollowValueMin: 3,
+      unFollowValueMax: 10,
       // AutoStop Follow Validation
       rulesNew: {
         // Min Value
@@ -160,7 +185,7 @@ export default {
       hasSucess: false,
       FollwingError: false,
       unfollowSign: "USD",
-      unfollowValue: "100",
+      unfollowValue: 100,
       selectAmount: false,
       selectTime: false,
       selectBets: false,
@@ -201,6 +226,10 @@ export default {
     })
   },
   methods: {
+    // Send to Parent Components
+    async closePopup(){
+      this.$emit("followBetClose");
+    },
     // Users Follow Bet Validation
     async followThisUser(followerID, followMethod) {
       // Check Empty Filed
@@ -347,13 +376,17 @@ export default {
     // Change Amount Validation
     changeAmount(value) {
       if (value == "stopWin" || value == "stopLoss") {
-        this.unfollowValue = "100";
+        this.unfollowValue = 100;
         this.unfollowSign = "USD";
       } else if (value == "stopTime") {
-        this.unfollowValue = "1";
+        this.unFollowValueMax = 10;
+        this.unFollowValueMin = 1;
+        this.unfollowValue = 2;
         this.unfollowSign = "Days";
       } else {
-        this.unfollowValue = "3";
+        this.unFollowValueMax = 10;
+        this.unFollowValueMin = 1;
+        this.unfollowValue = 3;
         this.unfollowSign = "Bets";
       }
     },
@@ -370,6 +403,9 @@ export default {
 </script>
 
 <style scoped>
+.v-slider  .v-label{
+  color:green !important;
+}
 .title {
   text-align: center;
   color: #0b2a68;
