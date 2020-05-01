@@ -80,6 +80,7 @@
                 </div>
                 <div style="position:absolute;z-index:1">
                   <v-date-picker
+                    color="#1db42f"
                     v-if="isShowDateStart"
                     v-model="startDate"
                     @input="isShowDateStart = false"
@@ -101,13 +102,14 @@
                 </div>
                 <div style="position:absolute;z-index:1">
                   <v-date-picker
+                    color="#1db42f"
                     v-if="isShowDateEnd"
                     v-model="endDate"
                     @input="isShowDateEnd = false"
                   ></v-date-picker>
                 </div>
               </v-flex>
-
+              <!-- end of end date -->
               <v-flex xs1 sm1 ml-1 mr-4>
                 <div class="date_picker_container">
                   <div class="title_date_picker">
@@ -191,12 +193,10 @@ export default {
       chartOptions: {
         chart: {
           height: 350,
-          type: "bar"
-          // events: {
-          //   click: function (chart, w, e) {
-          //     console.log(chart, e);
-          //   }
-          // }
+          type: "bar",
+          toolbar: {
+            show: false
+          },
         },
         plotOptions: {
           bar: {
