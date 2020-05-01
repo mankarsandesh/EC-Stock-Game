@@ -5,8 +5,8 @@ const config = {
   apiDomain: process.env.API_DOMAIN,
   socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
-  whitelabelUrl: process.env.WHITELABEL_URL,
   secretKey: "CC21128A312FAF7817C93D1B51CB9",
+  secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },

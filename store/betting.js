@@ -1,4 +1,5 @@
 import config from "../config/config.global";
+import secureStorage from "../plugins/secure-storage";
 import log from "roarr";
 
 const state = () => ({
@@ -88,8 +89,8 @@ const actions = {
   async sendBetting(context) {
     try {
       context.commit("SET_IS_SEND_BETTING", true);
-      const betDatas = context.state.multiGameBetSend;
-      if (betDatas.length == 0) {
+      const betDataFinal = context.state.multiGameBetSend;
+      if (betDataFinal.length == 0) {
         context.commit("SET_IS_SEND_BETTING", false);
         this._vm.$swal({
           type: "error",
@@ -103,7 +104,7 @@ const actions = {
         portalProviderUUID: context.rootState.provider.portalProviderUUID,
         userUUID: context.rootState.provider.userUUID,
         version: config.version,
-        betData: betDatas
+        betData: betDataFinal
       };
       var res = await this.$axios.$post(config.storeBet.url, reqBody, {
         headers: config.header
@@ -153,8 +154,8 @@ const actions = {
           res,
           page: "store/betting.js",
           apiUrl: config.storeBet.url,
-          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: localStorage.getItem("USER_UUID")
+          provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: secureStorage.getItem("USER_UUID")
         },
         ex.message
       );

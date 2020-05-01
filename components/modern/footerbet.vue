@@ -29,9 +29,13 @@
       </v-flex>
       <v-flex lg3 md3 xs2 class="betButton">
         <div>
-          <v-btn class="buttonGreensmall" dark @click="confirmBet()">{{
-            $t("msg.confirm")
-          }}</v-btn>
+          <v-btn
+            :disabled="!parseInt(this.getTempMultiGameBetAmount)"
+            class="buttonGreensmall"
+            dark
+            @click="confirmBet()"
+            >{{ $t("msg.confirm") }}</v-btn
+          >
           <v-btn class="buttonCancel" @click="cancelBet()">{{
             $t("msg.cancel")
           }}</v-btn>
@@ -99,7 +103,6 @@ export default {
   computed: {
     ...mapGetters([
       "getCoinsModern",
-      "getAllBettingAmount",
       "getFooterBetAmount",
       "getTempMultiGameBetAmount",
       "getUserInfo"

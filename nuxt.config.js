@@ -118,6 +118,7 @@ module.exports = {
     "@/plugins/roarr",
     "@plugins/secure-storage",
     "@/plugins/filters",
+    { src: "~/plugins/vuex-persist", ssr: false },
     "@/plugins/login.js",
     // { src: '~/plugins/vuex-persist', ssr: false },
     "@/plugins/i18n",

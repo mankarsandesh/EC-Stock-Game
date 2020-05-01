@@ -53,9 +53,7 @@
         >
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
-            <v-list-tile-content
-              >{{ data.loopName }} min</v-list-tile-content
-            >
+            <v-list-tile-content>{{ data.loopName }} min</v-list-tile-content>
           </template>
           <template v-else>
             <v-list-tile-content>
@@ -86,6 +84,8 @@
 import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
 import config from "../config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
+
 export default {
   data() {
     return {
@@ -237,8 +237,8 @@ export default {
             res,
             page: "components/stockSelect.vue",
             apiUrl: config.getActiveGamesByCategory.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -324,5 +324,4 @@ export default {
 .v-list {
   font-size: 12px;
 }
-
 </style>

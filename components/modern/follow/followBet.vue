@@ -74,27 +74,46 @@
               v-on:change="changeAmount(n.value)"
             ></v-radio>
 
-            <v-text-field
-              :rules="[
-                rulesNew.min(unfollowValue, autoStop),
-                rulesNew.max(unfollowValue, autoStop)
-              ]"
-              solo
-              @keypress="onlyNumber"
-              v-model="unfollowValue"
-            >
-              <span slot="append" color="red"> {{ unfollowSign }}</span>
-            </v-text-field>
-            <v-flex lg12>
+            <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
+              <v-text-field
+                :rules="[
+                  rulesNew.min(unfollowValue, autoStop),
+                  rulesNew.max(unfollowValue, autoStop)
+                ]"
+                solo
+                @keypress="onlyNumber"
+                v-model="unfollowValue"
+              >
+                <span slot="append" color="red"> {{ unfollowSign }}</span>
+              </v-text-field>
+            </v-flex>
+            <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
+              <v-slider
+                v-model="unfollowValue"
+                class="align-center"
+                :max="unFollowValueMax"
+                :min="unFollowValueMin"
+                color="green"
+                thumb-color="green"
+                track-color="green"
+                hide-details
+                thumb-size=50
+                inverse-label
+                track-fill-color="green"
+                :label="`${unfollowValue} ${unfollowSign}`"
+              >
+              </v-slider>
+            </v-flex>
+            <v-flex lg12 mt-2>
               <v-btn
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
                 >{{ $t("useraction.follow") }}</v-btn
               >
-              <!-- <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
+              <v-btn color="buttonCancel" v-on:click="closePopup" text>{{
                 $t("msg.cancel")
-              }}</v-btn> -->
+              }}</v-btn>
             </v-flex>
           </v-radio-group>
         </v-card-actions>
@@ -107,6 +126,9 @@
             text
             >{{ $t("useraction.unfollow") }}</v-btn
           >
+           <v-btn color="buttonCancel" v-on:click="closePopup" text>{{
+                $t("msg.cancel")
+              }}</v-btn>
         </v-flex>
       </div>
     </v-card>
@@ -116,10 +138,15 @@
 import { mapState } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
     return {
+      // Unfollow Default Value Min and Max
+      unFollowValueMin: 3,
+      unFollowValueMax: 10,
       // AutoStop Follow Validation
       rulesNew: {
         // Min Value
@@ -141,9 +168,7 @@ export default {
               (value || "") <= 10 || `Time may not be greater than 10 Days`
             );
           else
-            return (
-              (value || "") <= 10 || `Bet may not be greater than 10 Bets`
-            );
+            return (value || "") <= 10 || `Bet may not be greater than 10 Bets`;
         }
       },
       // Follow by Validation
@@ -160,7 +185,7 @@ export default {
       hasSucess: false,
       FollwingError: false,
       unfollowSign: "USD",
-      unfollowValue: "100",
+      unfollowValue: 100,
       selectAmount: false,
       selectTime: false,
       selectBets: false,
@@ -201,6 +226,10 @@ export default {
     })
   },
   methods: {
+    // Send to Parent Components
+    async closePopup(){
+      this.$emit("followBetClose");
+    },
     // Users Follow Bet Validation
     async followThisUser(followerID, followMethod) {
       // Check Empty Filed
@@ -221,21 +250,21 @@ export default {
       // Check Amount Value or Bet Value
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
-        if (this.BetValue >= 1000 || this.BetValue <= 10)
+        if (this.BetValue > 1000 || this.BetValue < 100)
           return this.errorShow(
             true,
             false,
             true,
-            "Amount should be Lower then 1001 & Grater then 10"
+            "Amount should be Lower then 1001 & Grater then 101"
           );
       } else {
         this.BetValue = this.rateValue;
-        if (this.BetValue >= 100 && this.BetValue <= 10)
+        if (this.BetValue > 100 || this.BetValue < 10)
           return this.errorShow(
             true,
             false,
             true,
-            "Bet Rate Should be Lower then 101 & Grater then 10"
+            "Bet Rate Should be Lower then 101 & Grater then 11"
           );
       }
 
@@ -243,32 +272,32 @@ export default {
       switch (this.autoStop) {
         case 4:
         case 5:
-          if (this.unfollowValue >= 1000 || this.unfollowValue <= 10) {
+          if (this.unfollowValue > 1000 || this.unfollowValue < 100) {
             return this.errorShow(
               true,
               false,
               true,
-              "Amount should be Lower then 1001 & Grater then 10"
+              "Auto Stop Amount should Between 100 to 1000"
             );
           }
           break;
         case 3:
-          if (this.unfollowValue >= 10 || this.unfollowValue <= 1) {
+          if (this.unfollowValue > 10 || this.unfollowValue < 1) {
             return this.errorShow(
               true,
               false,
               true,
-              "Days should be Lower then 11 & Grater then 0"
+              "Days should be Between 1 to 10."
             );
           }
           break;
         case 6:
-          if (this.unfollowValue >= 100 || this.unfollowValue <= 1) {
+          if (this.unfollowValue > 100 || this.unfollowValue < 1) {
             return this.errorShow(
               true,
               false,
               true,
-              "Bets should be Lower then 101 & Grater then 0"
+              "Bets should be Between 1 to 100"
             );
           }
           break;
@@ -326,8 +355,8 @@ export default {
             res: data.data,
             page: "pages/modern/follow/followBet.vue",
             apiUrl: config.followUser.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -347,13 +376,17 @@ export default {
     // Change Amount Validation
     changeAmount(value) {
       if (value == "stopWin" || value == "stopLoss") {
-        this.unfollowValue = "100";
+        this.unfollowValue = 100;
         this.unfollowSign = "USD";
       } else if (value == "stopTime") {
-        this.unfollowValue = "1";
+        this.unFollowValueMax = 10;
+        this.unFollowValueMin = 1;
+        this.unfollowValue = 2;
         this.unfollowSign = "Days";
       } else {
-        this.unfollowValue = "3";
+        this.unFollowValueMax = 10;
+        this.unFollowValueMin = 1;
+        this.unfollowValue = 3;
         this.unfollowSign = "Bets";
       }
     },
@@ -370,6 +403,9 @@ export default {
 </script>
 
 <style scoped>
+.v-slider  .v-label{
+  color:green !important;
+}
 .title {
   text-align: center;
   color: #0b2a68;

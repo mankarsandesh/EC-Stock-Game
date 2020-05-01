@@ -19,7 +19,9 @@ import { mapActions, mapGetters, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import notification from "~/components/modern/stocklist/notification";
 import config from "~/config/config.global";
+import secureStorage from "../../../plugins/secure-storage";
 import log from "roarr";
+
 export default {
   layout: "desktopModern",
   components: {
@@ -34,8 +36,8 @@ export default {
       notificationData: []
     };
   },
-  created() {
-    this.fetch();
+  async created() {
+    await this.fetch();
   },
   computed: {
     ...mapState({
@@ -52,9 +54,13 @@ export default {
           userUUID: this.userUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(config.getUserNotification.url, reqBody, {
-          headers: config.header
-        });
+        var res = await this.$axios.$post(
+          config.getUserNotification.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
         if (res.status) {
           this.notificationData = res.data;
         } else {
@@ -73,8 +79,8 @@ export default {
             res,
             page: "pages/modern/desktop/notification.vue",
             apiUrl: config.getUserNotification.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

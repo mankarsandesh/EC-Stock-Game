@@ -74,6 +74,7 @@
                   v-for="(item, i) in winnerList"
                   :key="i"
                   class="mainNotification"
+                  @click="$router.push(pageLink(item.type))"
                 >
                   <div class="userImage">
                     <i class="fa fa-user-o fa-1x" />
@@ -98,7 +99,6 @@
       <v-content>
         <nuxt />
       </v-content>
-
       <!-- invitation Windows-->
       <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
@@ -124,6 +124,7 @@ import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
 
 export default {
@@ -182,7 +183,7 @@ export default {
   created() {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];   
+    let isFullscreen = path[1];
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
@@ -201,6 +202,11 @@ export default {
     });
   },
   methods: {
+    pageLink(type) {
+      return type == 3
+        ? "/modern/desktop/profile/follower/"
+        : "/modern/desktop/notification";
+    },
     ...mapActions(["setGameChannelShow"]),
     async fetchNotification() {
       try {
@@ -230,8 +236,8 @@ export default {
             res: data,
             page: "layouts/desktopModern.vue",
             apiUrl: config.getUserNotification.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -256,9 +262,9 @@ export default {
 .noNotification {
   color: #333;
 }
-#notificationTab {  
-  padding:10px 10px 0px  10px;
-  overflow:scroll;
+#notificationTab {
+  padding: 10px 10px 0px 10px;
+  overflow: scroll;
   z-index: 9999;
   height: 320px;
   width: 350px;
@@ -272,6 +278,7 @@ export default {
   width: 100%;
   border-bottom: 1px solid #dddddd;
 }
+
 .userImage {
   float: left;
   width: 10%;

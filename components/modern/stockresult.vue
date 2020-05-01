@@ -6,9 +6,9 @@
     <v-layout>
       <!-- bet result -->
       <v-flex v-if="showStockresult == true">
-        <h4 class='text-center'>Please Wait...</h4>
+        <h4 class="text-center">Please Wait...</h4>
       </v-flex>
-      <v-flex v-if="showStockresult == false" >
+      <v-flex v-if="showStockresult == false">
         <div class="table-responsive">
           <table class="table">
             <tr>
@@ -40,10 +40,12 @@
 import { mapGetters, mapState } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../../plugins/secure-storage";
+
 export default {
   data() {
     return {
-      showStockresult : true,
+      showStockresult: true,
       selected: 1,
       getStockResult: []
     };
@@ -94,8 +96,8 @@ export default {
             res: data,
             page: "components/modern/stockresult.vue",
             apiUrl: config.getAllStock.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
