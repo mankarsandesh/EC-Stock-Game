@@ -148,7 +148,7 @@ export default {
           bar: {
             horizontal: false,
             columnWidth: "50%",
-            startingShape: "rounded",
+            // startingShape: "rounded",
             rangeBarOverlap: true,
             barHeight: "100%"
             // dataLabels: {
@@ -202,7 +202,7 @@ export default {
           curve: "smooth"
         },
         noData: {
-          text: this.$root.$t('leaderboard.nodata')
+          text: this.$root.$t('msg.nodata')
         },
         tooltip: {
           enabled: true,
