@@ -11,18 +11,15 @@
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
-              <span
-                class="camera_container"
-                style=" position: absolute; top: 9%;"
-              >
+              <span class="camera_container" style=" position: absolute; top: 9%;">
                 <v-icon color="black" :size="20">photo_camera</v-icon>
               </span>
             </div>
             <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
-            <span
-              >{{ $t("profile.onlinestatus") }} :
-              {{ getUserInfo.currentActiveTime }}</span
-            >
+            <span>
+              {{ $t("profile.onlinestatus") }} :
+              {{ getUserInfo.currentActiveTime }}
+            </span>
           </div>
         </v-flex>
       </v-layout>
@@ -38,10 +35,7 @@
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
-              <span
-                class="camera_container"
-                style="position: absolute;top: 5%;"
-              >
+              <span class="camera_container" style="position: absolute;top: 5%;">
                 <v-icon color="black" :size="20">photo_camera</v-icon>
               </span>
             </div>
@@ -88,7 +82,10 @@
             >
               <v-layout pt-3>
                 <v-flex xs2 sm2 md2 lg2 pr-2 class="text-xs-center">
-                  <label for="userName">{{ $t("profile.username") }}</label>
+                  <label for="userName">
+                    {{ $t("profile.username") }}
+                    <span style="color:red;">*</span>
+                  </label>
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
                   <input
@@ -100,12 +97,7 @@
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -124,12 +116,7 @@
                     placeholder="Your First Name"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -148,27 +135,25 @@
                     placeholder="Your Last Name"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
 
               <v-layout pt-2>
                 <v-flex xs2 sm2 md2 lg2 pt2 class="text-xs-center">
-                  <label for="gender">{{ $t("profile.gender") }}</label>
+                  <label for="gender">
+                    {{ $t("profile.gender") }}
+                    <span style="color:red;">*</span>
+                  </label>
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="gender" id="gender" name="gender">
+                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="15" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -187,29 +172,27 @@
                     placeholder="mackychinma@gmail.com"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="15"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
 
               <v-layout pt-3>
                 <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
-                  <label for="country">{{ $t("profile.country") }}</label>
+                  <label for="country">
+                    {{ $t("profile.country") }}
+                    <span style="color:red;">*</span>
+                  </label>
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="country" id="country" name="country">
+                  <select ref="country" id="country" name="country" :value="userData.country">
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
                     <option value="THA">Thailand</option>
                     <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -222,8 +205,7 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                    >{{ $t("msg.save") }}</v-btn
-                  >
+                  >{{ $t("msg.save") }}</v-btn>
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>
@@ -239,9 +221,11 @@
                 class="btn_save width-50"
                 block
               >
-                <span class="padding-right-60">{{
+                <span class="padding-right-60">
+                  {{
                   $t("profile.onlinehistory")
-                }}</span>
+                  }}
+                </span>
                 <i class="fa fa-plus"></i>
               </v-btn>
               <v-btn
@@ -253,9 +237,11 @@
                 "
                 block
               >
-                <span class="padding-right-60">{{
+                <span class="padding-right-60">
+                  {{
                   $t("profile.stockanalysis")
-                }}</span>
+                  }}
+                </span>
                 <i class="fa fa-plus"></i>
               </v-btn>
             </div>
@@ -274,6 +260,7 @@ import { mapGetters, mapActions } from "vuex";
 import OnlineHistory from "~/components/mobile/onlineHistory";
 import StockAnalysis from "~/components/mobile/stockAnalysis";
 import config from "../../config/config.global";
+import secureStorage from "../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -354,10 +341,10 @@ export default {
           {
             req: formData,
             res,
-            page: "pages/modern/desktop/profile/index.vue",
+            page: "pages/modern/profile.vue",
             apiUrl: config.updateUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

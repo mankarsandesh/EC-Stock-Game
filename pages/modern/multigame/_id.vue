@@ -49,6 +49,8 @@ import { mapGetters, mapActions } from "vuex";
 import multigame from "~/components/modern/multigame";
 import stockSelect from "~/components/stockSelect";
 import bottomBetMultigame from "~/components/modern/bottomBetMultigame";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   layout: "desktopModern",
   components: {
@@ -71,10 +73,10 @@ export default {
   },
   computed: {
     closeFullscreen() {
-      let fullscreenClose = localStorage.getItem("fullscreenclosed");
+      let fullscreenClose = secureStorage.getItem("fullscreenclosed");
       if (
-        localStorage.getItem("fullscreenclosed") == null ||
-        localStorage.getItem("fullscreenclosed") == "undefined"
+        secureStorage.getItem("fullscreenclosed") == null ||
+        secureStorage.getItem("fullscreenclosed") == "undefined"
       ) {
         fullscreenClose = "desktop";
       }

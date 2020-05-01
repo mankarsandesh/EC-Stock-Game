@@ -244,6 +244,8 @@
 import { mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   layout: "desktopModern",
   data() {
@@ -337,8 +339,8 @@ export default {
             res: res.data,
             page: "pages/modern/desktop/profile.vue",
             apiUrl: config.updateUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

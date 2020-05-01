@@ -15,6 +15,7 @@ import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 
 export default {
   props: {
@@ -179,7 +180,7 @@ export default {
               res: logData,
               page: "components/chartIndex.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -221,8 +222,8 @@ export default {
             res,
             page: "components/chartIndex.vue",
             apiUrl: config.getRoadMap.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

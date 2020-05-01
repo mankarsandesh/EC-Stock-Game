@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-              isNaN(betId.split("-")[1])
-                ? $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  $t("gamemsg." + betId.split("-")[1])
-                : $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  betId.split("-")[1]
+            isNaN(betId.split("-")[1])
+            ? $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            $t("gamemsg." + betId.split("-")[1])
+            : $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            betId.split("-")[1]
             }}
           </span>
         </h3>
@@ -31,12 +31,7 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar
-              size="70"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
-            >
+            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -58,13 +53,7 @@
           </v-flex>-->
 
           <v-flex style="align-self:center">
-            <input
-              type="number"
-              readonly
-              :min="1"
-              v-model="betValue"
-              class="input-bet"
-            />
+            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -81,22 +70,21 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-          >{{ $t("msg.confirm") }}</v-btn
-        >
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{ $t("msg.cancel") }}
-        </v-btn>
+        >{{ $t("msg.confirm") }}</v-btn>
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{ $t("msg.cancel") }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
+import Sound from "~/helpers/sound";
 import { mapGetters, mapActions } from "vuex";
 import result from "~/data/result";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
 import log from "roarr";
+import secureStorage from "../../plugins/secure-storage";
 
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
@@ -134,12 +122,13 @@ export default {
               if (items.type === "firstdigit") {
                 const result = item.rule.includes(first);
                 if (result) {
-                  console.log("You Win first :" + item.name + ":" + first);
+                  Sound.winBet();
                   $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
+                    Sound.winBet();
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0]
                     );
@@ -153,7 +142,6 @@ export default {
                     this.betId.split("-")[0]
                   );
                   $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==first==" + item.name + "==");
                 }
               }
 
@@ -162,12 +150,13 @@ export default {
               if (items.type === "lastdigit") {
                 const result = item.rule.includes(last);
                 if (result) {
-                  console.log("You Win last :" + item.name + ":" + last);
+                  Sound.winBet();
                   $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
+                    Sound.winBet();
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0]
                     );
@@ -181,7 +170,6 @@ export default {
                     this.betId.split("-")[0]
                   );
                   $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + "==");
                 }
               }
 
@@ -190,14 +178,13 @@ export default {
               if (items.type === "bothdigit") {
                 const result = item.rule.includes(bothdigit);
                 if (result) {
-                  console.log(
-                    "You Win bothdigit:" + item.name + ":" + bothdigit
-                  );
+                  Sound.winBet();
                   $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
+                    Sound.winBet();
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0]
                     );
@@ -211,7 +198,6 @@ export default {
                     this.betId.split("-")[0]
                   );
                   $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + "==");
                 }
               }
 
@@ -219,12 +205,13 @@ export default {
               if (items.type === "twodigit") {
                 const result = item.rule.includes(twoDigit);
                 if (result) {
-                  console.log("You Win twoDigit:" + item.name + ":" + twoDigit);
+                  Sound.winBet();
                   $("#" + this.betWin).addClass(this.betWin);
                   $("#" + this.stockName + this.betId).addClass(
                     this.betId.split("-")[0] + "-animation"
                   );
                   setTimeout(() => {
+                    Sound.winBet();
                     $("#" + this.stockName + this.betId).removeClass(
                       this.betId.split("-")[0]
                     );
@@ -238,7 +225,6 @@ export default {
                     this.betId.split("-")[0]
                   );
                   $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + " ==");
                 }
               }
             }
@@ -315,8 +301,8 @@ export default {
             res,
             page: "components/modern/betModal.vue",
             apiUrl: config.storeBet.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -337,6 +323,7 @@ export default {
           betAmount: this.betValue
         };
         if (this.betValue > 0) {
+          Sound.betTing();
           this.confirmDisabled = true;
           this.sendBetting(data);
           $("#" + this.stockName + this.betId).addClass(

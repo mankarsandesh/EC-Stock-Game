@@ -136,6 +136,7 @@ import config from "~/config/config.global";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import followBet from "~/components/modern/follow/followBet";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 
 export default {
   components: {
@@ -241,14 +242,14 @@ export default {
             }
           } catch (ex) {
             console.log(ex.message);
-            log.error(
+             log.error(
               {
                 req: reqBody,
                 res,
                 page: "components/channelChat.vue",
                 apiUrl: config.getUserInvitation.url,
-                provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-                user: localStorage.getItem("USER_UUID")
+                provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+                user: secureStorage.getItem("USER_UUID")
               },
               ex.message
             );

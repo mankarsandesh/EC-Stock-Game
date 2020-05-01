@@ -15,6 +15,7 @@ import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../../plugins/secure-storage";
 
 export default {
   props: {
@@ -175,7 +176,7 @@ export default {
               res: logData,
               page: "components/mobile/chartIndex.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
