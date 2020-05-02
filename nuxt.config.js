@@ -120,6 +120,7 @@ module.exports = {
     "@/plugins/filters",
     { src: "~/plugins/vuex-persist", ssr: false },
     "@/plugins/login.js",
+    // { src: '~/plugins/vuex-persist', ssr: false },
     "@/plugins/i18n",
     "@/plugins/chart",
     "@/plugins/sweetAlert",

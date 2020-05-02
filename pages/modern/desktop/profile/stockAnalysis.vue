@@ -23,6 +23,7 @@
           </div>
           <div style="position:absolute;z-index:1">
             <v-date-picker
+              color="#1db42f"
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
@@ -44,6 +45,7 @@
           </div>
           <div style="position:absolute;z-index:1">
             <v-date-picker
+              color="#1db42f"
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
