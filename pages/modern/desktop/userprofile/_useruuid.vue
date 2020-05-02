@@ -67,10 +67,14 @@
                 </div>
                 <v-btn
                   v-if="
-                    visitProfileUserData.userUUID != getUserUUID &&
-                      visitProfileUserData.isFollowing == 0
+                    visitProfileUserData.userUUID != getUserUUID 
                   "
-                  class="buttonFollow"
+                  v-bind:class="[
+                    visitProfileUserData.userUUID != getUserUUID &&
+                    visitProfileUserData.isFollowing == 0
+                      ? 'buttonFollow'
+                      : 'buttonunFollow'
+                  ]"
                   v-on:click="
                     followUserBet(
                       visitProfileUserData.username,
@@ -79,31 +83,20 @@
                       visitProfileUserData.isFollowing
                     )
                   "
-                  >Follow</v-btn
                 >
-                <v-btn
-                  v-if="
-                    visitProfileUserData.userUUID != getUserUUID &&
-                      visitProfileUserData.isFollowing == 1
-                  "
-                  class="buttonunFollow"
-                  v-on:click="
-                    followUserBet(
-                      visitProfileUserData.username,
-                      visitProfileUserData.userImage,
-                      visitProfileUserData.userUUID,
-                      visitProfileUserData.isFollowing
-                    )
-                  "
-                  >unFollow</v-btn
-                >
+                  {{
+                    visitProfileUserData.isFollowing == 0
+                      ? $t("useraction.followBet")
+                      : $t("useraction.unfollowBet")
+                  }}
+                </v-btn>
               </div>
             </v-flex>
           </v-layout>
         </v-parallax>
       </v-container>
     </section>
-    <v-container>
+    <v-container mb-5>
       <v-layout row wrap>
         <v-flex xs12 mt-3 v-if="messageError == false">
           <div class="container-content">
@@ -154,9 +147,9 @@
                     style="font-size: 40px; color: #ffd682;"
                   />
                 </span>
-                <span class="number-box">{{
-                  visitProfileUserData.totalWinBets
-                }}</span>
+                <span class="number-box"
+                  >${{ visitProfileUserData.totalWinAmount | currency }}</span
+                >
                 <span class="des-title text-uppercase">{{
                   $t("leaderboard.winningamount")
                 }}</span>
@@ -201,10 +194,12 @@
       <!-- Follow Dialog -->
       <v-dialog v-model="dialog" width="500" class="followDialog">
         <followBet
+          v-if="renderComponent"
           :username="this.username"
           :userImage="this.userImage"
           :FollowerUserUUID="this.FollowUserUUID"
           :isFollowing="this.FolloworNot"
+          @followBetClose="closeFollowBet"
         />
       </v-dialog>
     </v-container>
@@ -228,6 +223,7 @@ export default {
   },
   data() {
     return {
+      renderComponent: true, // render Follow Bet
       username: "",
       FollowUserUUID: "",
       FolloworNot: "",
@@ -303,8 +299,19 @@ export default {
     }
   },
   methods: {
+    // Render Follow Bet Component
+    forceRerender() {
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        this.renderComponent = true;
+      });
+    },
+    // Close Follow Bet Popup
+    closeFollowBet() {
+      this.dialog = false;
+    },
+    // Follow User Bet
     followUserBet: function(username, userImg, userUUID, method) {
-      console.log(username);
       this.username = username;
       this.FollowUserUUID = userUUID;
       if (method == 0) {
@@ -314,6 +321,7 @@ export default {
       }
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
       this.dialog = true;
+      this.forceRerender();
     },
     imgProfile(userImg) {
       return userImg === null
@@ -444,7 +452,7 @@ export default {
 }
 
 .number-box {
-  font-size: 40px;
+  font-size: 25px;
   font-weight: bolder;
 }
 
@@ -463,7 +471,7 @@ export default {
   border: #c0acef solid 3px;
   background-color: #fff;
   margin: 15px;
-  width: 180px;
+  width: 220px;
   height: 180px;
   box-shadow: 0 0 2px #fff;
   display: flex;
@@ -542,7 +550,7 @@ export default {
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 14px;
-  width: 100px;
+  width: 120px;
   height: 48px;
   flex-grow: wrap;
 }
@@ -553,7 +561,7 @@ export default {
   background-image: linear-gradient(to right, #888787 30%, #626161 51%);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 14px;
-  width: 100px;
+  width: 120px;
   height: 48px;
   flex-grow: wrap;
 }
