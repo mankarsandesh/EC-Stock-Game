@@ -343,5 +343,29 @@
     "only10" : "Only 10 Invitaion in one Day.",
     "youHave" : "You have",
     "invitationLeft" : "Invitaion left"
+  },
+  "tutorial": {
+    "resultDraw" : "Result of the DRAW",
+    "calculation" : "Calculation",
+    "lotteryDraw" : "Lottery DRAW",
+    "analyseGraph" : "analyse graph",
+    "stockGraph" : "You can analysis stock graph,the result of last draw",
+    "betonDigits" : "bet on digits",
+    "selectDigit" : "Now you can select DIGIT",
+    "betConfirm" : "bet confirm",
+    "betLastdigiteven" : "Your BET place confirm on the Last Digit EVEN",
+    "selectChip" : "Select CHIP or enter AMOUNT to CONFIRM bet",
+    "stockGame" : "stocks & game",
+    "stockTime" : "You can choose your Stock and Time,you want BET/PLAY",
+    "stockAnalysis" : "stock analysis",
+    "analysisCurrent" : "Analysis current active Stock DATA update",
+    "stockResult" : "stock result",
+    "checkUpdate" : "Check updated result of Stock",
+    "roadMap" : "road map",
+    "analyseStock" : "You can analyse stock graph,the result of last draw"
+
+  },
+  "error": {
+    "general" : "Something went wrong!"
   }
 }
