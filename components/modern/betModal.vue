@@ -112,7 +112,7 @@ export default {
       const first = parseInt(lastDraw.slice(0, 1));
       const last = parseInt(lastDraw.slice(1, 2));
       const bothdigit = first + last;
-      console.log("Here is the numner ", lastDraw);
+      //console.log("Here is the numner ", lastDraw);
       const twoDigit = lastDraw.slice(0, 1) + lastDraw.slice(1, 2);
       result.rule_data.map((items, index) => {
         if ($("#" + this.stockName + this.betId).hasClass(items.type)) {
