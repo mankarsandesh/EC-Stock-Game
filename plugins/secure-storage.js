@@ -16,9 +16,14 @@ const secureStorage = new SecureStorage(localStorage, {
     return data;
   },
   decrypt: function decrypt(data) {
-    data = CryptoJS.AES.decrypt(data, SECRET_KEY);
-    data = data.toString(CryptoJS.enc.Utf8);
-    return data;
+    try {
+      data = CryptoJS.AES.decrypt(data, SECRET_KEY);
+      data = data.toString(CryptoJS.enc.Utf8);
+      return data;
+    } catch (ex) {
+      // If the user edits the vuex state in local storage(the vuex state data will get invalid)
+      console.log(ex);
+    }
   }
 });
 

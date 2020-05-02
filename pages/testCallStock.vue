@@ -8,7 +8,6 @@
 import stockSelect from "~/components/stockSelect";
 import { mapActions, mapState } from "vuex";
 export default {
- 
   components: {
     stockSelect
   },
@@ -19,8 +18,7 @@ export default {
   mounted() {
     this.listenForBroadcast(
       {
-        channelName:
-          "roadMap.88778f4f-610b-4ec3-937d-65ef7bf24af5",
+        channelName: "roadMap.88778f4f-610b-4ec3-937d-65ef7bf24af5",
         eventName: "roadMap"
       },
       ({ data }) => {
@@ -37,7 +35,11 @@ export default {
   },
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
+      window.Echo.channel(channelName)
+        .listen(eventName, callback)
+        .on("pusher:subscription_succeeded", member => {
+          console.log("I am here");
+        });
     }
   }
 };
