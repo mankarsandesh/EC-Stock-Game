@@ -13,9 +13,9 @@
           @click="activeTab('world')"
           :class="{ active: tabActiveName === 'world' }"
         >
-          <a href="#"
-            >{{ $t("invitation.ecworld") }}
-            <span class="count"> {{ globalInvitation.length }} </span>
+          <a href="#">
+            {{ $t("invitation.ecworld") }}
+            <span class="count">{{ globalInvitation.length }}</span>
           </a>
         </span>
         <span
@@ -38,93 +38,68 @@
                   {{ item.value }}
                 </span>
               </span>
-            </div>            -->
+            </div>-->
             <div class="bodyChat">
-              <div
-                class="messageChatView noRecord"
-                v-if="globalInvitation.length == 0"
-              >
+              <div class="messageChatView noRecord" v-if="globalInvitation.length == 0">
                 <i class="fa fa-bell"></i>
-                <p>There are no users Invitaion.</p>
+                <p>{{$t("invitation.noInvitation")}}</p>
               </div>
 
-              <div
-                class="msgUser"
-                v-for="data in globalInvitation"
-                :key="data.index"
-              >
+              <div class="msgUser" v-for="data in globalInvitation" :key="data.index">
                 <div class="messageChatView" v-if="globalInvitation.length > 0">
                   <div>
-                    <nuxt-link
-                      :to="'/modern/desktop/userprofile/' + data.userUUID"
-                    >
+                    <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
                       <v-img
                         class="userImage"
                         :src="defaultImage"
                         aspect-ratio="1"
                         max-height="120"
                         max-width="120"
-                      >
-                      </v-img>
+                      ></v-img>
                     </nuxt-link>
                   </div>
                   <div>
-                    <div
-                      class="ranking"
-                      v-if="data.category.some(element => element == 3)"
-                    >
+                    <div class="ranking" v-if="data.category.some(element => element == 3)">
                       <span
                         v-if="
                           data.category[0] == 3 && data.category.length == 1
                         "
                         class="label"
-                      >
-                        Winning Rank</span
-                      >
+                      >{{$t("invitation.winningRank")}}</span>
 
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                          <span v-on="on">#{{ data.Rank }} </span>
+                          <span v-on="on">#{{ data.Rank }}</span>
                         </template>
-                        <span>User Rank</span>
+                        <span>{{$t("invitation.userRank")}}</span>
                       </v-tooltip>
                     </div>
-                    <div
-                      v-if="data.category.some(element => element == 2)"
-                      class="followcount"
-                    >
+                    <div v-if="data.category.some(element => element == 2)" class="followcount">
                       <span
                         v-if="
                           data.category[0] == 2 && data.category.length == 1
                         "
                         class="label"
-                      >
-                        Total Follower</span
-                      >
+                      >{{$t("invitation.totalFollower")}}</span>
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                          <span v-on="on">{{ data.followerCount }} </span>
+                          <span v-on="on">{{ data.followerCount }}</span>
                         </template>
-                        <span>User Follow Count</span>
+                        <span>{{$t("invitation.userfollowCount")}}</span>
                       </v-tooltip>
                     </div>
-                    <div
-                      class="winRate"
-                      v-if="data.category.some(element => element == 1)"
-                    >
+                    <div class="winRate" v-if="data.category.some(element => element == 1)">
                       <span
                         v-if="
                           data.category[0] == 1 && data.category.length == 1
                         "
                         class="label"
-                      >
-                        Winning Rate</span
-                      >
+                      >{{$t("invitation.winningRate")}}</span>
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                          <span v-on="on">{{ data.winRate }}% </span>
+                          <span v-on="on">{{ data.winRate }}%</span>
                         </template>
-                        <span>User Win Rate</span>
+                        <span>{{$t("invitation.userWinrate")}}</span>
                       </v-tooltip>
                     </div>
                   </div>
@@ -133,22 +108,20 @@
                       v-if="getUserUUID != data.userUUID"
                       class="following"
                       v-on:click="followUser(null, null, data.userUUID, '0')"
-                      >Follow</v-btn
-                    >
-                    <v-btn v-if="getUserUUID == data.userUUID" class="following"
-                      >Yourself</v-btn
-                    >
+                    >{{$t("useraction.follow")}}</v-btn>
+                    <v-btn
+                      v-if="getUserUUID == data.userUUID"
+                      class="following"
+                    >{{$t("useraction.yourself")}}</v-btn>
                   </div>
                 </div>
               </div>
             </div>
             <span class="leftMessage">
-              <span v-if="this.noInvitaion == true">
-                Only 10 Invitaion in one Day.</span
-              >
-              <span v-if="this.noInvitaion == false">
-                You have {{ leftUser }} Invitaion left.</span
-              >
+              <span v-if="this.noInvitaion == true">{{$t("invitation.only10")}}</span>
+              <span
+                v-if="this.noInvitaion == false"
+              >{{$t("invitation.youHave")}} {{ leftUser }} {{$t("invitation.invitationLeft")}}</span>
             </span>
             <div class="messageChat">
               <v-flex col-md-12>
@@ -161,12 +134,9 @@
                     :items="categoryName"
                     multiple
                     label="Select Category"
-                  ></v-select>
-                  &nbsp;<i
-                    @click="sendInvitation()"
-                    class="fa fa-paper-plane"
-                  ></i
-                ></v-btn>
+                  ></v-select>&nbsp;
+                  <i @click="sendInvitation()" class="fa fa-paper-plane"></i>
+                </v-btn>
               </v-flex>
             </div>
           </div>

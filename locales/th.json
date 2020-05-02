@@ -330,6 +330,16 @@
   "invitation": {
     "ecworld" : "EC โลก",
     "gameChannel" : "ช่องเกม",
-    "sendInvitation": "ส่งคำเชิญ"
+    "sendInvitation" : "ส่งคำเชิญ",
+    "noInvitation" : "ไม่มีคำเชิญผู้ใช้",
+    "winningRank" : "อันดับที่ชนะ",
+    "userRank" : "อันดับผู้ใช้",
+    "totalFollower" : "รวมผู้ติดตาม",
+    "userfollowCount" :"ผู้ติดตามผู้ใช้",
+    "winningRate" : "อัตราการชนะ",
+    "userWinrate":"อัตราการชนะของผู้ใช้",
+    "only10":"เพียง 10 คำเชิญในวันเดียว",
+    "youHave" : "คุณมี",
+    "invitationLeft" : "เหลือคำเชิญแล้ว"
   }
 }

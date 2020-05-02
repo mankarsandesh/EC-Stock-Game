@@ -332,6 +332,16 @@
   "invitation": {
     "ecworld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
-    "sendInvitation": "SEND INVITATION"
+    "sendInvitation": "SEND INVITATION",
+    "noInvitation": "No users Invitations.",
+    "winningRank":"Winning Rank",
+    "userRank":"User Rank",
+    "totalFollower": "Total Follower",
+    "userfollowCount": "User Follow Count",
+    "winningRate": "Winning Rate",
+    "userWinrate":"User Win Rate",
+    "only10" : "Only 10 Invitaion in one Day.",
+    "youHave" : "You have",
+    "invitationLeft" : "Invitaion left"
   }
 }

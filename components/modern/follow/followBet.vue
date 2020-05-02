@@ -79,7 +79,7 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red"> {{ unfollowSign }}</span>
+                <span slot="append" color="red">{{ unfollowSign }}</span>
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
@@ -92,23 +92,23 @@
                 thumb-color="green"
                 track-color="green"
                 hide-details
-                thumb-size=50
+                thumb-size="50"
                 inverse-label
                 track-fill-color="green"
                 :label="`${unfollowValue} ${unfollowSign}`"
-              >
-              </v-slider>
+              ></v-slider>
             </v-flex>
             <v-flex lg12 mt-2>
               <v-btn
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-                >{{ $t("useraction.follow") }}</v-btn
-              >
-              <v-btn color="buttonCancel" v-on:click="closePopup" text>{{
+              >{{ $t("useraction.follow") }}</v-btn>
+              <v-btn color="buttonCancel" v-on:click="closePopup" text>
+                {{
                 $t("msg.cancel")
-              }}</v-btn>
+                }}
+              </v-btn>
             </v-flex>
           </v-radio-group>
         </v-card-actions>
@@ -119,11 +119,12 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-            >{{ $t("useraction.unfollow") }}</v-btn
-          >
-           <v-btn color="buttonCancel" v-on:click="closePopup" text>{{
-                $t("msg.cancel")
-              }}</v-btn>
+          >{{ $t("useraction.unfollow") }}</v-btn>
+          <v-btn color="buttonCancel" v-on:click="closePopup" text>
+            {{
+            $t("msg.cancel")
+            }}
+          </v-btn>
         </v-flex>
       </div>
     </v-card>
@@ -194,7 +195,7 @@ export default {
       followby: [
         {
           id: 1,
-          name: this.$root.$t("leaderboard.vue translate followbyAmount"),
+          name: this.$root.$t("leaderboard.followbyAmount"),
           value: "Amount"
         },
         {
@@ -246,7 +247,7 @@ export default {
   },
   methods: {
     // Send to Parent Components
-    async closePopup(){
+    async closePopup() {
       this.$emit("followBetClose");
     },
     // Users Follow Bet Validation
@@ -422,8 +423,8 @@ export default {
 </script>
 
 <style scoped>
-.v-slider  .v-label{
-  color:green !important;
+.v-slider .v-label {
+  color: green !important;
 }
 .title {
   text-align: center;

@@ -329,6 +329,16 @@
   "invitation": {
     "ecworld" : "EC ໂລກ",
     "gameChannel" : "ການຫຼິ້ນ ຊ່ອງທາງ",
-    "sendInvitation": "ສົ່ງການລົງທືນ"
+    "sendInvitation" : "ສົ່ງການລົງທືນ",
+    "noInvitation" : "ບໍ່ມີຜູ້ຊົມໃຊ້",
+    "winningRank" : "ອັນດັບທີ່ຊະນະ",
+    "userRank" : "ອັນດັບຜູ້ໃຊ້",
+    "totalFollower" : "ຜູ້ຕິດຕາມທັງ ໝົດ",
+    "userfollowCount" : "ຈຳ ນວນຜູ້ຕິດຕາມຜູ້ໃຊ້",
+    "winningRate" : "ອັດຕາການຊະນະ",
+    "userWinrate":"ອັດຕາ Win ຂອງຜູ້ໃຊ້",
+    "only10":"ພຽງແຕ່ 10 ບັດເຊີນໃນມື້ດຽວເທົ່ານັ້ນ.",
+    "youHave" : "ເຈົ້າ​ມີ",
+    "invitationLeft" : "ການເຊື້ອເຊີນປະໄວ້"
   }
 }
