@@ -62,7 +62,6 @@ export default {
             headers: config.header
           }
         );
-        console.log('notification', res.data);
         if (res.status) {
           this.notificationData = res.data;
         } else {
