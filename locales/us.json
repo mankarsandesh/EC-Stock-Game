@@ -333,5 +333,8 @@
     "ecworld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
     "sendInvitation": "SEND INVITATION"
+  },
+  "error": {
+    "general": "Something went Wrong!"
   }
 }

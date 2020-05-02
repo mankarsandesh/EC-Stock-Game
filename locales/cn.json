@@ -330,5 +330,8 @@
     "ecworld" : "EC 世界",
     "gameChannel" : "游戏频道",
     "sendInvitation": "发送邀请"
+  },
+  "error": {
+    "general": "出问题了！"
   }
 }
