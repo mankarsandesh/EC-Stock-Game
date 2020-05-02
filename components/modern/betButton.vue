@@ -17,7 +17,7 @@
         v-for="data in firstDigit"
         :key="data.ruleid"
         class="w12"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -91,7 +91,7 @@
         v-for="(data, index) in lastDigit"
         :key="index"
         class="w12"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -173,7 +173,7 @@
         v-for="data in bothDigit"
         :key="data.rule"
         class="w12"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -248,7 +248,7 @@
         v-for="data in twoDigit"
         :key="data.rule"
         class="w12"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -316,7 +316,7 @@
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
         :key="'firstdigit-' + index"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -343,7 +343,7 @@
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
         :key="'lastdigit-' + index"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -370,7 +370,7 @@
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 19"
         :key="'bothdigit-' + index"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -397,7 +397,7 @@
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 100"
         :key="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
