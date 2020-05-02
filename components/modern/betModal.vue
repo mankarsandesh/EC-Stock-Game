@@ -31,7 +31,7 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key"   class="chips" >
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -347,17 +347,11 @@ export default {
 <style scoped>
 .chips {
   margin: 0px 3px;
-  -webkit-transition: -webkit-transform 0.8s ease-in-out;
-  transition: transform 0.8s ease-in-out;
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
 }
-
 .chips:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
-  -ms-transform: rotate(360deg);
-  /* IE 9 */
-  transform: rotate(360deg);
 }
-
 .betHeading {
   font-weight: 500;
   color: #545353;
