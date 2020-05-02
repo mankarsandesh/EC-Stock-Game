@@ -119,6 +119,7 @@
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
+        v-if="renderComponent"
         :username="this.username"
         :userImage="this.defaultImage"
         :FollowerUserUUID="this.FollowUserUUID"
@@ -139,6 +140,7 @@ export default {
   },
   data() {
     return {
+      renderComponent: true, // render Follow Bet
       defaultImage: "/no-profile-pic.jpg",
       isActiveWeek: true,
       isActiveMonth: false,
@@ -180,6 +182,13 @@ export default {
     }) 
   },
   methods: {    
+    // Render Follow Bet Component 
+    forceRerender() {        
+        this.renderComponent = false;        
+        this.$nextTick(() => {         
+          this.renderComponent = true;
+        });
+    },
     // Close Follow Bet Popup
     closeFollowBet(){
       this.dialog = false;
@@ -231,6 +240,7 @@ export default {
       method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2;     
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
+      this.forceRerender();
     },
     // fetch leaderboard Top Player
     async leaderBoard() {
@@ -243,7 +253,6 @@ export default {
           dateRangeTo: this.dateTo,
           version: config.version
         };
-        console.log(reqBody);
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
           reqBody,

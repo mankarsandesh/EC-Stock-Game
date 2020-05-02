@@ -6,6 +6,7 @@
       :titlebtn="$t('breadcrumbs.betHistory')"
     />
     <v-container>
+      <!-- Send Data to currentBet Component -->
       <currentBet :currentBets="currentBets" />
     </v-container>
   </div>
@@ -30,10 +31,11 @@ export default {
     };
   },
   computed: {
+    // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }) 
   },
   mounted() {
     this.fetch();

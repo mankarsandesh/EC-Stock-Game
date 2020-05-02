@@ -104,6 +104,7 @@
         </v-layout>
       </v-container>
     </section>
+    <!-- Bet History Data Table -->
     <bethistory :search="search" :userBetHistory="userBetHistory" />
   </div>
 </template>
@@ -140,10 +141,11 @@ export default {
     };
   },
   computed: {
+    // Get 2 data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }) 
   },
   mounted() {
     const lastWeek = new Date(
@@ -158,6 +160,7 @@ export default {
     this.fetchBetHsitory();
   },
   methods: {
+    // Sorting By Today,Week, Month 
     sortingBy() {
       if (this.sortby == "Today") {
         const lastWeek = new Date(
@@ -200,6 +203,7 @@ export default {
         this.fetchBetHsitory();
       }
     },
+    // Fetch bet History user wise
     async fetchBetHsitory() {
       try {
         var reqBody = {
@@ -221,7 +225,7 @@ export default {
           this.loadingImage = false;
         }
       } catch (ex) {
-        console.log(ex);
+        console.log(data.message);
         this.$swal({
           title: ex.message,
           type: "error",
