@@ -246,8 +246,8 @@ export default {
                 res,
                 page: "components/channelChat.vue",
                 apiUrl: config.getUserInvitation.url,
-                provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-                user: localStorage.getItem("USER_UUID")
+                provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+                user: secureStorage.getItem("USER_UUID")
               },
               ex.message
             );
@@ -448,6 +448,7 @@ export default {
   font-weight: 800;
   text-align: center;
 }
+
 .msgUser .followcount {
   float: left;
   font-size: 20px;
@@ -456,6 +457,7 @@ export default {
   font-weight: 800;
   text-align: center;
 }
+
 .msgUser .winRate {
   float: left;
   font-size: 20px;

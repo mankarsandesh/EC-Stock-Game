@@ -527,8 +527,6 @@ export default {
   cursor: pointer;
   float: left;
   text-align: center;
-  /* border: 1px solid #dddddd; */
-  /* height: 50px; */
   padding: 2px 4px;
 }
 .messageChatView .userImage {
@@ -575,8 +573,8 @@ export default {
   padding: 0px;
   float: right;
 }
+
 .label {
-  /* border:1px solid; */
   margin-top: -5px;
   color: #585757;
   font-size: 14px;
@@ -651,10 +649,12 @@ export default {
 .leftMessage {
   padding: 0px 10px;
   margin-bottom: 10px;
-  color: red;
+  font-weight: 400;
+  color: #ef5252;
   text-align: right;
   font-size: 12px;
 }
+
 /* width */
 ::-webkit-scrollbar {
   width: 8px;

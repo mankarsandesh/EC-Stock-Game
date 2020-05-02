@@ -35,6 +35,24 @@ Latest Version Features (1.0)
 10. User Online History
 
 
+Version 2 Features List 
+
+1.  Follow bet optimization (Will be based on the market response of version1)		
+2.  Chip Setting(Min-Max Setting based on V1 response)	
+3.  Every User has Different Currency ( Min and Max Chips Amount Depend on Currency)	
+4.  Player Privacy Issues(Player Settings)	
+5.  Big data statistics.	(Find the optimized solution to show big in-game data)	(Discussion with Designing Team)
+6.  Responsive focusing	(Laptop,Desktop,Mobile,Browser)
+7.  User top up balance option in Profile Page and redirect to portal Provider's Website.	
+8.  Chat box Invitation	Add extra preset content while sending an invitation	(Discussion with Designing Team)
+9.  Tutorial add character	Add mascot character in tutorial	( Discussion with Designing Team )
+10. Sound Effect (Betting , After Win, After Loss)
+11. User can set Avatar Picture. (Unable to Upload user own Picture)
+12. Work on Security no one can Enter game With Authentication Server. 
+13. Set Cookies for Users Important Information.
+
+
+
 Issues and enhancements to be addressed in future
 
 1. Difference between confirmed and unconfirmed bets in fullscreen(design team will decide what to show in confirmed bet and what to show in unconfirmed bets).
