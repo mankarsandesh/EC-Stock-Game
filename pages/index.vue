@@ -55,7 +55,7 @@ export default {
       if (this.$screen.width <= 1204) {
         this.linkto = "modern";
       } else {
-        this.linkto = "/modern/desktop/" + stockName;
+        this.linkto = "/modern/desktop/" + this.stockName;
       }
     }
   },

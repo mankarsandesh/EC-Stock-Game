@@ -225,7 +225,7 @@
 
                   <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed"
-                      >1 {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
+                      >{{ getStockLoop($route.params.id) }} {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
                     >
                     <v-btn
                       color="buttonGreen"
