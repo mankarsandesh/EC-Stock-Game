@@ -122,6 +122,7 @@ module.exports = {
     "@/plugins/login.js",
     // { src: '~/plugins/vuex-persist', ssr: false },
     "@/plugins/i18n",
+    "@plugins/google-translate",
     "@/plugins/chart",
     "@/plugins/sweetAlert",
     "@/plugins/vueScreen",
@@ -141,6 +142,7 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
     "@nuxtjs/moment",
+    // "@google-cloud/translate"
     //['vue-wait/nuxt', { useVuex: true }],
     [
       "nuxt-fontawesome",

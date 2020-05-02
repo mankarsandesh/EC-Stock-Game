@@ -20,6 +20,7 @@ import breadcrumbs from "~/components/breadcrumbs";
 import notification from "~/components/modern/stocklist/notification";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
+//const { Translate } = require("@google-cloud/translate").v2;
 import log from "roarr";
 
 export default {
@@ -61,6 +62,7 @@ export default {
             headers: config.header
           }
         );
+        console.log('notification', res.data);
         if (res.status) {
           this.notificationData = res.data;
         } else {
