@@ -222,8 +222,8 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                    >{{ $t("msg.save") }}</v-btn
-                  >
+                    >{{ $t("msg.save") }}
+                  </v-btn>
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>

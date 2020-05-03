@@ -2,7 +2,7 @@
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <!-- filter -->
-    <SlideMenu class="filter-style mt-5" ref="refslideleft" title="filter">
+    <SlideMenu class=" mt-5" ref="refslideleft" title="filter">
       <v-list class="pt-0 text-primary" dense>
         <!-- filter stock name -->
         <v-divider></v-divider>
@@ -13,36 +13,30 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <div class="text-uppercase text-primary pa-0" v-show="showfilterStock">
-          <v-list-tile>
-            <v-list-tile-content class="pl-3 text-color">
-              <v-checkbox
-                v-model="checkbox1"
-                color="#003e70"
-                label="china"
-              ></v-checkbox>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-content class="pl-3 text-primary text-color">
-              <v-checkbox
-                v-model="checkbox1"
-                color="#003e70"
-                label="usa"
-                style="color:red !important"
-              ></v-checkbox>
-            </v-list-tile-content>
-          </v-list-tile>
-
-          <v-list-tile>
-            <v-list-tile-content class="pl-3 text-primary text-color">
-              <v-checkbox
-                v-model="checkbox1"
-                color="#003e70"
-                label="cypto"
-              ></v-checkbox>
-            </v-list-tile-content>
-          </v-list-tile>
+        <div
+          class=" filter-centent-container text-uppercase text-primary pa-0"
+          v-show="showfilterStock"
+        >
+          <div class="item-content text-color">
+            <v-checkbox
+              v-model="filter.stock.china"
+              color="#003e70"
+              label="china"
+              hide-details
+            ></v-checkbox>
+            <v-checkbox
+              v-model="filter.stock.usa"
+              color="#003e70"
+              label="usa"
+              hide-details
+            ></v-checkbox>
+            <v-checkbox
+              v-model="filter.stock.cypto"
+              color="#003e70"
+              label="cypto"
+              hide-details
+            ></v-checkbox>
+          </div>
         </div>
         <!--filter game type -->
         <v-divider></v-divider>
@@ -53,29 +47,28 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <div class="text-uppercase text-primary pa-0" v-show="showfilterType">
-          <v-list-tile>
-            <v-list-tile-content class="pl-3 text-color">
-              <v-checkbox
-                v-model="checkbox1"
-                color="#003e70"
-                label="1 minute"
-              ></v-checkbox>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-content class="pl-3 text-primary text-color">
-              <v-checkbox
-                v-model="checkbox1"
-                color="#003e70"
-                label="5 minute"
-              ></v-checkbox>
-            </v-list-tile-content>
-          </v-list-tile>
+        <div
+          class="filter-centent-container text-uppercase text-primary pa-0"
+          v-show="showfilterType"
+        >
+          <div class="item-content text-color">
+            <v-checkbox
+              v-model="filter.gameType.loop1"
+              color="#003e70"
+              label="1 minute"
+              hide-details
+            ></v-checkbox>
+            <v-checkbox
+              v-model="filter.gameType.loop5"
+              color="#003e70"
+              label="5 minute"
+              hide-details
+            ></v-checkbox>
+          </div>
         </div>
 
         <v-divider></v-divider>
-        <v-list-tile class="py-2">
+        <v-list-tile class="py-2" @click="defaultFilter">
           <v-list-tile-content>
             <v-list-tile-title class="text-uppercase">
               {{ $t("default") }}
@@ -246,6 +239,17 @@ export default {
   },
   data() {
     return {
+      filter: {
+        stock: {
+          china: true,
+          usa: true,
+          cypto: true
+        },
+        gameType: {
+          loop1: true,
+          loop5: true
+        }
+      },
       checkbox1: false,
       showfilterStock: false,
       showfilterType: false
@@ -257,6 +261,13 @@ export default {
     ...mapGetters(["getAllStocks", "getTimerByStockName", "getStockLivePrice"])
   },
   methods: {
+    defaultFilter() {
+      this.filter.stock.china = true;
+      this.filter.stock.usa = true;
+      this.filter.stock.cypto = true;
+      this.filter.gameType.loop1 = true;
+      this.filter.gameType.loop5 = true;
+    },
     filterClick() {
       this.$refs.refslideleft.showMenu();
     },
@@ -276,5 +287,15 @@ export default {
   height: 66% !important;
   transform: translateX(0px);
   width: 300px !important;
+}
+.filter-centent-container {
+  display: flex;
+  flex-direction: column;
+}
+.item-content {
+  padding: 15px;
+  padding-top: 0px;
+  display: flex;
+  flex-direction: column;
 }
 </style>
