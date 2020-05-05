@@ -9,7 +9,7 @@
     />
     <v-container>
       <v-layout row wrap mt-3 md6 align-center justify-center > 
-        <v-flex md8 >
+        <v-flex md10 >
           <v-flex md6 class="d-flex">
             <v-select
               class="border-round"
@@ -26,7 +26,7 @@
         </v-flex>
       </v-layout>
       <v-layout row wrap align-center justify-center>
-        <v-flex md8 lg8>
+        <v-flex md10 lg10>
           <stocklist />
         </v-flex>
       </v-layout>

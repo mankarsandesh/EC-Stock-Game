@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-flex  md8 lg8 mt-3 style="margin:20px auto;">
-      <v-layout row>
+    <v-flex style="margin:0px auto;">
+      <v-layout row wrap>
         <v-flex grow pa-1>
           <p class="float-left md6 lg8">
             <span class="title">
@@ -37,14 +37,16 @@
       </v-layout>
     </v-flex>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.nodata") }}</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">
+        {{ $t("leaderboard.nodata") }}
+      </h2>
     </v-flex>
-    <v-flex v-if="topPlayerData.length > 0" >
+    <v-flex v-if="topPlayerData.length > 0">
       <v-flex
         xs12
-        md10
-        lg10
-        xl8
+        md12
+        lg12
+        xl12
         style="margin:0 auto;"
         v-for="(data, index) in topPlayerData"
         :key="index"
@@ -64,19 +66,21 @@
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
-            <h4 class="green--text titleText">{{ Math.round(data.winRate, 1) }}%</h4>
+            <h4 class="green--text titleText">
+              {{ Math.round(data.winRate, 1) }}%
+            </h4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
             <H4 style="color:#eb0b6e;" class="titleText">
-              {{
-              data.totalWinBets
-              }}
+              {{ data.totalWinBets }}
             </H4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
-            <h4 style="color:#0b2a68;" class="titleText">${{ Math.round(data.totalWinAmount, 1)  | currency}}</h4>
+            <h4 style="color:#0b2a68;" class="titleText">
+              ${{ Math.round(data.totalWinAmount, 1) | currency }}
+            </h4>
           </div>
           <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
             <v-btn
@@ -90,7 +94,8 @@
                 )
               "
               dark
-            >{{ $t("useraction.followBet") }}</v-btn>
+              >{{ $t("useraction.followBet") }}</v-btn
+            >
           </div>
           <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
             <v-btn
@@ -104,13 +109,15 @@
                 )
               "
               dark
-            >{{ $t("useraction.unfollow") }}</v-btn>
+              >{{ $t("useraction.unfollow") }}</v-btn
+            >
           </div>
-          <div v-if="data.isFollowing == -1" style="width:20%;padding-top:30px;">
+          <div
+            v-if="data.isFollowing == -1"
+            style="width:20%;padding-top:30px;"
+          >
             <v-btn class="buttonGreensmall">
-              {{
-              $t("useraction.yourself")
-              }}
+              {{ $t("useraction.yourself") }}
             </v-btn>
           </div>
         </div>
@@ -179,18 +186,18 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) 
+    })
   },
-  methods: {    
-    // Render Follow Bet Component 
-    forceRerender() {        
-        this.renderComponent = false;        
-        this.$nextTick(() => {         
-          this.renderComponent = true;
-        });
+  methods: {
+    // Render Follow Bet Component
+    forceRerender() {
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        this.renderComponent = true;
+      });
     },
     // Close Follow Bet Popup
-    closeFollowBet(){
+    closeFollowBet() {
       this.dialog = false;
     },
     // Sorting Weekly and Monthly
@@ -232,12 +239,12 @@ export default {
       return userImage === null
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/` + userImage;
-    },   
+    },
     // Open Dialog box When User Click on Follow Button
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2;     
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
       this.forceRerender();
