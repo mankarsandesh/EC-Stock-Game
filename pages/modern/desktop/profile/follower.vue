@@ -13,7 +13,7 @@
         <div class="title_container">
           <h3 class="text-black onFollower" v-if="followerEmpty == true">
             <i class="fa fa-user-o fa-2x" />
-            <div>{{$t("profile.noFollowers") }} </div>
+            <div>{{ $t("profile.noFollowers") }}</div>
           </h3>
           <div
             class="follower_container"
@@ -67,6 +67,7 @@
         :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
+        @followBetClose="closeFollowBet"
       />
     </v-dialog>
   </div>
@@ -102,6 +103,10 @@ export default {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
+    // Close Follow Bet Popup
+    closeFollowBet() {
+      this.dialog = false;
+    },
     // Follow User Bet
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
@@ -151,12 +156,12 @@ export default {
 </script>
 
 <style scoped>
-.onFollower{
+.onFollower {
   color: #aeafb0;
   text-align: center;
   font-size: 28px;
   width: 500px;
-  margin:20% auto;
+  margin: 20% auto;
 }
 .followType span {
   text-align: center;

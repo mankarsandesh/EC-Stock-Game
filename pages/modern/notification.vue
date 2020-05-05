@@ -1,33 +1,25 @@
 <template>
   <div>
-    <breadcrumbs
-      :title="$t('breadcrumbs.notification')"
-      linkItem="gamerule"
-      :titlebtn="$t('breadcrumbs.gamerule')"
-    />
-    <v-container>
-      <v-layout row wrap>
-        <v-flex xs12 md12 mt-5>
-          <notification :notificationData="notificationData" />
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <v-layout row wrap>
+      <v-flex xs12 md12>
+        <notification :notificationData="notificationData" />
+      </v-flex>
+    </v-layout>
   </div>
 </template>
+
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
-import breadcrumbs from "~/components/breadcrumbs";
-import notification from "~/components/modern/stocklist/notification";
+import { mapState } from "vuex";
 import config from "~/config/config.global";
-import secureStorage from "../../../plugins/secure-storage";
-//const { Translate } = require("@google-cloud/translate").v2;
 import log from "roarr";
+import notification from "~/components/mobile/notification";
+import secureStorage from "../../plugins/secure-storage";
 
 export default {
-  layout: "desktopModern",
+  layout: "default",
   components: {
-    notification,
-    breadcrumbs
+    notification
   },
   data() {
     return {
@@ -37,8 +29,8 @@ export default {
       notificationData: []
     };
   },
-  async created() {
-    await this.fetch();
+  created() {
+    this.fetch();
   },
   computed: {
     ...mapState({
@@ -47,7 +39,6 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["setIsLoadingStockGame"]),
     async fetch() {
       try {
         var reqBody = {
@@ -62,8 +53,10 @@ export default {
             headers: config.header
           }
         );
+
         if (res.status) {
           this.notificationData = res.data;
+          // console.log(this.notificationData,"Notification response");
         } else {
           throw new Error(config.error.general);
         }
@@ -78,9 +71,8 @@ export default {
           {
             req: reqBody,
             res,
-            page: "pages/modern/desktop/notification.vue",
-            apiUrl: config.getUserNotification.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            page: "pages/modern/notification",
+            apiUrl: secureStorage.getItem("PORTAL_PROVIDERUUID"),
             user: secureStorage.getItem("USER_UUID")
           },
           ex.message
@@ -90,3 +82,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.light-toobar h1 {
+  padding: 0px 20px;
+}
+</style>

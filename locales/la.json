@@ -99,6 +99,7 @@
     "confirmed": "ຢືນຢັນ",
     "betclosed": "ການເດີມພັນປິດ",
     "chooselanguage": "ພາສາ",
+    "Lao": "ລາວ",
     "Clear": "ລ້າງ",
     "Total Bet": "ການເດີມພັນທັງໝົດ",
     "Win Rate": "ອັດຕາຊະນະ",
@@ -270,7 +271,15 @@
     "lastupdate": "ອັບເດດຫຼ້າສຸດ 1 ນາທີທີ່ແລ້ວ",
     "top" : "ທາງເທີງ",
     "leaders" : "ຜູ້ ນຳ",
-    "nodata" : "ບໍ່ມີຜູ້ ນຳ ໃຊ້ໃນ Leaderboard."
+    "nodata" : "ບໍ່ມີຜູ້ ນຳ ໃຊ້ໃນ Leaderboard.",
+    "followBy": "ຕິດຕາມດ້ວຍ",
+    "autoStop":"ລົດຢຸດຕິດຕາມ",
+    "followbyAmount":"ຕິດຕາມດ້ວຍ ຈຳ ນວນເງິນ",
+    "followbyRate":"ປະຕິບັດຕາມໂດຍອັດຕາ",
+    "stopbyWinning":"ຢຸດໂດຍການຊະນະ",
+    "stopbyLosing":"ຢຸດໂດຍການສູນເສຍ",
+    "stopbyTiming":"ຢຸດເຊົາໂດຍເວລາ",
+    "stopbyBets":"ຢຸດໂດຍການເດີມພັນ"
   },
   "breadcrumbs": {
     "rule": "ກົດລະບຽບ",
@@ -320,6 +329,39 @@
   "invitation": {
     "ecworld" : "EC ໂລກ",
     "gameChannel" : "ການຫຼິ້ນ ຊ່ອງທາງ",
-    "sendInvitation": "ສົ່ງການລົງທືນ"
+    "sendInvitation" : "ສົ່ງການລົງທືນ",
+    "noInvitation" : "ບໍ່ມີຜູ້ຊົມໃຊ້",
+    "winningRank" : "ອັນດັບທີ່ຊະນະ",
+    "userRank" : "ອັນດັບຜູ້ໃຊ້",
+    "totalFollower" : "ຜູ້ຕິດຕາມທັງ ໝົດ",
+    "userfollowCount" : "ຈຳ ນວນຜູ້ຕິດຕາມຜູ້ໃຊ້",
+    "winningRate" : "ອັດຕາການຊະນະ",
+    "userWinrate":"ອັດຕາ Win ຂອງຜູ້ໃຊ້",
+    "only10":"ພຽງແຕ່ 10 ບັດເຊີນໃນມື້ດຽວເທົ່ານັ້ນ.",
+    "youHave" : "ເຈົ້າ​ມີ",
+    "invitationLeft" : "ການເຊື້ອເຊີນປະໄວ້"
+  },
+  "tutorial": {
+    "resultDraw":"ຜົນຂອງກົດ ໝາຍ DRAW",
+    "calculation" : "ການຄິດໄລ່",
+    "lotteryDraw" : "ໃບຫວຍຂູດ",
+    "analyseGraph" : "ເສັ້ນສະແດງການວິເຄາະ",
+    "stockGraph" : "ທ່ານສາມາດວິເຄາະເສັ້ນສະແດງຫຼັກຊັບ, ຜົນຂອງການແຕ້ມຄັ້ງສຸດທ້າຍ",
+    "betonDigits" : "ວາງເດີມພັນໃນຕົວເລກ",
+    "selectDigit" : "ຕອນນີ້ທ່ານສາມາດເລືອກຕົວເລກ",
+    "betConfirm" : "bet ຢືນຢັນ",
+    "betLastdigiteven" : "ສະຖານທີ່ການພະນັນຂອງທ່ານຢືນຢັນຕົວເລກສຸດທ້າຍແມ່ນແຕ່",
+    "selectChip" : "ເລືອກຊິບຫຼືໃສ່ ຈຳ ນວນເງິນເພື່ອຢືນຢັນການເດີມພັນ",
+    "stockGame" : "ຮຸ້ນແລະເກມ",
+    "stockTime" : "ທ່ານສາມາດເລືອກຫຼັກຊັບແລະເວລາຂອງທ່ານ, ທ່ານຕ້ອງການການເດີມພັນ / ການຫຼີ້ນ",
+    "stockAnalysis" : "ການວິເຄາະຫຼັກຊັບ",
+    "analysisCurrent" : "ວິເຄາະການອັບເດດຂໍ້ມູນຫຸ້ນທີ່ມີການເຄື່ອນໄຫວໃນປະຈຸບັນ",
+    "stockResult" : "ຜົນໄດ້ຮັບຫຼັກຊັບ",
+    "checkUpdate" : "ກວດເບິ່ງຜົນການປັບປຸງຂອງຫຸ້ນ",
+    "roadMap" : "ແຜນທີ່ເສັ້ນທາງ",
+    "analyseStock" : "ທ່ານສາມາດວິເຄາະເສັ້ນສະແດງຫຼັກຊັບ, ຜົນຂອງການແຕ້ມຄັ້ງສຸດທ້າຍ"
+  },
+  "error": {
+    "general" : "出问题了！"
   }
 }

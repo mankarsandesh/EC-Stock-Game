@@ -7,10 +7,9 @@
     <v-flex pa-2 class="headerStockBar">{{ $t("msg.betting") }}</v-flex>
 
     <v-flex class="text-xs-center" style="overflow-y: auto;height:200px">
-      <h3 v-show="getOnGoingBet.length <= 0" class="pa-5">
+      <h3 v-show="getOnGoingBet.length <= 0" class="pa-5 noBetting">
         {{ $t("msg.nobetting") }}
       </h3>
-      <!-- v-show="getOnGoingBet.length>0" -->
 
       <v-list three-line class="pa-0" v-show="getOnGoingBet.length > 0">
         <template v-for="(data, index) in getOnGoingBet" class="pa-0">
@@ -58,18 +57,17 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  data() {
-    return {};
-  },
   computed: {
     ...mapGetters(["getOnGoingBet", "getBettingAmount"])
   }
 };
 </script>
-
 <style scoped>
-.totalAmount{
-  font-size:30px;
+.noBetting {
+  color: #acacac;
+}
+.totalAmount {
+  font-size: 20px;
 }
 .current-bet {
   padding: 10px 0px;
@@ -77,7 +75,7 @@ export default {
 }
 .current-bet label {
   color: #333;
-  font-weight: 500;
+  font-weight: 800;
 }
 .listBet {
   padding: 5px 0px;

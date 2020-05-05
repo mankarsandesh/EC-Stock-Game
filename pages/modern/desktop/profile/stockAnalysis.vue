@@ -23,6 +23,7 @@
           </div>
           <div style="position:absolute;z-index:1">
             <v-date-picker
+              color="#1db42f"
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
@@ -44,6 +45,7 @@
           </div>
           <div style="position:absolute;z-index:1">
             <v-date-picker
+              color="#1db42f"
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
@@ -97,6 +99,7 @@ import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
 import log from "roarr";
+import secureStorage from "../../../../plugins/secure-storage";
 import config from "~/config/config.global";
 
 // set color win and lose color in bar chart
@@ -131,7 +134,7 @@ export default {
       isShowDateEnd: false,
       startDate: "",
       endDate: "",
-      error: '',
+      error: "",
       isDataValid: false,
       chartOptions: {
         colors: [
@@ -148,6 +151,10 @@ export default {
           bar: {
             horizontal: false,
             columnWidth: "50%",
+<<<<<<< HEAD
+=======
+            // startingShape: "rounded",
+>>>>>>> 4be9432e00581c541b4697cc21e3e8d808830691
             rangeBarOverlap: true,
             barHeight: "100%"
             // dataLabels: {
@@ -185,7 +192,7 @@ export default {
           }
         },
         title: {
-          text: this.$root.$t('profile.stockanalysis'),
+          text: this.$root.$t("profile.stockanalysis"),
           align: "left",
           margin: 10,
           offsetX: 2,
@@ -201,7 +208,11 @@ export default {
           curve: "smooth"
         },
         noData: {
+<<<<<<< HEAD
           text: this.$root.$t('msg.nodata')
+=======
+          text: this.$root.$t("msg.nodata")
+>>>>>>> 4be9432e00581c541b4697cc21e3e8d808830691
         },
         tooltip: {
           enabled: true,
@@ -334,8 +345,8 @@ export default {
             res,
             page: "pages/modern/desktop/profile/stockAnalysis.vue",
             apiUrl: config.getUserBetAnalysis.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -365,7 +376,7 @@ li {
 
 .chart-map-color {
   position: relative;
-  float: right ;
+  float: right;
   margin-top: 15px;
   display: inline-block;
 }

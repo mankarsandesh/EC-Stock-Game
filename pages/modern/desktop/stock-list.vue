@@ -19,9 +19,7 @@
         </v-flex>
         <v-flex xs1 class="d-flex mx-3">
           <v-btn @click="goSearch" class="buttonGreen">
-            {{
-            $t("msg.go")
-            }}
+            {{ $t("msg.go") }}
           </v-btn>
         </v-flex>
       </v-layout>

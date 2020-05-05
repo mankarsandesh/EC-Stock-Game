@@ -1,110 +1,10 @@
 <template>
   <div>
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <v-layout row wrap id="history">
-      <v-flex
-        xs4
-        sm2
-        md2
-        lg2
-        mr-1
-        mt-2
-        mb-2
-        style="float:left;"
-        class="input-text"
-      >
-        <v-menu
-          v-model="from"
-          :close-on-content-click="false"
-          :nudge-right="0"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              v-model="dateFrom"
-              prepend-icon="event"
-              readonly
-              v-on="on"
-              single-line
-              hide-details
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="dateFrom"
-            @input="from = false"
-          ></v-date-picker>
-        </v-menu>
-      </v-flex>
-
-      <v-flex
-        xs4
-        sm2
-        md2
-        lg2
-        mr-1
-        ml-1
-        mt-2
-        mb-2
-        style="float:left;"
-        class="input-text"
-      >
-        <v-menu
-          v-model="to"
-          :close-on-content-click="false"
-          :nudge-right="0"
-          transition="scale-transition"
-          offset-y
-          full-width
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              v-model="dateTo"
-              prepend-icon="event"
-              readonly
-              v-on="on"
-              single-line
-              hide-details
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="dateTo" @input="to = false"></v-date-picker>
-        </v-menu>
-      </v-flex>
-
-      <v-flex xs3 sm1 md1 ml-1 mr-2 mt-2 mb-2>
-        <button class="goButton buttonGreen">{{ $t("msg.go") }}</button>
-      </v-flex>
-
-      <v-flex xs5 sm5 md2 lg2 mr-2 mt-2 mb-2 class="input-text">
-        <v-text-field
-          single-line
-          hide-details
-          v-model="search"
-          append-icon="search"
-          class="selectHistory text-white"
-          style="padding:4px;"
-        ></v-text-field>
-      </v-flex>
-      <v-flex xs5 sm5 md2 lg2 mt-2 mb-2 class="input-text">
-        <v-select
-          single-line
-          hide-details
-          :items="items"
-          label="Sort By :"
-          v-model="itemss"
-          class="selectHistory"
-        ></v-select>
-      </v-flex>
-    </v-layout>
-
     <v-data-table
       hide-actions
       :items="userBetHistory"
       :pagination.sync="pagination"
+      :rows-per-page-items="[rowPageCount]"
       ref="table"
       :search="search"
       class="bg-colors"
@@ -132,23 +32,18 @@
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
           <td>{{ item.item.payout }}</td>
-          <td v-if="item.item.betResult == 'win'" class="text-uppercase">
-            <span class="win">{{ $t("msg.win") }}</span>
+
+          <td v-if="item.item.isFollowBet == 1" class="text-uppercase text-center">
+            <div class="following">by followers</div>
           </td>
-          <td v-if="item.item.betResult == 'lose'">
-            <span class="lose">{{ $t("msg.lose") }}</span>
-          </td>
-          <td v-if="item.item.betResult == 'pending'">
-            <span class="pending">{{ $t("msg.pending") }}...</span>
+          <td v-if="item.item.isFollowBet == 0" class="text-uppercase text-center">
+            <div class="original">original</div>
           </td>
         </tr>
         <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
           <td colspan="2">
             <span class="betDraw">{{ $t("bethistory.betdraw") }} :</span>
-            <span
-              class="gameDraw"
-              v-html="$options.filters.lastDraw(item.item.gameDraw)"
-            ></span>
+            <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
           </td>
           <td colspan="2" class="allDigit">
             {{ $t("gamemsg.firstdigit") }}
@@ -164,18 +59,16 @@
               v-html="$options.filters.bothDigit(item.item.gameDraw)"
             ></span>
             {{ $t("gamemsg.twodigit") }}
-            <span v-html="$options.filters.twoDigit(item.item.gameDraw)"></span>
+            <span
+              v-html="$options.filters.twoDigit(item.item.gameDraw)"
+            ></span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount == 0">
-            <span class="betDraw"
-              >{{ $t("bethistory.yourloosingamount") }} :</span
-            >
+            <span class="betDraw">{{ $t("bethistory.yourloosingamount") }} :</span>
             <span class="lossAmount">{{ item.item.betAmount }}</span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount != 0">
-            <span class="betDraw"
-              >{{ $t("bethistory.yourwinningamount") }} :</span
-            >
+            <span class="betDraw">{{ $t("bethistory.yourwinningamount") }} :</span>
             <span class="winAmount">{{ item.item.rollingAmount }}</span>
           </td>
         </tr>
@@ -195,11 +88,7 @@
       </template>
     </v-data-table>
     <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
-      <v-pagination
-        v-model="pagination.page"
-        color="#1db42f"
-        :length="10"
-      ></v-pagination>
+      <v-pagination v-model="pagination.page" color="#1db42f" :length="10"></v-pagination>
     </div>
   </div>
 </template>
@@ -209,6 +98,7 @@ export default {
   props: ["userBetHistory"],
   data() {
     return {
+      rowPageCount: 10,
       dateTo: new Date().toISOString().substr(0, 10),
       dateFrom: new Date().toISOString().substr(0, 10),
       from: false,
@@ -280,89 +170,61 @@ export default {
 };
 </script>
 <style scoped>
-.input-text {
+.totalRollingWin {
+  font-weight: 800;
+  color: green;
+}
+.totalRollingLoss {
+  font-weight: 800;
+  color: red;
+}
+
+.winning {
+  color: green;
+  font-weight: 800;
+}
+.losing {
+  color: red;
+  font-weight: 800;
+}
+.selectRow {
+  cursor: pointer;
+}
+.extraInfo {
+  padding: 10px;
+  height: 70px;
+  background-color: #f3f3f3;
+}
+.original {
+  margin: 0 auto;
+  width: 150px;
   border-radius: 5px;
-  height: 44px;
-  border: 1px solid;
-}
-.lose {
-  border-radius: 15px;
   padding: 4px 10px;
-  color: #fff;
-  font-size: 13px;
+  color: #333333;
+  font-size: 14px;
   text-transform: uppercase;
-  background-color: #e05858;
+  font-weight: 600;
+  background-color: #fec623;
 }
-.win {
-  border-radius: 15px;
+.following {
+  margin: 0 auto;
+  width: 150px;
+  border-radius: 5px;
   padding: 4px 16px;
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   text-transform: uppercase;
+  font-weight: 600;
   background-color: #2bb13b;
 }
 .pending {
   border-radius: 15px;
   padding: 4px 16px;
   color: #333;
-  font-size: 13px;
+  font-size: 14px;
   text-transform: uppercase;
+  font-weight: 600;
   background-color: #fec623;
-}
-
-label,
-.v-select__selection,
-.text-white {
-  color: white !important;
-}
-
-.toolbar-bg {
-  background-color: rgb(22, 83, 136);
-}
-
-.toolbar-text {
-  background-color: white;
-  color: black;
-  border-bottom: outset;
-}
-
-.v-window__container .v-window-item .layout .flex .v-input {
-  margin: 0px;
-}
-
-.v-window__container
-  .v-window-item
-  .layout
-  .flex
-  .v-input
-  .v-input__control
-  .bg-colors {
-  background-color: #9b2121 !important;
-  border-radius: 2px;
-}
-
-.v-window__container
-  .v-window-item
-  .layout
-  .flex
-  .v-input
-  .v-input__control
-  .v-input__slot
-  .v-text-field__slot
-  input {
-  color: #fff !important;
-  font-size: 1.2rem;
-  padding: 11px;
-}
-
-.goButton {
-  /* padding: 6px 4px; */
-  background-color: #003e70 !important;
-  color: #fff;
-  height: 100%;
-  margin-top: 0px;
-  left: -8px;
-  width: 100%;
 }
 .betDraw {
   color: #545353;

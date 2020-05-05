@@ -99,6 +99,7 @@
     "confirmed": "下注成功",
     "betclosed": "下注已关盘",
     "chooselanguage": "語言",
+    "Chinese": "中文",
     "Clear": "重置",
     "Total Bet": "总下注金额",
     "Win Rate": "赢率",
@@ -270,7 +271,15 @@
     "lastupdate": "最近更新1分钟前",
     "top" : "最佳",
     "leaders" : "领导者",
-    "nodata" : "排行榜中没有顶级用户。"
+    "nodata" : "排行榜中没有顶级用户。",
+    "followBy": "其次是",
+    "autoStop":"自动停止跟随",
+    "followbyAmount":"跟随金额",
+    "followbyRate":"跟随率",
+    "stopbyWinning":"止赢",
+    "stopbyLosing":"迷路了",
+    "stopbyTiming":"按时停下来",
+    "stopbyBets":"停止投注"
   },
   "breadcrumbs": {
     "rule": "规则",
@@ -320,6 +329,39 @@
   "invitation": {
     "ecworld" : "EC 世界",
     "gameChannel" : "游戏频道",
-    "sendInvitation": "发送邀请"
+    "sendInvitation" : "发送邀请",
+    "noInvitation" : "没有用户邀请.",
+    "winningRank" : "优胜者排名",
+    "userRank" : "用户等级",
+    "totalFollower" : "总关注者",
+    "userfollowCount" : "用户关注数",
+    "winningRate": "中奖率",
+    "userWinrate":"用户获胜率",
+    "only10":"一天只有10个邀请。",
+    "youHave" : "你有",
+    "invitationLeft" : "剩下的邀请"
+  },
+  "tutorial": {
+    "resultDraw":"抽签结果",
+    "calculation" : "计算方式",
+    "lotteryDraw" : "抽奖",
+    "analyseGraph" : "分析图",
+    "stockGraph" : "您可以分析股票图，最后抽奖的结果",
+    "betonDigits" : "投注数字",
+    "selectDigit" : "现在您可以选择数字",
+    "betConfirm" : "下注确认",
+    "betLastdigiteven" : "您的投注位置在最后一位数字上确认",
+    "selectChip" : "选择筹码或输入金额以确认赌注",
+    "stockGame" : "股票和游戏",
+    "stockTime" : "您可以选择股票和时间，想要下注/玩",
+    "stockAnalysis" : "库存分析",
+    "analysisCurrent" : "分析当前有效库存数据更新",
+    "stockResult" : "库存结果",
+    "checkUpdate" : "查看库存更新结果",
+    "roadMap" : "路线图",
+    "analyseStock" : "您可以分析股票图，最后抽奖的结果"
+  },
+  "error": {
+    "general" : "出问题了！"
   }
 }

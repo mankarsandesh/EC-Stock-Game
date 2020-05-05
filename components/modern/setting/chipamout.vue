@@ -45,6 +45,8 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import chips from "~/data/chips";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   props: ["value"],
   data() {
@@ -89,7 +91,7 @@ export default {
       let ship4 = this.$refs.ship4[0].value;
       let ship5 = this.$refs.ship5[0].value;
       let new_amount = `["${ship1}", "${ship2}", "${ship3}", "${ship4}", "${ship5}"]`;
-      localStorage.setItem("coinModern", new_amount);
+      secureStorage.setItem("coinsModern", new_amount);
       this.setCoinsModern();
     }
   }

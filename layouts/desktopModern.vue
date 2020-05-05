@@ -5,10 +5,7 @@
     <!-- tutorial  end -->
 
     <v-app style=" background-color: #f4f5fd;">
-      <div
-        class="text-xs-center container-loading loading"
-        v-if="getIsLoadingStockGame"
-      >
+      <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
         <v-progress-circular
           style="top: calc(100% - 68%);"
           :size="100"
@@ -20,45 +17,25 @@
       <v-toolbar class="toolbarMenu" style="background-color:#FFF;">
         <v-container fluid class="navbar">
           <v-toolbar-title>
-            <v-img
-              src="/logo.png"
-              @click="$router.push('/modern/desktop/btc1')"
-              class="logoStyle"
-            ></v-img>
+            <v-img src="/logo.png" @click="$router.push('/modern/desktop/btc1')" class="logoStyle"></v-img>
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items class="hidden-xs-only text-s1 toolBar">
-            <v-btn
-              flat
-              v-for="item in menu"
-              :key="item.title"
-              :to="item.to"
-              class="menuItem"
-            >
+            <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
               <i :class="item.icon" />
               <span>&nbsp;{{ $t(`menu.${item.title}`) }}</span>
             </v-btn>
             <div class="layout-btn">
-              <v-btn
-                class="btn-langage"
-                text
-                flat
-                @click="$refs.language.showDialog()"
-              >
+              <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
                 <countryFlag :country="countryflag" size="normal" />
-                <span>&nbsp;{{ $t("msg.chooselanguage") }}</span>
+                <span>&nbsp;{{ $t(`msg.${language[getLocale]}`) }}</span>
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>
             <userMenu class="layout-logout" />
             <v-menu bottom offset-y>
               <template v-slot:activator="{ on }">
-                <span
-                  v-on="on"
-                  flat
-                  id="notification"
-                  class="menuItemNotification"
-                >
+                <span v-on="on" flat id="notification" class="menuItemNotification">
                   <i class="fa fa-bell-o fa-2x" />
                   <span class="badge">{{ messagesCount }}</span>
                 </span>
@@ -67,24 +44,19 @@
                 <v-list-tile
                   v-if="winnerList.length == 0"
                   class="noNotification"
-                >
-                  There are no Notification.</v-list-tile
-                >
+                >There are no Notification.</v-list-tile>
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
                   class="mainNotification"
+                  @click="$router.push(pageLink(item.type))"
                 >
                   <div class="userImage">
                     <i class="fa fa-user-o fa-1x" />
                   </div>
                   <div class="messageBody">
-                    <div class="title">
-                      {{ item.title }}
-                    </div>
-                    <div class="description">
-                      {{ item.message }}
-                    </div>
+                    <div class="title">{{ item.title }}</div>
+                    <div class="description">{{ item.message }}</div>
                     <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
@@ -98,14 +70,13 @@
       <v-content>
         <nuxt />
       </v-content>
-
       <!-- invitation Windows-->
       <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :stockName="$route.params.id"
         :key="$route.name"
       />
-      <!-- <chatWindow /> -->
+      <!-- <invitation Windows /> -->
     </v-app>
   </div>
 </template>
@@ -124,6 +95,7 @@ import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
 
 export default {
@@ -166,7 +138,8 @@ export default {
       rightDrawer: false,
       title: "EC gaming",
       isFullscreen: null,
-      timeout: 3000
+      timeout: 3000,
+      language: config.language
     };
   },
   updated() {
@@ -181,7 +154,7 @@ export default {
   created() {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];   
+    let isFullscreen = path[1];
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
@@ -200,6 +173,11 @@ export default {
     });
   },
   methods: {
+    pageLink(type) {
+      return type == 3
+        ? "/modern/desktop/profile/follower/"
+        : "/modern/desktop/notification";
+    },
     ...mapActions(["setGameChannelShow"]),
     async fetchNotification() {
       try {
@@ -228,9 +206,9 @@ export default {
             req: reqBody,
             res: data,
             page: "layouts/desktopModern.vue",
-            apiUrl: config.getAllBets.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            apiUrl: config.getUserNotification.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -255,9 +233,9 @@ export default {
 .noNotification {
   color: #333;
 }
-#notificationTab {  
-  padding:10px 10px 0px  10px;
-  overflow:scroll;
+#notificationTab {
+  padding: 10px 10px 0px 10px;
+  overflow: scroll;
   z-index: 9999;
   height: 320px;
   width: 350px;
@@ -271,6 +249,7 @@ export default {
   width: 100%;
   border-bottom: 1px solid #dddddd;
 }
+
 .userImage {
   float: left;
   width: 10%;
