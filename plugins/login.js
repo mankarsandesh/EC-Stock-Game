@@ -7,8 +7,7 @@ export default async context => {
   try {
     document.referrer.match(/:\/\/(.[^/]+)/)[1];
     // Set Initial storage coins
-    initLocalStorageCoin(context.store);
-
+    initLocalStorageCoin(context.store);    
     if (performance.navigation.type == 1) {
       // If User reloads the page
       // Set user data in vuex store
@@ -18,10 +17,10 @@ export default async context => {
     } else if (
       performance.navigation.type == 0 &&
       document.referrer.match(/:\/\/(.[^/]+)/)[1] == window.location.host
-    ) {
+    ){
       // If user opens a new tab by right click
       // Set default language in vuex store
-      context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+      // context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
       // Set user data in vuex store
       context.store.dispatch("setUserData");
     } else {
@@ -57,7 +56,7 @@ export default async context => {
     }
   } catch (ex) {
     console.log(ex);
-    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
+    // window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
   }
 };
 

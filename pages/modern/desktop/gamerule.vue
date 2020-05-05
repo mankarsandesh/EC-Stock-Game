@@ -2,8 +2,8 @@
   <div xs2>
     <breadcrumbs :title="$t('breadcrumbs.rule')" />
     <v-container>
-      <v-layout row wrap>
-        <v-flex xs12 mt-3>
+      <v-layout row wrap justify-center>
+        <v-flex md10 lg10 xs12 mt-3>
           <rules />
         </v-flex>
       </v-layout>

@@ -1,8 +1,16 @@
 <template>
   <div>
-    <breadcrumbs :title="$t('breadcrumbs.leaderboard')" />
-    <v-container mb-5>
-      <leaderboardUserlist />
+    <breadcrumbs
+      :title="$t('breadcrumbs.leaderboard')"
+      linkItem="bet-history"
+      :titlebtn="$t('breadcrumbs.betHistory')"
+    />
+    <v-container>
+      <v-layout row wrap justify-center>
+        <v-flex md10 lg10 xs12 mt-2>
+          <leaderboardUserlist />
+        </v-flex>
+      </v-layout>
     </v-container>
   </div>
 </template>
