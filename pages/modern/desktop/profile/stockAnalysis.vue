@@ -151,10 +151,6 @@ export default {
           bar: {
             horizontal: false,
             columnWidth: "50%",
-<<<<<<< HEAD
-=======
-            // startingShape: "rounded",
->>>>>>> 4be9432e00581c541b4697cc21e3e8d808830691
             rangeBarOverlap: true,
             barHeight: "100%"
             // dataLabels: {
@@ -208,11 +204,7 @@ export default {
           curve: "smooth"
         },
         noData: {
-<<<<<<< HEAD
           text: this.$root.$t('msg.nodata')
-=======
-          text: this.$root.$t("msg.nodata")
->>>>>>> 4be9432e00581c541b4697cc21e3e8d808830691
         },
         tooltip: {
           enabled: true,
