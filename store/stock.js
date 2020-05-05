@@ -7,7 +7,8 @@ const state = () => ({
   stocks: stock.stockList,
   stockCategory: [], // Store Stocks category
   stockPrice: [], // Store stock list price
-  stockCountdown: [] // Store stock list Countdown
+  stockCountdown: [], // Store stock list Countdown
+  resetFullScreenChart: false // for reset fullscreen live bet chart
 });
 
 const mutations = {
@@ -18,7 +19,13 @@ const mutations = {
     state.stocks = payload;
   },
   SET_STOCK_COUNTDOWN(state, payload) {
+    if (parseInt(payload[6].gameEndTimeCountDownInSec) == 1) {
+      state.resetFullScreenChart = true;
+    }
     state.stockCountdown = payload;
+    if (parseInt(payload[6].gameEndTimeCountDownInSec) == 58) {
+      state.resetFullScreenChart = false;
+    }
   },
   SET_STOCK_PRICE(state, payload) {
     state.stockPrice.unshift(payload);
@@ -182,6 +189,9 @@ const getters = {
       }
     });
     return result;
+  },
+  getResetStatus(state) {
+    return state.resetFullScreenChart;
   }
 };
 
