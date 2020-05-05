@@ -5,8 +5,8 @@ const config = {
   apiDomain: process.env.API_DOMAIN,
   socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
-  whitelabelUrl: process.env.WHITELABEL_URL,
   secretKey: "GYXMAKGDYAWDW4K1C6HWWQHXH2W",
+  secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
@@ -69,7 +69,8 @@ const config = {
     host: "0.0.0.0"
   },
   error: {
-    general: "Something went wrong!"
+    general: "Something went wrong!",
+    lowBalance: "Insufficient Balance. Please topup your balance"
   },
   loginError: {
     portalProvider: "Portal Provider UUID is invalid",

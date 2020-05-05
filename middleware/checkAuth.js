@@ -1,7 +1,9 @@
+import secureStorage from "../plugins/secure-storage";
+
 export default function({ query, store, redirect }) {
-  const referrerURL = localStorage.getItem("referrerURL");
+  const referrerURL = secureStorage.getItem("referrerURL");
   if (referrerURL == undefined) {
-    localStorage.setItem(
+    secureStorage.setItem(
       "referrerURL",
       document.referrer.match(/:\/\/(.[^/]+)/)[1]
     );
@@ -29,13 +31,13 @@ export default function({ query, store, redirect }) {
         domain: referrerURL,
         balance: query.balance
       };
-      localStorage.setItem("PORTAL_PROVIDERUUID", query.portalProviderUUID);
+      secureStorage.setItem("PORTAL_PROVIDERUUID", query.portalProviderUUID);
       store.dispatch("setUserAuth", UserAuth);
       store.dispatch("setPortalProviderUUID", UserAuth.portalProviderUUID);
     }
     store.dispatch("setUserAuthError", query.messageError);
   } else {
     redirect(referrerURL);
-    localStorage.removeItem("referrerURL");
+    secureStorage.removeItem("referrerURL");
   }
 }

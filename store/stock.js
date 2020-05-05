@@ -1,6 +1,7 @@
 import config from "~/config/config.global";
 import stock from "~/data/stockList";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 
 const state = () => ({
   stocks: stock.stockList,
@@ -51,8 +52,8 @@ const actions = {
           res,
           page: "store/stock.js",
           apiUrl: config.getStock.url,
-          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: localStorage.getItem("USER_UUID")
+          provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: secureStorage.getItem("USER_UUID")
         },
         ex.message
       );

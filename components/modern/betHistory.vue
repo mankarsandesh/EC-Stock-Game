@@ -12,7 +12,7 @@
           class="current-bet"
           show-expand
         >
-          <template v-slot:headers="head">
+          <template v-slot:headers="headers">
             <tr>
               <th scope="col" class="bg-colors">{{ $t("msg.BetId") }}</th>
               <th scope="col" class="bg-colors">{{ $t("msg.gameid") }}</th>
@@ -37,28 +37,22 @@
               <td>{{ item.item.betAmount | toCurrency }}</td>
 
               <td v-if="item.item.betResult == 'win'">
-                <span class="winning"> {{ item.item.rollingAmount }} </span>
+                <span class="winning">{{ item.item.rollingAmount }}</span>
               </td>
               <td v-if="item.item.betResult == 'lose'">
-                <span class="lossing"> - {{ item.item.betAmount }} </span>
+                <span class="losing">- {{ item.item.betAmount }}</span>
               </td>
-              <td
-                v-if="item.item.isFollowBet == 1"
-                class="text-uppercase text-center"
-              >
+              <td v-if="item.item.isFollowBet == 1" class="text-uppercase text-center">
                 <div class="following">by followers</div>
               </td>
               <td v-if="item.item.isFollowBet == 0" class="text-uppercase">
-                <div class="orignal">orignal</div>
+                <div class="original">original</div>
               </td>
             </tr>
             <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
               <td colspan="2">
                 <span class="betDraw">{{ $t("bethistory.betdraw") }} :</span>
-                <span
-                  class="gameDraw"
-                  v-html="$options.filters.lastDraw(item.item.gameDraw)"
-                ></span>
+                <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
               </td>
               <td colspan="3" class="allDigit">
                 {{ $t("gamemsg.firstdigit") }}
@@ -79,15 +73,11 @@
                 ></span>
               </td>
               <td colspan="2" v-if="item.item.rollingAmount == 0">
-                <span class="betDraw"
-                  >{{ $t("bethistory.yourloosingamount") }} :</span
-                >
+                <span class="betDraw">{{ $t("bethistory.yourloosingamount") }} :</span>
                 <span class="lossAmount">{{ item.item.betAmount }}</span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount != 0">
-                <span class="betDraw"
-                  >{{ $t("bethistory.yourwinningamount") }} :</span
-                >
+                <span class="betDraw">{{ $t("bethistory.yourwinningamount") }} :</span>
                 <span class="winAmount">{{ item.item.rollingAmount }}</span>
               </td>
             </tr>
@@ -96,15 +86,19 @@
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.Total") }}</td>
-              <td colspan="3">
-                {{ userBetHistory.length }} {{ $t("leaderboard.bets") }}
-              </td>
+              <td colspan="3">{{ userBetHistory.length }} {{ $t("leaderboard.bets") }}</td>
               <td>
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>
               <td>
-                <span class="totalRollingWin" v-if="TotalAmount < TotalRolling" >{{ TotalRolling | toCurrency }}</span>
-                <span class="totalRollingLoss" v-if="TotalAmount  > TotalRolling" >{{ TotalRolling | toCurrency }}</span>
+                <span
+                  class="totalRollingWin"
+                  v-if="TotalAmount < TotalRolling"
+                >{{ TotalRolling | toCurrency }}</span>
+                <span
+                  class="totalRollingLoss"
+                  v-if="TotalAmount  > TotalRolling"
+                >{{ TotalRolling | toCurrency }}</span>
               </td>
               <td colspan="1"></td>
             </tr>
@@ -125,7 +119,7 @@
 export default {
   props: ["userBetHistory", "search"],
   data: () => ({
-    rowPageCount : 10,
+    rowPageCount: 10,
     pagination: {
       page: 1
     }
@@ -168,20 +162,20 @@ export default {
 };
 </script>
 <style scoped>
-.totalRollingWin{
-font-weight: 800;
-color:green;
+.totalRollingWin {
+  font-weight: 800;
+  color: green;
 }
-.totalRollingLoss{
-font-weight: 800;
-color:red;
+.totalRollingLoss {
+  font-weight: 800;
+  color: red;
 }
 
 .winning {
   color: green;
   font-weight: 800;
 }
-.lossing {
+.losing {
   color: red;
   font-weight: 800;
 }
@@ -193,7 +187,7 @@ color:red;
   height: 70px;
   background-color: #f3f3f3;
 }
-.orignal {
+.original {
   margin: 0 auto;
   width: 150px;
   border-radius: 5px;

@@ -104,6 +104,7 @@
         </v-layout>
       </v-container>
     </section>
+    <!-- Bet History Data Table -->
     <bethistory :search="search" :userBetHistory="userBetHistory" />
   </div>
 </template>
@@ -112,7 +113,9 @@ import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
+import secureStorage from "../../../plugins/secure-storage";
 import log from "roarr";
+
 export default {
   layout: "desktopModern",
   components: {
@@ -121,7 +124,7 @@ export default {
   },
   data() {
     return {
-      today : new Date(),
+      today: new Date(),
       sortby: "",
       search: "",
       loadingImage: false,
@@ -138,10 +141,11 @@ export default {
     };
   },
   computed: {
+    // Get 2 data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }) 
   },
   mounted() {
     const lastWeek = new Date(
@@ -152,32 +156,33 @@ export default {
       .toISOString()
       .substr(0, 10);
     this.dateFrom = lastWeek;
-    this.dateTo =  this.today.toISOString().substring(0, 10);
+    this.dateTo = this.today.toISOString().substring(0, 10);
     this.fetchBetHsitory();
   },
   methods: {
+    // Sorting By Today,Week, Month 
     sortingBy() {
       if (this.sortby == "Today") {
         const lastWeek = new Date(
-           this.today.getFullYear(),
-           this.today.getMonth(),
-           this.today.getDate() + 1
+          this.today.getFullYear(),
+          this.today.getMonth(),
+          this.today.getDate() + 1
         )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
-        this.dateTo =  this.today.toISOString().substring(0, 10);
+        this.dateTo = this.today.toISOString().substring(0, 10);
         this.fetchBetHsitory();
       } else if (this.sortby == "This Week") {
         const lastWeek = new Date(
-           this.today.getFullYear(),
-           this.today.getMonth(),
-           this.today.getDate() - 5
+          this.today.getFullYear(),
+          this.today.getMonth(),
+          this.today.getDate() - 5
         )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
-        this.dateTo =  this.today.toISOString().substring(0, 10);
+        this.dateTo = this.today.toISOString().substring(0, 10);
         this.fetchBetHsitory();
       } else if (this.sortby == "This Month") {
         const lastWeek = new Date(
@@ -198,13 +203,14 @@ export default {
         this.fetchBetHsitory();
       }
     },
+    // Fetch bet History user wise
     async fetchBetHsitory() {
       try {
         var reqBody = {
-          portalProviderUUID: this.portalProviderUUID, 
-          userUUID: this.userUUID, 
-          version: config.version, 
-          betResult: [0, 1],      
+          portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
+          version: config.version,
+          betResult: [0, 1],
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo
         };
@@ -219,7 +225,7 @@ export default {
           this.loadingImage = false;
         }
       } catch (ex) {
-        console.log(ex);
+        console.log(data.message);
         this.$swal({
           title: ex.message,
           type: "error",
@@ -232,8 +238,8 @@ export default {
             res: data.data,
             page: "pages/modern/desktop/bet-history.vue",
             apiUrl: config.getAllBets.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

@@ -1490,6 +1490,7 @@ import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
+import secureStorage from "../../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -1573,7 +1574,7 @@ export default {
               res: logData,
               page: "pages/modern/betting/_id.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -1747,8 +1748,8 @@ export default {
             res,
             page: "pages/modern/betting/_id.vue",
             apiUrl: config.storeBet.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

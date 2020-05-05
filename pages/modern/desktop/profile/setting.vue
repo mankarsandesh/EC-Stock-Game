@@ -77,6 +77,7 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "~/config/config.global";
+import secureStorage from "../../../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -142,8 +143,8 @@ export default {
             res,
             page: "pages/modern/desktop/profile/setting.vue",
             apiUrl: config.updateUserSetting.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid mt-2 class="containerNew pa-2 ">
-    <v-layout style="background-color: #f4f5fd;">
-      <!-- <v-flex md3 lg3 mt-3 > -->
+    <v-layout>
+      <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
@@ -29,7 +29,9 @@
           <v-icon color="#FFF">list</v-icon>
         </span>
       </v-flex>
-      <!-- </v-flex> -->
+      <!-- End Left Side -->
+
+      <!-- Main Middle Layout -->
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
@@ -54,6 +56,7 @@
                     </v-flex>
                   </div>
                 </v-flex>
+
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.BetClosein") }}</span>
                   <div id="betCloseInGuideline">
@@ -120,6 +123,8 @@
             </v-flex>
             <!-- Stock Last Draw End -->
           </v-layout>
+
+          <!-- Stock Chart and Bet button Component  -->
           <v-layout style="margin-top:-10px;">
             <v-flex md5 lg5>
               <div id="chartGuidelineNew" class="chartDesgin">
@@ -134,16 +139,16 @@
               </div>
             </v-flex>
           </v-layout>
+          <!-- End Stock Chart and Bet button Component  -->
         </v-flex>
 
-        <!-- Road Map Start -->
+        <!-- Stock Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
           <div
-            class="trendmap-container" 
+            class="trendmap-container"
             v-for="(trendType, index) in trendTypes"
             :key="index"
           >
-          
             <div id="trendmapGuidelines">
               <tableTrendMap
                 :index="index"
@@ -151,10 +156,7 @@
                 :isShowMultigameButton="index"
               ></tableTrendMap>
             </div>
-            <span
-              class="addChart"   
-              @click="removeTradMap(index)"            
-            >
+            <span class="addChart" @click="removeTradMap(index)">
               <v-icon>close</v-icon>
             </span>
             <span
@@ -205,6 +207,7 @@
             fab
             class="multiGame"
             dark
+            title="Multiple Game"
           >
             <i
               style="font-size:26px;"
@@ -212,7 +215,7 @@
               aria-hidden="true"
             ></i>
           </v-btn>
-
+          <!-- Multiple Screen Float Button -->
           <v-btn
             color="primary"
             rigth
@@ -226,7 +229,6 @@
           </v-btn>
         </div>
       </v-flex>
-      <!-- End Multiple Screen Button Code -->
     </v-layout>
   </v-container>
 </template>
@@ -246,6 +248,7 @@ import config from "~/config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
 
 export default {
   async validate({ params, store }) {
@@ -286,15 +289,16 @@ export default {
       isStep: 0
     };
   },
+  updated() {},
   created() {
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }
     this.getStock();
     // Game Rule Popup check and open Ne User
-    // if (localStorage.getItem("gameRule") != "shown") {
+    // if (secureStorage.getItem("gameRule") != "shown") {
     //   this.dialog = true;
-    //   localStorage.setItem("gameRule", "shown");
+    //   secureStorage.setItem("gameRule", "shown");
     // } else {
     //   this.dialog = false;
     // }
@@ -308,7 +312,7 @@ export default {
   },
   mounted() {
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
-    // live road map from socket
+    // Live Road Map From Socket
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -335,7 +339,7 @@ export default {
               res: logData,
               page: "pages/modern/desktop/_id.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -371,7 +375,7 @@ export default {
       "setIsLoadingStockGame"
     ]),
     setAfterFullScreenClosePage() {
-      localStorage.setItem("fullscreenclosed", "desktop");
+      secureStorage.setItem("fullscreenclosed", "desktop");
       this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
     },
     stopListenSocket(channel) {
@@ -402,8 +406,8 @@ export default {
             res,
             page: "pages/modern/desktop/_id.vue",
             apiUrl: config.getStock.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -424,16 +428,13 @@ export default {
           break;
       }
     },
-    // Remove trendMap 
-    removeTradMap(index){   
-      console.log(index);  
-      var indexValue = this.trendTypes[index];
-      console.log(indexValue);  
-      var newData =  this.trendTypes.filter(function(data) {       
-          return data != indexValue;
-        });
-      this.trendTypes = newData;
-       console.log(this.trendTypes);  
+    // Remove trendMap
+    removeTradMap(index) {     
+      var indexValue = this.trendTypes[index];    
+      var newData = this.trendTypes.filter(function(data) {
+        return data != indexValue;
+      });
+      this.trendTypes = newData;     
     },
     loaded() {
       this.isLoad = true;

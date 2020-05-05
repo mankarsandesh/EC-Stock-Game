@@ -39,7 +39,7 @@
     <v-flex v-if="topPlayerData.length == 0">
       <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.nodata") }}</h2>
     </v-flex>
-    <v-flex v-if="topPlayerData.length > 0">
+    <v-flex v-if="topPlayerData.length > 0" >
       <v-flex
         xs12
         md10
@@ -52,7 +52,8 @@
       >
         <div class="userRow">
           <div>
-              <!-- <span class="rank">  <i class="fas fa-crown"></i>   </span> -->
+            <!-- <span class="rank"> 
+            </span> -->
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
               <img class="pimage" :src="defaultImage" />
               <span class="subtitle-1 text-uppercase">
@@ -63,7 +64,7 @@
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
-            <h4 class="green--text titleText">{{ Math.round(data.winRate, 1) }} %</h4>
+            <h4 class="green--text titleText">{{ Math.round(data.winRate, 1) }}%</h4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
@@ -75,7 +76,7 @@
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
-            <h4 style="color:#0b2a68;" class="titleText">{{ Math.round(data.totalWinAmount, 1) }}</h4>
+            <h4 style="color:#0b2a68;" class="titleText">${{ Math.round(data.totalWinAmount, 1)  | currency}}</h4>
           </div>
           <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
             <v-btn
@@ -118,10 +119,12 @@
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
+        v-if="renderComponent"
         :username="this.username"
         :userImage="this.defaultImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
+        @followBetClose="closeFollowBet"
       />
     </v-dialog>
   </div>
@@ -137,6 +140,7 @@ export default {
   },
   data() {
     return {
+      renderComponent: true, // render Follow Bet
       defaultImage: "/no-profile-pic.jpg",
       isActiveWeek: true,
       isActiveMonth: false,
@@ -178,6 +182,17 @@ export default {
     }) 
   },
   methods: {    
+    // Render Follow Bet Component 
+    forceRerender() {        
+        this.renderComponent = false;        
+        this.$nextTick(() => {         
+          this.renderComponent = true;
+        });
+    },
+    // Close Follow Bet Popup
+    closeFollowBet(){
+      this.dialog = false;
+    },
     // Sorting Weekly and Monthly
     sortingBy(sort) {
       if (sort == "monthly") {
@@ -225,6 +240,7 @@ export default {
       method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2;     
       this.userImage = this.imgProfile(userImage);
       this.dialog = true;
+      this.forceRerender();
     },
     // fetch leaderboard Top Player
     async leaderBoard() {

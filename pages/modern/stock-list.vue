@@ -2,8 +2,6 @@
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
 
-    <!-- <breadcrumbs title="Stock list" linkItem="announcement" titlebtn="announcement" linkItem2="rule" titlebtn2="game rule" /> -->
-
     <!-- search -->
     <v-layout row wrap>
       <v-flex xs8 sm9 md9 lg9 class="d-flex">

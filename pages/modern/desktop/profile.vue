@@ -244,6 +244,8 @@
 import { mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   layout: "desktopModern",
   data() {
@@ -276,7 +278,7 @@ export default {
   },
   watch: {
     imageBase64() {
-      this.updateProfile();
+      this.updateImageProfile();
     }
   },
   methods: {
@@ -284,7 +286,7 @@ export default {
       this.newImage = image;
       console.log(image);
       this.snackbar = true;
-      // this.updateProfile();
+      // this.updateImageProfile();
     },
     ...mapActions(["setUserData"]),
     uploadImage(e) {
@@ -300,7 +302,7 @@ export default {
     cameraClick() {
       this.$refs.inputFile.click();
     },
-    async updateProfile() {
+    async updateImageProfile() {
       var reqBody = {
         profileImage: this.newImage,
         portalProviderUUID: this.getPortalProviderUUID,
@@ -337,8 +339,8 @@ export default {
             res: res.data,
             page: "pages/modern/desktop/profile.vue",
             apiUrl: config.updateUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

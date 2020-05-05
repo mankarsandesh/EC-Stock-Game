@@ -64,7 +64,7 @@
     "changechartview": "Change Chart View",
     "reference": "Reference",
     "totals": "Totals",
-    "winbet": "Win Bet",
+    "winbet": "Win Bets",
     "losebet": "Lose Bet",
     "amount": "Amount",
     "preset": "Preset",
@@ -102,6 +102,7 @@
     "confirmed": "Confirmed",
     "betclosed": "Bet Closed",
     "chooselanguage": "Language",
+    "English": "English",
     "Clear": "Clear",
     "Total Bet": "Total Bet",
     "Win Rate": "Win Rate",
@@ -118,7 +119,7 @@
     "livetime": "Live Time",
     "liveprice": "Live Price",
     "betting": "Betting",
-    "nobetting": "No Betting",
+    "nobetting": "There are No Betting",
     "exit": "Exit",
     "addtrendchart": "add trend chart",
     "bettingon": "betting on",
@@ -232,8 +233,8 @@
     "firstname": "first name",
     "lastname": "last name",
     "gender": "gender",
-    "male": "male",
-    "female": "female",
+    "male": "Male",
+    "female": "Female",
     "email": "email",
     "country": "country",
     "onlinestatus": "Online Status",
@@ -273,7 +274,15 @@
     "lastupdate": "last updated 1 minutes ago",
     "top" : "Top",
     "leaders" : "Leaders",
-    "nodata" : "There are no top users in Leaderboard."
+    "nodata" : "There are no top users in Leaderboard.",
+    "followBy": "Follow By",
+    "autoStop":"Auto Stop Follow",
+    "followbyAmount":"Follow by Amount",
+    "followbyRate":"Follow by Rate",
+    "stopbyWinning":"Stop by Winning",
+    "stopbyLosing":"Stop by Losing",
+    "stopbyTiming":"Stop by Timing",
+    "stopbyBets":"Stop by Bets"
   },
   "breadcrumbs": {
     "rule": "Rule",
@@ -323,6 +332,40 @@
   "invitation": {
     "ecworld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
-    "sendInvitation": "SEND INVITATION"
+    "sendInvitation": "SEND INVITATION",
+    "noInvitation": "No users Invitations.",
+    "winningRank":"Winning Rank",
+    "userRank":"User Rank",
+    "totalFollower": "Total Follower",
+    "userfollowCount": "User Follow Count",
+    "winningRate": "Winning Rate",
+    "userWinrate":"User Win Rate",
+    "only10" : "Only 10 Invitaion in one Day.",
+    "youHave" : "You have",
+    "invitationLeft" : "Invitaion left"
+  },
+  "tutorial": {
+    "resultDraw" : "Result of the DRAW",
+    "calculation" : "Calculation",
+    "lotteryDraw" : "Lottery DRAW",
+    "analyseGraph" : "analyse graph",
+    "stockGraph" : "You can analysis stock graph,the result of last draw",
+    "betonDigits" : "bet on digits",
+    "selectDigit" : "Now you can select DIGIT",
+    "betConfirm" : "bet confirm",
+    "betLastdigiteven" : "Your BET place confirm on the Last Digit EVEN",
+    "selectChip" : "Select CHIP or enter AMOUNT to CONFIRM bet",
+    "stockGame" : "stocks & game",
+    "stockTime" : "You can choose your Stock and Time,you want BET/PLAY",
+    "stockAnalysis" : "stock analysis",
+    "analysisCurrent" : "Analysis current active Stock DATA update",
+    "stockResult" : "stock result",
+    "checkUpdate" : "Check updated result of Stock",
+    "roadMap" : "road map",
+    "analyseStock" : "You can analyse stock graph,the result of last draw"
+
+  },
+  "error": {
+    "general" : "Something went wrong!"
   }
 }
