@@ -78,7 +78,7 @@ const config = {
     balance: "Balance is invalid",
     authError: "Authentication authUser & authPassword is Missing."
   },
-  logDomain: process.env.LOG_DOMAIN || "http://127.0.0.1:3003/log",
+  logDomain: process.env.LOG_DOMAIN,
   defaultLanguageLocale: "cn",
   defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
   homePageStockName: "btc1",
