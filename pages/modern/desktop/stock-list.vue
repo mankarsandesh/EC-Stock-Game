@@ -1,12 +1,6 @@
 <template>
   <div>
-    <breadcrumbs
-      :title="$t('breadcrumbs.stockList')"
-      linkItem="notification"
-      linkItem2="gamerule"
-      :titlebtn="$t('breadcrumbs.notification')"
-      :titlebtn2="$t('breadcrumbs.gamerule')"
-    />
+    <breadcrumbs :title="$t('breadcrumbs.stockList')" />
     <v-container>
       <v-layout row wrap mt-3>
         <v-flex xs3 class="d-flex">
@@ -18,9 +12,7 @@
           ></v-select>
         </v-flex>
         <v-flex xs1 class="d-flex mx-3">
-          <v-btn @click="goSearch" class="buttonGreen">
-            {{ $t("msg.go") }}
-          </v-btn>
+          <v-btn @click="goSearch" class="buttonGreen">{{ $t("msg.go") }}</v-btn>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
