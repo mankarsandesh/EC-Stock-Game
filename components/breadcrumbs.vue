@@ -1,12 +1,12 @@
 <template>
   <section class="breadcrumbs">
-    <v-container>
-      <v-parallax dark height="150">
-        <v-layout align-center row>
-          <v-flex xs6>
+    <v-container >
+      <v-parallax dark height="130">
+        <v-layout align-center justify-center >
+          <v-flex md4>
             <h3 class="display-2 font-weight-thick mb-3">{{ title }}</h3>
           </v-flex>
-          <v-flex xs8 class="text-right">
+          <v-flex md4 class="text-right">
             <Button v-if="linkItem" :linkItem="linkItem" :btnTitle="titlebtn" />
             <Button
               v-if="linkItem2"
