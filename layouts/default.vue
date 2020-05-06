@@ -76,24 +76,6 @@
         style="float: right; top: -98%;"
       >{{ $t("menu.current bet") }}</v-btn>
       <!-- <v-btn to="/modern/notification" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.notification')}}</v-btn> -->
-      <v-btn
-        to="/modern/rule"
-        v-show="isShow == 'notification'"
-        class="buttonGreen"
-        style="float: right; top: -98%;"
-      >{{ $t("menu.rule") }}</v-btn>
-      <v-btn
-        to="/modern/leaderboard"
-        v-show="isShow == 'rule'"
-        class="buttonGreen"
-        style="float: right; top: -98%;"
-      >{{ $t("menu.leaderboard") }}</v-btn>
-      <v-btn
-        to="/modern/setting"
-        v-show="isShow == 'leaderboard'"
-        class="buttonGreen"
-        style="float: right; top: -98%;"
-      >{{ $t("menu.setting") }}</v-btn>
     </div>
     <v-content>
       <v-container pa-1>
