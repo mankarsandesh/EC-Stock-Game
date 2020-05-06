@@ -1,5 +1,5 @@
 {
-  "rule_data": [
+  "resultBet": [
     {
       "type": "firstdigit",
       "rules": [
@@ -72,61 +72,61 @@
           "rule": [
             0
           ],
-          "name": "FD_0"
+          "name": "firstdigit-0"
         },
         {
           "rule": [
             1
           ],
-          "name": "FD_1"
+          "name": "firstdigit-1"
         },
         {
           "rule": [
             2
           ],
-          "name": "FD_2"
+          "name": "firstdigit-2"
         },
         {
           "rule": [
             3
           ],
-          "name": "FD_3"
+          "name": "firstdigit-3"
         },
         {
           "rule": [
             4
           ],
-          "name": "FD_4"
+          "name": "firstdigit-4"
         },
         {
           "rule": [
             5
           ],
-          "name": "FD_5"
+          "name": "firstdigit-5"
         },
         {
           "rule": [
             6
           ],
-          "name": "FD_6"
+          "name": "firstdigit-6"
         },
         {
           "rule": [
             7
           ],
-          "name": "FD_7"
+          "name": "firstdigit-7"
         },
         {
           "rule": [
             8
           ],
-          "name": "FD_8"
+          "name": "firstdigit-8"
         },
         {
           "rule": [
             9
           ],
-          "name": "FD_9"
+          "name": "firstdigit-9"
         }
       ]
     },
