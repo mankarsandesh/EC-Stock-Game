@@ -160,8 +160,11 @@ const checkUserLogin = async (
  * @param {*} store
  */
 const setLanguage = store => {
-  store.dispatch("setLanguage", config.defaultLanguageLocale);
-  secureStorage.setItem("lang", config.defaultLanguageLocale);
+  const lang = secureStorage.getItem("lang")
+    ? secureStorage.getItem("lang")
+    : config.defaultLanguageLocale;
+  store.dispatch("setLanguage", lang);
+  secureStorage.setItem("lang", lang);
 };
 
 /**
@@ -169,7 +172,11 @@ const setLanguage = store => {
  *
  * @param {*} store
  */
+
 const initLocalStorageCoin = store => {
-  store.dispatch("setCoinsModern", config.defaultCoinsModern);
-  secureStorage.setItem("coinsModern", config.defaultCoinsModern);
+  const chips = secureStorage.getItem("coinsModern")
+    ? secureStorage.getItem("coinsModern")
+    : config.defaultCoinsModern;
+  store.dispatch("setCoinsModern", chips);
+  secureStorage.setItem("coinsModern", chips);
 };

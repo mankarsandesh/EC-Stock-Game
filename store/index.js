@@ -7,6 +7,7 @@ import roadMap from "./roadMap";
 import game from "./game";
 
 const createStore = () => {
+
   return new Vuex.Store({
     modules: {
       betting,

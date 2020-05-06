@@ -7,10 +7,8 @@
 Big Screen 
 */
 @media (min-width: 1281px) {
-
-  
   .selectStock {
-    font-size: 14px ;
+    font-size: 14px;
   }
   .btn-langage span {
     font-size: 14px;
@@ -32,7 +30,7 @@ Big Screen
     margin-right: 5px;
     font-size: 18px;
   }
-  .stockname {   
+  .stockname {
     font-size: 20px;
     font-weight: 600;
     color: #4b65ff;
@@ -178,16 +176,22 @@ Big Screen
     padding: 0px;
   }
 
-  .firstDigit span{color:#FFF;}
+  .firstDigit span {
+    color: #fff;
+  }
   .firstDigit {
-    color:#FFF;
+    color: #fff;
     font-weight: bolder;
     border-radius: 10px;
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background: rgb(13,204,255);
-    background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
+    background: rgb(13, 204, 255);
+    background: linear-gradient(
+      22deg,
+      rgba(13, 204, 255, 1) 0%,
+      rgba(71, 96, 255, 1) 100%
+    );
   }
 
   .lastDigit {
@@ -197,8 +201,12 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background: rgb(250,209,38);
-    background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
+    background: rgb(250, 209, 38);
+    background: linear-gradient(
+      22deg,
+      rgba(250, 209, 38, 1) 0%,
+      rgba(255, 84, 79, 1) 100%
+    );
   }
 
   .bothDigit {
@@ -207,8 +215,12 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background: rgb(182,53,156);
-    background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
+    background: rgb(182, 53, 156);
+    background: linear-gradient(
+      22deg,
+      rgba(182, 53, 156, 1) 0%,
+      rgba(239, 10, 106, 1) 100%
+    );
   }
 
   .twoDigit {
@@ -217,8 +229,12 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background: rgb(1,233,189);
-    background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
+    background: rgb(1, 233, 189);
+    background: linear-gradient(
+      22deg,
+      rgba(1, 233, 189, 1) 0%,
+      rgba(0, 124, 222, 1) 100%
+    );
   }
 
   .RoadMapTable tr td {
@@ -231,23 +247,22 @@ Big Screen
     z-index: 50;
     text-transform: capitalize;
   }
-  .bg-btn-first{   
+  .bg-btn-first {
     min-width: 88% !important;
     width: 90% !important;
   }
-  .bg-btn-last{
+  .bg-btn-last {
     min-width: 88% !important;
     width: 90% !important;
   }
-  .bg-btn-both{
+  .bg-btn-both {
     min-width: 88% !important;
     width: 100% !important;
   }
-  .bg-btn-two{
+  .bg-btn-two {
     min-width: 88% !important;
     width: 100% !important;
   }
-
 }
 
 /* 
@@ -255,18 +270,17 @@ Big Screen
   ##Screen = B/w 1025px to 1280px
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
-
-  .bg-btn-first{
-    min-width:60px !important;
+  .bg-btn-first {
+    min-width: 60px !important;
   }
-  .bg-btn-last{
-    min-width:60px !important;
+  .bg-btn-last {
+    min-width: 60px !important;
   }
-  .bg-btn-both{
-    min-width:60px !important;
+  .bg-btn-both {
+    min-width: 60px !important;
   }
-  .bg-btn-two{
-     min-width:60px !important;
+  .bg-btn-two {
+    min-width: 60px !important;
   }
   .lastdraw {
     font-size: 14px !important;
@@ -287,15 +301,15 @@ Big Screen
     margin-top: -10px;
   }
 
-  .menuItem { 
+  .menuItem {
     border-right: 1px solid #dddddd;
     height: 55px !important;
     padding: 5px 10px;
   }
 
   .toolbarMenu {
-   background-color: #FFF !important;
-   height: 55px;
+    background-color: #fff !important;
+    height: 55px;
   }
 
   .menuItem span {
@@ -339,7 +353,6 @@ Big Screen
   /* game Rule Category Button */
   .btnHeight {
     height: 65px;
-    
   }
 
   .align_button4 {
@@ -410,22 +423,6 @@ Big Screen
     border: 1px solid #17b1ca !important;
   }
 
-  span.addChart i {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    height: 47px;
-    width: 47px;
-    padding: 10px !important;
-    color: #ffffff !important;
-    background-color: #4464ff !important;
-    position: absolute;
-    left: 49%;
-    top: 43%;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
-  }
-
   .red {
     text-align: center;
     color: #fff;
@@ -470,8 +467,12 @@ Big Screen
     height: 55px;
     width: 60px;
     font-size: 12px;
-    background: rgb(13,204,255);
-    background: linear-gradient(22deg, rgba(13,204,255,1) 0%, rgba(71,96,255,1) 100%);
+    background: rgb(13, 204, 255);
+    background: linear-gradient(
+      22deg,
+      rgba(13, 204, 255, 1) 0%,
+      rgba(71, 96, 255, 1) 100%
+    );
   }
 
   .lastDigit {
@@ -482,8 +483,12 @@ Big Screen
     height: 55px;
     width: 60px;
     font-size: 12px;
-    background: rgb(250,209,38);
-    background: linear-gradient(22deg, rgba(250,209,38,1) 0%, rgba(255,84,79,1) 100%);
+    background: rgb(250, 209, 38);
+    background: linear-gradient(
+      22deg,
+      rgba(250, 209, 38, 1) 0%,
+      rgba(255, 84, 79, 1) 100%
+    );
   }
 
   .bothDigit {
@@ -493,8 +498,12 @@ Big Screen
     height: 55px;
     width: 60px;
     font-size: 12px;
-    background: rgb(182,53,156);
-    background: linear-gradient(22deg, rgba(182,53,156,1) 0%, rgba(239,10,106,1) 100%);
+    background: rgb(182, 53, 156);
+    background: linear-gradient(
+      22deg,
+      rgba(182, 53, 156, 1) 0%,
+      rgba(239, 10, 106, 1) 100%
+    );
   }
 
   .twoDigit {
@@ -504,8 +513,12 @@ Big Screen
     height: 55px;
     width: 60px;
     font-size: 12px;
-    background: rgb(1,233,189);
-    background: linear-gradient(22deg, rgba(1,233,189,1) 0%, rgba(0,124,222,1) 100%);
+    background: rgb(1, 233, 189);
+    background: linear-gradient(
+      22deg,
+      rgba(1, 233, 189, 1) 0%,
+      rgba(0, 124, 222, 1) 100%
+    );
   }
 
   .RoadMapTable tr td {
@@ -524,20 +537,21 @@ Big Screen
     ##Device = Tablets, IPads (portrait)
     ##Screen = B/w 768px to 1024px
   */
-@media (min-width: 768px) and (max-width: 1024px) {}
+@media (min-width: 768px) and (max-width: 1024px) {
+}
 
 /* 
     ##Device = Tablets, IPads (landscape)
     ##Screen = B/w 768px to 1024px
 */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+}
 
 /* 
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
 @media (min-width: 481px) and (max-width: 767px) {
-
   .big-number {
     font-size: 12px;
     font-weight: bolder;
@@ -593,22 +607,6 @@ Big Screen
     color: #17b1ca !important;
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
-  }
-
-  span.addChart i {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    height: 47px;
-    width: 47px;
-    padding: 10px !important;
-    color: #ffffff !important;
-    background-color: #4464ff !important;
-    position: absolute;
-    left: 49%;
-    top: 46%;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
   .red {
@@ -695,7 +693,6 @@ Big Screen
    ##Screen = B/w 320px to 479px
 */
 @media (min-width: 320px) and (max-width: 480px) {
-
   .big-number {
     font-size: 12px;
     font-weight: bolder;
@@ -751,22 +748,6 @@ Big Screen
     color: #17b1ca !important;
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
-  }
-
-  span.addChart i {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    height: 47px;
-    width: 47px;
-    padding: 10px !important;
-    color: #ffffff !important;
-    background-color: #4464ff !important;
-    position: absolute;
-    left: 49%;
-    top: 46%;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
   .red {
@@ -846,5 +827,4 @@ Big Screen
     min-width: 16px;
     height: 16px;
   }
-  
 }
