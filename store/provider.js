@@ -1,7 +1,6 @@
 import config from "~/config/config.global";
 import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
-export const strict = false;
 
 const state = () => ({
   authUser: {}, // store auth user data
@@ -13,7 +12,7 @@ const state = () => ({
   userData: {}, // Store user data
   locales: ["cn", "us", "th", "la"], // Store language locales
   locale: secureStorage.getItem("lang"), // Store locale
-  coinsModern: [100, 500, 1000, 5000, 10000], // Store coins modern
+  coinsModern: [], // Store coins modern
   isShowTutorial: false,
   isWindowsHasScroll: false,
   tutorialStepNumber: 0, // Store tutorial step number
