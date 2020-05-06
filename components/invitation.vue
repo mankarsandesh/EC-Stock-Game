@@ -51,7 +51,7 @@
                     <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
                       <v-img
                         class="userImage"
-                        :src="defaultImage"
+                        :src="userImgProfile(data.userImage)"
                         aspect-ratio="1"
                         max-height="120"
                         max-width="120"
@@ -107,7 +107,7 @@
                     <v-btn
                       v-if="getUserUUID != data.userUUID"
                       class="following"
-                      v-on:click="followUser(null, null, data.userUUID, '0')"
+                      v-on:click="followUser(null, data.userImage, data.userUUID, '0')"
                     >{{$t("useraction.follow")}}</v-btn>
                     <v-btn
                       v-if="getUserUUID == data.userUUID"
@@ -156,7 +156,7 @@
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
         :username="this.username"
-        :userImage="defaultImage"
+        :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
         @followBetClose="closeFollowBet"
@@ -258,8 +258,7 @@ export default {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
         eventName: "messageSend"
       },
-      ({ data }) => {
-        console.log(data);
+      ({ data }) => {        
         const objectArray = Object.entries(data.data);
         let newData = [];
         objectArray.forEach(([key, value]) => {
@@ -279,6 +278,12 @@ export default {
     this.messageInput = "";
   },
   methods: {
+    // Set Image
+    userImgProfile(userImage) {
+      return userImage === null
+        ? this.defaultImage
+        : `${config.apiDomain}/`+userImage;
+    },
     // Close Follow Bet Popup
     closeFollowBet() {
       this.dialog = false;
@@ -313,22 +318,12 @@ export default {
           this.noInvitaion = true;
         }
       }
-    },
-    // fetch default image or from server image
-    imgProfile(userImg) {
-      return userImg === null
-        ? this.defaultImage
-        : `${config.apiDomain}/` + userImg;
-    },
-    followUser(username, userImage, userUUID, method) {
+    },   
+    followUser(username, userImage, userUUID, method) {     
       this.username = username;
       this.FollowUserUUID = userUUID;
-      if (method == 0) {
-        this.FolloworNot = 1;
-      } else {
-        this.FolloworNot = 2;
-      }
-      this.userImage = this.imgProfile(userImage);
+      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2 
+      this.userImage = this.userImgProfile(userImage);
       this.dialog = true;
     },
     toggle() {

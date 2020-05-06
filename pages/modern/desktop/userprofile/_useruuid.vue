@@ -13,7 +13,7 @@
                   <img
                     width="100%"
                     height="100%"
-                    :src="this.defaultImage"
+                    :src="userImgProfile(visitProfileUserData.userImage)"
                     class="grey darken-4"
                   />
                 </div>
@@ -223,6 +223,7 @@ export default {
   },
   data() {
     return {
+      myProfileImage : "",
       renderComponent: true, // render Follow Bet
       username: "",
       FollowUserUUID: "",
@@ -287,10 +288,10 @@ export default {
   },
   created() {
     this.setFilter(30);
-    this.getUserProfileByID();
+    this.getUserProfileByID();   
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID","getUserInfo"]),     
   },
   watch: {
     filter() {
@@ -311,7 +312,7 @@ export default {
       this.dialog = false;
     },
     // Follow User Bet
-    followUserBet: function(username, userImg, userUUID, method) {
+    followUserBet: function(username, userImg, userUUID, method) {      
       this.username = username;
       this.FollowUserUUID = userUUID;
       if (method == 0) {
@@ -319,15 +320,13 @@ export default {
       } else {
         this.FolloworNot = 2;
       }
-      this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
+      this.userImage = userImg ? this.userImgProfile(userImg) : this.defaultImage;     
       this.dialog = true;
       this.forceRerender();
     },
-    imgProfile(userImg) {
-      return userImg === null
-        ? this.defaultImage
-        : `${config.apiDomain}/` + userImg;
-    },
+    userImgProfile(userImg) {
+      return userImg ? `${config.apiDomain}/`+ userImg : this.defaultImage;        
+    },   
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
       const lastWeek = date.addDays(new Date(), -duration);
@@ -356,9 +355,13 @@ export default {
             headers: config.header
           }
         );
+        console.log(reqBody);
+        console.log(res);
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
+          this.myProfileImage = res.data.userImage;       
+          
           //  series
           let series = [];
           let xaxis = [];
