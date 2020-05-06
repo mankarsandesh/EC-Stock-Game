@@ -197,21 +197,7 @@
           </div>
         </nuxt-link>
       </v-flex>
-    </v-layout>
-
-    <v-layout row wrap pb-3 justify-center>
-      <v-flex xs5 class="text-center d-flex" style="color:#8291b2">
-        <v-btn
-          class="text-uppercase white--text"
-          style="background-color: #8291b2;border-radius: 15px;"
-          >{{ $t("stock-list.load more") }}</v-btn
-        >
-      </v-flex>
-    </v-layout>
-    <!-- back to top -->
-    <!-- <back-to-top bottom="22px" right="22px" visibleoffset="150">
-      <v-icon color="#fff" size="35">keyboard_arrow_up</v-icon>
-    </back-to-top>-->
+    </v-layout>  
   </div>
 </template>
 
