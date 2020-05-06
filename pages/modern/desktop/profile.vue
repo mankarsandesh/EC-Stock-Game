@@ -8,7 +8,7 @@
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img :src="newImage ? newImage : defaultImage" />
+                  <img :src="imgProfile" />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
@@ -163,8 +163,8 @@ export default {
   layout: "desktopModern",
   data() {
     return {
-      avatarID: "",
       imagePath: config.apiDomain + "/images/user/avatar/",
+      avatarID: "",      
       snackbar: false,
       newImage: "",
       dialog: false,
@@ -188,8 +188,12 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-    imgProfile() {
-      return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+    imgProfile() {      
+        if (this.getUserInfo.profileImage == null) { 
+         return `${this.defaultImage}`;  
+        } else {
+          return`${config.apiDomain}/${this.getUserInfo.profileImage}`;
+        }
     }
   },
   watch: {
@@ -224,8 +228,7 @@ export default {
         portalProviderUUID: this.getPortalProviderUUID,
         userUUID: this.getUserUUID,
         version: config.version
-      };
-      console.log(reqBody);
+      };     
       try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
@@ -233,8 +236,7 @@ export default {
           {
             headers: config.header
           }
-        );
-        console.log(res);
+        );        
         if (res.status) {
           this.blurValue = 0;
           this.setUserData();
