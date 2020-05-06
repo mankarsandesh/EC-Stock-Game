@@ -1,12 +1,6 @@
 <template>
   <div>
-    <breadcrumbs
-      :title="$t('breadcrumbs.stockList')"
-      linkItem="notification"
-      linkItem2="gamerule"
-      :titlebtn="$t('breadcrumbs.notification')"
-      :titlebtn2="$t('breadcrumbs.gamerule')"
-    />
+    <breadcrumbs :title="$t('breadcrumbs.stockList')" />
     <v-container>
       <v-layout row wrap mt-3>
         <v-flex xs3 class="d-flex">

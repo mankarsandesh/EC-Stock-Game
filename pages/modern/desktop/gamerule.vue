@@ -1,10 +1,6 @@
 <template>
   <div xs2>
-    <breadcrumbs
-      :title="$t('breadcrumbs.rule')"
-      linkItem2="notification"
-      :titlebtn2="$t('breadcrumbs.notification')"
-    />
+    <breadcrumbs :title="$t('breadcrumbs.rule')" />
     <v-container>
       <v-layout row wrap>
         <v-flex xs12 mt-3>
