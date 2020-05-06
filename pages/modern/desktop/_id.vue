@@ -1,7 +1,7 @@
 <template>
   <v-container fluid mt-2 class="containerNew pa-2 ">
-    <v-layout style="background-color: #f4f5fd;width:100%;">
-      <!-- <v-flex md3 lg3 mt-3 > -->
+    <v-layout>
+      <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
@@ -29,7 +29,9 @@
           <v-icon color="#FFF">list</v-icon>
         </span>
       </v-flex>
-      <!-- </v-flex> -->
+      <!-- End Left Side -->
+
+      <!-- Main Middle Layout -->
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
@@ -54,6 +56,7 @@
                     </v-flex>
                   </div>
                 </v-flex>
+
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.BetClosein") }}</span>
                   <div id="betCloseInGuideline">
@@ -120,6 +123,8 @@
             </v-flex>
             <!-- Stock Last Draw End -->
           </v-layout>
+
+          <!-- Stock Chart and Bet button Component  -->
           <v-layout style="margin-top:-10px;">
             <v-flex md5 lg5>
               <div id="chartGuidelineNew" class="chartDesgin">
@@ -134,9 +139,10 @@
               </div>
             </v-flex>
           </v-layout>
+          <!-- End Stock Chart and Bet button Component  -->
         </v-flex>
 
-        <!-- Road Map Start -->
+        <!-- Stock Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
           <div
             class="trendmap-container"
@@ -209,7 +215,7 @@
               aria-hidden="true"
             ></i>
           </v-btn>
-
+          <!-- Multiple Screen Float Button -->
           <v-btn
             color="primary"
             rigth
@@ -223,7 +229,6 @@
           </v-btn>
         </div>
       </v-flex>
-      <!-- End Multiple Screen Button Code -->
     </v-layout>
   </v-container>
 </template>
@@ -307,7 +312,7 @@ export default {
   },
   mounted() {
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
-    // live road map from socket
+    // Live Road Map From Socket
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -424,15 +429,12 @@ export default {
       }
     },
     // Remove trendMap
-    removeTradMap(index) {
-      console.log(index);
-      var indexValue = this.trendTypes[index];
-      console.log(indexValue);
+    removeTradMap(index) {     
+      var indexValue = this.trendTypes[index];    
       var newData = this.trendTypes.filter(function(data) {
         return data != indexValue;
       });
-      this.trendTypes = newData;
-      console.log(this.trendTypes);
+      this.trendTypes = newData;     
     },
     loaded() {
       this.isLoad = true;

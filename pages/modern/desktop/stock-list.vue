@@ -1,32 +1,26 @@
 <template>
   <div>
-    <breadcrumbs
-      :title="$t('breadcrumbs.stockList')"
-      linkItem="notification"
-      linkItem2="gamerule"
-      :titlebtn="$t('breadcrumbs.notification')"
-      :titlebtn2="$t('breadcrumbs.gamerule')"
-    />
+    <breadcrumbs :title="$t('breadcrumbs.stockList')" />
     <v-container>
-      <v-layout row wrap mt-3>
-        <v-flex xs3 class="d-flex">
-          <v-select
-            class="border-round"
-            hide-details
-            :items="items"
-            :placeholder="$t('msg.sortby')"
-          ></v-select>
-        </v-flex>
-        <v-flex xs1 class="d-flex mx-3">
-          <v-btn @click="goSearch" class="buttonGreen">
-            {{
-            $t("msg.go")
-            }}
-          </v-btn>
+      <v-layout row wrap mt-3 md6 align-center justify-center > 
+        <v-flex md10 >
+          <v-flex md6 class="d-flex">
+            <v-select
+              class="border-round"
+              hide-details
+              :items="items"
+              :placeholder="$t('msg.sortby')"
+            ></v-select>
+      
+            <v-btn @click="goSearch" class="buttonGreen">
+              {{ $t("msg.go") }}
+            </v-btn>
+
+          </v-flex>
         </v-flex>
       </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12>
+      <v-layout row wrap align-center justify-center>
+        <v-flex md10 lg10>
           <stocklist />
         </v-flex>
       </v-layout>

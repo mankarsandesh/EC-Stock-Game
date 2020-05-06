@@ -179,7 +179,6 @@ import config from "~/config/config.global";
 import chanelChat from "./chanelChat";
 import followBet from "~/components/modern/follow/followBet";
 import log from "roarr";
-
 let name = "btc5";
 export default {
   components: {
@@ -203,7 +202,6 @@ export default {
       color: "",
       mode: "",
       snackbar: false,
-
       timeout: 2000,
       x: null,
       y: "top",
@@ -261,6 +259,7 @@ export default {
         eventName: "messageSend"
       },
       ({ data }) => {
+        console.log(data);
         const objectArray = Object.entries(data.data);
         let newData = [];
         objectArray.forEach(([key, value]) => {
@@ -392,22 +391,18 @@ export default {
   border-radius: 10px;
   padding: 10px;
 }
-
 .followup {
   padding: 15px 30px;
   border-radius: 20px;
 }
-
 .followup h4 {
   color: #65686f;
 }
-
 .conve-container {
   position: relative;
   display: flex;
   flex-direction: column;
 }
-
 .buttonInvitation {
   padding: 10px;
   margin-top: -8px;
@@ -440,7 +435,6 @@ export default {
   border-radius: 10px;
   border: 1px solid #dddddd;
 }
-
 .liveChatImg {
   text-align: center;
   border-radius: 6px;
@@ -450,7 +444,6 @@ export default {
   background-color: #fff;
   /* border: 1px solid red; */
 }
-
 .liveChatButton {
   text-align: center;
   background-color: #2aaf3e;
@@ -458,7 +451,6 @@ export default {
   height: 50px;
   border-radius: 180px;
 }
-
 .chatRoom {
   height: 500px;
   width: 100%;
@@ -466,7 +458,6 @@ export default {
   border-radius: 5px;
   background-color: #fff;
 }
-
 .msgUser {
   padding: 2px 0px;
   overflow: auto;
@@ -477,11 +468,9 @@ export default {
   background-color: #fff;
   border: 1px solid #dddddd;
 }
-
 .filter {
   margin-top: 10px;
 }
-
 .filter .filterSpan {
   font-weight: 600;
   cursor: pointer;
@@ -491,23 +480,18 @@ export default {
   font-size: 12px;
   color: #8d8c8c;
 }
-
 .follow {
   border: 1px solid orange;
 }
-
 .rank {
   border: 1px solid #c6b2f0;
 }
-
 .rate {
   border: 1px solid green;
 }
-
 .messageChatView div:first-child {
   border: none;
 }
-
 .messageChatView div {
   margin: 0px 3px;
   cursor: pointer;
@@ -515,7 +499,6 @@ export default {
   text-align: center;
   padding: 2px 4px;
 }
-
 .messageChatView .userImage {
   border-radius: 180px;
   cursor: pointer;
@@ -524,7 +507,6 @@ export default {
   float: left;
   border: 1px solid #dddddd;
 }
-
 .messageChatView .userStatus {
   float: left;
   margin: 12px 5px;
@@ -532,7 +514,6 @@ export default {
   color: #8d8c8c;
   font-weight: 800;
 }
-
 .msgUser .ranking {
   float: left;
   font-size: 20px;
@@ -541,7 +522,6 @@ export default {
   font-weight: 800;
   text-align: center;
 }
-
 .msgUser .followcount {
   float: left;
   font-size: 20px;
@@ -550,7 +530,6 @@ export default {
   font-weight: 800;
   text-align: center;
 }
-
 .msgUser .winRate {
   float: left;
   font-size: 20px;
@@ -580,19 +559,15 @@ export default {
   width: 28px;
   font-size: 13px;
 }
-
 #headerChat {
   height: 45px;
 }
-
 #headerChat span:first-child a {
   border-top-left-radius: 15px;
 }
-
 #headerChat span:last-child a {
   border-top-right-radius: 15px;
 }
-
 #headerChat .tabs span {
   background-color: #fff;
   color: #333;
@@ -601,13 +576,11 @@ export default {
   width: 30px;
   font-size: 14px;
 }
-
 #headerChat .tabs {
   text-align: center;
   width: 50%;
   float: left;
 }
-
 #headerChat .tabs a {
   font-weight: 500;
   text-transform: uppercase;
@@ -616,17 +589,14 @@ export default {
   font-size: 13px;
   float: left;
   padding: 10px 15px;
-
   color: #333;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
 }
-
 #headerChat .active a {
   color: #fff;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   background-color: #003e70 !important;
 }
-
 .bodyChat {
   padding-top: 10px;
   border-bottom: 1px solid #dddddd;
@@ -638,7 +608,6 @@ export default {
   border-radius: 4px;
   margin-top: 10px;
 }
-
 .msgBody {
   color: #7f7e7e;
 }
@@ -660,19 +629,16 @@ export default {
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 /* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 7px #acacac;
   border-radius: 10px;
 }
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #acacac;
   border-radius: 15px;
 }
-
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #2c6b9e;

@@ -355,6 +355,7 @@ export default {
         method: method,
         version: config.version
       };
+      console.log(reqBody);
       try {
         var { data } = await this.$axios.post(config.followUser.url, reqBody, {
           headers: config.header
@@ -402,12 +403,12 @@ export default {
         this.unFollowValueMax = 10;
         this.unFollowValueMin = 1;
         this.unfollowValue = 2;
-        this.unfollowSign = "Days";
+        this.unfollowSign = this.$root.$t("msg.days");
       } else {
         this.unFollowValueMax = 10;
         this.unFollowValueMin = 1;
         this.unfollowValue = 3;
-        this.unfollowSign = "Bets";
+        this.unfollowSign = this.$root.$t("leaderboard.bets");
       }
     },
     // Number Validation

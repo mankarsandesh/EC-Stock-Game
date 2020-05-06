@@ -136,8 +136,6 @@ import config from "~/config/config.global";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import followBet from "~/components/modern/follow/followBet";
 import log from "roarr";
-import secureStorage from "../plugins/secure-storage";
-
 export default {
   components: {
     followBet
@@ -242,7 +240,7 @@ export default {
             }
           } catch (ex) {
             console.log(ex.message);
-             log.error(
+            log.error(
               {
                 req: reqBody,
                 res,
@@ -372,7 +370,6 @@ export default {
   background-color: #fff;
   /* border: 1px solid red; */
 }
-
 .liveChatButton {
   text-align: center;
   background-color: #2aaf3e;
@@ -380,7 +377,6 @@ export default {
   height: 50px;
   border-radius: 180px;
 }
-
 .chatRoom {
   height: 500px;
   width: 100%;
@@ -388,7 +384,6 @@ export default {
   border-radius: 5px;
   background-color: #fff;
 }
-
 .msgUser {
   padding: 2px 0px;
   overflow: auto;
@@ -402,7 +397,6 @@ export default {
 .filter {
   margin-top: 10px;
 }
-
 .filter .filterSpan {
   font-weight: 600;
   cursor: pointer;
@@ -431,7 +425,6 @@ export default {
   text-align: center;
   padding: 2px 4px;
 }
-
 .messageChatView .userImage {
   border-radius: 180px;
   cursor: pointer;
@@ -502,7 +495,6 @@ export default {
 #headerChat span:last-child a {
   border-top-right-radius: 15px;
 }
-
 #headerChat .tabs span {
   background-color: #fff;
   color: #333;
@@ -511,13 +503,11 @@ export default {
   width: 30px;
   font-size: 14px;
 }
-
 #headerChat .tabs {
   text-align: center;
   width: 50%;
   float: left;
 }
-
 #headerChat .tabs a {
   font-weight: 500;
   text-transform: uppercase;
@@ -526,17 +516,14 @@ export default {
   font-size: 13px;
   float: left;
   padding: 10px 15px;
-
   color: #333;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2) !important;
 }
-
 #headerChat .active a {
   color: #fff;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   background-color: #003e70 !important;
 }
-
 .bodyChat {
   padding-top: 10px;
   border-bottom: 1px solid #dddddd;
@@ -556,24 +543,20 @@ export default {
   bottom: 5px;
   background-color: #fff;
 }
-
 /* width */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 /* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 7px #acacac;
   border-radius: 10px;
 }
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #acacac;
   border-radius: 15px;
 }
-
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #2c6b9e;
