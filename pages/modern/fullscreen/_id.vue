@@ -225,7 +225,8 @@
 
                   <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed"
-                      >{{ getStockLoop($route.params.id) }} {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
+                      >{{ getStockLoop($route.params.id) }}
+                      {{ $t("msg.minute") }} {{ $t("msg.loop") }}</v-btn
                     >
                     <v-btn
                       color="buttonGreen"
@@ -336,8 +337,8 @@
           </h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
-            <fullscreenchart v-if="!isHidden"></fullscreenchart>
-            <fullscreencurrentbet v-else></fullscreencurrentbet>
+            <fullscreenchart v-show="!isHidden"></fullscreenchart>
+            <fullscreencurrentbet v-show="isHidden"></fullscreencurrentbet>
           </div>
           <v-layout pa-3>
             <v-flex md3 lg3 pt-2 style="text-align:center;">
@@ -569,7 +570,8 @@ export default {
       "getUserInfo",
       "getLastDraw",
       "getRoadMap",
-      "getStockLoop"
+      "getStockLoop",
+      "getResetStatus"
     ]),
     ...mapState({
       gameStockId: state => state.game.gameStockId

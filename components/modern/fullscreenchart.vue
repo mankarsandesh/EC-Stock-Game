@@ -33,48 +33,48 @@ export default {
       series: [
         {
           name: this.$root.$t("gamemsg.big"),
-          data: [1, 2, 0, 15],
-          betCounts: [15, 14, 13, 0]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.small"),
-          data: [0, 10, 10, 0],
-          betCounts: [15, 14, 13, 100]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.odd"),
-          data: [0, 0, 0, 10],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.even"),
-          data: [0, 0, 5, 15],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.high"),
-          data: [1, 5, 0, 1],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.mid"),
-          data: [1, 0, 0, 0],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.low"),
-          data: [0, 20, 0, 15],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.number"),
-          data: [1, 0, 10, 10],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.tie"),
-          data: [0, 9, 20, 0],
-          betCounts: [15, 14, 13, 20]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         }
       ],
       componentKey: 0,
@@ -146,52 +146,106 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.connectSocket();
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
   },
   computed: {
-    ...mapGetters(["getGameUUIDByStockName", "getPortalProviderUUID"])
+    ...mapGetters([
+      "getGameUUIDByStockName",
+      "getPortalProviderUUID",
+      "getResetStatus"
+    ])
   },
-  mounted() {
-    this.listenForBroadcast(
-      {
-        channelName: `liveBetCounts.${this.getGameUUIDByStockName(
-          this.$route.params.id
-        )}`,
-        eventName: "liveBetCounts"
-      },
-      ({ data }) => {
-        try {
-          var logData = data;
-          if (data.status) {
-            this.series = data.data;
-            this.componentKey += 1;
-          } else {
-            throw new Error(config.error.general);
-          }
-        } catch (ex) {
-          console.log(ex);
-          log.error(
-            {
-              channel: `liveBetCounts.${this.getGameUUIDByStockName(
-                this.$route.params.id
-              )}`,
-              event: "liveBetCounts",
-              res: logData,
-              page: "components/modern/fullscreenchart.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
-        }
-      }
+  watch: {
+    getResetStatus: function() {
+      window.Echo.leaveChannel(
+        `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`
+      );
+      this.connectSocket();
+    }
+  },
+  beforeDestroy() {
+    window.Echo.leaveChannel(
+      `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`
     );
   },
   methods: {
+    connectSocket() {
+      this.listenForBroadcast(
+        {
+          channelName: `liveBetCounts.${this.getGameUUIDByStockName(
+            this.$route.params.id
+          )}`,
+          eventName: "liveBetCounts"
+        },
+        ({ data }) => {
+          try {
+            var logData = data;
+            if (data.status) {
+              this.series = data.data;
+              this.componentKey += 1;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                channel: `liveBetCounts.${this.getGameUUIDByStockName(
+                  this.$route.params.id
+                )}`,
+                event: "liveBetCounts",
+                res: logData,
+                page: "components/modern/fullscreenchart.vue",
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        }
+      );
+    },
     listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
+      window.Echo.channel(channelName)
+        .listen(eventName, callback)
+        .on("pusher:subscription_succeeded", async member => {
+          try {
+            var reqBody = {
+              portalProviderUUID: this.getPortalProviderUUID,
+              gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
+              version: 1
+            };
+            var { data } = await this.$axios.post(
+              config.liveBetCount.url,
+              reqBody,
+              {
+                headers: config.header
+              }
+            );
+            if (data.status) {
+              this.series = data.data;
+              this.componentKey += 1;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                req: reqBody,
+                res: data,
+                page: "components/modern/fullscreenchart.vue",
+                apiUrl: config.userLoginAuth.url,
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        });
     },
     handleResize() {
       this.window.width = window.innerWidth;

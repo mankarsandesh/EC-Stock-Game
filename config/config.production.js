@@ -67,6 +67,9 @@ const config = {
   getUserNotification: {
     url: `${process.env.BASE_URL}/getNotification`
   },
+  liveBetCount: {
+    url: `${process.env.BASE_URL}/liveBetCount`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
