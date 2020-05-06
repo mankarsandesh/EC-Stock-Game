@@ -31,7 +31,7 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key"   class="chips" >
+            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -79,7 +79,8 @@
 
 <script>
 import Sound from "~/helpers/sound";
-import { mapGetters, mapActions } from "vuex";
+import Result from "~/helpers/Result";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
@@ -108,131 +109,8 @@ export default {
   },
   watch: {
     getLastDraw(val) {
-      const lastDraw = val.substr(val.length - 2); //get the last two digit
-      const first = parseInt(lastDraw.slice(0, 1));
-      const last = parseInt(lastDraw.slice(1, 2));
-      const bothdigit = first + last;
-      //console.log("Here is the numner ", lastDraw);
-      const twoDigit = lastDraw.slice(0, 1) + lastDraw.slice(1, 2);
-      result.rule_data.map((items, index) => {
-        if ($("#" + this.stockName + this.betId).hasClass(items.type)) {
-          items.rules.map((item, index) => {
-            if ($("#" + this.stockName + this.betId).hasClass(item.name)) {
-              /* ----------------------------- // First digit ----------------------------- */
-
-              if (items.type === "firstdigit") {
-                const result = item.rule.includes(first);
-                if (result) {
-                  Sound.winBet(); // sound when user win the bet
-                  $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.stockName + this.betId).addClass(
-                    this.betId.split("-")[0] + "-animation"
-                  );
-                  setTimeout(() => {
-                    Sound.winBet(); // sound when user win the bet
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0] + "-animation"
-                    );
-                  }, 5000);
-                } else {
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
-                  );
-                  $("#" + this.betWin).removeClass(this.betWin);
-                }
-              }
-
-              /* ------------------------------ // Last digit ----------------------------- */
-
-              if (items.type === "lastdigit") {
-                const result = item.rule.includes(last);
-                if (result) {
-                  Sound.winBet(); // sound when user win the bet
-                  $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.stockName + this.betId).addClass(
-                    this.betId.split("-")[0] + "-animation"
-                  );
-                  setTimeout(() => {
-                    Sound.winBet(); // sound when user win the bet
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0] + "-animation"
-                    );
-                  }, 5000);
-                } else {
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
-                  );
-                  $("#" + this.betWin).removeClass(this.betWin);
-                }
-              }
-
-              /* -------------------------------- bothdigit ------------------------------- */
-
-              if (items.type === "bothdigit") {
-                const result = item.rule.includes(bothdigit);
-                if (result) {
-                  Sound.winBet(); // sound when user win the bet
-                  $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.stockName + this.betId).addClass(
-                    this.betId.split("-")[0] + "-animation"
-                  );
-                  setTimeout(() => {
-                    Sound.winBet(); // sound when user win the bet
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0] + "-animation"
-                    );
-                  }, 5000);
-                } else {
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
-                  );
-                  $("#" + this.betWin).removeClass(this.betWin);
-                }
-              }
-
-              /* -------------------------------- tow digit ------------------------------- */
-
-              if (items.type === "twodigit") {              
-                const result = item.rule.includes(twoDigit);
-                if (result) {
-                  Sound.winBet(); // sound when user win the bet
-                  $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.stockName + this.betId).addClass(
-                    this.betId.split("-")[0] + "-animation"
-                  );
-                  setTimeout(() => {
-                    Sound.winBet(); // sound when user win the bet
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0] + "-animation"
-                    );
-                  }, 5000);
-                } else {                 
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
-                  );
-                  $("#" + this.betWin).removeClass(this.betWin);
-                }
-              }
-            }
-          });
-        }
-      });
+      // sending the data to process on the helper
+      Result.betResult(val, this.stockName, this.betId, this.betWin);
     }
   },
   created() {
@@ -247,6 +125,7 @@ export default {
     //  this.getwinuser()
   },
   methods: {
+    ...mapMutations(["SET_FIRST"]),
     ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
     coinClick(value) {
       let amount = parseInt(value);
@@ -326,6 +205,11 @@ export default {
         };
         if (this.betValue > 0) {
           Sound.betTing();
+          const stockDetail = {
+            stock: this.stockName,
+            betRule: this.betId
+          };
+          this.$emit("update-bet", stockDetail);
           this.confirmDisabled = true;
           this.sendBetting(data);
           $("#" + this.stockName + this.betId).addClass(
@@ -349,7 +233,7 @@ export default {
 <style scoped>
 .chips {
   margin: 0px 3px;
-   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
 }
 .chips:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
@@ -400,4 +284,5 @@ input[type="number"] {
 .chipImg {
   cursor: pointer;
 }
-</style>
+</style>  
+    

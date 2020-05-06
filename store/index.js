@@ -5,6 +5,7 @@ import stock from "./stock";
 import provider from "./provider";
 import roadMap from "./roadMap";
 import game from "./game";
+import bet from "./bet";
 
 const createStore = () => {
   return new Vuex.Store({
@@ -13,7 +14,8 @@ const createStore = () => {
       stock,
       provider,
       roadMap,
-      game
+      game,
+      bet
     }
   });
 };
