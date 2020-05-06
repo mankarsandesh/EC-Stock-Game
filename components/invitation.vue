@@ -319,15 +319,10 @@ export default {
         }
       }
     },   
-    followUser(username, userImage, userUUID, method) {
-      console.log(userImage);
+    followUser(username, userImage, userUUID, method) {     
       this.username = username;
       this.FollowUserUUID = userUUID;
-      if (method == 0) {
-        this.FolloworNot = 1;
-      } else {
-        this.FolloworNot = 2;
-      }
+      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2 
       this.userImage = this.userImgProfile(userImage);
       this.dialog = true;
     },

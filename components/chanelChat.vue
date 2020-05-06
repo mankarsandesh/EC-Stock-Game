@@ -81,7 +81,7 @@
             <v-btn
               v-if="getUserUUID != data.userUUID"
               class="following"
-              v-on:click="followUser(null, null, data.userUUID, '0')"
+              v-on:click="followUser(null, data.userImage, data.userUUID, '0')"
               >Follow</v-btn
             >
             <v-btn v-if="getUserUUID == data.userUUID" class="following"
@@ -122,7 +122,7 @@
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
         :username="this.username"
-        :userImage="defaultImage"
+        :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
         @followBetClose="closeFollowBet"
@@ -178,7 +178,7 @@ export default {
     };
   },
   methods: {
-    // Set Image
+    // Fetch default image or from server image
     userImgProfile(userImage) {
       return userImage === null
         ? this.defaultImage
@@ -192,20 +192,12 @@ export default {
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      if (method == 0) {
-        this.FolloworNot = 1;
-      } else {
-        this.FolloworNot = 2;
-      }
-      this.userImage = this.imgProfile(userImage);
+      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2 
+      this.userImage = this.userImgProfile(userImage);
+      console.log(userImage);
+      console.log(this.userImage);
       this.dialog = true;
-    },
-    // Fetch default image or from server image
-    imgProfile(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + userImage;
-    },
+    },    
     scrollDown() {
       $(".bodyChat")
         .stop()
