@@ -70,6 +70,9 @@ const config = {
   liveBetCount: {
     url: `${process.env.BASE_URL}/liveBetCount`
   },
+  liveCountBetData: {
+    url: `${process.env.BASE_URL}/liveCountBetData`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"

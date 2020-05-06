@@ -166,11 +166,6 @@ export default {
       this.connectSocket();
     }
   },
-  beforeDestroy() {
-    window.Echo.leaveChannel(
-      `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`
-    );
-  },
   methods: {
     connectSocket() {
       this.listenForBroadcast(
@@ -238,7 +233,7 @@ export default {
                 req: reqBody,
                 res: data,
                 page: "components/modern/fullscreenchart.vue",
-                apiUrl: config.userLoginAuth.url,
+                apiUrl: config.liveBetCount.url,
                 provider: this.getPortalProviderUUID,
                 user: secureStorage.getItem("USER_UUID")
               },
