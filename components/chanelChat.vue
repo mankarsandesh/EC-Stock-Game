@@ -15,7 +15,7 @@
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
               <v-img
                 class="userImage"
-                :src="defaultImage"
+                :src="userImgProfile(data.userImage)"
                 aspect-ratio="1"
                 max-height="120"
                 max-width="120"
@@ -178,6 +178,12 @@ export default {
     };
   },
   methods: {
+    // Set Image
+    userImgProfile(userImage) {
+      return userImage === null
+        ? this.defaultImage
+        : `${config.apiDomain}/`+userImage;
+    },
     // Close Follow Bet Popup
     closeFollowBet() {
       this.dialog = false;

@@ -128,7 +128,7 @@
       <followBet
         v-if="renderComponent"
         :username="this.username"
-        :userImage="this.defaultImage"
+        :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
         @followBetClose="closeFollowBet"

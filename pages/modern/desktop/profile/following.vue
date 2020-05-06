@@ -20,8 +20,8 @@
             v-for="(data, index) in followingList"
             :key="index"
           >
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
-              <img class="userImage" :src="defaultImage" />
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.profileImage">
+                <img class="userImage" :src="imgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">{{
                 data.userName
@@ -103,12 +103,8 @@ export default {
     },
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
-      this.FollowUserUUID = userUUID;
-      if (method == 0) {
-        this.FolloworNot = 1;
-      } else {
-        this.FolloworNot = 2;
-      }
+      this.FollowUserUUID = userUUID;      
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
       this.dialog = true;
     },

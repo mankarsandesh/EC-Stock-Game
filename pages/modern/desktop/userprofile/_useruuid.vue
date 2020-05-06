@@ -355,6 +355,8 @@ export default {
             headers: config.header
           }
         );
+        console.log(reqBody);
+        console.log(res);
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
