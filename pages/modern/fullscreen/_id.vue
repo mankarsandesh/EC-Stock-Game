@@ -345,31 +345,21 @@
               <span class="seticon">
                 <i class="fa fa-user fa-2x iconcolor" />
                 <span>
-                  {{
-                    dataliveBetAll.totalUsers ? dataliveBetAll.totalUsers : 15
-                  }}
+                  {{ dataliveBetAll.totalUsers }}
                 </span>
               </span>
             </v-flex>
             <v-flex md3 lg3 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-gamepad fa-2x iconcolor" />
-                <span>{{
-                  dataliveBetAll.totalBetCount
-                    ? dataliveBetAll.totalBetCount
-                    : 35
-                }}</span>
+                <span>{{ dataliveBetAll.totalBetCount }}</span>
               </span>
             </v-flex>
             <v-flex md4 lg4 pt-2 style="text-align:center;">
               <span class="seticon">
                 <i class="fa fa-money fa-2x iconcolor" />
                 <span>
-                  {{
-                    dataliveBetAll.totalAmountPlaced
-                      ? dataliveBetAll.totalAmountPlaced
-                      : 5500
-                  }}
+                  {{ dataliveBetAll.totalAmountPlaced }}
                 </span>
               </span>
             </v-flex>
@@ -486,6 +476,7 @@ export default {
   created() {
     this.getActiveGamesByCategory();
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    this.connectLiveBetCountDataSocket();
   },
   beforeDestroy() {
     window.Echo.leave(
@@ -528,17 +519,6 @@ export default {
         }
       }
     );
-    this.listenForBroadcast(
-      {
-        channelName: `LiveTotalBetData.${this.getGameUUIDByStockName(
-          this.$route.params.id
-        )}`,
-        eventName: "LiveTotalBetData"
-      },
-      ({ data }) => {
-        this.dataliveBetAll = data.data;
-      }
-    );
   },
 
   components: {
@@ -578,6 +558,13 @@ export default {
     })
   },
   watch: {
+    getResetStatus: function() {
+      window.Echo.leaveChannel(
+        `LiveTotalBetData.${this.getGameUUIDByStockName(this.$route.params.id)}`
+      );
+      this.isHidden = false;
+      this.connectLiveBetCountDataSocket();
+    },
     tutorialStepNumber(newValue) {
       switch (newValue) {
         case 1:
@@ -675,6 +662,77 @@ export default {
     ]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
+    },
+    liveBetCountData({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName)
+        .listen(eventName, callback)
+        .on("pusher:subscription_succeeded", async member => {
+          try {
+            var reqBody = {
+              portalProviderUUID: this.getPortalProviderUUID,
+              gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
+              version: config.version
+            };
+            var { data } = await this.$axios.post(
+              config.liveCountBetData.url,
+              reqBody,
+              { headers: config.header }
+            );
+            if (data.status) {
+              this.dataliveBetAll = data.data;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                req: reqBody,
+                res: data,
+                page: "pages/modern/fullscreen/_id.vue",
+                apiUrl: config.liveCountBetData.url,
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        });
+    },
+    connectLiveBetCountDataSocket() {
+      this.liveBetCountData(
+        {
+          channelName: `LiveTotalBetData.${this.getGameUUIDByStockName(
+            this.$route.params.id
+          )}`,
+          eventName: "LiveTotalBetData"
+        },
+        ({ data }) => {
+          try {
+            var logData = data;
+            if (data.status) {
+              this.dataliveBetAll = data.data;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                channel: `LiveTotalBetData.${this.getGameUUIDByStockName(
+                  this.$route.params.id
+                )}`,
+                event: "LiveTotalBetData",
+                res: logData,
+                page: "pages/modern/fullscreen/_id.vue",
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        }
+      );
     },
     async getActiveGamesByCategory() {
       var reqBody = {
