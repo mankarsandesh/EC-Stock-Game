@@ -4,7 +4,7 @@
       <template v-slot:activator="{ on }">
         <v-btn flat v-on="on">
           <v-avatar size="40">
-            <img :src="defaultImage" />
+            <img :src="imgProfile" />
           </v-avatar>
           <div class="userLogoutMenu">
             <span v-if="getUserInfo.firstName == null"
@@ -69,8 +69,8 @@ export default {
     AppDialogsConfirm
   },
   data() {
-    return {
-      defaultImage: "/no-profile-pic.jpg",
+    return {          
+      defaultImage: `/no-profile-pic.jpg`,
       dialogConfirm: false,
       profileImage: "",
       dialogprofile: false,
@@ -79,9 +79,13 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserInfo"]),
-    imgProfile() {
-      return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+    imgProfile() {   
+        if (this.getUserInfo.profileImage == null) { 
+         return `${this.defaultImage}`;  
+        } else {
+          return`${config.apiDomain}/${this.getUserInfo.profileImage}`;      
     }
+  }
   },
   mounted() {
     this.isShow = location.pathname.split("/")[1];

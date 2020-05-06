@@ -57,7 +57,7 @@
             <!-- <span class="rank"> 
             </span> -->
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
-              <img class="pimage" :src="defaultImage" />
+              <img class="pimage" :src="userImgProfile(data.userImage)" />
               <span class="subtitle-1 text-uppercase">
                 <span class="name">{{ data.username }}</span>
               </span>
@@ -128,7 +128,7 @@
       <followBet
         v-if="renderComponent"
         :username="this.username"
-        :userImage="this.defaultImage"
+        :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
         @followBetClose="closeFollowBet"
@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 export default {
@@ -186,7 +186,8 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+     ...mapGetters(["getUserInfo"])      
   },
   methods: {
     // Render Follow Bet Component
@@ -235,17 +236,17 @@ export default {
       }
     },
     // fetch default image or from server image
-    imgProfile(userImage) {
+    userImgProfile(userImage) {
       return userImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + userImage;
+        ? this.defaultImage
+        : `${config.apiDomain}/`+userImage;
     },
     // Open Dialog box When User Click on Follow Button
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
-      this.userImage = this.imgProfile(userImage);
+      this.userImage = this.userImgProfile(userImage);
       this.dialog = true;
       this.forceRerender();
     },
@@ -266,7 +267,7 @@ export default {
           {
             headers: config.header
           }
-        );
+        );       
         this.topPlayerData = data.data;
         this.loadingImage = false;
       } catch (error) {

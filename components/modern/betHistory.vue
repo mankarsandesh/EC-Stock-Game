@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout row class="justify-center">
-      <v-flex  md8 lg8 >
+      <v-flex  md10 lg10 >
         <v-data-table
           hide-actions
           :items="userBetHistory"
@@ -107,7 +107,7 @@
       </v-flex>
     </v-layout>
      <v-layout row class="justify-center">
-      <v-flex md8 lg8>
+      <v-flex md10 lg10>
         <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
       <v-pagination
         v-model="pagination.page"
