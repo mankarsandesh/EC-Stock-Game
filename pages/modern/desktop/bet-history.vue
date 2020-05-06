@@ -8,7 +8,7 @@
     <section class="filter">
       <v-container>
         <v-layout class="filter-history" align-center justify-center >
-          <v-flex xs12 sm12 md4 lg4>
+          <v-flex xs12 sm12 md5 lg5>
             <v-layout>
               <v-flex xs12 sm12 md4>
                 <v-menu
@@ -77,7 +77,7 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs12 sm12 md1 lg1></v-flex>
+          <v-flex xs12 sm12 md2 lg2></v-flex>
           <v-flex xs12 sm12 md3 lg3>
             <v-layout>
               <v-flex xs6 md6>
