@@ -19,12 +19,9 @@ const mutations = {
     state.stocks = payload;
   },
   SET_STOCK_COUNTDOWN(state, payload) {
-    if (parseInt(payload[6].gameEndTimeCountDownInSec) == 1) {
-      state.resetFullScreenChart = true;
-    }
     state.stockCountdown = payload;
     if (parseInt(payload[6].gameEndTimeCountDownInSec) == 58) {
-      state.resetFullScreenChart = false;
+      state.resetFullScreenChart = !state.resetFullScreenChart;
     }
   },
   SET_STOCK_PRICE(state, payload) {

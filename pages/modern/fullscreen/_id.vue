@@ -337,10 +337,7 @@
           </h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
-            <fullscreenchart
-              v-show="!isHidden"
-              v-if="!getResetStatus"
-            ></fullscreenchart>
+            <fullscreenchart v-show="!isHidden"></fullscreenchart>
             <fullscreencurrentbet v-show="isHidden"></fullscreencurrentbet>
           </div>
           <v-layout pa-3>

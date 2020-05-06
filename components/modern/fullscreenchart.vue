@@ -146,55 +146,68 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.connectSocket();
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
   },
   computed: {
-    ...mapGetters(["getGameUUIDByStockName", "getPortalProviderUUID"])
+    ...mapGetters([
+      "getGameUUIDByStockName",
+      "getPortalProviderUUID",
+      "getResetStatus"
+    ])
+  },
+  watch: {
+    getResetStatus: function() {
+      window.Echo.leaveChannel(
+        `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`
+      );
+      this.connectSocket();
+    }
   },
   beforeDestroy() {
     window.Echo.leaveChannel(
       `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`
     );
   },
-  mounted() {
-    this.listenForBroadcast(
-      {
-        channelName: `liveBetCounts.${this.getGameUUIDByStockName(
-          this.$route.params.id
-        )}`,
-        eventName: "liveBetCounts"
-      },
-      ({ data }) => {
-        try {
-          var logData = data;
-          if (data.status) {
-            this.series = data.data;
-            this.componentKey += 1;
-          } else {
-            throw new Error(config.error.general);
-          }
-        } catch (ex) {
-          console.log(ex);
-          log.error(
-            {
-              channel: `liveBetCounts.${this.getGameUUIDByStockName(
-                this.$route.params.id
-              )}`,
-              event: "liveBetCounts",
-              res: logData,
-              page: "components/modern/fullscreenchart.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
-        }
-      }
-    );
-  },
   methods: {
+    connectSocket() {
+      this.listenForBroadcast(
+        {
+          channelName: `liveBetCounts.${this.getGameUUIDByStockName(
+            this.$route.params.id
+          )}`,
+          eventName: "liveBetCounts"
+        },
+        ({ data }) => {
+          try {
+            var logData = data;
+            if (data.status) {
+              this.series = data.data;
+              this.componentKey += 1;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                channel: `liveBetCounts.${this.getGameUUIDByStockName(
+                  this.$route.params.id
+                )}`,
+                event: "liveBetCounts",
+                res: logData,
+                page: "components/modern/fullscreenchart.vue",
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        }
+      );
+    },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName)
         .listen(eventName, callback)
