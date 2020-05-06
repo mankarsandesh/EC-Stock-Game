@@ -89,7 +89,7 @@ const actions = {
       };
       var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
         headers: config.header
-      });
+      });    
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);

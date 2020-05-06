@@ -12,10 +12,10 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <!-- <v-icon color="black" :size="20" @click="cameraClick"
+                    <v-icon color="black" :size="20" @click="dialog = true"
                       >photo_camera</v-icon
-                    > -->
-                    <v-icon color="black" :size="20">photo_camera</v-icon>
+                    >
+                    <!-- <v-icon color="black" :size="20">photo_camera</v-icon> -->
                   </button>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
@@ -126,96 +126,9 @@
             Choose your Avatar
           </h3>
           <v-card-text style="text-align:center;">
-            <div class="avatarImage">
-              <v-img class="img" src="/avatar/Avatar-2.jpg"></v-img>
-              <span
-                href=""
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-2.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-3.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-3.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-4.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-4.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-5.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-5.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-6.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-6.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-7.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-7.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-8.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-8.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-9.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-9.jpg')"
+            <div class="avatarImage" v-for="n in 10" v-bind:key="n">
+              <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
+              <span href="" class="userAvatar" @click="useAvatar(n)"
                 >Use Avatar</span
               >
             </div>
@@ -250,6 +163,8 @@ export default {
   layout: "desktopModern",
   data() {
     return {
+      avatarID: "",
+      imagePath: config.apiDomain + "/images/user/avatar/",
       snackbar: false,
       newImage: "",
       dialog: false,
@@ -267,6 +182,7 @@ export default {
     this.currentChild = this.$route.path;
   },
   created() {
+    // console.log(this.getUserInfo.profileImage);
     // make a active menu
     this.currentChild = this.$route.path;
   },
@@ -283,10 +199,10 @@ export default {
   },
   methods: {
     useAvatar(image) {
-      this.newImage = image;
-      console.log(image);
+      this.newImage = this.imagePath + image + ".jpg";
+      this.avatarID = image;
       this.snackbar = true;
-      // this.updateImageProfile();
+      this.updateImageProfile();
     },
     ...mapActions(["setUserData"]),
     uploadImage(e) {
@@ -304,11 +220,12 @@ export default {
     },
     async updateImageProfile() {
       var reqBody = {
-        profileImage: this.newImage,
+        avatarID: this.avatarID,
         portalProviderUUID: this.getPortalProviderUUID,
         userUUID: this.getUserUUID,
         version: config.version
       };
+      console.log(reqBody);
       try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
@@ -317,7 +234,6 @@ export default {
             headers: config.header
           }
         );
-        console.log(reqBody);
         console.log(res);
         if (res.status) {
           this.blurValue = 0;
@@ -365,18 +281,17 @@ export default {
 
 .avatarImage {
   height: 200px;
-  /* border: 1px solid ; */
   text-align: center;
   margin: 10px;
-  width: 20%;
+  width: 15%;
   padding: 5px;
   display: inline-block;
 }
 .avatarImage .img {
   margin: 15px auto;
   border-radius: 180px;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border: 2px solid #dddddd;
 }
 .followDialog {
