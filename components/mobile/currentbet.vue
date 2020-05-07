@@ -1,13 +1,12 @@
 <template>
   <v-layout row class="justify-center" mt-2>
     <v-flex xs12 md12>
-        <v-list-tile v-if="currentBets.length == 0" class="notBets">
-            <h3 >
-              There are no bets in Current Bets.
-            </h3>
-        </v-list-tile>
-
-      <v-list three-line v-if="currentBets.length > 0">      
+      <v-list-tile v-if="currentBets.length == 0" class="notBets">
+        <h3>
+          There are no bets in Current Bets.
+        </h3>
+      </v-list-tile>
+      <v-list three-line v-if="currentBets.length > 0">
         <template
           v-for="(item, index) in currentBets"
           style="margin-bottom:50px;"
@@ -29,7 +28,7 @@
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <span class="betAmount">{{ item.betAmount | toCurrency}}</span>
+              <span class="betAmount">{{ item.betAmount | toCurrency }}</span>
               <div v-if="item.isFollowBet == 1" class="following">
                 by followers
               </div>
@@ -38,7 +37,7 @@
           </v-list-tile>
           <v-divider :key="index"></v-divider>
         </template>
-        <div class="footer" v-if="currentBets.length > 0" >
+        <div class="footer" v-if="currentBets.length > 0">
           <div>
             <span> <strong>Total : </strong>{{ currentBets.length }} bets</span>
             <span>
@@ -82,15 +81,15 @@ export default {
 };
 </script>
 <style>
-.notBets{
+.notBets {
   font-size: 16px;
-  color:#9e8e8e;
+  color: #9e8e8e;
   text-align: center;
-  margin:50% auto;
+  margin: 50% auto;
 }
-.notBets h3{
-text-align: center;
-margin:0 auto;
+.notBets h3 {
+  text-align: center;
+  margin: 0 auto;
 }
 .footer {
   width: 100%;
