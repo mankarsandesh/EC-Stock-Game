@@ -3,12 +3,12 @@
     <v-flex xs12 md12>
       <v-list-tile v-if="notificationData.length == 0" class="notBets">
         <h3>
-          There are notification.
+          There are no notification.
         </h3>
       </v-list-tile>
       <v-list three-line v-if="notificationData.length > 0">
-        <template v-for="(item, index) in notificationData">
-          <v-list-tile :key="item.title">
+        <template v-for="(item, index) in notificationData" >
+          <v-list-tile :key="item.date" > 
             <v-list-tile-content>
               <v-list-tile-sub-title
                 class="heading"
