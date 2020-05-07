@@ -39,7 +39,7 @@
 
     <v-toolbar
       :clipped-left="clipped"
-      class="pa-2 text-primary light-toobar setheight"
+      class="pa-3 text-primary light-toobar setheight"
     >
       <v-flex class="pa-2">
         <nuxt-link to="/modern">
@@ -107,7 +107,7 @@
         style="float: right; top: -98%;"
         >{{ $t("menu.current bet") }}</v-btn
       > -->
-   </div>
+    </div>
     <v-content>
       <v-container pa-1>
         <nuxt />
@@ -171,11 +171,11 @@ export default {
       this.dialogConfirm = true;
     },
     dialogStatus(value) {
-      if (value) {        
+      if (value) {
         secureStorage.removeItem("AUTH");
         const URL = secureStorage.getItem("referrerURL");
         location.href = "http://" + URL;
-        this.dialogConfirm = false;       
+        this.dialogConfirm = false;
       }
       this.dialogConfirm = false;
     }
@@ -208,6 +208,6 @@ export default {
 }
 .side-bar {
   z-index: 101;
-  width: 220px !important;
+  width: 250px !important;
 }
 </style>
