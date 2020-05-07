@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     goSearch() {
-      console.log("You press search button");
+      //console.log("You press search button");
     }
   },
   created() {
