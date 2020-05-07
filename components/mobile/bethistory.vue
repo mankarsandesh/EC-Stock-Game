@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-list three-line>
+     <v-list-tile v-if="userBetHistory.length == 0" class="notBets">
+            <h3 >
+              There are no bets in History Bets.
+            </h3>
+        </v-list-tile>
+
+    <v-list three-line v-if="userBetHistory.length > 0">
       <template
         v-for="(item, index) in userBetHistory"
         style="margin-bottom:50px;"
@@ -23,10 +29,10 @@
 
           <v-list-tile-action>
             <span v-if="item.rollingAmount == 0" class="lossAmount"
-              >-{{ item.betAmount }}</span
+              >-{{ item.betAmount | toCurrency}}</span
             >
             <span v-if="item.rollingAmount != 0" class="winAmount"
-              >+{{ item.betAmount }}</span
+              >+{{ item.betAmount | toCurrency }}</span
             >
             <div v-if="item.isFollowBet == 1" class="following">
               by followers
@@ -36,7 +42,7 @@
         </v-list-tile>
         <v-divider :key="index"></v-divider>
       </template>
-      <div class="footer">
+      <div class="footer" v-if="userBetHistory.length > 0">  
         <div>
           <span> {{ userBetHistory.length }} bets</span>
           <span> <strong>Total </strong> :{{ TotalAmount | toCurrency }} </span>
@@ -56,7 +62,6 @@
     </v-list>
   </div>
 </template>
-
 <script>
 export default {
   props: ["userBetHistory"],
@@ -134,9 +139,9 @@ export default {
 };
 </script>
 <style scoped>
-.footer {
+.footer { 
   width: 100%;
-  background-color: #fff;
+  background-color: #dddddd;
   padding: 10px 0px;
   position: fixed;
   bottom: 0;

@@ -100,13 +100,13 @@
         style="float: right; top: -98%;"
         >{{ $t("menu.history") }}</v-btn
       >
-      <v-btn
+      <!-- <v-btn
         to="/modern/current-bet"
         v-show="isShow == 'history'"
         class="buttonGreen"
         style="float: right; top: -98%;"
         >{{ $t("menu.current bet") }}</v-btn
-      >
+      > -->
    </div>
     <v-content>
       <v-container pa-1>
@@ -208,6 +208,6 @@ export default {
 }
 .side-bar {
   z-index: 101;
-  width: 200px !important;
+  width: 220px !important;
 }
 </style>

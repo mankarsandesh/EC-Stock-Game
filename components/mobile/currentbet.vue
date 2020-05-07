@@ -1,72 +1,52 @@
 <template>
   <v-layout row class="justify-center" mt-2>
     <v-flex xs12 md12>
-      <v-data-table
-        :items="currentBets"
-        :items-per-page="5"
-        ref="table"
-        :search="search"
-        class="current-bet"
-      >
-        <template v-slot:headers="headers">
-          <tr>
-            <th scope="col">{{ $t("msg.BetId") }}</th>
-            <th scope="col">{{ $t("msg.gameid") }}</th>
-            <th scope="col">{{ $t("msg.Betdetail") }}</th>
-            <th scope="col">{{ $t("msg.Time") }}</th>
-            <th scope="col">{{ $t("msg.amount") }}</th>
-            <th scope="col">{{ $t("msg.payout") }}</th>
-            <th scope="col">{{ $t("msg.Bet Status") }}</th>
-          </tr>
+        <v-list-tile v-if="currentBets.length == 0" class="notBets">
+            <h3 >
+              There are no bets in Current Bets.
+            </h3>
+        </v-list-tile>
+
+      <v-list three-line v-if="currentBets.length > 0">      
+        <template
+          v-for="(item, index) in currentBets"
+          style="margin-bottom:50px;"
+        >
+          <v-list-tile :key="item.betUUID">
+            <v-list-tile-content>
+              <v-list-tile-sub-title class="headingTitle">
+                {{ item.ruleName }} - ({{ item.payout }}) {{ item.stockName }}
+              </v-list-tile-sub-title>
+              <v-list-tile-sub-title>
+                <span
+                  class="lastDraw"
+                  v-html="$options.filters.lastDraw(item.gameDraw)"
+                ></span>
+              </v-list-tile-sub-title>
+              <v-list-tile-sub-title>
+                {{ item.createdDate }} {{ item.createdTime }}
+              </v-list-tile-sub-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
+              <span class="betAmount">{{ item.betAmount | toCurrency}}</span>
+              <div v-if="item.isFollowBet == 1" class="following">
+                by followers
+              </div>
+              <div v-if="item.isFollowBet == 0" class="original">original</div>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-divider :key="index"></v-divider>
         </template>
-        <template v-slot:items="item">
-          <td>{{ item.item.betUUID }}</td>
-          <td>{{ item.item.gameUUID }}</td>
-          <td>
-            {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }}
-          </td>
-          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
-          <td>{{ item.item.betAmount | toCurrency }}</td>
-          <td>{{ item.item.payout }}</td>
-          <td v-if="item.item.betResult == 'win'">
-            <v-chip
-              color="green"
-              text-color="white"
-              class="text-uppercase betresult"
-              >{{ $t("msg.win") }}</v-chip
-            >
-          </td>
-          <td v-if="item.item.betResult == 'lose'">
-            <v-chip
-              color="red"
-              text-color="white"
-              class="text-uppercase betresult"
-              >{{ $t("msg.lose") }}</v-chip
-            >
-          </td>
-          <td v-if="item.item.betResult == 'pending'">
-            <v-chip
-              color="yellow "
-              text-color="black"
-              class="text-uppercase betresult"
-              >{{ $t("msg.pending") }}...</v-chip
-            >
-          </td>
-        </template>
-        <template slot="footer">
-          <tr>
-            <td>{{ $t("msg.Total") }}</td>
-            <td colspan="3">
-              {{ currentBets.length }} {{ $t("leaderboard.bets") }}
-            </td>
-            <td>
-              <strong>{{ TotalAmount | toCurrency }}</strong>
-            </td>
-            <td colspan="2"></td>
-          </tr>
-        </template>
-      </v-data-table>
+        <div class="footer" v-if="currentBets.length > 0" >
+          <div>
+            <span> <strong>Total : </strong>{{ currentBets.length }} bets</span>
+            <span>
+              <strong>Total Amount</strong> :{{ TotalAmount | toCurrency }}
+            </span>
+          </div>
+        </div>
+      </v-list>
     </v-flex>
   </v-layout>
 </template>
@@ -102,7 +82,59 @@ export default {
 };
 </script>
 <style>
+.notBets{
+  font-size: 16px;
+  color:#9e8e8e;
+  text-align: center;
+  margin:50% auto;
+}
+.notBets h3{
+text-align: center;
+margin:0 auto;
+}
+.footer {
+  width: 100%;
+  background-color: #dddddd;
+  padding: 10px 0px;
+  position: fixed;
+  bottom: 0;
+  border-top: 2px solid #dddddd;
+}
+.footer div {
+  text-align: center;
+  width: 100%;
+}
+.footer div span {
+  text-align: center;
+  font-size: 16px;
+  margin: 0px 6px;
+}
 .betresult {
   width: auto;
+}
+.headingTitle {
+  font-weight: 600;
+  color: #003f70 !important;
+  font-size: 16px;
+}
+.original {
+  text-align: right;
+  width: 100px;
+  color: #fec623;
+  font-size: 12px;
+  text-transform: lowercase;
+  font-weight: 600;
+}
+.following {
+  text-align: right;
+  width: 100px;
+  color: #2bb13b;
+  font-size: 12px;
+  text-transform: lowercase;
+  font-weight: 600;
+}
+.betAmount {
+  font-weight: 600;
+  color: #333;
 }
 </style>
