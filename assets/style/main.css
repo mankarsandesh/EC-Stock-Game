@@ -1381,7 +1381,17 @@ p.guideline {
 .twodigitWin-even,
 .twodigitWin-high,
 .twodigitWin-mid,
-.twodigitWin-low {
+.twodigitWin-low,
+.firstdigitWin-0,
+.firstdigitWin-1,
+.firstdigitWin-2,
+.firstdigitWin-3,
+.firstdigitWin-4,
+.firstdigitWin-5,
+.firstdigitWin-6,
+.firstdigitWin-7,
+.firstdigitWin-8,
+.firstdigitWin-9 {
   background-size: 35px;
   height: 35px;
   background-position: center center;
@@ -1424,3 +1434,4 @@ p.guideline {
   transition: opacity 0.3s;
   opacity: 0;
 }
+
