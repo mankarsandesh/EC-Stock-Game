@@ -1769,6 +1769,12 @@ export default {
         this.$router.push(linkto);
       }
     },
+    bettingDialog(value) {
+      if (!value) {
+        this.betAmount = 0;
+      }
+    },
+
     // set payout
     gameRule() {
       let payoutArray1 = ["small", "big", "odd", "even"];

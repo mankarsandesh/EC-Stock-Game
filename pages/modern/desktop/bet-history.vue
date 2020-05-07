@@ -7,7 +7,7 @@
     />
     <section class="filter">
       <v-container>
-        <v-layout class="filter-history" align-center justify-center >
+        <v-layout class="filter-history" align-center justify-center>
           <v-flex xs12 sm12 md5 lg5>
             <v-layout>
               <v-flex xs12 sm12 md4>
@@ -145,7 +145,7 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) 
+    })
   },
   mounted() {
     const lastWeek = new Date(
@@ -160,7 +160,7 @@ export default {
     this.fetchBetHsitory();
   },
   methods: {
-    // Sorting By Today,Week, Month 
+    // Sorting By Today,Week, Month
     sortingBy() {
       if (this.sortby == "Today") {
         const lastWeek = new Date(

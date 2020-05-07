@@ -18,8 +18,7 @@
           @click="goSearch"
           class="mt-3 buttonGreen"
           style="border-radius:8px;"
-          >{{ $t("msg.go") }}</v-btn
-        >
+        >{{ $t("msg.go") }}</v-btn>
       </v-flex>
     </v-layout>
     <!-- end serach -->
@@ -28,7 +27,7 @@
         <stocklist />
       </v-flex>
     </v-layout>
-    <v-layout row wrap pb-3 justify-center>
+    <!-- <v-layout row wrap pb-3 justify-center>
       <v-flex xs5 class="text-center d-flex">
         <v-btn
           class="text-uppercase white--text"
@@ -36,11 +35,11 @@
           >{{ $t("stock-list.load more") }}</v-btn
         >
       </v-flex>
-    </v-layout>
+    </v-layout>-->
     <!-- back to top -->
     <!-- <back-to-top bottom="22px" right="22px" visibleoffset="150">
       <v-icon color="#fff" size="35">keyboard_arrow_up</v-icon>
-    </back-to-top> -->
+    </back-to-top>-->
   </div>
 </template>
 

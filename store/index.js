@@ -5,15 +5,18 @@ import stock from "./stock";
 import provider from "./provider";
 import roadMap from "./roadMap";
 import game from "./game";
+import bet from "./bet";
 
 const createStore = () => {
+
   return new Vuex.Store({
     modules: {
       betting,
       stock,
       provider,
       roadMap,
-      game
+      game,
+      bet
     }
   });
 };

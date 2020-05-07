@@ -1,103 +1,129 @@
 <template>
-  <div>
-    <v-card class="my-bg">
-      <v-layout row wrap justify-center class="allchips">
-        <v-flex
-          class="settingchips"
-          xs4
-          sm3
-          md3
-          lg2
-          v-for="(item, key) in imgChip"
-          :key="key"
-          justify-center
-        >
-          <div class="d-block">
-            <v-img :width="item.width" :src="item.img" class="chipImage">
-              <v-text-field
-                class="setpricechip"
-                outlined
-                v-model="getCoinsModern[key]"
-                :class="item.color"
-                :ref="item.id"
-              ></v-text-field>
-            </v-img>
-            <v-card-actions class="justify-center">
-              <v-btn class="chipamount" text @click="conOrEClick()">{{
-                $t("msg." + conOrE)
-              }}</v-btn>
-            </v-card-actions>
-            <div v-show="conOrE == 'confirm'">
-              <v-card-text>{{ $t("msg.min") }} = $200</v-card-text>
-              <v-card-text>{{ $t("msg.max") }} = $20,000</v-card-text>
-            </div>
-          </div>
-        </v-flex>
-      </v-layout>
-
-      <v-layout row wrap justify-center style="background-color: #f2f4ff;">
-        <v-btn
-          text
-          @click="reset"
-          style="background-color: #fec623!important;border-radius:8px;"
-          >{{ $t("msg.resettodefault") }}</v-btn
-        >
-      </v-layout>
-
-      <v-layout row wrap justify-center style="background-color: #f2f4ff;">
-        <v-btn class="my-btn buttonGreensmall" @click="saveClick()">{{
+  <div class="chip-setting-container">
+    <div class="chip-item" v-for="(chip, index) in chips" :key="index">
+      <div class="chip-image">
+        <v-img :width="80" :src="chip.image" class="chipImage" />
+        <input
+          :disabled="conOrE === 'edit' ? disableInput : false"
+          class="input-chip-amount"
+          type="number"
+          :value="chip.amount"
+          :ref="chip.chipID"
+        />
+      </div>
+      <div class="chip-action">
+        <v-btn class="chipamount" text @click="conOrEClick(chip.chipID)">{{
+          $t("msg." + conOrE)
+        }}</v-btn>
+        <div class="min-max" v-show="conOrE === 'confirm'">
+          <span>{{ $t("msg.min") }} = $200</span>
+          <span>{{ $t("msg.max") }} = $20,000</span>
+        </div>
+      </div>
+    </div>
+    <div class="action-container">
+      <v-btn
+        text
+        @click="reset()"
+        style="background-color: #fec623!important;border-radius:8px;"
+        >{{ $t("msg.resettodefault") }}</v-btn
+      >
+      <div class="pt-3">
+        <v-btn class="my-btn buttonGreensmall" @click="saveChipAmount()">{{
           $t("msg.save")
         }}</v-btn>
         <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
-      </v-layout>
-    </v-card>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import chips from "~/data/chips";
+import config from "../../config/config.global";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
   data() {
     return {
-      conOrE: "edit",
-      imgChip: chips.chipsData
+      amount: [],
+      disableInput: true,
+      conOrE: "edit"
     };
   },
+  mounted() {
+    this.amount = this.getCoinsModern;
+  },
   computed: {
-    ...mapGetters(["getCoinsModern"])
+    ...mapGetters(["getCoinsModern"]),
+    chips() {
+      return [
+        {
+          chipID: "chip1",
+          image: "/chip/danger.png",
+          amount: this.getCoinsModern[0]
+        },
+        {
+          chipID: "chip2",
+          image: "/chip/primary.png",
+          amount: this.getCoinsModern[1]
+        },
+        {
+          chipID: "chip3",
+          image: "/chip/success.png",
+          amount: this.getCoinsModern[2]
+        },
+        {
+          chipID: "chip4",
+          image: "/chip/warning.png",
+          amount: this.getCoinsModern[3]
+        },
+        {
+          chipID: "chip5",
+          image: "/chip/black.png",
+          amount: this.getCoinsModern[4]
+        }
+      ];
+    }
   },
   methods: {
     ...mapActions(["setCoinsModern"]),
-    conOrEClick() {
+    conOrEClick(ref) {
       if (this.conOrE == "edit") {
         this.conOrE = "confirm";
+        this.$nextTick(() => this.$refs[ref][0].focus());
       } else {
+        this.saveChipAmount();
+
         this.conOrE = "edit";
       }
     },
     reset() {
-      let defaultCoin = ["100", "500", "1000", "5000", "10000"];
-      this.$refs.ship1[0].value = defaultCoin[0];
-      this.$refs.ship2[0].value = defaultCoin[1];
-      this.$refs.ship3[0].value = defaultCoin[2];
-      this.$refs.ship4[0].value = defaultCoin[3];
-      this.$refs.ship5[0].value = defaultCoin[4];
+      this.setCoinsModern(config.defaultCoinsModern);
       if (this.conOrE == "confirm") {
         this.conOrE = "edit";
       }
     },
-    saveClick() {
-      let ship1 = this.$refs.ship1[0].value;
-      let ship2 = this.$refs.ship2[0].value;
-      let ship3 = this.$refs.ship3[0].value;
-      let ship4 = this.$refs.ship4[0].value;
-      let ship5 = this.$refs.ship5[0].value;
-      let new_amount = `["${ship1}", "${ship2}", "${ship3}", "${ship4}", "${ship5}"]`;
-      secureStorage.setItem("coinsModern", new_amount);
-      this.setCoinsModern();
+    saveChipAmount() {
+      let chip1 = this.$refs.chip1[0].value;
+      let chip2 = this.$refs.chip2[0].value;
+      let chip3 = this.$refs.chip3[0].value;
+      let chip4 = this.$refs.chip4[0].value;
+      let chip5 = this.$refs.chip5[0].value;
+      let new_amount = [chip1, chip2, chip3, chip4, chip5];
+      this.setCoinsModern(new_amount);
+
+      this.conOrE = "edit";
+    },
+    cancel() {
+      let chip1 = this.$refs.chip1[0].value;
+      let chip2 = this.$refs.chip2[0].value;
+      let chip3 = this.$refs.chip3[0].value;
+      let chip4 = this.$refs.chip4[0].value;
+      let chip5 = this.$refs.chip5[0].value;
+      let new_amount = [chip1, chip2, chip3, chip4, chip5];
+      this.setCoinsModern(new_amount);
       if (this.conOrE == "confirm") {
         this.conOrE = "edit";
       }
@@ -107,24 +133,55 @@ export default {
 </script>
 
 <style scoped>
+.action-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.chip-action {
+  text-align: center;
+  padding-bottom: 25px;
+}
+.min-max {
+  display: flex;
+  flex-direction: column;
+}
+.chip-setting-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.chip-item {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
 .setpricechip {
   position: relative;
-  left: 6px;
-  top: 32%;
-  padding-bottom: 2px;
+  top: 22%;
+  padding: 0;
   text-align: center;
   color: black;
   font-size: 1.2rem;
 }
-
-input {
-  background-color: brown;
-}
-
-.settingchips {
-  margin: 5px 10px;
+.chip-image {
+  position: relative;
   text-align: center;
-  clear: both;
+}
+.input-chip-amount {
+  position: relative;
+  top: -50px;
+  color: black;
+  /* background-color: #6424b9; */
+  width: 40%;
+  text-align: center;
+}
+.input-chip-amount:focus {
+  outline: none;
+}
+.settingchips {
+  text-align: center;
+  font-size: 20px;
 }
 
 .allchips {

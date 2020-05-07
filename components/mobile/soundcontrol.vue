@@ -1,29 +1,27 @@
 <template>
   <div>
-    <v-card class="my-bg pa-5" style="background-color: #f2f4ff !important;">
-      <v-layout row wrap justify-center>
-        <div>
-          <v-flex class="setting_container">
-            <span class="pt-1">{{ $t("msg.music") }}</span>
-            <label class="switch">
-              <input
-                type="checkbox"
-                ref="isSound"
-                :checked="getUserInfo.isSound"
-              />
-              <span class="slider round"></span>
-            </label>
-          </v-flex>
-        </div>
-      </v-layout>
-      <!-- <v-slider v-model="length" color="#003e70" min="1" max="15" :label="$t('msg.customlength')"></v-slider> -->
-      <v-layout row wrap justify-center>
-        <v-btn class="my-btn buttonGreensmall" @click="updateSetting">{{
-          $t("msg.save")
-        }}</v-btn>
-        <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
-      </v-layout>
-    </v-card>
+    <v-layout row wrap justify-center>
+      <div>
+        <v-flex class="setting_container">
+          <span class="pt-1">{{ $t("msg.music") }}</span>
+          <label class="switch">
+            <input
+              type="checkbox"
+              ref="isSound"
+              :checked="getUserInfo.isSound"
+            />
+            <span class="slider round"></span>
+          </label>
+        </v-flex>
+      </div>
+    </v-layout>
+    <!-- <v-slider v-model="length" color="#003e70" min="1" max="15" :label="$t('msg.customlength')"></v-slider> -->
+    <v-layout row wrap justify-center>
+      <v-btn class="my-btn buttonGreensmall" @click="updateSetting">{{
+        $t("msg.save")
+      }}</v-btn>
+      <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
+    </v-layout>
   </div>
 </template>
 
@@ -102,9 +100,9 @@ export default {
 .switch {
   position: relative;
   float: right;
-  top: -1px;
+  top: -6px;
   display: inline-block;
-  width: 60px;
+  width: 65px;
   height: 32px;
 }
 

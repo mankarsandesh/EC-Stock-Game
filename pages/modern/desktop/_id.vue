@@ -154,18 +154,23 @@
                 :index="index"
                 :dataArray="getRoadMap"
                 :isShowMultigameButton="index"
-              ></tableTrendMap>
+              >
+                <span
+                  class="addChart"
+                  @click="addTrendMap()"
+                  v-if="index === 0"
+                >
+                  <v-icon>add</v-icon>
+                </span>
+                <span
+                  v-else
+                  class="addChart"
+                  @click="removeTradMap(index)"
+                >
+                  <v-icon>close</v-icon>
+                </span>
+              </tableTrendMap>
             </div>
-            <span class="addChart" @click="removeTradMap(index)">
-              <v-icon>close</v-icon>
-            </span>
-            <span
-              class="addChart"
-              @click="addTrendMap()"
-              v-if="trendTypes.length == index + 1 && trendTypes.length < 4"
-            >
-              <v-icon>add</v-icon>
-            </span>
           </div>
         </v-flex>
         <!-- Road Map End -->
@@ -429,12 +434,12 @@ export default {
       }
     },
     // Remove trendMap
-    removeTradMap(index) {     
-      var indexValue = this.trendTypes[index];    
-      var newData = this.trendTypes.filter(function(data) {
+    removeTradMap(index) {
+      let indexValue = this.trendTypes[index];
+      let newData = this.trendTypes.filter(data => {
         return data != indexValue;
       });
-      this.trendTypes = newData;     
+      this.trendTypes = newData;
     },
     loaded() {
       this.isLoad = true;

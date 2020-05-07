@@ -1,14 +1,13 @@
 <template>
   <v-container>
     <v-layout row class="justify-center">
-      <v-flex  md10 lg10 >
+      <v-flex md10 lg10>
         <v-data-table
           hide-actions
-          :items="userBetHistory"
+          :items="betHistory"
           :pagination.sync="pagination"
           :rows-per-page-items="[rowPageCount]"
           ref="table"
-          :search="search"
           class="current-bet"
           show-expand
         >
@@ -42,7 +41,10 @@
               <td v-if="item.item.betResult == 'lose'">
                 <span class="losing">- {{ item.item.betAmount }}</span>
               </td>
-              <td v-if="item.item.isFollowBet == 1" class="text-uppercase text-center">
+              <td
+                v-if="item.item.isFollowBet == 1"
+                class="text-uppercase text-center"
+              >
                 <div class="following">by followers</div>
               </td>
               <td v-if="item.item.isFollowBet == 0" class="text-uppercase">
@@ -52,7 +54,10 @@
             <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
               <td colspan="2">
                 <span class="betDraw">{{ $t("bethistory.betdraw") }} :</span>
-                <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
+                <span
+                  class="gameDraw"
+                  v-html="$options.filters.lastDraw(item.item.gameDraw)"
+                ></span>
               </td>
               <td colspan="3" class="allDigit">
                 {{ $t("gamemsg.firstdigit") }}
@@ -73,11 +78,15 @@
                 ></span>
               </td>
               <td colspan="2" v-if="item.item.rollingAmount == 0">
-                <span class="betDraw">{{ $t("bethistory.yourloosingamount") }} :</span>
+                <span class="betDraw"
+                  >{{ $t("bethistory.yourloosingamount") }} :</span
+                >
                 <span class="lossAmount">{{ item.item.betAmount }}</span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount != 0">
-                <span class="betDraw">{{ $t("bethistory.yourwinningamount") }} :</span>
+                <span class="betDraw"
+                  >{{ $t("bethistory.yourwinningamount") }} :</span
+                >
                 <span class="winAmount">{{ item.item.rollingAmount }}</span>
               </td>
             </tr>
@@ -86,7 +95,9 @@
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.Total") }}</td>
-              <td colspan="3">{{ userBetHistory.length }} {{ $t("leaderboard.bets") }}</td>
+              <td colspan="3">
+                {{ betHistory.length }} {{ $t("leaderboard.bets") }}
+              </td>
               <td>
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>
@@ -94,11 +105,13 @@
                 <span
                   class="totalRollingWin"
                   v-if="TotalAmount < TotalRolling"
-                >{{ TotalRolling | toCurrency }}</span>
+                  >{{ TotalRolling | toCurrency }}</span
+                >
                 <span
                   class="totalRollingLoss"
-                  v-if="TotalAmount  > TotalRolling"
-                >{{ TotalRolling | toCurrency }}</span>
+                  v-if="TotalAmount > TotalRolling"
+                  >{{ TotalRolling | toCurrency }}</span
+                >
               </td>
               <td colspan="1"></td>
             </tr>
@@ -106,18 +119,17 @@
         </v-data-table>
       </v-flex>
     </v-layout>
-     <v-layout row class="justify-center">
+    <v-layout row class="justify-center">
       <v-flex md10 lg10>
-        <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
-      <v-pagination
-        v-model="pagination.page"
-        color="#1db42f"
-        :length="Math.round(userBetHistory.length / rowPageCount)"
-      ></v-pagination>
-    </div>
+        <div class="text-right my-3 my-pagination" v-if="betHistory.length > 4">
+          <v-pagination
+            v-model="pagination.page"
+            color="#1db42f"
+            :length="Math.round(betHistory.length / rowPageCount)"
+          ></v-pagination>
+        </div>
       </v-flex>
     </v-layout>
-    
   </v-container>
 </template>
 <script>
@@ -149,16 +161,22 @@ export default {
     }
   },
   computed: {
+    //Filter Bet Details Content 
+    betHistory() {
+      return this.userBetHistory.filter(data => {
+        return data.ruleName.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
     TotalAmount() {
       let total = null;
-      this.userBetHistory.map(item => {
+      this.betHistory.map(item => {
         total += item.betAmount;
       });
       return total;
     },
     TotalRolling() {
       let total = null;
-      this.userBetHistory.map(item => {
+      this.betHistory.map(item => {
         total += item.rollingAmount;
       });
       return total;
