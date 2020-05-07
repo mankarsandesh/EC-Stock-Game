@@ -1,6 +1,5 @@
 <template>
-  <v-flex xs12 class="mt-3">
-    <div class="v-table__overflow">
+  <v-flex xs12 class="mb-3">
       <table>
         <thead>
           <tr>
@@ -38,7 +37,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
   </v-flex>
 </template>
 <script>

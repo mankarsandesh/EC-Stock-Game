@@ -1,20 +1,24 @@
 <template>
   <v-layout row class="justify-center">
     <v-flex xs12 md12>
-      <v-data-table :items="notificationData" :items-per-page="5" ref="table" class="current-bet">
-        <template v-slot:headers="head">
-          <tr>
-            <th scope="col">{{ $t("msg.titles") }}</th>
-            <th scope="col">{{ $t("msg.date") }}</th>
-            <th scope="col">{{ $t("msg.preview") }}</th>
-          </tr>
+      <v-list three-line>
+        <template v-for="(item, index) in notificationData">
+          <v-list-tile :key="item.title">
+            <v-list-tile-content>
+              <v-list-tile-sub-title class="heading"
+                v-html="item.title"
+              ></v-list-tile-sub-title>
+              <v-list-tile-sub-title
+                v-html="item.message"
+              ></v-list-tile-sub-title>
+              <v-list-tile-sub-title
+                v-html="item.createdAt"
+              ></v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider :key="index"></v-divider>
         </template>
-        <template v-slot:items="item">
-          <td>{{ item.item.title }}</td>
-          <td>{{ item.item.createdAt }}</td>
-          <td>{{ item.item.message }}</td>
-        </template>
-      </v-data-table>
+      </v-list>
     </v-flex>
   </v-layout>
 </template>
@@ -26,6 +30,9 @@ export default {
 </script>
 
 <style scoped>
+.heading{
+  font-weight: 600;
+}
 table {
   border: none;
   /* border:1px solid red; */

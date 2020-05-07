@@ -39,7 +39,7 @@
 
     <v-toolbar
       :clipped-left="clipped"
-      class="pa-1 text-primary light-toobar setheight"
+      class="pa-2 text-primary light-toobar setheight"
     >
       <v-flex class="pa-2">
         <nuxt-link to="/modern">
@@ -107,8 +107,7 @@
         style="float: right; top: -98%;"
         >{{ $t("menu.current bet") }}</v-btn
       >
-      <!-- <v-btn to="/modern/notification" v-show="isShow == 'stock-list'" class="buttonGreen" style="float: right; top: -98%;">{{$t('menu.notification')}}</v-btn> -->
-    </div>
+   </div>
     <v-content>
       <v-container pa-1>
         <nuxt />
@@ -209,6 +208,6 @@ export default {
 }
 .side-bar {
   z-index: 101;
-  width: 150px !important;
+  width: 200px !important;
 }
 </style>

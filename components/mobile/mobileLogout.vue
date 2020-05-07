@@ -2,17 +2,14 @@
   <div style="z-index:100">
     <v-menu offset-y :close-on-content-click="false" :min-width="80">
       <template v-slot:activator="{ on }">
-        <button flat v-on="on" v-show="isShow == 'classic'">
-          <v-icon size="30">account_circle</v-icon>
-        </button>
-        <v-btn flat v-on="on" v-show="isShow == 'modern'">
-          <v-avatar size="30">
+        <v-btn flat v-on="on">
+          <v-avatar size="35" mr-1>
             <img :src="imgProfile" alt />
           </v-avatar>
           <div class="userLogoutMenu">
-            <span>{{ getUserName }}</span>
-            <span>
-              {{ $t("msg.acc") }}:
+            <span> {{ getUserName }} </span>
+            <span
+              >&nbsp; {{ $t("msg.acc") }}:
               <animated-number
                 :value="getUserInfo.balance"
                 :formatValue="formatToPrice"
@@ -20,33 +17,20 @@
               />
             </span>
           </div>
-          <!-- <i class="fa fa-caret-down" /> -->
         </v-btn>
       </template>
       <v-list>
-        <v-list-tile @click="dialogprofile = true" v-show="isShow == 'classic'">
-          <v-list-tile-title>Profile</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile
-          @click="$router.push('/modern/profile')"
-          v-show="isShow == 'modern'"
-        >
+        <v-list-tile @click="$router.push('/modern/profile')">
           <i class="fa fa-user fa-2x margin-right-5" />
           <v-list-tile-title>{{ $t("menu.profile") }}</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile
-          @click="$refs.onlineHistory.showDialogOnlineHistory()"
-          v-show="isShow == 'modern'"
-        >
+        <v-list-tile @click="$refs.onlineHistory.showDialogOnlineHistory()">
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
           <v-list-tile-title>{{
             $t("profile.onlinehistory")
           }}</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile
-          @click="$refs.stockAnalysis.showDialogStockAnalysis()"
-          v-show="isShow == 'modern'"
-        >
+        <v-list-tile @click="$refs.stockAnalysis.showDialogStockAnalysis()">
           <i class="fa fa-line-chart fa-15x margin-right-5" />
           <v-list-tile-title>{{
             $t("profile.stockanalysis")
@@ -95,7 +79,7 @@ export default {
   data() {
     return {
       dialogprofile: false,
-      isShow: ""
+      defaultImage: "no-profile-pic.jpg"
     };
   },
   computed: {
@@ -103,12 +87,9 @@ export default {
     imgProfile() {
       return this.getUserInfo.profileImage == "" ||
         this.getUserInfo.profileImage == undefined
-        ? "/user.png"
+        ? this.defaultImage
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     }
-  },
-  mounted() {
-    this.isShow = location.pathname.split("/")[1];
   },
   methods: {
     nFormatter(num, digits) {
