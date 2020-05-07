@@ -306,7 +306,7 @@ export default {
     return {
       updating: false,
       profile: {
-        imgProfile: ""
+        defaultImage: "no-profile-pic.jpg"
       }
     };
   },
@@ -317,10 +317,9 @@ export default {
   mounted() {},
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-    imgProfile() {
-      return this.getUserInfo.profileImage == "" ||
-        this.getUserInfo.profileImage == undefined
-        ? "/user.png"
+    imgProfile() {     
+      return this.getUserInfo.profileImage === null
+         ? this.defaultImage
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     },
     userData() {

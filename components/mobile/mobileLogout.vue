@@ -1,47 +1,23 @@
 <template>
   <div style="z-index:100">
-    <v-menu offset-y :close-on-content-click="false" :min-width="80">
-      <template v-slot:activator="{ on }">
-        <v-btn flat v-on="on">
-          <v-avatar size="35" mr-1>
-            <img :src="imgProfile" alt />
-          </v-avatar>
-          <div class="userLogoutMenu">
-            <span> {{ getUserName }} </span>
-            <span
-              >&nbsp; {{ $t("msg.acc") }}:
-              <animated-number
-                :value="getUserInfo.balance"
-                :formatValue="formatToPrice"
-                class="balance"
-              />
-            </span>
-          </div>
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-tile @click="$router.push('/modern/profile')">
-          <i class="fa fa-user fa-2x margin-right-5" />
-          <v-list-tile-title>{{ $t("menu.profile") }}</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="$refs.onlineHistory.showDialogOnlineHistory()">
-          <i class="fa fa-hourglass-half fa-15x margin-right-5" />
-          <v-list-tile-title>{{
-            $t("profile.onlinehistory")
-          }}</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="$refs.stockAnalysis.showDialogStockAnalysis()">
-          <i class="fa fa-line-chart fa-15x margin-right-5" />
-          <v-list-tile-title>{{
-            $t("profile.stockanalysis")
-          }}</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="getLogout()">
-          <i class="fa fa-lock fa-2x margin-right-5" />
-          <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-menu>
+    <template>
+      <v-btn flat>
+        <v-avatar size="35" mr-1>
+          <img :src="imgProfile" alt />
+        </v-avatar>
+        <div class="userLogoutMenu">
+          <span> {{ getUserName }} </span>
+          <span
+            >&nbsp; {{ $t("msg.acc") }}:
+            <animated-number
+              :value="getUserInfo.balance"
+              :formatValue="formatToPrice"
+              class="balance"
+            />
+          </span>
+        </div>
+      </v-btn>
+    </template>
 
     <v-dialog v-model="dialogprofile" max-width="1240px">
       <v-card>
@@ -79,14 +55,13 @@ export default {
   data() {
     return {
       dialogprofile: false,
-      defaultImage: "no-profile-pic.jpg"
+      defaultImage: "../no-profile-pic.jpg"
     };
   },
   computed: {
     ...mapGetters(["getUserName", "getBalance", "getUserInfo"]),
     imgProfile() {
-      return this.getUserInfo.profileImage == "" ||
-        this.getUserInfo.profileImage == undefined
+      return this.getUserInfo.profileImage === null
         ? this.defaultImage
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     }
