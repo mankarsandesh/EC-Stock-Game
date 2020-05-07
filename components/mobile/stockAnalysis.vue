@@ -9,18 +9,11 @@
     <v-card>
       <v-toolbar flat>
         <v-layout row>
+          <h2 class="title_menu">{{ $t("profile.stockanalysis") }}</h2>
           <v-spacer></v-spacer>
           <v-icon size="20" @click="dialogStockAnalysis = false">close</v-icon>
         </v-layout>
       </v-toolbar>
-
-      <v-flex xs12 md8 class="pt-2 pl-5 pr-5 text-xs-center">
-        <div>
-          <h2 class="title_menu">{{ $t("profile.stockanalysis") }}</h2>
-          <v-divider></v-divider>
-        </div>
-      </v-flex>
-
       <v-flex
         xs12
         md12
@@ -31,20 +24,22 @@
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
           </v-avatar>
-
-          <!-- <span class="blur-img">uploading</span> -->
         </div>
-        <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+        <h3 class="text-capitalize">
+          {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+        </h3>
         <p>
-          {{ $t("profile.onlinestatus") }} : {{ getUserInfo.currentActiveTime }}
+          <strong> {{ $t("profile.onlinestatus") }} : </strong
+          >{{ getUserInfo.currentActiveTime }}
         </p>
         <v-divider></v-divider>
       </v-flex>
 
-      <v-flex xs12 pt-3>
-        <v-layout row>
+      <v-flex xs12 sm12 pt-3>
+        <v-layout row justify-center >
           <v-flex
             xs2
+            sm12
             md2
             v-if="!$vuetify.breakpoint.xs"
             class="profile_head text-xs-center"
@@ -53,20 +48,21 @@
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
-
-              <!-- <span class="blur-img">uploading</span> -->
             </div>
-            <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+            <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
             <p>
-              {{ $t("profile.onlinestatus") }} :
+              <strong> {{ $t("profile.onlinestatus") }} : </strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
+             <v-divider></v-divider>
           </v-flex>
+        </v-layout>
+         <v-layout row justify-center pa-2 >
           <!-- select start date  -->
-          <v-flex xs5 sm3 mr-1 ml-1>
+          <v-flex xs5 sm4 mr-1 ml-1>
             <div class="date_picker_container" @click="startDateClick">
               <div class="title_date_picker">
-                <span>{{ $t("msg.from") }}</span>
+                <strong>{{ $t("msg.from") }}</strong>
               </div>
               <div class="date_picker">
                 <span class="select_date">{{ startDate }}</span>
@@ -85,10 +81,10 @@
             </div>
           </v-flex>
           <!-- select end date -->
-          <v-flex xs5 sm3 mr-1>
+          <v-flex xs5 sm4 mr-1 >
             <div class="date_picker_container" @click="endDateClick">
               <div class="title_date_picker">
-                <span>{{ $t("msg.to") }}</span>
+                <strong>{{ $t("msg.to") }}</strong>
               </div>
               <div class="date_picker">
                 <span class="select_date">{{ endDate }}</span>
@@ -107,7 +103,7 @@
             </div>
           </v-flex>
           <!-- end of end date -->
-          <v-flex xs1 sm1 ml-1 mr-4>
+          <v-flex xs1 sm1 ml-1 mr-4 >
             <div class="date_picker_container">
               <div class="title_date_picker">
                 <span></span>
@@ -117,29 +113,11 @@
               </button>
             </div>
           </v-flex>
-          <v-flex xs5 sm4 v-if="!$vuetify.breakpoint.xs">
-            <div class="date_picker_container">
-              <div class="title_date_picker">
-                <span>{{ $t("msg.sortby") }}</span>
-              </div>
-              <div class="date_picker">
-                <v-menu offset-y>
-                  <template v-slot:activator="{ on }">
-                    <span class="select_date">2020-02-12</span>
-                    <span class="icon_date">
-                      <v-icon v-on="on">arrow_drop_down</v-icon>
-                    </span>
-                  </template>
-                </v-menu>
-              </div>
-            </div>
-          </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs12 sm12 md10 lg10 mt-4>
-        <v-layout row>
-          <v-flex xs1 sm2></v-flex>
-          <v-flex xs10 sm8>
+      <v-flex xs12 sm12 md10 lg10 mt-4 pb-4>
+        <v-layout row justify-center>  
+          <v-flex xs11 sm10>
             <div class="chart_container">
               <div v-if="isDataValid" class="chart-map-color">
                 <span v-for="(stock, index) in stocks" :key="index">
@@ -440,9 +418,9 @@ button:focus {
   color: black;
   padding: 10px;
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
-  border-radius: 10px;
+  border-radius: 6px;
   width: 100%;
-  min-height: 415px;
+  height: 400px;
 }
 
 .date_picker {

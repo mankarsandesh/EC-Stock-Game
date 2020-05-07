@@ -137,7 +137,7 @@
           <p>{{ $t("msg.betclosed") }}</p>
         </div>
         <v-layout wrap sm6>
-          <v-tabs
+          <v-tabs          
             grow
             centered
             style="width:100%;background-color: #f2f4ff;"
