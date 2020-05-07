@@ -2,26 +2,23 @@
   <div>
     <breadcrumbs :title="$t('breadcrumbs.stockList')" />
     <v-container>
-      <v-layout row wrap mt-3 md6 align-center justify-center > 
-        <v-flex md10 >
+      <v-layout row wrap mt-3 md6 align-center justify-center>
+        <v-flex md10>
           <v-flex md6 class="d-flex">
             <v-select
+              v-model="sortBy"
               class="border-round"
               hide-details
               :items="items"
               :placeholder="$t('msg.sortby')"
+              :key="$root.$t('stock-list.ascending') + sortBy"
             ></v-select>
-      
-            <v-btn @click="goSearch" class="buttonGreen">
-              {{ $t("msg.go") }}
-            </v-btn>
-
           </v-flex>
         </v-flex>
       </v-layout>
       <v-layout row wrap align-center justify-center>
         <v-flex md10 lg10>
-          <stocklist />
+          <stocklist :sortBy="sortBy" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -38,14 +35,18 @@ export default {
   },
   data() {
     return {
-      items: [
-        this.$root.$t("stock-list.ascending"),
-        this.$root.$t("stock-list.descending")
-      ],
-      itemss: ""
+      sortBy: "asc"
     };
   },
-  computed: {},
+  computed: {
+    // to change select box while language change
+    items() {
+      return [
+        { value: "asc", text: this.$root.$t("stock-list.ascending") },
+        { value: "desc", text: this.$root.$t("stock-list.descending") }
+      ];
+    }
+  },
   methods: {
     goSearch() {
       console.log("You press search button");
