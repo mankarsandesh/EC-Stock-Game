@@ -83,7 +83,7 @@
                       visitProfileUserData.isFollowing
                     )
                   "
-                >
+                >              
                   {{
                     visitProfileUserData.isFollowing == 0
                       ? $t("useraction.followBet")
