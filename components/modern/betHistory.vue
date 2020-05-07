@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout row class="justify-center">
-      <v-flex xs12 md12>
+      <v-flex  md10 lg10 >
         <v-data-table
           hide-actions
           :items="userBetHistory"
@@ -106,13 +106,18 @@
         </v-data-table>
       </v-flex>
     </v-layout>
-    <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
+     <v-layout row class="justify-center">
+      <v-flex md10 lg10>
+        <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
       <v-pagination
         v-model="pagination.page"
         color="#1db42f"
         :length="Math.round(userBetHistory.length / rowPageCount)"
       ></v-pagination>
     </div>
+      </v-flex>
+    </v-layout>
+    
   </v-container>
 </template>
 <script>

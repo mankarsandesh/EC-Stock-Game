@@ -1,12 +1,12 @@
 <template>
   <section class="breadcrumbs">
-    <v-container>
-      <v-parallax dark height="150">
-        <v-layout align-center row>
-          <v-flex xs6>
-            <h3 class="display-2 font-weight-thick mb-3">{{ title }}</h3>
+    <v-container >
+      <v-parallax dark height="130">
+        <v-layout align-center justify-center >
+          <v-flex md5 lg5>
+            <h3 class="title">{{ title }}</h3>
           </v-flex>
-          <v-flex xs8 class="text-right">
+          <v-flex md5 lg5 class="text-right">
             <Button v-if="linkItem" :linkItem="linkItem" :btnTitle="titlebtn" />
             <Button
               v-if="linkItem2"
@@ -28,3 +28,8 @@ export default {
   props: ["linkItem", "linkItem2", "title", "titlebtn", "titlebtn2"]
 };
 </script>
+<style scoped>
+.title{
+  font-size: 30px !important;
+}
+</style>

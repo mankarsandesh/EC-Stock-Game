@@ -7,6 +7,9 @@ const config = {
   baseUrl: process.env.BASE_URL,
   secretKey: "CC21128A312FAF7817C93D1B51CB9",
   secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
+  portalProviderUUID: process.env.PORTAL_PROVIDER_UUID,
+  portalProviderUserId: process.env.PORTAL_PROVIDER_USER_ID,
+  userBalance: process.env.USER_BALANCE,
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
@@ -63,6 +66,12 @@ const config = {
   },
   getUserNotification: {
     url: `${process.env.BASE_URL}/getNotification`
+  },
+  liveBetCount: {
+    url: `${process.env.BASE_URL}/liveBetCount`
+  },
+  liveCountBetData: {
+    url: `${process.env.BASE_URL}/liveCountBetData`
   },
   serverConfig: {
     port: 8000,

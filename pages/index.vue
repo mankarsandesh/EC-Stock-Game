@@ -30,8 +30,7 @@ import log from "roarr";
 
 export default {
   layout: "nolayout",
-  middleware: ["getApiKey", "checkAuth"],
-
+  middleware: ["getApiKey"],
   data() {
     return {
       stockName: config.homePageStockName,
@@ -42,11 +41,11 @@ export default {
     if (this.getLoginError.length > 0) {
     } else {
       // Set referrer Url
-      secureStorage.setItem(
-        "referrerUrl",
-        document.referrer.match(/:\/\/(.[^/]+)/)[1]
-      );
-      this.setReferrer(document.referrer.match(/:\/\/(.[^/]+)/)[1]);
+      // secureStorage.setItem(
+      //   "referrerUrl",
+      //   document.referrer.match(/:\/\/(.[^/]+)/)[1]
+      // );
+      // this.setReferrer(document.referrer.match(/:\/\/(.[^/]+)/)[1]);
       this.getProgress();
     }
   },

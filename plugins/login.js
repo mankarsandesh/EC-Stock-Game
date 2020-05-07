@@ -5,98 +5,123 @@ import secureStorage from "./secure-storage";
 
 export default async context => {
   try {
-    document.referrer.match(/:\/\/(.[^/]+)/)[1];
+    // document.referrer.match(/:\/\/(.[^/]+)/)[1];
     // Set Initial storage coins
     initLocalStorageCoin(context.store);
-
-    if (performance.navigation.type == 1) {
-      // If User reloads the page
-      // Set user data in vuex store
-      context.store.dispatch("setUserData");
-      // Set default language in vuex store
+    // Check whether the portalProviderUUID, portalProviderUserId and balance exists
+    const portalProviderUUID = config.portalProviderUUID
+      ? config.portalProviderUUID
+      : "ef60e64b-dc17-4ff1-9f22-a177c6f1c204";
+    const portalProviderUserId = config.portalProviderUserId
+      ? config.portalProviderUserId
+      : "sandesh12";
+    const balance = config.userBalance ? config.userBalance : 10000;
+    // Check User Login
+    await checkUserLogin(
+      portalProviderUUID,
+      portalProviderUserId,
+      balance,
+      context.store
+    );
+    // Set default language
+    if (secureStorage.getItem("lang")) {
       context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
-    } else if (
-      performance.navigation.type == 0 &&
-      document.referrer.match(/:\/\/(.[^/]+)/)[1] == window.location.host
-    ) {
-      // If user opens a new tab by right click
-      // Set default language in vuex store
-      context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
-      // Set user data in vuex store
-      context.store.dispatch("setUserData");
     } else {
-      // If the user gets redirected from portal provider page
-      // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
-      const portalProviderUUID = context.query.portalProviderUUID
-        ? context.query.portalProviderUUID
-        : undefined;
-      const portalProviderUserId = context.query.portalProviderUserID
-        ? context.query.portalProviderUserID
-        : undefined;
-      const balance = context.query.balance ? context.query.balance : undefined;
-
-      // Validate Login values in URL
-      validateLoginValues(
-        portalProviderUUID,
-        portalProviderUserId,
-        balance,
-        context.store
-      );
-      // Check User Login
-      await checkUserLogin(
-        portalProviderUUID,
-        portalProviderUserId,
-        balance,
-        context.store
-      );
-
-      // Set default language
       setLanguage(context.store);
-      // Set user data in vuex store
-      context.store.dispatch("setUserData");
     }
+    // Set user data in vuex store
+    context.store.dispatch("setUserData");
+    // context.app.router.push('/index');
+    // await fakedelay();
+    // context.app.router.push('/')
+    // if (performance.navigation.type == 1) {
+    //   // If User reloads the page
+    //   // Set user data in vuex store
+    //   context.store.dispatch("setUserData");
+    //   // Set default language in vuex store
+    //   context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+    // } else if (
+    //   performance.navigation.type == 0 &&
+    //   document.referrer.match(/:\/\/(.[^/]+)/)[1] == window.location.host
+    // ){
+    //   // If user opens a new tab by right click
+    //   // Set default language in vuex store
+    //   // context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+    //   // Set user data in vuex store
+    //   context.store.dispatch("setUserData");
+    // } else {
+    //   // If the user gets redirected from portal provider page
+    //   // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
+    //   const portalProviderUUID = context.query.portalProviderUUID
+    //     ? context.query.portalProviderUUID
+    //     : undefined;
+    //   const portalProviderUserId = context.query.portalProviderUserID
+    //     ? context.query.portalProviderUserID
+    //     : undefined;
+    //   const balance = context.query.balance ? context.query.balance : undefined;
+
+    //   // Validate Login values in URL
+    //   validateLoginValues(
+    //     portalProviderUUID,
+    //     portalProviderUserId,
+    //     balance,
+    //     context.store
+    //   );
+    //   // Check User Login
+    //   await checkUserLogin(
+    //     portalProviderUUID,
+    //     portalProviderUserId,
+    //     balance,
+    //     context.store
+    //   );
+
+    //   // Set default language
+    //   setLanguage(context.store);
+    //   // Set user data in vuex store
+    //   context.store.dispatch("setUserData");
+    // }
   } catch (ex) {
     console.log(ex);
-    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
+    // window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
   }
 };
 
-/**
- * Validate Login values in URL
- *
- * @param {*} portalProviderUUID
- * @param {*} portalProviderUserId
- * @param {*} balance
- * @param {*} store
- * @returns
- */
-const validateLoginValues = (
-  portalProviderUUID,
-  portalProviderUserId,
-  balance,
-  store
-) => {
-  try {
-    const error = [];
-    if (!portalProviderUUID) {
-      error.push(config.loginError.portalProvider);
-    }
-    if (!portalProviderUserId) {
-      error.push(config.loginError.portalProviderUserId);
-    }
-    if (!balance) {
-      error.push(config.loginError.balance);
-    }
-    if (error.length > 0) {
-      store.dispatch("setLoginError", error);
-      return true;
-    } else {
-      return false;
-    }
-  } catch (ex) {
-    console.log(ex);
-  }
-};
+// /**
+//  * Validate Login values in URL
+//  *
+//  * @param {*} portalProviderUUID
+//  * @param {*} portalProviderUserId
+//  * @param {*} balance
+//  * @param {*} store
+//  * @returns
+//  */
+// const validateLoginValues = (
+//   portalProviderUUID,
+//   portalProviderUserId,
+//   balance,
+//   store
+// ) => {
+//   try {
+//     const error = [];
+//     if (!portalProviderUUID) {
+//       error.push(config.loginError.portalProvider);
+//     }
+//     if (!portalProviderUserId) {
+//       error.push(config.loginError.portalProviderUserId);
+//     }
+//     if (!balance) {
+//       error.push(config.loginError.balance);
+//     }
+//     if (error.length > 0) {
+//       store.dispatch("setLoginError", error);
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (ex) {
+//     console.log(ex);
+//   }
+// };
 
 /**
  * Check User Login from Server
@@ -119,7 +144,7 @@ const checkUserLogin = async (
         portalProviderUserID: portalProviderUserId,
         version: config.version,
         ip: "225.457.454.123",
-        domain: document.referrer.match(/:\/\/(.[^/]+)/)[1],
+        domain: "159.138.130.64",
         balance: balance
       };
       var { data } = await axios.post(config.userLoginAuth.url, reqBody, {
@@ -174,3 +199,11 @@ const initLocalStorageCoin = store => {
   store.dispatch("setCoinsModern", config.defaultCoinsModern);
   secureStorage.setItem("coinsModern", config.defaultCoinsModern);
 };
+
+// const fakedelay = () => {
+//   return new Promise((reolve) => {
+//     setTimeout(() => {
+//       return;
+//     }, 100000)
+//   })
+// }

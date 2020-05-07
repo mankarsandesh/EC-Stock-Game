@@ -5,7 +5,7 @@
         class="title"
       >{{ isFollowing == 1 ? $t("useraction.followBet") : $t("useraction.unfollowBet") }}</h3>
       <v-card-text style="text-align:center;">
-        <img class="pimage" v-bind:src="this.defaultImage" width="140px" />
+        <img class="pimage" v-bind:src="userImage" width="140px" />
         <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
       </v-card-text>
       <v-flex>
@@ -246,6 +246,10 @@ export default {
     })
   },
   methods: {
+    userImgProfile(userImg) {
+      console.log(userImg);
+      return userImg ? `${config.apiDomain}/`+ userImg : this.defaultImage;        
+    },
     // Send to Parent Components
     async closePopup() {
       this.$emit("followBetClose");
@@ -355,7 +359,6 @@ export default {
         method: method,
         version: config.version
       };
-      console.log(reqBody);
       try {
         var { data } = await this.$axios.post(config.followUser.url, reqBody, {
           headers: config.header

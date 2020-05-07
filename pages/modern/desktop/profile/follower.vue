@@ -21,7 +21,7 @@
             :key="index"
           >
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
-              <img class="userImage" :src="defaultImage" />
+              <img class="userImage" :src="userImgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">{{
                 data.userName
@@ -33,7 +33,7 @@
               v-on:click="
                 followUserBet(
                   data.userName,
-                  data.userImage,
+                  data.profileImage,
                   data.UUID,
                   data.isFollowing
                 )
@@ -47,7 +47,7 @@
               v-on:click="
                 followUserBet(
                   data.userName,
-                  data.userImage,
+                  data.profileImage,
                   data.UUID,
                   data.isFollowing
                 )
@@ -108,15 +108,15 @@ export default {
       this.dialog = false;
     },
     // Follow User Bet
-    followUserBet: function(username, userImg, userUUID, method) {
+    followUserBet: function(username, userImg, userUUID, method) {    
       this.username = username;
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
-      this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
+      this.userImage =  this.userImgProfile(userImg);    
       this.dialog = true;
     },
     // fetch default image or from server image
-    imgProfile(userImg) {
+    userImgProfile(userImg) {
       return userImg === null
         ? this.defaultImage
         : `${config.apiDomain}/` + userImg;
@@ -134,7 +134,7 @@ export default {
           {
             headers: config.header
           }
-        );
+        );        
         if (res.code == 200) {
           this.followerList = res.data;
           this.countFollower = res.data.length;
