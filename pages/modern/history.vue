@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout row wrap id="history">
+    <!-- <v-layout row wrap id="history">
       <v-flex
         xs4
         sm2
@@ -107,7 +107,7 @@
           :placeholder="$t('msg.sortby')"
         ></v-select>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
     <bethistory :search="search" :userBetHistory="userBetHistory" />
   </div>
 </template>
