@@ -114,16 +114,17 @@ module.exports = {
    */
   plugins: [
     "@/plugins/vuetify",
+    "@plugins/js-cookie", // for setting and reading cookies
     // "~/plugins/axios",
-    "@/plugins/roarr",
-    "@plugins/secure-storage",
+    "@/plugins/roarr", // for generating logs
+    "@plugins/secure-storage", // for encrypting local storage
+    { src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
     "@/plugins/filters",
-    { src: "~/plugins/vuex-persist", ssr: false },
-    "@/plugins/login.js",
     "@/plugins/i18n",
     "@/plugins/chart",
     "@/plugins/sweetAlert",
     "@/plugins/vueScreen",
+    "@/plugins/login.js", // login plugin
     "@/plugins/socketio",
     { src: "@/plugins/vChart", mode: "client" },
     { src: "@/plugins/ga", mode: "client" }

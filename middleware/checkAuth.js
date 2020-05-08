@@ -3,10 +3,7 @@ import secureStorage from "../plugins/secure-storage";
 export default function({ query, store, redirect }) {
   const referrerURL = secureStorage.getItem("referrerURL");
   if (referrerURL == undefined) {
-    secureStorage.setItem(
-      "referrerURL",
-      document.referrer.match(/:\/\/(.[^/]+)/)[1]
-    );
+    secureStorage.setItem("referrerURL", "159.138.130.64");
   }
   if (Object.keys(query).length !== 0) {
     let messageError = [];
