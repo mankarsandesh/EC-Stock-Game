@@ -54,9 +54,8 @@
             <v-list-tile-action>
               <v-btn
                 v-bind:class="[
-                  item.isFollowing == 1 ? 'buttonFollow' : 'buttonunFollow'
-                ]"
-                class="buttonGreensmall followButton"
+                  item.isFollowing == 0 ? 'buttonGreensmall' : 'buttonCancelSmall'
+                ]"               
                 v-on:click="
                   followUser(
                     item.username,
@@ -169,9 +168,8 @@ export default {
     closeFollowBet() {
       this.dialog = false;
     },
-    //sorting weekly and Monthly
+    //Sorting weekly and Monthly
     sortingBy(sort) {
-      console.log(sort);
       if (sort == "monthly") {
         const today = new Date();
         const monthly = new Date(
@@ -200,6 +198,7 @@ export default {
         this.leaderBoard();
       }
     },
+    // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
@@ -207,6 +206,7 @@ export default {
       this.userImage = this.userImgProfile(userImage);
       this.dialog = true;
     },
+    // Fetch Top 10 users in Leaderboard
     async leaderBoard() {
       this.loadingImage = true;
       try {

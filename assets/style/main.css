@@ -620,8 +620,15 @@ nav.modal-bet.v-toolbar.theme--light p {
 
 .buttonGreensmall {
   color: #fff !important;
-  border-radius: 10px;
+  border-radius: 5px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  font-size: 12px;
+  cursor: pointer;
+}
+.buttonCancelSmall {
+  color: #fff !important;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #888787 30%, #626161 51%);
   font-size: 12px;
   cursor: pointer;
 }
