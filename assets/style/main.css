@@ -486,8 +486,8 @@ nav.modal-bet.v-toolbar.theme--light p {
 
 .layout.row .v-card-style .close-bet-chart span.text-close-bet {
   position: relative;
-  color: #ff0000;
-  font-size: 22px;
+  color: #ff4848;
+  font-size: 18px;
   font-weight: 900;
   z-index: 10101011;
   text-transform: uppercase;
