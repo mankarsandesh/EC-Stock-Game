@@ -57,7 +57,7 @@ export const BetResult = {
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0]
                     );
-                    $("#" + betWin).removeClass(betWin);
+                    // $("#" + betWin).removeClass(betWin);   // Macky will move the chip
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0] + "-animation"
                     );
@@ -66,18 +66,18 @@ export const BetResult = {
                     $("#" + this.parentFirst).removeClass(
                         betID.split("-")[0] + "-animation"
                     );
-                    $("#" + this.parentFirst + 'Number').removeClass(betWin);
+                    // $("#" + this.parentFirst + 'Number').removeClass(betWin);  // Macky will move the chip
                     $("#" + this.parentFirst).removeClass(
                         betID.split("-")[0]);
                 }, 5000);
             } else {
-                $("#" + this.parentFirst).removeClass(betID.split("-")[0]);
                 this.SET_FIRST('You are lose')
-                // $("#" + this.StockResult).removeClass(betID.split("-")[0]); //           
+                $("#" + this.StockResult).removeClass(betID.split("-")[0]); //           
                 $("#" + stockName + betID).removeClass(
                     betID.split("-")[0]
                 );
                 $("#" + betWin).removeClass(betWin);
+                // $("#" + this.parentFirst).removeClass(betID.split("-")[0]);   // remove the chip and bring if user not win
             }
         },
 
@@ -85,15 +85,20 @@ export const BetResult = {
             jsonResult.resultBet.map((items, index) => {
                 items.rules.map((item, index) => {
                     if (item.name === nameRule) {
+                        $("#" + this.parentFirst).addClass(nameRule.split("-")[0]);
                         $("#" + this.parentFirst + 'Number').addClass(betWin);
                         $("#" + this.parentFirst).addClass(
                             nameRule.split("-")[0] + "-animation"
                         );
+                    } else {
+                        // $("#" + this.parentFirst).removeClass(nameRule.split("-")[0]);
+                        this.SET_FIRST('You are not bet on the number')
                     }
-                    this.SET_FIRST(null)
-                    $("#" + this.parentFirst).removeClass(nameRule.split("-")[0]);
                 })
             })
         }
     }
 }
+
+
+

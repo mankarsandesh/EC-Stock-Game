@@ -48,7 +48,8 @@
               })
             "
           ></showChipAmount>
-          <span class="big-digit" :id="'firstdigitWin-' + data.rule">
+          <span :id="'firstdigitWin-' + data.rule"></span>
+          <span class="big-digit">
             {{
             $t("gamemsg." + data.rule)
             }}
@@ -129,8 +130,8 @@
               })
             "
           ></showChipAmount>
-
-          <span class="big-digit" :id="'lastdigitWin-' + data.rule">
+          <span :id="'lastdigitWin-' + data.rule"></span>
+          <span class="big-digit">
             {{
             $t("gamemsg." + data.rule)
             }}
@@ -207,8 +208,9 @@
               })
             "
           ></showChipAmount>
+          <span :id="'bothdigitWin-' + data.rule"></span>
 
-          <span class="big-digit" :id="'bothdigitWin-' + data.rule">
+          <span class="big-digit">
             {{
             $t("gamemsg." + data.rule)
             }}
@@ -286,8 +288,9 @@
               })
             "
           ></showChipAmount>
+          <span :id="'twodigitWin-' + data.rule"></span>
 
-          <span class="big-digit" :id="'twodigitWin-' + data.rule">
+          <span class="big-digit">
             {{
             $t("gamemsg." + data.rule)
             }}
@@ -603,3 +606,4 @@ export default {
   white-space: pre-line;
 }
 </style>
+

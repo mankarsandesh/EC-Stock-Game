@@ -3,8 +3,8 @@ class Result {
 
     }
 
+
 }
 export default Result = new Result
-
 
 
