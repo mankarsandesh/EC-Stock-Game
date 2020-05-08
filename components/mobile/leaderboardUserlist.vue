@@ -34,58 +34,81 @@
       </v-list>
       <v-list two-line>
         <template v-for="(item, index) in topPlayerData">
-        <v-list-tile  :key="item.username" avatar> 
-          <v-list-tile-avatar>
-            <img :src="userImgProfile(item.userImage)" />
-          </v-list-tile-avatar>
+          <v-list-tile :key="item.username" avatar>
+            <v-list-tile-avatar>
+              <img :src="userImgProfile(item.userImage)" />
+            </v-list-tile-avatar>
 
-          <v-list-tile-content style="width:40%;">
-            <v-list-tile-title v-html="item.username"></v-list-tile-title>
-          </v-list-tile-content>
+            <v-list-tile-content style="width:40%;">
+              <v-list-tile-title v-html="item.username"></v-list-tile-title>
+            </v-list-tile-content>
 
-          <v-list-tile-content>
-            <v-list-tile-title
-              class="green--text titleText"
-              v-html="Math.round(item.winRate, 1) + '%'"
-            >
-            </v-list-tile-title>
-          </v-list-tile-content>
+            <v-list-tile-content>
+              <v-list-tile-title
+                class="green--text titleText"
+                v-html="Math.round(item.winRate, 1) + '%'"
+              >
+              </v-list-tile-title>
+            </v-list-tile-content>
 
-          <v-list-tile-action>
-            <v-btn
-              class="buttonGreensmall followButton"
-              v-on:click="
-                followUser(
-                  item.username,
-                  item.userImage,
-                  item.userUUID,
-                  item.isFollowing
-                )
-              "
-              dark
-              >{{ $t("useraction.follow") }}</v-btn
-            >
-          </v-list-tile-action>      
-        </v-list-tile>
+            <v-list-tile-action>
+              <v-btn
+                v-bind:class="[
+                  item.isFollowing == 1 ? 'buttonFollow' : 'buttonunFollow'
+                ]"
+                class="buttonGreensmall followButton"
+                v-on:click="
+                  followUser(
+                    item.username,
+                    item.userImage,
+                    item.userUUID,
+                    item.isFollowing
+                  )
+                "
+                dark
+                >{{
+                  item.isFollowing == 0
+                    ? $t("useraction.follow")
+                    : $t("useraction.unfollow")
+                }}</v-btn
+              >
+            </v-list-tile-action>
+          </v-list-tile>
           <v-divider
-              v-if="index + 1 < topPlayerData.length"
-              :key="index"
-            ></v-divider>
+            v-if="index + 1 < topPlayerData.length"
+            :key="index"
+          ></v-divider>
         </template>
-             
-        
-      </v-list>     
+      </v-list>
     </v-flex>
 
     <!-- Follow and UnFollow Dialog box-->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
-      <followBet
-        :username="this.username"
-        :userImage="this.defaultImage"
-        :FollowerUserUUID="this.FollowUserUUID"
-        :isFollowing="this.FolloworNot"
-        @followBetClose="closeFollowBet"
-      />
+    <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable
+    >
+      <v-card tile>
+        <v-toolbar card dark style="background-color:#2cb13b;">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{
+            this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+          }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+
+        <followBet
+          :username="this.username"
+          :userImage="this.userImage"
+          :FollowerUserUUID="this.FollowUserUUID"
+          :isFollowing="this.FolloworNot"
+          @followBetClose="closeFollowBet"
+        />
+      </v-card>
     </v-dialog>
   </div>
 </template>
@@ -177,18 +200,11 @@ export default {
         this.leaderBoard();
       }
     },
-
-    // fetch default image or from server image
-    imgProfile(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + userImage;
-    },
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
-      this.userImage = this.imgProfile(userImage);
+      this.userImage = this.userImgProfile(userImage);
       this.dialog = true;
     },
     async leaderBoard() {
