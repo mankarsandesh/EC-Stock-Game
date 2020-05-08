@@ -18,11 +18,10 @@
                   </h4>
                 </v-flex>
               </v-flex>
-
               <v-flex class="text-xs-center">
-                <span class="uppercase-text grey--text"
-                  >{{ $t("msg.BetClosein") }}:</span
-                >
+                <span class="uppercase-text grey--text">
+                  {{ $t("msg.BetClosein") }}:
+                </span>
                 <v-flex flex-style class="betclose">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
@@ -34,11 +33,10 @@
                   </h4>
                 </v-flex>
               </v-flex>
-
               <v-flex class="text-xs-center">
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lotterydraw") }}:</span
-                >
+                  >{{ $t("msg.lotterydraw") }}:
+                </span>
                 <v-flex flex-style class="lottery">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
@@ -120,8 +118,8 @@
               v-show="!isShowTrendMap"
               @click="changeShowTrendMap()"
               color="#003e70"
-              >keyboard_arrow_right</v-icon
-            >
+              >keyboard_arrow_right
+            </v-icon>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -137,29 +135,67 @@
           <p>{{ $t("msg.betclosed") }}</p>
         </div>
         <v-layout wrap sm6>
-          <v-tabs          
+          <div class="tab-menu-container">
+            <div class="digit-type-container">
+              <div
+                class="btn-digit-type first-digit"
+                @click="$refs.firstDigit.click()"
+              >
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.firstdigits")
+                }}</span>
+              </div>
+              <div
+                class="btn-digit-type last-digit"
+                @click="$refs.lastDigit.click()"
+              >
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.lastdigits")
+                }}</span>
+              </div>
+              <div
+                class="btn-digit-type both-digit"
+                @click="$refs.bothDigit.click()"
+              >
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.bothdigits")
+                }}</span>
+              </div>
+              <div
+                class="btn-digit-type two-digit"
+                @click="$refs.twoDigit.click()"
+              >
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.twodigits")
+                }}</span>
+              </div>
+            </div>
+            <span class="active-tab-mark" :style="leftActive"></span>
+          </div>
+
+          <v-tabs
             grow
             centered
             style="width:100%;background-color: #f2f4ff;"
             @change="tabChanged($event)"
           >
-            <v-tab class="firstdigit border-radius mr-1 ml-1">
-              <span class="text-pre-line text-white">
+            <v-tab v-show="false" ref="firstDigit">
+              <span>
                 {{ $t("gamemsg.firstdigits") }}
               </span>
             </v-tab>
-            <v-tab class="lastdigit border-radius mr-1 ml-1">
-              <span class="text-pre-line text-white">
+            <v-tab v-show="false" ref="lastDigit">
+              <span>
                 {{ $t("gamemsg.lastdigits") }}
               </span>
             </v-tab>
-            <v-tab class="bothdigit border-radius mr-1 ml-1">
-              <span class="text-pre-line text-white">
+            <v-tab v-show="false" ref="bothDigit">
+              <span>
                 {{ $t("gamemsg.bothdigits") }}
               </span>
             </v-tab>
-            <v-tab class="twodigit border-radius mr-1 ml-1">
-              <span class="text-pre-line text-white">
+            <v-tab v-show="false" ref="twoDigit">
+              <span>
                 {{ $t("gamemsg.twodigits") }}
               </span>
             </v-tab>
@@ -983,8 +1019,8 @@
           </v-tabs>
         </v-layout>
 
-        <div class="bettingFooter justify-center settotalbet sm10 xs10">
-          <span class="text-size08">
+        <div class="bettingFooter justify-center sm10 xs10">
+          <span>
             {{ $t("msg.totalbet") }}:
             {{ formatToPrice(getAllBettingAmount) }}
           </span>
@@ -999,76 +1035,77 @@
       transition="dialog-bottom-transition"
       light
     >
-      <div class="header-dialog">
-        <span></span>
-        <v-icon size="30" @click="bettingDialog = false">
-          close
-        </v-icon>
-      </div>
-      <v-flex
-        xs12
-        class="text-center mx-auto pa-2 round-3"
-        :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
-      >
-        <div class="d-block text-center" style="color:#000">
-          <p class="text-uppercase">
-            {{ $t("msg.Stock Name") }} :
-            {{ $t(`stockname.${$route.params.id}`) }}
-            {{ $t("msg.payout") }}:
-            {{ odd }}
-          </p>
-          <p class="text-uppercase test-time-loop">
-            {{ getStockLoop(this.$route.params.id) }}
-            {{ $t("msg.minute game") }}
-          </p>
-          <p class="text-uppercase test-rule-betting">
-            {{ $t("msg.bettingon") }}
-            {{
-              isNaN(gameRule.split("-")[1])
-                ? $t("gamemsg." + gameRule.split("-")[0]) +
-                  "-" +
-                  $t("gamemsg." + gameRule.split("-")[1])
-                : $t("gamemsg." + gameRule.split("-")[0]) +
-                  "-" +
-                  gameRule.split("-")[1]
-            }}
-          </p>
-        </div>
-      </v-flex>
-
-      <v-flex xs12 class="text-center">
-        <v-avatar
-          size="60"
-          v-for="(item, key) in imgChip"
-          :key="key"
-          @click="shipClick(getCoinsModern[key])"
+      <div class="dialog-content">
+        <span class="close-dialog-icon">
+          <v-icon size="30" @click="bettingDialog = false">
+            close
+          </v-icon>
+        </span>
+        <div
+          xs12
+          class="text-center mx-auto pa-2 round-3"
+          :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
         >
-          <v-img class="ma-4" :src="item.img" :alt="item.title">
-            <span class="setpricechip">{{ getCoinsModern[key] }}</span>
-          </v-img>
-        </v-avatar>
-      </v-flex>
+          <div class="d-block text-center" style="color:#000">
+            <p class="text-uppercase">
+              {{ $t("msg.Stock Name") }} :
+              {{ $t(`stockname.${$route.params.id}`) }}
+              {{ $t("msg.payout") }}:
+              {{ odd }}
+            </p>
+            <p class="text-uppercase test-time-loop">
+              {{ getStockLoop(this.$route.params.id) }}
+              {{ $t("msg.minute game") }}
+            </p>
+            <p class="text-uppercase test-rule-betting">
+              {{ $t("msg.bettingon") }}
+              {{
+                isNaN(gameRule.split("-")[1])
+                  ? $t("gamemsg." + gameRule.split("-")[0]) +
+                    "-" +
+                    $t("gamemsg." + gameRule.split("-")[1])
+                  : $t("gamemsg." + gameRule.split("-")[0]) +
+                    "-" +
+                    gameRule.split("-")[1]
+              }}
+            </p>
+          </div>
+        </div>
+        <div xs12 class="text-center">
+          <v-avatar
+            class="ma-1"
+            size="60"
+            v-for="(item, key) in imgChip"
+            :key="key"
+            @click="shipClick(getCoinsModern[key])"
+          >
+            <v-img class="ma-4" :src="item.img" :alt="item.title">
+              <span class="setpricechip">{{ getCoinsModern[key] }}</span>
+            </v-img>
+          </v-avatar>
+        </div>
 
-      <v-flex xs10 class="px-2 text-center ml-4 mt-3">
-        <input
-          class="round-2 text-input"
-          type="number"
-          readonly
-          label="$0"
-          v-model="betAmount"
-        />
-        <br />
-        {{ $t("msg.min") }} = $100 ;{{ $t("msg.max") }} = $5000
-      </v-flex>
+        <div xs10 class="px-2 text-center ml-4 mt-3">
+          <input
+            class="round-2 text-input"
+            type="number"
+            readonly
+            label="$0"
+            v-model="betAmount"
+          />
+          <br />
+          {{ $t("msg.min") }} = $100 ;{{ $t("msg.max") }} = $5000
+        </div>
 
-      <v-flex xs12 class="px-2 text-center mt-3">
-        <v-btn class="buttonGreen" @click="reviewbet()">{{
-          $t("betting.reviewBet")
-        }}</v-btn>
-        <v-btn class="btn_cancel" @click="bettingDialog = false">{{
-          $t("betting.cancelBet")
-        }}</v-btn>
-      </v-flex>
+        <div xs12 class="px-2 text-center mt-3">
+          <v-btn class="buttonGreen" @click="reviewbet()">{{
+            $t("betting.reviewBet")
+          }}</v-btn>
+          <v-btn class="btn_cancel" @click="bettingDialog = false">{{
+            $t("betting.cancelBet")
+          }}</v-btn>
+        </div>
+      </div>
     </v-dialog>
     <!-- price: "200" -->
     <!-- Review bet  -->
@@ -1079,78 +1116,79 @@
       transition="dialog-bottom-transition"
       light
     >
-      <div class="header-dialog">
-        <span></span>
-        <v-icon size="30" @click="reviewbetDialog = false">
-          close
-        </v-icon>
-      </div>
-      <div
-        class="mx-auto pa-2 round-3"
-        :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
-        color="#ffffff"
-      >
-        <v-flex xs12 class="text-center">
-          <div class="d-block text-center" style="color:#000">
-            <h2 class="text-color-blue">{{ $t("betting.reviewyourBet") }}</h2>
-            <p>{{ $t("betting.pleaseConfirm") }}</p>
+      <div class="dialog-content">
+        <span class="close-dialog-icon">
+          <v-icon size="30" @click="reviewbetDialog = false">
+            close
+          </v-icon>
+        </span>
+        <div
+          class="mx-auto round-3"
+          :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
+          color="#ffffff"
+        >
+          <div xs12 class="text-center">
+            <div class="d-block text-center" style="color:#000">
+              <h2 class="text-color-blue">{{ $t("betting.reviewyourBet") }}</h2>
+              <p>{{ $t("betting.pleaseConfirm") }}</p>
+            </div>
           </div>
-        </v-flex>
-        <hr />
-        <v-flex xs12 class="text-center">
-          <table class="table-review">
-            <tr>
-              <td class="text-right">{{ $t("msg.Stock Name") }}:</td>
-              <td class="text-left pl-2 text-color-blue">
-                {{ $t(`stockname.${$route.params.id}`) }}
-              </td>
-            </tr>
-            <tr>
-              <td class="text-right">{{ $t("msg.gameid") }}:</td>
-              <td class="text-left pl-2 text-color-blue">
-                {{ getGameUUIDByStockName(this.$route.params.id) }}
-              </td>
-            </tr>
-            <tr>
-              <td class="text-right">{{ $t("game type") }}:</td>
-              <td class="text-left pl-2 text-color-blue">
-                {{ getStockLoop(this.$route.params.id) }}
-                {{ $t("msg.minute game") }}
-              </td>
-            </tr>
-            <tr>
-              <td class="text-right">{{ $t("msg.bettingon") }}:</td>
-              <td class="text-left pl-2 text-color-blue">
-                {{
-                  isNaN(gameRule.split("-")[1])
-                    ? $t("gamemsg." + gameRule.split("-")[0]) +
-                      "-" +
-                      $t("gamemsg." + gameRule.split("-")[1])
-                    : $t("gamemsg." + gameRule.split("-")[0]) +
-                      "-" +
-                      gameRule.split("-")[1]
-                }}
-              </td>
-            </tr>
-            <tr>
-              <td class="text-right">{{ $t("msg.payout") }}:</td>
-              <td class="text-left pl-2 text-color-blue">1.95</td>
-            </tr>
-            <tr>
-              <td class="text-right">{{ $t("msg.amount") }}:</td>
-              <td class="text-left pl-2 text-color-green">{{ betAmount }}</td>
-            </tr>
-          </table>
-        </v-flex>
+          <hr />
+          <div xs12 class="text-center pa-2">
+            <table class="table-review">
+              <tr>
+                <td class="text-right">{{ $t("msg.Stock Name") }}:</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{ $t(`stockname.${$route.params.id}`) }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">{{ $t("msg.gameid") }}:</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{ getGameUUIDByStockName(this.$route.params.id) }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">{{ $t("game type") }}:</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{ getStockLoop(this.$route.params.id) }}
+                  {{ $t("msg.minute game") }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">{{ $t("msg.bettingon") }}:</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{
+                    isNaN(gameRule.split("-")[1])
+                      ? $t("gamemsg." + gameRule.split("-")[0]) +
+                        "-" +
+                        $t("gamemsg." + gameRule.split("-")[1])
+                      : $t("gamemsg." + gameRule.split("-")[0]) +
+                        "-" +
+                        gameRule.split("-")[1]
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right">{{ $t("msg.payout") }}:</td>
+                <td class="text-left pl-2 text-color-blue">1.95</td>
+              </tr>
+              <tr>
+                <td class="text-right">{{ $t("msg.amount") }}:</td>
+                <td class="text-left pl-2 text-color-green">{{ betAmount }}</td>
+              </tr>
+            </table>
+          </div>
 
-        <v-flex xs12 class="px-2 text-center mt-3">
-          <v-btn class="buttonGreen" @click="placeBet">{{
-            $t("betting.placeBet")
-          }}</v-btn>
-          <v-btn class="btn_cancel" @click="reviewbetDialog = false">{{
-            $t("betting.cancelBet")
-          }}</v-btn>
-        </v-flex>
+          <div xs12 class="px-2 text-center mt-3">
+            <v-btn class="buttonGreen" @click="placeBet">{{
+              $t("betting.placeBet")
+            }}</v-btn>
+            <v-btn class="btn_cancel" @click="reviewbetDialog = false">{{
+              $t("betting.cancelBet")
+            }}</v-btn>
+          </div>
+        </div>
       </div>
     </v-dialog>
     <!-- price: "200" -->
@@ -1499,6 +1537,9 @@ export default {
   },
   data() {
     return {
+      leftActive: {
+        left: "2%"
+      },
       // rule id
       firstDigit: gameRule.firstDigit,
       lastDigit: gameRule.lastDigit,
@@ -1661,17 +1702,23 @@ export default {
     tabChanged(e) {
       switch (e) {
         case 0:
+          this.leftActive.left = "2%";
           this.trendType = "firstDigit";
           break;
         case 1:
+          this.leftActive.left = "27%";
+
           this.trendType = "lastDigit";
 
           break;
         case 2:
+          this.leftActive.left = "52%";
+
           this.trendType = "bothDigit";
 
           break;
         case 3:
+          this.leftActive.left = "77%";
           this.trendType = "twoDigit";
 
           break;
@@ -1817,7 +1864,82 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style scoped>
+.tab-menu-container {
+  position: relative;
+  z-index: 2;
+  top: 48px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.digit-type-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  text-align: center;
+}
+.active-tab-mark {
+  width: 21%;
+  height: 3px;
+  background-color: #2e477d;
+  border-radius: 10px;
+  position: relative;
+  top: -3px;
+  transition: left 0.3s;
+}
+
+.btn-digit-type {
+  background-color: #2e477d;
+  margin: 5px;
+  width: 25%;
+  border-radius: 10px;
+  padding: 5px 2px;
+}
+.first-digit {
+  background: rgb(13, 204, 255);
+  background: linear-gradient(
+    22deg,
+    rgba(13, 204, 255, 1) 0%,
+    rgba(71, 96, 255, 1) 100%
+  );
+}
+.last-digit {
+  background: rgb(250, 209, 38);
+  background: linear-gradient(
+    22deg,
+    rgba(250, 209, 38, 1) 0%,
+    rgba(255, 84, 79, 1) 100%
+  );
+}
+
+.both-digit {
+  background: rgb(182, 53, 156);
+  background: linear-gradient(
+    22deg,
+    rgba(182, 53, 156, 1) 0%,
+    rgba(239, 10, 106, 1) 100%
+  );
+}
+.two-digit {
+  background: rgb(1, 233, 189);
+  background: linear-gradient(
+    22deg,
+    rgba(1, 233, 189, 1) 0%,
+    rgba(0, 124, 222, 1) 100%
+  );
+}
+.close-dialog-icon {
+  position: absolute;
+  top: 3px;
+  right: 12px;
+}
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
 .header-dialog {
   display: flex;
   justify-content: space-between;
@@ -1881,7 +2003,7 @@ h4 {
 
 .bettingFooter {
   border-radius: 20px;
-  margin-top: 0px;
+  margin-top: 15px;
   color: #fff;
   background-color: #8291b2;
   text-align: center !important;
@@ -1937,7 +2059,9 @@ h4 {
   margin-top: 6%;
   border: 0px;
 }
-
+.table-review td {
+  padding: 3px;
+}
 .text-color-blue {
   color: #2e477d;
   font-weight: bold;
