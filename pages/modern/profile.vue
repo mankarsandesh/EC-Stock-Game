@@ -3,21 +3,26 @@
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <!-- image profile  display on mobile -->
     <v-flex xs12 mt-2 mb-2 v-if="$vuetify.breakpoint.xs">
-      <v-layout row>
-        <v-flex xs12 sm2 md4 lg3>
+      <v-layout row >
+        <v-flex xs12 sm12 md4 lg3>
           <div class="profile_head text-xs-center">
             <div class="image_container">
               <v-avatar :size="90">
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
-              <span class="camera_container" style=" position: absolute; top: 9%;">
+              <span
+                class="camera_container"
+                style=" position: absolute; top: 9%;"
+              >
                 <v-icon color="black" :size="20">photo_camera</v-icon>
               </span>
             </div>
-            <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+            <h3 class="text-capitalize">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </h3>
             <span>
-              {{ $t("profile.onlinestatus") }} :
+              <strong> {{ $t("profile.onlinestatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
             </span>
           </div>
@@ -26,27 +31,33 @@
     </v-flex>
 
     <!-- image profile display on bigger device than mobile -->
-    <v-flex xs12 :class="!$vuetify.breakpoint.xs ? 'mt-2' : ''">
-      <v-layout row class="text-xs-center">
-        <v-flex xs2 sm2 md4 lg3 v-if="!$vuetify.breakpoint.xs">
+    <v-flex xs12 sm12 :class="!$vuetify.breakpoint.xs ? 'mt-2' : ''">
+      <v-layout row justify-center class="text-xs-center" mb-2>
+        <v-flex xs2 sm6 md4 lg3 v-if="!$vuetify.breakpoint.xs" >
           <div class="profile_head text-xs-center">
             <div class="image_container">
-              <v-avatar :size="50">
+              <v-avatar :size="50" >
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
-              <span class="camera_container" style="position: absolute;top: 5%;">
+              <span
+                class="camera_container"
+                style="position: absolute;top: 5%;"
+              >
                 <v-icon color="black" :size="20">photo_camera</v-icon>
               </span>
             </div>
-            <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
-            <p>
-              {{ $t("profile.onlinestatus") }} :
+            <h3 class="text-capitalize">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </h3>
+            <p >
+              <strong>{{ $t("profile.onlinestatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
           </div>
         </v-flex>
-
+      </v-layout>
+      <v-layout row justify-center>
         <v-flex :class="$vuetify.breakpoint.xs ? 'xs6 sm6' : 'xs4 sm6'" md4 lg3>
           <div class="amount_container">
             <div class="decorator_card decorator_card_green"></div>
@@ -81,13 +92,13 @@
               "
             >
               <v-layout pt-3>
-                <v-flex xs2 sm2 md2 lg2 pr-2 class="text-xs-center">
+                <v-flex xs3 sm2 md2 lg2 pr-2 class="text-xs-left">
                   <label for="userName">
                     {{ $t("profile.username") }}
                     <span style="color:red;">*</span>
                   </label>
                 </v-flex>
-                <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
+                <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
                   <input
                     ref="username"
                     type="text"
@@ -97,16 +108,21 @@
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
 
               <v-layout pt-3>
-                <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
+                <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
                   <label for="firstName">{{ $t("profile.firstname") }}</label>
                 </v-flex>
-                <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
+                <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
                   <input
                     ref="firstName"
                     type="text"
@@ -116,16 +132,21 @@
                     placeholder="Your First Name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
 
               <v-layout pt-2>
-                <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
+                <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
                   <label for="lastName">{{ $t("profile.lastname") }}</label>
                 </v-flex>
-                <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
+                <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
                   <input
                     ref="lastName"
                     type="text"
@@ -135,20 +156,30 @@
                     placeholder="Your Last Name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
 
               <v-layout pt-2>
-                <v-flex xs2 sm2 md2 lg2 pt2 class="text-xs-center">
+                <v-flex xs3 sm2 md2 lg2 pt2 class="text-xs-left">
                   <label for="gender">
                     {{ $t("profile.gender") }}
                     <span style="color:red;">*</span>
                   </label>
                 </v-flex>
-                <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
+                <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
+                  <select
+                    ref="gender"
+                    id="gender"
+                    name="gender"
+                    :value="userData.gender"
+                  >
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                   </select>
@@ -159,33 +190,43 @@
               </v-layout>
 
               <v-layout pt-3>
-                <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
+                <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
                   <label for="email">{{ $t("profile.email") }}</label>
                 </v-flex>
-                <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
+                <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
                   <input
                     ref="email"
                     type="text"
                     :value="userData.email"
                     id="email"
                     name="email"
-                    placeholder="mackychinma@gmail.com"
+                    placeholder="sandesh@gmail.com"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
 
               <v-layout pt-3>
-                <v-flex xs2 sm2 md2 lg2 class="text-xs-center">
+                <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
                   <label for="country">
                     {{ $t("profile.country") }}
                     <span style="color:red;">*</span>
                   </label>
                 </v-flex>
-                <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="country" id="country" name="country" :value="userData.country">
+                <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
+                  <select
+                    ref="country"
+                    id="country"
+                    name="country"
+                    :value="userData.country"
+                  >
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
                     <option value="THA">Thailand</option>
@@ -205,7 +246,8 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                  >{{ $t("msg.save") }}</v-btn>
+                    >{{ $t("msg.save") }}</v-btn
+                  >
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>
@@ -222,9 +264,7 @@
                 block
               >
                 <span class="padding-right-60">
-                  {{
-                  $t("profile.onlinehistory")
-                  }}
+                  {{ $t("profile.onlinehistory") }}
                 </span>
                 <i class="fa fa-plus"></i>
               </v-btn>
@@ -238,9 +278,7 @@
                 block
               >
                 <span class="padding-right-60">
-                  {{
-                  $t("profile.stockanalysis")
-                  }}
+                  {{ $t("profile.stockanalysis") }}
                 </span>
                 <i class="fa fa-plus"></i>
               </v-btn>
@@ -268,7 +306,7 @@ export default {
     return {
       updating: false,
       profile: {
-        imgProfile: ""
+        defaultImage: "no-profile-pic.jpg"
       }
     };
   },
@@ -279,10 +317,9 @@ export default {
   mounted() {},
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-    imgProfile() {
-      return this.getUserInfo.profileImage == "" ||
-        this.getUserInfo.profileImage == undefined
-        ? "/user.png"
+    imgProfile() {     
+      return this.getUserInfo.profileImage === null
+         ? this.defaultImage
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     },
     userData() {
@@ -383,9 +420,9 @@ input[type="text"]:disabled {
 input[type="text"],
 select {
   width: 230px;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 15px;
+  border-radius: 10px;
   resize: vertical;
   background-color: white;
   padding-right: 35px;
@@ -441,9 +478,9 @@ label {
   background-color: white;
   color: black;
   padding: 10px 0 10px 0;
-  margin-left: 20px;
+  margin: 0 10px;
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
-  border-radius: 15px;
+  border-radius: 10px;
   border-left-width: 1px;
   border-left-color: green;
   text-align: center;

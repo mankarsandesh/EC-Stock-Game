@@ -160,10 +160,10 @@ export default {
         case 8:
           $(".BetButtonGuideEven").css("z-index", "1");
           $("#background-tutorial").click();
-          $("#selectstockGuideline").css("z-index", "10001");
+          $("#selectstockGuidelines").css("z-index", "10001");
           break;
         case 9:
-          $("#selectstockGuideline").css("z-index", "1");
+          $("#selectstockGuidelines").css("z-index", "1");
           $("#stocklistGuidelines").css("z-index", "10001");
           break;
         case 10:

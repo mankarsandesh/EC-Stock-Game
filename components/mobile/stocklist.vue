@@ -1,21 +1,20 @@
 <template>
-  <v-flex xs12 class="mt-3">
-    <div class="v-table__overflow">
-      <table>
-        <thead>
-          <tr>
-            <th>{{ $t("msg.Stock Name") }}</th>
-            <th>{{ $t("msg.liveprice") }}</th>
-            <th class="text-left">{{ $t("msg.reference") }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in getStockListPrice[0]" :key="item.stockUUID">
-            <td>
-              <b>{{ item.stockName }}</b>
-            </td>
-            <td v-if="item.stockStatus == 'Closed'" :style="{ color: 'red' }">Closed</td>
-            <td
+  <v-flex xs12 class="mb-3">
+    <v-list three-line>
+      <template v-for="(item, index) in getStockListPrice[0]">
+        <v-list-tile :key="item.stockUUID">
+          <v-list-tile-content>
+            <v-list-tile-sub-title
+              class="heading"
+              v-html="item.stockName"
+            ></v-list-tile-sub-title>
+            <v-list-tile-sub-title
+              v-if="item.stockStatus == 'Closed'"
+              :style="{ color: 'red' }"
+            >
+              Closed
+            </v-list-tile-sub-title>
+            <v-list-tile-sub-title
               v-if="item.stockStatus !== 'Closed'"
               v-html="
                 getStockListPrice.length > 1
@@ -25,20 +24,17 @@
                     )
                   : item.stockPrice
               "
-            ></td>
-            <td class="text-left">
-              <a
-                :href="item.referenceUrl"
-                target="_blank"
-                style="overflow-y: auto; white-space: nowrap;"
-              >
+            ></v-list-tile-sub-title>
+            <v-list-tile-sub-title>
+              <a :href="item.referenceUrl" target="_blank">
                 <b>{{ item.stockReference }}</b>
               </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider :key="index"></v-divider>
+      </template>
+    </v-list>
   </v-flex>
 </template>
 <script>
@@ -51,6 +47,10 @@ export default {
 };
 </script>
 <style scoped>
+.heading {
+  font-size: 20px;
+  font-weight: 600;
+}
 .bg-colors {
   background-color: #003e70 !important;
 }
