@@ -388,8 +388,8 @@ export default {
     },
     // Change Amount Rate Validation
     changeAmountRate() {
-      this.UserfollowType = this.selectedFollow;
-      if (this.selectedFollow == "Amount") {
+      this.UserfollowType = this.selectedFollow;      
+      if (this.selectedFollow == 1) {
         this.selectAmount = true;
         this.selectRate = false;
       } else {

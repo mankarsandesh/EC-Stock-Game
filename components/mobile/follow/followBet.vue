@@ -364,6 +364,7 @@ export default {
     // Change Amount Rate Validation
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
+      console.log(this.selectedFollow);
       if (this.selectedFollow == "Amount") {
         this.selectAmount = true;
         this.selectRate = false;
