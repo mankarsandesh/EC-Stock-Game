@@ -1,117 +1,113 @@
 <template>
   <div>
-    <v-flex xs12 md10 lg10 mt-3 style="margin:0 auto;">
-      <v-layout row>
-        <v-flex grow pa-1>
-          <p class="float-left md12">
-            <span class="title">Top {{ topPlayerData.length }} Leaders</span>
-            (last updated 10 minutes ago)
-          </p>
-        </v-flex>
-      </v-layout>
-
-      <v-flex grow pa-1 class="text-lg-right ranking">
-        <span
-          class="text-uppercase font-weight-bold"
-          v-bind:class="{ active: isActiveWeek }"
-          v-on:click="sortingBy('weekly')"
-        >
-          <v-icon small>event</v-icon>
-          {{ $t("leaderboard.weeklyrankings") }}
-        </span>
-        <span
-          class="text-uppercase font-weight-bold"
-          v-bind:class="{ active: isActiveMonth }"
-          v-on:click="sortingBy('monthly')"
-        >
-          <v-icon small>event</v-icon>
-          {{ $t("leaderboard.monthlyrankings") }}
-        </span>
-      </v-flex>
-    </v-flex>
-
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">There are no top users in Leaderboard.</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">
+        There are no top users in Leaderboard.
+      </h2>
     </v-flex>
-    <v-flex v-if="topPlayerData.length > 0">
-      <v-flex
-        xs12
-        md10
-        lg10
-        xl8
-        style="margin:0 auto;"
-        v-for="(data, index) in topPlayerData"
-        :key="index"
-        id="userRow"
-      >
-        <div class="userRow">
-          <th style="vertical-align:top;">
-            <div>
-              <img class="pimage" :src="defaultImage" />
-            </div>
+    <v-flex>
+      <v-list subheader>
+        <v-list-tile>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Top 10 Leaderboard
+              <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i
+            ></v-list-tile-title>
+          </v-list-tile-content>
 
-            <h6 class="subtitle-1 text-uppercase">{{ data.username }}</h6>
-            <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
-          </th>
-          <th>
-            <h5 class="header">{{ $t("leaderboard.winningrate") }}</h5>
-            <h6 class="green--text titleText">{{ Math.round(data.winRate, 1) }} %</h6>
-          </th>
-          <th>
-            <h5 class="header">{{ $t("leaderboard.bets") }}</h5>
-            <h6 style="color:#eb0b6e;" class="titleText">{{ data.totalWinBets }}</h6>
-          </th>
-          <th>
-            <h5 class="header">{{ $t("leaderboard.winningamount") }}</h5>
-            <h6 style="color:#0b2a68;" class="titleText">{{ Math.round(data.totalWinAmount, 1) }}</h6>
-          </th>
-          <th v-if="data.isFollowing == 0" style="width:20%;">
-            <v-btn
-              class="buttonGreensmall"
-              v-on:click="
-                followUser(
-                  data.username,
-                  data.userImage,
-                  data.userUUID,
-                  data.isFollowing
-                )
-              "
-              dark
-            >{{ $t("useraction.follow") }}</v-btn>
-          </th>
-          <th v-if="data.isFollowing == 1" style="width:20%;">
-            <v-btn
-              class="buttonCancel"
-              v-on:click="
-                followUser(
-                  data.username,
-                  data.userImage,
-                  data.userUUID,
-                  data.isFollowing
-                )
-              "
-              dark
-            >{{ $t("useraction.unfollow") }}</v-btn>
-          </th>
-          <th v-if="data.isFollowing == -1" style="width:20%;">
-            <v-btn class="buttonGreensmall">
-              {{
-              $t("useraction.yourself")
-              }}
-            </v-btn>
-          </th>
-        </div>
-      </v-flex>
+          <v-list-tile-action>
+            <v-radio-group v-model="sortValue" row>
+              <v-radio
+                label="Monthly"
+                value="monthly"
+                v-on:click="sortingBy('monthly')"
+              ></v-radio>
+              &nbsp;
+              <v-radio
+                label="Weekly"
+                value="weekly"
+                v-on:click="sortingBy('weekly')"
+              ></v-radio>
+            </v-radio-group>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list>
+      <v-list two-line>
+        <template v-for="(item, index) in topPlayerData">
+          <v-list-tile :key="item.username" avatar>
+            <v-list-tile-avatar>
+              <img :src="userImgProfile(item.userImage)" />
+            </v-list-tile-avatar>
+
+            <v-list-tile-content style="width:40%;">
+              <v-list-tile-title v-html="item.username"></v-list-tile-title>
+            </v-list-tile-content>
+
+            <v-list-tile-content>
+              <v-list-tile-title
+                class="green--text titleText"
+                v-html="Math.round(item.winRate, 1) + '%'"
+              >
+              </v-list-tile-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
+              <v-btn
+                v-bind:class="[
+                  item.isFollowing == 0 ? 'buttonGreensmall' : 'buttonCancelSmall'
+                ]"               
+                v-on:click="
+                  followUser(
+                    item.username,
+                    item.userImage,
+                    item.userUUID,
+                    item.isFollowing
+                  )
+                "
+                dark
+                >{{
+                  item.isFollowing == 0
+                    ? $t("useraction.follow")
+                    : $t("useraction.unfollow")
+                }}</v-btn
+              >
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-divider
+            v-if="index + 1 < topPlayerData.length"
+            :key="index"
+          ></v-divider>
+        </template>
+      </v-list>
     </v-flex>
+
     <!-- Follow and UnFollow Dialog box-->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
-      <followBet
-        :username="this.username"
-        :userImage="this.defaultImage"
-        :FollowerUserUUID="this.FollowUserUUID"
-        :isFollowing="this.FolloworNot"
-        @followBetClose="closeFollowBet"
-      />
+    <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable
+    >
+      <v-card tile>
+        <v-toolbar card dark style="background-color:#2cb13b;">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{
+            this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+          }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+
+        <followBet
+          :username="this.username"
+          :userImage="this.userImage"
+          :FollowerUserUUID="this.FollowUserUUID"
+          :isFollowing="this.FolloworNot"
+          @followBetClose="closeFollowBet"
+        />
+      </v-card>
     </v-dialog>
   </div>
 </template>
@@ -122,6 +118,8 @@ import followBet from "~/components/mobile/follow/followBet";
 export default {
   data() {
     return {
+      loadingImage: false,
+      sortValue: "monthly",
       defaultImage: "/no-profile-pic.jpg",
       isActiveWeek: true,
       isActiveMonth: false,
@@ -160,11 +158,17 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
+    // fetch default image or from server image
+    userImgProfile(userImage) {
+      return userImage === null
+        ? this.defaultImage
+        : `${config.apiDomain}/` + userImage;
+    },
     // Close Follow Bet Popup
     closeFollowBet() {
       this.dialog = false;
     },
-    //sorting weekly and Monthly
+    //Sorting weekly and Monthly
     sortingBy(sort) {
       if (sort == "monthly") {
         const today = new Date();
@@ -177,9 +181,7 @@ export default {
           .substr(0, 10);
         this.dateFrom = monthly;
         this.dateTo = today.toISOString().substring(0, 10);
-        this.sortbyName = "Monthly Ranking";
-        this.isActiveMonth = true;
-        this.isActiveWeek = false;
+        this.sortValue = "monthly";
         this.leaderBoard();
       } else {
         const today = new Date();
@@ -192,27 +194,21 @@ export default {
           .substr(0, 10);
         this.dateFrom = lastWeek;
         this.dateTo = today.toISOString().substring(0, 10);
-        this.sortbyName = "Weekly Ranking";
-        this.isActiveMonth = false;
-        this.isActiveWeek = true;
+        this.sortValue = "weekly";
         this.leaderBoard();
       }
     },
-
-    // fetch default image or from server image
-    imgProfile(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : `${config.apiDomain}/` + userImage;
-    },
+    // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
-      this.userImage = this.imgProfile(userImage);
+      this.userImage = this.userImgProfile(userImage);
       this.dialog = true;
     },
+    // Fetch Top 10 users in Leaderboard
     async leaderBoard() {
+      this.loadingImage = true;
       try {
         const LeaderBoardData = {
           portalProviderUUID: this.portalProviderUUID,
@@ -230,6 +226,7 @@ export default {
         );
 
         this.topPlayerData = data.data;
+        this.loadingImage = false;
       } catch (error) {
         console.log(error);
       }
@@ -238,6 +235,10 @@ export default {
 };
 </script>
 <style scoped>
+.followButton {
+  height: auto;
+  padding: 4px;
+}
 .successful {
   width: 10%;
   border: 1px solid;

@@ -486,8 +486,8 @@ nav.modal-bet.v-toolbar.theme--light p {
 
 .layout.row .v-card-style .close-bet-chart span.text-close-bet {
   position: relative;
-  color: #ff0000;
-  font-size: 22px;
+  color: #ff4848;
+  font-size: 18px;
   font-weight: 900;
   z-index: 10101011;
   text-transform: uppercase;
@@ -620,8 +620,15 @@ nav.modal-bet.v-toolbar.theme--light p {
 
 .buttonGreensmall {
   color: #fff !important;
-  border-radius: 10px;
+  border-radius: 5px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  font-size: 12px;
+  cursor: pointer;
+}
+.buttonCancelSmall {
+  color: #fff !important;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #888787 30%, #626161 51%);
   font-size: 12px;
   cursor: pointer;
 }
