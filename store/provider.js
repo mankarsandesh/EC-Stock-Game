@@ -83,13 +83,14 @@ const actions = {
       var reqBody = {
         portalProviderUUID:
           context.state.portalProviderUUID ||
-          secureStorage.getItem("PORTAL_PROVIDERUUID"),
-        userUUID: context.state.userUUID || secureStorage.getItem("USER_UUID"),
+          Cookies.getJSON("login").portalProviderUUID,
+        userUUID: context.state.userUUID || Cookies.getJSON("login").userUUID,
         version: config.version
       };
       var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
         headers: config.header
-      });   
+      });
+      console.trace("setUSerData", res);
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);

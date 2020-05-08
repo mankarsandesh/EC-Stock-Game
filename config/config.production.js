@@ -7,6 +7,7 @@ const config = {
   baseUrl: process.env.BASE_URL,
   secretKey: "GYXMAKGDYAWDW4K1C6HWWQHXH2W",
   secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
+  sessionExpiryTime: new Date(new Date().getTime() + 30 * 60 * 1000),
   portalProviderUUID: process.env.PORTAL_PROVIDER_UUID,
   portalProviderUserId: process.env.PORTAL_PROVIDER_USER_ID,
   userBalance: process.env.USER_BALANCE,

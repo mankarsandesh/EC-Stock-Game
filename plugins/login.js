@@ -2,33 +2,60 @@ import config from "../config/config.global";
 import log from "roarr";
 import axios from "axios";
 import secureStorage from "./secure-storage";
+import Cookies from "./js-cookie";
 
 export default async context => {
   try {
     // document.referrer.match(/:\/\/(.[^/]+)/)[1];
     // Set Initial storage coins
     initLocalStorageCoin(context.store);
-    // Check whether the portalProviderUUID, portalProviderUserId and balance exists
-    const portalProviderUUID = config.portalProviderUUID
-      ? config.portalProviderUUID
-      : "ef60e64b-dc17-4ff1-9f22-a177c6f1c204";
-    const portalProviderUserId = config.portalProviderUserId
-      ? config.portalProviderUserId
-      : "sandesh12";
-    const balance = config.userBalance ? config.userBalance : 10000;
-    // Check User Login
-    await checkUserLogin(
-      portalProviderUUID,
-      portalProviderUserId,
-      balance,
-      context.store
-    );
-    // Set default language
-    if (secureStorage.getItem("lang")) {
-      context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+
+    if (performance.navigation.type == 1) {
+      // If User reloads the page
+      if (
+        Cookies.getJSON("login").userUUID &&
+        Cookies.getJSON("login").portalProviderUUID
+      ) {
+        // If user has a valid session
+        // Set user data in vuex store
+        context.store.dispatch("setUserData");
+        // Set default language in vuex store
+        context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+      } else {
+        // Invalid user session
+        throw new Error("Unauthorized access. Please login again");
+      }
     } else {
-      setLanguage(context.store);
+      // If the user gets redirected from portal provider page
+      // Check whether the portalProviderUUID, portalProviderUserId and balance exists
+      const portalProviderUUID = config.portalProviderUUID
+        ? config.portalProviderUUID
+        : "ef60e64b-dc17-4ff1-9f22-a177c6f1c204";
+      const portalProviderUserId = config.portalProviderUserId
+        ? config.portalProviderUserId
+        : "sandesh12";
+      const balance = config.userBalance ? config.userBalance : 10000;
+      // Check User Login
+      await checkUserLogin(
+        portalProviderUUID,
+        portalProviderUserId,
+        balance,
+        context.store
+      );
+      // Set default language
+      if (secureStorage.getItem("lang")) {
+        context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+      } else {
+        setLanguage(context.store);
+      }
+      // Set portal provider url
+      secureStorage.setItem("referrerUrl", "159.138.130.64");
+      // When the cookie expires redirect user to portal provider's login page
+      setTimeout(() => {
+        window.location.replace("159.138.130.64");
+      }, 30 * 60 * 1000);
     }
+
     // Set user data in vuex store
     context.store.dispatch("setUserData");
     // context.app.router.push('/index');
@@ -82,7 +109,7 @@ export default async context => {
     // }
   } catch (ex) {
     console.log(ex);
-    // window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
+    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
   }
 };
 
@@ -156,6 +183,17 @@ const checkUserLogin = async (
         store.dispatch("setUserUUID", userUUID);
         secureStorage.setItem("USER_UUID", userUUID); // Set User UUID in local Storage
         secureStorage.setItem("PORTAL_PROVIDERUUID", portalProviderUUID); // Set portal provider UUID in local storage
+        // Set cookie for user session
+        Cookies.set(
+          "login",
+          {
+            portalProviderUUID,
+            userUUID
+          },
+          {
+            expires: config.sessionExpiryTime
+          }
+        );
       } else {
         store.dispatch("setLoginError", [config.error.general]);
         throw new Error(config.error.general);
