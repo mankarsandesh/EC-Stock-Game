@@ -1,6 +1,7 @@
 import config from "~/config/config.global";
 import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
+import Cookies from "../plugins/js-cookie";
 
 const state = () => ({
   authUser: {}, // store auth user data

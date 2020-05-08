@@ -3,7 +3,6 @@ import log from "roarr";
 import axios from "axios";
 import secureStorage from "./secure-storage";
 import Cookies from "./js-cookie";
-import { browserName } from "mobile-device-detect";
 
 export default async context => {
   try {
@@ -208,7 +207,6 @@ const setLanguage = store => {
     ? secureStorage.getItem("lang")
     : config.defaultLanguageLocale;
   store.dispatch("setLanguage", lang);
-  secureStorage.setItem("lang", lang);
 };
 
 /**

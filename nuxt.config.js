@@ -121,8 +121,8 @@ module.exports = {
     "@plugins/secure-storage", // for encrypting local storage
     "@/plugins/filters",
     { src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
-    "@/plugins/login.js", // login plugin
     "@/plugins/i18n",
+    "@/plugins/login.js", // login plugin
     "@/plugins/chart",
     "@/plugins/sweetAlert",
     "@/plugins/vueScreen",
