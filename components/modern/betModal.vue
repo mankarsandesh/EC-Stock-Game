@@ -86,9 +86,10 @@ import config from "~/config/config.global";
 import chips from "~/data/chips";
 import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
-
+import { BetResult } from "~/mixin/betResult";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
+  mixins: [BetResult],
   data() {
     return {
       confirmDisabled: false,
@@ -109,8 +110,8 @@ export default {
   },
   watch: {
     getLastDraw(val) {
-      // sending the data to process on the helper
-      Result.betResult(val, this.stockName, this.betId, this.betWin);
+      // sending the data to process on the helper♦
+      this.betResult(val, this.stockName, this.betId, this.betWin);
     }
   },
   created() {
@@ -263,7 +264,7 @@ export default {
   border-radius: 8px;
 }
 
-.setpricechip {
+.setpricechip {  
   color: #333;
   font-size: 12px;
   font-weight: 600;
@@ -271,7 +272,7 @@ export default {
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-inner-spin-button {   
   -webkit-appearance: none;
   margin: 0;
 }
@@ -285,4 +286,3 @@ input[type="number"] {
   cursor: pointer;
 }
 </style>  
-    

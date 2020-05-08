@@ -48,7 +48,8 @@
               })
             "
           ></showChipAmount>
-          <span class="big-digit" :id="'firstdigitWin-' + data.rule">
+          <span :id="'firstdigitWin-' + data.rule"></span>
+          <span class="big-digit">
             {{
             $t("gamemsg." + data.rule)
             }}
@@ -74,7 +75,7 @@
               })
             "
           ></showChipAmount>
-          <span class="big-digit">0 - 9</span>
+          <span class="big-digit" :id="stockID+'firstdigitNumber'">0 - 9</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">{{ payout_09 }}</span>
@@ -129,8 +130,8 @@
               })
             "
           ></showChipAmount>
-
-          <span class="big-digit" :id="'lastdigitWin-' + data.rule">
+          <span :id="'lastdigitWin-' + data.rule"></span>
+          <span class="big-digit">
             {{
             $t("gamemsg." + data.rule)
             }}
@@ -207,8 +208,9 @@
               })
             "
           ></showChipAmount>
+          <span :id="'bothdigitWin-' + data.rule"></span>
 
-          <span class="big-digit" :id="'bothdigitWin-' + data.rule">
+          <span class="big-digit">
             {{
             $t("gamemsg." + data.rule)
             }}
@@ -286,8 +288,9 @@
               })
             "
           ></showChipAmount>
+          <span :id="'twodigitWin-' + data.rule"></span>
 
-          <span class="big-digit" :id="'twodigitWin-' + data.rule">
+          <span class="big-digit">
             {{
             $t("gamemsg." + data.rule)
             }}
@@ -436,7 +439,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import gameRule from "~/data/gameRule";
 
 import betModal from "~/components/modern/betModal";
@@ -458,7 +461,7 @@ export default {
   },
   watch: {
     first(val) {
-      console.log("This is a ", val);
+      this.btnNumber(val);
     }
   },
   data() {
@@ -537,13 +540,14 @@ export default {
       }
     }
   },
-  mounted() {},
+
   methods: {
     ...mapActions([
       "pushDataMultiGameBet",
       "clearDataMultiGameBet",
       "setTempMultiGameBetData"
     ]),
+    ...mapMutations(["SET_FIRST_PARENT"]),
     betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
@@ -565,10 +569,8 @@ export default {
     updateBet(items) {
       const split = items.betRule.split("-");
       $("#" + items.stock + items.betRule).addClass(split[0] + "-" + split[1]); // small button
-      Result.getIdStock(items.stock + split[0]);
-      $("#" + items.stock + split[0]).addClass(
-        split[0] + " " + split[0] + "-" + split[1]
-      ); // parent the button
+      this.SET_FIRST_PARENT(items.stock + split[0]);
+      $("#" + items.stock + split[0]).addClass(split[0]); // parent the button
     }
   }
 };
@@ -604,3 +606,4 @@ export default {
   white-space: pre-line;
 }
 </style>
+
