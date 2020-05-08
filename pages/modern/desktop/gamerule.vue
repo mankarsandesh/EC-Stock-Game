@@ -12,7 +12,7 @@
 </template>
 <script>
 import { mapMutations, mapGetters } from "vuex";
-import rules from "~/components/modern/stocklist/rules";
+import rules from "~/components/modern/rule/rules";
 import breadcrumbs from "~/components/breadcrumbs";
 export default {
   layout: "desktopModern",

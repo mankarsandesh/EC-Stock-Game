@@ -13,7 +13,7 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
-import notification from "~/components/modern/stocklist/notification";
+import notification from "~/components/modern/notification";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
 //const { Translate } = require("@google-cloud/translate").v2;

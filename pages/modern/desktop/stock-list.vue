@@ -26,7 +26,7 @@
 </template>
 <script>
 import breadcrumbs from "~/components/breadcrumbs";
-import stocklist from "~/components/modern/stocklist/stocklist";
+import stocklist from "~/components/modern/stocklist/stockList";
 export default {
   layout: "desktopModern",
   components: {

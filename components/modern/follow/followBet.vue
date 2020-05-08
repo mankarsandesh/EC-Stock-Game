@@ -45,7 +45,7 @@
             ></v-text-field>
             <v-text-field
               :rules="[
-                rules.min(10, amountValue, 'Amount'),
+                rules.min(100, amountValue, 'Amount'),
                 rules.max(1000, amountValue, 'Amount')
               ]"
               solo
@@ -248,7 +248,7 @@ export default {
   methods: {
     userImgProfile(userImg) {
       console.log(userImg);
-      return userImg ? `${config.apiDomain}/`+ userImg : this.defaultImage;        
+      return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
     },
     // Send to Parent Components
     async closePopup() {

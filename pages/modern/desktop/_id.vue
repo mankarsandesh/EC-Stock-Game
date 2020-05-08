@@ -198,7 +198,6 @@ import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
-import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "~/config/config.global";
@@ -219,7 +218,6 @@ export default {
     chartApp,
     betButton,
     tableTrendMap,
-    onlyrules,
     stockSelect,
     leaderboardUserlist,
     lotteryDraw,
