@@ -120,7 +120,7 @@ module.exports = {
     "@/plugins/roarr", // for generating logs
     "@plugins/secure-storage", // for encrypting local storage
     "@/plugins/filters",
-    { src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
+    // { src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
     "@/plugins/i18n",
     "@/plugins/login.js", // login plugin
     "@/plugins/chart",

@@ -94,6 +94,7 @@ const actions = {
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);
+        context.commit('SET_USER_UUID', userInfo.userUUID);
       } else {
         throw new Error(config.error.general);
       }
