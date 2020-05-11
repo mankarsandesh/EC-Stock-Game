@@ -51,12 +51,7 @@
             </v-layout>
           </v-flex>
           <v-flex xs12 sm12 pt-3>
-            <v-layout xs12 sm6>
-              <v-flex xs12 xs6 class="text-xs-center">
-                <v-btn class="buttonGreensmall">
-                  {{ $t("msg.Game Mode") }}
-                </v-btn>
-              </v-flex>
+            <v-layout xs12 sm6>             
               <v-flex xs12 xs6 class="text-xs-center">
                 <v-btn class="buttonGreensmall">
                   <nuxt-link to="/modern" class="text-white">
@@ -72,8 +67,8 @@
 
     <!-- betting zone -->
     <v-layout row wrap class="container-bet" >
-      <v-flex xs12 sm6 md12 >
-        <v-layout wrap xs6>
+      <v-flex xs12 sm12 md12 >
+        <v-layout wrap xs12 >
           <v-flex xs1 align-self-center class="text-xs-right">
             <v-icon
               color="#003e70"
@@ -96,7 +91,7 @@
             ></trendMap>
           </v-flex>
 
-          <v-flex v-else xs10 class="text-xs-center">
+          <v-flex v-else sm10 xs10 class="text-xs-center">
             <span>
               <h3 class="text-uppercase">
                 {{ $t("stockname." + $route.params.id) }}
@@ -107,7 +102,7 @@
                 <span>{{ getGameUUIDByStockName(this.$route.params.id) }}</span>
               </span>
             </span>
-            <v-flex pa-2 xs12 class="chartDesgin">
+            <v-flex pa-2 sm12 xs12 class="chartDesgin">
               <chartMobile :stockName="$route.params.id"></chartMobile>
             </v-flex>
           </v-flex>
