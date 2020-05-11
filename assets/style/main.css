@@ -500,8 +500,8 @@ nav.modal-bet.v-toolbar.theme--light p {
 
 .layout.row .v-card-style .close-bet-chart span.text-close-bet {
   position: relative;
-  color: #ff0000;
-  font-size: 22px;
+  color: #ff4848;
+  font-size: 18px;
   font-weight: 900;
   z-index: 10101011;
   text-transform: uppercase;
@@ -634,8 +634,15 @@ nav.modal-bet.v-toolbar.theme--light p {
 
 .buttonGreensmall {
   color: #fff !important;
-  border-radius: 10px;
+  border-radius: 5px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  font-size: 12px;
+  cursor: pointer;
+}
+.buttonCancelSmall {
+  color: #fff !important;
+  border-radius: 5px;
+  background-image: linear-gradient(to right, #888787 30%, #626161 51%);
   font-size: 12px;
   cursor: pointer;
 }
@@ -1494,7 +1501,17 @@ p.guideline {
 .twodigitWin-even,
 .twodigitWin-high,
 .twodigitWin-mid,
-.twodigitWin-low {
+.twodigitWin-low,
+.firstdigitWin-0,
+.firstdigitWin-1,
+.firstdigitWin-2,
+.firstdigitWin-3,
+.firstdigitWin-4,
+.firstdigitWin-5,
+.firstdigitWin-6,
+.firstdigitWin-7,
+.firstdigitWin-8,
+.firstdigitWin-9 {
   background-size: 35px;
   height: 35px;
   background-position: center center;
@@ -1558,3 +1575,16 @@ p.guideline {
   transition: opacity 0.3s;
   opacity: 0;
 }
+
+
+
+/* align_button4 v-btn theme--light firstdigit low firstdigit-animation
+
+<span data-v-70a183ee="" id="firstdigitWin-low" class="big-digit firstdigitWin-low">Low</span>
+
+
+
+align_button4 v-btn theme--light firstdigit firstdigitWin-9 firstdigit-animation
+
+
+<span data-v-70a183ee="" class="big-digit">0 - 9</span> */

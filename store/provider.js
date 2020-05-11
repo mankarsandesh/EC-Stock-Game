@@ -1,6 +1,7 @@
 import config from "~/config/config.global";
 import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
+import Cookies from "../plugins/js-cookie";
 
 const state = () => ({
   authUser: {}, // store auth user data
@@ -83,13 +84,13 @@ const actions = {
       var reqBody = {
         portalProviderUUID:
           context.state.portalProviderUUID ||
-          secureStorage.getItem("PORTAL_PROVIDERUUID"),
-        userUUID: context.state.userUUID || secureStorage.getItem("USER_UUID"),
+          Cookies.getJSON("login").portalProviderUUID,
+        userUUID: context.state.userUUID || Cookies.getJSON("login").userUUID,
         version: config.version
       };
       var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
         headers: config.header
-      });   
+      });
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);

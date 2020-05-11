@@ -8,45 +8,37 @@
   >
     <v-card>
       <v-toolbar>
-        <v-layout row>
+        <v-layout row justify-center>
+          <h2>{{ $t("profile.onlinehistory") }}</h2>
           <v-spacer></v-spacer>
           <v-icon size="20" @click="dialogOnlineHistory = false">close</v-icon>
         </v-layout>
       </v-toolbar>
-
-      <v-flex xs12 sm12 class="pt-2 pl-5 pr-5">
-        <v-layout row>
-          <v-flex xs0 sm2></v-flex>
-          <v-flex xs12 sm10 class="text-xs-center">
-            <h2 class="title_menu">{{ $t("profile.onlinehistory") }}</h2>
-            <v-divider></v-divider>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-
       <v-flex
         xs12
-        md12
         v-if="$vuetify.breakpoint.xs"
         class="profile_head text-xs-center"
       >
-        <div class="image_container">
+        <div class="image_container" mt-2>
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
           </v-avatar>
-          <!-- <span class="blur-img">uploading</span> -->
         </div>
-        <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+        <h3 class="text-capitalize">
+          {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+        </h3>
         <p>
-          {{ $t("profile.onlinestatus") }} : {{ getUserInfo.currentActiveTime }}
+          <strong> {{ $t("profile.onlinestatus") }} : </strong>
+          {{ getUserInfo.currentActiveTime }}
         </p>
         <v-divider></v-divider>
       </v-flex>
 
-      <v-flex xs12 sm12 pt-3>
-        <v-layout row>
-          <v-flex
+      <v-flex xs12 sm12 pt-3 >
+        <v-layout row justify-center >
+          <v-flex          
             xs2
+            sm12
             md2
             v-if="!$vuetify.breakpoint.xs"
             class="profile_head text-xs-center"
@@ -55,21 +47,25 @@
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
-              <!-- <span class="blur-img">uploading</span> -->
             </div>
-            <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+            <h3 class="text-capitalize">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </h3>
             <p>
-              {{ $t("profile.onlinestatus") }} :
+              <strong> {{ $t("profile.onlinestatus") }} : </strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
+            <v-divider></v-divider>
           </v-flex>
+        </v-layout>
+        <v-layout row justify-center>
           <v-flex xs12 sm10>
-            <v-layout row>
+            <v-layout row justify-center pa-2>
               <!-- select start date  -->
               <v-flex xs5 sm5 mr-1 ml-1>
                 <div class="date_picker_container" @click="startDateClick">
                   <div class="title_date_picker">
-                    <span>{{ $t("msg.from") }}</span>
+                    <strong>{{ $t("msg.from") }}</strong>
                   </div>
                   <div class="date_picker">
                     <span class="select_date">{{ startDate }}</span>
@@ -91,7 +87,7 @@
               <v-flex xs5 sm5 mr-1>
                 <div class="date_picker_container" @click="endDateClick">
                   <div class="title_date_picker">
-                    <span>{{ $t("msg.to") }}</span>
+                    <strong>{{ $t("msg.to") }}</strong>
                   </div>
                   <div class="date_picker">
                     <span class="select_date">{{ endDate }}</span>
@@ -110,7 +106,7 @@
                 </div>
               </v-flex>
               <!-- end of end date -->
-              <v-flex xs1 sm1 ml-1 mr-4>
+              <v-flex xs2 sm2>
                 <div class="date_picker_container">
                   <div class="title_date_picker">
                     <span></span>
@@ -124,10 +120,9 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs12 sm12 md10 lg10 :class="$vuetify.breakpoint.xs ? 'mt-4' : ''">
-        <v-layout row>
-          <v-flex xs1 sm2></v-flex>
-          <v-flex xs10 sm8>
+      <v-flex xs12 sm12 md10 lg10 mt-2 :class="$vuetify.breakpoint.xs ? 'mt-4' : ''">
+        <v-layout row justify-center>
+          <v-flex xs11 sm10>
             <div class="chart_container">
               <p class="no-data" v-if="!dataReady">
                 <strong>No data to display</strong>
@@ -145,16 +140,16 @@
         </v-layout>
       </v-flex>
 
-      <v-flex v-if="dataReady" xs12 class="pt-3 pl-5 text-xs-center">
+      <v-flex v-if="dataReady" xs12 pb-2 class="pt-3 text-xs-center">
         <div class="text-xs-center">
-          <span style="margin-right:30px">
-            Online time:
-            <b>{{ currentActiveTime }}</b>
-          </span>
-          <span style="margin-right:30px">
-            Total Online:
-            <b>{{ totalOnlineTime }}</b>
-          </span>
+          <div>
+            <strong> Online Time : </strong>
+            {{ currentActiveTime }}
+          </div>
+          <div>
+            <strong> Total Online : </strong>
+            {{ totalOnlineTime }}
+          </div>
         </div>
       </v-flex>
     </v-card>
@@ -196,7 +191,7 @@ export default {
           type: "bar",
           toolbar: {
             show: false
-          },
+          }
         },
         plotOptions: {
           bar: {
@@ -390,7 +385,7 @@ button:focus {
   color: black;
   padding: 10px;
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
-  border-radius: 10px;
+  border-radius: 6px;
   width: 100%;
   height: 400px;
 }
@@ -400,9 +395,9 @@ button:focus {
   color: black;
   padding: 10px;
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
-  border-radius: 10px;
+  border-radius: 5px;
   position: relative;
-  width: 120px;
+  width:80%;
 }
 
 .title_date_picker {

@@ -1,20 +1,30 @@
 <template>
   <v-layout row class="justify-center">
     <v-flex xs12 md12>
-      <v-data-table :items="notificationData" :items-per-page="5" ref="table" class="current-bet">
-        <template v-slot:headers="head">
-          <tr>
-            <th scope="col">{{ $t("msg.titles") }}</th>
-            <th scope="col">{{ $t("msg.date") }}</th>
-            <th scope="col">{{ $t("msg.preview") }}</th>
-          </tr>
+      <v-list-tile v-if="notificationData.length == 0" class="notBets">
+        <h3>
+          There are no notification.
+        </h3>
+      </v-list-tile>
+      <v-list three-line v-if="notificationData.length > 0">
+        <template v-for="(item, index) in notificationData" >
+          <v-list-tile :key="item.date" > 
+            <v-list-tile-content>
+              <v-list-tile-sub-title
+                class="heading"
+                v-html="item.title"
+              ></v-list-tile-sub-title>
+              <v-list-tile-sub-title
+                v-html="item.message"
+              ></v-list-tile-sub-title>
+              <v-list-tile-sub-title
+                v-html="item.createdAt"
+              ></v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider :key="index"></v-divider>
         </template>
-        <template v-slot:items="item">
-          <td>{{ item.item.title }}</td>
-          <td>{{ item.item.createdAt }}</td>
-          <td>{{ item.item.message }}</td>
-        </template>
-      </v-data-table>
+      </v-list>
     </v-flex>
   </v-layout>
 </template>
@@ -26,6 +36,19 @@ export default {
 </script>
 
 <style scoped>
+.notBets {
+  font-size: 16px;
+  color: #9e8e8e;
+  text-align: center;
+  margin: 50% auto;
+}
+.notBets h3 {
+  text-align: center;
+  margin: 0 auto;
+}
+.heading {
+  font-weight: 600;
+}
 table {
   border: none;
   /* border:1px solid red; */

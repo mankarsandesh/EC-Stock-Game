@@ -2,27 +2,46 @@ import config from "../config/config.global";
 import log from "roarr";
 import axios from "axios";
 import secureStorage from "./secure-storage";
+import Cookies from "./js-cookie";
 
 export default async context => {
   try {
-    document.referrer.match(/:\/\/(.[^/]+)/)[1];
+    // document.referrer.match(/:\/\/(.[^/]+)/)[1];
     // Set Initial storage coins
-    initLocalStorageCoin(context.store);    
+    initLocalStorageCoin(context.store);
     if (performance.navigation.type == 1) {
       // If User reloads the page
-      // Set user data in vuex store
-      context.store.dispatch("setUserData");
-      // Set default language in vuex store
-      context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+      if (
+        Cookies.getJSON("login").userUUID &&
+        Cookies.getJSON("login").portalProviderUUID
+      ) {
+        // If user has a valid session
+        // Set user data in vuex store
+        context.store.dispatch("setUserData");
+        // Set default language in vuex store
+        context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+      } else {
+        // Invalid user session
+        throw new Error("Unauthorized access. Please login again");
+      }
     } else if (
       performance.navigation.type == 0 &&
       document.referrer.match(/:\/\/(.[^/]+)/)[1] == window.location.host
-    ){
+    ) {
       // If user opens a new tab by right click
-      // Set default language in vuex store
-      // context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
-      // Set user data in vuex store
-      context.store.dispatch("setUserData");
+      if (
+        Cookies.getJSON("login").userUUID &&
+        Cookies.getJSON("login").portalProviderUUID
+      ) {
+        // If the user has a valid session
+        // Set default language in vuex store
+        context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+        // Set user data in vuex store
+        context.store.dispatch("setUserData");
+      } else {
+        // Invalid user session
+        throw new Error("Unauthorized access. Please login again");
+      }
     } else {
       // If the user gets redirected from portal provider page
       // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
@@ -53,10 +72,23 @@ export default async context => {
       setLanguage(context.store);
       // Set user data in vuex store
       context.store.dispatch("setUserData");
+
+      // Set portal provider url
+      secureStorage.setItem(
+        "referrerUrl",
+        document.referrer.match(/:\/\/(.[^/]+)/)[1]
+      );
+
+      // When the cookie expires redirect user to portal provider's login page
+      setTimeout(() => {
+        window.location.replace(
+          `http://${secureStorage.getItem("referrerUrl")}/`
+        );
+      }, 30 * 60 * 1000);
     }
   } catch (ex) {
     console.log(ex);
-    // window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
+    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
   }
 };
 
@@ -130,6 +162,17 @@ const checkUserLogin = async (
         store.dispatch("setUserUUID", userUUID);
         secureStorage.setItem("USER_UUID", userUUID); // Set User UUID in local Storage
         secureStorage.setItem("PORTAL_PROVIDERUUID", portalProviderUUID); // Set portal provider UUID in local storage
+        // Set Cookie for user session
+        Cookies.set(
+          "login",
+          {
+            portalProviderUUID,
+            userUUID
+          },
+          {
+            expires: config.sessionExpiryTime
+          }
+        );
       } else {
         store.dispatch("setLoginError", [config.error.general]);
         throw new Error(config.error.general);
@@ -164,7 +207,6 @@ const setLanguage = store => {
     ? secureStorage.getItem("lang")
     : config.defaultLanguageLocale;
   store.dispatch("setLanguage", lang);
-  secureStorage.setItem("lang", lang);
 };
 
 /**

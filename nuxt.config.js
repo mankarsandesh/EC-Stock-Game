@@ -112,15 +112,17 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
+  plugins: [    
+    '~/plugins/inject.js',
     "@/plugins/vuetify",
+    "@plugins/js-cookie", // for setting and reading cookies
     // "~/plugins/axios",
-    "@/plugins/roarr",
-    "@plugins/secure-storage",
+    "@/plugins/roarr", // for generating logs
+    "@plugins/secure-storage", // for encrypting local storage
     "@/plugins/filters",
-    { src: "~/plugins/vuex-persist", ssr: false },
-    "@/plugins/login.js",
+    { src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
     "@/plugins/i18n",
+    "@/plugins/login.js", // login plugin
     "@/plugins/chart",
     "@/plugins/sweetAlert",
     "@/plugins/vueScreen",
@@ -178,7 +180,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend: function(config, { isDev, isClient }) {
+    extend: function (config, { isDev, isClient }) {
       if (isDev) {
         config.devtool = isClient ? "source-map" : "inline-source-map";
       }

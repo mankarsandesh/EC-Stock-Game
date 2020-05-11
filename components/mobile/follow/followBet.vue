@@ -1,10 +1,9 @@
 <template>
   <div>
-    <v-card class="followup">
-      <h3 class="title">{{ isFollowing == 1 ? "Follow Bet " : "UnFollow Bet" }}</h3>
+    <div class="followup">    
       <v-card-text style="text-align:center;">
-        <img class="pimage" v-bind:src="this.defaultImage" width="140px" />
-        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
+        <img class="pimage" v-bind:src="this.userImage" width="140px" />
+        <h3 class="subtitle-1 text-center pt-1" v-if="this.username">{{ this.username }}</h3>
       </v-card-text>
       <v-flex>
         <p
@@ -126,7 +125,7 @@
           </v-btn>
         </v-flex>
       </div>
-    </v-card>
+    </div>
   </div>
 </template>
 <script>
@@ -219,6 +218,11 @@ export default {
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
     })
+  },
+  updated(){
+    
+    console.log("Checking");
+    console.log(this.userImage);
   },
   methods: {
     // Send to Parent Components
@@ -360,6 +364,7 @@ export default {
     // Change Amount Rate Validation
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
+      console.log(this.selectedFollow);
       if (this.selectedFollow == "Amount") {
         this.selectAmount = true;
         this.selectRate = false;
@@ -411,7 +416,7 @@ export default {
   padding: 5px;
 }
 .followup {
-  padding: 15px 30px;
+  padding: 5px 15px;
   border-radius: 20px;
 }
 .followup h4 {

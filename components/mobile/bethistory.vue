@@ -1,103 +1,123 @@
 <template>
   <div>
-    <v-data-table
-      hide-actions
-      :items="userBetHistory"
-      :pagination.sync="pagination"
-      :rows-per-page-items="[rowPageCount]"
-      ref="table"
-      :search="search"
-      class="bg-colors"
-      scope="col"
-    >
-      <template v-slot:headers="headers">
-        <tr class="text-uppercase">
-          <th scope="col">{{ $t("msg.BetId") }}</th>
-          <th scope="col">{{ $t("msg.gameid") }}</th>
-          <th scope="col">{{ $t("msg.Betdetail") }}</th>
-          <th scope="col">{{ $t("msg.Time") }}</th>
-          <th scope="col">{{ $t("msg.amount") }}</th>
-          <th scope="col">{{ $t("msg.payout") }}</th>
-          <th scope="col">{{ $t("msg.Bet Status") }}</th>
-        </tr>
-      </template>
-      <template v-slot:items="item">
-        <tr @click="clicked(item.item.betUUID)" class="selectRow">
-          <td>{{ item.item.betUUID }}</td>
-          <td>{{ item.item.gameUUID }}</td>
-          <td>
-            {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }}
-          </td>
-          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
-          <td>{{ item.item.betAmount | toCurrency }}</td>
-          <td>{{ item.item.payout }}</td>
+    <v-list-tile v-if="userBetHistory.length == 0" class="notBets">
+      <h3>
+        There are no bets in History Bets.
+      </h3>
+    </v-list-tile>
 
-          <td v-if="item.item.isFollowBet == 1" class="text-uppercase text-center">
-            <div class="following">by followers</div>
-          </td>
-          <td v-if="item.item.isFollowBet == 0" class="text-uppercase text-center">
-            <div class="original">original</div>
-          </td>
-        </tr>
-        <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
-          <td colspan="2">
-            <span class="betDraw">{{ $t("bethistory.betdraw") }} :</span>
-            <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
-          </td>
-          <td colspan="2" class="allDigit">
-            {{ $t("gamemsg.firstdigit") }}
-            <span
-              v-html="$options.filters.firstDigit(item.item.gameDraw)"
-            ></span>
-            {{ $t("gamemsg.lastdigit") }}
-            <span
-              v-html="$options.filters.lastDigit(item.item.gameDraw)"
-            ></span>
-            {{ $t("gamemsg.bothdigit") }}
-            <span
-              v-html="$options.filters.bothDigit(item.item.gameDraw)"
-            ></span>
-            {{ $t("gamemsg.twodigit") }}
-            <span
-              v-html="$options.filters.twoDigit(item.item.gameDraw)"
-            ></span>
-          </td>
-          <td colspan="3" v-if="item.item.rollingAmount == 0">
-            <span class="betDraw">{{ $t("bethistory.yourloosingamount") }} :</span>
-            <span class="lossAmount">{{ item.item.betAmount }}</span>
-          </td>
-          <td colspan="3" v-if="item.item.rollingAmount != 0">
-            <span class="betDraw">{{ $t("bethistory.yourwinningamount") }} :</span>
-            <span class="winAmount">{{ item.item.rollingAmount }}</span>
-          </td>
-        </tr>
-      </template>
+    <v-list three-line v-if="userBetHistory.length > 0">
+      <template
+        v-for="(item, index) in userBetHistory"
+        style="margin-bottom:50px;"
+      >
+        <v-list-tile
+          :key="item.betUUID"
+          @click="
+            betDetails(
+              item.betUUID,
+              item.gameDraw,
+              item.rollingAmount,
+              item.betAmount
+            )
+          "
+        >
+          <v-list-tile-content>
+            <v-list-tile-sub-title class="headingTitle">
+              {{ item.ruleName }} - ({{ item.payout }}) {{ item.stockName }}
+            </v-list-tile-sub-title>
+            <v-list-tile-sub-title>
+              <span
+                class="lastDraw"
+                v-html="$options.filters.lastDraw(item.gameDraw)"
+              ></span>
+            </v-list-tile-sub-title>
+            <v-list-tile-sub-title>
+              {{ item.createdDate }} {{ item.createdTime }}
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
 
-      <template slot="footer">
-        <tr>
-          <td>{{ $t("msg.Total") }}</td>
-          <td colspan="4">{{ userBetHistory.length }} bets</td>
-          <td>
-            <strong>{{ TotalAmount | toCurrency }}</strong>
-          </td>
-          <td>
-            <strong>{{ TotalRolling | toCurrency }}</strong>
-          </td>
-        </tr>
+          <v-list-tile-action>
+            <span v-if="item.betResult == 'lose'" class="lossAmount"
+              >-{{ item.betAmount | toCurrency }}</span
+            >
+            <span v-if="item.betResult == 'win'" class="winAmount"
+              >+{{ item.betAmount | toCurrency }}</span
+            >
+            <div v-if="item.isFollowBet == 1" class="following">
+              by followers
+            </div>
+            <div v-if="item.isFollowBet == 0" class="original">original</div>
+          </v-list-tile-action>
+        </v-list-tile>
+        <v-divider :key="index"></v-divider>
       </template>
-    </v-data-table>
-    <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
-      <v-pagination v-model="pagination.page" color="#1db42f" :length="10"></v-pagination>
-    </div>
+      <div class="footer" v-if="userBetHistory.length > 0">
+        <div>
+          <span> <strong>Bets :</strong> {{ userBetHistory.length }} </span>
+          <span> <strong>Total </strong> :{{ TotalAmount | toCurrency }} </span>
+          <span v-if="TotalAmount < TotalRolling">
+            <strong>Rolling </strong> :<span style="color:green;">{{
+              TotalRolling | toCurrency
+            }}</span>
+          </span>
+
+          <span v-if="TotalAmount > TotalRolling">
+            <strong>Rolling </strong> :<span
+              style="color: #c13f3f;font-weight: 800;"
+              >{{ TotalRolling | toCurrency }}</span
+            >
+          </span>
+        </div>
+      </div>
+    </v-list>
+
+    <!-- Follow and UnFollow Diealog Box -->
+    <v-dialog v-model="dialog" width="500" class="betDetails">
+      <v-card>
+        <h1 class="betId">BET #{{ this.betUUID }}</h1>
+
+        <v-layout class="betWrap">
+          <v-flex xs6 sm6 class="betSide">
+            <span>Game Draw</span>
+
+            <h4 v-html="$options.filters.lastDraw(this.gameDraw)"></h4
+          ></v-flex>
+          <v-flex xs6 sm6 class="betSide">
+            <div v-if="this.rollingAmount == 0">
+              <span> {{ $t("bethistory.yourloosingamount") }} : </span>
+              <h4 class="lossAmount">{{ this.betAmount }}</h4>
+            </div>
+            <div v-if="this.rollingAmount != 0">
+              <span>{{ $t("bethistory.yourwinningamount") }} </span>
+              <h4 class="winAmount">{{ this.rollingAmount }}</h4>
+            </div>
+          </v-flex>
+        </v-layout>
+        <v-flex class="allDigit">
+          FD
+          <span v-html="$options.filters.firstDigit(this.gameDraw)"></span>
+          LD
+          <span v-html="$options.filters.lastDigit(this.gameDraw)"></span>
+          BD
+          <span v-html="$options.filters.bothDigit(this.gameDraw)"></span>
+          TD
+          <span v-html="$options.filters.twoDigit(this.gameDraw)"></span>
+        </v-flex>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
-
 <script>
 export default {
   props: ["userBetHistory"],
   data() {
     return {
+      betAmount: "",
+      betUUID: "",
+      gameDraw: "",
+      rollingAmount: "",
+      dialog: false,
       rowPageCount: 10,
       dateTo: new Date().toISOString().substr(0, 10),
       dateFrom: new Date().toISOString().substr(0, 10),
@@ -155,9 +175,12 @@ export default {
     }
   },
   methods: {
-    clicked(betUUID) {
-      $(".extraInfo").hide();
-      $("#" + betUUID).show();
+    betDetails(betUUID, gameDraw, rollAmount, amount) {
+      this.dialog = true;
+      this.betUUID = betUUID;
+      this.gameDraw = gameDraw;
+      this.rollingAmount = rollAmount;
+      this.betAmount = amount;
     },
     setZero(num, digit) {
       var zero = "";
@@ -170,6 +193,75 @@ export default {
 };
 </script>
 <style scoped>
+.allDigit {
+  padding: 10px;
+  text-align: center !important;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+}
+.allDigit span {
+  border: 1px solid #a4a4a4;
+  color: red;
+  font-size: 14px;
+  padding: 0px 6px;
+  border-radius: 4px;
+  margin: 0px 5px;
+}
+
+.betId {
+  padding: 10px;
+  color: #676768;
+  font-size: 14px;
+  text-align: center;
+}
+.betWrap {
+  background-color: #f5f6fd;
+}
+.betWrap .betSide {
+  padding: 15px 10px;
+  text-align: center;
+  border: 1px solid #dddddd;
+}
+.betWrap .betSide span {
+  font-size: 14px;
+  color: #676768;
+  font-weight: 600;
+}
+.footerWrap {
+  text-align: center;
+}
+.footer {
+  left: 0;
+  width: 100%;
+  background-color: #2bb03e;
+  padding: 15px 0px;
+  position: fixed;
+  bottom: 0;
+  color: #fff;
+  border-top: 2px solid #1bba33;
+}
+.footer div {
+  text-align: center;
+  width: 100%;
+}
+.footer div span {
+  text-align: center;
+  font-size: 18px;
+  margin: 0px 6px;
+}
+.lastDraw {
+  background-color: #dddddd;
+  padding: 0px 6px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+.headingTitle {
+  font-weight: 600;
+  color: #003f70 !important;
+  font-size: 16px;
+}
 .totalRollingWin {
   font-weight: 800;
   color: green;
@@ -196,26 +288,20 @@ export default {
   background-color: #f3f3f3;
 }
 .original {
-  margin: 0 auto;
-  width: 150px;
-  border-radius: 5px;
-  padding: 4px 10px;
-  color: #333333;
-  font-size: 14px;
-  text-transform: uppercase;
+  text-align: right;
+  width: 100px;
+  color: #fec623;
+  font-size: 12px;
+  text-transform: lowercase;
   font-weight: 600;
-  background-color: #fec623;
 }
 .following {
-  margin: 0 auto;
-  width: 150px;
-  border-radius: 5px;
-  padding: 4px 16px;
-  color: #fff;
-  font-size: 14px;
-  text-transform: uppercase;
+  text-align: right;
+  width: 100px;
+  color: #2bb13b;
+  font-size: 12px;
+  text-transform: lowercase;
   font-weight: 600;
-  background-color: #2bb13b;
 }
 .pending {
   border-radius: 15px;
@@ -226,11 +312,7 @@ export default {
   font-weight: 600;
   background-color: #fec623;
 }
-.betDraw {
-  color: #545353;
-  font-size: 16px;
-  font-weight: 600;
-}
+
 .gameDraw {
   border: 1.5px solid #3a79ff;
   border-radius: 8px;
@@ -239,19 +321,13 @@ export default {
   font-weight: 600;
 }
 .winAmount {
-  border: 1.5px solid #0eb03e;
-  border-radius: 8px;
-  padding: 4px 20px;
   font-size: 16px;
   color: #0eb03e;
   font-weight: 600;
 }
 .lossAmount {
-  border: 1.5px solid #fc0020;
-  border-radius: 8px;
-  padding: 4px 12px;
   font-size: 16px;
-  color: #fc0020;
+  color: #d23a4e;
   font-weight: 600;
 }
 .allDigit {

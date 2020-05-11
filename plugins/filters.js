@@ -194,3 +194,4 @@ Vue.filter("livePriceColor", (current, previous) => {
   }
   return `<span style="color:${color}">${current}<span hidden>${color}</span></span>`;
 });
+
