@@ -6,7 +6,7 @@
         <v-divider></v-divider>
       </div>
     </v-flex>
-    <v-flex xs12 pt-5 pl-5>
+    <v-flex xs12 pt-5 pl-5>     
       <v-flex xs12>
         <div class="group_container">
           <span class="group_title">{{ $t("setting.account") }}</span>
@@ -69,6 +69,17 @@
           </div>
         </div>
       </v-flex>
+
+      <v-flex xs12>
+        <div class="group_container">
+          <span class="group_title">{{ $t("setting.gameoptions") }}</span>
+          <div class="title_container">
+            <chipsAmountDesktop />
+          </div>
+        </div>
+      </v-flex>
+
+
     </v-flex>
   </div>
 </template>
@@ -78,9 +89,13 @@ import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
+import chipsAmountDesktop from "~/components/modern/setting/chipamount";
 import log from "roarr";
 
 export default {
+  components: {
+    chipsAmountDesktop   
+  },
   mounted() {
     // this.updateSetting();
   },

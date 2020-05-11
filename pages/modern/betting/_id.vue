@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout style="margin: 0 0 -1% 0px;" >
+    <v-layout style="margin: 0 0 -1% 0px;">
       <v-flex>
         <v-layout row wrap class="pt-1">
           <v-flex xs12 sm12>
@@ -51,7 +51,7 @@
             </v-layout>
           </v-flex>
           <v-flex xs12 sm12 pt-3>
-            <v-layout xs12 sm6>             
+            <v-layout xs12 sm6>
               <v-flex xs12 xs6 class="text-xs-center">
                 <v-btn class="buttonGreensmall">
                   <nuxt-link to="/modern" class="text-white">
@@ -66,9 +66,9 @@
     </v-layout>
 
     <!-- betting zone -->
-    <v-layout row wrap class="container-bet" >
-      <v-flex xs12 sm12 md12 >
-        <v-layout wrap xs12 >
+    <v-layout row wrap class="container-bet">
+      <v-flex xs12 sm12 md12>
+        <v-layout wrap xs12>
           <v-flex xs1 align-self-center class="text-xs-right">
             <v-icon
               color="#003e70"
@@ -94,11 +94,14 @@
           <v-flex v-else sm10 xs10 class="text-xs-center">
             <span>
               <h3 class="text-uppercase">
-                {{ $t("stockname." + $route.params.id) }}
+                {{ $t("stockname." + $route.params.id) }} /
+                <span
+                  >{{ getStockLoop(this.$route.params.id) }}
+                  {{ $t("msg.minute game") }}</span
+                >
               </h3>
               <span class="text-primary">
-                <span>{{ getStockLoop(this.$route.params.id) }}</span>
-                {{ $t("msg.minute game") }} | ID:
+                GAME ID:
                 <span>{{ getGameUUIDByStockName(this.$route.params.id) }}</span>
               </span>
             </span>
@@ -119,7 +122,7 @@
         </v-layout>
       </v-flex>
 
-      <v-flex  style="background-color:rgb(242, 244, 255);" >
+      <v-flex style="background-color:rgb(242, 244, 255);">
         <div
           sm12
           xs12
@@ -129,7 +132,7 @@
         >
           <p>{{ $t("msg.betclosed") }}</p>
         </div>
-        <v-layout wrap sm6 >
+        <v-layout wrap sm6>
           <div class="tab-menu-container">
             <div class="digit-type-container">
               <div
@@ -1014,7 +1017,7 @@
           </v-tabs>
         </v-layout>
 
-        <div class="bettingFooter justify-center sm10 xs10" >
+        <div class="bettingFooter justify-center sm10 xs10">
           <span>
             {{ $t("msg.totalbet") }}:
             {{ formatToPrice(getAllBettingAmount) }}
@@ -1860,7 +1863,6 @@ export default {
 </script>
 
 <style scoped>
-
 .tab-menu-container {
   position: relative;
   z-index: 2;
@@ -1999,7 +2001,7 @@ h4 {
 
 .bettingFooter {
   border-radius: 20px;
-  margin:15px 0px;
+  margin: 15px 0px;
   padding: 10px;
   color: #fff;
   background-color: #8291b2;

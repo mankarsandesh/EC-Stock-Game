@@ -47,14 +47,10 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import setting from "~/components/modern/setting/chipamout";
 import chips from "~/data/chips";
 import config from "../../config/config.global";
 
 export default {
-  components: {
-    //setting
-  },
   data() {
     return {
       isSending: false,
