@@ -1,3 +1,4 @@
+import VuexPersistence from "vuex-persist";
 import config from "../config/config.global";
 import log from "roarr";
 import axios from "axios";
@@ -16,8 +17,22 @@ export default async context => {
         Cookies.getJSON("login").portalProviderUUID
       ) {
         // If user has a valid session
+        // Get vuex state if it exists in the local storage
+        await window.onNuxtReady(() => {
+          new VuexPersistence({
+            storage: secureStorage,
+            filter: mutation =>
+              mutation.type == "SET_USER_DATA" ||
+              mutation.type == "SET_LANGUAGE" ||
+              mutation.type == "SET_GAME_ID" ||
+              mutation.type == "SET_LIVE_ROAD_MAP" ||
+              mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
+              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+          }).plugin(context.store);
+        });
         // Set user data in vuex store
         context.store.dispatch("setUserData");
+        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
         // Set default language in vuex store
         context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
       } else {
@@ -34,10 +49,25 @@ export default async context => {
         Cookies.getJSON("login").portalProviderUUID
       ) {
         // If the user has a valid session
+        // Get vuex state if it exists in the local storage
+        await window.onNuxtReady(() => {
+          new VuexPersistence({
+            storage: secureStorage,
+            filter: mutation =>
+              mutation.type == "SET_USER_DATA" ||
+              mutation.type == "SET_LANGUAGE" ||
+              mutation.type == "SET_GAME_ID" ||
+              mutation.type == "SET_LIVE_ROAD_MAP" ||
+              mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
+              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+          }).plugin(context.store);
+        });
+        
         // Set default language in vuex store
         context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
         // Set user data in vuex store
         context.store.dispatch("setUserData");
+        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
       } else {
         // Invalid user session
         throw new Error("Unauthorized access. Please login again");
