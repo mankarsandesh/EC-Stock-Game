@@ -35,9 +35,11 @@
       <v-list two-line>
         <template v-for="(item, index) in topPlayerData">
           <v-list-tile :key="item.username" avatar>
-            <v-list-tile-avatar>
-              <img :src="userImgProfile(item.userImage)" />
-            </v-list-tile-avatar>
+            <nuxt-link :to="'/modern/userprofile/'+item.userUUID">
+              <v-list-tile-avatar>
+                <img :src="userImgProfile(item.userImage)" />
+              </v-list-tile-avatar>
+            </nuxt-link>
 
             <v-list-tile-content style="width:40%;">
               <v-list-tile-title v-html="item.username"></v-list-tile-title>
@@ -54,8 +56,10 @@
             <v-list-tile-action>
               <v-btn
                 v-bind:class="[
-                  item.isFollowing == 0 ? 'buttonGreensmall' : 'buttonCancelSmall'
-                ]"               
+                  item.isFollowing == 0
+                    ? 'buttonGreensmall'
+                    : 'buttonCancelSmall'
+                ]"
                 v-on:click="
                   followUser(
                     item.username,
@@ -224,7 +228,7 @@ export default {
             headers: config.header
           }
         );
-
+        console.log(data);
         this.topPlayerData = data.data;
         this.loadingImage = false;
       } catch (error) {
