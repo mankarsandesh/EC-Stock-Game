@@ -264,7 +264,7 @@ export default {
   border-radius: 8px;
 }
 
-.setpricechip {  
+.setpricechip {
   color: #333;
   font-size: 12px;
   font-weight: 600;
@@ -272,7 +272,7 @@ export default {
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {   
+input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }

@@ -147,7 +147,11 @@
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4 betButtonGuide" id="lastdigit" @click="btnNumber('last')">
+        <v-btn
+          class="align_button4 betButtonGuide"
+          :id="stockID+'lastdigit'"
+          @click="btnNumber('last')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -157,7 +161,7 @@
               })
             "
           ></showChipAmount>
-          <span class="big-digit">0 - 9</span>
+          <span class="big-digit " :id="stockID +'lastdigitNumber'">0 - 9</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">{{ payout_09 }}</span>
@@ -367,6 +371,7 @@
       >
         <div class="popper">
           <betModal
+            @update-bet="updateBet"
             :stockName="stockID"
             :ruleid="25 + index"
             :betId="'lastdigit-' + index"
@@ -375,7 +380,7 @@
           ></betModal>
         </div>
         <v-btn
-          :id="'lastdigit'+'-'+ index"
+          :id="stockID +'lastdigit'+'-'+ index"
           slot="reference"
           @click="betButtonClick(25 + index, 'lastdigit')"
           v-show="number == 'last'"
@@ -547,7 +552,6 @@ export default {
       "clearDataMultiGameBet",
       "setTempMultiGameBetData"
     ]),
-    ...mapMutations(["SET_FIRST_PARENT"]),
     betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
@@ -569,7 +573,6 @@ export default {
     updateBet(items) {
       const split = items.betRule.split("-");
       $("#" + items.stock + items.betRule).addClass(split[0] + "-" + split[1]); // small button
-      this.SET_FIRST_PARENT(items.stock + split[0]);
       $("#" + items.stock + split[0]).addClass(split[0]); // parent the button
     }
   }
@@ -596,7 +599,7 @@ export default {
 }
 
 .setlayuot {
-  flex-flow: wrap;
+  flex-flow: wrap;  
   position: relative;
 }
 .btn-digit {
@@ -606,4 +609,5 @@ export default {
   white-space: pre-line;
 }
 </style>
+
 

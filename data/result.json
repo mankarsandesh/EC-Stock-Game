@@ -202,61 +202,61 @@
           "rule": [
             0
           ],
-          "name": "LD_0"
+          "name": "lastdigit-0"
         },
         {
           "rule": [
             1
           ],
-          "name": "LD_1"
+          "name": "lastdigit-1"
         },
         {
           "rule": [
             2
           ],
-          "name": "LD_2"
+          "name": "lastdigit-2"
         },
         {
           "rule": [
             3
           ],
-          "name": "LD_3"
+          "name": "lastdigit-3"
         },
         {
           "rule": [
             4
           ],
-          "name": "LD_4"
+          "name": "lastdigit-4"
         },
         {
           "rule": [
             5
           ],
-          "name": "LD_5"
+          "name": "lastdigit-5"
         },
         {
           "rule": [
             6
           ],
-          "name": "LD_6"
+          "name": "lastdigit-6"
         },
         {
           "rule": [
             7
           ],
-          "name": "LD_7"
+          "name": "lastdigit-7"
         },
         {
           "rule": [
             8
           ],
-          "name": "LD_8"
+          "name": "lastdigit-8"
         },
         {
           "rule": [
             9
           ],
-          "name": "LD_9"
+          "name": "lastdigit-9"
         }
       ]
     },
@@ -1298,4 +1298,3 @@
     }
   ]
 }
-

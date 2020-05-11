@@ -3,9 +3,6 @@ import sound from "~/helpers/sound"
 import { mapMutations, mapGetters } from 'vuex'
 // define a mixin object
 export const BetResult = {
-    computed: {
-        ...mapGetters(["parentFirst"])
-    },
     methods: {
         ...mapMutations(["SET_FIRST"]),
         betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin           
@@ -20,16 +17,16 @@ export const BetResult = {
                         if ($("#" + stockName + betID).hasClass(item.name)) {
                             switch (items.type) {
                                 case 'firstdigit':
-                                    this.multipleResult(item, first, stockName, betID, betWin)
+                                    this.multipleResult(item, first, stockName, betID, betWin, item.name)
                                     break;
                                 case 'lastdigit':
-                                    this.multipleResult(item, last, stockName, betID, betWin)
+                                    this.multipleResult(item, last, stockName, betID, betWin, item.name)
                                     break;
                                 case 'bothdigit':
-                                    this.multipleResult(item, bothDigit, stockName, betID, betWin)
+                                    this.multipleResult(item, bothDigit, stockName, betID, betWin, item.name)
                                     break;
                                 case 'twodigit':
-                                    this.multipleResult(item, twoDigit, stockName, betID, betWin)
+                                    this.multipleResult(item, twoDigit, stockName, betID, betWin, item.name)
                                     break;
                                 default:
                             }
@@ -41,13 +38,24 @@ export const BetResult = {
             this.SET_FIRST('Can not find any bet')
         },
         // Multiple Result 
-        multipleResult(item, number, stockName, betID, betWin) {
+        multipleResult(item, number, stockName, betID, betWin, name) {
+            // console.log("This is the item", item)
+            // console.log("This is the number", number)
+            // console.log("This is the stockName", stockName)
+            // console.log("This is the betID", betID)
+            // console.log("This is the betWin", betWin)
+            // console.log("This is the name", name)
+            const specificNumber = "#" + stockName + betID.split("-")[0]
             const result = item.rule.includes(number);
             if (result) {
-                this.findNumber(betID, betWin)  // find the name of digit
                 sound.winBet(); // sound when user win the bet              
                 $("#" + betWin).addClass(betWin);
                 $("#" + stockName + betID).addClass(
+                    betID.split("-")[0] + "-animation"
+                );
+                $(specificNumber).addClass(betID.split("-")[0]);
+                $(specificNumber + 'Number').addClass(betWin);
+                $(specificNumber).addClass(
                     betID.split("-")[0] + "-animation"
                 );
                 $("#" + this.StockResult).addClass(betID.split("-")[0] + "-animation"); //         
@@ -63,42 +71,27 @@ export const BetResult = {
                     );
                     $("#" + this.StockResult).removeClass(betID.split("-")[0] + "-animation"); //   
 
-                    $("#" + this.parentFirst).removeClass(
+                    $(specificNumber).removeClass(
                         betID.split("-")[0] + "-animation"
                     );
-                    // $("#" + this.parentFirst + 'Number').removeClass(betWin);  // Macky will move the chip
-                    $("#" + this.parentFirst).removeClass(
+                    // $(specificNumber + 'Number').removeClass(betWin);  // Macky will move the chip
+                    $(specificNumber).removeClass(
                         betID.split("-")[0]);
                 }, 5000);
+            } else if ($(specificNumber).hasClass(name) == false) {
+                this.SET_FIRST('You are lose else if')
+                $('#' + stockName + betID).removeClass(betID.split("-")[0]);
+                $(specificNumber).removeClass(betID.split("-")[0]);   // remove the chip and bring if user not win
             } else {
-                this.SET_FIRST('You are lose')
-                $("#" + this.StockResult).removeClass(betID.split("-")[0]); //           
+                this.SET_FIRST('You are lose in else')
+                this.SET_FIRST(null)
+                $(stockName + betID).removeClass(betID.split("-")[0]);
+                $("#" + this.StockResult).removeClass(betID.split("-")[0]);
                 $("#" + stockName + betID).removeClass(
                     betID.split("-")[0]
                 );
                 $("#" + betWin).removeClass(betWin);
-                // $("#" + this.parentFirst).removeClass(betID.split("-")[0]);   // remove the chip and bring if user not win
             }
-        },
-
-        findNumber(nameRule, betWin) {
-            jsonResult.resultBet.map((items, index) => {
-                items.rules.map((item, index) => {
-                    if (item.name === nameRule) {
-                        $("#" + this.parentFirst).addClass(nameRule.split("-")[0]);
-                        $("#" + this.parentFirst + 'Number').addClass(betWin);
-                        $("#" + this.parentFirst).addClass(
-                            nameRule.split("-")[0] + "-animation"
-                        );
-                    } else {
-                        // $("#" + this.parentFirst).removeClass(nameRule.split("-")[0]);
-                        this.SET_FIRST('You are not bet on the number')
-                    }
-                })
-            })
         }
     }
 }
-
-
-

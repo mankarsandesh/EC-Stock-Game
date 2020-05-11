@@ -1391,7 +1391,17 @@ p.guideline {
 .firstdigitWin-6,
 .firstdigitWin-7,
 .firstdigitWin-8,
-.firstdigitWin-9 {
+.firstdigitWin-9,
+.lastdigitWin-0,
+.lastdigitWin-1,
+.lastdigitWin-2,
+.lastdigitWin-3,
+.lastdigitWin-4,
+.lastdigitWin-5,
+.lastdigitWin-6,
+.lastdigitWin-7,
+.lastdigitWin-8,
+.lastdigitWin-9 {
   background-size: 35px;
   height: 35px;
   background-position: center center;
@@ -1434,8 +1444,6 @@ p.guideline {
   transition: opacity 0.3s;
   opacity: 0;
 }
-
-
 
 /* align_button4 v-btn theme--light firstdigit low firstdigit-animation
 
