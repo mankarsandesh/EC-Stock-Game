@@ -1,3 +1,5 @@
+import VuexPersistence from "vuex-persist";
+
 import config from "../config/config.global";
 import log from "roarr";
 import axios from "axios";
@@ -17,6 +19,21 @@ export default async context => {
         Cookies.getJSON("login").portalProviderUUID
       ) {
         // If user has a valid session
+        // Get vuex state from local storage
+        window.onNuxtReady(() => {
+          new VuexPersistence({
+            storage: secureStorage,
+            filter: mutation =>
+              mutation.type == "SET_USER_DATA" ||
+              mutation.type == "SET_LANGUAGE" ||
+              mutation.type == "SET_GAME_ID" ||
+              mutation.type == "SET_LIVE_ROAD_MAP" ||
+              mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
+              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+          }).plugin(context.store);
+        });
+        // Set portal provider UUID in store
+        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
         // Set user data in vuex store
         context.store.dispatch("setUserData");
         // Set default language in vuex store
