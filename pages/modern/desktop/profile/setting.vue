@@ -69,7 +69,6 @@
           </div>
         </div>
       </v-flex>
-
       <v-flex xs12>
         <div class="group_container">
           <span class="group_title">{{ $t("setting.gameoptions") }}</span>

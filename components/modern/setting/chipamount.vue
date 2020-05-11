@@ -1,45 +1,50 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
-        <v-flex v-for="(chip, index) in chips" :key="index">
-            <div class="chip-image">
-        <v-img :width="90" :src="chip.image" class="chipImage" />
-        <input
-          :disabled="conOrE === 'edit' ? disableInput : false"
-          class="input-chip-amount"
-          type="number"
-          :value="chip.amount"
-          :ref="chip.chipID"
-        />
-      </div>
-      <div class="chip-action">
-        <v-btn class="chipamount" text @click="conOrEClick(chip.chipID)">{{
-          $t("msg." + conOrE)
-        }}</v-btn>
-        <div class="min-max" v-show="conOrE === 'confirm'">
-          <span>{{ $t("msg.min") }} = $200</span>
-          <span>{{ $t("msg.max") }} = $20,000</span>
+      <v-flex v-for="(chip, index) in chips" :key="index">
+        <div class="chip-image">
+          <v-img :width="90" :src="chip.image" class="chipImage" />
+          <input
+            :disabled="conOrE === 'edit' ? disableInput : false"
+            class="input-chip-amount"
+            type="number"
+            :value="chip.amount"
+            :ref="chip.chipID"
+          />
         </div>
-      </div>
-   
-        </v-flex>
-        <v-flex md12 lg12>
-            <div class="action-container">
-      <v-btn
-        text
-        @click="reset()"
-        style="background-color: #fec623!important;border-radius:8px;"
-        >{{ $t("msg.resettodefault") }}</v-btn
-      >
-      <div class="pt-3">
-        <v-btn class="my-btn buttonGreensmall" @click="saveChipAmount()">{{
-          $t("msg.save")
-        }}</v-btn>
-        <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
-      </div>
-    </div>
-        </v-flex>
+        <div class="chip-action">
+          <v-btn class="chipamount" text @click="conOrEClick(chip.chipID)">{{
+            $t("msg." + conOrE)
+          }}</v-btn>
+          <div class="min-max" v-show="conOrE === 'confirm'">
+            <span>{{ $t("msg.min") }} = $200</span>
+            <span>{{ $t("msg.max") }} = $20,000</span>
+          </div>
+        </div>
+      </v-flex>
+      <v-flex md12 lg12>
+        <div class="action-container">
+          <div class="pt-3">
+            <v-btn
+              text
+              @click="reset()"
+              style="background-color: #fec623!important;border-radius:8px;"
+              >{{ $t("msg.resettodefault") }}</v-btn
+            >
+            <v-btn class="my-btn buttonGreensmall" @click="saveChipAmount()">{{
+              $t("msg.save")
+            }}</v-btn>
+            <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
+          </div>
+        </div>
+      </v-flex>
     </v-layout>
+    <v-snackbar v-model="snackbar">
+      Sucessfully Update Chips Amount.
+      <v-btn color="pink" text @click="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -52,6 +57,7 @@ import secureStorage from "../../../plugins/secure-storage";
 export default {
   data() {
     return {
+      snackbar: false,
       amount: [],
       disableInput: true,
       conOrE: "edit"
@@ -118,8 +124,8 @@ export default {
       let chip5 = this.$refs.chip5[0].value;
       let new_amount = [chip1, chip2, chip3, chip4, chip5];
       this.setCoinsModern(new_amount);
-
       this.conOrE = "edit";
+      this.snackbar = true;
     },
     cancel() {
       let chip1 = this.$refs.chip1[0].value;
@@ -179,7 +185,7 @@ export default {
   top: -55px;
   color: black;
   width: 40%;
-  left:5px;
+  left: 5px;
   text-align: center;
 }
 .input-chip-amount:focus {
