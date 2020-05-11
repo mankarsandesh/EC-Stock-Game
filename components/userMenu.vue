@@ -10,10 +10,10 @@
             <span v-if="getUserInfo.firstName == null"
               >{{ getUserInfo.userName }}
             </span>
-            <span v-if="getUserInfo.firstName"
-              >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</span
-            >
-            <span>
+            <span v-if="getUserInfo.firstName">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </span>
+            <span id="userBanlance" @click="getUserBanlancePosition()">
               <animated-number
                 :value="getUserInfo.balance"
                 :formatValue="formatToPrice"
@@ -69,7 +69,7 @@ export default {
     AppDialogsConfirm
   },
   data() {
-    return {          
+    return {
       defaultImage: `/no-profile-pic.jpg`,
       dialogConfirm: false,
       profileImage: "",
@@ -79,18 +79,27 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserInfo"]),
-    imgProfile() {   
-        if (this.getUserInfo.profileImage == null) { 
-         return `${this.defaultImage}`;  
-        } else {
-          return`${config.apiDomain}/${this.getUserInfo.profileImage}`;      
+    imgProfile() {
+      if (this.getUserInfo.profileImage == null) {
+        return `${this.defaultImage}`;
+      } else {
+        return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      }
     }
-  }
   },
   mounted() {
     this.isShow = location.pathname.split("/")[1];
   },
   methods: {
+    getUserBanlancePosition() {
+      console.log(document.getElementById("userBanlance").offsetTop);
+      console.log(
+        document.getElementById("userBanlance").offsetParent.offsetParent
+          .offsetLeft
+      );
+      console.log(document.getElementById("betRuleButton").offsetTop);
+      console.log(document.getElementById("betRuleButton").offsetLeft);
+    },
     getLogout() {
       this.dialogConfirm = true;
     },
@@ -114,6 +123,9 @@ export default {
 </script>
 
 <style scoped>
+#userBanlance {
+  position: relative;
+}
 .v-menu__content {
   border-radius: 15px;
 }

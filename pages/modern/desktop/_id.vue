@@ -162,11 +162,7 @@
                 >
                   <v-icon>add</v-icon>
                 </span>
-                <span
-                  v-else
-                  class="addChart"
-                  @click="removeTradMap(index)"
-                >
+                <span v-else class="addChart" @click="removeTradMap(index)">
                   <v-icon>close</v-icon>
                 </span>
               </tableTrendMap>
