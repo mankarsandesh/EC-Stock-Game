@@ -118,7 +118,7 @@ module.exports = {
     // "~/plugins/axios",
     "@/plugins/roarr", // for generating logs
     "@plugins/secure-storage", // for encrypting local storage
-    { src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
+    // { src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
     "@/plugins/filters",
     "@/plugins/i18n",
     "@/plugins/chart",
