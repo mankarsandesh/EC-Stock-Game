@@ -1,6 +1,6 @@
 <template>
   <v-container fluid mt-2 class="containerNew pa-2">
-    <v-layout>
+    <v-layout >
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
