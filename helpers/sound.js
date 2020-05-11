@@ -8,7 +8,7 @@ class Sound {
 
     // win user win bet use this sound for play 
     winBet() {
-        return this.audio('winBet.mp3').play();
+        return this.audio('winbet.mp3').play();
     }
 
     // the sound for user hitting the bet
