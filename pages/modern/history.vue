@@ -1,7 +1,5 @@
-<template>
-  <div>    
+<template>  
     <bethistory :search="search" :userBetHistory="userBetHistory" />
-  </div>
 </template>
 
 <script>
@@ -109,7 +107,7 @@ export default {
         };
         var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
-        });
+        });     
         if (data.status) {
           this.userBetHistory = data.data;
           this.loadingImage = false;
