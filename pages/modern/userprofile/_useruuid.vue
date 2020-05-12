@@ -1,9 +1,27 @@
 <template>
   <div xs2>
     <section v-if="messageError == false">
-      <v-container xs12>
+      <v-container>
         <v-flex>
-          <v-layout justify-center row mt-4>
+          <v-layout justify-center row>
+            <v-flex class="profileBackground">
+              <div class="leftFollowDiv">
+                <div style="flex-grow: wrap; width: 120px; margin: 0 10px;">
+                  {{ $t("profile.historyPeriod") }}:
+                  <v-select
+                    v-model="filter"
+                    height="10px"
+                    dense
+                    hide-details
+                    :items="items"
+                    solo
+                  ></v-select>
+                </div>
+              </div>
+            </v-flex>
+          </v-layout>
+
+          <v-layout justify-center row style="margin-top:-40px;">
             <v-flex>
               <div class="profile-img-container">
                 <img
@@ -18,15 +36,11 @@
           <v-flex>
             <v-layout wrap sm12 xs12>
               <v-flex xs12>
-                <div class="text-capitalize">
-                  {{ visitProfileUserData.firstName }}
-                  {{ visitProfileUserData.lastName }}
-                </div>
                 <div
                   class="font-weight-medium"
                   v-if="visitProfileUserData.username"
                 >
-                  {{ visitProfileUserData.username }}
+                  @{{ visitProfileUserData.username }}
                 </div>
 
                 <span
@@ -35,7 +49,7 @@
                   {{ visitProfileUserData.currentActiveTime }}
                 </span>
                 <span v-else>
-                  <b>{{ $t("profile.lastActive") }} : </b>
+                  {{ $t("profile.lastActive") }} :
                   {{ visitProfileUserData.currentActiveTime }}
                 </span>
               </v-flex>
@@ -52,46 +66,31 @@
             </v-layout>
           </v-flex>
         </v-layout>
-        <v-layout wrap  justify-center  >       
-          <v-flex xs12 >
-            <div class="leftFollowDiv">
-              <span class="historyName">
-                {{ $t("profile.historyPeriod") }}:
-              </span>
-              <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
-                <v-select
-                  v-model="filter"
-                  height="15px"
-                  dense
-                  hide-details
-                  :items="items"
-                  solo
-                ></v-select>
-              </div>
-              <v-btn
-                v-if="visitProfileUserData.userUUID != getUserUUID"
-                v-bind:class="[
-                  visitProfileUserData.userUUID != getUserUUID &&
-                  visitProfileUserData.isFollowing == 0
-                    ? 'buttonFollow'
-                    : 'buttonunFollow'
-                ]"
-                v-on:click="
-                  followUserBet(
-                    visitProfileUserData.username,
-                    visitProfileUserData.userImage,
-                    visitProfileUserData.userUUID,
-                    visitProfileUserData.isFollowing
-                  )
-                "
-              >
-                {{
-                  visitProfileUserData.isFollowing == 0
-                    ? $t("useraction.followBet")
-                    : $t("useraction.unfollowBet")
-                }}
-              </v-btn>
-            </div>
+        <v-layout wrap justify-center>
+          <v-flex xs12 style="text-align:center;">
+            <v-btn
+              v-if="visitProfileUserData.userUUID != getUserUUID"
+              v-bind:class="[
+                visitProfileUserData.userUUID != getUserUUID &&
+                visitProfileUserData.isFollowing == 0
+                  ? 'buttonFollow'
+                  : 'buttonunFollow'
+              ]"
+              v-on:click="
+                followUserBet(
+                  visitProfileUserData.username,
+                  visitProfileUserData.userImage,
+                  visitProfileUserData.userUUID,
+                  visitProfileUserData.isFollowing
+                )
+              "
+            >
+              {{
+                visitProfileUserData.isFollowing == 0
+                  ? $t("useraction.followBet")
+                  : $t("useraction.unfollowBet")
+              }}
+            </v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -99,7 +98,7 @@
     <v-container mb-5>
       <v-layout row wrap>
         <v-flex xs12 mt-3 v-if="messageError == false">
-          <v-layout pa-1 wrap justify-center>
+          <v-layout pa-3 wrap justify-center>
             <v-flex xs6 sm3
               ><div class="cul-box" style="color: #7e57c2;">
                 <span>
@@ -121,7 +120,7 @@
                 <span>
                   <fa
                     icon="money-bill-wave"
-                    style="font-size: 40px; color: #ace6af;"
+                    style="font-size: 40px; color: #2bb13a;"
                   />
                 </span>
                 <span class="number-box">{{
@@ -132,7 +131,7 @@
                 }}</span>
               </div>
             </v-flex>
-       
+
             <v-flex xs6 sm3>
               <div class="cul-box cul-box-red">
                 <span>
@@ -354,8 +353,6 @@ export default {
             headers: config.header
           }
         );
-        console.log(reqBody);
-        console.log(res);
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
@@ -402,21 +399,27 @@ export default {
 };
 </script>
 <style scoped>
+.profileBackground {
+  background: url(/bg/Inner-page-banner.png);
+  background-size: cover;
+  height: 100px;
+  width: 100%;
+  color: white;
+  padding: 5px 0px 0px 45px;
+}
 .name div {
   width: 100% !important;
   text-align: center;
 }
 .leftFollowDiv {
+  float: right;
   display: flex;
   align-items: center;
- 
 }
 
-.historyName {
-  flex-grow: wrap;
-  font-weight: bold;
-}
-
+/* 
+Error Box When User Not Found
+*/
 .box-error {
   border: 1px solid #dddddd;
   background-color: #fff;
@@ -437,10 +440,13 @@ export default {
   margin-right: 10px;
 }
 
+/* Error Box End Here */
+
 .editButton {
-  color: #fff;
+  color: #2bb13a;
   font-size: 16px;
   font-weight: 800;
+  text-transform: uppercase;
 }
 
 .stock-history-container {
@@ -457,7 +463,7 @@ export default {
 }
 
 .number-box {
-  font-size: 25px;
+  font-size:18px;
   font-weight: bolder;
 }
 
@@ -466,26 +472,21 @@ export default {
   width: 100%;
 }
 
-.cul-box:first-child {
-  margin-left: 0;
-}
-
 .cul-box {
   padding: 5px;
   border-radius: 10px;
-  border: #c0acef solid 3px;
+  border: #c0acef solid 2px;
   background-color: #fff;
-  margin: 15px;
+  margin: 10px;
   box-shadow: 0 0 2px #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
 }
-
 .cul-box-green {
-  border-color: #ace6af !important;
-  color: #ace6af;
+  border-color: #2bb13a !important;
+  color: #2bb13a;
 }
 
 .cul-box-yellow {
@@ -526,7 +527,9 @@ export default {
   height: 100px;
   width: 100px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #fff !important;
+  border: 1px solid #dddddd !important;
+  padding: 4px;
 }
 
 .profile-name-tittle {
@@ -552,8 +555,8 @@ export default {
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   font-size: 14px;
-  width: 120px;
-  height: 48px;
+  width: 110px;
+  height: 34px;
   flex-grow: wrap;
 }
 
@@ -562,8 +565,8 @@ export default {
   border-radius: 3px;
   background-image: linear-gradient(to right, #888787 30%, #626161 51%);
   font-size: 14px;
-  width: 120px;
-  height: 48px;
+  width: 110px;
+  height: 34px;
   flex-grow: wrap;
 }
 </style>

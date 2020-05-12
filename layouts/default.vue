@@ -57,7 +57,7 @@
       <languageDialog ref="language" />
 
       <Logout size="normal" />
-      <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0"  />
+      <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
     </v-toolbar>
 
     <div
@@ -109,7 +109,7 @@
       > -->
     </div>
     <v-content>
-      <v-container pa-1>
+      <v-container>
         <nuxt />
       </v-container>
     </v-content>
@@ -190,8 +190,8 @@ export default {
 </script>
 
 <style scoped>
-.light-toobar{
-  background-color: #FFF !important;
+.light-toobar {
+  background-color: #fff !important;
 }
 .layout-logout {
   display: flex;
