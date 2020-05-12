@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       dialogprofile: false,
-      defaultImage: "../no-profile-pic.jpg"
+      defaultImage: "/no-profile-pic.jpg"
     };
   },
   computed: {

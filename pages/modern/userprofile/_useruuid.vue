@@ -58,9 +58,11 @@
                   class="font-weight-medium"
                   v-if="visitProfileUserData.userUUID == getUserUUID"
                 >
-                  <a class="editButton" href="/modern/profile/"
-                    >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
-                  </a>
+                  <nuxt-link to="/modern/profile">
+                    <a class="editButton"
+                      >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
+                    </a>
+                  </nuxt-link>
                 </span>
               </v-flex>
             </v-layout>
@@ -463,7 +465,7 @@ Error Box When User Not Found
 }
 
 .number-box {
-  font-size:18px;
+  font-size: 18px;
   font-weight: bolder;
 }
 

@@ -39,7 +39,6 @@
             <div class="image_container">
               <v-avatar :size="50">
                 <img :src="imgProfile" alt="img-profile" />
-                <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
               <span
                 class="camera_container"
@@ -344,10 +343,9 @@ export default {
       newImage: "",
       imagePath: config.apiDomain + "/images/user/avatar/",
       avatarDialog: false,
-      updating: false,
-      profile: {
-        defaultImage: "no-profile-pic.jpg"
-      }
+      updating: false,      
+      defaultImage: "/no-profile-pic.jpg"
+     
     };
   },
   components: {
@@ -359,7 +357,7 @@ export default {
     imgProfile() {
       return this.getUserInfo.profileImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/` + this.getUserInfo.profileImage;
+        : `${config.apiDomain}/`+this.getUserInfo.profileImage;
     },
     userData() {
       let data = this.getUserInfo;
