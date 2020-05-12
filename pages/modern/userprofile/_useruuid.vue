@@ -201,6 +201,35 @@
           </div>
         </v-flex>
       </v-layout>
+
+      <!-- Follow and UnFollow Dialog box-->
+      <v-dialog
+        v-model="followDialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        scrollable
+      >
+        <v-card tile>
+          <v-toolbar card dark style="background-color:#2cb13b;">
+            <v-btn icon dark @click="followDialog = false">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>{{
+              this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+            }}</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+
+          <followBet
+            :username="this.username"
+            :userImage="this.userImage"
+            :FollowerUserUUID="this.FollowUserUUID"
+            :isFollowing="this.FolloworNot"
+            @followBetClose="closeFollowBet"
+          />
+        </v-card>
+      </v-dialog>
     </v-container>
   </div>
 </template>
@@ -221,6 +250,7 @@ export default {
   },
   data() {
     return {
+      followDialog: false,
       myProfileImage: "",
       renderComponent: true, // render Follow Bet
       username: "",
@@ -313,17 +343,14 @@ export default {
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      if (method == 0) {
-        this.FolloworNot = 1;
-      } else {
-        this.FolloworNot = 2;
-      }
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = userImg
         ? this.userImgProfile(userImg)
         : this.defaultImage;
-      this.dialog = true;
+      this.followDialog = true;
       this.forceRerender();
     },
+    // Profile Image Set
     userImgProfile(userImg) {
       return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
     },
@@ -333,6 +360,7 @@ export default {
       this.startDate = date.format(lastWeek, "YYYY-MM-DD");
       this.endDate = now;
     },
+    // fetch Visitor User Profile Infomation.
     async getUserProfileByID() {
       try {
         if (!this.$route.params.useruuid) {
