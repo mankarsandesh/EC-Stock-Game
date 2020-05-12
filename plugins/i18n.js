@@ -1,11 +1,12 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
+import secureStorage from "./secure-storage";
 
 Vue.use(VueI18n);
 
 export default ({ app, store }) => {
   app.i18n = new VueI18n({
-    locale: store.getters.getLocale,
+    locale: secureStorage.getItem("lang") || "cn",
     fallbackLocale: "cn",
     messages: {
       us: require("~/locales/us.json"),
