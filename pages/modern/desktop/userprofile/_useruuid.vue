@@ -3,8 +3,8 @@
     <section class="breadcrumbs" v-if="messageError == false">
       <v-container md10>
         <v-parallax dark height="150">
-          <v-layout align-center row>
-            <v-flex xs6>
+          <v-layout align-center row  >
+            <v-flex xs6 md12>
               <div class="flex-container">
                 <div class="profile-img-container">
                   <div class="profile-crowd">
