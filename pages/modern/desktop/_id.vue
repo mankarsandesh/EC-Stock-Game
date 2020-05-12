@@ -1,6 +1,6 @@
 <template>
   <v-container fluid mt-2 class="containerNew pa-2">
-    <v-layout>
+    <v-layout >
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
@@ -198,7 +198,6 @@ import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
-import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "~/config/config.global";
@@ -219,7 +218,6 @@ export default {
     chartApp,
     betButton,
     tableTrendMap,
-    onlyrules,
     stockSelect,
     leaderboardUserlist,
     lotteryDraw,

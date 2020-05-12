@@ -85,7 +85,7 @@ export default {
   font-size: 16px;
   color: #9e8e8e;
   text-align: center;
-  margin: 50% auto;
+  margin: 300px auto;
 }
 .notBets h3 {
   text-align: center;

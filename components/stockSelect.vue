@@ -163,7 +163,7 @@ export default {
       if (GET_STOCK_FULL_URL !== `/modern/desktop/${GET_STOCK_URL}`) {
         if (GET_STOCK_TYPE == "crypto") {
           if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => {});
           } else {
             // if is multi game then add selected game
             this.addStockMultiGame(GET_STOCK_URL);
@@ -171,7 +171,7 @@ export default {
         } else {
           // check is multi game or not
           if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`);
+            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => {});
             // if is multi game then add selected game
           } else {
             this.addStockMultiGame(GET_STOCK_URL);

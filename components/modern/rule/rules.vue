@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import onlyrules from "~/components/modern/stocklist/onlyrule";
+import onlyrules from "~/components/modern/rule/onlyrule";
 export default {
   components: {
     onlyrules

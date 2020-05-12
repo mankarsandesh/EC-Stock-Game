@@ -7,14 +7,15 @@
     light
   >
     <v-card>
-      <v-toolbar flat>
-        <v-layout row>
-          <h2 class="title_menu">{{ $t("profile.stockanalysis") }}</h2>
+      <v-toolbar card dark style="background-color:#2cb13b;">
+        <v-layout row justify-center>
+          <h2>{{ $t("profile.stockanalysis") }}</h2>
           <v-spacer></v-spacer>
           <v-icon size="20" @click="dialogStockAnalysis = false">close</v-icon>
         </v-layout>
       </v-toolbar>
       <v-flex
+        mt-2
         xs12
         md12
         v-if="$vuetify.breakpoint.xs"
@@ -36,7 +37,7 @@
       </v-flex>
 
       <v-flex xs12 sm12 pt-3>
-        <v-layout row justify-center >
+        <v-layout row justify-center>
           <v-flex
             xs2
             sm12
@@ -49,15 +50,17 @@
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
             </div>
-            <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+            <h3 class="text-capitalize">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </h3>
             <p>
               <strong> {{ $t("profile.onlinestatus") }} : </strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
-             <v-divider></v-divider>
+            <v-divider></v-divider>
           </v-flex>
         </v-layout>
-         <v-layout row justify-center pa-2 >
+        <v-layout row justify-center pa-2>
           <!-- select start date  -->
           <v-flex xs5 sm4 mr-1 ml-1>
             <div class="date_picker_container" @click="startDateClick">
@@ -81,7 +84,7 @@
             </div>
           </v-flex>
           <!-- select end date -->
-          <v-flex xs5 sm4 mr-1 >
+          <v-flex xs5 sm4 mr-1>
             <div class="date_picker_container" @click="endDateClick">
               <div class="title_date_picker">
                 <strong>{{ $t("msg.to") }}</strong>
@@ -103,7 +106,7 @@
             </div>
           </v-flex>
           <!-- end of end date -->
-          <v-flex xs1 sm1 ml-1 mr-4 >
+          <v-flex xs1 sm1 ml-1 mr-4>
             <div class="date_picker_container">
               <div class="title_date_picker">
                 <span></span>
@@ -116,7 +119,7 @@
         </v-layout>
       </v-flex>
       <v-flex xs12 sm12 md10 lg10 mt-4 pb-4>
-        <v-layout row justify-center>  
+        <v-layout row justify-center>
           <v-flex xs11 sm10>
             <div class="chart_container">
               <div v-if="isDataValid" class="chart-map-color">

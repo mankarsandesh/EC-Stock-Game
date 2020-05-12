@@ -20,7 +20,7 @@
             v-for="(data, index) in followingList"
             :key="index"
           >
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.profileImage">
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
                 <img class="userImage" :src="imgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">{{
@@ -129,6 +129,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if (res.code == 200) {
           this.followingList = res.data;
           this.countFollwing = res.data.length;

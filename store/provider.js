@@ -1,6 +1,7 @@
 import config from "~/config/config.global";
 import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
+import Cookies from "../plugins/js-cookie";
 
 const state = () => ({
   authUser: {}, // store auth user data
@@ -93,6 +94,7 @@ const actions = {
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);
+        context.commit('SET_USER_UUID', userInfo.userUUID);
       } else {
         throw new Error(config.error.general);
       }

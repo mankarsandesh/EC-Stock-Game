@@ -287,11 +287,11 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-      this.demo = this.window.width;
+      this.demo = this.window.width;     
       // Chart Size Change According Desktop and Laptop Size
       if (this.window.width >= 2000) {
-        this.chartHeight = "420vh";
-        this.heightChart = 420;
+        this.chartHeight = "360vh";
+        this.heightChart = 360;
       } else if (this.window.width > 1400) {
         this.chartHeight = "330vh";
         this.heightChart = 330;

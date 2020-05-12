@@ -3,7 +3,7 @@
     <v-layout style="margin: 0 0 -1% 0px;">
       <v-flex>
         <v-layout row wrap class="pt-1">
-          <v-flex xs12 sm6>
+          <v-flex xs12 sm12>
             <v-layout>
               <v-flex class="text-xs-center">
                 <span class="uppercase-text grey--text"
@@ -50,13 +50,8 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs12 sm6 pt-3>
+          <v-flex xs12 sm12 pt-3>
             <v-layout xs12 sm6>
-              <v-flex xs12 xs6 class="text-xs-center">
-                <v-btn class="buttonGreensmall">
-                  {{ $t("msg.Game Mode") }}
-                </v-btn>
-              </v-flex>
               <v-flex xs12 xs6 class="text-xs-center">
                 <v-btn class="buttonGreensmall">
                   <nuxt-link to="/modern" class="text-white">
@@ -72,8 +67,8 @@
 
     <!-- betting zone -->
     <v-layout row wrap class="container-bet">
-      <v-flex xs12 sm6 md12>
-        <v-layout wrap xs6>
+      <v-flex xs12 sm12 md12>
+        <v-layout wrap xs12>
           <v-flex xs1 align-self-center class="text-xs-right">
             <v-icon
               color="#003e70"
@@ -96,18 +91,21 @@
             ></trendMap>
           </v-flex>
 
-          <v-flex v-else xs10 class="text-xs-center">
+          <v-flex v-else sm10 xs10 class="text-xs-center">
             <span>
               <h3 class="text-uppercase">
-                {{ $t("stockname." + $route.params.id) }}
+                {{ $t("stockname." + $route.params.id) }} /
+                <span
+                  >{{ getStockLoop(this.$route.params.id) }}
+                  {{ $t("msg.minute game") }}</span
+                >
               </h3>
               <span class="text-primary">
-                <span>{{ getStockLoop(this.$route.params.id) }}</span>
-                {{ $t("msg.minute game") }} | ID:
+                GAME ID:
                 <span>{{ getGameUUIDByStockName(this.$route.params.id) }}</span>
               </span>
             </span>
-            <v-flex pa-2 xs12 class="chartDesgin">
+            <v-flex pa-2 sm12 xs12 class="chartDesgin">
               <chartMobile :stockName="$route.params.id"></chartMobile>
             </v-flex>
           </v-flex>
@@ -124,7 +122,7 @@
         </v-layout>
       </v-flex>
 
-      <v-flex>
+      <v-flex style="background-color:rgb(242, 244, 255);">
         <div
           sm12
           xs12
@@ -2003,11 +2001,12 @@ h4 {
 
 .bettingFooter {
   border-radius: 20px;
-  margin-top: 15px;
+  margin: 15px 0px;
+  padding: 10px;
   color: #fff;
   background-color: #8291b2;
   text-align: center !important;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .setpricechip {

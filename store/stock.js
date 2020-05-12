@@ -170,7 +170,7 @@ const getters = {
   getStockUUIDByStockName: state => stockName => {
     let result = null;
     for (let i = 0; i < state.stocks.length; i++) {
-      if (state.stocks[i].stockName === stockName) {
+      if (state.stocks[i].stockName == stockName) {
         result = state.stocks[i].stockUUID;
         break;
       }
