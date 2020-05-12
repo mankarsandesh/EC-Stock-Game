@@ -142,7 +142,7 @@ export default {
     countryFlag,
     languageDialog,
     welcomeUser,
-    Logout,
+    mobileLogout,
     Button
   },
   data() {

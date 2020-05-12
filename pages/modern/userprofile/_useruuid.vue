@@ -6,7 +6,9 @@
           <v-layout justify-center row>
             <v-flex class="profileBackground">
               <div class="leftFollowDiv">
-                <div style="flex-grow: wrap; width: 120px; margin: 0 10px;">
+                <div
+                  style="flex-grow: wrap; width: 120px; margin: 0 10px;min-height: 36px !important;"
+                >
                   {{ $t("profile.historyPeriod") }}:
                   <v-select
                     v-model="filter"
@@ -238,7 +240,7 @@
 import { mapGetters } from "vuex";
 import VueApexCharts from "vue-apexcharts";
 import config from "~/config/config.global";
-import followBet from "~/components/modern/follow/followBet";
+import followBet from "~/components/mobile/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../plugins/secure-storage";
 import log from "roarr";
@@ -337,7 +339,7 @@ export default {
     },
     // Close Follow Bet Popup
     closeFollowBet() {
-      this.dialog = false;
+      this.followDialog = false;
     },
     // Follow User Bet
     followUserBet: function(username, userImg, userUUID, method) {
@@ -595,7 +597,6 @@ Error Box When User Not Found
   border-radius: 3px;
   background-image: linear-gradient(to right, #888787 30%, #626161 51%);
   font-size: 14px;
-  width: 110px;
   height: 34px;
   flex-grow: wrap;
 }
