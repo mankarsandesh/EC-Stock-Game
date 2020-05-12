@@ -17,7 +17,7 @@
             <div class="date_picker">
               <span class="select_date">{{ startDate }}</span>
               <span class="icon_date">
-                <v-icon>date_range</v-icon>
+                <v-icon>fa-calendar</v-icon>
               </span>
             </div>
           </div>
@@ -39,7 +39,7 @@
             <div class="date_picker">
               <span class="select_date">{{ endDate }}</span>
               <span class="icon_date">
-                <v-icon>date_range</v-icon>
+                <v-icon>fa-calendar</v-icon>
               </span>
             </div>
           </div>

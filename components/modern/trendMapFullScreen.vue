@@ -7,12 +7,14 @@
         :height="10"
         solo
         class="rounded-card"
+        append-icon="fa-chevron-down"
       ></v-select>
       <v-select
         v-model="which_one"
         :items="which_oneItem"
         solo
         class="rounded-card"
+        append-icon="fa-chevron-down"
       ></v-select>
     </v-flex>
     <v-flex lg10 md10>

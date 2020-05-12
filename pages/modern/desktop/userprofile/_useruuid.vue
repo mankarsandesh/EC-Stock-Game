@@ -63,6 +63,7 @@
                     hide-details
                     :items="items"
                     solo
+                    append-icon="fa-chevron-down"
                   ></v-select>
                 </div>
                 <v-btn

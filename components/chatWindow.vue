@@ -65,7 +65,7 @@
       </div>
     </div>
     <v-btn right fab slot="reference" class="liveChat">
-      <v-icon>chat</v-icon>
+      <v-icon>fa-comments</v-icon>
     </v-btn>
   </popper>
 </template>

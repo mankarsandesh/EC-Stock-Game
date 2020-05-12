@@ -4,7 +4,7 @@
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">close</v-icon>
+          <v-icon color="#0b2968">fa-close</v-icon>
         </span>
         <v-layout column>
           <v-flex xs12 pt-3>
@@ -26,7 +26,7 @@
       </v-flex>
       <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
-          <v-icon color="#FFF">list</v-icon>
+          <v-icon color="#FFF" size="20">fa-list</v-icon>
         </span>
       </v-flex>
       <!-- End Left Side -->
@@ -157,14 +157,14 @@
               ></tableTrendMap>
             </div>
             <span class="addChart" @click="removeTradMap(index)">
-              <v-icon>close</v-icon>
+              <v-icon>fa-times</v-icon>
             </span>
             <span
               class="addChart"
               @click="addTrendMap()"
               v-if="trendTypes.length == index + 1 && trendTypes.length < 4"
             >
-              <v-icon>add</v-icon>
+              <v-icon>fa-plus</v-icon>
             </span>
           </div>
         </v-flex>
@@ -225,7 +225,7 @@
             @click="setAfterFullScreenClosePage()"
             title="Full Screen"
           >
-            <v-icon>fullscreen</v-icon>
+            <v-icon size="25">fa-arrows-alt</v-icon>
           </v-btn>
         </div>
       </v-flex>
@@ -429,12 +429,12 @@ export default {
       }
     },
     // Remove trendMap
-    removeTradMap(index) {     
-      var indexValue = this.trendTypes[index];    
+    removeTradMap(index) {
+      var indexValue = this.trendTypes[index];
       var newData = this.trendTypes.filter(function(data) {
         return data != indexValue;
       });
-      this.trendTypes = newData;     
+      this.trendTypes = newData;
     },
     loaded() {
       this.isLoad = true;
@@ -536,12 +536,15 @@ export default {
 }
 
 .sidebar-close {
-  /* z-index: 999; */
-  padding: 3px;
+  z-index: 999;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
   font-size: 16px;
   cursor: pointer;
   background-color: #4464ff !important;
-  border-radius: 180px;
+  border-radius: 50%;
   position: absolute;
   top: -15px;
   right: -8px;
@@ -559,8 +562,11 @@ export default {
   top: 75px;
   background-color: #4464ff !important;
   color: #fff !important;
-  padding: 5px;
   border: 1px solid #dddddd;
-  border-radius: 180px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
 }
 </style>

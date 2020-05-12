@@ -22,7 +22,7 @@
             v-bind:class="{ active: isActiveWeek }"
             v-on:click="sortingBy('weekly')"
           >
-            <v-icon small>event</v-icon>
+            <v-icon small>fa-calendar</v-icon>
             {{ $t("leaderboard.weeklyrankings") }}
           </span>
           <span
@@ -30,7 +30,7 @@
             v-bind:class="{ active: isActiveMonth }"
             v-on:click="sortingBy('monthly')"
           >
-            <v-icon small>event</v-icon>
+            <v-icon small>fa-calendar</v-icon>
             {{ $t("leaderboard.monthlyrankings") }}
           </span>
         </v-flex>
@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import { mapState,mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 export default {
@@ -187,7 +187,7 @@ export default {
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
     }),
-     ...mapGetters(["getUserInfo"])      
+    ...mapGetters(["getUserInfo"])
   },
   methods: {
     // Render Follow Bet Component
@@ -239,7 +239,7 @@ export default {
     userImgProfile(userImage) {
       return userImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/`+userImage;
+        : `${config.apiDomain}/` + userImage;
     },
     // Open Dialog box When User Click on Follow Button
     followUser(username, userImage, userUUID, method) {
@@ -267,7 +267,7 @@ export default {
           {
             headers: config.header
           }
-        );       
+        );
         this.topPlayerData = data.data;
         this.loadingImage = false;
       } catch (error) {

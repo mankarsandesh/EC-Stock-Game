@@ -13,6 +13,7 @@
         item-text="type"
         item-value="name"
         return-object
+        append-icon="fa-chevron-down"
       ></v-select>
     </v-flex>
     <v-flex md3>
@@ -21,7 +22,7 @@
         :items="stockNames"
         label="Stock Name"
         class="selectStock"
-        prepend-icon="navigate_next"
+        prepend-icon="fa-chevron-right"
         color="blue"
         full-width
         solo
@@ -30,6 +31,7 @@
         item-text="stockName"
         item-value="name"
         return-object
+        append-icon="fa-chevron-down"
       ></v-select>
     </v-flex>
     <v-flex md3>
@@ -38,7 +40,7 @@
         :items="minutes"
         label="min"
         class="selectStock"
-        prepend-icon="navigate_next"
+        prepend-icon="fa-chevron-right"
         color="blue"
         full-width
         solo
@@ -47,6 +49,7 @@
         item-value="loopName"
         return-object
         id="minute"
+        append-icon="fa-chevron-down"
       >
         <template slot="selection" slot-scope="data"
           >{{ data.item.loopName }} min</template
@@ -69,7 +72,7 @@
       <v-text-field
         v-model="gameId"
         label="game id"
-        prepend-icon="navigate_next"
+        prepend-icon="fa-chevron-right"
         color="blue"
         full-width
         solo
@@ -163,7 +166,9 @@ export default {
       if (GET_STOCK_FULL_URL !== `/modern/desktop/${GET_STOCK_URL}`) {
         if (GET_STOCK_TYPE == "crypto") {
           if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => console.log(ex));
+            this.$router
+              .replace(`/modern/desktop/${GET_STOCK_URL}`)
+              .catch(ex => console.log(ex));
           } else {
             // if is multi game then add selected game
             this.addStockMultiGame(GET_STOCK_URL);
@@ -171,7 +176,9 @@ export default {
         } else {
           // check is multi game or not
           if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => console.log(ex));
+            this.$router
+              .replace(`/modern/desktop/${GET_STOCK_URL}`)
+              .catch(ex => console.log(ex));
             // if is multi game then add selected game
           } else {
             this.addStockMultiGame(GET_STOCK_URL);

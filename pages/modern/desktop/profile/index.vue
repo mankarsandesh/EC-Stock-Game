@@ -52,8 +52,9 @@
                       :size="20"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >edit</v-icon
                     >
+                      fa-edit
+                    </v-icon>
                   </span>
                 </div>
               </div>
@@ -75,8 +76,9 @@
                       :size="20"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >edit</v-icon
                     >
+                      fa-edit
+                    </v-icon>
                   </span>
                 </div>
               </div>
@@ -98,8 +100,8 @@
                       :size="20"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                      >fa-edit
+                    </v-icon>
                   </span>
                 </div>
               </div>
@@ -121,7 +123,7 @@
                     <option value="female">{{ $t("profile.female") }}</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="20" color="#bdbdbd">fa-chevron-down</v-icon>
                   </span>
                 </div>
               </div>
@@ -159,7 +161,7 @@
                     <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="20" color="#bdbdbd">fa-chevron-down</v-icon>
                   </span>
                 </div>
               </div>

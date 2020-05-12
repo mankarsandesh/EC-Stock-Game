@@ -2,20 +2,20 @@
   <div>
     <breadcrumbs :title="$t('breadcrumbs.stockList')" />
     <v-container>
-      <v-layout row wrap mt-3 md6 align-center justify-center > 
-        <v-flex md10 >
+      <v-layout row wrap mt-3 md6 align-center justify-center>
+        <v-flex md10>
           <v-flex md6 class="d-flex">
             <v-select
               class="border-round"
               hide-details
               :items="items"
               :placeholder="$t('msg.sortby')"
+              append-icon="fa-chevron-down"
             ></v-select>
-      
+
             <v-btn @click="goSearch" class="buttonGreen">
               {{ $t("msg.go") }}
             </v-btn>
-
           </v-flex>
         </v-flex>
       </v-layout>

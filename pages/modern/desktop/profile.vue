@@ -12,9 +12,9 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="dialog = true"
-                      >photo_camera</v-icon
-                    >
+                    <v-icon color="black" :size="20" @click="dialog = true">
+                      fa-camera
+                    </v-icon>
                     <!-- <v-icon color="black" :size="20">photo_camera</v-icon> -->
                   </button>
                 </span>
@@ -164,7 +164,7 @@ export default {
   data() {
     return {
       imagePath: config.apiDomain + "/images/user/avatar/",
-      avatarID: "",      
+      avatarID: "",
       snackbar: false,
       newImage: "",
       dialog: false,
@@ -188,12 +188,12 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-    imgProfile() {      
-        if (this.getUserInfo.profileImage == null) { 
-         return `${this.defaultImage}`;  
-        } else {
-          return`${config.apiDomain}/${this.getUserInfo.profileImage}`;
-        }
+    imgProfile() {
+      if (this.getUserInfo.profileImage == null) {
+        return `${this.defaultImage}`;
+      } else {
+        return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      }
     }
   },
   watch: {
@@ -228,7 +228,7 @@ export default {
         portalProviderUUID: this.getPortalProviderUUID,
         userUUID: this.getUserUUID,
         version: config.version
-      };     
+      };
       try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
@@ -236,7 +236,7 @@ export default {
           {
             headers: config.header
           }
-        );        
+        );
         if (res.status) {
           this.blurValue = 0;
           this.setUserData();
