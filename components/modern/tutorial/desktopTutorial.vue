@@ -54,7 +54,7 @@
       <!-- select chipcamount  -->
       <div class="guide-top" style="margin-right: 90px;" v-if="getTutorialStepNumber === 6">
         <span class="guide-title text-uppercase">{{$t("tutorial.betConfirm")}}</span>
-        <span class="guide-description">{{$t("tutorial.betLastdigiteven")}}</span>
+        <span class="guide-description">{{$t("tutorial.betLastDigitEven")}}</span>
       </div>
       <!-- enter amount bet -->
       <!-- has scroll   v-if="getTutorialStepNumber === 7 && getIsWindowsHasScroll"-->
