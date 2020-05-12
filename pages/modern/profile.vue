@@ -11,8 +11,11 @@
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
-              <span class="camera_container" style=" position: absolute; top: 9%;">
-                <v-icon color="black" :size="20">photo_camera</v-icon>
+              <span
+                class="camera_container"
+                style=" position: absolute; top: 9%;"
+              >
+                <v-icon color="black" :size="20">fa-camera</v-icon>
               </span>
             </div>
             <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
@@ -35,8 +38,11 @@
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
-              <span class="camera_container" style="position: absolute;top: 5%;">
-                <v-icon color="black" :size="20">photo_camera</v-icon>
+              <span
+                class="camera_container"
+                style="position: absolute;top: 5%;"
+              >
+                <v-icon color="black" :size="20">fa-camera</v-icon>
               </span>
             </div>
             <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
@@ -97,7 +103,12 @@
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -116,7 +127,12 @@
                     placeholder="Your First Name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -135,7 +151,12 @@
                     placeholder="Your Last Name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -148,7 +169,12 @@
                   </label>
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
+                  <select
+                    ref="gender"
+                    id="gender"
+                    name="gender"
+                    :value="userData.gender"
+                  >
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                   </select>
@@ -172,7 +198,12 @@
                     placeholder="mackychinma@gmail.com"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -185,7 +216,12 @@
                   </label>
                 </v-flex>
                 <v-flex xs10 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="country" id="country" name="country" :value="userData.country">
+                  <select
+                    ref="country"
+                    id="country"
+                    name="country"
+                    :value="userData.country"
+                  >
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
                     <option value="THA">Thailand</option>
@@ -205,7 +241,8 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                  >{{ $t("msg.save") }}</v-btn>
+                    >{{ $t("msg.save") }}</v-btn
+                  >
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>
@@ -222,9 +259,7 @@
                 block
               >
                 <span class="padding-right-60">
-                  {{
-                  $t("profile.onlinehistory")
-                  }}
+                  {{ $t("profile.onlinehistory") }}
                 </span>
                 <i class="fa fa-plus"></i>
               </v-btn>
@@ -238,9 +273,7 @@
                 block
               >
                 <span class="padding-right-60">
-                  {{
-                  $t("profile.stockanalysis")
-                  }}
+                  {{ $t("profile.stockanalysis") }}
                 </span>
                 <i class="fa fa-plus"></i>
               </v-btn>

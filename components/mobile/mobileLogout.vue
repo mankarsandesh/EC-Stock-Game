@@ -3,7 +3,7 @@
     <v-menu offset-y :close-on-content-click="false" :min-width="80">
       <template v-slot:activator="{ on }">
         <button flat v-on="on" v-show="isShow == 'classic'">
-          <v-icon size="30">account_circle</v-icon>
+          <v-icon size="30">fa-user-circle</v-icon>
         </button>
         <v-btn flat v-on="on" v-show="isShow == 'modern'">
           <v-avatar size="30">

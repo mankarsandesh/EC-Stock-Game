@@ -26,7 +26,7 @@
                       hide-details
                       v-model="dateFrom"
                       label="From"
-                      append-icon="event"
+                      append-icon="fa-calendar"
                       readonly
                       v-on="on"
                     ></v-text-field>
@@ -54,7 +54,7 @@
                       hide-details
                       v-model="dateTo"
                       label="To"
-                      append-icon="event"
+                      append-icon="fa-calendar"
                       readonly
                       v-on="on"
                     ></v-text-field>
@@ -83,7 +83,7 @@
               <v-flex xs6 md6>
                 <v-text-field
                   v-model="search"
-                  append-icon="search"
+                  append-icon="fa-search"
                   label="Search"
                   :placeholder="$t('bethistory.searchbyName')"
                   single-line
@@ -92,6 +92,7 @@
               </v-flex>
               <v-flex xs6 md>
                 <v-select
+                append-icon="fa-chevron-down"
                   @change="sortingBy"
                   v-model="sortby"
                   hide-details

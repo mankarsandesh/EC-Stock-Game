@@ -32,23 +32,25 @@
         <!-- for EC World -->
         <div v-if="tabActiveName === 'world'">
           <div class="conve-container">
-            <!-- <div class="filter">
-              <span v-for="item in filterNames" :key="item.name">
-                <span class="rank filterSpan">
-                  {{ item.value }}
-                </span>
-              </span>
-            </div>-->
             <div class="bodyChat">
-              <div class="messageChatView noRecord" v-if="globalInvitation.length == 0">
+              <div
+                class="messageChatView noRecord"
+                v-if="globalInvitation.length == 0"
+              >
                 <i class="fa fa-bell"></i>
-                <p>{{$t("invitation.noInvitation")}}</p>
+                <p>{{ $t("invitation.noInvitation") }}</p>
               </div>
 
-              <div class="msgUser" v-for="data in globalInvitation" :key="data.index">
+              <div
+                class="msgUser"
+                v-for="data in globalInvitation"
+                :key="data.index"
+              >
                 <div class="messageChatView" v-if="globalInvitation.length > 0">
                   <div>
-                    <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+                    <nuxt-link
+                      :to="'/modern/desktop/userprofile/' + data.userUUID"
+                    >
                       <v-img
                         class="userImage"
                         :src="userImgProfile(data.userImage)"
@@ -59,47 +61,59 @@
                     </nuxt-link>
                   </div>
                   <div>
-                    <div class="ranking" v-if="data.category.some(element => element == 3)">
+                    <div
+                      class="ranking"
+                      v-if="data.category.some(element => element == 3)"
+                    >
                       <span
                         v-if="
                           data.category[0] == 3 && data.category.length == 1
                         "
                         class="label"
-                      >{{$t("invitation.winningRank")}}</span>
+                        >{{ $t("invitation.winningRank") }}</span
+                      >
 
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
                           <span v-on="on">#{{ data.Rank }}</span>
                         </template>
-                        <span>{{$t("invitation.userRank")}}</span>
+                        <span>{{ $t("invitation.userRank") }}</span>
                       </v-tooltip>
                     </div>
-                    <div v-if="data.category.some(element => element == 2)" class="followcount">
+                    <div
+                      v-if="data.category.some(element => element == 2)"
+                      class="followcount"
+                    >
                       <span
                         v-if="
                           data.category[0] == 2 && data.category.length == 1
                         "
                         class="label"
-                      >{{$t("invitation.totalFollower")}}</span>
+                        >{{ $t("invitation.totalFollower") }}</span
+                      >
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.followerCount }}</span>
                         </template>
-                        <span>{{$t("invitation.userfollowCount")}}</span>
+                        <span>{{ $t("invitation.userfollowCount") }}</span>
                       </v-tooltip>
                     </div>
-                    <div class="winRate" v-if="data.category.some(element => element == 1)">
+                    <div
+                      class="winRate"
+                      v-if="data.category.some(element => element == 1)"
+                    >
                       <span
                         v-if="
                           data.category[0] == 1 && data.category.length == 1
                         "
                         class="label"
-                      >{{$t("invitation.winningRate")}}</span>
+                        >{{ $t("invitation.winningRate") }}</span
+                      >
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.winRate }}%</span>
                         </template>
-                        <span>{{$t("invitation.userWinrate")}}</span>
+                        <span>{{ $t("invitation.userWinrate") }}</span>
                       </v-tooltip>
                     </div>
                   </div>
@@ -107,21 +121,28 @@
                     <v-btn
                       v-if="getUserUUID != data.userUUID"
                       class="following"
-                      v-on:click="followUser(null, data.userImage, data.userUUID, '0')"
-                    >{{$t("useraction.follow")}}</v-btn>
+                      v-on:click="
+                        followUser(null, data.userImage, data.userUUID, '0')
+                      "
+                      >{{ $t("useraction.follow") }}</v-btn
+                    >
                     <v-btn
                       v-if="getUserUUID == data.userUUID"
                       class="following"
-                    >{{$t("useraction.yourself")}}</v-btn>
+                      >{{ $t("useraction.yourself") }}</v-btn
+                    >
                   </div>
                 </div>
               </div>
             </div>
             <span class="leftMessage">
-              <span v-if="this.noInvitaion == true">{{$t("invitation.only10")}}</span>
-              <span
-                v-if="this.noInvitaion == false"
-              >{{$t("invitation.youHave")}} {{ leftUser }} {{$t("invitation.invitationLeft")}}</span>
+              <span v-if="this.noInvitaion == true">{{
+                $t("invitation.only10")
+              }}</span>
+              <span v-if="this.noInvitaion == false"
+                >{{ $t("invitation.youHave") }} {{ leftUser }}
+                {{ $t("invitation.invitationLeft") }}</span
+              >
             </span>
             <div class="messageChat">
               <v-flex col-md-12>
@@ -130,11 +151,34 @@
                     class="selectCategory"
                     item-text="value"
                     item-value="id"
+                    hide-details
                     v-model="selectCategory"
                     :items="categoryName"
-                    multiple
                     label="Select Category"
-                  ></v-select>&nbsp;
+                    append-icon="fa-chevron-down"
+                  >
+                    <!-- <template v-slot:prepend-item>
+                      <div>
+                        <v-list-tile ripple @click="toggle">
+                          <v-list-tile-action>
+                            <v-icon
+                              :color="
+                                selectedFruits.length > 0
+                                  ? 'indigo darken-4'
+                                  : ''
+                              "
+                              >{{ icon }}</v-icon
+                            >
+                          </v-list-tile-action>
+                          <v-list-tile-content>
+                            <v-list-tile-title>555</v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-divider class="mt-2"></v-divider>
+                      </div>
+                    </template> -->
+                  </v-select>
+                  &nbsp;
                   <i @click="sendInvitation()" class="fa fa-paper-plane"></i>
                 </v-btn>
               </v-flex>
@@ -164,7 +208,7 @@
     </v-dialog>
 
     <v-btn right fab slot="reference" class="liveChat">
-      <v-icon>chat</v-icon>
+      <v-icon>fa-comments</v-icon>
     </v-btn>
   </popper>
 </template>
@@ -205,7 +249,7 @@ export default {
       timeout: 2000,
       x: null,
       y: "top",
-      selectCategory: [],
+      selectCategory: ["1"],
       categoryName: [
         {
           id: "1",
@@ -258,7 +302,7 @@ export default {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
         eventName: "messageSend"
       },
-      ({ data }) => {        
+      ({ data }) => {
         const objectArray = Object.entries(data.data);
         let newData = [];
         objectArray.forEach(([key, value]) => {
@@ -282,7 +326,7 @@ export default {
     userImgProfile(userImage) {
       return userImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/`+userImage;
+        : `${config.apiDomain}/` + userImage;
     },
     // Close Follow Bet Popup
     closeFollowBet() {
@@ -318,11 +362,11 @@ export default {
           this.noInvitaion = true;
         }
       }
-    },   
-    followUser(username, userImage, userUUID, method) {     
+    },
+    followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2 
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
       this.dialog = true;
     },

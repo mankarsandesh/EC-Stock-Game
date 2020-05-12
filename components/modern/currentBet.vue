@@ -1,12 +1,14 @@
 <template>
   <v-layout row class="justify-center">
-    <v-flex   md10 lg10 mt-5>
+    <v-flex md10 lg10 mt-5>
       <v-data-table
         :items="currentBets"
         :rows-per-page-items="[10]"
         ref="table"
         :search="search"
         class="current-bet"
+        prev-icon="fa-chevron-left"
+        next-icon="fa-chevron-right"
       >
         <v-progress-linear
           v-slot:progress
@@ -71,8 +73,6 @@
             <td colspan="2"></td>
           </tr>
         </template>
-        
-
       </v-data-table>
     </v-flex>
   </v-layout>

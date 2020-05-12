@@ -15,11 +15,11 @@
       </v-layout>
       <v-flex grow pa-1 xs12 class="text-lg-right ranking">
         <span class="text-uppercase font-weight-bold">
-          <v-icon small>event</v-icon>
+          <v-icon small>fa-calendar-day</v-icon>
           {{ $t("leaderboard.weeklyrankings") }}
         </span>
         <span class="text-uppercase font-weight-bold">
-          <v-icon small>event</v-icon>
+          <v-icon small>fa-calendar-day</v-icon>
           {{ $t("leaderboard.monthlyrankings") }}
         </span>
       </v-flex>

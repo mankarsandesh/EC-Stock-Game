@@ -16,12 +16,14 @@
           :key="index"
         >
           <country-flag :country="item.country" size="big" />
-          <v-radio-group v-model="value" row>
-            <v-radio
+          <div>
+            <input
+              type="radio"
+              v-model="value"
               :value="item.value"
               @click="changeLange(item.value)"
-            ></v-radio>
-          </v-radio-group>
+            />
+          </div>
         </v-flex>
       </v-layout>
     </v-card>
@@ -39,6 +41,7 @@ export default {
   },
   data() {
     return {
+      value: "",
       dialog: false,
       lang: [
         {
@@ -60,12 +63,11 @@ export default {
       ]
     };
   },
-  created() {},
+  created() {
+    this.value = this.getLocale;
+  },
   computed: {
-    ...mapGetters(["getLocale"]),
-    value() {
-      return this.getLocale;
-    }
+    ...mapGetters(["getLocale"])
   },
   methods: {
     ...mapActions(["setLanguage"]),

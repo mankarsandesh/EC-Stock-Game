@@ -111,7 +111,7 @@
             item-value="id"
             v-model="selectCategory"
             :items="categoryName"
-            multiple
+            append-icon="fa-chevron-down"
             label="Select Category"
           ></v-select>
           &nbsp;<i @click="sendInvitation()" class="fa fa-paper-plane"></i
@@ -182,7 +182,7 @@ export default {
     userImgProfile(userImage) {
       return userImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/`+userImage;
+        : `${config.apiDomain}/` + userImage;
     },
     // Close Follow Bet Popup
     closeFollowBet() {
@@ -192,12 +192,12 @@ export default {
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2 
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
       console.log(userImage);
       console.log(this.userImage);
       this.dialog = true;
-    },    
+    },
     scrollDown() {
       $(".bodyChat")
         .stop()

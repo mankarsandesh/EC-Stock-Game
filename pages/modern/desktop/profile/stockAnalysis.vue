@@ -17,7 +17,7 @@
             <div class="date_picker">
               <span class="select_date">{{ startDate }}</span>
               <span class="icon_date">
-                <v-icon>date_range</v-icon>
+                <v-icon>fa-calendar</v-icon>
               </span>
             </div>
           </div>
@@ -39,7 +39,7 @@
             <div class="date_picker">
               <span class="select_date">{{ endDate }}</span>
               <span class="icon_date">
-                <v-icon>date_range</v-icon>
+                <v-icon>fa-calendar</v-icon>
               </span>
             </div>
           </div>
@@ -288,11 +288,10 @@ export default {
         xaxis: {
           categories: [],
           labels: {
-            formatter: function (val) {
-            return val.toUpperCase();
+            formatter: function(val) {
+              return val.toUpperCase();
+            }
           }
-          }
-          
         },
         yaxis: {
           title: {
@@ -313,7 +312,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
     checkValidDate(startDate, endDate) {

@@ -425,7 +425,7 @@
               v-on="on"
               title="Full Screen"
             >
-              <v-icon>close</v-icon>
+              <v-icon>fa-times</v-icon>
             </v-btn>
           </template>
           <span>Close Full Screen</span>
