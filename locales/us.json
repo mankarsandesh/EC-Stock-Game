@@ -353,7 +353,7 @@
     "betonDigits" : "bet on digits",
     "selectDigit" : "Now you can select DIGIT",
     "betConfirm" : "bet confirm",
-    "betLastdigiteven" : "Your BET place confirm on the Last Digit EVEN",
+    "betLastDigitEven" : "Your BET place confirm on the Last Digit EVEN",
     "selectChip" : "Select CHIP or enter AMOUNT to CONFIRM bet",
     "stockGame" : "stocks & game",
     "stockTime" : "You can choose your Stock and Time,you want BET/PLAY",
@@ -362,8 +362,11 @@
     "stockResult" : "stock result",
     "checkUpdate" : "Check updated result of Stock",
     "roadMap" : "road map",
-    "analyseStock" : "You can analyse stock graph,the result of last draw"
-
+    "analyseStock" : "You can analyse stock graph,the result of last draw",
+    "selectAmount":"select amount",
+    "betMultiGame":"You can select amount and Bet Multi Game Rule",
+    "liveBet":"live bet",
+    "wholeBets":"You can see the whole bets for this game"
   },
   "error": {
     "general" : "Something went wrong!"
