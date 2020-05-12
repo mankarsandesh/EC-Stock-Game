@@ -58,7 +58,7 @@
                   class="font-weight-medium"
                   v-if="visitProfileUserData.userUUID == getUserUUID"
                 >
-                  <a class="editButton" href="/modern/desktop/profile/"
+                  <a class="editButton" href="/modern/profile/"
                     >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
                   </a>
                 </span>
