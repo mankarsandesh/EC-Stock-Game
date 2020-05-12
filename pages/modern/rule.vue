@@ -1,6 +1,5 @@
 <template>
-  <div xs12>
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
+  <div xs12 >
     <h1 class="jumbotron-heading text-center">
       {{ $t("msg.ecgamingrulesdescription") }}
     </h1>

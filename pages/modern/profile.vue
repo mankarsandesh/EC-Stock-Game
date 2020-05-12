@@ -14,7 +14,10 @@
                 class="camera_container"
                 style=" position: absolute; top: 9%;"
               >
-                <v-icon class="selectAvatar"  :size="20" @click="avatarDialog = true"
+                <v-icon
+                  class="selectAvatar"
+                  :size="20"
+                  @click="avatarDialog = true"
                   >photo_camera</v-icon
                 >
               </span>
@@ -81,7 +84,7 @@
     </v-flex>
     <v-flex xs12>
       <v-layout>
-        <v-flex xs12 pt-0 pl-1>
+        <v-flex xs12 pa-2>
           <div>
             <!-- form profile -->
             <form
@@ -91,7 +94,7 @@
                   : 'text-align: end; margin-left: 22%'
               "
             >
-              <v-layout pt-3>
+              <v-layout pl-2 pt-2>
                 <v-flex xs3 sm2 md2 lg2 pr-2 class="text-xs-left">
                   <label for="userName">
                     {{ $t("profile.username") }}
@@ -118,7 +121,7 @@
                 </v-flex>
               </v-layout>
 
-              <v-layout pt-3>
+              <v-layout pl-2 pt-2>
                 <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
                   <label for="firstName">{{ $t("profile.firstname") }}</label>
                 </v-flex>
@@ -142,7 +145,7 @@
                 </v-flex>
               </v-layout>
 
-              <v-layout pt-2>
+              <v-layout pl-2 pt-2>
                 <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
                   <label for="lastName">{{ $t("profile.lastname") }}</label>
                 </v-flex>
@@ -166,7 +169,7 @@
                 </v-flex>
               </v-layout>
 
-              <v-layout pt-2>
+              <v-layout pl-2 pt-2>
                 <v-flex xs3 sm2 md2 lg2 pt2 class="text-xs-left">
                   <label for="gender">
                     {{ $t("profile.gender") }}
@@ -189,7 +192,7 @@
                 </v-flex>
               </v-layout>
 
-              <v-layout pt-3>
+              <v-layout pl-2 pt-2>
                 <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
                   <label for="email">{{ $t("profile.email") }}</label>
                 </v-flex>
@@ -213,7 +216,7 @@
                 </v-flex>
               </v-layout>
 
-              <v-layout pt-3>
+              <v-layout pl-2 pt-2>
                 <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
                   <label for="country">
                     {{ $t("profile.country") }}
@@ -238,9 +241,9 @@
                 </v-flex>
               </v-layout>
 
-              <div class="row">
-                <div class="col-15"></div>
-                <div class="col-85">
+              <v-layout pl-2 pt-2>
+                <v-flex xs3 sm2 md2 lg2> </v-flex>
+                <v-flex pl-3 xs9 sm6 md6 lg6 class="text-xs-left">
                   <v-btn
                     :loading="updating"
                     :disabled="updating"
@@ -249,8 +252,8 @@
                     >{{ $t("msg.save") }}</v-btn
                   >
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
-                </div>
-              </div>
+                </v-flex>
+              </v-layout>
             </form>
             <div class="row" style="text-align: -webkit-center;">
               <v-btn
@@ -316,7 +319,7 @@
       </v-card>
     </v-dialog>
     <v-snackbar v-model="snackbar">
-      Sucessfully Avatar Updated.
+      {{ this.messageShow }}
       <v-btn color="pink" text @click="snackbar = false">
         Close
       </v-btn>
@@ -338,14 +341,14 @@ import log from "roarr";
 export default {
   data() {
     return {
+      messageShow: "",
       snackbar: false,
       avatarID: "",
       newImage: "",
       imagePath: config.apiDomain + "/images/user/avatar/",
       avatarDialog: false,
-      updating: false,      
+      updating: false,
       defaultImage: "/no-profile-pic.jpg"
-     
     };
   },
   components: {
@@ -357,7 +360,7 @@ export default {
     imgProfile() {
       return this.getUserInfo.profileImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/`+this.getUserInfo.profileImage;
+        : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     },
     userData() {
       let data = this.getUserInfo;
@@ -393,6 +396,7 @@ export default {
         );
         if (res.status) {
           this.snackbar = true;
+          this.messageShow = "Successfully Avatar Updated.";
           this.avatarDialog = false;
           this.setUserData();
         } else {
@@ -442,12 +446,8 @@ export default {
         if (res.status) {
           this.setUserData();
           this.updating = false;
-          this.$swal({
-            type: "success",
-            title: "Successful Information Saved!",
-            showConfirmButton: false,
-            timer: 1000
-          });
+          this.snackbar = true;
+          this.messageShow = "Successfully Information Saved!";
         } else {
           this.updating = false;
           throw new Error(res.message[0]);
@@ -477,13 +477,13 @@ export default {
 };
 </script>
 <style scoped>
-.selectAvatar{
-  border:1px solid #dddddd;
+.selectAvatar {
+  border: 1px solid #dddddd;
   border-radius: 50%;
-  padding:3px;
+  padding: 3px;
   background-color: #dddddd;
-  margin:0px -20px;
-  color:#333;
+  margin: 0px -20px;
+  color: #333;
 }
 .userAvatar {
   background-color: #0c2a69;

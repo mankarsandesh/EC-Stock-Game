@@ -22,6 +22,13 @@
       }}</v-btn>
       <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
     </v-layout>
+
+    <v-snackbar v-model="snackbar">
+      {{ this.messageShow }}
+      <v-btn color="pink" text @click="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -31,14 +38,20 @@ import axios from "axios";
 import config from "~/config/config.global";
 
 export default {
+  data() {
+    return {
+      messageShow: "",
+      snackbar: false
+    };
+  },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
     ...mapActions(["setUserData"]),
+    // Update Sount on or Off
     async updateSetting() {
       let isSound = this.$refs.isSound.checked ? true : false;
-
       try {
         let userSetting = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -54,22 +67,12 @@ export default {
           }
         );
         if (res.code == 200) {
-          this.$swal.fire({
-            position: "middle",
-            type: "success",
-            title: "Changes saved",
-            showConfirmButton: "false",
-            timer: 1500
-          });
+          this.snackbar = true;
+          this.messageShow = "Changes saved";
           this.setUserData();
-          // console.log(res);
-        } else {
-          // console.log(res);
-          // this.$alert("Alert message.");
         }
       } catch (ex) {
-        console.log(ex);
-        alert(ex.message);
+        console.log(ex.message);
       }
     }
   }

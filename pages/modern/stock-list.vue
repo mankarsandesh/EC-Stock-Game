@@ -1,10 +1,9 @@
 <template>
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-
     <!-- search -->
     <v-layout row wrap>
-      <v-flex xs12 sm12 class="d-flex">
+      <v-flex xs12 sm12 class="d-flex" pl-2 pr-2>
         <v-select
           class="border-round mt-2"
           hide-details
@@ -12,7 +11,7 @@
           placeholder="Sort By :"
           v-model="itemss"
         ></v-select>
-      </v-flex>    
+      </v-flex>
     </v-layout>
     <!-- end serach -->
     <v-layout row wrap mt-2>
@@ -20,10 +19,8 @@
         <stocklist />
       </v-flex>
     </v-layout>
- 
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
 import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";
