@@ -57,7 +57,7 @@
       <languageDialog ref="language" />
 
       <Logout size="normal" />
-      <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
+      <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0"  />
     </v-toolbar>
 
     <div
@@ -190,6 +190,9 @@ export default {
 </script>
 
 <style scoped>
+.light-toobar{
+  background-color: #FFF !important;
+}
 .layout-logout {
   display: flex;
   border: 1px solid #ccc;

@@ -3,19 +3,20 @@
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <!-- image profile  display on mobile -->
     <v-flex xs12 mt-2 mb-2 v-if="$vuetify.breakpoint.xs">
-      <v-layout row >
+      <v-layout row>
         <v-flex xs12 sm12 md4 lg3>
           <div class="profile_head text-xs-center">
             <div class="image_container">
               <v-avatar :size="90">
                 <img :src="imgProfile" alt="img-profile" />
-                <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
               <span
                 class="camera_container"
                 style=" position: absolute; top: 9%;"
               >
-                <v-icon color="black" :size="20">photo_camera</v-icon>
+                <v-icon class="selectAvatar"  :size="20" @click="avatarDialog = true"
+                  >photo_camera</v-icon
+                >
               </span>
             </div>
             <h3 class="text-capitalize">
@@ -33,10 +34,10 @@
     <!-- image profile display on bigger device than mobile -->
     <v-flex xs12 sm12 :class="!$vuetify.breakpoint.xs ? 'mt-2' : ''">
       <v-layout row justify-center class="text-xs-center" mb-2>
-        <v-flex xs2 sm6 md4 lg3 v-if="!$vuetify.breakpoint.xs" >
+        <v-flex xs2 sm6 md4 lg3 v-if="!$vuetify.breakpoint.xs">
           <div class="profile_head text-xs-center">
             <div class="image_container">
-              <v-avatar :size="50" >
+              <v-avatar :size="50">
                 <img :src="imgProfile" alt="img-profile" />
                 <!-- <img :style="{ filter: `blur(${blurValue}px)`}" v-else :src="imageBase64" alt="img-profile" /> -->
               </v-avatar>
@@ -50,7 +51,7 @@
             <h3 class="text-capitalize">
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </h3>
-            <p >
+            <p>
               <strong>{{ $t("profile.onlinestatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
@@ -288,6 +289,40 @@
       </v-layout>
     </v-flex>
 
+    <!-- User Select Avatar In Profile Page -->
+    <v-dialog
+      v-model="avatarDialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
+      <v-card tile>
+        <v-toolbar card dark style="background-color:#2cb13b;">
+          <v-btn icon dark @click="avatarDialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title> Choose your Avatar</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-layout style="text-align:center;height:auto;">
+          <v-flex xs12 sm12>
+            <div class="avatarImage" v-for="n in 10" v-bind:key="n">
+              <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
+              <span class="userAvatar" @click="useAvatar(n)">Use Avatar</span>
+            </div>
+          </v-flex>
+        </v-layout>
+
+        <v-divider></v-divider>
+      </v-card>
+    </v-dialog>
+    <v-snackbar v-model="snackbar">
+      Sucessfully Avatar Updated.
+      <v-btn color="pink" text @click="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
+
     <OnlineHistory ref="onlineHistory"></OnlineHistory>
     <StockAnalysis ref="stockAnalysis"></StockAnalysis>
   </div>
@@ -304,6 +339,11 @@ import log from "roarr";
 export default {
   data() {
     return {
+      snackbar: false,
+      avatarID: "",
+      newImage: "",
+      imagePath: config.apiDomain + "/images/user/avatar/",
+      avatarDialog: false,
       updating: false,
       profile: {
         defaultImage: "no-profile-pic.jpg"
@@ -314,12 +354,11 @@ export default {
     OnlineHistory,
     StockAnalysis
   },
-  mounted() {},
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-    imgProfile() {     
+    imgProfile() {
       return this.getUserInfo.profileImage === null
-         ? this.defaultImage
+        ? this.defaultImage
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     },
     userData() {
@@ -328,9 +367,58 @@ export default {
     }
   },
   methods: {
+    // Update Avatar Picture
+    useAvatar(image) {
+      this.newImage = this.imagePath + image + ".jpg";
+      this.avatarID = image;
+      this.updateImageProfile();
+    },
     ...mapActions(["setUserData"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
+    },
+    // Update Profile Picture
+    async updateImageProfile() {
+      var reqBody = {
+        avatarID: this.avatarID,
+        portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
+        version: config.version
+      };
+      try {
+        var res = await this.$axios.$post(
+          config.updateUserProfile.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+        if (res.status) {
+          this.snackbar = true;
+          this.avatarDialog = false;
+          this.setUserData();
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        log.error(
+          {
+            req: reqBody,
+            res: res.data,
+            page: "pages/modern/mobile/profile.vue",
+            apiUrl: config.updateUserProfile.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
+      }
     },
     async saveClick() {
       this.updating = true;
@@ -390,8 +478,41 @@ export default {
   }
 };
 </script>
-
 <style scoped>
+.selectAvatar{
+  border:1px solid #dddddd;
+  border-radius: 50%;
+  padding:3px;
+  background-color: #dddddd;
+  margin:0px -20px;
+  color:#333;
+}
+.userAvatar {
+  background-color: #0c2a69;
+  padding: 6px 12px;
+  margin-top: 10px;
+  color: #ffffff;
+  border: 1px solid;
+  width: 100%;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+.avatarImage {
+  height: 200px;
+  text-align: center;
+  margin: 10px;
+  width: 40%;
+  padding: 5px;
+  display: inline-block;
+}
+.avatarImage .img {
+  margin: 15px auto;
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  border: 2px solid #dddddd;
+}
 p {
   margin-bottom: 0px !important;
 }

@@ -7,7 +7,7 @@
     light
   >
     <v-card>
-      <v-toolbar>
+      <v-toolbar card dark style="background-color:#2cb13b;">
         <v-layout row justify-center>
           <h2>{{ $t("profile.onlinehistory") }}</h2>
           <v-spacer></v-spacer>
@@ -15,6 +15,7 @@
         </v-layout>
       </v-toolbar>
       <v-flex
+        mt-2
         xs12
         v-if="$vuetify.breakpoint.xs"
         class="profile_head text-xs-center"
