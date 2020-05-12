@@ -74,6 +74,24 @@ export default async context => {
       }
     } else {
       // If the user gets redirected from portal provider page
+
+      // Clear localStorage
+      secureStorage.clear();
+
+      // Get vuex state if it exists in the local storage
+      await window.onNuxtReady(() => {
+        new VuexPersistence({
+          storage: secureStorage,
+          filter: mutation =>
+            mutation.type == "SET_USER_DATA" ||
+            mutation.type == "SET_LANGUAGE" ||
+            mutation.type == "SET_GAME_ID" ||
+            mutation.type == "SET_LIVE_ROAD_MAP" ||
+            mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
+            mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+        }).plugin(context.store);
+      });
+
       // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
       const portalProviderUUID = context.query.portalProviderUUID
         ? context.query.portalProviderUUID
@@ -217,7 +235,7 @@ const checkUserLogin = async (
       {
         req: reqBody,
         res: data,
-        page: "plugins/callApi.js",
+        page: "plugins/login.js",
         apiUrl: config.userLoginAuth.url,
         provider: portalProviderUUID,
         user: userUUID
