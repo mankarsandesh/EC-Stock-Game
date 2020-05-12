@@ -161,7 +161,7 @@
               })
             "
           ></showChipAmount>
-          <span class="big-digit " :id="stockID +'lastdigitNumber'">0 - 9</span>
+          <span class="big-digit" :id="stockID +'lastdigitNumber'">0 - 9</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">{{ payout_09 }}</span>
@@ -446,7 +446,6 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import gameRule from "~/data/gameRule";
-
 import betModal from "~/components/modern/betModal";
 import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
@@ -599,7 +598,7 @@ export default {
 }
 
 .setlayuot {
-  flex-flow: wrap;  
+  flex-flow: wrap;
   position: relative;
 }
 .btn-digit {

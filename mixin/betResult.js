@@ -1,5 +1,5 @@
-const jsonResult = require('~/data/result')
-import sound from "~/helpers/sound"
+const jsonResult = require('~/data/result') // define the json result for the compare 
+import sound from "~/helpers/sound"   // import the sound helper 
 import { mapMutations, mapGetters } from 'vuex'
 // define a mixin object
 export const BetResult = {
@@ -35,18 +35,19 @@ export const BetResult = {
 
                 }
             })
-            this.SET_FIRST('Can not find any bet')
+            this.SET_FIRST('Can not find any bet') // make the button collage 
         },
         // Multiple Result 
         multipleResult(item, number, stockName, betID, betWin, name) {
+            const specificNumber = "#" + stockName + betID.split("-")[0]  // create the variable for receive the value
             // console.log("This is the item", item)
             // console.log("This is the number", number)
             // console.log("This is the stockName", stockName)
             // console.log("This is the betID", betID)
             // console.log("This is the betWin", betWin)
             // console.log("This is the name", name)
-            const specificNumber = "#" + stockName + betID.split("-")[0]
-            const result = item.rule.includes(number);
+            // console.log("This is the specificNumber", specificNumber)
+            const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
                 sound.winBet(); // sound when user win the bet              
                 $("#" + betWin).addClass(betWin);
@@ -54,44 +55,51 @@ export const BetResult = {
                     betID.split("-")[0] + "-animation"
                 );
                 $(specificNumber).addClass(betID.split("-")[0]);
-                $(specificNumber + 'Number').addClass(betWin);
                 $(specificNumber).addClass(
                     betID.split("-")[0] + "-animation"
                 );
-                $("#" + this.StockResult).addClass(betID.split("-")[0] + "-animation"); //         
                 setTimeout(() => {
                     this.SET_FIRST("You are win")
+
                     sound.winBet(); // sound when user win the bet
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0]
                     );
-                    // $("#" + betWin).removeClass(betWin);   // Macky will move the chip
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0] + "-animation"
                     );
-                    $("#" + this.StockResult).removeClass(betID.split("-")[0] + "-animation"); //   
-
                     $(specificNumber).removeClass(
                         betID.split("-")[0] + "-animation"
                     );
-                    // $(specificNumber + 'Number').removeClass(betWin);  // Macky will move the chip
                     $(specificNumber).removeClass(
                         betID.split("-")[0]);
+
                 }, 5000);
-            } else if ($(specificNumber).hasClass(name) == false) {
-                this.SET_FIRST('You are lose else if')
-                $('#' + stockName + betID).removeClass(betID.split("-")[0]);
-                $(specificNumber).removeClass(betID.split("-")[0]);   // remove the chip and bring if user not win
-            } else {
-                this.SET_FIRST('You are lose in else')
-                this.SET_FIRST(null)
-                $(stockName + betID).removeClass(betID.split("-")[0]);
-                $("#" + this.StockResult).removeClass(betID.split("-")[0]);
+
+            } else if ($(specificNumber + '-' + number).hasClass(betID.split("-")[0])) {
+                console.log('am here', specificNumber + '-' + number)
+                $(specificNumber).addClass(
+                    betID.split("-")[0]
+                );
+
+                $(specificNumber + 'Number').addClass(betWin);
+                this.SET_FIRST('You are lose in else false')
+                console.log('You win from  ', specificNumber + '-' + number)
+
                 $("#" + stockName + betID).removeClass(
                     betID.split("-")[0]
                 );
-                $("#" + betWin).removeClass(betWin);
+            } else {
+                console.log('You are lose in ', specificNumber + '-' + number)
+                this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
+                $(specificNumber).removeClass(
+                    betID.split("-")[0]
+                );
+                $("#" + stockName + betID).removeClass(
+                    betID.split("-")[0]
+                );
             }
         }
     }
 }
+
