@@ -100,13 +100,6 @@
         style="float: right; top: -98%;"
         >{{ $t("menu.history") }}</v-btn
       >
-      <!-- <v-btn
-        to="/modern/current-bet"
-        v-show="isShow == 'history'"
-        class="buttonGreen"
-        style="float: right; top: -98%;"
-        >{{ $t("menu.current bet") }}</v-btn
-      > -->
     </div>
     <v-content>
       <v-container>
@@ -125,7 +118,7 @@
 <script>
 import { mapGetters } from "vuex";
 
-import menu from "~/data/menu";
+import menu from "~/data/menuMobile";
 
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/mobile/LanguageDialog";

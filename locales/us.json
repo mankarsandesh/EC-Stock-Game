@@ -7,6 +7,7 @@
   "game type": "game type",
   "default": "default",
   "menu": {
+    "invitation":"Send Invitaion",
     "home": "home",
     "profile": "profile",
     "current bet": "current bet",
