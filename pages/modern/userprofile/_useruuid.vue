@@ -1,107 +1,110 @@
 <template>
   <div xs2>
-    <section class="breadcrumbs" v-if="messageError == false">
-      <v-container md10>
-        <v-parallax dark height="150">
-          <v-layout align-center row  >
-            <v-flex xs6 md12>
-              <div class="flex-container">
-                <div class="profile-img-container">
-                  <div class="profile-crowd">
-                    <fa icon="crown" style="font-size: 17px; color: orange;" />
-                  </div>
-                  <img
-                    width="100%"
-                    height="100%"
-                    :src="userImgProfile(visitProfileUserData.userImage)"
-                    class="grey darken-4"
-                  />
-                </div>
-                <div class="profile-name-container">
-                  <span class="profile-name-tittle text-capitalize">
-                    {{ visitProfileUserData.firstName }}
-                    {{ visitProfileUserData.lastName }}
-                  </span>
-
-                  <span
-                    class="font-weight-medium"
-                    v-if="visitProfileUserData.username"
-                  >
-                    {{ visitProfileUserData.username }}
-                  </span>
-
-                  <span
-                    v-if="visitProfileUserData.currentActiveTime === 'offline'"
-                  >
-                    {{ visitProfileUserData.currentActiveTime }}
-                  </span>
-                  <span v-else>
-                    <b>{{ $t("profile.lastActive") }} : </b>
-                    {{ visitProfileUserData.currentActiveTime }}
-                  </span>
-                  <span
-                    class="font-weight-medium"
-                    v-if="visitProfileUserData.userUUID == getUserUUID"
-                  >
-                    <a class="editButton" href="/modern/desktop/profile/"
-                      >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
-                    </a>
-                  </span>
-                </div>
-              </div>
-            </v-flex>
-            <v-flex xs8 class="text-end">
+    <section v-if="messageError == false">
+      <v-container>
+        <v-flex>
+          <v-layout justify-center row>
+            <v-flex class="profileBackground">
               <div class="leftFollowDiv">
-                <span class="historyName">
+                <div
+                  style="flex-grow: wrap; width: 120px; margin: 0 10px;min-height: 36px !important;"
+                >
                   {{ $t("profile.historyPeriod") }}:
-                </span>
-                <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
                   <v-select
                     v-model="filter"
-                    height="15px"
+                    height="10px"
                     dense
                     hide-details
                     :items="items"
                     solo
                   ></v-select>
                 </div>
-                <v-btn
-                  v-if="
-                    visitProfileUserData.userUUID != getUserUUID 
-                  "
-                  v-bind:class="[
-                    visitProfileUserData.userUUID != getUserUUID &&
-                    visitProfileUserData.isFollowing == 0
-                      ? 'buttonFollow'
-                      : 'buttonunFollow'
-                  ]"
-                  v-on:click="
-                    followUserBet(
-                      visitProfileUserData.username,
-                      visitProfileUserData.userImage,
-                      visitProfileUserData.userUUID,
-                      visitProfileUserData.isFollowing
-                    )
-                  "
-                >              
-                  {{
-                    visitProfileUserData.isFollowing == 0
-                      ? $t("useraction.followBet")
-                      : $t("useraction.unfollowBet")
-                  }}
-                </v-btn>
               </div>
             </v-flex>
           </v-layout>
-        </v-parallax>
+
+          <v-layout justify-center row style="margin-top:-40px;">
+            <v-flex>
+              <div class="profile-img-container">
+                <img
+                  :src="userImgProfile(visitProfileUserData.userImage)"
+                  class="grey darken-4"
+                />
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-layout row justify-center class="name">
+          <v-flex>
+            <v-layout wrap sm12 xs12>
+              <v-flex xs12>
+                <div
+                  class="font-weight-medium"
+                  v-if="visitProfileUserData.username"
+                >
+                  @{{ visitProfileUserData.username }}
+                </div>
+
+                <span
+                  v-if="visitProfileUserData.currentActiveTime === 'offline'"
+                >
+                  {{ visitProfileUserData.currentActiveTime }}
+                </span>
+                <span v-else>
+                  {{ $t("profile.lastActive") }} :
+                  {{ visitProfileUserData.currentActiveTime }}
+                </span>
+              </v-flex>
+              <v-flex xs12>
+                <span
+                  class="font-weight-medium"
+                  v-if="visitProfileUserData.userUUID == getUserUUID"
+                >
+                  <nuxt-link to="/modern/profile">
+                    <a class="editButton"
+                      >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
+                    </a>
+                  </nuxt-link>
+                </span>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+        </v-layout>
+        <v-layout wrap justify-center>
+          <v-flex xs12 style="text-align:center;">
+            <v-btn
+              v-if="visitProfileUserData.userUUID != getUserUUID"
+              v-bind:class="[
+                visitProfileUserData.userUUID != getUserUUID &&
+                visitProfileUserData.isFollowing == 0
+                  ? 'buttonFollow'
+                  : 'buttonunFollow'
+              ]"
+              v-on:click="
+                followUserBet(
+                  visitProfileUserData.username,
+                  visitProfileUserData.userImage,
+                  visitProfileUserData.userUUID,
+                  visitProfileUserData.isFollowing
+                )
+              "
+            >
+              {{
+                visitProfileUserData.isFollowing == 0
+                  ? $t("useraction.followBet")
+                  : $t("useraction.unfollowBet")
+              }}
+            </v-btn>
+          </v-flex>
+        </v-layout>
       </v-container>
     </section>
     <v-container mb-5>
       <v-layout row wrap>
         <v-flex xs12 mt-3 v-if="messageError == false">
-          <div class="container-content">
-            <div class="box-container">
-              <div class="cul-box" style="color: #7e57c2;">
+          <v-layout pa-3 wrap justify-center>
+            <v-flex xs6 sm3
+              ><div class="cul-box" style="color: #7e57c2;">
                 <span>
                   <fa
                     icon="percentage"
@@ -115,11 +118,13 @@
                   $t("leaderboard.winningrate")
                 }}</span>
               </div>
+            </v-flex>
+            <v-flex xs6 sm3>
               <div class="cul-box cul-box-green">
                 <span>
                   <fa
                     icon="money-bill-wave"
-                    style="font-size: 40px; color: #ace6af;"
+                    style="font-size: 40px; color: #2bb13a;"
                   />
                 </span>
                 <span class="number-box">{{
@@ -129,6 +134,9 @@
                   $t("msg.totalbet")
                 }}</span>
               </div>
+            </v-flex>
+
+            <v-flex xs6 sm3>
               <div class="cul-box cul-box-red">
                 <span>
                   <fa icon="users" style="font-size: 40px; color: #f28691;" />
@@ -140,6 +148,8 @@
                   $t("profile.followers")
                 }}</span>
               </div>
+            </v-flex>
+            <v-flex xs6 sm3>
               <div class="cul-box cul-box-yellow">
                 <span>
                   <fa
@@ -154,8 +164,11 @@
                   $t("leaderboard.winningamount")
                 }}</span>
               </div>
-            </div>
-            <div class="pt-5 stock-history">
+            </v-flex>
+          </v-layout>
+          <div class="container-content">
+            <div class="box-container"></div>
+            <div class="pa-2 stock-history">
               <h2 class="text-uppercase">
                 {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
               </h2>
@@ -191,16 +204,33 @@
         </v-flex>
       </v-layout>
 
-      <!-- Follow Dialog -->
-      <v-dialog v-model="dialog" width="500" class="followDialog">
-        <followBet
-          v-if="renderComponent"
-          :username="this.username"
-          :userImage="this.userImage"
-          :FollowerUserUUID="this.FollowUserUUID"
-          :isFollowing="this.FolloworNot"
-          @followBetClose="closeFollowBet"
-        />
+      <!-- Follow and UnFollow Dialog box-->
+      <v-dialog
+        v-model="followDialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        scrollable
+      >
+        <v-card tile>
+          <v-toolbar card dark style="background-color:#2cb13b;">
+            <v-btn icon dark @click="followDialog = false">
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-toolbar-title>{{
+              this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+            }}</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+
+          <followBet
+            :username="this.username"
+            :userImage="this.userImage"
+            :FollowerUserUUID="this.FollowUserUUID"
+            :isFollowing="this.FolloworNot"
+            @followBetClose="closeFollowBet"
+          />
+        </v-card>
       </v-dialog>
     </v-container>
   </div>
@@ -210,20 +240,20 @@
 import { mapGetters } from "vuex";
 import VueApexCharts from "vue-apexcharts";
 import config from "~/config/config.global";
-import followBet from "~/components/modern/follow/followBet";
+import followBet from "~/components/mobile/follow/followBet";
 import date from "date-and-time";
-import secureStorage from "../../../../plugins/secure-storage";
+import secureStorage from "../../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
-  layout: "desktopModern",
   components: {
     followBet,
     VueApexCharts
   },
   data() {
     return {
-      myProfileImage : "",
+      followDialog: false,
+      myProfileImage: "",
       renderComponent: true, // render Follow Bet
       username: "",
       FollowUserUUID: "",
@@ -288,10 +318,10 @@ export default {
   },
   created() {
     this.setFilter(30);
-    this.getUserProfileByID();   
+    this.getUserProfileByID();
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID","getUserInfo"]),     
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getUserInfo"])
   },
   watch: {
     filter() {
@@ -309,30 +339,30 @@ export default {
     },
     // Close Follow Bet Popup
     closeFollowBet() {
-      this.dialog = false;
+      this.followDialog = false;
     },
     // Follow User Bet
-    followUserBet: function(username, userImg, userUUID, method) {      
+    followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      if (method == 0) {
-        this.FolloworNot = 1;
-      } else {
-        this.FolloworNot = 2;
-      }
-      this.userImage = userImg ? this.userImgProfile(userImg) : this.defaultImage;     
-      this.dialog = true;
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
+      this.userImage = userImg
+        ? this.userImgProfile(userImg)
+        : this.defaultImage;
+      this.followDialog = true;
       this.forceRerender();
     },
+    // Profile Image Set
     userImgProfile(userImg) {
-      return userImg ? `${config.apiDomain}/`+ userImg : this.defaultImage;        
-    },   
+      return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
+    },
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
       const lastWeek = date.addDays(new Date(), -duration);
       this.startDate = date.format(lastWeek, "YYYY-MM-DD");
       this.endDate = now;
     },
+    // fetch Visitor User Profile Infomation.
     async getUserProfileByID() {
       try {
         if (!this.$route.params.useruuid) {
@@ -358,8 +388,8 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
-          this.myProfileImage = res.data.userImage;       
-          
+          this.myProfileImage = res.data.userImage;
+
           //  series
           let series = [];
           let xaxis = [];
@@ -400,19 +430,28 @@ export default {
   }
 };
 </script>
-
 <style scoped>
+.profileBackground {
+  background: url(/bg/Inner-page-banner.png);
+  background-size: cover;
+  height: 100px;
+  width: 100%;
+  color: white;
+  padding: 5px 0px 0px 45px;
+}
+.name div {
+  width: 100% !important;
+  text-align: center;
+}
 .leftFollowDiv {
+  float: right;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
 }
 
-.historyName {
-  flex-grow: wrap;
-  font-weight: bold;
-}
-
+/* 
+Error Box When User Not Found
+*/
 .box-error {
   border: 1px solid #dddddd;
   background-color: #fff;
@@ -433,10 +472,13 @@ export default {
   margin-right: 10px;
 }
 
+/* Error Box End Here */
+
 .editButton {
-  color: #fff;
+  color: #2bb13a;
   font-size: 16px;
   font-weight: 800;
+  text-transform: uppercase;
 }
 
 .stock-history-container {
@@ -453,7 +495,7 @@ export default {
 }
 
 .number-box {
-  font-size: 25px;
+  font-size: 18px;
   font-weight: bolder;
 }
 
@@ -462,28 +504,21 @@ export default {
   width: 100%;
 }
 
-.cul-box:first-child {
-  margin-left: 0;
-}
-
 .cul-box {
-  padding: 15px;
+  padding: 5px;
   border-radius: 10px;
-  border: #c0acef solid 3px;
+  border: #c0acef solid 2px;
   background-color: #fff;
-  margin: 15px;
-  width: 220px;
-  height: 180px;
+  margin: 10px;
   box-shadow: 0 0 2px #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
 }
-
 .cul-box-green {
-  border-color: #ace6af !important;
-  color: #ace6af;
+  border-color: #2bb13a !important;
+  color: #2bb13a;
 }
 
 .cul-box-yellow {
@@ -515,16 +550,18 @@ export default {
   right: -9px;
   padding: 4px;
 }
-
 .profile-img-container {
-  cursor: pointer;
-
-  position: relative;
-  border: gray solid 3px;
-  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+}
+.profile-img-container img {
+  margin: 0 auto;
   height: 100px;
   width: 100px;
-  box-shadow: 0 0 5px #fff;
+  border-radius: 50%;
+  background-color: #fff !important;
+  border: 1px solid #dddddd !important;
+  padding: 4px;
 }
 
 .profile-name-tittle {
@@ -549,10 +586,9 @@ export default {
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 14px;
-  width: 120px;
-  height: 48px;
+  width: 110px;
+  height: 34px;
   flex-grow: wrap;
 }
 
@@ -560,10 +596,8 @@ export default {
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #888787 30%, #626161 51%);
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 14px;
-  width: 120px;
-  height: 48px;
+  height: 34px;
   flex-grow: wrap;
 }
 </style>

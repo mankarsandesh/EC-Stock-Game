@@ -140,15 +140,15 @@
               </v-flex>
         </v-layout>
     </v-toolbar>-->
-    <div class="text-center mt-3">
+    <div class="text-center mt-2">
       <v-flex order-xs6 class="text-center d-flex justify-center">
         <v-btn text flat @click="filterClick" class="buttonGreen">
-          <span class="uppercase-text white--text">{{ $t("filter") }}</span>
+          <span class="body-2 uppercase-text white--text">{{ $t("filter") }}</span>
         </v-btn>
         <!-- </v-flex>
         <v-flex offset-xs6 class="text-center d-flex justify-center">-->
         <v-btn text flat @click="sortClick" class="buttonGreen">
-          <span class="uppercase-text white--text">{{ $t("sort") }}</span>
+          <span class="body-2 uppercase-text white--text">{{ $t("sort") }}</span>
         </v-btn>
       </v-flex>
     </div>

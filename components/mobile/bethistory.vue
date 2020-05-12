@@ -5,7 +5,6 @@
         There are no bets in History Bets.
       </h3>
     </v-list-tile>
-
     <v-list three-line v-if="userBetHistory.length > 0">
       <template
         v-for="(item, index) in userBetHistory"

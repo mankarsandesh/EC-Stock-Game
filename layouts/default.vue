@@ -56,8 +56,8 @@
       </button>
       <languageDialog ref="language" />
 
-      <Logout size="normal" />
-      <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0"  />
+      <mobileLogout size="normal" />
+      <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
     </v-toolbar>
 
     <div
@@ -100,16 +100,9 @@
         style="float: right; top: -98%;"
         >{{ $t("menu.history") }}</v-btn
       >
-      <!-- <v-btn
-        to="/modern/current-bet"
-        v-show="isShow == 'history'"
-        class="buttonGreen"
-        style="float: right; top: -98%;"
-        >{{ $t("menu.current bet") }}</v-btn
-      > -->
     </div>
     <v-content>
-      <v-container pa-1>
+      <v-container>
         <nuxt />
       </v-container>
     </v-content>
@@ -125,13 +118,13 @@
 <script>
 import { mapGetters } from "vuex";
 
-import menu from "~/data/menu";
+import menu from "~/data/menuMobile";
 
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/mobile/LanguageDialog";
 import welcomeUser from "~/components/welcomeUser";
 import openSocket from "socket.io-client";
-import Logout from "~/components/mobile/mobileLogout";
+import mobileLogout from "~/components/mobile/mobileLogout";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import i18n from "vue-i18n";
 import secureStorage from "../plugins/secure-storage";
@@ -142,7 +135,7 @@ export default {
     countryFlag,
     languageDialog,
     welcomeUser,
-    Logout,
+    mobileLogout,
     Button
   },
   data() {
@@ -190,8 +183,8 @@ export default {
 </script>
 
 <style scoped>
-.light-toobar{
-  background-color: #FFF !important;
+.light-toobar {
+  background-color: #fff !important;
 }
 .layout-logout {
   display: flex;

@@ -5,7 +5,7 @@
         <v-layout row wrap class="pt-1">
           <v-flex xs12 sm12>
             <v-layout>
-              <v-flex class="text-xs-center">
+              <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
                   >{{ $t("msg.Lastdraw") }}:</span
                 >
@@ -18,7 +18,7 @@
                   </h4>
                 </v-flex>
               </v-flex>
-              <v-flex class="text-xs-center">
+              <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text">
                   {{ $t("msg.BetClosein") }}:
                 </span>
@@ -33,7 +33,7 @@
                   </h4>
                 </v-flex>
               </v-flex>
-              <v-flex class="text-xs-center">
+              <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
                   >{{ $t("msg.lotterydraw") }}:
                 </span>
@@ -1597,7 +1597,6 @@ export default {
         try {
           var logData = data;
           if (data.status) {
-            console.log("live road map");
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
             throw new Error(config.error.general);

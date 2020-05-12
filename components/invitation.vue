@@ -354,7 +354,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .theme--light.v-select .v-select__selections {
   color: #fff !important;
@@ -401,7 +400,7 @@ export default {
 .buttonInvitation {
   padding: 10px;
   margin-top: -8px;
-  width: 100%;
+  width: 90%;
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);

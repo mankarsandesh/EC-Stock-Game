@@ -38,6 +38,11 @@ const Menu = [
     icon: "bubble_chart",
     title: "setting",
     to: "/modern/setting"
+  },
+  {
+    icon: "bubble_chart",
+    title: "invitation",
+    to: "/modern/invitation"
   }
 ];
 export default Menu;

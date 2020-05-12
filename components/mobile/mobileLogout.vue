@@ -1,22 +1,24 @@
 <template>
   <div style="z-index:100">
     <template>
-      <v-btn flat>
-        <v-avatar size="35" mr-1>
-          <img :src="imgProfile" alt />
-        </v-avatar>
-        <div class="userLogoutMenu">
-          <span> {{ getUserName }} </span>
-          <span
-            >&nbsp; {{ $t("msg.acc") }}:
-            <animated-number
-              :value="getUserInfo.balance"
-              :formatValue="formatToPrice"
-              class="balance"
-            />
-          </span>
-        </div>
-      </v-btn>
+      <nuxt-link :to="'/modern/userprofile/' + getUserInfo.userUUID">
+        <v-btn flat>
+          <v-avatar size="35" mr-1>
+            <img :src="imgProfile" alt />
+          </v-avatar>
+          <div class="userLogoutMenu">
+            <span> {{ getUserName }} </span>
+            <span
+              >&nbsp; {{ $t("msg.acc") }}:
+              <animated-number
+                :value="getUserInfo.balance"
+                :formatValue="formatToPrice"
+                class="balance"
+              />
+            </span>
+          </div>
+        </v-btn>
+      </nuxt-link>
     </template>
 
     <v-dialog v-model="dialogprofile" max-width="1240px">
@@ -55,12 +57,12 @@ export default {
   data() {
     return {
       dialogprofile: false,
-      defaultImage: "../no-profile-pic.jpg"
+      defaultImage: "/no-profile-pic.jpg"
     };
   },
   computed: {
     ...mapGetters(["getUserName", "getBalance", "getUserInfo"]),
-    imgProfile() {
+    imgProfile() {      
       return this.getUserInfo.profileImage === null
         ? this.defaultImage
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;

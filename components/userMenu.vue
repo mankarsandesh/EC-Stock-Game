@@ -41,7 +41,6 @@
           <i class="fa fa-user fa-2x margin-right-5" />
           <v-list-tile-title>{{ $t("profile.myfollowers") }}</v-list-tile-title>
         </v-list-tile>
-
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
           <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
