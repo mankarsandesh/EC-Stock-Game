@@ -363,5 +363,23 @@
   },
   "error": {
     "general" : "出问题了！"
+  },
+  "follow": {
+    "amount" : "量",
+    "rate" : "率",
+    "amountMust" : "最低下注$100",
+    "timeMust" : "必须达到1天时间",
+    "betMust" : "必须至少下注1次",
+    "amountMay" : "注码不可超过 $1000",
+    "timeMay" : "时间不可超过10天",
+    "betMay" : "最多下注不可超过10次",
+    "mustBe" : "必须至少达到",
+    "mayNotBe":"可能无法大于",
+    "followingType":"跟注类别还未选择",
+    "amountShould":"金额范围需在101-1001之间",
+    "betRate":"下注比率范围需在11-101之间",
+    "autoStop":"自动停止跟注需在100-1000之间",
+    "daysShould":"日期需控制在1-10",
+    "betsShould":"下注次数需控制在1-100"
   }
 }

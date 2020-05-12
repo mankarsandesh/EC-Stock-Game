@@ -171,7 +171,7 @@
     "live Stock": "live Stock",
     "Us Stock": "Us Stock",
     "Cypto Currency": "Cypto Currency",
-    "China Stocck": "China Stocck",
+    "China Stocck": "China Stock",
     "usa": "Usa Stock",
     "cypto": "Cypto Currency",
     "china": "China Stocck"
@@ -367,5 +367,23 @@
   },
   "error": {
     "general" : "Something went wrong!"
+  },
+  "follow": {
+    "amount" : "Amount",
+    "rate" : "Rate",
+    "amountMust" : "Minimum Amount must be at least 100 USD",
+    "timeMust" : "Minimum Time must be at least 1 Day.",
+    "betMust" : "Minimum Bet must be at least 1.",
+    "amountMay" : "Amount should not be greater than 1000 USD",
+    "timeMay" : "Time should not be greater than 10 Days",
+    "betMay" : "Bet should not be greater than 10 Bets",
+    "mustBe" : "must be at least",
+    "mayNotBe":"may not be greater than",
+    "followingType":"Following type is not selected",
+    "amountShould":"Amount should be Lower than 1001 & Greater than 101",
+    "betRate":"Bet Rate Should be Lower than 101 & Greater than 11",
+    "autoStop":"Auto Stop Amount should Between 100 to 1000",
+    "daysShould":"Days should be Between 1 to 10.",
+    "betsShould":"Bets should be Between 1 to 100"
   }
 }
