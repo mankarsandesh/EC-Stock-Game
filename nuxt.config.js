@@ -26,16 +26,16 @@ module.exports = {
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.png" },
-      {
-        rel: "stylesheet",
-        href:
-          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
-      },
-      {
-        rel: "stylesheet",
-        href:
-          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&display=swap"
-      }
+      // {
+      //   rel: "stylesheet",
+      //   href:
+      //     "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
+      // },
+      // {
+      //   rel: "stylesheet",
+      //   href:
+      //     "https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&display=swap"
+      // }
     ],
     script: [
       {
@@ -112,8 +112,8 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [    
-    '~/plugins/inject.js',
+  plugins: [
+    "~/plugins/inject.js",
     "@/plugins/vuetify",
     "@plugins/js-cookie", // for setting and reading cookies
     // "~/plugins/axios",
@@ -180,7 +180,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend: function (config, { isDev, isClient }) {
+    extend: function(config, { isDev, isClient }) {
       if (isDev) {
         config.devtool = isClient ? "source-map" : "inline-source-map";
       }

@@ -12,6 +12,7 @@
         label="select stock"
         item-text="type"
         item-value="name"
+        append-icon="fa-angle-down"
         return-object
       ></v-select>
     </v-flex>
@@ -21,7 +22,8 @@
         :items="stockNames"
         label="Stock Name"
         class="selectStock"
-        prepend-icon="navigate_next"
+        prepend-icon="fa-chevron-right"
+        append-icon="fa-angle-down"
         color="blue"
         full-width
         solo
@@ -38,7 +40,8 @@
         :items="minutes"
         label="min"
         class="selectStock"
-        prepend-icon="navigate_next"
+        prepend-icon="fa-chevron-right"
+        append-icon="fa-angle-down"
         color="blue"
         full-width
         solo
@@ -69,7 +72,8 @@
       <v-text-field
         v-model="gameId"
         label="game id"
-        prepend-icon="navigate_next"
+        prepend-icon="fa-chevron-right"
+        append-icon="fa-angle-down"
         color="blue"
         full-width
         solo
@@ -163,7 +167,9 @@ export default {
       if (GET_STOCK_FULL_URL !== `/modern/desktop/${GET_STOCK_URL}`) {
         if (GET_STOCK_TYPE == "crypto") {
           if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => {});
+            this.$router
+              .replace(`/modern/desktop/${GET_STOCK_URL}`)
+              .catch(ex => {});
           } else {
             // if is multi game then add selected game
             this.addStockMultiGame(GET_STOCK_URL);
@@ -171,7 +177,9 @@ export default {
         } else {
           // check is multi game or not
           if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => {});
+            this.$router
+              .replace(`/modern/desktop/${GET_STOCK_URL}`)
+              .catch(ex => {});
             // if is multi game then add selected game
           } else {
             this.addStockMultiGame(GET_STOCK_URL);

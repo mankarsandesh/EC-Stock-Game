@@ -20,6 +20,8 @@
             <v-radio
               :value="item.value"
               @click="changeLange(item.value)"
+              off-icon="fa-circle"
+              on-icon="fa-dot-circle"
             ></v-radio>
           </v-radio-group>
         </v-flex>
