@@ -95,7 +95,7 @@
                   @change="sortingBy"
                   v-model="sortby"
                   hide-details
-                  :items="dropdown_font"
+                  :items="[$t('bethistory.today'), $t('bethistory.thisWeek'), $t('bethistory.thisMonth')]"
                   :placeholder="$t('msg.sortby')"
                 ></v-select>
               </v-flex>
@@ -132,11 +132,6 @@ export default {
       from: false,
       dateTo: "",
       to: false,
-      dropdown_font: [
-        this.$root.$t("bethistory.today"),
-        this.$root.$t("bethistory.thisWeek"),
-        this.$root.$t("bethistory.thisMonth")
-      ],
       userBetHistory: []
     };
   },
