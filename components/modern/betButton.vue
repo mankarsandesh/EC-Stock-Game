@@ -48,7 +48,10 @@
               })
             "
           ></showChipAmount>
-          <div @click="testAnimation($event)" class="chip-animation"></div>
+          <div
+            @click="testAnimation($event)"
+            :id="'firstdigitWin-' + data.rule"
+          ></div>
 
           <span class="big-digit">
             {{ $t("gamemsg." + data.rule) }}
@@ -76,7 +79,9 @@
               })
             "
           ></showChipAmount>
-          <span class="big-digit" :id="stockID+'firstdigitNumber'">0 - 9</span>
+          <span class="big-digit" :id="stockID + 'firstdigitNumber'"
+            >0 - 9</span
+          >
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">{{ payout_09 }}</span>
@@ -131,9 +136,12 @@
               })
             "
           ></showChipAmount>
-          <div @click="testAnimation($event)" class="chip-animation"></div>
+          <div
+            @click="testAnimation($event)"
+            :id="'lastdigitWin-' + data.rule"
+          ></div>
 
-          <span class="big-digit" :id="'lastdigitWin-' + data.rule">
+          <span class="big-digit">
             {{ $t("gamemsg." + data.rule) }}
           </span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
@@ -210,8 +218,11 @@
               })
             "
           ></showChipAmount>
-          <div @click="testAnimation($event)" class="chip-animation"></div>
-          <span class="big-digit" :id="'bothdigitWin-' + data.rule">
+          <div
+            @click="testAnimation($event)"
+            :id="'bothdigitWin-' + data.rule"
+          ></div>
+          <span class="big-digit">
             {{ $t("gamemsg." + data.rule) }}
           </span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
@@ -285,8 +296,11 @@
               })
             "
           ></showChipAmount>
-          <div @click="testAnimation($event)" class="chip-animation"></div>
-          <span class="big-digit" :id="'twodigitWin-' + data.rule">
+          <div
+            @click="testAnimation($event)"
+            :id="'twodigitWin-' + data.rule"
+          ></div>
+          <span class="big-digit">
             {{ $t("gamemsg." + data.rule) }}
           </span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
@@ -635,4 +649,3 @@ export default {
   white-space: pre-line;
 }
 </style>
-
