@@ -1687,7 +1687,8 @@ export default {
       "clearDataMultiGameBet",
       "setLiveRoadMap",
       "setRoadMap",
-      "setUserData"
+      "setUserData",
+      "setSnackBarMessage"
     ]),
 
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -1739,16 +1740,17 @@ export default {
     reviewbet() {
       this.reviewbetDialog = true;
     },
+    // Place Bet Last Step
     placeBet() {
       let data = {
         gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
         ruleID: this.ruleid,
         betAmount: this.betAmount
-      };
-      console.log(data);
+      };     
       this.confirmDisabled = true;
       this.sendBetting(data);
     },
+    // Final Betting on Mobile
     async sendBetting(betData) {
       try {
         var reqBody = {
@@ -1765,28 +1767,14 @@ export default {
           this.betAmount = 0;
           this.bettingDialog = false;
           this.reviewbetDialog = false;
-          this.pushDataOnGoingBet(res.data[0]);
-          this.$swal({
-            type: "success",
-            title: this.$root.$t("msg.confirm"),
-            showConfirmButton: false,
-            timer: 1500
-          });
-        } else {
-          if (res.status) {
-            throw new Error(config.error.general);
-          } else {
-            throw new Error(config.error.general);
-          }
+          this.pushDataOnGoingBet(res.data[0]);        
+          this.setSnackBarMessage("Sucessfully Bet Place.");
+        }else {
+         this.setSnackBarMessage(config.error.general);         
         }
       } catch (ex) {
         this.confirmDisabled = false;
-        console.error(ex);
-        this.$swal({
-          type: "error",
-          title: `Error ${ex.message}`,
-          showConfirmButton: true
-        });
+        this.setSnackBarMessage(ex.message);        
         log.error(
           {
             req: reqBody,

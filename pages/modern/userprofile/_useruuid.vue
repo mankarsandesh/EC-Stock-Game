@@ -98,141 +98,144 @@
           </v-flex>
         </v-layout>
       </v-container>
+
+      <v-container mb-5>
+        <v-layout row wrap>
+          <v-flex xs12 mt-3 v-if="messageError == false">
+            <v-layout pa-3 wrap justify-center>
+              <v-flex xs6 sm3
+                ><div class="cul-box" style="color: #7e57c2;">
+                  <span>
+                    <fa
+                      icon="percentage"
+                      style="font-size: 40px; color: #7e57c2;"
+                    />
+                  </span>
+                  <span class="number-box"
+                    >{{ visitProfileUserData.winRate }}%</span
+                  >
+                  <span class="des-title text-uppercase">{{
+                    $t("leaderboard.winningrate")
+                  }}</span>
+                </div>
+              </v-flex>
+              <v-flex xs6 sm3>
+                <div class="cul-box cul-box-green">
+                  <span>
+                    <fa
+                      icon="money-bill-wave"
+                      style="font-size: 40px; color: #2bb13a;"
+                    />
+                  </span>
+                  <span class="number-box">{{
+                    visitProfileUserData.totalBets
+                  }}</span>
+                  <span class="des-title text-uppercase">{{
+                    $t("msg.totalbet")
+                  }}</span>
+                </div>
+              </v-flex>
+
+              <v-flex xs6 sm3>
+                <div class="cul-box cul-box-red">
+                  <span>
+                    <fa icon="users" style="font-size: 40px; color: #f28691;" />
+                  </span>
+                  <span class="number-box">{{
+                    visitProfileUserData.followerCount
+                  }}</span>
+                  <span class="des-title text-uppercase">{{
+                    $t("profile.followers")
+                  }}</span>
+                </div>
+              </v-flex>
+              <v-flex xs6 sm3>
+                <div class="cul-box cul-box-yellow">
+                  <span>
+                    <fa
+                      icon="money-bill-alt"
+                      style="font-size: 40px; color: #ffd682;"
+                    />
+                  </span>
+                  <span class="number-box"
+                    >${{ visitProfileUserData.totalWinAmount | currency }}</span
+                  >
+                  <span class="des-title text-uppercase">{{
+                    $t("leaderboard.winningamount")
+                  }}</span>
+                </div>
+              </v-flex>
+            </v-layout>
+            <div class="container-content">
+              <div class="box-container"></div>
+              <div class="pa-2 stock-history">
+                <h2 class="text-uppercase">
+                  {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
+                </h2>
+                <div class="stock-history-container">
+                  <VueApexCharts
+                    v-if="series.length > 0"
+                    type="bar"
+                    height="350"
+                    :options="chartOptions"
+                    :series="series"
+                    :key="series.length + '' + filter"
+                  />
+                </div>
+              </div>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </section>
-    <v-container mb-5>
-      <v-layout row wrap>
-        <v-flex xs12 mt-3 v-if="messageError == false">
-          <v-layout pa-3 wrap justify-center>
-            <v-flex xs6 sm3
-              ><div class="cul-box" style="color: #7e57c2;">
-                <span>
-                  <fa
-                    icon="percentage"
-                    style="font-size: 40px; color: #7e57c2;"
-                  />
-                </span>
-                <span class="number-box"
-                  >{{ visitProfileUserData.winRate }}%</span
-                >
-                <span class="des-title text-uppercase">{{
-                  $t("leaderboard.winningrate")
-                }}</span>
-              </div>
-            </v-flex>
-            <v-flex xs6 sm3>
-              <div class="cul-box cul-box-green">
-                <span>
-                  <fa
-                    icon="money-bill-wave"
-                    style="font-size: 40px; color: #2bb13a;"
-                  />
-                </span>
-                <span class="number-box">{{
-                  visitProfileUserData.totalBets
-                }}</span>
-                <span class="des-title text-uppercase">{{
-                  $t("msg.totalbet")
-                }}</span>
-              </div>
-            </v-flex>
-
-            <v-flex xs6 sm3>
-              <div class="cul-box cul-box-red">
-                <span>
-                  <fa icon="users" style="font-size: 40px; color: #f28691;" />
-                </span>
-                <span class="number-box">{{
-                  visitProfileUserData.followerCount
-                }}</span>
-                <span class="des-title text-uppercase">{{
-                  $t("profile.followers")
-                }}</span>
-              </div>
-            </v-flex>
-            <v-flex xs6 sm3>
-              <div class="cul-box cul-box-yellow">
-                <span>
-                  <fa
-                    icon="money-bill-alt"
-                    style="font-size: 40px; color: #ffd682;"
-                  />
-                </span>
-                <span class="number-box"
-                  >${{ visitProfileUserData.totalWinAmount | currency }}</span
-                >
-                <span class="des-title text-uppercase">{{
-                  $t("leaderboard.winningamount")
-                }}</span>
-              </div>
-            </v-flex>
-          </v-layout>
-          <div class="container-content">
-            <div class="box-container"></div>
-            <div class="pa-2 stock-history">
-              <h2 class="text-uppercase">
-                {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
-              </h2>
-              <div class="stock-history-container">
-                <VueApexCharts
-                  v-if="series.length > 0"
-                  type="bar"
-                  height="350"
-                  :options="chartOptions"
-                  :series="series"
-                  :key="series.length + '' + filter"
-                />
-              </div>
-            </div>
+    <v-layout  v-if="this.messageError == true" >
+      <v-flex pa-2>
+        <div class="container-content">
+          <div class="box-error">
+            <h2>Sorry, this content isn't avaiable right now</h2>
+            <p>
+              The Link you followed have expired, or the page may only be
+              visiable to an audiencce you're not in.
+            </p>
+            <a @click="$router.push('/modern/desktop/userprofile/')">
+              Go back to the previous Page
+            </a>
+            <a @click="$router.push('/modern/desktop/btc1/')">
+              EC Game Home Page</a
+            >
           </div>
-        </v-flex>
-        <v-flex v-if="messageError == true">
-          <div class="container-content">
-            <div class="box-error">
-              <h1>Sorry, this content isn't avaiable right now</h1>
-              <p>
-                The Link you followed have expired, or the page may only be
-                visiable to an audiencce you're not in.
-              </p>
-              <a @click="$router.push('/modern/desktop/userprofile/')">
-                Go back to the previous Page
-              </a>
-              <a @click="$router.push('/modern/desktop/btc1/')">
-                EC Game Home Page</a
-              >
-            </div>
-          </div>
-        </v-flex>
-      </v-layout>
+        </div>
+      </v-flex>
+    </v-layout>
 
-      <!-- Follow and UnFollow Dialog box-->
-      <v-dialog
-        v-model="followDialog"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-        scrollable
-      >
-        <v-card tile>
-          <v-toolbar card dark style="background-color:#2cb13b;">
-            <v-btn icon dark @click="followDialog = false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>{{
-              this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
-            }}</v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
+    <!-- Follow and UnFollow Dialog box-->
+    <v-dialog
+      v-model="followDialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable
+    >
+      <v-card tile>
+        <v-toolbar card dark style="background-color:#2cb13b;">
+          <v-btn icon dark @click="followDialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{
+            this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+          }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
 
-          <followBet
-            :username="this.username"
-            :userImage="this.userImage"
-            :FollowerUserUUID="this.FollowUserUUID"
-            :isFollowing="this.FolloworNot"
-            @followBetClose="closeFollowBet"
-          />
-        </v-card>
-      </v-dialog>
-    </v-container>
+        <followBet
+          :username="this.username"
+          :userImage="this.userImage"
+          :FollowerUserUUID="this.FollowUserUUID"
+          :isFollowing="this.FolloworNot"
+          @followBetClose="closeFollowBet"
+        />
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -405,7 +408,7 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
         } else {
           this.messageError = true;
-          throw new Error(config.error.general);
+          // throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
@@ -455,12 +458,10 @@ Error Box When User Not Found
 .box-error {
   border: 1px solid #dddddd;
   background-color: #fff;
-  width: 40%;
-  margin: 10% auto;
   padding: 40px;
 }
 
-.box-error h1 {
+.box-error h2 {
   border-bottom: 1px solid #dddddd;
   margin-bottom: 20px;
   color: #003e70;
@@ -532,7 +533,7 @@ Error Box When User Not Found
 }
 
 .container-content {
-  padding-top: 25px;
+  padding-top: 20px;
   display: flex;
   width: 100%;
   flex-direction: column;
