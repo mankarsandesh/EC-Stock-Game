@@ -3,6 +3,7 @@ import secureStorage from "../plugins/secure-storage";
 import log from "roarr";
 
 const state = () => ({
+  first: null,
   multiGameBet: [], // Store multi game bet
   multiGameBetSend: [], // Store multi game bet send
   footerBetAmount: 0, // Store footer bet amount
@@ -12,6 +13,9 @@ const state = () => ({
 });
 
 const mutations = {
+  SET_FIRST(state, payload) {
+    state.first = payload
+  },
   PUSH_DATA_MULTI_GAME_BET(state, payload) {
     state.multiGameBet.push(payload);
     state.multiGameBetSend.push(payload);
@@ -164,6 +168,7 @@ const actions = {
 };
 
 const getters = {
+  first: state => state.first,
   // Get multi game bet
   getMultiGameBet(state) {
     return state.multiGameBet;

@@ -2,13 +2,10 @@
 #result-draw {
   font-size: 300px;
   color: red;
-  text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff,
-    -1px -1px 0 #fff, 0px 1px 0 #fff, 0px -1px 0 #fff, -1px 0px 0 #fff,
-    1px 0px 0 #fff, 2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff,
-    -2px -2px 0 #fff, 0px 2px 0 #fff, 0px -2px 0 #fff, -2px 0px 0 #fff,
-    2px 0px 0 #fff, 1px 2px 0 #fff, -1px 2px 0 #fff, 1px -2px 0 #fff,
-    -1px -2px 0 #fff, 2px 1px 0 #fff, -2px 1px 0 #fff, 2px -1px 0 #fff,
-    -2px -1px 0 #fff;
+  text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff, 0px 1px 0 #fff, 0px -1px 0 #fff,
+    -1px 0px 0 #fff, 1px 0px 0 #fff, 2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff, -2px -2px 0 #fff, 0px 2px 0 #fff,
+    0px -2px 0 #fff, -2px 0px 0 #fff, 2px 0px 0 #fff, 1px 2px 0 #fff, -1px 2px 0 #fff, 1px -2px 0 #fff, -1px -2px 0 #fff,
+    2px 1px 0 #fff, -2px 1px 0 #fff, 2px -1px 0 #fff, -2px -1px 0 #fff;
 }
 .guide-description {
   font-size: 25px;
@@ -274,11 +271,7 @@ ul {
   border-radius: 50%;
 }
 
-.v-list__tile
-  .theme--light
-  .v-input__control
-  .v-input--selection-controls__input
-  i {
+.v-list__tile .theme--light .v-input__control .v-input--selection-controls__input i {
   color: #003e70 !important;
 }
 
@@ -343,12 +336,7 @@ a {
   padding: 16px;
 }
 
-.v-window
-  .v-window__container
-  .v-window-item
-  .box-click
-  .v-card__title.o-even
-  h5 {
+.v-window .v-window__container .v-window-item .box-click .v-card__title.o-even h5 {
   padding: 0px;
 }
 
@@ -376,9 +364,7 @@ nav.total-bet.v-toolbar.theme--light p {
   margin: 0;
 }
 
-.v-dialog.v-dialog--active
-  .v-card.v-sheet.theme--light
-  .v-card__title.headline {
+.v-dialog.v-dialog--active .v-card.v-sheet.theme--light .v-card__title.headline {
   text-align: center;
   justify-content: center;
 }
@@ -519,8 +505,8 @@ nav.modal-bet.v-toolbar.theme--light p {
   height: 200px !important;
   text-align: center !important;
   border-radius: 5px !important;
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
 }
 
 .container .bg-primary h1 {
@@ -722,21 +708,13 @@ table.result-table tr {
 
 .firstdigit {
   background: rgb(13, 204, 255);
-  background: linear-gradient(
-    22deg,
-    rgba(13, 204, 255, 1) 0%,
-    rgba(71, 96, 255, 1) 100%
-  );
+  background: linear-gradient(22deg, rgba(13, 204, 255, 1) 0%, rgba(71, 96, 255, 1) 100%);
   color: #fff !important;
 }
 
 .bg-btn-first {
   background: rgb(13, 204, 255);
-  background: linear-gradient(
-    22deg,
-    rgba(13, 204, 255, 1) 0%,
-    rgba(71, 96, 255, 1) 100%
-  );
+  background: linear-gradient(22deg, rgba(13, 204, 255, 1) 0%, rgba(71, 96, 255, 1) 100%);
   font-weight: 400;
   color: #ffffff !important;
   border-radius: 6px;
@@ -746,21 +724,13 @@ table.result-table tr {
 
 .lastdigit {
   background: rgb(250, 209, 38);
-  background: linear-gradient(
-    22deg,
-    rgba(250, 209, 38, 1) 0%,
-    rgba(255, 84, 79, 1) 100%
-  );
+  background: linear-gradient(22deg, rgba(250, 209, 38, 1) 0%, rgba(255, 84, 79, 1) 100%);
   color: #fff !important;
 }
 
 .bg-btn-last {
   background: rgb(250, 209, 38);
-  background: linear-gradient(
-    22deg,
-    rgba(250, 209, 38, 1) 0%,
-    rgba(255, 84, 79, 1) 100%
-  );
+  background: linear-gradient(22deg, rgba(250, 209, 38, 1) 0%, rgba(255, 84, 79, 1) 100%);
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -771,21 +741,13 @@ table.result-table tr {
 
 .bothdigit {
   background: rgb(182, 53, 156);
-  background: linear-gradient(
-    22deg,
-    rgba(182, 53, 156, 1) 0%,
-    rgba(239, 10, 106, 1) 100%
-  );
+  background: linear-gradient(22deg, rgba(182, 53, 156, 1) 0%, rgba(239, 10, 106, 1) 100%);
   color: #fff !important;
 }
 
 .bg-btn-both {
   background: rgb(182, 53, 156);
-  background: linear-gradient(
-    22deg,
-    rgba(182, 53, 156, 1) 0%,
-    rgba(239, 10, 106, 1) 100%
-  );
+  background: linear-gradient(22deg, rgba(182, 53, 156, 1) 0%, rgba(239, 10, 106, 1) 100%);
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -796,21 +758,13 @@ table.result-table tr {
 
 .twodigit {
   background: rgb(1, 233, 189);
-  background: linear-gradient(
-    22deg,
-    rgba(1, 233, 189, 1) 0%,
-    rgba(0, 124, 222, 1) 100%
-  );
+  background: linear-gradient(22deg, rgba(1, 233, 189, 1) 0%, rgba(0, 124, 222, 1) 100%);
   color: #fff !important;
 }
 
 .bg-btn-two {
   background: rgb(1, 233, 189);
-  background: linear-gradient(
-    22deg,
-    rgba(1, 233, 189, 1) 0%,
-    rgba(0, 124, 222, 1) 100%
-  );
+  background: linear-gradient(22deg, rgba(1, 233, 189, 1) 0%, rgba(0, 124, 222, 1) 100%);
   font-size: 16px;
   font-weight: 400;
   color: #ffffff !important;
@@ -1056,11 +1010,7 @@ table.result-table {
   border-radius: 8px;
   height: 40px;
   background: rgba(10, 177, 118, 1);
-  background: -moz-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
+  background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
   background: -webkit-gradient(
     left top,
     right top,
@@ -1070,26 +1020,10 @@ table.result-table {
   -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
-  background: -webkit-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: -o-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: -ms-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: linear-gradient(
-    to right,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
+  background: -webkit-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: -o-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: linear-gradient(to right, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0ab176', endColorstr='#0eb11e', GradientType=1);
 }
 
@@ -1099,11 +1033,7 @@ table.result-table {
   border-radius: 8px;
   height: 45px;
   background: rgba(10, 177, 118, 1);
-  background: -moz-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
+  background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
   background: -webkit-gradient(
     left top,
     right top,
@@ -1113,26 +1043,10 @@ table.result-table {
   -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
-  background: -webkit-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: -o-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: -ms-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: linear-gradient(
-    to right,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
+  background: -webkit-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: -o-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: linear-gradient(to right, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0ab176', endColorstr='#0eb11e', GradientType=1);
 }
 
@@ -1143,11 +1057,7 @@ table.result-table {
   border-radius: 8px;
   height: 45px;
   background: rgba(10, 177, 118, 1);
-  background: -moz-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
+  background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
   background: -webkit-gradient(
     left top,
     right top,
@@ -1157,26 +1067,10 @@ table.result-table {
   -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
   box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
-  background: -webkit-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: -o-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: -ms-linear-gradient(
-    left,
-    rgba(10, 177, 118, 1) 0%,
-    rgba(14, 177, 30, 1) 100%
-  );
-  background: linear-gradient(
-    to right,
-    rgb(255, 255, 255) 100%,
-    rgb(255, 255, 255) 100%
-  );
+  background: -webkit-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: -o-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+  background: linear-gradient(to right, rgb(255, 255, 255) 100%, rgb(255, 255, 255) 100%);
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0ab176', endColorstr='#0eb11e', GradientType=1);
 }
 
@@ -1255,13 +1149,7 @@ table.result-table {
   width: 10%;
   height: 100%;
   /* transform: rotate(1deg); */
-  background: repeating-linear-gradient(
-    45deg,
-    #ffc107,
-    #ffc107 10px,
-    #ffc107 10px,
-    #ffc107 20px
-  );
+  background: repeating-linear-gradient(45deg, #ffc107, #ffc107 10px, #ffc107 10px, #ffc107 20px);
   /* Stripes Background Gradient */
   box-shadow: 0px 0px 14px 1px #ffc107;
   position: absolute;
@@ -1534,6 +1422,7 @@ p.guideline {
   background-size: 35px;
   top: 0;
   left: 0;
+  right: 0;
   z-index: 500;
   min-height: 35px;
   min-width: 35px;
@@ -1546,11 +1435,7 @@ p.guideline {
 
 .firstdigit.firstdigit-animation {
   animation: taadaa 1s infinite !important;
-  background-color: linear-gradient(
-    to right,
-    #19b9ff 20%,
-    #3a79ff 51%
-  ) !important;
+  background-color: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%) !important;
   color: #fff !important;
 }
 .lastdigit.lastdigit-animation {
