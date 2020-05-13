@@ -3,10 +3,12 @@
     <v-flex xs12 md12>
       <v-data-table
         :items="currentBets"
-        :items-per-page="5"
+        :rows-per-page-items="[10]"
         ref="table"
         :search="search"
         class="current-bet"
+        prev-icon="fa-chevron-left"
+        next-icon="fa-chevron-right"
       >
         <template v-slot:headers="headers">
           <tr>

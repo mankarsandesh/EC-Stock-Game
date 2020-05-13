@@ -33,17 +33,26 @@
           <td>{{ item.item.betAmount | toCurrency }}</td>
           <td>{{ item.item.payout }}</td>
 
-          <td v-if="item.item.isFollowBet == 1" class="text-uppercase text-center">
+          <td
+            v-if="item.item.isFollowBet == 1"
+            class="text-uppercase text-center"
+          >
             <div class="following">by followers</div>
           </td>
-          <td v-if="item.item.isFollowBet == 0" class="text-uppercase text-center">
+          <td
+            v-if="item.item.isFollowBet == 0"
+            class="text-uppercase text-center"
+          >
             <div class="original">original</div>
           </td>
         </tr>
         <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
           <td colspan="2">
             <span class="betDraw">{{ $t("bethistory.betdraw") }} :</span>
-            <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
+            <span
+              class="gameDraw"
+              v-html="$options.filters.lastDraw(item.item.gameDraw)"
+            ></span>
           </td>
           <td colspan="2" class="allDigit">
             {{ $t("gamemsg.firstdigit") }}
@@ -59,16 +68,18 @@
               v-html="$options.filters.bothDigit(item.item.gameDraw)"
             ></span>
             {{ $t("gamemsg.twodigit") }}
-            <span
-              v-html="$options.filters.twoDigit(item.item.gameDraw)"
-            ></span>
+            <span v-html="$options.filters.twoDigit(item.item.gameDraw)"></span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount == 0">
-            <span class="betDraw">{{ $t("bethistory.yourloosingamount") }} :</span>
+            <span class="betDraw"
+              >{{ $t("bethistory.yourloosingamount") }} :</span
+            >
             <span class="lossAmount">{{ item.item.betAmount }}</span>
           </td>
           <td colspan="3" v-if="item.item.rollingAmount != 0">
-            <span class="betDraw">{{ $t("bethistory.yourwinningamount") }} :</span>
+            <span class="betDraw"
+              >{{ $t("bethistory.yourwinningamount") }} :</span
+            >
             <span class="winAmount">{{ item.item.rollingAmount }}</span>
           </td>
         </tr>
@@ -88,7 +99,13 @@
       </template>
     </v-data-table>
     <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
-      <v-pagination v-model="pagination.page" color="#1db42f" :length="10"></v-pagination>
+      <v-pagination
+        next-icon="fa-chevron-right"
+        prev-icon="fa-chevron-left"
+        v-model="pagination.page"
+        color="#1db42f"
+        :length="10"
+      ></v-pagination>
     </div>
   </div>
 </template>

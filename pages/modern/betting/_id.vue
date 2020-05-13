@@ -7,8 +7,8 @@
             <v-layout>
               <v-flex class="text-xs-center">
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.Lastdraw") }}:</span
-                >
+                  >{{ $t("msg.Lastdraw") }}:
+                </span>
                 <v-flex flex-style class="lastdraw">
                   <h4 class="body-3">
                     <span
@@ -21,8 +21,8 @@
 
               <v-flex class="text-xs-center">
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.BetClosein") }}:</span
-                >
+                  >{{ $t("msg.BetClosein") }}:
+                </span>
                 <v-flex flex-style class="betclose">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
@@ -37,8 +37,8 @@
 
               <v-flex class="text-xs-center">
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lotterydraw") }}:</span
-                >
+                  >{{ $t("msg.lotterydraw") }}:
+                </span>
                 <v-flex flex-style class="lottery">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
@@ -81,7 +81,7 @@
               color="#003e70"
               v-show="isShowTrendMap"
               @click="changeShowTrendMap()"
-              >keyboard_arrow_left</v-icon
+              >fa-chevron-left</v-icon
             >
           </v-flex>
 
@@ -116,11 +116,10 @@
 
           <v-flex xs1 align-self-center arrow>
             <v-icon
-              style="font-size:40px;"
               v-show="!isShowTrendMap"
               @click="changeShowTrendMap()"
               color="#003e70"
-              >keyboard_arrow_right</v-icon
+              >fa-chevron-right</v-icon
             >
           </v-flex>
         </v-layout>
@@ -1002,7 +1001,7 @@
       <div class="header-dialog">
         <span></span>
         <v-icon size="30" @click="bettingDialog = false">
-          close
+          fa-times
         </v-icon>
       </div>
       <v-flex
@@ -1082,7 +1081,7 @@
       <div class="header-dialog">
         <span></span>
         <v-icon size="30" @click="reviewbetDialog = false">
-          close
+          fa-times
         </v-icon>
       </div>
       <div
@@ -1171,7 +1170,7 @@
         </h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
         <v-icon size="30" @click="drawerderfirst = !drawerderfirst">
-          close
+          fa-times
         </v-icon>
       </div>
       <hr class="head-jumbothron" />
@@ -1215,7 +1214,7 @@
         </h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
         <v-icon size="30" @click="drawerderlast = !drawerderlast">
-          close
+          fa-times
         </v-icon>
       </div>
       <hr class="head-jumbothron" />
@@ -1259,7 +1258,7 @@
         </h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
         <v-icon size="30" @click="drawerder018 = !drawerder018">
-          close
+          fa-times
         </v-icon>
       </div>
       <hr class="head-jumbothron" />

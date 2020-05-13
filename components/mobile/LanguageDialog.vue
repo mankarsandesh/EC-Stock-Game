@@ -16,12 +16,14 @@
           :key="index"
         >
           <country-flag :country="item.country" size="big" />
-          <v-radio-group v-model="value" row>
-            <v-radio
+          <div>
+            <input
+              type="radio"
+              v-model="value"
               :value="item.value"
               @click="changeLange(item.value)"
-            ></v-radio>
-          </v-radio-group>
+            />
+          </div>
         </v-flex>
       </v-layout>
     </v-card>

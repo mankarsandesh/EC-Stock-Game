@@ -6,6 +6,7 @@
     <v-layout row wrap>
       <v-flex xs8 sm9 md9 lg9 class="d-flex">
         <v-select
+         append-icon="fa-chevron-down"
           class="border-round mt-2"
           hide-details
           :items="items"

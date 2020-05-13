@@ -25,7 +25,7 @@
           <template v-slot:activator="{ on }">
             <v-text-field
               v-model="dateFrom"
-              append-icon="event"
+              append-icon="fa-calendar"
               readonly
               v-on="on"
               single-line
@@ -64,7 +64,7 @@
           <template v-slot:activator="{ on }">
             <v-text-field
               v-model="dateTo"
-              append-icon="event"
+              append-icon="fa-calendar"
               readonly
               v-on="on"
               single-line
@@ -91,7 +91,7 @@
           single-line
           hide-details
           v-model="search"
-          append-icon="search"
+          append-icon="fa-search"
           label="Search"
           :placeholder="$t('bethistory.searchbyName')"
           class="selectHistory text-white"
@@ -100,6 +100,7 @@
       </v-flex>
       <v-flex xs5 sm5 md2 lg2 mt-2 mb-2 class="input-text">
         <v-select
+          append-icon="fa-chevron-down"
           @change="sortingBy"
           v-model="sortby"
           hide-details
