@@ -303,6 +303,7 @@
     "usersallowfollowme": "用户允许关注我",
     "userallowtosenddirectmessage": "用户允许发送直接消息",
     "gameoptions": "游戏选项",
+    "chipOptions": "芯片选项",
     "sound": "声音",
     "allowtolocation": "允许定位"
   },
@@ -390,6 +391,8 @@
     "betRate":"下注比率范围需在11-101之间",
     "autoStop":"自动停止跟注需在100-1000之间",
     "daysShould":"日期需控制在1-10",
-    "betsShould":"下注次数需控制在1-100"
+    "betsShould":"下注次数需控制在1-100",
+    "userFollowed":"用户已成功关注。",
+    "userUnfollowed":"用户成功取消关注。"
   }
 }

@@ -308,6 +308,7 @@
     "usersallowfollowme": "Users Allow Follow Me",
     "userallowtosenddirectmessage": "User Allow To Send Direct Message",
     "gameoptions": "GAME OPTIONS",
+    "chipOptions": "CHIP OPTIONS",
     "sound": "Sound",
     "allowtolocation": "Allow To Location"
   },
@@ -395,6 +396,8 @@
     "betRate":"Bet Rate Should be Lower than 101 & Greater than 11",
     "autoStop":"Auto Stop Amount should Between 100 to 1000",
     "daysShould":"Days should be Between 1 to 10.",
-    "betsShould":"Bets should be Between 1 to 100"
+    "betsShould":"Bets should be Between 1 to 100",
+    "userFollowed":"User followed successfully.",
+    "userUnfollowed":"User un-followed successfully."
   }
 }
