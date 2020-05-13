@@ -21,7 +21,7 @@ const state = () => ({
   messageError: [],
   loginError: [], // Error occurred on the login screen
   referrer: "" , 
-  snackBarError : false 
+  snackBarError : "" 
 });
 
 const mutations = {

@@ -25,7 +25,7 @@
                 $t(`menu.${item.title}`)
               }}</v-list-tile-title>
             </v-list-tile-content>
-          </v-list-tile>    
+          </v-list-tile>
 
           <v-divider></v-divider>
         </div>
@@ -106,13 +106,12 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-snackbar v-model="getSnackBarError">
-         Somthing Wronggg
-      <v-btn color="pink" text @click="setSnackBarError(false)">
+    <v-snackbar v-model="snackbar"  :timeout="timeout" >
+      {{ getSnackBarError }}
+      <v-btn color="pink" text @click="setSnackBarError('')">
         Close
       </v-btn>
     </v-snackbar>
-
 
     <app-dialogs-confirm
       v-on:dialogStatus="dialogStatus"
@@ -124,7 +123,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState,mapActions } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 
 import menu from "~/data/menuMobile";
 
@@ -148,6 +147,7 @@ export default {
   },
   data() {
     return {
+      snackbar : this.getSnackBarError,
       dialogConfirm: false,
       clipped: false,
       drawer: false,
@@ -157,16 +157,26 @@ export default {
       right: true,
       rightDrawer: false,
       title: "EC gaming",
-      isShow: ""
+      isShow: "",
+      timeout:6000
     };
   },
-  mounted() {   
+  watch :{
+    getSnackBarError(){
+      if(this.snackbar){
+        setTimeout(() => {  this.setSnackBarError(""); },this.timeout);
+      }
+    }
+  },
+  mounted() {
     setInterval(() => {
       this.isShow = location.pathname.split("/")[2];
     });
   },
   methods: {
-     ...mapActions(["setSnackBarError"]),
+    showSnackBar(){
+    },
+    ...mapActions(["setSnackBarError"]),
     getLogout() {
       this.dialogConfirm = true;
     },
@@ -181,7 +191,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getLocale","getSnackBarError"]),
+    ...mapGetters(["getLocale", "getSnackBarError"]),
     countryflag() {
       return this.getLocale;
     }

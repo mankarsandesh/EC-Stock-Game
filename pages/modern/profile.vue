@@ -374,7 +374,7 @@ export default {
       this.avatarID = image;
       this.updateImageProfile();
     },
-    ...mapActions(["setUserData"]),
+    ...mapActions(["setUserData","setSnackBarError"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
@@ -395,20 +395,13 @@ export default {
           }
         );
         if (res.status) {
-          this.snackbar = true;
-          this.messageShow = "Successfully Avatar Updated.";
           this.avatarDialog = false;
           this.setUserData();
         } else {
           throw new Error(config.error.general);
         }
       } catch (ex) {
-        console.error(ex);
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000
-        });
+        this.setSnackBarError(true);
         log.error(
           {
             req: reqBody,
@@ -443,23 +436,18 @@ export default {
             headers: config.header
           }
         );
+        throw new Error("sasasasa");
         if (res.status) {
           this.setUserData();
-          this.updating = false;
-          this.snackbar = true;
-          this.messageShow = "Successfully Information Saved!";
+          this.updating = false;    
+          // this.setSnackBarError("Sucessfully Data Save.");    
         } else {
           this.updating = false;
           throw new Error(res.message[0]);
         }
       } catch (ex) {
-        console.error(ex);
+        this.setSnackBarError("Something Wrong");
         this.updating = false;
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000
-        });
         log.error(
           {
             req: formData,
