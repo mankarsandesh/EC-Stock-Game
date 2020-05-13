@@ -435,16 +435,17 @@ export default {
           {
             headers: config.header
           }
-        );
+        );        
         if (res.status) {
           this.setUserData();
           this.updating = false;
+          this.setSnackBarMessage("Data Save Sucessfully");
         } else {
           this.updating = false;
-          throw new Error(res.message[0]);
+          this.setSnackBarMessage(res.message[0]);         
         }
       } catch (ex) {
-        this.setSnackBarMessage("Something Wrong");
+        this.setSnackBarMessage(config.error.general);
         this.updating = false;
         log.error(
           {
