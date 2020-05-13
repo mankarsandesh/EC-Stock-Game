@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panel v-model="panel" expand >
-    <v-expansion-panel-content class="ruleActive ruleHeading" style="border:1px solid red;">
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
           <span class="rules"

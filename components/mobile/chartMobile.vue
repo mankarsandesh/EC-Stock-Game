@@ -78,6 +78,15 @@ export default {
         newTime.push(element.stockTimestamp);
       });
       return {
+         tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            return (
+              '<div class="arrow_boxChart"> $' +
+              series[seriesIndex][dataPointIndex].toFixed(2) +
+              "</div>"
+            );
+          }
+        },
         zoom: {
           enabled: true,
           type: "x",
@@ -107,8 +116,7 @@ export default {
           zoom: {
             enabled: false
           },
-          toolbar: {
-            show: false,
+          toolbar: {           
             shared: false,
             y: {
               formatter: function(val) {
@@ -149,9 +157,6 @@ export default {
           show: true,
           labels: {
             show: true
-          },
-          title: {
-            text: "Price"
           }
         }
       };
@@ -211,6 +216,16 @@ export default {
 </script>
 
 <style>
+.arrow_boxChart {
+  font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid #003f70;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  font-size: 20px;
+  color: #fff;
+  background: #003f70 !important  ;
+}
 .stockPrice {
   padding-right: 14px;
   color: green;

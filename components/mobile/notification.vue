@@ -51,7 +51,6 @@ export default {
 }
 table {
   border: none;
-  /* border:1px solid red; */
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 2px 3px 10px rgb(0, 0, 0, 0.3);

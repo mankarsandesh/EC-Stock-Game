@@ -50,7 +50,7 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs12 sm12 pt-3>
+          <!-- <v-flex xs12 sm12 pt-3>
             <v-layout xs12 sm6>
               <v-flex xs12 xs6 class="text-xs-center">
                 <v-btn class="buttonGreensmall">
@@ -60,7 +60,7 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-          </v-flex>
+          </v-flex> -->
         </v-layout>
       </v-flex>
     </v-layout>
@@ -71,6 +71,7 @@
         <v-layout wrap xs12>
           <v-flex xs1 align-self-center class="text-xs-right">
             <v-icon
+              style="font-size:40px;"
               color="#003e70"
               v-show="isShowTrendMap"
               @click="changeShowTrendMap()"
@@ -105,7 +106,7 @@
                 <span>{{ getGameUUIDByStockName(this.$route.params.id) }}</span>
               </span>
             </span>
-            <v-flex pa-2 sm12 xs12 class="chartDesgin">
+            <v-flex sm12 xs12 class="chartDesgin">
               <chartMobile :stockName="$route.params.id"></chartMobile>
             </v-flex>
           </v-flex>
@@ -1865,7 +1866,7 @@ export default {
 .tab-menu-container {
   position: relative;
   z-index: 2;
-  top: 48px;
+  top: 10px;
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -1984,9 +1985,9 @@ h4 {
 
 .chartDesgin {
   margin-top: 10px;
-  padding: 5px 5px;
+  padding: 0px;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .v-dialog__content.v-dialog__content--active .v-dialog.v-dialog--active {
