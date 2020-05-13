@@ -4,20 +4,13 @@
       <v-list subheader class="topWrap">
         <v-list-tile>
           <v-list-tile-content>
-            <v-list-tile-title>
-              Follow Bet Invitaion
-              <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i
-            ></v-list-tile-title>
+            <b>Follow Bet Invitaion</b>
           </v-list-tile-content>
-
-          <v-list-tile-action>
-            Filter
-          </v-list-tile-action>
         </v-list-tile>
       </v-list>
       <v-list two-line class="bodyChat">
         <template>
-          <v-flex v-if="globalInvitation.length == 0" mt-5>
+          <v-flex v-if="globalInvitation.length == 0" style="margin-top:200px;">
             <h2 class="text-center" style="color:#a3a3a3;">
               There are no users in Invitaion.
             </h2>
@@ -64,7 +57,7 @@
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <span v-on="on">#{{ item.followerCount }}</span>
+                    <span v-on="on">{{ item.followerCount }}</span>
                   </template>
                   <span>{{ $t("invitation.userfollowCount") }}</span>
                 </v-tooltip>
@@ -91,7 +84,7 @@
               </v-list-tile-title>
             </v-list-tile-content>
 
-            <v-list-tile-action >
+            <v-list-tile-action>
               <v-btn
                 v-bind:class="[
                   item.userUUID == getUserUUID
@@ -139,7 +132,7 @@
 
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog
-      v-model="dialog"
+      v-model="followDialog"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
@@ -147,7 +140,7 @@
     >
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
-          <v-btn icon dark @click="dialog = false">
+          <v-btn icon dark @click="followDialog = false">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>{{
@@ -155,7 +148,6 @@
           }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
-
         <followBet
           :username="this.username"
           :userImage="this.userImage"
@@ -190,38 +182,20 @@ export default {
         }
       ],
       globalInvitation: [],
-      loadingImage: false,
-      sortValue: "monthly",
       defaultImage: "/no-profile-pic.jpg",
-      isActiveWeek: true,
-      isActiveMonth: false,
-      FollowName: "Follow",
-      selectRate: false,
-      selectAmount: true,
-      topPlayerData: [],
       FolloworNot: "",
-      FollowMethod: "",
       FollowUserUUID: "",
       method: "",
-      UserfollowType: "",
-      amountValue: "100",
-      rateValue: "10",
-      BetValue: "",
       username: "",
       userImage: "",
-      dialog: false,
-      selectedFollow: "",
-      followby: [
-        { id: 1, name: "Follow by Amount", value: "Amount" },
-        { id: 2, name: "Follow by Rate", value: "Rate" }
-      ]
+      followDialog: false
     };
   },
   components: {
     followBet
   },
   mounted() {
-    this.leaderBoard();
+    // Users List Invitaion Socket
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
@@ -234,14 +208,13 @@ export default {
           newData[key] = value;
         });
         this.globalInvitation.push(newData);
-        console.log(this.globalInvitation);
         this.scrollDown();
       }
     );
   },
   computed: {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
-     ...mapState({
+    ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
     }) //get 2 data from vuex first, in the computed
@@ -273,6 +246,7 @@ export default {
         }
       }
     },
+    // After more Invitation Come Scroll Down Automatically
     scrollDown() {
       $(".bodyChat")
         .stop()
@@ -294,39 +268,16 @@ export default {
     },
     // Close Follow Bet Popup
     closeFollowBet() {
-      this.dialog = false;
-    },   
+      this.followDialog = false;
+    },
     // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
-      this.username = username;
-      this.FollowUserUUID = userUUID;
-      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
-      this.userImage = this.userImgProfile(userImage);
-      this.dialog = true;
-    },
-    // Fetch Top 10 users in Leaderboard
-    async leaderBoard() {
-      this.loadingImage = true;
-      try {
-        const LeaderBoardData = {
-          portalProviderUUID: this.portalProviderUUID,
-          userUUID: this.userUUID,
-          dateRangeFrom: this.dateFrom,
-          dateRangeTo: this.dateTo,
-          version: config.version
-        };
-        const { data } = await this.$axios.post(
-          config.getLeaderBoard.url,
-          LeaderBoardData,
-          {
-            headers: config.header
-          }
-        );
-        console.log(data);
-        this.topPlayerData = data.data;
-        this.loadingImage = false;
-      } catch (error) {
-        console.log(error);
+      if (this.getUserUUID != userUUID) {
+        this.username = username;
+        this.FollowUserUUID = userUUID;
+        method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
+        this.userImage = this.userImgProfile(userImage);
+        this.followDialog = true;
       }
     }
   }
@@ -336,17 +287,17 @@ export default {
 .userList {
   border-bottom: 1px solid #dddddd;
 }
-.msgUser .ranking {
+.userList .ranking {
   color: #42c851;
   font-weight: 800;
   text-align: center;
 }
-.msgUser .followcount {
+.userList .followcount {
   color: #5f70b1;
   font-weight: 800;
   text-align: center;
 }
-.msgUser .winRate {
+.userList .winRate {
   color: #42c851;
   font-weight: 800;
   text-align: center;
@@ -381,23 +332,7 @@ export default {
   text-transform: uppercase;
   font-weight: 800;
   font-size: 14px;
-}
-.followButton {
-  height: auto;
-  padding: 4px;
-}
-.successful {
-  width: 10%;
-  border: 1px solid;
-  text-align: center;
-  color: green;
-}
-.titleText {
-  font-size: 14px;
-}
-.followup {
-  padding: 10px;
-  border-radius: 20px;
+  height: 45px;
 }
 .ranking span:hover {
   color: green;
