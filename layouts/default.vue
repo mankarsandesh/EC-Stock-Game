@@ -51,7 +51,7 @@
       <languageDialog ref="language" />
 
       <Logout size="normal" />
-      <v-toolbar-side-icon @click="drawer = !drawer" :elevation="0" />
+      <v-icon class="pr-2" @click="drawer = !drawer">fa-bars</v-icon>
     </v-toolbar>
 
     <div

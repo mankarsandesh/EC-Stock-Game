@@ -18,26 +18,26 @@
           v-show="showfilterStock"
         >
           <div class="item-content text-color">
-            <input type="checkbox" label="china" v-model="filter.stock.china">
-            <label for="vehicle1"> china</label><br>
-            <!-- <v-checkbox
-              v-model="filter.stock.china"
-              color="#003e70"
-              label="china"
-              hide-details
-            ></v-checkbox>
-            <v-checkbox
-              v-model="filter.stock.usa"
-              color="#003e70"
-              label="usa"
-              hide-details
-            ></v-checkbox>
-            <v-checkbox
-              v-model="filter.stock.crypto"
-              color="#003e70"
-              label="crypto"
-              hide-details
-            ></v-checkbox> -->
+            <div class="item-check-box">
+              <input
+                type="checkbox"
+                label="china"
+                v-model="filter.stock.china"
+              />
+              <label for="vehicle1" class="pl-2"> china</label><br />
+            </div>
+            <div class="item-check-box">
+              <input type="checkbox" label="china" v-model="filter.stock.usa" />
+              <label for="vehicle1" class="pl-2"> usa</label><br />
+            </div>
+            <div class="item-check-box">
+              <input
+                type="checkbox"
+                label="china"
+                v-model="filter.stock.crypto"
+              />
+              <label for="vehicle1" class="pl-2"> crypto</label><br />
+            </div>
           </div>
         </div>
         <!--filter game type -->
@@ -54,18 +54,22 @@
           v-show="showfilterType"
         >
           <div class="item-content text-color">
-            <v-checkbox
-              v-model="filter.gameType.loop1"
-              color="#003e70"
-              label="1 minute"
-              hide-details
-            ></v-checkbox>
-            <v-checkbox
-              v-model="filter.gameType.loop5"
-              color="#003e70"
-              label="5 minute"
-              hide-details
-            ></v-checkbox>
+            <div class="item-check-box">
+              <input
+                type="checkbox"
+                label="china"
+                v-model="filter.gameType.loop5"
+              />
+              <label for="vehicle1" class="pl-2"> 5 minute</label><br />
+            </div>
+            <div class="item-check-box">
+              <input
+                type="checkbox"
+                label="china"
+                v-model="filter.gameType.loop1"
+              />
+              <label for="vehicle1" class="pl-2"> 1 minute</label><br />
+            </div>
           </div>
         </div>
 
@@ -343,5 +347,10 @@ export default {
   padding-top: 0px;
   display: flex;
   flex-direction: column;
+}
+.item-check-box {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
 }
 </style>
