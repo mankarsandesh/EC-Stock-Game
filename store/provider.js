@@ -20,14 +20,11 @@ const state = () => ({
   UserAuth: {},
   messageError: [],
   loginError: [], // Error occurred on the login screen
-  referrer: "" , 
-  snackBarError : "" 
+  referrer: "",
+  snackBarMessage: ""
 });
 
 const mutations = {
-  SET_SNACK_BAR_ERROR(state,payload){
-    state.snackBarError = payload;
-  },
   SET_PORTAL_PROVIDER_UUID(state, payload) {
     state.portalProviderUUID = payload;
   },
@@ -78,13 +75,13 @@ const mutations = {
   },
   SET_REFERRER(state, payload) {
     state.referrer = payload;
+  },
+  SET_SNACK_BAR_MESSAGE(state, payload) {
+    state.snackBarMessage = payload;
   }
 };
 
 const actions = {
-  setSnackBarError({commit},payload){
-    commit("SET_SNACK_BAR_ERROR",payload);
-  },
   // Set user data from api
   async setUserData(context) {
     try {
@@ -101,7 +98,7 @@ const actions = {
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);
-        context.commit('SET_USER_UUID', userInfo.userUUID);
+        context.commit("SET_USER_UUID", userInfo.userUUID);
       } else {
         throw new Error(config.error.general);
       }
@@ -176,13 +173,13 @@ const actions = {
   // Set portal provider's whitelabel Url
   setReferrer({ commit }, payload) {
     commit("SET_REFERRER", payload);
+  },
+  setSnackBarMessage({ commit }, payload) {
+    commit("SET_SNACK_BAR_MESSAGE", payload);
   }
 };
 
 const getters = {
-  getSnackBarError(state){
-    return state.snackBarError;
-  },
   // Get portal provider UUID
   getPortalProviderUUID(state) {
     return state.portalProviderUUID;
