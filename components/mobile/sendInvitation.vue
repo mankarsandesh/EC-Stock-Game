@@ -12,7 +12,7 @@
         <template>
           <v-flex v-if="globalInvitation.length == 0" style="margin-top:200px;">
             <h2 class="text-center" style="color:#a3a3a3;">
-              There are no users in Invitaion.
+              There are no users.
             </h2>
           </v-flex>
         </template>
@@ -129,7 +129,6 @@
         </v-btn>
       </v-flex>
     </div>
-
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog
       v-model="followDialog"
@@ -160,12 +159,12 @@
   </div>
 </template>
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters,mapActions } from "vuex";
 import config from "~/config/config.global";
 import followBet from "~/components/mobile/follow/followBet";
 export default {
   data() {
-    return {
+    return {   
       selectCategory: [],
       categoryName: [
         {
@@ -220,6 +219,8 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
+    // Set Error from SnackBar 
+    ...mapActions(["setSnackBarError"]),
     // Send Top Player Users Invitation
     async sendInvitation() {
       if (this.selectCategory.length > 0) {
@@ -236,13 +237,9 @@ export default {
             {
               headers: config.header
             }
-          );
+          );        
         } catch (ex) {
-          this.$swal({
-            title: ex.message,
-            type: "error",
-            timer: 1000
-          });
+          this.setSnackBarError(true);
         }
       }
     },

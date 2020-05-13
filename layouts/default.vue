@@ -25,7 +25,7 @@
                 $t(`menu.${item.title}`)
               }}</v-list-tile-title>
             </v-list-tile-content>
-          </v-list-tile>
+          </v-list-tile>    
 
           <v-divider></v-divider>
         </div>
@@ -106,6 +106,14 @@
         <nuxt />
       </v-container>
     </v-content>
+    <v-snackbar v-model="getSnackBarError">
+         Somthing Wronggg
+      <v-btn color="pink" text @click="setSnackBarError(false)">
+        Close
+      </v-btn>
+    </v-snackbar>
+
+
     <app-dialogs-confirm
       v-on:dialogStatus="dialogStatus"
       :dialogConfirm="dialogConfirm"
@@ -116,7 +124,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState,mapActions } from "vuex";
 
 import menu from "~/data/menuMobile";
 
@@ -152,14 +160,13 @@ export default {
       isShow: ""
     };
   },
-
-  created() {},
-  mounted() {
+  mounted() {   
     setInterval(() => {
       this.isShow = location.pathname.split("/")[2];
     });
   },
   methods: {
+     ...mapActions(["setSnackBarError"]),
     getLogout() {
       this.dialogConfirm = true;
     },
@@ -174,7 +181,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getLocale"]),
+    ...mapGetters(["getLocale","getSnackBarError"]),
     countryflag() {
       return this.getLocale;
     }

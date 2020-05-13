@@ -20,10 +20,14 @@ const state = () => ({
   UserAuth: {},
   messageError: [],
   loginError: [], // Error occurred on the login screen
-  referrer: ""
+  referrer: "" , 
+  snackBarError : false 
 });
 
 const mutations = {
+  SET_SNACK_BAR_ERROR(state,payload){
+    state.snackBarError = payload;
+  },
   SET_PORTAL_PROVIDER_UUID(state, payload) {
     state.portalProviderUUID = payload;
   },
@@ -78,6 +82,9 @@ const mutations = {
 };
 
 const actions = {
+  setSnackBarError({commit},payload){
+    commit("SET_SNACK_BAR_ERROR",payload);
+  },
   // Set user data from api
   async setUserData(context) {
     try {
@@ -173,6 +180,9 @@ const actions = {
 };
 
 const getters = {
+  getSnackBarError(state){
+    return state.snackBarError;
+  },
   // Get portal provider UUID
   getPortalProviderUUID(state) {
     return state.portalProviderUUID;
