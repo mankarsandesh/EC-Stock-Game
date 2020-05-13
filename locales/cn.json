@@ -259,6 +259,12 @@
     "unfollow": "取消关注",
     "yourself": "我"
   },
+  "liveBetData": {
+    "betID" : "投注编号",
+    "dateTime" : "日期和时间",
+    "bet" : "打赌",
+    "stockName" : "股票名称"
+  },
   "leaderboard": {
     "user": "用户",
     "winningrate": "胜率",

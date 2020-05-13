@@ -260,6 +260,12 @@
     "unfollow": "เลิก",
     "yourself": "ด้วยตัวคุณเอง"
   },
+  "liveBetData": {
+    "betID" : "รหัสเดิมพัน",
+    "dateTime" : "วันและเวลา",
+    "bet" : "เดิมพัน",
+    "stockName" : "ชื่อหุ้น"
+  },
   "leaderboard": {
     "user": "ผู้ใช้งาน",
     "winningrate": "อัตราการชนะ",

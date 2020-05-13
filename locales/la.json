@@ -253,11 +253,17 @@
     "noFollowers" : "ບໍ່ມີຜູ້ຕິດຕາມ."
   },
   "useraction": {
-    "followBet": "ປະຕິບັດຕາມ BET",
-    "unfollowBet": "UNFOLLOW BET",
+    "followBet": "ຕິດຕາມການເດີມພັນ",
+    "unfollowBet": "ບໍ່ປະຕິບັດຕາມການເດີມພັນ",
     "follow": "ປະຕິບັດຕາມ",
     "unfollow": "ບໍ່ສົມບູນ",
     "yourself": "ຕົວທ່ານເອງ"
+  },
+  "liveBetData": {
+    "betID" : "ລະຫັດການພະນັນ",
+    "dateTime" : "ວັນທີແລະເວລາ",
+    "bet" : "ການເດີມພັນ",
+    "stockName" : "ຊື່ຫຸ້ນ"
   },
   "leaderboard": {
     "user": "ຜູ້ໃຊ້",

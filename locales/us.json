@@ -166,7 +166,8 @@
     "accept": "I accept",
     "pending": "Pending",
     "win": "Win",
-    "lose": "Lose"
+    "lose": "Lose",
+    "Date & Time" : "Date & Time"
   },
   "navlist": {
     "live Stock": "live Stock",
@@ -262,6 +263,12 @@
     "follow": "FOLLOW",
     "unfollow": "UNFOLLOW",
     "yourself": "YOURSELF"
+  },
+  "liveBetData": {
+    "betID" : "Bet ID",
+    "dateTime" : "Date & Time",
+    "bet" : "Bet",
+    "stockName" : "Stock name"
   },
   "leaderboard": {
     "user": "User",
