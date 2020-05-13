@@ -71,7 +71,7 @@
       </v-flex>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">{{ $t("setting.gameoptions") }}</span>
+          <span class="group_title">{{ $t("setting.chipOptions") }}</span>
           <div class="title_container">
             <chipsAmountDesktop />
           </div>

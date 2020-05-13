@@ -385,7 +385,14 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-          this.errorShow(true, true, false, data.message[0]);
+          this.errorShow(
+            true,
+            true,
+            false,
+            data.message[0] == "User followed successfully."
+              ? this.$root.$t("follow.userFollowed")
+              : this.$root.$t("follow.userUnfollowed")
+          );
           window.setTimeout(function() {
             location.reload();
           }, 2000);
