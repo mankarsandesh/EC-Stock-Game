@@ -374,7 +374,7 @@ export default {
       this.avatarID = image;
       this.updateImageProfile();
     },
-    ...mapActions(["setUserData","setSnackBarError"]),
+    ...mapActions(["setUserData", "setSnackBarMessage"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
@@ -401,7 +401,7 @@ export default {
           throw new Error(config.error.general);
         }
       } catch (ex) {
-        this.setSnackBarError(true);
+        this.setSnackBarMessage(ex);
         log.error(
           {
             req: reqBody,
@@ -436,17 +436,15 @@ export default {
             headers: config.header
           }
         );
-        throw new Error("sasasasa");
         if (res.status) {
           this.setUserData();
-          this.updating = false;    
-          // this.setSnackBarError("Sucessfully Data Save.");    
+          this.updating = false;
         } else {
           this.updating = false;
           throw new Error(res.message[0]);
         }
       } catch (ex) {
-        this.setSnackBarError("Something Wrong");
+        this.setSnackBarMessage("Something Wrong");
         this.updating = false;
         log.error(
           {

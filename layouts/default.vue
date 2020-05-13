@@ -106,12 +106,7 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-snackbar v-model="snackbar"  :timeout="timeout" >
-      {{ getSnackBarError }}
-      <v-btn color="pink" text @click="setSnackBarError('')">
-        Close
-      </v-btn>
-    </v-snackbar>
+    <snackbar />
 
     <app-dialogs-confirm
       v-on:dialogStatus="dialogStatus"
@@ -123,7 +118,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 import menu from "~/data/menuMobile";
 
@@ -136,6 +131,8 @@ import AppDialogsConfirm from "~/components/dialogsConfirm";
 import i18n from "vue-i18n";
 import secureStorage from "../plugins/secure-storage";
 import Button from "~/components/Button";
+import Snackbar from "../components/mobile/Snackbar.vue";
+
 export default {
   components: {
     AppDialogsConfirm,
@@ -143,11 +140,11 @@ export default {
     languageDialog,
     welcomeUser,
     mobileLogout,
-    Button
+    Button,
+    Snackbar
   },
   data() {
     return {
-      snackbar : this.getSnackBarError,
       dialogConfirm: false,
       clipped: false,
       drawer: false,
@@ -157,16 +154,8 @@ export default {
       right: true,
       rightDrawer: false,
       title: "EC gaming",
-      isShow: "",
-      timeout:6000
+      isShow: ""
     };
-  },
-  watch :{
-    getSnackBarError(){
-      if(this.snackbar){
-        setTimeout(() => {  this.setSnackBarError(""); },this.timeout);
-      }
-    }
   },
   mounted() {
     setInterval(() => {
@@ -174,9 +163,6 @@ export default {
     });
   },
   methods: {
-    showSnackBar(){
-    },
-    ...mapActions(["setSnackBarError"]),
     getLogout() {
       this.dialogConfirm = true;
     },
@@ -191,7 +177,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getLocale", "getSnackBarError"]),
+    ...mapGetters(["getLocale"]),
     countryflag() {
       return this.getLocale;
     }
