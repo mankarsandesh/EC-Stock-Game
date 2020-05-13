@@ -253,11 +253,17 @@
     "noFollowers" : "ບໍ່ມີຜູ້ຕິດຕາມ."
   },
   "useraction": {
-    "followBet": "ປະຕິບັດຕາມ BET",
-    "unfollowBet": "UNFOLLOW BET",
+    "followBet": "ຕິດຕາມການເດີມພັນ",
+    "unfollowBet": "ບໍ່ປະຕິບັດຕາມການເດີມພັນ",
     "follow": "ປະຕິບັດຕາມ",
     "unfollow": "ບໍ່ສົມບູນ",
     "yourself": "ຕົວທ່ານເອງ"
+  },
+  "liveBetData": {
+    "betID" : "ລະຫັດການພະນັນ",
+    "dateTime" : "ວັນທີແລະເວລາ",
+    "bet" : "ການເດີມພັນ",
+    "stockName" : "ຊື່ຫຸ້ນ"
   },
   "leaderboard": {
     "user": "ຜູ້ໃຊ້",
@@ -297,6 +303,7 @@
     "usersallowfollowme": "ຜູ້ໃຊ້ອະນຸຍາດໃຫ້ຕິດຕາມຂ້ອຍ",
     "userallowtosenddirectmessage": "ອະນຸຍາດໃຫ້ຜູ້ໃຊ້ສົ່ງຂໍ້ຄວາມໂດຍກົງ",
     "gameoptions": "ຕົວເລືອກເກມ",
+    "chipOptions": "ຕົວເລືອກຊິບ",
     "sound": "ສຽງ",
     "allowtolocation": "ອະນຸຍາດໃຫ້ຕັ້ງສະຖານທີ່"
   },
@@ -384,6 +391,8 @@
     "betRate":"ອັດຕາການເດີມພັນຄວນຈະຕ່ໍາກວ່າ 101 & ຫຼາຍກ່ວາ 11",
     "autoStop":"ຈຳ ນວນເງິນທີ່ຢຸດໂດຍອັດຕະໂນມັດຄວນຢູ່ລະຫວ່າງ 100 ເຖິງ 1000",
     "daysShould":"ມື້ຄວນຈະຢູ່ລະຫວ່າງ 1 ເຖິງ 10.",
-    "betsShould":"ການເດີມພັນຄວນຈະຢູ່ລະຫວ່າງ 1 ເຖິງ 100"
+    "betsShould":"ການເດີມພັນຄວນຈະຢູ່ລະຫວ່າງ 1 ເຖິງ 100",
+    "userFollowed":"ຜູ້ໃຊ້ໄດ້ປະສົບຜົນ ສຳ ເລັດ.",
+    "userUnfollowed":"ຜູ້ໃຊ້ບໍ່ໄດ້ຖືກກວດສອບ"
   }
 }
