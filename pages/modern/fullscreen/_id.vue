@@ -6,7 +6,7 @@
       <div id="background-tutorial"></div>
       <div id="guide-container">
         <div class="close-icon">
-          <v-icon @click="clearTutorialUI()" color="#fff">close</v-icon>
+          <v-icon @click="clearTutorialUI()" color="#fff">fa-times</v-icon>
         </div>
         <!-- last draw v-if="tutorialStepNumber === 1" -->
         <div class="guide-top" v-if="tutorialStepNumber === 1">
@@ -157,7 +157,7 @@
         <v-card-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="dialogOtherstock = false">
-            <v-icon>close</v-icon>
+            <v-icon>fa-times</v-icon>
           </v-btn>
         </v-card-title>
         <v-layout row wrap px-2 pt-2>
