@@ -2,9 +2,7 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">
-          {{ $t("profile.myfollowing") }} ({{ this.countFollwing }})
-        </h2>
+        <h2 class="text-uppercase">{{ $t("profile.myfollowing") }} ({{ this.countFollwing }})</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -12,28 +10,26 @@
       <v-flex xs10>
         <div class="title_container">
           <h3 class="text-black onFollower" v-if="followingListEmpty == true">
-              <i class="fa fa-user-o fa-2x" />
-              <div>{{ $t("profile.noFollowing") }}</div>
+            <i class="fa fa-user-o fa-2x" />
+            <div>{{ $t("profile.noFollowing") }}</div>
           </h3>
-          <div
-            class="follower_container"
-            v-for="(data, index) in followingList"
-            :key="index"
-          >
+          <div class="follower_container" v-for="(data, index) in followingList" :key="index">
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
-                <img class="userImage" :src="imgProfile(data.profileImage)" />
+              <img class="userImage" :src="imgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
-              <span v-if="data.fullName == null" class="name">{{
+              <span v-if="data.fullName == null" class="name">
+                {{
                 data.userName
-              }}</span>
+                }}
+              </span>
             </nuxt-link>
             <div class="followType">
               <span>
-                <label>Follow {{ data.followRuleValue[0].name }} :</label>
+                <label>{{ data.followRuleValue[0].name == 'byAmount' ? $t("leaderboard.followbyAmount") : $t("leaderboard.followbyRate") }} :</label>
                 {{ data.followRuleValue[0].value }}
               </span>
               <span>
-                <label>Auto Stop {{ data.unFollowRuleValue[0].name }}:</label>
+                <label>{{ data.unFollowRuleValue[0].name == 'byWin' ? $t("leaderboard.stopbyWinning") : data.unFollowRuleValue[0].name == 'byLose' ? $t("leaderboard.stopbyLosing") : data.unFollowRuleValue[0].name == 'byTime' ? $t("leaderboard.stopbyTiming") : $t("leaderboard.stopbyBets")}}:</label>
                 {{ data.unFollowRuleValue[0].value }}
               </span>
             </div>
@@ -47,9 +43,7 @@
                   data.isFollowing
                 )
               "
-            >
-              {{ $t("useraction.unfollow") }}
-            </button>
+            >{{ $t("useraction.unfollow") }}</button>
           </div>
         </div>
       </v-flex>
@@ -97,13 +91,13 @@ export default {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
-     // Close Follow Bet Popup
-    closeFollowBet(){
+    // Close Follow Bet Popup
+    closeFollowBet() {
       this.dialog = false;
     },
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
-      this.FollowUserUUID = userUUID;      
+      this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
       this.dialog = true;
@@ -150,12 +144,12 @@ export default {
 </script>
 
 <style scoped>
-.onFollower{
+.onFollower {
   color: #aeafb0;
   text-align: center;
   font-size: 28px;
   width: 500px;
-  margin:20% auto;
+  margin: 20% auto;
 }
 .followType span {
   text-align: center;

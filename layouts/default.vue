@@ -106,6 +106,8 @@
         <nuxt />
       </v-container>
     </v-content>
+    <snackbar />
+
     <app-dialogs-confirm
       v-on:dialogStatus="dialogStatus"
       :dialogConfirm="dialogConfirm"
@@ -129,6 +131,8 @@ import AppDialogsConfirm from "~/components/dialogsConfirm";
 import i18n from "vue-i18n";
 import secureStorage from "../plugins/secure-storage";
 import Button from "~/components/Button";
+import Snackbar from "../components/mobile/Snackbar.vue";
+
 export default {
   components: {
     AppDialogsConfirm,
@@ -136,7 +140,8 @@ export default {
     languageDialog,
     welcomeUser,
     mobileLogout,
-    Button
+    Button,
+    Snackbar
   },
   data() {
     return {
@@ -152,8 +157,6 @@ export default {
       isShow: ""
     };
   },
-
-  created() {},
   mounted() {
     setInterval(() => {
       this.isShow = location.pathname.split("/")[2];

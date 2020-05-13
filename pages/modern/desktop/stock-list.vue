@@ -9,7 +9,7 @@
               v-model="sortBy"
               class="border-round"
               hide-details
-              :items="items"
+              :items="[ { value: 'asc', text: $t('stock-list.ascending') } , { value: 'desc', text: $t('stock-list.descending') }]"
               :placeholder="$t('msg.sortby')"
               :key="$root.$t('stock-list.ascending') + sortBy"
             ></v-select>
@@ -37,15 +37,6 @@ export default {
     return {
       sortBy: "asc"
     };
-  },
-  computed: {
-    // to change select box while language change
-    items() {
-      return [
-        { value: "asc", text: this.$root.$t("stock-list.ascending") },
-        { value: "desc", text: this.$root.$t("stock-list.descending") }
-      ];
-    }
   },
   methods: {
     goSearch() {
