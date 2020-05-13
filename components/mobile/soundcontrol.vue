@@ -29,6 +29,7 @@
         Close
       </v-btn>
     </v-snackbar>
+    
   </div>
 </template>
 
@@ -69,7 +70,7 @@ export default {
         if (res.code == 200) {
           this.snackbar = true;
           this.messageShow = "Changes saved";
-          this.setUserData();
+          this.setUserData();        
         }
       } catch (ex) {
         console.log(ex.message);
