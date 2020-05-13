@@ -10,6 +10,7 @@ const state = () => ({
     "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"), // Store auth token
   portalProviderUUID: secureStorage.getItem("PORTAL_PROVIDERUUID"), // Store portal provider UUID
   userUUID: secureStorage.getItem("USER_UUID"), // Store user UUID
+  userBalance: 0,
   userData: {}, // Store user data
   locales: ["cn", "us", "th", "la"], // Store language locales
   locale: secureStorage.getItem("lang"), // Store locale
@@ -20,7 +21,8 @@ const state = () => ({
   UserAuth: {},
   messageError: [],
   loginError: [], // Error occurred on the login screen
-  referrer: ""
+  referrer: "",
+  snackBarMessage: ""
 });
 
 const mutations = {
@@ -74,6 +76,12 @@ const mutations = {
   },
   SET_REFERRER(state, payload) {
     state.referrer = payload;
+  },
+  SET_SNACK_BAR_MESSAGE(state, payload) {
+    state.snackBarMessage = payload;
+  },
+  SET_USER_BALANCE(state, payload) {
+    state.userBalance = payload;
   }
 };
 
@@ -94,7 +102,7 @@ const actions = {
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);
-        context.commit('SET_USER_UUID', userInfo.userUUID);
+        context.commit("SET_USER_UUID", userInfo.userUUID);
       } else {
         throw new Error(config.error.general);
       }
@@ -169,6 +177,12 @@ const actions = {
   // Set portal provider's whitelabel Url
   setReferrer({ commit }, payload) {
     commit("SET_REFERRER", payload);
+  },
+  setSnackBarMessage({ commit }, payload) {
+    commit("SET_SNACK_BAR_MESSAGE", payload);
+  },
+  setUserBalance({ commit }, payload) {
+    commit("SET_USER_BALANCE", payload);
   }
 };
 
@@ -242,6 +256,9 @@ const getters = {
   },
   getReferrer(state) {
     return state.referrer;
+  },
+  getUserBalance(state) {
+    return state.userBalance;
   }
 };
 
