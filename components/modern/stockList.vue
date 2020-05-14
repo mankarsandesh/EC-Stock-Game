@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-flex pa-2 class="headerStockBar">{{ $t("menu.stock list") }}</v-flex>
+      <v-flex pa-2 class="headerStockBar">{{ $t("menu.stockList") }}</v-flex>
     </v-layout>
     <v-flex>
       <div class="table-responsive">
@@ -12,15 +12,12 @@
             <th>{{ $t("msg.Status") }}</th>
             <th>{{ $t("msg.Countdown") }}</th>
           </tr>
-          <tr
-            v-for="(stock, index) in getStockListPrice[0]"
-            :key="stock.stockUUID"
-          >
+          <tr v-for="(stock, index) in getStockListPrice[0]" :key="stock.stockUUID">
             <td>
-              <nuxt-link :to="'/modern/desktop/' + stock.stockName"
-                >{{ $t(`stockname.${stock.stockName}`)
-                }}{{ stock.stockName == "btc5" ? "5" : "" }}</nuxt-link
-              >
+              <nuxt-link :to="'/modern/desktop/' + stock.stockName">
+                {{ $t(`stockname.${stock.stockName}`)
+                }}{{ stock.stockName == "btc5" ? "5" : "" }}
+              </nuxt-link>
             </td>
             <td
               v-html="
@@ -34,27 +31,23 @@
             ></td>
 
             <td>
-              <span
-                v-if="stock.stockStatus === 'Closed'"
-                :style="{ color: 'red' }"
-              >
-                Closed
-              </span>
+              <span v-if="stock.stockStatus === 'Closed'" :style="{ color: 'red' }">Closed</span>
               <span
                 v-if="
                   stock.stockStatus !== 'Closed' && getStockListCountdown[index]
                 "
-                >{{
-                  getStockListCountdown[index].gameEndTimeCountDownInSec
-                    | betstatus(getStockLoop(stock.stockName))
-                }}</span
               >
+                {{
+                getStockListCountdown[index].gameEndTimeCountDownInSec
+                | betstatus(getStockLoop(stock.stockName))
+                }}
+              </span>
             </td>
             <td>
               <span v-if="getStockListCountdown[index]">
                 {{
-                  getStockListCountdown[index].gameEndTimeCountDownInSec
-                    | lotterydraw(getStockLoop(stock.stockName))
+                getStockListCountdown[index].gameEndTimeCountDownInSec
+                | lotterydraw(getStockLoop(stock.stockName))
                 }}
               </span>
             </td>
