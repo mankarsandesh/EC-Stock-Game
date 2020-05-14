@@ -3,11 +3,11 @@
     <h4>
       {{ $t("home.welcome") }}
       <span class="warning--text">{{ getUserName }},</span>
-      {{ $t("home.yourcurrentbalanceis") }}
+      {{ $t("home.yourCurrentBalanceIs") }}
       <span class="warning--text">
         <animated-number value="15000" :formatValue="formatToPrice" />
       </span>
-      {{ $t("home.goodluck") }}！
+      {{ $t("home.goodLuck") }}！
       <span class="slideInLeft" :style="' color:' + color" v-if="snackbar"
         ><i class="fa fa-bell" style="color: yellow;" v-if="betPrice > 0" />
         {{ text }}

@@ -5,11 +5,13 @@
         <v-flex xs6 sm6 md6 lg4>
           <div class="amount_container">
             <div class="decorator_card decorator_card_green"></div>
-            <span>{{ $t("msg.accountbalance") }}</span>
+            <span>{{ $t("msg.accountBalance") }}</span>
             <br />
-            <span class="amount" v-if="userData.balance != 0">{{
+            <span class="amount" v-if="userData.balance != 0">
+              {{
               userData.balance | currency
-            }}</span>
+              }}
+            </span>
             <span class="amount" v-if="userData.balance == 0">00.00</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
@@ -18,7 +20,7 @@
           <div class="amount_container">
             <div class="decorator_card decorator_card_blue"></div>
 
-            <span>{{ $t("msg.rollingamount") }}</span>
+            <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
             <span class="amount">{{ 161536 | currency }}</span>
             <!-- <span class="title_currentcy">USD</span> -->
@@ -33,10 +35,10 @@
             <form action="/action_page.php">
               <div class="row">
                 <div class="col-15">
-                  <label for="username"
-                    >{{ $t("profile.username") }}
-                    <span class="required">*</span></label
-                  >
+                  <label for="username">
+                    {{ $t("profile.username") }}
+                    <span class="required">*</span>
+                  </label>
                 </div>
                 <div class="col-85">
                   <input
@@ -48,12 +50,7 @@
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </div>
               </div>
@@ -71,12 +68,7 @@
                     placeholder="Your first name"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </div>
               </div>
@@ -94,29 +86,19 @@
                     placeholder="Your Last Name"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </div>
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="gender"
-                    >{{ $t("profile.gender") }}
-                    <span class="required">*</span></label
-                  >
+                  <label for="gender">
+                    {{ $t("profile.gender") }}
+                    <span class="required">*</span>
+                  </label>
                 </div>
                 <div class="col-85">
-                  <select
-                    ref="gender"
-                    id="gender"
-                    name="gender"
-                    :value="userData.gender"
-                  >
+                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
                     <option value="male">{{ $t("profile.male") }}</option>
                     <option value="female">{{ $t("profile.female") }}</option>
                   </select>
@@ -142,17 +124,13 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="country"
-                    >{{ $t("profile.country") }} <span class="required">*</span>
+                  <label for="country">
+                    {{ $t("profile.country") }}
+                    <span class="required">*</span>
                   </label>
                 </div>
                 <div class="col-85">
-                  <select
-                    ref="country"
-                    id="country"
-                    name="country"
-                    :value="userData.country"
-                  >
+                  <select ref="country" id="country" name="country" :value="userData.country">
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
                     <option value="THA">Thailand</option>
@@ -172,8 +150,7 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                    >{{ $t("msg.save") }}</v-btn
-                  >
+                  >{{ $t("msg.save") }}</v-btn>
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>

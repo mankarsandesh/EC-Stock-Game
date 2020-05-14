@@ -76,10 +76,10 @@
         {{ $t("menu.history") }}
       </h2>
       <h2 class="text-uppercase" v-show="isShow == 'stock-list'">
-        {{ $t("menu.stock list") }}
+        {{ $t("menu.stockList") }}
       </h2>
       <h2 class="text-uppercase" v-show="isShow == 'current-bet'">
-        {{ $t("menu.current bet") }}
+        {{ $t("menu.currentBet") }}
       </h2>
       <h2 class="text-uppercase" v-show="isShow == 'notification'">
         {{ $t("menu.notification") }}
