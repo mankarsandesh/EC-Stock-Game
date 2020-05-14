@@ -35,9 +35,9 @@
         <v-divider></v-divider>
       </v-flex>
 
-      <v-flex xs12 sm12 pt-3 >
-        <v-layout row justify-center >
-          <v-flex          
+      <v-flex xs12 sm12 pt-3>
+        <v-layout row justify-center>
+          <v-flex
             xs2
             sm12
             md2
@@ -121,7 +121,14 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs12 sm12 md10 lg10 mt-2 :class="$vuetify.breakpoint.xs ? 'mt-4' : ''">
+      <v-flex
+        xs12
+        sm12
+        md10
+        lg10
+        mt-2
+        :class="$vuetify.breakpoint.xs ? 'mt-4' : ''"
+      >
         <v-layout row justify-center>
           <v-flex xs11 sm10>
             <div class="chart_container">
@@ -214,31 +221,6 @@ export default {
             }
           }
         }
-        // tootltip: {
-        //   enabled: false,
-        //   followCurso: true,
-        //   intersect: true,
-        //   onDataSetHover: {
-        //     highlightDataSeries: false
-        //   },
-        //   x: {
-        //     show: false
-        //   },
-        //   custom: function({series, seriesIndex, dataPointIndex, w}) {
-        //     console.log('ayaaaaaaaaa');
-        //     return '<div class="arrow_box">' +
-        //         '<span>' + series[seriesIndex][dataPointIndex] + '</span>' +
-        //       '</div>'
-        //   },
-        //   y: {
-        //     formatter: function (val, {series, seriesIndex, dataPointIndex, w}) {
-        //       console.log('ayaayaaaaaaaaa');
-        //       return '<div class="arrow-box">' +
-        //           '<span> Active minutes: ' + series[seriesIndex] + '</span>'
-        //         '</div>'
-        //     }
-        //   }
-        // },
       }
     };
   },
@@ -252,7 +234,6 @@ export default {
     // this.asynUserInfo();
     await this.getOnlineHistory();
   },
-
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
@@ -263,6 +244,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setSnackBarMessage"]),
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },
@@ -281,27 +263,23 @@ export default {
       this.isShowDateEnd = !this.isShowDateEnd;
       this.isShowDateStart = false;
     },
+    // Check Online History Date Wise.
     async getOnlineHistory() {
       try {
-        // console.log('mishri')
         if (!this.checkValidDate(this.startDate, this.endDate)) {
-          throw new Error("Please select a valid date");
+          this.setSnackBarMessage("Please select a valid date");
         }
-        const res = await this.$axios.$post(
-          config.getUserProfile.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID: this.getUserUUID,
-            dateRangeFrom: this.startDate,
-            dateRangeTo: this.endDate,
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-        if (res.code === 200) {
-          console.log(res.data);
+        var reBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          dateRangeFrom: this.startDate,
+          dateRangeTo: this.endDate,
+          version: config.version
+        };
+        const res = await this.$axios.$post(config.getUserProfile.url, reBody, {
+          headers: config.header
+        });
+        if(res.code == 200) {
           this.dataReady = true;
           let result = res.data.activeTimeDateWise;
           this.currentActiveTime = res.data.currentActiveTime;
@@ -323,16 +301,11 @@ export default {
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {
-          console.log(res);
-          // alert(res.message);
+         this.setSnackBarMessage(config.error.general);
         }
       } catch (ex) {
-        console.error(ex);
-        if (ex.message == "Please select a valid date") {
-          alert("Please select a valid date");
-          this.dataReady = false;
-        }
-        // alert(ex.message);
+        this.setSnackBarMessage("Please select a valid date");
+        this.dataReady = false;
       }
     }
   }
@@ -398,7 +371,7 @@ button:focus {
   box-shadow: 0px 2px 5px rgb(145, 145, 145);
   border-radius: 5px;
   position: relative;
-  width:80%;
+  width: 80%;
 }
 
 .title_date_picker {
