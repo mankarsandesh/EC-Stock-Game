@@ -7,7 +7,7 @@
     />
     <section class="filter">
       <v-container>
-        <v-layout class="filter-history" align-center justify-center >
+        <v-layout class="filter-history" align-center justify-center>
           <v-flex xs12 sm12 md5 lg5>
             <v-layout>
               <v-flex xs12 sm12 md4>
@@ -35,6 +35,8 @@
                     color="#1db42f"
                     v-model="dateFrom"
                     @input="from = false"
+                    next-icon="fa-chevron-right"
+                    prev-icon="fa-chevron-left"
                   ></v-date-picker>
                 </v-menu>
               </v-flex>
@@ -63,6 +65,8 @@
                     color="#1db42f"
                     v-model="dateTo"
                     @input="to = false"
+                    next-icon="fa-chevron-right"
+                    prev-icon="fa-chevron-left"
                   ></v-date-picker>
                 </v-menu>
               </v-flex>
@@ -92,11 +96,15 @@
               </v-flex>
               <v-flex xs6 md>
                 <v-select
-                append-icon="fa-chevron-down"
+                  append-icon="fa-chevron-down"
                   @change="sortingBy"
                   v-model="sortby"
                   hide-details
-                  :items="[$t('bethistory.today'), $t('bethistory.thisWeek'), $t('bethistory.thisMonth')]"
+                  :items="[
+                    $t('bethistory.today'),
+                    $t('bethistory.thisWeek'),
+                    $t('bethistory.thisMonth')
+                  ]"
                   :placeholder="$t('msg.sortby')"
                 ></v-select>
               </v-flex>
@@ -140,7 +148,7 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) 
+    })
   },
   mounted() {
     const lastWeek = new Date(
@@ -155,7 +163,7 @@ export default {
     this.fetchBetHsitory();
   },
   methods: {
-    // Sorting By Today,Week, Month 
+    // Sorting By Today,Week, Month
     sortingBy() {
       if (this.sortby == "Today") {
         const lastWeek = new Date(

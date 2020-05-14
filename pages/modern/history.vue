@@ -33,6 +33,8 @@
             ></v-text-field>
           </template>
           <v-date-picker
+            next-icon="fa-chevron-right"
+            prev-icon="fa-chevron-left"
             color="#1db42f"
             v-model="dateFrom"
             @input="from = false"
@@ -72,6 +74,8 @@
             ></v-text-field>
           </template>
           <v-date-picker
+            next-icon="fa-chevron-right"
+            prev-icon="fa-chevron-left"
             color="#1db42f"
             v-model="dateTo"
             @input="to = false"
