@@ -27,9 +27,9 @@ export default {
       dateTo: "",
       to: false,
       dropdown_font: [
-        this.$root.$t("bethistory.today"),
-        this.$root.$t("bethistory.thisWeek"),
-        this.$root.$t("bethistory.thisMonth")
+        this.$root.$t("betHistory.today"),
+        this.$root.$t("betHistory.thisWeek"),
+        this.$root.$t("betHistory.thisMonth")
       ],
       userBetHistory: []
     };

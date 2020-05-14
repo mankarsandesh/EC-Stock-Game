@@ -81,11 +81,11 @@
           </v-flex>
           <v-flex xs6 sm6 class="betSide">
             <div v-if="this.rollingAmount == 0">
-              <span>{{ $t("bethistory.yourLosingAmount") }} :</span>
+              <span>{{ $t("betHistory.yourLosingAmount") }} :</span>
               <h4 class="lossAmount">{{ this.betAmount }}</h4>
             </div>
             <div v-if="this.rollingAmount != 0">
-              <span>{{ $t("bethistory.yourWinningAmount") }}</span>
+              <span>{{ $t("betHistory.yourWinningAmount") }}</span>
               <h4 class="winAmount">{{ this.rollingAmount }}</h4>
             </div>
           </v-flex>

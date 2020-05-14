@@ -11,12 +11,12 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
-    title: "current bet",
+    title: "currentBet",
     to: "/modern/current-bet"
   },
   {
     icon: "bubble_chart",
-    title: "stock list",
+    title: "stockList",
     to: "/modern/stock-list"
   },
   {
