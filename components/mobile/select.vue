@@ -45,13 +45,13 @@ export default {
     closeMenu() {
       this.menuShow = false;
     },
-    selectClick(item) {
-      if (!this.select.includes(item)) {
-        this.select.push(item);
+    selectClick(object) {
+      if (!this.select.includes(object)) {
+        this.select.push(object);
       } else {
         this.select.splice(
           this.select.findIndex(
-            item => item.title.toLowerCase() === item.title.toLowerCase()
+            item => item.title.toLowerCase() === object.title.toLowerCase()
           ),
           1
         );
