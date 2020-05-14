@@ -74,7 +74,7 @@
                   v-model="search"
                   append-icon="search"
                   label="Search"
-                  :placeholder="$t('bethistory.searchByName')"
+                  :placeholder="$t('betHistory.searchByName')"
                   single-line
                   hide-details
                 ></v-text-field>
@@ -84,7 +84,7 @@
                   @change="sortingBy"
                   v-model="sortby"
                   hide-details
-                  :items="[$t('bethistory.today'),$t('bethistory.thisWeek'),$t('bethistory.thisMonth')]"
+                  :items="[$t('betHistory.today'),$t('betHistory.thisWeek'),$t('betHistory.thisMonth')]"
                   :placeholder="$t('msg.sortby')"
                 ></v-select>
               </v-flex>

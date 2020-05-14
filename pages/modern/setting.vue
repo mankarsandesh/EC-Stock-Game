@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      tabs: ["chip amount", "sound control"],
+      tabs: ["chipAmount", "soundControl"],
       active: 0
     };
   },

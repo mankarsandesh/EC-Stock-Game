@@ -10,7 +10,7 @@
     "invitation" : "邀请函",
     "home": "主页",
     "profile": "我的资料",
-    "currentBet": "我的投注",
+    "currentBet": "当前投注",
     "history": "历史",
     "stockList": "股票信息",
     "announcement": "公告",
@@ -30,7 +30,7 @@
     "reference": "参考网址",
     "load more": "更多",
     "search stock": "搜索库存",
-    "ascending" : "上升",
+    "ascending" : "升序",
     "descending" : "降序"
   },
   "home": {
@@ -318,12 +318,12 @@
     "usersFollowMe": "用户关注我",
     "amountCreditedOrDebitedToAccount": "贷记或借记到帐户的金额"
   },
-  "bethistory": {
+  "betHistory": {
     "betDraw": "开奖结果",
     "yourLosingAmount": "您的欠款额",
     "yourWinningAmount": "输赢数额",
     "searchByName" : "按名称搜索",
-    "today":"今天",
+    "today":"今日",
     "thisWeek":"本星期",
     "thisMonth":"这个月"
   },

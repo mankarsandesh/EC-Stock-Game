@@ -319,7 +319,7 @@
     "usersFollowMe": "ผู้ใช้ติดตามฉัน",
     "amountCreditedOrDebitedToAccount": "จำนวนเงินที่เครดิตหรือหักเข้าบัญชี"
   },
-  "bethistory": {
+  "betHistory": {
     "betDraw": "投注",
     "yourLosingAmount": "จำนวนเงินที่คุณสูญเสีย",
     "yourWinningAmount": "จำนวนเงินที่ชนะของคุณ",
