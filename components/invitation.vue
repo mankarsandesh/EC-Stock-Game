@@ -144,45 +144,18 @@
                 {{ $t("invitation.invitationLeft") }}</span
               >
             </span>
-            <div class="messageChat">
-              <v-flex col-md-12>
-                <v-btn class="buttonInvitation">
-                  <v-select
-                    class="selectCategory"
-                    item-text="value"
-                    item-value="id"
-                    hide-details
-                    v-model="selectCategory"
-                    :items="categoryName"
-                    label="Select Category"
-                    append-icon="fa-chevron-down"
-                  >
-                    <!-- <template v-slot:prepend-item>
-                      <div>
-                        <v-list-tile ripple @click="toggle">
-                          <v-list-tile-action>
-                            <v-icon
-                              :color="
-                                selectedFruits.length > 0
-                                  ? 'indigo darken-4'
-                                  : ''
-                              "
-                              >{{ icon }}</v-icon
-                            >
-                          </v-list-tile-action>
-                          <v-list-tile-content>
-                            <v-list-tile-title>555</v-list-tile-title>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                        <v-divider class="mt-2"></v-divider>
-                      </div>
-                    </template> -->
-                  </v-select>
-                  &nbsp;
-                  <i @click="sendInvitation()" class="fa fa-paper-plane"></i>
-                </v-btn>
-              </v-flex>
-            </div>
+            <v-flex col-md-12>
+              <div class="footer-bottom">
+                <div class="select-category">
+                  <macky-select :items="categoryName"></macky-select>
+                </div>
+                <div class="plane-icon">
+                  <v-icon color="#fff" @click="sendInvitation()">
+                    fa-paper-plane
+                  </v-icon>
+                </div>
+              </div>
+            </v-flex>
           </div>
         </div>
 
@@ -222,6 +195,7 @@ import moment from "moment";
 import config from "~/config/config.global";
 import chanelChat from "./chanelChat";
 import followBet from "~/components/modern/follow/followBet";
+import mackySelect from "~/components/mobile/select";
 import log from "roarr";
 let name = "btc5";
 export default {
@@ -229,7 +203,7 @@ export default {
     chanelChat,
     followBet,
     popper,
-    config
+    mackySelect
   },
   props: {
     gameUUID: {
@@ -253,15 +227,15 @@ export default {
       categoryName: [
         {
           id: "1",
-          value: "Win Bets"
+          title: "Win Bets"
         },
         {
           id: "2",
-          value: "Total Follower"
+          title: "Total Follower"
         },
         {
           id: "3",
-          value: "Rank"
+          title: "Rank"
         }
       ],
       FolloworNot: "",
@@ -400,6 +374,24 @@ export default {
 </script>
 
 <style scoped>
+.plane-icon {
+  flex-grow: 1;
+  align-self: center;
+  text-align: center;
+  width: 30;
+}
+.select-category {
+  width: 85%;
+}
+.footer-bottom {
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  border-radius: 4px;
+  text-align: left;
+  display: flex;
+  width: 100%;
+  padding: 5px 0;
+  height: 100%;
+}
 .theme--light.v-select .v-select__selections {
   color: #fff !important;
 }
@@ -535,7 +527,6 @@ export default {
   margin: 0px 3px;
   cursor: pointer;
   float: left;
-  text-align: center;
   padding: 2px 4px;
 }
 .messageChatView .userImage {
@@ -651,7 +642,7 @@ export default {
   color: #7f7e7e;
 }
 .messageChat {
-  width: 95%;
+  width: 100%;
   bottom: 5px;
   background-color: #fff;
 }
