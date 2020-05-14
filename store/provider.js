@@ -10,6 +10,7 @@ const state = () => ({
     "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"), // Store auth token
   portalProviderUUID: secureStorage.getItem("PORTAL_PROVIDERUUID"), // Store portal provider UUID
   userUUID: secureStorage.getItem("USER_UUID"), // Store user UUID
+  userBalance: 0,
   userData: {}, // Store user data
   locales: ["cn", "us", "th", "la"], // Store language locales
   locale: secureStorage.getItem("lang"), // Store locale
@@ -78,6 +79,9 @@ const mutations = {
   },
   SET_SNACK_BAR_MESSAGE(state, payload) {
     state.snackBarMessage = payload;
+  },
+  SET_USER_BALANCE(state, payload) {
+    state.userBalance = payload;
   }
 };
 
@@ -176,6 +180,9 @@ const actions = {
   },
   setSnackBarMessage({ commit }, payload) {
     commit("SET_SNACK_BAR_MESSAGE", payload);
+  },
+  setUserBalance({ commit }, payload) {
+    commit("SET_USER_BALANCE", payload);
   }
 };
 
@@ -249,6 +256,9 @@ const getters = {
   },
   getReferrer(state) {
     return state.referrer;
+  },
+  getUserBalance(state) {
+    return state.userBalance;
   }
 };
 
