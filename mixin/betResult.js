@@ -5,12 +5,12 @@ import { mapMutations, mapGetters } from 'vuex'
 export const BetResult = {
     methods: {
         ...mapMutations(["SET_FIRST"]),
-        betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin           
+        betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin     
             const lastDraw = result.substr(result.length - 2); //get the last two digit
             const first = parseInt(lastDraw.slice(0, 1)); // get the first digit number  
             const last = parseInt(lastDraw.slice(1, 2)); // get the last digit number 
             const bothDigit = first + last; // get the both digit number 
-            const twoDigit = lastDraw.slice(0, 1) + lastDraw.slice(1, 2); // git the two digit number 
+            const twoDigit = lastDraw.slice(0, 1) + lastDraw.slice(1, 2); // git the two digit number          
             jsonResult.resultBet.map((items, index) => {
                 if ($("#" + stockName + betID).hasClass(items.type)) {
                     items.rules.map((item, index) => {
@@ -26,13 +26,12 @@ export const BetResult = {
                                     this.multipleResult(item, bothDigit, stockName, betID, betWin, item.name)
                                     break;
                                 case 'twodigit':
-                                    this.multipleResult(item, twoDigit, stockName, betID, betWin, item.name)
+                                    this.multipleResultTwoDigit(item, twoDigit, stockName, betID, betWin, item.name)
                                     break;
                                 default:
                             }
                         }
                     })
-
                 }
             })
             this.SET_FIRST('Can not find any bet') // make the button collage 
@@ -40,15 +39,9 @@ export const BetResult = {
         // Multiple Result 
         multipleResult(item, number, stockName, betID, betWin, name) {
             const specificNumber = "#" + stockName + betID.split("-")[0]  // create the variable for receive the value
-            // console.log("This is the item", item)
-            // console.log("This is the number", number)
-            // console.log("This is the stockName", stockName)
-            // console.log("This is the betID", betID)
-            // console.log("This is the betWin", betWin)
-            // console.log("This is the name", name)
-            // console.log("This is the specificNumber", specificNumber)
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
+
                 sound.winBet(); // sound when user win the bet              
                 $("#" + betWin).addClass('chip-animation');
                 $("#" + stockName + betID).addClass(
@@ -57,8 +50,8 @@ export const BetResult = {
 
                 setTimeout(() => {
                     this.SET_FIRST("You are win")
-
                     sound.winBet(); // sound when user win the bet
+
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0]
                     );
@@ -70,10 +63,12 @@ export const BetResult = {
                     );
                     $(specificNumber).removeClass(
                         betID.split("-")[0]);
-
+                    this.collectCoin()
                 }, 5000);
 
             } else if ($(specificNumber + '-' + number).hasClass(betID.split("-")[0])) {
+
+
                 $(specificNumber).addClass(betID.split("-")[0]);
                 $(specificNumber).addClass(
                     betID.split("-")[0] + "-animation"
@@ -91,9 +86,6 @@ export const BetResult = {
                     betID.split("-")[0]
                 );
             } else {
-                console.log('===========The result is ==========')
-                console.log('The result is : ', specificNumber + '-' + number)
-                console.log('===========The result is ==========')
                 this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
@@ -102,6 +94,87 @@ export const BetResult = {
                     betID.split("-")[0]
                 );
             }
-        }
+        },
+
+        // Multiple Result 
+        multipleResultTwoDigit(item, number, stockName, betID, betWin, name) {
+            const specificNumber = "#" + stockName + betID.split("-")[0]  // create the variable for receive the value
+            const result = item.rule.includes(number); // check the value is have or not in the json result
+            if (result) {
+                sound.winBet(); // sound when user win the bet              
+                $("#" + betWin).addClass('chip-animation');
+                $(specificNumber + 'Number').addClass('chip-animation');
+                $("#" + stockName + betID.split("-")[0]).addClass(
+                    betID.split("-")[0] + "-animation"
+                );
+                $("#" + stockName + betID).addClass(
+                    betID.split("-")[0] + "-animation"
+                );
+
+                setTimeout(() => {
+                    this.SET_FIRST("You are win")
+                    sound.winBet(); // sound when user win the bet
+
+                    $("#" + stockName + betID).removeClass(
+                        betID.split("-")[0]
+                    );
+                    $("#" + stockName + betID).removeClass(
+                        betID.split("-")[0] + "-animation"
+                    );
+                    $(specificNumber).removeClass(
+                        betID.split("-")[0] + "-animation"
+                    );
+                    $(specificNumber).removeClass(
+                        betID.split("-")[0]);
+                    this.collectCoin()
+
+                }, 5000);
+
+            } else {
+                console.log('You are lose ', specificNumber + '-' + number)
+                this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
+                $(specificNumber).removeClass(
+                    betID.split("-")[0]
+                );
+                $("#" + stockName + betID).removeClass(
+                    betID.split("-")[0]
+                );
+            }
+        },
+
+        collectCoin() {
+            let elements = document.getElementsByClassName("chip-animation");
+            for (let i = 0; i < elements.length; i++) {
+                let top =
+                    elements[i].offsetParent.offsetParent.offsetTop +
+                    elements[i].offsetParent.offsetTop +
+                    62 +
+                    elements[i].offsetParent.offsetParent.offsetParent.offsetParent
+                        .offsetTop;
+                let left =
+                    elements[i].offsetParent.offsetParent.offsetParent.offsetParent
+                        .offsetLeft + elements[i].offsetParent.offsetParent.offsetLeft;
+                elements[i].style.position = "fixed";
+                elements[i].style.top = top + "px";
+                elements[i].style.left = left + "px";
+
+                setTimeout(() => {
+                    elements[i].style.transition = "left 1s linear, top 1s linear ";
+                    elements[i].style.top =
+                        document.getElementById("userBanlance").offsetTop + "px";
+                    elements[i].style.left =
+                        document.getElementById("userBanlance").offsetParent.offsetParent
+                            .offsetLeft + "px";
+                }, 1);
+                // clear style
+                setTimeout(() => {
+                    elements[i].style.display = "none";
+                    elements[i].style.top = 0;
+                    elements[i].style.left = 0;
+                    elements[i].style.transition = "left 0s linear, top 0s linear ";
+                }, 1200);
+            }
+        },
     }
 }
+
