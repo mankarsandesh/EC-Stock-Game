@@ -50,14 +50,11 @@ export const BetResult = {
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
                 sound.winBet(); // sound when user win the bet              
-                $("#" + betWin).addClass(betWin);
+                $("#" + betWin).addClass('chip-animation');
                 $("#" + stockName + betID).addClass(
                     betID.split("-")[0] + "-animation"
                 );
-                $(specificNumber).addClass(betID.split("-")[0]);
-                $(specificNumber).addClass(
-                    betID.split("-")[0] + "-animation"
-                );
+
                 setTimeout(() => {
                     this.SET_FIRST("You are win")
 
@@ -77,12 +74,16 @@ export const BetResult = {
                 }, 5000);
 
             } else if ($(specificNumber + '-' + number).hasClass(betID.split("-")[0])) {
-                console.log('am here', specificNumber + '-' + number)
+                $(specificNumber).addClass(betID.split("-")[0]);
+                $(specificNumber).addClass(
+                    betID.split("-")[0] + "-animation"
+                );
+
                 $(specificNumber).addClass(
                     betID.split("-")[0]
                 );
 
-                $(specificNumber + 'Number').addClass(betWin);
+                $(specificNumber + 'Number').addClass('chip-animation');
                 this.SET_FIRST('You are lose in else false')
                 console.log('You win from  ', specificNumber + '-' + number)
 
@@ -90,7 +91,9 @@ export const BetResult = {
                     betID.split("-")[0]
                 );
             } else {
-                console.log('You are lose in ', specificNumber + '-' + number)
+                console.log('===========The result is ==========')
+                console.log('The result is : ', specificNumber + '-' + number)
+                console.log('===========The result is ==========')
                 this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
@@ -102,4 +105,3 @@ export const BetResult = {
         }
     }
 }
-
