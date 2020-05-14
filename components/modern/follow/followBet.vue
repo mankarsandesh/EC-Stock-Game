@@ -1,26 +1,37 @@
 <template>
   <div>
     <v-card class="followup">
-      <h3
-        class="title"
-      >{{ isFollowing == 1 ? $t("useraction.followBet") : $t("useraction.unfollowBet") }}</h3>
+      <h3 class="title">
+        {{
+          isFollowing == 1
+            ? $t("useraction.followBet")
+            : $t("useraction.unfollowBet")
+        }}
+      </h3>
       <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="userImage" width="140px" />
-        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
+        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">
+          {{ this.username }}
+        </h3>
       </v-card-text>
       <v-flex>
         <p
           v-if="FollwingError"
           v-bind:class="{ 'text-danger': hasError, 'text-sucess': hasSucess }"
-        >{{ errorMessage }}</p>
+        >
+          {{ errorMessage }}
+        </p>
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase">{{$t("leaderboard.followBy")}}</h4>
+        <h4 class="subtitle-1 text-uppercase">
+          {{ $t("leaderboard.followBy") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
             <v-select
+              append-icon="fa-chevron-down"
               :items="followby"
               label="Select Follow type"
               v-model="selectedFollow"
@@ -39,7 +50,7 @@
               solo
               label="10%"
               v-if="selectRate"
-              append-icon="money"
+              append-icon="fas-money"
               v-model="rateValue"
               @keypress="onlyNumber"
             ></v-text-field>
@@ -58,17 +69,32 @@
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderboard.autoStop")}}</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">
+          {{ $t("leaderboard.autoStop") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
-            <v-radio
+            <label
+              v-for="n in autoStopFollow"
+              :key="n.id + '' + autoStop"
+              class="container"
+            >
+              <input
+                type="radio"
+                :value="n.id"
+                @click="changeAmount(n.id)"
+                :checked="autoStop === n.id"
+              />
+              {{ n.name }}
+            </label>
+            <!-- <v-radio
               v-for="n in autoStopFollow"
               :key="n.id"
               :label="`${n.name}`"
               :value="n.id"
               v-on:change="changeAmount(n.value)"
-            ></v-radio>
+            ></v-radio> -->
             <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
               <v-text-field
                 :rules="[
@@ -103,11 +129,10 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-              >{{ $t("useraction.follow") }}</v-btn>
+                >{{ $t("useraction.follow") }}</v-btn
+              >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
-                {{
-                $t("msg.cancel")
-                }}
+                {{ $t("msg.cancel") }}
               </v-btn>
             </v-flex>
           </v-radio-group>
@@ -119,11 +144,10 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-          >{{ $t("useraction.unfollow") }}</v-btn>
+            >{{ $t("useraction.unfollow") }}</v-btn
+          >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
-            {{
-            $t("msg.cancel")
-            }}
+            {{ $t("msg.cancel") }}
           </v-btn>
         </v-flex>
       </div>
@@ -248,7 +272,7 @@ export default {
   methods: {
     userImgProfile(userImg) {
       console.log(userImg);
-      return userImg ? `${config.apiDomain}/`+ userImg : this.defaultImage;        
+      return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
     },
     // Send to Parent Components
     async closePopup() {
@@ -399,6 +423,8 @@ export default {
     },
     // Change Amount Validation
     changeAmount(value) {
+      this.autoStop = value;
+      console.log(this.autoStop);
       if (value == "stopWin" || value == "stopLoss") {
         this.unfollowValue = 100;
         this.unfollowSign = "USD";
