@@ -118,7 +118,6 @@ import lottie from "lottie-web";
 import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
 import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
 
@@ -225,17 +224,6 @@ export default {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            req: reqBody,
-            res: data,
-            page: "layouts/desktopModern.vue",
-            apiUrl: config.getUserNotification.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   },

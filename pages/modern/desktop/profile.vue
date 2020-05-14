@@ -156,7 +156,6 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
 
 export default {
@@ -251,17 +250,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res: res.data,
-            page: "pages/modern/desktop/profile.vue",
-            apiUrl: config.updateUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

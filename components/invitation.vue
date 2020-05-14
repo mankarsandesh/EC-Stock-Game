@@ -199,7 +199,7 @@ import config from "~/config/config.global";
 import chanelChat from "./chanelChat";
 import followBet from "~/components/modern/follow/followBet";
 import mackySelect from "~/components/mobile/select";
-import log from "roarr";
+
 let name = "btc5";
 export default {
   components: {

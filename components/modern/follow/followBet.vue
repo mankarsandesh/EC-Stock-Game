@@ -133,7 +133,6 @@
 <script>
 import { mapState } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
 
 export default {
@@ -373,17 +372,6 @@ export default {
         }
       } catch (error) {
         console.log(error);
-        log.error(
-          {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/follow/followBet.vue",
-            apiUrl: config.followUser.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     // Change Amount Rate Validation

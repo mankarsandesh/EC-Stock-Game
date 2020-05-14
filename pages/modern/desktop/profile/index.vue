@@ -192,7 +192,6 @@ import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   data() {
@@ -257,17 +256,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: formData,
-            res,
-            page: "pages/modern/desktop/profile/index.vue",
-            apiUrl: config.updateUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

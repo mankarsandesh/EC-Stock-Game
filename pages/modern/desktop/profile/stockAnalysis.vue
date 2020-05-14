@@ -98,7 +98,6 @@ import apexchart from "vue-apexcharts";
 import { mapGetters } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
-import log from "roarr";
 import secureStorage from "../../../../plugins/secure-storage";
 import config from "~/config/config.global";
 
@@ -387,17 +386,6 @@ export default {
           this.error = "Please select a valid date";
           this.isDataValid = false;
         }
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/profile/stockAnalysis.vue",
-            apiUrl: config.getUserBetAnalysis.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     startDateClick() {
