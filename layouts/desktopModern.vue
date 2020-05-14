@@ -176,6 +176,9 @@ export default {
       this.setGameChannelShow(false);
     }
   },
+  beforeDestroy() {
+    window.Echo.leaveChannel(`balanceUpdate.${this.getUserUUID}`);
+  },
   created() {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
