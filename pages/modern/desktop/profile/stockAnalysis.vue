@@ -27,6 +27,8 @@
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
+              next-icon="fa-chevron-right"
+              prev-icon="fa-chevron-left"
             ></v-date-picker>
           </div>
         </v-flex>
@@ -49,6 +51,8 @@
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
+              next-icon="fa-chevron-right"
+              prev-icon="fa-chevron-left"
             ></v-date-picker>
           </div>
         </v-flex>
