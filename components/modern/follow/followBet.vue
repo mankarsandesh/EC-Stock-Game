@@ -44,18 +44,6 @@
           <v-flex lg6 pr-2>
             <v-text-field
               :rules="[
-                rules.min(10, rateValue, 'Rate'),
-                rules.max(100, rateValue, 'Rate')
-              ]"
-              solo
-              label="10%"
-              v-if="selectRate"
-              append-icon="fas-money"
-              v-model="rateValue"
-              @keypress="onlyNumber"
-            ></v-text-field>
-            <v-text-field
-              :rules="[
                 rules.min(10, amountValue, 'Amount'),
                 rules.max(1000, amountValue, 'Amount')
               ]"
@@ -64,8 +52,27 @@
               v-if="selectAmount"
               @keypress="onlyNumber"
               v-model="amountValue"
-              append-icon="money"
-            ></v-text-field>
+              append-icon="fas-money-bill-alt"
+            >
+              <span slot="append" color="red">
+                <font-awesome-icon icon="money-bill-wave"> </font-awesome-icon>
+              </span>
+            </v-text-field>
+            <v-text-field
+              :rules="[
+                rules.min(10, rateValue, 'Rate'),
+                rules.max(100, rateValue, 'Rate')
+              ]"
+              solo
+              label="10%"
+              v-if="selectRate"
+              v-model="rateValue"
+              @keypress="onlyNumber"
+            >
+              <span slot="append" color="red">
+                <font-awesome-icon icon="money-bill-wave"> </font-awesome-icon>
+              </span>
+            </v-text-field>
           </v-flex>
         </v-card-actions>
 
@@ -88,13 +95,6 @@
               />
               {{ n.name }}
             </label>
-            <!-- <v-radio
-              v-for="n in autoStopFollow"
-              :key="n.id"
-              :label="`${n.name}`"
-              :value="n.id"
-              v-on:change="changeAmount(n.value)"
-            ></v-radio> -->
             <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
               <v-text-field
                 :rules="[
