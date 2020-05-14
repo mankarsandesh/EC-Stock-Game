@@ -147,7 +147,10 @@
             <v-flex col-md-12>
               <div class="footer-bottom">
                 <div class="select-category">
-                  <macky-select :items="categoryName"></macky-select>
+                  <macky-select
+                    :items="categoryName"
+                    ref="refSelect"
+                  ></macky-select>
                 </div>
                 <div class="plane-icon">
                   <v-icon color="#fff" @click="sendInvitation()">
@@ -223,7 +226,6 @@ export default {
       timeout: 2000,
       x: null,
       y: "top",
-      selectCategory: ["1"],
       categoryName: [
         {
           id: "1",
@@ -308,13 +310,14 @@ export default {
     },
     // Send Top Player Users Invitation
     async sendInvitation() {
-      if (this.selectCategory.length > 0) {
+      if (this.$refs["refSelect"].select.map(e => e.id).length > 0) {
         if (this.leftUser > 0) {
+          console.log(this.$refs["refSelect"].select.map(e => e.id).length);
           try {
             const reqBody = {
               portalProviderUUID: this.getPortalProviderUUID,
               userUUID: this.getUserUUID,
-              category: this.selectCategory,
+              category: this.$refs["refSelect"].select.map(e => e.id),
               version: config.version
             };
             const res = await this.$axios.$post(
@@ -324,6 +327,7 @@ export default {
                 headers: config.header
               }
             );
+            console.log(res);
             this.leftUser--;
           } catch (ex) {
             this.$swal({

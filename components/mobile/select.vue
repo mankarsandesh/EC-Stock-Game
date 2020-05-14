@@ -4,25 +4,24 @@
       <span v-if="select.length === 0" class="pl-2">
         {{ label }}
       </span>
-      <span v-else class="item-select" v-for="item in select" :key="item">
-        {{ item }}
+      <span v-else class="item-select" v-for="item in select" :key="item.title">
+        {{ item.title }}
       </span>
       <span class="icon-select">
         <v-icon color="#fff">fa-chevron-down</v-icon>
       </span>
     </div>
     <div>
-      <div class="select-content" v-if="menuShow">
+      <div class="select-content" v-if="menuShow" v-on-clickaway="closeMenu">
         <v-card>
           <div
             class="item-available"
             v-for="item in items"
-            :key="item"
-            @click="selectClick(item.title)"
+            :key="item.title"
+            @click="selectClick(item)"
           >
-            <input v-if="select.includes(item.title)" type="checkbox" checked />
-            <input v-else type="checkbox" />
-            <label>{{ item.title }}</label>
+            <input type="checkbox" :checked="select.includes(item)" />
+            <label class="cursor-pointer">{{ item.title }}</label>
           </div>
         </v-card>
       </div>
@@ -30,7 +29,9 @@
   </div>
 </template>
 <script>
+import { mixin as clickaway } from "vue-clickaway";
 export default {
+  mixins: [clickaway],
   props: ["items"],
   data: () => ({
     label: "select category",
@@ -41,12 +42,17 @@ export default {
     this.label = this.label.toUpperCase();
   },
   methods: {
-    selectClick(value) {
-      if (!this.select.includes(value)) {
-        this.select.push(value);
+    closeMenu() {
+      this.menuShow = false;
+    },
+    selectClick(item) {
+      if (!this.select.includes(item)) {
+        this.select.push(item);
       } else {
         this.select.splice(
-          this.select.findIndex(item => item.title === value),
+          this.select.findIndex(
+            item => item.title.toLowerCase() === item.title.toLowerCase()
+          ),
           1
         );
       }
@@ -56,6 +62,9 @@ export default {
 </script>
 
 <style scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
 .flex-container {
   position: relative;
   width: 100%;
