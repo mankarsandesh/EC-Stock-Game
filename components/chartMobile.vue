@@ -141,7 +141,6 @@ export default {
             enabled: false
           },
           toolbar: {
-            show: false,
             shared: false,
             y: {
               formatter: function(val) {

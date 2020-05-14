@@ -398,7 +398,7 @@ export default {
           this.avatarDialog = false;
           this.setUserData();
         } else {
-          throw new Error(config.error.general);
+          this.setSnackBarMessage(config.error.general);          
         }
       } catch (ex) {
         this.setSnackBarMessage(ex);

@@ -49,24 +49,13 @@
                 </v-flex>
               </v-flex>
             </v-layout>
-          </v-flex>
-          <!-- <v-flex xs12 sm12 pt-3>
-            <v-layout xs12 sm6>
-              <v-flex xs12 xs6 class="text-xs-center">
-                <v-btn class="buttonGreensmall">
-                  <nuxt-link to="/modern" class="text-white">
-                    {{ $t("msg.otherstock") }}
-                  </nuxt-link>
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-flex> -->
+          </v-flex> 
         </v-layout>
       </v-flex>
     </v-layout>
 
     <!-- betting zone -->
-    <v-layout row wrap class="container-bet">
+    <v-layout row wrap class="container-bet" mt-3>
       <v-flex xs12 sm12 md12>
         <v-layout wrap xs12>
           <v-flex xs1 align-self-center class="text-xs-right">
@@ -1521,7 +1510,7 @@
 import { mapGetters, mapActions, mapState } from "vuex";
 import gameRule from "~/data/gameRule";
 
-import chartMobile from "~/components/chartMobile";
+import chartMobile from "~/components/mobile/chartMobile";
 import payout from "~/data/payout";
 import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
