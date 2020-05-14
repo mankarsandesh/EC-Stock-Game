@@ -11,12 +11,12 @@ const Menu = [
   },
   {
     icon: "fa fa-money fa-2x",
-    title: "current bet",
+    title: "currentBet",
     to: "/modern/desktop/current-bet"
   },
   {
     icon: "fa fa-bar-chart fa-2x",
-    title: "stock list",
+    title: "stockList",
     to: "/modern/desktop/stock-list"
   },
   {
