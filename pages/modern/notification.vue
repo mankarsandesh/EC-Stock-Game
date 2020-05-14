@@ -12,7 +12,6 @@
 <script>
 import { mapState } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import notification from "~/components/mobile/notification";
 import secureStorage from "../../plugins/secure-storage";
 
@@ -67,16 +66,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/notification",
-            apiUrl: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

@@ -116,7 +116,7 @@ module.exports = {
     "@/plugins/vuetify",
     "@plugins/js-cookie", // for setting and reading cookies
     // "~/plugins/axios",
-    "@/plugins/roarr", // for generating logs
+    // "@/plugins/roarr", // for generating logs
     "@plugins/secure-storage", // for encrypting local storage
     // { src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
     "@/plugins/filters",

@@ -1,7 +1,6 @@
 import Echo from "laravel-echo";
 import config from "../config/config.global";
 import axios from "axios";
-import log from "roarr";
 
 export default async ({ store }) => {
   const port = 6001;
@@ -22,17 +21,6 @@ export default async ({ store }) => {
     store.dispatch("setStockCategory", data.data);
   } catch (ex) {
     console.log(ex);
-    log.error(
-      {
-        req: reqBody,
-        res,
-        page: "plugins/socketio.js",
-        apiUrl: config.getActiveGamesByCategory.url,
-        provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-        user: secureStorage.getItem("USER_UUID")
-      },
-      ex.message
-    );
   }
 
   if (typeof io !== "undefined") {
@@ -72,17 +60,6 @@ export default async ({ store }) => {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            channel: `countdown.${store.getters.getPortalProviderUUID}`,
-            event: "countdown",
-            res: logData,
-            page: "plugins/socketio.js",
-            provider: store.getters.getPortalProviderUUID,
-            user: store.getters.getUserUUID
-          },
-          ex.message
-        );
       }
     }
   );
@@ -102,17 +79,6 @@ export default async ({ store }) => {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            channel: `getActiveGamesByCategory.${store.getters.getPortalProviderUUID}`,
-            event: "getActiveGamesByCategory",
-            res: logData,
-            page: "plugins/socketio.js",
-            provider: store.getters.getPortalProviderUUID,
-            user: store.getters.getUserUUID
-          },
-          ex.message
-        );
       }
     }
   );
@@ -132,17 +98,6 @@ export default async ({ store }) => {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            channel: `stockListOnly.${store.getters.getPortalProviderUUID}`,
-            event: "stockListOnly",
-            res: logData,
-            page: "plugins/socketio.js",
-            provider: store.getters.getPortalProviderUUID,
-            user: store.getters.getUserUUID
-          },
-          ex.message
-        );
       }
     }
   );

@@ -123,7 +123,6 @@ import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   layout: "desktopModern",
@@ -236,17 +235,6 @@ export default {
           timer: 1000
         });
         this.loadingImage = false;
-        log.error(
-          {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/desktop/bet-history.vue",
-            apiUrl: config.getAllBets.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

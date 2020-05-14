@@ -130,7 +130,6 @@ import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import followBet from "~/components/modern/follow/followBet";
 import mackySelect from "~/components/mobile/select";
 
-import log from "roarr";
 export default {
   components: {
     followBet,
@@ -233,17 +232,6 @@ export default {
             }
           } catch (ex) {
             console.log(ex.message);
-            log.error(
-              {
-                req: reqBody,
-                res,
-                page: "components/channelChat.vue",
-                apiUrl: config.getUserInvitation.url,
-                provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         } else {
           this.noInvitaion = true;
