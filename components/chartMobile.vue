@@ -1,9 +1,8 @@
 <template>
   <div>
     <apexchart
-      class="chartDesgin"
       type="area"
-      width="99.5%"
+      width="100%"
       :options="chartOptions"
       :series="series"
     />
@@ -103,6 +102,15 @@ export default {
         newTime.push(element.stockTimeStamp);
       });
       return {
+        tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            return (
+              '<div class="arrow_boxChart"> $' +
+              series[seriesIndex][dataPointIndex].toFixed(2) +
+              "</div>"
+            );
+          }
+        },
         zoom: {
           enabled: true,
           type: "x",
@@ -174,9 +182,6 @@ export default {
           show: true,
           labels: {
             show: true
-          },
-          title: {
-            text: "Price"
           }
         }
       };
@@ -248,6 +253,16 @@ export default {
 </script>
 
 <style>
+.arrow_boxChart {
+  font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid #003f70;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  font-size: 18px;
+  color: #fff;
+  background: #003f70 !important  ;
+}
 .stockPrice {
   padding-right: 14px;
   color: green;
