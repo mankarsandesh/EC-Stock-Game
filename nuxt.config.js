@@ -25,7 +25,11 @@ module.exports = {
       { hid: "description", name: "description", content: pkg.description }
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.png" }
+      { rel: "icon", type: "image/x-icon", href: "/favicon.png" },
+      {
+        rel: "stylesheet",
+        href: "https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      }
       // {
       //   rel: "stylesheet",
       //   href:
