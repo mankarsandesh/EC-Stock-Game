@@ -36,6 +36,7 @@ export const BetResult = {
             })
             this.SET_FIRST('Can not find any bet') // make the button collage 
         },
+
         // Multiple Result 
         multipleResult(item, number, stockName, betID, betWin, name) {
             const specificNumber = "#" + stockName + betID.split("-")[0]  // create the variable for receive the value
@@ -49,7 +50,7 @@ export const BetResult = {
                 );
 
                 setTimeout(() => {
-                    this.SET_FIRST("You are win")
+                    this.SET_FIRST("You are win")  // try to set the difference value 
                     sound.winBet(); // sound when user win the bet
 
                     $("#" + stockName + betID).removeClass(
@@ -67,17 +68,13 @@ export const BetResult = {
                 }, 5000);
 
             } else if ($(specificNumber + '-' + number).hasClass(betID.split("-")[0])) {
-
-
                 $(specificNumber).addClass(betID.split("-")[0]);
                 $(specificNumber).addClass(
                     betID.split("-")[0] + "-animation"
                 );
-
                 $(specificNumber).addClass(
                     betID.split("-")[0]
                 );
-
                 $(specificNumber + 'Number').addClass('chip-animation');
                 this.SET_FIRST('You are lose in else false')
                 console.log('You win from  ', specificNumber + '-' + number)
@@ -131,7 +128,7 @@ export const BetResult = {
                 }, 5000);
 
             } else {
-                console.log('You are lose ', specificNumber + '-' + number)
+                console.log('This is the result of two digit :', specificNumber + '-' + number)
                 this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
@@ -142,6 +139,8 @@ export const BetResult = {
             }
         },
 
+
+        // collection the coin when user win to the top 
         collectCoin() {
             let elements = document.getElementsByClassName("chip-animation");
             for (let i = 0; i < elements.length; i++) {
@@ -177,4 +176,6 @@ export const BetResult = {
         },
     }
 }
+
+
 

@@ -7,7 +7,7 @@ export default function({ query, store, redirect }) {
       "referrerURL",
       document.referrer.match(/:\/\/(.[^/]+)/)[1]
     );
-  }
+  }  
   if (Object.keys(query).length !== 0) {
     let messageError = [];
     if (!query.portalProviderUUID) {
