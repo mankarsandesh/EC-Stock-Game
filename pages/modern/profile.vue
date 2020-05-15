@@ -368,13 +368,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setUserData", "setSnackBarMessage"]),
     // Update Avatar Picture
     useAvatar(image) {
       this.newImage = this.imagePath + image + ".jpg";
       this.avatarID = image;
       this.updateImageProfile();
     },
-    ...mapActions(["setUserData", "setSnackBarMessage"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
@@ -435,14 +435,14 @@ export default {
           {
             headers: config.header
           }
-        );        
+        );
         if (res.status) {
           this.setUserData();
           this.updating = false;
           this.setSnackBarMessage("Data Save Sucessfully");
         } else {
           this.updating = false;
-          this.setSnackBarMessage(res.message[0]);         
+          this.setSnackBarMessage(res.message[0]);
         }
       } catch (ex) {
         this.setSnackBarMessage(config.error.general);

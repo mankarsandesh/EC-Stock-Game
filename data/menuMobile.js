@@ -11,6 +11,11 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
+    title: "My Following",
+    to: "/modern/following"
+  },
+  {
+    icon: "bubble_chart",
     title: "current bet",
     to: "/modern/current-bet"
   },
