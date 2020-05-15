@@ -90,8 +90,8 @@
     <app-dialogs-confirm
       v-on:dialogStatus="dialogStatus"
       :dialogConfirm="dialogConfirm"
-      :title="$t("logout.sure")"
-      :content="$t("logout.bye")"
+      :title = "$t('logout.sure')"
+      :content = "$t('logout.bye')"
     />
   </v-app>
 </template>
