@@ -176,6 +176,9 @@ export default {
       this.setGameChannelShow(false);
     }
   },
+  beforeDestroy() {
+    window.Echo.leaveChannel(`balanceUpdate.${this.getUserUUID}`);
+  },
   created() {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
@@ -185,6 +188,7 @@ export default {
     } else {
       this.isFullscreen = false;
     }
+    this.connectUserBalanceSocket();
     // console.log("crearted");
   },
   mounted() {
@@ -203,7 +207,42 @@ export default {
         ? "/modern/desktop/profile/follower/"
         : "/modern/desktop/notification";
     },
-    ...mapActions(["setGameChannelShow"]),
+    ...mapActions(["setGameChannelShow", "setUserBalance"]),
+    listenUserBalance({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
+    connectUserBalanceSocket() {
+      this.listenUserBalance(
+        {
+          channelName: `balanceUpdate.${this.getUserUUID}`,
+          eventName: "balanceUpdate"
+        },
+        ({ data }) => {
+          try {
+            var logData = data;
+            if (data.status) {
+              this.setUserBalance(data.data.userBalance);
+              console.log("user balance", data);
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                channelName: `balanceUpdate.${this.getUserUUID}`,
+                eventName: "balanceUpdate",
+                res: logData,
+                page: "layouts/desktopModern.vue",
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        }
+      );
+    },
     async fetchNotification() {
       try {
         var reqBody = {

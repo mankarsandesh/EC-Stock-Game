@@ -10,14 +10,7 @@
                   style="flex-grow: wrap; width: 120px; margin: 0 10px;min-height: 36px !important;"
                 >
                   {{ $t("profile.historyPeriod") }}:
-                  <v-select
-                    v-model="filter"
-                    height="10px"
-                    dense
-                    hide-details
-                    :items="items"
-                    solo
-                  ></v-select>
+                  <v-select v-model="filter" height="10px" dense hide-details :items="items" solo></v-select>
                 </div>
               </div>
             </v-flex>
@@ -26,10 +19,7 @@
           <v-layout justify-center row style="margin-top:-40px;">
             <v-flex>
               <div class="profile-img-container">
-                <img
-                  :src="userImgProfile(visitProfileUserData.userImage)"
-                  class="grey darken-4"
-                />
+                <img :src="userImgProfile(visitProfileUserData.userImage)" class="grey darken-4" />
               </div>
             </v-flex>
           </v-layout>
@@ -41,15 +31,11 @@
                 <div
                   class="font-weight-medium"
                   v-if="visitProfileUserData.username"
-                >
-                  @{{ visitProfileUserData.username }}
-                </div>
+                >@{{ visitProfileUserData.username }}</div>
 
                 <span
                   v-if="visitProfileUserData.currentActiveTime === 'offline'"
-                >
-                  {{ visitProfileUserData.currentActiveTime }}
-                </span>
+                >{{ visitProfileUserData.currentActiveTime }}</span>
                 <span v-else>
                   {{ $t("profile.lastActive") }} :
                   {{ visitProfileUserData.currentActiveTime }}
@@ -61,9 +47,7 @@
                   v-if="visitProfileUserData.userUUID == getUserUUID"
                 >
                   <nuxt-link to="/modern/profile">
-                    <a class="editButton"
-                      >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
-                    </a>
+                    <a class="editButton">{{ $t("msg.edit") }} {{ $t("menu.profile") }}</a>
                   </nuxt-link>
                 </span>
               </v-flex>
@@ -90,9 +74,9 @@
               "
             >
               {{
-                visitProfileUserData.isFollowing == 0
-                  ? $t("useraction.followBet")
-                  : $t("useraction.unfollowBet")
+              visitProfileUserData.isFollowing == 0
+              ? $t("useraction.followBet")
+              : $t("useraction.unfollowBet")
               }}
             </v-btn>
           </v-flex>
@@ -103,36 +87,34 @@
         <v-layout row wrap>
           <v-flex xs12 mt-3 v-if="messageError == false">
             <v-layout pa-3 wrap justify-center>
-              <v-flex xs6 sm3
-                ><div class="cul-box" style="color: #7e57c2;">
+              <v-flex xs6 sm3>
+                <div class="cul-box" style="color: #7e57c2;">
                   <span>
-                    <fa
-                      icon="percentage"
-                      style="font-size: 40px; color: #7e57c2;"
-                    />
+                    <fa icon="percentage" style="font-size: 40px; color: #7e57c2;" />
                   </span>
-                  <span class="number-box"
-                    >{{ visitProfileUserData.winRate }}%</span
-                  >
-                  <span class="des-title text-uppercase">{{
+                  <span class="number-box">{{ visitProfileUserData.winRate }}%</span>
+                  <span class="des-title text-uppercase">
+                    {{
                     $t("leaderboard.winningrate")
-                  }}</span>
+                    }}
+                  </span>
                 </div>
               </v-flex>
               <v-flex xs6 sm3>
                 <div class="cul-box cul-box-green">
                   <span>
-                    <fa
-                      icon="money-bill-wave"
-                      style="font-size: 40px; color: #2bb13a;"
-                    />
+                    <fa icon="money-bill-wave" style="font-size: 40px; color: #2bb13a;" />
                   </span>
-                  <span class="number-box">{{
+                  <span class="number-box">
+                    {{
                     visitProfileUserData.totalBets
-                  }}</span>
-                  <span class="des-title text-uppercase">{{
-                    $t("msg.totalbet")
-                  }}</span>
+                    }}
+                  </span>
+                  <span class="des-title text-uppercase">
+                    {{
+                    $t("msg.totalBet")
+                    }}
+                  </span>
                 </div>
               </v-flex>
 
@@ -141,37 +123,38 @@
                   <span>
                     <fa icon="users" style="font-size: 40px; color: #f28691;" />
                   </span>
-                  <span class="number-box">{{
+                  <span class="number-box">
+                    {{
                     visitProfileUserData.followerCount
-                  }}</span>
-                  <span class="des-title text-uppercase">{{
+                    }}
+                  </span>
+                  <span class="des-title text-uppercase">
+                    {{
                     $t("profile.followers")
-                  }}</span>
+                    }}
+                  </span>
                 </div>
               </v-flex>
               <v-flex xs6 sm3>
                 <div class="cul-box cul-box-yellow">
                   <span>
-                    <fa
-                      icon="money-bill-alt"
-                      style="font-size: 40px; color: #ffd682;"
-                    />
+                    <fa icon="money-bill-alt" style="font-size: 40px; color: #ffd682;" />
                   </span>
-                  <span class="number-box"
-                    >${{ visitProfileUserData.totalWinAmount | currency }}</span
-                  >
-                  <span class="des-title text-uppercase">{{
+                  <span class="number-box">${{ visitProfileUserData.totalWinAmount | currency }}</span>
+                  <span class="des-title text-uppercase">
+                    {{
                     $t("leaderboard.winningamount")
-                  }}</span>
+                    }}
+                  </span>
                 </div>
               </v-flex>
             </v-layout>
             <div class="container-content">
               <div class="box-container"></div>
               <div class="pa-2 stock-history">
-                <h2 class="text-uppercase">
-                  {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
-                </h2>
+                <h2
+                  class="text-uppercase"
+                >{{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}</h2>
                 <div class="stock-history-container">
                   <VueApexCharts
                     v-if="series.length > 0"
@@ -188,7 +171,7 @@
         </v-layout>
       </v-container>
     </section>
-    <v-layout  v-if="this.messageError == true" >
+    <v-layout v-if="this.messageError == true">
       <v-flex pa-2>
         <div class="container-content">
           <div class="box-error">
@@ -197,12 +180,8 @@
               The Link you followed have expired, or the page may only be
               visiable to an audiencce you're not in.
             </p>
-            <a @click="$router.push('/modern/desktop/userprofile/')">
-              Go back to the previous Page
-            </a>
-            <a @click="$router.push('/modern/desktop/btc1/')">
-              EC Game Home Page</a
-            >
+            <a @click="$router.push('/modern/desktop/userprofile/')">Go back to the previous Page</a>
+            <a @click="$router.push('/modern/desktop/btc1/')">EC Game Home Page</a>
           </div>
         </div>
       </v-flex>
@@ -221,9 +200,11 @@
           <v-btn icon dark @click="followDialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{
+          <v-toolbar-title>
+            {{
             this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
-          }}</v-toolbar-title>
+            }}
+          </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
 

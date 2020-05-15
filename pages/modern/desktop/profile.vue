@@ -12,22 +12,19 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="dialog = true"
-                      >photo_camera</v-icon
-                    >
+                    <v-icon color="black" :size="20" @click="dialog = true">photo_camera</v-icon>
                     <!-- <v-icon color="black" :size="20">photo_camera</v-icon> -->
                   </button>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h2 v-if="getUserInfo.firstName == null">
-                {{ getUserInfo.userName }}
-              </h2>
-              <h2 v-if="getUserInfo.firstName" class="text-capitalize">
-                {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-              </h2>
+              <h2 v-if="getUserInfo.firstName == null">{{ getUserInfo.userName }}</h2>
+              <h2
+                v-if="getUserInfo.firstName"
+                class="text-capitalize"
+              >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h2>
               <p>
-                <b> {{ $t("profile.onlinestatus") }} </b> : Available
+                <b>{{ $t("profile.onlinestatus") }}</b> : Available
               </p>
             </div>
             <div class="profile_menu">
@@ -40,9 +37,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.basicinfo") }}
-                  </li>
+                  >{{ $t("profile.basicinfo") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/onlinehistory/">
                   <li
@@ -51,9 +46,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.onlinehistory") }}
-                  </li>
+                  >{{ $t("profile.onlinehistory") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/stockanalysis/">
                   <li
@@ -62,9 +55,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.stockanalysis") }}
-                  </li>
+                  >{{ $t("profile.stockanalysis") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/follower/">
                   <li
@@ -73,9 +64,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.myfollowers") }}
-                  </li>
+                  >{{ $t("profile.myfollowers") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/following/">
                   <li
@@ -84,9 +73,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.myfollowing") }}
-                  </li>
+                  >{{ $t("profile.myfollowing") }}</li>
                 </nuxt-link>
                 <!-- <nuxt-link to="/modern/desktop/profile/notification/">
                   <li
@@ -96,9 +83,9 @@
                         : 'menu_title'
                     "
                   >
-                    {{ $t("profile.mynotification") }}
+                    {{ $t("profile.myNotification") }}
                   </li>
-                </nuxt-link> -->
+                </nuxt-link>-->
                 <nuxt-link to="/modern/desktop/profile/setting/">
                   <li
                     :class="
@@ -106,9 +93,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.setting") }}
-                  </li>
+                  >{{ $t("profile.setting") }}</li>
                 </nuxt-link>
               </ul>
             </div>
@@ -122,33 +107,25 @@
 
       <v-dialog v-model="dialog" width="900" class="followDialog">
         <v-card class="followup">
-          <h3 class="title" style="text-align: center; color: #0b2a68;">
-            Choose your Avatar
-          </h3>
+          <h3 class="title" style="text-align: center; color: #0b2a68;">Choose your Avatar</h3>
           <v-card-text style="text-align:center;">
             <div class="avatarImage" v-for="n in 10" v-bind:key="n">
               <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
-              <span href="" class="userAvatar" @click="useAvatar(n)"
-                >Use Avatar</span
-              >
+              <span href class="userAvatar" @click="useAvatar(n)">Use Avatar</span>
             </div>
           </v-card-text>
           <v-divider></v-divider>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">
-              Close
-            </v-btn>
+            <v-btn color="primary" text @click="dialog = false">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
       <v-snackbar v-model="snackbar">
         Sucessfully Avatar Updated.
-        <v-btn color="pink" text @click="snackbar = false">
-          Close
-        </v-btn>
+        <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
       </v-snackbar>
     </v-layout>
   </v-container>
@@ -164,7 +141,7 @@ export default {
   data() {
     return {
       imagePath: config.apiDomain + "/images/user/avatar/",
-      avatarID: "",      
+      avatarID: "",
       snackbar: false,
       newImage: "",
       dialog: false,
@@ -188,12 +165,12 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-    imgProfile() {      
-        if (this.getUserInfo.profileImage == null) { 
-         return `${this.defaultImage}`;  
-        } else {
-          return`${config.apiDomain}/${this.getUserInfo.profileImage}`;
-        }
+    imgProfile() {
+      if (this.getUserInfo.profileImage == null) {
+        return `${this.defaultImage}`;
+      } else {
+        return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      }
     }
   },
   watch: {
@@ -228,7 +205,7 @@ export default {
         portalProviderUUID: this.getPortalProviderUUID,
         userUUID: this.getUserUUID,
         version: config.version
-      };     
+      };
       try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
@@ -236,7 +213,7 @@ export default {
           {
             headers: config.header
           }
-        );        
+        );
         if (res.status) {
           this.blurValue = 0;
           this.setUserData();

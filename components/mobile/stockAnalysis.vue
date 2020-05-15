@@ -248,6 +248,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setSnackBarMessage"]),
     showDialogStockAnalysis() {
       this.dialogStockAnalysis = true;
     },
@@ -272,22 +273,23 @@ export default {
     async getStockAnalysis() {
       try {
         if (!this.checkValidDate(this.startDate, this.endDate)) {
-          throw new Error("Please select a valid date");
+          this.setSnackBarMessage("Please select a valid date");
         }
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          dateRangeFrom: this.startDate,
+          dateRangeTo: this.endDate,
+          version: config.version
+        };
         const res = await this.$axios.$post(
           config.getUserBetAnalysis.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID: this.getUserUUID,
-            dateRangeFrom: this.startDate,
-            dateRangeTo: this.endDate,
-            version: config.version
-          },
+          reqBody,
           {
             headers: config.header
           }
         );
-        if (res.code === 200) {
+        if (res.code == 200) {
           if (res.data.length) {
             this.isDataValid = true;
             this.error = "";
@@ -295,18 +297,14 @@ export default {
           } else {
             this.isDataValid = false;
             this.error = "No data to display";
+            this.setSnackBarMessage("No Data to Display");
           }
-        } else {
-          // console.log(res);
-          // alert(res.message);
+        }else {
+          this.setSnackBarMessage(res.message[0]);
         }
       } catch (ex) {
-        console.error(ex);
-        if (ex.message == "Please select a valid date") {
-          this.error = "Please select a valid date";
-          this.isDataValid = false;
-        }
-        // alert(ex.message);
+        this.setSnackBarMessage(ex.message);
+        this.isDataValid = false;
       }
     }
   },

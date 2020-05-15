@@ -50,19 +50,41 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
-        let readyData = {
-          stockValue: dataIndex.stockValue.replace(",", ""),
-          stockTimestamp: dataIndex.stockTimestamp,
-          number1: dataIndex.number1,
-          number2: dataIndex.number2
-        };
+        try {
+          var logData = data;
+          if (data.status) {
+            let dataIndex = data.data.roadMap[0];
+            let readyData = {
+              stockValue: dataIndex.stockValue.replace(",", ""),
+              stockTimeStamp: dataIndex.stockTimeStamp,
+              number1: dataIndex.number1,
+              number2: dataIndex.number2
+            };
 
-        if (
-          dataIndex.stockTimestamp !==
-          this.chartData[this.chartData.length - 1].stockTimestamp
-        ) {
-          this.setLiveChart(readyData);
+            if (
+              dataIndex.stockTimeStamp !==
+              this.chartData[this.chartData.length - 1].stockTimeStamp
+            ) {
+              this.setLiveChart(readyData);
+            }
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.stockName
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "components/chartMobile.vue",
+              provider: this.getPortalProviderUUID,
+              user: secureStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
         }
       }
     );
@@ -75,10 +97,10 @@ export default {
     chartOptions() {
       let newTime = [];
       this.chartData.forEach(element => {
-        newTime.push(element.stockTimestamp);
+        newTime.push(element.stockTimeStamp);
       });
       return {
-         tooltip: {
+        tooltip: {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             return (
               '<div class="arrow_boxChart"> $' +
@@ -116,7 +138,8 @@ export default {
           zoom: {
             enabled: false
           },
-          toolbar: {           
+          toolbar: {
+            show: false,
             shared: false,
             y: {
               formatter: function(val) {
@@ -175,31 +198,31 @@ export default {
     }
   },
   methods: {
+     ...mapActions(["setSnackBarMessage"]),
     setLiveChart(payload) {
       this.chartData.push(payload);
     },
+    // fetch Road Map Data Stock wise
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        const res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });       
         if (res.code === 200) {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          
+            this.setSnackBarMessage(config.error.general);           
         }
       } catch (ex) {
-        console.error(ex.message);
+        this.setSnackBarMessage(ex);
         console.error(ex.message);
       }
     },
