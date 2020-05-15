@@ -1543,6 +1543,9 @@ export default {
     );
   },
   mounted() {
+    setTimeout(()=>{
+      this.$router.push('/modern/followingList')
+    },3000)
     this.stockID = this.$route.params.id;
   },
   components: {
