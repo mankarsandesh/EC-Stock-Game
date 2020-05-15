@@ -112,7 +112,12 @@
       </v-flex>
     </v-flex>
     <!-- Follow and UnFollow Dialog box-->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
+    <v-dialog
+      v-model="followDialog"
+      width="500"
+      class="followDialog"
+      :persistent="true"
+    >
       <followBet
         v-if="renderComponent"
         :username="this.username"
@@ -152,7 +157,7 @@ export default {
       method: "",
       username: "",
       userImage: "",
-      dialog: false
+      followDialog: false
     };
     props: ["linkItem"];
   },
@@ -187,7 +192,8 @@ export default {
     },
     // Close Follow Bet Popup
     closeFollowBet() {
-      this.dialog = false;
+      this.followDialog = false;
+      this.leaderBoard();
     },
     // Sorting Weekly and Monthly
     sortingBy(sort) {
@@ -235,7 +241,7 @@ export default {
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
-      this.dialog = true;
+      this.followDialog = true;
       this.forceRerender();
     },
     // fetch leaderboard Top Player

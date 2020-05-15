@@ -311,13 +311,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setUserData", "setSnackBarMessage"]),
     // Update Avatar Picture
     useAvatar(image) {
       this.newImage = this.imagePath + image + ".jpg";
       this.avatarID = image;
       this.updateImageProfile();
     },
-    ...mapActions(["setUserData", "setSnackBarMessage"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
