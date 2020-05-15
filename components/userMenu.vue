@@ -13,7 +13,7 @@
             <span v-if="getUserInfo.firstName">
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </span>
-            <span id="userBanlance" @click="getUserBanlancePosition()">
+            <span id="userBanlance">
               <animated-number
                 :value="getUserInfo.balance"
                 :formatValue="formatToPrice"

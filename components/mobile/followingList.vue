@@ -1,0 +1,277 @@
+<template>
+  <div>
+    <v-flex v-if="followList.length == 0">
+      <h2 class="text-center" style="color:#a3a3a3;">
+        no one following you yet.
+      </h2>
+    </v-flex>
+    <v-flex>
+      <v-list>
+        <h3 class="pa-2">
+          Your followers
+        </h3>
+        <hr />
+        <template v-for="(item, index) in followList">
+          <v-list-tile :key="item.username" avatar>
+            <nuxt-link :to="'/modern/userprofile/' + item.userUUID">
+              <v-list-tile-avatar>
+                <img :src="userImgProfile(item.userImage)" />
+              </v-list-tile-avatar>
+            </nuxt-link>
+
+            <v-list-tile-content style="width:40%;">
+              <v-list-tile-title v-html="item.username"></v-list-tile-title>
+            </v-list-tile-content>
+
+            <v-list-tile-content>
+              <v-list-tile-title
+                class="green--text titleText"
+                v-html="Math.round(item.winRate, 1) + '%'"
+              >
+              </v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-btn
+                v-bind:class="[
+                  item.isFollowing == 0
+                    ? 'buttonGreensmall'
+                    : 'buttonCancelSmall'
+                ]"
+                @click="
+                  followUser(
+                    item.username,
+                    item.userImage,
+                    item.userUUID,
+                    item.isFollowing
+                  )
+                "
+                dark
+                >{{
+                  item.isFollowing == 0
+                    ? $t("useraction.follow")
+                    : $t("useraction.unfollow")
+                }}
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-divider
+            v-if="index + 1 < followList.length"
+            :key="index"
+          ></v-divider>
+        </template>
+      </v-list>
+    </v-flex>
+
+    <!-- Follow and UnFollow Dialog box-->
+    <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable
+    >
+      <v-card tile>
+        <v-toolbar card dark style="background-color:#2cb13b;">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{
+            this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+          }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+
+        <followBet
+          :username="this.username"
+          :userImage="this.userImage"
+          :FollowerUserUUID="this.FollowUserUUID"
+          :isFollowing="this.FolloworNot"
+          @followBetClose="closeFollowBet"
+        />
+      </v-card>
+    </v-dialog>
+  </div>
+</template>
+<script>
+import { mapState } from "vuex";
+import config from "~/config/config.global";
+import followBet from "~/components/mobile/follow/followBet";
+export default {
+  data() {
+    return {
+      loadingImage: false,
+      sortValue: "monthly",
+      defaultImage: "/no-profile-pic.jpg",
+      isActiveWeek: true,
+      isActiveMonth: false,
+      FollowName: "Follow",
+      selectRate: false,
+      selectAmount: true,
+      followList: [],
+      FolloworNot: "",
+      FollowMethod: "",
+      FollowUserUUID: "",
+      method: "",
+      UserfollowType: "",
+      amountValue: "100",
+      rateValue: "10",
+      BetValue: "",
+      username: "",
+      userImage: "",
+      dialog: false,
+      selectedFollow: "",
+      followby: [
+        { id: 1, name: "Follow by Amount", value: "Amount" },
+        { id: 2, name: "Follow by Rate", value: "Rate" }
+      ]
+    };
+  },
+  components: {
+    followBet
+  },
+  mounted() {
+    this.fetchFollowers();
+  },
+  computed: {
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+    }) //get 2 data from vuex first, in the computed
+  },
+  methods: {
+    // fetch default image or from server image
+    userImgProfile(userImage) {
+      return userImage === null
+        ? this.defaultImage
+        : `${config.apiDomain}/` + userImage;
+    },
+    // Close Follow Bet Popup
+    closeFollowBet() {
+      this.dialog = false;
+    },
+    //Sorting weekly and Monthly
+    sortingBy(sort) {
+      if (sort == "monthly") {
+        const today = new Date();
+        const monthly = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 30
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = monthly;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.sortValue = "monthly";
+        this.fetchFollowers();
+      } else {
+        const today = new Date();
+        const lastWeek = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() - 7
+        )
+          .toISOString()
+          .substr(0, 10);
+        this.dateFrom = lastWeek;
+        this.dateTo = today.toISOString().substring(0, 10);
+        this.sortValue = "weekly";
+        this.fetchFollowers();
+      }
+    },
+    // Follow and Unfollow User
+    followUser(username, userImage, userUUID, method) {
+      this.username = username;
+      this.FollowUserUUID = userUUID;
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
+      this.userImage = this.userImgProfile(userImage);
+      this.dialog = true;
+    },
+    // Fetch Top 10 users in fetchFollowers
+    async fetchFollowers() {
+      this.loadingImage = true;
+      try {
+        const LeaderBoardData = {
+          portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
+          dateRangeFrom: this.dateFrom,
+          dateRangeTo: this.dateTo,
+          version: config.version
+        };
+        const { data } = await this.$axios.post(
+          config.getLeaderBoard.url,
+          LeaderBoardData,
+          {
+            headers: config.header
+          }
+        );
+        this.followList = data.data;
+        this.loadingImage = false;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+};
+</script>
+<style scoped>
+.followButton {
+  height: auto;
+  padding: 4px;
+}
+.successful {
+  width: 10%;
+  border: 1px solid;
+  text-align: center;
+  color: green;
+}
+.titleText {
+  font-size: 14px;
+}
+.followup {
+  padding: 10px;
+  border-radius: 20px;
+}
+.ranking span:hover {
+  color: green;
+  cursor: pointer;
+}
+.topHeader p:first-child {
+  border: 1px solid;
+}
+.header {
+  color: #6c6c6c;
+}
+#userRow {
+  border-radius: 10px;
+}
+.userRow {
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin: 10px 0px;
+}
+.userRow:hover {
+  background-color: #f7f7f7;
+  cursor: pointer;
+}
+.userRow th {
+  border-right: 1px solid #dddddd;
+  width: 25%;
+  padding: 5px;
+}
+.userRow th:first-child span {
+  vertical-align: middle;
+}
+.userRow th:first-child i {
+  vertical-align: middle;
+  /* border-radius:10px; */
+}
+.pimage {
+  margin-right: 10px;
+  width: 70px;
+  height: 70px;
+  border: 2px solid #dddddd;
+  border-radius: 180px;
+}
+</style>
