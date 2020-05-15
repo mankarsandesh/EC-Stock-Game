@@ -87,7 +87,7 @@
 
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog
-      v-model="dialog"
+      v-model="followDialog"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
@@ -95,7 +95,7 @@
     >
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
-          <v-btn icon dark @click="dialog = false">
+          <v-btn icon dark @click="followDialog = false">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>{{
@@ -125,28 +125,13 @@ export default {
       loadingImage: false,
       sortValue: "monthly",
       defaultImage: "/no-profile-pic.jpg",
-      isActiveWeek: true,
-      isActiveMonth: false,
-      FollowName: "Follow",
-      selectRate: false,
-      selectAmount: true,
       topPlayerData: [],
       FolloworNot: "",
-      FollowMethod: "",
       FollowUserUUID: "",
       method: "",
-      UserfollowType: "",
-      amountValue: "100",
-      rateValue: "10",
-      BetValue: "",
       username: "",
       userImage: "",
-      dialog: false,
-      selectedFollow: "",
-      followby: [
-        { id: 1, name: "Follow by Amount", value: "Amount" },
-        { id: 2, name: "Follow by Rate", value: "Rate" }
-      ]
+      followDialog: false
     };
   },
   components: {
@@ -167,10 +152,6 @@ export default {
       return userImage === null
         ? this.defaultImage
         : `${config.apiDomain}/` + userImage;
-    },
-    // Close Follow Bet Popup
-    closeFollowBet() {
-      this.dialog = false;
     },
     //Sorting weekly and Monthly
     sortingBy(sort) {
@@ -202,19 +183,23 @@ export default {
         this.leaderBoard();
       }
     },
+    // Close Follow Bet Popup
+    closeFollowBet() {
+      this.followDialog = false;
+    },
     // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
-      this.dialog = true;
+      this.followDialog = true;
     },
     // Fetch Top 10 users in Leaderboard
     async leaderBoard() {
       this.loadingImage = true;
       try {
-        const LeaderBoardData = {
+        const reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           dateRangeFrom: this.dateFrom,
@@ -223,7 +208,7 @@ export default {
         };
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
-          LeaderBoardData,
+          reqBody,
           {
             headers: config.header
           }
