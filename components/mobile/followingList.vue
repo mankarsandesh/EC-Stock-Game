@@ -158,12 +158,12 @@ export default {
             headers: config.header
           }
         );
-        if (res.code == 200) {
+        if(res.code == 200) {
           this.followingList = res.data;
-        } else {
+        }else {
           this.setSnackBarMessage(config.error.general);
         }
-      } catch (ex) {
+      }catch(ex) {
         this.setSnackBarMessage(config.error.general);
         console.error(ex.message);
       }
