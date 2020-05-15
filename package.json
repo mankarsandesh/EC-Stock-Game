@@ -40,6 +40,7 @@
         "js-cookie": "^2.2.1",
         "laravel-echo": "^1.6.1",
         "lottie-web": "^5.5.9",
+        "material-design-icons": "^3.0.1",
         "mobile-device-detect": "^0.3.3",
         "nuxt": "^2.3.4",
         "nuxt-fontawesome": "^0.4.0",
