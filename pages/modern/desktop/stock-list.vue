@@ -9,9 +9,9 @@
               v-model="sortBy"
               class="border-round"
               hide-details
-              :items="[ { value: 'asc', text: $t('stock-list.ascending') } , { value: 'desc', text: $t('stock-list.descending') }]"
-              :placeholder="$t('msg.sortby')"
-              :key="$root.$t('stock-list.ascending') + sortBy"
+              :items="[ { value: 'asc', text: $t('stockList.ascending') } , { value: 'desc', text: $t('stockList.descending') }]"
+              :placeholder="$t('msg.sortBy')"
+              :key="$root.$t('stockList.ascending') + sortBy"
             ></v-select>
           </v-flex>
         </v-flex>

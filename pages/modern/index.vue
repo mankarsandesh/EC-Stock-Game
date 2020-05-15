@@ -64,7 +64,7 @@
         <v-divider></v-divider>
         <v-list-tile class="pt-2" @click="sortBy = 'name'">
           <v-list-tile-content>
-            <v-list-tile-title class="text-uppercase">{{ $t("stock-list.stock name") }}</v-list-tile-title>
+            <v-list-tile-title class="text-uppercase">{{ $t("stockList.stockName") }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
           <v-icon class="icon-primary" v-if="sortBy === 'name'">done</v-icon>

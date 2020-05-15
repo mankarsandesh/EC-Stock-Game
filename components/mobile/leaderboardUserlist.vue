@@ -1,30 +1,30 @@
 <template>
   <div>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">
-        There are no top users in Leaderboard.
-      </h2>
+      <h2 class="text-center" style="color:#a3a3a3;">{{$t("leaderboard.noData")}}</h2>
     </v-flex>
     <v-flex>
       <v-list subheader>
         <v-list-tile>
           <v-list-tile-content>
             <v-list-tile-title>
-              Top 10 Leaderboard
-              <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i
-            ></v-list-tile-title>
+              {{$t("leaderboard.Top10Leaders")}}
+              <i
+                v-if="loadingImage"
+                class="fa fa-circle-o-notch fa-spin"
+              ></i>
+            </v-list-tile-title>
           </v-list-tile-content>
 
           <v-list-tile-action>
             <v-radio-group v-model="sortValue" row>
               <v-radio
-                label="Monthly"
+                :label="$t('leaderboard.monthly')"
                 value="monthly"
                 v-on:click="sortingBy('monthly')"
-              ></v-radio>
-              &nbsp;
+              ></v-radio>&nbsp;
               <v-radio
-                label="Weekly"
+                :label="$t('leaderboard.weekly')"
                 value="weekly"
                 v-on:click="sortingBy('weekly')"
               ></v-radio>
@@ -49,8 +49,7 @@
               <v-list-tile-title
                 class="green--text titleText"
                 v-html="Math.round(item.winRate, 1) + '%'"
-              >
-              </v-list-tile-title>
+              ></v-list-tile-title>
             </v-list-tile-content>
 
             <v-list-tile-action>
@@ -69,18 +68,16 @@
                   )
                 "
                 dark
-                >{{
-                  item.isFollowing == 0
-                    ? $t("useraction.follow")
-                    : $t("useraction.unfollow")
-                }}</v-btn
               >
+                {{
+                item.isFollowing == 0
+                ? $t("useraction.follow")
+                : $t("useraction.unfollow")
+                }}
+              </v-btn>
             </v-list-tile-action>
           </v-list-tile>
-          <v-divider
-            v-if="index + 1 < topPlayerData.length"
-            :key="index"
-          ></v-divider>
+          <v-divider v-if="index + 1 < topPlayerData.length" :key="index"></v-divider>
         </template>
       </v-list>
     </v-flex>
@@ -98,9 +95,11 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{
+          <v-toolbar-title>
+            {{
             this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
-          }}</v-toolbar-title>
+            }}
+          </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
 

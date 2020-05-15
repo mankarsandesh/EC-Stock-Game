@@ -2,24 +2,15 @@
   <v-layout row class="justify-center">
     <v-flex xs12 md12>
       <v-list-tile v-if="notificationData.length == 0" class="notBets">
-        <h3>
-          There are no notification.
-        </h3>
+        <h3>{{$t("notification.noNotification")}}</h3>
       </v-list-tile>
       <v-list three-line v-if="notificationData.length > 0">
-        <template v-for="(item, index) in notificationData" >
-          <v-list-tile :key="item.date" > 
+        <template v-for="(item, index) in notificationData">
+          <v-list-tile :key="item.date">
             <v-list-tile-content>
-              <v-list-tile-sub-title
-                class="heading"
-                v-html="item.title"
-              ></v-list-tile-sub-title>
-              <v-list-tile-sub-title
-                v-html="item.message"
-              ></v-list-tile-sub-title>
-              <v-list-tile-sub-title
-                v-html="item.createdAt"
-              ></v-list-tile-sub-title>
+              <v-list-tile-sub-title class="heading" v-html="item.title"></v-list-tile-sub-title>
+              <v-list-tile-sub-title v-html="item.message"></v-list-tile-sub-title>
+              <v-list-tile-sub-title v-html="item.createdAt"></v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-divider :key="index"></v-divider>

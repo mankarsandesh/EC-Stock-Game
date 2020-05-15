@@ -23,9 +23,10 @@
     "soundControl": "ການຄວບຄຸມສຽງ",
     "leaderboard": "ກະດານ ນຳ"
   },
-  "stock-list": {
+  "stockList": {
     "stock lists": "ບັນຊີລາຍຊື່",
-    "stock name": "ຊື່ຫຸ້ນ",
+    "stockName": "ຊື່ຫຸ້ນ",
+    "sortBy": "ຈັດຮຽງຕາມ",
     "live price": "ລາຄາສົດ",
     "reference": "ກະສານອ້າງອີງ",
     "load more": "ໂຫຼດເພີ່ມ",
@@ -278,7 +279,7 @@
     "lastupdate": "ອັບເດດຫຼ້າສຸດ 1 ນາທີທີ່ແລ້ວ",
     "top" : "ທາງເທີງ",
     "leaders" : "ຜູ້ ນຳ",
-    "nodata" : "ບໍ່ມີຜູ້ ນຳ ໃຊ້ໃນ Leaderboard.",
+    "noData" : "ບໍ່ມີຜູ້ ນຳ ໃຊ້ໃນ Leaderboard.",
     "followBy": "ຕິດຕາມດ້ວຍ",
     "autoStop":"ລົດຢຸດຕິດຕາມ",
     "followbyAmount":"ຕິດຕາມດ້ວຍ ຈຳ ນວນເງິນ",
@@ -286,7 +287,9 @@
     "stopbyWinning":"ຢຸດໂດຍການຊະນະ",
     "stopbyLosing":"ຢຸດໂດຍການສູນເສຍ",
     "stopbyTiming":"ຢຸດເຊົາໂດຍເວລາ",
-    "stopbyBets":"ຢຸດໂດຍການເດີມພັນ"
+    "stopbyBets":"ຢຸດໂດຍການເດີມພັນ",
+    "monthly":"ລາຍເດືອນ",
+    "weekly":"ປະ ຈຳ ອາທິດ"
   },
   "breadcrumbs": {
     "rule": "ກົດລະບຽບ",
@@ -316,7 +319,8 @@
     "winingBets": "ชนะเดิมพัน",
     "losingBets": "ການສູນເສຍການເດີມພັນ",
     "usersFollowMe": "ຜູ້ໃຊ້ຕິດຕາມຂ້ອຍ",
-    "amountCreditedOrDebitedToAccount": "ຈຳ ນວນເງິນທີ່ຝາກຫຼື debited ເຂົ້າບັນຊີ"
+    "amountCreditedOrDebitedToAccount": "ຈຳ ນວນເງິນທີ່ຝາກຫຼື debited ເຂົ້າບັນຊີ",
+    "noNotification": "ບໍ່ມີແຈ້ງການຫຍັງ."
   },
   "betHistory": {
     "betDraw": "BET DRAW",
@@ -325,7 +329,14 @@
     "searchByName" : "ຄົ້ນຫາຕາມຊື່",
     "today":"ມື້​ນີ້",
     "thisWeek":"ອາ​ທິດ​ນີ້",
-    "thisMonth":"ເດືອນ​ນີ້"
+    "thisMonth":"ເດືອນ​ນີ້",
+    "noBets":"ບໍ່ມີປະຫວັດການເດີມພັນ",
+    "byFollowers":"ໂດຍຜູ້ຕິດຕາມ",
+    "original":"ຕົ້ນສະບັບ",
+    "total":"ລວມ",
+    "bets":"ພະນັນ",
+    "totalAmount":"ຈໍາ​ນວນ​ທັງ​ຫມົດ",
+    "rolling": "ມ້ວນ"
   },
   "betting": {
     "reviewBet" : "ທົບທວນ Bet",
@@ -395,5 +406,13 @@
     "betsShould":"ການເດີມພັນຄວນຈະຢູ່ລະຫວ່າງ 1 ເຖິງ 100",
     "userFollowed":"ຜູ້ໃຊ້ໄດ້ປະສົບຜົນ ສຳ ເລັດ.",
     "userUnfollowed":"ຜູ້ໃຊ້ບໍ່ໄດ້ຖືກກວດສອບ"
+  },
+  "currentBet": {
+    "noBets" : "ບໍ່ມີການເດີມພັນໃນປະຈຸບັນ.",
+    "byFollowers":"ໂດຍຜູ້ຕິດຕາມ",
+    "original":"ຕົ້ນສະບັບ",
+    "total":"ລວມ",
+    "bets":"ພະນັນ",
+    "totalAmount":"ຈໍາ​ນວນ​ທັງ​ຫມົດ"
   }
 }
