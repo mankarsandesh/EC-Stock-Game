@@ -25,6 +25,8 @@ export default {
   data() {
     return {
       chartHeight: "350vh",
+      stockName: this.$route.path.split('/')[3],
+      loopName: '',
       window: {
         width: 0,
         height: 0
@@ -145,6 +147,13 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    if(this.stockName.slice(0, -1) == 'btc') {
+      this.loopName = this.stockName.slice(-1) == 1 ? this.stockName.slice(-1) : '5';
+      this.stockName = this.stockName; 
+    } else {
+      this.stockName = this.stockName[3];
+      this.loopName = '5';
+    }
     this.connectSocket();
   },
   destroyed() {
@@ -154,24 +163,14 @@ export default {
     ...mapGetters([
       "getGameUUIDByStockName",
       "getPortalProviderUUID",
-      "getResetStatus"
+      "getStockUUIDByStockName",
     ])
-  },
-  watch: {
-    getResetStatus: function() {
-      window.Echo.leaveChannel(
-        `liveBetCounts.${this.getGameUUIDByStockName(this.$route.params.id)}`
-      );
-      this.connectSocket();
-    }
   },
   methods: {
     connectSocket() {
       this.listenForBroadcast(
         {
-          channelName: `liveBetCounts.${this.getGameUUIDByStockName(
-            this.$route.params.id
-          )}`,
+          channelName: `liveBetCounts.${this.getPortalProviderUUID}.${this.getStockUUIDByStockName(this.stockName)}.${this.loopName}`,
           eventName: "liveBetCounts"
         },
         ({ data }) => {
@@ -185,6 +184,19 @@ export default {
             }
           } catch (ex) {
             console.log(ex);
+            log.error(
+              {
+                channel: `liveBetCounts.${this.getGameUUIDByStockName(
+                  this.$route.params.id
+                )}`,
+                event: "liveBetCounts",
+                res: logData,
+                page: "components/modern/fullscreenchart.vue",
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
           }
         }
       );
