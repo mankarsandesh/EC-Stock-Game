@@ -116,7 +116,7 @@
       v-model="followDialog"
       width="500"
       class="followDialog"
-      :persistent="true"
+      :persistent=true
     >
       <followBet
         v-if="renderComponent"
