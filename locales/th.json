@@ -21,7 +21,9 @@
     "gameResult": "ผลลัพธ์ของเกม",
     "chipAmount": "จำนวนชิป",
     "soundControl": "การควบคุมเสียง",
-    "leaderboard": "ลีดเดอร์"
+    "leaderboard": "ลีดเดอร์",
+    "myFollowers": "ผู้ติดตามของฉัน",
+    "myFollowing": "ดังต่อไปนี้"
   },
   "stockList": {
     "stock lists": "รายการสินค้า",

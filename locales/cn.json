@@ -21,7 +21,9 @@
     "gameResult": "遊戲結果",
     "chipAmount": "籌碼金額",
     "soundControl": "聲音控制",
-    "leaderboard": "排行榜"
+    "leaderboard": "排行榜",
+    "myFollowers": "我的追随者",
+    "myFollowing": "我的以下"
   },
   "stockList": {
     "stock lists": "库存清单",
