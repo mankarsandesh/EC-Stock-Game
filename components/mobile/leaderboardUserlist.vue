@@ -97,7 +97,7 @@
           </v-btn>
           <v-toolbar-title>
             {{
-            this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+            this.FolloworNot == 1 ? $t("useraction.followBet") : $t("useraction.unfollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
