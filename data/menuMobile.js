@@ -11,12 +11,12 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
-    title: "My Followers",
+    title: "myFollowers",
     to: "/modern/followers"
   },
   {
     icon: "bubble_chart",
-    title: "My Following",
+    title: "myFollowing",
     to: "/modern/following"
   },
   {

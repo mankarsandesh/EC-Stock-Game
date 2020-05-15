@@ -21,7 +21,9 @@
     "gameResult": "Game Result",
     "chipAmount": "Chip Amount",
     "soundControl": "Sound Control",
-    "leaderboard": "Leaderboard"
+    "leaderboard": "Leaderboard",
+    "myFollowers": "My Followers",
+    "myFollowing": "My Following"
   },
   "stockList": {
     "stock lists": "Stock Lists",

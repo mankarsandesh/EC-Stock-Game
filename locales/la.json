@@ -21,7 +21,9 @@
     "gameResult": "ຜົນໄດ້ຮັບ",
     "chipAmount": "ຈຳນວນເງິນຊິບ",
     "soundControl": "ການຄວບຄຸມສຽງ",
-    "leaderboard": "ກະດານ ນຳ"
+    "leaderboard": "ກະດານ ນຳ",
+    "myFollowers": "ຜູ້ຕິດຕາມຂອງຂ້ອຍ",
+    "myFollowing": "ຕໍ່ໄປນີ້"
   },
   "stockList": {
     "stock lists": "ບັນຊີລາຍຊື່",
