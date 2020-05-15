@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div class="followup">    
+    <div class="followup">
       <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="this.userImage" width="140px" />
-        <h3 class="subtitle-1 text-center pt-1" v-if="this.username">{{ this.username }}</h3>
+        <h3 class="subtitle-1 text-center pt-1" v-if="this.username">
+          {{ this.username }}
+        </h3>
       </v-card-text>
       <v-flex>
         <p
           v-if="FollwingError"
           v-bind:class="{ 'text-danger': hasError, 'text-sucess': hasSucess }"
-        >{{ errorMessage }}</p>
+        >
+          {{ errorMessage }}
+        </p>
       </v-flex>
 
       <div v-if="isFollowing == 1">
@@ -101,11 +105,10 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-              >{{ $t("useraction.follow") }}</v-btn>
+                >{{ $t("useraction.follow") }}</v-btn
+              >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
-                {{
-                $t("msg.cancel")
-                }}
+                {{ $t("msg.cancel") }}
               </v-btn>
             </v-flex>
           </v-radio-group>
@@ -117,11 +120,10 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-          >{{ $t("useraction.unfollow") }}</v-btn>
+            >{{ $t("useraction.unfollow") }}</v-btn
+          >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
-            {{
-            $t("msg.cancel")
-            }}
+            {{ $t("msg.cancel") }}
           </v-btn>
         </v-flex>
       </div>
@@ -129,7 +131,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
@@ -219,12 +221,9 @@ export default {
       userUUID: state => state.provider.userUUID
     })
   },
-  updated(){
-    
-    console.log("Checking");
-    console.log(this.userImage);
-  },
   methods: {
+    // Snackbar Notification
+    ...mapActions(["setSnackBarMessage"]),
     // Send to Parent Components
     async closePopup() {
       this.$emit("followBetClose");
@@ -238,31 +237,20 @@ export default {
         !this.autoStop &&
         !this.unfollowValue
       ) {
-        return this.errorShow(
-          true,
-          false,
-          true,
-          "Follwing type is not selected"
-        );
+        return this.setSnackBarMessage("Follwing type is not selected");
       }
 
       // Check Amount Value or Bet Value
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
         if (this.BetValue > 1000 || this.BetValue < 100)
-          return this.errorShow(
-            true,
-            false,
-            true,
+          return this.setSnackBarMessage(
             "Amount should be Lower then 1001 & Grater then 101"
           );
       } else {
         this.BetValue = this.rateValue;
         if (this.BetValue > 100 || this.BetValue < 10)
-          return this.errorShow(
-            true,
-            false,
-            true,
+          return this.setSnackBarMessage(
             "Bet Rate Should be Lower then 101 & Grater then 11"
           );
       }
@@ -272,35 +260,23 @@ export default {
         case 4:
         case 5:
           if (this.unfollowValue > 1000 || this.unfollowValue < 100) {
-            return this.errorShow(
-              true,
-              false,
-              true,
+            return this.setSnackBarMessage(
               "Auto Stop Amount should Between 100 to 1000"
             );
           }
           break;
         case 3:
           if (this.unfollowValue > 10 || this.unfollowValue < 1) {
-            return this.errorShow(
-              true,
-              false,
-              true,
-              "Days should be Between 1 to 10."
-            );
+            return this.setSnackBarMessage("Days should be Between 1 to 10.");
           }
           break;
         case 6:
           if (this.unfollowValue > 100 || this.unfollowValue < 1) {
-            return this.errorShow(
-              true,
-              false,
-              true,
-              "Bets should be Between 1 to 100"
-            );
+            return this.setSnackBarMessage("Bets should be Between 1 to 100");
           }
           break;
       }
+
       return this.follwingBetting(followerID, followMethod);
     },
     // Error Function Common
@@ -339,12 +315,11 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-          this.errorShow(true, true, false, data.message[0]);
-          window.setTimeout(function() {
-            location.reload();
-          }, 2000);
+          this.setSnackBarMessage(data.message[0]);
+          // this.errorShow(true, true, false, data.message[0]);
         } else {
-          this.errorShow(true, false, true, data.message[0]);
+          this.setSnackBarMessage(data.message[0]);
+          // this.errorShow(true, false, true, data.message[0]);
         }
       } catch (error) {
         console.log(error);

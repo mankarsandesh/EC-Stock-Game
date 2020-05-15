@@ -87,6 +87,7 @@
 
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog
+      persistent=true
       v-model="followDialog"
       fullscreen
       hide-overlay
@@ -95,7 +96,7 @@
     >
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
-          <v-btn icon dark @click="followDialog = false">
+          <v-btn icon dark @click="closeFollowBet">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>{{
@@ -131,7 +132,8 @@ export default {
       method: "",
       username: "",
       userImage: "",
-      followDialog: false
+      followDialog: false,
+      temp : false,
     };
   },
   components: {
@@ -139,6 +141,9 @@ export default {
   },
   mounted() {
     this.leaderBoard();
+  },
+  beforeDestroy(){
+    console.log("destory");
   },
   computed: {
     ...mapState({
@@ -186,6 +191,8 @@ export default {
     // Close Follow Bet Popup
     closeFollowBet() {
       this.followDialog = false;
+      this.leaderBoard();
+      console.log("Close");
     },
     // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
@@ -194,6 +201,7 @@ export default {
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
       this.followDialog = true;
+      this.temp = true;
     },
     // Fetch Top 10 users in Leaderboard
     async leaderBoard() {
@@ -213,6 +221,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(data.data);
         this.topPlayerData = data.data;
         this.loadingImage = false;
       } catch (error) {
