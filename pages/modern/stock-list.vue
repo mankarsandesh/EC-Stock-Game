@@ -7,8 +7,8 @@
         <v-select
           class="border-round mt-2"
           hide-details
-          :items="items"
-          placeholder="Sort By :"
+          :items="[$t('stockList.ascending'), $t('stockList.descending')]"
+          :placeholder="$t('stockList.sortBy')"
           v-model="itemss"
         ></v-select>
       </v-flex>

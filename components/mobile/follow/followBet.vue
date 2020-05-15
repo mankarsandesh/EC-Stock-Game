@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="followup">    
+    <div class="followup">
       <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="this.userImage" width="140px" />
         <h3 class="subtitle-1 text-center pt-1" v-if="this.username">{{ this.username }}</h3>
@@ -13,7 +13,7 @@
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase">Follow By</h4>
+        <h4 class="subtitle-1 text-uppercase">{{$t("leaderboard.followBy")}}</h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -55,7 +55,7 @@
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">Auto Stop Follow</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderboard.autoStop")}}</h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
@@ -146,32 +146,53 @@ export default {
         // Min Value
         min(value, text) {
           if (text == 4 || text == 5)
-            return (value || "") >= 100 || `Amount must be at least 100 USD`;
+            return (
+              (value || "") >= 100 || window.$nuxt.$root.$t("follow.amountMust")
+            );
           else if (text == 3)
-            return (value || "") >= 1 || `Time must be at least 1 Days`;
-          else return (value || "") >= 1 || `Bet must be at least 1 Bet`;
+            return (
+              (value || "") >= 1 || window.$nuxt.$root.$t("follow.timeMust")
+            );
+          else
+            return (
+              (value || "") >= 1 || window.$nuxt.$root.$t("follow.timeMust")
+            );
         },
         // Max value
         max(value, text) {
           if (text == 4 || text == 5)
             return (
-              (value || "") <= 1000 || `Amount may not be greater than 1000 USD`
+              (value || "") <= 1000 || window.$nuxt.$root.$t("follow.amountMay")
             );
           else if (text == 3)
             return (
-              (value || "") <= 10 || `Time may not be greater than 10 Days`
+              (value || "") <= 10 || window.$nuxt.$root.$t("follow.timeMay")
             );
           else
-            return (value || "") <= 10 || `Bet may not be greater than 10 Bets`;
+            return (
+              (value || "") <= 10 || window.$nuxt.$root.$t("follow.betMay")
+            );
         }
       },
       // Follow by Validation
       rules: {
         min(min, v, text) {
-          return (v || "") >= min || `${text} must be at least ${min}`;
+          text == "Amount"
+            ? (text = window.$nuxt.$root.$t("follow.amount"))
+            : (text = window.$nuxt.$root.$t("follow.rate"));
+          return (
+            (v || "") >= min ||
+            `${text} ` + window.$nuxt.$root.$t("follow.mustBe") + ` ${min}`
+          );
         },
         max(max, v, text) {
-          return (v || "") <= max || `${text} may not be greater than ${max}.`;
+          text == "Amount"
+            ? (text = window.$nuxt.$root.$t("follow.amount"))
+            : (text = window.$nuxt.$root.$t("follow.rate"));
+          return (
+            (v || "") <= max ||
+            `${text} ` + window.$nuxt.$root.$t("follow.mayNotBe") + ` ${max}.`
+          );
         }
       },
       errorMessage: "",
@@ -191,15 +212,39 @@ export default {
       selectedFollow: 1,
       // Default Follow By List
       followby: [
-        { id: 1, name: "Follow by Amount", value: "Amount" },
-        { id: 2, name: "Follow by Rate", value: "Rate" }
+        {
+          id: 1,
+          name: this.$root.$t("leaderboard.followbyAmount"),
+          value: "Amount"
+        },
+        {
+          id: 2,
+          name: this.$root.$t("leaderboard.followbyRate"),
+          value: "Rate"
+        }
       ],
       // Default AUto Stop Follow
       autoStopFollow: [
-        { id: 4, name: "Stop by Winning", value: "stopWin" },
-        { id: 5, name: "Stop by Losing", value: "stopLoss" },
-        { id: 3, name: "Stop by Timing", value: "stopTime" },
-        { id: 6, name: "Stop by Bets", value: "stopBets" }
+        {
+          id: 4,
+          name: this.$root.$t("leaderboard.stopbyWinning"),
+          value: "stopWin"
+        },
+        {
+          id: 5,
+          name: this.$root.$t("leaderboard.stopbyLosing"),
+          value: "stopLoss"
+        },
+        {
+          id: 3,
+          name: this.$root.$t("leaderboard.stopbyTiming"),
+          value: "stopTime"
+        },
+        {
+          id: 6,
+          name: this.$root.$t("leaderboard.stopbyBets"),
+          value: "stopBets"
+        }
       ],
       defaultImage: "/no-profile-pic.jpg",
       selectedFruits: [],
@@ -219,8 +264,7 @@ export default {
       userUUID: state => state.provider.userUUID
     })
   },
-  updated(){
-    
+  updated() {
     console.log("Checking");
     console.log(this.userImage);
   },
@@ -242,7 +286,7 @@ export default {
           true,
           false,
           true,
-          "Follwing type is not selected"
+          window.$nuxt.$root.$t("follow.followingType")
         );
       }
 
@@ -254,7 +298,7 @@ export default {
             true,
             false,
             true,
-            "Amount should be Lower then 1001 & Grater then 101"
+            window.$nuxt.$root.$t("follow.amountShould")
           );
       } else {
         this.BetValue = this.rateValue;
@@ -263,7 +307,7 @@ export default {
             true,
             false,
             true,
-            "Bet Rate Should be Lower then 101 & Grater then 11"
+            window.$nuxt.$root.$t("follow.betRate")
           );
       }
 
@@ -276,7 +320,7 @@ export default {
               true,
               false,
               true,
-              "Auto Stop Amount should Between 100 to 1000"
+              window.$nuxt.$root.$t("follow.autoStop")
             );
           }
           break;
@@ -286,7 +330,7 @@ export default {
               true,
               false,
               true,
-              "Days should be Between 1 to 10."
+              window.$nuxt.$root.$t("follow.daysShould")
             );
           }
           break;
@@ -296,7 +340,7 @@ export default {
               true,
               false,
               true,
-              "Bets should be Between 1 to 100"
+              window.$nuxt.$root.$t("follow.betsShould")
             );
           }
           break;
@@ -339,7 +383,14 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-          this.errorShow(true, true, false, data.message[0]);
+          this.errorShow(
+            true,
+            true,
+            false,
+            data.message[0] == "User followed successfully."
+              ? this.$root.$t("follow.userFollowed")
+              : this.$root.$t("follow.userUnfollowed")
+          );
           window.setTimeout(function() {
             location.reload();
           }, 2000);

@@ -23,9 +23,10 @@
     "soundControl": "Sound Control",
     "leaderboard": "Leaderboard"
   },
-  "stock-list": {
+  "stockList": {
     "stock lists": "Stock Lists",
-    "stock name": "Stock Name",
+    "stockName": "Stock Name",
+    "sortBy": "Sort By:",
     "live price": "Live Price",
     "reference": "reference",
     "load more": "load more",
@@ -282,7 +283,7 @@
     "lastupdate": "last updated 1 minutes ago",
     "top" : "Top",
     "leaders" : "Leaders",
-    "nodata" : "There are no top users in Leaderboard.",
+    "noData" : "There are no top users in Leaderboard.",
     "followBy": "Follow By",
     "autoStop":"Auto Stop Follow",
     "followbyAmount":"Follow by Amount",
@@ -290,7 +291,9 @@
     "stopbyWinning":"Stop by Winning",
     "stopbyLosing":"Stop by Losing",
     "stopbyTiming":"Stop by Timing",
-    "stopbyBets":"Stop by Bets"
+    "stopbyBets":"Stop by Bets",
+    "monthly":"Monthly",
+    "weekly":"Weekly"
   },
   "breadcrumbs": {
     "rule": "Rule",
@@ -320,7 +323,8 @@
     "winingBets": "wining bets",
     "losingBets": "losing bets",
     "usersFollowMe": "users follw me",
-    "amountCreditedOrDebitedToAccount": "amount credited or debited to an account"
+    "amountCreditedOrDebitedToAccount": "amount credited or debited to an account",
+    "noNotification": "There is no notification."
   },
   "betHistory": {
     "betDraw": "BET DRAW",
@@ -329,7 +333,14 @@
     "searchByName" : "Search by Name",
     "today":"Today",
     "thisWeek":"This Week",
-    "thisMonth":"This Month"
+    "thisMonth":"This Month",
+    "noBets":"There is no bet history",
+    "byFollowers":"by followers",
+    "original":"original",
+    "total":"Total",
+    "bets":"Bets",
+    "totalAmount":"Total Amount",
+    "rolling": "Rolling"
   },
   "betting": {
     "reviewBet" : "Review Bet",
@@ -342,16 +353,18 @@
     "ecworld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
     "sendInvitation": "SEND INVITATION",
-    "noInvitation": "No users Invitations.",
+    "noInvitation": "There are no invitations.",
+    "winBets": "Win Bets",
     "winningRank":"Winning Rank",
     "userRank":"User Rank",
-    "totalFollower": "Total Follower",
+    "totalFollower": "Total Followers",
     "userfollowCount": "User Follow Count",
     "winningRate": "Winning Rate",
     "userWinrate":"User Win Rate",
     "only10" : "Only 10 Invitaion in one Day.",
     "youHave" : "You have",
-    "invitationLeft" : "Invitaion left"
+    "invitationLeft" : "Invitaion left",
+    "followBet":"FOLLOW BET INVITATION"
   },
   "tutorial": {
     "resultDraw" : "Result of the DRAW",
@@ -399,5 +412,19 @@
     "betsShould":"Bets should be Between 1 to 100",
     "userFollowed":"User followed successfully.",
     "userUnfollowed":"User un-followed successfully."
+  },
+  "currentBet": {
+    "noBets" : "There are no current bets.",
+    "byFollowers":"by followers",
+    "original":"original",
+    "total":"Total",
+    "bets":"Bets",
+    "totalAmount":"Total Amount"
+  },
+  "logout": {
+    "sure" : "Are you sure to logout?",
+    "bye" : "Hope to see you as soon, BYE BYE",
+    "agree" : "Agree",
+    "disagree" : "Disagree"
   }
 }
