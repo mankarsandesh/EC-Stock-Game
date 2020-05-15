@@ -23,9 +23,10 @@
     "soundControl": "聲音控制",
     "leaderboard": "排行榜"
   },
-  "stock-list": {
+  "stockList": {
     "stock lists": "库存清单",
-    "stock name": "股票名称",
+    "stockName": "股票名称",
+    "sortBy": "排序方式:",
     "live price": "实时报价",
     "reference": "参考网址",
     "load more": "更多",
@@ -278,7 +279,7 @@
     "lastupdate": "最近更新1分钟前",
     "top" : "最佳",
     "leaders" : "领导者",
-    "nodata" : "排行榜中没有顶级用户。",
+    "noData" : "排行榜中没有顶级用户。",
     "followBy": "其次是",
     "autoStop":"自动停止跟随",
     "followbyAmount":"跟随金额",
@@ -286,7 +287,9 @@
     "stopbyWinning":"赢自动停止",
     "stopbyLosing":"迷路自动停止",
     "stopbyTiming":"定时自动停止",
-    "stopbyBets":"自动停止投注"
+    "stopbyBets":"自动停止投注",
+    "monthly":"每月一次",
+    "weekly":"每周"
   },
   "breadcrumbs": {
     "rule": "规则",
@@ -316,7 +319,8 @@
     "winingBets": "获胜投注",
     "losingBets": "下注",
     "usersFollowMe": "用户关注我",
-    "amountCreditedOrDebitedToAccount": "贷记或借记到帐户的金额"
+    "amountCreditedOrDebitedToAccount": "贷记或借记到帐户的金额",
+    "noNotification": "没有通知。"
   },
   "betHistory": {
     "betDraw": "开奖结果",
@@ -325,7 +329,14 @@
     "searchByName" : "按名称搜索",
     "today":"今日",
     "thisWeek":"本星期",
-    "thisMonth":"这个月"
+    "thisMonth":"这个月",
+    "noBets":"没有投注历史",
+    "byFollowers":"追随者",
+    "original":"原版的",
+    "total":"总",
+    "bets":"赌注",
+    "totalAmount":"总金额",
+    "rolling": "滚动"
   },
   "betting": {
     "reviewBet" : "複習投注",
@@ -339,6 +350,7 @@
     "gameChannel" : "游戏频道",
     "sendInvitation" : "发送邀请",
     "noInvitation" : "没有用户邀请.",
+    "winBets":"赢得赌注",
     "winningRank" : "优胜者排名",
     "userRank" : "用户等级",
     "totalFollower" : "总关注者",
@@ -347,7 +359,8 @@
     "userWinrate":"用户获胜率",
     "only10":"一天只有10个邀请。",
     "youHave" : "你有",
-    "invitationLeft" : "剩下的邀请"
+    "invitationLeft" : "剩下的邀请",
+    "followBet":"跟随投注邀请"
   },
   "tutorial": {
     "resultDraw":"开奖结果",
@@ -395,5 +408,19 @@
     "betsShould":"下注次数需控制在1-100",
     "userFollowed":"用户已成功关注。",
     "userUnfollowed":"用户成功取消关注。"
+  },
+  "currentBet": {
+    "noBets" : "目前没有下注。",
+    "byFollowers":"追随者",
+    "original":"原版的",
+    "total":"总",
+    "bets":"赌注",
+    "totalAmount":"总金额"
+  },
+  "logout": {
+    "sure" : "您确定要注销吗？",
+    "bye" : "希望能尽快见到你，再见",
+    "agree" : "同意",
+    "disagree" : "不同意"
   }
 }

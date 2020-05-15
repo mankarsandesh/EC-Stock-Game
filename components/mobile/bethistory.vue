@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-list-tile v-if="userBetHistory.length == 0" class="notBets">
-      <h3>There are no bets in History Bets.</h3>
+      <h3>{{$t("betHistory.noBets")}}.</h3>
     </v-list-tile>
     <v-list three-line v-if="userBetHistory.length > 0">
       <template v-for="(item, index) in userBetHistory" style="margin-bottom:50px;">
@@ -35,8 +35,8 @@
               v-if="item.betResult == 'win'"
               class="winAmount"
             >+{{ item.betAmount | toCurrency }}</span>
-            <div v-if="item.isFollowBet == 1" class="following">by followers</div>
-            <div v-if="item.isFollowBet == 0" class="original">original</div>
+            <div v-if="item.isFollowBet == 1" class="following">{{$t("betHistory.byFollowers")}}</div>
+            <div v-if="item.isFollowBet == 0" class="original">{{$t("betHistory.original")}}</div>
           </v-list-tile-action>
         </v-list-tile>
         <v-divider :key="index"></v-divider>
@@ -44,15 +44,15 @@
       <div class="footer" v-if="userBetHistory.length > 0">
         <div>
           <span>
-            <strong>Bets :</strong>
+            <strong>{{$t("betHistory.bets")}} :</strong>
             {{ userBetHistory.length }}
           </span>
           <span>
-            <strong>Total</strong>
+            <strong>{{$t("betHistory.total")}}</strong>
             :{{ TotalAmount | toCurrency }}
           </span>
           <span v-if="TotalAmount < TotalRolling">
-            <strong>Rolling</strong> :
+            <strong>{{$t("betHistory.rolling")}}</strong> :
             <span style="color:green;">
               {{
               TotalRolling | toCurrency
@@ -61,7 +61,7 @@
           </span>
 
           <span v-if="TotalAmount > TotalRolling">
-            <strong>Rolling</strong> :
+            <strong>{{$t("betHistory.rolling")}}</strong> :
             <span style="color: #c13f3f;font-weight: 800;">{{ TotalRolling | toCurrency }}</span>
           </span>
         </div>
@@ -71,17 +71,17 @@
     <!-- Follow and UnFollow Diealog Box -->
     <v-dialog v-model="dialog" width="500" class="betDetails">
       <v-card>
-        <h1 class="betId">BET #{{ this.betUUID }}</h1>
+        <h1 class="betId">{{$t("betHistory.bets")}} #{{ this.betUUID }}</h1>
 
         <v-layout class="betWrap">
           <v-flex xs6 sm6 class="betSide">
-            <span>Game Draw</span>
+            <span>{{$t("betHistory.betDraw")}}</span>
 
             <h4 v-html="$options.filters.lastDraw(this.gameDraw)"></h4>
           </v-flex>
           <v-flex xs6 sm6 class="betSide">
             <div v-if="this.rollingAmount == 0">
-              <span>{{ $t("betHistory.yourLosingAmount") }} :</span>
+              <span>{{ $t("betHistory.yourLosingAmount") }}</span>
               <h4 class="lossAmount">{{ this.betAmount }}</h4>
             </div>
             <div v-if="this.rollingAmount != 0">
