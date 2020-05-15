@@ -1,3 +1,5 @@
+@import "~/node_modules/material-design-icons/iconfont/material-icons.css";
+
 $mainColor: #003e70;
 $mainbg: #003e70;
 $mainBgColor: #f2f4ff;
@@ -14,6 +16,38 @@ $mainBgColor: #f2f4ff;
     url("../fonts/NotoSansLaoUI-Regular.ttf") format("woff2"), url("../fonts/NotoSansLaoUI-Regular.ttf") format("woff"),
     url("../fonts/NotoSansLaoUI-Regular.ttf") format("truetype");
 }
+
+/* google fonts */
+@font-face {
+  font-family: "robotobold";
+  src: url("../fonts/roboto-bold-webfont.woff2") format("woff2"),
+    url("../fonts/roboto-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "robotolight";
+  src: url("../fonts/roboto-light-webfont.woff2") format("woff2"),
+    url("../fonts/roboto-light-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "robotomedium";
+  src: url("../fonts/roboto-medium-webfont.woff2") format("woff2"),
+    url("../fonts/roboto-medium-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "robotoregular";
+  src: url("../fonts/roboto-regular-webfont.woff2") format("woff2"),
+    url("../fonts/roboto-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 .container {
   width: 100%;
   padding-right: 15px;
@@ -28,7 +62,7 @@ $mainBgColor: #f2f4ff;
 .v-btn__content,
 .dashboard,
 span {
-  font-family: "NotoSansLaoUI", "Roboto", sans-serif !important;
+  font-family: "NotoSansLaoUI", "Roboto", "robotobold", "robotolight", "robotomedium", "robotoregular",  sans-serif !important;
   // font-family: 'Roboto', sans-serif;
 }
 
@@ -827,7 +861,7 @@ main.v-content {
   .flex {
     .v-input {
       .v-input__prepend-outer {
-        margin: 4px -7px;
+        margin: 6px -7px;
         border: 1px solid rgba(0, 0, 0, 0.32941);
         border-radius: 20px;
         padding: 0px;
