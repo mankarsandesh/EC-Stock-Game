@@ -2,15 +2,15 @@
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <v-container>
-      <followingList />
+      <followerList />
     </v-container>
   </div>
 </template>
 <script>
-import followingList from "~/components/mobile/followingList";
+import followerList from "~/components/mobile/followerList";
 export default {
   components: {
-    followingList
+    followerList
   }
 };
 </script>

@@ -5,21 +5,21 @@
         <v-list-tile>
           <v-list-tile-content>
             <v-list-tile-title>
-              My Following
-              <span class="followingCount">{{ followingList.length }} </span>
+              My Followers
+              <span class="followingCount">{{ followersList.length }} </span>
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
       <v-list>
-        <v-flex v-if="followingList.length == 0">
+        <v-flex v-if="followersList.length == 0">
           <h2 class="text-center" style="color:#a3a3a3;">
-            There are no users in Following List.
+            There are no users in Followers Users.
           </h2>
         </v-flex>
       </v-list>
       <v-list two-line>
-        <template v-for="(item, index) in followingList">
+        <template v-for="(item, index) in followersList">
           <v-list-tile :key="item.userName" avatar>
             <nuxt-link :to="'/modern/userprofile/' + item.UUID">
               <v-list-tile-avatar>
@@ -56,7 +56,7 @@
             </v-list-tile-action>
           </v-list-tile>
           <v-divider
-            v-if="index + 1 < followingList.length"
+            v-if="index + 1 < followersList.length"
             :key="index"
           ></v-divider>
         </template>
@@ -99,7 +99,7 @@ import followBet from "~/components/mobile/follow/followBet";
 export default {
   data() {
     return {
-      followingList: [],
+      followersList: [],
       defaultImage: "/no-profile-pic.jpg",
       FolloworNot: "",
       FollowUserUUID: "",
@@ -113,7 +113,7 @@ export default {
     followBet
   },
   mounted() {
-    this.getFollowingList();
+    this.getFollowersList();
   },
   computed: {
     ...mapState({
@@ -132,7 +132,7 @@ export default {
     // Close Follow Bet Popup
     closeFollowBet() {
       this.followDialog = false;
-      this.getFollowingList();
+      this.getFollowersList();
     },
     // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
@@ -142,13 +142,13 @@ export default {
       this.userImage = this.userImgProfile(userImage);
       this.followDialog = true;
     },
-    // fetch User Following List
-    async getFollowingList() {
+    // fetch User Followers List
+    async getFollowersList() {
       try {
         const reBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
-          followersType: 2, // Follwing users List
+          followersType: 1, // Follwing users List
           version: config.version
         };
         const res = await this.$axios.$post(
@@ -157,9 +157,9 @@ export default {
           {
             headers: config.header
           }
-        );
+        );        
         if (res.code == 200) {
-          this.followingList = res.data;
+          this.followersList = res.data;
         } else {
           this.setSnackBarMessage(config.error.general);
         }
