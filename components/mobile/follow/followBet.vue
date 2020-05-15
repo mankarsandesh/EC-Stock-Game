@@ -355,7 +355,7 @@ export default {
         });
         if (data.code == 200) {
              data.message[0] == "User followed successfully."
-              ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed"));    
+              ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed")) 
               : this.setSnackBarMessage(this.$root.$t("follow.userUnfollowed"));     
         } else {
           this.setSnackBarMessage(data.message[0]);
