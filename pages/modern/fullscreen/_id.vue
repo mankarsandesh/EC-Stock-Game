@@ -288,7 +288,7 @@
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
                 class="curretbet-btn"
-              >{{ $t("menu.current bet") }}</v-btn>
+              >{{ $t("menu.currentBet") }}</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>

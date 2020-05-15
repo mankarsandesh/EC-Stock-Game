@@ -13,7 +13,7 @@
             <span v-if="getUserInfo.firstName">
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </span>
-            <span id="userBanlance" @click="getUserBanlancePosition()">
+            <span id="userBanlance">
               <animated-number
                 :value="getUserInfo.balance"
                 :formatValue="formatToPrice"
@@ -91,13 +91,13 @@ export default {
   },
   methods: {
     getUserBanlancePosition() {
-      console.log(document.getElementById("userBanlance").offsetTop);
-      console.log(
-        document.getElementById("userBanlance").offsetParent.offsetParent
-          .offsetLeft
-      );
-      console.log(document.getElementById("betRuleButton").offsetTop);
-      console.log(document.getElementById("betRuleButton").offsetLeft);
+      // console.log(document.getElementById("userBanlance").offsetTop);
+      // console.log(
+      //   document.getElementById("userBanlance").offsetParent.offsetParent
+      //     .offsetLeft
+      // );
+      // console.log(document.getElementById("betRuleButton").offsetTop);
+      // console.log(document.getElementById("betRuleButton").offsetLeft);
     },
     getLogout() {
       this.dialogConfirm = true;

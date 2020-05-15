@@ -3,39 +3,41 @@
   "sort": "ประเภท",
   "search": "ค้นหา",
   "stock": "คลังสินค้า",
-  "stock type": "ประเภทหุ้น",
-  "game type": "ประเภทเกม",
+  "stockType": "ประเภทหุ้น",
+  "gameType": "ประเภทเกม",
   "default": "ค่าเริ่มต้น",
   "menu": {
+    "invitation" : "คำเชิญ",
     "home": "หน้าหลัก",
     "profile": "ข้อมูลส่วนตัว",
-    "current bet": "เดิมพันปัจจุบัน",
+    "currentBet": "เดิมพันปัจจุบัน",
     "history": "ประวัติศาสตร์",
-    "stock list": "รายการหุ้น",
+    "stockList": "รายการหุ้น",
     "announcement": "การประกาศ",   
     "notification": "การแจ้งเตือน",
     "rule": "กฎระเบียบ",
     "gamerule": "กฎของเกม",
     "setting": "การตั้งค่า",
-    "game result": "ผลลัพธ์ของเกม",
-    "chip amount": "จำนวนชิป",
-    "sound control": "การควบคุมเสียง",
+    "gameResult": "ผลลัพธ์ของเกม",
+    "chipAmount": "จำนวนชิป",
+    "soundControl": "การควบคุมเสียง",
     "leaderboard": "ลีดเดอร์"
   },
-  "stock-list": {
+  "stockList": {
     "stock lists": "รายการสินค้า",
-    "stock name": "ชื่อหุ้น",
+    "stockName": "ชื่อหุ้น",
+    "sortBy": "จัดเรียงตาม:",
     "live price": "ราคาสด",
     "reference": "การอ้างอิง",
     "load more": "โหลดเพิ่มเติม",
     "search stock": "ค้นหาหุ้น",
     "ascending" : "จากน้อยไปมาก",
-    "descending" : "Descending"
+    "descending" : "จากมากไปน้อย"
   },
   "home": {
     "welcome": "ยินดีต้อนรับ",
-    "goodluck": "โชคดี",
-    "yourcurrentbalanceis": "ยอดเงินปัจจุบันของคุณคือ"
+    "goodLuck": "โชคดี",
+    "yourCurrentBalanceIs": "ยอดเงินปัจจุบันของคุณคือ"
   },
   "about": {
     "title": "เกี่ยวกับ",
@@ -43,17 +45,17 @@
   },
   "msg": {
     "acc": "acc",
-    "accountbalance": "ยอดเงินในบัญชี",
-    "rollingamount": "จำนวนกลิ้ง",
+    "accountBalance": "ยอดเงินในบัญชี",
+    "rollingAmount": "จำนวนกลิ้ง",
     "calculating": "การคำนวณ...",
-    "marketclosed": "ปิดตลาด!",
+    "marketClosed": "ปิดตลาด!",
     "reset": "รีเซ็ต",
     "confirm": "ยืนยัน",
     "gamerule": "กฎระเบียบ",
     "payout": "การจ่ายเงิน",
-    "deleteall": "ลบทั้งหมด",
-    "totalbet": "การเดิมพันทั้งหมด",
-    "totalamount": "ยอดรวมทั้งหมด",
+    "deleteAll": "ลบทั้งหมด",
+    "totalBet": "การเดิมพันทั้งหมด",
+    "totalAmount": "ยอดรวมทั้งหมด",
     "ok": "ตกลง",
     "cancel": "ยกเลิก",
     "edit": "แก้ไข",
@@ -98,7 +100,7 @@
     "moneynotenough": "เงินไม่พอ",
     "confirmed": "ได้รับการยืนยัน",
     "betclosed": "เดิมพันปิด",
-    "chooselanguage": "ภาษา",
+    "chooseLanguage": "ภาษา",
     "Thai": "ไทย",
     "Clear": "ล้าง",
     "Total Bet": "การเดิมพันทั้งหมด",
@@ -243,7 +245,7 @@
     "signout": "ออกจากระบบ",
     "myfollowers": "ผู้ติดตามของฉัน",
     "myfollowing": "ดังต่อไปนี้",
-    "mynotification": "การแจ้งเตือนของฉัน",
+    "myNotification": "การแจ้งเตือนของฉัน",
     "setting": "การตั้งค่า",
     "lastActive" : "ใช้งานล่าสุด",
     "historyPeriod" : "ประวัติศาสตร์ช่วงเวลา",
@@ -278,7 +280,7 @@
     "lastupdate": "อัปเดตล่าสุดเมื่อ 1 นาทีที่ผ่านมา",
     "top" : "ด้านบน",
     "leaders" : "ผู้นำ",
-    "nodata" : "ไม่มีผู้ใช้อันดับต้น ๆ ในกระดานผู้นำ",
+    "noData" : "ไม่มีผู้ใช้อันดับต้น ๆ ในกระดานผู้นำ",
     "followBy": "ติดตามโดย",
     "autoStop":"หยุดการติดตามอัตโนมัติ",
     "followbyAmount":"ตามด้วยจำนวนเงิน",
@@ -286,7 +288,9 @@
     "stopbyWinning":"หยุดโดยการชนะ",
     "stopbyLosing":"หยุดโดยการสูญเสีย",
     "stopbyTiming":"หยุดตามกำหนดเวลา",
-    "stopbyBets":"หยุดโดยการเดิมพัน"
+    "stopbyBets":"หยุดโดยการเดิมพัน",
+    "monthly":"รายเดือน",
+    "weekly":"รายสัปดาห์"
   },
   "breadcrumbs": {
     "rule": "กฎ",
@@ -300,32 +304,40 @@
   },
   "setting": {
     "account": "บัญชีผู้ใช้",
-    "usersallowtovisitmyprofile": "ผู้ใช้อนุญาตให้เยี่ยมชมโปรไฟล์ของฉัน",
-    "usersallowfollowme": "ผู้ใช้อนุญาตให้ติดตามฉัน",
-    "userallowtosenddirectmessage": "ผู้ใช้อนุญาตให้ส่งข้อความโดยตรง",
-    "gameoptions": "ตัวเลือกของเกม",
+    "usersAllowToVisitMyProfile": "ผู้ใช้อนุญาตให้เยี่ยมชมโปรไฟล์ของฉัน",
+    "usersAllowFollowMe": "ผู้ใช้อนุญาตให้ติดตามฉัน",
+    "userAllowToSendDirectMessage": "ผู้ใช้อนุญาตให้ส่งข้อความโดยตรง",
+    "gameOptions": "ตัวเลือกของเกม",
     "chipOptions": "ตัวเลือกชิปการเดิมพัน",
     "sound": "เสียง",
-    "allowtolocation": "ອະນຸຍາດໃຫ້ຕັ້ງສະຖານທີ່"
+    "allowToLocation": "ອະນຸຍາດໃຫ້ຕັ້ງສະຖານທີ່"
   },
   "notification": {
-    "mynotification": "การแจ้งเตือนของฉัน",
-    "receivebyemail": "รับทางอีเมล",
-    "receivebymessage": "รับโดยข้อความ",
-    "insufficientbalance": "ยอดเงินไม่เพียงพอในบัญชี",
-    "winingbets": "ชนะเดิมพัน",
-    "losingbets": "สูญเสียเดิมพัน",
-    "usersfollwme": "ผู้ใช้ติดตามฉัน",
-    "amountcreditedordebitedtoanaccount": "จำนวนเงินที่เครดิตหรือหักเข้าบัญชี"
+    "myNotification": "การแจ้งเตือนของฉัน",
+    "receiveByEmail": "รับทางอีเมล",
+    "receiveByMessage": "รับโดยข้อความ",
+    "insufficientBalance": "ยอดเงินไม่เพียงพอในบัญชี",
+    "winingBets": "ชนะเดิมพัน",
+    "losingBets": "สูญเสียเดิมพัน",
+    "usersFollowMe": "ผู้ใช้ติดตามฉัน",
+    "amountCreditedOrDebitedToAccount": "จำนวนเงินที่เครดิตหรือหักเข้าบัญชี",
+    "noNotification": "ไม่มีการแจ้งเตือน"
   },
-  "bethistory": {
-    "betdraw": "投注",
-    "yourloosingamount": "จำนวนเงินที่คุณสูญเสีย",
-    "yourwinningamount": "จำนวนเงินที่ชนะของคุณ",
-    "searchbyName" : "ค้นหาตามชื่อ",
+  "betHistory": {
+    "betDraw": "投注",
+    "yourLosingAmount": "จำนวนเงินที่คุณสูญเสีย",
+    "yourWinningAmount": "จำนวนเงินที่ชนะของคุณ",
+    "searchByName" : "ค้นหาตามชื่อ",
     "today":"ในวันนี้",
     "thisWeek":"ในสัปดาห์นี้",
-    "thisMonth":"เดือนนี้"
+    "thisMonth":"เดือนนี้",
+    "noBets":"ไม่มีประวัติการเดิมพัน",
+    "byFollowers":"ตามผู้ติดตาม",
+    "original":"เป็นต้นฉบับ",
+    "total":"รวม",
+    "bets":"เดิมพัน",
+    "totalAmount":"จำนวนเงินทั้งหมด",
+    "rolling": "การกลิ้ง"
   },
   "betting": {
     "reviewBet" : "รีวิวพนัน",
@@ -339,6 +351,7 @@
     "gameChannel" : "ช่องเกม",
     "sendInvitation" : "ส่งคำเชิญ",
     "noInvitation" : "ไม่มีคำเชิญผู้ใช้",
+    "winBets": "ชนะเดิมพัน",
     "winningRank" : "อันดับที่ชนะ",
     "userRank" : "อันดับผู้ใช้",
     "totalFollower" : "รวมผู้ติดตาม",
@@ -347,7 +360,8 @@
     "userWinrate":"อัตราการชนะของผู้ใช้",
     "only10":"เพียง 10 คำเชิญในวันเดียว",
     "youHave" : "คุณมี",
-    "invitationLeft" : "เหลือคำเชิญแล้ว"
+    "invitationLeft" : "เหลือคำเชิญแล้ว",
+    "followBet":"ติดตามการเดิมพัน"
   },
   "tutorial": {
     "resultDraw":"ผลลัพธ์ของ DRAW",
@@ -395,5 +409,19 @@
     "betsShould":"การเดิมพันควรอยู่ระหว่าง 1 ถึง 100",
     "userFollowed":"ผู้ใช้ติดตามสำเร็จแล้ว",
     "userUnfollowed":"ผู้ใช้ยกเลิกการติดตามสำเร็จแล้ว"
+  },
+  "currentBet": {
+    "noBets" : "ไม่มีการเดิมพันปัจจุบัน",
+    "byFollowers":"ตามผู้ติดตาม",
+    "original":"เป็นต้นฉบับ",
+    "total":"รวม",
+    "bets":"เดิมพัน",
+    "totalAmount":"จำนวนเงินทั้งหมด"
+  },
+  "logout": {
+    "sure" : "คุณแน่ใจว่าจะออกจากระบบ?",
+    "bye" : "หวังว่าจะได้พบคุณเร็ว ๆ นี้บายบาย",
+    "agree" : "ตกลง",
+    "disagree" : "ไม่เห็นด้วย"
   }
 }
