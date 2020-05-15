@@ -106,6 +106,7 @@ export default {
   mixins: [BetResult],
   data() {
     return {
+      testValue: "9432.61",
       confirmDisabled: false,
       betValue: 100,
       imgChip: chips.chipsData

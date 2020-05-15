@@ -364,61 +364,115 @@
           "rule": [
             0
           ],
-          "name": "BD_0"
+          "name": "bothdigit-0"
         },
         {
           "rule": [
             1
           ],
-          "name": "BD_1"
+          "name": "bothdigit-1"
         },
         {
           "rule": [
             2
           ],
-          "name": "BD_2"
+          "name": "bothdigit-2"
         },
         {
           "rule": [
             3
           ],
-          "name": "BD_3"
+          "name": "bothdigit-3"
         },
         {
           "rule": [
             4
           ],
-          "name": "BD_4"
+          "name": "bothdigit-4"
         },
         {
           "rule": [
             5
           ],
-          "name": "BD_5"
+          "name": "bothdigit-5"
         },
         {
           "rule": [
             6
           ],
-          "name": "BD_6"
+          "name": "bothdigit-6"
         },
         {
           "rule": [
             7
           ],
-          "name": "BD_7"
+          "name": "bothdigit-7"
         },
         {
           "rule": [
             8
           ],
-          "name": "BD_8"
+          "name": "bothdigit-8"
         },
         {
           "rule": [
             9
           ],
-          "name": "BD_9"
+          "name": "bothdigit-9"
+        },
+        {
+          "rule": [
+            10
+          ],
+          "name": "bothdigit-10"
+        },
+        {
+          "rule": [
+            11
+          ],
+          "name": "bothdigit-11"
+        },
+        {
+          "rule": [
+            12
+          ],
+          "name": "bothdigit-12"
+        },
+        {
+          "rule": [
+            13
+          ],
+          "name": "bothdigit-13"
+        },
+        {
+          "rule": [
+            14
+          ],
+          "name": "bothdigit-14"
+        },
+        {
+          "rule": [
+            15
+          ],
+          "name": "bothdigit-15"
+        },
+        {
+          "rule": [
+            16
+          ],
+          "name": "bothdigit-16"
+        },
+        {
+          "rule": [
+            17
+          ],
+          "name": "bothdigit-17"
+        },
+        {
+          "rule": [
+            18
+          ],
+          "name": "bothdigit-18"
         }
       ]
     },
@@ -724,601 +778,601 @@
           "rule": [
             "00"
           ],
-          "name": "TD_00"
+          "name": "twodigit-00"
         },
         {
           "rule": [
             "01"
           ],
-          "name": "TD_01"
+          "name": "twodigit-01"
         },
         {
           "rule": [
             "02"
           ],
-          "name": "TD_02"
+          "name": "twodigit-02"
         },
         {
           "rule": [
             "03"
           ],
-          "name": "TD_03"
+          "name": "twodigit-03"
         },
         {
           "rule": [
             "04"
           ],
-          "name": "TD_04"
+          "name": "twodigit-04"
         },
         {
           "rule": [
             "05"
           ],
-          "name": "TD_05"
+          "name": "twodigit-05"
         },
         {
           "rule": [
             "06"
           ],
-          "name": "TD_06"
+          "name": "twodigit-06"
         },
         {
           "rule": [
             "07"
           ],
-          "name": "TD_07"
+          "name": "twodigit-07"
         },
         {
           "rule": [
             "08"
           ],
-          "name": "TD_08"
+          "name": "twodigit-08"
         },
         {
           "rule": [
             "09"
           ],
-          "name": "TD_09"
+          "name": "twodigit-09"
         },
         {
           "rule": [
             "10"
           ],
-          "name": "TD_10"
+          "name": "twodigit-10"
         },
         {
           "rule": [
             "11"
           ],
-          "name": "TD_11"
+          "name": "twodigit-11"
         },
         {
           "rule": [
             "12"
           ],
-          "name": "TD_12"
+          "name": "twodigit-12"
         },
         {
           "rule": [
             "13"
           ],
-          "name": "TD_13"
+          "name": "twodigit-13"
         },
         {
           "rule": [
             "14"
           ],
-          "name": "TD_14"
+          "name": "twodigit-14"
         },
         {
           "rule": [
             "15"
           ],
-          "name": "TD_15"
+          "name": "twodigit-15"
         },
         {
           "rule": [
             "16"
           ],
-          "name": "TD_16"
+          "name": "twodigit-16"
         },
         {
           "rule": [
             "17"
           ],
-          "name": "TD_17"
+          "name": "twodigit-17"
         },
         {
           "rule": [
             "18"
           ],
-          "name": "TD_18"
+          "name": "twodigit-18"
         },
         {
           "rule": [
             "19"
           ],
-          "name": "TD_19"
+          "name": "twodigit-19"
         },
         {
           "rule": [
             "20"
           ],
-          "name": "TD_20"
+          "name": "twodigit-20"
         },
         {
           "rule": [
             "21"
           ],
-          "name": "TD_21"
+          "name": "twodigit-21"
         },
         {
           "rule": [
             "22"
           ],
-          "name": "TD_22"
+          "name": "twodigit-22"
         },
         {
           "rule": [
             "23"
           ],
-          "name": "TD_23"
+          "name": "twodigit-23"
         },
         {
           "rule": [
             "24"
           ],
-          "name": "TD_24"
+          "name": "twodigit-24"
         },
         {
           "rule": [
             "25"
           ],
-          "name": "TD_25"
+          "name": "twodigit-25"
         },
         {
           "rule": [
             "26"
           ],
-          "name": "TD_26"
+          "name": "twodigit-26"
         },
         {
           "rule": [
             "27"
           ],
-          "name": "TD_27"
+          "name": "twodigit-27"
         },
         {
           "rule": [
             "28"
           ],
-          "name": "TD_28"
+          "name": "twodigit-28"
         },
         {
           "rule": [
             "29"
           ],
-          "name": "TD_29"
+          "name": "twodigit-29"
         },
         {
           "rule": [
             "30"
           ],
-          "name": "TD_30"
+          "name": "twodigit-30"
         },
         {
           "rule": [
             "31"
           ],
-          "name": "TD_31"
+          "name": "twodigit-31"
         },
         {
           "rule": [
             "32"
           ],
-          "name": "TD_32"
+          "name": "twodigit-32"
         },
         {
           "rule": [
             "33"
           ],
-          "name": "TD_33"
+          "name": "twodigit-33"
         },
         {
           "rule": [
             "34"
           ],
-          "name": "TD_34"
+          "name": "twodigit-34"
         },
         {
           "rule": [
             "35"
           ],
-          "name": "TD_35"
+          "name": "twodigit-35"
         },
         {
           "rule": [
             "36"
           ],
-          "name": "TD_36"
+          "name": "twodigit-36"
         },
         {
           "rule": [
             "37"
           ],
-          "name": "TD_37"
+          "name": "twodigit-37"
         },
         {
           "rule": [
             "38"
           ],
-          "name": "TD_38"
+          "name": "twodigit-38"
         },
         {
           "rule": [
             "39"
           ],
-          "name": "TD_39"
+          "name": "twodigit-39"
         },
         {
           "rule": [
             "40"
           ],
-          "name": "TD_40"
+          "name": "twodigit-40"
         },
         {
           "rule": [
             "41"
           ],
-          "name": "TD_41"
+          "name": "twodigit-41"
         },
         {
           "rule": [
             "42"
           ],
-          "name": "TD_42"
+          "name": "twodigit-42"
         },
         {
           "rule": [
             "43"
           ],
-          "name": "TD_43"
+          "name": "twodigit-43"
         },
         {
           "rule": [
             "44"
           ],
-          "name": "TD_44"
+          "name": "twodigit-44"
         },
         {
           "rule": [
             "45"
           ],
-          "name": "TD_45"
+          "name": "twodigit-45"
         },
         {
           "rule": [
             "46"
           ],
-          "name": "TD_46"
+          "name": "twodigit-46"
         },
         {
           "rule": [
             "47"
           ],
-          "name": "TD_47"
+          "name": "twodigit-47"
         },
         {
           "rule": [
             "48"
           ],
-          "name": "TD_48"
+          "name": "twodigit-48"
         },
         {
           "rule": [
             "49"
           ],
-          "name": "TD_49"
+          "name": "twodigit-49"
         },
         {
           "rule": [
             "50"
           ],
-          "name": "TD_50"
+          "name": "twodigit-50"
         },
         {
           "rule": [
             "51"
           ],
-          "name": "TD_51"
+          "name": "twodigit-51"
         },
         {
           "rule": [
             "52"
           ],
-          "name": "TD_52"
+          "name": "twodigit-52"
         },
         {
           "rule": [
             "53"
           ],
-          "name": "TD_53"
+          "name": "twodigit-53"
         },
         {
           "rule": [
             "54"
           ],
-          "name": "TD_54"
+          "name": "twodigit-54"
         },
         {
           "rule": [
             "55"
           ],
-          "name": "TD_55"
+          "name": "twodigit-55"
         },
         {
           "rule": [
             "56"
           ],
-          "name": "TD_56"
+          "name": "twodigit-56"
         },
         {
           "rule": [
             "57"
           ],
-          "name": "TD_57"
+          "name": "twodigit-57"
         },
         {
           "rule": [
             "58"
           ],
-          "name": "TD_58"
+          "name": "twodigit-58"
         },
         {
           "rule": [
             "59"
           ],
-          "name": "TD_59"
+          "name": "twodigit-59"
         },
         {
           "rule": [
             "60"
           ],
-          "name": "TD_60"
+          "name": "twodigit-60"
         },
         {
           "rule": [
             "61"
           ],
-          "name": "TD_61"
+          "name": "twodigit-61"
         },
         {
           "rule": [
             "62"
           ],
-          "name": "TD_62"
+          "name": "twodigit-62"
         },
         {
           "rule": [
             "63"
           ],
-          "name": "TD_63"
+          "name": "twodigit-63"
         },
         {
           "rule": [
             "64"
           ],
-          "name": "TD_64"
+          "name": "twodigit-64"
         },
         {
           "rule": [
             "65"
           ],
-          "name": "TD_65"
+          "name": "twodigit-65"
         },
         {
           "rule": [
             "66"
           ],
-          "name": "TD_66"
+          "name": "twodigit-66"
         },
         {
           "rule": [
             "67"
           ],
-          "name": "TD_67"
+          "name": "twodigit-67"
         },
         {
           "rule": [
             "68"
           ],
-          "name": "TD_68"
+          "name": "twodigit-68"
         },
         {
           "rule": [
             "69"
           ],
-          "name": "TD_69"
+          "name": "twodigit-69"
         },
         {
           "rule": [
             "70"
           ],
-          "name": "TD_70"
+          "name": "twodigit-70"
         },
         {
           "rule": [
             "71"
           ],
-          "name": "TD_71"
+          "name": "twodigit-71"
         },
         {
           "rule": [
             "72"
           ],
-          "name": "TD_72"
+          "name": "twodigit-72"
         },
         {
           "rule": [
             "73"
           ],
-          "name": "TD_73"
+          "name": "twodigit-73"
         },
         {
           "rule": [
             "74"
           ],
-          "name": "TD_74"
+          "name": "twodigit-74"
         },
         {
           "rule": [
             "75"
           ],
-          "name": "TD_75"
+          "name": "twodigit-75"
         },
         {
           "rule": [
             "76"
           ],
-          "name": "TD_76"
+          "name": "twodigit-76"
         },
         {
           "rule": [
             "77"
           ],
-          "name": "TD_77"
+          "name": "twodigit-77"
         },
         {
           "rule": [
             "78"
           ],
-          "name": "TD_78"
+          "name": "twodigit-78"
         },
         {
           "rule": [
             "79"
           ],
-          "name": "TD_79"
+          "name": "twodigit-79"
         },
         {
           "rule": [
             "80"
           ],
-          "name": "TD_80"
+          "name": "twodigit-80"
         },
         {
           "rule": [
             "81"
           ],
-          "name": "TD_81"
+          "name": "twodigit-81"
         },
         {
           "rule": [
             "82"
           ],
-          "name": "TD_82"
+          "name": "twodigit-82"
         },
         {
           "rule": [
             "83"
           ],
-          "name": "TD_83"
+          "name": "twodigit-83"
         },
         {
           "rule": [
             "84"
           ],
-          "name": "TD_84"
+          "name": "twodigit-84"
         },
         {
           "rule": [
             "85"
           ],
-          "name": "TD_85"
+          "name": "twodigit-85"
         },
         {
           "rule": [
             "86"
           ],
-          "name": "TD_86"
+          "name": "twodigit-86"
         },
         {
           "rule": [
             "87"
           ],
-          "name": "TD_87"
+          "name": "twodigit-87"
         },
         {
           "rule": [
             "88"
           ],
-          "name": "TD_88"
+          "name": "twodigit-88"
         },
         {
           "rule": [
             "89"
           ],
-          "name": "TD_89"
+          "name": "twodigit-89"
         },
         {
           "rule": [
             "90"
           ],
-          "name": "TD_90"
+          "name": "twodigit-90"
         },
         {
           "rule": [
             "91"
           ],
-          "name": "TD_91"
+          "name": "twodigit-91"
         },
         {
           "rule": [
             "92"
           ],
-          "name": "TD_92"
+          "name": "twodigit-92"
         },
         {
           "rule": [
             "93"
           ],
-          "name": "TD_93"
+          "name": "twodigit-93"
         },
         {
           "rule": [
             "94"
           ],
-          "name": "TD_94"
+          "name": "twodigit-94"
         },
         {
           "rule": [
             "95"
           ],
-          "name": "TD_95"
+          "name": "twodigit-95"
         },
         {
           "rule": [
             "96"
           ],
-          "name": "TD_96"
+          "name": "twodigit-96"
         },
         {
           "rule": [
             "97"
           ],
-          "name": "TD_97"
+          "name": "twodigit-97"
         },
         {
           "rule": [
             "98"
           ],
-          "name": "TD_98"
+          "name": "twodigit-98"
         },
         {
           "rule": [
             "99"
           ],
-          "name": "TD_99"
+          "name": "twodigit-99"
         }
       ]
     }
