@@ -392,10 +392,7 @@ export default {
             data.message[0] == "User followed successfully."
               ? this.$root.$t("follow.userFollowed")
               : this.$root.$t("follow.userUnfollowed")
-          );
-          window.setTimeout(function() {
-            location.reload();
-          }, 2000);
+          );        
         } else {
           this.errorShow(true, false, true, data.message[0]);
         }
