@@ -350,6 +350,7 @@
     "gameChannel" : "游戏频道",
     "sendInvitation" : "发送邀请",
     "noInvitation" : "没有用户邀请.",
+    "winBets":"赢得赌注",
     "winningRank" : "优胜者排名",
     "userRank" : "用户等级",
     "totalFollower" : "总关注者",
@@ -358,7 +359,8 @@
     "userWinrate":"用户获胜率",
     "only10":"一天只有10个邀请。",
     "youHave" : "你有",
-    "invitationLeft" : "剩下的邀请"
+    "invitationLeft" : "剩下的邀请",
+    "followBet":"跟随投注邀请"
   },
   "tutorial": {
     "resultDraw":"开奖结果",
@@ -414,5 +416,11 @@
     "total":"总",
     "bets":"赌注",
     "totalAmount":"总金额"
+  },
+  "logout": {
+    "sure" : "您确定要注销吗？",
+    "bye" : "希望能尽快见到你，再见",
+    "agree" : "同意",
+    "disagree" : "不同意"
   }
 }
