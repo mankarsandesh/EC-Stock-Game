@@ -124,7 +124,12 @@
       </v-flex>
     </v-flex>
     <!-- Follow and UnFollow Dialog box-->
-    <v-dialog v-model="followDialog" width="500" class="followDialog" :persistent="true">
+    <v-dialog
+      v-model="followDialog"
+      width="500"
+      class="followDialog"
+      :persistent="true"
+    >
       <followBet
         v-if="renderComponent"
         :username="this.username"
