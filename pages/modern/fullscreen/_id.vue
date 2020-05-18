@@ -256,9 +256,9 @@
         <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
           <h3
             class="balanceUser"
-            v-if="getUserInfo.balance > 0"
-          >Acc : {{ getUserInfo.balance | currency }}</h3>
-          <h3 class="balanceUser" v-if="getUserInfo.balance == 0">Acc : 0000.00</h3>
+            v-if="getUserBalance > 0"
+          >Acc : {{ getUserBalance | currency }}</h3>
+          <h3 class="balanceUser" v-if="getUserBalance == 0">Acc : 0000.00</h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-show="!isHidden"></fullscreenchart>
@@ -455,7 +455,8 @@ export default {
       "getLastDraw",
       "getRoadMap",
       "getStockLoop",
-      "getResetStatus"
+      "getResetStatus",
+      "getUserBalance"
     ]),
     ...mapState({
       gameStockId: state => state.game.gameStockId

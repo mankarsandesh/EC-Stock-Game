@@ -11,7 +11,7 @@
             <span
               >&nbsp; {{ $t("msg.acc") }}:
               <animated-number
-                :value="getUserInfo.balance"
+                :value="getUserBalance"
                 :formatValue="formatToPrice"
                 class="balance"
               />
@@ -61,7 +61,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserName", "getBalance", "getUserInfo"]),
+    ...mapGetters(["getUserName", "getBalance", "getUserInfo", "getUserBalance"]),
     imgProfile() {      
       return this.getUserInfo.profileImage === null
         ? this.defaultImage

@@ -82,6 +82,11 @@ const mutations = {
   },
   SET_USER_BALANCE(state, payload) {
     state.userBalance = payload;
+  },
+  SET_CHIPS(state, payload) {
+    state.coinsModern[payload.index] = payload.amount;
+    state.coinsModern.sort((a,b) => a-b);
+    secureStorage.setItem("coinsModern", state.coinsModern);
   }
 };
 
@@ -103,6 +108,7 @@ const actions = {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);
         context.commit("SET_USER_UUID", userInfo.userUUID);
+        context.commit("SET_USER_BALANCE", userInfo.balance);
       } else {
         throw new Error(config.error.general);
       }
@@ -183,6 +189,9 @@ const actions = {
   },
   setUserBalance({ commit }, payload) {
     commit("SET_USER_BALANCE", payload);
+  },
+  setChips({ commit }, payload) {
+    commit("SET_CHIPS", payload);
   }
 };
 

@@ -120,7 +120,8 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getLastDraw",
-      "getUserInfo"
+      "getUserInfo",
+      "getUserBalance"
     ])
   },
   watch: {
@@ -191,7 +192,7 @@ export default {
           type: "error",
           title: ex.message,
           showConfirmButton: true,
-          timer: 100000
+          timer: 1000
         });
         log.error(
           {
@@ -207,7 +208,7 @@ export default {
       }
     },
     confirmBet() {
-      if (parseInt(this.betValue) > parseInt(this.getUserInfo.balance)) {
+      if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
         this.$swal({
           type: "error",
           title: config.error.lowBalance,
