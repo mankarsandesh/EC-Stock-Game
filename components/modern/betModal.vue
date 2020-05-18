@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_FIRST"]),
-    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
+    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData", "getUserBalance"]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
@@ -191,7 +191,7 @@ export default {
       }
     },
     confirmBet() {
-      if (parseInt(this.betValue) > parseInt(this.getUserInfo.balance)) {
+      if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
         this.$swal({
           type: "error",
           title: config.error.lowBalance,

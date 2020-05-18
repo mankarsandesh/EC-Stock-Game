@@ -66,7 +66,7 @@
             <div class="decorator_card decorator_card_green"></div>
             <span>{{ $t("msg.accountbalance") }}</span>
             <br />
-            <span class="amount">{{ getUserInfo.balance | currency }}</span>
+            <span class="amount">{{ getUserBalance | currency }}</span>
             <span class="title_currentcy"></span>
           </div>
         </v-flex>
@@ -356,7 +356,7 @@ export default {
     StockAnalysis
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserBalance"]),
     imgProfile() {
       return this.getUserInfo.profileImage === null
         ? this.defaultImage
