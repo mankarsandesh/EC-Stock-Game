@@ -119,7 +119,7 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-          >{{ $t("useraction.unFollowBet") }}</v-btn>
+          >{{ $t("useraction.unFollow") }}</v-btn>
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
             {{
             $t("msg.cancel")

@@ -3,18 +3,14 @@
     <v-flex>
       <v-list subheader class="topWrap">
         <v-list-tile>
-          <v-list-tile-content>
-            {{$t("profile.myFollowing")}}
-          </v-list-tile-content>
+          <v-list-tile-content>{{$t("profile.myFollowing")}}</v-list-tile-content>
         </v-list-tile>
       </v-list>
 
       <v-layout row wrap>
         <v-flex v-if="followingList.length == 0">
           <div class="noMore">
-            <h3 class="text-center" style="color:#a3a3a3;">
-              {{$t("profile.noFollowing")}}
-            </h3>
+            <h3 class="text-center" style="color:#a3a3a3;">{{$t("profile.noFollowing")}}</h3>
           </div>
         </v-flex>
         <v-flex xs6 sm4 v-for="(data, index) in followingList" :key="index">
@@ -22,9 +18,11 @@
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
               <img class="userImage" :src="userImgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
-              <span v-if="data.fullName == null" class="name">{{
+              <span v-if="data.fullName == null" class="name">
+                {{
                 data.userName
-              }}</span>
+                }}
+              </span>
             </nuxt-link>
             <button
               v-bind:class="[
@@ -43,9 +41,9 @@
               dark
             >
               {{
-                data.isFollowing == 0
-                  ? $t("useraction.follow")
-                  : $t("useraction.unfollow")
+              data.isFollowing == 0
+              ? $t("useraction.follow")
+              : $t("useraction.unFollow")
               }}
             </button>
           </div>
@@ -66,9 +64,11 @@
           <v-btn icon dark @click="closeFollowBet">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{
+          <v-toolbar-title>
+            {{
             this.FolloworNot == 1 ? this.$root.$t("useraction.followBet") : this.$root.$t("useraction.unFollowBet")
-          }}</v-toolbar-title>
+            }}
+          </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <followBet
