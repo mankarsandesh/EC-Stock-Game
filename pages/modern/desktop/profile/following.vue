@@ -55,7 +55,7 @@
               </span>
             </div>
             <button
-              class="btn_unfollow"
+              class="buttonCancel btnUnfollow"
               v-on:click="
                 followUserBet(
                   data.userName,
@@ -193,15 +193,15 @@ export default {
   margin: 15px 5px;
 }
 .userImage {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 180px;
   margin: 0 auto;
 }
 .name {
   margin-top: 10px;
   font-size: 18px;
-  color: #013f70;
+  color: #2bb13a;
   display: block;
   width: 100%;
   text-transform: capitalize;
@@ -211,7 +211,7 @@ export default {
   padding-bottom: 15px;
 }
 .follower_container {
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #dddddd;
   background-color: white;
   width: 30%;
@@ -221,28 +221,21 @@ export default {
   text-align: center;
 }
 
-.btn_follow {
-  margin-top: 10px;
-  font-weight: bold;
-  bottom: 10px;
+.btnFollow {
+  font-size: 16px;
+  text-transform: capitalize;
   width: 130px;
   padding: 4px 0px;
   color: #fff;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #25b175 19%, #2cb121 70%);
-  border-radius: 15px;
-  box-shadow: 0px 2px 5px rgb(145, 145, 145);
+  border-radius: 5px;
 }
 
-.btn_unfollow {
-  margin-top: 10px;
-  font-weight: bold;
-  bottom: 10px;
+.btnUnfollow {
+  font-size: 16px;
+  text-transform: capitalize;
   width: 130px;
   padding: 4px 0px;
   color: #fff;
-  text-transform: uppercase;
-  background-image: linear-gradient(to right, #888787 19%, #626161 70%);
-  border-radius: 15px;
+  border-radius: 5px;
 }
 </style>
