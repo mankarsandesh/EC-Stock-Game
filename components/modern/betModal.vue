@@ -120,7 +120,8 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getLastDraw",
-      "getUserInfo"
+      "getUserInfo",
+      "getUserBalance"
     ])
   },
   watch: {
@@ -142,7 +143,7 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_FIRST"]),
-    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData", "getUserBalance"]),
+    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
