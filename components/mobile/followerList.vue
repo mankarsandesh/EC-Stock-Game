@@ -1,66 +1,59 @@
 <template>
   <div>
     <v-flex>
-      <v-list subheader>
+      <v-list subheader class="topWrap">
         <v-list-tile>
           <v-list-tile-content>
-            <v-list-tile-title>
-              My Followers
-              <span class="followingCount">{{ followersList.length }} </span>
-            </v-list-tile-title>
+            Followers
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-      <v-list>
-        <v-flex v-if="followersList.length == 0">
-          <h2 class="text-center" style="color:#a3a3a3;">
-            There are no users in Followers Users.
-          </h2>
+
+      <v-layout row wrap>
+      
+          <v-flex v-if="followersList.length == 0">
+          <div class="noMore">
+            <h3 class="text-center" style="color:#a3a3a3;">
+              There are no users in Following.
+            </h3>
+          </div>
         </v-flex>
-      </v-list>
-      <v-list two-line>
-        <template v-for="(item, index) in followersList">
-          <v-list-tile :key="item.userName" avatar>
-            <nuxt-link :to="'/modern/userprofile/' + item.UUID">
-              <v-list-tile-avatar>
-                <img :src="userImgProfile(item.profileImage)" />
-              </v-list-tile-avatar>
+      
+        <v-flex xs6 sm4 v-for="(data, index) in followersList" :key="index">
+          <div class="followerContainer">
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
+              <img class="userImage" :src="userImgProfile(data.profileImage)" />
+              <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
+              <span v-if="data.fullName == null" class="name">{{
+                data.userName
+              }}</span>
             </nuxt-link>
 
-            <v-list-tile-content style="width:40%;">
-              <v-list-tile-title v-html="item.userName"></v-list-tile-title>
-            </v-list-tile-content>
-
-            <v-list-tile-action>
-              <v-btn
-                v-bind:class="[
-                  item.isFollowing == 0
-                    ? 'buttonGreensmall'
-                    : 'buttonCancelSmall'
-                ]"
-                v-on:click="
-                  followUser(
-                    item.userName,
-                    item.profileImage,
-                    item.UUID,
-                    item.isFollowing
-                  )
-                "
-                dark
-                >{{
-                  item.isFollowing == 0
-                    ? $t("useraction.follow")
-                    : $t("useraction.unfollow")
-                }}</v-btn
-              >
-            </v-list-tile-action>
-          </v-list-tile>
-          <v-divider
-            v-if="index + 1 < followersList.length"
-            :key="index"
-          ></v-divider>
-        </template>
-      </v-list>
+            <button
+              v-bind:class="[
+                data.isFollowing == 0
+                  ? 'buttonGreen btnFollow'
+                  : 'buttonCancel btnUnfollow'
+              ]"
+              v-on:click="
+                followUser(
+                  data.userName,
+                  data.profileImage,
+                  data.UUID,
+                  data.isFollowing
+                )
+              "
+              dark
+            >
+              {{
+                data.isFollowing == 0
+                  ? $t("useraction.follow")
+                  : $t("useraction.unfollow")
+              }}
+            </button>
+          </div>
+        </v-flex>
+      </v-layout>
     </v-flex>
 
     <!-- Follow and UnFollow Dialog box-->
@@ -157,7 +150,7 @@ export default {
           {
             headers: config.header
           }
-        );        
+        );
         if (res.code == 200) {
           this.followersList = res.data;
         } else {
@@ -168,16 +161,67 @@ export default {
         console.error(ex.message);
       }
     }
+
   }
 };
 </script>
 <style scoped>
-.followingCount {
-  background-color: #334599;
+.noMore {
+  margin-top: 50px;
+}
+.userImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 180px;
+  margin: 0 auto;
+}
+.name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #2bb13a;
+  display: block;
+  width: 100%;
+  text-transform: capitalize;
+}
+
+.title_container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.followerContainer {
+  margin: 5px;
+  border-radius: 6px;
+  border: 1px solid #dddddd;
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.btnFollow {
+  margin-top: 15px;
+  font-size: 12px;
+  text-transform: capitalize;
+   width: 100px;
+  padding: 4px 0px;
   color: #fff;
   border-radius: 5px;
-  padding: 5px;
-  width: 40px;
-  height: 40px;
+}
+
+.btnUnfollow {
+  margin-top: 15px;
+  font-size: 12px;
+  text-transform: capitalize;
+  width: 100px;
+  padding: 4px 0px;
+  color: #fff;
+  border-radius: 5px;
+}
+.topWrap {
+  background-color: #2bb13a;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 14px;
+  height: 45px;
 }
 </style>
