@@ -72,7 +72,7 @@
                 {{
                 item.isFollowing == 0
                 ? $t("useraction.follow")
-                : $t("useraction.unfollow")
+                : $t("useraction.unFollow")
                 }}
               </v-btn>
             </v-list-tile-action>
@@ -84,7 +84,7 @@
 
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog
-      persistent=true
+      :persistent=true
       v-model="followDialog"
       fullscreen
       hide-overlay
@@ -98,7 +98,7 @@
           </v-btn>
           <v-toolbar-title>
             {{
-            this.FolloworNot == 1 ? $t("useraction.followBet") : $t("useraction.unfollowBet")
+            this.FolloworNot == 1 ? $t("useraction.followBet") : $t("useraction.unFollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>

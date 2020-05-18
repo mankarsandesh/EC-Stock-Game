@@ -70,7 +70,7 @@ export default {
     confirmBet() {
       if (
         parseInt(this.getTempMultiGameBetAmount) <=
-          parseInt(this.getUserInfo.balance) &&
+          parseInt(this.getUserBalance) &&
         parseInt(this.getTempMultiGameBetAmount) > 0
       ) {
         this.isSending = true;
@@ -101,7 +101,8 @@ export default {
       "getCoinsModern",
       "getFooterBetAmount",
       "getTempMultiGameBetAmount",
-      "getUserInfo"
+      "getUserInfo",
+      "getUserBalance"
     ])
   }
 };

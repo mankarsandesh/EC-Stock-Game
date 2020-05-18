@@ -64,7 +64,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.myfollowers") }}</li>
+                  >{{ $t("profile.myFollowers") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/following/">
                   <li
@@ -73,7 +73,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.myfollowing") }}</li>
+                  >{{ $t("profile.myFollowing") }}</li>
                 </nuxt-link>
                 <!-- <nuxt-link to="/modern/desktop/profile/notification/">
                   <li

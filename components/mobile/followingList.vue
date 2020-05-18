@@ -4,7 +4,7 @@
       <v-list subheader class="topWrap">
         <v-list-tile>
           <v-list-tile-content>
-            Following
+            {{$t("profile.myFollowing")}}
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -13,7 +13,7 @@
         <v-flex v-if="followingList.length == 0">
           <div class="noMore">
             <h3 class="text-center" style="color:#a3a3a3;">
-              There are no users in Following.
+              {{$t("profile.noFollowing")}}
             </h3>
           </div>
         </v-flex>
@@ -26,7 +26,6 @@
                 data.userName
               }}</span>
             </nuxt-link>
-
             <button
               v-bind:class="[
                 data.isFollowing == 0
@@ -68,7 +67,7 @@
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>{{
-            this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+            this.FolloworNot == 1 ? this.$root.$t("useraction.followBet") : this.$root.$t("useraction.unFollowBet")
           }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>

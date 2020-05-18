@@ -3,7 +3,7 @@
     <v-flex xs12 class="pt-5 pl-5">
       <div>
         <h2 class="text-uppercase">
-          {{ $t("profile.myfollowing") }} ({{ this.countFollwing }})
+          {{ $t("profile.myFollowing") }} ({{ this.countFollwing }})
         </h2>
         <v-divider></v-divider>
       </div>
@@ -32,8 +32,8 @@
                 <label
                   >{{
                     data.followRuleValue[0].name == "byAmount"
-                      ? $t("leaderboard.followbyAmount")
-                      : $t("leaderboard.followbyRate")
+                      ? $t("leaderboard.followByAmount")
+                      : $t("leaderboard.followByRate")
                   }}
                   :</label
                 >
@@ -43,12 +43,12 @@
                 <label
                   >{{
                     data.unFollowRuleValue[0].name == "byWin"
-                      ? $t("leaderboard.stopbyWinning")
+                      ? $t("leaderboard.stopByWinning")
                       : data.unFollowRuleValue[0].name == "byLose"
-                      ? $t("leaderboard.stopbyLosing")
+                      ? $t("leaderboard.stopByLosing")
                       : data.unFollowRuleValue[0].name == "byTime"
-                      ? $t("leaderboard.stopbyTiming")
-                      : $t("leaderboard.stopbyBets")
+                      ? $t("leaderboard.stopByTiming")
+                      : $t("leaderboard.stopByBets")
                   }}:</label
                 >
                 {{ data.unFollowRuleValue[0].value }}
@@ -65,7 +65,7 @@
                 )
               "
             >
-              {{ $t("useraction.unfollow") }}
+              {{ $t("useraction.unFollow") }}
             </button>
           </div>
         </div>

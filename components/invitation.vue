@@ -14,7 +14,7 @@
           :class="{ active: tabActiveName === 'world' }"
         >
           <a href="#">
-            {{ $t("invitation.ecworld") }}
+            {{ $t("invitation.ecWorld") }}
             <span class="count">{{ globalInvitation.length }}</span>
           </a>
         </span>
@@ -78,7 +78,7 @@
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.followerCount }}</span>
                         </template>
-                        <span>{{$t("invitation.userfollowCount")}}</span>
+                        <span>{{$t("invitation.userFollowCount")}}</span>
                       </v-tooltip>
                     </div>
                     <div class="winRate" v-if="data.category.some(element => element == 1)">
@@ -92,7 +92,7 @@
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.winRate }}%</span>
                         </template>
-                        <span>{{$t("invitation.userWinrate")}}</span>
+                        <span>{{$t("invitation.userWinRate")}}</span>
                       </v-tooltip>
                     </div>
                   </div>
