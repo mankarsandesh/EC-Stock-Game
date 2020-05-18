@@ -414,7 +414,7 @@
     "daysShould":"Days should be Between 1 to 10.",
     "betsShould":"Bets should be Between 1 to 100",
     "userFollowed":"User followed successfully.",
-    "userUnfollowed":"User un-followed successfully."
+    "userUnFollowed":"User un-followed successfully."
   },
   "currentBet": {
     "noBets" : "There are no current bets.",
