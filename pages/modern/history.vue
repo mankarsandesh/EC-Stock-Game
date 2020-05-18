@@ -25,7 +25,7 @@
           <template v-slot:activator="{ on }">
             <v-text-field
               v-model="dateFrom"
-              append-icon="fa-calendar"
+              append-icon="today"
               readonly
               v-on="on"
               single-line
@@ -33,8 +33,8 @@
             ></v-text-field>
           </template>
           <v-date-picker
-            next-icon="fa-chevron-right"
-            prev-icon="fa-chevron-left"
+            
+            
             color="#1db42f"
             v-model="dateFrom"
             @input="from = false"
@@ -66,7 +66,7 @@
           <template v-slot:activator="{ on }">
             <v-text-field
               v-model="dateTo"
-              append-icon="fa-calendar"
+              append-icon="today"
               readonly
               v-on="on"
               single-line
@@ -74,8 +74,8 @@
             ></v-text-field>
           </template>
           <v-date-picker
-            next-icon="fa-chevron-right"
-            prev-icon="fa-chevron-left"
+            
+            
             color="#1db42f"
             v-model="dateTo"
             @input="to = false"
@@ -104,7 +104,7 @@
       </v-flex>
       <v-flex xs5 sm5 md2 lg2 mt-2 mb-2 class="input-text">
         <v-select
-          append-icon="fa-chevron-down"
+          
           @change="sortingBy"
           v-model="sortby"
           hide-details

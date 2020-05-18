@@ -26,7 +26,7 @@
                       hide-details
                       v-model="dateFrom"
                       label="From"
-                      append-icon="fa-calendar"
+                      append-icon="today"
                       readonly
                       v-on="on"
                     ></v-text-field>
@@ -35,8 +35,6 @@
                     color="#1db42f"
                     v-model="dateFrom"
                     @input="from = false"
-                    next-icon="fa-chevron-right"
-                    prev-icon="fa-chevron-left"
                   ></v-date-picker>
                 </v-menu>
               </v-flex>
@@ -56,7 +54,7 @@
                       hide-details
                       v-model="dateTo"
                       label="To"
-                      append-icon="fa-calendar"
+                      append-icon="today"
                       readonly
                       v-on="on"
                     ></v-text-field>
@@ -65,8 +63,6 @@
                     color="#1db42f"
                     v-model="dateTo"
                     @input="to = false"
-                    next-icon="fa-chevron-right"
-                    prev-icon="fa-chevron-left"
                   ></v-date-picker>
                 </v-menu>
               </v-flex>
@@ -96,7 +92,7 @@
               </v-flex>
               <v-flex xs6 md>
                 <v-select
-                  append-icon="fa-chevron-down"
+                  
                   @change="sortingBy"
                   v-model="sortby"
                   hide-details

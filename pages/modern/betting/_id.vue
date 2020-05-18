@@ -81,7 +81,7 @@
               color="#003e70"
               v-show="isShowTrendMap"
               @click="changeShowTrendMap()"
-              >fa-chevron-left</v-icon
+              >keyboard_arrow_left</v-icon
             >
           </v-flex>
 
@@ -119,7 +119,7 @@
               v-show="!isShowTrendMap"
               @click="changeShowTrendMap()"
               color="#003e70"
-              >fa-chevron-right</v-icon
+              >keyboard_arrow_right</v-icon
             >
           </v-flex>
         </v-layout>
@@ -1001,7 +1001,7 @@
       <div class="header-dialog">
         <span></span>
         <v-icon size="30" @click="bettingDialog = false">
-          fa-times
+          close
         </v-icon>
       </div>
       <v-flex
@@ -1081,7 +1081,7 @@
       <div class="header-dialog">
         <span></span>
         <v-icon size="30" @click="reviewbetDialog = false">
-          fa-times
+          close
         </v-icon>
       </div>
       <div
@@ -1170,7 +1170,7 @@
         </h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
         <v-icon size="30" @click="drawerderfirst = !drawerderfirst">
-          fa-times
+          close
         </v-icon>
       </div>
       <hr class="head-jumbothron" />
@@ -1214,7 +1214,7 @@
         </h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
         <v-icon size="30" @click="drawerderlast = !drawerderlast">
-          fa-times
+          close
         </v-icon>
       </div>
       <hr class="head-jumbothron" />
@@ -1258,7 +1258,7 @@
         </h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
         <v-icon size="30" @click="drawerder018 = !drawerder018">
-          fa-times
+          close
         </v-icon>
       </div>
       <hr class="head-jumbothron" />

@@ -83,7 +83,7 @@
           class="multiplefull"
           style="float:right;"
         >
-          <v-icon size="25">fa-arrows-alt</v-icon>
+          <v-icon>fullscreen</v-icon>
         </v-btn>
       </v-flex>
     </v-flex>

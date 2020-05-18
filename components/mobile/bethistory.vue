@@ -100,8 +100,8 @@
     </v-data-table>
     <div class="text-right my-3 my-pagination" v-if="userBetHistory.length > 4">
       <v-pagination
-        next-icon="fa-chevron-right"
-        prev-icon="fa-chevron-left"
+        
+        
         v-model="pagination.page"
         color="#1db42f"
         :length="10"

@@ -15,14 +15,14 @@
         v-bind:class="{ active: isActiveWeek }"
         v-on:click="sortingBy('weekly')"
         >
-          <v-icon small>fa-calendar-day</v-icon>
+          <v-icon small>today</v-icon>
           {{ $t("leaderboard.weeklyrankings") }}
         </span>
         <span class="text-uppercase font-weight-bold"
           v-bind:class="{ active: isActiveMonth }"
           v-on:click="sortingBy('monthly')"
         >
-          <v-icon small>fa-calendar-day</v-icon>
+          <v-icon small>today</v-icon>
           {{ $t("leaderboard.monthlyrankings") }}
         </span>
       </v-flex>

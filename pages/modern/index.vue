@@ -102,7 +102,7 @@
           </v-list-tile-content>
           <v-spacer></v-spacer>
           <v-icon class="icon-primary" v-if="sortBy === 'name'"
-            >fa-check</v-icon
+            >done</v-icon
           >
         </v-list-tile>
 
@@ -116,7 +116,7 @@
           </v-list-tile-content>
           <v-spacer></v-spacer>
           <v-icon class="icon-primary" v-if="sortBy === 'type'"
-            >fa-check</v-icon
+            >done</v-icon
           >
         </v-list-tile>
         <v-divider></v-divider>
@@ -128,7 +128,7 @@
           </v-list-tile-content>
           <v-spacer></v-spacer>
           <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
-                    <v-icon class="icon-primary">fa-check</v-icon>
+                    <v-icon class="icon-primary">done</v-icon>
           </v-btn>-->
         </v-list-tile>
         <v-divider></v-divider>

@@ -2,8 +2,8 @@
   <v-layout row class="justify-center">
     <v-flex xs12 md10 lg10>
       <v-data-table
-        prev-icon="fa-chevron-left"
-        next-icon="fa-chevron-right"
+        
+        
         :items="notificationData"
         :rows-per-page-items="[5]"
         ref="table"

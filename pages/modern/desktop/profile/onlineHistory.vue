@@ -17,7 +17,7 @@
             <div class="date_picker">
               <span class="select_date">{{ startDate }}</span>
               <span class="icon_date">
-                <v-icon>fa-calendar</v-icon>
+                <v-icon>today</v-icon>
               </span>
             </div>
           </div>
@@ -27,8 +27,8 @@
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
-              next-icon="fa-chevron-right"
-              prev-icon="fa-chevron-left"
+              
+              
             ></v-date-picker>
           </div>
         </v-flex>
@@ -41,7 +41,7 @@
             <div class="date_picker">
               <span class="select_date">{{ endDate }}</span>
               <span class="icon_date">
-                <v-icon>fa-calendar</v-icon>
+                <v-icon>today</v-icon>
               </span>
             </div>
           </div>
@@ -51,8 +51,8 @@
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
-              next-icon="fa-chevron-right"
-            prev-icon="fa-chevron-left"
+              
+            
             ></v-date-picker>
           </div>
         </v-flex>

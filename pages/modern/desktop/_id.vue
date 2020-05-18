@@ -4,7 +4,7 @@
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">fa-close</v-icon>
+          <v-icon color="#0b2968">fa-times</v-icon>
         </span>
         <v-layout column>
           <v-flex xs12 pt-3>
@@ -157,14 +157,14 @@
               ></tableTrendMap>
             </div>
             <span class="addChart" @click="removeTradMap(index)">
-              <v-icon>fa-times</v-icon>
+              <v-icon>close</v-icon>
             </span>
             <span
               class="addChart"
               @click="addTrendMap()"
               v-if="trendTypes.length == index + 1 && trendTypes.length < 4"
             >
-              <v-icon>fa-plus</v-icon>
+              <v-icon>add</v-icon>
             </span>
           </div>
         </v-flex>
@@ -225,7 +225,7 @@
             @click="setAfterFullScreenClosePage()"
             title="Full Screen"
           >
-            <v-icon size="25">fa-arrows-alt</v-icon>
+            <v-icon>fullscreen</v-icon>
           </v-btn>
         </div>
       </v-flex>

@@ -15,7 +15,7 @@
                 class="camera_container"
                 style=" position: absolute; top: 9%;"
               >
-                <v-icon color="black" :size="20">fa-camera</v-icon>
+                <v-icon color="black" :size="20">camera_alt</v-icon>
               </span>
             </div>
             <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
@@ -42,7 +42,7 @@
                 class="camera_container"
                 style="position: absolute;top: 5%;"
               >
-                <v-icon color="black" :size="20">fa-camera</v-icon>
+                <v-icon color="black" :size="20">camera_alt</v-icon>
               </span>
             </div>
             <h3>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
@@ -107,7 +107,7 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >fa-edit</v-icon
+                      >edit</v-icon
                     >
                   </span>
                 </v-flex>
@@ -131,7 +131,7 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >fa-edit</v-icon
+                      >edit</v-icon
                     >
                   </span>
                 </v-flex>
@@ -155,7 +155,7 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >fa-edit</v-icon
+                      >edit</v-icon
                     >
                   </span>
                 </v-flex>
@@ -179,7 +179,9 @@
                     <option value="male">Male</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd">fa-chevron-down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd"
+                      >keyboard_arrow_down</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -202,7 +204,7 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >fa-edit</v-icon
+                      >edit</v-icon
                     >
                   </span>
                 </v-flex>
@@ -228,7 +230,9 @@
                     <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd">fa-chevron-down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd"
+                      >keyboard_arrow_down</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>

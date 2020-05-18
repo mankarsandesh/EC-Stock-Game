@@ -22,7 +22,7 @@
             v-bind:class="{ active: isActiveWeek }"
             v-on:click="sortingBy('weekly')"
           >
-            <v-icon small>fa-calendar</v-icon>
+            <v-icon small>today</v-icon>
             {{ $t("leaderboard.weeklyrankings") }}
           </span>
           <span
@@ -30,7 +30,7 @@
             v-bind:class="{ active: isActiveMonth }"
             v-on:click="sortingBy('monthly')"
           >
-            <v-icon small>fa-calendar</v-icon>
+            <v-icon small>today</v-icon>
             {{ $t("leaderboard.monthlyrankings") }}
           </span>
         </v-flex>

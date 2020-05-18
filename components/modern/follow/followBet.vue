@@ -31,7 +31,7 @@
         <v-card-actions>
           <v-flex lg6 pr-4>
             <v-select
-              append-icon="fa-chevron-down"
+              
               :items="followby"
               label="Select Follow type"
               v-model="selectedFollow"

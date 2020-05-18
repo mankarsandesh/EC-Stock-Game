@@ -11,7 +11,7 @@
       <v-list>
         <!-- Close button cross mark for mobile responsive side bar -->
         <v-btn icon @click="drawer = !drawer" style="float: right;">
-          <v-icon>fa-times</v-icon>
+          <v-icon>close</v-icon>
         </v-btn>
         <div v-for="(item, i) in menu" :key="i">
           <v-list-tile
@@ -51,7 +51,7 @@
       <languageDialog ref="language" />
 
       <Logout size="normal" />
-      <v-icon class="pr-2" @click="drawer = !drawer">fa-bars</v-icon>
+      <v-icon class="pr-2" @click="drawer = !drawer">menu</v-icon>
     </v-toolbar>
 
     <div

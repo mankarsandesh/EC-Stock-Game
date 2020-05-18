@@ -7,8 +7,8 @@
         ref="table"
         :search="search"
         class="current-bet"
-        prev-icon="fa-chevron-left"
-        next-icon="fa-chevron-right"
+        
+        
       >
         <v-progress-linear
           v-slot:progress

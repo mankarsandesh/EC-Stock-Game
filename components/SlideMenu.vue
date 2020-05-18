@@ -15,7 +15,7 @@
         </v-list-tile-content>
         <v-spacer></v-spacer>
         <v-btn icon @click.stop="drawer = !drawer" v-if="!isHideClear">
-          <v-icon>fa-times</v-icon>
+          <v-icon>close</v-icon>
         </v-btn>
       </v-list-tile>
     </v-list>

@@ -13,7 +13,7 @@
                 <span class="camera_container">
                   <button class="btn_camera">
                     <v-icon color="black" :size="20" @click="dialog = true">
-                      fa-camera
+                      camera_alt
                     </v-icon>
                     <!-- <v-icon color="black" :size="20">photo_camera</v-icon> -->
                   </button>

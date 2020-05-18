@@ -8,7 +8,7 @@
         {{ item.title }}
       </span>
       <span class="icon-select">
-        <v-icon color="#fff">fa-chevron-down</v-icon>
+        <v-icon color="#fff">keyboard_arrow_down</v-icon>
       </span>
     </div>
     <div>

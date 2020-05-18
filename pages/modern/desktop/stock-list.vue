@@ -10,7 +10,7 @@
               hide-details
               :items="items"
               :placeholder="$t('msg.sortby')"
-              append-icon="fa-chevron-down"
+              
             ></v-select>
 
             <v-btn @click="goSearch" class="buttonGreen">
