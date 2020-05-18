@@ -216,12 +216,12 @@ export default {
       followby: [
         {
           id: 1,
-          name: this.$root.$t("leaderboard.followbyAmount"),
+          name: this.$root.$t("leaderboard.followByAmount"),
           value: "Amount"
         },
         {
           id: 2,
-          name: this.$root.$t("leaderboard.followbyRate"),
+          name: this.$root.$t("leaderboard.followByRate"),
           value: "Rate"
         }
       ],
@@ -229,22 +229,22 @@ export default {
       autoStopFollow: [
         {
           id: 4,
-          name: this.$root.$t("leaderboard.stopbyWinning"),
+          name: this.$root.$t("leaderboard.stopByWinning"),
           value: "stopWin"
         },
         {
           id: 5,
-          name: this.$root.$t("leaderboard.stopbyLosing"),
+          name: this.$root.$t("leaderboard.stopByLosing"),
           value: "stopLoss"
         },
         {
           id: 3,
-          name: this.$root.$t("leaderboard.stopbyTiming"),
+          name: this.$root.$t("leaderboard.stopByTiming"),
           value: "stopTime"
         },
         {
           id: 6,
-          name: this.$root.$t("leaderboard.stopbyBets"),
+          name: this.$root.$t("leaderboard.stopByBets"),
           value: "stopBets"
         }
       ],
@@ -356,7 +356,7 @@ export default {
         if (data.code == 200) {
              data.message[0] == "User followed successfully."
               ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed")) 
-              : this.setSnackBarMessage(this.$root.$t("follow.userUnfollowed"));     
+              : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));     
         } else {
           this.setSnackBarMessage(data.message[0]);
           // this.errorShow(true, false, true, data.message[0]);

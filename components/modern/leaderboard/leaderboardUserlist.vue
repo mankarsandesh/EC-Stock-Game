@@ -8,7 +8,7 @@
               {{ $t("leaderboard.top") }} {{ topPlayerData.length }}
               {{ $t("leaderboard.leaders") }}
             </span>
-            ({{ this.sortbyName == "monthly" ? $t("leaderboard.monthlyrankings") : $t("leaderboard.weeklyrankings")}})
+            ({{ this.sortbyName == "monthly" ? $t("leaderboard.monthlyRankings") : $t("leaderboard.weeklyRankings")}})
             <i
               v-if="loadingImage"
               class="fa fa-circle-o-notch fa-spin"
@@ -23,7 +23,7 @@
             v-on:click="sortingBy('weekly')"
           >
             <v-icon small>event</v-icon>
-            {{ $t("leaderboard.weeklyrankings") }}
+            {{ $t("leaderboard.weeklyRankings") }}
           </span>
           <span
             class="text-uppercase font-weight-bold"
@@ -31,13 +31,13 @@
             v-on:click="sortingBy('monthly')"
           >
             <v-icon small>event</v-icon>
-            {{ $t("leaderboard.monthlyrankings") }}
+            {{ $t("leaderboard.monthlyRankings") }}
           </span>
         </v-flex>
       </v-layout>
     </v-flex>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.nodata") }}</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.noData") }}</h2>
     </v-flex>
     <v-flex v-if="topPlayerData.length > 0">
       <v-flex
@@ -63,7 +63,7 @@
             <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
           </div>
           <div>
-            <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
+            <h3 class="header">{{ $t("leaderboard.winningRate") }}</h3>
             <h4 class="green--text titleText">{{ Math.round(data.winRate, 1) }}%</h4>
           </div>
           <div>
@@ -71,7 +71,7 @@
             <H4 style="color:#eb0b6e;" class="titleText">{{ data.totalWinBets }}</H4>
           </div>
           <div>
-            <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
+            <h3 class="header">{{ $t("leaderboard.winningAmount") }}</h3>
             <h4
               style="color:#0b2a68;"
               class="titleText"

@@ -52,7 +52,7 @@
                   <template v-slot:activator="{ on }">
                     <span v-on="on">{{ item.followerCount }}</span>
                   </template>
-                  <span>{{ $t("invitation.userfollowCount") }}</span>
+                  <span>{{ $t("invitation.userFollowCount") }}</span>
                 </v-tooltip>
               </v-list-tile-title>
             </v-list-tile-content>
@@ -68,7 +68,7 @@
                   <template v-slot:activator="{ on }">
                     <span v-on="on">#{{ item.winRate }}</span>
                   </template>
-                  <span>{{ $t("invitation.userWinrate") }}</span>
+                  <span>{{ $t("invitation.userWinRate") }}</span>
                 </v-tooltip>
               </v-list-tile-title>
             </v-list-tile-content>
