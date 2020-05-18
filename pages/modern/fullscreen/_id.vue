@@ -45,7 +45,7 @@
 
         <!-- bet on digigt  -->
         <div class="guide-top" style="margin-right: 90px;" v-if="tutorialStepNumber === 5">
-          <span class="guide-title text-uppercase">{{$t("tutorial.betonDigits")}}</span>
+          <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
           <span class="guide-description">{{$t("tutorial.selectDigit")}}</span>
         </div>
         <!-- select chipcamount  -->
@@ -61,7 +61,7 @@
           id="enter-bet-guide"
           v-if="tutorialStepNumber === 7 && getIsWindowsHasScroll"
         >
-          <span class="guide-title text-uppercase">{{$t("tutorial.betonDigits")}}</span>
+          <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
           <span class="guide-description">{{$t("tutorial.selectChip")}}</span>
         </div>
         <!-- no scroll -->

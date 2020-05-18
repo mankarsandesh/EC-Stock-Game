@@ -75,8 +75,8 @@
             >
               {{
               visitProfileUserData.isFollowing == 0
-              ? $t("useraction.followBet")
-              : $t("useraction.unfollowBet")
+              ? $t("useraction.follow")
+              : $t("useraction.unFollow")
               }}
             </v-btn>
           </v-flex>
@@ -95,7 +95,7 @@
                   <span class="number-box">{{ visitProfileUserData.winRate }}%</span>
                   <span class="des-title text-uppercase">
                     {{
-                    $t("leaderboard.winningrate")
+                    $t("leaderboard.winningRate")
                     }}
                   </span>
                 </div>
@@ -143,7 +143,7 @@
                   <span class="number-box">${{ visitProfileUserData.totalWinAmount | currency }}</span>
                   <span class="des-title text-uppercase">
                     {{
-                    $t("leaderboard.winningamount")
+                    $t("leaderboard.winningAmount")
                     }}
                   </span>
                 </div>
