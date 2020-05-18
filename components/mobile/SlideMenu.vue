@@ -6,8 +6,8 @@
     temporary
     class="slide-navbar"
   >
-    <v-list class="pt-4 pr-0 text-primary">
-      <v-list-tile class="mt-3 pr-0">
+    <v-list class="pa-0 pr-0 text-primary">
+      <v-list-tile class="pr-0">
         <v-list-tile-content>
           <v-list-tile-title class="text-uppercase"
             ><em>{{ $t(`${title}`) }}</em></v-list-tile-title

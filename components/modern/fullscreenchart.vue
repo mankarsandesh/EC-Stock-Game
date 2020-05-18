@@ -16,6 +16,7 @@ import { mapGetters } from "vuex";
 import openSocket from "socket.io-client";
 import config from "../../config/config.global";
 import log from "roarr";
+import secureStorage from "../../plugins/secure-storage.js";
 
 export default {
   props: ["StockData"],
@@ -23,8 +24,10 @@ export default {
     apexchart: VueApexCharts
   },
   data() {
-    return {    
+    return {
       chartHeight: "350vh",
+      stockName: this.$route.path.split('/')[3],
+      loopName: '',
       window: {
         width: 0,
         height: 0
@@ -32,48 +35,48 @@ export default {
       series: [
         {
           name: this.$root.$t("gamemsg.big"),
-          data: [1, 2, 0, 15],
-          betCounts: [15, 14, 13, 0]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.small"),
-          data: [0, 10, 10, 0],
-          betCounts: [15, 14, 13, 100]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.odd"),
-          data: [0, 0, 0, 10],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.even"),
-          data: [0, 0, 5, 15],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.high"),
-          data: [1, 5, 0, 1],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.mid"),
-          data: [1, 0, 0, 0],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.low"),
-          data: [0, 20, 0, 15],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.number"),
-          data: [1, 0, 10, 10],
-          betCounts: [15, 14, 13, 12]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
           name: this.$root.$t("gamemsg.tie"),
-          data: [0, 9, 20, 0],
-          betCounts: [15, 14, 13, 20]
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         }
       ],
       componentKey: 0,
@@ -83,7 +86,7 @@ export default {
             show: false
           },
           type: "bar",
-          height:250,
+          height: 250,
           stacked: true,
           stackType: "100%"
         },
@@ -95,7 +98,7 @@ export default {
         stroke: {
           width: 1,
           colors: ["#fff"]
-        },       
+        },
         xaxis: {
           categories: [
             this.$root.$t("gamemsg.firstdigit"),
@@ -142,70 +145,115 @@ export default {
       }
     };
   },
-  created(){
-     window.addEventListener("resize", this.handleResize);
-     this.handleResize();
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+    if(this.stockName.slice(0, -1) == 'btc') {
+      this.loopName = this.stockName.slice(-1) == 1 ? this.stockName.slice(-1) : '5';
+      this.stockName = this.stockName; 
+    } else {
+      this.stockName = this.stockName[3];
+      this.loopName = '5';
+    }
+    this.connectSocket();
   },
-   destroyed() {
+  destroyed() {
     window.removeEventListener("resize", this.handleResize);
   },
   computed: {
-    ...mapGetters(["getGameUUIDByStockName", "getPortalProviderUUID"]),
-    
-  },
-  mounted() {
-    this.listenForBroadcast(
-      {
-        channelName: `liveBetCounts.${this.getGameUUIDByStockName(
-          this.$route.params.id
-        )}`,
-        eventName: "liveBetCounts"
-      },
-      ({ data }) => {
-        try {
-          var logData = data;
-          if (data.status) {
-            this.series = data.data;
-            this.componentKey += 1;
-          } else {
-            throw new Error(config.error.general);
-          }
-        } catch (ex) {
-          console.log(ex);
-          log.error(
-            {
-              channel: `liveBetCounts.${this.getGameUUIDByStockName(
-                this.$route.params.id
-              )}`,
-              event: "liveBetCounts",
-              res: logData,
-              page: "components/modern/fullscreenchart.vue",
-              provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
-        }
-      }
-    );
+    ...mapGetters([
+      "getGameUUIDByStockName",
+      "getPortalProviderUUID",
+      "getStockUUIDByStockName"
+    ])
   },
   methods: {
-    listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
+    connectSocket() {
+      this.listenForBroadcast(
+        {
+          channelName: `liveBetCounts.${this.getPortalProviderUUID}.${this.getStockUUIDByStockName(this.stockName)}.${this.loopName}`,
+          eventName: "liveBetCounts"
+        },
+        ({ data }) => {
+          try {
+            var logData = data;
+            if (data.status) {
+              this.series = data.data;
+              this.componentKey += 1;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                channel: `liveBetCounts.${this.getGameUUIDByStockName(
+                  this.$route.params.id
+                )}`,
+                event: "liveBetCounts",
+                res: logData,
+                page: "components/modern/fullscreenchart.vue",
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        }
+      );
     },
-     handleResize() {
+    listenForBroadcast({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName)
+        .listen(eventName, callback)
+        .on("pusher:subscription_succeeded", async member => {
+          try {
+            var reqBody = {
+              portalProviderUUID: this.getPortalProviderUUID,
+              gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
+              version: 1
+            };
+            var { data } = await this.$axios.post(
+              config.liveBetCount.url,
+              reqBody,
+              {
+                headers: config.header
+              }
+            );
+            if (data.status) {
+              this.series = data.data;
+              this.componentKey += 1;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                req: reqBody,
+                res: data,
+                page: "components/modern/fullscreenchart.vue",
+                apiUrl: config.liveBetCount.url,
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        });
+    },
+    handleResize() {
       this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;    
+      this.window.height = window.innerHeight;
       // Chart Size Change According Desktop and Laptop Size
       if (this.window.width >= 2000) {
         this.chartHeight = "420vh";
         this.heightChart = 420;
-      } else if(this.window.width > 1400){
+      } else if (this.window.width > 1400) {
         this.chartHeight = "380vh";
         this.heightChart = 380;
-      }else{
-          this.chartHeight = "300vh";
-          this.heightChart = 300;
+      } else {
+        this.chartHeight = "300vh";
+        this.heightChart = 300;
       }
     }
   }

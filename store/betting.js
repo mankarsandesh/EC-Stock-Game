@@ -1,16 +1,21 @@
 import config from "../config/config.global";
+import secureStorage from "../plugins/secure-storage";
 import log from "roarr";
 
 const state = () => ({
+  first: null,
   multiGameBet: [], // Store multi game bet
   multiGameBetSend: [], // Store multi game bet send
   footerBetAmount: 0, // Store footer bet amount
   onGoingBet: [], // store data betting
   isSendBetting: false,
-  tempMultiGameBetData: []  // Store temp bet data of multi game until the bet is ent to the server
+  tempMultiGameBetData: [] // Store temp bet data of multi game until the bet is ent to the server
 });
 
 const mutations = {
+  SET_FIRST(state, payload) {
+    state.first = payload
+  },
   PUSH_DATA_MULTI_GAME_BET(state, payload) {
     state.multiGameBet.push(payload);
     state.multiGameBetSend.push(payload);
@@ -75,21 +80,21 @@ const actions = {
   },
   // Set temporary multi game bet data
   setTempMultiGameBetData({ commit }, payload) {
-    commit('SET_TEMP_MULTI_GAME_BET_DATA', payload);
+    commit("SET_TEMP_MULTI_GAME_BET_DATA", payload);
   },
   // Move temporary multi game bet data to multi game bet
   confirmTempMultiGameBetData({ commit }) {
-    commit('CONFIRM_TEMP_MULTI_GAME_BET_DATA');
+    commit("CONFIRM_TEMP_MULTI_GAME_BET_DATA");
   },
   clearTempMultiGameBetData({ commit }) {
-    commit('CLEAR_TEMP_MULTI_GAME_BET_DATA');
+    commit("CLEAR_TEMP_MULTI_GAME_BET_DATA");
   },
   // Send bet data for multi game and footer bet on full screen
   async sendBetting(context) {
     try {
       context.commit("SET_IS_SEND_BETTING", true);
-      const betDatas = context.state.multiGameBetSend;
-      if (betDatas.length == 0) {
+      const betDataFinal = context.state.multiGameBetSend;
+      if (betDataFinal.length == 0) {
         context.commit("SET_IS_SEND_BETTING", false);
         this._vm.$swal({
           type: "error",
@@ -103,7 +108,7 @@ const actions = {
         portalProviderUUID: context.rootState.provider.portalProviderUUID,
         userUUID: context.rootState.provider.userUUID,
         version: config.version,
-        betData: betDatas
+        betData: betDataFinal
       };
       var res = await this.$axios.$post(config.storeBet.url, reqBody, {
         headers: config.header
@@ -153,8 +158,8 @@ const actions = {
           res,
           page: "store/betting.js",
           apiUrl: config.storeBet.url,
-          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: localStorage.getItem("USER_UUID")
+          provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: secureStorage.getItem("USER_UUID")
         },
         ex.message
       );
@@ -163,6 +168,7 @@ const actions = {
 };
 
 const getters = {
+  first: state => state.first,
   // Get multi game bet
   getMultiGameBet(state) {
     return state.multiGameBet;
@@ -266,6 +272,16 @@ const getters = {
   // Get amount by rule id
   getBetAmountRuleID: state => data => {
     return 0;
+  },
+  getTempMultiGameBetAmount(state) {
+    if (!state.tempMultiGameBetData.length > 0) {
+      return 0;
+    }
+    let amount = 0;
+    state.tempMultiGameBetData.forEach(betData => {
+      amount += betData.betAmount;
+    });
+    return amount;
   }
 };
 

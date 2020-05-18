@@ -1,63 +1,25 @@
 <template>
   <div style="z-index:100">
-    <v-menu offset-y :close-on-content-click="false" :min-width="80">
-      <template v-slot:activator="{ on }">
-        <button flat v-on="on" v-show="isShow == 'classic'">
-          <v-icon size="30">account_circle</v-icon>
-        </button>
-        <v-btn flat v-on="on" v-show="isShow == 'modern'">
-          <v-avatar size="30">
+    <template>
+      <nuxt-link :to="'/modern/userprofile/' + getUserInfo.userUUID">
+        <v-btn flat>
+          <v-avatar size="35" mr-1>
             <img :src="imgProfile" alt />
           </v-avatar>
           <div class="userLogoutMenu">
-            <span>{{ getUserName }}</span>
-            <span>
-              {{ $t("msg.acc") }}:
+            <span> {{ getUserName }} </span>
+            <span
+              >&nbsp; {{ $t("msg.acc") }}:
               <animated-number
-                :value="getUserInfo.balance"
+                :value="getUserBalance"
                 :formatValue="formatToPrice"
                 class="balance"
               />
             </span>
           </div>
-          <!-- <i class="fa fa-caret-down" /> -->
         </v-btn>
-      </template>
-      <v-list>
-        <v-list-tile @click="dialogprofile = true" v-show="isShow == 'classic'">
-          <v-list-tile-title>Profile</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile
-          @click="$router.push('/modern/profile')"
-          v-show="isShow == 'modern'"
-        >
-          <i class="fa fa-user fa-2x margin-right-5" />
-          <v-list-tile-title>{{ $t("menu.profile") }}</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile
-          @click="$refs.onlineHistory.showDialogOnlineHistory()"
-          v-show="isShow == 'modern'"
-        >
-          <i class="fa fa-hourglass-half fa-15x margin-right-5" />
-          <v-list-tile-title>{{
-            $t("profile.onlinehistory")
-          }}</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile
-          @click="$refs.stockAnalysis.showDialogStockAnalysis()"
-          v-show="isShow == 'modern'"
-        >
-          <i class="fa fa-line-chart fa-15x margin-right-5" />
-          <v-list-tile-title>{{
-            $t("profile.stockanalysis")
-          }}</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="getLogout()">
-          <i class="fa fa-lock fa-2x margin-right-5" />
-          <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-menu>
+      </nuxt-link>
+    </template>
 
     <v-dialog v-model="dialogprofile" max-width="1240px">
       <v-card>
@@ -83,6 +45,8 @@ import AnimatedNumber from "animated-number-vue";
 import { mapGetters } from "vuex";
 import profile from "~/pages/modern/desktop/profile";
 import config from "~/config/config.global";
+import secureStorage from "../../plugins/secure-storage";
+
 export default {
   components: {
     profile,
@@ -93,20 +57,16 @@ export default {
   data() {
     return {
       dialogprofile: false,
-      isShow: ""
+      defaultImage: "/no-profile-pic.jpg"
     };
   },
   computed: {
-    ...mapGetters(["getUserName", "getBalance", "getUserInfo"]),
-    imgProfile() {
-      return this.getUserInfo.profileImage == "" ||
-        this.getUserInfo.profileImage == undefined
-        ? "/user.png"
+    ...mapGetters(["getUserName", "getBalance", "getUserInfo", "getUserBalance"]),
+    imgProfile() {      
+      return this.getUserInfo.profileImage === null
+        ? this.defaultImage
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     }
-  },
-  mounted() {
-    this.isShow = location.pathname.split("/")[1];
   },
   methods: {
     nFormatter(num, digits) {
@@ -178,7 +138,7 @@ export default {
             timer: 1500
           }).then(Confirm => {
             this.$store.state.provider.authToken = [];
-            localStorage.apikey = [];
+            secureStorage.apikey = [];
             window.close();
           });
         } else {

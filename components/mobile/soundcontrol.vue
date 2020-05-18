@@ -1,29 +1,35 @@
 <template>
   <div>
-    <v-card class="my-bg pa-5" style="background-color: #f2f4ff !important;">
-      <v-layout row wrap justify-center>
-        <div>
-          <v-flex class="setting_container">
-            <span class="pt-1">{{ $t("msg.music") }}</span>
-            <label class="switch">
-              <input
-                type="checkbox"
-                ref="isSound"
-                :checked="getUserInfo.isSound"
-              />
-              <span class="slider round"></span>
-            </label>
-          </v-flex>
-        </div>
-      </v-layout>
-      <!-- <v-slider v-model="length" color="#003e70" min="1" max="15" :label="$t('msg.customlength')"></v-slider> -->
-      <v-layout row wrap justify-center>
-        <v-btn class="my-btn buttonGreensmall" @click="updateSetting">{{
-          $t("msg.save")
-        }}</v-btn>
-        <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
-      </v-layout>
-    </v-card>
+    <v-layout row wrap justify-center>
+      <div>
+        <v-flex class="setting_container">
+          <span class="pt-1">{{ $t("msg.music") }}</span>
+          <label class="switch">
+            <input
+              type="checkbox"
+              ref="isSound"
+              :checked="getUserInfo.isSound"
+            />
+            <span class="slider round"></span>
+          </label>
+        </v-flex>
+      </div>
+    </v-layout>
+    <!-- <v-slider v-model="length" color="#003e70" min="1" max="15" :label="$t('msg.customlength')"></v-slider> -->
+    <v-layout row wrap justify-center>
+      <v-btn class="my-btn buttonGreensmall" @click="updateSetting">{{
+        $t("msg.save")
+      }}</v-btn>
+      <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
+    </v-layout>
+
+    <v-snackbar v-model="snackbar">
+      {{ this.messageShow }}
+      <v-btn color="pink" text @click="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
+    
   </div>
 </template>
 
@@ -33,14 +39,20 @@ import axios from "axios";
 import config from "~/config/config.global";
 
 export default {
+  data() {
+    return {
+      messageShow: "",
+      snackbar: false
+    };
+  },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
     ...mapActions(["setUserData"]),
+    // Update Sount on or Off
     async updateSetting() {
       let isSound = this.$refs.isSound.checked ? true : false;
-
       try {
         let userSetting = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -56,22 +68,12 @@ export default {
           }
         );
         if (res.code == 200) {
-          this.$swal.fire({
-            position: "middle",
-            type: "success",
-            title: "Changes saved",
-            showConfirmButton: "false",
-            timer: 1500
-          });
-          this.setUserData();
-          // console.log(res);
-        } else {
-          // console.log(res);
-          // this.$alert("Alert message.");
+          this.snackbar = true;
+          this.messageShow = "Changes saved";
+          this.setUserData();        
         }
       } catch (ex) {
-        console.log(ex);
-        alert(ex.message);
+        console.log(ex.message);
       }
     }
   }
@@ -102,9 +104,9 @@ export default {
 .switch {
   position: relative;
   float: right;
-  top: -1px;
+  top: -6px;
   display: inline-block;
-  width: 60px;
+  width: 65px;
   height: 32px;
 }
 

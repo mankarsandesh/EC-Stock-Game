@@ -23,6 +23,7 @@
           </div>
           <div style="position:absolute;z-index:1">
             <v-date-picker
+              color="#1db42f"
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
@@ -44,6 +45,7 @@
           </div>
           <div style="position:absolute;z-index:1">
             <v-date-picker
+              color="#1db42f"
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
@@ -82,7 +84,7 @@
         <apexchart
           v-if="isDataValid"
           type="bar"
-          height="480vh"
+          height="480"
           :options="chartOptions"
           :series="series"
         ></apexchart>
@@ -93,10 +95,11 @@
 
 <script>
 import apexchart from "vue-apexcharts";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import axios from "axios";
 import date from "date-and-time";
 import log from "roarr";
+import secureStorage from "../../../../plugins/secure-storage";
 import config from "~/config/config.global";
 
 // set color win and lose color in bar chart
@@ -131,9 +134,132 @@ export default {
       isShowDateEnd: false,
       startDate: "",
       endDate: "",
-      error: '',
+      error: "",
       isDataValid: false,
+      stocks: [],
+      series: [],
+      // chartOptions: {
+      //   colors: [
+      //     function({ value, seriesIndex, dataPointIndex, w }) {
+      //       if (seriesIndex == 0) {
+      //         return barColor[0][dataPointIndex];
+      //       }
+      //       if (seriesIndex == 1) {
+      //         return barColor[1][dataPointIndex];
+      //       }
+      //     }
+      //   ],
+      //   plotOptions: {
+      //     bar: {
+      //       horizontal: false,
+      //       columnWidth: "50%",
+      //       rangeBarOverlap: true,
+      //       barHeight: "100%"
+      //       // dataLabels: {
+      //       //   position: 'top'
+      //       // }
+      //       //endingShape: 'rounded'
+      //       // distributed: true
+      //     }
+      //   },
+      //   dataLabels: {
+      //     enabled: false
+      //   },
+      //   chart: {
+      //     type: "bar",
+      //     stacked: true,
+      //     //stackType: '100%',
+      //     toolbar: {
+      //       show: false
+      //     },
+      //     zoom: {
+      //       enabled: false
+      //     },
+      //     animations: {
+      //       enabled: true,
+      //       easing: "easeinout",
+      //       speed: 800,
+      //       animateGradually: {
+      //         enabled: true,
+      //         delay: 150
+      //       },
+      //       dynamicAnimation: {
+      //         enabled: true,
+      //         speed: 350
+      //       }
+      //     }
+      //   },
+      //   title: {
+      //     text: this.$root.$t("profile.stockanalysis"),
+      //     align: "left",
+      //     margin: 10,
+      //     offsetX: 2,
+      //     offsetY: -5,
+      //     style: {
+      //       fontSize: "20px",
+      //       fontWeight: "bold"
+      //     }
+      //   },
+      //   stroke: {
+      //     show: true,
+      //     width: 2,
+      //     curve: "smooth"
+      //   },
+      //   noData: {
+      //     text: this.$root.$t('msg.noData')
+      //   },
+      //   tooltip: {
+      //     enabled: true,
+      //     followCursor: true,
+      //     intersect: true,
+      //     onDataSetHover: {
+      //       highlightDataSeries: false
+      //     },
+      //     x: {
+      //       show: false
+      //     },
+      //     y: {
+      //       formatter: (val, { series, seriesIndex, dataPointIndex }) => {
+      //         return (
+      //           '<div class="arrow_box">' +
+      //           "<span> " +
+      //           this.stockAnalysis[dataPointIndex].stockName +
+      //           " </span>" +
+      //           "<span> " +
+      //           series[seriesIndex][dataPointIndex] +
+      //           "</span>" +
+      //           "</div>"
+      //         );
+      //       },
+      //       title: {
+      //         formatter: function(seriesName) {
+      //           return seriesName.toUpperCase();
+      //         }
+      //       }
+      //     }
+      //   },
+      //   xaxis: {
+      //     labels: {
+      //       offsetX: 10,
+      //       offsetY: 10,
+      //       formatter: function(value) {
+      //         return "";
+      //       },
+      //       axisBorder: {
+      //         show: true,
+      //         width: "10%"
+      //       }
+      //     }
+      //   }
+      // }
       chartOptions: {
+        chart: {
+          type: "bar",
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
         colors: [
           function({ value, seriesIndex, dataPointIndex, w }) {
             if (seriesIndex == 0) {
@@ -147,103 +273,38 @@ export default {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: "50%",
-            startingShape: "rounded",
-            rangeBarOverlap: true,
-            barHeight: "100%"
-            // dataLabels: {
-            //   position: 'top'
-            // }
-            //endingShape: 'rounded'
-            // distributed: true
+            columnWidth: "30%",
+            endingShape: "flat"
           }
         },
         dataLabels: {
           enabled: false
         },
-        chart: {
-          type: "bar",
-          stacked: true,
-          //stackType: '100%',
-          toolbar: {
-            show: false
-          },
-          zoom: {
-            enabled: false
-          },
-          animations: {
-            enabled: true,
-            easing: "easeinout",
-            speed: 800,
-            animateGradually: {
-              enabled: true,
-              delay: 150
-            },
-            dynamicAnimation: {
-              enabled: true,
-              speed: 350
-            }
-          }
-        },
-        title: {
-          text: this.$root.$t('profile.stockanalysis'),
-          align: "left",
-          margin: 10,
-          offsetX: 2,
-          offsetY: -5,
-          style: {
-            fontSize: "20px",
-            fontWeight: "bold"
-          }
-        },
         stroke: {
           show: true,
           width: 2,
-          curve: "smooth"
+          colors: ["transparent"]
         },
-        noData: {
-          text: this.$root.$t('leaderboard.nodata')
-        },
-        tooltip: {
-          enabled: true,
-          followCursor: true,
-          intersect: true,
-          onDataSetHover: {
-            highlightDataSeries: false
-          },
-          x: {
-            show: false
-          },
-          y: {
-            formatter: (val, { series, seriesIndex, dataPointIndex }) => {
-              return (
-                '<div class="arrow_box">' +
-                "<span> " +
-                this.stockAnalysis[dataPointIndex].stockName +
-                " </span>" +
-                "<span> " +
-                series[seriesIndex][dataPointIndex] +
-                "</span>" +
-                "</div>"
-              );
-            },
-            title: {
-              formatter: function(seriesName) {
-                return seriesName.toUpperCase();
-              }
+        xaxis: {
+          categories: [],
+          labels: {
+            formatter: function(val) {
+              return val.toUpperCase();
             }
           }
         },
-        xaxis: {
-          labels: {
-            offsetX: 10,
-            offsetY: 10,
-            formatter: function(value) {
-              return "";
-            },
-            axisBorder: {
-              show: true,
-              width: "10%"
+        yaxis: {
+          title: {
+            text: ""
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function(val) {
+              return val;
             }
           }
         }
@@ -251,32 +312,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"]),
-    stocks() {
-      let stocks = [];
-      this.stockAnalysis.forEach(element => {
-        stocks.push(element.stockName);
-      });
-      return stocks;
-    },
-    series() {
-      let win = [];
-      let loss = [];
-      this.stockAnalysis.forEach(element => {
-        win.push(element.winCount);
-        loss.push(element.lossCount);
-      });
-      return [
-        {
-          name: this.$root.$t("msg.win"),
-          data: win
-        },
-        {
-          name: this.$root.$t("msg.lose"),
-          data: loss
-        }
-      ];
-    }
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
     checkValidDate(startDate, endDate) {
@@ -307,9 +343,31 @@ export default {
         );
         if (res.status) {
           if (res.data.length) {
+            this.stockAnalysis = res.data;
+            let stocks = [];
+            this.stockAnalysis.forEach(element => {
+              stocks.push(element.stockName);
+            });
+            this.stocks = stocks;
+            this.chartOptions.xaxis.categories = stocks;
+            let win = [];
+            let loss = [];
+            this.stockAnalysis.forEach(element => {
+              win.push(element.winCount);
+              loss.push(element.lossCount);
+            });
+            this.series = [
+              {
+                name: this.$root.$t("msg.win"),
+                data: win
+              },
+              {
+                name: this.$root.$t("msg.lose"),
+                data: loss
+              }
+            ];
             this.isDataValid = true;
             this.error = "";
-            this.stockAnalysis = res.data;
           } else {
             this.isDataValid = false;
             this.error = "No data to display";
@@ -335,8 +393,8 @@ export default {
             res,
             page: "pages/modern/desktop/profile/stockAnalysis.vue",
             apiUrl: config.getUserBetAnalysis.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -366,7 +424,7 @@ li {
 
 .chart-map-color {
   position: relative;
-  float: right ;
+  float: right;
   margin-top: 15px;
   display: inline-block;
 }

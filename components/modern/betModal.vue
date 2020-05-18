@@ -83,25 +83,30 @@
           :disabled="confirmDisabled"
           >{{ $t("msg.confirm") }}</v-btn
         >
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{ $t("msg.cancel") }}
-        </v-btn>
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{
+          $t("msg.cancel")
+        }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import Sound from "~/helpers/sound";
+import Result from "~/helpers/Result";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
 import log from "roarr";
-
+import secureStorage from "../../plugins/secure-storage";
+import { BetResult } from "~/mixin/betResult";
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
+  mixins: [BetResult],
   data() {
     return {
+      testValue: "9432.61",
       confirmDisabled: false,
       betValue: 100,
       imgChip: chips.chipsData
@@ -114,136 +119,15 @@ export default {
       "getCoinsModern",
       "getPortalProviderUUID",
       "getUserUUID",
-      "getLastDraw"
+      "getLastDraw",
+      "getUserInfo",
+      "getUserBalance"
     ])
   },
   watch: {
     getLastDraw(val) {
-      const lastDraw = val.substr(val.length - 2);
-      const first = parseInt(lastDraw.slice(0, 1));
-      const last = parseInt(lastDraw.slice(1, 2));
-      const bothdigit = first + last;
-      const twoDigit = first + last;
-      result.rule_data.map((items, index) => {
-        if ($("#" + this.stockName + this.betId).hasClass(items.type)) {
-          items.rules.map((item, index) => {
-            if ($("#" + this.stockName + this.betId).hasClass(item.name)) {
-              /* ----------------------------- // First digit ----------------------------- */
-
-              if (items.type === "firstdigit") {
-                const result = item.rule.includes(first);
-                if (result) {
-                  console.log("You Win first :" + item.name + ":" + first);
-                  $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.stockName + this.betId).addClass(
-                    this.betId.split("-")[0] + "-animation"
-                  );
-                  setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0] + "-animation"
-                    );
-                  }, 5000);
-                } else {
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
-                  );
-                  $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==first==" + item.name + "==");
-                }
-              }
-
-              /* ------------------------------ // Last digit ----------------------------- */
-
-              if (items.type === "lastdigit") {
-                const result = item.rule.includes(last);
-                if (result) {
-                  console.log("You Win last :" + item.name + ":" + last);
-                  $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.stockName + this.betId).addClass(
-                    this.betId.split("-")[0] + "-animation"
-                  );
-                  setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0] + "-animation"
-                    );
-                  }, 5000);
-                } else {
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
-                  );
-                  $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + "==");
-                }
-              }
-
-              /* -------------------------------- bothdigit ------------------------------- */
-
-              if (items.type === "bothdigit") {
-                const result = item.rule.includes(bothdigit);
-                if (result) {
-                  console.log(
-                    "You Win bothdigit:" + item.name + ":" + bothdigit
-                  );
-                  $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.stockName + this.betId).addClass(
-                    this.betId.split("-")[0] + "-animation"
-                  );
-                  setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0] + "-animation"
-                    );
-                  }, 5000);
-                } else {
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
-                  );
-                  $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + "==");
-                }
-              }
-
-              /* -------------------------------- tow digit ------------------------------- */
-              if (items.type === "twodigit") {
-                const result = item.rule.includes(twoDigit);
-                if (result) {
-                  console.log("You Win twoDigit:" + item.name + ":" + twoDigit);
-                  $("#" + this.betWin).addClass(this.betWin);
-                  $("#" + this.stockName + this.betId).addClass(
-                    this.betId.split("-")[0] + "-animation"
-                  );
-                  setTimeout(() => {
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0]
-                    );
-                    $("#" + this.betWin).removeClass(this.betWin);
-                    $("#" + this.stockName + this.betId).removeClass(
-                      this.betId.split("-")[0] + "-animation"
-                    );
-                  }, 5000);
-                } else {
-                  $("#" + this.stockName + this.betId).removeClass(
-                    this.betId.split("-")[0]
-                  );
-                  $("#" + this.betWin).removeClass(this.betWin);
-                  console.log("==You==lose==last==" + item.name + " ==");
-                }
-              }
-            }
-          });
-        }
-      });
+      // sending the data to process on the helper♦
+      this.betResult(val, this.stockName, this.betId, this.betWin);
     }
   },
   created() {
@@ -258,6 +142,7 @@ export default {
     //  this.getwinuser()
   },
   methods: {
+    ...mapMutations(["SET_FIRST"]),
     ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
     coinClick(value) {
       let amount = parseInt(value);
@@ -306,7 +191,8 @@ export default {
         this.$swal({
           type: "error",
           title: ex.message,
-          showConfirmButton: true
+          showConfirmButton: true,
+          timer: 1000
         });
         log.error(
           {
@@ -314,25 +200,40 @@ export default {
             res,
             page: "components/modern/betModal.vue",
             apiUrl: config.storeBet.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
       }
     },
     confirmBet() {
-      let data = {
-        gameUUID: this.getGameUUIDByStockName(this.stockName),
-        ruleID: this.ruleid,
-        betAmount: this.betValue
-      };
-      if (this.betValue > 0) {
-        this.confirmDisabled = true;
-        this.sendBetting(data);
-        $("#" + this.stockName + this.betId).addClass(
-          this.betId.split("-")[0] + " " + this.betId.split("-")[1]
-        );
+      if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
+        this.$swal({
+          type: "error",
+          title: config.error.lowBalance,
+          timer: 100000,
+          showConfirmButton: true
+        });
+      } else {
+        let data = {
+          gameUUID: this.getGameUUIDByStockName(this.stockName),
+          ruleID: this.ruleid,
+          betAmount: this.betValue
+        };
+        if (this.betValue > 0) {
+          Sound.betTing();
+          const stockDetail = {
+            stock: this.stockName,
+            betRule: this.betId
+          };
+          this.$emit("update-bet", stockDetail);
+          this.confirmDisabled = true;
+          this.sendBetting(data);
+          $("#" + this.stockName + this.betId).addClass(
+            this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+          );
+        }
       }
     },
     closePopper() {
@@ -350,17 +251,11 @@ export default {
 <style scoped>
 .chips {
   margin: 0px 3px;
-  -webkit-transition: -webkit-transform 0.8s ease-in-out;
-  transition: transform 0.8s ease-in-out;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
 }
-
 .chips:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
-  -ms-transform: rotate(360deg);
-  /* IE 9 */
-  transform: rotate(360deg);
 }
-
 .betHeading {
   font-weight: 500;
   color: #545353;

@@ -4,18 +4,18 @@
       <template v-slot:activator="{ on }">
         <v-btn flat v-on="on">
           <v-avatar size="40">
-            <img :src="defaultImage" />
+            <img :src="imgProfile" />
           </v-avatar>
           <div class="userLogoutMenu">
             <span v-if="getUserInfo.firstName == null"
               >{{ getUserInfo.userName }}
             </span>
-            <span v-if="getUserInfo.firstName"
-              >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</span
-            >
-            <span>
+            <span v-if="getUserInfo.firstName">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </span>
+            <span id="userBalance" @click="getUserBalancePosition()">
               <animated-number
-                :value="getUserInfo.balance"
+                :value="getUserBalance"
                 :formatValue="formatToPrice"
                 class="balance"
               />
@@ -37,15 +37,10 @@
             $t("profile.onlinehistory")
           }}</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile
-          @click="$router.push('/modern/desktop/profile/stockanalysis/')"
-        >
-          <i class="fa fa-line-chart fa-15x margin-right-5" />
-          <v-list-tile-title>{{
-            $t("profile.stockanalysis")
-          }}</v-list-tile-title>
+        <v-list-tile @click="$router.push('/modern/desktop/profile/follower/')">
+          <i class="fa fa-user fa-2x margin-right-5" />
+          <v-list-tile-title>{{ $t("profile.myFollowers") }}</v-list-tile-title>
         </v-list-tile>
-
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
           <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
@@ -65,6 +60,8 @@ import AnimatedNumber from "animated-number-vue";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import config from "../config/config.global";
+import secureStorage from "../plugins/secure-storage";
+
 export default {
   components: {
     AnimatedNumber,
@@ -72,7 +69,7 @@ export default {
   },
   data() {
     return {
-      defaultImage: "/no-profile-pic.jpg",
+      defaultImage: `/no-profile-pic.jpg`,
       dialogConfirm: false,
       profileImage: "",
       dialogprofile: false,
@@ -80,22 +77,35 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserInfo"]),
+    ...mapGetters(["getUserInfo", "getUserBalance"]),
     imgProfile() {
-      return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      if (this.getUserInfo.profileImage == null) {
+        return `${this.defaultImage}`;
+      } else {
+        return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      }
     }
   },
   mounted() {
     this.isShow = location.pathname.split("/")[1];
   },
   methods: {
+    getUserBalancePosition() {
+      // console.log(document.getElementById("userBanlance").offsetTop);
+      // console.log(
+      //   document.getElementById("userBanlance").offsetParent.offsetParent
+      //     .offsetLeft
+      // );
+      // console.log(document.getElementById("betRuleButton").offsetTop);
+      // console.log(document.getElementById("betRuleButton").offsetLeft);
+    },
     getLogout() {
       this.dialogConfirm = true;
     },
-    async dialogStatus(value) {
+    dialogStatus(value) {
       if (value) {
-        await localStorage.removeItem("AUTH");
-        const URL = await localStorage.getItem("referrerURL");
+        secureStorage.removeItem("AUTH");
+        const URL = secureStorage.getItem("referrerURL");
         location.href = "http://" + URL;
         this.dialogConfirm = false;
       }
@@ -112,6 +122,9 @@ export default {
 </script>
 
 <style scoped>
+#userBalance {
+  position: relative;
+}
 .v-menu__content {
   border-radius: 15px;
 }

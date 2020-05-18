@@ -1,11 +1,10 @@
 <template>
-  <div>
+  <div md8 lg8>
     <div>
       <v-container fill-height>
-        <v-layout>
+        <v-layout row wrap>
           <v-flex>
             <h2 class="display-1">{{ $t("msg.ecgamingrulesdescription") }}</h2>
-
             <p class="subheading">{{ $t("msg.textinfoule") }}</p>
             <v-dialog v-model="dialog" width="600">
               <template v-slot:activator="{ on }">
@@ -79,7 +78,7 @@
 </template>
 
 <script>
-import onlyrules from "~/components/modern/stocklist/onlyrule";
+import onlyrules from "~/components/modern/rule/onlyrule";
 export default {
   components: {
     onlyrules

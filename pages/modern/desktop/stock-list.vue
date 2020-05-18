@@ -1,33 +1,24 @@
 <template>
   <div>
-    <breadcrumbs
-      :title="$t('breadcrumbs.stockList')"
-      linkItem="notification"
-      linkItem2="gamerule"
-      :titlebtn="$t('breadcrumbs.notification')"
-      :titlebtn2="$t('breadcrumbs.gamerule')"
-    />
+    <breadcrumbs :title="$t('breadcrumbs.stockList')" />
     <v-container>
-      <v-layout row wrap mt-3>
-        <v-flex xs3 class="d-flex">
-          <v-select
-            class="border-round"
-            hide-details
-            :items="items"
-            :placeholder="$t('msg.sortby')"
-          ></v-select>
-        </v-flex>
-        <v-flex xs1 class="d-flex mx-3">
-          <v-btn @click="goSearch" class="buttonGreen">
-            {{
-            $t("msg.go")
-            }}
-          </v-btn>
+      <v-layout row wrap mt-3 md6 align-center justify-center>
+        <v-flex md10>
+          <v-flex md6 class="d-flex">
+            <v-select
+              v-model="sortBy"
+              class="border-round"
+              hide-details
+              :items="[ { value: 'asc', text: $t('stockList.ascending') } , { value: 'desc', text: $t('stockList.descending') }]"
+              :placeholder="$t('msg.sortBy')"
+              :key="$root.$t('stockList.ascending') + sortBy"
+            ></v-select>
+          </v-flex>
         </v-flex>
       </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12>
-          <stocklist />
+      <v-layout row wrap align-center justify-center>
+        <v-flex md10 lg10>
+          <stocklist :sortBy="sortBy" />
         </v-flex>
       </v-layout>
     </v-container>
@@ -44,17 +35,12 @@ export default {
   },
   data() {
     return {
-      items: [
-        this.$root.$t("stock-list.ascending"),
-        this.$root.$t("stock-list.descending")
-      ],
-      itemss: ""
+      sortBy: "asc"
     };
   },
-  computed: {},
   methods: {
     goSearch() {
-      console.log("You press search button");
+      //console.log("You press search button");
     }
   },
   created() {

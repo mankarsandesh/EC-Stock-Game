@@ -1,12 +1,39 @@
 import Echo from "laravel-echo";
 import config from "../config/config.global";
+import axios from "axios";
 import log from "roarr";
 
-export default ({ store }) => {
+export default async ({ store }) => {
   const port = 6001;
 
   window.io = require("socket.io-client");
   window.Pusher = require("pusher-js");
+
+  try {
+    var reqBody = {
+      portalProviderUUID: store.getters.getPortalProviderUUID,
+      version: config.version
+    };
+    var { data } = await axios.post(
+      config.getActiveGamesByCategory.url,
+      reqBody,
+      { headers: config.header }
+    );
+    store.dispatch("setStockCategory", data.data);
+  } catch (ex) {
+    console.log(ex);
+    log.error(
+      {
+        req: reqBody,
+        res,
+        page: "plugins/socketio.js",
+        apiUrl: config.getActiveGamesByCategory.url,
+        provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+        user: secureStorage.getItem("USER_UUID")
+      },
+      ex.message
+    );
+  }
 
   if (typeof io !== "undefined") {
     // connect to web socket

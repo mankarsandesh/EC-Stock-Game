@@ -1,138 +1,75 @@
 <template>
-  <v-flex xs12 class="mt-1">
-    <div class="v-table__overflow">
-      <table class="v-datatable v-table theme--light">
-        <thead>
-          <tr>
-            <th>{{ $t("msg.Stock Name") }}</th>
-            <th>{{ $t("msg.liveprice") }}</th>
-            <th class="text-left">{{ $t("msg.reference") }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in stocks" :key="index">
-            <td>{{ item.stockName }}</td>
-            <td
-              :class="{ 'text-red': currentPrice, 'text-green': !currentPrice }"
+  <v-flex xs12 class="mb-3">
+    <v-list three-line>
+      <template v-for="(item, index) in getStockListPrice[0]">
+        <v-list-tile :key="item.stockUUID">
+          <v-list-tile-content>
+            <v-list-tile-sub-title
+              class="heading"
+              v-html="item.stockName"
+            ></v-list-tile-sub-title>
+            <v-list-tile-sub-title
+              v-if="item.stockStatus == 'Closed'"
+              :style="{ color: 'red' }"
             >
-              {{ checkStock(item.stockPrice) }}
-            </td>
-            <td class="text-left">
-              <a
-                :href="item.referenceUrl"
-                target="_blank"
-                style="overflow-y: auto; white-space: nowrap;"
-              >
-                <b>{{ item.referenceUrl }}</b>
+              Closed
+            </v-list-tile-sub-title>
+            <v-list-tile-sub-title
+              v-if="item.stockStatus !== 'Closed'"
+              v-html="
+                getStockListPrice.length > 1
+                  ? $options.filters.livePriceColor(
+                      item.stockPrice,
+                      getStockListPrice[1][index].stockPrice
+                    )
+                  : item.stockPrice
+              "
+            ></v-list-tile-sub-title>
+            <v-list-tile-sub-title>
+              <a :href="item.referenceUrl" target="_blank">
+                <b>{{ item.stockReference }}</b>
               </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider :key="index"></v-divider>
+      </template>
+    </v-list>
   </v-flex>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import log from "roarr";
-
+import { mapGetters, mapState } from "vuex";
+import config from "~/config/config.global";
 export default {
-  props: ["item"],
-  data() {
-    return {
-      items: ["ascending", "descending"],
-      last_price: 0,
-      stockStatus: false,
-      currentPrice: null,
-      head: [
-        { text: "stock name", value: "stockName" },
-        { text: "live price", value: "stockOpenOrClosed" },
-        { text: "reference", value: "referenceUrl" }
-      ],
-      stocks: []
-    };
-  },
   computed: {
-    ...mapGetters(["getStockList", "getPreviousPrice", "getPortalProviderUUID"])
-  },
-  mounted() {
-    this.listenForBroadcast(
-      {
-        channelName: `stockList.${getPortalProviderUUID}`,
-        eventName: "stockList"
-      },
-      ({ data }) => {
-        try {
-          var logData = data;
-          if (data.status) {
-            this.stocks = data.data.stockData;
-          } else {
-            throw new Error(config.error.general);
-          }
-        } catch (ex) {
-          console.log(ex);
-          log.error(
-            {
-              channel: `stockList.${getPortalProviderUUID}`,
-              event: "stockList",
-              res: logData,
-              page: "components/mobile/stocklist.vue",
-              provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
-        }
-      }
-    );
-  },
-  watch: {
-    item(val) {
-      function compare(a, b) {
-        if (val == "ascending") {
-          if (a.stockName < b.stockName) return -1;
-          if (a.stockName > b.stockName) return 1;
-          return 0;
-        } else {
-          if (a.stockName < b.stockName) return 1;
-          if (a.stockName > b.stockName) return -1;
-          return 1;
-        }
-      }
-      return this.stocks.sort(compare);
-    }
-  },
-
-  methods: {
-    listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
-    },
-
-    checkStock(value) {
-      let close = {};
-      if (value == "") {
-        close = "Close";
-        this.stockStatus = true;
-      } else if (value) {
-        if (this.last_price > value) {
-          // console.log("DOWN " + value);
-          this.currentPrice = false;
-        } else {
-          // console.log("UP " + value);
-          this.currentPrice = true;
-        }
-        this.last_price = value;
-        close = value;
-      } else {
-        close = "NO DATA";
-      }
-      return close;
-    }
+    ...mapGetters(["getStockListPrice"])
   }
 };
 </script>
 <style scoped>
+.heading {
+  font-size: 20px;
+  font-weight: 600;
+}
 .bg-colors {
   background-color: #003e70 !important;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  text-align: center;
+  padding: 15px 10px;
+  border: 1px solid #dddddd;
+  background-color: #fff;
+}
+
+th {
+  background-color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  color: #8c8c8c;
 }
 </style>

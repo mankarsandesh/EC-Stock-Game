@@ -11,23 +11,28 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
-    title: "current bet",
+    title: "myFollowers",
+    to: "/modern/followers"
+  },
+  {
+    icon: "bubble_chart",
+    title: "myFollowing",
+    to: "/modern/following"
+  },
+  {
+    icon: "bubble_chart",
+    title: "currentBet",
     to: "/modern/current-bet"
   },
   {
     icon: "bubble_chart",
-    title: "history",
-    to: "/modern/history"
-  },
-  {
-    icon: "bubble_chart",
-    title: "stock list",
+    title: "stockList",
     to: "/modern/stock-list"
   },
   {
     icon: "bubble_chart",
-    title: "announcement",
-    to: "/modern/announcement"
+    title: "notification",
+    to: "/modern/notification"
   },
   {
     icon: "bubble_chart",
@@ -43,6 +48,11 @@ const Menu = [
     icon: "bubble_chart",
     title: "setting",
     to: "/modern/setting"
+  },
+  {
+    icon: "bubble_chart",
+    title: "invitation",
+    to: "/modern/invitation"
   }
 ];
 export default Menu;

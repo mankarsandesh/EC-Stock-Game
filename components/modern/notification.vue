@@ -1,6 +1,6 @@
 <template>
   <v-layout row class="justify-center">
-    <v-flex xs12 md12>
+    <v-flex xs12 md10  lg10>
       <v-data-table :items="notificationData" :items-per-page="5" ref="table" class="current-bet">
         <template v-slot:headers="head">
           <tr>

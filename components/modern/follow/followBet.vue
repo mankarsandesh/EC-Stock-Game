@@ -1,26 +1,22 @@
 <template>
   <div>
     <v-card class="followup">
-      <h3 class="title">
-        {{ isFollowing == 1 ? "Follow Bet " : "UnFollow Bet" }}
-      </h3>
+      <h3
+        class="title"
+      >{{ isFollowing == 1 ? $t("useraction.followBet") : $t("useraction.unFollowBet") }}</h3>
       <v-card-text style="text-align:center;">
-        <img class="pimage" v-bind:src="this.defaultImage" width="140px" />
-        <h3 class="subtitle-1  text-center pt-2" v-if="this.username">
-          {{ this.username }}
-        </h3>
+        <img class="pimage" v-bind:src="userImage" width="140px" />
+        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
       </v-card-text>
       <v-flex>
         <p
           v-if="FollwingError"
           v-bind:class="{ 'text-danger': hasError, 'text-sucess': hasSucess }"
-        >
-          {{ errorMessage }}
-        </p>
+        >{{ errorMessage }}</p>
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase ">Follow By</h4>
+        <h4 class="subtitle-1 text-uppercase">{{$t("leaderboard.followBy")}}</h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -49,7 +45,7 @@
             ></v-text-field>
             <v-text-field
               :rules="[
-                rules.min(10, amountValue, 'Amount'),
+                rules.min(100, amountValue, 'Amount'),
                 rules.max(1000, amountValue, 'Amount')
               ]"
               solo
@@ -62,7 +58,7 @@
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">Auto Stop Follow</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderboard.autoStop")}}</h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
@@ -73,28 +69,46 @@
               :value="n.id"
               v-on:change="changeAmount(n.value)"
             ></v-radio>
-
-            <v-text-field
-              :rules="[
-                rulesNew.min(unfollowValue, autoStop),
-                rulesNew.max(unfollowValue, autoStop)
-              ]"
-              solo
-              @keypress="onlyNumber"
-              v-model="unfollowValue"
-            >
-              <span slot="append" color="red"> {{ unfollowSign }}</span>
-            </v-text-field>
-            <v-flex lg12>
+            <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
+              <v-text-field
+                :rules="[
+                  rulesNew.min(unfollowValue, autoStop),
+                  rulesNew.max(unfollowValue, autoStop)
+                ]"
+                solo
+                @keypress="onlyNumber"
+                v-model="unfollowValue"
+              >
+                <span slot="append" color="red">{{ unfollowSign }}</span>
+              </v-text-field>
+            </v-flex>
+            <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
+              <v-slider
+                v-model="unfollowValue"
+                class="align-center"
+                :max="unFollowValueMax"
+                :min="unFollowValueMin"
+                color="green"
+                thumb-color="green"
+                track-color="green"
+                hide-details
+                thumb-size="50"
+                inverse-label
+                track-fill-color="green"
+                :label="`${unfollowValue} ${unfollowSign}`"
+              ></v-slider>
+            </v-flex>
+            <v-flex lg12 mt-2>
               <v-btn
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-                >{{ $t("useraction.follow") }}</v-btn
-              >
-              <!-- <v-btn color="buttonCancel" v-on:click="dialog = false" text>{{
+              >{{ $t("useraction.follow") }}</v-btn>
+              <v-btn color="buttonCancel" v-on:click="closePopup" text>
+                {{
                 $t("msg.cancel")
-              }}</v-btn> -->
+                }}
+              </v-btn>
             </v-flex>
           </v-radio-group>
         </v-card-actions>
@@ -105,8 +119,12 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-            >{{ $t("useraction.unfollow") }}</v-btn
-          >
+          >{{ $t("useraction.unFollow") }}</v-btn>
+          <v-btn color="buttonCancel" v-on:click="closePopup" text>
+            {{
+            $t("msg.cancel")
+            }}
+          </v-btn>
         </v-flex>
       </div>
     </v-card>
@@ -116,43 +134,67 @@
 import { mapState } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
     return {
+      // Unfollow Default Value Min and Max
+      unFollowValueMin: 3,
+      unFollowValueMax: 10,
       // AutoStop Follow Validation
       rulesNew: {
         // Min Value
         min(value, text) {
           if (text == 4 || text == 5)
-            return (value || "") >= 100 || `Amount must be at least 100 USD`;
+            return (
+              (value || "") >= 100 || window.$nuxt.$root.$t("follow.amountMust")
+            );
           else if (text == 3)
-            return (value || "") >= 1 || `Time must be at least 1 Days`;
-          else return (value || "") >= 1 || `Bet must be at least 1 Bet`;
+            return (
+              (value || "") >= 1 || window.$nuxt.$root.$t("follow.timeMust")
+            );
+          else
+            return (
+              (value || "") >= 1 || window.$nuxt.$root.$t("follow.betMust")
+            );
         },
         // Max value
         max(value, text) {
           if (text == 4 || text == 5)
             return (
-              (value || "") <= 1000 || `Amount may not be greater than 1000 USD`
+              (value || "") <= 1000 || window.$nuxt.$root.$t("follow.amountMay")
             );
           else if (text == 3)
             return (
-              (value || "") <= 10 || `Time may not be greater than 10 Days`
+              (value || "") <= 10 || window.$nuxt.$root.$t("follow.timeMay")
             );
           else
             return (
-              (value || "") <= 10 || `Bet may not be greater than 10 Bets`
+              (value || "") <= 10 || window.$nuxt.$root.$t("follow.betMay")
             );
         }
       },
       // Follow by Validation
       rules: {
         min(min, v, text) {
-          return (v || "") >= min || `${text} must be at least ${min}`;
+          text == "Amount"
+            ? (text = window.$nuxt.$root.$t("follow.amount"))
+            : (text = window.$nuxt.$root.$t("follow.rate"));
+          return (
+            (v || "") >= min ||
+            `${text} ` + window.$nuxt.$root.$t("follow.mustBe") + ` ${min}`
+          );
         },
         max(max, v, text) {
-          return (v || "") <= max || `${text} may not be greater than ${max}.`;
+          text == "Amount"
+            ? (text = window.$nuxt.$root.$t("follow.amount"))
+            : (text = window.$nuxt.$root.$t("follow.rate"));
+          return (
+            (v || "") <= max ||
+            `${text} ` + window.$nuxt.$root.$t("follow.mayNotBe") + ` ${max}.`
+          );
         }
       },
       errorMessage: "",
@@ -160,7 +202,7 @@ export default {
       hasSucess: false,
       FollwingError: false,
       unfollowSign: "USD",
-      unfollowValue: "100",
+      unfollowValue: 100,
       selectAmount: false,
       selectTime: false,
       selectBets: false,
@@ -172,15 +214,39 @@ export default {
       selectedFollow: 1,
       // Default Follow By List
       followby: [
-        { id: 1, name: "Follow by Amount", value: "Amount" },
-        { id: 2, name: "Follow by Rate", value: "Rate" }
+        {
+          id: 1,
+          name: this.$root.$t("leaderboard.followByAmount"),
+          value: "Amount"
+        },
+        {
+          id: 2,
+          name: this.$root.$t("leaderboard.followByRate"),
+          value: "Rate"
+        }
       ],
       // Default AUto Stop Follow
       autoStopFollow: [
-        { id: 4, name: "Stop by Winning", value: "stopWin" },
-        { id: 5, name: "Stop by Losing", value: "stopLoss" },
-        { id: 3, name: "Stop by Timing", value: "stopTime" },
-        { id: 6, name: "Stop by Bets", value: "stopBets" }
+        {
+          id: 4,
+          name: this.$root.$t("leaderboard.stopByWinning"),
+          value: "stopWin"
+        },
+        {
+          id: 5,
+          name: this.$root.$t("leaderboard.stopByLosing"),
+          value: "stopLoss"
+        },
+        {
+          id: 3,
+          name: this.$root.$t("leaderboard.stopByTiming"),
+          value: "stopTime"
+        },
+        {
+          id: 6,
+          name: this.$root.$t("leaderboard.stopByBets"),
+          value: "stopBets"
+        }
       ],
       defaultImage: "/no-profile-pic.jpg",
       selectedFruits: [],
@@ -201,6 +267,14 @@ export default {
     })
   },
   methods: {
+    userImgProfile(userImg) {
+      console.log(userImg);
+      return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
+    },
+    // Send to Parent Components
+    async closePopup() {
+      this.$emit("followBetClose");
+    },
     // Users Follow Bet Validation
     async followThisUser(followerID, followMethod) {
       // Check Empty Filed
@@ -214,28 +288,28 @@ export default {
           true,
           false,
           true,
-          "Follwing type is not selected"
+          window.$nuxt.$root.$t("follow.followingType")
         );
       }
 
       // Check Amount Value or Bet Value
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
-        if (this.BetValue >= 1000 || this.BetValue <= 10)
+        if (this.BetValue > 1000 || this.BetValue < 100)
           return this.errorShow(
             true,
             false,
             true,
-            "Amount should be Lower then 1001 & Grater then 10"
+            window.$nuxt.$root.$t("follow.amountShould")
           );
       } else {
         this.BetValue = this.rateValue;
-        if (this.BetValue >= 100 && this.BetValue <= 10)
+        if (this.BetValue > 100 || this.BetValue < 10)
           return this.errorShow(
             true,
             false,
             true,
-            "Bet Rate Should be Lower then 101 & Grater then 10"
+            window.$nuxt.$root.$t("follow.betRate")
           );
       }
 
@@ -243,32 +317,32 @@ export default {
       switch (this.autoStop) {
         case 4:
         case 5:
-          if (this.unfollowValue >= 1000 || this.unfollowValue <= 10) {
+          if (this.unfollowValue > 1000 || this.unfollowValue < 100) {
             return this.errorShow(
               true,
               false,
               true,
-              "Amount should be Lower then 1001 & Grater then 10"
+              window.$nuxt.$root.$t("follow.autoStop")
             );
           }
           break;
         case 3:
-          if (this.unfollowValue >= 10 || this.unfollowValue <= 1) {
+          if (this.unfollowValue > 10 || this.unfollowValue < 1) {
             return this.errorShow(
               true,
               false,
               true,
-              "Days should be Lower then 11 & Grater then 0"
+              window.$nuxt.$root.$t("follow.daysShould")
             );
           }
           break;
         case 6:
-          if (this.unfollowValue >= 100 || this.unfollowValue <= 1) {
+          if (this.unfollowValue > 100 || this.unfollowValue < 1) {
             return this.errorShow(
               true,
               false,
               true,
-              "Bets should be Lower then 101 & Grater then 0"
+              window.$nuxt.$root.$t("follow.betsShould")
             );
           }
           break;
@@ -311,10 +385,14 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-          this.errorShow(true, true, false, data.message[0]);
-          window.setTimeout(function() {
-            location.reload();
-          }, 2000);
+          this.errorShow(
+            true,
+            true,
+            false,
+            data.message[0] == "User followed successfully."
+              ? this.$root.$t("follow.userFollowed")
+              : this.$root.$t("follow.userUnFollowed")
+          );        
         } else {
           this.errorShow(true, false, true, data.message[0]);
         }
@@ -326,8 +404,8 @@ export default {
             res: data.data,
             page: "pages/modern/follow/followBet.vue",
             apiUrl: config.followUser.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -336,7 +414,7 @@ export default {
     // Change Amount Rate Validation
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
-      if (this.selectedFollow == "Amount") {
+      if (this.selectedFollow == 1) {
         this.selectAmount = true;
         this.selectRate = false;
       } else {
@@ -347,14 +425,18 @@ export default {
     // Change Amount Validation
     changeAmount(value) {
       if (value == "stopWin" || value == "stopLoss") {
-        this.unfollowValue = "100";
+        this.unfollowValue = 100;
         this.unfollowSign = "USD";
       } else if (value == "stopTime") {
-        this.unfollowValue = "1";
-        this.unfollowSign = "Days";
+        this.unFollowValueMax = 10;
+        this.unFollowValueMin = 1;
+        this.unfollowValue = 2;
+        this.unfollowSign = this.$root.$t("msg.days");
       } else {
-        this.unfollowValue = "3";
-        this.unfollowSign = "Bets";
+        this.unFollowValueMax = 10;
+        this.unFollowValueMin = 1;
+        this.unfollowValue = 3;
+        this.unfollowSign = this.$root.$t("leaderboard.bets");
       }
     },
     // Number Validation
@@ -370,6 +452,9 @@ export default {
 </script>
 
 <style scoped>
+.v-slider .v-label {
+  color: green !important;
+}
 .title {
   text-align: center;
   color: #0b2a68;

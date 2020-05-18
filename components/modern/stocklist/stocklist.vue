@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 class="mt-3">
+  <v-flex xs12 class="mt-3" v-if="getStockListPrice.length > 0">
     <div class="v-table__overflow">
       <table>
         <thead>
@@ -10,10 +10,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in getStockListPrice[0]"
-            :key="item.stockUUID"
-          >
+          <tr v-for="(item, index) in stockLists[0]" :key="item.stockUUID">
             <td>
               <b>{{ item.stockName }}</b>
             </td>
@@ -23,10 +20,10 @@
             <td
               v-if="item.stockStatus !== 'Closed'"
               v-html="
-                getStockListPrice.length > 1
+                stockLists.length > 1
                   ? $options.filters.livePriceColor(
                       item.stockPrice,
-                      getStockListPrice[1][index].stockPrice
+                      stockLists[1][index].stockPrice
                     )
                   : item.stockPrice
               "
@@ -50,9 +47,48 @@
 import { mapGetters, mapState } from "vuex";
 import config from "~/config/config.global";
 export default {
-  props: ["itemss"],
+  props: {
+    sortBy: {
+      type: String
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      console.log(this.getStockListPrice);
+    }, 1500);
+  },
   computed: {
-    ...mapGetters(["getStockListPrice"])
+    ...mapGetters(["getStockListPrice"]),
+    stockLists() {
+      function sortByAsc(a, b) {
+        if (a.stockName < b.stockName) {
+          return -1;
+        }
+        if (a.stockName > b.stockName) {
+          return 1;
+        }
+        return 0;
+      }
+      function sortByDesc(a, b) {
+        if (a.stockName < b.stockName) {
+          return 1;
+        }
+        if (a.stockName > b.stockName) {
+          return -1;
+        }
+        return 0;
+      }
+      let result = [];
+      if (this.sortBy === "asc") {
+        result.push(this.getStockListPrice[0].sort(sortByAsc));
+        result.push(this.getStockListPrice[1].sort(sortByAsc));
+      } else {
+        result.push(this.getStockListPrice[0].sort(sortByDesc));
+        result.push(this.getStockListPrice[1].sort(sortByDesc));
+      }
+
+      return result;
+    }
   }
 };
 </script>

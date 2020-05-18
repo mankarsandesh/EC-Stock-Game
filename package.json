@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "@fortawesome/free-solid-svg-icons": "^5.13.0",
+        "@google-cloud/translate": "^5.3.0",
         "@nuxtjs/auth": "^4.8.4",
         "@nuxtjs/axios": "^5.8.0",
         "@nuxtjs/dotenv": "^1.4.1",
@@ -37,9 +38,11 @@
         "hchs-vue-charts": "^1.2.8",
         "howler": "^2.1.2",
         "image-exists": "^1.1.0",
+        "js-cookie": "^2.2.1",
         "laravel-echo": "^1.6.1",
         "lottie-web": "^5.5.9",
         "mobile-device-detect": "^0.3.3",
+        "net": "^1.0.2",
         "nuxt": "^2.3.4",
         "nuxt-fontawesome": "^0.4.0",
         "nuxt-winston-log": "^1.0.2",
@@ -66,11 +69,12 @@
         "vue-toast-notification": "^0.2.0",
         "vuetify": "^1.0.0",
         "vuetify-loader": "^1.0.8",
+        "vuex-persist": "^2.2.0",
         "winston": "^3.2.1",
         "winston-loggly-bulk": "^3.0.1"
     },
     "devDependencies": {
-        "node-sass": "^4.12.0",
+        "node-sass": "^4.14.1",
         "nodemon": "^1.18.9",
         "sass-loader": "^8.0.0",
         "stylus": "^0.54.5",

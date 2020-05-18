@@ -1,13 +1,9 @@
 <template>
   <div xs2>
-    <breadcrumbs
-      :title="$t('breadcrumbs.rule')"
-      linkItem2="notification"
-      :titlebtn2="$t('breadcrumbs.notification')"
-    />
+    <breadcrumbs :title="$t('breadcrumbs.rule')" />
     <v-container>
-      <v-layout row wrap>
-        <v-flex xs12 mt-3>
+      <v-layout row wrap justify-center>
+        <v-flex md10 lg10 xs12 mt-3>
           <rules />
         </v-flex>
       </v-layout>
@@ -16,7 +12,7 @@
 </template>
 <script>
 import { mapMutations, mapGetters } from "vuex";
-import rules from "~/components/modern/stocklist/rules";
+import rules from "~/components/modern/rule/rules";
 import breadcrumbs from "~/components/breadcrumbs";
 export default {
   layout: "desktopModern",

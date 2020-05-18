@@ -2,7 +2,7 @@
   <div>
     <v-layout row justify-center id="footerBet-guide">
       <v-flex lg2 md2 xs2 class="amount">
-        <div>{{ getFooterBetAmount }}</div>
+        <div>$ {{ getFooterBetAmount }}</div>
       </v-flex>
       <v-flex lg5 md5 xs3 class="chipsdiv">
         <v-layout row>
@@ -10,8 +10,8 @@
             <v-avatar
               size="65"
               v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
+              :key="key"            
+              v-bind:class="[ getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '' , 'chips']"
             >
               <v-img
                 @click="setFooterBetAmount(getCoinsModern[key])"
@@ -29,9 +29,13 @@
       </v-flex>
       <v-flex lg3 md3 xs2 class="betButton">
         <div>
-          <v-btn class="buttonGreensmall" dark @click="confirmBet()">{{
-            $t("msg.confirm")
-          }}</v-btn>
+          <v-btn
+            :disabled="!parseInt(this.getTempMultiGameBetAmount)"
+            class="buttonGreensmall"
+            dark
+            @click="confirmBet()"
+            >{{ $t("msg.confirm") }}</v-btn
+          >
           <v-btn class="buttonCancel" @click="cancelBet()">{{
             $t("msg.cancel")
           }}</v-btn>
@@ -43,12 +47,10 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import setting from "~/components/modern/setting/chipamout";
 import chips from "~/data/chips";
+import config from "../../config/config.global";
+
 export default {
-  components: {
-    //setting
-  },
   data() {
     return {
       isSending: false,
@@ -66,14 +68,27 @@ export default {
       "clearTempMultiGameBetData"
     ]),
     confirmBet() {
-      this.isSending = true;
-      this.texts = this.$root.$t("msg.sending");
-      this.confirmTempMultiGameBetData();
-      // setTimeout(() => {
-      this.sendBetting();
-      this.setFooterBetAmount(0);
-      this.isSending = false;
-      // }, 1000);
+      if (
+        parseInt(this.getTempMultiGameBetAmount) <=
+          parseInt(this.getUserBalance) &&
+        parseInt(this.getTempMultiGameBetAmount) > 0
+      ) {
+        this.isSending = true;
+        this.texts = this.$root.$t("msg.sending");
+        this.confirmTempMultiGameBetData();
+        // setTimeout(() => {
+        this.sendBetting();
+        this.setFooterBetAmount(0);
+        this.isSending = false;
+        // }, 1000);
+      } else {
+        this.clearTempMultiGameBetData();
+        this.$swal({
+          type: "error",
+          title: config.error.lowBalance,
+          timer: 1500
+        });
+      }
     },
     cancelBet() {
       this.isSending = false;
@@ -84,14 +99,19 @@ export default {
   computed: {
     ...mapGetters([
       "getCoinsModern",
-      "getAllBettingAmount",
-      "getFooterBetAmount"
+      "getFooterBetAmount",
+      "getTempMultiGameBetAmount",
+      "getUserInfo",
+      "getUserBalance"
     ])
   }
 };
 </script>
 
 <style scoped>
+.activeChips{
+box-shadow: 0 10px 10px -6px #333;
+}
 .amount div {
   margin: 10px -15px;
   padding: 8px;
@@ -133,19 +153,9 @@ export default {
 
 .chips {
   cursor: pointer;
-  margin: 2px 5px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
-  -webkit-transition: -webkit-transform 0.8s ease-in-out;
-  transition: transform 0.8s ease-in-out;
+  margin: 2px 5px;  
+  border:2px solid #dddddd;
 }
-
-.chips:hover {
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
-  -ms-transform: rotate(360deg);
-  /* IE 9 */
-  transform: rotate(360deg);
-}
-
 .chipImg {
   color: #333;
   font-size: 24px;
