@@ -5,7 +5,7 @@
         <v-list-tile>
           <v-list-tile-content>
             <v-list-tile-title>
-              My Following
+              {{$t("profile.myFollowing")}}
               <span class="followingCount">{{ followingList.length }} </span>
             </v-list-tile-title>
           </v-list-tile-content>
@@ -14,7 +14,7 @@
       <v-list>
         <v-flex v-if="followingList.length == 0">
           <h2 class="text-center" style="color:#a3a3a3;">
-            There are no users in Following List.
+            {{$t("profile.noFollowing")}}
           </h2>
         </v-flex>
       </v-list>
@@ -50,7 +50,7 @@
                 >{{
                   item.isFollowing == 0
                     ? $t("useraction.follow")
-                    : $t("useraction.unfollow")
+                    : $t("useraction.unFollow")
                 }}</v-btn
               >
             </v-list-tile-action>
@@ -77,7 +77,7 @@
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>{{
-            this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
+            this.FolloworNot == 1 ? this.$root.$t("useraction.followBet") : this.$root.$t("useraction.unFollowBet")
           }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>

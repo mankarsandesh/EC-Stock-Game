@@ -145,7 +145,7 @@
     "go": "ไป",
     "moredetails": "รายละเอียดเพิ่มเติม",
     "viewchart": "ดูแผนภูมิ",
-    "sortby": "จัดเรียงตาม:",
+    "sortBy": "จัดเรียงตาม:",
     "membership": "การเป็นสมาชิก",
     "min": "ต่ำสุด",
     "max": "สูงสุด",
@@ -245,8 +245,8 @@
     "onlinetime": "เวลาออนไลน์",
     "totalonline": "ออนไลน์ทั้งหมด",
     "signout": "ออกจากระบบ",
-    "myfollowers": "ผู้ติดตามของฉัน",
-    "myfollowing": "ดังต่อไปนี้",
+    "myFollowers": "ผู้ติดตามของฉัน",
+    "myFollowing": "ดังต่อไปนี้",
     "myNotification": "การแจ้งเตือนของฉัน",
     "setting": "การตั้งค่า",
     "lastActive" : "ใช้งานล่าสุด",
@@ -259,9 +259,9 @@
   },
   "useraction": {
     "followBet": "ทำตามการพนัน",
-    "unfollowBet": "ยกเลิกการเดิมพัน",
+    "unFollowBet": "ยกเลิกการเดิมพัน",
     "follow": "ติดตาม",
-    "unfollow": "เลิก",
+    "unFollow": "เลิก",
     "yourself": "ด้วยตัวคุณเอง"
   },
   "liveBetData": {

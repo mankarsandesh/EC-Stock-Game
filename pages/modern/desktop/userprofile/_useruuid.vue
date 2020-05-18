@@ -75,7 +75,7 @@
                   {{
                   visitProfileUserData.isFollowing == 0
                   ? $t("useraction.followBet")
-                  : $t("useraction.unfollowBet")
+                  : $t("useraction.unFollowBet")
                   }}
                 </v-btn>
               </div>

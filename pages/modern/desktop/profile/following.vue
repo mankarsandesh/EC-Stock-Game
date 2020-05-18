@@ -3,7 +3,7 @@
     <v-flex xs12 class="pt-5 pl-5">
       <div>
         <h2 class="text-uppercase">
-          {{ $t("profile.myfollowing") }} ({{ this.countFollwing }})
+          {{ $t("profile.myFollowing") }} ({{ this.countFollwing }})
         </h2>
         <v-divider></v-divider>
       </div>
@@ -65,7 +65,7 @@
                 )
               "
             >
-              {{ $t("useraction.unfollow") }}
+              {{ $t("useraction.unFollow") }}
             </button>
           </div>
         </div>

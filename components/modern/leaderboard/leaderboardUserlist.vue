@@ -103,7 +103,7 @@
                 )
               "
               dark
-            >{{ $t("useraction.unfollow") }}</v-btn>
+            >{{ $t("useraction.unFollowBet") }}</v-btn>
           </div>
           <div v-if="data.isFollowing == -1" style="width:20%;padding-top:30px;">
             <v-btn class="buttonGreensmall">{{ $t("useraction.yourself") }}</v-btn>

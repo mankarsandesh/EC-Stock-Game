@@ -46,7 +46,7 @@
             ></v-text-field>
             <v-text-field
               :rules="[
-                rules.min(10, amountValue, 'Amount'),
+                rules.min(100, amountValue, 'Amount'),
                 rules.max(1000, amountValue, 'Amount')
               ]"
               solo
@@ -120,7 +120,7 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-            >{{ $t("useraction.unfollow") }}</v-btn
+            >{{ $t("useraction.unFollow") }}</v-btn
           >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
             {{ $t("msg.cancel") }}

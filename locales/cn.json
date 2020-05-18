@@ -145,7 +145,7 @@
     "go": "确认",
     "moredetails": "赢率细节",
     "viewchart": " 查看图表",
-    "sortby": "排序方式:",
+    "sortBy": "排序方式:",
     "membership": "會員資格",
     "min": "最低的",
     "max": "最高的",
@@ -245,8 +245,8 @@
     "onlinetime": "上线时间",
     "totalonline": "总在线",
     "signout": "登出",
-    "myfollowers": "我的追随者",
-    "myfollowing": "我的以下",
+    "myFollowers": "我的追随者",
+    "myFollowing": "我的以下",
     "myNotification": "提醒权限",
     "setting": "设置",
     "lastActive" : "最后登录",
@@ -258,9 +258,9 @@
   },
   "useraction": {
     "followBet": "跟进",
-    "unfollowBet": "取消投注",
+    "unFollowBet": "取消投注",
     "follow": "跟随",
-    "unfollow": "取消关注",
+    "unFollow": "取消关注",
     "yourself": "我"
   },
   "liveBetData": {

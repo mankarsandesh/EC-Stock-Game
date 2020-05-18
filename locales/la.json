@@ -145,7 +145,7 @@
     "go": "ໄປ",
     "moredetails": "ລາຍ​ລະ​ອຽດ​ເພີ່ມ​ເຕີມ",
     "viewchart": "ເບິ່ງຕາຕະລາງ",
-    "sortby": "ຈັດຮຽງຕາມ",
+    "sortBy": "ຈັດຮຽງຕາມ",
     "membership": "ສະມາຊິກ",
     "min": "ຕ່ຳສຸດ",
     "max": "ສູງສຸດ",
@@ -245,8 +245,8 @@
     "onlinetime": "ເວລາ ອອນລາຍ",
     "totalonline": "ທັງ ໝົດ ອອນລາຍ",
     "signout": "ອອກ​ຈາກ​ລະ​ບົບ",
-    "myfollowers": "ຜູ້ຕິດຕາມຂອງຂ້ອຍ",
-    "myfollowing": "ຕໍ່ໄປນີ້",
+    "myFollowers": "ຜູ້ຕິດຕາມຂອງຂ້ອຍ",
+    "myFollowing": "ຕໍ່ໄປນີ້",
     "myNotification": "ແຈ້ງການຂອງຂ້ອຍ",
     "setting": "ການຕັ້ງຄ່າ",
     "lastActive" : "ມີການເຄື່ອນໄຫວສຸດທ້າຍ",
@@ -258,9 +258,9 @@
   },
   "useraction": {
     "followBet": "ຕິດຕາມການເດີມພັນ",
-    "unfollowBet": "ບໍ່ປະຕິບັດຕາມການເດີມພັນ",
+    "unFollowBet": "ບໍ່ປະຕິບັດຕາມການເດີມພັນ",
     "follow": "ປະຕິບັດຕາມ",
-    "unfollow": "ບໍ່ສົມບູນ",
+    "unFollow": "ບໍ່ສົມບູນ",
     "yourself": "ຕົວທ່ານເອງ"
   },
   "liveBetData": {

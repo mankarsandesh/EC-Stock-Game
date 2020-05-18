@@ -3,7 +3,7 @@
     <v-card class="followup">
       <h3
         class="title"
-      >{{ isFollowing == 1 ? $t("useraction.followBet") : $t("useraction.unfollowBet") }}</h3>
+      >{{ isFollowing == 1 ? $t("useraction.followBet") : $t("useraction.unFollowBet") }}</h3>
       <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="userImage" width="140px" />
         <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
@@ -119,7 +119,7 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-          >{{ $t("useraction.unfollow") }}</v-btn>
+          >{{ $t("useraction.unFollowBet") }}</v-btn>
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
             {{
             $t("msg.cancel")
