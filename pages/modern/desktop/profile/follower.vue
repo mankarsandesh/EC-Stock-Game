@@ -61,7 +61,12 @@
     </v-flex>
 
     <!-- Follow Dialog -->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
+    <v-dialog
+      v-model="followDialog"
+      width="500"
+      class="followDialog"
+      :persistent=true
+    >
       <followBet
         :username="this.username"
         :userImage="this.userImage"
@@ -86,7 +91,7 @@ export default {
       FollowUserUUID: "",
       FolloworNot: "",
       userImage: "",
-      dialog: false,
+      followDialog: false,
       active: null,
       followerList: [],
       countFollower: 0,
@@ -105,15 +110,16 @@ export default {
   methods: {
     // Close Follow Bet Popup
     closeFollowBet() {
-      this.dialog = false;
+      this.followDialog = false;
+      this.getFollowerList();
     },
     // Follow User Bet
-    followUserBet: function(username, userImg, userUUID, method) {    
+    followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
-      this.userImage =  this.userImgProfile(userImg);    
-      this.dialog = true;
+      this.userImage = this.userImgProfile(userImg);
+      this.followDialog = true;
     },
     // fetch default image or from server image
     userImgProfile(userImg) {
@@ -134,7 +140,7 @@ export default {
           {
             headers: config.header
           }
-        );        
+        );
         if (res.code == 200) {
           this.followerList = res.data;
           this.countFollower = res.data.length;

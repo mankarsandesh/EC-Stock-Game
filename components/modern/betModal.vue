@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-            isNaN(betId.split("-")[1])
-            ? $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            $t("gamemsg." + betId.split("-")[1])
-            : $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            betId.split("-")[1]
+              isNaN(betId.split("-")[1])
+                ? $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  $t("gamemsg." + betId.split("-")[1])
+                : $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  betId.split("-")[1]
             }}
           </span>
         </h3>
@@ -31,7 +31,12 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -53,7 +58,13 @@
           </v-flex>-->
 
           <v-flex style="align-self:center">
-            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -70,8 +81,11 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-        >{{ $t("msg.confirm") }}</v-btn>
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{ $t("msg.cancel") }}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn
+        >
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{
+          $t("msg.cancel")
+        }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -92,6 +106,7 @@ export default {
   mixins: [BetResult],
   data() {
     return {
+      testValue: "9432.61",
       confirmDisabled: false,
       betValue: 100,
       imgChip: chips.chipsData
@@ -175,7 +190,8 @@ export default {
         this.$swal({
           type: "error",
           title: ex.message,
-          showConfirmButton: true
+          showConfirmButton: true,
+          timer: 100000
         });
         log.error(
           {
@@ -195,7 +211,7 @@ export default {
         this.$swal({
           type: "error",
           title: config.error.lowBalance,
-          timer: 1500,
+          timer: 100000,
           showConfirmButton: true
         });
       } else {
@@ -285,4 +301,4 @@ input[type="number"] {
 .chipImg {
   cursor: pointer;
 }
-</style>  
+</style>

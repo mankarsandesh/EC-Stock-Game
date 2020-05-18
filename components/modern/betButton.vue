@@ -48,20 +48,23 @@
               })
             "
           ></showChipAmount>
-          <div @click="testAnimation($event)" :id="'firstdigitWin-' + data.rule"></div>
+          <div :id="'firstdigitWin-' + data.rule"></div>
 
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
-          <span
-            class="small-digit"
-            v-show="isFullscreen"
-          >{{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}</span>
+          <span class="small-digit" v-show="isFullscreen">{{
+            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
+          }}</span>
         </v-btn>
       </popper>
 
       <span class="w10">
-        <v-btn class="align_button4" :id="stockID + 'firstdigit'" @click="btnNumber('first')">
+        <v-btn
+          class="align_button4"
+          :id="stockID + 'firstdigit'"
+          @click="btnNumber('first')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -71,7 +74,9 @@
               })
             "
           ></showChipAmount>
-          <span class="big-digit" :id="stockID + 'firstdigitNumber'">0 - 9</span>
+
+          <div class="big-digit" :id="stockID + 'firstdigitNumber'"></div>
+          <span class="big-digit">0 - 9</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">{{ payout_09 }}</span>
@@ -126,22 +131,21 @@
               })
             "
           ></showChipAmount>
-          <div @click="testAnimation($event)" :id="'lastdigitWin-' + data.rule"></div>
+          <div :id="'lastdigitWin-' + data.rule"></div>
 
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span
-            class="small-digit"
-            v-show="isFullscreen"
-          >{{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}</span>
+          <span class="small-digit" v-show="isFullscreen">{{
+            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
+          }}</span>
         </v-btn>
       </popper>
 
       <span class="w12">
         <v-btn
           class="align_button4 betButtonGuide"
-          :id="stockID+'lastdigit'"
+          :id="stockID + 'lastdigit'"
           @click="btnNumber('last')"
         >
           <showChipAmount
@@ -153,7 +157,7 @@
               })
             "
           ></showChipAmount>
-          <div class="big-digit" :id="stockID +'lastdigitNumber'"></div>
+          <div class="big-digit" :id="stockID + 'lastdigitNumber'"></div>
           <span class="big-digit">0 - 9</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
@@ -205,19 +209,17 @@
               })
             "
           ></showChipAmount>
-          <div @click="testAnimation($event)" :id="'bothdigitWin-' + data.rule"></div>
+          <div :id="'bothdigitWin-' + data.rule"></div>
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span
-            class="small-digit"
-            v-show="isFullscreen"
-          >{{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}</span>
+          <span class="small-digit" v-show="isFullscreen">{{
+            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
+          }}</span>
         </v-btn>
       </popper>
-
       <span class="w12">
-        <v-btn class="align_button4" id="both" @click="btnNumber('both')">
+        <v-btn class="align_button4" :id="stockID + 'bothdigit'" @click="btnNumber('both')">
           <showChipAmount
             size="45px"
             :amount="
@@ -227,6 +229,7 @@
               })
             "
           ></showChipAmount>
+          <div class="big-digit" :id="stockID + 'bothdigitNumber'"></div>
 
           <span class="big-digit">0 - 18</span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
@@ -279,19 +282,18 @@
               })
             "
           ></showChipAmount>
-          <div @click="testAnimation($event)" :id="'twodigitWin-' + data.rule"></div>
+          <div :id="'twodigitWin-' + data.rule"></div>
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span
-            class="small-digit"
-            v-show="isFullscreen"
-          >{{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}</span>
+          <span class="small-digit" v-show="isFullscreen">{{
+            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
+          }}</span>
         </v-btn>
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4" id="two" @click="btnNumber('two')">
+        <v-btn class="align_button4" :id="stockID + 'twodigit'" @click="btnNumber('two')">
           <showChipAmount
             size="45px"
             :amount="
@@ -301,8 +303,8 @@
               })
             "
           ></showChipAmount>
-
-          <span class="big-digit">00 - 99</span>
+          <div :id="stockID + 'twodigitNumber'"></div>
+          <span class="big-digit">0 - 99</span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">{{ payout_99 }}</span>
@@ -338,7 +340,8 @@
           @click="betButtonClick(8 + index, 'firstdigit')"
           v-show="number == 'first'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -361,12 +364,13 @@
           ></betModal>
         </div>
         <v-btn
-          :id="stockID +'lastdigit'+'-'+ index"
+          :id="stockID + 'lastdigit' + '-' + index"
           slot="reference"
           @click="betButtonClick(25 + index, 'lastdigit')"
           v-show="number == 'last'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -380,6 +384,7 @@
       >
         <div class="popper">
           <betModal
+            @update-bet="updateBet"
             :stockName="stockID"
             :ruleid="149 + index"
             :betId="'bothdigit-' + index"
@@ -388,12 +393,13 @@
           ></betModal>
         </div>
         <v-btn
-          :id="stockID +'bothdigit'+'-'+ index"
+          :id="stockID + 'bothdigit' + '-' + index"
           slot="reference"
           @click="betButtonClick(149 + index, 'bothdigit')"
           v-show="number == 'both'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -407,20 +413,22 @@
       >
         <div class="popper">
           <betModal
+            @update-bet="updateBet"
             :stockName="stockID"
             :ruleid="42 + index"
             :betId="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
-            :betWin="'twodigit-0Win-' + index"
+            :betWin="'twodigitWin-' + index"
             :payout="index + 69"
           ></betModal>
         </div>
         <v-btn
-          :id="stockID +'twodigit'+'-'+ index"
+          :id="index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index"
           slot="reference"
           @click="betButtonClick(42 + index, 'twodigit')"
           v-show="number == 'two'"
           class="btn-small"
-        >{{ index < 10 ? "0" + index : index }}</v-btn>
+          >{{ index < 10 ? "0" + index : index }}</v-btn
+        >
       </popper>
     </v-layout>
   </div>
@@ -534,39 +542,7 @@ export default {
       "clearDataMultiGameBet",
       "setTempMultiGameBetData"
     ]),
-    testAnimation() {
-      let elements = document.getElementsByClassName("chip-animation");
-      for (let i = 0; i < elements.length; i++) {
-        let top =
-          elements[i].offsetParent.offsetParent.offsetTop +
-          elements[i].offsetParent.offsetTop +
-          62 +
-          elements[i].offsetParent.offsetParent.offsetParent.offsetParent
-            .offsetTop;
-        let left =
-          elements[i].offsetParent.offsetParent.offsetParent.offsetParent
-            .offsetLeft + elements[i].offsetParent.offsetParent.offsetLeft;
-        elements[i].style.position = "fixed";
-        elements[i].style.top = top + "px";
-        elements[i].style.left = left + "px";
 
-        setTimeout(() => {
-          elements[i].style.transition = "left 1s linear, top 1s linear ";
-          elements[i].style.top =
-            document.getElementById("userBanlance").offsetTop + "px";
-          elements[i].style.left =
-            document.getElementById("userBanlance").offsetParent.offsetParent
-              .offsetLeft + "px";
-        }, 1);
-        // clear style
-        setTimeout(() => {
-          elements[i].style.display = "none";
-          elements[i].style.top = 0;
-          elements[i].style.left = 0;
-          elements[i].style.transition = "left 0s linear, top 0s linear ";
-        }, 1200);
-      }
-    },
     ...mapMutations(["SET_FIRST_PARENT"]),
     betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
@@ -625,5 +601,4 @@ export default {
   white-space: pre-line;
 }
 </style>
-
 

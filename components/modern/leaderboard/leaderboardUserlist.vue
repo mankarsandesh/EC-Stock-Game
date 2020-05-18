@@ -8,7 +8,7 @@
               {{ $t("leaderboard.top") }} {{ topPlayerData.length }}
               {{ $t("leaderboard.leaders") }}
             </span>
-            ({{ this.sortbyName }})
+            ({{ this.sortbyName == "monthly" ? $t("leaderboard.monthlyrankings") : $t("leaderboard.weeklyrankings")}})
             <i
               v-if="loadingImage"
               class="fa fa-circle-o-notch fa-spin"
@@ -37,9 +37,7 @@
       </v-layout>
     </v-flex>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">
-        {{ $t("leaderboard.nodata") }}
-      </h2>
+      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.nodata") }}</h2>
     </v-flex>
     <v-flex v-if="topPlayerData.length > 0">
       <v-flex
@@ -55,7 +53,7 @@
         <div class="userRow">
           <div>
             <!-- <span class="rank"> 
-            </span> -->
+            </span>-->
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
               <img class="pimage" :src="userImgProfile(data.userImage)" />
               <span class="subtitle-1 text-uppercase">
@@ -66,21 +64,18 @@
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningrate") }}</h3>
-            <h4 class="green--text titleText">
-              {{ Math.round(data.winRate, 1) }}%
-            </h4>
+            <h4 class="green--text titleText">{{ Math.round(data.winRate, 1) }}%</h4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
-            <H4 style="color:#eb0b6e;" class="titleText">
-              {{ data.totalWinBets }}
-            </H4>
+            <H4 style="color:#eb0b6e;" class="titleText">{{ data.totalWinBets }}</H4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningamount") }}</h3>
-            <h4 style="color:#0b2a68;" class="titleText">
-              ${{ Math.round(data.totalWinAmount, 1) | currency }}
-            </h4>
+            <h4
+              style="color:#0b2a68;"
+              class="titleText"
+            >${{ Math.round(data.totalWinAmount, 1) | currency }}</h4>
           </div>
           <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
             <v-btn
@@ -94,8 +89,7 @@
                 )
               "
               dark
-              >{{ $t("useraction.followBet") }}</v-btn
-            >
+            >{{ $t("useraction.followBet") }}</v-btn>
           </div>
           <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
             <v-btn
@@ -109,22 +103,21 @@
                 )
               "
               dark
-              >{{ $t("useraction.unfollow") }}</v-btn
-            >
+            >{{ $t("useraction.unfollow") }}</v-btn>
           </div>
-          <div
-            v-if="data.isFollowing == -1"
-            style="width:20%;padding-top:30px;"
-          >
-            <v-btn class="buttonGreensmall">
-              {{ $t("useraction.yourself") }}
-            </v-btn>
+          <div v-if="data.isFollowing == -1" style="width:20%;padding-top:30px;">
+            <v-btn class="buttonGreensmall">{{ $t("useraction.yourself") }}</v-btn>
           </div>
         </div>
       </v-flex>
     </v-flex>
     <!-- Follow and UnFollow Dialog box-->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
+    <v-dialog
+      v-model="followDialog"
+      width="500"
+      class="followDialog"
+      :persistent=true
+    >
       <followBet
         v-if="renderComponent"
         :username="this.username"
@@ -138,7 +131,7 @@
 </template>
 
 <script>
-import { mapState,mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 export default {
@@ -151,7 +144,7 @@ export default {
       defaultImage: "/no-profile-pic.jpg",
       isActiveWeek: true,
       isActiveMonth: false,
-      sortbyName: this.$root.$t("leaderboard.weeklyrankings"),
+      sortbyName: "weekly",
       loadingImage: false,
       dateFrom: "",
       dateTo: "",
@@ -164,7 +157,7 @@ export default {
       method: "",
       username: "",
       userImage: "",
-      dialog: false
+      followDialog: false
     };
     props: ["linkItem"];
   },
@@ -187,7 +180,7 @@ export default {
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
     }),
-     ...mapGetters(["getUserInfo"])      
+    ...mapGetters(["getUserInfo"])
   },
   methods: {
     // Render Follow Bet Component
@@ -199,7 +192,8 @@ export default {
     },
     // Close Follow Bet Popup
     closeFollowBet() {
-      this.dialog = false;
+      this.followDialog = false;
+      this.leaderBoard();
     },
     // Sorting Weekly and Monthly
     sortingBy(sort) {
@@ -214,7 +208,7 @@ export default {
           .substr(0, 10);
         this.dateFrom = monthly;
         this.dateTo = today.toISOString().substring(0, 10);
-        this.sortbyName = this.$root.$t("leaderboard.monthlyrankings");
+        this.sortbyName = "monthly";
         this.isActiveMonth = true;
         this.isActiveWeek = false;
         this.leaderBoard();
@@ -229,7 +223,7 @@ export default {
           .substr(0, 10);
         this.dateFrom = lastWeek;
         this.dateTo = today.toISOString().substring(0, 10);
-        this.sortbyName = this.$root.$t("leaderboard.weeklyrankings");
+        this.sortbyName = "weekly";
         this.isActiveMonth = false;
         this.isActiveWeek = true;
         this.leaderBoard();
@@ -239,7 +233,7 @@ export default {
     userImgProfile(userImage) {
       return userImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/`+userImage;
+        : `${config.apiDomain}/` + userImage;
     },
     // Open Dialog box When User Click on Follow Button
     followUser(username, userImage, userUUID, method) {
@@ -247,7 +241,7 @@ export default {
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
-      this.dialog = true;
+      this.followDialog = true;
       this.forceRerender();
     },
     // fetch leaderboard Top Player
@@ -267,7 +261,7 @@ export default {
           {
             headers: config.header
           }
-        );       
+        );
         this.topPlayerData = data.data;
         this.loadingImage = false;
       } catch (error) {

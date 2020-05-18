@@ -2,7 +2,9 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="text-uppercase">{{ $t("profile.myfollowing") }} ({{ this.countFollwing }})</h2>
+        <h2 class="text-uppercase">
+          {{ $t("profile.myfollowing") }} ({{ this.countFollwing }})
+        </h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -13,23 +15,42 @@
             <i class="fa fa-user-o fa-2x" />
             <div>{{ $t("profile.noFollowing") }}</div>
           </h3>
-          <div class="follower_container" v-for="(data, index) in followingList" :key="index">
+          <div
+            class="follower_container"
+            v-for="(data, index) in followingList"
+            :key="index"
+          >
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
               <img class="userImage" :src="imgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">
-                {{
-                data.userName
-                }}
+                {{ data.userName }}
               </span>
             </nuxt-link>
             <div class="followType">
               <span>
-                <label>{{ data.followRuleValue[0].name == 'byAmount' ? $t("leaderboard.followbyAmount") : $t("leaderboard.followbyRate") }} :</label>
+                <label
+                  >{{
+                    data.followRuleValue[0].name == "byAmount"
+                      ? $t("leaderboard.followbyAmount")
+                      : $t("leaderboard.followbyRate")
+                  }}
+                  :</label
+                >
                 {{ data.followRuleValue[0].value }}
               </span>
               <span>
-                <label>{{ data.unFollowRuleValue[0].name == 'byWin' ? $t("leaderboard.stopbyWinning") : data.unFollowRuleValue[0].name == 'byLose' ? $t("leaderboard.stopbyLosing") : data.unFollowRuleValue[0].name == 'byTime' ? $t("leaderboard.stopbyTiming") : $t("leaderboard.stopbyBets")}}:</label>
+                <label
+                  >{{
+                    data.unFollowRuleValue[0].name == "byWin"
+                      ? $t("leaderboard.stopbyWinning")
+                      : data.unFollowRuleValue[0].name == "byLose"
+                      ? $t("leaderboard.stopbyLosing")
+                      : data.unFollowRuleValue[0].name == "byTime"
+                      ? $t("leaderboard.stopbyTiming")
+                      : $t("leaderboard.stopbyBets")
+                  }}:</label
+                >
                 {{ data.unFollowRuleValue[0].value }}
               </span>
             </div>
@@ -43,13 +64,20 @@
                   data.isFollowing
                 )
               "
-            >{{ $t("useraction.unfollow") }}</button>
+            >
+              {{ $t("useraction.unfollow") }}
+            </button>
           </div>
         </div>
       </v-flex>
     </v-flex>
     <!-- Follow Dialog -->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
+    <v-dialog
+      v-model="followDialog"
+      width="500"
+      class="followDialog"
+      :persistent=true
+    >
       <followBet
         :username="this.username"
         :userImage="this.userImage"
@@ -73,7 +101,7 @@ export default {
       userImage: "",
       FollowUserUUID: "",
       FolloworNot: "",
-      dialog: false,
+      followDialog: false,
       followingListEmpty: false,
       active: null,
       followingList: [],
@@ -93,14 +121,15 @@ export default {
   methods: {
     // Close Follow Bet Popup
     closeFollowBet() {
-      this.dialog = false;
+      this.followDialog = false;
+      this.getFollowingList();
     },
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
-      this.dialog = true;
+      this.followDialog = true;
     },
     // fetch default image or from server image
     imgProfile(userImg) {
@@ -111,14 +140,15 @@ export default {
     // fetch default image or from server image
     async getFollowingList() {
       try {
+        const reBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          followersType: 2, // Follwing users List
+          version: config.version
+        };
         const res = await this.$axios.$post(
           config.getUserFollower.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID: this.getUserUUID,
-            followersType: 2, // Follwing users List
-            version: config.version
-          },
+          reBody,
           {
             headers: config.header
           }
@@ -126,7 +156,6 @@ export default {
         if (res.code == 200) {
           this.followingList = res.data;
           this.countFollwing = res.data.length;
-
           if (this.countFollwing == 0) {
             this.followingListEmpty = true;
           } else {
