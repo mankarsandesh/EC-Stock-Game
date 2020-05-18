@@ -5,20 +5,20 @@
         <div class="chip-image">
           <v-img :width="90" :src="chip.image" class="chipImage" />
           <input
-            :disabled="conOrE === 'edit' ? disableInput : false"
+            :disabled="toggleButtonStatus === 'edit' ? disableInput : false"
             class="input-chip-amount"
             type="number"
             :value="chip.amount"
-            :ref="chip.chipID"
+            :ref="index"
           />
         </div>
         <div class="chip-action">
-          <v-btn class="chipamount" text @click="conOrEClick(chip.chipID)">{{
-            $t("msg." + conOrE)
+          <v-btn class="chipamount" text @click="changeChipAmount(chip.chipID)">{{
+            $t("msg." + toggleButtonStatus)
           }}</v-btn>
-          <div class="min-max" v-show="conOrE === 'confirm'">
-            <span>{{ $t("msg.min") }} = $200</span>
-            <span>{{ $t("msg.max") }} = $20,000</span>
+          <div class="min-max" v-show="toggleButtonStatus === 'confirm'">
+            <span>{{ $t("msg.min") }} = $100</span>
+            <span>{{ $t("msg.max") }} = $10,000</span>
           </div>
         </div>
       </v-flex>
@@ -31,10 +31,7 @@
               style="background-color: #fec623!important;border-radius:8px;"
               >{{ $t("msg.resettodefault") }}</v-btn
             >
-            <v-btn class="my-btn buttonGreensmall" @click="saveChipAmount()">{{
-              $t("msg.save")
-            }}</v-btn>
-            <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
+            <v-btn class="my-btn buttonCancel" @click="cancelAction()">{{ $t("msg.cancel") }}</v-btn>
           </div>
         </div>
       </v-flex>
@@ -60,7 +57,7 @@ export default {
       snackbar: false,
       amount: [],
       disableInput: true,
-      conOrE: "edit"
+      toggleButtonStatus: "edit"
     };
   },
   mounted() {
@@ -99,45 +96,55 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setCoinsModern"]),
-    conOrEClick(ref) {
-      if (this.conOrE == "edit") {
-        this.conOrE = "confirm";
-        this.$nextTick(() => this.$refs[ref][0].focus());
+    ...mapActions(["setCoinsModern", "setChips"]),
+    changeChipAmount(chipId) {
+      if (this.toggleButtonStatus == "edit") {
+        this.toggleButtonStatus = "confirm";
+        //this.$nextTick(() => this.$refs[chipId][0].focus());
       } else {
-        this.saveChipAmount();
-
-        this.conOrE = "edit";
+        this.saveChipAmount(chipId);
+        this.toggleButtonStatus = "edit";
       }
     },
     reset() {
-      this.setCoinsModern(config.defaultCoinsModern);
-      if (this.conOrE == "confirm") {
-        this.conOrE = "edit";
+      this.setCoinsModern(["100", "500", "1000", "5000", "10000"]);
+      this.toggleButtonStatus = "edit";
+    },
+    saveChipAmount(chipId) {
+      let index = this.chips.findIndex((chip) => chip.chipID == chipId);
+      if(index != -1) {
+        if(parseInt(this.$refs[index][0].value) >= 100 && this.$refs[index][0].value <= 10000) {
+          if(!(this.getCoinsModern.includes(this.$refs[index][0].value))) {
+            this.setChips({ index, amount: this.$refs[index][0].value })
+            this.toggleButtonStatus = "edit";
+            this.snackbar = true;
+          } else {
+            this.$swal({
+            type: "error",
+            title: "Chip Amount already exist",
+            showConfirmButton: true,
+            timer: 1000
+          });
+          }
+        } else {
+          this.$swal({
+            type: "error",
+            title: "Chip amount should be greater than 100 and less than 10000",
+            showConfirmButton: true,
+            timer: 1000
+          });
+        }
+      } else {
+        this.$swal({
+          type: "error",
+          title: config.error.general,
+          showConfirmButton: true,
+          timer: 1000
+        });
       }
     },
-    saveChipAmount() {
-      let chip1 = this.$refs.chip1[0].value;
-      let chip2 = this.$refs.chip2[0].value;
-      let chip3 = this.$refs.chip3[0].value;
-      let chip4 = this.$refs.chip4[0].value;
-      let chip5 = this.$refs.chip5[0].value;
-      let new_amount = [chip1, chip2, chip3, chip4, chip5];
-      this.setCoinsModern(new_amount);
-      this.conOrE = "edit";
-      this.snackbar = true;
-    },
-    cancel() {
-      let chip1 = this.$refs.chip1[0].value;
-      let chip2 = this.$refs.chip2[0].value;
-      let chip3 = this.$refs.chip3[0].value;
-      let chip4 = this.$refs.chip4[0].value;
-      let chip5 = this.$refs.chip5[0].value;
-      let new_amount = [chip1, chip2, chip3, chip4, chip5];
-      this.setCoinsModern(new_amount);
-      if (this.conOrE == "confirm") {
-        this.conOrE = "edit";
-      }
+    cancelAction() {
+      this.toggleButtonStatus = "edit";
     }
   }
 };

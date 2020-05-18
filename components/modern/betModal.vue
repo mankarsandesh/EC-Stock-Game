@@ -192,7 +192,7 @@ export default {
           type: "error",
           title: ex.message,
           showConfirmButton: true,
-          timer: 100000
+          timer: 1000
         });
         log.error(
           {
