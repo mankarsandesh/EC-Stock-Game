@@ -37,17 +37,17 @@ Version Features (1.0)
 
 Version Features (1.1)
 
-1.  Follow bet optimization (Will be based on the market response of version1)		
+1.  Follow bet optimization (Will be based on the market response of version1) - Done		
 2.  Chip Setting(Min-Max Setting based on V1 response)	
 3.  Every User has Different Currency ( Min and Max Chips Amount Depend on Currency)	
-4.  Player Privacy Issues(Player Settings)	
-5.  Big data statistics.	(Find the optimized solution to show big in-game data)	(Discussion with Designing Team)
-6.  Responsive focusing	(Laptop,Desktop,Mobile,Browser)
-7.  User top up balance option in Profile Page and redirect to portal Provider's Website.	
+4.  Player Privacy Issues(Player Settings)- Done
+5.  Big data statistics.	(Find the optimized solution to show big in-game data)	(Discussion with Designing Team) - Done
+6.  Responsive focusing	(Laptop,Desktop,Mobile,Browser) - Done
+7.  User top up balance option in Profile Page and redirect to portal Provider's Website.  Done
 8.  Chat box Invitation	Add extra preset content while sending an invitation	(Discussion with Designing Team)
 9.  Tutorial add character	Add mascot character in tutorial	( Discussion with Designing Team )
 10. Sound Effect (Betting , After Win, After Loss)
-11. User can set Avatar Picture. (Unable to Upload user own Picture)
+11. User can set Avatar Picture. (Unable to Upload user own Picture) - Done
 12. Work on security. No one can enter the game without authentication.
 13. Cookies(for user auth and session management) implementation if done from the backend side will be implemented.
 
