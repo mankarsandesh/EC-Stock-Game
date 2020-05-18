@@ -141,9 +141,6 @@ export default {
   mounted() {
     this.leaderBoard();
   },
-  beforeDestroy(){
-    console.log("destory");
-  },
   computed: {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,

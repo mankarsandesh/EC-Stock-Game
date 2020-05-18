@@ -45,7 +45,7 @@
               {{
                 data.isFollowing == 0
                   ? $t("useraction.follow")
-                  : $t("useraction.unfollow")
+                  : $t("useraction.unFollow")
               }}
             </button>
           </div>
