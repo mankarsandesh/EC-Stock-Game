@@ -1,6 +1,6 @@
 <template>
   <v-container fluid mt-2 class="containerNew pa-2">
-    <v-layout >
+    <v-layout>
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
@@ -48,7 +48,9 @@
                   <span>{{ $t("msg.Lastdraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
-                      <span v-html="$options.filters.lastDraw(getLastDraw)"></span>
+                      <span
+                        v-html="$options.filters.lastDraw(getLastDraw)"
+                      ></span>
                     </v-flex>
                   </div>
                 </v-flex>
@@ -65,16 +67,16 @@
                         "
                       >
                         {{
-                        getTimerByStockName($route.params.id)
-                        | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                       <span v-else>
                         {{
-                        getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                        .gameEndTimeCountDownInSec
-                        | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -87,10 +89,10 @@
                     <v-flex class="lottery">
                       <span>
                         {{
-                        getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                        .gameEndTimeCountDownInSec
-                        | lotterydraw(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | lotterydraw(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -98,8 +100,20 @@
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
 
-                <v-flex xs2 md1 class="text-xs-right" style="align-self: flex-end;">
-                  <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
+                <v-flex
+                  xs2
+                  md1
+                  class="text-xs-right"
+                  style="align-self: flex-end;"
+                >
+                  <v-btn
+                    fab
+                    dark
+                    small
+                    class="helpButton"
+                    @click="openTutorial()"
+                    title="Help"
+                  >
                     <v-icon dark size="22">fa-question</v-icon>
                   </v-btn>
                 </v-flex>
@@ -109,8 +123,8 @@
           </v-layout>
 
           <!-- Stock Chart and Bet button Component  -->
-          <v-layout style="margin-top:-10px;">
-            <v-flex md5 lg5>
+          <v-layout>
+            <v-flex md5 lg5 mt-2>
               <div id="chartGuidelineNew" class="chartDesgin">
                 <v-flex>
                   <chartApp :stockName="routeParams" />
@@ -128,10 +142,22 @@
 
         <!-- Stock Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
+          <div
+            class="trendmap-container"
+            v-for="(trendType, index) in trendTypes"
+            :key="index"
+          >
             <div id="trendmapGuidelines">
-              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index">
-                <span class="addChart" @click="addTrendMap()" v-if="index === 0">
+              <tableTrendMap
+                :index="index"
+                :dataArray="getRoadMap"
+                :isShowMultigameButton="index"
+              >
+                <span
+                  class="addChart"
+                  @click="addTrendMap()"
+                  v-if="index === 0"
+                >
                   <v-icon>add</v-icon>
                 </span>
                 <span v-else class="addChart" @click="removeTradMap(index)">
@@ -147,13 +173,25 @@
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius: 10px;">
-          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
+          <v-icon
+            class="closePopup"
+            color="#333 !important"
+            @click="dialog = false"
+            >close</v-icon
+          >
+          <v-card-title class="title" primary-title
+            >TOP 10 LEADERS</v-card-title
+          >
           <v-card-text>
             <leaderboardUserlist />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
+            <v-btn
+              class="buttonGreensmall"
+              to="/modern/desktop/leaderboard"
+              dark
+              >Go to Leaderboard</v-btn
+            >
           </v-flex>
         </v-card>
       </v-dialog>
@@ -170,7 +208,11 @@
             dark
             title="Multiple Game"
           >
-            <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
+            <i
+              style="font-size:26px;"
+              class="fa fa-gamepad"
+              aria-hidden="true"
+            ></i>
           </v-btn>
           <!-- Multiple Screen Float Button -->
           <v-btn
@@ -506,7 +548,9 @@ export default {
 .sidebar-close .v-icon {
   color: #fff !important;
 }
-
+.chartDesgin {
+  border-radius: 10px;
+}
 .sidebar-toggle {
   cursor: pointer;
   position: fixed;
