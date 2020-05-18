@@ -1,12 +1,12 @@
 <template>
   <div class="v-card-style">
-    <v-layout px-1 mt-1 >
-      <v-flex xs6 class="text-xs-left stockTimer">      
-        <span  v-if="getStockLiveTime(stockName)">{{
+    <v-layout px-1 mt-1>
+      <v-flex xs6 class="text-xs-left stockTimer">
+        <span v-if="getStockLiveTime(stockName)">{{
           getStockLiveTime(stockName).split(" ")[1]
         }}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right stockPrice">      
+      <v-flex xs6 class="text-xs-right stockPrice">
         <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
@@ -28,6 +28,7 @@ import Chart from "chart.js";
 import { mapGetters, mapActions } from "vuex";
 import Echo from "laravel-echo";
 import log from "roarr";
+import secureStorage from "../../plugins/secure-storage";
 
 export default {
   props: {
@@ -107,7 +108,7 @@ export default {
               res: logData,
               page: "components/modern/chart.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -270,8 +271,8 @@ export default {
             res,
             page: "components/modern/chart.vue",
             apiUrl: config.getRoadMap.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -286,23 +287,23 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-      this.demo = this.window.width;
+      this.demo = this.window.width;     
       // Chart Size Change According Desktop and Laptop Size
       if (this.window.width >= 2000) {
-        this.chartHeight = "420vh";
-        this.heightChart = 420;
-      } else if(this.window.width > 1400){
+        this.chartHeight = "360vh";
+        this.heightChart = 360;
+      } else if (this.window.width > 1400) {
         this.chartHeight = "330vh";
         this.heightChart = 330;
-      }else{
-          this.chartHeight = "250vh";
-          this.heightChart = 250;
-      }    
+      } else {
+        this.chartHeight = "250vh";
+        this.heightChart = 250;
+      }
     }
   }
 };
 </script>
-<style >
+<style>
 .arrow_boxChart {
   font-family: Arial, Helvetica, sans-serif;
   border: 1px solid #003f70;
@@ -310,10 +311,10 @@ export default {
   font-weight: 600;
   padding: 3px 10px;
   font-size: 20px;
-  color: #FFF;
+  color: #fff;
   background: #003f70 !important  ;
 }
-.stockTimer{
+.stockTimer {
   margin-left: 10px;
 }
 .stockPrice span {

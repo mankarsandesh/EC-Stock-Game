@@ -1,27 +1,16 @@
 <template>
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-
-    <!-- <breadcrumbs title="Stock list" linkItem="announcement" titlebtn="announcement" linkItem2="rule" titlebtn2="game rule" /> -->
-
     <!-- search -->
     <v-layout row wrap>
-      <v-flex xs8 sm9 md9 lg9 class="d-flex">
+      <v-flex xs12 sm12 class="d-flex" pl-2 pr-2>
         <v-select
           class="border-round mt-2"
           hide-details
-          :items="items"
-          placeholder="Sort By :"
+          :items="[$t('stockList.ascending'), $t('stockList.descending')]"
+          :placeholder="$t('stockList.sortBy')"
           v-model="itemss"
         ></v-select>
-      </v-flex>
-      <v-flex xs2 sm2 md3 lg2>
-        <v-btn
-          @click="goSearch"
-          class="mt-3 buttonGreen"
-          style="border-radius:8px;"
-          >{{ $t("msg.go") }}</v-btn
-        >
       </v-flex>
     </v-layout>
     <!-- end serach -->
@@ -30,22 +19,8 @@
         <stocklist />
       </v-flex>
     </v-layout>
-    <v-layout row wrap pb-3 justify-center>
-      <v-flex xs5 class="text-center d-flex">
-        <v-btn
-          class="text-uppercase white--text"
-          style="background-color: #8291b2;border-radius: 15px;"
-          >{{ $t("stock-list.load more") }}</v-btn
-        >
-      </v-flex>
-    </v-layout>
-    <!-- back to top -->
-    <!-- <back-to-top bottom="22px" right="22px" visibleoffset="150">
-      <v-icon color="#fff" size="35">keyboard_arrow_up</v-icon>
-    </back-to-top> -->
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
 import breadcrumbs from "~/components/mobile/mobilebreadcrumbs";

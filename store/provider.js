@@ -1,23 +1,28 @@
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
+import Cookies from "../plugins/js-cookie";
 
 const state = () => ({
   authUser: {}, // store auth user data
   userLoginData: {}, // Store user login data
-  authToken: (localStorage.apikey =
+  authToken: (secureStorage.apikey =
     "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"), // Store auth token
-  portalProviderUUID: localStorage.getItem("PORTAL_PROVIDERUUID"), // Store portal provider UUID
-  userUUID: localStorage.getItem("USER_UUID"), // Store user UUID
+  portalProviderUUID: secureStorage.getItem("PORTAL_PROVIDERUUID"), // Store portal provider UUID
+  userUUID: secureStorage.getItem("USER_UUID"), // Store user UUID
+  userBalance: 0,
   userData: {}, // Store user data
   locales: ["cn", "us", "th", "la"], // Store language locales
-  locale: localStorage.getItem("lang"), // Store locale
+  locale: secureStorage.getItem("lang"), // Store locale
   coinsModern: [], // Store coins modern
   isShowTutorial: false,
   isWindowsHasScroll: false,
   tutorialStepNumber: 0, // Store tutorial step number
   UserAuth: {},
   messageError: [],
-  loginError: [] // Error occurred on the login screen
+  loginError: [], // Error occurred on the login screen
+  referrer: "",
+  snackBarMessage: ""
 });
 
 const mutations = {
@@ -46,7 +51,7 @@ const mutations = {
     if (state.locales.includes(locale)) {
       state.locale = locale;
     }
-    localStorage.setItem("lang", locale);
+    secureStorage.setItem("lang", locale);
   },
   SET_TOP_PLAYER(state, payload) {
     state.isLoadingTopPlayer = payload;
@@ -68,6 +73,20 @@ const mutations = {
   },
   SET_LOGIN_ERROR(state, payload) {
     state.loginError.push(...payload);
+  },
+  SET_REFERRER(state, payload) {
+    state.referrer = payload;
+  },
+  SET_SNACK_BAR_MESSAGE(state, payload) {
+    state.snackBarMessage = payload;
+  },
+  SET_USER_BALANCE(state, payload) {
+    state.userBalance = payload;
+  },
+  SET_CHIPS(state, payload) {
+    state.coinsModern[payload.index] = payload.amount;
+    state.coinsModern.sort((a,b) => a-b);
+    secureStorage.setItem("coinsModern", state.coinsModern);
   }
 };
 
@@ -76,8 +95,10 @@ const actions = {
   async setUserData(context) {
     try {
       var reqBody = {
-        portalProviderUUID: context.state.portalProviderUUID,
-        userUUID: context.state.userUUID,
+        portalProviderUUID:
+          context.state.portalProviderUUID ||
+          Cookies.getJSON("login").portalProviderUUID,
+        userUUID: context.state.userUUID || Cookies.getJSON("login").userUUID,
         version: config.version
       };
       var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
@@ -86,6 +107,8 @@ const actions = {
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);
+        context.commit("SET_USER_UUID", userInfo.userUUID);
+        context.commit("SET_USER_BALANCE", userInfo.balance);
       } else {
         throw new Error(config.error.general);
       }
@@ -156,6 +179,19 @@ const actions = {
   },
   setLoginError({ commit }, payload) {
     commit("SET_LOGIN_ERROR", payload);
+  },
+  // Set portal provider's whitelabel Url
+  setReferrer({ commit }, payload) {
+    commit("SET_REFERRER", payload);
+  },
+  setSnackBarMessage({ commit }, payload) {
+    commit("SET_SNACK_BAR_MESSAGE", payload);
+  },
+  setUserBalance({ commit }, payload) {
+    commit("SET_USER_BALANCE", payload);
+  },
+  setChips({ commit }, payload) {
+    commit("SET_CHIPS", payload);
   }
 };
 
@@ -226,6 +262,12 @@ const getters = {
     } else {
       return false;
     }
+  },
+  getReferrer(state) {
+    return state.referrer;
+  },
+  getUserBalance(state) {
+    return state.userBalance;
   }
 };
 

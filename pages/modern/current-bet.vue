@@ -10,6 +10,7 @@ import currentbet from "~/components/mobile/currentbet";
 import config from "~/config/config.global";
 import { mapState } from "vuex";
 import log from "roarr";
+import secureStorage from "../../plugins/secure-storage";
 
 export default {
   layout: "",
@@ -57,8 +58,8 @@ export default {
             res: data,
             page: "pages/modern/current-bet.vue",
             apiUrl: config.getAllBets.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

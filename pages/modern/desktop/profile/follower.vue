@@ -3,7 +3,7 @@
     <v-flex xs12 class="pt-5 pl-5">
       <div>
         <h2 class="text-uppercase">
-          {{ $t("profile.myfollowers") }} ({{ this.countFollower }})
+          {{ $t("profile.myFollowers") }} ({{ this.countFollower }})
         </h2>
         <v-divider></v-divider>
       </div>
@@ -13,7 +13,7 @@
         <div class="title_container">
           <h3 class="text-black onFollower" v-if="followerEmpty == true">
             <i class="fa fa-user-o fa-2x" />
-            <div>{{$t("profile.noFollowers") }} </div>
+            <div>{{ $t("profile.noFollowers") }}</div>
           </h3>
           <div
             class="follower_container"
@@ -21,7 +21,7 @@
             :key="index"
           >
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
-              <img class="userImage" :src="defaultImage" />
+              <img class="userImage" :src="userImgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">{{
                 data.userName
@@ -29,11 +29,11 @@
             </nuxt-link>
             <button
               v-if="data.isFollowing == 0"
-              class="btn_follow"
+              class="buttonGreen btnFollow"
               v-on:click="
                 followUserBet(
                   data.userName,
-                  data.userImage,
+                  data.profileImage,
                   data.UUID,
                   data.isFollowing
                 )
@@ -43,17 +43,17 @@
             </button>
             <button
               v-if="data.isFollowing == 1"
-              class="btn_unfollow"
+              class="buttonCancel btnUnfollow"
               v-on:click="
                 followUserBet(
                   data.userName,
-                  data.userImage,
+                  data.profileImage,
                   data.UUID,
                   data.isFollowing
                 )
               "
             >
-              {{ $t("useraction.unfollow") }}
+              {{ $t("useraction.unFollow") }}
             </button>
           </div>
         </div>
@@ -61,12 +61,18 @@
     </v-flex>
 
     <!-- Follow Dialog -->
-    <v-dialog v-model="dialog" width="500" class="followDialog">
+    <v-dialog
+      v-model="followDialog"
+      width="500"
+      class="followDialog"
+      :persistent=true
+    >
       <followBet
         :username="this.username"
         :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
         :isFollowing="this.FolloworNot"
+        @followBetClose="closeFollowBet"
       />
     </v-dialog>
   </div>
@@ -85,7 +91,7 @@ export default {
       FollowUserUUID: "",
       FolloworNot: "",
       userImage: "",
-      dialog: false,
+      followDialog: false,
       active: null,
       followerList: [],
       countFollower: 0,
@@ -102,16 +108,21 @@ export default {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
   methods: {
+    // Close Follow Bet Popup
+    closeFollowBet() {
+      this.followDialog = false;
+      this.getFollowerList();
+    },
     // Follow User Bet
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
-      this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
-      this.dialog = true;
+      this.userImage = this.userImgProfile(userImg);
+      this.followDialog = true;
     },
     // fetch default image or from server image
-    imgProfile(userImg) {
+    userImgProfile(userImg) {
       return userImg === null
         ? this.defaultImage
         : `${config.apiDomain}/` + userImg;
@@ -151,12 +162,12 @@ export default {
 </script>
 
 <style scoped>
-.onFollower{
+.onFollower {
   color: #aeafb0;
   text-align: center;
   font-size: 28px;
   width: 500px;
-  margin:20% auto;
+  margin: 20% auto;
 }
 .followType span {
   text-align: center;
@@ -174,8 +185,8 @@ export default {
 }
 
 .userImage {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 180px;
   margin: 0 auto;
 }
@@ -183,7 +194,7 @@ export default {
 .name {
   margin-top: 10px;
   font-size: 18px;
-  color: #013f70;
+  color: #2bb13a;
   display: block;
   width: 100%;
   text-transform: capitalize;
@@ -195,7 +206,7 @@ export default {
 }
 
 .follower_container {
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #dddddd;
   background-color: white;
   width: 30%;
@@ -205,27 +216,23 @@ export default {
   text-align: center;
 }
 
-.btn_follow {
-  margin-top: 10px;
-  font-weight: bold;
-  bottom: 10px;
+.btnFollow {
+  margin-top:15px;
+  font-size: 16px;
+  text-transform: capitalize;
   width: 130px;
   padding: 4px 0px;
   color: #fff;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #25b175 19%, #2cb121 70%);
-  border-radius: 15px;
+  border-radius: 5px;
 }
 
-.btn_unfollow {
-  margin-top: 10px;
-  font-weight: bold;
-  bottom: 10px;
+.btnUnfollow {
+  margin-top:15px;
+  font-size: 16px;
+  text-transform: capitalize;
   width: 130px;
   padding: 4px 0px;
   color: #fff;
-  text-transform: uppercase;
-  background-image: linear-gradient(to right, #888787 19%, #626161 70%);
-  border-radius: 15px;
+  border-radius: 5px;
 }
 </style>

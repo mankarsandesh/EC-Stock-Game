@@ -5,8 +5,9 @@ const config = {
   apiDomain: process.env.API_DOMAIN,
   socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
-  whitelabelUrl: process.env.WHITELABEL_URL,
   secretKey: "CC21128A312FAF7817C93D1B51CB9",
+  secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
+  sessionExpiryTime: new Date(new Date().getTime() + 30 * 60 * 1000),
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
@@ -43,9 +44,6 @@ const config = {
   getActiveGamesByCategory: {
     url: `${process.env.BASE_URL}/getActiveGamesByCategory`
   },
-  getNotification: {
-    url: `${process.env.BASE_URL}/getNotification`
-  },
   followUser: {
     url: `${process.env.BASE_URL}/followUser`
   },
@@ -67,12 +65,19 @@ const config = {
   getUserNotification: {
     url: `${process.env.BASE_URL}/getNotification`
   },
+  liveBetCount: {
+    url: `${process.env.BASE_URL}/liveBetCount`
+  },
+  liveCountBetData: {
+    url: `${process.env.BASE_URL}/liveCountBetData`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
   },
   error: {
-    general: "Something went wrong!"
+    general: "Something went wrong!",
+    lowBalance: "Insufficient Balance. Please topup your balance"
   },
   loginError: {
     portalProvider: "Portal Provider UUID is invalid",
@@ -83,7 +88,13 @@ const config = {
   logDomain: process.env.LOG_DOMAIN,
   defaultLanguageLocale: "cn",
   defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
-  homePageStockName: "btc1"
+  homePageStockName: "btc1",
+  language: {
+    cn: "Chinese",
+    us: "English",
+    th: "Thai",
+    la: "Lao"
+  }
 };
 
 export default config;

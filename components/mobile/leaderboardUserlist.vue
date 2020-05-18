@@ -1,198 +1,142 @@
 <template>
   <div>
-    <v-flex xs12 md10 lg10 mt-3 style="margin:0 auto;">
-      <v-layout row>
-        <v-flex grow pa-1>
-          <p class="float-left md12">
-            <span class="title">Top {{ topPlayerData.length }} Leaders</span>
-            (last updated 10 minutes ago)
-          </p>
-        </v-flex>
-      </v-layout>
-
-      <v-flex grow pa-1 class="text-lg-right ranking">
-        <span class="text-uppercase font-weight-bold"
-        v-bind:class="{ active: isActiveWeek }"
-        v-on:click="sortingBy('weekly')"
-        >
-          <v-icon small>event</v-icon>
-          {{ $t("leaderboard.weeklyrankings") }}
-        </span>
-        <span class="text-uppercase font-weight-bold"
-          v-bind:class="{ active: isActiveMonth }"
-          v-on:click="sortingBy('monthly')"
-        >
-          <v-icon small>event</v-icon>
-          {{ $t("leaderboard.monthlyrankings") }}
-        </span>
-      </v-flex>
-    </v-flex>
-
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">
-        There are no top users in Leaderboard.
-      </h2>
+      <h2 class="text-center" style="color:#a3a3a3;">{{$t("leaderboard.noData")}}</h2>
     </v-flex>
-    <v-flex v-if="topPlayerData.length > 0">
-      <v-flex
-        xs12
-        md10
-        lg10
-        xl8
-        style="margin:0 auto;"
-        v-for="(data, index) in topPlayerData"
-        :key="index"
-        id="userRow"
-      >
-        <div class="userRow">
-          <th style="vertical-align:top;">
-            <div>
-              <img class="pimage" :src="getImgUrl(data.userImage)" />
-            </div>
+    <v-flex>
+      <v-list subheader>
+        <v-list-tile>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              {{$t("leaderboard.Top10Leaders")}}
+              <i
+                v-if="loadingImage"
+                class="fa fa-circle-o-notch fa-spin"
+              ></i>
+            </v-list-tile-title>
+          </v-list-tile-content>
 
-            <h6 class="subtitle-1 text-uppercase">{{ data.username }}</h6>
-            <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
-          </th>
-          <th>
-            <h5 class="header">{{ $t("leaderboard.winningrate") }}</h5>
-            <h6 class="green--text titleText">
-              {{ Math.round(data.winRate, 1) }} %
-            </h6>
-          </th>
-          <th>
-            <h5 class="header">{{ $t("leaderboard.bets") }}</h5>
-            <h6 style="color:#eb0b6e;" class="titleText">
-              {{ data.totalWinBets }}
-            </h6>
-          </th>
-          <th>
-            <h5 class="header">{{ $t("leaderboard.winningamount") }}</h5>
-            <h6 style="color:#0b2a68;" class="titleText">
-              {{ Math.round(data.totalWinAmount, 1) }}
-            </h6>
-          </th>
-          <th v-if="data.isFollowing == 0" style="width:20%;">
-            <v-btn
-              class="buttonGreensmall"
-              v-on:click="
-                followUser(
-                  data.username,
-                  data.userImage,
-                  data.userUUID,
-                  data.isFollowing
-                )
-              "
-              dark
-              >{{ $t("useraction.follow") }}</v-btn
-            >
-          </th>
-          <th v-if="data.isFollowing == 1" style="width:20%;">
-            <v-btn
-              class="buttonCancel"
-              v-on:click="unfollowUser(data.userUUID)"
-              dark
-              >{{ $t("useraction.unfollow") }}</v-btn
-            >
-          </th>
-          <th v-if="data.isFollowing == -1" style="width:20%;">
-            <v-btn class="buttonGreensmall">{{
-              $t("useraction.yourself")
-            }}</v-btn>
-          </th>
-        </div>
-      </v-flex>
+          <v-list-tile-action>
+            <v-radio-group v-model="sortValue" row>
+              <v-radio
+                :label="$t('leaderboard.monthly')"
+                value="monthly"
+                v-on:click="sortingBy('monthly')"
+              ></v-radio>&nbsp;
+              <v-radio
+                :label="$t('leaderboard.weekly')"
+                value="weekly"
+                v-on:click="sortingBy('weekly')"
+              ></v-radio>
+            </v-radio-group>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list>
+      <v-list two-line>
+        <template v-for="(item, index) in topPlayerData">
+          <v-list-tile :key="item.username" avatar>
+            <nuxt-link :to="'/modern/userprofile/' + item.userUUID">
+              <v-list-tile-avatar>
+                <img :src="userImgProfile(item.userImage)" />
+              </v-list-tile-avatar>
+            </nuxt-link>
 
-      <v-dialog
-        v-model="dialog"
-        width="600"
-        style="border-radius:20px; !important"
-      >
-        <v-card class="followup">
-          <h3
-            class="title font-weight-bold"
-            style="text-align:center;color:#0b2a68;"
-          >
-            {{ $t("useraction.follow") }}
-          </h3>
+            <v-list-tile-content style="width:40%;">
+              <v-list-tile-title v-html="item.username"></v-list-tile-title>
+            </v-list-tile-content>
 
-          <v-card-text style="text-align:center;">
-            <img class="pimage" v-bind:src="this.userImage" width="140px" />
-            <h3 class="subtitle-1 text-uppercase text-center pt-2">
-              {{ this.username }}
-            </h3>
-          </v-card-text>
-          <v-card-actions>
-            <v-flex lg6 pr-4>
-              <v-select
-                :items="followby"
-                label="Select bet type"
-                v-model="selectedFollow"
-                item-text="name"
-                item-value="value"
-                v-on:change="changeAmountRate($event)"
-                solo
-              ></v-select>
-            </v-flex>
-            <v-flex lg3 pr-2>
-              <v-text-field
-                solo
-                label="10%"
-                v-if="selectRate"
-                append-icon="money"
-                v-model="rateValue"
-              ></v-text-field>
-              <v-text-field
-                solo
-                label="100"
-                v-if="selectAmount"
-                @keypress="onlyNumber"
-                v-model="amountValue"
-                append-icon="money"
-              ></v-text-field>
-            </v-flex>
-            <v-flex lg3 pl-3 pb-3>
+            <v-list-tile-content>
+              <v-list-tile-title
+                class="green--text titleText"
+                v-html="Math.round(item.winRate, 1) + '%'"
+              ></v-list-tile-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
               <v-btn
-                color="buttonGreensmall"
-                text
-                v-on:click="followThisUser()"
-                >{{ FollowName }}</v-btn
+                v-bind:class="[
+                  item.isFollowing == 0
+                    ? 'buttonGreensmall'
+                    : 'buttonCancelSmall'
+                ]"
+                v-on:click="
+                  followUser(
+                    item.username,
+                    item.userImage,
+                    item.userUUID,
+                    item.isFollowing
+                  )
+                "
+                dark
               >
-            </v-flex>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+                {{
+                item.isFollowing == 0
+                ? $t("useraction.follow")
+                : $t("useraction.unFollow")
+                }}
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-divider v-if="index + 1 < topPlayerData.length" :key="index"></v-divider>
+        </template>
+      </v-list>
     </v-flex>
+
+    <!-- Follow and UnFollow Dialog box-->
+    <v-dialog
+      :persistent=true
+      v-model="followDialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable
+    >
+      <v-card tile>
+        <v-toolbar card dark style="background-color:#2cb13b;">
+          <v-btn icon dark @click="closeFollowBet">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>
+            {{
+            this.FolloworNot == 1 ? $t("useraction.followBet") : $t("useraction.unFollowBet")
+            }}
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+
+        <followBet
+          :username="this.username"
+          :userImage="this.userImage"
+          :FollowerUserUUID="this.FollowUserUUID"
+          :isFollowing="this.FolloworNot"
+          @followBetClose="closeFollowBet"
+        />
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
 import config from "~/config/config.global";
+import followBet from "~/components/mobile/follow/followBet";
 export default {
   data() {
     return {
-      isActiveWeek: true,
-      isActiveMonth: false,
-      FollowName: "Follow",
-      selectRate: false,
-      selectAmount: true,
+      loadingImage: false,
+      sortValue: "monthly",
+      defaultImage: "/no-profile-pic.jpg",
       topPlayerData: [],
       FolloworNot: "",
-      FollowMethod: "",
       FollowUserUUID: "",
       method: "",
-      UserfollowType: "",
-      amountValue: "100",
-      rateValue: "10",
-      BetValue: "",
       username: "",
       userImage: "",
-      dialog: false,
-      selectedFollow: "",
-      followby: [
-        { id: 1, name: "Follow by Amount", value: "Amount" },
-        { id: 2, name: "Follow by Rate", value: "Rate" }
-      ]
+      followDialog: false,
+      temp : false,
     };
+  },
+  components: {
+    followBet
   },
   mounted() {
     this.leaderBoard();
@@ -204,7 +148,13 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
-    //sorting weekly and Monthly
+    // fetch default image or from server image
+    userImgProfile(userImage) {
+      return userImage === null
+        ? this.defaultImage
+        : `${config.apiDomain}/` + userImage;
+    },
+    //Sorting weekly and Monthly
     sortingBy(sort) {
       if (sort == "monthly") {
         const today = new Date();
@@ -217,9 +167,7 @@ export default {
           .substr(0, 10);
         this.dateFrom = monthly;
         this.dateTo = today.toISOString().substring(0, 10);
-        this.sortbyName = "Monthly Ranking";
-        this.isActiveMonth = true;
-        this.isActiveWeek = false;
+        this.sortValue = "monthly";
         this.leaderBoard();
       } else {
         const today = new Date();
@@ -232,112 +180,30 @@ export default {
           .substr(0, 10);
         this.dateFrom = lastWeek;
         this.dateTo = today.toISOString().substring(0, 10);
-        this.sortbyName = "Weekly Ranking";
-        this.isActiveMonth = false;
-        this.isActiveWeek = true;
+        this.sortValue = "weekly";
         this.leaderBoard();
       }
     },
-    getImgUrl(userImage) {
-      return userImage === null
-        ? "/no-profile-pic.jpg"
-        : "http://uattesting.equitycapitalgaming.com/" + userImage;
+    // Close Follow Bet Popup
+    closeFollowBet() {
+      this.followDialog = false;
+      this.leaderBoard();
+      console.log("Close");
     },
-    onlyNumber($event) {
-      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
-      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
-        // 46 is dot
-        $event.preventDefault();
-      }
-    },
-    // Unfollow User
-    async unfollowUser(FollowUserUUID) {
-      // console.log(FollowUserUUID);
-      const LeaderBoardData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        followToID: FollowUserUUID,
-        method: "unfollow",
-        version: config.version
-      };
-      console.log(LeaderBoardData);
-      try {
-        const { data } = await this.$axios.post(
-          config.followUser.url,
-          LeaderBoardData,
-          {
-            headers: config.header
-          }
-        );
-        this.unfollowUser = data;
-        location.reload();
-        console.log(this.unfollowUser);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async followThisUser() {
-      if (this.selectedFollow == "Amount") {
-        this.BetValue = this.amountValue;
-      } else if (this.selectedFollow == "Rate") {
-        this.BetValue = this.rateValue;
-      }
-      if (this.FolloworNot == 0) {
-        this.FollowMethod = "follow";
-      } else if (this.FolloworNot == 1) {
-        this.FollowMethod = "unfollow";
-      }
-      const LeaderBoardData = {
-        portalProviderUUID: this.portalProviderUUID,
-        userUUID: this.userUUID,
-        followToID: this.FollowUserUUID,
-        method: this.FollowMethod,
-        followType: this.selectedFollow,
-        value: this.BetValue,
-        version: 1
-      };
-      try {
-        const { data } = await this.$axios.post(
-          config.followUser.url,
-          LeaderBoardData,
-          {
-            headers: config.header
-          }
-        );
-
-        this.followData = data;
-        console.log(this.followData);
-        location.reload();
-        if ((data.status = 200)) {
-          this.FollowName = "Following";
-        } else {
-          console.log(this.followData);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    changeAmountRate() {
-      this.UserfollowType = this.selectedFollow;
-      if (this.selectedFollow == "Amount") {
-        this.selectAmount = true;
-        this.selectRate = false;
-      } else {
-        this.selectAmount = false;
-        this.selectRate = true;
-      }
-    },
+    // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      this.FolloworNot = method;
-      this.userImage = this.getImgUrl(userImage);
-      this.dialog = true;
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
+      this.userImage = this.userImgProfile(userImage);
+      this.followDialog = true;
+      this.temp = true;
     },
+    // Fetch Top 10 users in Leaderboard
     async leaderBoard() {
-      
+      this.loadingImage = true;
       try {
-        const LeaderBoardData = {
+        const reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           dateRangeFrom: this.dateFrom,
@@ -346,22 +212,26 @@ export default {
         };
         const { data } = await this.$axios.post(
           config.getLeaderBoard.url,
-          LeaderBoardData,
+          reqBody,
           {
             headers: config.header
           }
         );
-
+        console.log(data.data);
         this.topPlayerData = data.data;
+        this.loadingImage = false;
       } catch (error) {
         console.log(error);
       }
-    },
-    
+    }
   }
 };
 </script>
 <style scoped>
+.followButton {
+  height: auto;
+  padding: 4px;
+}
 .successful {
   width: 10%;
   border: 1px solid;

@@ -45,8 +45,8 @@
                 flat
                 @click="$refs.language.showDialog()"
               >
-                <countryFlag :country="countryflag" size="normal" />
-                <span>&nbsp;{{ $t("msg.chooselanguage") }}</span>
+                <country-flag :country="getLocale" size="normal" />
+                <span>&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span>
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>
@@ -67,24 +67,20 @@
                 <v-list-tile
                   v-if="winnerList.length == 0"
                   class="noNotification"
-                >
-                  There are no Notification.</v-list-tile
+                  >There are no Notification.</v-list-tile
                 >
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
                   class="mainNotification"
+                  @click="$router.push(pageLink(item.type))"
                 >
                   <div class="userImage">
                     <i class="fa fa-user-o fa-1x" />
                   </div>
                   <div class="messageBody">
-                    <div class="title">
-                      {{ item.title }}
-                    </div>
-                    <div class="description">
-                      {{ item.message }}
-                    </div>
+                    <div class="title">{{ item.title }}</div>
+                    <div class="description">{{ item.message }}</div>
                     <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
@@ -98,14 +94,13 @@
       <v-content>
         <nuxt />
       </v-content>
-
       <!-- invitation Windows-->
       <invitation
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :stockName="$route.params.id"
         :key="$route.name"
       />
-      <!-- <chatWindow /> -->
+      <!-- <invitation Windows /> -->
     </v-app>
   </div>
 </template>
@@ -124,7 +119,9 @@ import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
+import Cookies from "../plugins/js-cookie";
 
 export default {
   components: {
@@ -166,7 +163,8 @@ export default {
       rightDrawer: false,
       title: "EC gaming",
       isFullscreen: null,
-      timeout: 3000
+      timeout: 3000,
+      language: config.language
     };
   },
   updated() {
@@ -178,15 +176,19 @@ export default {
       this.setGameChannelShow(false);
     }
   },
+  beforeDestroy() {
+    window.Echo.leaveChannel(`balanceUpdate.${this.getUserUUID}`);
+  },
   created() {
     // check is full screen or not
     let path = this.$nuxt.$route.name.split("-");
-    let isFullscreen = path[1];   
+    let isFullscreen = path[1];
     if (isFullscreen === "fullscreen") {
       this.isFullscreen = true;
     } else {
       this.isFullscreen = false;
     }
+    this.connectUserBalanceSocket();
     // console.log("crearted");
   },
   mounted() {
@@ -200,12 +202,42 @@ export default {
     });
   },
   methods: {
-    ...mapActions(["setGameChannelShow"]),
+    pageLink(type) {
+      return type == 3
+        ? "/modern/desktop/profile/follower/"
+        : "/modern/desktop/notification";
+    },
+    ...mapActions(["setGameChannelShow", "setUserBalance"]),
+    listenUserBalance({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
+    connectUserBalanceSocket() {
+      this.listenUserBalance(
+        {
+          channelName: `balanceUpdate.${this.getUserUUID}`,
+          eventName: "balanceUpdate"
+        },
+        ({ data }) => {
+          try {
+            var logData = data;
+            if (data.status) {
+              this.setUserBalance(data.data.userBalance);
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+          }
+        }
+      );
+    },
+    // Fetch User Notification
     async fetchNotification() {
       try {
         var reqBody = {
-          portalProviderUUID: this.getPortalProviderUUID,
-          userUUID: this.getUserUUID,
+          portalProviderUUID:
+            this.getPortalProviderUUID || Cookies.getJSON("portalProviderUUID"),
+          userUUID: this.getUserUUID || Cookies.getJSON("userUUID"),
           version: config.version
         };
         var { data } = await this.$axios.post(
@@ -223,17 +255,6 @@ export default {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            req: reqBody,
-            res: data,
-            page: "layouts/desktopModern.vue",
-            apiUrl: config.getAllBets.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   },
@@ -244,10 +265,7 @@ export default {
       "getUserUUID", // Get UserUUID
       "getLocale",
       "getIsLoadingStockGame"
-    ]),
-    countryflag() {
-      return this.getLocale;
-    }
+    ])
   }
 };
 </script>
@@ -255,9 +273,10 @@ export default {
 .noNotification {
   color: #333;
 }
-#notificationTab {  
-  padding:10px 10px 0px  10px;
-  overflow:scroll;
+#notificationTab {
+  padding: 10px 10px 0px 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
   z-index: 9999;
   height: 320px;
   width: 350px;
@@ -271,6 +290,7 @@ export default {
   width: 100%;
   border-bottom: 1px solid #dddddd;
 }
+
 .userImage {
   float: left;
   width: 10%;
@@ -315,16 +335,16 @@ export default {
 }
 .badge {
   position: absolute;
-  margin-top: -5px;
+  margin-top: -6px;
   margin-left: -15px;
   background-color: red;
   color: #fff;
   border-radius: 180px;
   padding: 1px;
-  height: 18px;
-  width: 18px;
-  font-size: 10px;
-  font-weight: 800;
+  height: 20px;
+  width: 20px;
+  font-size: 12px;
+  /* font-weight: 800; */
   border: 1px solid #333;
 }
 .closeNotification {
@@ -426,5 +446,25 @@ nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
   border-bottom: none;
   border-top: none;
   border-right: none;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 7px #acacac;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #acacac;
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2c6b9e;
 }
 </style>

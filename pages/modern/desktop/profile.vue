@@ -1,33 +1,30 @@
 <template>
-  <v-container fluid>
+  <v-container >
     <input @change="uploadImage($event)" type="file" ref="inputFile" hidden />
-    <v-layout pt-3 row wrap class="justify-center">
+    <v-layout pt-1 row wrap class="justify-center" >
       <v-flex xs12 ms12 lg10 md10>
         <v-layout>
           <v-flex xs4 md3 lg3 xl2 class="pt-5" style="background-color:white">
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img :src="newImage ? newImage : defaultImage" />
+                  <img :src="imgProfile" />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <!-- <v-icon color="black" :size="20" @click="cameraClick"
-                      >photo_camera</v-icon
-                    > -->
-                    <v-icon color="black" :size="20">photo_camera</v-icon>
+                    <v-icon color="black" :size="20" @click="dialog = true">photo_camera</v-icon>
+                    <!-- <v-icon color="black" :size="20">photo_camera</v-icon> -->
                   </button>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h2 v-if="getUserInfo.firstName == null">
-                {{ getUserInfo.userName }}
-              </h2>
-              <h2 v-if="getUserInfo.firstName" class="text-capitalize">
-                {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-              </h2>
+              <h2 v-if="getUserInfo.firstName == null">{{ getUserInfo.userName }}</h2>
+              <h2
+                v-if="getUserInfo.firstName"
+                class="text-capitalize"
+              >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h2>
               <p>
-                <b> {{ $t("profile.onlinestatus") }} </b> : Available
+                <b>{{ $t("profile.onlinestatus") }}</b> : Available
               </p>
             </div>
             <div class="profile_menu">
@@ -40,9 +37,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.basicinfo") }}
-                  </li>
+                  >{{ $t("profile.basicinfo") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/onlinehistory/">
                   <li
@@ -51,9 +46,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.onlinehistory") }}
-                  </li>
+                  >{{ $t("profile.onlinehistory") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/stockanalysis/">
                   <li
@@ -62,9 +55,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.stockanalysis") }}
-                  </li>
+                  >{{ $t("profile.stockanalysis") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/follower/">
                   <li
@@ -73,9 +64,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.myfollowers") }}
-                  </li>
+                  >{{ $t("profile.myFollowers") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/following/">
                   <li
@@ -84,11 +73,9 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.myfollowing") }}
-                  </li>
+                  >{{ $t("profile.myFollowing") }}</li>
                 </nuxt-link>
-                <nuxt-link to="/modern/desktop/profile/notification/">
+                <!-- <nuxt-link to="/modern/desktop/profile/notification/">
                   <li
                     :class="
                       '/modern/desktop/profile/notification/' === currentChild
@@ -96,9 +83,9 @@
                         : 'menu_title'
                     "
                   >
-                    {{ $t("profile.mynotification") }}
+                    {{ $t("profile.myNotification") }}
                   </li>
-                </nuxt-link>
+                </nuxt-link>-->
                 <nuxt-link to="/modern/desktop/profile/setting/">
                   <li
                     :class="
@@ -106,9 +93,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >
-                    {{ $t("profile.setting") }}
-                  </li>
+                  >{{ $t("profile.setting") }}</li>
                 </nuxt-link>
               </ul>
             </div>
@@ -122,120 +107,25 @@
 
       <v-dialog v-model="dialog" width="900" class="followDialog">
         <v-card class="followup">
-          <h3 class="title" style="text-align: center; color: #0b2a68;">
-            Choose your Avatar
-          </h3>
+          <h3 class="title" style="text-align: center; color: #0b2a68;">Choose your Avatar</h3>
           <v-card-text style="text-align:center;">
-            <div class="avatarImage">
-              <v-img class="img" src="/avatar/Avatar-2.jpg"></v-img>
-              <span
-                href=""
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-2.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-3.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-3.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-4.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-4.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-5.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-5.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-6.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-6.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-7.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-7.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-8.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-8.jpg')"
-                >Use Avatar</span
-              >
-            </div>
-            <div class="avatarImage">
-              <v-img
-                class="img"
-                src="/avatar/Avatar-9.jpg"
-                aspect-ratio="1.7"
-              ></v-img>
-              <span
-                class="userAvatar"
-                @click="useAvatar('/avatar/Avatar-9.jpg')"
-                >Use Avatar</span
-              >
+            <div class="avatarImage" v-for="n in 10" v-bind:key="n">
+              <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
+              <span href class="userAvatar" @click="useAvatar(n)">Use Avatar</span>
             </div>
           </v-card-text>
           <v-divider></v-divider>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">
-              Close
-            </v-btn>
+            <v-btn color="primary" text @click="dialog = false">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
       <v-snackbar v-model="snackbar">
         Sucessfully Avatar Updated.
-        <v-btn color="pink" text @click="snackbar = false">
-          Close
-        </v-btn>
+        <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
       </v-snackbar>
     </v-layout>
   </v-container>
@@ -244,10 +134,14 @@
 import { mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   layout: "desktopModern",
   data() {
     return {
+      imagePath: config.apiDomain + "/images/user/avatar/",
+      avatarID: "",
       snackbar: false,
       newImage: "",
       dialog: false,
@@ -265,26 +159,31 @@ export default {
     this.currentChild = this.$route.path;
   },
   created() {
+    // console.log(this.getUserInfo.profileImage);
     // make a active menu
     this.currentChild = this.$route.path;
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      if (this.getUserInfo.profileImage == null) {
+        return `${this.defaultImage}`;
+      } else {
+        return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      }
     }
   },
   watch: {
     imageBase64() {
-      this.updateProfile();
+      this.updateImageProfile();
     }
   },
   methods: {
     useAvatar(image) {
-      this.newImage = image;
-      console.log(image);
+      this.newImage = this.imagePath + image + ".jpg";
+      this.avatarID = image;
       this.snackbar = true;
-      // this.updateProfile();
+      this.updateImageProfile();
     },
     ...mapActions(["setUserData"]),
     uploadImage(e) {
@@ -300,9 +199,9 @@ export default {
     cameraClick() {
       this.$refs.inputFile.click();
     },
-    async updateProfile() {
+    async updateImageProfile() {
       var reqBody = {
-        profileImage: this.newImage,
+        avatarID: this.avatarID,
         portalProviderUUID: this.getPortalProviderUUID,
         userUUID: this.getUserUUID,
         version: config.version
@@ -315,8 +214,6 @@ export default {
             headers: config.header
           }
         );
-        console.log(reqBody);
-        console.log(res);
         if (res.status) {
           this.blurValue = 0;
           this.setUserData();
@@ -337,8 +234,8 @@ export default {
             res: res.data,
             page: "pages/modern/desktop/profile.vue",
             apiUrl: config.updateUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -363,18 +260,17 @@ export default {
 
 .avatarImage {
   height: 200px;
-  /* border: 1px solid ; */
   text-align: center;
   margin: 10px;
-  width: 20%;
+  width: 15%;
   padding: 5px;
   display: inline-block;
 }
 .avatarImage .img {
   margin: 15px auto;
   border-radius: 180px;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border: 2px solid #dddddd;
 }
 .followDialog {

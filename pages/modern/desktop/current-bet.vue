@@ -6,6 +6,7 @@
       :titlebtn="$t('breadcrumbs.betHistory')"
     />
     <v-container>
+      <!-- Send Data to currentBet Component -->
       <currentBet :currentBets="currentBets" />
     </v-container>
   </div>
@@ -15,7 +16,9 @@ import currentBet from "~/components/modern/currentBet";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "~/config/config.global";
+import secureStorage from "../../../plugins/secure-storage";
 import log from "roarr";
+
 export default {
   layout: "desktopModern",
   components: {
@@ -28,10 +31,11 @@ export default {
     };
   },
   computed: {
+    // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }) 
   },
   mounted() {
     this.fetch();
@@ -66,8 +70,8 @@ export default {
             res: data.data,
             page: "pages/modern/desktop/current-bet.vue",
             apiUrl: config.getAllBets.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

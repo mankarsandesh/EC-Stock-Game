@@ -1,9 +1,8 @@
 <template>
   <div>
     <apexchart
-      class="chartDesgin"
       type="area"
-      width="99.5%"
+      width="100%"
       :options="chartOptions"
       :series="series"
     />
@@ -19,6 +18,8 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import Echo from "laravel-echo";
 import config from "~/config/config.global";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
+
 export default {
   props: {
     height: {
@@ -82,7 +83,7 @@ export default {
               res: logData,
               page: "components/chartMobile.vue",
               provider: this.getPortalProviderUUID,
-              user: localStorage.getItem("USER_UUID")
+              user: secureStorage.getItem("USER_UUID")
             },
             ex.message
           );
@@ -101,6 +102,15 @@ export default {
         newTime.push(element.stockTimeStamp);
       });
       return {
+        tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            return (
+              '<div class="arrow_boxChart"> $' +
+              series[seriesIndex][dataPointIndex].toFixed(2) +
+              "</div>"
+            );
+          }
+        },
         zoom: {
           enabled: true,
           type: "x",
@@ -131,7 +141,6 @@ export default {
             enabled: false
           },
           toolbar: {
-            show: false,
             shared: false,
             y: {
               formatter: function(val) {
@@ -172,9 +181,6 @@ export default {
           show: true,
           labels: {
             show: true
-          },
-          title: {
-            text: "Price"
           }
         }
       };
@@ -226,8 +232,8 @@ export default {
             res,
             page: "components/chartMobile.vue",
             apiUrl: config.getRoadMap.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -246,6 +252,16 @@ export default {
 </script>
 
 <style>
+.arrow_boxChart {
+  font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid #003f70;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  font-size: 18px;
+  color: #fff;
+  background: #003f70 !important  ;
+}
 .stockPrice {
   padding-right: 14px;
   color: green;

@@ -1,12 +1,14 @@
 import config from "~/config/config.global";
 import stock from "~/data/stockList";
 import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 
 const state = () => ({
   stocks: stock.stockList,
   stockCategory: [], // Store Stocks category
   stockPrice: [], // Store stock list price
-  stockCountdown: [] // Store stock list Countdown
+  stockCountdown: [], // Store stock list Countdown
+  resetFullScreenChart: false // for reset fullscreen live bet chart
 });
 
 const mutations = {
@@ -18,6 +20,9 @@ const mutations = {
   },
   SET_STOCK_COUNTDOWN(state, payload) {
     state.stockCountdown = payload;
+    if (parseInt(payload[6].gameEndTimeCountDownInSec) == 58) {
+      state.resetFullScreenChart = !state.resetFullScreenChart;
+    }
   },
   SET_STOCK_PRICE(state, payload) {
     state.stockPrice.unshift(payload);
@@ -51,8 +56,8 @@ const actions = {
           res,
           page: "store/stock.js",
           apiUrl: config.getStock.url,
-          provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: localStorage.getItem("USER_UUID")
+          provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+          user: secureStorage.getItem("USER_UUID")
         },
         ex.message
       );
@@ -165,7 +170,7 @@ const getters = {
   getStockUUIDByStockName: state => stockName => {
     let result = null;
     for (let i = 0; i < state.stocks.length; i++) {
-      if (state.stocks[i].stockName === stockName) {
+      if (state.stocks[i].stockName == stockName) {
         result = state.stocks[i].stockUUID;
         break;
       }
@@ -181,6 +186,9 @@ const getters = {
       }
     });
     return result;
+  },
+  getResetStatus(state) {
+    return state.resetFullScreenChart;
   }
 };
 

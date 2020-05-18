@@ -12,7 +12,7 @@
           <span class="group_title">{{ $t("setting.account") }}</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>{{ $t("setting.usersallowtovisitmyprofile") }}</span>
+              <span>{{ $t("setting.usersAllowToVisitMyProfile") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -24,7 +24,7 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>{{ $t("setting.usersallowfollowme") }}</span>
+              <span>{{ $t("setting.usersAllowFollowMe") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -40,7 +40,7 @@
       </v-flex>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">{{ $t("setting.gameoptions") }}</span>
+          <span class="group_title">{{ $t("setting.gameOptions") }}</span>
           <div class="title_container">
             <div class="setting_container">
               <span>{{ $t("setting.sound") }}</span>
@@ -55,7 +55,7 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>{{ $t("setting.allowtolocation") }}</span>
+              <span>{{ $t("setting.allowToLocation") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -69,6 +69,14 @@
           </div>
         </div>
       </v-flex>
+      <v-flex xs12>
+        <div class="group_container">
+          <span class="group_title">{{ $t("setting.chipOptions") }}</span>
+          <div class="title_container">
+            <chipsAmountDesktop />
+          </div>
+        </div>
+      </v-flex>
     </v-flex>
   </div>
 </template>
@@ -77,9 +85,14 @@
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import config from "~/config/config.global";
+import secureStorage from "../../../../plugins/secure-storage";
+import chipsAmountDesktop from "~/components/modern/setting/chipamount";
 import log from "roarr";
 
 export default {
+  components: {
+    chipsAmountDesktop
+  },
   mounted() {
     // this.updateSetting();
   },
@@ -142,8 +155,8 @@ export default {
             res,
             page: "pages/modern/desktop/profile/setting.vue",
             apiUrl: config.updateUserSetting.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );

@@ -1,46 +1,21 @@
 <template>
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <v-layout row wrap>
-      <v-flex xs12 md2>
-        <v-item-group
-          v-model="window"
-          class="shrink ml-5 mr-5"
-          mandatory
-          tag="v-flex"
+    <div class="tab-container">
+      <div class="tab-item" v-for="(tab, index) in tabs" :key="index">
+        <v-btn
+          block
+          :class="active === index ? 'active-tab' : ''"
+          @click="active = index"
         >
-          <v-item v-for="n in tabs" :key="n">
-            <div slot-scope="{ active, toggle }">
-              <v-btn
-                block
-                :class="active ? 'setting-btn-active' : 'setting-btn'"
-                @click="toggle"
-                >{{ $t("menu." + n) }}</v-btn
-              >
-            </div>
-          </v-item>
-        </v-item-group>
-      </v-flex>
-      <v-flex xs12 md10>
-        <v-window
-          v-model="window"
-          class="elevation-1"
-          style="color: #f2f4ff!important;"
-          vertical
-        >
-          <!-- rules -->
-          <v-window-item>
-            <chipamount />
-          </v-window-item>
-          <!-- rules -->
-          <!-- stock list -->
-          <v-window-item>
-            <soundcontrol />
-          </v-window-item>
-          <!-- stock list -->
-        </v-window>
-      </v-flex>
-    </v-layout>
+          {{ $t("menu." + tabs[index]) }}
+        </v-btn>
+      </div>
+      <div class="tab-content">
+        <chipamount v-if="active === 0" />
+        <soundcontrol v-else />
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -56,9 +31,8 @@ export default {
   },
   data() {
     return {
-      window: 0,
-      tabs: ["chip amount", "sound control"],
-      active: null
+      tabs: ["chipAmount", "soundControl"],
+      active: 0
     };
   },
   methods: {
@@ -66,3 +40,22 @@ export default {
   }
 };
 </script>
+<style scoped>
+.tab-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.active-tab {
+  background-color: #1db42f !important;
+  color: aliceblue;
+}
+.tab-item {
+  padding: 0px 35px;
+  width: 100%;
+}
+.tab-content {
+  padding-top: 35px;
+  margin: 10px;
+}
+</style>

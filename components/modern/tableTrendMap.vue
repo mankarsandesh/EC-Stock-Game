@@ -1,8 +1,8 @@
 <template>
   <div v-if="dataArray.length > 0">
-    <v-layout wrap row  pl-3  pa-2 >
-      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" mt-4 >
-        <v-layout >
+    <v-layout wrap row pl-3 pa-2>
+      <v-flex xs1 md1 lg1 xl1 v-if="!isFullscreen" mt-4>
+        <v-layout>
           <v-flex xs9 lg8>
             <v-btn
               block
@@ -67,10 +67,11 @@
             v-show="activeType == 'twoDigit'"
           ></v-flex>
         </v-layout>
-      </v-flex>     
-      <v-flex xs9 md10 lg10 xl10 >
+      </v-flex>
+      <v-flex xs9 md10 lg10 xl10>
         <v-layout row wrap>
-          <v-flex xs12 lg12 md12>
+          <v-flex xs12 lg12 md12 style="position:relative">
+            <slot></slot>
             <trendMap
               :dataArray="dataArray"
               :trendType="activeType"
@@ -138,7 +139,6 @@ export default {
 </script>
 
 <style scoped>
-
 .triangle-right {
   width: 0;
   height: 0;

@@ -1,37 +1,113 @@
+import VuexPersistence from "vuex-persist";
 import config from "../config/config.global";
 import log from "roarr";
 import axios from "axios";
+import secureStorage from "./secure-storage";
+import Cookies from "./js-cookie";
 
 export default async context => {
   try {
-    document.referrer.match(/:\/\/(.[^/]+)/)[1];
-
+    // document.referrer.match(/:\/\/(.[^/]+)/)[1];
     // Set Initial storage coins
     initLocalStorageCoin(context.store);
-
-    // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
-    const portalProviderUUID = context.query.portalProviderUUID
-      ? context.query.portalProviderUUID
-      : undefined;
-    const portalProviderUserId = context.query.portalProviderUserID
-      ? context.query.portalProviderUserID
-      : undefined;
-    const balance = context.query.balance ? context.query.balance : undefined;
-
-    // Validate Login values in URL
-    const isError = validateLoginValues(
-      portalProviderUUID,
-      portalProviderUserId,
-      balance,
-      context.store
-    );
-
-    if (isError) {
-      // Set user data in vuex store
-      context.store.dispatch("setUserData");
-      // Set default language in vuex store
-      context.store.dispatch("setLanguage", localStorage.getItem("lang"));
+    if (performance.navigation.type == 1) {
+      // If User reloads the page
+      if (
+        Cookies.getJSON("login").userUUID &&
+        Cookies.getJSON("login").portalProviderUUID
+      ) {
+        // If user has a valid session
+        // Get vuex state if it exists in the local storage
+        await window.onNuxtReady(() => {
+          new VuexPersistence({
+            storage: secureStorage,
+            filter: mutation =>
+              mutation.type == "SET_USER_DATA" ||
+              mutation.type == "SET_LANGUAGE" ||
+              mutation.type == "SET_GAME_ID" ||
+              mutation.type == "SET_LIVE_ROAD_MAP" ||
+              mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
+              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+          }).plugin(context.store);
+        });
+        // Set user data in vuex store
+        context.store.dispatch("setUserData");
+        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
+        // Set default language in vuex store
+        context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+      } else {
+        // Invalid user session
+        throw new Error("Unauthorized access. Please login again");
+      }
+    } else if (
+      performance.navigation.type == 0 &&
+      document.referrer.match(/:\/\/(.[^/]+)/)[1] == window.location.host
+    ) {
+      // If user opens a new tab by right click
+      if (
+        Cookies.getJSON("login").userUUID &&
+        Cookies.getJSON("login").portalProviderUUID
+      ) {
+        // If the user has a valid session
+        // Get vuex state if it exists in the local storage
+        await window.onNuxtReady(() => {
+          new VuexPersistence({
+            storage: secureStorage,
+            filter: mutation =>
+              mutation.type == "SET_USER_DATA" ||
+              mutation.type == "SET_LANGUAGE" ||
+              mutation.type == "SET_GAME_ID" ||
+              mutation.type == "SET_LIVE_ROAD_MAP" ||
+              mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
+              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+          }).plugin(context.store);
+        });
+        
+        // Set default language in vuex store
+        context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
+        // Set user data in vuex store
+        context.store.dispatch("setUserData");
+        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
+      } else {
+        // Invalid user session
+        throw new Error("Unauthorized access. Please login again");
+      }
     } else {
+      // If the user gets redirected from portal provider page
+
+      // Clear localStorage
+      secureStorage.clear();
+
+      // Get vuex state if it exists in the local storage
+      await window.onNuxtReady(() => {
+        new VuexPersistence({
+          storage: secureStorage,
+          filter: mutation =>
+            mutation.type == "SET_USER_DATA" ||
+            mutation.type == "SET_LANGUAGE" ||
+            mutation.type == "SET_GAME_ID" ||
+            mutation.type == "SET_LIVE_ROAD_MAP" ||
+            mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
+            mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+        }).plugin(context.store);
+      });
+
+      // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
+      const portalProviderUUID = context.query.portalProviderUUID
+        ? context.query.portalProviderUUID
+        : undefined;
+      const portalProviderUserId = context.query.portalProviderUserID
+        ? context.query.portalProviderUserID
+        : undefined;
+      const balance = context.query.balance ? context.query.balance : undefined;
+
+      // Validate Login values in URL
+      validateLoginValues(
+        portalProviderUUID,
+        portalProviderUserId,
+        balance,
+        context.store
+      );
       // Check User Login
       await checkUserLogin(
         portalProviderUUID,
@@ -39,14 +115,28 @@ export default async context => {
         balance,
         context.store
       );
+
       // Set default language
       setLanguage(context.store);
       // Set user data in vuex store
       context.store.dispatch("setUserData");
+
+      // Set portal provider url
+      secureStorage.setItem(
+        "referrerUrl",
+        document.referrer.match(/:\/\/(.[^/]+)/)[1]
+      );
+
+      // When the cookie expires redirect user to portal provider's login page
+      setTimeout(() => {
+        window.location.replace(
+          `http://${secureStorage.getItem("referrerUrl")}/`
+        );
+      }, 30 * 60 * 1000);
     }
   } catch (ex) {
     console.log(ex);
-    window.location.replace(config.whitelabelUrl);
+    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
   }
 };
 
@@ -118,8 +208,19 @@ const checkUserLogin = async (
         var userUUID = data.data.userUUID;
         store.dispatch("setPortalProviderUUID", portalProviderUUID);
         store.dispatch("setUserUUID", userUUID);
-        localStorage.setItem("USER_UUID", userUUID); // Set User UUID in local Storage
-        localStorage.setItem("PORTAL_PROVIDERUUID", portalProviderUUID); // Set portal provider UUID in local storage
+        secureStorage.setItem("USER_UUID", userUUID); // Set User UUID in local Storage
+        secureStorage.setItem("PORTAL_PROVIDERUUID", portalProviderUUID); // Set portal provider UUID in local storage
+        // Set Cookie for user session
+        Cookies.set(
+          "login",
+          {
+            portalProviderUUID,
+            userUUID
+          },
+          {
+            expires: config.sessionExpiryTime
+          }
+        );
       } else {
         store.dispatch("setLoginError", [config.error.general]);
         throw new Error(config.error.general);
@@ -134,7 +235,7 @@ const checkUserLogin = async (
       {
         req: reqBody,
         res: data,
-        page: "plugins/callApi.js",
+        page: "plugins/login.js",
         apiUrl: config.userLoginAuth.url,
         provider: portalProviderUUID,
         user: userUUID
@@ -150,8 +251,10 @@ const checkUserLogin = async (
  * @param {*} store
  */
 const setLanguage = store => {
-  store.dispatch("setLanguage", config.defaultLanguageLocale);
-  localStorage.setItem("lang", config.defaultLanguageLocale);
+  const lang = secureStorage.getItem("lang")
+    ? secureStorage.getItem("lang")
+    : config.defaultLanguageLocale;
+  store.dispatch("setLanguage", lang);
 };
 
 /**
@@ -159,7 +262,11 @@ const setLanguage = store => {
  *
  * @param {*} store
  */
+
 const initLocalStorageCoin = store => {
-  store.dispatch("setCoinsModern", config.defaultCoinsModern);
-  localStorage.setItem("coinModern", config.defaultCoinsModern);
+  const chips = secureStorage.getItem("coinsModern")
+    ? secureStorage.getItem("coinsModern")
+    : config.defaultCoinsModern;
+  store.dispatch("setCoinsModern", chips);
+  secureStorage.setItem("coinsModern", chips);
 };

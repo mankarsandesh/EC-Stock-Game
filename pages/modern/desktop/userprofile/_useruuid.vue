@@ -1,10 +1,10 @@
 <template>
-  <div xs2>
+  <div>
     <section class="breadcrumbs" v-if="messageError == false">
-      <v-container md10>
-        <v-parallax dark height="150">
-          <v-layout align-center row>
-            <v-flex xs6>
+      <v-container>
+        <v-parallax dark height="130">
+          <v-layout align-center  justify-center  row md8 lg8>
+            <v-flex xs6 md5 lg5 >
               <div class="flex-container">
                 <div class="profile-img-container">
                   <div class="profile-crowd">
@@ -13,7 +13,7 @@
                   <img
                     width="100%"
                     height="100%"
-                    :src="this.defaultImage"
+                    :src="userImgProfile(visitProfileUserData.userImage)"
                     class="grey darken-4"
                   />
                 </div>
@@ -26,35 +26,33 @@
                   <span
                     class="font-weight-medium"
                     v-if="visitProfileUserData.username"
+                    >{{ visitProfileUserData.username }}</span
                   >
-                    {{ visitProfileUserData.username }}
-                  </span>
 
                   <span
                     v-if="visitProfileUserData.currentActiveTime === 'offline'"
+                    >{{ visitProfileUserData.currentActiveTime }}</span
                   >
-                    {{ visitProfileUserData.currentActiveTime }}
-                  </span>
                   <span v-else>
-                    <b>{{ $t("profile.lastActive") }} : </b>
+                    <b>{{ $t("profile.lastActive") }} :</b>
                     {{ visitProfileUserData.currentActiveTime }}
                   </span>
                   <span
                     class="font-weight-medium"
                     v-if="visitProfileUserData.userUUID == getUserUUID"
                   >
-                    <a class="editButton" href="/modern/desktop/profile/"
-                      >{{ $t("msg.edit") }} {{ $t("menu.profile") }}
-                    </a>
+                    <nuxt-link class="editButton" to="/modern/desktop/profile/">
+                      {{ $t("msg.edit") }} {{ $t("menu.profile") }}
+                    </nuxt-link>
                   </span>
                 </div>
               </div>
             </v-flex>
-            <v-flex xs8 class="text-end">
+            <v-flex xs8 md5 lg5 class="text-end" >
               <div class="leftFollowDiv">
-                <span class="historyName">
-                  {{ $t("profile.historyPeriod") }}:
-                </span>
+                <span class="historyName"
+                  >{{ $t("profile.historyPeriod") }}:</span
+                >
                 <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
                   <v-select
                     v-model="filter"
@@ -66,11 +64,13 @@
                   ></v-select>
                 </div>
                 <v-btn
-                  v-if="
+                  v-if="visitProfileUserData.userUUID != getUserUUID"
+                  v-bind:class="[
                     visitProfileUserData.userUUID != getUserUUID &&
-                      visitProfileUserData.isFollowing == 0
-                  "
-                  class="buttonFollow"
+                    visitProfileUserData.isFollowing == 0
+                      ? 'buttonFollow'
+                      : 'buttonunFollow'
+                  ]"
                   v-on:click="
                     followUserBet(
                       visitProfileUserData.username,
@@ -79,24 +79,13 @@
                       visitProfileUserData.isFollowing
                     )
                   "
-                  >Follow</v-btn
                 >
-                <v-btn
-                  v-if="
-                    visitProfileUserData.userUUID != getUserUUID &&
-                      visitProfileUserData.isFollowing == 1
-                  "
-                  class="buttonunFollow"
-                  v-on:click="
-                    followUserBet(
-                      visitProfileUserData.username,
-                      visitProfileUserData.userImage,
-                      visitProfileUserData.userUUID,
-                      visitProfileUserData.isFollowing
-                    )
-                  "
-                  >unFollow</v-btn
-                >
+                  {{
+                    visitProfileUserData.isFollowing == 0
+                      ? $t("useraction.followBet")
+                      : $t("useraction.unfollowBet")
+                  }}
+                </v-btn>
               </div>
             </v-flex>
           </v-layout>
@@ -104,109 +93,122 @@
       </v-container>
     </section>
     <v-container>
-      <v-layout row wrap>
-        <v-flex xs12 mt-3 v-if="messageError == false">
-          <div class="container-content">
-            <div class="box-container">
-              <div class="cul-box" style="color: #7e57c2;">
-                <span>
-                  <fa
-                    icon="percentage"
-                    style="font-size: 40px; color: #7e57c2;"
-                  />
-                </span>
-                <span class="number-box"
-                  >{{ visitProfileUserData.winRate }}%</span
-                >
-                <span class="des-title text-uppercase">{{
-                  $t("leaderboard.winningrate")
-                }}</span>
+      <v-layout row wrap justify-center>
+        <v-flex md10 lg10 xs12 mt-2>
+             <v-container mb-5>
+          <v-layout row wrap>
+            <v-flex xs12 mt-3 v-if="messageError == false">
+              <div class="container-content">
+                <div class="box-container">
+                  <div class="cul-box" style="color: #7e57c2;">
+                    <span>
+                      <fa
+                        icon="percentage"
+                        style="font-size: 40px; color: #7e57c2;"
+                      />
+                    </span>
+                    <span class="number-box"
+                      >{{ visitProfileUserData.winRate }}%</span
+                    >
+                    <span class="des-title text-uppercase">
+                      {{ $t("leaderboard.winningRate") }}
+                    </span>
+                  </div>
+                  <div class="cul-box cul-box-green">
+                    <span>
+                      <fa
+                        icon="money-bill-wave"
+                        style="font-size: 40px; color: #ace6af;"
+                      />
+                    </span>
+                    <span class="number-box">
+                      {{ visitProfileUserData.totalBets }}
+                    </span>
+                    <span class="des-title text-uppercase">
+                      {{ $t("msg.totalBet") }}
+                    </span>
+                  </div>
+                  <div class="cul-box cul-box-red">
+                    <span>
+                      <fa
+                        icon="users"
+                        style="font-size: 40px; color: #f28691;"
+                      />
+                    </span>
+                    <span class="number-box">
+                      {{ visitProfileUserData.followerCount }}
+                    </span>
+                    <span class="des-title text-uppercase">
+                      {{ $t("profile.followers") }}
+                    </span>
+                  </div>
+                  <div class="cul-box cul-box-yellow">
+                    <span>
+                      <fa
+                        icon="money-bill-alt"
+                        style="font-size: 40px; color: #ffd682;"
+                      />
+                    </span>
+                    <span class="number-box"
+                      >${{
+                        visitProfileUserData.totalWinAmount | currency
+                      }}</span
+                    >
+                    <span class="des-title text-uppercase">
+                      {{ $t("leaderboard.winningAmount") }}
+                    </span>
+                  </div>
+                </div>
+                <div class="pt-5 stock-history">
+                  <h2 class="text-uppercase">
+                    {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
+                  </h2>
+                  <div class="stock-history-container">
+                    <VueApexCharts
+                      v-if="series.length > 0"
+                      type="bar"
+                      height="350"
+                      :options="chartOptions"
+                      :series="series"
+                      :key="series.length + '' + filter"
+                    />
+                  </div>
+                </div>
               </div>
-              <div class="cul-box cul-box-green">
-                <span>
-                  <fa
-                    icon="money-bill-wave"
-                    style="font-size: 40px; color: #ace6af;"
-                  />
-                </span>
-                <span class="number-box">{{
-                  visitProfileUserData.totalBets
-                }}</span>
-                <span class="des-title text-uppercase">{{
-                  $t("msg.totalbet")
-                }}</span>
+            </v-flex>
+            <v-flex v-if="messageError == true">
+              <div class="container-content">
+                <div class="box-error">
+                  <h1>Sorry, this content isn't avaiable right now</h1>
+                  <p>
+                    The Link you followed have expired, or the page may only be
+                    visiable to an audiencce you're not in.
+                  </p>
+                  <a @click="$router.push('/modern/desktop/userprofile/')"
+                    >Go back to the previous Page</a
+                  >
+                  <a @click="$router.push('/modern/desktop/btc1/')"
+                    >EC Game Home Page</a
+                  >
+                </div>
               </div>
-              <div class="cul-box cul-box-red">
-                <span>
-                  <fa icon="users" style="font-size: 40px; color: #f28691;" />
-                </span>
-                <span class="number-box">{{
-                  visitProfileUserData.followerCount
-                }}</span>
-                <span class="des-title text-uppercase">{{
-                  $t("profile.followers")
-                }}</span>
-              </div>
-              <div class="cul-box cul-box-yellow">
-                <span>
-                  <fa
-                    icon="money-bill-alt"
-                    style="font-size: 40px; color: #ffd682;"
-                  />
-                </span>
-                <span class="number-box">{{
-                  visitProfileUserData.totalWinBets
-                }}</span>
-                <span class="des-title text-uppercase">{{
-                  $t("leaderboard.winningamount")
-                }}</span>
-              </div>
-            </div>
-            <div class="pt-5 stock-history">
-              <h2 class="text-uppercase">
-                {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
-              </h2>
-              <div class="stock-history-container">
-                <VueApexCharts
-                  v-if="series.length > 0"
-                  type="bar"
-                  height="350"
-                  :options="chartOptions"
-                  :series="series"
-                  :key="series.length + '' + filter"
-                />
-              </div>
-            </div>
-          </div>
-        </v-flex>
-        <v-flex v-if="messageError == true">
-          <div class="container-content">
-            <div class="box-error">
-              <h1>Sorry, this content isn't avaiable right now</h1>
-              <p>
-                The Link you followed have expired, or the page may only be
-                visiable to an audiencce you're not in.
-              </p>
-              <a @click="$router.push('/modern/desktop/userprofile/')">
-                Go back to the previous Page
-              </a>
-              <a @click="$router.push('/modern/desktop/btc1/')">
-                EC Game Home Page</a
-              >
-            </div>
-          </div>
+            </v-flex>
+          </v-layout>
+
+          <!-- Follow Dialog -->
+          <v-dialog v-model="dialog" width="500" class="followDialog">
+            <followBet
+              v-if="renderComponent"
+              :username="this.username"
+              :userImage="this.userImage"
+              :FollowerUserUUID="this.FollowUserUUID"
+              :isFollowing="this.FolloworNot"
+              @followBetClose="closeFollowBet"
+            />
+          </v-dialog>
+        </v-container>
         </v-flex>
       </v-layout>
-
-      <!-- Follow Dialog -->
-      <v-dialog v-model="dialog" width="500" class="followDialog">
-        <followBet
-          :username="this.username"
-          :userImage="this.userImage"
-          :FollowerUserUUID="this.FollowUserUUID"
-          :isFollowing="this.FolloworNot"
-        />
-      </v-dialog>
     </v-container>
   </div>
 </template>
@@ -217,6 +219,7 @@ import VueApexCharts from "vue-apexcharts";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
+import secureStorage from "../../../../plugins/secure-storage";
 import log from "roarr";
 
 export default {
@@ -227,6 +230,8 @@ export default {
   },
   data() {
     return {
+      myProfileImage: "",
+      renderComponent: true, // render Follow Bet
       username: "",
       FollowUserUUID: "",
       FolloworNot: "",
@@ -293,7 +298,7 @@ export default {
     this.getUserProfileByID();
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getUserInfo"])
   },
   watch: {
     filter() {
@@ -302,8 +307,19 @@ export default {
     }
   },
   methods: {
+    // Render Follow Bet Component
+    forceRerender() {
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        this.renderComponent = true;
+      });
+    },
+    // Close Follow Bet Popup
+    closeFollowBet() {
+      this.dialog = false;
+    },
+    // Follow User Bet
     followUserBet: function(username, userImg, userUUID, method) {
-      console.log(username);
       this.username = username;
       this.FollowUserUUID = userUUID;
       if (method == 0) {
@@ -311,13 +327,14 @@ export default {
       } else {
         this.FolloworNot = 2;
       }
-      this.userImage = userImg ? this.imgProfile(userImg) : this.defaultImage;
+      this.userImage = userImg
+        ? this.userImgProfile(userImg)
+        : this.defaultImage;
       this.dialog = true;
+      this.forceRerender();
     },
-    imgProfile(userImg) {
-      return userImg === null
-        ? this.defaultImage
-        : `${config.apiDomain}/` + userImg;
+    userImgProfile(userImg) {
+      return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
     },
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
@@ -350,6 +367,8 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
+          this.myProfileImage = res.data.userImage;
+
           //  series
           let series = [];
           let xaxis = [];
@@ -380,8 +399,8 @@ export default {
             res,
             page: "pages/modern/desktop/userprofile/_useruuid.vue",
             apiUrl: config.getVisitUserProfile.url,
-            provider: localStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: localStorage.getItem("USER_UUID")
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
           ex.message
         );
@@ -443,7 +462,7 @@ export default {
 }
 
 .number-box {
-  font-size: 40px;
+  font-size: 25px;
   font-weight: bolder;
 }
 
@@ -462,7 +481,7 @@ export default {
   border: #c0acef solid 3px;
   background-color: #fff;
   margin: 15px;
-  width: 180px;
+  width: 220px;
   height: 180px;
   box-shadow: 0 0 2px #fff;
   display: flex;
@@ -541,7 +560,7 @@ export default {
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 14px;
-  width: 100px;
+  width: 120px;
   height: 48px;
   flex-grow: wrap;
 }
@@ -552,7 +571,7 @@ export default {
   background-image: linear-gradient(to right, #888787 30%, #626161 51%);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 14px;
-  width: 100px;
+  width: 120px;
   height: 48px;
   flex-grow: wrap;
 }
