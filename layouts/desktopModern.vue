@@ -46,7 +46,7 @@
                 @click="$refs.language.showDialog()"
               >
                 <country-flag :country="getLocale" size="normal" />
-                <span>&nbsp;{{ $t(`msg.${language[getLocale]}`) }}</span>
+                <span>&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span>
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>

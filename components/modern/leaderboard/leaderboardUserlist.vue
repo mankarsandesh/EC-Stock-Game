@@ -37,7 +37,7 @@
       </v-layout>
     </v-flex>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.nodata") }}</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.noData") }}</h2>
     </v-flex>
     <v-flex v-if="topPlayerData.length > 0">
       <v-flex
