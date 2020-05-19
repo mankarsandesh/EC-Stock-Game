@@ -45,7 +45,7 @@
 
         <!-- bet on digigt  -->
         <div class="guide-top" style="margin-right: 90px;" v-if="tutorialStepNumber === 5">
-          <span class="guide-title text-uppercase">{{$t("tutorial.betonDigits")}}</span>
+          <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
           <span class="guide-description">{{$t("tutorial.selectDigit")}}</span>
         </div>
         <!-- select chipcamount  -->
@@ -61,7 +61,7 @@
           id="enter-bet-guide"
           v-if="tutorialStepNumber === 7 && getIsWindowsHasScroll"
         >
-          <span class="guide-title text-uppercase">{{$t("tutorial.betonDigits")}}</span>
+          <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
           <span class="guide-description">{{$t("tutorial.selectChip")}}</span>
         </div>
         <!-- no scroll -->
@@ -256,9 +256,9 @@
         <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
           <h3
             class="balanceUser"
-            v-if="getUserInfo.balance > 0"
-          >Acc : {{ getUserInfo.balance | currency }}</h3>
-          <h3 class="balanceUser" v-if="getUserInfo.balance == 0">Acc : 0000.00</h3>
+            v-if="getUserBalance > 0"
+          >Acc : {{ getUserBalance | currency }}</h3>
+          <h3 class="balanceUser" v-if="getUserBalance == 0">Acc : 0000.00</h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-show="!isHidden"></fullscreenchart>
@@ -455,7 +455,8 @@ export default {
       "getLastDraw",
       "getRoadMap",
       "getStockLoop",
-      "getResetStatus"
+      "getResetStatus",
+      "getUserBalance"
     ]),
     ...mapState({
       gameStockId: state => state.game.gameStockId

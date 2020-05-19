@@ -52,7 +52,6 @@ export default {
             var logData = data;
             if (data.status) {
               this.setUserBalance(data.data.userBalance);
-              console.log("user balance", data);
             } else {
               throw new Error(config.error.general);
             }

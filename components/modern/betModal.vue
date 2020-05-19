@@ -61,7 +61,7 @@
         </v-layout>
       </v-flex>
       <v-flex class="py-1 betHeading">
-        <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $5000</span>
+        <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $10000</span>
       </v-flex>
       <!-- <v-divider></v-divider> -->
       <v-flex xs-12 class="pt-2 text-uppercase">
@@ -108,7 +108,8 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getLastDraw",
-      "getUserInfo"
+      "getUserInfo",
+      "getUserBalance"
     ])
   },
   watch: {
@@ -179,7 +180,7 @@ export default {
           type: "error",
           title: ex.message,
           showConfirmButton: true,
-          timer: 100000
+          timer: 1000
         });
         log.error(
           {
@@ -195,11 +196,11 @@ export default {
       }
     },
     confirmBet() {
-      if (parseInt(this.betValue) > parseInt(this.getUserInfo.balance)) {
+      if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
         this.$swal({
           type: "error",
           title: config.error.lowBalance,
-          timer: 100000,
+          timer: 1000,
           showConfirmButton: true
         });
       } else {
@@ -246,7 +247,7 @@ export default {
 
 <style scoped>
 .chips {
-  margin: 0px 3px;
+  margin: 0px 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
 }
 .chips:hover {

@@ -206,7 +206,7 @@ export default {
       //     curve: "smooth"
       //   },
       //   noData: {
-      //     text: this.$root.$t('msg.nodata')
+      //     text: this.$root.$t('msg.noData')
       //   },
       //   tooltip: {
       //     enabled: true,

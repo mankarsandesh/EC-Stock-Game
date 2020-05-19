@@ -1,6 +1,6 @@
 <template>
   <div xs2>
-    <section v-if="messageError == false">
+    <section v-if="messageError == false" style="background-color:;">
       <v-container>
         <v-flex>
           <v-layout justify-center row>
@@ -10,7 +10,14 @@
                   style="flex-grow: wrap; width: 120px; margin: 0 10px;min-height: 36px !important;"
                 >
                   {{ $t("profile.historyPeriod") }}:
-                  <v-select v-model="filter" height="10px" dense hide-details :items="items" solo></v-select>
+                  <v-select
+                    v-model="filter"
+                    height="10px"
+                    dense
+                    hide-details
+                    :items="items"
+                    solo
+                  ></v-select>
                 </div>
               </div>
             </v-flex>
@@ -19,7 +26,10 @@
           <v-layout justify-center row style="margin-top:-40px;">
             <v-flex>
               <div class="profile-img-container">
-                <img :src="userImgProfile(visitProfileUserData.userImage)" class="grey darken-4" />
+                <img
+                  :src="userImgProfile(visitProfileUserData.userImage)"
+                  class="grey darken-4"
+                />
               </div>
             </v-flex>
           </v-layout>
@@ -31,11 +41,14 @@
                 <div
                   class="font-weight-medium"
                   v-if="visitProfileUserData.username"
-                >@{{ visitProfileUserData.username }}</div>
+                >
+                  @{{ visitProfileUserData.username }}
+                </div>
 
                 <span
                   v-if="visitProfileUserData.currentActiveTime === 'offline'"
-                >{{ visitProfileUserData.currentActiveTime }}</span>
+                  >{{ visitProfileUserData.currentActiveTime }}</span
+                >
                 <span v-else>
                   {{ $t("profile.lastActive") }} :
                   {{ visitProfileUserData.currentActiveTime }}
@@ -47,7 +60,9 @@
                   v-if="visitProfileUserData.userUUID == getUserUUID"
                 >
                   <nuxt-link to="/modern/profile">
-                    <a class="editButton">{{ $t("msg.edit") }} {{ $t("menu.profile") }}</a>
+                    <a class="editButton"
+                      >{{ $t("msg.edit") }} {{ $t("menu.profile") }}</a
+                    >
                   </nuxt-link>
                 </span>
               </v-flex>
@@ -74,9 +89,9 @@
               "
             >
               {{
-              visitProfileUserData.isFollowing == 0
-              ? $t("useraction.followBet")
-              : $t("useraction.unfollowBet")
+                visitProfileUserData.isFollowing == 0
+                  ? $t("useraction.follow")
+                  : $t("useraction.unFollow")
               }}
             </v-btn>
           </v-flex>
@@ -85,35 +100,37 @@
 
       <v-container mb-5>
         <v-layout row wrap>
-          <v-flex xs12 mt-3 v-if="messageError == false">
+          <v-flex xs12 mt-1 v-if="messageError == false">
             <v-layout pa-3 wrap justify-center>
               <v-flex xs6 sm3>
                 <div class="cul-box" style="color: #7e57c2;">
                   <span>
-                    <fa icon="percentage" style="font-size: 40px; color: #7e57c2;" />
+                    <fa
+                      icon="percentage"
+                      style="font-size: 40px; color: #7e57c2;"
+                    />
                   </span>
-                  <span class="number-box">{{ visitProfileUserData.winRate }}%</span>
+                  <span class="number-box"
+                    >{{ visitProfileUserData.winRate }}%</span
+                  >
                   <span class="des-title text-uppercase">
-                    {{
-                    $t("leaderboard.winningrate")
-                    }}
+                    {{ $t("leaderboard.winningRate") }}
                   </span>
                 </div>
               </v-flex>
               <v-flex xs6 sm3>
                 <div class="cul-box cul-box-green">
                   <span>
-                    <fa icon="money-bill-wave" style="font-size: 40px; color: #2bb13a;" />
+                    <fa
+                      icon="money-bill-wave"
+                      style="font-size: 40px; color: #2bb13a;"
+                    />
                   </span>
                   <span class="number-box">
-                    {{
-                    visitProfileUserData.totalBets
-                    }}
+                    {{ visitProfileUserData.totalBets }}
                   </span>
                   <span class="des-title text-uppercase">
-                    {{
-                    $t("msg.totalBet")
-                    }}
+                    {{ $t("msg.totalBet") }}
                   </span>
                 </div>
               </v-flex>
@@ -121,30 +138,29 @@
               <v-flex xs6 sm3>
                 <div class="cul-box cul-box-red">
                   <span>
-                    <fa icon="users" style="font-size: 40px; color: #f28691;" />
+                    <fa icon="users" style="font-size: 40px; color: #e73762;" />
                   </span>
                   <span class="number-box">
-                    {{
-                    visitProfileUserData.followerCount
-                    }}
+                    {{ visitProfileUserData.followerCount }}
                   </span>
                   <span class="des-title text-uppercase">
-                    {{
-                    $t("profile.followers")
-                    }}
+                    {{ $t("profile.followers") }}
                   </span>
                 </div>
               </v-flex>
               <v-flex xs6 sm3>
                 <div class="cul-box cul-box-yellow">
                   <span>
-                    <fa icon="money-bill-alt" style="font-size: 40px; color: #ffd682;" />
+                    <fa
+                      icon="money-bill-alt"
+                      style="font-size: 40px; color: #f19135;"
+                    />
                   </span>
-                  <span class="number-box">${{ visitProfileUserData.totalWinAmount | currency }}</span>
+                  <span class="number-box"
+                    >${{ visitProfileUserData.totalWinAmount | currency }}</span
+                  >
                   <span class="des-title text-uppercase">
-                    {{
-                    $t("leaderboard.winningamount")
-                    }}
+                    {{ $t("leaderboard.winningAmount") }}
                   </span>
                 </div>
               </v-flex>
@@ -152,9 +168,9 @@
             <div class="container-content">
               <div class="box-container"></div>
               <div class="pa-2 stock-history">
-                <h2
-                  class="text-uppercase"
-                >{{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}</h2>
+                <h3 class="text-uppercase text-center" justify-center>
+                  {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
+                </h3>
                 <div class="stock-history-container">
                   <VueApexCharts
                     v-if="series.length > 0"
@@ -180,8 +196,12 @@
               The Link you followed have expired, or the page may only be
               visiable to an audiencce you're not in.
             </p>
-            <a @click="$router.push('/modern/desktop/userprofile/')">Go back to the previous Page</a>
-            <a @click="$router.push('/modern/desktop/btc1/')">EC Game Home Page</a>
+            <a @click="$router.push('/modern/desktop/userprofile/')"
+              >Go back to the previous Page</a
+            >
+            <a @click="$router.push('/modern/desktop/btc1/')"
+              >EC Game Home Page</a
+            >
           </div>
         </div>
       </v-flex>
@@ -201,9 +221,7 @@
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>
-            {{
-            this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet"
-            }}
+            {{ this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet" }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
@@ -504,13 +522,13 @@ Error Box When User Not Found
 }
 
 .cul-box-yellow {
-  border-color: #ffd682 !important;
-  color: #ffd682;
+  border-color: #f19135 !important;
+  color: #f19135;
 }
 
 .cul-box-red {
-  border-color: #f28691 !important;
-  color: #f28691;
+  border-color: #e73762 !important;
+  color: #e73762;
 }
 
 .container-content {
@@ -542,7 +560,7 @@ Error Box When User Not Found
   width: 100px;
   border-radius: 50%;
   background-color: #fff !important;
-  border: 1px solid #dddddd !important;
+  border: 3px solid #d4d6dc !important;
   padding: 4px;
 }
 

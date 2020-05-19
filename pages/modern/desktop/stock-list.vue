@@ -10,8 +10,7 @@
               class="border-round"
               hide-details
               :items="[ { value: 'asc', text: $t('stockList.ascending') } , { value: 'desc', text: $t('stockList.descending') }]"
-              :placeholder="$t('msg.sortBy')"
-              :key="$root.$t('stockList.ascending') + sortBy"
+              :placeholder="$t('msg.sortBy')"             
             ></v-select>
           </v-flex>
         </v-flex>
@@ -35,16 +34,8 @@ export default {
   },
   data() {
     return {
-      sortBy: "asc"
+      sortBy: ""
     };
-  },
-  methods: {
-    goSearch() {
-      //console.log("You press search button");
-    }
-  },
-  created() {
-    this.active = false;
   }
 };
 </script>

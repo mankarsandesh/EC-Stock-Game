@@ -9,11 +9,15 @@ const state = () => ({
     footerBetAmount: 0, // Store footer bet amount
     onGoingBet: [], // store data betting
     isSendBetting: false,
+    multiGameFooterBetAmount: 0, // Store multi game footer bet amount
     tempMultiGameBetData: [], // Store temp bet data of multi game until the bet is ent to the server,
     itemsBetting: []
 });
 
 const mutations = {
+    SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
+    state.multiGameFooterBetAmount = payload;
+  },
     CLEAR_ITEMS_BETTING(state, payload) {  
         state.itemsBetting = []
     },
@@ -62,6 +66,9 @@ const mutations = {
 };
 
 const actions = {
+      setMultiGameFooterBetAmount({ commit }, payload) {
+    commit("SET_MULTI_GAME_FOOTER_BET_AMOUNT", payload);
+  },
     // Push data to multi game bet
     pushDataMultiGameBet({ commit }, payload) {
         commit("PUSH_DATA_MULTI_GAME_BET", payload);
@@ -290,6 +297,15 @@ const getters = {
         });
         return amount;
     }
+    let amount = 0;
+    state.tempMultiGameBetData.forEach(betData => {
+      amount += betData.betAmount;
+    });
+    return amount;
+  },
+  getMultiGameFooterBetAmount(state) {
+    return state.multiGameFooterBetAmount;
+  }
 };
 
 export default {
