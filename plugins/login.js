@@ -32,7 +32,10 @@ export default async context => {
         });
         // Set user data in vuex store
         context.store.dispatch("setUserData");
-        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
+        context.store.dispatch(
+          "setPortalProviderUUID",
+          Cookies.getJSON("login").portalProviderUUID
+        );
         // Set default language in vuex store
         context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
       } else {
@@ -62,12 +65,15 @@ export default async context => {
               mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
           }).plugin(context.store);
         });
-        
+
         // Set default language in vuex store
         context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
         // Set user data in vuex store
         context.store.dispatch("setUserData");
-        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
+        context.store.dispatch(
+          "setPortalProviderUUID",
+          Cookies.getJSON("login").portalProviderUUID
+        );
       } else {
         // Invalid user session
         throw new Error("Unauthorized access. Please login again");
@@ -251,8 +257,8 @@ const checkUserLogin = async (
  * @param {*} store
  */
 const setLanguage = store => {
-  const lang = secureStorage.getItem("lang")
-    ? secureStorage.getItem("lang")
+  const lang = store.getters.getLocale
+    ? store.getters.getLocale
     : config.defaultLanguageLocale;
   store.dispatch("setLanguage", lang);
 };
@@ -268,5 +274,4 @@ const initLocalStorageCoin = store => {
     ? secureStorage.getItem("coinsModern")
     : config.defaultCoinsModern;
   store.dispatch("setCoinsModern", chips);
-  secureStorage.setItem("coinsModern", chips);
 };
