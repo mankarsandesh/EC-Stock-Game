@@ -73,16 +73,18 @@ export default {
         }
         return 0;
       }
-      let result = [];
+      let stockNewList = [];
       if (this.sortBy === "asc") {
-        result.push(this.getStockListPrice[0].sort(sortByAsc));
-        result.push(this.getStockListPrice[1].sort(sortByAsc));
-      } else {
-        result.push(this.getStockListPrice[0].sort(sortByDesc));
-        result.push(this.getStockListPrice[1].sort(sortByDesc));
+        stockNewList.push(this.getStockListPrice[0].sort(sortByAsc));
+        stockNewList.push(this.getStockListPrice[1].sort(sortByAsc));
+      } else  if (this.sortBy === "desc") {
+        stockNewList.push(this.getStockListPrice[0].sort(sortByDesc));
+        stockNewList.push(this.getStockListPrice[1].sort(sortByDesc));
+      }else{
+        stockNewList.push(this.getStockListPrice[0].sort(sortByDesc));
+        stockNewList.push(this.getStockListPrice[1].sort(sortByDesc));
       }
-
-      return result;
+      return stockNewList;
     }
   }
 };

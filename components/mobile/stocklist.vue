@@ -68,15 +68,18 @@ export default {
         }
         return 0;
       }
-      let result = [];
+      let StockNewList = [];
       if (this.sortBy === "asc") {
-        result.push(this.getStockListPrice[0].sort(sortByAsc));
-        result.push(this.getStockListPrice[1].sort(sortByAsc));
+        StockNewList.push(this.getStockListPrice[0].sort(sortByAsc));
+        StockNewList.push(this.getStockListPrice[1].sort(sortByAsc));
+      } else if (this.sortBy === "desc") {
+        StockNewList.push(this.getStockListPrice[0].sort(sortByDesc));
+        StockNewList.push(this.getStockListPrice[1].sort(sortByDesc));
       } else {
-        result.push(this.getStockListPrice[0].sort(sortByDesc));
-        result.push(this.getStockListPrice[1].sort(sortByDesc));
+        StockNewList.push(this.getStockListPrice[0]);
+        StockNewList.push(this.getStockListPrice[1]);
       }
-      return result;
+      return StockNewList;
     }
   }
 };
