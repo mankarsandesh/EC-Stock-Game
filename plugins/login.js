@@ -228,8 +228,8 @@ const checkUserLogin = async (
           }
         );
       } else {
-        store.dispatch("setLoginError", [config.error.general]);
-        throw new Error(config.error.general);
+        store.dispatch("setLoginError", [data.message[0]]);
+        throw new Error(data.message[0]);
       }
     } else {
       store.dispatch("setLoginError", [config.loginError.authError]);
