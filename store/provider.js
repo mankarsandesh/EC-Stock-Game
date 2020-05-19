@@ -46,12 +46,11 @@ const mutations = {
   },
   SET_COINS_MODERN(state, payload) {
     state.coinsModern = payload;
+    secureStorage.setItem("coinsModern", payload);
   },
-  SET_LANGUAGE(state, locale) {
-    if (state.locales.includes(locale)) {
-      state.locale = locale;
-    }
-    secureStorage.setItem("lang", locale);
+  SET_LANGUAGE(state, payload) {
+    state.locale = payload;
+    secureStorage.setItem("lang", payload);
   },
   SET_TOP_PLAYER(state, payload) {
     state.isLoadingTopPlayer = payload;
@@ -85,7 +84,7 @@ const mutations = {
   },
   SET_CHIPS(state, payload) {
     state.coinsModern[payload.index] = payload.amount;
-    state.coinsModern.sort((a,b) => a-b);
+    state.coinsModern.sort((a, b) => a - b);
     secureStorage.setItem("coinsModern", state.coinsModern);
   }
 };

@@ -112,9 +112,10 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [    
-    '~/plugins/inject.js',
+  plugins: [
+    "~/plugins/inject.js",
     "@/plugins/vuetify",
+    "@plugins/maintenance",
     "@plugins/js-cookie", // for setting and reading cookies
     // "~/plugins/axios",
     "@/plugins/roarr", // for generating logs
@@ -157,9 +158,6 @@ module.exports = {
       }
     ]
   ],
-  /*
-   ** Axios module configuration
-   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: "http://uattesting.equitycapitalgaming.com/webApi",
@@ -180,7 +178,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend: function (config, { isDev, isClient }) {
+    extend: function(config, { isDev, isClient }) {
       if (isDev) {
         config.devtool = isClient ? "source-map" : "inline-source-map";
       }
