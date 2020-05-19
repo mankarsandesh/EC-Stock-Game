@@ -1,6 +1,7 @@
+import config from "../config/config.global";
+
 export default function(context) {
-  let isMaintenance = !!process.env.MAINTENANCE_MODE;
-  if (isMaintenance) {
+  if (config.isMaintenance == 'true') {
     return context.redirect('/maintenance');
   }
   return;
