@@ -11,21 +11,31 @@
         <v-icon color="#fff">keyboard_arrow_down</v-icon>
       </span>
     </div>
-    <div>
+    <v-card>
       <div class="select-content" v-if="menuShow" v-on-clickaway="closeMenu">
-        <v-card>
-          <div
-            class="item-available"
-            v-for="item in items"
-            :key="item.title"
-            @click="selectClick(item)"
-          >
-            <input type="checkbox" :checked="select.includes(item)" />
-            <label class="cursor-pointer">{{ item.title }}</label>
-          </div>
-        </v-card>
+        <div
+          class="item-available"
+          v-for="item in items"
+          :key="item.title"
+          @click="selectClick(item)"
+        >
+          <v-checkbox
+            :off-icon="
+              select.includes(item) ? 'check_box' : 'check_box_outline_blank'
+            "
+            :on-icon="
+              select.includes(item) ? 'check_box' : 'check_box_outline_blank'
+            "
+            readonly
+            class="ma-2"
+            hide-details
+            color="black"
+            :label="item.title"
+          ></v-checkbox>
+          <!-- <label class="cursor-pointer">{{ item.title }}</label> -->
+        </div>
       </div>
-    </div>
+    </v-card>
   </div>
 </template>
 <script>
@@ -89,24 +99,20 @@ export default {
   background-color: #fff;
   width: 100%;
   position: absolute;
-  min-height: 50px;
   overflow-y: auto;
+  top: -35px;
+  min-height: 100px;
 }
 .item-available {
   display: flex;
   align-items: center;
-  padding: 5px 25px;
+  padding: 0px 25px;
   cursor: pointer;
-}
-.item-available:first-child {
-  padding-top: 5px;
 }
 .item-available:hover {
   background-color: aliceblue;
 }
-.item-available > label {
-  padding-left: 10px;
-}
+
 .icon-select {
   position: absolute;
   right: 12px;

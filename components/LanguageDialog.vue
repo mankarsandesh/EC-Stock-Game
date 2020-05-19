@@ -16,14 +16,15 @@
           :key="index"
         >
           <country-flag :country="item.country" size="big" />
-          <div>
-            <input
-              type="radio"
-              v-model="value"
+          <v-radio-group v-model="value" row>
+            <v-radio
+              color="black"
               :value="item.value"
+              off-icon="radio_button_unchecked"
+              on-icon="radio_button_checked "
               @click="changeLange(item.value)"
-            />
-          </div>
+            ></v-radio>
+          </v-radio-group>
         </v-flex>
       </v-layout>
     </v-card>
@@ -75,6 +76,7 @@ export default {
       this.dialog = true;
     },
     changeLange(value) {
+      this.value = value;
       this.setLanguage(value);
       this.dialog = false;
       this.$i18n.locale = this.getLocale;

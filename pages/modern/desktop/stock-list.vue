@@ -10,8 +10,8 @@
               hide-details
               :items="items"
               :placeholder="$t('msg.sortby')"
-              
-            ></v-select>
+            >
+            </v-select>
 
             <v-btn @click="goSearch" class="buttonGreen">
               {{ $t("msg.go") }}

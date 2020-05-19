@@ -4,7 +4,7 @@
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">fa-times</v-icon>
+          <v-icon color="#0b2968">close</v-icon>
         </span>
         <v-layout column>
           <v-flex xs12 pt-3>
@@ -26,7 +26,7 @@
       </v-flex>
       <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
-          <v-icon color="#FFF" size="20">fa-list</v-icon>
+          <v-icon size="30" color="#FFF">list</v-icon>
         </span>
       </v-flex>
       <!-- End Left Side -->
@@ -156,7 +156,7 @@
                 :isShowMultigameButton="index"
               ></tableTrendMap>
             </div>
-            <span class="addChart" @click="removeTradMap(index)">
+            <span class="addChart">
               <v-icon>close</v-icon>
             </span>
             <span
@@ -516,7 +516,7 @@ export default {
   height: 35px;
   text-align: center;
   line-height: 35px;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   background-color: #4464ff !important;
   border-radius: 50%;
@@ -542,6 +542,7 @@ export default {
   width: 40px;
   height: 40px;
   text-align: center;
-  line-height: 40px;
+  line-height: 50px;
+  justify-items: center;
 }
 </style>
