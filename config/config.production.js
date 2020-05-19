@@ -92,7 +92,13 @@ const config = {
   logDomain: process.env.LOG_DOMAIN,
   defaultLanguageLocale: "cn",
   defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
-  homePageStockName: "btc1"
+  homePageStockName: "btc1",
+  language: {
+    cn: "Chinese",
+    us: "English",
+    th: "Thai",
+    la: "Lao"
+  }
 };
 
 export default config;
