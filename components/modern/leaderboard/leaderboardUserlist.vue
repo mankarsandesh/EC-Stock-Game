@@ -402,8 +402,8 @@ export default {
 
 .pimage {
   margin-right: 10px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border: 2px solid #dddddd;
   border-radius: 180px;
 }

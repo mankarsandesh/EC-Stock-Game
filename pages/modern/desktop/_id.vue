@@ -158,7 +158,7 @@
                   @click="addTrendMap()"
                   v-if="index === 0"
                 >
-                  <v-icon>add</v-icon>
+                  <v-icon>fa-plus</v-icon>
                 </span>
                 <span v-else class="addChart" @click="removeTradMap(index)">
                   <v-icon>close</v-icon>
@@ -224,7 +224,7 @@
             @click="setAfterFullScreenClosePage()"
             title="Full Screen"
           >
-            <v-icon>fullscreen</v-icon>
+            <v-icon size="24px">fa-arrows-alt</v-icon>
           </v-btn>
         </div>
       </v-flex>
