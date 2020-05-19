@@ -628,8 +628,7 @@ nav.modal-bet.v-toolbar.theme--light p {
 .buttonRed {
   color: #fff !important;
   border-radius: 5px;
-  background-image: linear-gradient(to right, #b73599 20%, #eb106e 51%);
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+  background-image: linear-gradient(to right, #b73599 20%, #eb106e 51%); 
   font-size: 12px;
 }
 
