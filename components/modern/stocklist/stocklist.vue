@@ -52,11 +52,6 @@ export default {
       type: String
     }
   },
-  mounted() {
-    setTimeout(() => {
-      console.log(this.getStockListPrice);
-    }, 1500);
-  },
   computed: {
     ...mapGetters(["getStockListPrice"]),
     stockLists() {

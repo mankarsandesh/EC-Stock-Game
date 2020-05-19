@@ -5,18 +5,22 @@
     <v-layout row wrap>
       <v-flex xs12 sm12 class="d-flex" pl-2 pr-2>
         <v-select
-          class="border-round mt-2"
+          v-model="sortBy"
+          class="border-round"
           hide-details
-          :items="[$t('stockList.ascending'), $t('stockList.descending')]"
-          :placeholder="$t('stockList.sortBy')"
-          v-model="itemss"
+          :items="[
+            { value: 'asc', text: $t('stockList.ascending') },
+            { value: 'desc', text: $t('stockList.descending') }
+          ]"
+          :placeholder="$t('msg.sortBy')"
+          :key="$root.$t('stockList.ascending') + sortBy"
         ></v-select>
       </v-flex>
     </v-layout>
     <!-- end serach -->
     <v-layout row wrap mt-2>
       <v-flex xs12>
-        <stocklist />
+        <stocklist :sortBy="sortBy" />
       </v-flex>
     </v-layout>
   </div>
@@ -33,7 +37,8 @@ export default {
   data() {
     return {
       items: ["ascending", "descending"],
-      itemss: ""
+      itemss: "",
+      sortBy: "asc"
     };
   },
   computed: {
@@ -51,14 +56,6 @@ export default {
         return false;
       }
     }
-  },
-  methods: {
-    goSearch() {
-      // alert("You're right");
-    }
-  },
-  created() {
-    this.active = false;
   }
 };
 </script>

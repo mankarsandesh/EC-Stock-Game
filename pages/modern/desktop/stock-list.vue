@@ -37,14 +37,6 @@ export default {
     return {
       sortBy: "asc"
     };
-  },
-  methods: {
-    goSearch() {
-      //console.log("You press search button");
-    }
-  },
-  created() {
-    this.active = false;
   }
 };
 </script>
