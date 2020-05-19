@@ -80,8 +80,8 @@
     </v-layout>
   </div>
 </template>
-
 <script>
+
 import Sound from "~/helpers/sound";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
@@ -95,7 +95,6 @@ export default {
   mixins: [BetResult],
   data() {
     return {
-      testValue: "9432.61",
       confirmDisabled: false,
       betValue: 100,
       imgChip: chips.chipsData

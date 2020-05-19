@@ -14,13 +14,12 @@ const state = () => ({
 });
 
 const mutations = {
-    CLEAR_ITEMS_BETTING(state, payload) {
+    CLEAR_ITEMS_BETTING(state, payload) {  
         state.itemsBetting = []
     },
     SET_ITEMS_BETTING(state, payload) {
         state.itemsBetting.push(payload)
-
-        localStorage.setItem("itemsBetting", JSON.stringify(state.itemsBetting))
+        secureStorage.setItem("itemsBetting", state.itemsBetting)
     },
     SET_FIRST(state, payload) {
         state.first = payload

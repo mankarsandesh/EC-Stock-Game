@@ -5,7 +5,7 @@ const SecureStorage = require("secure-web-storage");
 
 const SECRET_KEY = config.secureStorageSecretKey;
 
-const secureStorage = new SecureStorage(localStorage, {
+const secureStorage = new SecureStorage(localStorage, {  
   hash: function hash(key) {
     key = CryptoJS.SHA256(key, SECRET_KEY);
     return key.toString();

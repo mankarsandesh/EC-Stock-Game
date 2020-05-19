@@ -127,7 +127,7 @@ module.exports = {
         { src: "@/plugins/ga", mode: "client" }
     ],
     router: {
-        middleware: ["auth", "showLoading", "betting"]
+        middleware: ["auth", "showLoading"]
             // middleware: 'maintenance'
     },
     /*

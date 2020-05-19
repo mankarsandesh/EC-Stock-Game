@@ -1,17 +1,9 @@
 const jsonResult = require('~/data/result') // define the json result for the compare 
+import secureStorage from '~/plugins/secure-storage'
 import sound from "~/helpers/sound" // import the sound helper 
 import { mapMutations, mapGetters } from 'vuex'
-import Result from "~/helpers/Result" // import the sound helper 
-
-
-
 // define a mixin object
 export const BetResult = {
-
-    create() {
-        console.log('am here in mixin')
-    },
-
     computed: {
         ...mapGetters(["itemsBetting"])
     },
@@ -197,7 +189,7 @@ export const BetResult = {
         clearItemsAfterLastDraw() {
             if (this.itemsBetting.length) {
 
-                localStorage.removeItem("itemsBetting")
+                secureStorage.removeItem("itemsBetting")
 
                 this.CLEAR_ITEMS_BETTING()
 

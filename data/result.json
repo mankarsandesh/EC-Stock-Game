@@ -4,7 +4,7 @@
       "type": "firstdigit",
       "rules": [
         {
-          "rule": [
+          "rule": [  
             5,
             6,
             7,
