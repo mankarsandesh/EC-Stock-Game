@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid>
+  <v-container >
     <input @change="uploadImage($event)" type="file" ref="inputFile" hidden />
-    <v-layout pt-3 row wrap class="justify-center">
+    <v-layout pt-1 row wrap class="justify-center" >
       <v-flex xs12 ms12 lg10 md10>
         <v-layout>
           <v-flex xs4 md3 lg3 xl2 class="pt-5" style="background-color:white">
@@ -64,7 +64,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.myfollowers") }}</li>
+                  >{{ $t("profile.myFollowers") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/following/">
                   <li
@@ -73,7 +73,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.myfollowing") }}</li>
+                  >{{ $t("profile.myFollowing") }}</li>
                 </nuxt-link>
                 <!-- <nuxt-link to="/modern/desktop/profile/notification/">
                   <li

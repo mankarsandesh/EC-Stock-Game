@@ -227,21 +227,11 @@ export default {
             }
           } catch (ex) {
             console.log(ex);
-            log.error(
-              {
-                channelName: `balanceUpdate.${this.getUserUUID}`,
-                eventName: "balanceUpdate",
-                res: logData,
-                page: "layouts/desktopModern.vue",
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         }
       );
     },
+    // Fetch User Notification
     async fetchNotification() {
       try {
         var reqBody = {
@@ -265,17 +255,6 @@ export default {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            req: reqBody,
-            res: data,
-            page: "layouts/desktopModern.vue",
-            apiUrl: config.getUserNotification.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   },
@@ -296,7 +275,8 @@ export default {
 }
 #notificationTab {
   padding: 10px 10px 0px 10px;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   z-index: 9999;
   height: 320px;
   width: 350px;
@@ -355,16 +335,16 @@ export default {
 }
 .badge {
   position: absolute;
-  margin-top: -5px;
+  margin-top: -6px;
   margin-left: -15px;
   background-color: red;
   color: #fff;
   border-radius: 180px;
   padding: 1px;
-  height: 18px;
-  width: 18px;
-  font-size: 10px;
-  font-weight: 800;
+  height: 20px;
+  width: 20px;
+  font-size: 12px;
+  /* font-weight: 800; */
   border: 1px solid #333;
 }
 .closeNotification {
@@ -466,5 +446,25 @@ nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
   border-bottom: none;
   border-top: none;
   border-right: none;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 7px #acacac;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #acacac;
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2c6b9e;
 }
 </style>

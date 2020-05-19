@@ -14,7 +14,7 @@
           :class="{ active: tabActiveName === 'world' }"
         >
           <a href="#">
-            {{ $t("invitation.ecworld") }}
+            {{ $t("invitation.ecWorld") }}
             <span class="count">{{ globalInvitation.length }}</span>
           </a>
         </span>
@@ -31,14 +31,7 @@
       <div class="chatRoom">
         <!-- for EC World -->
         <div v-if="tabActiveName === 'world'">
-          <div class="conve-container">
-            <!-- <div class="filter">
-              <span v-for="item in filterNames" :key="item.name">
-                <span class="rank filterSpan">
-                  {{ item.value }}
-                </span>
-              </span>
-            </div>-->
+          <div class="conve-container">     
             <div class="bodyChat">
               <div class="messageChatView noRecord" v-if="globalInvitation.length == 0">
                 <i class="fa fa-bell"></i>
@@ -85,7 +78,7 @@
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.followerCount }}</span>
                         </template>
-                        <span>{{$t("invitation.userfollowCount")}}</span>
+                        <span>{{$t("invitation.userFollowCount")}}</span>
                       </v-tooltip>
                     </div>
                     <div class="winRate" v-if="data.category.some(element => element == 1)">
@@ -99,7 +92,7 @@
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.winRate }}%</span>
                         </template>
-                        <span>{{$t("invitation.userWinrate")}}</span>
+                        <span>{{$t("invitation.userWinRate")}}</span>
                       </v-tooltip>
                     </div>
                   </div>
@@ -118,10 +111,8 @@
               </div>
             </div>
             <span class="leftMessage">
-              <span v-if="this.noInvitaion == true">{{$t("invitation.only10")}}</span>
-              <span
-                v-if="this.noInvitaion == false"
-              >{{$t("invitation.youHave")}} {{ leftUser }} {{$t("invitation.invitationLeft")}}</span>
+            <span v-if="invitationMessage"> {{ invitationMessage }} </span>
+            </span>
             </span>
             <div class="messageChat">
               <v-flex col-md-12>
@@ -168,7 +159,6 @@
     </v-btn>
   </popper>
 </template>
-
 <script>
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
@@ -197,8 +187,7 @@ export default {
   },
   data() {
     return {
-      noInvitaion: false,
-      leftUser: 10,
+      invitationMessage: "",
       color: "",
       mode: "",
       snackbar: false,
@@ -290,8 +279,7 @@ export default {
     },
     // Send Top Player Users Invitation
     async sendInvitation() {
-      if (this.selectCategory.length > 0) {
-        if (this.leftUser > 0) {
+      if (this.selectCategory.length > 0) {     
           try {
             const reqBody = {
               portalProviderUUID: this.getPortalProviderUUID,
@@ -306,19 +294,21 @@ export default {
                 headers: config.header
               }
             );
-            this.leftUser--;
+           if(res.code == 400){
+              this.invitationMessage = res.message[0];
+           }
           } catch (ex) {
             this.$swal({
               title: ex.message,
               type: "error",
               timer: 1000
             });
-          }
-        } else {
-          this.noInvitaion = true;
-        }
+          }       
+      }else{
+        this.invitationMessage = "Please Select Cateogry.";
       }
     },   
+    // Follow Users Bets
     followUser(username, userImage, userUUID, method) {     
       this.username = username;
       this.FollowUserUUID = userUUID;
@@ -400,7 +390,7 @@ export default {
 .buttonInvitation {
   padding: 10px;
   margin-top: -8px;
-  width: 90%;
+  width: 96%;
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
@@ -606,7 +596,7 @@ export default {
   color: #7f7e7e;
 }
 .messageChat {
-  width: 95%;
+  width: 100%;
   bottom: 5px;
   background-color: #fff;
 }
@@ -617,6 +607,7 @@ export default {
   color: #ef5252;
   text-align: right;
   font-size: 12px;
+  height: 20px;
 }
 
 /* width */
