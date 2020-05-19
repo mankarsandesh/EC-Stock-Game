@@ -7,6 +7,7 @@ const state = () => ({
   multiGameBet: [], // Store multi game bet
   multiGameBetSend: [], // Store multi game bet send
   footerBetAmount: 0, // Store footer bet amount
+  multiGameFooterBetAmount: 0, // Store multi game footer bet amount
   onGoingBet: [], // store data betting
   isSendBetting: false,
   tempMultiGameBetData: [] // Store temp bet data of multi game until the bet is ent to the server
@@ -14,7 +15,7 @@ const state = () => ({
 
 const mutations = {
   SET_FIRST(state, payload) {
-    state.first = payload
+    state.first = payload;
   },
   PUSH_DATA_MULTI_GAME_BET(state, payload) {
     state.multiGameBet.push(payload);
@@ -50,6 +51,9 @@ const mutations = {
   },
   CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
     state.tempMultiGameBetData = [];
+  },
+  SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
+    state.multiGameFooterBetAmount = payload;
   }
 };
 
@@ -88,6 +92,9 @@ const actions = {
   },
   clearTempMultiGameBetData({ commit }) {
     commit("CLEAR_TEMP_MULTI_GAME_BET_DATA");
+  },
+  setMultiGameFooterBetAmount({ commit }, payload) {
+    commit("SET_MULTI_GAME_FOOTER_BET_AMOUNT", payload);
   },
   // Send bet data for multi game and footer bet on full screen
   async sendBetting(context) {
@@ -282,6 +289,9 @@ const getters = {
       amount += betData.betAmount;
     });
     return amount;
+  },
+  getMultiGameFooterBetAmount(state) {
+    return state.multiGameFooterBetAmount;
   }
 };
 
