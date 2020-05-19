@@ -12,8 +12,7 @@
             { value: 'asc', text: $t('stockList.ascending') },
             { value: 'desc', text: $t('stockList.descending') }
           ]"
-          :placeholder="$t('msg.sortBy')"
-          :key="$root.$t('stockList.ascending') + sortBy"
+          :placeholder="$t('msg.sortBy')"        
         ></v-select>
       </v-flex>
     </v-layout>
@@ -36,9 +35,7 @@ export default {
   },
   data() {
     return {
-      items: ["ascending", "descending"],
-      itemss: "",
-      sortBy: "asc"
+      sortBy: ""
     };
   },
   computed: {
@@ -66,7 +63,6 @@ export default {
   box-shadow: none !important;
   border-radius: 0;
 }
-
 /* .v-label{
     color:#003e70 !important
 } */
