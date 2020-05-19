@@ -1,15 +1,20 @@
 <template>
   <div class="footerBet">
     <div class="total-bet-multigame">
-      <span>{{ formatToPrice(getAllBettingAmount) }}</span>
+      <span>{{ formatToPrice(getMultiGameFooterBetAmount) }}</span>
     </div>
     <div class="amount-multigame">
-      <span>$00000</span>
+      <span>{{ getMultiGameFooterBetAmount }}</span>
     </div>
     <div class="chips-multigame">
-      <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+      <v-avatar
+        size="70"
+        v-for="(item, key) in imgChip"
+        :key="key"
+        class="chips"
+      >
         <v-img
-          @click="setFooterBetAmount(getCoinsModern[key])"
+          @click="setMultiGameFooterBetAmount(getCoinsModern[key])"
           :src="item.img"
           :width="item.width"
           :alt="item.title"
@@ -22,14 +27,10 @@
     </div>
     <div class="action-multigame">
       <v-btn class="buttonGreen" dark @click="getSending()">
-        {{
-        $t("msg." + texts)
-        }}
+        {{ $t("msg." + texts) }}
       </v-btn>
       <v-btn class="buttonCancel" @click="clearDataMultiGameBet()">
-        {{
-        $t("msg.cancel")
-        }}
+        {{ $t("msg.cancel") }}
       </v-btn>
     </div>
     <div class="max-min-multigame">
@@ -52,6 +53,7 @@ export default {
   methods: {
     ...mapActions([
       "setFooterBetAmount",
+      "setMultiGameFooterBetAmount",
       "clearDataMultiGameBet",
       "sendBetting"
     ]),
@@ -72,6 +74,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getMultiGameFooterBetAmount",
       "getCoinsModern",
       "getAllBettingAmount",
       "getMultiGameBetLength",
@@ -92,7 +95,7 @@ export default {
   align-items: center;
 }
 .total-bet-multigame {
-   border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   background-color: #fff;
   border: #aeadad solid 2px;
@@ -106,7 +109,7 @@ export default {
   align-items: center;
 }
 .amount-multigame {
-    border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   background-color: #fff;
   border: #aeadad solid 2px;
@@ -121,7 +124,7 @@ export default {
   margin-left: -2px;
   align-items: center;
 }
-.chips-multigame {  
+.chips-multigame {
   background-color: #fff;
   border: #aeadad solid 2px;
   padding: 5px 15px;
@@ -135,7 +138,7 @@ export default {
   align-items: center;
 }
 .action-multigame {
-   border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: #fff;
   border: #aeadad solid 2px;
@@ -146,7 +149,7 @@ export default {
   align-items: center;
 }
 .max-min-multigame {
-   border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: #fff;
   border: #aeadad solid 2px;

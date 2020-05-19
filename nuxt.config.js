@@ -112,9 +112,10 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [    
-    '~/plugins/inject.js',
+  plugins: [
+    "~/plugins/inject.js",
     "@/plugins/vuetify",
+    "@plugins/maintenance",
     "@plugins/js-cookie", // for setting and reading cookies
     // "~/plugins/axios",
     "@/plugins/roarr", // for generating logs
@@ -142,7 +143,6 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
     "@nuxtjs/moment",
-    // "nuxt-maintenance-mode",
     //['vue-wait/nuxt', { useVuex: true }],
     [
       "nuxt-fontawesome",
@@ -158,14 +158,6 @@ module.exports = {
       }
     ]
   ],
-  // maintenance: {
-  //   enabled: !!(process.env.MAINTENANCE_MODE),
-  //   path: "/maintenance",
-  //   matcher: /^\/admin/
-  // },
-  /*
-   ** Axios module configuration
-   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: "http://uattesting.equitycapitalgaming.com/webApi",
@@ -186,7 +178,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend: function (config, { isDev, isClient }) {
+    extend: function(config, { isDev, isClient }) {
       if (isDev) {
         config.devtool = isClient ? "source-map" : "inline-source-map";
       }
