@@ -30,7 +30,7 @@ import log from "roarr";
 
 export default {
   layout: "nolayout",
-  middleware: ["getApiKey", "checkAuth"],
+  middleware: ["maintenance", "getApiKey", "checkAuth", ],
 
   data() {
     return {

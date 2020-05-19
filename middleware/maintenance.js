@@ -1,9 +1,7 @@
-export default function({ redirect, route }) {
-  let isMaintenance = true;
+export default function(context) {
+  let isMaintenance = !!process.env.MAINTENANCE_MODE;
   if (isMaintenance) {
-    return redirect("/maintenance");
+    return context.redirect('/maintenance');
   }
-  if (isMaintenance === false && route.path === "/maintenance") {
-    return redirect("/");
-  }
+  return;
 }

@@ -142,6 +142,7 @@ module.exports = {
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
     "@nuxtjs/moment",
+    // "nuxt-maintenance-mode",
     //['vue-wait/nuxt', { useVuex: true }],
     [
       "nuxt-fontawesome",
@@ -157,6 +158,11 @@ module.exports = {
       }
     ]
   ],
+  // maintenance: {
+  //   enabled: !!(process.env.MAINTENANCE_MODE),
+  //   path: "/maintenance",
+  //   matcher: /^\/admin/
+  // },
   /*
    ** Axios module configuration
    */
