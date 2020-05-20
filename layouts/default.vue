@@ -71,7 +71,7 @@
       <h2 class="text-uppercase" v-show="isShow == 'current-bet'">{{ $t("menu.currentBet") }}</h2>
       <h2 class="text-uppercase" v-show="isShow == 'notification'">{{ $t("menu.notification") }}</h2>
       <h2 class="text-uppercase" v-show="isShow == 'rule'">{{ $t("menu.rule") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">{{ $t("menu.leaderboard") }}</h2>
+      <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">{{ $t("menu.leaderBoard") }}</h2>
       <h2 class="text-uppercase" v-show="isShow == 'setting'">{{ $t("menu.setting") }}</h2>
       <v-btn
         to="/modern/history"
@@ -90,8 +90,8 @@
     <app-dialogs-confirm
       v-on:dialogStatus="dialogStatus"
       :dialogConfirm="dialogConfirm"
-      :title = "$t('logout.sure')"
-      :content = "$t('logout.bye')"
+      :title="$t('logout.sure')"
+      :content="$t('logout.bye')"
     />
   </v-app>
 </template>

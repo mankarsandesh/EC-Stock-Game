@@ -41,7 +41,7 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
-    title: "leaderboard",
+    title: "leaderBoard",
     to: "/modern/leaderboard"
   },
   {
