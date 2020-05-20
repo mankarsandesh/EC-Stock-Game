@@ -92,12 +92,7 @@
       </div>
     </div>
     <span class="leftMessage">
-      <span v-if="this.noInvitaion == true">
-        Only 10 Invitaion in one Day.</span
-      >
-      <span v-if="this.noInvitaion == false">
-        You have {{ leftUser }} Invitaion left.</span
-      >
+      <span v-if="this.invitationMessage">{{ this.invitationMessage }}</span>
     </span>
     <div class="messageChat">
       <v-flex col-md-12>
@@ -150,8 +145,7 @@ export default {
   },
   data() {
     return {
-      noInvitaion: false,
-      leftUser: 10,
+      invitationMessage: "",
       selectCategory: [],
       categoryName: [
         {
@@ -182,7 +176,7 @@ export default {
     userImgProfile(userImage) {
       return userImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/`+userImage;
+        : `${config.apiDomain}/` + userImage;
     },
     // Close Follow Bet Popup
     closeFollowBet() {
@@ -192,12 +186,12 @@ export default {
     followUser(username, userImage, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
-      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2 
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
       console.log(userImage);
       console.log(this.userImage);
       this.dialog = true;
-    },    
+    },
     scrollDown() {
       $(".bodyChat")
         .stop()
@@ -214,45 +208,29 @@ export default {
     // Channel for gameUUDI
     async sendInvitation() {
       if (this.selectCategory.length > 0) {
-        if (this.leftUser > 0) {
-          try {
-            var reqBody = {
-              portalProviderUUID: this.getPortalProviderUUID,
-              userUUID: this.getUserUUID,
-              gameUUID: this.gameUUID,
-              category: this.selectCategory,
-              version: config.version
-            };
-            console.log(this.selectCategory);
-            var res = await this.$axios.$post(
-              config.getUserInvitation.url,
-              reqBody,
-              {
-                headers: config.header
-              }
-            );
-            if (res.status) {
-              this.snackbar = true;
-            } else {
-              throw new Error(config.error.general);
+        try {
+          var reqBody = {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
+            gameUUID: this.gameUUID,
+            category: this.selectCategory,
+            version: config.version
+          };
+          var res = await this.$axios.$post(
+            config.getUserInvitation.url,
+            reqBody,
+            {
+              headers: config.header
             }
-          } catch (ex) {
-            console.log(ex.message);
-            log.error(
-              {
-                req: reqBody,
-                res,
-                page: "components/channelChat.vue",
-                apiUrl: config.getUserInvitation.url,
-                provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
+          );
+          if (res.code == 400) {
+            this.invitationMessage = res.message[0];
           }
-        } else {
-          this.noInvitaion = true;
+        } catch (ex) {
+          console.log(ex.message);
         }
+      } else {
+        this.invitationMessage = "Please Select Category";
       }
     }
   },
@@ -290,12 +268,13 @@ export default {
 
 <style scoped>
 .leftMessage {
-  padding: 0px 10px;
+ padding: 0px 10px;
   margin-bottom: 10px;
   font-weight: 400;
   color: #ef5252;
   text-align: right;
   font-size: 12px;
+  height: 20px;
 }
 .noRecord {
   text-align: center;
@@ -329,9 +308,9 @@ export default {
   color: #fff !important;
 }
 .buttonInvitation {
-  padding: 10px;
+   padding: 10px;
   margin-top: -8px;
-  width: 100%;
+  width: 96%;
   color: #fff !important;
   border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
@@ -537,7 +516,7 @@ export default {
   color: #7f7e7e;
 }
 .messageChat {
-  width: 95%;
+  width:100%;
   bottom: 5px;
   background-color: #fff;
 }

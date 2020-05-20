@@ -74,7 +74,7 @@
         "winston-loggly-bulk": "^3.0.1"
     },
     "devDependencies": {
-        "node-sass": "^4.12.0",
+        "node-sass": "^4.14.1",
         "nodemon": "^1.18.9",
         "sass-loader": "^8.0.0",
         "stylus": "^0.54.5",

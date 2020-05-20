@@ -13,9 +13,9 @@
             <span v-if="getUserInfo.firstName">
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </span>
-            <span id="userBanlance">
+            <span id="userBalance" @click="getUserBalancePosition()">
               <animated-number
-                :value="getUserInfo.balance"
+                :value="getUserBalance"
                 :formatValue="formatToPrice"
                 class="balance"
               />
@@ -39,7 +39,7 @@
         </v-list-tile>
         <v-list-tile @click="$router.push('/modern/desktop/profile/follower/')">
           <i class="fa fa-user fa-2x margin-right-5" />
-          <v-list-tile-title>{{ $t("profile.myfollowers") }}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("profile.myFollowers") }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
@@ -77,7 +77,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserInfo"]),
+    ...mapGetters(["getUserInfo", "getUserBalance"]),
     imgProfile() {
       if (this.getUserInfo.profileImage == null) {
         return `${this.defaultImage}`;
@@ -90,7 +90,7 @@ export default {
     this.isShow = location.pathname.split("/")[1];
   },
   methods: {
-    getUserBanlancePosition() {
+    getUserBalancePosition() {
       // console.log(document.getElementById("userBanlance").offsetTop);
       // console.log(
       //   document.getElementById("userBanlance").offsetParent.offsetParent
@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style scoped>
-#userBanlance {
+#userBalance {
   position: relative;
 }
 .v-menu__content {

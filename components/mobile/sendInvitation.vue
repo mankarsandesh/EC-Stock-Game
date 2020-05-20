@@ -4,14 +4,16 @@
       <v-list subheader class="topWrap">
         <v-list-tile>
           <v-list-tile-content>
-            <b>{{$t("invitation.followBet")}}</b>
+            <b>{{ $t("invitation.followBet") }}</b>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
       <v-list two-line class="bodyChat">
         <template>
           <v-flex v-if="globalInvitation.length == 0" style="margin-top:200px;">
-            <h2 class="text-center" style="color:#a3a3a3;">{{$t("invitation.noInvitation")}}</h2>
+            <h2 class="text-center" style="color:#a3a3a3;">
+              {{ $t("invitation.noInvitation") }}
+            </h2>
           </v-flex>
         </template>
         <template v-for="item in globalInvitation">
@@ -22,12 +24,16 @@
               </v-list-tile-avatar>
             </nuxt-link>
 
-            <v-list-tile-content v-if="item.category.some(element => element == 3)" class="ranking">
+            <v-list-tile-content
+              v-if="item.category.some(element => element == 3)"
+              class="ranking"
+            >
               <v-list-tile-title>
                 <span
                   v-if="item.category[0] == 3 && item.category.length == 1"
                   class="label"
-                >{{ $t("invitation.winningRank") }}</span>
+                  >{{ $t("invitation.winningRank") }}</span
+                >
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
@@ -46,54 +52,50 @@
                 <span
                   v-if="item.category[0] == 2 && item.category.length == 1"
                   class="label"
-                >{{ $t("invitation.totalFollower") }}</span>
+                  >{{ $t("invitation.totalFollower") }}</span
+                >
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span v-on="on">{{ item.followerCount }}</span>
                   </template>
-                  <span>{{ $t("invitation.userfollowCount") }}</span>
+                  <span>{{ $t("invitation.userFollowCount") }}</span>
                 </v-tooltip>
               </v-list-tile-title>
             </v-list-tile-content>
 
-            <v-list-tile-content v-if="item.category.some(element => element == 1)" class="winRate">
+            <v-list-tile-content
+              v-if="item.category.some(element => element == 1)"
+              class="winRate"
+            >
               <v-list-tile-title>
                 <span
                   v-if="item.category[0] == 1 && item.category.length == 1"
                   class="label"
-                >{{ $t("invitation.winningRate") }}</span>
+                  >{{ $t("invitation.winningRate") }}</span
+                >
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span v-on="on">#{{ item.winRate }}</span>
                   </template>
-                  <span>{{ $t("invitation.userWinrate") }}</span>
+                  <span>{{ $t("invitation.userWinRate") }}</span>
                 </v-tooltip>
               </v-list-tile-title>
             </v-list-tile-content>
 
             <v-list-tile-action>
               <v-btn
-                v-bind:class="[
-                  item.userUUID == getUserUUID
-                    ? 'buttonGreensmall'
-                    : 'buttonGreensmall'
-                ]"
+                class="buttonGreensmall"
                 v-on:click="
-                  followUser(
-                    item.username,
-                    item.userImage,
-                    item.userUUID,
-                    item.isFollowing
-                  )
+                  followUser(item.username, item.userImage, item.userUUID, 0)
                 "
                 dark
               >
                 {{
-                item.userUUID == getUserUUID
-                ? $t("useraction.yourself")
-                : $t("useraction.follow")
+                  item.userUUID == getUserUUID
+                    ? $t("useraction.yourself")
+                    : $t("useraction.follow")
                 }}
               </v-btn>
             </v-list-tile-action>
@@ -103,16 +105,22 @@
     </v-flex>
     <div class="messageChat">
       <v-flex col-md-12>
-        <v-layout justify-center>
+        <v-layout class="errorMessage"> 
+           <v-flex> {{ this.invitationError }} </v-flex>
+        </v-layout>
+        <v-layout justify-center>        
           <v-flex v-for="(item, index) in categoryName" v-bind:key="index" pl-3>
-            <!-- {{ item.value == 'Win Bets' ? 'itswin' : 'Total Followers' ? 'itsfollow' : 'ser rank'}} -->
-            <!-- {{ item.value == 'Total Followers' ? 'itsfollow' : 'isdfcdfvdss'}} -->
-            <v-checkbox :height="5" v-model="selectCategory" :label="item.value" :value="item.id"></v-checkbox>
+            <v-checkbox
+              :height="5"
+              v-model="selectCategory"
+              :label="item.value"
+              :value="item.id"
+            ></v-checkbox>
           </v-flex>
         </v-layout>
 
         <v-btn class="buttonInvitation" @click="sendInvitation()">
-          {{$t("invitation.sendInvitation")}} &nbsp;
+          {{ $t("invitation.sendInvitation") }} &nbsp;
           <i class="fa fa-paper-plane"></i>
         </v-btn>
       </v-flex>
@@ -132,7 +140,9 @@
           </v-btn>
           <v-toolbar-title>
             {{
-            this.FolloworNot == 1 ? $t("useraction.followBet") : $t("useraction.unfollowBet")
+              this.FolloworNot == 1
+                ? $t("useraction.followBet")
+                : $t("useraction.unFollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
@@ -155,6 +165,7 @@ import followBet from "~/components/mobile/follow/followBet";
 export default {
   data() {
     return {
+      invitationError : "",
       selectCategory: [],
       categoryName: [
         {
@@ -196,7 +207,7 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
-        this.globalInvitation.push(newData);
+        this.globalInvitation.push(newData);      
         this.scrollDown();
       }
     );
@@ -227,10 +238,15 @@ export default {
             {
               headers: config.header
             }
-          );
+          );  
+          if(res.code == 400){
+            this.invitationError = res.message[0];
+          }
         } catch (ex) {
           this.setSnackBarError(true);
         }
+      }else{
+          this.invitationError = "Please Select Category";
       }
     },
     // After more Invitation Come Scroll Down Automatically
@@ -259,10 +275,10 @@ export default {
     },
     // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
-      if (this.getUserUUID != userUUID) {
+        if (this.getUserUUID != userUUID) {
         this.username = username;
         this.FollowUserUUID = userUUID;
-        method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
+        method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);    
         this.userImage = this.userImgProfile(userImage);
         this.followDialog = true;
       }
@@ -271,6 +287,11 @@ export default {
 };
 </script>
 <style scoped>
+.errorMessage{
+text-align: center;
+color:red;
+text-transform:capitalize;
+}
 .userList {
   border-bottom: 1px solid #dddddd;
 }

@@ -85,7 +85,7 @@
                   v-model="sortby"
                   hide-details
                   :items="[$t('betHistory.today'),$t('betHistory.thisWeek'),$t('betHistory.thisMonth')]"
-                  :placeholder="$t('msg.sortby')"
+                  :placeholder="$t('msg.sortBy')"
                 ></v-select>
               </v-flex>
             </v-layout>

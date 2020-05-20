@@ -1,7 +1,7 @@
 <template>
   <v-flex xs12 class="mb-3">
     <v-list three-line>
-      <template v-for="(item, index) in getStockListPrice[0]">
+      <template v-for="(item, index) in stockLists[0]">
         <v-list-tile :key="item.stockUUID">
           <v-list-tile-content>
             <v-list-tile-sub-title
@@ -41,8 +41,46 @@
 import { mapGetters, mapState } from "vuex";
 import config from "~/config/config.global";
 export default {
+  props: {
+    sortBy: {
+      type: String
+    }
+  },
   computed: {
-    ...mapGetters(["getStockListPrice"])
+    ...mapGetters(["getStockListPrice"]),
+    // Sorting Stock List
+    stockLists() {
+      function sortByAsc(a, b) {
+        if (a.stockName < b.stockName) {
+          return -1;
+        }
+        if (a.stockName > b.stockName) {
+          return 1;
+        }
+        return 0;
+      }
+      function sortByDesc(a, b) {
+        if (a.stockName < b.stockName) {
+          return 1;
+        }
+        if (a.stockName > b.stockName) {
+          return -1;
+        }
+        return 0;
+      }
+      let StockNewList = [];
+      if (this.sortBy === "asc") {
+        StockNewList.push(this.getStockListPrice[0].sort(sortByAsc));
+        StockNewList.push(this.getStockListPrice[1].sort(sortByAsc));
+      } else if (this.sortBy === "desc") {
+        StockNewList.push(this.getStockListPrice[0].sort(sortByDesc));
+        StockNewList.push(this.getStockListPrice[1].sort(sortByDesc));
+      } else {
+        StockNewList.push(this.getStockListPrice[0]);
+        StockNewList.push(this.getStockListPrice[1]);
+      }
+      return StockNewList;
+    }
   }
 };
 </script>

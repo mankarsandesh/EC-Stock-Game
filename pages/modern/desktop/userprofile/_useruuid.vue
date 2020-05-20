@@ -1,10 +1,10 @@
 <template>
-  <div xs2>
+  <div>
     <section class="breadcrumbs" v-if="messageError == false">
-      <v-container md10>
-        <v-parallax dark height="150">
-          <v-layout align-center row>
-            <v-flex xs6 md12>
+      <v-container>
+        <v-parallax dark height="130">
+          <v-layout align-center justify-center row md8 lg8>
+            <v-flex xs6 md5 lg5>
               <div class="flex-container">
                 <div class="profile-img-container">
                   <div class="profile-crowd">
@@ -26,11 +26,13 @@
                   <span
                     class="font-weight-medium"
                     v-if="visitProfileUserData.username"
-                  >{{ visitProfileUserData.username }}</span>
+                    >{{ visitProfileUserData.username }}</span
+                  >
 
                   <span
                     v-if="visitProfileUserData.currentActiveTime === 'offline'"
-                  >{{ visitProfileUserData.currentActiveTime }}</span>
+                    >{{ visitProfileUserData.currentActiveTime }}</span
+                  >
                   <span v-else>
                     <b>{{ $t("profile.lastActive") }} :</b>
                     {{ visitProfileUserData.currentActiveTime }}
@@ -39,24 +41,30 @@
                     class="font-weight-medium"
                     v-if="visitProfileUserData.userUUID == getUserUUID"
                   >
-                    <a
-                      class="editButton"
-                      href="/modern/desktop/profile/"
-                    >{{ $t("msg.edit") }} {{ $t("menu.profile") }}</a>
+                    <nuxt-link class="editButton" to="/modern/desktop/profile/">
+                      {{ $t("msg.edit") }} {{ $t("menu.profile") }}
+                    </nuxt-link>
                   </span>
                 </div>
               </div>
             </v-flex>
-            <v-flex xs8 class="text-end">
+            <v-flex xs8 md5 lg5 class="text-end">
               <div class="leftFollowDiv">
-                <span class="historyName">{{ $t("profile.historyPeriod") }}:</span>
+                <span class="historyName"
+                  >{{ $t("profile.historyPeriod") }}:</span
+                >
                 <div style="flex-grow: wrap; width: 150px; margin: 0 10px;">
-                  <v-select v-model="filter" height="15px" dense hide-details :items="items" solo></v-select>
+                  <v-select
+                    v-model="filter"
+                    height="15px"
+                    dense
+                    hide-details
+                    :items="items"
+                    solo
+                  ></v-select>
                 </div>
                 <v-btn
-                  v-if="
-                    visitProfileUserData.userUUID != getUserUUID 
-                  "
+                  v-if="visitProfileUserData.userUUID != getUserUUID"
                   v-bind:class="[
                     visitProfileUserData.userUUID != getUserUUID &&
                     visitProfileUserData.isFollowing == 0
@@ -73,9 +81,9 @@
                   "
                 >
                   {{
-                  visitProfileUserData.isFollowing == 0
-                  ? $t("useraction.followBet")
-                  : $t("useraction.unfollowBet")
+                    visitProfileUserData.isFollowing == 0
+                      ? $t("useraction.followBet")
+                      : $t("useraction.unFollowBet")
                   }}
                 </v-btn>
               </div>
@@ -84,109 +92,136 @@
         </v-parallax>
       </v-container>
     </section>
-    <v-container mb-5>
-      <v-layout row wrap>
-        <v-flex xs12 mt-3 v-if="messageError == false">
-          <div class="container-content">
-            <div class="box-container">
-              <div class="cul-box" style="color: #7e57c2;">
-                <span>
-                  <fa icon="percentage" style="font-size: 40px; color: #7e57c2;" />
-                </span>
-                <span class="number-box">{{ visitProfileUserData.winRate }}%</span>
-                <span class="des-title text-uppercase">
-                  {{
-                  $t("leaderboard.winningrate")
-                  }}
-                </span>
-              </div>
-              <div class="cul-box cul-box-green">
-                <span>
-                  <fa icon="money-bill-wave" style="font-size: 40px; color: #ace6af;" />
-                </span>
-                <span class="number-box">
-                  {{
-                  visitProfileUserData.totalBets
-                  }}
-                </span>
-                <span class="des-title text-uppercase">
-                  {{
-                  $t("msg.totalBet")
-                  }}
-                </span>
-              </div>
-              <div class="cul-box cul-box-red">
-                <span>
-                  <fa icon="users" style="font-size: 40px; color: #f28691;" />
-                </span>
-                <span class="number-box">
-                  {{
-                  visitProfileUserData.followerCount
-                  }}
-                </span>
-                <span class="des-title text-uppercase">
-                  {{
-                  $t("profile.followers")
-                  }}
-                </span>
-              </div>
-              <div class="cul-box cul-box-yellow">
-                <span>
-                  <fa icon="money-bill-alt" style="font-size: 40px; color: #ffd682;" />
-                </span>
-                <span class="number-box">${{ visitProfileUserData.totalWinAmount | currency }}</span>
-                <span class="des-title text-uppercase">
-                  {{
-                  $t("leaderboard.winningamount")
-                  }}
-                </span>
-              </div>
-            </div>
-            <div class="pt-5 stock-history">
-              <h2 class="text-uppercase">{{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}</h2>
-              <div class="stock-history-container">
-                <VueApexCharts
-                  v-if="series.length > 0"
-                  type="bar"
-                  height="350"
-                  :options="chartOptions"
-                  :series="series"
-                  :key="series.length + '' + filter"
-                />
-              </div>
-            </div>
-          </div>
-        </v-flex>
-        <v-flex v-if="messageError == true">
-          <div class="container-content">
-            <div class="box-error">
-              <h1>Sorry, this content isn't avaiable right now</h1>
-              <p>
-                The Link you followed have expired, or the page may only be
-                visiable to an audiencce you're not in.
-              </p>
-              <a @click="$router.push('/modern/desktop/userprofile/')">Go back to the previous Page</a>
-              <a @click="$router.push('/modern/desktop/btc1/')">EC Game Home Page</a>
-            </div>
-          </div>
+    <v-container>
+      <v-layout row wrap justify-center>
+        <v-flex md10 lg10 xs12 mt-2>
+          <v-container mb-5>
+            <v-layout row wrap>
+              <v-flex xs12 mt-3 v-if="messageError == false">
+                <div class="container-content">
+                  <div class="box-container">
+                    <div class="cul-box" style="color: #7e57c2;">
+                      <span>
+                        <fa
+                          icon="percentage"
+                          style="font-size: 40px; color: #7e57c2;"
+                        />
+                      </span>
+                      <span class="number-box"
+                        >{{ visitProfileUserData.winRate }}%</span
+                      >
+                      <span class="des-title text-uppercase">
+                        {{ $t("leaderboard.winningRate") }}
+                      </span>
+                    </div>
+                    <div class="cul-box cul-box-green">
+                      <span>
+                        <fa
+                          icon="money-bill-wave"
+                          style="font-size: 40px; color: #ace6af;"
+                        />
+                      </span>
+                      <span class="number-box">
+                        {{ visitProfileUserData.totalBets }}
+                      </span>
+                      <span class="des-title text-uppercase">
+                        {{ $t("msg.totalBet") }}
+                      </span>
+                    </div>
+                    <div class="cul-box cul-box-red">
+                      <span>
+                        <fa
+                          icon="users"
+                          style="font-size: 40px; color: #f28691;"
+                        />
+                      </span>
+                      <span class="number-box">
+                        {{ visitProfileUserData.followerCount }}
+                      </span>
+                      <span class="des-title text-uppercase">
+                        {{ $t("profile.followers") }}
+                      </span>
+                    </div>
+                    <div class="cul-box cul-box-yellow">
+                      <span>
+                        <fa
+                          icon="money-bill-alt"
+                          style="font-size: 40px; color: #ffd682;"
+                        />
+                      </span>
+                      <span
+                        class="number-box"
+                        v-if="visitProfileUserData.totalWinAmount"
+                        >${{
+                          visitProfileUserData.totalWinAmount | currency
+                        }}</span
+                      >
+                      <span
+                        class="number-box"
+                        v-if="visitProfileUserData.totalWinAmount == 0"
+                        >${{
+                          0
+                        }}</span
+                      >
+                      <span class="des-title text-uppercase">
+                        {{ $t("leaderboard.winningAmount") }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="pt-5 stock-history">
+                    <h2 class="text-uppercase">
+                      {{ $t("profile.onlinehistory") }}
+                      {{ $t("profile.chart") }}
+                    </h2>
+                    <div class="stock-history-container">
+                      <VueApexCharts
+                        v-if="series.length > 0"
+                        type="bar"
+                        height="350"
+                        :options="chartOptions"
+                        :series="series"
+                        :key="series.length + '' + filter"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </v-flex>
+              <v-flex v-if="messageError == true">
+                <div class="container-content">
+                  <div class="box-error">
+                    <h1>Sorry, this content isn't avaiable right now</h1>
+                    <p>
+                      The Link you followed have expired, or the page may only
+                      be visiable to an audiencce you're not in.
+                    </p>
+                    <a @click="$router.push('/modern/desktop/userprofile/')"
+                      >Go back to the previous Page</a
+                    >
+                    <a @click="$router.push('/modern/desktop/btc1/')"
+                      >EC Game Home Page</a
+                    >
+                  </div>
+                </div>
+              </v-flex>
+            </v-layout>
+
+            <!-- Follow Dialog -->
+            <v-dialog v-model="dialog" width="500" class="followDialog"  :persistent=true>
+              <followBet
+                v-if="renderComponent"
+                :username="this.username"
+                :userImage="this.userImage"
+                :FollowerUserUUID="this.FollowUserUUID"
+                :isFollowing="this.FolloworNot"
+                @followBetClose="closeFollowBet"
+              />
+            </v-dialog>
+          </v-container>
         </v-flex>
       </v-layout>
-
-      <!-- Follow Dialog -->
-      <v-dialog v-model="dialog" width="500" class="followDialog">
-        <followBet
-          v-if="renderComponent"
-          :username="this.username"
-          :userImage="this.userImage"
-          :FollowerUserUUID="this.FollowUserUUID"
-          :isFollowing="this.FolloworNot"
-          @followBetClose="closeFollowBet"
-        />
-      </v-dialog>
     </v-container>
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
 import VueApexCharts from "vue-apexcharts";
@@ -291,6 +326,7 @@ export default {
     // Close Follow Bet Popup
     closeFollowBet() {
       this.dialog = false;
+      this.getUserProfileByID();
     },
     // Follow User Bet
     followUserBet: function(username, userImg, userUUID, method) {

@@ -1099,7 +1099,7 @@
           <v-btn icon dark @click="reviewbetDialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title> {{ $t("betting.reviewyourBet") }} </v-toolbar-title>
+          <v-toolbar-title> {{ $t("betting.reviewYourBet") }} </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <div
@@ -1581,9 +1581,6 @@ export default {
     );
   },
   mounted() {
-    setTimeout(()=>{
-      this.$router.push('/modern/followingList')
-    },3000)
     this.stockID = this.$route.params.id;
   },
   components: {
