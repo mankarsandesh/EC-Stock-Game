@@ -83,7 +83,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
 import chipsAmountDesktop from "~/components/modern/setting/chipamount";
