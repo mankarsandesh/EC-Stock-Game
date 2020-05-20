@@ -169,7 +169,7 @@
               <div class="box-container"></div>
               <div class="pa-2 stock-history">
                 <h3 class="text-uppercase text-center" justify-center>
-                  {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
+                  {{ $t("profile.onlineHistory") }} {{ $t("profile.chart") }}
                 </h3>
                 <div class="stock-history-container">
                   <VueApexCharts

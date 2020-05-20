@@ -170,7 +170,7 @@
                   </div>
                   <div class="pt-5 stock-history">
                     <h2 class="text-uppercase">
-                      {{ $t("profile.onlinehistory") }}
+                      {{ $t("profile.onlineHistory") }}
                       {{ $t("profile.chart") }}
                     </h2>
                     <div class="stock-history-container">

@@ -2,7 +2,7 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">{{ $t("profile.onlinehistory") }}</h2>
+        <h2 class="title_menu">{{ $t("profile.onlineHistory") }}</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -153,7 +153,7 @@ export default {
           text:
             this.$root.$t("leaderboard.user") +
             " " +
-            this.$root.$t("profile.onlinehistory"),
+            this.$root.$t("profile.onlineHistory"),
           align: "center",
           margin: 10,
           offsetX: 2,

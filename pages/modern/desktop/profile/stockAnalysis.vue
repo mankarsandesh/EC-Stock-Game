@@ -2,7 +2,7 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">{{ $t("profile.stockanalysis") }}</h2>
+        <h2 class="title_menu">{{ $t("profile.stockAnalysis") }}</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -190,7 +190,7 @@ export default {
       //     }
       //   },
       //   title: {
-      //     text: this.$root.$t("profile.stockanalysis"),
+      //     text: this.$root.$t("profile.stockAnalysis"),
       //     align: "left",
       //     margin: 10,
       //     offsetX: 2,

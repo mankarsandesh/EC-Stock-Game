@@ -16,7 +16,7 @@
             </div>
             <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
             <span>
-              <strong>{{ $t("profile.onlinestatus") }} :</strong>
+              <strong>{{ $t("profile.onlineStatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
             </span>
           </div>
@@ -39,7 +39,7 @@
             </div>
             <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
             <p>
-              <strong>{{ $t("profile.onlinestatus") }} :</strong>
+              <strong>{{ $t("profile.onlineStatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
           </div>
@@ -122,7 +122,7 @@
 
               <v-layout pl-2 pt-2>
                 <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
-                  <label for="lastName">{{ $t("profile.lastname") }}</label>
+                  <label for="lastName">{{ $t("profile.lastName") }}</label>
                 </v-flex>
                 <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
                   <input
@@ -220,7 +220,7 @@
                 class="btn_save width-50"
                 block
               >
-                <span class="padding-right-60">{{ $t("profile.onlinehistory") }}</span>
+                <span class="padding-right-60">{{ $t("profile.onlineHistory") }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>
               <v-btn
@@ -232,7 +232,7 @@
                 "
                 block
               >
-                <span class="padding-right-60">{{ $t("profile.stockanalysis") }}</span>
+                <span class="padding-right-60">{{ $t("profile.stockAnalysis") }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>
             </div>
