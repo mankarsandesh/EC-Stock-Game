@@ -5,13 +5,13 @@
         <v-flex grow pa-1>
           <p class="float-left md6 lg8">
             <span class="title">
-              {{ $t("leaderboard.top") }} {{ topPlayerData.length }}
-              {{ $t("leaderboard.leaders") }}
+              {{ $t("leaderBoard.top") }} {{ topPlayerData.length }}
+              {{ $t("leaderBoard.leaders") }}
             </span>
             ({{
               this.sortbyName == "monthly"
-                ? $t("leaderboard.monthlyRankings")
-                : $t("leaderboard.weeklyRankings")
+                ? $t("leaderBoard.monthlyRankings")
+                : $t("leaderBoard.weeklyRankings")
             }})
             <i
               v-if="loadingImage"
@@ -27,7 +27,7 @@
             v-on:click="sortingBy('weekly')"
           >
             <v-icon small>event</v-icon>
-            {{ $t("leaderboard.weeklyRankings") }}
+            {{ $t("leaderBoard.weeklyRankings") }}
           </span>
           <span
             class="text-uppercase font-weight-bold"
@@ -35,14 +35,14 @@
             v-on:click="sortingBy('monthly')"
           >
             <v-icon small>event</v-icon>
-            {{ $t("leaderboard.monthlyRankings") }}
+            {{ $t("leaderBoard.monthlyRankings") }}
           </span>
         </v-flex>
       </v-layout>
     </v-flex>
     <v-flex v-if="topPlayerData.length == 0">
       <h2 class="text-center" style="color:#a3a3a3;">
-        {{ $t("leaderboard.noData") }}
+        {{ $t("leaderBoard.noData") }}
       </h2>
     </v-flex>
     <v-flex v-if="topPlayerData.length > 0">
@@ -71,19 +71,19 @@
             <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
           </div>
           <div>
-            <h3 class="header">{{ $t("leaderboard.winningRate") }}</h3>
+            <h3 class="header">{{ $t("leaderBoard.winningRate") }}</h3>
             <h4 class="green--text titleText">
               {{ Math.round(data.winRate, 1) }}%
             </h4>
           </div>
           <div>
-            <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
+            <h3 class="header">{{ $t("leaderBoard.bets") }}</h3>
             <H4 style="color:#eb0b6e;" class="titleText">{{
               data.totalWinBets
             }}</H4>
           </div>
           <div>
-            <h3 class="header">{{ $t("leaderboard.winningAmount") }}</h3>
+            <h3 class="header">{{ $t("leaderBoard.winningAmount") }}</h3>
             <h4 style="color:#0b2a68;" class="titleText">
               ${{ Math.round(data.totalWinAmount, 1) | currency }}
             </h4>

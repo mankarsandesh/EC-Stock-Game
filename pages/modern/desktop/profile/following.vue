@@ -32,8 +32,8 @@
                 <label
                   >{{
                     data.followRuleValue[0].name == "byAmount"
-                      ? $t("leaderboard.followByAmount")
-                      : $t("leaderboard.followByRate")
+                      ? $t("leaderBoard.followByAmount")
+                      : $t("leaderBoard.followByRate")
                   }}
                   :</label
                 >
@@ -43,12 +43,12 @@
                 <label
                   >{{
                     data.unFollowRuleValue[0].name == "byWin"
-                      ? $t("leaderboard.stopByWinning")
+                      ? $t("leaderBoard.stopByWinning")
                       : data.unFollowRuleValue[0].name == "byLose"
-                      ? $t("leaderboard.stopByLosing")
+                      ? $t("leaderBoard.stopByLosing")
                       : data.unFollowRuleValue[0].name == "byTime"
-                      ? $t("leaderboard.stopByTiming")
-                      : $t("leaderboard.stopByBets")
+                      ? $t("leaderBoard.stopByTiming")
+                      : $t("leaderBoard.stopByBets")
                   }}:</label
                 >
                 {{ data.unFollowRuleValue[0].value }}

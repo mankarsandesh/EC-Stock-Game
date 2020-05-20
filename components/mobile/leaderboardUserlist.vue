@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">{{$t("leaderboard.noData")}}</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">{{$t("leaderBoard.noData")}}</h2>
     </v-flex>
     <v-flex>
       <v-list subheader>
         <v-list-tile>
           <v-list-tile-content>
             <v-list-tile-title>
-              {{$t("leaderboard.Top10Leaders")}}
+              {{$t("leaderBoard.Top10Leaders")}}
               <i
                 v-if="loadingImage"
                 class="fa fa-circle-o-notch fa-spin"
@@ -19,12 +19,12 @@
           <v-list-tile-action>
             <v-radio-group v-model="sortValue" row>
               <v-radio
-                :label="$t('leaderboard.monthly')"
+                :label="$t('leaderBoard.monthly')"
                 value="monthly"
                 v-on:click="sortingBy('monthly')"
               ></v-radio>&nbsp;
               <v-radio
-                :label="$t('leaderboard.weekly')"
+                :label="$t('leaderBoard.weekly')"
                 value="weekly"
                 v-on:click="sortingBy('weekly')"
               ></v-radio>

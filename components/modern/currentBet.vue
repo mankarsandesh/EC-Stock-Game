@@ -63,7 +63,7 @@
           <tr>
             <td>{{ $t("msg.total") }}</td>
             <td colspan="3">
-              {{ currentBets.length }} {{ $t("leaderboard.bets") }}
+              {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
             </td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>

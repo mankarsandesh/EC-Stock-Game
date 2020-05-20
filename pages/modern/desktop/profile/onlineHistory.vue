@@ -83,10 +83,10 @@
     <v-flex xs12 class="pt-3 pl-5">
       <div v-if="dataReady">
         <span style="margin-right: 30px;">
-          {{ $t("profile.onlinetime") }} : <b>{{ currentActiveTime }}</b>
+          {{ $t("profile.onlineTime") }} : <b>{{ currentActiveTime }}</b>
         </span>
         <span style="margin-right: 30px;">
-          {{ $t("profile.totalonline") }} : <b> {{ totalOnlineTime }} </b>
+          {{ $t("profile.totalOnline") }} : <b> {{ totalOnlineTime }} </b>
         </span>
       </div>
     </v-flex>
@@ -151,7 +151,7 @@ export default {
         },
         title: {
           text:
-            this.$root.$t("leaderboard.user") +
+            this.$root.$t("leaderBoard.user") +
             " " +
             this.$root.$t("profile.onlineHistory"),
           align: "center",

@@ -272,7 +272,7 @@
     "bet" : "ການເດີມພັນ",
     "stockName" : "ຊື່ຫຸ້ນ"
   },
-  "leaderboard": {
+  "leaderBoard": {
     "user": "ຜູ້ໃຊ້",
     "winningRate": "ອັດຕາການຊະນະ",
     "bets": "ພະນັນ",
@@ -299,7 +299,7 @@
   "breadcrumbs": {
     "rule": "ກົດລະບຽບ",
     "gameRule": "ກົດລະບຽບເກມ",
-    "leaderboard": "ກະດານ ນຳ",
+    "leaderBoard": "ກະດານ ນຳ",
     "betHistory": "ປະຫວັດການເດີມພັນ",
     "currentBet": "ເດີມພັນໃນປະຈຸບັນ",
     "stockList": "ລາຍການຫຸ້ນ",

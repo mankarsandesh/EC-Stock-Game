@@ -273,7 +273,7 @@
     "bet" : "Bet",
     "stockName" : "Stock name"
   },
-  "leaderboard": {
+  "leaderBoard": {
     "user": "User",
     "winningRate": "Winning rate",
     "bets": "Bets",
@@ -300,7 +300,7 @@
   "breadcrumbs": {
     "rule": "Rule",
     "gameRule": "Game Rule",
-    "leaderboard": "Leaderboard",
+    "leaderBoard": "Leaderboard",
     "betHistory": "Bet History",
     "currentBet": "Current Bet",
     "stockList": "Stock List",
@@ -324,7 +324,7 @@
     "insufficientBalance": "insufficient balance in an account",
     "winingBets": "wining bets",
     "losingBets": "losing bets",
-    "usersFollowMe": "users follw me",
+    "usersFollowMe": "users follow me",
     "amountCreditedOrDebitedToAccount": "amount credited or debited to an account",
     "noNotification": "There is no notification."
   },
@@ -363,7 +363,7 @@
     "userFollowCount": "User Follow Count",
     "winningRate": "Winning Rate",
     "userWinRate":"User Win Rate",
-    "only10" : "Only 10 Invitaion in one Day.",
+    "only10" : "Only 10 Invitaions in one Day.",
     "youHave" : "You have",
     "invitationLeft" : "Invitaion left",
     "followBet":"FOLLOW BET INVITATION"

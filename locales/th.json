@@ -272,7 +272,7 @@
     "bet" : "เดิมพัน",
     "stockName" : "ชื่อหุ้น"
   },
-  "leaderboard": {
+  "leaderBoard": {
     "user": "ผู้ใช้งาน",
     "winningRate": "อัตราการชนะ",
     "bets": "เดิมพัน",
@@ -299,7 +299,7 @@
   "breadcrumbs": {
     "rule": "กฎ",
     "gameRule": "กฎของเกม",
-    "leaderboard": "ลีดเดอร์บอร์ด",
+    "leaderBoard": "ลีดเดอร์บอร์ด",
     "betHistory": "ประวัติการเดิมพัน",
     "currentBet": "เดิมพันปัจจุบัน",
     "stockList": "รายการสินค้า",

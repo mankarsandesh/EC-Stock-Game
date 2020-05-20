@@ -85,7 +85,7 @@
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.total") }}</td>
-              <td colspan="3">{{ betHistory.length }} {{ $t("leaderboard.bets") }}</td>
+              <td colspan="3">{{ betHistory.length }} {{ $t("leaderBoard.bets") }}</td>
               <td>
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>

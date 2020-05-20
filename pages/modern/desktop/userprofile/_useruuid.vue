@@ -111,7 +111,7 @@
                         >{{ visitProfileUserData.winRate }}%</span
                       >
                       <span class="des-title text-uppercase">
-                        {{ $t("leaderboard.winningRate") }}
+                        {{ $t("leaderBoard.winningRate") }}
                       </span>
                     </div>
                     <div class="cul-box cul-box-green">
@@ -164,7 +164,7 @@
                         }}</span
                       >
                       <span class="des-title text-uppercase">
-                        {{ $t("leaderboard.winningAmount") }}
+                        {{ $t("leaderBoard.winningAmount") }}
                       </span>
                     </div>
                   </div>

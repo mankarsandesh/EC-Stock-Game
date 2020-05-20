@@ -272,7 +272,7 @@
     "bet" : "打赌",
     "stockName" : "股票名称"
   },
-  "leaderboard": {
+  "leaderBoard": {
     "user": "用户",
     "winningRate": "胜率",
     "bets": "总下注次数",
@@ -299,7 +299,7 @@
   "breadcrumbs": {
     "rule": "规则",
     "gameRule": "游戏规则",
-    "leaderboard": "排行榜",
+    "leaderBoard": "排行榜",
     "betHistory": "投注历史",
     "currentBet": "当前投注",
     "stockList": "库存清单",

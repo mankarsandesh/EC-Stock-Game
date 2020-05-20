@@ -114,7 +114,7 @@
                     >{{ visitProfileUserData.winRate }}%</span
                   >
                   <span class="des-title text-uppercase">
-                    {{ $t("leaderboard.winningRate") }}
+                    {{ $t("leaderBoard.winningRate") }}
                   </span>
                 </div>
               </v-flex>
@@ -160,7 +160,7 @@
                     >${{ visitProfileUserData.totalWinAmount | currency }}</span
                   >
                   <span class="des-title text-uppercase">
-                    {{ $t("leaderboard.winningAmount") }}
+                    {{ $t("leaderBoard.winningAmount") }}
                   </span>
                 </div>
               </v-flex>
