@@ -32,7 +32,7 @@
               {{ currentBets.length }} {{$t("currentBet.bets")}}
             </span>
             <span>
-              <strong>{{$t("currentBet.totalAmount")}}</strong>
+              <strong>{{$t("currentBet.totalAmount")}}</strong>  
               :{{ TotalAmount | toCurrency }}
             </span>
           </div>
