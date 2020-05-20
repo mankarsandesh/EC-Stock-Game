@@ -8,7 +8,7 @@ class Result {
 
         const getItem = secureStorage.getItem("itemsBetting")
 
-        if (getItem) {
+    if (getItem) {
 
             const keys = Object.values(getItem)
 

@@ -448,7 +448,7 @@ export default {
   props: {
     isFullscreen: {
       type: Boolean,
-      default: false
+      default: false  
     },
     //  for multi game
     stockName: {
