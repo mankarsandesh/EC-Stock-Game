@@ -76,11 +76,11 @@ export default {
       this.snackbar = true;
       this.betPrice = totalPayout.data;
       if (totalPayout.data > 0) {
-        this.text = this.$root.$t("msg.winbet");
+        this.text = this.$root.$t("msg.winBet");
         this.color = "#17da14";
         this.playSound("/voice/winbet.mp3");
       } else {
-        this.text = this.$root.$t("msg.losebet");
+        this.text = this.$root.$t("msg.loseBet");
         this.color = "red";
       }
     },

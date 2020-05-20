@@ -222,8 +222,8 @@
                     <v-btn
                       color="buttonGreen"
                       @click="dialogOtherstock = true"
-                      >{{ $t("msg.otherstock") }}</v-btn
-                    >
+                      >{{ $t("msg.otherstock") }}
+                    </v-btn>
                   </v-flex>
                 </v-layout>
               </v-flex>
@@ -244,7 +244,7 @@
           <v-flex>
             <v-layout>
               <v-flex class="text-xs-center" xs4 px-2>
-                <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
+                <span class="text-black">{{ $t("msg.lastDraw") }}:</span>
                 <div id="lastDrawGuideline">
                   <v-flex flex-style class="lastdraw">
                     <h4
@@ -255,7 +255,7 @@
                 </div>
               </v-flex>
               <v-flex class="text-xs-center" xs4 px-2>
-                <span class="text-black">{{ $t("msg.BetClosein") }}:</span>
+                <span class="text-black">{{ $t("msg.betCloseIn") }}:</span>
                 <div id="betCloseInGuideline">
                   <v-flex flex-style class="betclose">
                     <span
@@ -283,7 +283,7 @@
                 </div>
               </v-flex>
               <v-flex class="text-xs-center" xs4 px-2>
-                <span class="text-black">{{ $t("msg.lotterydraw") }}:</span>
+                <span class="text-black">{{ $t("msg.lotteryDraw") }}:</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex flex-style class="lottery">
                     <span class="text-black">

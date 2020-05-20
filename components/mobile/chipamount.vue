@@ -26,7 +26,7 @@
         text
         @click="reset()"
         style="background-color: #fec623!important;border-radius:8px;"
-        >{{ $t("msg.resettodefault") }}</v-btn
+        >{{ $t("msg.resetToDefault") }}</v-btn
       >
       <div class="pt-3">
         <v-btn class="my-btn buttonGreensmall" @click="saveChipAmount()">{{

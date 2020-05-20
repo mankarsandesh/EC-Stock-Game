@@ -56,7 +56,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="first-name">{{ $t("profile.firstname") }}</label>
+                  <label for="first-name">{{ $t("profile.firstName") }}</label>
                 </div>
                 <div class="col-85">
                   <input
@@ -74,7 +74,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="last-name">{{ $t("profile.lastname") }}</label>
+                  <label for="last-name">{{ $t("profile.lastName") }}</label>
                 </div>
                 <div class="col-85">
                   <input

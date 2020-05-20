@@ -45,7 +45,7 @@
             <v-flex xs6 md5 lg6 pt-1>
               <v-layout mb-3>
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.Lastdraw") }}</span>
+                  <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
                       <span
@@ -56,7 +56,7 @@
                 </v-flex>
 
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.BetClosein") }}</span>
+                  <span>{{ $t("msg.betCloseIn") }}</span>
                   <div id="betCloseInGuideline">
                     <v-flex class="betclose">
                       <span
@@ -84,7 +84,7 @@
                 </v-flex>
 
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.lotterydraw") }}</span>
+                  <span>{{ $t("msg.lotteryDraw") }}</span>
                   <div id="lotteryDrawGuidelines">
                     <v-flex class="lottery">
                       <span>

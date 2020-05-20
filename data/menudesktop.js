@@ -6,7 +6,7 @@ const Menu = [
   },
   {
     icon: "fa fa-trophy fa-2x",
-    title: "leaderboard",
+    title: "leaderBoard",
     to: "/modern/desktop/leaderboard"
   },
   {
