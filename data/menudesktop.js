@@ -18,11 +18,6 @@ const Menu = [
     icon: "fa fa-bar-chart fa-2x",
     title: "stockList",
     to: "/modern/desktop/stock-list"
-  },
-  {
-    icon: "fa fa-bullhorn fa-2x",
-    title: "notification",
-    to: "/modern/desktop/notification"
   }
 ];
 export default Menu;

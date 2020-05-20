@@ -30,7 +30,7 @@
               <td>{{ item.item.gameUUID }}</td>
               <td>
                 {{ item.item.ruleName }} - ({{ item.item.payout }})
-                {{ item.item.stockName }} / {{ item.item.loop }}
+                {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minute')}}
               </td>
               <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
               <td>{{ item.item.betAmount | toCurrency }}</td>
