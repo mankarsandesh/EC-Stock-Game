@@ -1,14 +1,14 @@
 <template>
   <div xs12 >
     <h1 class="jumbotron-heading text-center">
-      {{ $t("msg.ecgamingrulesdescription") }}
+      {{ $t("msg.ecGamingRulesDescription") }}
     </h1>
-    <p class="lead text-muted text-center">{{ $t("msg.textinfoule") }}</p>
+    <p class="lead text-muted text-center">{{ $t("msg.textInfoRule") }}</p>
     <div class="text-xs-center">
       <v-dialog v-model="dialog">
         <template v-slot:activator="{ on }">
           <v-btn color="buttonGreen" dark v-on="on">{{
-            $t("msg.resultintroduction")
+            $t("msg.resultIntroduction")
           }}</v-btn>
         </template>
 
@@ -21,7 +21,7 @@
             <b>{{ $t("msg.introduction") }}</b>
           </v-card-title>
           <v-card-text>
-            <!-- {{$t('msg.textresultintroduction')}} -->
+            <!-- {{$t('msg.textResultIntroduction')}} -->
             <v-icon
               class="closePopup close-button topright v-icon closePopup v-icon--link material-icons theme--light"
               style="position:right;"

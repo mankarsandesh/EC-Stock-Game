@@ -13,13 +13,13 @@
         >
           <template v-slot:headers="headers">
             <tr>
-              <th scope="col" class="bg-colors">{{ $t("msg.BetId") }}</th>
-              <th scope="col" class="bg-colors">{{ $t("msg.gameid") }}</th>
-              <th scope="col" class="bg-colors">{{ $t("msg.Betdetail") }}</th>
-              <th scope="col" class="bg-colors">{{ $t("msg.Time") }}</th>
+              <th scope="col" class="bg-colors">{{ $t("msg.betId") }}</th>
+              <th scope="col" class="bg-colors">{{ $t("msg.gameId") }}</th>
+              <th scope="col" class="bg-colors">{{ $t("msg.betDetail") }}</th>
+              <th scope="col" class="bg-colors">{{ $t("msg.time") }}</th>
               <th scope="col" class="bg-colors">{{ $t("msg.amount") }}</th>
               <th scope="col" class="bg-colors">{{ $t("msg.payout") }}</th>
-              <th scope="col" class="bg-colors">{{ $t("msg.Bet Status") }}</th>
+              <th scope="col" class="bg-colors">{{ $t("msg.betStatus") }}</th>
             </tr>
           </template>
           <template v-slot:items="item">
@@ -84,7 +84,7 @@
 
           <template slot="footer">
             <tr>
-              <td>{{ $t("msg.Total") }}</td>
+              <td>{{ $t("msg.total") }}</td>
               <td colspan="3">{{ betHistory.length }} {{ $t("leaderboard.bets") }}</td>
               <td>
                 <strong>{{ TotalAmount | toCurrency }}</strong>
