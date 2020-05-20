@@ -60,7 +60,7 @@ export default {
         },
         title: {
           display: true,
-          text: this.$root.$t("msg.StockLiveData")
+          text: this.$root.$t("msg.stockLiveData")
         },
         tooltips: {
           enabled: false

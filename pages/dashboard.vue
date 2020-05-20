@@ -10,7 +10,7 @@
     <v-container>
       <v-layout row wrap align-center justify-center>
         <v-flex xs12>
-          <h1 class="display-1">{{ $t("msg.ChooseTheVersionToPlay") }}</h1>
+          <h1 class="display-1">{{ $t("msg.chooseTheVersionToPlay") }}</h1>
         </v-flex>
         <v-flex xs12>
           <v-img src="/bg/gameType.png" />
@@ -25,7 +25,7 @@
               :small="$vuetify.breakpoint.smAndDown"
               color="red"
               class="white--text"
-              >{{ $t("msg.ClassicVersion") }}</v-btn
+              >{{ $t("msg.classicVersion") }}</v-btn
             >
             <v-btn
               :to="linkto"
@@ -33,7 +33,7 @@
               :small="$vuetify.breakpoint.smAndDown"
               color="green"
               class="white--text"
-              >{{ $t("msg.ModernVersion") }}</v-btn
+              >{{ $t("msg.modernVersion") }}</v-btn
             >
           </v-layout>
         </v-flex>

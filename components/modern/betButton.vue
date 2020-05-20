@@ -3,7 +3,7 @@
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
-      <p>{{ $t("msg.betclosed") }}</p>
+      <p>{{ $t("msg.betClosed") }}</p>
     </div>
     <!-- end for show bet close -->
     <v-layout row md10>

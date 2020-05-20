@@ -4,8 +4,8 @@
       <table>
         <thead>
           <tr>
-            <th>{{ $t("msg.Stock Name") }}</th>
-            <th>{{ $t("msg.liveprice") }}</th>
+            <th>{{ $t("msg.stockName") }}</th>
+            <th>{{ $t("msg.livePrice") }}</th>
             <th class="text-left">{{ $t("msg.reference") }}</th>
           </tr>
         </thead>

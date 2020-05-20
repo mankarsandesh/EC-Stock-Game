@@ -137,12 +137,12 @@
             <v-card-title class="px-1 py-0 pa-2" style="font-size:11px;">
               <v-layout>
                 <v-flex xs6 class="text-xs-left">
-                  {{ $t("msg.livetime") }}:
+                  {{ $t("msg.liveTime") }}:
                   <!-- <span class="text-primary">{{getStockLivePrice(data.stockName)}}</span> -->
                 </v-flex>
                 <v-spacer></v-spacer>
                 <v-flex xs6 class="text-xs-right">
-                  {{ $t("msg.liveprice") }}:
+                  {{ $t("msg.livePrice") }}:
                   <span class="text-primary">
                     {{
                     getStockLivePrice(data.stockName)

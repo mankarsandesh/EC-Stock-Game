@@ -34,7 +34,7 @@
         >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
           <v-list-tile-title>{{
-            $t("profile.onlinehistory")
+            $t("profile.onlineHistory")
           }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile @click="$router.push('/modern/desktop/profile/follower/')">
@@ -43,7 +43,7 @@
         </v-list-tile>
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
-          <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("profile.signOut") }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>

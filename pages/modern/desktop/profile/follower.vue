@@ -39,7 +39,7 @@
                 )
               "
             >
-              {{ $t("leaderboard.follow") }}
+              {{ $t("leaderBoard.follow") }}
             </button>
             <button
               v-if="data.isFollowing == 1"
@@ -53,7 +53,7 @@
                 )
               "
             >
-              {{ $t("useraction.unFollow") }}
+              {{ $t("userAction.unFollow") }}
             </button>
           </div>
         </div>
