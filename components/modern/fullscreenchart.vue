@@ -34,47 +34,47 @@ export default {
       },
       series: [
         {
-          name: this.$root.$t("gamemsg.big"),
+          name: window.$nuxt.$root.$t("gamemsg.big"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: this.$root.$t("gamemsg.small"),
+          name: window.$nuxt.$root.$t("gamemsg.small"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: this.$root.$t("gamemsg.odd"),
+          name: window.$nuxt.$root.$t("gamemsg.odd"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: this.$root.$t("gamemsg.even"),
+          name: window.$nuxt.$root.$t("gamemsg.even"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: this.$root.$t("gamemsg.high"),
+          name: window.$nuxt.$root.$t("gamemsg.high"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: this.$root.$t("gamemsg.mid"),
+          name: window.$nuxt.$root.$t("gamemsg.mid"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: this.$root.$t("gamemsg.low"),
+          name: window.$nuxt.$root.$t("gamemsg.low"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: this.$root.$t("gamemsg.number"),
+          name: window.$nuxt.$root.$t("gamemsg.number"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: this.$root.$t("gamemsg.tie"),
+          name: window.$nuxt.$root.$t("gamemsg.tie"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         }

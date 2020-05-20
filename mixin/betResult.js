@@ -1,11 +1,16 @@
 const jsonResult = require('~/data/result') // define the json result for the compare 
-import sound from "~/helpers/sound"   // import the sound helper 
+import secureStorage from '~/plugins/secure-storage'
+import sound from "~/helpers/sound" // import the sound helper 
 import { mapMutations, mapGetters } from 'vuex'
 // define a mixin object
 export const BetResult = {
+    computed: {
+        ...mapGetters(["itemsBetting"])
+    },
     methods: {
-        ...mapMutations(["SET_FIRST"]),
-        betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin     
+        ...mapMutations(["SET_FIRST", "SET_ITEMS_BETTING", "CLEAR_ITEMS_BETTING"]),
+        betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin   
+            this.clearItemsAfterLastDraw()
             const lastDraw = result.substr(result.length - 2); //get the last two digit
             const first = parseInt(lastDraw.slice(0, 1)); // get the first digit number  
             const last = parseInt(lastDraw.slice(1, 2)); // get the last digit number 
@@ -39,7 +44,7 @@ export const BetResult = {
 
         // Multiple Result 
         multipleResult(item, number, stockName, betID, betWin, name) {
-            const specificNumber = "#" + stockName + betID.split("-")[0]  // create the variable for receive the value
+            const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
 
@@ -50,7 +55,7 @@ export const BetResult = {
                 );
 
                 setTimeout(() => {
-                    this.SET_FIRST("You are win")  // try to set the difference value 
+                    this.SET_FIRST("You are win") // try to set the difference value 
                     sound.winBet(); // sound when user win the bet
 
                     $("#" + stockName + betID).removeClass(
@@ -95,7 +100,7 @@ export const BetResult = {
 
         // Multiple Result 
         multipleResultTwoDigit(item, number, stockName, betID, betWin, name) {
-            const specificNumber = "#" + stockName + betID.split("-")[0]  // create the variable for receive the value
+            const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
                 sound.winBet(); // sound when user win the bet              
@@ -149,10 +154,10 @@ export const BetResult = {
                     elements[i].offsetParent.offsetTop +
                     62 +
                     elements[i].offsetParent.offsetParent.offsetParent.offsetParent
-                        .offsetTop;
+                    .offsetTop;
                 let left =
                     elements[i].offsetParent.offsetParent.offsetParent.offsetParent
-                        .offsetLeft + elements[i].offsetParent.offsetParent.offsetLeft;
+                    .offsetLeft + elements[i].offsetParent.offsetParent.offsetLeft;
                 elements[i].style.position = "fixed";
                 elements[i].style.top = top + "px";
                 elements[i].style.left = left + "px";
@@ -163,7 +168,7 @@ export const BetResult = {
                         document.getElementById("userBanlance").offsetTop + "px";
                     elements[i].style.left =
                         document.getElementById("userBanlance").offsetParent.offsetParent
-                            .offsetLeft + "px";
+                        .offsetLeft + "px";
                 }, 1);
                 // clear style
                 setTimeout(() => {
@@ -174,8 +179,21 @@ export const BetResult = {
                 }, 1200);
             }
         },
+
+
+        // store bet in localStroge 
+        storeBetOnLocalStroge(items) {
+            this.SET_ITEMS_BETTING(items)
+        },
+
+        clearItemsAfterLastDraw() {
+            if (this.itemsBetting.length) {
+
+                secureStorage.removeItem("itemsBetting")
+
+                this.CLEAR_ITEMS_BETTING()
+
+            }
+        }
     }
 }
-
-
-

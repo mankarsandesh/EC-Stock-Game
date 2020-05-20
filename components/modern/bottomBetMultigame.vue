@@ -21,7 +21,7 @@
           :class="item.color"
           class="chipImg"
         >
-          <span class="setpricechip">{{ getCoinsModern[key] }}</span>
+        <span class="setpricechip">{{ getCoinsModern[key] }}</span>
         </v-img>
       </v-avatar>
     </div>
@@ -176,17 +176,16 @@ export default {
   cursor: pointer;
   margin: 2px 5px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
-  -webkit-transition: -webkit-transform 0.8s ease-in-out;
-  transition: transform 0.8s ease-in-out;
+
 }
 .chips:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4) !important;
-  -ms-transform: rotate(360deg); /* IE 9 */
-  transform: rotate(360deg);
+
 }
 .chipImg {
   color: #333;
   font-size: 24px;
+  font-weight: 600;
 }
 
 .st0 {

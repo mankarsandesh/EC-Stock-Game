@@ -53,18 +53,16 @@
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
-          <span class="small-digit" v-show="isFullscreen">{{
+          <span class="small-digit" v-show="isFullscreen">
+            {{
             $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-          }}</span>
+            }}
+          </span>
         </v-btn>
       </popper>
 
       <span class="w10">
-        <v-btn
-          class="align_button4"
-          :id="stockID + 'firstdigit'"
-          @click="btnNumber('first')"
-        >
+        <v-btn class="align_button4" :id="stockID + 'firstdigit'" @click="btnNumber('first')">
           <showChipAmount
             size="45px"
             :amount="
@@ -136,9 +134,11 @@
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{
+          <span class="small-digit" v-show="isFullscreen">
+            {{
             $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-          }}</span>
+            }}
+          </span>
         </v-btn>
       </popper>
 
@@ -213,9 +213,11 @@
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{
+          <span class="small-digit" v-show="isFullscreen">
+            {{
             $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-          }}</span>
+            }}
+          </span>
         </v-btn>
       </popper>
       <span class="w12">
@@ -286,9 +288,11 @@
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{
+          <span class="small-digit" v-show="isFullscreen">
+            {{
             $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-          }}</span>
+            }}
+          </span>
         </v-btn>
       </popper>
 
@@ -340,8 +344,7 @@
           @click="betButtonClick(8 + index, 'firstdigit')"
           v-show="number == 'first'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -369,8 +372,7 @@
           @click="betButtonClick(25 + index, 'lastdigit')"
           v-show="number == 'last'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -398,8 +400,7 @@
           @click="betButtonClick(149 + index, 'bothdigit')"
           v-show="number == 'both'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -427,8 +428,7 @@
           @click="betButtonClick(42 + index, 'twodigit')"
           v-show="number == 'two'"
           class="btn-small"
-          >{{ index < 10 ? "0" + index : index }}</v-btn
-        >
+        >{{ index < 10 ? "0" + index : index }}</v-btn>
       </popper>
     </v-layout>
   </div>
@@ -443,16 +443,20 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
 import Result from "~/helpers/Result";
+
 export default {
   props: {
     isFullscreen: {
       type: Boolean,
-      default: false
+      default: false  
     },
     //  for multi game
     stockName: {
       type: String
     }
+  },
+  mounted() {
+    Result.setItemBetting();
   },
   watch: {
     first(val) {
@@ -601,4 +605,5 @@ export default {
   white-space: pre-line;
 }
 </style>
+
 

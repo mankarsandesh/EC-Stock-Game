@@ -7,13 +7,24 @@ const state = () => ({
   multiGameBet: [], // Store multi game bet
   multiGameBetSend: [], // Store multi game bet send
   footerBetAmount: 0, // Store footer bet amount
-  multiGameFooterBetAmount: 0, // Store multi game footer bet amount
   onGoingBet: [], // store data betting
   isSendBetting: false,
-  tempMultiGameBetData: [] // Store temp bet data of multi game until the bet is ent to the server
+  multiGameFooterBetAmount: 0, // Store multi game footer bet amount
+  tempMultiGameBetData: [], // Store temp bet data of multi game until the bet is ent to the server,
+  itemsBetting: []
 });
 
 const mutations = {
+  SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
+    state.multiGameFooterBetAmount = payload;
+  },
+  CLEAR_ITEMS_BETTING(state, payload) {
+    state.itemsBetting = [];
+  },
+  SET_ITEMS_BETTING(state, payload) {
+    state.itemsBetting.push(payload);
+    secureStorage.setItem("itemsBetting", state.itemsBetting);
+  },
   SET_FIRST(state, payload) {
     state.first = payload;
   },
@@ -51,13 +62,13 @@ const mutations = {
   },
   CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
     state.tempMultiGameBetData = [];
-  },
-  SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
-    state.multiGameFooterBetAmount = payload;
   }
 };
 
 const actions = {
+  setMultiGameFooterBetAmount({ commit }, payload) {
+    commit("SET_MULTI_GAME_FOOTER_BET_AMOUNT", payload);
+  },
   // Push data to multi game bet
   pushDataMultiGameBet({ commit }, payload) {
     commit("PUSH_DATA_MULTI_GAME_BET", payload);
@@ -92,9 +103,6 @@ const actions = {
   },
   clearTempMultiGameBetData({ commit }) {
     commit("CLEAR_TEMP_MULTI_GAME_BET_DATA");
-  },
-  setMultiGameFooterBetAmount({ commit }, payload) {
-    commit("SET_MULTI_GAME_FOOTER_BET_AMOUNT", payload);
   },
   // Send bet data for multi game and footer bet on full screen
   async sendBetting(context) {
@@ -175,6 +183,7 @@ const actions = {
 };
 
 const getters = {
+  itemsBetting: state => state.itemsBetting,
   first: state => state.first,
   // Get multi game bet
   getMultiGameBet(state) {

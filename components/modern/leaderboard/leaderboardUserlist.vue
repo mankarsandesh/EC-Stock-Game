@@ -8,7 +8,11 @@
               {{ $t("leaderboard.top") }} {{ topPlayerData.length }}
               {{ $t("leaderboard.leaders") }}
             </span>
-            ({{ this.sortbyName == "monthly" ? $t("leaderboard.monthlyRankings") : $t("leaderboard.weeklyRankings")}})
+            ({{
+              this.sortbyName == "monthly"
+                ? $t("leaderboard.monthlyRankings")
+                : $t("leaderboard.weeklyRankings")
+            }})
             <i
               v-if="loadingImage"
               class="fa fa-circle-o-notch fa-spin"
@@ -37,7 +41,9 @@
       </v-layout>
     </v-flex>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.noData") }}</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">
+        {{ $t("leaderboard.noData") }}
+      </h2>
     </v-flex>
     <v-flex v-if="topPlayerData.length > 0">
       <v-flex
@@ -52,8 +58,10 @@
       >
         <div class="userRow">
           <div>
-            <!-- <span class="rank"> 
-            </span>-->
+            <v-icon class="tropy" color=#fad052 v-if="index == 0">fa-trophy</v-icon>
+            <v-icon class="tropy" color=#f46f86 v-if="index == 1">fa-trophy</v-icon>
+            <v-icon class="tropy" color=#7a7a7a v-if="index == 2">fa-trophy</v-icon>
+
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
               <img class="pimage" :src="userImgProfile(data.userImage)" />
               <span class="subtitle-1 text-uppercase">
@@ -64,18 +72,21 @@
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningRate") }}</h3>
-            <h4 class="green--text titleText">{{ Math.round(data.winRate, 1) }}%</h4>
+            <h4 class="green--text titleText">
+              {{ Math.round(data.winRate, 1) }}%
+            </h4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
-            <H4 style="color:#eb0b6e;" class="titleText">{{ data.totalWinBets }}</H4>
+            <H4 style="color:#eb0b6e;" class="titleText">{{
+              data.totalWinBets
+            }}</H4>
           </div>
           <div>
             <h3 class="header">{{ $t("leaderboard.winningAmount") }}</h3>
-            <h4
-              style="color:#0b2a68;"
-              class="titleText"
-            >${{ Math.round(data.totalWinAmount, 1) | currency }}</h4>
+            <h4 style="color:#0b2a68;" class="titleText">
+              ${{ Math.round(data.totalWinAmount, 1) | currency }}
+            </h4>
           </div>
           <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
             <v-btn
@@ -89,7 +100,8 @@
                 )
               "
               dark
-            >{{ $t("useraction.followBet") }}</v-btn>
+              >{{ $t("useraction.followBet") }}</v-btn
+            >
           </div>
           <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
             <v-btn
@@ -103,10 +115,16 @@
                 )
               "
               dark
-            >{{ $t("useraction.unFollowBet") }}</v-btn>
+              >{{ $t("useraction.unFollowBet") }}</v-btn
+            >
           </div>
-          <div v-if="data.isFollowing == -1" style="width:20%;padding-top:30px;">
-            <v-btn class="buttonGreensmall">{{ $t("useraction.yourself") }}</v-btn>
+          <div
+            v-if="data.isFollowing == -1"
+            style="width:20%;padding-top:30px;"
+          >
+            <v-btn class="buttonGreensmall">{{
+              $t("useraction.yourself")
+            }}</v-btn>
           </div>
         </div>
       </v-flex>
@@ -116,7 +134,7 @@
       v-model="followDialog"
       width="500"
       class="followDialog"
-      :persistent=true
+      :persistent="true"
     >
       <followBet
         v-if="renderComponent"
@@ -273,6 +291,17 @@ export default {
 </script>
 
 <style scoped>
+.tropy {
+  font-size: 26px;
+  margin-top: 30px;
+  margin-left: -25px;
+  background-color: #fff;
+  border: 1px solid #dddddd;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  float: left;
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;
@@ -373,8 +402,8 @@ export default {
 
 .pimage {
   margin-right: 10px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border: 2px solid #dddddd;
   border-radius: 180px;
 }

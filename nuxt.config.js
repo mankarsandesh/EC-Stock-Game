@@ -1,19 +1,14 @@
 const pkg = require("./package");
-
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
-
 import config from "./config/config.global";
-
 module.exports = {
   mode: "spa",
   buildModules: [
     // Simple usage
     "@nuxtjs/dotenv"
-
     // With options
     // ['@nuxtjs/dotenv', { /* module options */ }]
   ],
-
   /*
    ** Headers of the page
    */
@@ -86,7 +81,6 @@ module.exports = {
       "/modern/desktop/profile/setting"
     ]
   },
-
   /*
    ** Customize the progress-bar color
    */
@@ -94,7 +88,7 @@ module.exports = {
   loadingIndicator: {
     name: "~/components/loaders/PageLoader.html",
     color: "#FDFEFE",
-    background: "#2980b9"
+    background: "#2980B9"
   },
   pageTransition: {
     name: "fade",
@@ -162,7 +156,6 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: "http://uattesting.equitycapitalgaming.com/webApi",
   },
-
   /*
    ** Build configuration
    */
@@ -174,7 +167,6 @@ module.exports = {
         import: ["~assets/style/variables.styl"]
       }
     },
-
     /*
      ** You can extend webpack config here
      */
