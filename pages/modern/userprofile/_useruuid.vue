@@ -90,8 +90,8 @@
             >
               {{
                 visitProfileUserData.isFollowing == 0
-                  ? $t("useraction.follow")
-                  : $t("useraction.unFollow")
+                  ? $t("userAction.follow")
+                  : $t("userAction.unFollow")
               }}
             </v-btn>
           </v-flex>

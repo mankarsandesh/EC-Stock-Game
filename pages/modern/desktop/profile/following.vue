@@ -65,7 +65,7 @@
                 )
               "
             >
-              {{ $t("useraction.unFollow") }}
+              {{ $t("userAction.unFollow") }}
             </button>
           </div>
         </div>

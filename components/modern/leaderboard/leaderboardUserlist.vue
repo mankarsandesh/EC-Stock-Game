@@ -100,7 +100,7 @@
                 )
               "
               dark
-              >{{ $t("useraction.followBet") }}</v-btn
+              >{{ $t("userAction.followBet") }}</v-btn
             >
           </div>
           <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
@@ -115,7 +115,7 @@
                 )
               "
               dark
-              >{{ $t("useraction.unFollowBet") }}</v-btn
+              >{{ $t("userAction.unFollowBet") }}</v-btn
             >
           </div>
           <div
@@ -123,7 +123,7 @@
             style="width:20%;padding-top:30px;"
           >
             <v-btn class="buttonGreensmall">{{
-              $t("useraction.yourself")
+              $t("userAction.yourself")
             }}</v-btn>
           </div>
         </div>

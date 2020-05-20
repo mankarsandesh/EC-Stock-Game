@@ -71,8 +71,8 @@
               >
                 {{
                 item.isFollowing == 0
-                ? $t("useraction.follow")
-                : $t("useraction.unFollow")
+                ? $t("userAction.follow")
+                : $t("userAction.unFollow")
                 }}
               </v-btn>
             </v-list-tile-action>
@@ -98,7 +98,7 @@
           </v-btn>
           <v-toolbar-title>
             {{
-            this.FolloworNot == 1 ? $t("useraction.followBet") : $t("useraction.unFollowBet")
+            this.FolloworNot == 1 ? $t("userAction.followBet") : $t("userAction.unFollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>

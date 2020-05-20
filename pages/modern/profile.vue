@@ -103,7 +103,7 @@
 
               <v-layout pl-2 pt-2>
                 <v-flex xs3 sm2 md2 lg2 class="text-xs-left">
-                  <label for="firstName">{{ $t("profile.firstname") }}</label>
+                  <label for="firstName">{{ $t("profile.firstName") }}</label>
                 </v-flex>
                 <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
                   <input

@@ -233,20 +233,20 @@
   },
   "profile": {
     "username": "ຊື່ຜູ້ໃຊ້",
-    "firstname": "ชื่อจริง",
-    "lastname": "นามสกุล",
+    "firstName": "ชื่อจริง",
+    "lastName": "นามสกุล",
     "gender": "เพศ",
     "male": "ชาย",
     "female": "หญิง",
     "email": "อีเมล",
     "country": "ประเทศ",
-    "onlinestatus": "สถานะออนไลน์",
-    "basicinfo": "ข้อมูลพื้นฐาน",
-    "onlinehistory": "ประวัติออนไลน์",
-    "stockanalysis": "การวิเคราะห์หุ้น",
-    "onlinetime": "เวลาออนไลน์",
-    "totalonline": "ออนไลน์ทั้งหมด",
-    "signout": "ออกจากระบบ",
+    "onlineStatus": "สถานะออนไลน์",
+    "basicInfo": "ข้อมูลพื้นฐาน",
+    "onlineHistory": "ประวัติออนไลน์",
+    "stockAnalysis": "การวิเคราะห์หุ้น",
+    "onlineTime": "เวลาออนไลน์",
+    "totalOnline": "ออนไลน์ทั้งหมด",
+    "signOut": "ออกจากระบบ",
     "myFollowers": "ผู้ติดตามของฉัน",
     "myFollowing": "ดังต่อไปนี้",
     "myNotification": "การแจ้งเตือนของฉัน",
@@ -259,7 +259,7 @@
     "noFollowers" : "ไม่มีผู้ติดตาม"
     
   },
-  "useraction": {
+  "userAction": {
     "followBet": "ทำตามการพนัน",
     "unFollowBet": "ยกเลิกการเดิมพัน",
     "follow": "ติดตาม",
