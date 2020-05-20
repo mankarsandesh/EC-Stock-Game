@@ -81,8 +81,8 @@ export default {
         stockNewList.push(this.getStockListPrice[0].sort(sortByDesc));
         stockNewList.push(this.getStockListPrice[1].sort(sortByDesc));
       }else{
-        stockNewList.push(this.getStockListPrice[0].sort(sortByDesc));
-        stockNewList.push(this.getStockListPrice[1].sort(sortByDesc));
+        stockNewList.push(this.getStockListPrice[0]);
+        stockNewList.push(this.getStockListPrice[1]);
       }
       return stockNewList;
     }
