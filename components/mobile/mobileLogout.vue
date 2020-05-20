@@ -61,8 +61,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserName", "getBalance", "getUserInfo", "getUserBalance"]),
-    imgProfile() {      
+    ...mapGetters([
+      "getUserName",
+      "getBalance",
+      "getUserInfo",
+      "getUserBalance"
+    ]),
+    imgProfile() {
       return this.getUserInfo.profileImage === null
         ? this.defaultImage
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
@@ -137,8 +142,6 @@ export default {
             showConfirmButton: false,
             timer: 1500
           }).then(Confirm => {
-            this.$store.state.provider.authToken = [];
-            secureStorage.apikey = [];
             window.close();
           });
         } else {

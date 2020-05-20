@@ -7,7 +7,7 @@ export default function({ query, store, redirect }) {
       "referrerURL",
       document.referrer.match(/:\/\/(.[^/]+)/)[1]
     );
-  }  
+  }
   if (Object.keys(query).length !== 0) {
     let messageError = [];
     if (!query.portalProviderUUID) {
@@ -32,10 +32,8 @@ export default function({ query, store, redirect }) {
         balance: query.balance
       };
       secureStorage.setItem("PORTAL_PROVIDERUUID", query.portalProviderUUID);
-      store.dispatch("setUserAuth", UserAuth);
       store.dispatch("setPortalProviderUUID", UserAuth.portalProviderUUID);
     }
-    store.dispatch("setUserAuthError", query.messageError);
   } else {
     redirect(referrerURL);
     secureStorage.removeItem("referrerURL");

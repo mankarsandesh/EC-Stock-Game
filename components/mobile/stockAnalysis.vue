@@ -155,7 +155,6 @@ import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "./UploadFile";
 import config from "~/config/config.global";
 import date from "date-and-time";
 
@@ -299,7 +298,7 @@ export default {
             this.error = "No data to display";
             this.setSnackBarMessage("No Data to Display");
           }
-        }else {
+        } else {
           this.setSnackBarMessage(res.message[0]);
         }
       } catch (ex) {

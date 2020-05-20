@@ -1581,9 +1581,9 @@ export default {
     );
   },
   mounted() {
-    setTimeout(()=>{
-      this.$router.push('/modern/followingList')
-    },3000)
+    setTimeout(() => {
+      this.$router.push("/modern/followingList");
+    }, 3000);
     this.stockID = this.$route.params.id;
   },
   components: {
@@ -1601,7 +1601,6 @@ export default {
       "getCheckStock",
       "getCoinsModern",
       "getAllBettingAmount",
-      "getAuthToken",
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",
