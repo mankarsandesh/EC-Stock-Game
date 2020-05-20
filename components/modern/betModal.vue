@@ -101,7 +101,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters([  
       "getStockLoop",
       "getGameUUIDByStockName",
       "getCoinsModern",
@@ -130,7 +130,6 @@ export default {
     //  this.getwinuser()
   },
   methods: {
-    ...mapMutations(["SET_FIRST"]),
     ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
     coinClick(value) {
       let amount = parseInt(value);
