@@ -104,7 +104,6 @@ import menu from "~/data/menuMobile";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/mobile/LanguageDialog";
 import welcomeUser from "~/components/welcomeUser";
-import openSocket from "socket.io-client";
 import mobileLogout from "~/components/mobile/mobileLogout";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import i18n from "vue-i18n";
