@@ -187,7 +187,7 @@
               class="buttonGreensmall"
               to="/modern/desktop/gamerule"
               dark
-              >Gameing Rule</v-btn
+              >Gaming Rule</v-btn
             >
           </v-flex>
         </v-card>
