@@ -31,7 +31,13 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" v-model="dateFrom" @input="from = false"></v-date-picker>
+                  <v-date-picker
+                    next-icon="fa-chevron-right"
+                    prev-icon="fa-chevron-left"
+                    color="#1db42f"
+                    v-model="dateFrom"
+                    @input="from = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md4>
@@ -55,12 +61,21 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" v-model="dateTo" @input="to = false"></v-date-picker>
+                  <v-date-picker
+                    next-icon="fa-chevron-right"
+                    prev-icon="fa-chevron-left"
+                    color="#1db42f"
+                    v-model="dateTo"
+                    @input="to = false"
+                  ></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md2>
                 <v-btn class="goButton" @click="searchBetHistory()">
-                  <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
+                  <i
+                    v-if="loadingImage"
+                    class="fa fa-circle-o-notch fa-spin"
+                  ></i>
                   &nbsp;{{ $t("msg.go") }}
                 </v-btn>
               </v-flex>
@@ -72,7 +87,7 @@
               <v-flex xs6 md6>
                 <v-text-field
                   v-model="search"
-                  append-icon="search"
+                  append-icon="fa-search"
                   label="Search"
                   :placeholder="$t('betHistory.searchByName')"
                   single-line
@@ -84,9 +99,13 @@
                   @change="sortingBy"
                   v-model="sortby"
                   hide-details
-                  :items="[$t('betHistory.today'),$t('betHistory.thisWeek'),$t('betHistory.thisMonth')]"
+                  :items="[
+                    $t('betHistory.today'),
+                    $t('betHistory.thisWeek'),
+                    $t('betHistory.thisMonth')
+                  ]"
                   :placeholder="$t('msg.sortBy')"
-                 append-icon="fa-angle-down"
+                  append-icon="fa-angle-down"
                 ></v-select>
               </v-flex>
             </v-layout>

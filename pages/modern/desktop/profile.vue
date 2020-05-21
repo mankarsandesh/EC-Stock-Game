@@ -12,8 +12,8 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="dialog = true">photo_camera</v-icon>
-                    <!-- <v-icon color="black" :size="20">photo_camera</v-icon> -->
+                    <v-icon color="black" :size="20" @click="dialog = true">fa-camera</v-icon>
+                    <!-- <v-icon color="black" :size="20">fa-camera</v-icon> -->
                   </button>
                 </span>
                 <!-- <span class="blur-img">uploading</span> -->
@@ -118,14 +118,14 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">fa-times</v-btn>
+            <v-btn color="primary" text @click="dialog = false">close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
       <v-snackbar v-model="snackbar">
         Sucessfully Avatar Updated.
-        <v-btn color="pink" text @click="snackbar = false">fa-times</v-btn>
+        <v-btn color="pink" text @click="snackbar = false">close</v-btn>
       </v-snackbar>
     </v-layout>
   </v-container>

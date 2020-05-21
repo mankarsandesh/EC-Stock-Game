@@ -1,22 +1,32 @@
 <template>
   <div>
     <v-card class="followup">
-      <h3
-        class="title"
-      >{{ isFollowing == 1 ? $t("userAction.followBet") : $t("userAction.unFollowBet") }}</h3>
+      <h3 class="title">
+        {{
+          isFollowing == 1
+            ? $t("userAction.followBet")
+            : $t("userAction.unFollowBet")
+        }}
+      </h3>
       <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="userImage" width="140px" />
-        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
+        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">
+          {{ this.username }}
+        </h3>
       </v-card-text>
       <v-flex>
         <p
           v-if="FollwingError"
           v-bind:class="{ 'text-danger': hasError, 'text-sucess': hasSucess }"
-        >{{ errorMessage }}</p>
+        >
+          {{ errorMessage }}
+        </p>
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase">{{$t("leaderBoard.followBy")}}</h4>
+        <h4 class="subtitle-1 text-uppercase">
+          {{ $t("leaderBoard.followBy") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -28,7 +38,7 @@
               item-value="id"
               v-on:change="changeAmountRate($event)"
               solo
-             append-icon="fa-angle-down"
+              append-icon="fa-angle-down"
             ></v-select>
           </v-flex>
           <v-flex lg6 pr-2>
@@ -40,7 +50,7 @@
               solo
               label="10%"
               v-if="selectRate"
-              append-icon="money"
+              append-icon="fa-money"
               v-model="rateValue"
               @keypress="onlyNumber"
             ></v-text-field>
@@ -54,12 +64,14 @@
               v-if="selectAmount"
               @keypress="onlyNumber"
               v-model="amountValue"
-              append-icon="money"
+              append-icon="fa-money"
             ></v-text-field>
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderBoard.autoStop")}}</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">
+          {{ $t("leaderBoard.autoStop") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
@@ -104,11 +116,10 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-              >{{ $t("userAction.follow") }}</v-btn>
+                >{{ $t("userAction.follow") }}</v-btn
+              >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
-                {{
-                $t("msg.cancel")
-                }}
+                {{ $t("msg.cancel") }}
               </v-btn>
             </v-flex>
           </v-radio-group>
@@ -120,11 +131,10 @@
             color="buttonCancel"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-          >{{ $t("userAction.unFollow") }}</v-btn>
+            >{{ $t("userAction.unFollow") }}</v-btn
+          >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
-            {{
-            $t("msg.cancel")
-            }}
+            {{ $t("msg.cancel") }}
           </v-btn>
         </v-flex>
       </div>
@@ -393,7 +403,7 @@ export default {
             data.message[0] == "User followed successfully."
               ? this.$root.$t("follow.userFollowed")
               : this.$root.$t("follow.userUnFollowed")
-          );        
+          );
         } else {
           this.errorShow(true, false, true, data.message[0]);
         }

@@ -78,7 +78,7 @@
         solo
         hide-details
         disabled
-          prepend-icon="fa-chevron-right"
+        prepend-icon="fa-chevron-right"
       />
     </v-flex>
   </v-layout>

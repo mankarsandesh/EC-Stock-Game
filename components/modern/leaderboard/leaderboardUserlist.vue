@@ -26,7 +26,7 @@
             v-bind:class="{ active: isActiveWeek }"
             v-on:click="sortingBy('weekly')"
           >
-            <v-icon small>event</v-icon>
+            <v-icon small>fa-calendar</v-icon>
             {{ $t("leaderBoard.weeklyRankings") }}
           </span>
           <span
@@ -34,7 +34,7 @@
             v-bind:class="{ active: isActiveMonth }"
             v-on:click="sortingBy('monthly')"
           >
-            <v-icon small>event</v-icon>
+            <v-icon small>fa-calendar</v-icon>
             {{ $t("leaderBoard.monthlyRankings") }}
           </span>
         </v-flex>
@@ -58,9 +58,15 @@
       >
         <div class="userRow">
           <div>
-            <v-icon class="tropy" color=#fad052 v-if="index == 0">fa-trophy</v-icon>
-            <v-icon class="tropy" color=#f46f86 v-if="index == 1">fa-trophy</v-icon>
-            <v-icon class="tropy" color=#7a7a7a v-if="index == 2">fa-trophy</v-icon>
+            <v-icon class="tropy" color="#fad052" v-if="index == 0"
+              >fa-trophy</v-icon
+            >
+            <v-icon class="tropy" color="#f46f86" v-if="index == 1"
+              >fa-trophy</v-icon
+            >
+            <v-icon class="tropy" color="#7a7a7a" v-if="index == 2"
+              >fa-trophy</v-icon
+            >
 
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
               <img class="pimage" :src="userImgProfile(data.userImage)" />
