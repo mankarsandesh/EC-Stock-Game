@@ -65,7 +65,8 @@ export default {
       "clearDataMultiGameBet",
       "sendBetting",
       "confirmTempMultiGameBetData",
-      "clearTempMultiGameBetData"
+      "clearTempMultiGameBetData",
+      "clearTempBetClass"
     ]),
     confirmBet() {
       if (
@@ -79,10 +80,12 @@ export default {
         // setTimeout(() => {
         this.sendBetting();
         this.setFooterBetAmount(0);
+        this.clearTempBetClass();
         this.isSending = false;
         // }, 1000);
       } else {
         this.clearTempMultiGameBetData();
+        this.clearTempBetClass();
         this.$swal({
           type: "error",
           title: config.error.lowBalance,
@@ -94,6 +97,13 @@ export default {
       this.isSending = false;
       this.clearTempMultiGameBetData();
       this.setFooterBetAmount(0);
+      // if(this.getTempBetClass.length > 0) {
+      //   this.getTempBetClass.forEach((el) => {
+      //     console.log('el', el);
+      //     $(`${el.id}`).removeClass(el.class);
+      //   });
+      // }
+      this.clearTempBetClass();
     }
   },
   computed: {
@@ -102,7 +112,8 @@ export default {
       "getFooterBetAmount",
       "getTempMultiGameBetAmount",
       "getUserInfo",
-      "getUserBalance"
+      "getUserBalance",
+      "getTempBetClass"
     ])
   }
 };

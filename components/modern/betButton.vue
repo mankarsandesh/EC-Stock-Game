@@ -18,6 +18,7 @@
         :key="data.ruleid"
         class="w12"
         trigger="clickToToggle"
+        :ref="'firstdigit-' + data.rule"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -37,7 +38,7 @@
           class="align_button4"
           :id="stockID + 'firstdigit-' + data.rule"
           slot="reference"
-          @click="betButtonClick(data.ruleid)"
+          @click="betButtonClick(data.ruleid, `firstdigit-${data.rule}`)"
         >
           <showChipAmount
             size="45px"
@@ -95,6 +96,7 @@
         v-for="(data, index) in lastDigit"
         :key="index"
         class="w12"
+        :ref="'lastdigit-' + data.rule"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -117,7 +119,7 @@
               : 'align_button4 betButtonGuide'
           "
           :id="stockID + 'lastdigit-' + data.rule"
-          @click="betButtonClick(data.ruleid)"
+          @click="betButtonClick(data.ruleid, `lastdigit-${data.rule}`)"
           slot="reference"
         >
           <showChipAmount
@@ -179,6 +181,7 @@
         v-for="data in bothDigit"
         :key="data.rule"
         class="w12"
+        :ref="'bothdigit-' + data.rule"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -197,7 +200,7 @@
         <v-btn
           class="align_button4"
           :id="stockID + 'bothdigit-' + data.rule"
-          @click="betButtonClick(data.ruleid)"
+          @click="betButtonClick(data.ruleid, `bothdigit-${data.rule}`)"
           slot="reference"
         >
           <showChipAmount
@@ -254,6 +257,7 @@
         v-for="data in twoDigit"
         :key="data.rule"
         class="w12"
+        :ref="'twodigit-' + data.rule"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -272,7 +276,7 @@
         <v-btn
           class="align_button4"
           :id="stockID + 'twodigit-' + data.rule"
-          @click="betButtonClick(data.ruleid)"
+          @click="betButtonClick(data.ruleid, `twodigit-${data.rule}`)"
           slot="reference"
         >
           <showChipAmount
@@ -322,6 +326,7 @@
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
         :key="'firstdigit-' + index"
+        :ref="'firstdigit-' + index"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -341,7 +346,7 @@
         <v-btn
           :id="stockID + 'firstdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(8 + index, 'firstdigit')"
+          @click="betButtonClickNumber(8 + index, 'firstdigit-' + index)"
           v-show="number == 'first'"
           class="btn-small"
         >{{ index }}</v-btn>
@@ -350,6 +355,7 @@
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
         :key="'lastdigit-' + index"
+        :ref="'lastdigit-' + index"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -369,7 +375,7 @@
         <v-btn
           :id="stockID + 'lastdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(25 + index, 'lastdigit')"
+          @click="betButtonClickNumber(25 + index, 'lastdigit-' + index)"
           v-show="number == 'last'"
           class="btn-small"
         >{{ index }}</v-btn>
@@ -378,6 +384,7 @@
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 19"
         :key="'bothdigit-' + index"
+        :ref="'bothdigit-' + index"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -397,7 +404,7 @@
         <v-btn
           :id="stockID + 'bothdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(149 + index, 'bothdigit')"
+          @click="betButtonClickNumber(149 + index, 'bothdigit-' + index)"
           v-show="number == 'both'"
           class="btn-small"
         >{{ index }}</v-btn>
@@ -406,6 +413,7 @@
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 100"
         :key="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
+        :ref="'twodigit-' + index"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -425,7 +433,7 @@
         <v-btn
           :id="index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index"
           slot="reference"
-          @click="betButtonClick(42 + index, 'twodigit')"
+          @click="betButtonClickNumber(42 + index, 'twodigit-' + index)"
           v-show="number == 'two'"
           class="btn-small"
         >{{ index < 10 ? "0" + index : index }}</v-btn>
@@ -520,6 +528,7 @@ export default {
           this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
         ) {
           this.clearDataMultiGameBet(5);
+          this.clearTempBetClass();
         }
         return (
           this.getTimerByStockName(this.stockID) &&
@@ -531,6 +540,7 @@ export default {
           this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
         ) {
           this.clearDataMultiGameBet(1);
+          this.clearTempBetClass();
         }
         return (
           this.getTimerByStockName(this.stockID) &&
@@ -544,11 +554,14 @@ export default {
     ...mapActions([
       "pushDataMultiGameBet",
       "clearDataMultiGameBet",
-      "setTempMultiGameBetData"
+      "setTempMultiGameBetData",
+      "setTempBetClass",
+      "clearTempBetClass"
     ]),
 
     ...mapMutations(["SET_FIRST_PARENT"]),
-    betButtonClick(ruleID, specificNumber = "") {
+    betButtonClick(ruleID, betId, specificNumber = "") {
+      console.log("betData", ruleID, betId);
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
         let betData = {
@@ -558,8 +571,56 @@ export default {
           betAmount: this.getFooterBetAmount
         };
         this.setTempMultiGameBetData(betData);
+        this.setTempBetClass({
+          id: `${this.stockID}${betId}`,
+          class: `${betId.split("-")[0]} ${betId.split("-")[1]}`
+        });
+        $("#" + this.stockID + betId).addClass(
+            betId.split("-")[0] + " " + betId.split("-")[1]
+          );
+          console.log('popper ref', this.$refs[betId][0], betId);
+        setTimeout(() => {
+          console.log('popper ref', this.$refs[betId][0].showPopper);
+          this.$refs[betId][0].showPopper = false
+          console.log('popper ref', this.$refs[betId][0].showPopper);
+        }, 1000)
+        
+        //   console.log('popper ref', this.$refs[betId][0].$parent.showPopper);
+        //    setTimeout(() => {
+        //      this.$refs[betId][0].$parent.showPopper = false;
+        //      console.log('popper ref', this.$refs[betId][0].$parent.showPopper);
+        //    }, 1000)
+        //    this.$refs[betId][0].$parent.showPopper = false;
+          // this.$refs.firstdigitpopper.showPopper = false;
+          
         // this.pushDataMultiGameBet(betData);
         // console.warn(this.getMultiGameBet);
+      }
+    },
+    betButtonClickNumber (ruleID, betId, specificNumber = "") {
+      console.log("betData", ruleID, betId);
+      // $("#"+ruleID).addClass('bg-btn-first');
+      if (this.checkFooterBetAmount) {
+        let betData = {
+          specificNumber: specificNumber,
+          gameUUID: this.getGameUUIDByStockName(this.stockID),
+          ruleID: ruleID,
+          betAmount: this.getFooterBetAmount
+        };
+        this.setTempMultiGameBetData(betData);
+        this.setTempBetClass({
+          id: `${this.stockID}${betId.split("-")[0]}`,
+          class: `${betId.split("-")[0]} ${betId.split("-")[1]}`
+        });
+        $("#" + this.stockID + betId.split("-")[0]).addClass(
+            betId.split("-")[0] + " " + betId.split("-")[1]
+          );
+          console.log('popper ref', this.$refs[betId][0], betId);
+        setTimeout(() => {
+          console.log('popper ref', this.$refs[betId][0].showPopper);
+          this.$refs[betId][0].showPopper = false
+          console.log('popper ref', this.$refs[betId][0].showPopper);
+        }, 1000)
       }
     },
     // the btnNumber methods use to switch specific number first,last,both and two
@@ -567,7 +628,9 @@ export default {
       value == this.number ? (this.number = null) : (this.number = value);
     },
     updateBet(items) {
+     
       const split = items.betRule.split("-");
+      console.log('update bet', items.betRule, split[0] + "-" + split[1]);
       $("#" + items.stock + items.betRule).addClass(split[0] + "-" + split[1]); // small button
       $("#" + items.stock + split[0]).addClass(split[0]); // parent the button
     }

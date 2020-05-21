@@ -1619,6 +1619,7 @@ export default {
             240
         ) {
           this.clearDataMultiGameBet();
+          this.clearTempBetClass();
         }
         return (
           this.getTimerByStockName(this.stockID) &&
@@ -1630,6 +1631,7 @@ export default {
           this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 40
         ) {
           this.clearDataMultiGameBet();
+          this.clearTempBetClass();
         }
         return (
           this.getTimerByStockName(this.stockID) &&
@@ -1646,7 +1648,8 @@ export default {
       "setLiveRoadMap",
       "setRoadMap",
       "setUserData",
-      "setSnackBarMessage"
+      "setSnackBarMessage",
+      "clearTempBetClass"
     ]),
 
     listenForBroadcast({ channelName, eventName }, callback) {

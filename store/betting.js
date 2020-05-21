@@ -11,7 +11,8 @@ const state = () => ({
   isSendBetting: false,
   multiGameFooterBetAmount: 0, // Store multi game footer bet amount
   tempMultiGameBetData: [], // Store temp bet data of multi game until the bet is ent to the server,
-  itemsBetting: []
+  itemsBetting: [],
+  tempBetClass: []
 });
 
 const mutations = {
@@ -54,6 +55,8 @@ const mutations = {
   },
   SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
     state.tempMultiGameBetData.push(payload);
+    state.onGoingBet.push(payload);
+    state.itemsBetting.push(payload)
   },
   CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
     state.multiGameBetSend.push(...state.tempMultiGameBetData);
@@ -62,6 +65,19 @@ const mutations = {
   },
   CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
     state.tempMultiGameBetData = [];
+  },
+  SET_TEMP_BET_CLASS(state, payload) {
+    state.tempBetClass.push(payload);
+  },
+  CLEAR_TEMP_BET_CLASS(state) {
+    if(state.tempBetClass.length > 0) {
+      state.tempBetClass.forEach((el) => {
+        console.log('el', el);
+        console.log('copy',  $(`#${el.id}`))
+        $(`#${el.id}`).removeClass(el.class);
+      });
+    }
+    state.tempBetClass = [];
   }
 };
 
@@ -103,6 +119,12 @@ const actions = {
   },
   clearTempMultiGameBetData({ commit }) {
     commit("CLEAR_TEMP_MULTI_GAME_BET_DATA");
+  },
+  setTempBetClass({ commit }, payload) {
+    commit("SET_TEMP_BET_CLASS", payload);
+  },
+  clearTempBetClass({ commit }) {
+    commit("CLEAR_TEMP_BET_CLASS");
   },
   // Send bet data for multi game and footer bet on full screen
   async sendBetting(context) {
@@ -301,6 +323,9 @@ const getters = {
   },
   getMultiGameFooterBetAmount(state) {
     return state.multiGameFooterBetAmount;
+  },
+  getTempBetClass(state) {
+    return state.tempBetClass;
   }
 };
 
