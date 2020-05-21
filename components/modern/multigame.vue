@@ -26,7 +26,7 @@
       <v-flex>
         <v-layout>
           <v-flex class="text-xs-center" px-2>
-            <span class="text-gray">{{ $t("msg.lastdraw") }}:</span>
+            <span class="text-gray">{{ $t("msg.lastDraw") }}:</span>
             <v-flex class="lastdraw">
               <span
                 class="text-black"

@@ -1,14 +1,22 @@
 const jsonResult = require('~/data/result') // define the json result for the compare 
 import secureStorage from '~/plugins/secure-storage'
 import sound from "~/helpers/sound" // import the sound helper 
-import { mapMutations, mapGetters } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 // define a mixin object
 export const BetResult = {
+
     computed: {
-        ...mapGetters(["itemsBetting"])
+        ...mapGetters(["getItemsBetting"])
     },
+
     methods: {
-        ...mapMutations(["SET_FIRST", "SET_ITEMS_BETTING", "CLEAR_ITEMS_BETTING"]),
+
+        ...mapActions([
+            "setCollegeButtonNumberParent",
+            "setItemBetting",
+            "clearItemBetting"
+        ]),
+
         betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin   
             this.clearItemsAfterLastDraw()
             const lastDraw = result.substr(result.length - 2); //get the last two digit
@@ -39,7 +47,7 @@ export const BetResult = {
                     })
                 }
             })
-            this.SET_FIRST('Can not find any bet') // make the button collage 
+            this.setCollegeButtonNumberParent('Can not find any bet') // make the button collage 
         },
 
         // Multiple Result 
@@ -55,7 +63,7 @@ export const BetResult = {
                 );
 
                 setTimeout(() => {
-                    this.SET_FIRST("You are win") // try to set the difference value 
+                    this.setCollegeButtonNumberParent("You are win") // try to set the difference value 
                     sound.winBet(); // sound when user win the bet
 
                     $("#" + stockName + betID).removeClass(
@@ -69,7 +77,9 @@ export const BetResult = {
                     );
                     $(specificNumber).removeClass(
                         betID.split("-")[0]);
-                    this.collectCoin()
+
+                    $("#" + betWin).removeClass('chip-animation');
+                    // this.collectCoin()
                 }, 5000);
 
             } else if ($(specificNumber + '-' + number).hasClass(betID.split("-")[0])) {
@@ -81,14 +91,14 @@ export const BetResult = {
                     betID.split("-")[0]
                 );
                 $(specificNumber + 'Number').addClass('chip-animation');
-                this.SET_FIRST('You are lose in else false')
+                this.setCollegeButtonNumberParent('You are lose in else false')
                 console.log('You win from  ', specificNumber + '-' + number)
 
                 $("#" + stockName + betID).removeClass(
                     betID.split("-")[0]
                 );
             } else {
-                this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
+                this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
                 );
@@ -114,7 +124,7 @@ export const BetResult = {
                 );
 
                 setTimeout(() => {
-                    this.SET_FIRST("You are win")
+                    this.setCollegeButtonNumberParent("You are win")
                     sound.winBet(); // sound when user win the bet
 
                     $("#" + stockName + betID).removeClass(
@@ -128,13 +138,14 @@ export const BetResult = {
                     );
                     $(specificNumber).removeClass(
                         betID.split("-")[0]);
-                    this.collectCoin()
 
+                    // this.collectCoin()
+                    $("#" + betWin).removeClass('chip-animation');
                 }, 5000);
 
             } else {
                 console.log('This is the result of two digit :', specificNumber + '-' + number)
-                this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
+                this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
                 );
@@ -183,15 +194,17 @@ export const BetResult = {
 
         // store bet in localStroge 
         storeBetOnLocalStroge(items) {
-            this.SET_ITEMS_BETTING(items)
+
+            this.setItemBetting(items)
         },
 
         clearItemsAfterLastDraw() {
-            if (this.itemsBetting.length) {
 
-                secureStorage.removeItem("itemsBetting")
+            if (this.getItemsBetting.length) {
 
-                this.CLEAR_ITEMS_BETTING()
+                secureStorage.removeItem("getItemsBetting")
+
+                this.clearItemBetting()
 
             }
         }

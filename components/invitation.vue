@@ -113,7 +113,6 @@
             <span class="leftMessage">
             <span v-if="invitationMessage"> {{ invitationMessage }} </span>
             </span>
-            </span>
             <div class="messageChat">
               <v-flex col-md-12>
                 <v-btn class="buttonInvitation">
