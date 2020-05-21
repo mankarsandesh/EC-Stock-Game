@@ -1,9 +1,8 @@
 import Echo from "laravel-echo";
 import config from "../config/config.global";
-import axios from "axios";
 import log from "roarr";
 
-export default async ({ store }) => {
+export default async ({ store, $axios }) => {
   const port = 6001;
 
   window.io = require("socket.io-client");
@@ -14,7 +13,7 @@ export default async ({ store }) => {
       portalProviderUUID: store.getters.getPortalProviderUUID,
       version: config.version
     };
-    var { data } = await axios.post(
+    var { data } = await $axios.post(
       config.getActiveGamesByCategory.url,
       reqBody,
       { headers: config.header }

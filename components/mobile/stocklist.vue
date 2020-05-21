@@ -6,7 +6,7 @@
           <v-list-tile-content>
             <v-list-tile-sub-title
               class="heading"
-              v-html="item.stockName"
+              v-html="item.stockName.toUpperCase()"
             ></v-list-tile-sub-title>
             <v-list-tile-sub-title
               v-if="item.stockStatus == 'Closed'"

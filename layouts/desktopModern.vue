@@ -28,7 +28,9 @@
             <div class="layout-btn">
               <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
                 <country-flag :country="getLocale" size="normal" />
-                <span>&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span>
+                <span
+                  >&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span
+                >
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>
@@ -60,6 +62,10 @@
                     <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
+                 
+              </v-list>
+              <v-list class="footerView">
+                <span @click="$router.push('/modern/desktop/notification/')">View All</span>
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -88,10 +94,7 @@ import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import winnerMarquee from "~/components/modern/winnerMarquee";
-import welcomeUser from "~/components/welcomeUser";
-import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
-import lottie from "lottie-web";
 import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
@@ -107,7 +110,6 @@ export default {
     countryFlag,
     languageDialog,
     winnerMarquee,
-    welcomeUser,
     userMenu,
     AnimatedNumber
   },
@@ -170,13 +172,6 @@ export default {
   },
   mounted() {
     this.fetchNotification();
-    lottie.loadAnimation({
-      container: this.$refs.svgContainer, // the dom element that will contain the animation
-      renderer: "svg",
-      loop: true,
-      autoplay: true,
-      path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
-    });
   },
   methods: {
     pageLink(type) {
@@ -247,6 +242,17 @@ export default {
 };
 </script>
 <style scoped>
+.footerView{
+  border-top:1px solid #dddddd;
+  text-align: center;
+  cursor: pointer;
+}
+.footerView span{
+  font-size: 14px;
+  color:#003f70;
+  font-weight: 400;
+  text-align: center;
+}
 .noNotification {
   color: #333;
 }

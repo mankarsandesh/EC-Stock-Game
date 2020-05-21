@@ -1598,7 +1598,6 @@ export default {
       "getCheckStock",
       "getCoinsModern",
       "getAllBettingAmount",
-      "getAuthToken",
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",

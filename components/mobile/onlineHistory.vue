@@ -166,10 +166,8 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "./UploadFile";
 import onlineChart from "./onlinechart";
 import VueApexCharts from "vue-apexcharts";
 import date from "date-and-time";
@@ -279,7 +277,7 @@ export default {
         const res = await this.$axios.$post(config.getUserProfile.url, reBody, {
           headers: config.header
         });
-        if(res.code == 200) {
+        if (res.code == 200) {
           this.dataReady = true;
           let result = res.data.activeTimeDateWise;
           this.currentActiveTime = res.data.currentActiveTime;
@@ -301,7 +299,7 @@ export default {
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {
-         this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(config.error.general);
         }
       } catch (ex) {
         this.setSnackBarMessage("Please select a valid date");
