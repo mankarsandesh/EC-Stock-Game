@@ -14,47 +14,31 @@
           <v-icon size="20" @click="dialogStockAnalysis = false">close</v-icon>
         </v-layout>
       </v-toolbar>
-      <v-flex
-        mt-2
-        xs12
-        md12
-        v-if="$vuetify.breakpoint.xs"
-        class="profile_head text-xs-center"
-      >
+      <v-flex mt-2 xs12 md12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
         <div class="image_container">
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
           </v-avatar>
         </div>
-        <h3 class="text-capitalize">
-          {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-        </h3>
+        <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
         <p>
-          <strong> {{ $t("profile.onlineStatus") }} : </strong
-          >{{ getUserInfo.currentActiveTime }}
+          <strong>{{ $t("profile.onlineStatus") }} :</strong>
+          {{ getUserInfo.currentActiveTime }}
         </p>
         <v-divider></v-divider>
       </v-flex>
 
       <v-flex xs12 sm12 pt-3>
         <v-layout row justify-center>
-          <v-flex
-            xs2
-            sm12
-            md2
-            v-if="!$vuetify.breakpoint.xs"
-            class="profile_head text-xs-center"
-          >
+          <v-flex xs2 sm12 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
             <div class="image_container">
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
             </div>
-            <h3 class="text-capitalize">
-              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-            </h3>
+            <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
             <p>
-              <strong> {{ $t("profile.onlineStatus") }} : </strong>
+              <strong>{{ $t("profile.onlineStatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
             <v-divider></v-divider>
@@ -111,9 +95,7 @@
               <div class="title_date_picker">
                 <span></span>
               </div>
-              <button @click="getStockAnalysis" class="buttonGreen btn-go">
-                GO
-              </button>
+              <button @click="getStockAnalysis" class="buttonGreen btn-go">{{$t("msg.go")}}</button>
             </div>
           </v-flex>
         </v-layout>
@@ -124,10 +106,7 @@
             <div class="chart_container">
               <div v-if="isDataValid" class="chart-map-color">
                 <span v-for="(stock, index) in stocks" :key="index">
-                  <span
-                    class="circle-color"
-                    :style="{ backgroundColor: colors[0][index] }"
-                  ></span>
+                  <span class="circle-color" :style="{ backgroundColor: colors[0][index] }"></span>
                   <span style="margin-right:10px">{{ stock }}</span>
                 </span>
               </div>
@@ -336,11 +315,11 @@ export default {
       });
       return [
         {
-          name: "win",
+          name: window.$nuxt.$root.$t("msg.win"),
           data: win
         },
         {
-          name: "loss",
+          name: window.$nuxt.$root.$t("msg.lose"),
           data: loss
         }
       ];
