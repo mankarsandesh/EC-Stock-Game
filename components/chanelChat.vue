@@ -107,6 +107,7 @@
             v-model="selectCategory"
             :items="categoryName"
             multiple
+            append-icon="fa-angle-down"
             label="Select Category"
           ></v-select>
           &nbsp;<i @click="sendInvitation()" class="fa fa-paper-plane"></i

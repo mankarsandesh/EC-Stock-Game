@@ -113,12 +113,13 @@
             <span class="leftMessage">
             <span v-if="invitationMessage"> {{ invitationMessage }} </span>
             </span>
-            </span>
+           
             <div class="messageChat">
               <v-flex col-md-12>
                 <v-btn class="buttonInvitation">
                   <v-select
                     class="selectCategory"
+                    append-icon="fa-angle-down"
                     item-text="value"
                     item-value="id"
                     v-model="selectCategory"
