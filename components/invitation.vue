@@ -163,7 +163,6 @@
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
-import io from "socket.io-client";
 import moment from "moment";
 import config from "~/config/config.global";
 import chanelChat from "./chanelChat";

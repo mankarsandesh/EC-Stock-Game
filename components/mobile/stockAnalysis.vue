@@ -152,7 +152,6 @@
 <script>
 import apexchart from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import config from "~/config/config.global";
