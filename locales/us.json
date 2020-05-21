@@ -22,8 +22,8 @@
     "chipAmount": "Chip Amount",
     "soundControl": "Sound Control",
     "leaderBoard": "Leaderboard",
-    "myFollowers": "My Followers",
-    "myFollowing": "My Following"
+    "myFollowers": "Followers",
+    "myFollowing": "Following"
   },
   "stockList": {
     "stockLists": "Stock Lists",
