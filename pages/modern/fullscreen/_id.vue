@@ -219,9 +219,7 @@
                       {{ getStockLoop($route.params.id) }}
                       {{ $t("msg.minute") }} {{ $t("msg.loop") }}
                     </v-btn>
-                    <v-btn
-                      color="buttonGreen"
-                      @click="dialogOtherstock = true"
+                    <v-btn color="buttonGreen" @click="dialogOtherstock = true"
                       >{{ $t("msg.otherstock") }}
                     </v-btn>
                   </v-flex>
@@ -327,9 +325,10 @@
         </v-flex>
         <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
           <h3 class="balanceUser" v-if="getUserBalance > 0">
-            Acc : {{ getUserBalance | currency }}
+            Acc :
+            <span class="userBlanace"> ${{ getUserBalance | currency }} </span>
           </h3>
-          <h3 class="balanceUser" v-if="getUserBalance == 0">Acc : 0000.00</h3>
+          <h3 class="balanceUser" v-if="getUserBalance == 0">Acc : <span class="userBlanace"> 0000.00 </span></h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-show="!isHidden"></fullscreenchart>
@@ -785,6 +784,9 @@ export default {
 </script>
 
 <style scoped>
+.userBlanace {
+  color: #002a68;
+}
 .close-icon {
   z-index: 10028;
   position: absolute;
