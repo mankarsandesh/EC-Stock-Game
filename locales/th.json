@@ -219,7 +219,9 @@
     "O": "O",
     "U": "U",
     "L": "L",
-    "M": "M"
+    "M": "M",
+    "null": "",
+    "undefined" :""
   },
   "stockname": {
     "btc1": "BTC/USDT",

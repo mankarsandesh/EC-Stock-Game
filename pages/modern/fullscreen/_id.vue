@@ -222,7 +222,7 @@
                     <v-btn
                       color="buttonGreen"
                       @click="dialogOtherstock = true"
-                      >{{ $t("msg.otherstock") }}
+                      >{{ $t("msg.otherStock") }}
                     </v-btn>
                   </v-flex>
                 </v-layout>
