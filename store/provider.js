@@ -4,10 +4,6 @@ import secureStorage from "../plugins/secure-storage";
 import Cookies from "../plugins/js-cookie";
 
 const state = () => ({
-  authUser: {}, // store auth user data
-  userLoginData: {}, // Store user login data
-  authToken: (secureStorage.apikey =
-    "JXb6nICLMNnyYkQEio75j7ijdcj8LT2c3PcqyJtYCPknbM0DcfYpZQ0OuIvPYJXSFexqVh4NjUxtQNMX"), // Store auth token
   portalProviderUUID: secureStorage.getItem("PORTAL_PROVIDERUUID"), // Store portal provider UUID
   userUUID: secureStorage.getItem("USER_UUID"), // Store user UUID
   userBalance: 0,
@@ -18,8 +14,6 @@ const state = () => ({
   isShowTutorial: false,
   isWindowsHasScroll: false,
   tutorialStepNumber: 0, // Store tutorial step number
-  UserAuth: {},
-  messageError: [],
   loginError: [], // Error occurred on the login screen
   referrer: "",
   snackBarMessage: ""
@@ -32,17 +26,8 @@ const mutations = {
   SET_USER_UUID(state, payload) {
     state.userUUID = payload;
   },
-  SET_AUTH(state, payload) {
-    state.authUser = payload;
-  },
   SET_USER_DATA(state, payload) {
     state.userData = payload;
-  },
-  SET_USER_LOGIN_DATA(state, payload) {
-    state.userLoginData = payload;
-  },
-  SET_AUTH_TOKEN(state, token) {
-    state.authToken = token;
   },
   SET_COINS_MODERN(state, payload) {
     state.coinsModern = payload;
@@ -63,12 +48,6 @@ const mutations = {
   },
   SET_TUTORIAL_STEP_NUMBER(state, payload) {
     state.tutorialStepNumber = payload;
-  },
-  SET_USER_AUTH(state, payload) {
-    state.UserAuth = payload;
-  },
-  SET_USER_AUTH_ERROR(state, payload) {
-    state.messageError = payload;
   },
   SET_LOGIN_ERROR(state, payload) {
     state.loginError.push(...payload);
@@ -126,10 +105,6 @@ const actions = {
       );
     }
   },
-  // Set user auth data
-  setAuth({ commit }, payload) {
-    commit("SET_AUTH", payload);
-  },
   // Set portal provider UUID
   setPortalProviderUUID({ commit }, payload) {
     commit("SET_PORTAL_PROVIDER_UUID", payload);
@@ -137,14 +112,6 @@ const actions = {
   // Set user UUID
   setUserUUID({ commit }, payload) {
     commit("SET_USER_UUID", payload);
-  },
-  // Set user login data
-  setUserLoginData({ commit }, payload) {
-    commit("SET_USER_LOGIN_DATA", payload);
-  },
-  // Set auth token
-  setAuthToken({ commit }, payload) {
-    commit("SET_AUTH_TOKEN", payload);
   },
   // Set coins modern
   setCoinsModern({ commit }, payload) {
@@ -169,12 +136,6 @@ const actions = {
   // Set tutorial's step number
   setTutorialStepNumber({ commit }, payload) {
     commit("SET_TUTORIAL_STEP_NUMBER", payload);
-  },
-  setUserAuth({ commit }, payload) {
-    commit("SET_USER_AUTH", payload);
-  },
-  setUserAuthError({ commit }, payload) {
-    commit("SET_USER_AUTH_ERROR", payload);
   },
   setLoginError({ commit }, payload) {
     commit("SET_LOGIN_ERROR", payload);
@@ -203,18 +164,6 @@ const getters = {
   getUserUUID(state) {
     return state.userUUID;
   },
-  // Check authToken
-  checkAuth(state) {
-    if (
-      state.authToken === "" ||
-      state.authToken == null ||
-      state.authToken == undefined
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  },
   // Get user info
   getUserInfo(state) {
     return state.userData;
@@ -229,9 +178,6 @@ const getters = {
       const formData = JSON.parse(sessionStorage.getItem("userData"));
     }
     return state.formData;
-  },
-  getAuthToken(state) {
-    return state.authToken;
   },
   // get chip amount
   getCoinsModern(state) {
@@ -253,8 +199,6 @@ const getters = {
   getTutorialStepNumber(state) {
     return state.tutorialStepNumber;
   },
-  getUserAuth: state => state.UserAuth,
-  getMessageError: state => state.messageError,
   getLoginError: state => {
     if (state.loginError.length > 0) {
       return state.loginError;

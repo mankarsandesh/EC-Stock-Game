@@ -46,7 +46,9 @@
                 @click="$refs.language.showDialog()"
               >
                 <country-flag :country="getLocale" size="normal" />
-                <span>&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span>
+                <span
+                  >&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span
+                >
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>
@@ -115,7 +117,6 @@ import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import winnerMarquee from "~/components/modern/winnerMarquee";
-import welcomeUser from "~/components/welcomeUser";
 import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
 import lottie from "lottie-web";
@@ -134,7 +135,6 @@ export default {
     countryFlag,
     languageDialog,
     winnerMarquee,
-    welcomeUser,
     userMenu,
     AnimatedNumber
   },

@@ -12,7 +12,7 @@
         <tbody>
           <tr v-for="(item, index) in stockLists[0]" :key="item.stockUUID">
             <td>
-              <b>{{ item.stockName }}</b>
+              <b>{{ item.stockName.toUpperCase() }}</b>
             </td>
             <td v-if="item.stockStatus == 'Closed'" :style="{ color: 'red' }">
               Closed
