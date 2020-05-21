@@ -6,9 +6,9 @@ class Result {
     }
     setItemBetting() {
 
-        const getItem = secureStorage.getItem("itemsBetting")
+        const getItem = secureStorage.getItem("getItemsBetting")
 
-    if (getItem) {
+        if (getItem) {
 
             const keys = Object.values(getItem)
 
@@ -22,6 +22,5 @@ class Result {
             })
         }
     }
-
 }
 export default Result = new Result

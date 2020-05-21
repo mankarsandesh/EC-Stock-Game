@@ -448,7 +448,7 @@ export default {
   props: {
     isFullscreen: {
       type: Boolean,
-      default: false  
+      default: false
     },
     //  for multi game
     stockName: {
@@ -459,7 +459,7 @@ export default {
     Result.setItemBetting();
   },
   watch: {
-    first(val) {
+    getCollegeBtnNumber(val) {
       this.btnNumber(val);
     }
   },
@@ -496,7 +496,7 @@ export default {
       "getFooterBetAmount",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "first"
+      "getCollegeBtnNumber"
     ]),
     stockID() {
       if (this.stockName == null) {
@@ -544,10 +544,10 @@ export default {
     ...mapActions([
       "pushDataMultiGameBet",
       "clearDataMultiGameBet",
-      "setTempMultiGameBetData"
+      "setTempMultiGameBetData",
+      "setCollegeButtonNumberParent"
     ]),
 
-    ...mapMutations(["SET_FIRST_PARENT"]),
     betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
@@ -562,14 +562,17 @@ export default {
         // console.warn(this.getMultiGameBet);
       }
     },
+
     // the btnNumber methods use to switch specific number first,last,both and two
     btnNumber(value) {
       value == this.number ? (this.number = null) : (this.number = value);
     },
     updateBet(items) {
       const split = items.betRule.split("-");
-      $("#" + items.stock + items.betRule).addClass(split[0] + "-" + split[1]); // small button
-      $("#" + items.stock + split[0]).addClass(split[0]); // parent the button
+      // small button
+      $("#" + items.stock + items.betRule).addClass(items.betRule);
+      // parent the button
+      $("#" + items.stock + split[0]).addClass(split[0]);
     }
   }
 };
