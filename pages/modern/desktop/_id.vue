@@ -196,7 +196,7 @@
       <!-- Full Screen Float Button -->
       <v-flex class="layout-bottom">
         <div id="fullscreenGuidelines">
-          <v-btn
+          <!-- <v-btn
             color="primary"
             :to="'/modern/multigame/' + $route.params.id"
             rigth
@@ -210,7 +210,7 @@
               class="fa fa-gamepad"
               aria-hidden="true"
             ></i>
-          </v-btn>
+          </v-btn> -->
           <!-- Multiple Screen Float Button -->
           <v-btn
             color="primary"
@@ -508,7 +508,7 @@ export default {
 }
 .fullscreen {
   position: fixed !important;
-  bottom: 140px;
+  bottom: 80px;
   right: 0px;
   width: 50px;
   height: 50px;
