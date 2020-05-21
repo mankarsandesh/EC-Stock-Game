@@ -186,9 +186,8 @@
             </template>
             <span>Enter Fullscreen Mode</span>
           </v-tooltip>
-
-          <!-- Multiple Screen Float Button -->
-          <v-tooltip left>
+          <!-- Multiple Screen Float Button 
+          <!-- <v-tooltip left>
             <template v-slot:activator="{ on }">
               <v-btn
                 color="primary"
@@ -203,7 +202,7 @@
               </v-btn>
             </template>
             <span>Enter Multi-Gaming Mode</span>
-          </v-tooltip>
+          </v-tooltip> -->
         </div>
       </v-flex>
     </v-layout>
@@ -489,7 +488,7 @@ export default {
 }
 .fullscreen {
   position: fixed !important;
-  bottom: 140px;
+  bottom: 80px;
   right: 0px;
   width: 50px;
   height: 50px;
