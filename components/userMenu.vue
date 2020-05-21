@@ -123,7 +123,7 @@ export default {
       this.dialogConfirm = false;
     },
     formatToPrice(value) {
-      return `${Number(value)
+      return `$ ${Number(value)
         .toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
