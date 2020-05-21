@@ -61,6 +61,7 @@
                     hide-details
                     :items="items"
                     solo
+                   append-icon="fa-angle-down"
                   ></v-select>
                 </div>
                 <v-btn

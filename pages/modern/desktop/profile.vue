@@ -118,14 +118,14 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">Close</v-btn>
+            <v-btn color="primary" text @click="dialog = false">fa-times</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
       <v-snackbar v-model="snackbar">
         Sucessfully Avatar Updated.
-        <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+        <v-btn color="pink" text @click="snackbar = false">fa-times</v-btn>
       </v-snackbar>
     </v-layout>
   </v-container>

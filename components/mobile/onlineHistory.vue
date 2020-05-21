@@ -11,7 +11,7 @@
         <v-layout row justify-center>
           <h2>{{ $t("profile.onlineHistory") }}</h2>
           <v-spacer></v-spacer>
-          <v-icon size="20" @click="dialogOnlineHistory = false">close</v-icon>
+          <v-icon size="20" @click="dialogOnlineHistory = false">fa-times</v-icon>
         </v-layout>
       </v-toolbar>
       <v-flex

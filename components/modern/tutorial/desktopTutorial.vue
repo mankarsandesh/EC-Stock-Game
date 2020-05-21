@@ -3,7 +3,7 @@
     <div id="background-tutorial"></div>
     <div id="guide-container">
       <div style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer">
-        <v-icon @click="setIsShowTutorial(false)" color="#fff">close</v-icon>
+        <v-icon @click="setIsShowTutorial(false)" color="#fff">fa-times</v-icon>
       </div>
       <!-- last draw v-if="getTutorialStepNumber === 1" -->
       <div class="guide-top" v-if="getTutorialStepNumber === 1">

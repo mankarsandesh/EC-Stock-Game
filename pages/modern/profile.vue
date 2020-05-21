@@ -246,7 +246,7 @@
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="avatarDialog = false">
-            <v-icon>close</v-icon>
+            <v-icon>fa-times</v-icon>
           </v-btn>
           <v-toolbar-title>Choose your Avatar</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -265,7 +265,7 @@
     </v-dialog>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+      <v-btn color="pink" text @click="snackbar = false">fa-times</v-btn>
     </v-snackbar>
 
     <OnlineHistory ref="onlineHistory"></OnlineHistory>

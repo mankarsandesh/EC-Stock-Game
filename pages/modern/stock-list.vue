@@ -6,6 +6,7 @@
       <v-flex xs12 sm12 class="d-flex" pl-2 pr-2>
         <v-select
           v-model="sortBy"
+         append-icon="fa-angle-down"
           class="border-round"
           hide-details
           :items="[

@@ -1,11 +1,13 @@
 <template>
   <v-expansion-panel v-model="panel" expand>
-    <v-expansion-panel-content class="ruleActive ruleHeading">
+    <v-expansion-panel-content
+      expand-icon="fa-chevron-down"
+      class="ruleActive ruleHeading"
+    >
       <template v-slot:header>
         <div>
           <span class="rules">
-            {{ $t("gamemsg.firstdigit") }} (????.
-            <b class="headline1">?</b>?)
+            {{ $t("gamemsg.firstdigit") }} (????. <b class="headline1">?</b>?)
           </span>
         </div>
       </template>
@@ -36,12 +38,14 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content class="ruleActive ruleHeading">
+    <v-expansion-panel-content
+      expand-icon="fa-chevron-down"
+      class="ruleActive ruleHeading"
+    >
       <template v-slot:header>
-        <div >
+        <div>
           <span class="rules">
-            {{ $t("gamemsg.lastdigit") }} (????. ?
-            <b class="headline1">?</b>)
+            {{ $t("gamemsg.lastdigit") }} (????. ? <b class="headline1">?</b>)
           </span>
         </div>
       </template>
@@ -72,7 +76,10 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content class="ruleActive ruleHeading">
+    <v-expansion-panel-content
+      expand-icon="fa-chevron-down"
+      class="ruleActive ruleHeading"
+    >
       <template v-slot:header>
         <div>
           <span class="rules">
@@ -84,7 +91,8 @@
       </template>
       <v-card>
         <v-card-text class="white">
-          <span class="text-blue">{{ $t("gamemsg.small") }}</span>– 1, 2, 3, 4, 5, 6, 7, 8, 9;
+          <span class="text-blue">{{ $t("gamemsg.small") }}</span
+          >– 1, 2, 3, 4, 5, 6, 7, 8, 9;
           <br />
           <span class="text-success">{{ $t("gamemsg.big") }}</span> – 10, 11,
           12, 13, 14, 15, 16, 17, 18;
@@ -111,12 +119,14 @@
         </v-card-text>
       </v-card>
     </v-expansion-panel-content>
-    <v-expansion-panel-content class="ruleActive ruleHeading">
+    <v-expansion-panel-content
+      expand-icon="fa-chevron-down"
+      class="ruleActive ruleHeading"
+    >
       <template v-slot:header>
-        <div >
+        <div>
           <span class="rules">
-            {{ $t("gamemsg.twodigit") }} (????.
-            <b class="headline1">??</b>)
+            {{ $t("gamemsg.twodigit") }} (????. <b class="headline1">??</b>)
           </span>
         </div>
       </template>

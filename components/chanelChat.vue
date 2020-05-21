@@ -268,7 +268,7 @@ export default {
 
 <style scoped>
 .leftMessage {
- padding: 0px 10px;
+  padding: 0px 10px;
   margin-bottom: 10px;
   font-weight: 400;
   color: #ef5252;
@@ -308,7 +308,7 @@ export default {
   color: #fff !important;
 }
 .buttonInvitation {
-   padding: 10px;
+  padding: 10px;
   margin-top: -8px;
   width: 96%;
   color: #fff !important;
@@ -516,7 +516,7 @@ export default {
   color: #7f7e7e;
 }
 .messageChat {
-  width:100%;
+  width: 100%;
   bottom: 5px;
   background-color: #fff;
 }

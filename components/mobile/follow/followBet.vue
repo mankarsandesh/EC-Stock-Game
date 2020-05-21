@@ -29,6 +29,7 @@
               item-value="id"
               v-on:change="changeAmountRate($event)"
               solo
+             append-icon="fa-angle-down"
             ></v-select>
           </v-flex>
           <v-flex lg6 pr-2>
