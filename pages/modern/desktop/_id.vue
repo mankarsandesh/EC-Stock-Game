@@ -48,9 +48,7 @@
                   <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
-                      <span
-                        v-html="$options.filters.lastDraw(getLastDraw)"
-                      ></span>
+                      <span v-html="$options.filters.lastDraw(getLastDraw)"></span>
                     </v-flex>
                   </div>
                 </v-flex>
@@ -67,16 +65,16 @@
                         "
                       >
                         {{
-                          getTimerByStockName($route.params.id)
-                            | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id)
+                        | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                       <span v-else>
                         {{
-                          getTimerByStockName($route.params.id) &&
-                            getTimerByStockName($route.params.id)
-                              .gameEndTimeCountDownInSec
-                              | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                        .gameEndTimeCountDownInSec
+                        | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -89,10 +87,10 @@
                     <v-flex class="lottery">
                       <span>
                         {{
-                          getTimerByStockName($route.params.id) &&
-                            getTimerByStockName($route.params.id)
-                              .gameEndTimeCountDownInSec
-                              | lotterydraw(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                        .gameEndTimeCountDownInSec
+                        | lotterydraw(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -100,20 +98,8 @@
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
 
-                <v-flex
-                  xs2
-                  md1
-                  class="text-xs-right"
-                  style="align-self: flex-end;"
-                >
-                  <v-btn
-                    fab
-                    dark
-                    small
-                    class="helpButton"
-                    @click="openTutorial()"
-                    title="Help"
-                  >
+                <v-flex xs2 md1 class="text-xs-right" style="align-self: flex-end;">
+                  <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
                     <v-icon dark size="22">fa-question</v-icon>
                   </v-btn>
                 </v-flex>
@@ -142,22 +128,10 @@
 
         <!-- Stock Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div
-            class="trendmap-container"
-            v-for="(trendType, index) in trendTypes"
-            :key="index"
-          >
+          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <div id="trendmapGuidelines">
-              <tableTrendMap
-                :index="index"
-                :dataArray="getRoadMap"
-                :isShowMultigameButton="index"
-              >
-                <span
-                  class="addChart"
-                  @click="addTrendMap()"
-                  v-if="index === 0"
-                >
+              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index">
+                <span class="addChart" @click="addTrendMap()" v-if="index === 0">
                   <v-icon>fa-plus</v-icon>
                 </span>
                 <span v-else class="addChart" @click="removeTradMap(index)">
@@ -173,25 +147,13 @@
       <!-- Game Rule Popup -->
       <v-dialog v-model="dialog" width="800">
         <v-card class="ruleModel" style="border-radius: 10px;">
-          <v-icon
-            class="closePopup"
-            color="#333 !important"
-            @click="dialog = false"
-            >close</v-icon
-          >
-          <v-card-title class="title" primary-title
-            >TOP 10 LEADERS</v-card-title
-          >
+          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
+          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
           <v-card-text>
             <leaderboardUserlist />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn
-              class="buttonGreensmall"
-              to="/modern/desktop/leaderboard"
-              dark
-              >Go to Leaderboard</v-btn
-            >
+            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
@@ -199,33 +161,40 @@
       <!-- Full Screen Float Button -->
       <v-flex class="layout-bottom">
         <div id="fullscreenGuidelines">
-          <v-btn
-            color="primary"
-            :to="'/modern/multigame/' + $route.params.id"
-            rigth
-            fab
-            class="multiGame"
-            dark
-            title="Multiple Game"
-          >
-            <i
-              style="font-size:26px;"
-              class="fa fa-gamepad"
-              aria-hidden="true"
-            ></i>
-          </v-btn>
+          <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                rigth
+                fab
+                class="fullscreen"
+                dark
+                @click="setAfterFullScreenClosePage()"
+                v-on="on"
+              >
+                <v-icon size="24px">fa-arrows-alt</v-icon>
+              </v-btn>
+            </template>
+            <span>Enter Fullscreen Mode</span>
+          </v-tooltip>
+
           <!-- Multiple Screen Float Button -->
-          <v-btn
-            color="primary"
-            rigth
-            fab
-            class="fullscreen"
-            dark
-            @click="setAfterFullScreenClosePage()"
-            title="Full Screen"
-          >
-            <v-icon size="24px">fa-arrows-alt</v-icon>
-          </v-btn>
+          <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                :to="'/modern/multigame/' + $route.params.id"
+                rigth
+                fab
+                class="multiGame"
+                dark
+                v-on="on"
+              >
+                <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
+              </v-btn>
+            </template>
+            <span>Enter Multi-Gaming Mode</span>
+          </v-tooltip>
         </div>
       </v-flex>
     </v-layout>
