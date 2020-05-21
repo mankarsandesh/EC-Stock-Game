@@ -45,7 +45,7 @@
             <v-flex xs6 md5 lg6 pt-1>
               <v-layout mb-3>
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.Lastdraw") }}</span>
+                  <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
                       <span
@@ -56,7 +56,7 @@
                 </v-flex>
 
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.BetClosein") }}</span>
+                  <span>{{ $t("msg.betCloseIn") }}</span>
                   <div id="betCloseInGuideline">
                     <v-flex class="betclose">
                       <span
@@ -84,7 +84,7 @@
                 </v-flex>
 
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.lotterydraw") }}</span>
+                  <span>{{ $t("msg.lotteryDraw") }}</span>
                   <div id="lotteryDrawGuidelines">
                     <v-flex class="lottery">
                       <span>
@@ -170,27 +170,24 @@
         <!-- Road Map End -->
       </v-flex>
 
-      <!-- Game Rule Popup -->
-      <v-dialog v-model="dialog" width="800">
+      <!-- Game Rule Popup open First Time -->
+      <v-dialog v-model="GameRuleDialog" width="50%">
         <v-card class="ruleModel" style="border-radius: 10px;">
           <v-icon
             class="closePopup"
             color="#333 !important"
-            @click="dialog = false"
-            >close</v-icon
-          >
-          <v-card-title class="title" primary-title
-            >TOP 10 LEADERS</v-card-title
-          >
-          <v-card-text>
-            <leaderboardUserlist />
+            @click="GameRuleDialog = false"
+            >close</v-icon          >          
+          <v-card-text style="padding:40px;">
+            <h2 style="text-align:center;">EC Gameing Rule </h2>
+             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
             <v-btn
               class="buttonGreensmall"
-              to="/modern/desktop/leaderboard"
+              to="/modern/desktop/gamerule"
               dark
-              >Go to Leaderboard</v-btn
+              >Gaming Rule</v-btn
             >
           </v-flex>
         </v-card>
@@ -241,12 +238,12 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
 import stockSelect from "~/components/stockSelect";
-import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "~/config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
+import onlyrules from "~/components/modern/rule/onlyrule";
 
 export default {
   async validate({ params, store }) {
@@ -261,15 +258,15 @@ export default {
     betButton,
     tableTrendMap,
     stockSelect,
-    leaderboardUserlist,
     lotteryDraw,
-    isMobile: isMobile
+    isMobile: isMobile,
+    onlyrules
   },
   data() {
     return {
       routeParams: this.$route.params.id,
       stock: [],
-      dialog: false,
+      GameRuleDialog: true,
       bgColor: "#778899",
       position: "top-right",
       isHidden: false,
@@ -293,12 +290,12 @@ export default {
     }
     this.getStock();
     // Game Rule Popup check and open Ne User
-    // if (secureStorage.getItem("gameRule") != "shown") {
-    //   this.dialog = true;
-    //   secureStorage.setItem("gameRule", "shown");
-    // } else {
-    //   this.dialog = false;
-    // }
+    if (secureStorage.getItem("gameRule") != "shown") {
+      this.GameRuleDialog = true;
+      secureStorage.setItem("gameRule", "shown");
+    } else {
+      this.GameRuleDialog = false;
+    }
   },
   beforeDestroy() {
     this.stopListenSocket(
@@ -488,6 +485,14 @@ export default {
 };
 </script>
 <style scoped>
+.closePopup{
+  background-color: #FFF;
+  right:0;
+  border-radius:50%;
+  padding: 2px;
+  width: 30px;
+  height: 30px;
+}
 .multiGame {
   z-index: 999;
   position: fixed;

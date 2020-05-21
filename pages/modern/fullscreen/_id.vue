@@ -11,47 +11,74 @@
         <!-- last draw v-if="tutorialStepNumber === 1" -->
         <div class="guide-top" v-if="tutorialStepNumber === 1">
           <span id="result-draw">{{ getLastDraw | lastDraw2 }}</span>
-          <span class="guide-description">{{$t("tutorial.resultDraw")}}</span>
+          <span class="guide-description">{{ $t("tutorial.resultDraw") }}</span>
         </div>
         <!-- bet close in  -->
         <div class="guide-top" v-if="tutorialStepNumber === 2">
-          <span
-            class="guide-description text-uppercase"
-            style="font-size:100px"
-          >{{$t("tutorial.calculation")}}...</span>
+          <span class="guide-description text-uppercase" style="font-size:100px"
+            >{{ $t("tutorial.calculation") }}...</span
+          >
         </div>
         <!-- lottery  -->
         <div class="guide-top" v-if="tutorialStepNumber === 3">
           <span id="lottery-draw-guide-text">
             {{
-            getTimerByStockName($route.params.id) &&
-            getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
-            | lotterydraw(getStockLoop($route.params.id))
+              getTimerByStockName($route.params.id) &&
+                getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
+                  | lotterydraw(getStockLoop($route.params.id))
             }}
           </span>
-          <span class="guide-description">{{$t("tutorial.lotteryDraw")}}</span>
+          <span class="guide-description">{{
+            $t("tutorial.lotteryDraw")
+          }}</span>
         </div>
         <!-- chart  -->
         <!-- has scroll -->
-        <div class="guide-top" v-if="tutorialStepNumber === 4 && getIsWindowsHasScroll">
-          <span class="guide-title text-uppercase">{{$t("tutorial.analyseGraph")}}</span>
-          <span class="guide-description">{{$t("tutorial.analyseGraph")}}</span>
+        <div
+          class="guide-top"
+          v-if="tutorialStepNumber === 4 && getIsWindowsHasScroll"
+        >
+          <span class="guide-title text-uppercase">{{
+            $t("tutorial.analyseGraph")
+          }}</span>
+          <span class="guide-description">{{
+            $t("tutorial.analyseGraph")
+          }}</span>
         </div>
         <!-- no scroll -->
-        <div class="guide-top" v-if="tutorialStepNumber === 4 && !getIsWindowsHasScroll">
+        <div
+          class="guide-top"
+          v-if="tutorialStepNumber === 4 && !getIsWindowsHasScroll"
+        >
           <span class="guide-title text-uppercase">analysis graph</span>
-          <span class="guide-description">{{$t("tutorial.stockGraph")}}</span>
+          <span class="guide-description">{{ $t("tutorial.stockGraph") }}</span>
         </div>
 
         <!-- bet on digigt  -->
-        <div class="guide-top" style="margin-right: 90px;" v-if="tutorialStepNumber === 5">
-          <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
-          <span class="guide-description">{{$t("tutorial.selectDigit")}}</span>
+        <div
+          class="guide-top"
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 5"
+        >
+          <span class="guide-title text-uppercase">{{
+            $t("tutorial.betOnDigits")
+          }}</span>
+          <span class="guide-description">{{
+            $t("tutorial.selectDigit")
+          }}</span>
         </div>
         <!-- select chipcamount  -->
-        <div class="guide-top" style="margin-right: 90px;" v-if="tutorialStepNumber === 6">
-          <span class="guide-title text-uppercase">{{$t("tutorial.betConfirm")}}</span>
-          <span class="guide-description">{{$t("tutorial.betLastDigitEven")}}</span>
+        <div
+          class="guide-top"
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 6"
+        >
+          <span class="guide-title text-uppercase">{{
+            $t("tutorial.betConfirm")
+          }}</span>
+          <span class="guide-description">{{
+            $t("tutorial.betLastDigitEven")
+          }}</span>
         </div>
         <!-- enter amount bet -->
         <!-- has scroll   v-if="tutorialStepNumber === 7 && getIsWindowsHasScroll"-->
@@ -61,8 +88,10 @@
           id="enter-bet-guide"
           v-if="tutorialStepNumber === 7 && getIsWindowsHasScroll"
         >
-          <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
-          <span class="guide-description">{{$t("tutorial.selectChip")}}</span>
+          <span class="guide-title text-uppercase">{{
+            $t("tutorial.betOnDigits")
+          }}</span>
+          <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
         </div>
         <!-- no scroll -->
         <div
@@ -71,11 +100,10 @@
           id="enter-bet-guide"
           v-if="tutorialStepNumber === 7 && !getIsWindowsHasScroll"
         >
-          <span
-            class="guide-title text-uppercase"
-            style="margin-left: 20px;"
-          >bet on digits has no scroll</span>
-          <span class="guide-description">{{$t("tutorial.selectChip")}}</span>
+          <span class="guide-title text-uppercase" style="margin-left: 20px;"
+            >bet on digits has no scroll</span
+          >
+          <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
         </div>
         <!-- to scroll here -->
         <div id="enter-amount-to-bet" hidden>hidden</div>
@@ -83,18 +111,32 @@
 
         <!-- select chipcamount for multi game rules  -->
         <div class="guide-bottom" v-if="tutorialStepNumber === 8">
-          <span class="guide-title text-uppercase">{{$t("tutorial.selectAmount")}}</span>
-          <span class="guide-description">{{$t("tutorial.betMultiGame")}}</span>
+          <span class="guide-title text-uppercase">{{
+            $t("tutorial.selectAmount")
+          }}</span>
+          <span class="guide-description">{{
+            $t("tutorial.betMultiGame")
+          }}</span>
         </div>
         <!-- road map  -->
         <div class="guide-bottom" v-if="tutorialStepNumber === 9">
-          <span class="guide-title text-uppercase">{{$t("tutorial.roadMap")}}</span>
-          <span class="guide-description">{{$t("tutorial.analyseStock")}}</span>
+          <span class="guide-title text-uppercase">{{
+            $t("tutorial.roadMap")
+          }}</span>
+          <span class="guide-description">{{
+            $t("tutorial.analyseStock")
+          }}</span>
         </div>
         <!-- live betting  -->
-        <div class="guide-top" style="margin-right: 90px;" v-if="tutorialStepNumber === 10">
-          <span class="guide-title text-uppercase">{{$t("tutorial.liveBet")}}</span>
-          <span class="guide-description">{{$t("tutorial.wholeBets")}}</span>
+        <div
+          class="guide-top"
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 10"
+        >
+          <span class="guide-title text-uppercase">{{
+            $t("tutorial.liveBet")
+          }}</span>
+          <span class="guide-description">{{ $t("tutorial.wholeBets") }}</span>
         </div>
       </div>
     </div>
@@ -137,7 +179,9 @@
                 </v-card-text>
               </v-card>
               <div class="pt-2" style="color: white;">
-                <h3 class="text-uppercase">{{ $t("stockname." + data.stockName) }}</h3>
+                <h3 class="text-uppercase">
+                  {{ $t("stockname." + data.stockName) }}
+                </h3>
                 <h4 style="line-height: 1;">
                   <em>{{ data.loop }} minute game</em>
                 </h4>
@@ -162,11 +206,11 @@
                     class="text-xs-center1"
                     style="width: 100%; align-self: center;"
                   >
-                    <div class="stockname">{{ $t(`stockname.${$route.params.id}`) }}</div>
+                    <div class="stockname">
+                      {{ $t(`stockname.${$route.params.id}`) }}
+                    </div>
                     <span class="gameid">
-                      {{
-                      getGameUUIDByStockName($route.params.id)
-                      }}
+                      {{ getGameUUIDByStockName($route.params.id) }}
                     </span>
                   </v-flex>
 
@@ -178,11 +222,19 @@
                     <v-btn
                       color="buttonGreen"
                       @click="dialogOtherstock = true"
-                    >{{ $t("msg.otherstock") }}</v-btn>
+                      >{{ $t("msg.otherstock") }}
+                    </v-btn>
                   </v-flex>
                 </v-layout>
               </v-flex>
-              <v-flex xs12 sm12 md8 lg12 class="chartDesgin" id="chartGuidelineNew">
+              <v-flex
+                xs12
+                sm12
+                md8
+                lg12
+                class="chartDesgin"
+                id="chartGuidelineNew"
+              >
                 <chartApp :stockName="$route.params.id"></chartApp>
               </v-flex>
             </div>
@@ -192,15 +244,18 @@
           <v-flex>
             <v-layout>
               <v-flex class="text-xs-center" xs4 px-2>
-                <span class="text-black">{{ $t("msg.Lastdraw") }}:</span>
+                <span class="text-black">{{ $t("msg.lastDraw") }}:</span>
                 <div id="lastDrawGuideline">
                   <v-flex flex-style class="lastdraw">
-                    <h4 class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></h4>
+                    <h4
+                      class="text-black"
+                      v-html="$options.filters.lastDraw(getLastDraw)"
+                    ></h4>
                   </v-flex>
                 </div>
               </v-flex>
               <v-flex class="text-xs-center" xs4 px-2>
-                <span class="text-black">{{ $t("msg.BetClosein") }}:</span>
+                <span class="text-black">{{ $t("msg.betCloseIn") }}:</span>
                 <div id="betCloseInGuideline">
                   <v-flex flex-style class="betclose">
                     <span
@@ -212,52 +267,68 @@
                       class="text-black"
                     >
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      "close" | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          "close" | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                     <span v-else class="text-black">
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
                 </div>
               </v-flex>
               <v-flex class="text-xs-center" xs4 px-2>
-                <span class="text-black">{{ $t("msg.lotterydraw") }}:</span>
+                <span class="text-black">{{ $t("msg.lotteryDraw") }}:</span>
                 <div id="lotteryDrawGuidelines">
                   <v-flex flex-style class="lottery">
                     <span class="text-black">
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | lotterydraw(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | lotterydraw(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
                 </div>
               </v-flex>
               <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn @click="openTutorial()" fab dark small class="helpButton" title="Help">
-                  <v-icon dark size="25">fa-question</v-icon>
-                </v-btn>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      v-on="on"
+                      @click="openTutorial()"
+                      fab
+                      dark
+                      small
+                      class="helpButton"
+                      title="Help"
+                    >
+                      <v-icon dark size="25">fa-question</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Full Game Screen Tutorial</span>
+                </v-tooltip>
               </v-flex>
             </v-layout>
           </v-flex>
           <v-flex id="betButtonGuidelines" xs4 sm12 md12 lg12 mt-4>
-            <betButton :isFullscreen="true" :stockName="$route.params.id" :loop="1"></betButton>
+            <betButton
+              :isFullscreen="true"
+              :stockName="$route.params.id"
+              :loop="1"
+            ></betButton>
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
-          <h3
-            class="balanceUser"
-            v-if="getUserBalance > 0"
-          >Acc : {{ getUserBalance | currency }}</h3>
+          <h3 class="balanceUser" v-if="getUserBalance > 0">
+            Acc : {{ getUserBalance | currency }}
+          </h3>
           <h3 class="balanceUser" v-if="getUserBalance == 0">Acc : 0000.00</h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
@@ -266,51 +337,82 @@
           </div>
           <v-layout pa-3>
             <v-flex md3 lg3 pt-2 style="text-align:center;">
-              <span class="seticon">
-                <i class="fa fa-user fa-2x iconcolor" />
-                <span>{{ dataliveBetAll.totalUsers }}</span>
-              </span>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span class="seticon" v-on="on">
+                    <i class="fa fa-user fa-2x iconcolor" />
+                    <span>{{ dataliveBetAll.totalUsers }}</span>
+                  </span>
+                </template>
+                <span>Total Users places bet on the Game.</span>
+              </v-tooltip>
             </v-flex>
             <v-flex md3 lg3 pt-2 style="text-align:center;">
-              <span class="seticon">
-                <i class="fa fa-gamepad fa-2x iconcolor" />
-                <span>{{ dataliveBetAll.totalBetCount }}</span>
-              </span>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span class="seticon" v-on="on">
+                    <i class="fa fa-gamepad fa-2x iconcolor" />
+                    <span>{{ dataliveBetAll.totalBetCount }}</span>
+                  </span>
+                </template>
+                <span>Total Bet Count on the Game.</span>
+              </v-tooltip>
             </v-flex>
             <v-flex md4 lg4 pt-2 style="text-align:center;">
-              <span class="seticon">
-                <i class="fa fa-money fa-2x iconcolor" />
-                <span>{{ dataliveBetAll.totalAmountPlaced }}</span>
-              </span>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <span class="seticon" v-on="on">
+                    <i class="fa fa-money fa-2x iconcolor" />
+                    <span>{{ dataliveBetAll.totalAmountPlaced }}</span>
+                  </span>
+                </template>
+                <span>Total Amount places on the Game.</span>
+              </v-tooltip>
             </v-flex>
             <v-flex sm4 md4 lg4 mb-1 style="text-align:center;">
               <v-btn
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
                 class="curretbet-btn"
-              >{{ $t("menu.currentBet") }}</v-btn>
+                >{{ $t("menu.currentBet") }}</v-btn
+              >
             </v-flex>
           </v-layout>
         </v-flex>
         <!-- live Chart road map -->
         <v-flex xs12 class="text-xs-center">
           <footerBet lg12 md12></footerBet>
-          <v-layout class="fullroadMap elevation-4" id="fullscreen-roadmap-guide">
+          <v-layout
+            class="fullroadMap elevation-4"
+            id="fullscreen-roadmap-guide"
+          >
             <v-flex xs12 sm12 md12 lg12 wrap pt-2 id="roadmapGuidelines">
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="0" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="0"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="1" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="1"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
               </v-layout>
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="2" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="2"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="3" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="3"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
               </v-layout>
             </v-flex>

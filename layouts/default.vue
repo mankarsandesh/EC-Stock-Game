@@ -14,12 +14,15 @@
           <v-icon>clear</v-icon>
         </v-btn>
         <div v-for="(item, i) in menu" :key="i">
-          <v-list-tile :to="item.to" router exact class="text-primary text-uppercase">
+          <v-list-tile
+            :to="item.to"
+            router
+            exact
+            class="text-primary text-uppercase"
+          >
             <v-list-tile-content>
               <v-list-tile-title>
-                {{
-                $t(`menu.${item.title}`)
-                }}
+                {{ $t(`menu.${item.title}`) }}
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -28,13 +31,16 @@
         </div>
         <v-list-tile @click="getLogout()">
           <v-list-tile-content>
-            <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
+            <v-list-tile-title>{{ $t("profile.signOut") }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar :clipped-left="clipped" class="pa-3 text-primary light-toobar setheight">
+    <v-toolbar
+      :clipped-left="clipped"
+      class="pa-3 text-primary light-toobar setheight"
+    >
       <v-flex class="pa-2">
         <nuxt-link to="/modern">
           <v-toolbar-title>
@@ -66,19 +72,34 @@
           isShow == 'setting'
       "
     >
-      <h2 class="text-uppercase" v-show="isShow == 'history'">{{ $t("menu.history") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'stock-list'">{{ $t("menu.stockList") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'current-bet'">{{ $t("menu.currentBet") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'notification'">{{ $t("menu.notification") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'rule'">{{ $t("menu.rule") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">{{ $t("menu.leaderboard") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'setting'">{{ $t("menu.setting") }}</h2>
+      <h2 class="text-uppercase" v-show="isShow == 'history'">
+        {{ $t("menu.history") }}
+      </h2>
+      <h2 class="text-uppercase" v-show="isShow == 'stock-list'">
+        {{ $t("menu.stockList") }}
+      </h2>
+      <h2 class="text-uppercase" v-show="isShow == 'current-bet'">
+        {{ $t("menu.currentBet") }}
+      </h2>
+      <h2 class="text-uppercase" v-show="isShow == 'notification'">
+        {{ $t("menu.notification") }}
+      </h2>
+      <h2 class="text-uppercase" v-show="isShow == 'rule'">
+        {{ $t("menu.rule") }}
+      </h2>
+      <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">
+        {{ $t("menu.leaderboard") }}
+      </h2>
+      <h2 class="text-uppercase" v-show="isShow == 'setting'">
+        {{ $t("menu.setting") }}
+      </h2>
       <v-btn
         to="/modern/history"
         v-show="isShow == 'current-bet'"
         class="buttonGreen"
         style="float: right; top: -98%;"
-      >{{ $t("menu.history") }}</v-btn>
+        >{{ $t("menu.history") }}</v-btn
+      >
     </div>
     <v-content>
       <v-container>
@@ -90,8 +111,8 @@
     <app-dialogs-confirm
       v-on:dialogStatus="dialogStatus"
       :dialogConfirm="dialogConfirm"
-      :title = "$t('logout.sure')"
-      :content = "$t('logout.bye')"
+      :title="$t('logout.sure')"
+      :content="$t('logout.bye')"
     />
   </v-app>
 </template>
@@ -103,7 +124,6 @@ import menu from "~/data/menuMobile";
 
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/mobile/LanguageDialog";
-import welcomeUser from "~/components/welcomeUser";
 import mobileLogout from "~/components/mobile/mobileLogout";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import i18n from "vue-i18n";
@@ -116,7 +136,6 @@ export default {
     AppDialogsConfirm,
     countryFlag,
     languageDialog,
-    welcomeUser,
     mobileLogout,
     Button,
     Snackbar

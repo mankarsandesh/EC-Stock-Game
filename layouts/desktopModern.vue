@@ -86,6 +86,10 @@
                     <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
+                 
+              </v-list>
+              <v-list class="footerView">
+                <span @click="$router.push('/modern/desktop/notification/')">View All</span>
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -113,7 +117,6 @@ import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import winnerMarquee from "~/components/modern/winnerMarquee";
-import welcomeUser from "~/components/welcomeUser";
 import i18n from "vue-i18n";
 import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
@@ -130,7 +133,6 @@ export default {
     countryFlag,
     languageDialog,
     winnerMarquee,
-    welcomeUser,
     userMenu,
     AnimatedNumber
   },
@@ -263,6 +265,17 @@ export default {
 };
 </script>
 <style scoped>
+.footerView{
+  border-top:1px solid #dddddd;
+  text-align: center;
+  cursor: pointer;
+}
+.footerView span{
+  font-size: 14px;
+  color:#003f70;
+  font-weight: 400;
+  text-align: center;
+}
 .noNotification {
   color: #333;
 }

@@ -9,7 +9,7 @@
     <v-card>
       <v-toolbar card dark style="background-color:#2cb13b;">
         <v-layout row justify-center>
-          <h2>{{ $t("profile.onlinehistory") }}</h2>
+          <h2>{{ $t("profile.onlineHistory") }}</h2>
           <v-spacer></v-spacer>
           <v-icon size="20" @click="dialogOnlineHistory = false">close</v-icon>
         </v-layout>
@@ -29,7 +29,7 @@
           {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
         </h3>
         <p>
-          <strong> {{ $t("profile.onlinestatus") }} : </strong>
+          <strong> {{ $t("profile.onlineStatus") }} : </strong>
           {{ getUserInfo.currentActiveTime }}
         </p>
         <v-divider></v-divider>
@@ -53,7 +53,7 @@
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </h3>
             <p>
-              <strong> {{ $t("profile.onlinestatus") }} : </strong>
+              <strong> {{ $t("profile.onlineStatus") }} : </strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
             <v-divider></v-divider>
@@ -168,7 +168,6 @@
 import { mapGetters, mapActions } from "vuex";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "./UploadFile";
 import onlineChart from "./onlinechart";
 import VueApexCharts from "vue-apexcharts";
 import date from "date-and-time";
@@ -278,7 +277,7 @@ export default {
         const res = await this.$axios.$post(config.getUserProfile.url, reBody, {
           headers: config.header
         });
-        if(res.code == 200) {
+        if (res.code == 200) {
           this.dataReady = true;
           let result = res.data.activeTimeDateWise;
           this.currentActiveTime = res.data.currentActiveTime;
@@ -300,7 +299,7 @@ export default {
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {
-         this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(config.error.general);
         }
       } catch (ex) {
         this.setSnackBarMessage("Please select a valid date");

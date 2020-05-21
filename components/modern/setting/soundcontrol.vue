@@ -8,7 +8,7 @@
         color="#003e70"
         min="1"
         max="15"
-        :label="$t('msg.customlength')"
+        :label="$t('msg.customLength')"
       ></v-slider>
       <v-layout row wrap justify-center>
         <v-btn class="my-btn">{{ $t("msg.save") }}</v-btn>

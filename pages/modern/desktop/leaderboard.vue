@@ -1,7 +1,7 @@
 <template>
   <div>
     <breadcrumbs
-      :title="$t('breadcrumbs.leaderboard')"
+      :title="$t('breadcrumbs.leaderBoard')"
       linkItem="bet-history"
       :titlebtn="$t('breadcrumbs.betHistory')"
     />

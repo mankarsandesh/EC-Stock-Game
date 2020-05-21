@@ -9,7 +9,7 @@
     <v-card>
       <v-toolbar card dark style="background-color:#2cb13b;">
         <v-layout row justify-center>
-          <h2>{{ $t("profile.stockanalysis") }}</h2>
+          <h2>{{ $t("profile.stockAnalysis") }}</h2>
           <v-spacer></v-spacer>
           <v-icon size="20" @click="dialogStockAnalysis = false">close</v-icon>
         </v-layout>
@@ -30,7 +30,7 @@
           {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
         </h3>
         <p>
-          <strong> {{ $t("profile.onlinestatus") }} : </strong
+          <strong> {{ $t("profile.onlineStatus") }} : </strong
           >{{ getUserInfo.currentActiveTime }}
         </p>
         <v-divider></v-divider>
@@ -54,7 +54,7 @@
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </h3>
             <p>
-              <strong> {{ $t("profile.onlinestatus") }} : </strong>
+              <strong> {{ $t("profile.onlineStatus") }} : </strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
             <v-divider></v-divider>
@@ -154,7 +154,6 @@ import apexchart from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "./UploadFile";
 import config from "~/config/config.global";
 import date from "date-and-time";
 
@@ -298,7 +297,7 @@ export default {
             this.error = "No data to display";
             this.setSnackBarMessage("No Data to Display");
           }
-        }else {
+        } else {
           this.setSnackBarMessage(res.message[0]);
         }
       } catch (ex) {
