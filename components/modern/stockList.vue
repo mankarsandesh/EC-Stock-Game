@@ -3,8 +3,8 @@
     <v-layout>
       <v-flex pa-2 class="headerStockBar">{{ $t("menu.stockList") }}</v-flex>
     </v-layout>
-    <v-flex>
-      <div class="table-responsive">
+    <v-flex id="style-3">
+      <div class="table-responsive overflow-scroll">
         <table class="table">
           <tr>
             <th>{{ $t("msg.stockName") }}</th>
