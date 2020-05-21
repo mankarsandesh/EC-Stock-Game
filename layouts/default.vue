@@ -72,7 +72,6 @@
           isShow == 'setting'
       "
     >
-<<<<<<< HEAD
       <h2 class="text-uppercase" v-show="isShow == 'history'">
         {{ $t("menu.history") }}
       </h2>
@@ -94,15 +93,6 @@
       <h2 class="text-uppercase" v-show="isShow == 'setting'">
         {{ $t("menu.setting") }}
       </h2>
-=======
-      <h2 class="text-uppercase" v-show="isShow == 'history'">{{ $t("menu.history") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'stock-list'">{{ $t("menu.stockList") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'current-bet'">{{ $t("menu.currentBet") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'notification'">{{ $t("menu.notification") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'rule'">{{ $t("menu.rule") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">{{ $t("menu.leaderBoard") }}</h2>
-      <h2 class="text-uppercase" v-show="isShow == 'setting'">{{ $t("menu.setting") }}</h2>
->>>>>>> e42a1491b9b45cf8650263a493cf83af78c209bd
       <v-btn
         to="/modern/history"
         v-show="isShow == 'current-bet'"
@@ -134,7 +124,6 @@ import menu from "~/data/menuMobile";
 
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/mobile/LanguageDialog";
-import openSocket from "socket.io-client";
 import mobileLogout from "~/components/mobile/mobileLogout";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import i18n from "vue-i18n";

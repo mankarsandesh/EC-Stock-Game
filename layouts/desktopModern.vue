@@ -117,9 +117,7 @@ import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import winnerMarquee from "~/components/modern/winnerMarquee";
-import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
-import lottie from "lottie-web";
 import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
@@ -197,13 +195,6 @@ export default {
   },
   mounted() {
     this.fetchNotification();
-    lottie.loadAnimation({
-      container: this.$refs.svgContainer, // the dom element that will contain the animation
-      renderer: "svg",
-      loop: true,
-      autoplay: true,
-      path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
-    });
   },
   methods: {
     pageLink(type) {

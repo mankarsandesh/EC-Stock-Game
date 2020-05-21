@@ -96,7 +96,6 @@
 <script>
 import apexchart from "vue-apexcharts";
 import { mapGetters } from "vuex";
-import axios from "axios";
 import date from "date-and-time";
 import log from "roarr";
 import secureStorage from "../../../../plugins/secure-storage";

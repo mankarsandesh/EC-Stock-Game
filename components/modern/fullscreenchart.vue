@@ -13,7 +13,6 @@
 <script>
 import VueApexCharts from "vue-apexcharts";
 import { mapGetters } from "vuex";
-import openSocket from "socket.io-client";
 import config from "../../config/config.global";
 import log from "roarr";
 import secureStorage from "../../plugins/secure-storage.js";
