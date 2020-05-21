@@ -55,15 +55,17 @@
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
-            {{
-            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-            }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
 
       <span class="w10">
-        <v-btn class="align_button4" :id="stockID + 'firstdigit'" @click="btnNumber('first')">
+        <v-btn
+          class="align_button4"
+          :id="stockID + 'firstdigit'"
+          @click="btnNumber('first')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -137,9 +139,7 @@
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{
-            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-            }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
@@ -217,14 +217,16 @@
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{
-            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-            }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
       <span class="w12">
-        <v-btn class="align_button4" :id="stockID + 'bothdigit'" @click="btnNumber('both')">
+        <v-btn
+          class="align_button4"
+          :id="stockID + 'bothdigit'"
+          @click="btnNumber('both')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -293,15 +295,17 @@
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{
-            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-            }}
+            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
           </span>
         </v-btn>
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4" :id="stockID + 'twodigit'" @click="btnNumber('two')">
+        <v-btn
+          class="align_button4"
+          :id="stockID + 'twodigit'"
+          @click="btnNumber('two')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -349,7 +353,8 @@
           @click="betButtonClickNumber(8 + index, 'firstdigit-' + index)"
           v-show="number == 'first'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -378,7 +383,8 @@
           @click="betButtonClickNumber(25 + index, 'lastdigit-' + index)"
           v-show="number == 'last'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -407,7 +413,8 @@
           @click="betButtonClickNumber(149 + index, 'bothdigit-' + index)"
           v-show="number == 'both'"
           class="btn-small"
-        >{{ index }}</v-btn>
+          >{{ index }}</v-btn
+        >
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -431,12 +438,17 @@
           ></betModal>
         </div>
         <v-btn
-          :id="index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index"
+          :id="
+            index < 10
+              ? stockID + 'twodigit-0' + index
+              : stockID + 'twodigit' + '-' + index
+          "
           slot="reference"
           @click="betButtonClickNumber(42 + index, 'twodigit-' + index)"
           v-show="number == 'two'"
           class="btn-small"
-        >{{ index < 10 ? "0" + index : index }}</v-btn>
+          >{{ index < 10 ? "0" + index : index }}</v-btn
+        >
       </popper>
     </v-layout>
   </div>
@@ -456,7 +468,7 @@ export default {
   props: {
     isFullscreen: {
       type: Boolean,
-      default: false  
+      default: false
     },
     //  for multi game
     stockName: {
@@ -561,7 +573,7 @@ export default {
 
     ...mapMutations(["SET_FIRST_PARENT"]),
     betButtonClick(ruleID, betId, specificNumber = "") {
-      console.log("betData", ruleID, betId);
+      // console.log("betData", ruleID, betId);
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
         let betData = {
@@ -576,29 +588,18 @@ export default {
           class: `${betId.split("-")[0]} ${betId.split("-")[1]}`
         });
         $("#" + this.stockID + betId).addClass(
-            betId.split("-")[0] + " " + betId.split("-")[1]
-          );
-          console.log('popper ref', this.$refs[betId][0], betId);
+          betId.split("-")[0] + " " + betId.split("-")[1]
+        );
+        // console.log('popper ref', this.$refs[betId][0], betId);
         setTimeout(() => {
-          console.log('popper ref', this.$refs[betId][0].showPopper);
-          this.$refs[betId][0].showPopper = false
-          console.log('popper ref', this.$refs[betId][0].showPopper);
-        }, 1000)
-        
-        //   console.log('popper ref', this.$refs[betId][0].$parent.showPopper);
-        //    setTimeout(() => {
-        //      this.$refs[betId][0].$parent.showPopper = false;
-        //      console.log('popper ref', this.$refs[betId][0].$parent.showPopper);
-        //    }, 1000)
-        //    this.$refs[betId][0].$parent.showPopper = false;
-          // this.$refs.firstdigitpopper.showPopper = false;
-          
-        // this.pushDataMultiGameBet(betData);
-        // console.warn(this.getMultiGameBet);
+          // console.log('popper ref', this.$refs[betId][0].showPopper);
+          this.$refs[betId][0].showPopper = false;
+          // console.log('popper ref', this.$refs[betId][0].showPopper);
+        }, 1000);
       }
     },
-    betButtonClickNumber (ruleID, betId, specificNumber = "") {
-      console.log("betData", ruleID, betId);
+    betButtonClickNumber(ruleID, betId, specificNumber = "") {
+      // console.log("betData", ruleID, betId);
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
         let betData = {
@@ -613,14 +614,14 @@ export default {
           class: `${betId.split("-")[0]} ${betId.split("-")[1]}`
         });
         $("#" + this.stockID + betId.split("-")[0]).addClass(
-            betId.split("-")[0] + " " + betId.split("-")[1]
-          );
-          console.log('popper ref', this.$refs[betId][0], betId);
+          betId.split("-")[0] + " " + betId.split("-")[1]
+        );
+        // console.log('popper ref', this.$refs[betId][0], betId);
         setTimeout(() => {
-          console.log('popper ref', this.$refs[betId][0].showPopper);
-          this.$refs[betId][0].showPopper = false
-          console.log('popper ref', this.$refs[betId][0].showPopper);
-        }, 1000)
+          // console.log('popper ref', this.$refs[betId][0].showPopper);
+          this.$refs[betId][0].showPopper = false;
+          // console.log('popper ref', this.$refs[betId][0].showPopper);
+        }, 1000);
       }
     },
     // the btnNumber methods use to switch specific number first,last,both and two
@@ -628,9 +629,8 @@ export default {
       value == this.number ? (this.number = null) : (this.number = value);
     },
     updateBet(items) {
-     
       const split = items.betRule.split("-");
-      console.log('update bet', items.betRule, split[0] + "-" + split[1]);
+      // console.log('update bet', items.betRule, split[0] + "-" + split[1]);
       $("#" + items.stock + items.betRule).addClass(split[0] + "-" + split[1]); // small button
       $("#" + items.stock + split[0]).addClass(split[0]); // parent the button
     }
@@ -668,5 +668,3 @@ export default {
   white-space: pre-line;
 }
 </style>
-
-

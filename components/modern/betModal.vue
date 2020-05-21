@@ -6,13 +6,13 @@
           {{ $t("msg.bettingon") }}
           <span class="text-uppercase">
             {{
-            isNaN(betId.split("-")[1])
-            ? $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            $t("gamemsg." + betId.split("-")[1])
-            : $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            betId.split("-")[1]
+              isNaN(betId.split("-")[1])
+                ? $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  $t("gamemsg." + betId.split("-")[1])
+                : $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  betId.split("-")[1]
             }}
           </span>
         </h3>
@@ -31,7 +31,12 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -53,7 +58,13 @@
           </v-flex>-->
 
           <v-flex style="align-self:center">
-            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
@@ -70,18 +81,16 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-        >{{ $t("msg.confirm") }}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn
+        >
         <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{
-          $t("msg.cancel")
-          }}
+          {{ $t("msg.cancel") }}
         </v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 <script>
-
 import Sound from "~/helpers/sound";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
@@ -131,7 +140,12 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_FIRST"]),
-    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
+    ...mapActions([
+      "pushDataOnGoingBet",
+      "setGameId",
+      "setUserData",
+      "pushDataMultiGameBet"
+    ]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
@@ -226,10 +240,11 @@ export default {
           };
           this.$emit("update-bet", stockDetail);
           this.confirmDisabled = true;
+          this.pushDataMultiGameBet(data);
           this.sendBetting(data);
-          $("#" + this.stockName + this.betId).addClass(
-            this.betId.split("-")[0] + " " + this.betId.split("-")[1]
-          );
+          // $("#" + this.stockName + this.betId).addClass(
+          //   this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+          // );
         }
       }
     },
