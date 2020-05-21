@@ -24,7 +24,7 @@
                 class="text-capitalize"
               >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h2>
               <p>
-                <b>{{ $t("profile.onlinestatus") }}</b> : Available
+                <b>{{ $t("profile.onlineStatus") }}</b> : Available
               </p>
             </div>
             <div class="profile_menu">
@@ -37,7 +37,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.basicinfo") }}</li>
+                  >{{ $t("profile.basicInfo") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/onlinehistory/">
                   <li
@@ -46,7 +46,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.onlinehistory") }}</li>
+                  >{{ $t("profile.onlineHistory") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/stockanalysis/">
                   <li
@@ -55,7 +55,7 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.stockanalysis") }}</li>
+                  >{{ $t("profile.stockAnalysis") }}</li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/follower/">
                   <li

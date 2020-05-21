@@ -94,8 +94,8 @@
               >
                 {{
                   item.userUUID == getUserUUID
-                    ? $t("useraction.yourself")
-                    : $t("useraction.follow")
+                    ? $t("userAction.yourself")
+                    : $t("userAction.follow")
                 }}
               </v-btn>
             </v-list-tile-action>
@@ -141,8 +141,8 @@
           <v-toolbar-title>
             {{
               this.FolloworNot == 1
-                ? $t("useraction.followBet")
-                : $t("useraction.unFollowBet")
+                ? $t("userAction.followBet")
+                : $t("userAction.unFollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>

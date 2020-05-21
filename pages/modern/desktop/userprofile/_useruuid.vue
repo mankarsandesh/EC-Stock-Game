@@ -82,8 +82,8 @@
                 >
                   {{
                     visitProfileUserData.isFollowing == 0
-                      ? $t("useraction.followBet")
-                      : $t("useraction.unFollowBet")
+                      ? $t("userAction.followBet")
+                      : $t("userAction.unFollowBet")
                   }}
                 </v-btn>
               </div>
@@ -111,7 +111,7 @@
                         >{{ visitProfileUserData.winRate }}%</span
                       >
                       <span class="des-title text-uppercase">
-                        {{ $t("leaderboard.winningRate") }}
+                        {{ $t("leaderBoard.winningRate") }}
                       </span>
                     </div>
                     <div class="cul-box cul-box-green">
@@ -164,13 +164,13 @@
                         }}</span
                       >
                       <span class="des-title text-uppercase">
-                        {{ $t("leaderboard.winningAmount") }}
+                        {{ $t("leaderBoard.winningAmount") }}
                       </span>
                     </div>
                   </div>
                   <div class="pt-5 stock-history">
                     <h2 class="text-uppercase">
-                      {{ $t("profile.onlinehistory") }}
+                      {{ $t("profile.onlineHistory") }}
                       {{ $t("profile.chart") }}
                     </h2>
                     <div class="stock-history-container">

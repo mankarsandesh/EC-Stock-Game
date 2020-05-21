@@ -86,6 +86,10 @@
                     <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
+                 
+              </v-list>
+              <v-list class="footerView">
+                <span @click="$router.push('/modern/desktop/notification/')">View All</span>
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -270,6 +274,17 @@ export default {
 };
 </script>
 <style scoped>
+.footerView{
+  border-top:1px solid #dddddd;
+  text-align: center;
+  cursor: pointer;
+}
+.footerView span{
+  font-size: 14px;
+  color:#003f70;
+  font-weight: 400;
+  text-align: center;
+}
 .noNotification {
   color: #333;
 }

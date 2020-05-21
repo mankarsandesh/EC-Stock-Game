@@ -31,7 +31,7 @@
         </div>
         <v-list-tile @click="getLogout()">
           <v-list-tile-content>
-            <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
+            <v-list-tile-title>{{ $t("profile.signOut") }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -72,6 +72,7 @@
           isShow == 'setting'
       "
     >
+<<<<<<< HEAD
       <h2 class="text-uppercase" v-show="isShow == 'history'">
         {{ $t("menu.history") }}
       </h2>
@@ -93,6 +94,15 @@
       <h2 class="text-uppercase" v-show="isShow == 'setting'">
         {{ $t("menu.setting") }}
       </h2>
+=======
+      <h2 class="text-uppercase" v-show="isShow == 'history'">{{ $t("menu.history") }}</h2>
+      <h2 class="text-uppercase" v-show="isShow == 'stock-list'">{{ $t("menu.stockList") }}</h2>
+      <h2 class="text-uppercase" v-show="isShow == 'current-bet'">{{ $t("menu.currentBet") }}</h2>
+      <h2 class="text-uppercase" v-show="isShow == 'notification'">{{ $t("menu.notification") }}</h2>
+      <h2 class="text-uppercase" v-show="isShow == 'rule'">{{ $t("menu.rule") }}</h2>
+      <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">{{ $t("menu.leaderBoard") }}</h2>
+      <h2 class="text-uppercase" v-show="isShow == 'setting'">{{ $t("menu.setting") }}</h2>
+>>>>>>> e42a1491b9b45cf8650263a493cf83af78c209bd
       <v-btn
         to="/modern/history"
         v-show="isShow == 'current-bet'"
