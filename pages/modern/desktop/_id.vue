@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2">
+  <v-container fluid mt-2 class="containerNew">
     <v-layout>
       <!-- Left Side Stock List  -->
-      <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
+      <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
         </span>
@@ -32,7 +32,7 @@
       <!-- End Left Side -->
 
       <!-- Main Middle Layout -->
-      <v-flex :xs10="!isHidden" :xs12="isHidden">
+      <v-flex :xs10="!isHidden" :xs12="isHidden" lg10>
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
@@ -117,7 +117,7 @@
                 </v-flex>
               </div>
             </v-flex>
-            <v-flex md7 lg6 ml-3 pt-2>
+            <v-flex md7 lg7 mx-2 pt-2>
               <div id="betRuleButton">
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
@@ -147,11 +147,7 @@
       <!-- Game Rule Popup open First Time -->
       <v-dialog v-model="GameRuleDialog" width="50%">
         <v-card class="ruleModel" style="border-radius: 10px;">
-          <v-icon
-            class="closePopup"
-            color="#333 !important"
-            @click="GameRuleDialog = false"
-            >close</v-icon          >          
+          <v-icon class="closePopup" color="#333 !important" @click="GameRuleDialog = false">close</v-icon>
           <v-card-text style="padding:40px;">
             <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}} </h2>
              <onlyrules />
@@ -465,10 +461,10 @@ export default {
 };
 </script>
 <style scoped>
-.closePopup{
-  background-color: #FFF;
-  right:0;
-  border-radius:50%;
+.closePopup {
+  background-color: #fff;
+  right: 0;
+  border-radius: 50%;
   padding: 2px;
   width: 30px;
   height: 30px;
@@ -511,7 +507,7 @@ export default {
 
 .leftStocklist {
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 5px;
   position: relative;
   top: 0;
   box-shadow: 0 0 2px grey;
