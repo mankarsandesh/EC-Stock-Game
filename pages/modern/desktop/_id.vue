@@ -153,7 +153,7 @@
             @click="GameRuleDialog = false"
             >close</v-icon          >          
           <v-card-text style="padding:40px;">
-            <h2 style="text-align:center;">EC Gameing Rule </h2>
+            <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}} </h2>
              <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
@@ -161,7 +161,7 @@
               class="buttonGreensmall"
               to="/modern/desktop/gamerule"
               dark
-              >Gaming Rule</v-btn
+              >{{$t("msg.gameRule")}}</v-btn
             >
           </v-flex>
         </v-card>
