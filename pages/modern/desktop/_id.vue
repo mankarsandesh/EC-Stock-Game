@@ -161,29 +161,39 @@
       <!-- Full Screen Float Button -->
       <v-flex class="layout-bottom">
         <div id="fullscreenGuidelines">
-          <v-btn
-            color="primary"
-            :to="'/modern/multigame/' + $route.params.id"
-            rigth
-            fab
-            class="multiGame"
-            dark
-            title="Multiple Game"
-          >
-            <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
-          </v-btn>
-          <!-- Multiple Screen Float Button -->
-          <v-btn
-            color="primary"
-            rigth
-            fab
-            class="fullscreen"
-            dark
-            @click="setAfterFullScreenClosePage()"
-            title="Full Screen"
-          >
-            <v-icon size="24px">fa-arrows-alt</v-icon>
-          </v-btn>
+          <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                rigth
+                fab
+                class="fullscreen"
+                dark
+                @click="setAfterFullScreenClosePage()"
+                v-on="on"
+              >
+                <v-icon size="24px">fa-arrows-alt</v-icon>
+              </v-btn>
+            </template>
+            <span>Enter Fullscreen Mode</span>
+          </v-tooltip>
+          <!-- Multiple Screen Float Button 
+          <!-- <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                :to="'/modern/multigame/' + $route.params.id"
+                rigth
+                fab
+                class="multiGame"
+                dark
+                v-on="on"
+              >
+                <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
+              </v-btn>
+            </template>
+            <span>Enter Multi-Gaming Mode</span>
+          </v-tooltip> -->
         </div>
       </v-flex>
     </v-layout>
@@ -469,7 +479,7 @@ export default {
 }
 .fullscreen {
   position: fixed !important;
-  bottom: 140px;
+  bottom: 80px;
   right: 0px;
   width: 50px;
   height: 50px;

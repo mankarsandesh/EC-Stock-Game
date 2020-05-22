@@ -22,8 +22,8 @@
     "chipAmount": "Chip Amount",
     "soundControl": "Sound Control",
     "leaderBoard": "Leaderboard",
-    "myFollowers": "My Followers",
-    "myFollowing": "My Following"
+    "myFollowers": "Followers",
+    "myFollowing": "Following"
   },
   "stockList": {
     "stockLists": "Stock Lists",
@@ -221,7 +221,9 @@
     "O": "O",
     "U": "U",
     "L": "L",
-    "M": "M"
+    "M": "M",
+    "null": "",
+    "undefined" :""
   },
   "stockname": {
     "btc1": "BTC/USDT1",
@@ -363,9 +365,9 @@
     "userFollowCount": "User Follow Count",
     "winningRate": "Winning Rate",
     "userWinRate":"User Win Rate",
-    "only10" : "Only 10 Invitaions in one Day.",
+    "only10" : "Only 10 Invitations in one Day.",
     "youHave" : "You have",
-    "invitationLeft" : "Invitaion left",
+    "invitationLeft" : "Invitation left",
     "followBet":"FOLLOW BET INVITATION"
   },
   "tutorial": {
