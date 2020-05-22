@@ -105,16 +105,18 @@
     </v-flex>
     <div class="messageChat">
       <v-flex col-md-12>
-        <v-layout class="errorMessage"> 
-           <v-flex> {{ this.invitationError }} </v-flex>
+        <v-layout class="errorMessage">
+          <v-flex> {{ this.invitationError }} </v-flex>
         </v-layout>
-        <v-layout justify-center>        
+        <v-layout justify-center>
           <v-flex v-for="(item, index) in categoryName" v-bind:key="index" pl-3>
             <v-checkbox
               :height="5"
               v-model="selectCategory"
               :label="item.value"
               :value="item.id"
+              off-icon="fa-square"
+              on-icon="fa-check-square"
             ></v-checkbox>
           </v-flex>
         </v-layout>
@@ -165,7 +167,7 @@ import followBet from "~/components/mobile/follow/followBet";
 export default {
   data() {
     return {
-      invitationError : "",
+      invitationError: "",
       selectCategory: [],
       categoryName: [
         {
@@ -207,7 +209,7 @@ export default {
         objectArray.forEach(([key, value]) => {
           newData[key] = value;
         });
-        this.globalInvitation.push(newData);      
+        this.globalInvitation.push(newData);
         this.scrollDown();
       }
     );
@@ -238,15 +240,15 @@ export default {
             {
               headers: config.header
             }
-          );  
-          if(res.code == 400){
+          );
+          if (res.code == 400) {
             this.invitationError = res.message[0];
           }
         } catch (ex) {
           this.setSnackBarError(true);
         }
-      }else{
-          this.invitationError = "Please Select Category";
+      } else {
+        this.invitationError = "Please Select Category";
       }
     },
     // After more Invitation Come Scroll Down Automatically
@@ -275,10 +277,10 @@ export default {
     },
     // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
-        if (this.getUserUUID != userUUID) {
+      if (this.getUserUUID != userUUID) {
         this.username = username;
         this.FollowUserUUID = userUUID;
-        method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);    
+        method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
         this.userImage = this.userImgProfile(userImage);
         this.followDialog = true;
       }
@@ -287,10 +289,10 @@ export default {
 };
 </script>
 <style scoped>
-.errorMessage{
-text-align: center;
-color:red;
-text-transform:capitalize;
+.errorMessage {
+  text-align: center;
+  color: red;
+  text-transform: capitalize;
 }
 .userList {
   border-bottom: 1px solid #dddddd;

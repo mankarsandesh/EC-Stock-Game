@@ -94,26 +94,21 @@
     <span class="leftMessage">
       <span v-if="this.invitationMessage">{{ this.invitationMessage }}</span>
     </span>
-    <div class="messageChat">
-      <v-flex col-md-12>
-        <!-- <v-btn class="buttonInvitation" @click="sendInvitation()"
-          >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
-        ></v-btn> -->
-        <v-btn class="buttonInvitation">
-          <v-select
-            class="selectCategory"
-            item-text="value"
-            item-value="id"
-            v-model="selectCategory"
+    <v-flex col-md-12>
+      <div class="footer-bottom">
+        <div class="select-category">
+          <catalogInviteSelection
             :items="categoryName"
-            multiple
-            append-icon="fa-angle-down"
-            label="Select Category"
-          ></v-select>
-          &nbsp;<i @click="sendInvitation()" class="fa fa-paper-plane"></i
-        ></v-btn>
-      </v-flex>
-    </div>
+            ref="refSelect"
+          ></catalogInviteSelection>
+        </div>
+        <div class="plane-icon">
+          <v-icon color="#fff" @click="sendInvitation()">
+            fa-paper-plane
+          </v-icon>
+        </div>
+      </div>
+    </v-flex>
     <!-- Follow Dialog -->
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
@@ -131,10 +126,13 @@
 import config from "~/config/config.global";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import followBet from "~/components/modern/follow/followBet";
+import catalogInviteSelection from "~/components/catalogInviteSelection";
+
 import log from "roarr";
 export default {
   components: {
-    followBet
+    followBet,
+    catalogInviteSelection
   },
   props: {
     gameUUID: {
@@ -151,15 +149,15 @@ export default {
       categoryName: [
         {
           id: "1",
-          value: "Win Bets"
+          title: "Win Bets"
         },
         {
           id: "2",
-          value: "Total Follower"
+          title: "Total Follower"
         },
         {
           id: "3",
-          value: "Rank"
+          title: "Rank"
         }
       ],
       FolloworNot: "",
@@ -208,13 +206,13 @@ export default {
     },
     // Channel for gameUUDI
     async sendInvitation() {
-      if (this.selectCategory.length > 0) {
+      if (this.$refs["refSelect"].select.map(e => e.id).length > 0) {
         try {
           var reqBody = {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             gameUUID: this.gameUUID,
-            category: this.selectCategory,
+            category: this.$refs["refSelect"].select.map(e => e.id),
             version: config.version
           };
           var res = await this.$axios.$post(
@@ -268,6 +266,24 @@ export default {
 </script>
 
 <style scoped>
+.plane-icon {
+  flex-grow: 1;
+  align-self: center;
+  text-align: center;
+  width: 30;
+}
+.select-category {
+  width: 85%;
+}
+.footer-bottom {
+  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
+  border-radius: 4px;
+  text-align: left;
+  display: flex;
+  width: 100%;
+  padding: 5px 0;
+  height: 100%;
+}
 .leftMessage {
   padding: 0px 10px;
   margin-bottom: 10px;
