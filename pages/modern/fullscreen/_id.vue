@@ -180,7 +180,7 @@
               </v-card>
               <div class="pt-2" style="color: white;">
                 <h3 class="text-uppercase">
-                  {{ $t("stockname." + data.stockName) }}
+                  {{ $t("stockName." + data.stockName) }}
                 </h3>
                 <h4 style="line-height: 1;">
                   <em>{{ data.loop }} minute game</em>

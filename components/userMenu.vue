@@ -50,15 +50,14 @@
 
     <v-dialog v-model="logoutDialog" persistent max-width="400">
       <v-card class="logout">
-        <v-card-title class="headlineh1">ARE YOU SURE?</v-card-title>
+        <v-card-title class="headlineh1">{{$t("logout.sure")}}</v-card-title>
         <v-card-text
-          >This will erase all data from this device and take you back to the
-          loging screen.</v-card-text
+          >{{$t("logout.bye")}}</v-card-text
         >
         <v-card-actions>
-          <v-btn class="buttonGreen" text @click="dialogStatus">Logout</v-btn>
-          <v-btn class="buttonCancel" text @click="dialog = false"
-            >Cancel</v-btn
+          <v-btn class="buttonGreen" text @click="dialogStatus">{{$t("logout.logout")}}</v-btn>
+          <v-btn class="buttonCancel" text @click="logoutDialog = false"
+            >{{$t("logout.cancel")}}</v-btn
           >
         </v-card-actions>
       </v-card>
