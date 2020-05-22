@@ -153,12 +153,15 @@ box-shadow: 0 10px 10px -6px #333;
 
 .chips {
   cursor: pointer;
-  margin: 2px 5px;  
+  margin: 2px 8px;  
   border:2px solid #dddddd;
 }
 .chipImg {
   color: #333;
   font-size: 24px;
+  font-weight: 600;
+  width: 75px;
+  height: 75px;
 }
 
 .st0 {

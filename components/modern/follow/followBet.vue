@@ -3,7 +3,7 @@
     <v-card class="followup">
       <h3
         class="title"
-      >{{ isFollowing == 1 ? $t("useraction.followBet") : $t("useraction.unFollowBet") }}</h3>
+      >{{ isFollowing == 1 ? $t("userAction.followBet") : $t("userAction.unFollowBet") }}</h3>
       <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="userImage" width="140px" />
         <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
@@ -16,7 +16,7 @@
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase">{{$t("leaderboard.followBy")}}</h4>
+        <h4 class="subtitle-1 text-uppercase">{{$t("leaderBoard.followBy")}}</h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -58,7 +58,7 @@
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderboard.autoStop")}}</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderBoard.autoStop")}}</h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
@@ -103,7 +103,7 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-              >{{ $t("useraction.follow") }}</v-btn>
+              >{{ $t("msg.confirm") }}</v-btn>
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
                 {{
                 $t("msg.cancel")
@@ -116,10 +116,10 @@
       <div v-else>
         <v-flex lg12 text-center>
           <v-btn
-            color="buttonCancel"
+            color="buttonGreen"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-          >{{ $t("useraction.unFollow") }}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn>
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
             {{
             $t("msg.cancel")
@@ -216,12 +216,12 @@ export default {
       followby: [
         {
           id: 1,
-          name: this.$root.$t("leaderboard.followByAmount"),
+          name: this.$root.$t("leaderBoard.followByAmount"),
           value: "Amount"
         },
         {
           id: 2,
-          name: this.$root.$t("leaderboard.followByRate"),
+          name: this.$root.$t("leaderBoard.followByRate"),
           value: "Rate"
         }
       ],
@@ -229,22 +229,22 @@ export default {
       autoStopFollow: [
         {
           id: 4,
-          name: this.$root.$t("leaderboard.stopByWinning"),
+          name: this.$root.$t("leaderBoard.stopByWinning"),
           value: "stopWin"
         },
         {
           id: 5,
-          name: this.$root.$t("leaderboard.stopByLosing"),
+          name: this.$root.$t("leaderBoard.stopByLosing"),
           value: "stopLoss"
         },
         {
           id: 3,
-          name: this.$root.$t("leaderboard.stopByTiming"),
+          name: this.$root.$t("leaderBoard.stopByTiming"),
           value: "stopTime"
         },
         {
           id: 6,
-          name: this.$root.$t("leaderboard.stopByBets"),
+          name: this.$root.$t("leaderBoard.stopByBets"),
           value: "stopBets"
         }
       ],
@@ -436,7 +436,7 @@ export default {
         this.unFollowValueMax = 10;
         this.unFollowValueMin = 1;
         this.unfollowValue = 3;
-        this.unfollowSign = this.$root.$t("leaderboard.bets");
+        this.unfollowSign = this.$root.$t("leaderBoard.bets");
       }
     },
     // Number Validation

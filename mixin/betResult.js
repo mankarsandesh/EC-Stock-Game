@@ -1,11 +1,24 @@
 const jsonResult = require('~/data/result') // define the json result for the compare 
-import sound from "~/helpers/sound"   // import the sound helper 
-import { mapMutations, mapGetters } from 'vuex'
+import secureStorage from '~/plugins/secure-storage'
+import sound from "~/helpers/sound" // import the sound helper 
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 // define a mixin object
 export const BetResult = {
+
+    computed: {
+        ...mapGetters(["getItemsBetting"])
+    },
+
     methods: {
-        ...mapMutations(["SET_FIRST"]),
-        betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin     
+
+        ...mapActions([
+            "setCollegeButtonNumberParent",
+            "setItemBetting",
+            "clearItemBetting"
+        ]),
+
+        betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin   
+            this.clearItemsAfterLastDraw()
             const lastDraw = result.substr(result.length - 2); //get the last two digit
             const first = parseInt(lastDraw.slice(0, 1)); // get the first digit number  
             const last = parseInt(lastDraw.slice(1, 2)); // get the last digit number 
@@ -34,12 +47,12 @@ export const BetResult = {
                     })
                 }
             })
-            this.SET_FIRST('Can not find any bet') // make the button collage 
+            this.setCollegeButtonNumberParent('Can not find any bet') // make the button collage 
         },
 
         // Multiple Result 
         multipleResult(item, number, stockName, betID, betWin, name) {
-            const specificNumber = "#" + stockName + betID.split("-")[0]  // create the variable for receive the value
+            const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
 
@@ -50,7 +63,7 @@ export const BetResult = {
                 );
 
                 setTimeout(() => {
-                    this.SET_FIRST("You are win")  // try to set the difference value 
+                    this.setCollegeButtonNumberParent("You are win") // try to set the difference value 
                     sound.winBet(); // sound when user win the bet
 
                     $("#" + stockName + betID).removeClass(
@@ -64,7 +77,9 @@ export const BetResult = {
                     );
                     $(specificNumber).removeClass(
                         betID.split("-")[0]);
-                    this.collectCoin()
+
+                    $("#" + betWin).removeClass('chip-animation');
+                    // this.collectCoin()
                 }, 5000);
 
             } else if ($(specificNumber + '-' + number).hasClass(betID.split("-")[0])) {
@@ -76,14 +91,16 @@ export const BetResult = {
                     betID.split("-")[0]
                 );
                 $(specificNumber + 'Number').addClass('chip-animation');
-                this.SET_FIRST('You are lose in else false')
+                this.setCollegeButtonNumberParent('You are lose in else false')
                 console.log('You win from  ', specificNumber + '-' + number)
 
                 $("#" + stockName + betID).removeClass(
                     betID.split("-")[0]
                 );
             } else {
-                this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
+                $(specificNumber + 'Number').removeClass('chip-animation');
+
+                this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
                 );
@@ -95,7 +112,7 @@ export const BetResult = {
 
         // Multiple Result 
         multipleResultTwoDigit(item, number, stockName, betID, betWin, name) {
-            const specificNumber = "#" + stockName + betID.split("-")[0]  // create the variable for receive the value
+            const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
                 sound.winBet(); // sound when user win the bet              
@@ -109,7 +126,7 @@ export const BetResult = {
                 );
 
                 setTimeout(() => {
-                    this.SET_FIRST("You are win")
+                    this.setCollegeButtonNumberParent("You are win")
                     sound.winBet(); // sound when user win the bet
 
                     $("#" + stockName + betID).removeClass(
@@ -123,13 +140,15 @@ export const BetResult = {
                     );
                     $(specificNumber).removeClass(
                         betID.split("-")[0]);
-                    this.collectCoin()
 
+                    // this.collectCoin()
+                    $("#" + betWin).removeClass('chip-animation');
                 }, 5000);
 
             } else {
+                $(specificNumber + 'Number').removeClass('chip-animation');
                 console.log('This is the result of two digit :', specificNumber + '-' + number)
-                this.SET_FIRST('You are lose in else' + specificNumber + '-' + number)
+                this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
                 );
@@ -137,6 +156,7 @@ export const BetResult = {
                     betID.split("-")[0]
                 );
             }
+            $(specificNumber + 'Number').removeClass('chip-animation');
         },
 
 
@@ -149,10 +169,10 @@ export const BetResult = {
                     elements[i].offsetParent.offsetTop +
                     62 +
                     elements[i].offsetParent.offsetParent.offsetParent.offsetParent
-                        .offsetTop;
+                    .offsetTop;
                 let left =
                     elements[i].offsetParent.offsetParent.offsetParent.offsetParent
-                        .offsetLeft + elements[i].offsetParent.offsetParent.offsetLeft;
+                    .offsetLeft + elements[i].offsetParent.offsetParent.offsetLeft;
                 elements[i].style.position = "fixed";
                 elements[i].style.top = top + "px";
                 elements[i].style.left = left + "px";
@@ -163,7 +183,7 @@ export const BetResult = {
                         document.getElementById("userBanlance").offsetTop + "px";
                     elements[i].style.left =
                         document.getElementById("userBanlance").offsetParent.offsetParent
-                            .offsetLeft + "px";
+                        .offsetLeft + "px";
                 }, 1);
                 // clear style
                 setTimeout(() => {
@@ -174,8 +194,23 @@ export const BetResult = {
                 }, 1200);
             }
         },
+
+
+        // store bet in localStroge 
+        storeBetOnLocalStroge(items) {
+
+            this.setItemBetting(items)
+        },
+
+        clearItemsAfterLastDraw() {
+
+            if (this.getItemsBetting.length) {
+
+                secureStorage.removeItem("getItemsBetting")
+
+                this.clearItemBetting()
+
+            }
+        }
     }
 }
-
-
-

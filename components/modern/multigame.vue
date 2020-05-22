@@ -26,7 +26,7 @@
       <v-flex>
         <v-layout>
           <v-flex class="text-xs-center" px-2>
-            <span class="text-gray">{{ $t("msg.Lastdraw") }}:</span>
+            <span class="text-gray">{{ $t("msg.lastDraw") }}:</span>
             <v-flex class="lastdraw">
               <span
                 class="text-black"
@@ -35,7 +35,7 @@
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
-            <span class="text-gray">{{ $t("msg.BetClosein") }}:</span>
+            <span class="text-gray">{{ $t("msg.betCloseIn") }}:</span>
             <v-flex class="betclose">
               <span
                 v-if="
@@ -59,7 +59,7 @@
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
-            <span class="text-gray">{{ $t("msg.lotterydraw") }}:</span>
+            <span class="text-gray">{{ $t("msg.lotteryDraw") }}:</span>
             <v-flex class="lottery">
               <span class="text-black">
                 {{

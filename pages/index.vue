@@ -30,7 +30,7 @@ import log from "roarr";
 
 export default {
   layout: "nolayout",
-  middleware: ["getApiKey", "checkAuth"],
+  middleware: ["checkAuth"],
 
   data() {
     return {
@@ -51,7 +51,7 @@ export default {
     }
   },
   watch: {
-    "$screen.width"() {    
+    "$screen.width"() {
       if (this.$screen.width <= 1204) {
         this.linkto = "modern";
       } else {

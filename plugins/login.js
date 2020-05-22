@@ -1,7 +1,6 @@
 import VuexPersistence from "vuex-persist";
 import config from "../config/config.global";
 import log from "roarr";
-import axios from "axios";
 import secureStorage from "./secure-storage";
 import Cookies from "./js-cookie";
 
@@ -32,7 +31,10 @@ export default async context => {
         });
         // Set user data in vuex store
         context.store.dispatch("setUserData");
-        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
+        context.store.dispatch(
+          "setPortalProviderUUID",
+          Cookies.getJSON("login").portalProviderUUID
+        );
         // Set default language in vuex store
         context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
       } else {
@@ -62,12 +64,15 @@ export default async context => {
               mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
           }).plugin(context.store);
         });
-        
+
         // Set default language in vuex store
         context.store.dispatch("setLanguage", secureStorage.getItem("lang"));
         // Set user data in vuex store
         context.store.dispatch("setUserData");
-        context.store.dispatch("setPortalProviderUUID", Cookies.getJSON("login").portalProviderUUID);
+        context.store.dispatch(
+          "setPortalProviderUUID",
+          Cookies.getJSON("login").portalProviderUUID
+        );
       } else {
         // Invalid user session
         throw new Error("Unauthorized access. Please login again");
@@ -113,7 +118,8 @@ export default async context => {
         portalProviderUUID,
         portalProviderUserId,
         balance,
-        context.store
+        context.store,
+        context.$axios
       );
 
       // Set default language
@@ -189,7 +195,8 @@ const checkUserLogin = async (
   portalProviderUUID,
   portalProviderUserId,
   balance,
-  store
+  store,
+  axios
 ) => {
   try {
     if (config.authUser && config.authPassword) {
@@ -204,6 +211,7 @@ const checkUserLogin = async (
       var { data } = await axios.post(config.userLoginAuth.url, reqBody, {
         headers: config.header
       });
+
       if (data.status) {
         var userUUID = data.data.userUUID;
         store.dispatch("setPortalProviderUUID", portalProviderUUID);
@@ -222,8 +230,8 @@ const checkUserLogin = async (
           }
         );
       } else {
-        store.dispatch("setLoginError", [config.error.general]);
-        throw new Error(config.error.general);
+        store.dispatch("setLoginError", [data.message[0]]);
+        throw new Error(data.message[0]);
       }
     } else {
       store.dispatch("setLoginError", [config.loginError.authError]);
@@ -251,8 +259,8 @@ const checkUserLogin = async (
  * @param {*} store
  */
 const setLanguage = store => {
-  const lang = secureStorage.getItem("lang")
-    ? secureStorage.getItem("lang")
+  const lang = store.getters.getLocale
+    ? store.getters.getLocale
     : config.defaultLanguageLocale;
   store.dispatch("setLanguage", lang);
 };
@@ -268,5 +276,4 @@ const initLocalStorageCoin = store => {
     ? secureStorage.getItem("coinsModern")
     : config.defaultCoinsModern;
   store.dispatch("setCoinsModern", chips);
-  secureStorage.setItem("coinsModern", chips);
 };

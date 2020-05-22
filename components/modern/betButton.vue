@@ -3,7 +3,7 @@
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
-      <p>{{ $t("msg.betclosed") }}</p>
+      <p>{{ $t("msg.betClosed") }}</p>
     </div>
     <!-- end for show bet close -->
     <v-layout row md10>
@@ -53,18 +53,16 @@
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
-          <span class="small-digit" v-show="isFullscreen">{{
+          <span class="small-digit" v-show="isFullscreen">
+            {{
             $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-          }}</span>
+            }}
+          </span>
         </v-btn>
       </popper>
 
       <span class="w10">
-        <v-btn
-          class="align_button4"
-          :id="stockID + 'firstdigit'"
-          @click="btnNumber('first')"
-        >
+        <v-btn class="align_button4" :id="stockID + 'firstdigit'" @click="btnNumber('first')">
           <showChipAmount
             size="45px"
             :amount="
@@ -136,9 +134,11 @@
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{
+          <span class="small-digit" v-show="isFullscreen">
+            {{
             $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-          }}</span>
+            }}
+          </span>
         </v-btn>
       </popper>
 
@@ -213,9 +213,11 @@
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{
+          <span class="small-digit" v-show="isFullscreen">
+            {{
             $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-          }}</span>
+            }}
+          </span>
         </v-btn>
       </popper>
       <span class="w12">
@@ -286,9 +288,11 @@
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{
+          <span class="small-digit" v-show="isFullscreen">
+            {{
             $store.state.game.payout[parseInt(data.payout)].dynamicOdds
-          }}</span>
+            }}
+          </span>
         </v-btn>
       </popper>
 
@@ -340,8 +344,7 @@
           @click="betButtonClick(8 + index, 'firstdigit')"
           v-show="number == 'first'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -369,8 +372,7 @@
           @click="betButtonClick(25 + index, 'lastdigit')"
           v-show="number == 'last'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -398,8 +400,7 @@
           @click="betButtonClick(149 + index, 'bothdigit')"
           v-show="number == 'both'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
         :disabled="checkFooterBetAmount"
@@ -427,8 +428,7 @@
           @click="betButtonClick(42 + index, 'twodigit')"
           v-show="number == 'two'"
           class="btn-small"
-          >{{ index < 10 ? "0" + index : index }}</v-btn
-        >
+        >{{ index < 10 ? "0" + index : index }}</v-btn>
       </popper>
     </v-layout>
   </div>
@@ -438,11 +438,12 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import gameRule from "~/data/gameRule";
 import betModal from "~/components/modern/betModal";
-import showChipAmount from "~/components/modern/showChipAmount";
+import showChipAmount from "~/components/modern/showChipAmount";  
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
 import Result from "~/helpers/Result";
+
 export default {
   props: {
     isFullscreen: {
@@ -454,8 +455,13 @@ export default {
       type: String
     }
   },
+
+// will discuss with the team later, about the set betting on the localStroge  
+  // mounted() {
+  //   Result.setItemBetting();
+  // },
   watch: {
-    first(val) {
+    getCollegeBtnNumber(val) {
       this.btnNumber(val);
     }
   },
@@ -492,7 +498,7 @@ export default {
       "getFooterBetAmount",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "first"
+      "getCollegeBtnNumber"
     ]),
     stockID() {
       if (this.stockName == null) {
@@ -540,10 +546,10 @@ export default {
     ...mapActions([
       "pushDataMultiGameBet",
       "clearDataMultiGameBet",
-      "setTempMultiGameBetData"
+      "setTempMultiGameBetData",
+      "setCollegeButtonNumberParent"
     ]),
 
-    ...mapMutations(["SET_FIRST_PARENT"]),
     betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
       if (this.checkFooterBetAmount) {
@@ -558,14 +564,17 @@ export default {
         // console.warn(this.getMultiGameBet);
       }
     },
+
     // the btnNumber methods use to switch specific number first,last,both and two
     btnNumber(value) {
       value == this.number ? (this.number = null) : (this.number = value);
     },
     updateBet(items) {
       const split = items.betRule.split("-");
-      $("#" + items.stock + items.betRule).addClass(split[0] + "-" + split[1]); // small button
-      $("#" + items.stock + split[0]).addClass(split[0]); // parent the button
+      // small button
+      $("#" + items.stock + items.betRule).addClass(items.betRule);
+      // parent the button
+      $("#" + items.stock + split[0]).addClass(split[0]);
     }
   }
 };
@@ -601,4 +610,5 @@ export default {
   white-space: pre-line;
 }
 </style>
+
 

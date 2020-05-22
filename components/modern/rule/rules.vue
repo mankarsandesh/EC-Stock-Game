@@ -4,12 +4,12 @@
       <v-container fill-height>
         <v-layout row wrap>
           <v-flex>
-            <h2 class="display-1">{{ $t("msg.ecgamingrulesdescription") }}</h2>
-            <p class="subheading">{{ $t("msg.textinfoule") }}</p>
+            <h2 class="display-1">{{ $t("msg.ecGamingRulesDescription") }}</h2>
+            <p class="subheading">{{ $t("msg.textInfoRule") }}</p>
             <v-dialog v-model="dialog" width="600">
               <template v-slot:activator="{ on }">
                 <v-btn class="accept" color="buttonGreen" dark v-on="on">{{
-                  $t("msg.resultintroduction")
+                  $t("msg.resultIntroduction")
                 }}</v-btn>
               </template>
               <v-card class="ruleModel" style="border-radius:10px;">

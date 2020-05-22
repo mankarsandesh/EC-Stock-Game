@@ -2,7 +2,7 @@
   <v-expansion-panel v-model="panel" expand>
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div @click="setActive($event)">
+        <div>
           <span class="rules">
             {{ $t("gamemsg.firstdigit") }} (????.
             <b class="headline1">?</b>?)
@@ -38,7 +38,7 @@
 
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div @click="setActive($event)">
+        <div >
           <span class="rules">
             {{ $t("gamemsg.lastdigit") }} (????. ?
             <b class="headline1">?</b>)
@@ -74,7 +74,7 @@
 
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div @click="setActive($event)">
+        <div>
           <span class="rules">
             {{ $t("gamemsg.bothdigit") }} (????. ?+?
             <b class="headline1">=??</b>
@@ -113,7 +113,7 @@
     </v-expansion-panel-content>
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
-        <div @click="setActive($event)">
+        <div >
           <span class="rules">
             {{ $t("gamemsg.twodigit") }} (????.
             <b class="headline1">??</b>)
@@ -198,7 +198,7 @@ export default {
   color: #ffffff !important;
 }
 .rules {
-  /* color: #ffffff; */
+  color: #ffffff;
   background-color: #0b2a68;
 }
 

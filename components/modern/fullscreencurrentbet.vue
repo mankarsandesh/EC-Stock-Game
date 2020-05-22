@@ -1,23 +1,23 @@
 <template>
 <div class="table-scroll table-wrapper-scroll-y pl-3">
   <div>
-    <h4 align="center" fill-height fluid justify="center" v-show="getOnGoingBet.length <= 0" class="nobetting">{{ $t("msg.nobetting") }}</h4>
+    <h4 align="center" fill-height fluid justify="center" v-show="getOnGoingBet.length <= 0" class="nobetting">{{ $t("msg.noBetting") }}</h4>
     <table class="main-table" v-show="getOnGoingBet.length > 0">
       <tbody v-for="(item, index) in getOnGoingBet" :key="index">
         <tr class="table-rowheight">
-          <th class="fixed-side table-headbg">{{$t('msg.BetId')}}</th>
+          <th class="fixed-side table-headbg">{{$t('msg.betId')}}</th>
           <td>{{ item.betUUID }}</td>
         </tr>
         <tr class="table-rowheight">
-          <th class="fixed-side table-headbg">{{$t('msg.gameid')}}</th>
+          <th class="fixed-side table-headbg">{{$t('msg.gameId')}}</th>
           <td>{{ item.gameUUID }}</td>
         </tr>
         <tr class="table-rowheight">
-          <th class="fixed-side table-headbg">{{$t('msg.Betdetail')}}</th>
+          <th class="fixed-side table-headbg">{{$t('msg.betDetail')}}</th>
           <td>{{ item.betAmount }} on rule ({{ item.ruleName }})</td>
         </tr>
         <tr class="table-rowheight">
-          <th class="fixed-side table-headbg">{{$t('msg.Time')}}</th>
+          <th class="fixed-side table-headbg">{{$t('msg.time')}}</th>
           <td>{{ item.betDate }} {{ item.betTime }} {{item.createdDate}} {{item.createdTime}}</td>
         </tr>
         <tr class="table-rowheight">

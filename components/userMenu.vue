@@ -34,7 +34,7 @@
         >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
           <v-list-tile-title>{{
-            $t("profile.onlinehistory")
+            $t("profile.onlineHistory")
           }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile @click="$router.push('/modern/desktop/profile/follower/')">
@@ -43,16 +43,26 @@
         </v-list-tile>
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
-          <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("profile.signOut") }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
-    <app-dialogs-confirm
-      v-on:dialogStatus="dialogStatus"
-      :dialogConfirm="dialogConfirm"
-      title="Are you sure to logout?"
-      content="Hope to see you as soon, BYE BYE"
-    />
+
+    <v-dialog v-model="logoutDialog" persistent max-width="400">
+      <v-card class="logout">
+        <v-card-title class="headlineh1">ARE YOU SURE?</v-card-title>
+        <v-card-text
+          >This will erase all data from this device and take you back to the
+          loging screen.</v-card-text
+        >
+        <v-card-actions>
+          <v-btn class="buttonGreen" text @click="dialogStatus">Logout</v-btn>
+          <v-btn class="buttonCancel" text @click="dialog = false"
+            >Cancel</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -69,6 +79,7 @@ export default {
   },
   data() {
     return {
+      logoutDialog: false,
       defaultImage: `/no-profile-pic.jpg`,
       dialogConfirm: false,
       profileImage: "",
@@ -100,7 +111,7 @@ export default {
       // console.log(document.getElementById("betRuleButton").offsetLeft);
     },
     getLogout() {
-      this.dialogConfirm = true;
+      this.logoutDialog = true;
     },
     dialogStatus(value) {
       if (value) {
@@ -112,7 +123,7 @@ export default {
       this.dialogConfirm = false;
     },
     formatToPrice(value) {
-      return `${Number(value)
+      return `$ ${Number(value)
         .toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
@@ -122,6 +133,16 @@ export default {
 </script>
 
 <style scoped>
+.headlineh1 {
+  font-weight: 600;
+  font-size: 22px;
+  text-align: left;
+  color: #0e2b69;
+}
+.logout {
+  padding: 10px 20px;
+  border-radius: 10px;
+}
 #userBalance {
   position: relative;
 }

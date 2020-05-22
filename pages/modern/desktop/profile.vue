@@ -1,7 +1,7 @@
 <template>
-  <v-container >
+  <v-container>
     <input @change="uploadImage($event)" type="file" ref="inputFile" hidden />
-    <v-layout pt-1 row wrap class="justify-center" >
+    <v-layout pt-1 row wrap class="justify-center">
       <v-flex xs12 ms12 lg10 md10>
         <v-layout>
           <v-flex xs4 md3 lg3 xl2 class="pt-5" style="background-color:white">
@@ -12,19 +12,23 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="dialog = true">photo_camera</v-icon>
-                    <!-- <v-icon color="black" :size="20">photo_camera</v-icon> -->
+                    <v-icon
+                      color="black"
+                      :size="20"
+                      @click="avatarDialog = true"
+                      >photo_camera</v-icon
+                    >
                   </button>
                 </span>
-                <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h2 v-if="getUserInfo.firstName == null">{{ getUserInfo.userName }}</h2>
-              <h2
-                v-if="getUserInfo.firstName"
-                class="text-capitalize"
-              >{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h2>
+              <h2 v-if="getUserInfo.firstName == null">
+                {{ getUserInfo.userName }}
+              </h2>
+              <h2 v-if="getUserInfo.firstName" class="text-capitalize">
+                {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+              </h2>
               <p>
-                <b>{{ $t("profile.onlinestatus") }}</b> : Available
+                <b>{{ $t("profile.onlineStatus") }}</b> : Available
               </p>
             </div>
             <div class="profile_menu">
@@ -37,7 +41,9 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.basicinfo") }}</li>
+                  >
+                    {{ $t("profile.basicInfo") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/onlinehistory/">
                   <li
@@ -46,7 +52,9 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.onlinehistory") }}</li>
+                  >
+                    {{ $t("profile.onlineHistory") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/stockanalysis/">
                   <li
@@ -55,7 +63,9 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.stockanalysis") }}</li>
+                  >
+                    {{ $t("profile.stockAnalysis") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/follower/">
                   <li
@@ -64,7 +74,9 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.myFollowers") }}</li>
+                  >
+                    {{ $t("profile.myFollowers") }}
+                  </li>
                 </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/following/">
                   <li
@@ -73,19 +85,10 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.myFollowing") }}</li>
-                </nuxt-link>
-                <!-- <nuxt-link to="/modern/desktop/profile/notification/">
-                  <li
-                    :class="
-                      '/modern/desktop/profile/notification/' === currentChild
-                        ? 'menu_title_active'
-                        : 'menu_title'
-                    "
                   >
-                    {{ $t("profile.myNotification") }}
+                    {{ $t("profile.myFollowing") }}
                   </li>
-                </nuxt-link>-->
+                </nuxt-link>
                 <nuxt-link to="/modern/desktop/profile/setting/">
                   <li
                     :class="
@@ -93,7 +96,9 @@
                         ? 'menu_title_active'
                         : 'menu_title'
                     "
-                  >{{ $t("profile.setting") }}</li>
+                  >
+                    {{ $t("profile.setting") }}
+                  </li>
                 </nuxt-link>
               </ul>
             </div>
@@ -105,13 +110,17 @@
         </v-layout>
       </v-flex>
 
-      <v-dialog v-model="dialog" width="900" class="followDialog">
+      <v-dialog v-model="avatarDialog" width="900" class="followDialog">
         <v-card class="followup">
-          <h3 class="title" style="text-align: center; color: #0b2a68;">Choose your Avatar</h3>
+          <h3 class="title" style="text-align: center; color: #0b2a68;">
+            Choose your Avatar
+          </h3>
           <v-card-text style="text-align:center;">
             <div class="avatarImage" v-for="n in 10" v-bind:key="n">
               <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
-              <span href class="userAvatar" @click="useAvatar(n)">Use Avatar</span>
+              <span href class="userAvatar" @click="useAvatar(n)"
+                >Use Avatar</span
+              >
             </div>
           </v-card-text>
           <v-divider></v-divider>
@@ -122,11 +131,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-
-      <v-snackbar v-model="snackbar">
-        Sucessfully Avatar Updated.
-        <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
-      </v-snackbar>
     </v-layout>
   </v-container>
 </template>
@@ -142,9 +146,8 @@ export default {
     return {
       imagePath: config.apiDomain + "/images/user/avatar/",
       avatarID: "",
-      snackbar: false,
       newImage: "",
-      dialog: false,
+      avatarDialog: false,
       defaultImage: `/no-profile-pic.jpg`,
       currentChild: "basicinfo",
       blurValue: 5,
@@ -173,17 +176,12 @@ export default {
       }
     }
   },
-  watch: {
-    imageBase64() {
-      this.updateImageProfile();
-    }
-  },
   methods: {
     useAvatar(image) {
       this.newImage = this.imagePath + image + ".jpg";
       this.avatarID = image;
-      this.snackbar = true;
-      this.updateImageProfile();
+      this.avatarDialog = false;
+      this.updateAvatarProfile();
     },
     ...mapActions(["setUserData"]),
     uploadImage(e) {
@@ -199,7 +197,8 @@ export default {
     cameraClick() {
       this.$refs.inputFile.click();
     },
-    async updateImageProfile() {
+    // Update User Avatar
+    async updateAvatarProfile() {
       var reqBody = {
         avatarID: this.avatarID,
         portalProviderUUID: this.getPortalProviderUUID,
@@ -217,6 +216,12 @@ export default {
         if (res.status) {
           this.blurValue = 0;
           this.setUserData();
+          this.$swal({
+            type: "success",
+            title: this.$root.$t("msg.confirm"),
+            showConfirmButton: false,
+            timer: 1000
+          });
         } else {
           throw new Error(config.error.general);
         }

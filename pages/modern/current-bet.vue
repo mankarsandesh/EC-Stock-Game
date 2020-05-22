@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       currentBets: []
-    };
+    };   
   },
   computed: {
     ...mapState({

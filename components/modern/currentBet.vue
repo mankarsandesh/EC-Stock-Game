@@ -14,14 +14,14 @@
           indeterminate
         ></v-progress-linear>
         <template v-slot:headers="headers">
-          <tr>
-            <th scope="col">{{ $t("msg.BetId") }}</th>
-            <th scope="col">{{ $t("msg.gameid") }}</th>
-            <th scope="col">{{ $t("msg.Betdetail") }}</th>
-            <th scope="col">{{ $t("msg.Time") }}</th>
+          <tr class="tableStyle">
+            <th scope="col">{{ $t("msg.betId") }}</th>
+            <th scope="col">{{ $t("msg.gameId") }}</th>
+            <th scope="col">{{ $t("msg.betDetail") }}</th>
+            <th scope="col">{{ $t("msg.time") }}</th>
             <th scope="col">{{ $t("msg.amount") }}</th>
             <th scope="col">{{ $t("msg.payout") }}</th>
-            <th scope="col">{{ $t("msg.Bet Status") }}</th>
+            <th scope="col">{{ $t("msg.betStatus") }}</th>
           </tr>
         </template>
         <template v-slot:items="item">
@@ -29,7 +29,7 @@
           <td>{{ item.item.gameUUID }}</td>
           <td>
             {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }}
+            {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minute')}}
           </td>
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
@@ -61,9 +61,9 @@
         </template>
         <template slot="footer">
           <tr>
-            <td>{{ $t("msg.Total") }}</td>
+            <td>{{ $t("msg.total") }}</td>
             <td colspan="3">
-              {{ currentBets.length }} {{ $t("leaderboard.bets") }}
+              {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
             </td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>

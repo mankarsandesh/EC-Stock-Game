@@ -7,7 +7,7 @@
             <v-layout>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.Lastdraw") }}:</span
+                  >{{ $t("msg.lastDraw") }}:</span
                 >
                 <v-flex flex-style class="lastdraw">
                   <h4 class="body-3">
@@ -20,7 +20,7 @@
               </v-flex>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.BetClosein") }}:</span
+                  >{{ $t("msg.betCloseIn") }}:</span
                 >
                 <v-flex flex-style class="betclose">
                   <h4 class="body-3 uppercase-text text-black">
@@ -35,7 +35,7 @@
               </v-flex>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lotterydraw") }}:</span
+                  >{{ $t("msg.lotteryDraw") }}:</span
                 >
                 <v-flex flex-style class="lottery">
                   <h4 class="body-3 uppercase-text text-black">
@@ -87,7 +87,7 @@
                 {{ $t("stockname." + $route.params.id) }} /
                 <span>
                   {{ getStockLoop(this.$route.params.id) }}
-                  {{ $t("msg.minute game") }}
+                  {{ $t("msg.minuteGame") }}
                 </span>
               </h3>
               <span class="text-primary">
@@ -120,7 +120,7 @@
           :style="$vuetify.breakpoint.xs ? 'width: 100%;' : ' width: 50%;'"
           v-if="checkBetClose"
         >
-          <p>{{ $t("msg.betclosed") }}</p>
+          <p>{{ $t("msg.betClosed") }}</p>
         </div>
         <v-layout wrap sm6>
           <div class="tab-menu-container">
@@ -1026,17 +1026,17 @@
         >
           <div class="d-block text-center" style="color:#000">
             <p class="text-uppercase">
-              {{ $t("msg.Stock Name") }} :
+              {{ $t("msg.stockName") }} :
               {{ $t(`stockname.${$route.params.id}`) }}
               {{ $t("msg.payout") }}:
               {{ odd }}
             </p>
             <p class="text-uppercase test-time-loop">
               {{ getStockLoop(this.$route.params.id) }}
-              {{ $t("msg.minute game") }}
+              {{ $t("msg.minuteGame") }}
             </p>
             <p class="text-uppercase test-rule-betting">
-              {{ $t("msg.bettingon") }}
+              {{ $t("msg.bettingOn") }}
               {{
                 isNaN(gameRule.split("-")[1])
                   ? $t("gamemsg." + gameRule.split("-")[0]) +
@@ -1110,13 +1110,13 @@
           <div xs12 class="text-center mt-5 pa-3">
             <table class="table-review">
               <tr>
-                <td class="text-right">{{ $t("msg.Stock Name") }}:</td>
+                <td class="text-right">{{ $t("msg.stockName") }}:</td>
                 <td class="text-left pl-2 text-color-blue">
                   {{ $t(`stockname.${$route.params.id}`) }}
                 </td>
               </tr>
               <tr>
-                <td class="text-right">{{ $t("msg.gameid") }}:</td>
+                <td class="text-right">{{ $t("msg.gameId") }}:</td>
                 <td class="text-left pl-2 text-color-blue">
                   {{ getGameUUIDByStockName(this.$route.params.id) }}
                 </td>
@@ -1125,11 +1125,11 @@
                 <td class="text-right">{{ $t("gameType") }}:</td>
                 <td class="text-left pl-2 text-color-blue">
                   {{ getStockLoop(this.$route.params.id) }}
-                  {{ $t("msg.minute game") }}
+                  {{ $t("msg.minuteGame") }}
                 </td>
               </tr>
               <tr>
-                <td class="text-right">{{ $t("msg.bettingon") }}:</td>
+                <td class="text-right">{{ $t("msg.bettingOn") }}:</td>
                 <td class="text-left pl-2 text-color-blue">
                   {{ gameRule }}
                 </td>
@@ -1581,9 +1581,6 @@ export default {
     );
   },
   mounted() {
-    setTimeout(()=>{
-      this.$router.push('/modern/followingList')
-    },3000)
     this.stockID = this.$route.params.id;
   },
   components: {
@@ -1601,7 +1598,6 @@ export default {
       "getCheckStock",
       "getCoinsModern",
       "getAllBettingAmount",
-      "getAuthToken",
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",

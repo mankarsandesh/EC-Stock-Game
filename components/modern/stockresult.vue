@@ -12,9 +12,9 @@
         <div class="table-responsive">
           <table class="table">
             <tr>
-              <th>{{ $t("msg.Stock Name") }}</th>
-              <th>{{ $t("msg.Time") }}</th>
-              <th>{{ $t("msg.Result") }}</th>
+              <th>{{ $t("msg.stockName") }}</th>
+              <th>{{ $t("msg.time") }}</th>
+              <th>{{ $t("msg.result") }}</th>
             </tr>
             <tr
               v-for="(data, index) in getStockResult"
