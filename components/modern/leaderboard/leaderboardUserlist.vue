@@ -24,7 +24,7 @@
           <span
             class="text-uppercase font-weight-bold"
             v-bind:class="{ active: isActiveWeek }"
-            v-on:click="sortingBy('weekly')"
+            @click="sortingBy('weekly')"
           >
             <v-icon small>fa-calendar</v-icon>
             {{ $t("leaderBoard.weeklyRankings") }}
@@ -32,7 +32,7 @@
           <span
             class="text-uppercase font-weight-bold"
             v-bind:class="{ active: isActiveMonth }"
-            v-on:click="sortingBy('monthly')"
+            @click="sortingBy('monthly')"
           >
             <v-icon small>fa-calendar</v-icon>
             {{ $t("leaderBoard.monthlyRankings") }}
@@ -97,7 +97,7 @@
           <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
             <v-btn
               class="buttonGreensmall"
-              v-on:click="
+              @click="
                 followUser(
                   data.username,
                   data.userImage,
@@ -112,7 +112,7 @@
           <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
             <v-btn
               class="buttonCancel"
-              v-on:click="
+              @click="
                 followUser(
                   data.username,
                   data.userImage,

@@ -105,7 +105,9 @@
             }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <v-icon class="icon-primary" v-if="sortBy === 'name'">done</v-icon>
+          <v-icon class="icon-primary" v-if="sortBy === 'name'"
+            >fa-check
+          </v-icon>
         </v-list-tile>
 
         <!--sort game type -->
@@ -117,7 +119,9 @@
             }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <v-icon class="icon-primary" v-if="sortBy === 'type'">done</v-icon>
+          <v-icon class="icon-primary" v-if="sortBy === 'type'">
+            fa-check
+          </v-icon>
         </v-list-tile>
         <v-divider></v-divider>
         <v-list-tile class="py-2" @click="sortBy = ''">
@@ -128,7 +132,7 @@
           </v-list-tile-content>
           <v-spacer></v-spacer>
           <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
-                    <v-icon class="icon-primary">done</v-icon>
+                    <v-icon class="icon-primary">fa-check</v-icon>
           </v-btn>-->
         </v-list-tile>
         <v-divider></v-divider>

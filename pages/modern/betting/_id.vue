@@ -58,13 +58,13 @@
     <v-layout row wrap class="container-bet" mt-3>
       <v-flex xs12 sm12 md12>
         <v-layout wrap xs12>
-          <v-flex xs1 align-self-center class="text-xs-right">
+          <v-flex xs1 align-self-center class="text-xs-center">
             <v-icon
               style="font-size:40px;"
               color="#003e70"
               v-show="isShowTrendMap"
               @click="changeShowTrendMap()"
-              >keyboard_arrow_left</v-icon
+              >fa-angle-left</v-icon
             >
           </v-flex>
 
@@ -100,14 +100,14 @@
             </v-flex>
           </v-flex>
 
-          <v-flex xs1 align-self-center arrow>
+          <v-flex xs1 align-self-center arrow class="text-xs-center">
             <v-icon
               style="font-size:40px;"
               v-show="!isShowTrendMap"
               @click="changeShowTrendMap()"
               color="#003e70"
-              >keyboard_arrow_right</v-icon
-            >
+              >fa-angle-right
+            </v-icon>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -1220,7 +1220,9 @@
       <div class="header-dialog">
         <h3 class="text-uppercase">{{ $t("gamemsg.lastdigit") }}</h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
-        <v-icon size="30" @click="drawerderlast = !drawerderlast">fa-times</v-icon>
+        <v-icon size="30" @click="drawerderlast = !drawerderlast"
+          >fa-times</v-icon
+        >
       </div>
       <hr class="head-jumbothron" />
       <v-container pa-1>
@@ -1260,7 +1262,9 @@
       <div class="header-dialog">
         <h3 class="text-uppercase">{{ $t("gamemsg.bothdigit") }}</h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
-        <v-icon size="30" @click="drawerder018 = !drawerder018">fa-times</v-icon>
+        <v-icon size="30" @click="drawerder018 = !drawerder018"
+          >fa-times</v-icon
+        >
       </div>
       <hr class="head-jumbothron" />
       <v-container pa-1>
@@ -1302,7 +1306,9 @@
         <div class="header-dialog">
           <h3 class="text-uppercase">{{ $t("gamemsg.twodigit") }}</h3>
           <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
-          <v-icon size="30" @click="drawerder099 = !drawerder099">fa-times</v-icon>
+          <v-icon size="30" @click="drawerder099 = !drawerder099"
+            >fa-times</v-icon
+          >
         </div>
         <v-layout row>
           <v-tabs slider-color="#003e70" grow centered>

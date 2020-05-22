@@ -115,8 +115,8 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                      >fa-edit
+                    </v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -139,8 +139,8 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                      >fa-edit
+                    </v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -163,7 +163,7 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >edit</v-icon
+                      >fa-edit</v-icon
                     >
                   </span>
                 </v-flex>
@@ -210,8 +210,8 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >edit</v-icon
-                    >
+                      >fa-edit
+                    </v-icon>
                   </span>
                 </v-flex>
               </v-layout>
