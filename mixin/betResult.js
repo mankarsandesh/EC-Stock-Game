@@ -98,6 +98,8 @@ export const BetResult = {
                     betID.split("-")[0]
                 );
             } else {
+                $(specificNumber + 'Number').removeClass('chip-animation');
+
                 this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
@@ -144,6 +146,7 @@ export const BetResult = {
                 }, 5000);
 
             } else {
+                $(specificNumber + 'Number').removeClass('chip-animation');
                 console.log('This is the result of two digit :', specificNumber + '-' + number)
                 this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
@@ -153,6 +156,7 @@ export const BetResult = {
                     betID.split("-")[0]
                 );
             }
+            $(specificNumber + 'Number').removeClass('chip-animation');
         },
 
 

@@ -133,7 +133,7 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
+    // Doc: https://axios.nuxtjs.org/usage 
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
     "@nuxtjs/moment",
