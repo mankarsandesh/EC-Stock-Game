@@ -2,10 +2,10 @@ import config from "../config/config.global";
 
 export default context => {
   // Global Roarr function
-  globalThis.ROARR = globalThis.ROARR || {};
+  window.ROARR = window.ROARR || {};
 
   // Send log to the server
-  globalThis.ROARR.write = message => {
+  window.ROARR.write = message => {
     context.$axios
       .post(config.logDomain, JSON.parse(message))
       .then(done => {})
