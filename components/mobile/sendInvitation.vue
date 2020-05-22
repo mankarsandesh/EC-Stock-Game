@@ -77,7 +77,7 @@
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <span v-on="on">#{{ item.winRate }}</span>
+                    <span v-on="on">{{ item.winRate }}%</span>
                   </template>
                   <span>{{ $t("invitation.userWinRate") }}</span>
                 </v-tooltip>
@@ -109,8 +109,9 @@
           <v-flex> {{ this.invitationError }} </v-flex>
         </v-layout>
         <v-layout justify-center>
-          <v-flex v-for="(item, index) in categoryName" v-bind:key="index" pl-3>
+          <v-flex v-for="(item, index) in categoryName" v-bind:key="index">
             <v-checkbox
+              justify-center
               color="green"
               :height="5"
               v-model="selectCategory"
@@ -119,7 +120,6 @@
             ></v-checkbox>
           </v-flex>
         </v-layout>
-
         <v-btn class="buttonInvitation" @click="sendInvitation()">
           {{ $t("invitation.sendInvitation") }} &nbsp;
           <i class="fa fa-paper-plane"></i>
@@ -307,7 +307,7 @@ export default {
   text-align: center;
 }
 .userList .winRate {
-  color: #42c851;
+  color: #ed4561;
   font-weight: 800;
   text-align: center;
 }

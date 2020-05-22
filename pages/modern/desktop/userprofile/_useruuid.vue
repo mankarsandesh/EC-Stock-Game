@@ -45,9 +45,7 @@
                     </span>
                     </v-flex>
                   </v-layout>
-                    
                   </div>
-
                   <span
                     class="font-weight-medium"
                     v-if="visitProfileUserData.username"
