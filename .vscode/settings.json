@@ -1,4 +1,13 @@
 {
-    "i18n-ally.localesPaths": "locales",
-    "vue-i18n-ally.localesPaths": "locales"
+  "i18n-ally.localesPaths": "locales",
+  "vue-i18n-ally.localesPaths": "locales",
+  "cSpell.words": [
+    "Roarr",
+    "WHITELABEL",
+    "axios",
+    "linkto",
+    "swal",
+    "topup",
+    "vuex"
+  ]
 }

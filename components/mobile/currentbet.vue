@@ -1,67 +1,50 @@
 <template>
   <v-layout row class="justify-center" mt-2>
     <v-flex xs12 md12>
-      <v-data-table
-        :headers="head"
-        :items="currentBets"
-        :items-per-page="5"
-        ref="table"
-        :search="search"
-        class="current-bet"
-      >     
-        <template v-slot:items="item">
-          <td>{{ item.item.betUUID }}</td>
-          <td>{{ item.item.gameUUID }}</td>
-          <td>
-            {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }}
-          </td>
-          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
-          <td>{{ item.item.betAmount | toCurrency }}</td>
-          <td>{{ item.item.payout }}</td>
-          <td v-if="item.item.betResult == 'win'">
-            <v-chip
-              color="green"
-              text-color="white"
-              class="text-uppercase betresult"
-              >{{ item.item.betResult }}</v-chip
-            >
-          </td>
-          <td v-if="item.item.betResult == 'lose'">
-            <v-chip
-              color="red"
-              text-color="white"
-              class="text-uppercase betresult"
-              >{{ item.item.betResult }}</v-chip
-            >
-          </td>
-          <td v-if="item.item.betResult == 'pending'">
-            <v-chip
-              color="yellow "
-              text-color="black"
-              class="text-uppercase betresult"
-              >{{ item.item.betResult }}...</v-chip
-            >
-          </td>
+      <v-list-tile v-if="currentBets.length == 0" class="notBets">
+        <h3>{{$t("currentBet.noBets")}}</h3>
+      </v-list-tile>
+      <v-list three-line v-if="currentBets.length > 0">
+        <template v-for="(item, index) in currentBets" style="margin-bottom:50px;">
+          <v-list-tile :key="item.betUUID">
+            <v-list-tile-content>
+              <v-list-tile-sub-title
+                class="headingTitle"
+              >{{ item.ruleName }} - ({{ item.payout }}) {{ item.stockName }}</v-list-tile-sub-title>
+              <v-list-tile-sub-title>
+                <span class="lastDraw" v-html="$options.filters.lastDraw(item.gameDraw)"></span>
+              </v-list-tile-sub-title>
+              <v-list-tile-sub-title>{{ item.createdDate }} {{ item.createdTime }}</v-list-tile-sub-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
+              <span class="betAmount">{{ item.betAmount | toCurrency }}</span>
+              <div v-if="item.isFollowBet == 1" class="following">{{$t("currentBet.byFollowers")}}</div>
+              <div v-if="item.isFollowBet == 0" class="original">{{$t("currentBet.original")}}</div>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-divider :key="index"></v-divider>
         </template>
-        <template slot="footer">
-          <tr>
-            <td>{{ $t("msg.Total") }}</td>
-            <td colspan="3">{{ currentBets.length }} bets</td>
-            <td>
-              <strong>{{ TotalAmount | toCurrency }}</strong>
-            </td>
-            <td colspan="2"></td>
-          </tr>
-        </template>
-      </v-data-table>
+        <div class="footer" v-if="currentBets.length > 0">
+          <div>
+            <span>
+              <strong>{{$t("currentBet.total")}} :</strong>
+              {{ currentBets.length }} {{$t("currentBet.bets")}}
+            </span>
+            <span>
+              <strong>{{$t("currentBet.totalAmount")}}</strong>  
+              :{{ TotalAmount | toCurrency }}
+            </span>
+          </div>
+        </div>
+      </v-list>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
 export default {
-  props: ["head", "currentBets"],
+  props: ["currentBets"],
   data: () => ({
     search: ""
   }),
@@ -90,7 +73,59 @@ export default {
 };
 </script>
 <style>
+.notBets {
+  font-size: 16px;
+  color: #9e8e8e;
+  text-align: center;
+  margin: 300px auto;
+}
+.notBets h3 {
+  text-align: center;
+  margin: 0 auto;
+}
+.footer {
+  width: 100%;
+  background-color: #dddddd;
+  padding: 10px 0px;
+  position: fixed;
+  bottom: 0;
+  border-top: 2px solid #dddddd;
+}
+.footer div {
+  text-align: center;
+  width: 100%;
+}
+.footer div span {
+  text-align: center;
+  font-size: 16px;
+  margin: 0px 6px;
+}
 .betresult {
   width: auto;
+}
+.headingTitle {
+  font-weight: 600;
+  color: #003f70 !important;
+  font-size: 16px;
+}
+.original {
+  text-align: right;
+  width: 100px;
+  color: #fec623;
+  font-size: 12px;
+  text-transform: lowercase;
+  font-weight: 600;
+}
+.following {
+  text-align: right;
+  width: 100px;
+  color: #2bb13b;
+  font-size: 12px;
+  text-transform: lowercase;
+  font-weight: 600;
+}
+.betAmount {
+  font-weight: 600;
+  color: #333;
 }
 </style>

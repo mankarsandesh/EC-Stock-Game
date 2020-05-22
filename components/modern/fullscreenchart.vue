@@ -1,13 +1,22 @@
 <template>
   <div class="text-xs-center">
-    <apexchart type="bar" height="350" :options="chartOptions" :series="series" :key="componentKey"></apexchart>
+    <apexchart
+      type="bar"
+      :height="chartHeight"
+      :options="chartOptions"
+      :series="series"
+      :key="componentKey"
+    ></apexchart>
   </div>
 </template>
 
 <script>
 import VueApexCharts from "vue-apexcharts";
-import { mapGetters, mapState } from "vuex";
-import openSocket from "socket.io-client";
+import { mapGetters } from "vuex";
+import config from "../../config/config.global";
+import log from "roarr";
+import secureStorage from "../../plugins/secure-storage.js";
+
 export default {
   props: ["StockData"],
   components: {
@@ -15,59 +24,68 @@ export default {
   },
   data() {
     return {
+      chartHeight: "350vh",
+      stockName: this.$route.path.split('/')[3],
+      loopName: '',
+      window: {
+        width: 0,
+        height: 0
+      },
       series: [
         {
-          name: "BIG",
-          data: [1, 2, 0, 15],
-          betCounts: [15, 14, 13, 0]
+          name: window.$nuxt.$root.$t("gamemsg.big"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
-          name: "SMALL",
-          data: [0, 10, 10, 0],
-          betCounts: [15, 14, 13, 100]
+          name: window.$nuxt.$root.$t("gamemsg.small"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
-          name: "ODD",
-          data: [0, 0, 0, 10],
-          betCounts: [15, 14, 13, 12]
+          name: window.$nuxt.$root.$t("gamemsg.odd"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
-          name: "EVEN",
-          data: [0, 0, 5, 15],
-          betCounts: [15, 14, 13, 12]
+          name: window.$nuxt.$root.$t("gamemsg.even"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
-          name: "HIGH",
-          data: [1, 5, 0, 1],
-          betCounts: [15, 14, 13, 12]
+          name: window.$nuxt.$root.$t("gamemsg.high"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
-          name: "MID",
-          data: [1, 0, 0, 0],
-          betCounts: [15, 14, 13, 12]
+          name: window.$nuxt.$root.$t("gamemsg.mid"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
-          name: "LOW",
-          data: [0, 20, 0, 15],
-          betCounts: [15, 14, 13, 12]
+          name: window.$nuxt.$root.$t("gamemsg.low"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
-          name: "NUMBER",
-          data: [1, 0, 10, 10],
-          betCounts: [15, 14, 13, 12]
+          name: window.$nuxt.$root.$t("gamemsg.number"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         },
         {
-          name : "TIE",
-          data: [0, 9, 20, 0],
-          betCounts: [15, 14, 13, 20]
+          name: window.$nuxt.$root.$t("gamemsg.tie"),
+          data: [0, 0, 0, 0],
+          betCounts: [0, 0, 0, 0]
         }
       ],
       componentKey: 0,
       chartOptions: {
         chart: {
-          toolbar : { show :false },     
+          toolbar: {
+            show: false
+          },
           type: "bar",
-          height: 350,
+          height: 250,
           stacked: true,
           stackType: "100%"
         },
@@ -80,11 +98,13 @@ export default {
           width: 1,
           colors: ["#fff"]
         },
-        // title: {
-        //   text: "Live Bet Data"
-        // },
         xaxis: {
-          categories: ["First Digit", "Last Digit", "Both Digit", "Two Digit"]
+          categories: [
+            this.$root.$t("gamemsg.firstdigit"),
+            this.$root.$t("gamemsg.lastdigit"),
+            this.$root.$t("gamemsg.bothdigit"),
+            this.$root.$t("gamemsg.twodigit")
+          ]
         },
         tooltip: {
           enabled: true,
@@ -94,13 +114,22 @@ export default {
             highlightDataSeries: false
           },
           y: {
-            formatter: function(val, { series, seriesIndex, dataPointIndex, w }) {
-              return '<div class="arrow_box">' +
-                 '<span> Amount: $' + series[seriesIndex][dataPointIndex] + ' </span>' +
-                '</div>' +
-                '<div class="arrow_box">' + 
-                '<span> BetCount:' + w.config.series[seriesIndex].betCounts[dataPointIndex] + '</span>' +
-                '</div>'
+            formatter: function(
+              val,
+              { series, seriesIndex, dataPointIndex, w }
+            ) {
+              return (
+                '<div class="arrow_box">' +
+                "<span> Amount: $" +
+                series[seriesIndex][dataPointIndex] +
+                " </span>" +
+                "</div>" +
+                '<div class="arrow_box">' +
+                "<span> BetCount:" +
+                w.config.series[seriesIndex].betCounts[dataPointIndex] +
+                "</span>" +
+                "</div>"
+              );
             }
           }
         },
@@ -114,44 +143,118 @@ export default {
         }
       }
     };
-  },  
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+    if(this.stockName.slice(0, -1) == 'btc') {
+      this.loopName = this.stockName.slice(-1) == 1 ? this.stockName.slice(-1) : '5';
+      this.stockName = this.stockName; 
+    } else {
+      this.stockName = this.stockName[3];
+      this.loopName = '5';
+    }
+    this.connectSocket();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   computed: {
     ...mapGetters([
-      ""
-    ]),
-    ...mapState([
-      "gameStockId"
+      "getGameUUIDByStockName",
+      "getPortalProviderUUID",
+      "getStockUUIDByStockName"
     ])
   },
-  mounted() {
-    this.listenForBroadcast({ 
-      channelName: "liveBetCounts." + this.gameStockId,
-      eventName: "liveBetCounts" 
-    },
-     ({ data }) => {
-       console.log("live game");
-      console.log(data.data);
-      this.series = data.data;
-      this.componentKey += 1;
-    }
-    );
-  },
   methods: {
+    connectSocket() {
+      this.listenForBroadcast(
+        {
+          channelName: `liveBetCounts.${this.getPortalProviderUUID}.${this.getStockUUIDByStockName(this.stockName)}.${this.loopName}`,
+          eventName: "liveBetCounts"
+        },
+        ({ data }) => {
+          try {
+            var logData = data;
+            if (data.status) {
+              this.series = data.data;
+              this.componentKey += 1;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                channel: `liveBetCounts.${this.getGameUUIDByStockName(
+                  this.$route.params.id
+                )}`,
+                event: "liveBetCounts",
+                res: logData,
+                page: "components/modern/fullscreenchart.vue",
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        }
+      );
+    },
     listenForBroadcast({ channelName, eventName }, callback) {
-    window.Echo.channel(channelName).listen(eventName, callback);
+      window.Echo.channel(channelName)
+        .listen(eventName, callback)
+        .on("pusher:subscription_succeeded", async member => {
+          try {
+            var reqBody = {
+              portalProviderUUID: this.getPortalProviderUUID,
+              gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
+              version: 1
+            };
+            var { data } = await this.$axios.post(
+              config.liveBetCount.url,
+              reqBody,
+              {
+                headers: config.header
+              }
+            );
+            if (data.status) {
+              this.series = data.data;
+              this.componentKey += 1;
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                req: reqBody,
+                res: data,
+                page: "components/modern/fullscreenchart.vue",
+                apiUrl: config.liveBetCount.url,
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        });
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+      // Chart Size Change According Desktop and Laptop Size
+      if (this.window.width >= 2000) {
+        this.chartHeight = "420vh";
+        this.heightChart = 420;
+      } else if (this.window.width > 1400) {
+        this.chartHeight = "380vh";
+        this.heightChart = 380;
+      } else {
+        this.chartHeight = "300vh";
+        this.heightChart = 300;
+      }
     }
   }
-
 };
 </script>
-
-<style scoped>
-.set-height {
-  height: 300px;
-}
-
-.v-progress-circular {
-  margin: 1rem;
-}
-</style>
-

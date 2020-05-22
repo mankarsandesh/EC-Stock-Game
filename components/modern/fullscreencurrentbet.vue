@@ -1,50 +1,46 @@
 <template>
-  <div class="table-scroll table-wrapper-scroll-y pl-3">
-    <div>
-      <h4
-        align="center"
-        fill-height
-        fluid
-        justify="center"
-        v-show="getOnGoingBet.length <= 0"
-        class="nobetting"
-      >{{ $t("msg.nobetting") }}</h4>
-      <table class="main-table" v-show="getOnGoingBet.length > 0">
-        <tbody v-for="(item, index) in getOnGoingBet" :key="index">
-          <tr class="table-rowheight">
-            <th class="fixed-side table-headbg">BET ID</th>
-            <td>{{ item.betUUID }}</td>
-          </tr>
-          <tr class="table-rowheight">
-            <th class="fixed-side table-headbg">GAME ID</th>
-            <td>{{ item.gameUUID }}</td>
-          </tr>
-          <tr class="table-rowheight">
-            <th class="fixed-side table-headbg">BET DETAIL</th>
-            <td>{{ item.betAmount }} on rule ({{ item.ruleName }})</td>
-          </tr>
-          <tr class="table-rowheight">
-            <th class="fixed-side table-headbg">TIME</th>
-            <td>{{ item.betDate }} {{ item.betTime }}</td>
-          </tr>
-          <tr class="table-rowheight">
-            <th class="fixed-side table-headbg">AMOUNT</th>
-            <td>{{ item.betAmount }}</td>
-          </tr>
-          <tr class="table-rowheight">
-            <th class="fixed-side table-headbg">PAYOUT</th>
-            <td>{{ item.payout }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="table-scroll table-wrapper-scroll-y pl-3">
+  <div>
+    <h4 align="center" fill-height fluid justify="center" v-show="getOnGoingBet.length <= 0" class="nobetting">{{ $t("msg.noBetting") }}</h4>
+    <table class="main-table" v-show="getOnGoingBet.length > 0">
+      <tbody v-for="(item, index) in getOnGoingBet" :key="index">
+        <tr class="table-rowheight">
+          <th class="fixed-side table-headbg">{{$t('msg.betId')}}</th>
+          <td>{{ item.betUUID }}</td>
+        </tr>
+        <tr class="table-rowheight">
+          <th class="fixed-side table-headbg">{{$t('msg.gameId')}}</th>
+          <td>{{ item.gameUUID }}</td>
+        </tr>
+        <tr class="table-rowheight">
+          <th class="fixed-side table-headbg">{{$t('msg.betDetail')}}</th>
+          <td>{{ item.betAmount }} on rule ({{ item.ruleName }})</td>
+        </tr>
+        <tr class="table-rowheight">
+          <th class="fixed-side table-headbg">{{$t('msg.time')}}</th>
+          <td>{{ item.betDate }} {{ item.betTime }} {{item.createdDate}} {{item.createdTime}}</td>
+        </tr>
+        <tr class="table-rowheight">
+          <th class="fixed-side table-headbg">{{$t('msg.amount')}}</th>
+          <td>{{ item.betAmount }}</td>
+        </tr>
+        <tr class="table-rowheight">
+          <th class="fixed-side table-headbg">{{$t('msg.payout')}}</th>
+          <td>{{ item.payout }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
 </template>
+
 <script>
-import { mapGetters } from "vuex";
+import {
+  mapGetters
+} from "vuex";
 export default {
   computed: {
-    ...mapGetters(["getOnGoingBet"])
+    ...mapGetters(["getOnGoingBet", "getMultiGameBet"])
   }
 };
 </script>
@@ -56,7 +52,7 @@ export default {
 
 .table-scroll {
   position: relative;
-  min-width: 290px;
+  min-width: 400px;
   margin: auto;
   overflow: auto;
   max-height: 350px;
@@ -116,22 +112,27 @@ export default {
 .clone tfoot {
   background: transparent;
 }
+
 .nobetting {
   padding: 148px 48px !important;
 }
+
 ::-webkit-scrollbar {
   width: 12px;
 }
+
 /* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 7px #acacac;
   border-radius: 10px;
 }
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #acacac;
   border-radius: 15px;
 }
+
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #2c6b9e;

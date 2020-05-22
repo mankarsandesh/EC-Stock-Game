@@ -1,27 +1,40 @@
 <template>
-  <v-container grid-list-md text-xs-center fluid grid-list-lg fill-height class="bg-gmaeType">
+  <v-container
+    grid-list-md
+    text-xs-center
+    fluid
+    grid-list-lg
+    fill-height
+    class="bg-gmaeType"
+  >
     <v-container>
       <v-layout row wrap align-center justify-center>
         <v-flex xs12>
-          <h1 class="display-1">{{$t('msg.ChooseTheVersionToPlay')}}</h1>
+          <h1 class="display-1">{{ $t("msg.chooseTheVersionToPlay") }}</h1>
         </v-flex>
         <v-flex xs12>
           <v-img src="/bg/gameType.png" />
           <v-layout row wrap align-end justify-space-around>
             <v-btn
-              :to="stockname == '' ? '/classic/l-btc1-live':'/classic/l-'+stockname+'-live'"
+              :to="
+                stockname == ''
+                  ? '/classic/l-btc1-live'
+                  : '/classic/l-' + stockname + '-live'
+              "
               :large="$vuetify.breakpoint.smAndUp"
               :small="$vuetify.breakpoint.smAndDown"
               color="red"
               class="white--text"
-            >{{$t('msg.ClassicVersion')}}</v-btn>
+              >{{ $t("msg.classicVersion") }}</v-btn
+            >
             <v-btn
               :to="linkto"
               :large="$vuetify.breakpoint.smAndUp"
               :small="$vuetify.breakpoint.smAndDown"
               color="green"
               class="white--text"
-            >{{$t('msg.ModernVersion')}}</v-btn>
+              >{{ $t("msg.modernVersion") }}</v-btn
+            >
           </v-layout>
         </v-flex>
       </v-layout>
@@ -55,27 +68,25 @@ export default {
       .split("?")[1]
       .split("=")[1]
       .split("&")[0];
-    // console.log(this.stockname)
   },
   watch: {
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
         this.linkto = "modern";
       } else {
-        this.linkto = "/modern/desktop/" + stockname;
+        this.linkto = "/modern/desktop/" + this.stockname;
       }
     }
   },
   computed: {
-    ...mapGetters(["getlocale", "getUserName"]),
+    ...mapGetters(["getLocale"]),
     countryflag() {
-      return this.getlocale;
+      return this.getLocale;
     }
   },
   methods: {}
 };
 </script>
-
 
 <style lang="scss">
 .bg-gmaeType {

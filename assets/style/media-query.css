@@ -2,44 +2,60 @@
   ##Device = Desktops
   ##Screen = 1281px to higher resolution desktops
 */
-/*
-Big Screen 
-*/
 
-@media (min-width: 1281px) {
+/*
+Big Screen 24 Inch 
+*/
+@media (min-width: 1920px) and (max-width: 3000px) {
+    /* Leader board Page */
+    .userProfileRow .pimage {
+      width: 60px;
+      height: 60px;
+    }
+    .header {
+      font-size: 20px;
+      margin-top: 30px;
+      color: #6c6c6c;
+    }
+    .titleText {
+      font-size: 24px;
+    }
+
+  /* Current Bet Page*/
+  .tableStyle th{
+    font-size: 15px !important;
+  }
+  .selectStock {
+    font-size: 14px;
+  }
   .btn-langage span {
     font-size: 14px;
   }
-  
   .menuItem {
     border-right: 2px solid #dddddd;
     height: 60px !important;
     padding: 15px;
   }
-
   .logoStyle {
     width: 150px;
     cursor: pointer;
     margin-left: 15px;
   }
-
   .menuItem span {
     font-size: 14px;
   }
-
   .menuItem i {
     margin-right: 5px;
     font-size: 18px;
   }
-
   .stockname {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     color: #4b65ff;
   }
 
   .gameid {
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
     font-weight: 500;
   }
@@ -50,30 +66,26 @@ Big Screen
     padding: 0px;
     margin: 0px;
   }
-
   .containerNew {
-    width: 95% !important;
+    width: 80% !important;
   }
-
   .buttonbtn {
-    width: 100px;
+    width: 80px;
   }
-
   /* game Rule Category Button */
   .btnHeight {
-    height: 80px;
+    width: 80px;
+    height: 85px;
   }
-
   .align_button4 {
     box-shadow: none !important;
     border: 2px solid #e8e8e8;
-    height: 85px;
+    height: 90px;
   }
-
-
   .big-digit {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
+    /* color:#6e6d6d; */
   }
 
   .big-number {
@@ -113,7 +125,6 @@ Big Screen
     background-color: #f7d0e3;
     border: 1px solid #fc4181 !important;
   }
-
   .rs0,
   .rs-o,
   .rs-l {
@@ -124,7 +135,6 @@ Big Screen
     background-color: #d0dafd;
     border: 1px solid #4b72ff !important;
   }
-
   .rs-m {
     font-size: 15px;
     font-weight: bolder;
@@ -132,20 +142,19 @@ Big Screen
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
   }
-
   span.addChart i {
     cursor: pointer;
     display: flex;
     justify-content: center;
     border-radius: 50%;
-    height: 47px;
-    width: 47px;
+    height: 45px;
+    width: 45px;
     padding: 10px !important;
     color: #ffffff !important;
     background-color: #4464ff !important;
     position: absolute;
     left: 49%;
-    top: 46%;
+    top: 45%;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
@@ -185,14 +194,22 @@ Big Screen
     padding: 0px;
   }
 
-
+  .firstDigit span {
+    color: #fff;
+  }
   .firstDigit {
+    color: #fff;
     font-weight: bolder;
     border-radius: 10px;
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+    background: rgb(13, 204, 255);
+    background: linear-gradient(
+      22deg,
+      rgba(13, 204, 255, 1) 0%,
+      rgba(71, 96, 255, 1) 100%
+    );
   }
 
   .lastDigit {
@@ -201,8 +218,13 @@ Big Screen
     font-weight: bolder;
     white-space: pre-line !important;
     height: 60px;
-    font-size: 12p14pxx;
-    background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+    font-size: 14px;
+    background: rgb(250, 209, 38);
+    background: linear-gradient(
+      22deg,
+      rgba(250, 209, 38, 1) 0%,
+      rgba(255, 84, 79, 1) 100%
+    );
   }
 
   .bothDigit {
@@ -211,7 +233,12 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
+    background: rgb(182, 53, 156);
+    background: linear-gradient(
+      22deg,
+      rgba(182, 53, 156, 1) 0%,
+      rgba(239, 10, 106, 1) 100%
+    );
   }
 
   .twoDigit {
@@ -220,7 +247,12 @@ Big Screen
     white-space: pre-line !important;
     height: 60px;
     font-size: 14px;
-    background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+    background: rgb(1, 233, 189);
+    background: linear-gradient(
+      22deg,
+      rgba(1, 233, 189, 1) 0%,
+      rgba(0, 124, 222, 1) 100%
+    );
   }
 
   .RoadMapTable tr td {
@@ -233,6 +265,306 @@ Big Screen
     z-index: 50;
     text-transform: capitalize;
   }
+  .bg-btn-first {
+    min-width: 88% !important;
+    width: 90% !important;
+  }
+  .bg-btn-last {
+    min-width: 88% !important;
+    width: 90% !important;
+  }
+  .bg-btn-both {
+    min-width: 88% !important;
+    width: 100% !important;
+  }
+  .bg-btn-two {
+    min-width: 88% !important;
+    width: 100% !important;
+  }
+  /* Leader board Page */
+  .userProfileRow .pimage {
+    width: 60px;
+    height: 60px;
+  }
+}
+/*
+Big Screen 22 Inch 
+*/
+@media (min-width: 1281px) and (max-width: 1920px) {
+  .selectStock {
+    font-size: 14px;
+  }
+  .btn-langage span {
+    font-size: 14px;
+  }
+  .menuItem {
+    border-right: 2px solid #dddddd;
+    height: 60px !important;
+    padding: 15px;
+  }
+  .logoStyle {
+    width: 150px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+  .menuItem span {
+    font-size: 14px;
+  }
+  .menuItem i {
+    margin-right: 5px;
+    font-size: 18px;
+  }
+  .stockname {
+    font-size: 20px;
+    font-weight: 600;
+    color: #4b65ff;
+  }
+
+  .gameid {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+  }
+
+  .notification {
+    background-color: #2cb028 !important;
+    height: 42px !important;
+    padding: 0px;
+    margin: 0px;
+  }
+  .containerNew {
+    width: 100% !important;
+  }
+  .buttonbtn {
+    width: 80px;
+  }
+  /* game Rule Category Button */
+  .btnHeight {
+    width: 80px;
+    height: 80px;
+  }
+  .align_button4 {
+    box-shadow: none !important;
+    border: 2px solid #e8e8e8;
+    height: 85px;
+  }
+  .big-digit {
+    font-size: 14px;
+    font-weight: 600;
+    /* color:#6e6d6d; */
+  }
+
+  .big-number {
+    font-size: 15px;
+    font-weight: bolder;
+    color: #4871ff !important;
+    outline: none;
+    background-color: #d0dafd;
+    border: 1px solid #97a9fe !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .small-number {
+    margin-right: 10px;
+    font-size: 15px;
+    font-weight: bolder;
+    color: #fc4783 !important;
+    outline: none;
+    background-color: #f6d0e3;
+    border: 1px solid #fc4783 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .rs1,
+  .rs-e,
+  .rs-u {
+    color: #003f70;
+    font-size: 15px;
+    font-weight: bolder;
+    color: #fc4181 !important;
+    background-color: #f7d0e3;
+    border: 1px solid #fc4181 !important;
+  }
+  .rs0,
+  .rs-o,
+  .rs-l {
+    color: red;
+    font-size: 15px;
+    font-weight: bolder;
+    color: #4b72ff !important;
+    background-color: #d0dafd;
+    border: 1px solid #4b72ff !important;
+  }
+  .rs-m {
+    font-size: 15px;
+    font-weight: bolder;
+    color: #17b1ca !important;
+    background-color: #c0e6f2;
+    border: 1px solid #17b1ca !important;
+  }
+  span.addChart i {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    padding: 10px !important;
+    color: #ffffff !important;
+    background-color: #4464ff !important;
+    position: absolute;
+    left: 49%;
+    top: 45%;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .red {
+    text-align: center;
+    color: #fff;
+    height: 24px;
+    width: 24px;
+    background-color: red;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .blue {
+    text-align: center;
+    color: #fff;
+    height: 24px;
+    width: 24px;
+    background-color: #003f70;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .green {
+    text-align: center;
+    color: #fff;
+    height: 24px;
+    width: 24px;
+    background-color: rgb(8, 214, 77);
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .firstDigit span {
+    color: #fff;
+  }
+  .firstDigit {
+    color: #fff;
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background: rgb(13, 204, 255);
+    background: linear-gradient(
+      22deg,
+      rgba(13, 204, 255, 1) 0%,
+      rgba(71, 96, 255, 1) 100%
+    );
+  }
+
+  .lastDigit {
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bolder;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background: rgb(250, 209, 38);
+    background: linear-gradient(
+      22deg,
+      rgba(250, 209, 38, 1) 0%,
+      rgba(255, 84, 79, 1) 100%
+    );
+  }
+
+  .bothDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background: rgb(182, 53, 156);
+    background: linear-gradient(
+      22deg,
+      rgba(182, 53, 156, 1) 0%,
+      rgba(239, 10, 106, 1) 100%
+    );
+  }
+
+  .twoDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 60px;
+    font-size: 14px;
+    background: rgb(1, 233, 189);
+    background: linear-gradient(
+      22deg,
+      rgba(1, 233, 189, 1) 0%,
+      rgba(0, 124, 222, 1) 100%
+    );
+  }
+
+  .RoadMapTable tr td {
+    min-width: 23px;
+    height: 23px;
+  }
+  .bet-close p {
+    position: absolute;
+    font-size: 6em;
+    z-index: 50;
+    text-transform: capitalize;
+  }
+  .bg-btn-first {
+    min-width: 88% !important;
+    width: 90% !important;
+  }
+  .bg-btn-last {
+    min-width: 88% !important;
+    width: 90% !important;
+  }
+  .bg-btn-both {
+    min-width: 88% !important;
+    width: 100% !important;
+  }
+  .bg-btn-two {
+    min-width: 88% !important;
+    width: 100% !important;
+  }
+  /* Leader board Page */
+  .userProfileRow .pimage {
+    width: 60px;
+    height: 60px;
+  }
+  .header {
+    font-size: 20px;
+    margin-top: 30px;
+    color: #6c6c6c;
+  }
+  .titleText {
+    font-size: 24px;
+  }
+
+  /* Current Bet Page*/
+  .tableStyle th{
+    font-size: 15px !important;
+  }
 
 }
 
@@ -241,23 +573,65 @@ Big Screen
   ##Screen = B/w 1025px to 1280px
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
+  /* Leader board Page */
+  .userProfileRow .pimage {
+    width: 50px;
+    height: 50px;
+  }
+  .header {
+    font-size: 16px;
+    margin-top: 30px;
+    color: #6c6c6c;
+  }
+  .titleText {
+    font-size: 20px;
+  }
+  /* Current Bet Page*/
+  .tableStyle th{
+    font-size: 12px !important;
+  }
+  .userRow div:first-child .name {
+    font-size: 12px !important;
+  }
+  .bg-btn-first {
+    min-width: 60px !important;
+  }
+  .bg-btn-last {
+    min-width: 60px !important;
+  }
+  .bg-btn-both {
+    min-width: 60px !important;
+  }
+  .bg-btn-two {
+    min-width: 60px !important;
+  }
+  .lastdraw {
+    font-size: 14px !important;
+  }
+  .betclose {
+    font-size: 14px !important;
+  }
+  .lottery {
+    font-size: 14px !important;
+  }
+  .selectStock {
+    font-size: 12px !important;
+  }
   .btn-langage span {
     font-size: 12px;
   }
-
   .toolBar {
     margin-top: -10px;
   }
 
   .menuItem {
-    /* border:1px solid red; */
     border-right: 1px solid #dddddd;
     height: 55px !important;
     padding: 5px 10px;
   }
 
   .toolbarMenu {
-    /* border:1px solid red; */
+    background-color: #fff !important;
     height: 55px;
   }
 
@@ -304,16 +678,31 @@ Big Screen
   }
 
   .align_button4 {
+    width: 40px !important;
     box-shadow: none !important;
-    border: 1px solid #e8e8e8;
     height: 65px;
+    border: 1px solid #e8e8e8;
   }
 
   .big-digit {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
   }
-
+  span.addChart i {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    padding: 10px !important;
+    color: #ffffff !important;
+    background-color: #4464ff !important;
+    position: absolute;
+    left: 49%;
+    top: 45%;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
   .big-number {
     font-size: 12px;
     font-weight: bolder;
@@ -369,22 +758,6 @@ Big Screen
     color: #17b1ca !important;
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
-  }
-
-  span.addChart i {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    height: 47px;
-    width: 47px;
-    padding: 10px !important;
-    color: #ffffff !important;
-    background-color: #4464ff !important;
-    position: absolute;
-    left: 49%;
-    top: 46%;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
   .red {
@@ -424,12 +797,19 @@ Big Screen
   }
 
   .firstDigit {
-    font-weight: bolder;
+    text-align: center;
     border-radius: 10px;
+    font-weight: bolder;
     white-space: pre-line !important;
-    height: 60px;
-    font-size: 14px;
-    background-image: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
+    background: rgb(13, 204, 255);
+    background: linear-gradient(
+      22deg,
+      rgba(13, 204, 255, 1) 0%,
+      rgba(71, 96, 255, 1) 100%
+    );
   }
 
   .lastDigit {
@@ -437,27 +817,45 @@ Big Screen
     border-radius: 10px;
     font-weight: bolder;
     white-space: pre-line !important;
-    height: 60px;
-    font-size: 12p14pxx;
-    background-image: linear-gradient(to right, #fcc12c 20%, #fe644a 51%);
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
+    background: rgb(250, 209, 38);
+    background: linear-gradient(
+      22deg,
+      rgba(250, 209, 38, 1) 0%,
+      rgba(255, 84, 79, 1) 100%
+    );
   }
 
   .bothDigit {
     font-weight: bolder;
     border-radius: 10px;
     white-space: pre-line !important;
-    height: 60px;
-    font-size: 14px;
-    background-image: linear-gradient(to right, #be3095 20%, #e41273 51%);
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
+    background: rgb(182, 53, 156);
+    background: linear-gradient(
+      22deg,
+      rgba(182, 53, 156, 1) 0%,
+      rgba(239, 10, 106, 1) 100%
+    );
   }
 
   .twoDigit {
     font-weight: bolder;
     border-radius: 10px;
     white-space: pre-line !important;
-    height: 60px;
-    font-size: 14px;
-    background-image: linear-gradient(to right, #25dac2 20%, #0287db 51%);
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
+    background: rgb(1, 233, 189);
+    background: linear-gradient(
+      22deg,
+      rgba(1, 233, 189, 1) 0%,
+      rgba(0, 124, 222, 1) 100%
+    );
   }
 
   .RoadMapTable tr td {
@@ -476,20 +874,21 @@ Big Screen
     ##Device = Tablets, IPads (portrait)
     ##Screen = B/w 768px to 1024px
   */
-@media (min-width: 768px) and (max-width: 1024px) {}
+@media (min-width: 768px) and (max-width: 1024px) {
+}
 
 /* 
     ##Device = Tablets, IPads (landscape)
     ##Screen = B/w 768px to 1024px
 */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+}
 
 /* 
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
 @media (min-width: 481px) and (max-width: 767px) {
-
   .big-number {
     font-size: 12px;
     font-weight: bolder;
@@ -545,22 +944,6 @@ Big Screen
     color: #17b1ca !important;
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
-  }
-
-  span.addChart i {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    height: 47px;
-    width: 47px;
-    padding: 10px !important;
-    color: #ffffff !important;
-    background-color: #4464ff !important;
-    position: absolute;
-    left: 49%;
-    top: 46%;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
   .red {
@@ -647,7 +1030,6 @@ Big Screen
    ##Screen = B/w 320px to 479px
 */
 @media (min-width: 320px) and (max-width: 480px) {
-
   .big-number {
     font-size: 12px;
     font-weight: bolder;
@@ -703,22 +1085,6 @@ Big Screen
     color: #17b1ca !important;
     background-color: #c0e6f2;
     border: 1px solid #17b1ca !important;
-  }
-
-  span.addChart i {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    height: 47px;
-    width: 47px;
-    padding: 10px !important;
-    color: #ffffff !important;
-    background-color: #4464ff !important;
-    position: absolute;
-    left: 49%;
-    top: 46%;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   }
 
   .red {
@@ -798,5 +1164,4 @@ Big Screen
     min-width: 16px;
     height: 16px;
   }
-  
 }

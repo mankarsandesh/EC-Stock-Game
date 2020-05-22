@@ -1,19 +1,46 @@
 import Echo from "laravel-echo";
 import config from "../config/config.global";
-export default ({ store }) => {
-  const hostName = "uattesting.equitycapitalgaming.com";
+import log from "roarr";
+
+export default async ({ store, $axios }) => {
   const port = 6001;
 
   window.io = require("socket.io-client");
   window.Pusher = require("pusher-js");
+
+  try {
+    var reqBody = {
+      portalProviderUUID: store.getters.getPortalProviderUUID,
+      version: config.version
+    };
+    var { data } = await $axios.post(
+      config.getActiveGamesByCategory.url,
+      reqBody,
+      { headers: config.header }
+    );
+    store.dispatch("setStockCategory", data.data);
+  } catch (ex) {
+    console.log(ex);
+    log.error(
+      {
+        req: reqBody,
+        res,
+        page: "plugins/socketio.js",
+        apiUrl: config.getActiveGamesByCategory.url,
+        provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+        user: secureStorage.getItem("USER_UUID")
+      },
+      ex.message
+    );
+  }
 
   if (typeof io !== "undefined") {
     // connect to web socket
     try {
       window.Echo = new Echo({
         broadcaster: "pusher",
-        key: "CC21128A312FAF7817C93D1B51CB9", // SERVER_KEY = CC21128A312FAF7817C93D1B51CB9 ,Local Key = 6E591671FA45AE32B4AC2CB5BFA69
-        wsHost: hostName,
+        key: config.secretKey, // check on Config File.
+        wsHost: config.socketUrl,
         wsPort: port,
         disableStats: true,
         auth: {
@@ -24,31 +51,98 @@ export default ({ store }) => {
       console.log(error.message);
     }
   }
-  function listenForBroadcast({ channelName, eventName }, callback) {
-    window.Echo.channel(channelName).listen(eventName, callback);
-  }
-  // start listening socket stock live price
-  listenForBroadcast(
-    {
-      channelName: `stockList.${store.getters.getPortalProviderUUID}`,
-      eventName: "stockList"
-    },
-    ({ data }) => {
-      store.commit("setStockListTimer", data.data.stockData);
-    }
-  );
 
-  // get the stock category
   function listenStock({ channelName, eventName }, callback) {
     window.Echo.channel(channelName).listen(eventName, callback);
   }
+  // Get stock list countdown
+  listenStock(
+    {
+      channelName: `countdown.${store.getters.getPortalProviderUUID}`,
+      eventName: "countdown"
+    },
+    ({ data }) => {
+      try {
+        var logData = data;
+        if (data.status) {
+          store.dispatch("setStockCountdown", data.data.timeData);
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            channel: `countdown.${store.getters.getPortalProviderUUID}`,
+            event: "countdown",
+            res: logData,
+            page: "plugins/socketio.js",
+            provider: store.getters.getPortalProviderUUID,
+            user: store.getters.getUserUUID
+          },
+          ex.message
+        );
+      }
+    }
+  );
+  // Get active games by category
   listenStock(
     {
       channelName: `getActiveGamesByCategory.${store.getters.getPortalProviderUUID}`,
       eventName: "getActiveGamesByCategory"
     },
     ({ data }) => {
-      store.commit("SET_STOCK_CATEGORY", data.res.data);
+      try {
+        var logData = data.res;
+        if (data.res.status) {
+          store.dispatch("setStockCategory", data.res.data);
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            channel: `getActiveGamesByCategory.${store.getters.getPortalProviderUUID}`,
+            event: "getActiveGamesByCategory",
+            res: logData,
+            page: "plugins/socketio.js",
+            provider: store.getters.getPortalProviderUUID,
+            user: store.getters.getUserUUID
+          },
+          ex.message
+        );
+      }
+    }
+  );
+  // Get Stock list price
+  listenStock(
+    {
+      channelName: `stockListOnly.${store.getters.getPortalProviderUUID}`,
+      eventName: "stockListOnly"
+    },
+    ({ data }) => {
+      try {
+        var logData = data.data;
+        if (data.status) {
+          store.dispatch("setStockPrice", data.data.stockData);
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
+          {
+            channel: `stockListOnly.${store.getters.getPortalProviderUUID}`,
+            event: "stockListOnly",
+            res: logData,
+            page: "plugins/socketio.js",
+            provider: store.getters.getPortalProviderUUID,
+            user: store.getters.getUserUUID
+          },
+          ex.message
+        );
+      }
     }
   );
 };

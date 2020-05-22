@@ -2,52 +2,76 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">{{$t('notification.mynotification')}}</h2>
+        <h2 class="title_menu">{{ $t("notification.myNotification") }}</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">{{$t('notification.receivebyemail')}}</span>
+          <span class="group_title">
+            {{
+            $t("notification.receiveByEmail")
+            }}
+          </span>
           <div class="title_container">
             <!-- <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" @click="dialog = showAlert()"/> -->
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.insufficientbalance')}}</span>
+            <span class="titile">
+              {{
+              $t("notification.insufficientBalance")
+              }}
+            </span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.winingbets')}}</span>
+            <span class="titile">{{ $t("notification.winingBets") }}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.losingbets')}}</span>
+            <span class="titile">{{ $t("notification.losingBets") }}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.usersfollwme')}}</span>
+            <span class="titile">{{ $t("notification.usersFollowMe") }}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.amountcreditedordebitedtoanaccount')}}</span>
+            <span class="titile">
+              {{
+              $t("notification.amountCreditedOrDebitedToAccount")
+              }}
+            </span>
             <br />
           </div>
         </div>
       </v-flex>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">{{$t('notification.receivebymessage')}}</span>
+          <span class="group_title">
+            {{
+            $t("notification.receiveByMessage")
+            }}
+          </span>
           <div class="title_container">
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.insufficientbalance')}}</span>
+            <span class="titile">
+              {{
+              $t("notification.insufficientBalance")
+              }}
+            </span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.winingbets')}}</span>
+            <span class="titile">{{ $t("notification.winingBets") }}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.losingbets')}}</span>
+            <span class="titile">{{ $t("notification.losingBets") }}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.usersfollwme')}}</span>
+            <span class="titile">{{ $t("notification.usersFollowMe") }}</span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-            <span class="titile">{{$t('notification.amountcreditedordebitedtoanaccount')}}</span>
+            <span class="titile">
+              {{
+              $t("notification.amountCreditedOrDebitedToAccount")
+              }}
+            </span>
             <br />
           </div>
         </div>
@@ -58,12 +82,12 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
+
 export default {
   methods: {
     showAlert() {
       this.$swal.fire({
-        positio: "top",
+        position: "top",
         type: "success",
         title: "Changes saved",
         showConfirmButton: false,

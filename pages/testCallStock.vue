@@ -8,7 +8,6 @@
 import stockSelect from "~/components/stockSelect";
 import { mapActions, mapState } from "vuex";
 export default {
-  layout: "desktopModern",
   components: {
     stockSelect
   },
@@ -19,9 +18,8 @@ export default {
   mounted() {
     this.listenForBroadcast(
       {
-        channelName:
-          "getActiveGamesByCategory.0c0de128-e2bd-41f1-a8ec-40a57c72bae5",
-        eventName: "getActiveGamesByCategory"
+        channelName: "roadMap.88778f4f-610b-4ec3-937d-65ef7bf24af5",
+        eventName: "roadMap"
       },
       ({ data }) => {
         this.SelectStockItems = data;
@@ -31,11 +29,17 @@ export default {
   },
 
   computed: {
-    ...mapState(["portalProviderUUID", "headers"])
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID
+    })
   },
   methods: {
     listenForBroadcast({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
+      window.Echo.channel(channelName)
+        .listen(eventName, callback)
+        .on("pusher:subscription_succeeded", member => {
+          console.log("I am here");
+        });
     }
   }
 };

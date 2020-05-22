@@ -5,14 +5,16 @@
     </v-layout>
     <v-layout>
       <!-- bet result -->
-      <v-flex xs12>
+      <v-flex v-if="showStockresult == true">
+        <h4 class="text-center">Please Wait...</h4>
+      </v-flex>
+      <v-flex v-if="showStockresult == false">
         <div class="table-responsive">
-          <!-- <h3 class="title" v-show="getStockResult.code == 500">There are no Data</h3> -->
           <table class="table">
             <tr>
-              <th>{{ $t("msg.Stock Name") }}</th>
-              <th>{{ $t("msg.Time") }}</th>
-              <th>{{ $t("msg.Result") }}</th>
+              <th>{{ $t("msg.stockName") }}</th>
+              <th>{{ $t("msg.time") }}</th>
+              <th>{{ $t("msg.result") }}</th>
             </tr>
             <tr
               v-for="(data, index) in getStockResult"
@@ -20,9 +22,10 @@
               v-show="getStockResult.length > 0"
             >
               <td>
-                <nuxt-link
-                  :to="'/modern/desktop/' + data.stockName"
-                >{{ $t(`stockname.${data.stockName}`) }} {{ data.stockName == 'btc5' ? '5':'' }}</nuxt-link>
+                <nuxt-link :to="'/modern/desktop/' + data.stockName"
+                  >{{ $t(`stockname.${data.stockName}`) }}
+                  {{ data.stockName == "btc5" ? "5" : "" }}</nuxt-link
+                >
               </td>
               <td class="text-xs-center">{{ data.stockTimeStamp }}</td>
               <td class="text-xs-center">{{ roundValue(data.stockValue) }}</td>
@@ -35,16 +38,23 @@
 </template>
 <script>
 import { mapGetters, mapState } from "vuex";
-import config from "../../config/config.global";
+import config from "~/config/config.global";
+import log from "roarr";
+import secureStorage from "../../plugins/secure-storage";
+
 export default {
   data() {
     return {
+      showStockresult: true,
       selected: 1,
       getStockResult: []
     };
   },
   computed: {
-    ...mapState(["portalProviderUUID", "headers", "userUUID"]) //get 2 data from vuex first, in the computed
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+    }) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.stockResult();
@@ -52,29 +62,46 @@ export default {
 
   methods: {
     roundValue(value) {
-      return `${Number(value)
-        .toFixed(2)
-}`;
+      return `${Number(value).toFixed(2)}`;
     },
     onlyTime(value) {
       let d = value.split(" ");
       return d[1];
     },
     async stockResult() {
-      const dataSend = {
-        portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-        version: config.version // version of API
-      };
-      const { data } = await this.$axios.post(
-        config.getAllStock.url, // after finish crawl the every API will the the baseURL from AXIOS
-        dataSend, // data object
-        {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.portalProviderUUID,
+          version: config.version
+        };
+        var { data } = await this.$axios.post(config.getAllStock.url, reqBody, {
           headers: config.header
+        });
+        if (data.status) {
+          this.showStockresult = false;
+          this.getStockResult = data.data;
+        } else {
+          throw new Error(config.error.general);
         }
-      );
-      console.log(data);
-      console.log("Stock Resdult");
-      this.getStockResult = data.data;
+      } catch (ex) {
+        console.log(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        log.error(
+          {
+            req: reqBody,
+            res: data,
+            page: "components/modern/stockresult.vue",
+            apiUrl: config.getAllStock.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
+      }
     }
   }
 };

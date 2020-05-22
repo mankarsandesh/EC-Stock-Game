@@ -3,8 +3,13 @@
     <v-fade-transition mode="out-in">
       <v-layout align-center column>
         <v-img src="/bg/group33.png" width="500" height="100" />
+        <div class="errorBox" v-if="getLoginError.length > 0">
+          <h4 v-for="(data, index) in getLoginError" :key="index">
+            {{ data }}
+          </h4>
+        </div>
         <div class="preloader-wrap">
-          <div class="percentage" id="precent"></div>
+          <div class="percentage" id="percent"></div>
           <div class="loader">
             <div class="trackbar">
               <div class="loadbar"></div>
@@ -16,83 +21,62 @@
     </v-fade-transition>
   </v-container>
 </template>
-
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+import config from "~/config/config.global";
 import { isMobile } from "mobile-device-detect";
+import secureStorage from "../plugins/secure-storage";
+import log from "roarr";
+
 export default {
   layout: "nolayout",
-  middleware: "getApiKey",
+  middleware: ["checkAuth"],
 
   data() {
     return {
-      stockname: "btc1",
-      linkto: "",
-      // const userData = this.$route.query;
-      userData: {
-        authUser: "TNKSuper",
-        authPassword: "Test123!",
-        portalProviderUUID: "743c7b7d-0166-48be-84c3-375430a3c0ae",
-        userId: "dd7060bd-5da1-4f6c-96a2-fc292acd23f8",
-        redirect: "www.whitelabel.com"
-      }
+      stockName: config.homePageStockName,
+      linkto: ""
     };
   },
   mounted() {
-    let objJsonStr = JSON.stringify(this.userData);
-    let buff = new Buffer(objJsonStr);
-    let base64data = buff.toString("base64");
-
-    if (this.userData.authUser && this.userData.authPassword) {
-      if (this.userData.portalProviderUUID && this.userData.userId) {
-        let buffDecode = new Buffer(base64data, "base64");
-        let authData = buffDecode.toString("ascii");
-        this.setAuth(authData);
-        sessionStorage.setItem("AUTH", JSON.stringify(base64data));
-        this.getProgress();
-        this.linkto = isMobile
-          ? "/modern"
-          : "/modern/desktop/" + this.stockname;
-      } else {
-        console.log("Portal Provider OR userID is Missing..");
-      }
+    if (this.getLoginError.length > 0) {
     } else {
-      console.log("Authication authUser & authPassword is Missing.");
+      // Set referrer Url
+      secureStorage.setItem(
+        "referrerUrl",
+        document.referrer.match(/:\/\/(.[^/]+)/)[1]
+      );
+      this.setReferrer(document.referrer.match(/:\/\/(.[^/]+)/)[1]);
+      this.getProgress();
     }
   },
-  // created() {
-  //   this.stockname = window.location.search 
-  //     .split("?")[1]  // if run on the production will be have the api_key from url 
-  //     .split("=")[1] // find the spit the url 
-  //     .split("&")[0]; //  get data from split 
-  // },
   watch: {
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
         this.linkto = "modern";
       } else {
-        this.linkto = "/modern/desktop/" + stockname;
+        this.linkto = "/modern/desktop/" + this.stockName;
       }
     }
   },
+  computed: {
+    ...mapGetters(["getLoginError"])
+  },
   methods: {
-    ...mapMutations(["setAuth"]),
+    ...mapActions(["setReferrer"]),
     getProgress() {
-      let seft = this;
       let width = 100,
         perfData = window.performance.timing, // The PerformanceTiming interface represents timing-related performance information for the given page.
         EstimatedTime = -(perfData.loadEventEnd - perfData.navigationStart),
-        time = parseInt((EstimatedTime / 1000) % 60) * 100;
-
-      // Loadbar Animation
+        time = 1000;
+      // Load bar Animation
       $(".loadbar").animate(
         {
           width: width + "%"
         },
         time
       );
-
-      // Loadbar Glow Animation
+      // Load bar Glow Animation
       $(".glow").animate(
         {
           width: width + "%"
@@ -101,37 +85,50 @@ export default {
       );
 
       // Percentage Increment Animation
-      let PercentageID = $("#precent"),
+      let PercentageID = $("#percent"),
         start = 0,
         end = 100,
-        durataion = time;
-      animateValue(PercentageID, start, end, durataion);
-
-      function animateValue(id, start, end, duration) {
-        let range = end - start,
-          current = start,
-          increment = end > start ? 1 : -1,
-          stepTime = Math.abs(Math.floor(duration / range)),
-          obj = $(id);
-
-        let timer = setInterval(function() {
-          current += increment;
-          //   $(obj).text(current + "%");  //sHOW BY %
-          $(obj).text("lOADING..."); // SHOW BY LOADING
-          obj.innerHTML = current;
-          if (current == end) {
-            clearInterval(timer);
-            seft.$router.push("/modern/desktop/btc1");
-            // seft.$router.push("/dashboard?stockname=" + seft.stockname);
-          }
-        }, stepTime);
-      }
+        duration = time;
+      this.animateValue(PercentageID, start, end, duration);
 
       // Fading Out Loadbar on Finised
       setTimeout(function() {
         $(".preloader-wrap").fadeOut(100);
       }, time);
+    },
+    animateValue(id, start, end, duration) {
+      let range = end - start,
+        current = start,
+        increment = end > start ? 1 : -1,
+        stepTime = Math.abs(Math.floor(duration / range)),
+        obj = $(id);
+
+      let timer = setInterval(() => {
+        current += increment;
+        //   $(obj).text(current + "%");  //sHOW BY %
+        $(obj).text("lOADING..."); // SHOW BY LOADING
+        obj.innerHTML = current;
+        if (current == end) {
+          clearInterval(timer);
+          this.$router.push(
+            isMobile ? "/modern" : `/modern/desktop/${this.stockName}`
+          );
+        }
+      }, stepTime);
     }
   }
 };
 </script>
+
+<style scoped>
+.errorBox {
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 5px;
+  font-size: 23px;
+}
+
+.errorBox h2 {
+  color: #333;
+}
+</style>

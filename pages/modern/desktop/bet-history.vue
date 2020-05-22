@@ -1,16 +1,16 @@
 <template>
   <div>
     <breadcrumbs
-      :title=" $t('breadcrumbs.betHistory')"
+      :title="$t('breadcrumbs.betHistory')"
       linkItem="current-bet"
-      :titlebtn=" $t('breadcrumbs.currentBet')"
+      :titlebtn="$t('breadcrumbs.currentBet')"
     />
     <section class="filter">
       <v-container>
-        <v-layout class="filter-history">
-          <v-flex xs12 sm12 md6>
+        <v-layout class="filter-history" align-center justify-center>
+          <v-flex xs12 sm12 md5 lg5>
             <v-layout>
-              <v-flex xs12 sm12 md5>
+              <v-flex xs12 sm12 md4>
                 <v-menu
                   v-model="from"
                   :close-on-content-click="false"
@@ -31,14 +31,10 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker
-                    color="#1db42f"
-                    v-model="dateFrom"
-                    @input="from = false"
-                  ></v-date-picker>
+                  <v-date-picker color="#1db42f" v-model="dateFrom" @input="from = false"></v-date-picker>
                 </v-menu>
               </v-flex>
-              <v-flex xs12 sm12 md5>
+              <v-flex xs12 sm12 md4>
                 <v-menu
                   v-model="to"
                   :close-on-content-click="false"
@@ -59,43 +55,37 @@
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker
-                    color="#1db42f"
-                    v-model="dateTo"
-                    @input="to = false"
-                  ></v-date-picker>
+                  <v-date-picker color="#1db42f" v-model="dateTo" @input="to = false"></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md2>
                 <v-btn class="goButton" @click="searchBetHistory()">
-                  <i
-                    v-if="loadingImage"
-                    class="fa fa-circle-o-notch fa-spin"
-                  ></i
-                  >&nbsp;Go</v-btn
-                >
+                  <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
+                  &nbsp;{{ $t("msg.go") }}
+                </v-btn>
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs12 sm12 md6>
+          <v-flex xs12 sm12 md2 lg2></v-flex>
+          <v-flex xs12 sm12 md3 lg3>
             <v-layout>
-              <v-flex xs6>
+              <v-flex xs6 md6>
                 <v-text-field
                   v-model="search"
                   append-icon="search"
                   label="Search"
-                  placeholder="Search"
+                  :placeholder="$t('betHistory.searchByName')"
                   single-line
                   hide-details
                 ></v-text-field>
               </v-flex>
-              <v-flex xs6>
+              <v-flex xs6 md>
                 <v-select
                   @change="sortingBy"
                   v-model="sortby"
                   hide-details
-                  :items="dropdown_font"
-                  placeholder="Sort By"
+                  :items="[$t('betHistory.today'),$t('betHistory.thisWeek'),$t('betHistory.thisMonth')]"
+                  :placeholder="$t('msg.sortBy')"
                 ></v-select>
               </v-flex>
             </v-layout>
@@ -103,30 +93,27 @@
         </v-layout>
       </v-container>
     </section>
-    <!-- <fillterHistory /> -->
-    <bethistory
-      :head="head"
-      :search="search"
-      :userBetHistory="userBetHistory"
-    />
+    <!-- Bet History Data Table -->
+    <bethistory :search="search" :userBetHistory="userBetHistory" />
   </div>
 </template>
-
 <script>
 import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
-import fillterHistory from "~/components/modern/fillterHistory";
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
+import secureStorage from "../../../plugins/secure-storage";
+import log from "roarr";
+
 export default {
   layout: "desktopModern",
   components: {
     breadcrumbs,
-    fillterHistory,
     bethistory
   },
   data() {
     return {
+      today: new Date(),
       sortby: "",
       search: "",
       loadingImage: false,
@@ -134,109 +121,118 @@ export default {
       from: false,
       dateTo: "",
       to: false,
-      dropdown_font: ["Today", "This Week", "This Month"],
-      head: [
-        {
-          text: "bet ID",
-          value: "betID",
-          sortable: true,
-          value: "createdTime"
-        },
-        { text: "game ID", value: "gameID" },
-        { text: "bet detail", value: "ruleName" },
-        { text: "time", value: "createdTime" },
-        { text: "amount", value: "betAmount" },
-        { text: "payout", value: "payout" },
-        { text: "bet status", value: "gameStatus" }
-      ],
+      // dropdown_font: [
+      //   this.$root.$t("bethistory.today"),
+      //   this.$root.$t("bethistory.thisWeek"),
+      //   this.$root.$t("bethistory.thisMonth")
+      // ],
       userBetHistory: []
     };
   },
   computed: {
-    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
+    // Get 2 data from vuex first, in the computed
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+    })
   },
   mounted() {
-    const today = new Date();
     const lastWeek = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() - 7
+      this.today.getFullYear(),
+      this.today.getMonth(),
+      this.today.getDate() - 7
     )
       .toISOString()
       .substr(0, 10);
     this.dateFrom = lastWeek;
-    this.dateTo = today.toISOString().substring(0, 10);
-    this.fetch();
+    this.dateTo = this.today.toISOString().substring(0, 10);
+    this.fetchBetHsitory();
   },
   methods: {
+    // Sorting By Today,Week, Month
     sortingBy() {
-      console.log(this.sortby);
       if (this.sortby == "Today") {
-        console.log(this.sortby);
-        const today = new Date();
         const lastWeek = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate() - 1
+          this.today.getFullYear(),
+          this.today.getMonth(),
+          this.today.getDate() + 1
         )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
-        this.dateTo = today.toISOString().substring(0, 10);
-        this.fetch();
+        this.dateTo = this.today.toISOString().substring(0, 10);
+        this.fetchBetHsitory();
       } else if (this.sortby == "This Week") {
-        const today = new Date();
         const lastWeek = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate() - 7
+          this.today.getFullYear(),
+          this.today.getMonth(),
+          this.today.getDate() - 5
         )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
-        this.dateTo = today.toISOString().substring(0, 10);
-        this.fetch();
+        this.dateTo = this.today.toISOString().substring(0, 10);
+        this.fetchBetHsitory();
       } else if (this.sortby == "This Month") {
-        const today = new Date();
         const lastWeek = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate() - 30
+          this.today.getFullYear(),
+          this.today.getMonth(),
+          this.today.getDate() - 30
         )
           .toISOString()
           .substr(0, 10);
         this.dateFrom = lastWeek;
-        this.dateTo = today.toISOString().substring(0, 10);
-        this.fetch();
+        this.dateTo = this.today.toISOString().substring(0, 10);
+        this.fetchBetHsitory();
       }
     },
     searchBetHistory() {
       this.loadingImage = true;
       if (this.dateFrom && this.dateTo) {
-        this.fetch();
+        this.fetchBetHsitory();
       }
     },
-    async fetch() {
-      const userData = {
-        portalProviderUUID: this.portalProviderUUID, // get the portal provider uuid from computed that we call from vuex
-        userUUID: this.userUUID, // get the userUUID with the this object
-        version: config.version, // version of API
-        betResult: [0, 1], // -1= pending, 0= lose , 1 = win
-        limit: "50",
-        offset: "0", // offset or skip the data,
-        dateRangeFrom: this.dateFrom,
-        dateRangeTo: this.dateTo
-      };
-      const { data } = await this.$axios.post(
-        config.getAllBets.url, // after finish crawl the every API will the the baseURL from AXIOS
-        userData, // data object
-        {
+    // Fetch bet History user wise
+    async fetchBetHsitory() {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
+          version: config.version,
+          betResult: [0, 1],
+          dateRangeFrom: this.dateFrom,
+          dateRangeTo: this.dateTo
+        };
+        var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
+        });
+        if (data.status) {
+          this.userBetHistory = data.data;
+          this.loadingImage = false;
+        } else {
+          throw new Error(data.message);
+          this.loadingImage = false;
         }
-      );
-      this.userBetHistory = data.data;
-      console.log(this.userBetHistory);
-      this.loadingImage = false;
+      } catch (ex) {
+        console.log(data.message);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        this.loadingImage = false;
+        log.error(
+          {
+            req: reqBody,
+            res: data.data,
+            page: "pages/modern/desktop/bet-history.vue",
+            apiUrl: config.getAllBets.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
+      }
     }
   }
 };
@@ -244,7 +240,8 @@ export default {
 
 <style scoped>
 .filter {
-  padding: 10px;
+  background-color: #fff;
+  padding: 25px;
 }
 .goButton {
   background-color: #1db42f;

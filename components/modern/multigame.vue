@@ -26,7 +26,7 @@
       <v-flex>
         <v-layout>
           <v-flex class="text-xs-center" px-2>
-            <span class="text-gray">{{ $t("msg.Lastdraw") }}:</span>
+            <span class="text-gray">{{ $t("msg.lastDraw") }}:</span>
             <v-flex class="lastdraw">
               <span
                 class="text-black"
@@ -35,18 +35,18 @@
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
-            <span class="text-gray">{{ $t("msg.BetClosein") }}:</span>
+            <span class="text-gray">{{ $t("msg.betCloseIn") }}:</span>
             <v-flex class="betclose">
               <span
                 v-if="
                   getTimerByStockName(stockid) &&
-                    getTimerByStockName(stockid).stockOpenOrClosed === 'Closed!'
+                    getTimerByStockName(stockid).stockStatus === 'Closed'
                 "
                 class="text-black"
               >
                 {{
-                  getTimerByStockName(stockid) &&
-                    "close" | betclosein(getStockLoop(stockid))
+                  getTimerByStockName(stockid)
+                    | betclosein(getStockLoop(stockid))
                 }}
               </span>
               <span v-else class="text-black">
@@ -59,7 +59,7 @@
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
-            <span class="text-gray">{{ $t("msg.lotterydraw") }}:</span>
+            <span class="text-gray">{{ $t("msg.lotteryDraw") }}:</span>
             <v-flex class="lottery">
               <span class="text-black">
                 {{
@@ -96,8 +96,11 @@
 import { mapGetters } from "vuex";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
-import config from "../../config/config.global";
-// import livechart from "../modern/livechart"
+import config from "~/config/config.global";
+import secureStorage from "../../plugins/secure-storage";
+import log from "roarr";
+// import livechart from "~/modern/livechart"
+
 export default {
   data() {
     return {
@@ -120,8 +123,30 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
-        this.lastDraw = dataIndex.stockValue.replace(",", "");
+        try {
+          var logData = data;
+          if (data.status) {
+            let dataIndex = data.data.roadMap[0];
+            this.lastDraw = dataIndex.stockValue.replace(",", "");
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(this.stockid)}.${
+                this.getPortalProviderUUID
+              }`,
+              event: "roadMap",
+              res: logData,
+              page: "components/modern/multigame.vue",
+              provider: this.getPortalProviderUUID,
+              user: secureStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
   },
@@ -147,43 +172,53 @@ export default {
       "getPortalProviderUUID",
       "getTimerByStockName",
       "getStockLoop",
-      "lotterydraw",
-      "getStockById",
       "getAmountBettingByStockId"
     ])
   },
   methods: {
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-        if (res.code === 200) {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });
+        if (res.status) {
           this.lastDraw = res.data[0].roadMap
             .reverse()[0]
             .stockValue.replace(",", "");
         } else {
-          throw new Error();
+          throw new Error(config.error.general);
         }
       } catch (ex) {
-        this.fetchChart(this.getStockUUIDByStockName(this.stockid));
-        console.error(ex.message);
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/modern/multigame.vue",
+            apiUrl: config.getRoadMap.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
     setAfterFullScreenClosePage() {
-      localStorage.setItem("fullscreenclosed", "multigame");
+      secureStorage.setItem("fullscreenclosed", "multigame");
       this.$router.push(`/modern/fullscreen/${this.stockid}`);
     },
     formatToPrice(value) {

@@ -1,19 +1,21 @@
 <template>
-  <div style="z-index:100">
+  <div style="z-index: 100;">
     <v-menu offset-y :close-on-content-click="false" :min-width="180">
       <template v-slot:activator="{ on }">
-        <v-btn flat v-on="on" v-show="isShow == 'classic'">
-          <v-icon size="30">account_circle</v-icon>
-        </v-btn>
-        <v-btn flat v-on="on" v-show="isShow == 'modern'">
+        <v-btn flat v-on="on">
           <v-avatar size="40">
             <img :src="imgProfile" />
-          </v-avatar>          
+          </v-avatar>
           <div class="userLogoutMenu">
-            <span>{{getUserInfo.firstName}} {{getUserInfo.lastName}}</span>
-            <span>            
+            <span v-if="getUserInfo.firstName == null"
+              >{{ getUserInfo.userName }}
+            </span>
+            <span v-if="getUserInfo.firstName">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </span>
+            <span id="userBalance" @click="getUserBalancePosition()">
               <animated-number
-                :value="getUserInfo.balance"
+                :value="getUserBalance"
                 :formatValue="formatToPrice"
                 class="balance"
               />
@@ -23,103 +25,127 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-tile
-          @click="$router.push('/modern/desktop/profile/');"
-          v-show="isShow == 'modern'"
-        >
+        <v-list-tile @click="$router.push('/modern/desktop/userprofile/')">
           <i class="fa fa-user fa-2x margin-right-5" />
-          <v-list-tile-title>{{$t('menu.profile')}}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("menu.profile") }}</v-list-tile-title>
         </v-list-tile>
         <v-list-tile
-          @click="$router.push('/modern/desktop/profile/onlinehistory/');"
-          v-show="isShow == 'modern'"
+          @click="$router.push('/modern/desktop/profile/onlinehistory/')"
         >
           <i class="fa fa-hourglass-half fa-15x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.onlinehistory')}}</v-list-tile-title>
+          <v-list-tile-title>{{
+            $t("profile.onlineHistory")
+          }}</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile
-          @click="$router.push('/modern/desktop/profile/stockanalysis/');"
-          v-show="isShow == 'modern'"
-        >
-          <i class="fa fa-line-chart fa-15x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.stockanalysis')}}</v-list-tile-title>
+        <v-list-tile @click="$router.push('/modern/desktop/profile/follower/')">
+          <i class="fa fa-user fa-2x margin-right-5" />
+          <v-list-tile-title>{{ $t("profile.myFollowers") }}</v-list-tile-title>
         </v-list-tile>
-
         <v-list-tile @click="getLogout()">
           <i class="fa fa-lock fa-2x margin-right-5" />
-          <v-list-tile-title>{{$t('profile.signout')}}</v-list-tile-title>
+          <v-list-tile-title>{{ $t("profile.signOut") }}</v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
+
+    <v-dialog v-model="logoutDialog" persistent max-width="400">
+      <v-card class="logout">
+        <v-card-title class="headlineh1">ARE YOU SURE?</v-card-title>
+        <v-card-text
+          >This will erase all data from this device and take you back to the
+          loging screen.</v-card-text
+        >
+        <v-card-actions>
+          <v-btn class="buttonGreen" text @click="dialogStatus">Logout</v-btn>
+          <v-btn class="buttonCancel" text @click="dialog = false"
+            >Cancel</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 import AnimatedNumber from "animated-number-vue";
+import AppDialogsConfirm from "~/components/dialogsConfirm";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import config from '../config/config.global';
+import config from "../config/config.global";
+import secureStorage from "../plugins/secure-storage";
+
 export default {
   components: {
-    AnimatedNumber
+    AnimatedNumber,
+    AppDialogsConfirm
   },
   data() {
     return {
+      logoutDialog: false,
+      defaultImage: `/no-profile-pic.jpg`,
+      dialogConfirm: false,
+      profileImage: "",
       dialogprofile: false,
       isShow: ""
     };
   },
   computed: {
-    ...mapGetters(["getUserInfo"]),
+    ...mapGetters(["getUserInfo", "getUserBalance"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/` + this.getUserInfo.profileImage;
+      if (this.getUserInfo.profileImage == null) {
+        return `${this.defaultImage}`;
+      } else {
+        return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      }
     }
   },
   mounted() {
     this.isShow = location.pathname.split("/")[1];
   },
   methods: {
-    formatToPrice(value) {
-      return `${Number(value)
-        .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "1,")}`;
+    getUserBalancePosition() {
+      // console.log(document.getElementById("userBanlance").offsetTop);
+      // console.log(
+      //   document.getElementById("userBanlance").offsetParent.offsetParent
+      //     .offsetLeft
+      // );
+      // console.log(document.getElementById("betRuleButton").offsetTop);
+      // console.log(document.getElementById("betRuleButton").offsetLeft);
     },
     getLogout() {
-      this.$swal({
-        title: "Are you sure?",
-        text: "Did you leave the EC Gaming page?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, Logout!",
-        cancelButtonText: "No, Cancel Logout!",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      }).then(isConfirm => {
-        if (isConfirm.value) {
-          this.$swal({
-            title: "Good Bye EC Gaming!",
-            type: "success",
-            showConfirmButton: false,
-            timer: 1500
-          }).then(Confirm => {
-            this.$store.state.auth_token = [];
-            localStorage.apikey = [];
-            window.close();
-          });
-        } else {
-          this.$swal({
-            title: "Cancelled Logout",
-            type: "error",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
-      });
+      this.logoutDialog = true;
+    },
+    dialogStatus(value) {
+      if (value) {
+        secureStorage.removeItem("AUTH");
+        const URL = secureStorage.getItem("referrerURL");
+        location.href = "http://" + URL;
+        this.dialogConfirm = false;
+      }
+      this.dialogConfirm = false;
+    },
+    formatToPrice(value) {
+      return `$ ${Number(value)
+        .toFixed(2)
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     }
   }
 };
 </script>
 
 <style scoped>
+.headlineh1 {
+  font-weight: 600;
+  font-size: 22px;
+  text-align: left;
+  color: #0e2b69;
+}
+.logout {
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+#userBalance {
+  position: relative;
+}
 .v-menu__content {
   border-radius: 15px;
 }

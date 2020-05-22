@@ -1,84 +1,68 @@
 <template>
-  <div>
-    <v-layout wrap>
-      <v-flex
-        :class="setClass(' pl-3 pb-5')"
-        style="margin-top:10px;"
-        v-show="which_one == 'B/S' || which_one == !isFullscreen"
-      >
-        <div v-show="isFullscreen">
-          <span class="countBig text-grey"></span>
-          <span class="countSmall text-grey"></span>
-        </div>
-        <div class="bs-coltabledivlast">
-          <table class="table-responsive RoadMapTable" ref="tablebsTwo">
-            <tr v-for="(tr,index) in rowTable" :key="index">
-              <td v-for="(td,index) in BSLength" :key="index"></td>
-            </tr>
-          </table>
-        </div>
-      </v-flex>
+<div>
+  <v-layout wrap>
+    <v-flex :class="setClass(' pl-3 pb-5')" style="margin-top:10px;" v-show="which_one == 'B/S' || which_one == !isFullscreen">
+      <div v-show="isFullscreen">
+        <span class="countBig text-grey"></span>
+        <span class="countSmall text-grey"></span>
+      </div>
+      <div class="bs-coltabledivlast">
+        <table class="table-responsive RoadMapTable" ref="tablebsTwo">
+          <tr v-for="(tr, index) in rowTable" :key="index">
+            <td v-for="(td, index) in BSLength" :key="index"></td>
+          </tr>
+        </table>
+      </div>
+    </v-flex>
 
-      <v-flex
-        :class="setClass(' pl-3 pb-5')"
-        style="margin-top:10px;"
-        v-show="which_one == 'O/E' || which_one == !isFullscreen"
-      >
-        <div v-show="isFullscreen">
-          <span class="countOdd text-grey"></span>
-          <span class="countEven text-grey"></span>
-        </div>
-        <div class="oe-coltabledivlast">
-          <table class="table-responsive RoadMapTable" ref="tableOETwo">
-            <tr v-for="(tr,index) in rowTable" :key="index">
-              <td v-for="(td,index) in OELength" :key="index"></td>
-            </tr>
-          </table>
-        </div>
-      </v-flex>
+    <v-flex :class="setClass(' pl-3 pb-5')" style="margin-top:10px;" v-show="which_one == 'O/E' || which_one == !isFullscreen">
+      <div v-show="isFullscreen">
+        <span class="countOdd text-grey"></span>
+        <span class="countEven text-grey"></span>
+      </div>
+      <div class="oe-coltabledivlast">
+        <table class="table-responsive RoadMapTable" ref="tableOETwo">
+          <tr v-for="(tr, index) in rowTable" :key="index">
+            <td v-for="(td, index) in OELength" :key="index"></td>
+          </tr>
+        </table>
+      </div>
+    </v-flex>
 
-      <v-flex
-        :class="setClass('pl-3 pb-5')"
-        style="margin-top:10px;"
-        v-show="which_one == 'U/L' || which_one == !isFullscreen"
-      >
-        <div v-show="isFullscreen">
-          <span class="countUpper text-grey"></span>
-          <span class="countMiddle text-grey"></span>
-          <span class="countLower text-grey"></span>
-        </div>
-        <div class="ul-coltabledivlast">
-          <table class="table-responsive RoadMapTable" ref="tablebUMLTwo">
-            <tr v-for="(tr,index) in rowTable" :key="index">
-              <td v-for="(td,index) in HMLLength" :key="index"></td>
-            </tr>
-          </table>
-        </div>
-      </v-flex>
+    <v-flex :class="setClass('pl-3 pb-5')" style="margin-top:10px;" v-show="which_one == 'U/L' || which_one == !isFullscreen">
+      <div v-show="isFullscreen">
+        <span class="countUpper text-grey"></span>
+        <span class="countMiddle text-grey"></span>
+        <span class="countLower text-grey"></span>
+      </div>
+      <div class="ul-coltabledivlast">
+        <table class="table-responsive RoadMapTable" ref="tablebUMLTwo">
+          <tr v-for="(tr, index) in rowTable" :key="index">
+            <td v-for="(td, index) in HMLLength" :key="index"></td>
+          </tr>
+        </table>
+      </div>
+    </v-flex>
 
-      <v-flex
-        :class="setClass('pl-3 pb-5')"
-        style="margin-top:10px;"
-        v-show="which_one == 'NUM' || which_one == !isFullscreen"
-      >
-        <div v-show="isFullscreen" ref="sortNumber">
-          <span class="text-grey"></span>
-          <span class="text-grey"></span>
-          <span class="text-grey"></span>
-          <span class="text-grey"></span>
-          <span class="text-grey"></span>
-          <span class="text-grey"></span>
-        </div>
-        <div class="num-coltabledivlast">
-          <table class="table-responsive RoadMapTable" ref="tableNumberTwo">
-            <tr v-for="(tr,index) in rowTable" :key="index">
-              <td v-for="(td,index) in Numlength" :key="index"></td>
-            </tr>
-          </table>
-        </div>
-      </v-flex>
-    </v-layout>
-  </div>
+    <v-flex :class="setClass('pl-3 pb-5')" style="margin-top:10px;" v-show="which_one == 'NUM' || which_one == !isFullscreen">
+      <div v-show="isFullscreen" ref="sortNumber">
+        <span class="text-grey"></span>
+        <span class="text-grey"></span>
+        <span class="text-grey"></span>
+        <span class="text-grey"></span>
+        <span class="text-grey"></span>
+        <span class="text-grey"></span>
+      </div>
+      <div class="num-coltabledivlast">
+        <table class="table-responsive RoadMapTable" ref="tableNumberTwo">
+          <tr v-for="(tr, index) in rowTable" :key="index">
+            <td v-for="(td, index) in Numlength" :key="index"></td>
+          </tr>
+        </table>
+      </div>
+    </v-flex>
+  </v-layout>
+</div>
 </template>
 
 <script>
@@ -229,66 +213,33 @@ export default {
         }
       }
     },
-    // changeChartType(value) {
-    //   this.trendType = value;
-    //   this.clearTrendMap();
-    //   this.getTableChartBS();
-    // },
-    // autoScroll() {
-    //   let _this = this;
-    //   // setTimeout(function() {
-    //   let lop =
-    //     $(".my-coltabledivlast")
-    //       .first()
-    //       .width() - 30;
-    //   let valuebs = $(_this.$refs.tablebsTwo).find(".mystylelast")[0]
-    //     .offsetLeft;
-    //   let valueoe = $(_this.$refs.tableOETwo).find(".oestylelast")[0]
-    //     .offsetLeft;
-    //   let valueuml = $(_this.$refs.tablebUMLTwo).find(".umlstylelast")[0]
-    //     .offsetLeft;
-    //   let valuenum = $(_this.$refs.tableNumberTwo).find(".numScroll")[0]
-    //     .offsetLeft;
-    //   $(_this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
-    //   $(_this.$refs.tableOETwo).scrollLeft(valueoe - lop);
-    //   $(_this.$refs.tablebUMLTwo).scrollLeft(valueuml - lop);
-    //   $(_this.$refs.tableNumberTwo).scrollLeft(valuenum - lop);
-    //   // }, 1000);
-    // },
-    // sleep(milliseconds) {
-    //   return new Promise(resolve => setTimeout(resolve, milliseconds));
-    // },
     getTableChartBS() {
       if (this.dataArray === "") return;
       this.clearTrendMap();
       let n = 0;
       let firstlast = "";
-
       var start = +new Date(); // log start timestamp
-      // console.log(`${start} good` );
-      // console.log(this.dataArray)
-
       this.dataArray.forEach(element => {
         n++;
         if (this.trendType === "firstDigit") {
           firstlast = element.number1;
           this.gameID.push(
             element.stockTimeStamp +
-              "\n" +
-              element.stockValue +
-              "\n" +
-              "Fist Digit = " +
-              element.number1 +
-              "\n" +
-              "Last Digit = " +
-              element.number2 +
-              "\n" +
-              "Both Digit = " +
-              (parseInt(element.number1) + parseInt(element.number2)) +
-              "\n" +
-              "Two Digit = " +
-              element.number1 +
-              element.number2
+            "\n" +
+            element.stockValue +
+            "\n" +
+            "Fist Digit = " +
+            element.number1 +
+            "\n" +
+            "Last Digit = " +
+            element.number2 +
+            "\n" +
+            "Both Digit = " +
+            (parseInt(element.number1) + parseInt(element.number2)) +
+            "\n" +
+            "Two Digit = " +
+            element.number1 +
+            element.number2
           );
           //bigsmall
           if (firstlast < 5) {
@@ -321,21 +272,21 @@ export default {
           firstlast = element.number2;
           this.gameID.push(
             element.stockTimeStamp +
-              "\n" +
-              element.stockValue +
-              "\n" +
-              "Fist Digit = " +
-              element.number1 +
-              "\n" +
-              "Last Digit = " +
-              element.number2 +
-              "\n" +
-              "Both Digit = " +
-              (parseInt(element.number1) + parseInt(element.number2)) +
-              "\n" +
-              "Two Digit = " +
-              element.number1 +
-              element.number2
+            "\n" +
+            element.stockValue +
+            "\n" +
+            "Fist Digit = " +
+            element.number1 +
+            "\n" +
+            "Last Digit = " +
+            element.number2 +
+            "\n" +
+            "Both Digit = " +
+            (parseInt(element.number1) + parseInt(element.number2)) +
+            "\n" +
+            "Two Digit = " +
+            element.number1 +
+            element.number2
           );
           //bigsmall
           if (firstlast < 5) {
@@ -369,21 +320,21 @@ export default {
           firstlast = parseInt(rs);
           this.gameID.push(
             element.stockTimeStamp +
-              "\n" +
-              element.stockValue +
-              "\n" +
-              "Fist Digit = " +
-              element.number1 +
-              "\n" +
-              "Last Digit = " +
-              element.number2 +
-              "\n" +
-              "Both Digit = " +
-              (parseInt(element.number1) + parseInt(element.number2)) +
-              "\n" +
-              "Two Digit = " +
-              element.number1 +
-              element.number2
+            "\n" +
+            element.stockValue +
+            "\n" +
+            "Fist Digit = " +
+            element.number1 +
+            "\n" +
+            "Last Digit = " +
+            element.number2 +
+            "\n" +
+            "Both Digit = " +
+            (parseInt(element.number1) + parseInt(element.number2)) +
+            "\n" +
+            "Two Digit = " +
+            element.number1 +
+            element.number2
           );
           //bigsmall
           if (firstlast < 9) {
@@ -417,21 +368,21 @@ export default {
           firstlast = parseInt(rs);
           this.gameID.push(
             element.stockTimeStamp +
-              "\n" +
-              element.stockValue +
-              "\n" +
-              "Fist Digit = " +
-              element.number1 +
-              "\n" +
-              "Last Digit = " +
-              element.number2 +
-              "\n" +
-              "Both Digit = " +
-              (parseInt(element.number1) + parseInt(element.number2)) +
-              "\n" +
-              "Two Digit = " +
-              element.number1 +
-              element.number2
+            "\n" +
+            element.stockValue +
+            "\n" +
+            "Fist Digit = " +
+            element.number1 +
+            "\n" +
+            "Last Digit = " +
+            element.number2 +
+            "\n" +
+            "Both Digit = " +
+            (parseInt(element.number1) + parseInt(element.number2)) +
+            "\n" +
+            "Two Digit = " +
+            element.number1 +
+            element.number2
           );
           //bigsmall
           if (firstlast <= 49) {
@@ -473,15 +424,11 @@ export default {
       // loop table[][]
       var s = -1;
       loop1: for (
-        let j = 0;
-        j < this.$refs.tablebsTwo.children[0].children.length;
-        j++
+        let j = 0; j < this.$refs.tablebsTwo.children[0].children.length; j++
       ) {
         // j = td tag
         loop2: for (
-          let i = 0;
-          i < this.$refs.tablebsTwo.childElementCount;
-          i++
+          let i = 0; i < this.$refs.tablebsTwo.childElementCount; i++
         ) {
           // auto scroll
           //set classs to ref the last one
@@ -495,10 +442,6 @@ export default {
             //  alert(valuebs + "valuebs")
 
             $(this.$refs.tablebsTwo).scrollLeft(valuebs - lop);
-
-            // $(this.$refs.tablebsTwo)
-            //   .find(".mystylelast")[0]
-            //   .scrollIntoView({ inline: "end" });
           }
           // if loop all s it will render B&S and exit all loop
           if (s == this.trent.length) {
@@ -668,15 +611,11 @@ export default {
       // loop table[][]
       var s = -1;
       loop1: for (
-        let j = 0;
-        j < this.$refs.tableOETwo.children[0].children.length;
-        j++
+        let j = 0; j < this.$refs.tableOETwo.children[0].children.length; j++
       ) {
         // j = td tag
         loop2: for (
-          let i = 0;
-          i < this.$refs.tableOETwo.childElementCount;
-          i++
+          let i = 0; i < this.$refs.tableOETwo.childElementCount; i++
         ) {
           // auto scroll
           if (this.trentOE.length == s) {
@@ -854,15 +793,11 @@ export default {
       let countLower = 0;
       var s = -1;
       loop1: for (
-        let j = 0;
-        j < this.$refs.tablebUMLTwo.children[0].children.length;
-        j++
+        let j = 0; j < this.$refs.tablebUMLTwo.children[0].children.length; j++
       ) {
         // j = td tag
         loop2: for (
-          let i = 0;
-          i < this.$refs.tablebUMLTwo.childElementCount;
-          i++
+          let i = 0; i < this.$refs.tablebUMLTwo.childElementCount; i++
         ) {
           // auto scroll
           if (this.trentUML.length == s) {
@@ -884,7 +819,7 @@ export default {
               for (let j = 0; j < this.HMLLength; j++) {
                 if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
-                    .textContent === "2"
+                  .textContent === "2"
                 ) {
                   countUpper++;
                   $(".countUpper").text(
@@ -901,7 +836,7 @@ export default {
                   ].textContent = this.$root.$t("gamemsg.U");
                 } else if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
-                    .textContent === "1"
+                  .textContent === "1"
                 ) {
                   countMiddle++;
                   $(".countMiddle").text(
@@ -918,7 +853,7 @@ export default {
                   ].textContent = this.$root.$t("gamemsg.M");
                 } else if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
-                    .textContent === "0"
+                  .textContent === "0"
                 ) {
                   countLower++;
                   $(".countLower").text(
@@ -1082,7 +1017,7 @@ export default {
                 sortable.push([maxSpeed, counts[maxSpeed]]);
               }
 
-              sortable.sort(function(a, b) {
+              sortable.sort(function (a, b) {
                 return b[1] - a[1];
               });
               // console.log(sortable);
@@ -1120,9 +1055,9 @@ export default {
           }
           if (this.trendType === "twoDigit") {
             this.$refs.tableNumberTwo.children[k].children[j].textContent =
-              this.trentNumber[s] < 10
-                ? "0" + this.trentNumber[s]
-                : this.trentNumber[s];
+              this.trentNumber[s] < 10 ?
+              "0" + this.trentNumber[s] :
+              this.trentNumber[s];
           } else {
             this.$refs.tableNumberTwo.children[k].children[
               j
@@ -1138,16 +1073,24 @@ export default {
   }
 };
 </script>
-
 <style scoped>
+/* tr td[title]:hover:after {
+  width: 100%;
+  content: attr(title);
+  padding: 3px 6px;
+  position: absolute;
+  float: left;
+  top : -10px;
+  left: 0%;
+  background-color:#FFF;
+  border-radius: 4px;
+} */
 .line-through {
-  background: transparent url("http://davidrhysthomas.co.uk/linked/strike.png")
-    0 50% repeat-x;
+  background: transparent url("http://davidrhysthomas.co.uk/linked/strike.png") 0 50% repeat-x;
 }
 .tooltip-inner {
   text-align: left;
 }
-
 .table-responsive {
   border: 1px solid #dddddd;
   border-radius: 7px;
@@ -1158,7 +1101,7 @@ table {
   border-collapse: collapse;
   background-color: #fff;
   display: block;
-  overflow-x: hidden;
+  overflow-x: auto;
   white-space: nowrap;
   border-collapse: separate;
   border-spacing: 3px 2px;
@@ -1166,6 +1109,7 @@ table {
 table td {
   border: 1px solid #dddddd;
   border-radius: 5px;
+  cursor: pointer;
 }
 td,
 tr {
@@ -1187,5 +1131,27 @@ p {
 
 .padding {
   padding-top: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 7px #acacac;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #acacac;
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2c6b9e;
 }
 </style>

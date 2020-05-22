@@ -13,7 +13,9 @@
 import VueApexCharts from "vue-apexcharts";
 import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import config from "../config/config.global";
+import config from "~/config/config.global";
+import log from "roarr";
+import secureStorage from "../plugins/secure-storage";
 
 export default {
   props: {
@@ -30,12 +32,7 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getStockLivePrice",
-      "getStockUUIDByStockName",
-      "getLiveTime"
-    ]),
+    ...mapGetters(["getPortalProviderUUID", "getStockUUIDByStockName"]),
     series() {
       let newData = [];
       this.chartData.forEach(element => {
@@ -49,6 +46,10 @@ export default {
       ];
     },
     chartOptions() {
+      let newTime = [];
+      this.chartData.forEach(element => {
+        newTime.push(element.stockTimeStamp);
+      });
       return {
         zoom: {
           enabled: true,
@@ -148,19 +149,41 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];
-        let readyData = {
-          stockValue: dataIndex.stockValue.replace(",", ""),
-          stockTimeStamp: dataIndex.stockTimeStamp,
-          number1: dataIndex.number1,
-          number2: dataIndex.number2
-        };
+        try {
+          var logData = data.data;
+          if (data.status) {
+            let dataIndex = data.data.roadMap[0];
+            let readyData = {
+              stockValue: dataIndex.stockValue.replace(",", ""),
+              stockTimeStamp: dataIndex.stockTimeStamp,
+              number1: dataIndex.number1,
+              number2: dataIndex.number2
+            };
 
-        if (
-          dataIndex.stockTimeStamp !==
-          this.chartData[this.chartData.length - 1].stockTimeStamp
-        ) {
-          this.setLiveChart(readyData);
+            if (
+              dataIndex.stockTimeStamp !==
+              this.chartData[this.chartData.length - 1].stockTimeStamp
+            ) {
+              this.setLiveChart(readyData);
+            }
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.stockName
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "components/chartIndex.vue",
+              provider: this.getPortalProviderUUID,
+              user: secureStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
         }
       }
     );
@@ -171,26 +194,39 @@ export default {
     },
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-        if (res.code === 200) {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });
+        if (res.status) {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          throw new Error(config.error.general);
         }
       } catch (ex) {
-        console.error(ex.message);
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/chartIndex.vue",
+            apiUrl: config.getRoadMap.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

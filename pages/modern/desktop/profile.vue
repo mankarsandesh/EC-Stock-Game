@@ -1,103 +1,158 @@
 <template>
-  <v-container fluid>
-    <input @change="readFile($event)" type="file" ref="inputFile" hidden />
-    <v-layout pt-3 row wrap class="justify-center">
+  <v-container>
+    <input @change="uploadImage($event)" type="file" ref="inputFile" hidden />
+    <v-layout pt-1 row wrap class="justify-center">
       <v-flex xs12 ms12 lg10 md10>
         <v-layout>
           <v-flex xs4 md3 lg3 xl2 class="pt-5" style="background-color:white">
             <div class="profile_head text-xs-center">
               <div class="image_container">
                 <v-avatar :size="90">
-                  <img
-                    v-if="imageBase64 == ''"
-                    :src="imgProfile"
-                    alt="img-profile"
-                  />
-                  <img
-                    :style="{ filter: `blur(${blurValue}px)` }"
-                    v-else
-                    :src="imageBase64"
-                    alt="img-profile"
-                  />
+                  <img :src="imgProfile" />
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon color="black" :size="20" @click="cameraClick"
+                    <v-icon
+                      color="black"
+                      :size="20"
+                      @click="avatarDialog = true"
                       >photo_camera</v-icon
                     >
                   </button>
                 </span>
-                <!-- <span class="blur-img">uploading</span> -->
               </div>
-              <h1>{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h1>
-              <p>Online Status : 2hours</p>
+              <h2 v-if="getUserInfo.firstName == null">
+                {{ getUserInfo.userName }}
+              </h2>
+              <h2 v-if="getUserInfo.firstName" class="text-capitalize">
+                {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+              </h2>
+              <p>
+                <b>{{ $t("profile.onlineStatus") }}</b> : Available
+              </p>
             </div>
             <div class="profile_menu">
               <div class="display_component"></div>
               <ul class="pa-3">
-                <nuxt-link
-                  v-for="(menu, index) in profileMenu"
-                  :key="index"
-                  :to="menu.path"
-                >
+                <nuxt-link to="/modern/desktop/profile/">
                   <li
                     :class="
-                      menu.path.toLowerCase() === currentChild.toLowerCase()
-                        ? ' menu_title_active'
+                      '/modern/desktop/profile/' === currentChild
+                        ? 'menu_title_active'
                         : 'menu_title'
                     "
                   >
-                    {{ menu.title }}
+                    {{ $t("profile.basicInfo") }}
+                  </li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/onlinehistory/">
+                  <li
+                    :class="
+                      '/modern/desktop/profile/onlinehistory/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.onlineHistory") }}
+                  </li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/stockanalysis/">
+                  <li
+                    :class="
+                      '/modern/desktop/profile/stockanalysis/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.stockAnalysis") }}
+                  </li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/follower/">
+                  <li
+                    :class="
+                      '/modern/desktop/profile/follower/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.myFollowers") }}
+                  </li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/following/">
+                  <li
+                    :class="
+                      '/modern/desktop/profile/following/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.myFollowing") }}
+                  </li>
+                </nuxt-link>
+                <nuxt-link to="/modern/desktop/profile/setting/">
+                  <li
+                    :class="
+                      '/modern/desktop/profile/setting/' === currentChild
+                        ? 'menu_title_active'
+                        : 'menu_title'
+                    "
+                  >
+                    {{ $t("profile.setting") }}
                   </li>
                 </nuxt-link>
               </ul>
             </div>
           </v-flex>
-
           <!-- change component here when click menu  -->
           <v-flex xs8 sm9 lg10 xl10>
             <nuxt-child />
           </v-flex>
         </v-layout>
       </v-flex>
+
+      <v-dialog v-model="avatarDialog" width="900" class="followDialog">
+        <v-card class="followup">
+          <h3 class="title" style="text-align: center; color: #0b2a68;">
+            Choose your Avatar
+          </h3>
+          <v-card-text style="text-align:center;">
+            <div class="avatarImage" v-for="n in 10" v-bind:key="n">
+              <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
+              <span href class="userAvatar" @click="useAvatar(n)"
+                >Use Avatar</span
+              >
+            </div>
+          </v-card-text>
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="dialog = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </v-container>
 </template>
 <script>
-import { mapMutations, mapActions, mapGetters } from "vuex";
-import config from "../../../config/config.global";
+import { mapActions, mapGetters } from "vuex";
+import config from "~/config/config.global";
+import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   layout: "desktopModern",
-
   data() {
     return {
+      imagePath: config.apiDomain + "/images/user/avatar/",
+      avatarID: "",
+      newImage: "",
+      avatarDialog: false,
+      defaultImage: `/no-profile-pic.jpg`,
       currentChild: "basicinfo",
       blurValue: 5,
       imageBase64: "",
       activeMenu: "online history",
-      profileMenu: [
-        {
-          title: "basic information",
-          path: "/modern/desktop/profile/"
-        },
-        {
-          title: "online history",
-          path: "/modern/desktop/profile/onlinehistory/"
-        },
-        {
-          title: "stock analysis",
-          path: "/modern/desktop/profile/stockanalysis/"
-        },
-        {
-          title: "my followers",
-          path: "/modern/desktop/profile/follower/"
-        },
-        {
-          title: "my notification",
-          path: "/modern/desktop/profile/notification/"
-        },
-        { title: "setting", path: "/modern/desktop/profile/setting/" }
-      ],
       window: 0,
       active: null
     };
@@ -107,25 +162,30 @@ export default {
     this.currentChild = this.$route.path;
   },
   created() {
+    // console.log(this.getUserInfo.profileImage);
     // make a active menu
     this.currentChild = this.$route.path;
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     imgProfile() {
-      return this.getUserInfo.profileImage === "" ? "/no-profile-pic.jpg" : `${config.apiDomain}/${this.getUserInfo.profileImage}`;
-    }
-  },
-  watch: {
-    imageBase64() {
-      this.updateProfile();
+      if (this.getUserInfo.profileImage == null) {
+        return `${this.defaultImage}`;
+      } else {
+        return `${config.apiDomain}/${this.getUserInfo.profileImage}`;
+      }
     }
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
-    readFile(e) {
+    useAvatar(image) {
+      this.newImage = this.imagePath + image + ".jpg";
+      this.avatarID = image;
+      this.avatarDialog = false;
+      this.updateAvatarProfile();
+    },
+    ...mapActions(["setUserData"]),
+    uploadImage(e) {
       let self = this;
-      console.log(e.target);
       if (e.target.files && e.target.files[0]) {
         let FR = new FileReader();
         FR.addEventListener("load", function(e) {
@@ -137,52 +197,96 @@ export default {
     cameraClick() {
       this.$refs.inputFile.click();
     },
-    async updateProfile() {
-      let formData = new FormData();
-      formData.append("profileImage", this.$refs.inputFile.files[0], "file");
-      formData.append("portalProviderUUID", this.getPortalProviderUUID);
-      formData.append("userUUID", this.getUserUUID);
-      formData.append("version", config.version);
+    // Update User Avatar
+    async updateAvatarProfile() {
+      var reqBody = {
+        avatarID: this.avatarID,
+        portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
+        version: config.version
+      };
       try {
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserProfile.url,
-          formData,
+          reqBody,
           {
-            headers: {
-              Authorization: "Basic VG5rc3VwZXI6VGVzdDEyMyE="
-            },
-
-            onUploadProgress: progressEvent => {
-              console.log("process......");
-              const totalLength = progressEvent.lengthComputable
-                ? progressEvent.total
-                : progressEvent.target.getResponseHeader("content-length") ||
-                  progressEvent.target.getResponseHeader(
-                    "x-decompressed-content-length"
-                  );
-              if (totalLength !== null) {
-                this.blurValue = Math.round(totalLength - progressEvent.loaded);
-              }
-            }
+            headers: config.header
           }
         );
-        if (res.code === 200) {
+        if (res.status) {
           this.blurValue = 0;
+          this.setUserData();
+          this.$swal({
+            type: "success",
+            title: this.$root.$t("msg.confirm"),
+            showConfirmButton: false,
+            timer: 1000
+          });
         } else {
-          console.log(res.message);
-          this.imageBase64 = "";
+          throw new Error(config.error.general);
         }
       } catch (ex) {
+        this.imageBase64 = "";
         console.error(ex);
-        alert(ex.message);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        log.error(
+          {
+            req: reqBody,
+            res: res.data,
+            page: "pages/modern/desktop/profile.vue",
+            apiUrl: config.updateUserProfile.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
-    },
-    ...mapMutations(["setIsLoadingStockGame"])
+    }
   }
 };
 </script>
 
 <style scoped>
+.userAvatar {
+  background-color: #0c2a69;
+  padding: 6px 12px;
+  margin-top: 10px;
+  color: #ffffff;
+  border: 1px solid;
+  width: 100%;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.avatarImage {
+  height: 200px;
+  text-align: center;
+  margin: 10px;
+  width: 15%;
+  padding: 5px;
+  display: inline-block;
+}
+.avatarImage .img {
+  margin: 15px auto;
+  border-radius: 180px;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #dddddd;
+}
+.followDialog {
+  width: 800px;
+  border-radius: 10px;
+  padding: 15px;
+}
+.followup {
+  padding: 15px 30px;
+  border-radius: 20px;
+}
 .display_component {
   position: absolute;
   height: 550px;
@@ -202,6 +306,7 @@ export default {
 }
 .image_container {
   position: relative;
+  margin-bottom: 10px;
 }
 .blur-img {
   position: absolute;
@@ -235,7 +340,7 @@ li {
   font-weight: bold;
 }
 .menu_title_active {
-  background: linear-gradient(to right, #2e7d32 20%, #39b01e 51%);
+  background-color: #2cb038;
   margin: 10px;
   padding: 10px;
   padding-left: 20px;

@@ -1,17 +1,16 @@
 <template>
   <div class="v-card-style">
-    <v-layout px-1>
+    <v-layout px-1 mt-1>
       <v-flex xs6 class="text-xs-left stockTimer">
-        {{ $t("msg.livetime") }}:
-        <!-- <span class="stockTimer">{{ getLiveTime(stockid) }}</span> -->
+        <span v-if="getStockLiveTime(stockName)">{{
+          getStockLiveTime(stockName).split(" ")[1]
+        }}</span>
       </v-flex>
       <v-flex xs6 class="text-xs-right stockPrice">
-        {{ $t("msg.liveprice") }}:
-        <span>{{ getStockLivePrice(stockName) }}</span>
+        <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
     <apexchart
-      class="chartDesgin"
       type="area"
       :height="chartHeight"
       width="99.5%"
@@ -20,15 +19,17 @@
     />
   </div>
 </template>
-
 <script>
-import config from "../../config/config.global";
+import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import { Line, mixins } from "vue-chartjs";
 import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
-import { mapGetters, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Echo from "laravel-echo";
+import log from "roarr";
+import secureStorage from "../../plugins/secure-storage";
+
 export default {
   props: {
     height: {
@@ -73,20 +74,44 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        let dataIndex = data.data.roadMap[0];    
-        let readyData = {
-          stockValue: dataIndex.stockValue.replace(",", ""),
-          stockTimeStamp: dataIndex.stockTimeStamp,
-          number1: dataIndex.number1,
-          number2: dataIndex.number2
-        };
-        if (dataIndex.stockTimeStamp !== this.chartData[this.chartData.length - 1].stockTimeStamp) {
-          console.log('RoadMap data', readyData);
-           this.SET_CLEAR_ROAD_MAP(true);
-          this.setLiveChart(readyData);
-          setTimeout(() => {
-            this.SET_CLEAR_ROAD_MAP(false);
-          }, 1000);
+        try {
+          var logData = data;
+          if (data.status) {
+            let dataIndex = data.data.roadMap[0];
+            let readyData = {
+              stockValue: dataIndex.stockValue.replace(",", ""),
+              stockTimeStamp: dataIndex.stockTimeStamp,
+              number1: dataIndex.number1,
+              number2: dataIndex.number2
+            };
+            // if (
+            //   dataIndex.stockTimeStamp !==
+            //   this.chartData[this.chartData.length - 1].stockTimeStamp
+            // ) {
+            this.setClearRoadMap(true);
+            this.setLiveChart(readyData);
+            setTimeout(() => {
+              this.setClearRoadMap(false);
+            }, 1000);
+            // }
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.stockName
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "components/modern/chart.vue",
+              provider: this.getPortalProviderUUID,
+              user: secureStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
         }
       }
     );
@@ -98,8 +123,8 @@ export default {
     ...mapGetters([
       "getPortalProviderUUID",
       "getStockLivePrice",
-      "getStockUUIDByStockName",
-      "getLiveTime"
+      "getStockLiveTime",
+      "getStockUUIDByStockName"
     ]),
     chartOptions() {
       let newTime = [];
@@ -107,6 +132,15 @@ export default {
         newTime.push(element.stockTimeStamp);
       });
       return {
+        tooltip: {
+          custom: function({ series, seriesIndex, dataPointIndex, w }) {
+            return (
+              '<div class="arrow_boxChart"> $' +
+              series[seriesIndex][dataPointIndex].toFixed(2) +
+              "</div>"
+            );
+          }
+        },
         zoom: {
           enabled: true,
           type: "x",
@@ -137,6 +171,9 @@ export default {
             enabled: false
           },
           toolbar: {
+            tools: {
+              download: false
+            },
             shared: false,
             y: {
               formatter: function(val) {
@@ -147,7 +184,7 @@ export default {
         },
         brush: {
           target: "chartArea",
-          enabled: true
+          enabled: false
         },
         dataLabels: {
           enabled: false
@@ -198,32 +235,47 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   methods: {
-    ...mapMutations(["SET_CLEAR_ROAD_MAP"]),
+    ...mapActions(["setClearRoadMap"]),
+    // live chart
     setLiveChart(payload) {
       this.chartData.push(payload);
     },
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-        if (res.code === 200) {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });
+
+        if (res.status) {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          throw new Error(config.error.general);
         }
       } catch (ex) {
-        console.error(ex.message);
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "components/modern/chart.vue",
+            apiUrl: config.getRoadMap.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -235,30 +287,46 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-      this.demo = this.window.width;
-      if (this.window.width >= 1900) {
-        this.chartHeight = "320vh";
-        this.heightChart = 320;
+      this.demo = this.window.width;     
+      // Chart Size Change According Desktop and Laptop Size
+      if (this.window.width >= 2000) {
+        this.chartHeight = "360vh";
+        this.heightChart = 360;
+      } else if (this.window.width > 1400) {
+        this.chartHeight = "330vh";
+        this.heightChart = 330;
       } else {
-        this.chartHeight = "320vh";
-        this.heightChart = 320;
+        this.chartHeight = "250vh";
+        this.heightChart = 250;
       }
     }
   }
 };
 </script>
 <style>
+.arrow_boxChart {
+  font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid #003f70;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  font-size: 20px;
+  color: #fff;
+  background: #003f70 !important  ;
+}
+.stockTimer {
+  margin-left: 10px;
+}
 .stockPrice span {
   padding-right: 14px;
   color: green;
-  font-size: 16px;
+  font-size: 18px;
   margin: 0px;
   font-weight: 600;
 }
 .stockTimer span {
-  padding-left: 20px;
-  color: #333;
-  font-size: 16px;
+  color: #585858;
+  font-size: 18px;
   margin: 0px;
   font-weight: 600;
 }

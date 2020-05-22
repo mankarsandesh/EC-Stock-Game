@@ -2,20 +2,20 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">{{$t('menu.setting')}}</h2>
+        <h2 class="title_menu">{{ $t("menu.setting") }}</h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">{{$t('setting.account')}}</span>
+          <span class="group_title">{{ $t("setting.account") }}</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>{{$t('setting.usersallowtovisitmyprofile')}}</span>
+              <span>{{ $t("setting.usersAllowToVisitMyProfile") }}</span>
               <label class="switch">
                 <input
-                  @change="updateSetting"                
+                  @change="updateSetting"
                   type="checkbox"
                   ref="isAllowToVisitProfile"
                   :checked="getUserInfo.isAllowToVisitProfile"
@@ -24,25 +24,13 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>{{$t('setting.usersallowfollowme')}}</span>
-              <label class="switch">
-                <input
-                  @change="updateSetting"                 
-                  type="checkbox"
-                  ref="isAllowToFollow"
-                  :checked="getUserInfo.isAllowToFollow"
-                />
-                <span class="slider round"></span>
-              </label>
-            </div>
-            <div class="setting_container">
-              <span>{{$t('setting.userallowtosenddirectmessage')}}</span>
+              <span>{{ $t("setting.usersAllowFollowMe") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
                   type="checkbox"
-                  ref="isAllowToDirectMessage"
-                  :checked="getUserInfo.isAllowToDirectMessage"
+                  ref="isAllowToFollow"
+                  :checked="getUserInfo.isAllowToFollow"
                 />
                 <span class="slider round"></span>
               </label>
@@ -52,10 +40,10 @@
       </v-flex>
       <v-flex xs12>
         <div class="group_container">
-          <span class="group_title">{{$t('setting.gameoptions')}}</span>
+          <span class="group_title">{{ $t("setting.gameOptions") }}</span>
           <div class="title_container">
             <div class="setting_container">
-              <span>{{$t('setting.sound')}}</span>
+              <span>{{ $t("setting.sound") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -67,7 +55,7 @@
               </label>
             </div>
             <div class="setting_container">
-              <span>{{$t('setting.allowtolocation')}}</span>
+              <span>{{ $t("setting.allowToLocation") }}</span>
               <label class="switch">
                 <input
                   @change="updateSetting"
@@ -81,72 +69,98 @@
           </div>
         </div>
       </v-flex>
+      <v-flex xs12>
+        <div class="group_container">
+          <span class="group_title">{{ $t("setting.chipOptions") }}</span>
+          <div class="title_container">
+            <chipsAmountDesktop />
+          </div>
+        </div>
+      </v-flex>
     </v-flex>
   </div>
 </template>
+
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
+import secureStorage from "../../../../plugins/secure-storage";
+import chipsAmountDesktop from "~/components/modern/setting/chipamount";
+import log from "roarr";
 
 export default {
+  components: {
+    chipsAmountDesktop
+  },
   mounted() {
     // this.updateSetting();
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-  }, 
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+  },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     async updateSetting() {
       // set value to 1 or 0 true==1 false==0
       let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
-        ? 1
-        : 0;
-      let isAllowToFollow = this.$refs.isAllowToFollow.checked ? 1 : 0;
-      let isAllowToDirectMessage = this.$refs.isAllowToDirectMessage.checked
-        ? 1
-        : 0;
-      let isSound = this.$refs.isSound.checked ? 1 : 0;
-      let isAllowToLocation = this.$refs.isAllowToLocation.checked ? 1 : 0;
+        ? true
+        : false;
+      let isAllowToFollow = this.$refs.isAllowToFollow.checked ? true : false;
+      let isSound = this.$refs.isSound.checked ? true : false;
+      let isAllowToLocation = this.$refs.isAllowToLocation.checked
+        ? true
+        : false;
       // end set value to 1 or 0 true==1 false==0
 
       try {
-        let userSetting = {
+        var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
           version: config.version,
           isAllowToVisitProfile,
           isAllowToFollow,
-          isAllowToDirectMessage,
           isSound,
           isAllowToLocation
         };
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserSetting.url,
-          userSetting,
+          reqBody,
           {
             headers: config.header
           }
         );
-        if (res.code === 200) {
-           this.$swal.fire({
+        if (res.status) {
+          this.$swal.fire({
             position: "top",
             type: "success",
             title: "Changes saved",
             showConfirmButton: false,
             timer: 1000
           });
-          this.asynUserInfo();
+          this.setUserData();
         } else {
-          console.log(res.message);
-          this.$alert("Alert Message.");
+          throw new Error(config.error.general);
         }
       } catch (ex) {
         console.error(ex);
-        alert(ex.message);
+        this.$swal({
+          type: "error",
+          title: ex.message,
+          timer: 1000
+        });
+        log.error(
+          {
+            req: reqBody,
+            res,
+            page: "pages/modern/desktop/profile/setting.vue",
+            apiUrl: config.updateUserSetting.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
-    },
+    }
   }
 };
 </script>
@@ -155,19 +169,23 @@ export default {
 .title_menu {
   text-transform: uppercase;
 }
+
 .titile {
   padding-left: 5px;
 }
+
 .group_title {
   font-weight: bold;
   font-size: 18px;
   text-transform: uppercase;
 }
+
 .title_container {
   padding-top: 15px;
   padding-bottom: 15px;
   text-transform: capitalize;
 }
+
 .setting_container {
   margin-left: 5px;
   margin-bottom: 15px;
@@ -180,6 +198,7 @@ export default {
   border-color: #bdbec1;
   border-radius: 10px;
 }
+
 /* switch */
 .switch {
   position: relative;
@@ -224,6 +243,7 @@ export default {
 input:checked + .slider::before {
   background-color: #38b062;
 }
+
 input:checked + .slider {
   background-color: white;
 }

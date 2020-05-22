@@ -1,13 +1,13 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-3">
-    <v-layout style="background-color:#f4f5fd; ">
-      <!-- <v-flex md3 lg3 mt-3 > -->
-      <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
+  <v-container fluid mt-2 class="containerNew">
+    <v-layout>
+      <!-- Left Side Stock List  -->
+      <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
         </span>
         <v-layout column>
-          <v-flex xs12 pt-2>
+          <v-flex xs12 pt-3>
             <div id="stocklistGuidelines">
               <stockList></stockList>
             </div>
@@ -24,141 +24,141 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex v-if="isHidden" @click="isHidden = false">
+      <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
           <v-icon color="#FFF">list</v-icon>
         </span>
       </v-flex>
-      <!-- </v-flex> -->
+      <!-- End Left Side -->
 
-      <v-flex :xs10="!isHidden" :xs12="isHidden">
-        <v-layout xs12 pt-2>
-          <v-flex xs6 md6 lg6 pt-2>
-            <v-layout column>
-              <v-flex xs12>
-                <div id="selectstockGuideline">
-                  <stockSelect />
-                </div>
-              </v-flex>
-              <v-flex>
-                <div id="chartGuideline" class="chartDesgin">
-                  <v-flex>
-                    <chartApp :stockName="routeParams" />
-                  </v-flex>
-                </div>
-              </v-flex>
-            </v-layout>
-          </v-flex>
+      <!-- Main Middle Layout -->
+      <v-flex :xs10="!isHidden" :xs12="isHidden" lg10>
+        <v-flex md12 lg12 pl-3>
+          <v-layout row wrap md12>
+            <!-- Stock Select Start -->
+            <v-flex md7 lg6 pt-2 id="selectstockGuidelines">
+              <stockSelect />
+            </v-flex>
+            <!-- Stock Select End -->
 
-          <v-flex xs6 md6 lg6 class="mx-2">
-            <v-layout mb-3>
-              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
-                <span>{{ $t("msg.Lastdraw") }}</span>
-                <div id="lastDrawGuideline">
-                  <v-flex class="lastdraw">
-                    <span class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></span>
-                  </v-flex>
-                </div>
-              </v-flex>
-              <!-- <v-spacer></v-spacer> -->
-              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
-                <span>{{ $t("msg.BetClosein") }}</span>
-                <div id="betCloseInGuideline">
-                  <v-flex class="betclose">
-                    <span
-                      v-if="
+            <!-- Stock Last Draw Start -->
+            <v-flex xs6 md5 lg6 pt-1>
+              <v-layout mb-3>
+                <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
+                  <span>{{ $t("msg.lastDraw") }}</span>
+                  <div id="lastDrawGuideline">
+                    <v-flex class="lastdraw">
+                      <span v-html="$options.filters.lastDraw(getLastDraw)"></span>
+                    </v-flex>
+                  </div>
+                </v-flex>
+
+                <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
+                  <span>{{ $t("msg.betCloseIn") }}</span>
+                  <div id="betCloseInGuideline">
+                    <v-flex class="betclose">
+                      <span
+                        v-if="
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .stockStatus === 'Closed'
+                        "
+                      >
+                        {{
+                        getTimerByStockName($route.params.id)
+                        | betclosein(getStockLoop($route.params.id))
+                        }}
+                      </span>
+                      <span v-else>
+                        {{
                         getTimerByStockName($route.params.id) &&
-                          getTimerByStockName($route.params.id)
-                            .stockOpenOrClosed === 'Closed!'
-                      "
-                      class="text-black"
-                    >
-                      {{
-                      getTimerByStockName($route.params.id) &&
-                      "close" | betclosein(getStockLoop($route.params.id))
-                      }}
-                    </span>
-                    <span v-else class="text-black">
-                      {{
-                      getTimerByStockName($route.params.id) &&
-                      getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | betclosein(getStockLoop($route.params.id))
-                      }}
-                    </span>
-                  </v-flex>
-                </div>
-              </v-flex>
+                        getTimerByStockName($route.params.id)
+                        .gameEndTimeCountDownInSec
+                        | betclosein(getStockLoop($route.params.id))
+                        }}
+                      </span>
+                    </v-flex>
+                  </div>
+                </v-flex>
 
-              <v-flex xs4 class="text-xs-center text-uppercase" px-2>
-                <span>{{ $t("msg.lotterydraw") }}</span>
-                <div id="lotteryDrawGuidelines">
-                  <v-flex class="lottery">
-                    <span class="text-black">
-                      {{
-                      getTimerByStockName($route.params.id) &&
-                      getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | lotterydraw(getStockLoop($route.params.id))
-                      }}
-                    </span>
-                  </v-flex>
-                </div>
-              </v-flex>
+                <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
+                  <span>{{ $t("msg.lotteryDraw") }}</span>
+                  <div id="lotteryDrawGuidelines">
+                    <v-flex class="lottery">
+                      <span>
+                        {{
+                        getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                        .gameEndTimeCountDownInSec
+                        | lotterydraw(getStockLoop($route.params.id))
+                        }}
+                      </span>
+                    </v-flex>
+                  </div>
+                  <!-- <lotteryDraw > </lotteryDraw>   -->
+                </v-flex>
 
-              <v-flex xs2 class="text-xs-right" style="align-self: flex-end;">
-                <v-btn
-                  fab
-                  dark
-                  small
-                  class="helpButton"
-                  @click="setNextstep(), getopen()"
-                  title="Help"
-                >
-                  <v-icon dark size="25">fa-question</v-icon>
-                </v-btn>
-              </v-flex>
-            </v-layout>
-            <div id="betRuleButton">
-              <betButton :stockName="$route.params.id" :loop="1"></betButton>
-            </div>
-          </v-flex>
-        </v-layout>
+                <v-flex xs2 md1 class="text-xs-right" style="align-self: flex-end;">
+                  <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
+                    <v-icon dark size="22">fa-question</v-icon>
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <!-- Stock Last Draw End -->
+          </v-layout>
+
+          <!-- Stock Chart and Bet button Component  -->
+          <v-layout>
+            <v-flex md5 lg5 mt-2>
+              <div id="chartGuidelineNew" class="chartDesgin">
+                <v-flex>
+                  <chartApp :stockName="routeParams" />
+                </v-flex>
+              </div>
+            </v-flex>
+            <v-flex md7 lg7 mx-2 pt-2>
+              <div id="betRuleButton">
+                <betButton :stockName="$route.params.id" :loop="1"></betButton>
+              </div>
+            </v-flex>
+          </v-layout>
+          <!-- End Stock Chart and Bet button Component  -->
+        </v-flex>
+
+        <!-- Stock Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
           <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
-            <hr v-if="index > 0" />
             <div id="trendmapGuidelines">
-              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index"></tableTrendMap>
+              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index">
+                <span class="addChart" @click="addTrendMap()" v-if="index === 0">
+                  <v-icon>fa-plus</v-icon>
+                </span>
+                <span v-else class="addChart" @click="removeTradMap(index)">
+                  <v-icon>close</v-icon>
+                </span>
+              </tableTrendMap>
             </div>
-            <span
-              class="addChart"
-              @click="addTrendMap()"
-              v-if="trendTypes.length == index + 1 && trendTypes.length < 4"
-            >
-              <v-icon>add</v-icon>
-            </span>
           </div>
         </v-flex>
+        <!-- Road Map End -->
       </v-flex>
-      <!-- <v-flex v-if="!isHidden" class="leftStocklist" style="box-shadow: 0 0 10px grey;">
-            <v-btn @click="isHidden = true"  fab small slot="reference" class="sidebar-close">
-            <v-icon style="color: #0b2a68 !important;">close</v-icon>
-      </v-btn>-->
 
-      <!-- Game Rule Popup -->
-      <v-dialog v-model="dialog" width="800">
-        <v-card class="ruleModel" style="border-radius:10px;">
-          <v-icon class="closePopup" color="#333 !important" @click="dialog = false">close</v-icon>
-          <v-card-title class="title" primary-title>TOP 10 LEADERS</v-card-title>
-          <v-card-text>
-            <leaderboardUserlist />
+      <!-- Game Rule Popup open First Time -->
+      <v-dialog v-model="GameRuleDialog" width="50%">
+        <v-card class="ruleModel" style="border-radius: 10px;">
+          <v-icon class="closePopup" color="#333 !important" @click="GameRuleDialog = false">close</v-icon>
+          <v-card-text style="padding:40px;">
+            <h2 style="text-align:center;">EC Gameing Rule</h2>
+            <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn class="buttonGreensmall" to="/modern/desktop/leaderboard" dark>Go to Leaderboard</v-btn>
+            <v-btn class="buttonGreensmall" to="/modern/desktop/gamerule" dark>Gaming Rule</v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
 
+      <!-- Full Screen Float Button -->
       <v-flex class="layout-bottom">
         <div id="fullscreenGuidelines">
           <v-tooltip left>
@@ -170,165 +170,51 @@
                 class="fullscreen"
                 dark
                 @click="setAfterFullScreenClosePage()"
-                title="Full Screen"
+                v-on="on"
               >
-                <v-icon>fullscreen</v-icon>
+                <v-icon size="24px">fa-arrows-alt</v-icon>
               </v-btn>
             </template>
-            <span>Full Screen</span>
+            <span>Enter Fullscreen Mode</span>
           </v-tooltip>
+          <!-- Multiple Screen Float Button 
+          <!-- <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                :to="'/modern/multigame/' + $route.params.id"
+                rigth
+                fab
+                class="multiGame"
+                dark
+                v-on="on"
+              >
+                <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
+              </v-btn>
+            </template>
+            <span>Enter Multi-Gaming Mode</span>
+          </v-tooltip> -->
         </div>
       </v-flex>
     </v-layout>
-    <div ref="guideline" class="overlay">
-      <a class="closebtn" @click="closeGuideline()">&times;</a>
-    </div>
-    <div hidden ref="guidelineContent" class="overlay-content">
-      <!-- stock list 1 -->
-      <div ref="stocklistGuideline" style="position:fixed" v-show="isStep == 1">
-        <div class="d-flex">
-          <p class="float-right guideline" @click="setNextstep">
-            The stock list
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8628;</div>
-        </div>
-      </div>
-      <!-- select stock 2 -->
-      <div ref="selectGuideline" style="position:fixed" v-show="isStep == 2">
-        <div class="d-flex">
-          <p class="float-right guideline" @click="setNextstep">
-            Select other stock games
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8628;</div>
-        </div>
-      </div>
-
-      <!-- last draw 3 -->
-      <div ref="lastDrawtGuideline" style="position:fixed" v-show="isStep == 3">
-        <div class="d-flex">
-          <p class="float-right guideline" @click="setNextstep">
-            The latest result
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8628;</div>
-        </div>
-      </div>
-
-      <!-- bet close in 4 -->
-      <div ref="betCloseInGuideline" style="position:fixed" v-show="isStep == 4">
-        <div class="d-block">
-          <div style="position: relative">
-            <p class="float-right guideline" @click="setNextstep">
-              Countdown to close bet
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-          </div>
-          <div class="arrow float-left line-my">&#8601;</div>
-        </div>
-      </div>
-      <!-- lottery draw 5 -->
-      <div ref="lotteryDrawGuideline" style="position:fixed" v-show="isStep == 5">
-        <div class="d-flex">
-          <div class="arrow float-left line-my">&#8630;</div>
-          <div>
-            <p class="float-right guideline" @click="setNextstep">
-              Countdown to the result
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- Stock chart 6 -->
-      <div ref="chartGuideline" style="position:fixed;" v-show="isStep == 6">
-        <div class="d-flex">
-          <p class="float-right guideline" @click="setNextstep">
-            This is the chart that show a amount of the stock
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8631;</div>
-        </div>
-      </div>
-      <!-- bet rule title 7 -->
-      <div ref="betTitleGuideline" style="position:fixed" v-show="isStep == 7">
-        <div ref="betguideline" style="position:fixed"></div>
-        <div class="d-flex">
-          <p class="float-right guideline" @click="setNextstep">
-            Choose which you want to bets
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8631;</div>
-        </div>
-      </div>
-      <!-- betresult 8  -->
-      <div ref="betresultGuideline" style="position:fixed" v-show="isStep == 8">
-        <div class="d-flex">
-          <p class="float-right guideline" @click="setNextstep">
-            The stock result
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8628;</div>
-        </div>
-      </div>
-
-      <!-- fullscreen 9-->
-      <div ref="fullScreenGuideline" style="position:fixed" v-show="isStep == 9">
-        <div class="d-flex">
-          <p class="float-right guideline" @click="setNextstep">
-            Click to enter full screen mode
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8605;</div>
-        </div>
-      </div>
-      <!-- multi game 10-->
-      <!-- <div ref="multigameGuideline" style="position:fixed" v-show="isStep == 10">
-        <div class="d-flex">
-          <div>
-            <p class="float-right guideline" @click="setNextstep">
-              This is multiple gaming
-              <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-            </p>
-          </div>
-          <div class="arrow float-left line-my">&#8605;</div>
-        </div>
-      </div>-->
-      <!-- betting 11 -->
-      <div ref="bettingGuideline" style="position:fixed" v-show="isStep == 11">
-        <div class="d-flex">
-          <p class="float-right guideline" @click="setNextstep">
-            The betting
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8628;</div>
-        </div>
-      </div>
-      <!-- trendmap 12 -->
-      <div ref="trendmapGuideline" style="position:fixed" v-show="isStep == 12">
-        <div class="d-flex">
-          <p class="float-left guideline" @click="setNextstep">
-            The Trend Charts
-            <v-icon dark size="15" color="#000">fa-arrow-right</v-icon>
-          </p>
-          <div class="arrow float-left line-my">&#8628;</div>
-        </div>
-      </div>
-    </div>
   </v-container>
 </template>
+
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import stockList from "~/components/modern/stockList";
 import stockResult from "~/components/modern/stockresult";
 import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
-import onlyrules from "~/components/modern/stocklist/onlyrule";
 import stockSelect from "~/components/stockSelect";
-import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
+import lotteryDraw from "~/components/modern/lotteryDraw";
+import { isMobile } from "mobile-device-detect";
+import log from "roarr";
+import secureStorage from "../../../plugins/secure-storage";
+import onlyrules from "~/components/modern/rule/onlyrule";
 
 export default {
   async validate({ params, store }) {
@@ -342,18 +228,20 @@ export default {
     chartApp,
     betButton,
     tableTrendMap,
-    onlyrules,
     stockSelect,
-    leaderboardUserlist
+    lotteryDraw,
+    isMobile: isMobile,
+    onlyrules
   },
   data() {
     return {
       routeParams: this.$route.params.id,
       stock: [],
-      dialog: false,
+      GameRuleDialog: true,
       bgColor: "#778899",
       position: "top-right",
       isHidden: false,
+      isMobile: isMobile,
       firstPanelFocus: false,
       fabActions: [
         {
@@ -361,34 +249,24 @@ export default {
           icon: "cached"
         }
       ],
-      items: [
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me"
-        },
-        {
-          title: "Click Me 2"
-        }
-      ],
       trendTypes: ["firstDigit"],
       isloading: false,
       isStep: 0
     };
   },
+  updated() {},
   created() {
+    if (isMobile) {
+      window.location = `/modern/betting/${this.$route.params.id}`;
+    }
     this.getStock();
     // Game Rule Popup check and open Ne User
-    // if (localStorage.getItem("gameRule") != "shown") {
-    //   this.dialog = true;
-    //   localStorage.setItem("gameRule", "shown");
-    // } else {
-    //   this.dialog = false;
-    // }
+    if (secureStorage.getItem("gameRule") != "shown") {
+      this.GameRuleDialog = true;
+      secureStorage.setItem("gameRule", "shown");
+    } else {
+      this.GameRuleDialog = false;
+    }
   },
   beforeDestroy() {
     this.stopListenSocket(
@@ -398,8 +276,8 @@ export default {
     );
   },
   mounted() {
-    this.asyncRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
-    // socket new api
+    this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    // Live Road Map From Socket
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -408,7 +286,29 @@ export default {
         eventName: "roadMap"
       },
       ({ data }) => {
-        this.setLiveRoadMap(data.data.roadMap[0]);
+        try {
+          var logData = data;
+          if (data.status) {
+            this.setLiveRoadMap(data.data.roadMap[0]);
+          } else {
+            throw new Error(config.error.general);
+          }
+        } catch (ex) {
+          console.log(ex);
+          log.error(
+            {
+              channel: `roadMap.${this.getStockUUIDByStockName(
+                this.$route.params.id
+              )}.${this.getPortalProviderUUID}`,
+              event: "roadMap",
+              res: logData,
+              page: "pages/modern/desktop/_id.vue",
+              provider: this.getPortalProviderUUID,
+              user: secureStorage.getItem("USER_UUID")
+            },
+            ex.message
+          );
+        }
       }
     );
     // call this every page that used "dekstopModern" layout to hide loading
@@ -418,16 +318,6 @@ export default {
     // set footerBet to zero because on this page cant use bet footer
     this.setFooterBetAmount(0);
     this.removeAllFooterBet();
-    // function resize Tutorial
-    let vm = this;
-    // $(document).ready(function() {
-    //   $(window).resize(function() {
-    //     if (vm.$refs.guidelineContent.hidden == false) {
-    //       vm.setTutorial(this.isStep);
-    //     }
-    //   });
-    // });
-    this.setNextstepstart();
   },
   watch: {
     // check size screen
@@ -440,15 +330,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asyncRoadMap"]),
-    ...mapMutations([
+    ...mapActions([
+      "setRoadMap",
+      "setTutorialStepNumber",
+      "setIsShowTutorial",
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
       "setIsLoadingStockGame"
     ]),
     setAfterFullScreenClosePage() {
-      localStorage.setItem("fullscreenclosed", "desktop");
+      secureStorage.setItem("fullscreenclosed", "desktop");
       this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
     },
     stopListenSocket(channel) {
@@ -459,20 +351,34 @@ export default {
     },
     async getStock() {
       try {
-        const data = await this.$axios.$post(
-          config.getStock.url,
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.getStock.url, reqBody, {
+          headers: config.header
+        });
+        if (res.status) {
+          this.stock = res.data;
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+        log.error(
           {
-            portalProviderUUID: this.getPortalProviderUUID,
-            version: config.version
+            req: reqBody,
+            res,
+            page: "pages/modern/desktop/_id.vue",
+            apiUrl: config.getStock.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
           },
-          { headers: config.header }
+          ex.message
         );
-
-        this.stock = data;
-      } catch (error) {
-        console.log(error);
       }
     },
+    // Add TrendMap
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -487,195 +393,94 @@ export default {
           break;
       }
     },
-
+    // Remove trendMap
+    removeTradMap(index) {
+      let indexValue = this.trendTypes[index];
+      let newData = this.trendTypes.filter(data => {
+        return data != indexValue;
+      });
+      this.trendTypes = newData;
+    },
     loaded() {
       this.isLoad = true;
     },
-    getopen() {
-      // open Next step start
-      localStorage.valTutorial = 0;
-      this.setNextstepstart();
+    clearTutorialUI() {
+      $("#lastDrawGuideline").css("z-index", "1");
+      $("#betCloseInGuideline").css("z-index", "1");
+      $("#lotteryDrawGuidelines").css("z-index", "1");
+      $("#chartGuidelineNew").css("z-index", "1");
+      $(".betButtonGuide").css("z-index", "1");
+      $(".BetButtonGuideEven").css("z-index", "1");
+      $("#selectstockGuidelines").css("z-index", "1");
+      $("#stocklistGuidelines").css("z-index", "1");
+      $("#trendmapGuidelines").css("z-index", "1");
+      $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
     },
-    setNextstepstart() {
-      // Run Timer Next step
-      if (localStorage.valTutorial != "1") {
-        let i = 0;
-        let setIntervals = setInterval(() => {
-          i++;
-          if (i == 13) {
-            clearInterval(setIntervals);
-            this.closeGuideline();
-            $(".guideline").css("style", "none");
-            localStorage.valTutorial = 1;
-            return;
-          }
-          if (localStorage.valTutorial != "1") {
-            this.setNextstep();
+    openTutorial() {
+      const _this = this;
+      let timeStart = this.getTutorialStepNumber === 0 ? 0 : 3000;
+      // setTimeout  to  resolve problems if user close tutorial and reopen
+      setTimeout(() => {
+        this.setIsShowTutorial(true);
+        let step = 1;
+        this.setTutorialStepNumber(step);
+        let stepGo = setInterval(() => {
+          step++;
+          this.setTutorialStepNumber(step);
+          if (step === 12 || !_this.getIsShowTutorial) {
+            clearInterval(stepGo);
+            _this.clearTutorialUI();
+            this.setTutorialStepNumber(0);
           }
         }, 3000);
-      }
-    },
-    setNextstep() {
-      // Next one step and stop step 12
-      if (this.isStep < 12) this.isStep += 1;
-      else this.isStep = 1;
-      this.setTutorial(this.isStep);
-    },
-    setTutorial(isStep) {
-      // open Tutorial
-      this.$refs.guidelineContent.hidden = false;
-      let w = window.innerWidth;
-
-      if (isStep == 1) {
-        // stock list
-        let stockG = $("#stocklistGuidelines").offset();
-        $("#stocklistGuidelines").css("border-style", "solid");
-        $("#stocklistGuidelines").css("border-color", "coral");
-        $(this.$refs.stocklistGuideline).css("right", w - stockG.left - 60);
-        $(this.$refs.stocklistGuideline).css("top", stockG.top - 35);
-        $("#trendmapGuidelines").css("border-style", "none");
-      } else if (isStep == 2) {
-        // select stock
-        let selectG = $("#selectstockGuideline").offset();
-        $("#selectstockGuideline").css("border-style", "solid");
-        $("#selectstockGuideline").css("border-color", "coral");
-        $(this.$refs.selectGuideline).css("left", selectG.left);
-        $(this.$refs.selectGuideline).css("top", selectG.top - 35);
-        $("#stocklistGuidelines").css("border-style", "none");
-      } else if (isStep == 3) {
-        // last Draw
-        let lastG = $("#lastDrawGuideline").offset();
-        $("#lastDrawGuideline").css("border-style", "solid");
-        $("#lastDrawGuideline").css("border-color", "coral");
-        $(this.$refs.lastDrawtGuideline).css("right", w - lastG.left - 60);
-        $(this.$refs.lastDrawtGuideline).css("top", lastG.top - 35);
-        $("#selectstockGuideline").css("border-style", "none");
-      } else if (isStep == 4) {
-        // bet Close In
-        let betG = $("#betCloseInGuideline").offset();
-        $("#betCloseInGuideline").css("border-style", "solid");
-        $("#betCloseInGuideline").css("border-color", "coral");
-        $(this.$refs.betCloseInGuideline).css("left", betG.left + 70);
-        $(this.$refs.betCloseInGuideline).css("top", betG.top - 85);
-        $("#lastDrawGuideline").css("border-style", "none");
-      } else if (isStep == 5) {
-        // lottery Draw
-        let lotteryDrawG = $("#lotteryDrawGuidelines").offset();
-        $("#lotteryDrawGuidelines").css("border-style", "solid");
-        $("#lotteryDrawGuidelines").css("border-color", "coral");
-        $(this.$refs.lotteryDrawGuideline).css("left", lotteryDrawG.left + 100);
-        $(this.$refs.lotteryDrawGuideline).css("top", lotteryDrawG.top - 20);
-        $("#betCloseInGuideline").css("border-style", "none");
-      } else if (isStep == 6) {
-        // chart
-        let chartG = $("#chartGuideline").offset();
-        $("#chartGuideline").css("border-style", "solid");
-        $("#chartGuideline").css("border-color", "coral");
-        $(this.$refs.chartGuideline).css("left", chartG.left - 370);
-        $(this.$refs.chartGuideline).css("top", chartG.top + 20);
-        $("#lotteryDrawGuidelines").css("border-style", "none");
-      } else if (isStep == 7) {
-        // bet rule
-        let ruleG = $("#betRuleButton").offset();
-        let width = $("#betRuleButton").width();
-        let height = $("#betRuleButton").height();
-        $(this.$refs.betguideline).css("width", width + 5);
-        $(this.$refs.betguideline).css("height", height + 5);
-        $(this.$refs.betguideline).css("border-style", "solid");
-        $(this.$refs.betguideline).css("border-color", "coral");
-        $(this.$refs.betguideline).css("left", ruleG.left);
-        $(this.$refs.betguideline).css("top", ruleG.top);
-        // bet title
-        $(this.$refs.betTitleGuideline).css("right", w - ruleG.left - 25);
-        // $(this.$refs.betTitleGuideline).css("top", ruleG.top + 50);
-        $("#chartGuideline").css("border-style", "none");
-      } else if (isStep == 8) {
-        // betresult
-        let betresultG = $("#betresultGuidelines").offset();
-        $("#betresultGuidelines").css("border-style", "solid");
-        $("#betresultGuidelines").css("border-color", "coral");
-        $(this.$refs.betresultGuideline).css("right", w - betresultG.left - 60);
-        $(this.$refs.betresultGuideline).css("top", betresultG.top - 35);
-      } else if (isStep == 9) {
-        // fullscreen
-        const fullG = $("#fullscreenGuidelines").offset();
-        $("#fullscreenGuidelines").css("border-style", "solid");
-        $("#fullscreenGuidelines").css("border-color", "coral");
-        $(this.$refs.fullScreenGuideline).css("right", fullG.left - 10);
-        $(this.$refs.fullScreenGuideline).css("top", fullG.top + 270);
-        $("#betresultGuidelines").css("border-style", "none");
-      } else if (isStep == 10) {
-        // multiple gaming
-        let multiG = $("#multiGuideline").offset();
-        $("#multiGuideline").css("border-style", "solid");
-        $("#multiGuideline").css("border-color", "coral");
-        $(this.$refs.multigameGuideline).css("right", multiG.left - 300);
-        $(this.$refs.multigameGuideline).css("top", multiG.top - 50);
-        $("#fullscreenGuidelines").css("border-style", "none");
-      } else if (isStep == 11) {
-        // betting
-        let bettingG = $("#bettingGuidelines").offset();
-        $("#bettingGuidelines").css("border-style", "solid");
-        $("#bettingGuidelines").css("border-color", "coral");
-        $(this.$refs.bettingGuideline).css("right", w - bettingG.left - 60);
-        $(this.$refs.bettingGuideline).css("top", bettingG.top - 35);
-        $("#multiGuideline").css("border-style", "none");
-      } else if (isStep == 12) {
-        // trendmap
-        let trendmapG = $("#trendmapGuidelines").offset();
-        $("#trendmapGuidelines").css("border-style", "solid");
-        $("#trendmapGuidelines").css("border-color", "coral");
-        $(this.$refs.trendmapGuideline).css("right", trendmapG.left - 310);
-        $(this.$refs.trendmapGuideline).css("top", trendmapG.top - 40);
-        $("#bettingGuidelines").css("border-style", "none");
-      }
-      this.$refs.guideline.style.height = "100%";
-      document.documentElement.style.overflow = "hidden";
-      window.scrollTo(0, 0);
-    },
-    closeGuideline() {
-      // close Tutorial
-      this.isStep = 0;
-      $(".fa-question-circle").show();
-      this.$refs.guidelineContent.hidden = true;
-      this.$refs.guideline.style.height = "0%";
-      document.documentElement.style.overflow = "visible";
-      $("#selectstockGuideline").css("border-style", "none");
-      $("#chartGuideline").css("border-style", "none");
-      $("#lastDrawGuideline").css("border-style", "none");
-      $("#stocklistGuidelines").css("border-style", "none");
-      $("#betresultGuidelines").css("border-style", "none");
-      $("#bettingGuidelines").css("border-style", "none");
-      $("#trendmapGuidelines").css("border-style", "none");
-      $("#fullscreenGuidelines").css("border-style", "none");
-      $("#betCloseInGuideline").css("border-style", "none");
-      $("#multiGuideline").css("border-style", "none");
-      $("#lotteryDrawGuidelines").css("border-style", "none");
-      localStorage.valTutorial = 1;
+      }, timeStart);
     }
   },
   computed: {
+    vueVersion() {
+      console.log(Vue.version, "Version");
+      return Vue.version;
+    },
     ...mapGetters([
+      "getTutorialStepNumber",
+      "getIsShowTutorial",
       "getStockLoop",
       "getTimerByStockName",
       "getStockUUIDByStockName",
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "lotterydraw",
-      "getStockLoop",
-      "getStockLastDraw",
-      "getStockCrawlerData"
+      "getStockLoop"
     ])
   }
 };
 </script>
-
 <style scoped>
+.closePopup {
+  background-color: #fff;
+  right: 0;
+  border-radius: 50%;
+  padding: 2px;
+  width: 30px;
+  height: 30px;
+}
+.multiGame {
+  z-index: 999;
+  position: fixed;
+  right: 0px;
+  bottom: 80px;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  font-size: 12px !important;
+  background: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
+  padding: 0px 9px;
+}
 .fullscreen {
   position: fixed !important;
-  bottom: 140px;
-  right: 12px;
+  bottom: 80px;
+  right: 0px;
   width: 50px;
   height: 50px;
   color: #fff;
@@ -692,28 +497,36 @@ export default {
 .helpButton {
   background-color: #4464ff !important;
   color: #fff;
-  padding: 5px;
-  font-size: 22px;
+  padding: 3px;
 }
+
 .leftStocklist {
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 5px;
   position: relative;
   top: 0;
   box-shadow: 0 0 2px grey;
-  right: 5px;
 }
 
 .sidebar-close {
+  /* z-index: 999; */
+  padding: 3px;
+  font-size: 16px;
   cursor: pointer;
-  background-color: #ffffff !important;
+  background-color: #4464ff !important;
   border-radius: 180px;
   position: absolute;
-  top: -10px;
-  right: 0px;
+  top: -15px;
+  right: -8px;
   transition: none !important;
 }
 
+.sidebar-close .v-icon {
+  color: #fff !important;
+}
+.chartDesgin {
+  border-radius: 10px;
+}
 .sidebar-toggle {
   cursor: pointer;
   position: fixed;

@@ -2,239 +2,236 @@
   <div>
     <v-flex xs12 class="pt-5 pl-5">
       <div>
-        <h2 class="title_menu">my followers</h2>
+        <h2 class="text-uppercase">
+          {{ $t("profile.myFollowers") }} ({{ this.countFollower }})
+        </h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex xs12 pt-5 pl-5>
-      <v-layout row pb-4>
-        <v-flex xs3>
-          <div class="input-container">
-            <input type="text" placeholder="search by name" />
-            <span class="icon-container-search">
-              <v-icon :size="20" color="#bdbdbd">search</v-icon>
-            </span>
-          </div>
-        </v-flex>
-        <v-flex xs3>
-          <div class="input-container">
-            <select id="country" name="country">
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-            <span class="icon-container">
-              <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
-            </span>
-          </div>
-        </v-flex>
-        <v-flex xs3>
-          <div class="input-container">
-            <select id="country" name="country">
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-            <span class="icon-container">
-              <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
-            </span>
-          </div>
-        </v-flex>
-        <v-flex xs3 pt-1>
-          <button class="btn_go">{{$t('msg.go')}}</button>
-        </v-flex>
-      </v-layout>
-
       <v-flex xs10>
-        <div class="filter_container">
-          <span class="filter-title">Filter by:</span>
-          <span class="tag">
-            5555
-            <span class="close-icon">X</span>
-          </span>
-          <span class="tag">5555</span>
-          <span class="tag">5555</span>
-          <span class="tag">5555</span>
-        </div>
         <div class="title_container">
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow">follow</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow">follow</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow btn_unfollow">unfollow</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow btn_following">following</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow">follow</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow btn_following">following</button>
-          </div>
-          <div class="follower_container">
-            <span>User allow to visit my profile</span>
-            <span class="span_center">us index dollar</span>
-            <span>stock name</span>
-            <button class="btn_follow">follow</button>
+          <h3 class="text-black onFollower" v-if="followerEmpty == true">
+            <i class="fa fa-user-o fa-2x" />
+            <div>{{ $t("profile.noFollowers") }}</div>
+          </h3>
+          <div
+            class="follower_container"
+            v-for="(data, index) in followerList"
+            :key="index"
+          >
+            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
+              <img class="userImage" :src="userImgProfile(data.profileImage)" />
+              <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
+              <span v-if="data.fullName == null" class="name">{{
+                data.userName
+              }}</span>
+            </nuxt-link>
+            <button
+              v-if="data.isFollowing == 0"
+              class="buttonGreen btnFollow"
+              v-on:click="
+                followUserBet(
+                  data.userName,
+                  data.profileImage,
+                  data.UUID,
+                  data.isFollowing
+                )
+              "
+            >
+              {{ $t("leaderBoard.follow") }}
+            </button>
+            <button
+              v-if="data.isFollowing == 1"
+              class="buttonCancel btnUnfollow"
+              v-on:click="
+                followUserBet(
+                  data.userName,
+                  data.profileImage,
+                  data.UUID,
+                  data.isFollowing
+                )
+              "
+            >
+              {{ $t("userAction.unFollow") }}
+            </button>
           </div>
         </div>
       </v-flex>
     </v-flex>
+
+    <!-- Follow Dialog -->
+    <v-dialog
+      v-model="followDialog"
+      width="500"
+      class="followDialog"
+      :persistent=true
+    >
+      <followBet
+        :username="this.username"
+        :userImage="this.userImage"
+        :FollowerUserUUID="this.FollowUserUUID"
+        :isFollowing="this.FolloworNot"
+        @followBetClose="closeFollowBet"
+      />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
-export default {};
+import config from "~/config/config.global";
+import followBet from "~/components/modern/follow/followBet";
+export default {
+  data() {
+    return {
+      followerEmpty: false,
+      username: "",
+      FollowUserUUID: "",
+      FolloworNot: "",
+      userImage: "",
+      followDialog: false,
+      active: null,
+      followerList: [],
+      countFollower: 0,
+      defaultImage: "/no-profile-pic.jpg"
+    };
+  },
+  components: {
+    followBet
+  },
+  mounted() {
+    this.getFollowerList();
+  },
+  computed: {
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+  },
+  methods: {
+    // Close Follow Bet Popup
+    closeFollowBet() {
+      this.followDialog = false;
+      this.getFollowerList();
+    },
+    // Follow User Bet
+    followUserBet: function(username, userImg, userUUID, method) {
+      this.username = username;
+      this.FollowUserUUID = userUUID;
+      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
+      this.userImage = this.userImgProfile(userImg);
+      this.followDialog = true;
+    },
+    // fetch default image or from server image
+    userImgProfile(userImg) {
+      return userImg === null
+        ? this.defaultImage
+        : `${config.apiDomain}/` + userImg;
+    },
+    async getFollowerList() {
+      try {
+        const res = await this.$axios.$post(
+          config.getUserFollower.url,
+          {
+            portalProviderUUID: this.getPortalProviderUUID,
+            userUUID: this.getUserUUID,
+            followersType: 1,
+            version: config.version
+          },
+          {
+            headers: config.header
+          }
+        );
+        if (res.code == 200) {
+          this.followerList = res.data;
+          this.countFollower = res.data.length;
+
+          if (this.countFollower == 0) {
+            this.followerEmpty = true;
+          } else {
+            this.followerEmpty = false;
+          }
+        } else {
+          this.followerEmpty = true;
+        }
+      } catch (ex) {
+        console.error(ex.message);
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
-.title_menu {
-  text-transform: uppercase;
+.onFollower {
+  color: #aeafb0;
+  text-align: center;
+  font-size: 28px;
+  width: 500px;
+  margin: 20% auto;
 }
-.titile {
-  padding-left: 5px;
+.followType span {
+  text-align: center;
+  width: 100%;
+  display: block;
 }
-.filter_container{
-    margin-bottom:30px
+
+.followType label {
+  width: 100%;
+  font-weight: 600;
 }
-.filter-title {
-  font-weight: bold;
-  /* font-size: 18px;
-  text-transform: uppercase; */
+
+.followType {
+  margin: 15px 5px;
 }
+
+.userImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 180px;
+  margin: 0 auto;
+}
+
+.name {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #2bb13a;
+  display: block;
+  width: 100%;
+  text-transform: capitalize;
+}
+
 .title_container {
   padding-top: 15px;
   padding-bottom: 15px;
-  text-transform: capitalize;
 }
+
 .follower_container {
+  border-radius: 6px;
+  border: 1px solid #dddddd;
   background-color: white;
-  margin-left: 5px;
-  margin-bottom: 15px;
-  position: relative;
-  width: 90%;
-  padding: 10px;
-  padding-left: 15px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #bdbec1;
-  border-radius: 10px;
+  width: 30%;
+  float: left;
+  margin: 5px;
+  padding: 15px 10px;
+  text-align: center;
 }
-.btn_follow {
-  position: relative;
-  float: right;
-  font-weight: bold;
-  bottom: 4px;
+
+.btnFollow {
+  margin-top:15px;
+  font-size: 16px;
+  text-transform: capitalize;
   width: 130px;
   padding: 4px 0px;
   color: #fff;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #25b175 19%, #2cb121 70%);
-
-  border-radius: 10px;
-  box-shadow: 0px 2px 5px rgb(145, 145, 145);
-}
-.btn_unfollow {
-  background: linear-gradient(to right, #898888 19%, #626161 70%);
-}
-.btn_following {
-  background: linear-gradient(to right, #51c6b8 19%, #73d07f 70%);
-}
-.input-container {
-  position: relative;
-}
-input[type="text"],
-select {
-  width: 90%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  resize: vertical;
-  background-color: white;
-}
-input[type="text"] {
-  padding-left: 35px;
-}
-select {
-  padding-right: 35px;
-}
-.icon-container {
-  position: absolute;
-  top: 14px;
-  right: 45px;
-}
-.icon-container-search {
-  position: absolute;
-  left: 10px;
-  top: 14px;
-}
-select {
-  cursor: pointer;
-}
-button:focus,
-input:focus,
-select:focus {
-  outline: none;
-}
-.btn_go {
-  background-color: green;
-  padding: 10px;
-  width: 60px;
-  color: #ffffff;
-  border-radius: 10px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-span.tag {
-  position: relative;
-  color: black;
-  /* font-size: 12px; */
-  border: 1px solid #cfcfd2;
   border-radius: 5px;
-  padding: 2px 10px;
-  margin-right: 15px;
-}
-.close-icon {
-  position: absolute;
-  border: 1px solid #cfcfd2;
-  color: #cfcfd2;
-  font-size: 8px;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  top: -5px;
-  right: -8px;
-  text-align: center;
-  background-color: white;
-  font-weight: 900;
-  cursor: pointer;
 }
 
-.span_center {
-  margin: 0px 80px;
+.btnUnfollow {
+  margin-top:15px;
+  font-size: 16px;
+  text-transform: capitalize;
+  width: 130px;
+  padding: 4px 0px;
+  color: #fff;
+  border-radius: 5px;
 }
 </style>

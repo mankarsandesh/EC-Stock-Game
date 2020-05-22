@@ -6,7 +6,8 @@
       :titlebtn="$t('breadcrumbs.betHistory')"
     />
     <v-container>
-      <currentBet :head="head" :currentBets="currentBets" />
+      <!-- Send Data to currentBet Component -->
+      <currentBet :currentBets="currentBets" />
     </v-container>
   </div>
 </template>
@@ -14,7 +15,10 @@
 import currentBet from "~/components/modern/currentBet";
 import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
-import config from "../../../config/config.global";
+import config from "~/config/config.global";
+import secureStorage from "../../../plugins/secure-storage";
+import log from "roarr";
+
 export default {
   layout: "desktopModern",
   components: {
@@ -23,25 +27,15 @@ export default {
   },
   data() {
     return {
-      head: [
-        {
-          text: "bet ID",
-          value: "betID",
-          sortable: false,
-          value: "createdTime"
-        },
-        { text: "game ID", value: "gameID" },
-        { text: "bet detail", value: "ruleName" },
-        { text: "time", value: "createdTime" },
-        { text: "amount", value: "betAmount" },
-        { text: "payout", value: "payout" },
-        { text: "bet status", value: "gameStatus" }
-      ],
       currentBets: []
     };
   },
   computed: {
-    ...mapState(["portalProviderUUID", "userUUID"]) //get 2 data from vuex first, in the computed
+    // Get 2 Data from vuex first, in the computed
+    ...mapState({
+      portalProviderUUID: state => state.provider.portalProviderUUID,
+      userUUID: state => state.provider.userUUID
+    }) 
   },
   mounted() {
     this.fetch();
@@ -49,25 +43,38 @@ export default {
   methods: {
     async fetch() {
       try {
-        const userData = {
+        var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           version: config.version,
-          betResult: [-1],
-          limit: "20",
-          offset: "0"
+          betResult: [-1]
         };
-        const { data } = await this.$axios.post(
-          config.getAllBets.url,
-          userData,
+        var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
+          headers: config.header
+        });
+        if (data.status) {
+          this.currentBets = data.data;
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.error(ex);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        log.error(
           {
-            headers: config.header
-          }
+            req: reqBody,
+            res: data.data,
+            page: "pages/modern/desktop/current-bet.vue",
+            apiUrl: config.getAllBets.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
         );
-        this.currentBets = data.data;
-        console.log(this.currentBets);
-      } catch (error) {
-        console.log(data);
       }
     }
   }

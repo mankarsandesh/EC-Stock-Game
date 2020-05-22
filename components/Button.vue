@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="main-btn" :to="linkItem">{{btnTitle}}</v-btn>
+  <v-btn class="main-btn" :to="linkItem">{{ btnTitle }}</v-btn>
 </template>
 <script>
 export default {
@@ -7,5 +7,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,40 +1,78 @@
 <template>
   <v-layout row class="justify-center">
-    <v-flex xs12 md12>
+    <v-flex   md10 lg10 mt-5>
       <v-data-table
-        :headers="head"
         :items="currentBets"
-        :items-per-page="5"        
+        :rows-per-page-items="[10]"
         ref="table"
         :search="search"
         class="current-bet"
       >
-      <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
+        <v-progress-linear
+          v-slot:progress
+          color="blue"
+          indeterminate
+        ></v-progress-linear>
+        <template v-slot:headers="headers">
+          <tr class="tableStyle">
+            <th scope="col">{{ $t("msg.betId") }}</th>
+            <th scope="col">{{ $t("msg.gameId") }}</th>
+            <th scope="col">{{ $t("msg.betDetail") }}</th>
+            <th scope="col">{{ $t("msg.time") }}</th>
+            <th scope="col">{{ $t("msg.amount") }}</th>
+            <th scope="col">{{ $t("msg.payout") }}</th>
+            <th scope="col">{{ $t("msg.betStatus") }}</th>
+          </tr>
+        </template>
         <template v-slot:items="item">
           <td>{{ item.item.betUUID }}</td>
           <td>{{ item.item.gameUUID }}</td>
           <td>
             {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }}
+            {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minute')}}
           </td>
-          <td>{{ item.item.createdDate }} {{ item.item.createdTime }} </td>
+          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
-          <td>{{ item.item.payout }}</td>        
+          <td>{{ item.item.payout }}</td>
+          <td v-if="item.item.betResult == 'win'">
+            <v-chip
+              color="green"
+              text-color="white"
+              class="text-uppercase betresult"
+              >{{ $t("msg.win") }}</v-chip
+            >
+          </td>
+          <td v-if="item.item.betResult == 'lose'">
+            <v-chip
+              color="red"
+              text-color="white"
+              class="text-uppercase betresult"
+              >{{ $t("msg.lose") }}</v-chip
+            >
+          </td>
           <td v-if="item.item.betResult == 'pending'">
-            <span  class="pending"
-              >{{ item.item.betResult }}...</span>            
+            <v-chip
+              color="yellow "
+              text-color="black"
+              class="text-uppercase betresult"
+              >{{ $t("msg.pending") }}...</v-chip
+            >
           </td>
         </template>
         <template slot="footer">
           <tr>
-            <td>{{ $t("msg.Total") }}</td>
-            <td colspan="3">{{ currentBets.length }} bets</td>
+            <td>{{ $t("msg.total") }}</td>
+            <td colspan="3">
+              {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
+            </td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>
             </td>
             <td colspan="2"></td>
           </tr>
         </template>
+        
+
       </v-data-table>
     </v-flex>
   </v-layout>
@@ -42,7 +80,7 @@
 
 <script>
 export default {
-  props: ["head", "currentBets"],
+  props: ["currentBets"],
   data: () => ({
     search: ""
   }),
@@ -76,31 +114,31 @@ export default {
 };
 </script>
 <style scoped>
-.lose{
- border-radius:15px;
+.lose {
+  border-radius: 15px;
   padding: 4px 10px;
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 600;
   background-color: #e05858;
 }
-.win{
- border-radius:15px;
+.win {
+  border-radius: 15px;
   padding: 4px 16px;
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 600;
   background-color: #2bb13b;
 }
-.pending{
-  border-radius:15px;
+.pending {
+  border-radius: 15px;
   padding: 4px 16px;
   color: #333;
   font-size: 14px;
-  text-transform:uppercase;
+  text-transform: uppercase;
   font-weight: 600;
-  background-color:#fec623;
+  background-color: #fec623;
 }
 </style>

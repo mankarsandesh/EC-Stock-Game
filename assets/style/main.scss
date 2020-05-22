@@ -722,7 +722,7 @@ main.v-content {
         background-image: url("/bg/Inner-page-banner.png");
         background-size: cover;
         background-position: center;
-        margin: 0 0 30px 0;
+        // margin: 0 0 30px 0;
       }
     }
   }
@@ -863,6 +863,7 @@ main.v-content {
   }
 }
 
+
 /* -------------------------------------------------------------------------- */
 /*                               End selec stock                              */
 /* -------------------------------------------------------------------------- */
@@ -894,7 +895,7 @@ main.v-content {
 /*                                 bet history                                */
 /* -------------------------------------------------------------------------- */
 section.filter {
-  margin: 30px 0;
+  margin:0px 0px 30px 0;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14),
     0px 1px 0px 0px rgba(0, 0, 0, 0.12) !important;
   .layout.filter-history {

@@ -3,21 +3,21 @@
     <button class="closepopper" hidden>close popper</button>
     <!-- for show bet close -->
     <div class="bet-close" v-if="checkBetClose">
-      <p>{{ $t("msg.betclosed") }}</p>
+      <p>{{ $t("msg.betClosed") }}</p>
     </div>
     <!-- end for show bet close -->
-    <v-layout row>
+    <v-layout row md10>
       <span class="w12 buttonbtn">
         <v-btn class="bg-btn-first btnHeight">
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
         </v-btn>
       </span>
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="data in firstDigit"
-        :key="data.rule"
+        :key="data.ruleid"
         class="w12"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -29,12 +29,13 @@
             :stockName="stockID"
             :ruleid="data.ruleid"
             :betId="'firstdigit-' + data.rule"
+            :betWin="'firstdigitWin-' + data.rule"
             :payout="data.payout"
           ></betModal>
         </div>
         <v-btn
-          class="align_button4 "
-          :id="'firstdigit-' + data.rule"
+          class="align_button4"
+          :id="stockID + 'firstdigit-' + data.rule"
           slot="reference"
           @click="betButtonClick(data.ruleid)"
         >
@@ -47,17 +48,21 @@
               })
             "
           ></showChipAmount>
+          <div :id="'firstdigitWin-' + data.rule"></div>
+
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{
+            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
+            }}
           </span>
         </v-btn>
       </popper>
 
-      <span class="w12">
-        <v-btn class="align_button4" id="first" @click="btnNumber('first')">
+      <span class="w10">
+        <v-btn class="align_button4" :id="stockID + 'firstdigit'" @click="btnNumber('first')">
           <showChipAmount
             size="45px"
             :amount="
@@ -67,6 +72,8 @@
               })
             "
           ></showChipAmount>
+
+          <div class="big-digit" :id="stockID + 'firstdigitNumber'"></div>
           <span class="big-digit">0 - 9</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
@@ -78,17 +85,17 @@
     <!-- Row betting button2 -->
     <v-layout row>
       <span class="w12 buttonbtn">
-        <v-btn class="bg-btn-last btnHeight">
+        <v-btn class="bg-btn-last btnHeight betButtonGuide">
           <span class="btn-digit">{{ $t("gamemsg.lastdigits") }}</span>
         </v-btn>
       </span>
 
       <popper
-        :disabled="checkFooterBet"
-        v-for="data in lastDigit"
-        :key="data.rule"
+        :disabled="checkFooterBetAmount"
+        v-for="(data, index) in lastDigit"
+        :key="index"
         class="w12"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -99,12 +106,17 @@
             :stockName="stockID"
             :ruleid="data.ruleid"
             :betId="'lastdigit-' + data.rule"
+            :betWin="'lastdigitWin-' + data.rule"
             :payout="data.payout"
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
-          :id="'lastdigit-' + data.rule"
+          :class="
+            index == 3
+              ? 'align_button4 betButtonGuide BetButtonGuideEven'
+              : 'align_button4 betButtonGuide'
+          "
+          :id="stockID + 'lastdigit-' + data.rule"
           @click="betButtonClick(data.ruleid)"
           slot="reference"
         >
@@ -117,18 +129,25 @@
               })
             "
           ></showChipAmount>
+          <div :id="'lastdigitWin-' + data.rule"></div>
 
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{
+            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
+            }}
           </span>
         </v-btn>
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4" id="last" @click="btnNumber('last')">
+        <v-btn
+          class="align_button4 betButtonGuide"
+          :id="stockID + 'lastdigit'"
+          @click="btnNumber('last')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -138,6 +157,7 @@
               })
             "
           ></showChipAmount>
+          <div class="big-digit" :id="stockID + 'lastdigitNumber'"></div>
           <span class="big-digit">0 - 9</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
@@ -155,11 +175,11 @@
       </span>
 
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="data in bothDigit"
         :key="data.rule"
         class="w12"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -170,12 +190,13 @@
             :stockName="stockID"
             :ruleid="data.ruleid"
             :betId="'bothdigit-' + data.rule"
+            :betWin="'bothdigitWin-' + data.rule"
             :payout="data.payout"
           ></betModal>
         </div>
         <v-btn
           class="align_button4"
-          :id="'bothdigit-' + data.rule"
+          :id="stockID + 'bothdigit-' + data.rule"
           @click="betButtonClick(data.ruleid)"
           slot="reference"
         >
@@ -188,18 +209,19 @@
               })
             "
           ></showChipAmount>
-
+          <div :id="'bothdigitWin-' + data.rule"></div>
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{
+            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
+            }}
           </span>
         </v-btn>
       </popper>
-
       <span class="w12">
-        <v-btn class="align_button4" id="both" @click="btnNumber('both')">
+        <v-btn class="align_button4" :id="stockID + 'bothdigit'" @click="btnNumber('both')">
           <showChipAmount
             size="45px"
             :amount="
@@ -209,6 +231,7 @@
               })
             "
           ></showChipAmount>
+          <div class="big-digit" :id="stockID + 'bothdigitNumber'"></div>
 
           <span class="big-digit">0 - 18</span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
@@ -227,11 +250,11 @@
       </span>
 
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="data in twoDigit"
         :key="data.rule"
         class="w12"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -242,12 +265,13 @@
             :stockName="stockID"
             :ruleid="data.ruleid"
             :betId="'twodigit-' + data.rule"
+            :betWin="'twodigitWin-' + data.rule"
             :payout="data.payout"
           ></betModal>
         </div>
         <v-btn
           class="align_button4"
-          :id="'twodigit-' + data.rule"
+          :id="stockID + 'twodigit-' + data.rule"
           @click="betButtonClick(data.ruleid)"
           slot="reference"
         >
@@ -260,18 +284,20 @@
               })
             "
           ></showChipAmount>
-
+          <div :id="'twodigitWin-' + data.rule"></div>
           <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.payout[parseInt(data.payout)].dynamicOdds }}
+            {{
+            $store.state.game.payout[parseInt(data.payout)].dynamicOdds
+            }}
           </span>
         </v-btn>
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4" id="two" @click="btnNumber('two')">
+        <v-btn class="align_button4" :id="stockID + 'twodigit'" @click="btnNumber('two')">
           <showChipAmount
             size="45px"
             :amount="
@@ -281,8 +307,8 @@
               })
             "
           ></showChipAmount>
-
-          <span class="big-digit">00 - 99</span>
+          <div :id="stockID + 'twodigitNumber'"></div>
+          <span class="big-digit">0 - 99</span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">{{ payout_99 }}</span>
@@ -293,10 +319,10 @@
     <!-- specific number bet button -->
     <v-layout row class="setlayuot">
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
         :key="'firstdigit-' + index"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -304,25 +330,27 @@
       >
         <div class="popper">
           <betModal
+            @update-bet="updateBet"
             :stockName="stockID"
             :ruleid="8 + index"
             :betId="'firstdigit-' + index"
+            :betWin="'firstdigitWin-' + index"
             :payout="index + 30"
           ></betModal>
         </div>
         <v-btn
+          :id="stockID + 'firstdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(8 + index)"
+          @click="betButtonClick(8 + index, 'firstdigit')"
           v-show="number == 'first'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
         :key="'lastdigit-' + index"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -330,25 +358,27 @@
       >
         <div class="popper">
           <betModal
+            @update-bet="updateBet"
             :stockName="stockID"
             :ruleid="25 + index"
             :betId="'lastdigit-' + index"
+            :betWin="'lastdigitWin-' + index"
             :payout="index + 40"
           ></betModal>
         </div>
         <v-btn
+          :id="stockID + 'lastdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(25 + index)"
+          @click="betButtonClick(25 + index, 'lastdigit')"
           v-show="number == 'last'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(n, index) in 19"
         :key="'bothdigit-' + index"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -356,25 +386,27 @@
       >
         <div class="popper">
           <betModal
+            @update-bet="updateBet"
             :stockName="stockID"
             :ruleid="149 + index"
             :betId="'bothdigit-' + index"
+            :betWin="'bothdigitWin-' + index"
             :payout="index + 50"
           ></betModal>
         </div>
         <v-btn
+          :id="stockID + 'bothdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(149 + index)"
+          @click="betButtonClick(149 + index, 'bothdigit')"
           v-show="number == 'both'"
           class="btn-small"
-          >{{ index }}</v-btn
-        >
+        >{{ index }}</v-btn>
       </popper>
       <popper
-        :disabled="checkFooterBet"
+        :disabled="checkFooterBetAmount"
         v-for="(n, index) in 100"
         :key="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
-        trigger="click"
+        trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
           modifiers: { offset: { offset: '25px' } }
@@ -382,32 +414,36 @@
       >
         <div class="popper">
           <betModal
+            @update-bet="updateBet"
             :stockName="stockID"
             :ruleid="42 + index"
             :betId="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
+            :betWin="'twodigitWin-' + index"
             :payout="index + 69"
           ></betModal>
         </div>
         <v-btn
+          :id="index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index"
           slot="reference"
-          @click="betButtonClick(42 + index)"
+          @click="betButtonClick(42 + index, 'twodigit')"
           v-show="number == 'two'"
           class="btn-small"
-          >{{ index < 10 ? "0" + index : index }}</v-btn
-        >
+        >{{ index < 10 ? "0" + index : index }}</v-btn>
       </popper>
     </v-layout>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import gameRule from "~/data/gameRule";
 import betModal from "~/components/modern/betModal";
-import showChipAmount from "~/components/modern/showChipAmount";
+import showChipAmount from "~/components/modern/showChipAmount";  
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
+import Result from "~/helpers/Result";
+
 export default {
   props: {
     isFullscreen: {
@@ -417,6 +453,16 @@ export default {
     //  for multi game
     stockName: {
       type: String
+    }
+  },
+
+// will discuss with the team later, about the set betting on the localStroge  
+  // mounted() {
+  //   Result.setItemBetting();
+  // },
+  watch: {
+    getCollegeBtnNumber(val) {
+      this.btnNumber(val);
     }
   },
   data() {
@@ -430,224 +476,10 @@ export default {
       payout_18: payout._18,
       payout_99: payout._99,
       // games rules
-      firstDigit: [
-        {
-          ruleid: 1,
-          rule: "big",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 0
-        },
-        {
-          ruleid: 2,
-          rule: "small",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 1
-        },
-        {
-          ruleid: 3,
-          rule: "odd",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 2
-        },
-        {
-          ruleid: 4,
-          rule: "even",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 3
-        },
-        {
-          ruleid: 5,
-          rule: "high",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 4
-        },
-        {
-          ruleid: 6,
-          rule: "mid",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 5
-        },
-        {
-          ruleid: 7,
-          rule: "low",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 6
-        }
-      ],
-      lastDigit: [
-        {
-          ruleid: 18,
-          rule: "big",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 7
-        },
-        {
-          ruleid: 19,
-          rule: "small",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 8
-        },
-        {
-          ruleid: 20,
-          rule: "odd",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 9
-        },
-        {
-          ruleid: 21,
-          rule: "even",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 10
-        },
-        {
-          ruleid: 22,
-          rule: "high",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 11
-        },
-        {
-          ruleid: 23,
-          rule: "mid",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 12
-        },
-        {
-          ruleid: 24,
-          rule: "low",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 13
-        }
-      ],
-      bothDigit: [
-        {
-          ruleid: 142,
-          rule: "big",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 14
-        },
-        {
-          ruleid: 169,
-          rule: "tie",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 15
-        },
-        {
-          ruleid: 143,
-          rule: "small",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 16
-        },
-        {
-          ruleid: 144,
-          rule: "odd",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 17
-        },
-        {
-          ruleid: 145,
-          rule: "even",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 18
-        },
-        {
-          ruleid: 146,
-          rule: "high",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 19
-        },
-        {
-          ruleid: 147,
-          rule: "mid",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 20
-        },
-        {
-          ruleid: 148,
-          rule: "low",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 21
-        }
-      ],
-      twoDigit: [
-        {
-          ruleid: 35,
-          rule: "big",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 22
-        },
-        {
-          ruleid: 168,
-          rule: "tie",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 23
-        },
-        {
-          ruleid: 36,
-          rule: "small",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 24
-        },
-        {
-          ruleid: 37,
-          rule: "odd",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 25
-        },
-        {
-          ruleid: 38,
-          rule: "even",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 26
-        },
-        {
-          ruleid: 39,
-          rule: "high",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 27
-        },
-        {
-          ruleid: 40,
-          rule: "mid",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 28
-        },
-        {
-          ruleid: 71,
-          rule: "low",
-          stock_id: this.$route.params.id,
-          stock_name: this.$route.params.id,
-          payout: 29
-        }
-      ]
+      firstDigit: gameRule.firstDigit,
+      lastDigit: gameRule.lastDigit,
+      bothDigit: gameRule.bothDigit,
+      twoDigit: gameRule.twoDigit
     };
   },
   components: {
@@ -662,12 +494,11 @@ export default {
       "getGameUUIDByStockName",
       "getTimerByStockName",
       "getStockLoop",
-      "checkFooterBet",
+      "checkFooterBetAmount",
       "getFooterBetAmount",
-      "getMultiGameBet",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "getPayout"
+      "getCollegeBtnNumber"
     ]),
     stockID() {
       if (this.stockName == null) {
@@ -680,7 +511,7 @@ export default {
     checkBetClose() {
       if (
         this.getTimerByStockName(this.stockID) &&
-        this.getTimerByStockName(this.stockID).stockOpenOrClosed === "Closed!"
+        this.getTimerByStockName(this.stockID).stockStatus === "Closed"
       ) {
         return true;
       }
@@ -688,10 +519,9 @@ export default {
       if (this.getStockLoop(this.stockID) === 5) {
         if (
           this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec ==
-            240
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
         ) {
-          this.clearDataMultiGameBet();
+          this.clearDataMultiGameBet(5);
         }
         return (
           this.getTimerByStockName(this.stockID) &&
@@ -700,9 +530,9 @@ export default {
       } else {
         if (
           this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 40
+          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
         ) {
-          this.clearDataMultiGameBet();
+          this.clearDataMultiGameBet(1);
         }
         return (
           this.getTimerByStockName(this.stockID) &&
@@ -711,24 +541,40 @@ export default {
       }
     }
   },
-  mounted() {},
+
   methods: {
-    ...mapMutations(["pushDataMultiGameBet", "clearDataMultiGameBet"]),
-    betButtonClick(ruleID) {
+    ...mapActions([
+      "pushDataMultiGameBet",
+      "clearDataMultiGameBet",
+      "setTempMultiGameBetData",
+      "setCollegeButtonNumberParent"
+    ]),
+
+    betButtonClick(ruleID, specificNumber = "") {
       // $("#"+ruleID).addClass('bg-btn-first');
-      if (this.checkFooterBet) {
+      if (this.checkFooterBetAmount) {
         let betData = {
+          specificNumber: specificNumber,
           gameUUID: this.getGameUUIDByStockName(this.stockID),
           ruleID: ruleID,
           betAmount: this.getFooterBetAmount
         };
-        this.pushDataMultiGameBet(betData);
+        this.setTempMultiGameBetData(betData);
+        // this.pushDataMultiGameBet(betData);
         // console.warn(this.getMultiGameBet);
       }
     },
+
     // the btnNumber methods use to switch specific number first,last,both and two
     btnNumber(value) {
       value == this.number ? (this.number = null) : (this.number = value);
+    },
+    updateBet(items) {
+      const split = items.betRule.split("-");
+      // small button
+      $("#" + items.stock + items.betRule).addClass(items.betRule);
+      // parent the button
+      $("#" + items.stock + split[0]).addClass(split[0]);
     }
   }
 };
@@ -764,3 +610,5 @@ export default {
   white-space: pre-line;
 }
 </style>
+
+

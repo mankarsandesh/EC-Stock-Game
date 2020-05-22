@@ -5,10 +5,14 @@
         <v-flex xs6 sm6 md6 lg4>
           <div class="amount_container">
             <div class="decorator_card decorator_card_green"></div>
-            <span>{{$t('msg.accountbalance')}}</span>
+            <span>{{ $t("msg.accountBalance") }}</span>
             <br />
-            <span class="amount" v-if="userData.balance != 0">{{userData.balance | currency}}</span>
-             <span class="amount" v-if="userData.balance == 0">00.00</span>
+            <span class="amount" v-if="userData.balance != 0">
+              {{
+              userData.balance | currency
+              }}
+            </span>
+            <span class="amount" v-if="userData.balance == 0">00.00</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -16,9 +20,9 @@
           <div class="amount_container">
             <div class="decorator_card decorator_card_blue"></div>
 
-            <span>{{$t('msg.rollingamount')}}</span>
+            <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{161536 | currency}}</span>
+            <span class="amount">{{ 161536 | currency }}</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -30,12 +34,11 @@
           <div style="margin-top:20px">
             <form action="/action_page.php">
               <div class="row">
-
-                 <p class=error-message v-if="error">{{error}}</p> 
-                   
-
                 <div class="col-15">
-                  <label for="username">{{$t('profile.username')}}</label>
+                  <label for="username">
+                    {{ $t("profile.username") }}
+                    <span class="required">*</span>
+                  </label>
                 </div>
                 <div class="col-85">
                   <input
@@ -53,7 +56,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="first-name">{{$t('profile.firstname')}}</label>
+                  <label for="first-name">{{ $t("profile.firstName") }}</label>
                 </div>
                 <div class="col-85">
                   <input
@@ -71,7 +74,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="last-name">{{$t('profile.lastname')}}</label>
+                  <label for="last-name">{{ $t("profile.lastName") }}</label>
                 </div>
                 <div class="col-85">
                   <input
@@ -89,12 +92,15 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="gender">{{$t('profile.gender')}}</label>
+                  <label for="gender">
+                    {{ $t("profile.gender") }}
+                    <span class="required">*</span>
+                  </label>
                 </div>
                 <div class="col-85">
-                  <select ref="gender" id="gender" name="gender">
-                    <option value="female">{{$t('profile.female')}}</option>
-                    <option value="male">{{$t('profile.male')}}</option>
+                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
+                    <option value="male">{{ $t("profile.male") }}</option>
+                    <option value="female">{{ $t("profile.female") }}</option>
                   </select>
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
@@ -103,7 +109,7 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="email">{{$t('profile.email')}}</label>
+                  <label for="email">{{ $t("profile.email") }}</label>
                 </div>
                 <div class="col-85">
                   <input
@@ -118,22 +124,24 @@
               </div>
               <div class="row">
                 <div class="col-15">
-                  <label for="country">{{$t('profile.country')}}</label>
+                  <label for="country">
+                    {{ $t("profile.country") }}
+                    <span class="required">*</span>
+                  </label>
                 </div>
                 <div class="col-85">
-                  <select ref="country" id="country" name="country">
-                    <option value="china">China</option>
-                    <option value="usa">USA</option>
-                    <option value="thailand">Thailand</option>
-                    <option value="laos">Laos</option>
+                  <select ref="country" id="country" name="country" :value="userData.country">
+                    <option value="CHN">China</option>
+                    <option value="USA">USA</option>
+                    <option value="THA">Thailand</option>
+                    <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </div>
               </div>
-                
-             
+
               <div class="row">
                 <div class="col-15"></div>
                 <div class="col-85">
@@ -142,8 +150,8 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                  >{{$t('msg.save')}}</v-btn>
-                  <v-btn class="btn_cancel">{{$t('msg.cancel')}}</v-btn>
+                  >{{ $t("msg.save") }}</v-btn>
+                  <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>
             </form>
@@ -156,14 +164,14 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
-import config from "../../../../config/config.global";
+import config from "~/config/config.global";
+import secureStorage from "../../../../plugins/secure-storage";
+import log from "roarr";
 
 export default {
   data() {
     return {
-      updating: false,
-      error: ""
+      updating: false
     };
   },
   mounted() {
@@ -177,14 +185,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["asynUserInfo"]),
+    ...mapActions(["setUserData"]),
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
     async saveClick() {
       this.updating = true;
       const ref = this.$refs;
-      let formData = new FormData();
+      var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
       formData.append("email", ref.email.value);
@@ -192,37 +200,48 @@ export default {
       formData.append("firstName", ref.firstName.value);
       formData.append("lastName", ref.lastName.value);
       formData.append("gender", ref.gender.value);
-      // formData.append("country", ref.country.value);
+      formData.append("country", ref.country.value);
       formData.append("version", config.version);
       try {
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
           {
             headers: config.header
           }
-        );        
-        if (res.code === 200) {
-          console.log('basic info', res);
+        );
+        if (res.status) {
+          this.setUserData();
+          this.updating = false;
           this.$swal({
             type: "success",
             title: "Successful Information Saved!",
             showConfirmButton: false,
-            timer: 1500
-          });          
-          this.asynUserInfo();
-          this.updating = false;         
-          this.error = '';
-        } else {         
+            timer: 1000
+          });
+        } else {
           this.updating = false;
-          this.error = res.message;
-          this.msgError = true;
-          console.log(res);
+          throw new Error(res.message[0]);
         }
       } catch (ex) {
         console.error(ex);
         this.updating = false;
-        alert(ex.message);
+        this.$swal({
+          title: ex.message,
+          type: "error",
+          timer: 1000
+        });
+        log.error(
+          {
+            req: formData,
+            res,
+            page: "pages/modern/desktop/profile/index.vue",
+            apiUrl: config.updateUserProfile.url,
+            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
+            user: secureStorage.getItem("USER_UUID")
+          },
+          ex.message
+        );
       }
     }
   }
@@ -230,13 +249,18 @@ export default {
 </script>
 
 <style scoped>
-/* .......form....... */
+.required {
+  color: red;
+}
 label {
+  font-weight: 600;
   text-transform: capitalize;
 }
+
 input[type="text"]:disabled {
   background-color: #ccc;
 }
+
 input[type="text"],
 select {
   width: 350px;
@@ -247,18 +271,11 @@ select {
   background-color: white;
   padding-right: 35px;
 }
+
 select {
   cursor: pointer;
 }
-.error-message {
-  border:1px solid red;
-  padding:8px 10px;
-  color: red;
-  width: 40%;
-  text-transform: capitalize;
-  border-radius:4px;
-  background-color: #FBD7D7;
-}
+
 input:focus,
 select:focus {
   outline: none;
@@ -268,6 +285,7 @@ label {
   padding: 12px 12px 12px 0;
   display: inline-block;
 }
+
 .col-15 {
   float: left;
   width: 13%;
@@ -287,11 +305,13 @@ label {
   display: table;
   clear: both;
 }
+
 .btn_save {
   background-color: #38af3e !important;
   color: white;
   border-radius: 7px;
 }
+
 .btn_cancel {
   background-color: #656464 !important;
   color: white;
@@ -311,11 +331,13 @@ label {
   text-transform: capitalize;
   line-height: 1.1;
 }
+
 .amount {
   font-size: 32px;
   font-weight: bold;
   position: relative;
 }
+
 .title_currentcy {
   color: #888888;
   font-size: 14px;
@@ -323,6 +345,7 @@ label {
   padding-left: 5px;
   position: absolute;
 }
+
 .decorator_card {
   position: absolute;
   height: 35px;
@@ -331,52 +354,65 @@ label {
   margin-top: 8px;
   margin-left: -2px;
 }
+
 .decorator_card_green {
   background-color: #39b01e;
 }
+
 .decorator_card_blue {
   background-color: #1e45b0;
 }
+
 .decorator_card_red {
   background-color: #b01e1e;
 }
+
 .icon-container {
   position: relative;
   right: 37px;
 }
+
 /* loading.... */
 .custom-loader {
   animation: loader 1s infinite;
   display: flex;
 }
+
 @-moz-keyframes loader {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 @-webkit-keyframes loader {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 @-o-keyframes loader {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 @keyframes loader {
   from {
     transform: rotate(0);
   }
+
   to {
     transform: rotate(360deg);
   }

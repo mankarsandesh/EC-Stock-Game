@@ -1,10 +1,11 @@
-export default function ({ isHMR, app, store, route, error, redirect }) {
+import secureStorage from "../plugins/secure-storage";
 
-    let getAuth = sessionStorage.getItem("AUTH")  //get the data from sessionStorage
-    let buffDecode = new Buffer(getAuth, "base64"); // decode the data from sessionStorage 
-    let authData = buffDecode.toString("ascii"); //convert data to normal data 
-    if (Object.keys(authData).length > 1) { // check data is not empty before send to center data 
-        store.commit("setAuth", authData)  // if the value is not empty, let's send it 
-    }
-
+export default function({ query, store, redirect }) {
+  const referrerURL = secureStorage.getItem("referrerURL");
+  if (referrerURL == undefined) {
+    secureStorage.setItem(
+      "referrerURL",
+      document.referrer.match(/:\/\/(.[^/]+)/)[1]
+    );
+  }
 }
