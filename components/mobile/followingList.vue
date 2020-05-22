@@ -15,7 +15,7 @@
         </v-flex>
         <v-flex xs6 sm4 v-for="(data, index) in followingList" :key="index">
           <div class="followerContainer">
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
+            <nuxt-link :to="'/modern/userprofile/' + data.UUID">
               <img class="userImage" :src="userImgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">
@@ -42,8 +42,8 @@
             >
               {{
               data.isFollowing == 0
-              ? $t("useraction.follow")
-              : $t("useraction.unFollow")
+              ? $t("userAction.follow")
+              : $t("userAction.unFollow")
               }}
             </button>
           </div>
@@ -66,7 +66,7 @@
           </v-btn>
           <v-toolbar-title>
             {{
-            this.FolloworNot == 1 ? this.$root.$t("useraction.followBet") : this.$root.$t("useraction.unFollowBet")
+            this.FolloworNot == 1 ? this.$root.$t("userAction.followBet") : this.$root.$t("userAction.unFollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>

@@ -139,7 +139,7 @@ export default {
           },
           title: {
             display: true,
-            text: this.$root.$t("msg.Stock")
+            text: this.$root.$t("msg.stock")
           },
           pan: {
             enabled: true,

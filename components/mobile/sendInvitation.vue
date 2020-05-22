@@ -4,14 +4,16 @@
       <v-list subheader class="topWrap">
         <v-list-tile>
           <v-list-tile-content>
-            <b>{{$t("invitation.followBet")}}</b>
+            <b>{{ $t("invitation.followBet") }}</b>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
       <v-list two-line class="bodyChat">
         <template>
           <v-flex v-if="globalInvitation.length == 0" style="margin-top:200px;">
-            <h2 class="text-center" style="color:#a3a3a3;">{{$t("invitation.noInvitation")}}</h2>
+            <h2 class="text-center" style="color:#a3a3a3;">
+              {{ $t("invitation.noInvitation") }}
+            </h2>
           </v-flex>
         </template>
         <template v-for="item in globalInvitation">
@@ -22,12 +24,16 @@
               </v-list-tile-avatar>
             </nuxt-link>
 
-            <v-list-tile-content v-if="item.category.some(element => element == 3)" class="ranking">
+            <v-list-tile-content
+              v-if="item.category.some(element => element == 3)"
+              class="ranking"
+            >
               <v-list-tile-title>
                 <span
                   v-if="item.category[0] == 3 && item.category.length == 1"
                   class="label"
-                >{{ $t("invitation.winningRank") }}</span>
+                  >{{ $t("invitation.winningRank") }}</span
+                >
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
@@ -46,7 +52,8 @@
                 <span
                   v-if="item.category[0] == 2 && item.category.length == 1"
                   class="label"
-                >{{ $t("invitation.totalFollower") }}</span>
+                  >{{ $t("invitation.totalFollower") }}</span
+                >
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
@@ -57,16 +64,20 @@
               </v-list-tile-title>
             </v-list-tile-content>
 
-            <v-list-tile-content v-if="item.category.some(element => element == 1)" class="winRate">
+            <v-list-tile-content
+              v-if="item.category.some(element => element == 1)"
+              class="winRate"
+            >
               <v-list-tile-title>
                 <span
                   v-if="item.category[0] == 1 && item.category.length == 1"
                   class="label"
-                >{{ $t("invitation.winningRate") }}</span>
+                  >{{ $t("invitation.winningRate") }}</span
+                >
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <span v-on="on">#{{ item.winRate }}</span>
+                    <span v-on="on">{{ item.winRate }}%</span>
                   </template>
                   <span>{{ $t("invitation.userWinRate") }}</span>
                 </v-tooltip>
@@ -75,25 +86,16 @@
 
             <v-list-tile-action>
               <v-btn
-                v-bind:class="[
-                  item.userUUID == getUserUUID
-                    ? 'buttonGreensmall'
-                    : 'buttonGreensmall'
-                ]"
+                class="buttonGreensmall"
                 v-on:click="
-                  followUser(
-                    item.username,
-                    item.userImage,
-                    item.userUUID,
-                    item.isFollowing
-                  )
+                  followUser(item.username, item.userImage, item.userUUID, 0)
                 "
                 dark
               >
                 {{
-                item.userUUID == getUserUUID
-                ? $t("useraction.yourself")
-                : $t("useraction.follow")
+                  item.userUUID == getUserUUID
+                    ? $t("userAction.yourself")
+                    : $t("userAction.follow")
                 }}
               </v-btn>
             </v-list-tile-action>
@@ -103,16 +105,23 @@
     </v-flex>
     <div class="messageChat">
       <v-flex col-md-12>
+        <v-layout class="errorMessage">
+          <v-flex> {{ this.invitationError }} </v-flex>
+        </v-layout>
         <v-layout justify-center>
-          <v-flex v-for="(item, index) in categoryName" v-bind:key="index" pl-3>
-            <!-- {{ item.value == 'Win Bets' ? 'itswin' : 'Total Followers' ? 'itsfollow' : 'ser rank'}} -->
-            <!-- {{ item.value == 'Total Followers' ? 'itsfollow' : 'isdfcdfvdss'}} -->
-            <v-checkbox :height="5" v-model="selectCategory" :label="item.value" :value="item.id"></v-checkbox>
+          <v-flex v-for="(item, index) in categoryName" v-bind:key="index">
+            <v-checkbox
+              justify-center
+              color="green"
+              :height="5"
+              v-model="selectCategory"
+              :label="item.value"
+              :value="item.id"
+            ></v-checkbox>
           </v-flex>
         </v-layout>
-
         <v-btn class="buttonInvitation" @click="sendInvitation()">
-          {{$t("invitation.sendInvitation")}} &nbsp;
+          {{ $t("invitation.sendInvitation") }} &nbsp;
           <i class="fa fa-paper-plane"></i>
         </v-btn>
       </v-flex>
@@ -132,7 +141,9 @@
           </v-btn>
           <v-toolbar-title>
             {{
-            this.FolloworNot == 1 ? $t("useraction.followBet") : $t("useraction.unFollowBet")
+              this.FolloworNot == 1
+                ? $t("userAction.followBet")
+                : $t("userAction.unFollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
@@ -155,6 +166,7 @@ import followBet from "~/components/mobile/follow/followBet";
 export default {
   data() {
     return {
+      invitationError: "",
       selectCategory: [],
       categoryName: [
         {
@@ -228,9 +240,14 @@ export default {
               headers: config.header
             }
           );
+          if (res.code == 400) {
+            this.invitationError = res.message[0];
+          }
         } catch (ex) {
           this.setSnackBarError(true);
         }
+      } else {
+        this.invitationError = "Please Select Category";
       }
     },
     // After more Invitation Come Scroll Down Automatically
@@ -271,6 +288,11 @@ export default {
 };
 </script>
 <style scoped>
+.errorMessage {
+  text-align: center;
+  color: red;
+  text-transform: capitalize;
+}
 .userList {
   border-bottom: 1px solid #dddddd;
 }
@@ -285,7 +307,7 @@ export default {
   text-align: center;
 }
 .userList .winRate {
-  color: #42c851;
+  color: #ed4561;
   font-weight: 800;
   text-align: center;
 }

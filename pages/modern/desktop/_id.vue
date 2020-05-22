@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2">
+  <v-container fluid mt-2 class="containerNew">
     <v-layout>
       <!-- Left Side Stock List  -->
-      <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
+      <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
         </span>
@@ -32,7 +32,7 @@
       <!-- End Left Side -->
 
       <!-- Main Middle Layout -->
-      <v-flex :xs10="!isHidden" :xs12="isHidden">
+      <v-flex :xs10="!isHidden" :xs12="isHidden" lg10>
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
@@ -45,18 +45,16 @@
             <v-flex xs6 md5 lg6 pt-1>
               <v-layout mb-3>
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.Lastdraw") }}</span>
+                  <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
-                      <span
-                        v-html="$options.filters.lastDraw(getLastDraw)"
-                      ></span>
+                      <span v-html="$options.filters.lastDraw(getLastDraw)"></span>
                     </v-flex>
                   </div>
                 </v-flex>
 
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.BetClosein") }}</span>
+                  <span>{{ $t("msg.betCloseIn") }}</span>
                   <div id="betCloseInGuideline">
                     <v-flex class="betclose">
                       <span
@@ -67,16 +65,16 @@
                         "
                       >
                         {{
-                          getTimerByStockName($route.params.id)
-                            | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id)
+                        | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                       <span v-else>
                         {{
-                          getTimerByStockName($route.params.id) &&
-                            getTimerByStockName($route.params.id)
-                              .gameEndTimeCountDownInSec
-                              | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                        .gameEndTimeCountDownInSec
+                        | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -84,15 +82,15 @@
                 </v-flex>
 
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
-                  <span>{{ $t("msg.lotterydraw") }}</span>
+                  <span>{{ $t("msg.lotteryDraw") }}</span>
                   <div id="lotteryDrawGuidelines">
                     <v-flex class="lottery">
                       <span>
                         {{
-                          getTimerByStockName($route.params.id) &&
-                            getTimerByStockName($route.params.id)
-                              .gameEndTimeCountDownInSec
-                              | lotterydraw(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                        getTimerByStockName($route.params.id)
+                        .gameEndTimeCountDownInSec
+                        | lotterydraw(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -100,20 +98,8 @@
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
 
-                <v-flex
-                  xs2
-                  md1
-                  class="text-xs-right"
-                  style="align-self: flex-end;"
-                >
-                  <v-btn
-                    fab
-                    dark
-                    small
-                    class="helpButton"
-                    @click="openTutorial()"
-                    title="Help"
-                  >
+                <v-flex xs2 md1 class="text-xs-right" style="align-self: flex-end;">
+                  <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
                     <v-icon dark size="22">fa-question</v-icon>
                   </v-btn>
                 </v-flex>
@@ -131,7 +117,7 @@
                 </v-flex>
               </div>
             </v-flex>
-            <v-flex md7 lg6 ml-3 pt-2>
+            <v-flex md7 lg7 mx-2 pt-2>
               <div id="betRuleButton">
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
@@ -142,23 +128,11 @@
 
         <!-- Stock Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div
-            class="trendmap-container"
-            v-for="(trendType, index) in trendTypes"
-            :key="index"
-          >
+          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
             <div id="trendmapGuidelines">
-              <tableTrendMap
-                :index="index"
-                :dataArray="getRoadMap"
-                :isShowMultigameButton="index"
-              >
-                <span
-                  class="addChart"
-                  @click="addTrendMap()"
-                  v-if="index === 0"
-                >
-                  <v-icon>add</v-icon>
+              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index">
+                <span class="addChart" @click="addTrendMap()" v-if="index === 0">
+                  <v-icon>fa-plus</v-icon>
                 </span>
                 <span v-else class="addChart" @click="removeTradMap(index)">
                   <v-icon>close</v-icon>
@@ -170,28 +144,16 @@
         <!-- Road Map End -->
       </v-flex>
 
-      <!-- Game Rule Popup -->
-      <v-dialog v-model="dialog" width="800">
+      <!-- Game Rule Popup open First Time -->
+      <v-dialog v-model="GameRuleDialog" width="50%">
         <v-card class="ruleModel" style="border-radius: 10px;">
-          <v-icon
-            class="closePopup"
-            color="#333 !important"
-            @click="dialog = false"
-            >close</v-icon
-          >
-          <v-card-title class="title" primary-title
-            >TOP 10 LEADERS</v-card-title
-          >
-          <v-card-text>
-            <leaderboardUserlist />
+          <v-icon class="closePopup" color="#333 !important" @click="GameRuleDialog = false">close</v-icon>
+          <v-card-text style="padding:40px;">
+            <h2 style="text-align:center;">EC Gameing Rule</h2>
+            <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn
-              class="buttonGreensmall"
-              to="/modern/desktop/leaderboard"
-              dark
-              >Go to Leaderboard</v-btn
-            >
+            <v-btn class="buttonGreensmall" to="/modern/desktop/gamerule" dark>Gaming Rule</v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
@@ -199,33 +161,39 @@
       <!-- Full Screen Float Button -->
       <v-flex class="layout-bottom">
         <div id="fullscreenGuidelines">
-          <v-btn
-            color="primary"
-            :to="'/modern/multigame/' + $route.params.id"
-            rigth
-            fab
-            class="multiGame"
-            dark
-            title="Multiple Game"
-          >
-            <i
-              style="font-size:26px;"
-              class="fa fa-gamepad"
-              aria-hidden="true"
-            ></i>
-          </v-btn>
-          <!-- Multiple Screen Float Button -->
-          <v-btn
-            color="primary"
-            rigth
-            fab
-            class="fullscreen"
-            dark
-            @click="setAfterFullScreenClosePage()"
-            title="Full Screen"
-          >
-            <v-icon>fullscreen</v-icon>
-          </v-btn>
+          <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                rigth
+                fab
+                class="fullscreen"
+                dark
+                @click="setAfterFullScreenClosePage()"
+                v-on="on"
+              >
+                <v-icon size="24px">fa-arrows-alt</v-icon>
+              </v-btn>
+            </template>
+            <span>Enter Fullscreen Mode</span>
+          </v-tooltip>
+          <!-- Multiple Screen Float Button 
+          <!-- <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                :to="'/modern/multigame/' + $route.params.id"
+                rigth
+                fab
+                class="multiGame"
+                dark
+                v-on="on"
+              >
+                <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
+              </v-btn>
+            </template>
+            <span>Enter Multi-Gaming Mode</span>
+          </v-tooltip> -->
         </div>
       </v-flex>
     </v-layout>
@@ -241,12 +209,12 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import tableTrendMap from "~/components/modern/tableTrendMap";
 import stockSelect from "~/components/stockSelect";
-import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import config from "~/config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
 import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
+import onlyrules from "~/components/modern/rule/onlyrule";
 
 export default {
   async validate({ params, store }) {
@@ -261,15 +229,15 @@ export default {
     betButton,
     tableTrendMap,
     stockSelect,
-    leaderboardUserlist,
     lotteryDraw,
-    isMobile: isMobile
+    isMobile: isMobile,
+    onlyrules
   },
   data() {
     return {
       routeParams: this.$route.params.id,
       stock: [],
-      dialog: false,
+      GameRuleDialog: true,
       bgColor: "#778899",
       position: "top-right",
       isHidden: false,
@@ -293,12 +261,12 @@ export default {
     }
     this.getStock();
     // Game Rule Popup check and open Ne User
-    // if (secureStorage.getItem("gameRule") != "shown") {
-    //   this.dialog = true;
-    //   secureStorage.setItem("gameRule", "shown");
-    // } else {
-    //   this.dialog = false;
-    // }
+    if (secureStorage.getItem("gameRule") != "shown") {
+      this.GameRuleDialog = true;
+      secureStorage.setItem("gameRule", "shown");
+    } else {
+      this.GameRuleDialog = false;
+    }
   },
   beforeDestroy() {
     this.stopListenSocket(
@@ -488,6 +456,14 @@ export default {
 };
 </script>
 <style scoped>
+.closePopup {
+  background-color: #fff;
+  right: 0;
+  border-radius: 50%;
+  padding: 2px;
+  width: 30px;
+  height: 30px;
+}
 .multiGame {
   z-index: 999;
   position: fixed;
@@ -503,7 +479,7 @@ export default {
 }
 .fullscreen {
   position: fixed !important;
-  bottom: 140px;
+  bottom: 80px;
   right: 0px;
   width: 50px;
   height: 50px;
@@ -526,7 +502,7 @@ export default {
 
 .leftStocklist {
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 5px;
   position: relative;
   top: 0;
   box-shadow: 0 0 2px grey;

@@ -29,7 +29,7 @@
               text
               @click="reset()"
               style="background-color: #fec623!important;border-radius:8px;"
-              >{{ $t("msg.resettodefault") }}</v-btn
+              >{{ $t("msg.resetToDefault") }}</v-btn
             >
             <v-btn class="my-btn buttonCancel" @click="cancelAction()">{{ $t("msg.cancel") }}</v-btn>
           </div>

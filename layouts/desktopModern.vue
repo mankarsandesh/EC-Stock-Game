@@ -5,10 +5,7 @@
     <!-- tutorial  end -->
 
     <v-app style=" background-color: #f4f5fd;">
-      <div
-        class="text-xs-center container-loading loading"
-        v-if="getIsLoadingStockGame"
-      >
+      <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
         <v-progress-circular
           style="top: calc(100% - 68%);"
           :size="100"
@@ -20,45 +17,27 @@
       <v-toolbar class="toolbarMenu" style="background-color:#FFF;">
         <v-container fluid class="navbar">
           <v-toolbar-title>
-            <v-img
-              src="/logo.png"
-              @click="$router.push('/modern/desktop/btc1')"
-              class="logoStyle"
-            ></v-img>
+            <v-img src="/logo.png" @click="$router.push('/modern/desktop/btc1')" class="logoStyle"></v-img>
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items class="hidden-xs-only text-s1 toolBar">
-            <v-btn
-              flat
-              v-for="item in menu"
-              :key="item.title"
-              :to="item.to"
-              class="menuItem"
-            >
+            <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
               <i :class="item.icon" />
               <span>&nbsp;{{ $t(`menu.${item.title}`) }}</span>
             </v-btn>
             <div class="layout-btn">
-              <v-btn
-                class="btn-langage"
-                text
-                flat
-                @click="$refs.language.showDialog()"
-              >
+              <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
                 <country-flag :country="getLocale" size="normal" />
-                <span>&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span>
+                <span
+                  >&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span
+                >
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>
             <userMenu class="layout-logout" />
             <v-menu bottom offset-y>
               <template v-slot:activator="{ on }">
-                <span
-                  v-on="on"
-                  flat
-                  id="notification"
-                  class="menuItemNotification"
-                >
+                <span v-on="on" flat id="notification" class="menuItemNotification">
                   <i class="fa fa-bell-o fa-2x" />
                   <span class="badge">{{ messagesCount }}</span>
                 </span>
@@ -67,8 +46,7 @@
                 <v-list-tile
                   v-if="winnerList.length == 0"
                   class="noNotification"
-                  >There are no Notification.</v-list-tile
-                >
+                >There are no Notification.</v-list-tile>
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
@@ -84,6 +62,10 @@
                     <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
+                 
+              </v-list>
+              <v-list class="footerView">
+                <span @click="$router.push('/modern/desktop/notification/')">View All</span>
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -100,6 +82,7 @@
         :stockName="$route.params.id"
         :key="$route.name"
       />
+
       <!-- <invitation Windows /> -->
     </v-app>
   </div>
@@ -111,10 +94,7 @@ import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import winnerMarquee from "~/components/modern/winnerMarquee";
-import welcomeUser from "~/components/welcomeUser";
-import openSocket from "socket.io-client";
 import i18n from "vue-i18n";
-import lottie from "lottie-web";
 import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
 import config from "~/config/config.global";
@@ -130,7 +110,6 @@ export default {
     countryFlag,
     languageDialog,
     winnerMarquee,
-    welcomeUser,
     userMenu,
     AnimatedNumber
   },
@@ -193,13 +172,6 @@ export default {
   },
   mounted() {
     this.fetchNotification();
-    lottie.loadAnimation({
-      container: this.$refs.svgContainer, // the dom element that will contain the animation
-      renderer: "svg",
-      loop: true,
-      autoplay: true,
-      path: "https://assets10.lottiefiles.com/packages/lf20_logbxj.json" // the path to the animation json
-    });
   },
   methods: {
     pageLink(type) {
@@ -270,6 +242,17 @@ export default {
 };
 </script>
 <style scoped>
+.footerView{
+  border-top:1px solid #dddddd;
+  text-align: center;
+  cursor: pointer;
+}
+.footerView span{
+  font-size: 14px;
+  color:#003f70;
+  font-weight: 400;
+  text-align: center;
+}
 .noNotification {
   color: #333;
 }
@@ -290,7 +273,6 @@ export default {
   width: 100%;
   border-bottom: 1px solid #dddddd;
 }
-
 .userImage {
   float: left;
   width: 10%;

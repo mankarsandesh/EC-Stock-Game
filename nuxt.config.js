@@ -1,19 +1,14 @@
 const pkg = require("./package");
-
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
-
 import config from "./config/config.global";
-
 module.exports = {
   mode: "spa",
   buildModules: [
     // Simple usage
     "@nuxtjs/dotenv"
-
     // With options
     // ['@nuxtjs/dotenv', { /* module options */ }]
   ],
-
   /*
    ** Headers of the page
    */
@@ -86,7 +81,6 @@ module.exports = {
       "/modern/desktop/profile/setting"
     ]
   },
-
   /*
    ** Customize the progress-bar color
    */
@@ -94,7 +88,7 @@ module.exports = {
   loadingIndicator: {
     name: "~/components/loaders/PageLoader.html",
     color: "#FDFEFE",
-    background: "#2980b9"
+    background: "#2980B9"
   },
   pageTransition: {
     name: "fade",
@@ -112,9 +106,10 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [    
-    '~/plugins/inject.js',
+  plugins: [
+    "~/plugins/inject.js",
     "@/plugins/vuetify",
+    "@plugins/maintenance",
     "@plugins/js-cookie", // for setting and reading cookies
     // "~/plugins/axios",
     "@/plugins/roarr", // for generating logs
@@ -138,7 +133,7 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
+    // Doc: https://axios.nuxtjs.org/usage 
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
     "@nuxtjs/moment",
@@ -157,14 +152,10 @@ module.exports = {
       }
     ]
   ],
-  /*
-   ** Axios module configuration
-   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     // baseURL: "http://uattesting.equitycapitalgaming.com/webApi",
   },
-
   /*
    ** Build configuration
    */
@@ -176,11 +167,10 @@ module.exports = {
         import: ["~assets/style/variables.styl"]
       }
     },
-
     /*
      ** You can extend webpack config here
      */
-    extend: function (config, { isDev, isClient }) {
+    extend: function(config, { isDev, isClient }) {
       if (isDev) {
         config.devtool = isClient ? "source-map" : "inline-source-map";
       }

@@ -5,10 +5,14 @@
         <v-flex grow pa-1>
           <p class="float-left md6 lg8">
             <span class="title">
-              {{ $t("leaderboard.top") }} {{ topPlayerData.length }}
-              {{ $t("leaderboard.leaders") }}
+              {{ $t("leaderBoard.top") }} {{ topPlayerData.length }}
+              {{ $t("leaderBoard.leaders") }}
             </span>
-            ({{ this.sortbyName == "monthly" ? $t("leaderboard.monthlyRankings") : $t("leaderboard.weeklyRankings")}})
+            ({{
+              this.sortbyName == "monthly"
+                ? $t("leaderBoard.monthlyRankings")
+                : $t("leaderBoard.weeklyRankings")
+            }})
             <i
               v-if="loadingImage"
               class="fa fa-circle-o-notch fa-spin"
@@ -23,7 +27,7 @@
             v-on:click="sortingBy('weekly')"
           >
             <v-icon small>event</v-icon>
-            {{ $t("leaderboard.weeklyRankings") }}
+            {{ $t("leaderBoard.weeklyRankings") }}
           </span>
           <span
             class="text-uppercase font-weight-bold"
@@ -31,13 +35,15 @@
             v-on:click="sortingBy('monthly')"
           >
             <v-icon small>event</v-icon>
-            {{ $t("leaderboard.monthlyRankings") }}
+            {{ $t("leaderBoard.monthlyRankings") }}
           </span>
         </v-flex>
       </v-layout>
     </v-flex>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">{{ $t("leaderboard.noData") }}</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">
+        {{ $t("leaderBoard.noData") }}
+      </h2>
     </v-flex>
     <v-flex v-if="topPlayerData.length > 0">
       <v-flex
@@ -50,34 +56,64 @@
         :key="index"
         id="userRow"
       >
-        <div class="userRow">
-          <div>
-            <!-- <span class="rank"> 
-            </span>-->
+        <div class="userRow leaderboard">
+          <div class="rows">
+            <v-icon class="tropy" color="#fad052" v-if="index == 0"
+              >fa-trophy</v-icon
+            >
+            <v-icon class="tropy" color="#f46f86" v-if="index == 1"
+              >fa-trophy</v-icon
+            >
+            <v-icon class="tropy" color="#7a7a7a" v-if="index == 2"
+              >fa-trophy</v-icon
+            >
+
             <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
-              <img class="pimage" :src="userImgProfile(data.userImage)" />
-              <span class="subtitle-1 text-uppercase">
-                <span class="name">{{ data.username }}</span>
-              </span>
+              <v-layout class="userProfileRow" pa-2>
+                <v-flex md3 lg3>
+                  <img class="pimage" :src="userImgProfile(data.userImage)" />
+                </v-flex>
+                <v-flex md9 lg9 pt-4 pl-3>
+                  <v-layout mt-1>
+                    <v-flex md8 lg8 style="text-align: left !important;">
+                      <span class="name">
+                        {{ data.username.substring(0, 14) }}
+                      </span>
+                    </v-flex>
+                    <v-flex md4 lg4>
+                      <country-flag country="us" v-if="data.country == 'USA'" />
+                      <country-flag country="th" v-if="data.country == 'THA'" />
+                      <country-flag country="cn" v-if="data.country == 'CHN'" />
+                      <country-flag country="la" v-if="data.country == 'LAO'" />
+                    </v-flex>
+                  </v-layout>
+                </v-flex>
+              </v-layout>
             </nuxt-link>
-            <!-- <span  style="height:30px;width:40px;" class="flag flag-us small-flag"></span> -->
           </div>
-          <div>
-            <h3 class="header">{{ $t("leaderboard.winningRate") }}</h3>
-            <h4 class="green--text titleText">{{ Math.round(data.winRate, 1) }}%</h4>
+          <div class="rows">
+            <h3 class="header">{{ $t("leaderBoard.winningRate") }}</h3>
+            <h4 class="green--text titleText">
+              {{ Math.round(data.winRate, 1) }}%
+            </h4>
           </div>
-          <div>
-            <h3 class="header">{{ $t("leaderboard.bets") }}</h3>
-            <H4 style="color:#eb0b6e;" class="titleText">{{ data.totalWinBets }}</H4>
+          <div class="rows">
+            <h3 class="header">{{ $t("leaderBoard.bets") }}</h3>
+            <H4 style="color:#eb0b6e;" class="titleText">{{
+              data.totalWinBets
+            }}</H4>
           </div>
-          <div>
-            <h3 class="header">{{ $t("leaderboard.winningAmount") }}</h3>
-            <h4
-              style="color:#0b2a68;"
-              class="titleText"
-            >${{ Math.round(data.totalWinAmount, 1) | currency }}</h4>
+          <div class="rows">
+            <h3 class="header">{{ $t("leaderBoard.winningAmount") }}</h3>
+            <h4 style="color:#0b2a68;" class="titleText">
+              ${{ Math.round(data.totalWinAmount, 1) | currency }}
+            </h4>
           </div>
-          <div v-if="data.isFollowing == 0" style="width:20%;padding-top:30px;">
+          <div
+            v-if="data.isFollowing == 0"
+            style="width:20%;padding-top:30px;"
+            class="rows"
+          >
             <v-btn
               class="buttonGreensmall"
               v-on:click="
@@ -89,9 +125,14 @@
                 )
               "
               dark
-            >{{ $t("useraction.followBet") }}</v-btn>
+              >{{ $t("userAction.followBet") }}</v-btn
+            >
           </div>
-          <div v-if="data.isFollowing == 1" style="width:20%;padding-top:30px;">
+          <div
+            v-if="data.isFollowing == 1"
+            style="width:20%;padding-top:30px;"
+            class="rows"
+          >
             <v-btn
               class="buttonCancel"
               v-on:click="
@@ -103,10 +144,17 @@
                 )
               "
               dark
-            >{{ $t("useraction.unFollowBet") }}</v-btn>
+              >{{ $t("userAction.unFollowBet") }}</v-btn
+            >
           </div>
-          <div v-if="data.isFollowing == -1" style="width:20%;padding-top:30px;">
-            <v-btn class="buttonGreensmall">{{ $t("useraction.yourself") }}</v-btn>
+          <div
+            class="rows"
+            v-if="data.isFollowing == -1"
+            style="width:20%;padding-top:30px;"
+          >
+            <v-btn class="buttonGreensmall">{{
+              $t("userAction.yourself")
+            }}</v-btn>
           </div>
         </div>
       </v-flex>
@@ -116,7 +164,7 @@
       v-model="followDialog"
       width="500"
       class="followDialog"
-      :persistent=true
+      :persistent="true"
     >
       <followBet
         v-if="renderComponent"
@@ -134,9 +182,11 @@
 import { mapState, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
+import countryFlag from "vue-country-flag";
 export default {
   components: {
-    followBet
+    followBet,
+    countryFlag
   },
   data() {
     return {
@@ -273,6 +323,17 @@ export default {
 </script>
 
 <style scoped>
+.tropy {
+  font-size: 26px;
+  margin-top: 30px;
+  margin-left: -25px;
+  background-color: #fff;
+  border: 1px solid #dddddd;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  float: left;
+}
 .followDialog {
   width: 600px;
   border-radius: 10px;
@@ -285,11 +346,6 @@ export default {
   text-align: center;
   color: green;
 }
-
-.titleText {
-  font-size: 24px;
-}
-
 .followup {
   padding: 10px;
   border-radius: 20px;
@@ -312,13 +368,6 @@ export default {
 .topHeader p:first-child {
   border: 1px solid;
 }
-
-.header {
-  font-size: 20px;
-  margin-top: 30px;
-  color: #6c6c6c;
-}
-
 #userRow {
   border-radius: 10px;
 }
@@ -337,7 +386,7 @@ export default {
   cursor: pointer;
 }
 
-.userRow div {
+.userRow .rows {
   text-align: center;
   height: 120px;
   border-right: 1px solid #dddddd;
@@ -347,17 +396,16 @@ export default {
 }
 
 .userRow div:first-child .name {
+  text-align: left !important;
   width: 100%;
-  float: left;
   color: #333;
-  text-align: center;
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .userRow div:first-child .name span {
   color: #333;
-  border-radius: 180px;
+  margin-top: 10px;
   padding: 3px;
   font-size: 14px;
 }
@@ -368,13 +416,15 @@ export default {
 
 .userRow div:first-child i {
   vertical-align: middle;
-  /* border-radius:10px; */
+}
+.userProfileRow {
+  /* border:1px solid red; */
+  margin: 12px auto;
+  width: 90%;
 }
 
 .pimage {
-  margin-right: 10px;
-  width: 50px;
-  height: 50px;
+ 
   border: 2px solid #dddddd;
   border-radius: 180px;
 }

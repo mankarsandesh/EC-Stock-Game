@@ -3,14 +3,14 @@
     <v-layout>
       <v-flex pa-2 class="headerStockBar">{{ $t("menu.stockList") }}</v-flex>
     </v-layout>
-    <v-flex>
-      <div class="table-responsive">
+    <v-flex id="style-3">
+      <div class="table-responsive overflow-scroll">
         <table class="table">
           <tr>
-            <th>{{ $t("msg.Stock Name") }}</th>
-            <th>{{ $t("msg.liveprice") }}</th>
-            <th>{{ $t("msg.Status") }}</th>
-            <th>{{ $t("msg.Countdown") }}</th>
+            <th>{{ $t("msg.stockName") }}</th>
+            <th>{{ $t("msg.livePrice") }}</th>
+            <th>{{ $t("msg.status") }}</th>
+            <th>{{ $t("msg.countDown") }}</th>
           </tr>
           <tr v-for="(stock, index) in getStockListPrice[0]" :key="stock.stockUUID">
             <td>

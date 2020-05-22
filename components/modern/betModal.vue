@@ -3,23 +3,23 @@
     <v-layout class="mx-5 my-3 bettingModel" column>
       <v-flex>
         <h3>
-          {{ $t("msg.bettingon") }}
+          {{ $t("msg.bettingOn") }}
           <span class="text-uppercase">
             {{
-              isNaN(betId.split("-")[1])
-                ? $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  $t("gamemsg." + betId.split("-")[1])
-                : $t("gamemsg." + betId.split("-")[0]) +
-                  " - " +
-                  betId.split("-")[1]
+            isNaN(betId.split("-")[1])
+            ? $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            $t("gamemsg." + betId.split("-")[1])
+            : $t("gamemsg." + betId.split("-")[0]) +
+            " - " +
+            betId.split("-")[1]
             }}
           </span>
         </h3>
       </v-flex>
       <v-flex class="pt-1 text-uppercase betHeading">
         <span>
-          {{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
+          {{ $t("msg.stockName") }}: {{ $t(`stockname.${stockName}`) }} -
           {{ getStockLoop(stockName) }} {{ $t("msg.minute") }}
         </span>
         |
@@ -31,12 +31,7 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar
-              size="70"
-              v-for="(item, key) in imgChip"
-              :key="key"
-              class="chips"
-            >
+            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -58,21 +53,15 @@
           </v-flex>-->
 
           <v-flex style="align-self:center">
-            <input
-              type="number"
-              readonly
-              :min="1"
-              v-model="betValue"
-              class="input-bet"
-            />
+            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
           </v-flex>
           <v-flex style="align-self:center">
-            <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
+            <v-btn color="error" @click="clear">{{ $t("msg.clear") }}</v-btn>
           </v-flex>
         </v-layout>
       </v-flex>
       <v-flex class="py-1 betHeading">
-        <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $5000</span>
+        <span>{{ $t("msg.min") }} = $100 , {{ $t("msg.max") }} = $10000</span>
       </v-flex>
       <!-- <v-divider></v-divider> -->
       <v-flex xs-12 class="pt-2 text-uppercase">
@@ -81,19 +70,19 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-          >{{ $t("msg.confirm") }}</v-btn
-        >
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{
+        >{{ $t("msg.confirm") }}</v-btn>
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
+          {{
           $t("msg.cancel")
-        }}</v-btn>
+          }}
+        </v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
-
 <script>
+
 import Sound from "~/helpers/sound";
-import Result from "~/helpers/Result";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
 import config from "~/config/config.global";
@@ -106,14 +95,13 @@ export default {
   mixins: [BetResult],
   data() {
     return {
-      testValue: "9432.61",
       confirmDisabled: false,
       betValue: 100,
       imgChip: chips.chipsData
     };
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters([  
       "getStockLoop",
       "getGameUUIDByStockName",
       "getCoinsModern",
@@ -142,7 +130,6 @@ export default {
     //  this.getwinuser()
   },
   methods: {
-    ...mapMutations(["SET_FIRST"]),
     ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
     coinClick(value) {
       let amount = parseInt(value);
@@ -212,15 +199,24 @@ export default {
         this.$swal({
           type: "error",
           title: config.error.lowBalance,
-          timer: 100000,
+          timer: 1000,
           showConfirmButton: true
         });
       } else {
+        const betStore = {
+          id: this.stockName + this.betId,
+          class: this.betId.split("-")[0],
+          betAmount: this.betValue
+        };
+
+        this.storeBetOnLocalStroge(betStore);
+
         let data = {
           gameUUID: this.getGameUUIDByStockName(this.stockName),
           ruleID: this.ruleid,
           betAmount: this.betValue
         };
+
         if (this.betValue > 0) {
           Sound.betTing();
           const stockDetail = {
@@ -250,7 +246,7 @@ export default {
 
 <style scoped>
 .chips {
-  margin: 0px 3px;
+  margin: 0px 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
 }
 .chips:hover {

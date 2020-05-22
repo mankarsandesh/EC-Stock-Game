@@ -6,11 +6,6 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
-    title: "profile",
-    to: "/modern/profile"
-  },
-  {
-    icon: "bubble_chart",
     title: "myFollowers",
     to: "/modern/followers"
   },
@@ -41,18 +36,18 @@ const Menu = [
   },
   {
     icon: "bubble_chart",
-    title: "leaderboard",
+    title: "leaderBoard",
     to: "/modern/leaderboard"
-  },
-  {
-    icon: "bubble_chart",
-    title: "setting",
-    to: "/modern/setting"
   },
   {
     icon: "bubble_chart",
     title: "invitation",
     to: "/modern/invitation"
-  }
+  },
+  {
+    icon: "bubble_chart",
+    title: "setting",
+    to: "/modern/setting"
+  }  
 ];
 export default Menu;
