@@ -219,10 +219,8 @@
                       {{ getStockLoop($route.params.id) }}
                       {{ $t("msg.minute") }} {{ $t("msg.loop") }}
                     </v-btn>
-                    <v-btn
-                      color="buttonGreen"
-                      @click="dialogOtherstock = true"
-                      >{{ $t("msg.otherstock") }}
+                    <v-btn color="buttonGreen" @click="dialogOtherstock = true"
+                      >{{ $t("msg.otherStock") }}
                     </v-btn>
                   </v-flex>
                 </v-layout>
@@ -327,9 +325,10 @@
         </v-flex>
         <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
           <h3 class="balanceUser" v-if="getUserBalance > 0">
-            Acc : {{ getUserBalance | currency }}
+            Acc :
+            <span class="userBlanace"> ${{ getUserBalance | currency }} </span>
           </h3>
-          <h3 class="balanceUser" v-if="getUserBalance == 0">Acc : 0000.00</h3>
+          <h3 class="balanceUser" v-if="getUserBalance == 0">Acc : <span class="userBlanace"> 0000.00 </span></h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-show="!isHidden"></fullscreenchart>
@@ -476,12 +475,21 @@ export default {
       msg: "",
       dataliveBetAll: {},
       stockId: "",
-      isStep: 0
+      isStep: 0,
+      stockName: this.$route.path.split('/')[3],
+      loopName: ''
     };
   },
   created() {
     this.getActiveGamesByCategory();
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+    if(this.stockName.slice(0, -1) == 'btc') {
+      this.loopName = this.stockName.slice(-1) == 1 ? this.stockName.slice(-1) : '5';
+      this.stockName = this.stockName; 
+    } else {
+      this.stockName = this.stockName[3];
+      this.loopName = '5';
+    }
     this.connectLiveBetCountDataSocket();
   },
   beforeDestroy() {
@@ -557,7 +565,6 @@ export default {
       "getLastDraw",
       "getRoadMap",
       "getStockLoop",
-      "getResetStatus",
       "getUserBalance"
     ]),
     ...mapState({
@@ -565,13 +572,6 @@ export default {
     })
   },
   watch: {
-    getResetStatus: function() {
-      window.Echo.leaveChannel(
-        `LiveTotalBetData.${this.getGameUUIDByStockName(this.$route.params.id)}`
-      );
-      this.isHidden = false;
-      this.connectLiveBetCountDataSocket();
-    },
     tutorialStepNumber(newValue) {
       switch (newValue) {
         case 1:
@@ -709,9 +709,7 @@ export default {
     connectLiveBetCountDataSocket() {
       this.liveBetCountData(
         {
-          channelName: `LiveTotalBetData.${this.getGameUUIDByStockName(
-            this.$route.params.id
-          )}`,
+          channelName: `LiveTotalBetData.${this.getPortalProviderUUID}.${this.getStockUUIDByStockName(this.stockName)}.${this.loopName}`,
           eventName: "LiveTotalBetData"
         },
         ({ data }) => {
@@ -726,9 +724,7 @@ export default {
             console.log(ex);
             log.error(
               {
-                channel: `LiveTotalBetData.${this.getGameUUIDByStockName(
-                  this.$route.params.id
-                )}`,
+                channel: `LiveTotalBetData.${this.getPortalProviderUUID}.${this.getStockUUIDByStockName(this.stockName)}.${this.loopName}`,
                 event: "LiveTotalBetData",
                 res: logData,
                 page: "pages/modern/fullscreen/_id.vue",
@@ -780,11 +776,19 @@ export default {
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     }
+  },
+  beforeDestroy() {
+    window.Echo.leaveChannel(
+        `LiveTotalBetData.${this.getPortalProviderUUID}.${this.getStockUUIDByStockName(this.stockName)}.${this.loopName}`
+      );
   }
 };
 </script>
 
 <style scoped>
+.userBlanace {
+  color: #002a68;
+}
 .close-icon {
   z-index: 10028;
   position: absolute;

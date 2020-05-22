@@ -18,7 +18,7 @@
       </v-layout>
       <v-layout row wrap align-center justify-center>
         <v-flex md10 lg10>
-          <stocklist :sortBy="sortBy" />
+          <stocklist />
         </v-flex>
       </v-layout>
     </v-container>
@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      sortBy: ""
+    
     };
   }
 };

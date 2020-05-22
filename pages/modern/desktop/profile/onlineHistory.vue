@@ -123,24 +123,16 @@ export default {
         chart: {
           height: 350,
           type: "bar",
-          stacked: true,
           toolbar: {
             show: false
           },
-          animations: {
-            enabled: true,
-            easing: "easeinout",
-            speed: 800,
-            animateGradually: {
-              enabled: true,
-              delay: 150
-            },
-            dynamicAnimation: {
-              enabled: true,
-              speed: 350
+          events: {
+            click: function(chart, w, e) {
+
             }
           }
         },
+        // colors: colors,
         plotOptions: {
           bar: {
             columnWidth: "45%",
@@ -150,61 +142,17 @@ export default {
         dataLabels: {
           enabled: false
         },
-        title: {
-          text:
-            this.$root.$t("leaderBoard.user") +
-            " " +
-            this.$root.$t("profile.onlineHistory"),
-          align: "center",
-          margin: 10,
-          offsetX: 2,
-          offsetY: -5,
-          style: {
-            fontSize: "20px",
-            fontWeight: "bold"
-          }
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          curve: "smooth"
-        },
         legend: {
           show: false
-          //       tooltipHoverFormatter: function(seriesName, opts) {
-          //         console.log(seriesName, opts)
-          //     return seriesName + ' - <strong>' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + '</strong>'
-          // }
         },
-        tootltip: {
-          //shared: true,
-          // enabled: true,
-          // followCurso: true,
-          // intersect: true,
-          // onDataSetHover: {
-          //   highlightDataSeries: false
-          // },
-          // x: {
-          //   // show: true,
-          //   formatter: function (val, {series, seriesIndex, dataPointIndex, w}) {
-          //     console.log('ayaayaaaaaaaaa yyyyyyyyy');
-          //     return '<div class="arrow-box">' +
-          //         '<span> Active minutes: ' + series[seriesIndex] + '</span>'
-          //       '</div>'
-          //   }
-          // },
-          // custom: function({series, seriesIndex, dataPointIndex, w}) {
-          //   console.log('ayaaaaaaaaa xxxxxxxxxxxxxxxxx');
-          //   return '<div class="arrow_box">' +
-          //       '<span>' + series[seriesIndex][dataPointIndex] + '</span>' +
-          //     '</div>'
-          // },
+        tooltip: {
           y: {
-            formatter: val => {},
-            title: {
-              formatter: function(seriesName) {
-                return seriesName.toUpperCase();
-              }
+            formatter(val, q) {
+              return (
+                '<div>' + "<span>" +
+                q.series[0][q.dataPointIndex] + " minutes" + 
+                " </span>"
+              )
             }
           }
         },
@@ -284,6 +232,7 @@ export default {
             }${hours} hours and ${minutes} minutes`;
             this.series = [
               {
+                name: 'Online Active Time',
                 data: chartData
               }
             ];

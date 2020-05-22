@@ -438,7 +438,7 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import gameRule from "~/data/gameRule";
 import betModal from "~/components/modern/betModal";
-import showChipAmount from "~/components/modern/showChipAmount";
+import showChipAmount from "~/components/modern/showChipAmount";  
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
@@ -455,9 +455,11 @@ export default {
       type: String
     }
   },
-  mounted() {
-    Result.setItemBetting();
-  },
+
+// will discuss with the team later, about the set betting on the localStroge  
+  // mounted() {
+  //   Result.setItemBetting();
+  // },
   watch: {
     getCollegeBtnNumber(val) {
       this.btnNumber(val);

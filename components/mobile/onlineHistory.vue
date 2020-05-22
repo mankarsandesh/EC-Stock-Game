@@ -14,22 +14,15 @@
           <v-icon size="20" @click="dialogOnlineHistory = false">fa-times</v-icon>
         </v-layout>
       </v-toolbar>
-      <v-flex
-        mt-2
-        xs12
-        v-if="$vuetify.breakpoint.xs"
-        class="profile_head text-xs-center"
-      >
+      <v-flex mt-2 xs12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
         <div class="image_container" mt-2>
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
           </v-avatar>
         </div>
-        <h3 class="text-capitalize">
-          {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-        </h3>
+        <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
         <p>
-          <strong> {{ $t("profile.onlineStatus") }} : </strong>
+          <strong>{{ $t("profile.onlineStatus") }} :</strong>
           {{ getUserInfo.currentActiveTime }}
         </p>
         <v-divider></v-divider>
@@ -37,23 +30,15 @@
 
       <v-flex xs12 sm12 pt-3>
         <v-layout row justify-center>
-          <v-flex
-            xs2
-            sm12
-            md2
-            v-if="!$vuetify.breakpoint.xs"
-            class="profile_head text-xs-center"
-          >
+          <v-flex xs2 sm12 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
             <div class="image_container">
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
             </div>
-            <h3 class="text-capitalize">
-              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-            </h3>
+            <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
             <p>
-              <strong> {{ $t("profile.onlineStatus") }} : </strong>
+              <strong>{{ $t("profile.onlineStatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
             <v-divider></v-divider>
@@ -114,23 +99,14 @@
                   <div class="title_date_picker">
                     <span></span>
                   </div>
-                  <button @click="getOnlineHistory" class="buttonGreen btn-go">
-                    GO
-                  </button>
+                  <button @click="getOnlineHistory" class="buttonGreen btn-go">{{$t("msg.go")}}</button>
                 </div>
               </v-flex>
             </v-layout>
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex
-        xs12
-        sm12
-        md10
-        lg10
-        mt-2
-        :class="$vuetify.breakpoint.xs ? 'mt-4' : ''"
-      >
+      <v-flex xs12 sm12 md10 lg10 mt-2 :class="$vuetify.breakpoint.xs ? 'mt-4' : ''">
         <v-layout row justify-center>
           <v-flex xs11 sm10>
             <div class="chart_container">
@@ -153,11 +129,11 @@
       <v-flex v-if="dataReady" xs12 pb-2 class="pt-3 text-xs-center">
         <div class="text-xs-center">
           <div>
-            <strong> Online Time : </strong>
+            <strong>{{$t("profile.onlineTime")}} :</strong>
             {{ currentActiveTime }}
           </div>
           <div>
-            <strong> Total Online : </strong>
+            <strong>{{$t("profile.totalOnline")}} :</strong>
             {{ totalOnlineTime }}
           </div>
         </div>

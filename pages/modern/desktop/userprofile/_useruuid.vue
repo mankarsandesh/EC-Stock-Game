@@ -18,11 +18,34 @@
                   />
                 </div>
                 <div class="profile-name-container">
-                  <span class="profile-name-tittle text-capitalize">
-                    {{ visitProfileUserData.firstName }}
+                  <div class="profile-name-tittle text-capitalize" v-if="visitProfileUserData.firstName">
+                    <v-layout> 
+                    <v-flex>
+                        {{ visitProfileUserData.firstName }}
                     {{ visitProfileUserData.lastName }}
-                  </span>
-
+                    </v-flex>
+                    <v-flex>
+                      <span>
+                      <country-flag
+                        country="us"
+                        v-if="visitProfileUserData.country == 'USA'"
+                      />
+                      <country-flag
+                        country="th"
+                        v-if="visitProfileUserData.country == 'THA'"
+                      />
+                      <country-flag
+                        country="cn"
+                        v-if="visitProfileUserData.country == 'CHN'"
+                      />
+                      <country-flag
+                        country="la"
+                        v-if="visitProfileUserData.country == 'LAO'"
+                      />
+                    </span>
+                    </v-flex>
+                  </v-layout>
+                  </div>
                   <span
                     class="font-weight-medium"
                     v-if="visitProfileUserData.username"
@@ -160,9 +183,7 @@
                       <span
                         class="number-box"
                         v-if="visitProfileUserData.totalWinAmount == 0"
-                        >${{
-                          0
-                        }}</span
+                        >${{ 0 }}</span
                       >
                       <span class="des-title text-uppercase">
                         {{ $t("leaderBoard.winningAmount") }}
@@ -207,7 +228,12 @@
             </v-layout>
 
             <!-- Follow Dialog -->
-            <v-dialog v-model="dialog" width="500" class="followDialog"  :persistent=true>
+            <v-dialog
+              v-model="dialog"
+              width="500"
+              class="followDialog"
+              :persistent="true"
+            >
               <followBet
                 v-if="renderComponent"
                 :username="this.username"
@@ -231,10 +257,12 @@ import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../../plugins/secure-storage";
 import log from "roarr";
+import countryFlag from "vue-country-flag";
 
 export default {
   layout: "desktopModern",
   components: {
+    countryFlag,
     followBet,
     VueApexCharts
   },

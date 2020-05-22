@@ -13,7 +13,7 @@
           show-expand
         >
           <template v-slot:headers="headers">
-            <tr>
+            <tr class="tableStyle">
               <th scope="col" class="bg-colors">{{ $t("msg.betId") }}</th>
               <th scope="col" class="bg-colors">{{ $t("msg.gameId") }}</th>
               <th scope="col" class="bg-colors">{{ $t("msg.betDetail") }}</th>

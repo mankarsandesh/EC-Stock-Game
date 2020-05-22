@@ -112,7 +112,7 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-                >{{ $t("userAction.follow") }}</v-btn
+                >{{ $t("msg.confirm") }}</v-btn
               >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
                 {{ $t("msg.cancel") }}
@@ -124,10 +124,10 @@
       <div v-else>
         <v-flex lg12 text-center>
           <v-btn
-            color="buttonCancel"
+            color="buttonGreen"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-            >{{ $t("userAction.unFollow") }}</v-btn
+            >{{ $t("msg.confirm") }}</v-btn
           >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
             {{ $t("msg.cancel") }}

@@ -219,7 +219,9 @@
     "O": "O",
     "U": "U",
     "L": "L",
-    "M": "M"
+    "M": "M",
+    "null": "",
+    "undefined" :""
   },
   "stockname": {
     "btc1": "BTC/USDT",
@@ -244,7 +246,7 @@
     "basicInfo": "ข้อมูลพื้นฐาน",
     "onlineHistory": "ประวัติออนไลน์",
     "stockAnalysis": "การวิเคราะห์หุ้น",
-    "onlineTime": "เวลาออนไลน์",
+    "onlineTime": "เวลาที่ใช้งานในปัจจุบัน",
     "totalOnline": "ออนไลน์ทั้งหมด",
     "signOut": "ออกจากระบบ",
     "myFollowers": "ผู้ติดตามของฉัน",

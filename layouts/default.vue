@@ -88,7 +88,7 @@
         {{ $t("menu.rule") }}
       </h2>
       <h2 class="text-uppercase" v-show="isShow == 'leaderboard'">
-        {{ $t("menu.leaderboard") }}
+        {{ $t("menu.leaderBoard") }}
       </h2>
       <h2 class="text-uppercase" v-show="isShow == 'setting'">
         {{ $t("menu.setting") }}

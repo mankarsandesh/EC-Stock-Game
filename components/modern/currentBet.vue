@@ -16,7 +16,7 @@
           indeterminate
         ></v-progress-linear>
         <template v-slot:headers="headers">
-          <tr>
+          <tr class="tableStyle">
             <th scope="col">{{ $t("msg.betId") }}</th>
             <th scope="col">{{ $t("msg.gameId") }}</th>
             <th scope="col">{{ $t("msg.betDetail") }}</th>
