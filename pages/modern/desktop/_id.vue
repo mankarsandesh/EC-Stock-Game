@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid mt-2 class="containerNew pa-2">
+  <v-container fluid mt-2 class="containerNew">
     <v-layout>
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
@@ -502,7 +502,7 @@ export default {
 
 .leftStocklist {
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 5px;
   position: relative;
   top: 0;
   box-shadow: 0 0 2px grey;
