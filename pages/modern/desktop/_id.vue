@@ -2,7 +2,7 @@
   <v-container fluid mt-2 class="containerNew pa-2">
     <v-layout>
       <!-- Left Side Stock List  -->
-      <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
+      <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">close</v-icon>
         </span>
@@ -32,7 +32,7 @@
       <!-- End Left Side -->
 
       <!-- Main Middle Layout -->
-      <v-flex :xs10="!isHidden" :xs12="isHidden" lg10>
+      <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
@@ -178,7 +178,7 @@
             <span>Enter Fullscreen Mode</span>
           </v-tooltip>
           <!-- Multiple Screen Float Button 
-          <!-- <v-tooltip left>
+           <v-tooltip left>
             <template v-slot:activator="{ on }">
               <v-btn
                 color="primary"
@@ -193,7 +193,7 @@
               </v-btn>
             </template>
             <span>Enter Multi-Gaming Mode</span>
-          </v-tooltip> -->
+          </v-tooltip>-->
         </div>
       </v-flex>
     </v-layout>
@@ -539,3 +539,6 @@ export default {
   border-radius: 180px;
 }
 </style>
+
+
+betting 
