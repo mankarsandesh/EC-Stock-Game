@@ -64,7 +64,7 @@ const actions = {
     }
 };
 
-const getters = {
+const getters = {  
     // Get clear road map status
     clearRoadMap: state => {
         return state.clearRoadMap;
