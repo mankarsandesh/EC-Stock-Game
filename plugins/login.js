@@ -1,7 +1,6 @@
 import VuexPersistence from "vuex-persist";
 import config from "../config/config.global";
 import log from "roarr";
-import axios from "axios";
 import secureStorage from "./secure-storage";
 import Cookies from "./js-cookie";
 
@@ -119,7 +118,8 @@ export default async context => {
         portalProviderUUID,
         portalProviderUserId,
         balance,
-        context.store
+        context.store,
+        context.$axios
       );
 
       // Set default language
@@ -195,7 +195,8 @@ const checkUserLogin = async (
   portalProviderUUID,
   portalProviderUserId,
   balance,
-  store
+  store,
+  axios
 ) => {
   try {
     if (config.authUser && config.authPassword) {
@@ -210,6 +211,7 @@ const checkUserLogin = async (
       var { data } = await axios.post(config.userLoginAuth.url, reqBody, {
         headers: config.header
       });
+
       if (data.status) {
         var userUUID = data.data.userUUID;
         store.dispatch("setPortalProviderUUID", portalProviderUUID);

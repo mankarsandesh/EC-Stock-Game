@@ -90,8 +90,8 @@
             >
               {{
                 visitProfileUserData.isFollowing == 0
-                  ? $t("useraction.follow")
-                  : $t("useraction.unFollow")
+                  ? $t("userAction.follow")
+                  : $t("userAction.unFollow")
               }}
             </v-btn>
           </v-flex>
@@ -114,7 +114,7 @@
                     >{{ visitProfileUserData.winRate }}%</span
                   >
                   <span class="des-title text-uppercase">
-                    {{ $t("leaderboard.winningRate") }}
+                    {{ $t("leaderBoard.winningRate") }}
                   </span>
                 </div>
               </v-flex>
@@ -160,7 +160,7 @@
                     >${{ visitProfileUserData.totalWinAmount | currency }}</span
                   >
                   <span class="des-title text-uppercase">
-                    {{ $t("leaderboard.winningAmount") }}
+                    {{ $t("leaderBoard.winningAmount") }}
                   </span>
                 </div>
               </v-flex>
@@ -169,7 +169,7 @@
               <div class="box-container"></div>
               <div class="pa-2 stock-history">
                 <h3 class="text-uppercase text-center" justify-center>
-                  {{ $t("profile.onlinehistory") }} {{ $t("profile.chart") }}
+                  {{ $t("profile.onlineHistory") }} {{ $t("profile.chart") }}
                 </h3>
                 <div class="stock-history-container">
                   <VueApexCharts

@@ -39,7 +39,7 @@
                 )
               "
             >
-              {{ $t("leaderboard.follow") }}
+              {{ $t("leaderBoard.follow") }}
             </button>
             <button
               v-if="data.isFollowing == 1"
@@ -53,7 +53,7 @@
                 )
               "
             >
-              {{ $t("useraction.unFollow") }}
+              {{ $t("userAction.unFollow") }}
             </button>
           </div>
         </div>
@@ -80,7 +80,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 export default {

@@ -7,10 +7,10 @@
       <div class="table-responsive">
         <table class="table">
           <tr>
-            <th>{{ $t("msg.Stock Name") }}</th>
-            <th>{{ $t("msg.liveprice") }}</th>
-            <th>{{ $t("msg.Status") }}</th>
-            <th>{{ $t("msg.Countdown") }}</th>
+            <th>{{ $t("msg.stockName") }}</th>
+            <th>{{ $t("msg.livePrice") }}</th>
+            <th>{{ $t("msg.status") }}</th>
+            <th>{{ $t("msg.countDown") }}</th>
           </tr>
           <tr v-for="(stock, index) in getStockListPrice[0]" :key="stock.stockUUID">
             <td>

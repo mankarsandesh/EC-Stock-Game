@@ -3,7 +3,7 @@
     <v-layout class="mx-5 my-3 bettingModel" column>
       <v-flex>
         <h3>
-          {{ $t("msg.bettingon") }}
+          {{ $t("msg.bettingOn") }}
           <span class="text-uppercase">
             {{
               isNaN(betId.split("-")[1])
@@ -19,7 +19,7 @@
       </v-flex>
       <v-flex class="pt-1 text-uppercase betHeading">
         <span>
-          {{ $t("msg.Stock Name") }}: {{ $t(`stockname.${stockName}`) }} -
+          {{ $t("msg.stockName") }}: {{ $t(`stockname.${stockName}`) }} -
           {{ getStockLoop(stockName) }} {{ $t("msg.minute") }}
         </span>
         |
@@ -67,7 +67,7 @@
             />
           </v-flex>
           <v-flex style="align-self:center">
-            <v-btn color="error" @click="clear">{{ $t("msg.Clear") }}</v-btn>
+            <v-btn color="error" @click="clear">{{ $t("msg.clear") }}</v-btn>
           </v-flex>
         </v-layout>
       </v-flex>

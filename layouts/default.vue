@@ -31,7 +31,7 @@
         </div>
         <v-list-tile @click="getLogout()">
           <v-list-tile-content>
-            <v-list-tile-title>{{ $t("profile.signout") }}</v-list-tile-title>
+            <v-list-tile-title>{{ $t("profile.signOut") }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -124,7 +124,6 @@ import menu from "~/data/menuMobile";
 
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/mobile/LanguageDialog";
-import openSocket from "socket.io-client";
 import mobileLogout from "~/components/mobile/mobileLogout";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import i18n from "vue-i18n";

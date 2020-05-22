@@ -9,7 +9,7 @@
     <v-card>
       <v-toolbar card dark style="background-color:#2cb13b;">
         <v-layout row justify-center>
-          <h2>{{ $t("profile.onlinehistory") }}</h2>
+          <h2>{{ $t("profile.onlineHistory") }}</h2>
           <v-spacer></v-spacer>
           <v-icon size="20" @click="dialogOnlineHistory = false">close</v-icon>
         </v-layout>
@@ -29,7 +29,7 @@
           {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
         </h3>
         <p>
-          <strong> {{ $t("profile.onlinestatus") }} : </strong>
+          <strong> {{ $t("profile.onlineStatus") }} : </strong>
           {{ getUserInfo.currentActiveTime }}
         </p>
         <v-divider></v-divider>
@@ -53,7 +53,7 @@
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </h3>
             <p>
-              <strong> {{ $t("profile.onlinestatus") }} : </strong>
+              <strong> {{ $t("profile.onlineStatus") }} : </strong>
               {{ getUserInfo.currentActiveTime }}
             </p>
             <v-divider></v-divider>
@@ -166,7 +166,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import onlineChart from "./onlinechart";

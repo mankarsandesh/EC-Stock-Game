@@ -101,11 +101,11 @@
                       v-if="getUserUUID != data.userUUID"
                       class="following"
                       v-on:click="followUser(null, data.userImage, data.userUUID, '0')"
-                    >{{$t("useraction.follow")}}</v-btn>
+                    >{{$t("userAction.follow")}}</v-btn>
                     <v-btn
                       v-if="getUserUUID == data.userUUID"
                       class="following"
-                    >{{$t("useraction.yourself")}}</v-btn>
+                    >{{$t("userAction.yourself")}}</v-btn>
                   </div>
                 </div>
               </div>
@@ -163,7 +163,6 @@
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
-import io from "socket.io-client";
 import moment from "moment";
 import config from "~/config/config.global";
 import chanelChat from "./chanelChat";
