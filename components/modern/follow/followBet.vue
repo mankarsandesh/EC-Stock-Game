@@ -1,22 +1,32 @@
 <template>
   <div>
     <v-card class="followup">
-      <h3
-        class="title"
-      >{{ isFollowing == 1 ? $t("userAction.followBet") : $t("userAction.unFollowBet") }}</h3>
+      <h3 class="title">
+        {{
+          isFollowing == 1
+            ? $t("userAction.followBet")
+            : $t("userAction.unFollowBet")
+        }}
+      </h3>
       <v-card-text style="text-align:center;">
         <img class="pimage" v-bind:src="userImage" width="140px" />
-        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">{{ this.username }}</h3>
+        <h3 class="subtitle-1 text-center pt-2" v-if="this.username">
+          {{ this.username }}
+        </h3>
       </v-card-text>
       <v-flex>
         <p
           v-if="FollwingError"
           v-bind:class="{ 'text-danger': hasError, 'text-sucess': hasSucess }"
-        >{{ errorMessage }}</p>
+        >
+          {{ errorMessage }}
+        </p>
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase">{{$t("leaderBoard.followBy")}}</h4>
+        <h4 class="subtitle-1 text-uppercase">
+          {{ $t("leaderBoard.followBy") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -58,7 +68,9 @@
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderBoard.autoStop")}}</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">
+          {{ $t("leaderBoard.autoStop") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
@@ -103,11 +115,10 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-              >{{ $t("msg.confirm") }}</v-btn>
+                >{{ $t("msg.confirm") }}</v-btn
+              >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
-                {{
-                $t("msg.cancel")
-                }}
+                {{ $t("msg.cancel") }}
               </v-btn>
             </v-flex>
           </v-radio-group>
@@ -119,11 +130,10 @@
             color="buttonGreen"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-          >{{ $t("msg.confirm") }}</v-btn>
+            >{{ $t("msg.confirm") }}</v-btn
+          >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
-            {{
-            $t("msg.cancel")
-            }}
+            {{ $t("msg.cancel") }}
           </v-btn>
         </v-flex>
       </div>
@@ -385,16 +395,23 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-          this.errorShow(
-            true,
-            true,
-            false,
-            data.message[0] == "User followed successfully."
-              ? this.$root.$t("follow.userFollowed")
-              : this.$root.$t("follow.userUnFollowed")
-          );        
+          this.$emit("followBetClose");
+          this.$swal({
+            type: "success",
+            title:
+              data.message[0] == "User followed successfully."
+                ? this.$root.$t("follow.userFollowed")
+                : this.$root.$t("follow.userUnFollowed"),
+            showConfirmButton: false,
+            timer: 1000
+          });
         } else {
-          this.errorShow(true, false, true, data.message[0]);
+          this.$swal({
+            type: "error",
+            title: data.message[0],
+            showConfirmButton: true,
+            timer: 1000
+          });
         }
       } catch (error) {
         console.log(error);
