@@ -18,7 +18,7 @@
                   />
                 </div>
                 <div class="profile-name-container">
-                  <div class="profile-name-tittle text-capitalize">
+                  <div class="profile-name-tittle text-capitalize" v-if="visitProfileUserData.firstName">
                     <v-layout> 
                     <v-flex>
                         {{ visitProfileUserData.firstName }}
