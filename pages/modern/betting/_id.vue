@@ -84,7 +84,7 @@
           <v-flex v-else sm10 xs10 class="text-xs-center">
             <span>
               <h3 class="text-uppercase">
-                {{ $t("stockname." + $route.params.id) }} /
+                {{ $t("stockName." + $route.params.id) }} /
                 <span>
                   {{ getStockLoop(this.$route.params.id) }}
                   {{ $t("msg.minuteGame") }}

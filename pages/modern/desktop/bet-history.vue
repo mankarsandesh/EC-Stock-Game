@@ -25,7 +25,7 @@
                     <v-text-field
                       hide-details
                       v-model="dateFrom"
-                      label="From"
+                      :label="$t('msg.from')"
                       append-icon="event"
                       readonly
                       v-on="on"
@@ -49,7 +49,7 @@
                     <v-text-field
                       hide-details
                       v-model="dateTo"
-                      label="To"
+                      :label="$t('msg.to')"
                       append-icon="event"
                       readonly
                       v-on="on"
