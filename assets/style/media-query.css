@@ -7,7 +7,24 @@
 Big Screen 24 Inch 
 */
 @media (min-width: 1920px) and (max-width: 3000px) {
+    /* Leader board Page */
+    .userProfileRow .pimage {
+      width: 60px;
+      height: 60px;
+    }
+    .header {
+      font-size: 20px;
+      margin-top: 30px;
+      color: #6c6c6c;
+    }
+    .titleText {
+      font-size: 24px;
+    }
 
+  /* Current Bet Page*/
+  .tableStyle th{
+    font-size: 15px !important;
+  }
   .selectStock {
     font-size: 14px;
   }
@@ -264,7 +281,11 @@ Big Screen 24 Inch
     min-width: 88% !important;
     width: 100% !important;
   }
-
+  /* Leader board Page */
+  .userProfileRow .pimage {
+    width: 60px;
+    height: 60px;
+  }
 }
 /*
 Big Screen 22 Inch 
@@ -526,6 +547,25 @@ Big Screen 22 Inch
     min-width: 88% !important;
     width: 100% !important;
   }
+  /* Leader board Page */
+  .userProfileRow .pimage {
+    width: 60px;
+    height: 60px;
+  }
+  .header {
+    font-size: 20px;
+    margin-top: 30px;
+    color: #6c6c6c;
+  }
+  .titleText {
+    font-size: 24px;
+  }
+
+  /* Current Bet Page*/
+  .tableStyle th{
+    font-size: 15px !important;
+  }
+
 }
 
 /* 
@@ -533,6 +573,26 @@ Big Screen 22 Inch
   ##Screen = B/w 1025px to 1280px
 */
 @media (min-width: 1025px) and (max-width: 1280px) {
+  /* Leader board Page */
+  .userProfileRow .pimage {
+    width: 50px;
+    height: 50px;
+  }
+  .header {
+    font-size: 16px;
+    margin-top: 30px;
+    color: #6c6c6c;
+  }
+  .titleText {
+    font-size: 20px;
+  }
+  /* Current Bet Page*/
+  .tableStyle th{
+    font-size: 12px !important;
+  }
+  .userRow div:first-child .name {
+    font-size: 12px !important;
+  }
   .bg-btn-first {
     min-width: 60px !important;
   }
@@ -815,7 +875,6 @@ Big Screen 22 Inch
     ##Screen = B/w 768px to 1024px
   */
 @media (min-width: 768px) and (max-width: 1024px) {
-
 }
 
 /* 
