@@ -56,7 +56,7 @@
         :key="index"
         id="userRow"
       >
-        <div class="userRow">
+        <div class="userRow leaderboard">
           <div class="rows">
             <v-icon class="tropy" color="#fad052" v-if="index == 0"
               >fa-trophy</v-icon
@@ -73,8 +73,8 @@
                 <v-flex md3 lg3>
                   <img class="pimage" :src="userImgProfile(data.userImage)" />
                 </v-flex>
-                <v-flex md9 lg9 pt-4 pl-2>
-                  <v-layout mt-2>
+                <v-flex md9 lg9 pt-4 pl-3>
+                  <v-layout mt-1>
                     <v-flex md8 lg8 style="text-align: left !important;">
                       <span class="name">
                         {{ data.username.substring(0, 14) }}
@@ -346,11 +346,6 @@ export default {
   text-align: center;
   color: green;
 }
-
-.titleText {
-  font-size: 24px;
-}
-
 .followup {
   padding: 10px;
   border-radius: 20px;
@@ -373,13 +368,6 @@ export default {
 .topHeader p:first-child {
   border: 1px solid;
 }
-
-.header {
-  font-size: 20px;
-  margin-top: 30px;
-  color: #6c6c6c;
-}
-
 #userRow {
   border-radius: 10px;
 }
@@ -430,13 +418,13 @@ export default {
   vertical-align: middle;
 }
 .userProfileRow {
-  margin: 0 auto;
-  width: 94%;
+  /* border:1px solid red; */
+  margin: 12px auto;
+  width: 90%;
 }
 
 .pimage {
-  width: 65px;
-  height: 65px;
+ 
   border: 2px solid #dddddd;
   border-radius: 180px;
 }
