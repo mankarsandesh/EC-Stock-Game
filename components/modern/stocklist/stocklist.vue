@@ -30,7 +30,7 @@
             ></td>
             <td class="text-left">
               <a
-                :href="item.referenceUrl"
+                :href="item.stockReference"
                 target="_blank"
                 style="overflow-y: auto; white-space: nowrap;"
               >
@@ -85,7 +85,6 @@ export default {
         stockNewList.push(this.getStockListPrice[0]);
         stockNewList.push(this.getStockListPrice[1]);
       }
-      console.log(stockNewList);
       return stockNewList;
     }
   }
