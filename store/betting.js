@@ -18,12 +18,12 @@ const mutations = {
     SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
         state.multiGameFooterBetAmount = payload;
     },
-    CLEAR_ITEMS_BETTING(state, payload) {
+    CLEAR_ITEMS_BETTING(state) {
         state.getItemsBetting = [];
     },
     SET_ITEMS_BETTING(state, payload) {
         state.getItemsBetting.push(payload);
-        secureStorage.setItem("getItemsBetting", state.getItemsBetting);
+        secureStorage.setItem("itemBetting", state.getItemsBetting)
     },
     SET_COLLEGE_BUTTON_NUMBER(state, payload) {
         state.collegeBtnNumber = payload;
@@ -69,8 +69,8 @@ const actions = {
     clearItemBetting({ commit }) {
         commit("CLEAR_ITEMS_BETTING");
     },
-    setItemBetting({ commit }) {
-        commit("SET_ITEMS_BETTING");
+    setItemBetting({ commit }, payload) {
+        commit("SET_ITEMS_BETTING", payload);
     },
     setCollegeButtonNumberParent({ commit }) {
         commit("SET_COLLEGE_BUTTON_NUMBER");
@@ -163,7 +163,8 @@ const actions = {
                 this._vm.$swal({
                     type: resultStatus.success >= resultStatus.failed ? "success" : "error",
                     title: `<span style="color:green"> bet success ${resultStatus.success} </span> <span style="color:red;padding-left:10px"> bet failed ${resultStatus.failed} </span>`,
-                    showConfirmButton: true
+                    showConfirmButton: false,
+                    timer: 1000
                 });
             } else {
                 throw new Error(config.error.general);

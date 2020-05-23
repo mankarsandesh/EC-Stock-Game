@@ -87,7 +87,8 @@
     "resultOutTime": "ຜົນໄດ້ຮັບອອກທີ່ໃຊ້ເວລາ",
     "days": "ມື້",
     "hours": "ຊົ່ວໂມງ",
-    "minute": "ນາທີ",
+    "minutes": "ນາທີ",
+    "seconds": "ວິນາທີ",
     "loading": "ກຳລັງໂຫຼດ...",
     "stock": "ຫຸ້ນ",
     "userInfo": "ຂໍ້ມູນຜູ້ໃຊ້",
@@ -127,7 +128,7 @@
     "addTrendChart": "ເພີ່ມຕາຕະລາງ",
     "bettingOn": "ການພະນັນ",
     "status": "ສະຖານະ",
-    "countdown": "ນັບຖອຍຫລັງ",
+    "countDown": "ນັບຖອຍຫລັງ",
     "loop": "ວົນຮອບ",
     "selectStock": "ເລືອກຫຼັກຊັບ",
     "online": "ອອນລາຍ",
@@ -169,7 +170,14 @@
     "pending": "ທີ່ຍັງຄ້າງ",
     "win": "ຊະນະ",
     "lose": "ສູນເສຍ",
-    "dateTime" : "ວັນແລະເວລາ"
+    "dateTime" : "ວັນແລະເວລາ",
+    "closed" : "ປິດແລ້ວ",
+    "accepting": "ຍອມຮັບ",
+    "changesSaved" : "ການປ່ຽນແປງຖືກບັນທຶກແລ້ວ",
+    "enterFullScreen":"ໃສ່ຮູບແບບເຕັມຈໍ",
+    "closeFullScreen":"ປິດຮູບແບບເຕັມຈໍ",
+    "close" : "ປິດ",
+    "rowsPerPage":"ແຖວເກັດທີ່ຢູ່ຕໍ່ຫນ້າ:"
   },
   "navlist": {
     "live Stock": "ຫຸ້ນເປີດ",
@@ -224,7 +232,7 @@
     "null": "",
     "undefined" :""
   },
-  "stockname": {
+  "stockName": {
     "btc1": "ດັດຊະນີ Bitcoin",
     "btc": "ດັດຊະນີ Bitcoin",
     "usindex": "ດັດຊະນີ USA",
@@ -259,7 +267,11 @@
     "followers" : "ຜູ້ຕິດຕາມ",
     "chart": "ຕາຕະລາງ",
     "noFollowing" : "ບໍ່ມີຜູ້ໃຊ້ຕິດຕາມ.",
-    "noFollowers" : "ບໍ່ມີຜູ້ຕິດຕາມ."
+    "noFollowers" : "ບໍ່ມີຜູ້ຕິດຕາມ.",
+    "1month":"1 ເດືອນ",
+    "2months":"2 ເດືອນ",
+    "3months":"3 ເດືອນ"
+    
   },
   "userAction": {
     "followBet": "ຕິດຕາມການເດີມພັນ",
@@ -327,7 +339,8 @@
     "losingBets": "ການສູນເສຍການເດີມພັນ",
     "usersFollowMe": "ຜູ້ໃຊ້ຕິດຕາມຂ້ອຍ",
     "amountCreditedOrDebitedToAccount": "ຈຳ ນວນເງິນທີ່ຝາກຫຼື debited ເຂົ້າບັນຊີ",
-    "noNotification": "ບໍ່ມີແຈ້ງການຫຍັງ."
+    "noNotification": "ບໍ່ມີແຈ້ງການຫຍັງ.",
+    "viewAll": "ເບິ່ງ​ທັງ​ຫມົດ"
   },
   "betHistory": {
     "betDraw": "BET DRAW",
@@ -425,9 +438,9 @@
     "totalAmount":"ຈໍາ​ນວນ​ທັງ​ຫມົດ"
   },
   "logout": {
-    "sure" : "ທ່ານແນ່ໃຈບໍ່ອອກຈາກລະບົບ?",
-    "bye" : "ຫວັງວ່າຈະໄດ້ເຫັນເຈົ້າໃນໄວໆນີ້, bye bye",
-    "agree" : "ຕົກລົງ",
-    "disagree" : "ບໍ່ເຫັນດີ ນຳ"
+    "sure" : "ເຈົ້າ​ແນ່​ໃຈ​ບໍ່?",
+    "bye" : "ນີ້ຈະລົບລ້າງຂໍ້ມູນທັງ ໝົດ ຈາກອຸປະກອນນີ້ແລະ ນຳ ທ່ານກັບສູ່ ໜ້າ ຈໍເຂົ້າສູ່ລະບົບ.",
+    "logout" : "ອອກ​ຈາກ​ລະ​ບົບ",
+    "cancel" : "ຍົກເລີກ"
   }
 }

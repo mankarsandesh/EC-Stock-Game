@@ -133,7 +133,7 @@ export default {
           this.$swal.fire({
             position: "top",
             type: "success",
-            title: "Changes saved",
+            title: this.$root.$t("msg.changesSaved"),
             showConfirmButton: false,
             timer: 1000
           });
