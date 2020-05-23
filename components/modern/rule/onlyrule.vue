@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel v-model="panel" expand>
+  <v-expansion-panel v-model="panel" >
     <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div>
