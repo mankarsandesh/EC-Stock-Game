@@ -48,7 +48,9 @@
                   <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
-                      <span v-html="$options.filters.lastDraw(getLastDraw)"></span>
+                      <span
+                        v-html="$options.filters.lastDraw(getLastDraw)"
+                      ></span>
                     </v-flex>
                   </div>
                 </v-flex>
@@ -65,16 +67,16 @@
                         "
                       >
                         {{
-                        getTimerByStockName($route.params.id)
-                        | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                       <span v-else>
                         {{
-                        getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                        .gameEndTimeCountDownInSec
-                        | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -87,10 +89,10 @@
                     <v-flex class="lottery">
                       <span>
                         {{
-                        getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                        .gameEndTimeCountDownInSec
-                        | lotterydraw(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | lotterydraw(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -98,8 +100,20 @@
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
 
-                <v-flex xs2 md1 class="text-xs-right" style="align-self: flex-end;">
-                  <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
+                <v-flex
+                  xs2
+                  md1
+                  class="text-xs-right"
+                  style="align-self: flex-end;"
+                >
+                  <v-btn
+                    fab
+                    dark
+                    small
+                    class="helpButton"
+                    @click="openTutorial()"
+                    title="Help"
+                  >
                     <v-icon dark size="22">fa-question</v-icon>
                   </v-btn>
                 </v-flex>
@@ -128,10 +142,22 @@
 
         <!-- Stock Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
+          <div
+            class="trendmap-container"
+            v-for="(trendType, index) in trendTypes"
+            :key="index"
+          >
             <div id="trendmapGuidelines">
-              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index">
-                <span class="addChart" @click="addTrendMap()" v-if="index === 0">
+              <tableTrendMap
+                :index="index"
+                :dataArray="getRoadMap"
+                :isShowMultigameButton="index"
+              >
+                <span
+                  class="addChart"
+                  @click="addTrendMap()"
+                  v-if="index === 0"
+                >
                   <v-icon>fa-plus</v-icon>
                 </span>
                 <span v-else class="addChart" @click="removeTradMap(index)">
@@ -154,15 +180,17 @@
             >fa-times</v-icon
           >
           <v-card-text style="padding:40px;">
-            <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}} </h2>
-             <onlyrules />
+            <h2 style="text-align:center;">
+              {{ $t("msg.ecGamingRulesDescription") }}
+            </h2>
+            <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
             <v-btn
               class="buttonGreensmall"
               to="/modern/desktop/gamerule"
               dark
-              >{{$t("msg.gameRule")}}</v-btn
+              >{{ $t("msg.gameRule") }}</v-btn
             >
           </v-flex>
         </v-card>
@@ -206,6 +234,7 @@
           </v-tooltip>-->
         </div>
       </v-flex>
+      <chat-box></chat-box>
     </v-layout>
   </v-container>
 </template>
@@ -225,6 +254,7 @@ import { isMobile } from "mobile-device-detect";
 import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
 import onlyrules from "~/components/modern/rule/onlyrule";
+import chatBox from "~/components/modern/chatBox";
 
 export default {
   async validate({ params, store }) {
@@ -241,7 +271,8 @@ export default {
     stockSelect,
     lotteryDraw,
     isMobile: isMobile,
-    onlyrules
+    onlyrules,
+    chatBox
   },
   data() {
     return {
@@ -557,5 +588,4 @@ export default {
 }
 </style>
 
-
-betting 
+betting
