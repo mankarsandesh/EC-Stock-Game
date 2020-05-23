@@ -8,7 +8,11 @@
         :search="search"
         class="current-bet"
       >
-        <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
+        <v-progress-linear
+          v-slot:progress
+          color="blue"
+          indeterminate
+        ></v-progress-linear>
         <template v-slot:headers="headers">
           <tr class="tableStyle">
             <th scope="col">{{ $t("msg.betId") }}</th>
@@ -25,7 +29,8 @@
           <td>{{ item.item.gameUUID }}</td>
           <td>
             {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minutes')}}
+            {{ item.item.stockName }} / {{ item.item.loop }}
+            {{ $t("msg.minutes") }}
           </td>
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
@@ -35,30 +40,37 @@
               color="green"
               text-color="white"
               class="text-uppercase betresult"
-            >{{ $t("msg.win") }}</v-chip>
+              >{{ $t("msg.win") }}</v-chip
+            >
           </td>
           <td v-if="item.item.betResult == 'lose'">
             <v-chip
               color="red"
               text-color="white"
               class="text-uppercase betresult"
-            >{{ $t("msg.lose") }}</v-chip>
+              >{{ $t("msg.lose") }}</v-chip
+            >
           </td>
           <td v-if="item.item.betResult == 'pending'">
             <v-chip
               color="yellow "
               text-color="black"
               class="text-uppercase betresult"
-            >{{ $t("msg.pending") }}...</v-chip>
+              >{{ $t("msg.pending") }}...</v-chip
+            >
           </td>
         </template>
         <template slot="no-data">
-          <v-text :value="true">{{$t("currentBet.noBets")}}</v-text>
+          <td colspan="7">
+            {{ $t("currentBet.noBets") }}
+          </td>
         </template>
         <template slot="footer">
           <tr>
             <td>{{ $t("msg.total") }}</td>
-            <td colspan="3">{{ currentBets.length }} {{ $t("leaderBoard.bets") }}</td>
+            <td colspan="3">
+              {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
+            </td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>
             </td>
