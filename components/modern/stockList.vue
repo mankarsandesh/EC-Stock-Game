@@ -4,7 +4,7 @@
       <v-flex pa-2 class="headerStockBar">{{ $t("menu.stockList") }}</v-flex>
     </v-layout>
     <v-flex id="style-3">
-      <div class="table-responsive overflow-scroll">
+      <div class="table-responsive">
         <table class="table">
           <tr>
             <th>{{ $t("msg.stockName") }}</th>

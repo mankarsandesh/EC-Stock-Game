@@ -1,3 +1,70 @@
+/* radio */
+
+.radio-container {
+    padding-top: 10px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+[type="radio"]:checked+label,
+[type="radio"]:not(:checked)+label {
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+}
+
+[type="radio"]:checked+label:before,
+[type="radio"]:not(:checked)+label:before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: solid gray 2px;
+    border-radius: 100%;
+    background: #fff;
+}
+
+[type="radio"]:checked+label:after,
+[type="radio"]:not(:checked)+label:after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background: black;
+    position: absolute;
+    top: 3px;
+    left: 8px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+[type="radio"]:not(:checked)+label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+[type="radio"]:checked+label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+
+/* radio */
+
+
 /* tutorial */
 
 #result-draw {
@@ -723,13 +790,13 @@ table.result-table tr {
 
 .firstdigit {
     background: rgb(13, 204, 255);
-    background: linear-gradient(22deg, rgba(13, 204, 255, 1) 0%, rgba(71, 96, 255, 1) 100%);
+    background: linear-gradient( 22deg, rgba(13, 204, 255, 1) 0%, rgba(71, 96, 255, 1) 100%);
     color: #fff !important;
 }
 
 .bg-btn-first {
     background: rgb(13, 204, 255);
-    background: linear-gradient(22deg, rgba(13, 204, 255, 1) 0%, rgba(71, 96, 255, 1) 100%);
+    background: linear-gradient( 22deg, rgba(13, 204, 255, 1) 0%, rgba(71, 96, 255, 1) 100%);
     font-weight: 400;
     color: #ffffff !important;
     border-radius: 6px;
@@ -739,13 +806,13 @@ table.result-table tr {
 
 .lastdigit {
     background: rgb(250, 209, 38);
-    background: linear-gradient(22deg, rgba(250, 209, 38, 1) 0%, rgba(255, 84, 79, 1) 100%);
+    background: linear-gradient( 22deg, rgba(250, 209, 38, 1) 0%, rgba(255, 84, 79, 1) 100%);
     color: #fff !important;
 }
 
 .bg-btn-last {
     background: rgb(250, 209, 38);
-    background: linear-gradient(22deg, rgba(250, 209, 38, 1) 0%, rgba(255, 84, 79, 1) 100%);
+    background: linear-gradient( 22deg, rgba(250, 209, 38, 1) 0%, rgba(255, 84, 79, 1) 100%);
     font-size: 16px;
     font-weight: 400;
     color: #ffffff !important;
@@ -756,13 +823,13 @@ table.result-table tr {
 
 .bothdigit {
     background: rgb(182, 53, 156);
-    background: linear-gradient(22deg, rgba(182, 53, 156, 1) 0%, rgba(239, 10, 106, 1) 100%);
+    background: linear-gradient( 22deg, rgba(182, 53, 156, 1) 0%, rgba(239, 10, 106, 1) 100%);
     color: #fff !important;
 }
 
 .bg-btn-both {
     background: rgb(182, 53, 156);
-    background: linear-gradient(22deg, rgba(182, 53, 156, 1) 0%, rgba(239, 10, 106, 1) 100%);
+    background: linear-gradient( 22deg, rgba(182, 53, 156, 1) 0%, rgba(239, 10, 106, 1) 100%);
     font-size: 16px;
     font-weight: 400;
     color: #ffffff !important;
@@ -773,13 +840,13 @@ table.result-table tr {
 
 .twodigit {
     background: rgb(1, 233, 189);
-    background: linear-gradient(22deg, rgba(1, 233, 189, 1) 0%, rgba(0, 124, 222, 1) 100%);
+    background: linear-gradient( 22deg, rgba(1, 233, 189, 1) 0%, rgba(0, 124, 222, 1) 100%);
     color: #fff !important;
 }
 
 .bg-btn-two {
     background: rgb(1, 233, 189);
-    background: linear-gradient(22deg, rgba(1, 233, 189, 1) 0%, rgba(0, 124, 222, 1) 100%);
+    background: linear-gradient( 22deg, rgba(1, 233, 189, 1) 0%, rgba(0, 124, 222, 1) 100%);
     font-size: 16px;
     font-weight: 400;
     color: #ffffff !important;
@@ -1026,15 +1093,15 @@ table.result-table {
     border-radius: 8px;
     height: 40px;
     background: rgba(10, 177, 118, 1);
-    background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -moz-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
     background: -webkit-gradient( left top, right top, color-stop(0%, rgba(10, 177, 118, 1)), color-stop(100%, rgba(14, 177, 30, 1)));
     -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
     -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
     box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
-    background: -webkit-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: -o-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: -ms-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: linear-gradient(to right, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -webkit-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -o-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -ms-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: linear-gradient( to right, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0ab176', endColorstr='#0eb11e', GradientType=1);
 }
 
@@ -1044,15 +1111,15 @@ table.result-table {
     border-radius: 8px;
     height: 45px;
     background: rgba(10, 177, 118, 1);
-    background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -moz-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
     background: -webkit-gradient( left top, right top, color-stop(0%, rgba(10, 177, 118, 1)), color-stop(100%, rgba(14, 177, 30, 1)));
     -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
     -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
     box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
-    background: -webkit-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: -o-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: -ms-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: linear-gradient(to right, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -webkit-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -o-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -ms-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: linear-gradient( to right, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0ab176', endColorstr='#0eb11e', GradientType=1);
 }
 
@@ -1063,15 +1130,15 @@ table.result-table {
     border-radius: 8px;
     height: 45px;
     background: rgba(10, 177, 118, 1);
-    background: -moz-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -moz-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
     background: -webkit-gradient( left top, right top, color-stop(0%, rgba(10, 177, 118, 1)), color-stop(100%, rgba(14, 177, 30, 1)));
     -webkit-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
     -moz-box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
     box-shadow: 17px -5px 133px 6px rgba(186, 186, 186, 0.64);
-    background: -webkit-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: -o-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: -ms-linear-gradient(left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
-    background: linear-gradient(to right, rgb(255, 255, 255) 100%, rgb(255, 255, 255) 100%);
+    background: -webkit-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -o-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: -ms-linear-gradient( left, rgba(10, 177, 118, 1) 0%, rgba(14, 177, 30, 1) 100%);
+    background: linear-gradient( to right, rgb(255, 255, 255) 100%, rgb(255, 255, 255) 100%);
     filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#0ab176', endColorstr='#0eb11e', GradientType=1);
 }
 
@@ -1151,7 +1218,7 @@ table.result-table {
     width: 10%;
     height: 100%;
     /* transform: rotate(1deg); */
-    background: repeating-linear-gradient(45deg, #ffc107, #ffc107 10px, #ffc107 10px, #ffc107 20px);
+    background: repeating-linear-gradient( 45deg, #ffc107, #ffc107 10px, #ffc107 10px, #ffc107 20px);
     /* Stripes Background Gradient */
     box-shadow: 0px 0px 14px 1px #ffc107;
     position: absolute;
@@ -1391,7 +1458,7 @@ p.guideline {
 
 .firstdigit.firstdigit-animation {
     animation: taadaa 1s infinite !important;
-    background-color: linear-gradient(to right, #19b9ff 20%, #3a79ff 51%) !important;
+    background-color: linear-gradient( to right, #19b9ff 20%, #3a79ff 51%) !important;
     color: #fff !important;
 }
 
@@ -1435,6 +1502,10 @@ p.guideline {
 
 .overflow-scroll {
     overflow: scroll !important;
+}
+
+.ml-13 {
+    margin-left: 14px !important;
 }
 
 
