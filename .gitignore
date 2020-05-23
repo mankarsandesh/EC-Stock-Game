@@ -89,9 +89,5 @@ sw.*
 #node_modules
 node_modules
 
-<<<<<<< HEAD
-
-=======
->>>>>>> fe86ac68418074e416b6d142da737ef4af9b842e
 #stocklist data
-data/stockList.js
+#data/stockList.js
