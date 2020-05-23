@@ -17,13 +17,12 @@
             <div class="date_picker">
               <span class="select_date">{{ startDate }}</span>
               <span class="icon_date">
-                <v-icon>fa-calendar</v-icon>
+                <v-icon>date_range</v-icon>
               </span>
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-             <v-date-picker next-icon="fa-chevron-right"
-  prev-icon="fa-chevron-left"
+            <v-date-picker
               color="#1db42f"
               v-if="isShowDateStart"
               v-model="startDate"
@@ -40,13 +39,12 @@
             <div class="date_picker">
               <span class="select_date">{{ endDate }}</span>
               <span class="icon_date">
-                <v-icon>fa-calendar</v-icon>
+                <v-icon>date_range</v-icon>
               </span>
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-             <v-date-picker next-icon="fa-chevron-right"
-  prev-icon="fa-chevron-left"
+            <v-date-picker
               color="#1db42f"
               v-if="isShowDateEnd"
               v-model="endDate"

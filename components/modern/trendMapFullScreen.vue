@@ -13,7 +13,6 @@
         :items="which_oneItem"
         solo
         class="rounded-card"
-       append-icon="fa-angle-down"
       ></v-select>
     </v-flex>
     <v-flex lg10 md10>

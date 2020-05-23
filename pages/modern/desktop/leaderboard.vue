@@ -24,6 +24,12 @@ export default {
   components: {
     breadcrumbs,
     leaderboardUserlist: leaderboardUserlist
+  },
+  data() {
+    return {
+      tabs: ["history", "current bet"],
+      active: null
+    };
   }
 };
 </script>

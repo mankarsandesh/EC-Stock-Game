@@ -827,16 +827,14 @@ main.v-content {
   .flex {
     .v-input {
       .v-input__prepend-outer {
-        margin: 4px -7px;
+        margin: 6px -7px;
         border: 1px solid rgba(0, 0, 0, 0.32941);
         border-radius: 20px;
+        padding: 0px;
         z-index: 10;
         background: #fafafa;
         width: 25px;
         height: 25px;
-        align-items: center;
-        padding: 1px;
-        font-size:50px
       }
       .v-input__control {
         min-height: 40px;

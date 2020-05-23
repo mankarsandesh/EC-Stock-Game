@@ -24,17 +24,17 @@
           <span
             class="text-uppercase font-weight-bold"
             v-bind:class="{ active: isActiveWeek }"
-            @click="sortingBy('weekly')"
+            v-on:click="sortingBy('weekly')"
           >
-            <v-icon small>fa-calendar</v-icon>
+            <v-icon small>event</v-icon>
             {{ $t("leaderBoard.weeklyRankings") }}
           </span>
           <span
             class="text-uppercase font-weight-bold"
             v-bind:class="{ active: isActiveMonth }"
-            @click="sortingBy('monthly')"
+            v-on:click="sortingBy('monthly')"
           >
-            <v-icon small>fa-calendar</v-icon>
+            <v-icon small>event</v-icon>
             {{ $t("leaderBoard.monthlyRankings") }}
           </span>
         </v-flex>
@@ -116,7 +116,7 @@
           >
             <v-btn
               class="buttonGreensmall"
-              @click="
+              v-on:click="
                 followUser(
                   data.username,
                   data.userImage,
@@ -135,7 +135,7 @@
           >
             <v-btn
               class="buttonCancel"
-              @click="
+              v-on:click="
                 followUser(
                   data.username,
                   data.userImage,

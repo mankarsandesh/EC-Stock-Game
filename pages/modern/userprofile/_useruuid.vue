@@ -17,7 +17,6 @@
                     hide-details
                     :items="items"
                     solo
-                   append-icon="fa-angle-down"
                   ></v-select>
                 </div>
               </div>
@@ -219,7 +218,7 @@
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="followDialog = false">
-            <v-icon>fa-times</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>
             {{ this.FolloworNot == 1 ? "Follow Bet " : "UnFollow Bet" }}

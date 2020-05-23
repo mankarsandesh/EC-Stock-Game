@@ -20,17 +20,17 @@ module.exports = {
       { hid: "description", name: "description", content: pkg.description }
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.png" }
-      // {
-      //   rel: "stylesheet",
-      //   href:
-      //     "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
-      // }
-      // {
-      //   rel: "stylesheet",
-      //   href:
-      //     "https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&display=swap"
-      // }
+      { rel: "icon", type: "image/x-icon", href: "/favicon.png" },
+      {
+        rel: "stylesheet",
+        href:
+          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
+      },
+      {
+        rel: "stylesheet",
+        href:
+          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&display=swap"
+      }
     ],
     script: [
       {

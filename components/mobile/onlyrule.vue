@@ -1,9 +1,6 @@
 <template>
-  <v-expansion-panel v-model="panel">
-    <v-expansion-panel-content
-      class="ruleActive ruleHeading"
-      expand-icon="fa-chevron-down"
-    >
+  <v-expansion-panel v-model="panel" >
+    <v-expansion-panel-content class="ruleActive ruleHeading" >
       <template v-slot:header>
         <div @click="setActive($event)">
           <span class="rules">
@@ -38,10 +35,7 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content
-      class="ruleActive ruleHeading"
-      expand-icon="fa-chevron-down"
-    >
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
           <span class="rules">
@@ -76,10 +70,7 @@
       </v-card>
     </v-expansion-panel-content>
 
-    <v-expansion-panel-content
-      class="ruleActive ruleHeading"
-      expand-icon="fa-chevron-down"
-    >
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
           <span class="rules">
@@ -118,10 +109,7 @@
         </v-card-text>
       </v-card>
     </v-expansion-panel-content>
-    <v-expansion-panel-content
-      class="ruleActive ruleHeading"
-      expand-icon="fa-chevron-down"
-    >
+    <v-expansion-panel-content class="ruleActive ruleHeading">
       <template v-slot:header>
         <div @click="setActive($event)">
           <span class="rules">
