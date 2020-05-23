@@ -42,10 +42,10 @@
                 <span class="losing">- {{ item.item.betAmount }}</span>
               </td>
               <td v-if="item.item.isFollowBet == 1" class="text-uppercase text-center">
-                <div class="following">by followers</div>
+                <div class="following">{{$t("currentBet.byFollowers")}}</div>
               </td>
               <td v-if="item.item.isFollowBet == 0" class="text-uppercase">
-                <div class="original">original</div>
+                <div class="original">{{$t("currentBet.original")}}</div>
               </td>
             </tr>
             <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
