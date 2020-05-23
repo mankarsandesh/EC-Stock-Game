@@ -17,7 +17,9 @@
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase">{{$t("leaderBoard.followBy")}}</h4>
+        <h4 class="subtitle-1 text-uppercase">
+          {{ $t("leaderBoard.followBy") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
@@ -29,6 +31,7 @@
               item-value="id"
               v-on:change="changeAmountRate($event)"
               solo
+              append-icon="fa-angle-down"
             ></v-select>
           </v-flex>
           <v-flex lg6 pr-2>
@@ -40,7 +43,7 @@
               solo
               label="10%"
               v-if="selectRate"
-              append-icon="money"
+              append-icon="fa-money"
               v-model="rateValue"
               @keypress="onlyNumber"
             ></v-text-field>
@@ -54,22 +57,26 @@
               v-if="selectAmount"
               @keypress="onlyNumber"
               v-model="amountValue"
-              append-icon="money"
+              append-icon="fa-money"
             ></v-text-field>
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderBoard.autoStop")}}</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">
+          {{ $t("leaderBoard.autoStop") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
-            <v-radio
+            <div
+              @change="changeAmount(n.value)"
+              class="pa-1"
               v-for="n in autoStopFollow"
               :key="n.id"
-              :label="`${n.name}`"
-              :value="n.id"
-              v-on:change="changeAmount(n.value)"
-            ></v-radio>
+            >
+              <input type="radio" :id="n.id" name="radio-group" />
+              <label :for="n.id">{{ n.name }}</label>
+            </div>
 
             <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
               <v-text-field
@@ -282,18 +289,24 @@ export default {
         !this.autoStop &&
         !this.unfollowValue
       ) {
-        return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.followingType"));
+        return this.setSnackBarMessage(
+          window.$nuxt.$root.$t("follow.followingType")
+        );
       }
 
       // Check Amount Value or Bet Value
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
         if (this.BetValue > 1000 || this.BetValue < 100)
-          return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.amountShould"));
+          return this.setSnackBarMessage(
+            window.$nuxt.$root.$t("follow.amountShould")
+          );
       } else {
         this.BetValue = this.rateValue;
         if (this.BetValue > 100 || this.BetValue < 10)
-          return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.betRate"));
+          return this.setSnackBarMessage(
+            window.$nuxt.$root.$t("follow.betRate")
+          );
       }
 
       // Auto Stop Follow
@@ -301,17 +314,23 @@ export default {
         case 4:
         case 5:
           if (this.unfollowValue > 1000 || this.unfollowValue < 100) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.autoStop"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.autoStop")
+            );
           }
           break;
         case 3:
           if (this.unfollowValue > 10 || this.unfollowValue < 1) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.daysShould"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.daysShould")
+            );
           }
           break;
         case 6:
           if (this.unfollowValue > 100 || this.unfollowValue < 1) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.betsShould"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.betsShould")
+            );
           }
           break;
       }
@@ -354,9 +373,9 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-             data.message[0] == "User followed successfully."
-              ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed")) 
-              : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));     
+          data.message[0] == "User followed successfully."
+            ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed"))
+            : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));
         } else {
           this.setSnackBarMessage(data.message[0]);
           // this.errorShow(true, false, true, data.message[0]);

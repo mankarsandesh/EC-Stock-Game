@@ -8,9 +8,7 @@
             <span>{{ $t("msg.accountBalance") }}</span>
             <br />
             <span class="amount" v-if="userData.balance != 0">
-              {{
-              userData.balance | currency
-              }}
+              {{ userData.balance | currency }}
             </span>
             <span class="amount" v-if="userData.balance == 0">00.00</span>
             <!-- <span class="title_currentcy">USD</span> -->
@@ -50,7 +48,12 @@
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >fa-edit</v-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -68,7 +71,12 @@
                     placeholder="Your first name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >fa-edit</v-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -86,7 +94,12 @@
                     placeholder="Your Last Name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >fa-edit</v-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -98,12 +111,17 @@
                   </label>
                 </div>
                 <div class="col-85">
-                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
+                  <select
+                    ref="gender"
+                    id="gender"
+                    name="gender"
+                    :value="userData.gender"
+                  >
                     <option value="male">{{ $t("profile.male") }}</option>
                     <option value="female">{{ $t("profile.female") }}</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="20" color="#bdbdbd">fa-angle-down</v-icon>
                   </span>
                 </div>
               </div>
@@ -130,14 +148,19 @@
                   </label>
                 </div>
                 <div class="col-85">
-                  <select ref="country" id="country" name="country" :value="userData.country">
+                  <select
+                    ref="country"
+                    id="country"
+                    name="country"
+                    :value="userData.country"
+                  >
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
                     <option value="THA">Thailand</option>
                     <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="20" color="#bdbdbd">fa-angle-down</v-icon>
                   </span>
                 </div>
               </div>
@@ -150,7 +173,8 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                  >{{ $t("msg.save") }}</v-btn>
+                    >{{ $t("msg.save") }}</v-btn
+                  >
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>

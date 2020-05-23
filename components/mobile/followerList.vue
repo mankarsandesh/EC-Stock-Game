@@ -64,7 +64,7 @@
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="closeFollowBet">
-            <v-icon>close</v-icon>
+            <v-icon>fa-times</v-icon>
           </v-btn>
           <v-toolbar-title>{{
             this.FolloworNot == 1 ? this.$root.$t("userAction.followBet") : this.$root.$t("userAction.unFollowBet")

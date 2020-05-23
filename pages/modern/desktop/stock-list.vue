@@ -5,7 +5,14 @@
       <v-layout row wrap mt-3 md6 align-center justify-center>
         <v-flex md10>
           <v-flex md6 class="d-flex">
-        
+            <v-select
+              v-model="sortBy"
+              class="border-round"
+              hide-details
+              :items="[ { value: 'asc', text: $t('stockList.ascending') } , { value: 'desc', text: $t('stockList.descending') }]"
+              :placeholder="$t('msg.sortBy')"   
+             append-icon="fa-angle-down"          
+            ></v-select>
           </v-flex>
         </v-flex>
       </v-layout>

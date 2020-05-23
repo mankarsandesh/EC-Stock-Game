@@ -12,12 +12,8 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon
-                      color="black"
-                      :size="20"
-                      @click="avatarDialog = true"
-                      >photo_camera</v-icon
-                    >
+                    <v-icon color="black" :size="20" @click="avatarDialog = true">fa-camera</v-icon>
+                    <!-- <v-icon color="black" :size="20">fa-camera</v-icon> -->
                   </button>
                 </span>
               </div>
@@ -127,7 +123,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">Close</v-btn>
+            <v-btn color="primary" text @click="dialog = false">close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

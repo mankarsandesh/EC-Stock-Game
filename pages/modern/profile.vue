@@ -10,11 +10,21 @@
               <v-avatar :size="90">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
-              <span class="camera_container" style=" position: absolute; top: 9%;">
-                <v-icon class="selectAvatar" :size="20" @click="avatarDialog = true">photo_camera</v-icon>
+              <span
+                class="camera_container"
+                style=" position: absolute; top: 9%;"
+              >
+                <v-icon
+                  class="selectAvatar"
+                  :size="20"
+                  @click="avatarDialog = true"
+                  >fa-camera</v-icon
+                >
               </span>
             </div>
-            <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+            <h3 class="text-capitalize">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </h3>
             <span>
               <strong>{{ $t("profile.onlineStatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
@@ -33,11 +43,16 @@
               <v-avatar :size="50">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
-              <span class="camera_container" style="position: absolute;top: 5%;">
-                <v-icon color="black" :size="20">photo_camera</v-icon>
+              <span
+                class="camera_container"
+                style="position: absolute;top: 5%;"
+              >
+                <v-icon color="black" :size="20">fa-camera</v-icon>
               </span>
             </div>
-            <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+            <h3 class="text-capitalize">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </h3>
             <p>
               <strong>{{ $t("profile.onlineStatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
@@ -96,7 +111,12 @@
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >fa-edit
+                    </v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -115,7 +135,12 @@
                     placeholder="Your First Name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >fa-edit
+                    </v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -134,7 +159,12 @@
                     placeholder="Your Last Name"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >fa-edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -147,12 +177,17 @@
                   </label>
                 </v-flex>
                 <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
+                  <select
+                    ref="gender"
+                    id="gender"
+                    name="gender"
+                    :value="userData.gender"
+                  >
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd">fa-chevron-down</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -171,7 +206,12 @@
                     placeholder="sandesh@gmail.com"
                   />
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="16"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >fa-edit
+                    </v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -184,14 +224,19 @@
                   </label>
                 </v-flex>
                 <v-flex xs9 sm6 md6 lg6 class="text-xs-center">
-                  <select ref="country" id="country" name="country" :value="userData.country">
+                  <select
+                    ref="country"
+                    id="country"
+                    name="country"
+                    :value="userData.country"
+                  >
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
                     <option value="THA">Thailand</option>
                     <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd">arrow_drop_down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd">fa-chevron-down</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -204,7 +249,8 @@
                     :disabled="updating"
                     class="btn_save"
                     @click="saveClick()"
-                  >{{ $t("msg.save") }}</v-btn>
+                    >{{ $t("msg.save") }}</v-btn
+                  >
                   <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
                 </v-flex>
               </v-layout>
@@ -220,7 +266,7 @@
                 class="btn_save width-50"
                 block
               >
-                <span class="padding-right-60">{{ $t("profile.onlinehistory") }}</span>
+ <span class="padding-right-60">{{ $t("profile.onlinehistory") }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>
               <v-btn
@@ -242,11 +288,16 @@
     </v-flex>
 
     <!-- User Select Avatar In Profile Page -->
-    <v-dialog v-model="avatarDialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-dialog
+      v-model="avatarDialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="avatarDialog = false">
-            <v-icon>close</v-icon>
+            <v-icon>fa-times</v-icon>
           </v-btn>
           <v-toolbar-title>Choose your Avatar</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -265,7 +316,7 @@
     </v-dialog>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+      <v-btn color="pink" text @click="snackbar = false">fa-times</v-btn>
     </v-snackbar>
 
     <OnlineHistory ref="onlineHistory"></OnlineHistory>
@@ -299,7 +350,12 @@ export default {
     StockAnalysis
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID", "getUserBalance"]),
+    ...mapGetters([
+      "getUserInfo",
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getUserBalance"
+    ]),
     imgProfile() {
       return this.getUserInfo.profileImage === null
         ? this.defaultImage
@@ -341,7 +397,7 @@ export default {
           this.avatarDialog = false;
           this.setUserData();
         } else {
-          this.setSnackBarMessage(config.error.general);          
+          this.setSnackBarMessage(config.error.general);
         }
       } catch (ex) {
         this.setSnackBarMessage(ex);

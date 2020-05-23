@@ -4,7 +4,7 @@
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">close</v-icon>
+          <v-icon color="#0b2968">fa-times</v-icon>
         </span>
         <v-layout column>
           <v-flex xs12 pt-3>
@@ -26,7 +26,7 @@
       </v-flex>
       <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
-          <v-icon color="#FFF">list</v-icon>
+          <v-icon color="#FFF">fa-th-list</v-icon>
         </span>
       </v-flex>
       <!-- End Left Side -->
@@ -135,7 +135,7 @@
                   <v-icon>fa-plus</v-icon>
                 </span>
                 <span v-else class="addChart" @click="removeTradMap(index)">
-                  <v-icon>close</v-icon>
+                  <v-icon>fa-times</v-icon>
                 </span>
               </tableTrendMap>
             </div>
@@ -147,7 +147,12 @@
       <!-- Game Rule Popup open First Time -->
       <v-dialog v-model="GameRuleDialog" width="50%">
         <v-card class="ruleModel" style="border-radius: 10px;">
-          <v-icon class="closePopup" color="#333 !important" @click="GameRuleDialog = false">close</v-icon>
+          <v-icon
+            class="closePopup"
+            color="#333 !important"
+            @click="GameRuleDialog = false"
+            >fa-times</v-icon
+          >
           <v-card-text style="padding:40px;">
             <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}} </h2>
              <onlyrules />
@@ -514,12 +519,15 @@ export default {
 }
 
 .sidebar-close {
-  /* z-index: 999; */
-  padding: 3px;
+  z-index: 999;
   font-size: 16px;
   cursor: pointer;
   background-color: #4464ff !important;
-  border-radius: 180px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
   position: absolute;
   top: -15px;
   right: -8px;
@@ -537,11 +545,15 @@ export default {
   position: fixed;
   left: 5px;
   top: 75px;
+  width: 45px;
+  height: 45px;
+  line-height: 48px;
+  text-align: center;
+  border-radius: 50%;
+
   background-color: #4464ff !important;
   color: #fff !important;
-  padding: 5px;
   border: 1px solid #dddddd;
-  border-radius: 180px;
 }
 </style>
 

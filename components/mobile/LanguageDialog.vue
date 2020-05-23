@@ -1,17 +1,34 @@
 <template>
-  <v-dialog v-model="dialog" max-width="400" style="background-color:#fff!important;">
+  <v-dialog
+    v-model="dialog"
+    max-width="400"
+    style="background-color:#fff!important;"
+  >
     <v-card class="pa-3">
       <v-card-title class="headline">
-        {{
-        $t("msg.chooseLanguage")
-        }}
+        {{ $t("msg.chooseLanguage") }}
       </v-card-title>
       <v-layout class="card-flag">
-        <v-flex xs6 class="d-block card-flag" v-for="(item, index) in lang" :key="index">
+        <v-flex
+          xs6
+          class="d-block card-flag"
+          v-for="(item, index) in lang"
+          :key="index"
+        >
           <country-flag :country="item.country" size="big" />
-          <v-radio-group v-model="value" row>
+          <!-- <v-radio-group v-model="value" row>
             <v-radio :value="item.value" @click="changeLange(item.value)"></v-radio>
-          </v-radio-group>
+          </v-radio-group> -->
+          <div class="radio-container ">
+            <input
+              :checked="item.value === value"
+              @click="changeLange(item.value)"
+              type="radio"
+              :id="item.value"
+              name="radio-group"
+            />
+            <label :for="item.value"></label>
+          </div>
         </v-flex>
       </v-layout>
     </v-card>

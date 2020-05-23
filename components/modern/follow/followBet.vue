@@ -38,6 +38,7 @@
               item-value="id"
               v-on:change="changeAmountRate($event)"
               solo
+              append-icon="fa-angle-down"
             ></v-select>
           </v-flex>
           <v-flex lg6 pr-2>
@@ -49,7 +50,7 @@
               solo
               label="10%"
               v-if="selectRate"
-              append-icon="money"
+              append-icon="fa-money"
               v-model="rateValue"
               @keypress="onlyNumber"
             ></v-text-field>
@@ -63,7 +64,7 @@
               v-if="selectAmount"
               @keypress="onlyNumber"
               v-model="amountValue"
-              append-icon="money"
+              append-icon="fa-money"
             ></v-text-field>
           </v-flex>
         </v-card-actions>
@@ -74,13 +75,15 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
-            <v-radio
+            <div
+              @change="changeAmount(n.value)"
+              class="pa-1"
               v-for="n in autoStopFollow"
               :key="n.id"
-              :label="`${n.name}`"
-              :value="n.id"
-              v-on:change="changeAmount(n.value)"
-            ></v-radio>
+            >
+              <input type="radio" :id="n.id" name="radio-group" />
+              <label :for="n.id">{{ n.name }}</label>
+            </div>
             <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
               <v-text-field
                 :rules="[

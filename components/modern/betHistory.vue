@@ -2,7 +2,8 @@
   <v-container>
     <v-layout row class="justify-center">
       <v-flex md10 lg10>
-        <v-data-table
+         <v-data-table prev-icon="fa-chevron-left"
+        next-icon="fa-chevron-right"
           hide-actions
           :items="betHistory"
           :pagination.sync="pagination"
@@ -30,7 +31,8 @@
               <td>{{ item.item.gameUUID }}</td>
               <td>
                 {{ item.item.ruleName }} - ({{ item.item.payout }})
-                {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minute')}}
+                {{ item.item.stockName }} / {{ item.item.loop }}
+                {{ $t("msg.minute") }}
               </td>
               <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
               <td>{{ item.item.betAmount | toCurrency }}</td>
@@ -41,7 +43,10 @@
               <td v-if="item.item.betResult == 'lose'">
                 <span class="losing">- {{ item.item.betAmount }}</span>
               </td>
-              <td v-if="item.item.isFollowBet == 1" class="text-uppercase text-center">
+              <td
+                v-if="item.item.isFollowBet == 1"
+                class="text-uppercase text-center"
+              >
                 <div class="following">by followers</div>
               </td>
               <td v-if="item.item.isFollowBet == 0" class="text-uppercase">
@@ -51,7 +56,10 @@
             <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
               <td colspan="2">
                 <span class="betDraw">{{ $t("betHistory.betDraw") }} :</span>
-                <span class="gameDraw" v-html="$options.filters.lastDraw(item.item.gameDraw)"></span>
+                <span
+                  class="gameDraw"
+                  v-html="$options.filters.lastDraw(item.item.gameDraw)"
+                ></span>
               </td>
               <td colspan="3" class="allDigit">
                 {{ $t("gamemsg.firstdigit") }}
@@ -72,11 +80,15 @@
                 ></span>
               </td>
               <td colspan="2" v-if="item.item.rollingAmount == 0">
-                <span class="betDraw">{{ $t("betHistory.yourLosingAmount") }} :</span>
+                <span class="betDraw"
+                  >{{ $t("betHistory.yourLosingAmount") }} :</span
+                >
                 <span class="lossAmount">{{ item.item.betAmount }}</span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount != 0">
-                <span class="betDraw">{{ $t("betHistory.yourWinningAmount") }} :</span>
+                <span class="betDraw"
+                  >{{ $t("betHistory.yourWinningAmount") }} :</span
+                >
                 <span class="winAmount">{{ item.item.rollingAmount }}</span>
               </td>
             </tr>
@@ -85,7 +97,9 @@
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.total") }}</td>
-              <td colspan="3">{{ betHistory.length }} {{ $t("leaderBoard.bets") }}</td>
+              <td colspan="3">
+                {{ betHistory.length }} {{ $t("leaderBoard.bets") }}
+              </td>
               <td>
                 <strong>{{ TotalAmount | toCurrency }}</strong>
               </td>
@@ -93,11 +107,13 @@
                 <span
                   class="totalRollingWin"
                   v-if="TotalAmount < TotalRolling"
-                >{{ TotalRolling | toCurrency }}</span>
+                  >{{ TotalRolling | toCurrency }}</span
+                >
                 <span
                   class="totalRollingLoss"
                   v-if="TotalAmount > TotalRolling"
-                >{{ TotalRolling | toCurrency }}</span>
+                  >{{ TotalRolling | toCurrency }}</span
+                >
               </td>
               <td colspan="1"></td>
             </tr>
@@ -111,6 +127,8 @@
           <v-pagination
             v-model="pagination.page"
             color="#1db42f"
+            next-icon="fa-chevron-right"
+            prev-icon="fa-chevron-left"
             :length="Math.round(betHistory.length / rowPageCount)"
           ></v-pagination>
         </div>
