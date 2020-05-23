@@ -93,14 +93,6 @@ export const itemBetting = {
          */
         storemarkColor(ruleID, id, classe, specific) {
 
-            console.log("This is the  ruleID", ruleID);
-
-            console.log("This is the  id", id);
-
-            console.log("This is the classe", classe);
-
-            console.log("This is the specific", specific);
-
             if (!$("#" + id).hasClass(classe)) {
 
                 $("#" + id).addClass(classe + ' ' + id.split("-")[1])
@@ -121,7 +113,7 @@ export const itemBetting = {
             // $("#" + ruleID).addClass('bg-btn-first');
             if (this.checkFooterBetAmount) {
                 let betData = {
-                    specificNumber: 'devla Media',
+                    specificNumber: '',
                     gameUUID: this.getGameUUIDByStockName(this.stockID),
                     ruleID: ruleID,
                     betAmount: this.getFooterBetAmount
