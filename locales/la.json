@@ -127,7 +127,7 @@
     "addTrendChart": "ເພີ່ມຕາຕະລາງ",
     "bettingOn": "ການພະນັນ",
     "status": "ສະຖານະ",
-    "countdown": "ນັບຖອຍຫລັງ",
+    "countDown": "ນັບຖອຍຫລັງ",
     "loop": "ວົນຮອບ",
     "selectStock": "ເລືອກຫຼັກຊັບ",
     "online": "ອອນລາຍ",
@@ -169,7 +169,9 @@
     "pending": "ທີ່ຍັງຄ້າງ",
     "win": "ຊະນະ",
     "lose": "ສູນເສຍ",
-    "dateTime" : "ວັນແລະເວລາ"
+    "dateTime" : "ວັນແລະເວລາ",
+    "closed" : "ປິດແລ້ວ",
+    "accepting": "ຍອມຮັບ"
   },
   "navlist": {
     "live Stock": "ຫຸ້ນເປີດ",

@@ -176,9 +176,10 @@
 
       <popper
         :disabled="checkFooterBetAmount"
-        v-for="data in bothDigit"
-        :key="data.rule"
+        v-for="(data,index) in bothDigit"
+        :key="index"
         class="w12"
+        :class="index === 0 ? 'ml-13': null"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -251,9 +252,10 @@
 
       <popper
         :disabled="checkFooterBetAmount"
-        v-for="data in twoDigit"
-        :key="data.rule"
+        v-for="(data,index) in twoDigit"
+        :key="index"
         class="w12"
+        :class="index === 0 ? 'ml-13': null"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',

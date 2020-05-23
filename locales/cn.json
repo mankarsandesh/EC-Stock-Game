@@ -169,7 +169,9 @@
     "pending": "正在处理",
     "win": "贏",
     "lose": "輸",
-    "dateTime":"约会时间"
+    "dateTime":"约会时间",
+    "closed" : "封闭",
+    "accepting": "接受"
   },
   "navlist": {
     "live Stock": "正开放股票",
