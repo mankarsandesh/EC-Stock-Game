@@ -10,7 +10,7 @@
             <v-avatar
               size="65"
               v-for="(item, key) in imgChip"
-              :key="key"            
+              :key="key"
               v-bind:class="[ getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '' , 'chips']"
             >
               <v-img
@@ -34,11 +34,12 @@
             class="buttonGreensmall"
             dark
             @click="confirmBet()"
-            >{{ $t("msg.confirm") }}</v-btn
-          >
-          <v-btn class="buttonCancel" @click="cancelBet()">{{
+          >{{ $t("msg.confirm") }}</v-btn>
+          <v-btn class="buttonCancel" @click="cancelBet()">
+            {{
             $t("msg.cancel")
-          }}</v-btn>
+            }}
+          </v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -109,8 +110,8 @@ export default {
 </script>
 
 <style scoped>
-.activeChips{
-box-shadow: 0 10px 10px -6px #333;
+.activeChips {
+  box-shadow: 0 10px 10px -6px #333;
 }
 .amount div {
   margin: 10px -15px;
@@ -153,8 +154,8 @@ box-shadow: 0 10px 10px -6px #333;
 
 .chips {
   cursor: pointer;
-  margin: 2px 8px;  
-  border:2px solid #dddddd;
+  margin: 2px 8px;
+  border: 2px solid #dddddd;
 }
 .chipImg {
   color: #333;

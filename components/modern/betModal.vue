@@ -223,7 +223,9 @@ export default {
             stock: this.stockName,
             betRule: this.betId
           };
+
           this.$emit("update-bet", stockDetail);
+
           this.confirmDisabled = true;
           this.sendBetting(data);
           $("#" + this.stockName + this.betId).addClass(

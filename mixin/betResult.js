@@ -12,7 +12,6 @@ export const BetResult = {
     methods: {
 
         ...mapActions([
-
             "setCollegeButtonNumberParent",
             "setItemBetting",
             "clearItemBetting"
