@@ -22,10 +22,10 @@
               v-show="getStockResult.length > 0"
             >
               <td>
-                <nuxt-link :to="'/modern/desktop/' + data.stockName"
-                  >{{ $t(`stockname.${data.stockName}`) }}
-                  {{ data.stockName == "btc5" ? "5" : "" }}</nuxt-link
-                >
+                <nuxt-link :to="'/modern/desktop/' + data.stockName">
+                  {{ $t(`stockName.${data.stockName}`) }}
+                  {{ data.stockName == "btc5" ? "5" : "" }}
+                </nuxt-link>
               </td>
               <td class="text-xs-center">{{ data.stockTimeStamp }}</td>
               <td class="text-xs-center">{{ roundValue(data.stockValue) }}</td>

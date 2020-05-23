@@ -15,7 +15,7 @@
           <tr v-for="(stock, index) in getStockListPrice[0]" :key="stock.stockUUID">
             <td>
               <nuxt-link :to="'/modern/desktop/' + stock.stockName">
-                {{ $t(`stockname.${stock.stockName}`)
+                {{ $t(`stockName.${stock.stockName}`)
                 }}{{ stock.stockName == "btc5" ? "5" : "" }}
               </nuxt-link>
             </td>
@@ -31,7 +31,10 @@
             ></td>
 
             <td>
-              <span v-if="stock.stockStatus === 'Closed'" :style="{ color: 'red' }">Closed</span>
+              <span
+                v-if="stock.stockStatus === 'Closed'"
+                :style="{ color: 'red' }"
+              >{{$t("msg.closed")}}</span>
               <span
                 v-if="
                   stock.stockStatus !== 'Closed' && getStockListCountdown[index]

@@ -126,7 +126,7 @@
     "addTrendChart": "เพิ่มแผนภูมิแนวโน้ม",
     "bettingOn": "เดิมพัน",
     "status": "สถานะ",
-    "countdown": "นับถอยหลัง",
+    "countDown": "นับถอยหลัง",
     "loop": "รอบ",
     "selectStock": "เลือกหุ้น",
     "online": "ออนไลน์",
@@ -168,7 +168,9 @@
     "pending": "อยู่ระหว่างดำเนินการ",
     "win": "ชนะ",
     "lose": "แพ้",
-    "dateTime" : "วันเวลา"
+    "dateTime" : "วันเวลา",
+    "closed" : "ปิด",
+    "accepting": "ยอมรับ"
   },
   "navlist": {
     "live Stock": "หุ้นที่เปิดอยู่",
