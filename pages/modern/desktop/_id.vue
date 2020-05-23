@@ -2,7 +2,7 @@
   <v-container fluid mt-2 class="containerNew">
     <v-layout>
       <!-- Left Side Stock List  -->
-      <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
+      <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">fa-times</v-icon>
         </span>
@@ -151,19 +151,17 @@
             class="closePopup"
             color="#333 !important"
             @click="GameRuleDialog = false"
-            >fa-times</v-icon
-          >
+          >fa-times</v-icon>
           <v-card-text style="padding:40px;">
-            <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}} </h2>
-             <onlyrules />
+            <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}}</h2>
+            <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
             <v-btn
               class="buttonGreensmall"
               to="/modern/desktop/gamerule"
               dark
-              >{{$t("msg.gameRule")}}</v-btn
-            >
+            >{{$t("msg.gameRule")}}</v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
