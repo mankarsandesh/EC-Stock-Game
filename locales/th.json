@@ -87,7 +87,8 @@
     "resultOutTime": "ผลลัพธ์ออกเวลา",
     "days": "วัน",
     "hours": "ชั่วโมง",
-    "minute": "นาที",
+    "minutes": "นาที",
+    "seconds": "วินาที",
     "loading": "กำลังโหลด...",
     "stock": "หุ้น",
     "userInfo": "ข้อมูลผู้ใช้",
@@ -170,8 +171,11 @@
     "lose": "แพ้",
     "dateTime" : "วันเวลา",
     "closed" : "ปิด",
-    "close" : "ปิด",
-    "accepting": "ยอมรับ"
+    "accepting": "ยอมรับ",
+    "changesSaved" : "บันทึกการเปลี่ยนแปลงแล้ว",
+    "enterFullScreen":"เข้าสู่โหมดเต็มหน้าจอ",
+    "closeFullScreen":"ปิดโหมดเต็มหน้าจอ"
+    "close" : "ปิด"
   },
   "navlist": {
     "live Stock": "หุ้นที่เปิดอยู่",
@@ -261,8 +265,10 @@
     "followers" : "สมัครพรรคพวก",
     "chart": "แผนภูมิ",
     "noFollowing" : "ไม่มีผู้ใช้งาน follwing",
-    "noFollowers" : "ไม่มีผู้ติดตาม"
-    
+    "noFollowers" : "ไม่มีผู้ติดตาม",
+    "1month":"1 เดือน",
+    "2months":"2 เดือน",
+    "3months":"3 เดือน"
   },
   "userAction": {
     "followBet": "ทำตามการพนัน",
@@ -330,7 +336,8 @@
     "losingBets": "สูญเสียเดิมพัน",
     "usersFollowMe": "ผู้ใช้ติดตามฉัน",
     "amountCreditedOrDebitedToAccount": "จำนวนเงินที่เครดิตหรือหักเข้าบัญชี",
-    "noNotification": "ไม่มีการแจ้งเตือน"
+    "noNotification": "ไม่มีการแจ้งเตือน",
+    "viewAll": "ดูทั้งหมด"
   },
   "betHistory": {
     "betDraw": "投注",

@@ -28,9 +28,7 @@
             <div class="layout-btn">
               <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
                 <country-flag :country="getLocale" size="normal" />
-                <span
-                  >&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span
-                >
+                <span>&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span>
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>
@@ -46,7 +44,7 @@
                 <v-list-tile
                   v-if="winnerList.length == 0"
                   class="noNotification"
-                >There are no Notification.</v-list-tile>
+                >{{$t("notification.noNotification")}}</v-list-tile>
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
@@ -62,10 +60,11 @@
                     <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
-                 
               </v-list>
               <v-list class="footerView">
-                <span @click="$router.push('/modern/desktop/notification/')">View All</span>
+                <span
+                  @click="$router.push('/modern/desktop/notification/')"
+                >{{$t("notification.viewAll")}}</span>
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -93,7 +92,6 @@ import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
-import winnerMarquee from "~/components/modern/winnerMarquee";
 import i18n from "vue-i18n";
 import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
@@ -109,7 +107,6 @@ export default {
     invitation,
     countryFlag,
     languageDialog,
-    winnerMarquee,
     userMenu,
     AnimatedNumber
   },
@@ -244,14 +241,14 @@ export default {
 };
 </script>
 <style scoped>
-.footerView{
-  border-top:1px solid #dddddd;
+.footerView {
+  border-top: 1px solid #dddddd;
   text-align: center;
   cursor: pointer;
 }
-.footerView span{
+.footerView span {
   font-size: 14px;
-  color:#003f70;
+  color: #003f70;
   font-weight: 400;
   text-align: center;
 }
