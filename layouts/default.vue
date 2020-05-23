@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 import menu from "~/data/menuMobile";
 
@@ -154,12 +154,16 @@ export default {
       isShow: ""
     };
   },
+  created() {
+    this.connectUserBalanceSocket();
+  },
   mounted() {
     setInterval(() => {
       this.isShow = location.pathname.split("/")[2];
     });
   },
   methods: {
+    ...mapActions(["setUserBalance"]),
     getLogout() {
       this.dialogConfirm = true;
     },
@@ -171,10 +175,47 @@ export default {
         this.dialogConfirm = false;
       }
       this.dialogConfirm = false;
+    },
+    listenUserBalance({ channelName, eventName }, callback) {
+      window.Echo.channel(channelName).listen(eventName, callback);
+    },
+    connectUserBalanceSocket() {
+      this.listenUserBalance(
+        {
+          channelName: `balanceUpdate.${this.getUserUUID}`,
+          eventName: "balanceUpdate"
+        },
+        ({ data }) => {
+          try {
+            var logData = data;
+            if (data.status) {
+              this.setUserBalance(data.data.userBalance);
+            } else {
+              throw new Error(config.error.general);
+            }
+          } catch (ex) {
+            console.log(ex);
+            log.error(
+              {
+                channelName: `balanceUpdate.${this.getUserUUID}`,
+                eventName: "balanceUpdate",
+                res: logData,
+                page: "layouts/default.vue",
+                provider: this.getPortalProviderUUID,
+                user: secureStorage.getItem("USER_UUID")
+              },
+              ex.message
+            );
+          }
+        }
+      );
     }
   },
+  beforeDestroy() {
+    window.Echo.leaveChannel(`balanceUpdate.${this.getUserUUID}`);
+  },
   computed: {
-    ...mapGetters(["getLocale"]),
+    ...mapGetters(["getLocale", "getUserUUID", "getPortalProviderUUID"]),
     countryflag() {
       return this.getLocale;
     }
