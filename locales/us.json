@@ -170,7 +170,9 @@
     "pending": "Pending",
     "win": "Win",
     "lose": "Lose",
-    "dateTime" : "Date & Time"
+    "dateTime" : "Date & Time",
+    "closed" : "Closed",
+    "accepting": "Accepting"
   },
   "navlist": {
     "live Stock": "live Stock",
