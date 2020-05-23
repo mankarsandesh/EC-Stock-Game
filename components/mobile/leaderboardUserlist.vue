@@ -1,43 +1,34 @@
 <template>
   <div>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">
-        {{ $t("leaderBoard.noData") }}
-      </h2>
+      <h2 class="text-center" style="color:#a3a3a3;">{{$t("leaderBoard.noData")}}</h2>
     </v-flex>
     <v-flex>
       <v-list subheader>
         <v-list-tile>
           <v-list-tile-content>
             <v-list-tile-title>
-              {{ $t("leaderBoard.Top10Leaders") }}
-              <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
+              {{$t("leaderBoard.Top10Leaders")}}
+              <i
+                v-if="loadingImage"
+                class="fa fa-circle-o-notch fa-spin"
+              ></i>
             </v-list-tile-title>
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <!-- <v-radio-group v-model="sortValue" row> -->
-            <div style="display:flex;flex-direction:row">
-              <!-- monthly -->
-              <input
+            <v-radio-group v-model="sortValue" row>
+              <v-radio
+                :label="$t('leaderBoard.monthly')"
                 value="monthly"
-                type="radio"
-                id="monthly"
-                name="radio-group"
-                checked
-                @click="sortingBy('monthly')"
-              />
-              <label for="monthly">{{ $t("leaderBoard.monthly") }}</label>
-              <!-- weekly -->
-              <input
+                v-on:click="sortingBy('monthly')"
+              ></v-radio>&nbsp;
+              <v-radio
+                :label="$t('leaderBoard.weekly')"
                 value="weekly"
-                type="radio"
-                @click="sortingBy('weekly')"
-                id="weekly"
-                name="radio-group"
-              />
-              <label for="weekly">{{ $t("leaderBoard.weekly") }}</label>
-            </div>
+                v-on:click="sortingBy('weekly')"
+              ></v-radio>
+            </v-radio-group>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
@@ -79,24 +70,21 @@
                 dark
               >
                 {{
-                  item.isFollowing == 0
-                    ? $t("userAction.follow")
-                    : $t("userAction.unFollow")
+                item.isFollowing == 0
+                ? $t("userAction.follow")
+                : $t("userAction.unFollow")
                 }}
               </v-btn>
             </v-list-tile-action>
           </v-list-tile>
-          <v-divider
-            v-if="index + 1 < topPlayerData.length"
-            :key="index"
-          ></v-divider>
+          <v-divider v-if="index + 1 < topPlayerData.length" :key="index"></v-divider>
         </template>
       </v-list>
     </v-flex>
 
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog
-      :persistent="true"
+      :persistent=true
       v-model="followDialog"
       fullscreen
       hide-overlay
@@ -106,13 +94,11 @@
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="closeFollowBet">
-            <v-icon>fa-times</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>
             {{
-              this.FolloworNot == 1
-                ? $t("userAction.followBet")
-                : $t("userAction.unFollowBet")
+            this.FolloworNot == 1 ? $t("userAction.followBet") : $t("userAction.unFollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
@@ -146,7 +132,7 @@ export default {
       username: "",
       userImage: "",
       followDialog: false,
-      temp: false
+      temp : false,
     };
   },
   components: {
@@ -163,7 +149,6 @@ export default {
   },
   methods: {
     // fetch default image or from server image
-
     userImgProfile(userImage) {
       return userImage === null
         ? this.defaultImage
@@ -199,7 +184,6 @@ export default {
         this.leaderBoard();
       }
     },
-
     // Close Follow Bet Popup
     closeFollowBet() {
       this.followDialog = false;

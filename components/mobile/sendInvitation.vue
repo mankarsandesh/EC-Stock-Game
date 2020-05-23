@@ -109,7 +109,7 @@
           <v-flex> {{ this.invitationError }} </v-flex>
         </v-layout>
         <v-layout justify-center>
-          <v-flex v-for="(item, index) in categoryName" v-bind:key="index" pl-3>
+          <v-flex v-for="(item, index) in categoryName" v-bind:key="index">
             <v-checkbox
               justify-center
               color="green"
@@ -117,8 +117,6 @@
               v-model="selectCategory"
               :label="item.value"
               :value="item.id"
-              off-icon="fa-square"
-              on-icon="fa-check-square"
             ></v-checkbox>
           </v-flex>
         </v-layout>
@@ -139,7 +137,7 @@
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="followDialog = false">
-            <v-icon>fa-times</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>
             {{

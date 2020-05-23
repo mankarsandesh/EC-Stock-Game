@@ -8,9 +8,7 @@
         <v-divider></v-divider>
         <v-list-tile class="pt-2" @click="showfilterStock = !showfilterStock">
           <v-list-tile-content>
-            <v-list-tile-title class="text-uppercase">{{
-              $t("stock")
-            }}</v-list-tile-title>
+            <v-list-tile-title class="text-uppercase">{{ $t("stock") }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <div
@@ -18,39 +16,16 @@
           v-show="showfilterStock"
         >
           <div class="item-content text-color">
-            <v-checkbox
-              off-icon="fa-square"
-              on-icon="fa-check-square"
-              v-model="filter.stock.china"
-              color="#003e70"
-              label="china"
-              hide-details
-            ></v-checkbox>
-            <v-checkbox
-              off-icon="fa-square"
-              on-icon="fa-check-square"
-              v-model="filter.stock.usa"
-              color="#003e70"
-              label="usa"
-              hide-details
-            ></v-checkbox>
-            <v-checkbox
-              off-icon="fa-square"
-              on-icon="fa-check-square"
-              v-model="filter.stock.crypto"
-              color="#003e70"
-              label="crypto"
-              hide-details
-            ></v-checkbox>
+            <v-checkbox v-model="filter.stock.china" color="#003e70" label="china" hide-details></v-checkbox>
+            <v-checkbox v-model="filter.stock.usa" color="#003e70" label="usa" hide-details></v-checkbox>
+            <v-checkbox v-model="filter.stock.crypto" color="#003e70" label="crypto" hide-details></v-checkbox>
           </div>
         </div>
         <!--filter game type -->
         <v-divider></v-divider>
         <v-list-tile class="pt-2">
           <v-list-tile-content @click="showfilterType = !showfilterType">
-            <v-list-tile-title class="text-uppercase">{{
-              $t("gameType")
-            }}</v-list-tile-title>
+            <v-list-tile-title class="text-uppercase">{{ $t("gameType") }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <div
@@ -63,16 +38,12 @@
               color="#003e70"
               label="1 minute"
               hide-details
-              off-icon="fa-square"
-              on-icon="fa-check-square"
             ></v-checkbox>
             <v-checkbox
               v-model="filter.gameType.loop5"
               color="#003e70"
               label="5 minute"
               hide-details
-              off-icon="fa-square"
-              on-icon="fa-check-square"
             ></v-checkbox>
           </div>
         </div>
@@ -80,59 +51,42 @@
         <v-divider></v-divider>
         <v-list-tile class="py-2" @click="defaultFilter">
           <v-list-tile-content>
-            <v-list-tile-title class="text-uppercase">{{
-              $t("default")
-            }}</v-list-tile-title>
+            <v-list-tile-title class="text-uppercase">{{ $t("default") }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
       </v-list>
     </SlideMenu>
     <!-- sort -->
-    <SlideMenu
-      class="filter-style mt-5"
-      ref="refslideright"
-      title="sort"
-      :right="true"
-    >
+    <SlideMenu class="filter-style mt-5" ref="refslideright" title="sort" :right="true">
       <v-list class="pt-0 text-primary" dense>
         <!-- sort stock name -->
         <v-divider></v-divider>
         <v-list-tile class="pt-2" @click="sortBy = 'name'">
           <v-list-tile-content>
-            <v-list-tile-title class="text-uppercase">{{
-              $t("stockList.stockName")
-            }}</v-list-tile-title>
+            <v-list-tile-title class="text-uppercase">{{ $t("stockList.stockName") }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <v-icon class="icon-primary" v-if="sortBy === 'name'"
-            >fa-check
-          </v-icon>
+          <v-icon class="icon-primary" v-if="sortBy === 'name'">done</v-icon>
         </v-list-tile>
 
         <!--sort game type -->
         <v-divider></v-divider>
         <v-list-tile class="pt-2" @click="sortBy = 'type'">
           <v-list-tile-content>
-            <v-list-tile-title class="text-uppercase">{{
-              $t("stockType")
-            }}</v-list-tile-title>
+            <v-list-tile-title class="text-uppercase">{{ $t("stockType") }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <v-icon class="icon-primary" v-if="sortBy === 'type'">
-            fa-check
-          </v-icon>
+          <v-icon class="icon-primary" v-if="sortBy === 'type'">done</v-icon>
         </v-list-tile>
         <v-divider></v-divider>
         <v-list-tile class="py-2" @click="sortBy = ''">
           <v-list-tile-content>
-            <v-list-tile-title class="text-uppercase">{{
-              $t("default")
-            }}</v-list-tile-title>
+            <v-list-tile-title class="text-uppercase">{{ $t("default") }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
           <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
-                    <v-icon class="icon-primary">fa-check</v-icon>
+                    <v-icon class="icon-primary">done</v-icon>
           </v-btn>-->
         </v-list-tile>
         <v-divider></v-divider>
@@ -157,16 +111,12 @@
     <div class="text-center mt-2">
       <v-flex order-xs6 class="text-center d-flex justify-center">
         <v-btn text flat @click="filterClick" class="buttonGreen">
-          <span class="body-2 uppercase-text white--text">{{
-            $t("filter")
-          }}</span>
+          <span class="body-2 uppercase-text white--text">{{ $t("filter") }}</span>
         </v-btn>
         <!-- </v-flex>
         <v-flex offset-xs6 class="text-center d-flex justify-center">-->
         <v-btn text flat @click="sortClick" class="buttonGreen">
-          <span class="body-2 uppercase-text white--text">{{
-            $t("sort")
-          }}</span>
+          <span class="body-2 uppercase-text white--text">{{ $t("sort") }}</span>
         </v-btn>
       </v-flex>
     </div>
@@ -194,7 +144,9 @@
                 <v-flex xs6 class="text-xs-right">
                   {{ $t("msg.livePrice") }}:
                   <span class="text-primary">
-                    {{ getStockLivePrice(data.stockName) }}
+                    {{
+                    getStockLivePrice(data.stockName)
+                    }}
                   </span>
                 </v-flex>
               </v-layout>
@@ -204,9 +156,7 @@
             </v-card-text>
           </v-card>
           <div class="pt-2">
-            <h3 class="text-primary text-uppercase text-center">
-              {{ data.stockName }}
-            </h3>
+            <h3 class="text-primary text-uppercase text-center">{{ data.stockName }}</h3>
             <h4 style="line-height: 1">
               <div class="text-center">
                 <em>{{ data.loop }} minute game</em>
