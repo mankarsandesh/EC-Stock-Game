@@ -118,7 +118,8 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-              >{{ $t("msg.confirm") }}</v-btn>
+                >{{ $t("msg.confirm") }}</v-btn
+              >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
                 {{ $t("msg.cancel") }}
               </v-btn>
@@ -132,7 +133,8 @@
             color="buttonGreen"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-          >{{ $t("msg.confirm") }}</v-btn>
+            >{{ $t("msg.confirm") }}</v-btn
+          >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
             {{ $t("msg.cancel") }}
           </v-btn>
@@ -396,16 +398,23 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-          this.errorShow(
-            true,
-            true,
-            false,
-            data.message[0] == "User followed successfully."
-              ? this.$root.$t("follow.userFollowed")
-              : this.$root.$t("follow.userUnFollowed")
-          );
+          this.$emit("followBetClose");
+          this.$swal({
+            type: "success",
+            title:
+              data.message[0] == "User followed successfully."
+                ? this.$root.$t("follow.userFollowed")
+                : this.$root.$t("follow.userUnFollowed"),
+            showConfirmButton: false,
+            timer: 1000
+          });
         } else {
-          this.errorShow(true, false, true, data.message[0]);
+          this.$swal({
+            type: "error",
+            title: data.message[0],
+            showConfirmButton: true,
+            timer: 1000
+          });
         }
       } catch (error) {
         console.log(error);

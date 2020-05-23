@@ -217,7 +217,7 @@ export default {
 .original {
   margin: 0 auto;
   width: 150px;
-  border-radius: 5px;
+  border-radius: 15px;
   padding: 4px 10px;
   color: #333333;
   font-size: 14px;
@@ -228,7 +228,7 @@ export default {
 .following {
   margin: 0 auto;
   width: 150px;
-  border-radius: 5px;
+  border-radius: 15px;
   padding: 4px 16px;
   color: #fff;
   font-size: 14px;

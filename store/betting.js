@@ -18,12 +18,12 @@ const mutations = {
     SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
         state.multiGameFooterBetAmount = payload;
     },
-    CLEAR_ITEMS_BETTING(state, payload) {
+    CLEAR_ITEMS_BETTING(state) {
         state.getItemsBetting = [];
     },
     SET_ITEMS_BETTING(state, payload) {
         state.getItemsBetting.push(payload);
-        secureStorage.setItem("getItemsBetting", state.getItemsBetting);
+        secureStorage.setItem("itemBetting", state.getItemsBetting)
     },
     SET_COLLEGE_BUTTON_NUMBER(state, payload) {
         state.collegeBtnNumber = payload;
@@ -69,8 +69,8 @@ const actions = {
     clearItemBetting({ commit }) {
         commit("CLEAR_ITEMS_BETTING");
     },
-    setItemBetting({ commit }) {
-        commit("SET_ITEMS_BETTING");
+    setItemBetting({ commit }, payload) {
+        commit("SET_ITEMS_BETTING", payload);
     },
     setCollegeButtonNumberParent({ commit }) {
         commit("SET_COLLEGE_BUTTON_NUMBER");

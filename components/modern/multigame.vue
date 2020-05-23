@@ -4,7 +4,7 @@
   <v-layout class="multiplescreen">
     <v-flex xs12 class="pt-2">
       <h3 class="text-uppercase ml-4 heading">
-        {{ $t("stockname." + stockid) }} {{ getStockLoop(stockid) }}
+        {{ $t("stockName." + stockid) }} {{ getStockLoop(stockid) }}
         {{ $t("msg.minute") }} {{ $t("msg.loop") }}
       </h3>
       <chartApp :stockName="stockid" />

@@ -2,7 +2,7 @@
   <v-container fluid mt-2 class="containerNew">
     <v-layout>
       <!-- Left Side Stock List  -->
-      <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
+      <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
         <span @click="isHidden = true" class="sidebar-close">
           <v-icon color="#0b2968">fa-times</v-icon>
         </span>
@@ -32,7 +32,7 @@
       <!-- End Left Side -->
 
       <!-- Main Middle Layout -->
-      <v-flex :xs10="!isHidden" :xs12="isHidden" lg10>
+      <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
@@ -154,12 +154,15 @@
             >fa-times</v-icon
           >
           <v-card-text style="padding:40px;">
-            <h2 style="text-align:center;">EC Gameing Rule</h2>
-            <onlyrules />
+            <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}} </h2>
+             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn class="buttonGreensmall" to="/modern/desktop/gamerule" dark
-              >Gaming Rule</v-btn
+            <v-btn
+              class="buttonGreensmall"
+              to="/modern/desktop/gamerule"
+              dark
+              >{{$t("msg.gameRule")}}</v-btn
             >
           </v-flex>
         </v-card>
@@ -185,7 +188,7 @@
             <span>Enter Fullscreen Mode</span>
           </v-tooltip>
           <!-- Multiple Screen Float Button 
-          <!-- <v-tooltip left>
+           <v-tooltip left>
             <template v-slot:activator="{ on }">
               <v-btn
                 color="primary"
@@ -200,7 +203,7 @@
               </v-btn>
             </template>
             <span>Enter Multi-Gaming Mode</span>
-          </v-tooltip> -->
+          </v-tooltip>-->
         </div>
       </v-flex>
     </v-layout>
@@ -553,3 +556,6 @@ export default {
   border: 1px solid #dddddd;
 }
 </style>
+
+
+betting 
