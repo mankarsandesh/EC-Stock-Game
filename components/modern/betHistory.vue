@@ -81,7 +81,11 @@
               </td>
             </tr>
           </template>
-
+          <template slot="no-data">
+          <td colspan="7">
+            {{ $t("betHistory.noBets") }}
+          </td>
+        </template>
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.total") }}</td>
