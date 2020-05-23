@@ -438,13 +438,13 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import gameRule from "~/data/gameRule";
 import betModal from "~/components/modern/betModal";
-import showChipAmount from "~/components/modern/showChipAmount";  
+import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import payout from "~/data/payout";
-import Result from "~/helpers/Result";
-
+import { itemBetting } from "~/mixin/itemBetting";
 export default {
+  mixins: [itemBetting],
   props: {
     isFullscreen: {
       type: Boolean,
@@ -456,10 +456,6 @@ export default {
     }
   },
 
-// will discuss with the team later, about the set betting on the localStroge  
-  // mounted() {
-  //   Result.setItemBetting();
-  // },
   watch: {
     getCollegeBtnNumber(val) {
       this.btnNumber(val);
