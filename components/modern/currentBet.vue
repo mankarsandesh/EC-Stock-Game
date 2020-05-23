@@ -52,6 +52,9 @@
             >{{ $t("msg.pending") }}...</v-chip>
           </td>
         </template>
+        <template slot="no-data">
+          <v-text :value="true">{{$t("currentBet.noBets")}}</v-text>
+        </template>
         <template slot="footer">
           <tr>
             <td>{{ $t("msg.total") }}</td>

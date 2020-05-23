@@ -183,7 +183,7 @@
                 <v-icon size="24px">fa-arrows-alt</v-icon>
               </v-btn>
             </template>
-            <span>Enter Fullscreen Mode</span>
+            <span>{{$t("msg.enterFullScreen")}}</span>
           </v-tooltip>
           <!-- Multiple Screen Float Button 
            <v-tooltip left>

@@ -172,7 +172,9 @@
     "dateTime" : "วันเวลา",
     "closed" : "ปิด",
     "accepting": "ยอมรับ",
-    "changesSaved" : "บันทึกการเปลี่ยนแปลงแล้ว"
+    "changesSaved" : "บันทึกการเปลี่ยนแปลงแล้ว",
+    "enterFullScreen":"เข้าสู่โหมดเต็มหน้าจอ",
+    "closeFullScreen":"ปิดโหมดเต็มหน้าจอ"
   },
   "navlist": {
     "live Stock": "หุ้นที่เปิดอยู่",
@@ -333,7 +335,8 @@
     "losingBets": "สูญเสียเดิมพัน",
     "usersFollowMe": "ผู้ใช้ติดตามฉัน",
     "amountCreditedOrDebitedToAccount": "จำนวนเงินที่เครดิตหรือหักเข้าบัญชี",
-    "noNotification": "ไม่มีการแจ้งเตือน"
+    "noNotification": "ไม่มีการแจ้งเตือน",
+    "viewAll": "ดูทั้งหมด"
   },
   "betHistory": {
     "betDraw": "投注",

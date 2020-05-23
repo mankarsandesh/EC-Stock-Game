@@ -174,7 +174,9 @@
     "dateTime" : "Date & Time",
     "closed" : "Closed",
     "accepting": "Accepting",
-    "changesSaved" : "Changes saved"
+    "changesSaved" : "Changes saved",
+    "enterFullScreen":"Enter Fullscreen Mode",
+    "closeFullScreen":"Close Fullscreen Mode"
   },
   "navlist": {
     "live Stock": "live Stock",
@@ -335,7 +337,8 @@
     "losingBets": "losing bets",
     "usersFollowMe": "users follow me",
     "amountCreditedOrDebitedToAccount": "amount credited or debited to an account",
-    "noNotification": "There is no notification."
+    "noNotification": "There is no notification.",
+    "viewAll": "View All"
   },
   "betHistory": {
     "betDraw": "BET DRAW",

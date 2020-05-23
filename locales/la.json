@@ -173,7 +173,9 @@
     "dateTime" : "ວັນແລະເວລາ",
     "closed" : "ປິດແລ້ວ",
     "accepting": "ຍອມຮັບ",
-    "changesSaved" : "ການປ່ຽນແປງຖືກບັນທຶກແລ້ວ"
+    "changesSaved" : "ການປ່ຽນແປງຖືກບັນທຶກແລ້ວ",
+    "enterFullScreen":"ໃສ່ຮູບແບບເຕັມຈໍ",
+    "closeFullScreen":"ປິດຮູບແບບເຕັມຈໍ"
   },
   "navlist": {
     "live Stock": "ຫຸ້ນເປີດ",
@@ -335,7 +337,8 @@
     "losingBets": "ການສູນເສຍການເດີມພັນ",
     "usersFollowMe": "ຜູ້ໃຊ້ຕິດຕາມຂ້ອຍ",
     "amountCreditedOrDebitedToAccount": "ຈຳ ນວນເງິນທີ່ຝາກຫຼື debited ເຂົ້າບັນຊີ",
-    "noNotification": "ບໍ່ມີແຈ້ງການຫຍັງ."
+    "noNotification": "ບໍ່ມີແຈ້ງການຫຍັງ.",
+    "viewAll": "ເບິ່ງ​ທັງ​ຫມົດ"
   },
   "betHistory": {
     "betDraw": "BET DRAW",
