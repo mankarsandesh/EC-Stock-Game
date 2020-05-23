@@ -27,7 +27,7 @@
               style="position:right;"
               color="#808080 !important"
               @click="dialog = false"
-              >fa-times</v-icon
+              >close</v-icon
             >
             <p>
               e.g. Assuming a stock resulting in 1234.
