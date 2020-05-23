@@ -22,7 +22,7 @@
 
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ 161536 | currency }}</span>
+            <span class="amount">{{ userData.rollingAmount | currency }}</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -182,6 +182,7 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     userData() {
       let data = this.getUserInfo;
+      console.log(data);
       return data;
     }
   },
