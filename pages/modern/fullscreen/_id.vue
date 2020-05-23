@@ -221,7 +221,7 @@
                   <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed">
                       {{ getStockLoop($route.params.id) }}
-                      {{ $t("msg.minute") }} {{ $t("msg.loop") }}
+                      {{ $t("msg.minutes") }} {{ $t("msg.loop") }}
                     </v-btn>
                     <v-btn
                       color="buttonGreen"
@@ -411,7 +411,7 @@
               <v-icon>close</v-icon>
             </v-btn>
           </template>
-          <span>Close Full Screen</span>
+          <span>{{$t("msg.closeFullScreen")}}</span>
         </v-tooltip>
       </v-layout>
     </v-container>

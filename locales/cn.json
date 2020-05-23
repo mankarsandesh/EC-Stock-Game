@@ -74,8 +74,8 @@
     "amount": "下注金额",
     "preset": "預置",
     "betNow": "距离关盘",
-    "gameId": "游戏 ID",
-    "betId": "下注 ID",
+    "gameId": "游戏 身分识别",
+    "betId": "下注 身分识别",
     "betDetail": "下注详情",
     "time": "下注时间",
     "betStatus": "投注状态",
@@ -87,7 +87,8 @@
     "resultOutTime": "結果出來了",
     "days": "天",
     "hours": "小时",
-    "minute": "分鐘",
+    "minutes": "分钟",
+    "seconds": "秒",
     "loading": "裝載...",
     "stock": "股票",
     "userInfo": "用戶信息",
@@ -171,7 +172,11 @@
     "lose": "輸",
     "dateTime":"约会时间",
     "closed" : "封闭",
-    "accepting": "接受"
+    "accepting": "接受",
+    "changesSaved" : "更改已保存",
+    "enterFullScreen":"进入全屏模式",
+    "closeFullScreen":"关闭全屏模式",
+    "close" : "关"
   },
   "navlist": {
     "live Stock": "正开放股票",
@@ -261,7 +266,10 @@
     "followers" : "追随者",
     "chart": "图表",
     "noFollowing" : "没有关注的用户。",
-    "noFollowers" : "没有追随者。"
+    "noFollowers" : "没有追随者。",
+    "1month":"1 月",
+    "2months":"2 个月",
+    "3months":"3 个月"
   },
   "userAction": {
     "followBet": "跟进",
@@ -329,7 +337,8 @@
     "losingBets": "下注",
     "usersFollowMe": "用户关注我",
     "amountCreditedOrDebitedToAccount": "贷记或借记到帐户的金额",
-    "noNotification": "没有通知。"
+    "noNotification": "没有通知。",
+    "viewAll": "查看全部"
   },
   "betHistory": {
     "betDraw": "开奖结果",

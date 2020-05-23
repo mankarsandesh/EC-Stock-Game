@@ -796,18 +796,269 @@ Big Screen 22 Inch
     ##Device = Tablets, IPads (portrait)
     ##Screen = B/w 768px to 1024px
   */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .big-number {
+    font-size: 12px;
+    font-weight: bolder;
+    color: #4871ff !important;
+    outline: none;
+    background-color: #d0dafd;
+    border: 1px solid #97a9fe !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
 
-@media (min-width: 768px) and (max-width: 1024px) {}
+  .small-number {
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #fc4783 !important;
+    outline: none;
+    background-color: #f6d0e3;
+    border: 1px solid #fc4783 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .rs1,
+  .rs-e,
+  .rs-u {
+    color: #003f70;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #fc4181 !important;
+    background-color: #f7d0e3;
+    border: 1px solid #fc4181 !important;
+  }
+
+  .rs0,
+  .rs-o,
+  .rs-l {
+    color: red;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #4b72ff !important;
+    background-color: #d0dafd;
+    border: 1px solid #4b72ff !important;
+  }
+
+  .rs-m {
+    font-size: 12px;
+    font-weight: bolder;
+    color: #17b1ca !important;
+    background-color: #c0e6f2;
+    border: 1px solid #17b1ca !important;
+  }
+
+  .red {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: red;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .blue {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: #003f70;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .green {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: rgb(8, 214, 77);
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .firstDigit {
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bolder;
+    white-space: pre-line !important;
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
+    background: rgb(13, 204, 255);
+    background: linear-gradient(
+      22deg,
+      rgba(13, 204, 255, 1) 0%,
+      rgba(71, 96, 255, 1) 100%
+    );
+  }
+
+  .lastDigit {
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bolder;
+    white-space: pre-line !important;
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
+    background: rgb(250, 209, 38);
+    background: linear-gradient(
+      22deg,
+      rgba(250, 209, 38, 1) 0%,
+      rgba(255, 84, 79, 1) 100%
+    );
+  }
+
+  .bothDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
+    background: rgb(182, 53, 156);
+    background: linear-gradient(
+      22deg,
+      rgba(182, 53, 156, 1) 0%,
+      rgba(239, 10, 106, 1) 100%
+    );
+  }
+
+  .twoDigit {
+    font-weight: bolder;
+    border-radius: 10px;
+    white-space: pre-line !important;
+    height: 55px;
+    width: 60px;
+    font-size: 12px;
+    background: rgb(1, 233, 189);
+    background: linear-gradient(
+      22deg,
+      rgba(1, 233, 189, 1) 0%,
+      rgba(0, 124, 222, 1) 100%
+    );
+  }
+
+  .RoadMapTable tr td {
+    min-width: 16px;
+    height: 16px;
+  }
+  
+}
 
 
 /* 
     ##Device = Tablets, IPads (landscape)
     ##Screen = B/w 768px to 1024px
 */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
 
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {}
+  .big-number {
+    font-size: 12px;
+    font-weight: bolder;
+    color: #4871ff !important;
+    outline: none;
+    background-color: #d0dafd;
+    border: 1px solid #97a9fe !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
 
+  .small-number {
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #fc4783 !important;
+    outline: none;
+    background-color: #f6d0e3;
+    border: 1px solid #fc4783 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
 
+  .rs1,
+  .rs-e,
+  .rs-u {
+    color: #003f70;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #fc4181 !important;
+    background-color: #f7d0e3;
+    border: 1px solid #fc4181 !important;
+  }
+
+  .rs0,
+  .rs-o,
+  .rs-l {
+    color: red;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #4b72ff !important;
+    background-color: #d0dafd;
+    border: 1px solid #4b72ff !important;
+  }
+
+  .rs-m {
+    font-size: 12px;
+    font-weight: bolder;
+    color: #17b1ca !important;
+    background-color: #c0e6f2;
+    border: 1px solid #17b1ca !important;
+  }
+
+  .red {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: red;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .blue {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: #003f70;
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+
+  .green {
+    text-align: center;
+    color: #fff;
+    height: 18px;
+    width: 18px;
+    background-color: rgb(8, 214, 77);
+    border-radius: 5rem !important;
+    display: inline-block;
+    font-size: 13px;
+    padding: 0px;
+  }
+}
 /* 
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px

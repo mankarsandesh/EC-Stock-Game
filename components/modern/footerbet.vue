@@ -69,7 +69,14 @@ export default {
       "clearTempMultiGameBetData"
     ]),
     confirmBet() {
-      if (
+      if (parseInt(this.getTempMultiGameBetAmount) > 10000) {
+        this.$swal({
+          type: "error",
+          title: "Bet value should not be more than 10000",
+          timer: 1000,
+          showConfirmButton: true
+        });
+      } else if (
         parseInt(this.getTempMultiGameBetAmount) <=
           parseInt(this.getUserBalance) &&
         parseInt(this.getTempMultiGameBetAmount) > 0

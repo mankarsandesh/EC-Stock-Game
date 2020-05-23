@@ -87,7 +87,8 @@
     "resultOutTime": "result out time",
     "days": "days",
     "hours": "hours",
-    "minute": "Minute",
+    "minutes": "minutes",
+    "seconds": "seconds",
     "loading": "loading...",
     "stock": "Stock",
     "userInfo": "User Info",
@@ -172,7 +173,11 @@
     "lose": "Lose",
     "dateTime" : "Date & Time",
     "closed" : "Closed",
-    "accepting": "Accepting"
+    "accepting": "Accepting",
+    "changesSaved" : "Changes saved",
+    "enterFullScreen":"Enter Fullscreen Mode",
+    "closeFullScreen":"Close Fullscreen Mode",
+    "close" : "Close"
   },
   "navlist": {
     "live Stock": "live Stock",
@@ -262,7 +267,10 @@
     "followers" : "Followers",
     "chart": "chart",
     "noFollowing" : "There are no following user.",
-    "noFollowers" : "There are no followers."
+    "noFollowers" : "There are no followers.",
+    "1month":"1 Month",
+    "2months":"2 Months",
+    "3months":"3 Months"
   },
   "userAction": {
     "followBet": "FOLLOW BET",
@@ -330,7 +338,8 @@
     "losingBets": "losing bets",
     "usersFollowMe": "users follow me",
     "amountCreditedOrDebitedToAccount": "amount credited or debited to an account",
-    "noNotification": "There is no notification."
+    "noNotification": "There is no notification.",
+    "viewAll": "View All"
   },
   "betHistory": {
     "betDraw": "BET DRAW",
