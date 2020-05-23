@@ -76,7 +76,7 @@
             <div class="decorator_card decorator_card_blue"></div>
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ 161536 | currency }}</span>
+            <span class="amount">{{ getUserInfo.rollingAmount | currency }}</span>
             <span class="title_currentcy"></span>
           </div>
         </v-flex>
