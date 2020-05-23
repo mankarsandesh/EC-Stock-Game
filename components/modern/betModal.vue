@@ -20,7 +20,7 @@
       <v-flex class="pt-1 text-uppercase betHeading">
         <span>
           {{ $t("msg.stockName") }}: {{ $t(`stockName.${stockName}`) }} -
-          {{ getStockLoop(stockName) }} {{ $t("msg.minute") }}
+          {{ getStockLoop(stockName) }} {{ $t("msg.minutes") }}
         </span>
         |
         <span>

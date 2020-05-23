@@ -1,6 +1,6 @@
 <template>
   <v-layout row class="justify-center">
-    <v-flex   md10 lg10 mt-5>
+    <v-flex md10 lg10 mt-5>
       <v-data-table
         :items="currentBets"
         :rows-per-page-items="[10]"
@@ -8,11 +8,7 @@
         :search="search"
         class="current-bet"
       >
-        <v-progress-linear
-          v-slot:progress
-          color="blue"
-          indeterminate
-        ></v-progress-linear>
+        <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
         <template v-slot:headers="headers">
           <tr class="tableStyle">
             <th scope="col">{{ $t("msg.betId") }}</th>
@@ -29,7 +25,7 @@
           <td>{{ item.item.gameUUID }}</td>
           <td>
             {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minute')}}
+            {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minutes')}}
           </td>
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
@@ -39,40 +35,33 @@
               color="green"
               text-color="white"
               class="text-uppercase betresult"
-              >{{ $t("msg.win") }}</v-chip
-            >
+            >{{ $t("msg.win") }}</v-chip>
           </td>
           <td v-if="item.item.betResult == 'lose'">
             <v-chip
               color="red"
               text-color="white"
               class="text-uppercase betresult"
-              >{{ $t("msg.lose") }}</v-chip
-            >
+            >{{ $t("msg.lose") }}</v-chip>
           </td>
           <td v-if="item.item.betResult == 'pending'">
             <v-chip
               color="yellow "
               text-color="black"
               class="text-uppercase betresult"
-              >{{ $t("msg.pending") }}...</v-chip
-            >
+            >{{ $t("msg.pending") }}...</v-chip>
           </td>
         </template>
         <template slot="footer">
           <tr>
             <td>{{ $t("msg.total") }}</td>
-            <td colspan="3">
-              {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
-            </td>
+            <td colspan="3">{{ currentBets.length }} {{ $t("leaderBoard.bets") }}</td>
             <td>
               <strong>{{ TotalAmount | toCurrency }}</strong>
             </td>
             <td colspan="2"></td>
           </tr>
         </template>
-        
-
       </v-data-table>
     </v-flex>
   </v-layout>
