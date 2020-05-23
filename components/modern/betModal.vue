@@ -6,13 +6,13 @@
           {{ $t("msg.bettingOn") }}
           <span class="text-uppercase">
             {{
-            isNaN(betId.split("-")[1])
-            ? $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            $t("gamemsg." + betId.split("-")[1])
-            : $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            betId.split("-")[1]
+              isNaN(betId.split("-")[1])
+                ? $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  $t("gamemsg." + betId.split("-")[1])
+                : $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  betId.split("-")[1]
             }}
           </span>
         </h3>
@@ -31,7 +31,12 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="70"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -53,7 +58,13 @@
           </v-flex>-->
 
           <v-flex style="align-self:center">
-            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.clear") }}</v-btn>
@@ -70,11 +81,10 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-        >{{ $t("msg.confirm") }}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn
+        >
         <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{
-          $t("msg.cancel")
-          }}
+          {{ $t("msg.cancel") }}
         </v-btn>
       </v-flex>
     </v-layout>
@@ -133,7 +143,16 @@ export default {
     ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
     coinClick(value) {
       let amount = parseInt(value);
-      this.betValue = this.betValue + amount;
+      if (parseInt(this.betValue + amount) > 10000) {
+        this.$swal({
+          type: "error",
+          title: "Bet value should not be more than 10000",
+          timer: 1000,
+          showConfirmButton: true
+        });
+      } else {
+        this.betValue = this.betValue + amount;
+      }
     },
     async sendBetting(betData) {
       try {
@@ -195,7 +214,14 @@ export default {
       }
     },
     confirmBet() {
-      if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
+      if (parseInt(this.betValue) > 10000) {
+        this.$swal({
+          type: "error",
+          title: "Bet value should not be more than 10000",
+          timer: 1000,
+          showConfirmButton: true
+        });
+      } else if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
         this.$swal({
           type: "error",
           title: config.error.lowBalance,
