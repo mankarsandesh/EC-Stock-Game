@@ -118,7 +118,7 @@
                 >{{ $t("msg.confirm") }}</v-btn
               >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
-                {{ $t("msg.cancel") }}
+                {{ $t("msg.close") }}
               </v-btn>
             </v-flex>
           </v-radio-group>
@@ -133,7 +133,7 @@
             >{{ $t("msg.confirm") }}</v-btn
           >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
-            {{ $t("msg.cancel") }}
+            {{ $t("msg.close") }}
           </v-btn>
         </v-flex>
       </div>
