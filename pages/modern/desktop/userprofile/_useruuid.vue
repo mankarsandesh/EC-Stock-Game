@@ -416,6 +416,7 @@ export default {
           });
           this.series = [
             {
+              name: "Online Active Time",
               data: series
             }
           ];

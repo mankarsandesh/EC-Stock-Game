@@ -138,7 +138,7 @@ export default async context => {
         window.location.replace(
           `http://${secureStorage.getItem("referrerUrl")}/`
         );
-      }, 30 * 60 * 1000);
+      }, 24 * 60 * 60 * 1000);
     }
   } catch (ex) {
     console.log(ex);

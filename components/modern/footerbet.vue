@@ -10,8 +10,11 @@
             <v-avatar
               size="65"
               v-for="(item, key) in imgChip"
-              :key="key"            
-              v-bind:class="[ getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '' , 'chips']"
+              :key="key"
+              v-bind:class="[
+                getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '',
+                'chips'
+              ]"
             >
               <v-img
                 @click="setFooterBetAmount(getCoinsModern[key])"
@@ -68,7 +71,14 @@ export default {
       "clearTempMultiGameBetData"
     ]),
     confirmBet() {
-      if (
+      if (parseInt(this.getTempMultiGameBetAmount) > 10000) {
+        this.$swal({
+          type: "error",
+          title: "Bet value should not be more than 10000",
+          timer: 1000,
+          showConfirmButton: true
+        });
+      } else if (
         parseInt(this.getTempMultiGameBetAmount) <=
           parseInt(this.getUserBalance) &&
         parseInt(this.getTempMultiGameBetAmount) > 0
@@ -109,8 +119,8 @@ export default {
 </script>
 
 <style scoped>
-.activeChips{
-box-shadow: 0 10px 10px -6px #333;
+.activeChips {
+  box-shadow: 0 10px 10px -6px #333;
 }
 .amount div {
   margin: 10px -15px;
@@ -153,8 +163,8 @@ box-shadow: 0 10px 10px -6px #333;
 
 .chips {
   cursor: pointer;
-  margin: 2px 8px;  
-  border:2px solid #dddddd;
+  margin: 2px 8px;
+  border: 2px solid #dddddd;
 }
 .chipImg {
   color: #333;
