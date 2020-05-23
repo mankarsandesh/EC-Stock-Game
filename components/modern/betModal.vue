@@ -214,10 +214,10 @@ export default {
       }
     },
     confirmBet() {
-      if (parseInt(this.betValue) > 10000) {
+      if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
         this.$swal({
           type: "error",
-          title: "Bet value should not be more than 10000",
+          title: "Bet value should be greater than 0 and not be more than 10000",
           timer: 1000,
           showConfirmButton: true
         });
