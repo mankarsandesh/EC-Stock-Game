@@ -177,7 +177,8 @@
     "changesSaved" : "Changes saved",
     "enterFullScreen":"Enter Fullscreen Mode",
     "closeFullScreen":"Close Fullscreen Mode",
-    "close" : "Close"
+    "close" : "Close",
+    "rowsPerPage":"Rows per page:"
   },
   "navlist": {
     "live Stock": "live Stock",

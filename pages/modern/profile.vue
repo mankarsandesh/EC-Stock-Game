@@ -267,7 +267,7 @@
                 block
               >
                 <span class="padding-right-60">{{
-                  $t("profile.onlinehistory")
+                  $t("profile.onlineHistory")
                 }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>
@@ -281,7 +281,7 @@
                 block
               >
                 <span class="padding-right-60">{{
-                  $t("profile.stockanalysis")
+                  $t("profile.stockAnalysis")
                 }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>

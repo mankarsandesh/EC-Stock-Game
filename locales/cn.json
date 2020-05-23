@@ -176,7 +176,8 @@
     "changesSaved" : "更改已保存",
     "enterFullScreen":"进入全屏模式",
     "closeFullScreen":"关闭全屏模式",
-    "close" : "关"
+    "close" : "关",
+    "rowsPerPage":"每页行:"
   },
   "navlist": {
     "live Stock": "正开放股票",

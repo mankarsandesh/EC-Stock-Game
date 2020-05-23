@@ -1,7 +1,13 @@
 <template>
   <v-layout row class="justify-center">
-    <v-flex xs12 md10  lg10>
-      <v-data-table :items="notificationData" :items-per-page="5" ref="table" class="current-bet">
+    <v-flex xs12 md10 lg10>
+      <v-data-table
+        :items="notificationData"
+        :items-per-page="5"
+        ref="table"
+        class="current-bet"
+        :rows-per-page-text="msg"
+      >
         <template v-slot:headers="head">
           <tr>
             <th scope="col">{{ $t("msg.titles") }}</th>
@@ -21,6 +27,11 @@
 
 <script>
 export default {
-  props: ["notificationData"]
+  props: ["notificationData"],
+  data() {
+    return {
+      msg: this.$root.$t("msg.rowsPerPage")
+    };
+  }
 };
 </script>

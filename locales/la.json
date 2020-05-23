@@ -176,7 +176,8 @@
     "changesSaved" : "ການປ່ຽນແປງຖືກບັນທຶກແລ້ວ",
     "enterFullScreen":"ໃສ່ຮູບແບບເຕັມຈໍ",
     "closeFullScreen":"ປິດຮູບແບບເຕັມຈໍ",
-    "close" : "ປິດ"
+    "close" : "ປິດ",
+    "rowsPerPage":"ແຖວເກັດທີ່ຢູ່ຕໍ່ຫນ້າ:"
   },
   "navlist": {
     "live Stock": "ຫຸ້ນເປີດ",
