@@ -225,7 +225,7 @@
     "null": "",
     "undefined" :""
   },
-  "stockname": {
+  "stockName": {
     "btc1": "BTC/USDT1",
     "btc": "BTC/USDT5",
     "usindex": "US dollar Index",
@@ -426,9 +426,9 @@
     "totalAmount":"Total Amount"
   },
   "logout": {
-    "sure" : "Are you sure to logout?",
-    "bye" : "Hope to see you as soon, BYE BYE",
-    "agree" : "Agree",
-    "disagree" : "Disagree"
+    "sure" : "ARE YOU SURE?",
+    "bye" : "This will erase all data from this device and take you back to the logging screen.",
+    "logout" : "LOGOUT",
+    "cancel" : "CANCEL"
   }
 }

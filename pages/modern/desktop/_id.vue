@@ -32,7 +32,7 @@
       <!-- End Left Side -->
 
       <!-- Main Middle Layout -->
-      <v-flex :xs10="!isHidden" :xs12="isHidden" lg10>
+      <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
@@ -147,13 +147,21 @@
       <!-- Game Rule Popup open First Time -->
       <v-dialog v-model="GameRuleDialog" width="50%">
         <v-card class="ruleModel" style="border-radius: 10px;">
-          <v-icon class="closePopup" color="#333 !important" @click="GameRuleDialog = false">close</v-icon>
+          <v-icon
+            class="closePopup"
+            color="#333 !important"
+            @click="GameRuleDialog = false"
+          >fa-times</v-icon>
           <v-card-text style="padding:40px;">
-            <h2 style="text-align:center;">EC Gameing Rule</h2>
+            <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}}</h2>
             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn class="buttonGreensmall" to="/modern/desktop/gamerule" dark>Gaming Rule</v-btn>
+            <v-btn
+              class="buttonGreensmall"
+              to="/modern/desktop/gamerule"
+              dark
+            >{{$t("msg.gameRule")}}</v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
@@ -178,7 +186,7 @@
             <span>Enter Fullscreen Mode</span>
           </v-tooltip>
           <!-- Multiple Screen Float Button 
-          <!-- <v-tooltip left>
+           <v-tooltip left>
             <template v-slot:activator="{ on }">
               <v-btn
                 color="primary"
@@ -193,7 +201,7 @@
               </v-btn>
             </template>
             <span>Enter Multi-Gaming Mode</span>
-          </v-tooltip> -->
+          </v-tooltip>-->
         </div>
       </v-flex>
     </v-layout>
@@ -539,3 +547,6 @@ export default {
   border-radius: 180px;
 }
 </style>
+
+
+betting 

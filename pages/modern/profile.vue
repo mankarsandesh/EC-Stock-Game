@@ -220,7 +220,7 @@
                 class="btn_save width-50"
                 block
               >
-                <span class="padding-right-60">{{ $t("profile.onlineHistory") }}</span>
+                <span class="padding-right-60">{{ $t("profile.onlinehistory") }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>
               <v-btn
@@ -232,7 +232,7 @@
                 "
                 block
               >
-                <span class="padding-right-60">{{ $t("profile.stockAnalysis") }}</span>
+                <span class="padding-right-60">{{ $t("profile.stockanalysis") }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>
             </div>

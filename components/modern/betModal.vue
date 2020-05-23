@@ -81,7 +81,6 @@
   </div>
 </template>
 <script>
-
 import Sound from "~/helpers/sound";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
@@ -90,6 +89,7 @@ import chips from "~/data/chips";
 import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 import { BetResult } from "~/mixin/betResult";
+
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   mixins: [BetResult],
@@ -101,7 +101,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([  
+    ...mapGetters([
       "getStockLoop",
       "getGameUUIDByStockName",
       "getCoinsModern",
