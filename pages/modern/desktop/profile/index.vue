@@ -151,7 +151,7 @@
                     class="btn_save"
                     @click="saveClick()"
                   >{{ $t("msg.save") }}</v-btn>
-                  <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
+                  <v-btn class="btn_cancel" @click="cancelUpdateProfile">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>
             </form>
@@ -166,6 +166,7 @@
 import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
+import validator from "validator";
 import log from "roarr";
 
 export default {
@@ -189,9 +190,20 @@ export default {
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
+    cancelUpdateProfile() {
+      this.$forceUpdate();
+    },
     async saveClick() {
+      
+      try {
       this.updating = true;
       const ref = this.$refs;
+      validator.isEmail(ref.email.value) ? "" :  new Error('Email is invalid');
+      validator.isAlpha(ref.firstName.value) ? "" : new Error('First Name should be alphabetical');
+      validator.isAlpha(ref.lastName.value) ? "" : new Error('Last name should be alphanumeric');
+      if(!(validator.isByteLength(ref.username.value, {min: 5, max: 15}))) {
+        throw new Error("Username should be minimum 5 characters and maximum 15 characters long");
+      }
       var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
@@ -202,7 +214,6 @@ export default {
       formData.append("gender", ref.gender.value);
       formData.append("country", ref.country.value);
       formData.append("version", config.version);
-      try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,

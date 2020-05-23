@@ -34,10 +34,10 @@
             </div>
             <userMenu class="layout-logout" />
             <v-menu bottom offset-y>
-              <template v-slot:activator="{ on }">
-                <span v-on="on" flat id="notification" class="menuItemNotification">
+              <template v-slot:activator="{ on }" >
+                <span v-on="on" flat id="notification" class="menuItemNotification" @click="clearNotification">
                   <i class="fa fa-bell-o fa-2x" />
-                  <span class="badge">{{ messagesCount }}</span>
+                  <span class="badge">{{ winnerList.length }}</span>
                 </span>
               </template>
               <v-list id="notificationTab">
@@ -113,7 +113,7 @@ export default {
   data() {
     return {
       isShowTutorial: true,
-      messagesCount: 2,
+      messagesCount: 0,
       activeClass: null,
       direction: "top",
       fab: true,
@@ -171,6 +171,9 @@ export default {
     this.fetchNotification();
   },
   methods: {
+    clearNotification(){
+      this.fetchNotification();      
+    },
     pageLink(type) {
       return type == 3
         ? "/modern/desktop/profile/follower/"
@@ -217,7 +220,6 @@ export default {
           }
         );
         if (data.status) {
-          this.messagesCount = data.data.length;
           this.winnerList = data.data.reverse();
         } else {
           throw new Error(config.error.general);

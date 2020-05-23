@@ -111,7 +111,7 @@
           <v-pagination
             v-model="pagination.page"
             color="#1db42f"
-            :length="Math.round(betHistory.length / rowPageCount)"
+            :length="Math.ceil(betHistory.length / rowPageCount)"
           ></v-pagination>
         </div>
       </v-flex>
@@ -161,11 +161,13 @@ export default {
       return total;
     },
     TotalRolling() {
-      let total = null;
+      let totalRolling = null;
+      let totalbBetting = null;
       this.betHistory.map(item => {
-        total += item.rollingAmount;
+        totalRolling += item.rollingAmount;
+        if(item.betResult == 'lose') { totalbBetting += item.betAmount; }
       });
-      return total;
+      return totalRolling - totalbBetting;
     }
   }
 };

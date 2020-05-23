@@ -175,6 +175,7 @@
     "changesSaved" : "บันทึกการเปลี่ยนแปลงแล้ว",
     "enterFullScreen":"เข้าสู่โหมดเต็มหน้าจอ",
     "closeFullScreen":"ปิดโหมดเต็มหน้าจอ"
+    "close" : "ปิด"
   },
   "navlist": {
     "live Stock": "หุ้นที่เปิดอยู่",

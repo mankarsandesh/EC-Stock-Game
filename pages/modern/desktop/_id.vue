@@ -110,14 +110,14 @@
 
           <!-- Stock Chart and Bet button Component  -->
           <v-layout>
-            <v-flex md5 lg5 mt-2>
+            <v-flex md5 lg5 class="marginTop-2">
               <div id="chartGuidelineNew" class="chartDesgin">
                 <v-flex>
                   <chartApp :stockName="routeParams" />
                 </v-flex>
               </div>
             </v-flex>
-            <v-flex md7 lg7 mx-2 pt-2>
+            <v-flex md7 lg7 mx-2 class="marginTop-2">
               <div id="betRuleButton">
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
