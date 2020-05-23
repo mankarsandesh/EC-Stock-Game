@@ -71,9 +71,9 @@
         </v-layout>
       </v-container>
     </div>
-    <v-card>
+    
       <onlyrules />
-    </v-card>
+   
   </div>
 </template>
 
