@@ -178,7 +178,7 @@ export default {
     await this.getOnlineHistory();
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getLocale", "getPortalProviderUUID", "getUserUUID"]),
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     getTotalOnlineTime () {
       let days = this.totalOnlineTime.split("|")[0];
       let hours = this.totalOnlineTime.split("|")[1];
@@ -187,7 +187,7 @@ export default {
       this.componentKey++;
       return `${
               days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
-            }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t("msg.minute")}`;
+            }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t("msg.minutes")}`;
     },
   },
   methods: {
@@ -221,7 +221,6 @@ export default {
         var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
           headers: config.header
         });
-        console.log('now', new Date().toISOString())
         if (res.status) {
           if (res.data.activeTimeDateWise.length) {
             this.dataReady = true;
