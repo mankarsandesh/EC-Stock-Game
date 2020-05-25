@@ -146,10 +146,11 @@
                 <div class="col-15"></div>
                 <div class="col-85">
                   <v-btn
+                    type="submit"
                     :loading="updating"
                     :disabled="updating"
                     class="btn_save"
-                    @click="saveClick()"
+                    @click.prevent="saveClick()"
                   >{{ $t("msg.save") }}</v-btn>
                   <v-btn class="btn_cancel" @click="cancelUpdateProfile">{{ $t("msg.cancel") }}</v-btn>
                 </div>
@@ -202,16 +203,17 @@ export default {
       validator.isEmail(ref.email.value) ? "" :  new Error('Email is invalid');
       validator.isAlpha(ref.firstName.value) ? "" : new Error('First Name should be alphabetical');
       validator.isAlpha(ref.lastName.value) ? "" : new Error('Last name should be alphanumeric');
-      if(!(validator.isByteLength(ref.username.value, {min: 5, max: 18}))) {
-        throw new Error("Username should be minimum 5 characters and maximum 18 characters long");
-      }
+      validator.isByteLength(ref.username.value, {min: 5, max: 18}) ? "" : new Error("Username should be minimum 5 characters and maximum 18 characters long");
+      // if(!(validator.isByteLength(ref.username.value, {min: 5, max: 18}))) {
+      //   throw new Error("Username should be minimum 5 characters and maximum 18 characters long");
+      // }
       var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
-      formData.append("email", ref.email.value);
-      formData.append("userName", ref.username.value);
-      formData.append("firstName", ref.firstName.value);
-      formData.append("lastName", ref.lastName.value);
+      formData.append("email", validator.trim(ref.email.value));
+      formData.append("userName", validator.trim(ref.username.value));
+      formData.append("firstName", validator.trim(ref.firstName.value));
+      formData.append("lastName", validator.trim(ref.lastName.value));
       formData.append("gender", ref.gender.value);
       formData.append("country", ref.country.value);
       formData.append("version", config.version);
