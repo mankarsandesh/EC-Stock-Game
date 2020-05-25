@@ -446,7 +446,6 @@ export default {
   },
   computed: {
     vueVersion() {
-      console.log(Vue.version, "Version");
       return Vue.version;
     },
     ...mapGetters([
