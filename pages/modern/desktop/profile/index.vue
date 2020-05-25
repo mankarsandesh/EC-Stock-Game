@@ -22,7 +22,7 @@
 
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ 161536 | currency }}</span>
+            <span class="amount">{{ userData.rollingAmount | currency }}</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -146,12 +146,13 @@
                 <div class="col-15"></div>
                 <div class="col-85">
                   <v-btn
+                    type="submit"
                     :loading="updating"
                     :disabled="updating"
                     class="btn_save"
-                    @click="saveClick()"
+                    @click.prevent="saveClick()"
                   >{{ $t("msg.save") }}</v-btn>
-                  <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
+                  <v-btn class="btn_cancel" @click="cancelUpdateProfile">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>
             </form>
@@ -166,6 +167,7 @@
 import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
+import validator from "validator";
 import log from "roarr";
 
 export default {
@@ -189,20 +191,28 @@ export default {
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
+    cancelUpdateProfile() {
+      this.$forceUpdate();
+    },
     async saveClick() {
+      
+      try {
       this.updating = true;
       const ref = this.$refs;
+      validator.isEmail(ref.email.value) ||  (() =>  {throw new Error(this.$root.$t("profile.invalidEmail"))})();
+      validator.isAlpha(ref.firstName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstName"))})();
+      validator.isAlpha(ref.lastName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastName"))})();
+      validator.isByteLength(ref.username.value, {min: 5, max: 20}) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidUsername"))})();
       var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
-      formData.append("email", ref.email.value);
-      formData.append("userName", ref.username.value);
-      formData.append("firstName", ref.firstName.value);
-      formData.append("lastName", ref.lastName.value);
+      formData.append("email", validator.trim(ref.email.value));
+      formData.append("userName", validator.trim(ref.username.value));
+      formData.append("firstName", validator.trim(ref.firstName.value));
+      formData.append("lastName", validator.trim(ref.lastName.value));
       formData.append("gender", ref.gender.value);
       formData.append("country", ref.country.value);
       formData.append("version", config.version);
-      try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
@@ -215,7 +225,7 @@ export default {
           this.updating = false;
           this.$swal({
             type: "success",
-            title: "Successful Information Saved!",
+            title: this.$root.$t("profile.success"),
             showConfirmButton: false,
             timer: 1000
           });

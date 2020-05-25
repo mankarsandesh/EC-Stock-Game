@@ -12,14 +12,14 @@
             class="buttonGreen"
             color="primary"
             @click="dialogConfirmStatus(true)"
-          >{{$t("logout.agree")}}</v-btn>
+          >{{$t("logout.logout")}}</v-btn>
           <v-btn
             depressed
             small
             color="error"
             class="buttonCancel"
             @click="dialogConfirmStatus(false)"
-          >{{$t("logout.disagree")}}</v-btn>
+          >{{$t("logout.cancel")}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

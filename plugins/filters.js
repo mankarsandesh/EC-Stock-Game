@@ -117,15 +117,15 @@ Vue.filter("betstatus", (value, loop) => {
   let result = "error";
   if (loop == 1) {
     if (value <= 20) {
-      result = "calculating";
+      result = window.$nuxt.$root.$t("msg.calculating");
     } else {
-      result = "accepting";
+      result = window.$nuxt.$root.$t("msg.accepting");
     }
   } else if (loop == 5) {
     if (value <= 60) {
-      result = "calculating";
+      result = window.$nuxt.$root.$t("msg.calculating");
     } else {
-      result = "accepting";
+      result = window.$nuxt.$root.$t("msg.accepting");
     }
   }
   return result;

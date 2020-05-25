@@ -24,6 +24,7 @@
           <div style="position:absolute;z-index:1">
             <v-date-picker
               color="#1db42f"
+              :max="maxDate"
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
@@ -46,6 +47,7 @@
           <div style="position:absolute;z-index:1">
             <v-date-picker
               color="#1db42f"
+              :max="maxDate"
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
@@ -87,6 +89,7 @@
           height="480"
           :options="chartOptions"
           :series="series"
+          :key="componentKey"
         ></apexchart>
       </div>
     </v-flex>
@@ -128,7 +131,9 @@ export default {
   data() {
     return {
       stockAnalysis: [],
+      componentKey: 0,
       colors: barColor,
+      maxDate: new Date().toISOString(),
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
@@ -311,7 +316,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getLocale"])
+  },
+  watch: {
+    getLocale() {
+      this.series[0].name = this.$root.$t("msg.win");
+      this.series[1].name = this.$root.$t("msg.lose")
+      this.componentKey++;
+    }
   },
   methods: {
     checkValidDate(startDate, endDate) {

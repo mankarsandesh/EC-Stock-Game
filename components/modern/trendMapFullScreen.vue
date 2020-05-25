@@ -4,6 +4,8 @@
       <v-select
         v-model="trendType"
         :items="typeItems"
+        item-text="value"
+        item-value="name"
         :height="10"
         solo
         class="rounded-card"
@@ -11,6 +13,8 @@
       <v-select
         v-model="which_one"
         :items="which_oneItem"
+        item-text="value"
+        item-value="name"
         solo
         class="rounded-card"
       ></v-select>
@@ -53,9 +57,51 @@ export default {
     return {
       trendType: null,
       selectedType: "",
-      typeItems: ["firstDigit", "lastDigit", "bothDigit", "twoDigit"],
-      which_oneItem: ["B/S", "O/E", "U/L", "NUM"],
-      which_one: "B/S"
+      typeItems: [
+      {
+        id: 1,
+        name: "firstDigit",
+        value: this.$root.$t("gamemsg.firstdigit")
+      },
+      {
+        id: 2,
+        name: "lastDigit",
+        value: this.$root.$t("gamemsg.lastdigit")
+      },
+      {
+        id: 3,
+        name: "bothDigit",
+        value: this.$root.$t("gamemsg.bothdigit")
+      },
+      {
+        id: 4,
+        name: "twoDigit",
+         value: this.$root.$t("gamemsg.twodigit")
+      }
+      ],
+       which_oneItem: [
+      {
+        id: 1,
+        name: "B/S",
+        value: this.$root.$t("gamemsg.big")+"/"+this.$root.$t("gamemsg.small")
+      },
+      {
+        id: 2,
+        name: "O/E",
+        value: this.$root.$t("gamemsg.odd")+"/"+this.$root.$t("gamemsg.even")
+      },
+      {
+        id: 3,
+        name: "U/L",
+        value: this.$root.$t("gamemsg.high")+"/"+this.$root.$t("gamemsg.mid")+"/"+this.$root.$t("gamemsg.low")
+      },
+      {
+        id: 4,
+        name: "NUM",
+        value: this.$root.$t("gamemsg.number")
+      }
+      ],
+      which_one: "B/S",
     };
   },
   components: {
@@ -63,7 +109,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.trendType = this.typeItems[this.index];
+    this.trendType = this.typeItems[this.index]['name'];
   },
   methods: {},
   watch: {

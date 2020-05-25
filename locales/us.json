@@ -48,6 +48,9 @@
     "introduction": "This page is made to give you more information."
   },
   "msg": {
+    "currentActiveTime": "Current Active Time",
+    "totalOnlineTime": "Total Online Time",
+    "onlineActiveTime": "Online Active Time",
     "acc": "Acc",
     "accountBalance": "Account Balance",
     "rollingAmount": "Rolling Amount",
@@ -87,7 +90,8 @@
     "resultOutTime": "result out time",
     "days": "days",
     "hours": "hours",
-    "minute": "Minute",
+    "minutes": "minutes",
+    "seconds": "seconds",
     "loading": "loading...",
     "stock": "Stock",
     "userInfo": "User Info",
@@ -170,7 +174,14 @@
     "pending": "Pending",
     "win": "Win",
     "lose": "Lose",
-    "dateTime" : "Date & Time"
+    "dateTime" : "Date & Time",
+    "closed" : "Closed",
+    "accepting": "Accepting",
+    "changesSaved" : "Changes saved",
+    "enterFullScreen":"Enter Fullscreen Mode",
+    "closeFullScreen":"Close Fullscreen Mode",
+    "close" : "Close",
+    "rowsPerPage":"Rows per page:"
   },
   "navlist": {
     "live Stock": "live Stock",
@@ -225,7 +236,7 @@
     "null": "",
     "undefined" :""
   },
-  "stockname": {
+  "stockName": {
     "btc1": "BTC/USDT1",
     "btc": "BTC/USDT5",
     "usindex": "US dollar Index",
@@ -244,6 +255,11 @@
     "female": "Female",
     "email": "email",
     "country": "country",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidFirstName": "Please enter a valid First Name. Only alphabetical characters are allowed",
+    "invalidLastName": "'Please enter a valid Last Name. Only alphabetical characters are allowed'",
+    "invalidUsername": "Username should be minimum 5 characters and maximum 20 characters long",
+    "success": "Successful Information Saved!",
     "onlineStatus": "Online Status",
     "basicInfo": "basic information",
     "onlineHistory": "Online History",
@@ -260,7 +276,10 @@
     "followers" : "Followers",
     "chart": "chart",
     "noFollowing" : "There are no following user.",
-    "noFollowers" : "There are no followers."
+    "noFollowers" : "There are no followers.",
+    "1month":"1 Month",
+    "2months":"2 Months",
+    "3months":"3 Months"
   },
   "userAction": {
     "followBet": "FOLLOW BET",
@@ -328,7 +347,8 @@
     "losingBets": "losing bets",
     "usersFollowMe": "users follow me",
     "amountCreditedOrDebitedToAccount": "amount credited or debited to an account",
-    "noNotification": "There is no notification."
+    "noNotification": "There is no notification.",
+    "viewAll": "View All"
   },
   "betHistory": {
     "betDraw": "BET DRAW",
@@ -426,9 +446,9 @@
     "totalAmount":"Total Amount"
   },
   "logout": {
-    "sure" : "Are you sure to logout?",
-    "bye" : "Hope to see you as soon, BYE BYE",
-    "agree" : "Agree",
-    "disagree" : "Disagree"
+    "sure" : "ARE YOU SURE?",
+    "bye" : "This will erase all data from this device and take you back to the logging screen.",
+    "logout" : "LOGOUT",
+    "cancel" : "CANCEL"
   }
 }
