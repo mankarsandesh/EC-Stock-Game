@@ -50,7 +50,7 @@
 import { mapGetters, mapActions } from "vuex";
 import chips from "~/data/chips";
 import config from "../../config/config.global";
-
+import Betting from "~/helpers/betting";
 export default {
   data() {
     return {
@@ -98,10 +98,18 @@ export default {
         });
       }
     },
-    cancelBet() {
-      this.isSending = false;
-      this.clearTempMultiGameBetData();
-      this.setFooterBetAmount(0);
+    async cancelBet() {
+      try {
+        this.isSending = false;
+
+        await Betting.cancelBettingClear(this.gettempMultiGameBetData);
+
+        await this.clearTempMultiGameBetData();
+
+        await this.clearDataMultiGameBet(0);
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   computed: {
@@ -110,7 +118,8 @@ export default {
       "getFooterBetAmount",
       "getTempMultiGameBetAmount",
       "getUserInfo",
-      "getUserBalance"
+      "getUserBalance",
+      "gettempMultiGameBetData"
     ])
   }
 };
