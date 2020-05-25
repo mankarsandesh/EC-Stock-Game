@@ -48,6 +48,9 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "currentActiveTime": "当前活动时间",
+    "totalOnlineTime": "总在线时间",
+    "onlineActiveTime": "在线活动时间",
     "acc": "Acc",
     "accountBalance": "账户余额",
     "rollingAmount": "滚动量",

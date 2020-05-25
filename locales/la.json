@@ -48,6 +48,9 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "currentActiveTime": "ເວລາທີ່ໃຊ້ງານໃນປະຈຸບັນ",
+    "totalOnlineTime": "ເວລາ online ທັງ ໝົດ",
+    "onlineActiveTime": "ເວລາທີ່ໃຊ້ວຽກ Online",
     "acc": "acc",
     "accountBalance": "ຍອດບັນຊີ",
     "rollingAmount": "ປະລິມານມ້ວນ",

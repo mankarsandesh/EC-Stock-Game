@@ -23,6 +23,7 @@
           </div>
           <div style="position: absolute; z-index: 1;">
             <v-date-picker
+              :max="maxDate"
               color="#1db42f"
               v-if="isShowDateStart"
               v-model="startDate"
@@ -45,6 +46,7 @@
           </div>
           <div style="position: absolute; z-index: 1;">
             <v-date-picker
+              :max="maxDate"
               color="#1db42f"
               v-if="isShowDateEnd"
               v-model="endDate"
@@ -86,7 +88,7 @@
           {{ $t("profile.onlineTime") }} : <b>{{ currentActiveTime }}</b>
         </span>
         <span style="margin-right: 30px;">
-          {{ $t("profile.totalOnline") }} : <b> {{ totalOnlineTime }} </b>
+          {{ $t("profile.totalOnline") }} : <b> {{ getTotalOnlineTime }} </b>
         </span>
       </div>
     </v-flex>
@@ -109,6 +111,7 @@ export default {
     return {
       series: [],
       componentKey: 0,
+      maxDate: new Date().toISOString(),
       totalOnlineTime: "",
       currentActiveTime: "",
       dataReady: false,
@@ -174,9 +177,18 @@ export default {
   async mounted() {
     await this.getOnlineHistory();
   },
-
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getUserInfo", "getLocale", "getPortalProviderUUID", "getUserUUID"]),
+    getTotalOnlineTime () {
+      let days = this.totalOnlineTime.split("|")[0];
+      let hours = this.totalOnlineTime.split("|")[1];
+      let minutes = this.totalOnlineTime.split("|")[2];
+      this.series[0].name = this.$root.$t("msg.onlineActiveTime");
+      this.componentKey++;
+      return `${
+              days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
+            }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t("msg.minute")}`;
+    },
   },
   methods: {
     startDateClick() {
@@ -209,6 +221,7 @@ export default {
         var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
           headers: config.header
         });
+        console.log('now', new Date().toISOString())
         if (res.status) {
           if (res.data.activeTimeDateWise.length) {
             this.dataReady = true;
@@ -225,12 +238,10 @@ export default {
             let days = Math.floor(totalActiveTime / (24 * 60));
             let hours = parseInt(totalActiveTime / 60) % 24;
             let minutes = totalActiveTime % 60;
-            this.totalOnlineTime = `${
-              days ? `${days} days, ` : ``
-            }${hours} hours and ${minutes} minutes`;
+            this.totalOnlineTime = `${days}|${hours}|${minutes}`;
             this.series = [
               {
-                name: 'Online Active Time',
+                name: this.$root.$t("msg.onlineActiveTime"),
                 data: chartData
               }
             ];

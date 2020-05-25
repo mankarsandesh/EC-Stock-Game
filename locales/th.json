@@ -48,6 +48,9 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "currentActiveTime": "เวลาที่ใช้งานในปัจจุบัน",
+    "totalOnlineTime": "รวมเวลาออนไลน์",
+    "onlineActiveTime": "เวลาที่ใช้งานออนไลน์",
     "acc": "acc",
     "accountBalance": "ยอดเงินในบัญชี",
     "rollingAmount": "จำนวนกลิ้ง",

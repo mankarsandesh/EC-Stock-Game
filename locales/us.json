@@ -48,6 +48,9 @@
     "introduction": "This page is made to give you more information."
   },
   "msg": {
+    "currentActiveTime": "Current Active Time",
+    "totalOnlineTime": "Total Online Time",
+    "onlineActiveTime": "Online Active Time",
     "acc": "Acc",
     "accountBalance": "Account Balance",
     "rollingAmount": "Rolling Amount",
