@@ -557,10 +557,11 @@ nav.modal-bet.v-toolbar.theme--light p {
 }
 
 .layout.row .v-card-style .close-bet-chart {
-    background-color: #00000082;
+    background-color: rgba(136, 133, 133, 0.5098);
     position: absolute;
     z-index: 1;
     width: 100%;
+    border-radius: 5px;
     height: 100%;
 }
 
@@ -865,7 +866,7 @@ table.result-table tr {
     font-weight: 400;
     background-color: #fff !important;
     border: 1px soli #e8e8e8;
-    min-width: 100%;
+    min-width: 92%;
     border-radius: 6px;
     padding: 0;
     margin: 4px;

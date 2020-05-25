@@ -36,15 +36,15 @@
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
-            <v-flex md7 lg6 pt-2 id="selectstockGuidelines">
+            <v-flex md6 lg6 pt-2 id="selectstockGuidelines">
               <stockSelect />
             </v-flex>
             <!-- Stock Select End -->
 
             <!-- Stock Last Draw Start -->
-            <v-flex xs6 md5 lg6 pt-1>
-              <v-layout mb-3>
-                <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
+            <v-flex xs6 md6 lg6 pt-1>
+              <v-layout mb-3 justify-center wrap row>
+                <v-flex xs4 md3 lg3 class="text-xs-center text-uppercase" px-2 >
                   <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
@@ -52,7 +52,6 @@
                     </v-flex>
                   </div>
                 </v-flex>
-
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.betCloseIn") }}</span>
                   <div id="betCloseInGuideline">
@@ -80,7 +79,6 @@
                     </v-flex>
                   </div>
                 </v-flex>
-
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.lotteryDraw") }}</span>
                   <div id="lotteryDrawGuidelines">
@@ -98,7 +96,7 @@
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
 
-                <v-flex xs2 md1 class="text-xs-right" style="align-self: flex-end;">
+                <v-flex xs2 md3 class="text-xs-right" style="align-self: flex-end;">
                   <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
                     <v-icon dark size="22">fa-question</v-icon>
                   </v-btn>
@@ -446,7 +444,6 @@ export default {
   },
   computed: {
     vueVersion() {
-      console.log(Vue.version, "Version");
       return Vue.version;
     },
     ...mapGetters([
