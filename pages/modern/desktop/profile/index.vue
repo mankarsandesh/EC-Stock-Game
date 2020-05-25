@@ -183,7 +183,6 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     userData() {
       let data = this.getUserInfo;
-      console.log(data);
       return data;
     }
   },
@@ -200,13 +199,10 @@ export default {
       try {
       this.updating = true;
       const ref = this.$refs;
-      validator.isEmail(ref.email.value) ? "" :  new Error('Email is invalid');
-      validator.isAlpha(ref.firstName.value) ? "" : new Error('First Name should be alphabetical');
-      validator.isAlpha(ref.lastName.value) ? "" : new Error('Last name should be alphanumeric');
-      validator.isByteLength(ref.username.value, {min: 5, max: 18}) ? "" : new Error("Username should be minimum 5 characters and maximum 18 characters long");
-      // if(!(validator.isByteLength(ref.username.value, {min: 5, max: 18}))) {
-      //   throw new Error("Username should be minimum 5 characters and maximum 18 characters long");
-      // }
+      validator.isEmail(ref.email.value) ||  (() =>  {throw new Error(this.$root.$t("profile.invalidEmail"))})();
+      validator.isAlpha(ref.firstName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstName"))})();
+      validator.isAlpha(ref.lastName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastName"))})();
+      validator.isByteLength(ref.username.value, {min: 5, max: 15}) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidUsername"))})();
       var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
@@ -229,7 +225,7 @@ export default {
           this.updating = false;
           this.$swal({
             type: "success",
-            title: "Successful Information Saved!",
+            title: this.$root.$t("profile.success"),
             showConfirmButton: false,
             timer: 1000
           });
