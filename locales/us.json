@@ -258,7 +258,7 @@
     "invalidEmail": "Please enter a valid email address",
     "invalidFirstName": "Please enter a valid First Name. Only alphabetical characters are allowed",
     "invalidLastName": "'Please enter a valid Last Name. Only alphabetical characters are allowed'",
-    "invalidUsername": "Username should be minimum 5 characters and maximum 18 characters long",
+    "invalidUsername": "Username should be minimum 5 characters and maximum 20 characters long",
     "success": "Successful Information Saved!",
     "onlineStatus": "Online Status",
     "basicInfo": "basic information",
