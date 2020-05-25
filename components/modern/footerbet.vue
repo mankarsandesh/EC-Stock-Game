@@ -11,10 +11,7 @@
               size="65"
               v-for="(item, key) in imgChip"
               :key="key"
-              v-bind:class="[
-                getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '',
-                'chips'
-              ]"
+              v-bind:class="[ getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '' , 'chips']"
             >
               <v-img
                 @click="setFooterBetAmount(getCoinsModern[key])"
@@ -37,11 +34,12 @@
             class="buttonGreensmall"
             dark
             @click="confirmBet()"
-            >{{ $t("msg.confirm") }}</v-btn
-          >
-          <v-btn class="buttonCancel" @click="cancelBet()">{{
+          >{{ $t("msg.confirm") }}</v-btn>
+          <v-btn class="buttonCancel" @click="cancelBet()">
+            {{
             $t("msg.cancel")
-          }}</v-btn>
+            }}
+          </v-btn>
         </div>
       </v-flex>
     </v-layout>

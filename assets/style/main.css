@@ -1509,6 +1509,17 @@ p.guideline {
 }
 
 
+/* .v-icon.closePopup {
+    color: #fff !important;
+    background-color: #00c58e;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border-radius: 100%;
+    margin: -21px;
+} */
+
+
 /* align_button4 v-btn theme--light firstdigit low firstdigit-animation
 
 <span data-v-70a183ee="" id="firstdigitWin-low" class="big-digit firstdigitWin-low">Low</span>

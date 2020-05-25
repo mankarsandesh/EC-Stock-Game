@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex justify-center">
     <v-img v-if="isShow" :src="setsrc" :width="size" class="show-chip">
       <span>{{ amount }}</span>
     </v-img>
@@ -7,7 +7,7 @@
     <v-img v-show="amounts >=500" src="/chip/primary.png" width="25" class="show-chip" />
     <v-img v-show="amounts >=1000" src="/chip/success.png" width="30" class="show-chip" />
     <v-img v-show="amounts >=5000" src="/chip/warning.png" width="35" class="show-chip" />
-    <v-img v-show="amounts >=10000" src="/chip/black.png" width="40" class="show-chip" /> -->
+    <v-img v-show="amounts >=10000" src="/chip/black.png" width="40" class="show-chip" />-->
   </div>
 </template>
 

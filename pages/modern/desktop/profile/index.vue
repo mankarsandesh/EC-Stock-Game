@@ -22,7 +22,7 @@
 
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ 161536 | currency }}</span>
+            <span class="amount">{{ userData.rollingAmount | currency }}</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -182,6 +182,7 @@ export default {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     userData() {
       let data = this.getUserInfo;
+      console.log(data);
       return data;
     }
   },
@@ -201,8 +202,8 @@ export default {
       validator.isEmail(ref.email.value) ? "" :  new Error('Email is invalid');
       validator.isAlpha(ref.firstName.value) ? "" : new Error('First Name should be alphabetical');
       validator.isAlpha(ref.lastName.value) ? "" : new Error('Last name should be alphanumeric');
-      if(!(validator.isByteLength(ref.username.value, {min: 5, max: 15}))) {
-        throw new Error("Username should be minimum 5 characters and maximum 15 characters long");
+      if(!(validator.isByteLength(ref.username.value, {min: 5, max: 18}))) {
+        throw new Error("Username should be minimum 5 characters and maximum 18 characters long");
       }
       var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);

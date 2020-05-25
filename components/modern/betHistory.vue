@@ -30,7 +30,7 @@
               <td>{{ item.item.gameUUID }}</td>
               <td>
                 {{ item.item.ruleName }} - ({{ item.item.payout }})
-                {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minute')}}
+                {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minutes')}}
               </td>
               <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
               <td>{{ item.item.betAmount | toCurrency }}</td>
@@ -81,7 +81,11 @@
               </td>
             </tr>
           </template>
-
+          <template slot="no-data">
+          <td colspan="7">
+            {{ $t("betHistory.noBets") }}
+          </td>
+        </template>
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.total") }}</td>
@@ -111,7 +115,7 @@
           <v-pagination
             v-model="pagination.page"
             color="#1db42f"
-            :length="Math.round(betHistory.length / rowPageCount)"
+            :length="Math.ceil(betHistory.length / rowPageCount)"
           ></v-pagination>
         </div>
       </v-flex>
@@ -161,11 +165,13 @@ export default {
       return total;
     },
     TotalRolling() {
-      let total = null;
+      let totalRolling = null;
+      let totalbBetting = null;
       this.betHistory.map(item => {
-        total += item.rollingAmount;
+        totalRolling += item.rollingAmount;
+        if(item.betResult == 'lose') { totalbBetting += item.betAmount; }
       });
-      return total;
+      return totalRolling - totalbBetting;
     }
   }
 };

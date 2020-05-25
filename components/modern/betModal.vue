@@ -20,7 +20,7 @@
       <v-flex class="pt-1 text-uppercase betHeading">
         <span>
           {{ $t("msg.stockName") }}: {{ $t(`stockName.${stockName}`) }} -
-          {{ getStockLoop(stockName) }} {{ $t("msg.minute") }}
+          {{ getStockLoop(stockName) }} {{ $t("msg.minutes") }}
         </span>
         |
         <span>
@@ -249,7 +249,9 @@ export default {
             stock: this.stockName,
             betRule: this.betId
           };
+
           this.$emit("update-bet", stockDetail);
+
           this.confirmDisabled = true;
           this.sendBetting(data);
           $("#" + this.stockName + this.betId).addClass(
