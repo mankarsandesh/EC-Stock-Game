@@ -6,7 +6,7 @@
           getStockLiveTime(stockName).split(" ")[1]
         }}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right stockPrice">
+      <v-flex xs6 class="text-xs-right stockPrice" v-if="getStockLivePrice(stockName) ">
         <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
