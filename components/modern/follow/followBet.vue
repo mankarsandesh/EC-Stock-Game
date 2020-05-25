@@ -278,7 +278,6 @@ export default {
   },
   methods: {
     userImgProfile(userImg) {
-      console.log(userImg);
       return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
     },
     // Send to Parent Components

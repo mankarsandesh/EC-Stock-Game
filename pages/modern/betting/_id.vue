@@ -112,8 +112,8 @@
           <p>{{ $t("msg.betClosed") }}</p>
         </div>
         <v-layout wrap sm6>
-          <div class="tab-menu-container">
-            <div class="digit-type-container">
+          <div class="tab-menu-container" >
+            <div class="digit-type-container"  >
               <div class="btn-digit-type first-digit" @click="$refs.firstDigit.click()">
                 <span class="text-pre-line text-white">{{ $t("gamemsg.firstdigits") }}</span>
               </div>
@@ -127,16 +127,16 @@
                 <span class="text-pre-line text-white">{{ $t("gamemsg.twodigits") }}</span>
               </div>
             </div>
-            <span class="active-tab-mark" :style="leftActive"></span>
+            <span class="active-tab-mark" :style="leftActive" ></span>
           </div>
 
-          <v-tabs
+          <v-tabs          
             grow
             centered
-            style="width:100%;background-color: #f2f4ff;"
+            style="width:100%;background-color: #f2f4ff;padding:0 !important;"
             @change="tabChanged($event)"
           >
-            <v-tab v-show="false" ref="firstDigit">
+            <v-tab v-show="false" ref="firstDigit" >
               <span>{{ $t("gamemsg.firstdigits") }}</span>
             </v-tab>
             <v-tab v-show="false" ref="lastDigit">
@@ -150,8 +150,7 @@
             </v-tab>
 
             <!-- First Digit -->
-
-            <v-tab-item xs4>
+            <v-tab-item xs4 >
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -203,7 +202,7 @@
                 </v-card>
               </v-layout>
 
-              <v-layout row align-center justify-center>
+              <v-layout row align-center justify-center >
                 <v-card
                   class="box-click"
                   @click="
@@ -336,9 +335,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
+             <!-- First Digit -->
 
             <!-- last digit -->
-            <v-tab-item>
+            <v-tab-item xs4 >
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -524,9 +524,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
+            <!-- last digit -->
 
             <!-- Both Digit -->
-            <v-tab-item>
+            <v-tab-item xs4 >
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -737,11 +738,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
-
             <!-- Both Digit -->
 
             <!-- TWO Digit -->
-            <v-tab-item>
+            <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -951,8 +951,8 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
-
             <!-- TWO Digit -->
+          
           </v-tabs>
         </v-layout>
 
@@ -1729,17 +1729,24 @@ export default {
 .tab-menu-container {
   position: relative;
   z-index: 2;
-  top: 10px;
+  top: 5px;
+  height: 70px;
   display: flex;
   width: 100%;
   flex-direction: column;
 }
 .digit-type-container {
-  height: 80px;
+  height: 70px;
   display: flex;
   width: 100%;
   justify-content: space-around;
   text-align: center;
+}
+.btn-digit-type {
+  margin: 5px;
+  width: 25%;
+  border-radius: 10px;
+  padding:5px;
 }
 .active-tab-mark {
   width: 21%;
@@ -1749,14 +1756,6 @@ export default {
   position: relative;
   top: -3px;
   transition: left 0.3s;
-}
-
-.btn-digit-type {
-  background-color: #2e477d;
-  margin: 5px;
-  width: 25%;
-  border-radius: 10px;
-  padding: 5px -5px;
 }
 .first-digit {
   background: rgb(13, 204, 255);

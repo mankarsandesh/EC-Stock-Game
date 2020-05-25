@@ -108,7 +108,7 @@
                 >{{ $t("msg.confirm") }}</v-btn
               >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
-                {{ $t("msg.cancel") }}
+                {{ $t("msg.close") }}
               </v-btn>
             </v-flex>
           </v-radio-group>
@@ -356,11 +356,12 @@ export default {
         if (data.code == 200) {
              data.message[0] == "User followed successfully."
               ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed")) 
-              : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));     
+              : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));                     
         } else {
           this.setSnackBarMessage(data.message[0]);
           // this.errorShow(true, false, true, data.message[0]);
         }
+        this.$emit("followBetClose");       
       } catch (error) {
         console.log(error);
         log.error(
