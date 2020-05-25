@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+    v-if="dialogOnlineHistory"
     v-model="dialogOnlineHistory"
     fullscreen
     hide-overlay
@@ -63,6 +64,7 @@
                 <div style="position:absolute;z-index:1">
                   <v-date-picker
                     color="#1db42f"
+                    :max="maxDate"
                     v-if="isShowDateStart"
                     v-model="startDate"
                     @input="isShowDateStart = false"
@@ -85,6 +87,7 @@
                 <div style="position:absolute;z-index:1">
                   <v-date-picker
                     color="#1db42f"
+                    :max="maxDate"
                     v-if="isShowDateEnd"
                     v-model="endDate"
                     @input="isShowDateEnd = false"
@@ -132,7 +135,7 @@
           </div>
           <div>
             <strong>{{$t("profile.totalOnline")}} :</strong>
-            {{ totalOnlineTime }}
+            {{ getTotalOnlineTime }}
           </div>
         </div>
       </v-flex>
@@ -156,6 +159,7 @@ export default {
     return {
       series: [],
       componentKey: 0,
+      maxDate: new Date().toISOString(),
       totalOnlineTime: "",
       currentActiveTime: "",
       dataReady: false,
@@ -215,12 +219,23 @@ export default {
         this.getUserInfo.profileImage == undefined
         ? "/user.png"
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-    }
+    },
+    getTotalOnlineTime () {
+      let days = this.totalOnlineTime.split("|")[0];
+      let hours = this.totalOnlineTime.split("|")[1];
+      let minutes = this.totalOnlineTime.split("|")[2];
+      this.series[0].name = this.$root.$t("msg.onlineActiveTime");
+      this.componentKey++;
+      return `${
+              days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
+            }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t("msg.minutes")}`;
+    },
   },
   methods: {
     ...mapActions(["setSnackBarMessage"]),
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
+      this.componentKey++;
     },
     checkValidDate(startDate, endDate) {
       const now = date.format(new Date(), "YYYY-MM-DD");
@@ -268,10 +283,11 @@ export default {
           let days = Math.floor(totalActiveTime / (24 * 60));
           let hours = parseInt(totalActiveTime / 60) % 24;
           let minutes = totalActiveTime % 60;
-          this.totalOnlineTime = `${
-            days ? `${days} days, ` : ``
-          }${hours} hours and ${minutes} minutes`;
-          this.series = [{ data: chartData }];
+          this.totalOnlineTime = `${days}|${hours}|${minutes}`;
+          this.series = [{
+            name: this.$root.$t("msg.onlineActiveTime"),
+            data: chartData
+            }];
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {

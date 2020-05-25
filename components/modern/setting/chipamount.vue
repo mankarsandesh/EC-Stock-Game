@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
-      <v-flex v-for="(chip, index) in chips" :key="index">
+      <v-flex v-for="(chip, index) in chips" :key="chip.amount">
         <div class="chip-image">
           <v-img :width="90" :src="chip.image" class="chipImage" />
           <input
