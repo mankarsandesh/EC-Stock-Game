@@ -83,7 +83,6 @@
 <script>
 import { mapGetters, mapActions } from "vuex"; // impor the vuex library frist, before use vuex
 import config from "../config/config.global";
-import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
 
 export default {
@@ -231,17 +230,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "components/stockSelect.vue",
-            apiUrl: config.getActiveGamesByCategory.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     getGameUUID(items) {

@@ -14,7 +14,6 @@
 import VueApexCharts from "vue-apexcharts";
 import { mapGetters } from "vuex";
 import config from "../../config/config.global";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage.js";
 
 export default {
@@ -184,19 +183,6 @@ export default {
             }
           } catch (ex) {
             console.log(ex);
-            log.error(
-              {
-                channel: `liveBetCounts.${this.getGameUUIDByStockName(
-                  this.$route.params.id
-                )}`,
-                event: "liveBetCounts",
-                res: logData,
-                page: "components/modern/fullscreenchart.vue",
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         }
       );
@@ -226,17 +212,6 @@ export default {
             }
           } catch (ex) {
             console.log(ex);
-            log.error(
-              {
-                req: reqBody,
-                res: data,
-                page: "components/modern/fullscreenchart.vue",
-                apiUrl: config.liveBetCount.url,
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         });
     },

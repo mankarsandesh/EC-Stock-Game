@@ -14,7 +14,6 @@ import VueApexCharts from "vue-apexcharts";
 import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -167,19 +166,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/mobile/chartIndex.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );

@@ -195,17 +195,6 @@ export default {
             }
           } catch (ex) {
             console.log(ex);
-            log.error(
-              {
-                channelName: `balanceUpdate.${this.getUserUUID}`,
-                eventName: "balanceUpdate",
-                res: logData,
-                page: "layouts/default.vue",
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         }
       );

@@ -14,7 +14,6 @@ import VueApexCharts from "vue-apexcharts";
 import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
 
 export default {
@@ -171,19 +170,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/chartIndex.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -216,17 +202,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "components/chartIndex.vue",
-            apiUrl: config.getRoadMap.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

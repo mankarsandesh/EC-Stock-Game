@@ -1498,7 +1498,6 @@ import trendMap from "~/components/modern/trendMap";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   async validate({ params, store }) {
@@ -1574,19 +1573,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.$route.params.id
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "pages/modern/betting/_id.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -1751,17 +1737,6 @@ export default {
       } catch (ex) {
         this.confirmDisabled = false;
         this.setSnackBarMessage(ex.message);
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/betting/_id.vue",
-            apiUrl: config.storeBet.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     formatToPrice(value) {

@@ -1,5 +1,4 @@
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
 import Cookies from "../plugins/js-cookie";
 
@@ -92,17 +91,6 @@ const actions = {
       }
     } catch (ex) {
       console.error(ex);
-      log.error(
-        {
-          req: reqBody,
-          res,
-          page: "store/provider.js",
-          apiUrl: config.getUserProfile.url,
-          provider: this.portalProviderUUID,
-          user: this.userUUID
-        },
-        ex.message
-      );
     }
   },
   // Set portal provider UUID

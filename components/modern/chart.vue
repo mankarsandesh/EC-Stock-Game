@@ -27,7 +27,6 @@ import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
 import { mapGetters, mapActions } from "vuex";
 import Echo from "laravel-echo";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -99,19 +98,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/modern/chart.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -265,17 +251,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "components/modern/chart.vue",
-            apiUrl: config.getRoadMap.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

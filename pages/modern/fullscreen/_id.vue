@@ -428,7 +428,6 @@ import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   async validate({ params, store }) {
@@ -496,19 +495,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.$route.params.id
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "pages/modern/fullscreen/_id.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -671,17 +657,6 @@ export default {
             }
           } catch (ex) {
             console.log(ex);
-            log.error(
-              {
-                req: reqBody,
-                res: data,
-                page: "pages/modern/fullscreen/_id.vue",
-                apiUrl: config.liveCountBetData.url,
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         });
     },
@@ -703,21 +678,6 @@ export default {
             }
           } catch (ex) {
             console.log(ex);
-            log.error(
-              {
-                channel: `LiveTotalBetData.${
-                  this.getPortalProviderUUID
-                }.${this.getStockUUIDByStockName(this.stockName)}.${
-                  this.loopName
-                }`,
-                event: "LiveTotalBetData",
-                res: logData,
-                page: "pages/modern/fullscreen/_id.vue",
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         }
       );
@@ -743,17 +703,6 @@ export default {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/fullscreen/_id.vue",
-            apiUrl: config.getActiveGamesByCategory.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     formatToPrice(value) {
