@@ -15,7 +15,20 @@
                     height="10px"
                     dense
                     hide-details
-                    :items="items"
+                    :items="[
+                      {
+                        text: $t('profile.1month'),
+                        value: 1
+                      },
+                      {
+                        text: $t('profile.2months'),
+                        value: 2
+                      },
+                      {
+                        text: $t('profile.3months'),
+                        value: 3
+                      }
+                    ]"
                     solo
                   ></v-select>
                 </div>
@@ -269,20 +282,6 @@ export default {
       endDate: "",
       visitProfileUserData: "",
       filter: 1,
-      items: [
-        {
-          text: "1 Month",
-          value: 1
-        },
-        {
-          text: "2 Month",
-          value: 2
-        },
-        {
-          text: "3 Month",
-          value: 3
-        }
-      ],
       series: [],
       chartOptions: {
         chart: {
