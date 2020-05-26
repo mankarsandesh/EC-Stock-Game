@@ -234,7 +234,6 @@
           </v-tooltip>-->
         </div>
       </v-flex>
-      <chat-box></chat-box>
     </v-layout>
   </v-container>
 </template>
@@ -254,7 +253,6 @@ import { isMobile } from "mobile-device-detect";
 import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
 import onlyrules from "~/components/modern/rule/onlyrule";
-import chatBox from "~/components/modern/chatBox";
 
 export default {
   async validate({ params, store }) {
@@ -271,8 +269,7 @@ export default {
     stockSelect,
     lotteryDraw,
     isMobile: isMobile,
-    onlyrules,
-    chatBox
+    onlyrules
   },
   data() {
     return {

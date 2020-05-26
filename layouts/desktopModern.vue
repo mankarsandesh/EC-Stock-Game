@@ -5,7 +5,10 @@
     <!-- tutorial  end -->
 
     <v-app style=" background-color: #f4f5fd;">
-      <div class="text-xs-center container-loading loading" v-if="getIsLoadingStockGame">
+      <div
+        class="text-xs-center container-loading loading"
+        v-if="getIsLoadingStockGame"
+      >
         <v-progress-circular
           style="top: calc(100% - 68%);"
           :size="100"
@@ -17,16 +20,31 @@
       <v-toolbar class="toolbarMenu" style="background-color:#FFF;">
         <v-container fluid class="navbar">
           <v-toolbar-title>
-            <v-img src="/logo.png" @click="$router.push('/modern/desktop/btc1')" class="logoStyle"></v-img>
+            <v-img
+              src="/logo.png"
+              @click="$router.push('/modern/desktop/btc1')"
+              class="logoStyle"
+            ></v-img>
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items class="hidden-xs-only text-s1 toolBar">
-            <v-btn flat v-for="item in menu" :key="item.title" :to="item.to" class="menuItem">
+            <v-btn
+              flat
+              v-for="item in menu"
+              :key="item.title"
+              :to="item.to"
+              class="menuItem"
+            >
               <i :class="item.icon" />
               <span>&nbsp;{{ $t(`menu.${item.title}`) }}</span>
             </v-btn>
             <div class="layout-btn">
-              <v-btn class="btn-langage" text flat @click="$refs.language.showDialog()">
+              <v-btn
+                class="btn-langage"
+                text
+                flat
+                @click="$refs.language.showDialog()"
+              >
                 <country-flag :country="getLocale" size="normal" />
                 <span
                   >&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span
@@ -37,7 +55,12 @@
             <userMenu class="layout-logout" />
             <v-menu bottom offset-y>
               <template v-slot:activator="{ on }">
-                <span v-on="on" flat id="notification" class="menuItemNotification">
+                <span
+                  v-on="on"
+                  flat
+                  id="notification"
+                  class="menuItemNotification"
+                >
                   <i class="fa fa-bell-o fa-2x" />
                   <span class="badge">{{ messagesCount }}</span>
                 </span>
@@ -46,7 +69,8 @@
                 <v-list-tile
                   v-if="winnerList.length == 0"
                   class="noNotification"
-                >There are no Notification.</v-list-tile>
+                  >There are no Notification.</v-list-tile
+                >
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
@@ -62,10 +86,11 @@
                     <div class="dateTime">{{ item.createdAt }}</div>
                   </div>
                 </v-list-tile>
-                 
               </v-list>
               <v-list class="footerView">
-                <span @click="$router.push('/modern/desktop/notification/')">View All</span>
+                <span @click="$router.push('/modern/desktop/notification/')"
+                  >View All</span
+                >
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -76,14 +101,11 @@
       <v-content>
         <nuxt />
       </v-content>
-      <!-- invitation Windows-->
-      <invitation
+      <chat-box
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :stockName="$route.params.id"
-        :key="$route.name"
-      />
-
-      <!-- <invitation Windows /> -->
+        :pathName="$route.name"
+      ></chat-box>
     </v-app>
   </div>
 </template>
@@ -97,6 +119,7 @@ import winnerMarquee from "~/components/modern/winnerMarquee";
 import i18n from "vue-i18n";
 import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
+import chatBox from "~/components/modern/chatBox";
 import config from "~/config/config.global";
 import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
@@ -111,7 +134,8 @@ export default {
     languageDialog,
     winnerMarquee,
     userMenu,
-    AnimatedNumber
+    AnimatedNumber,
+    chatBox
   },
   data() {
     return {
@@ -242,14 +266,14 @@ export default {
 };
 </script>
 <style scoped>
-.footerView{
-  border-top:1px solid #dddddd;
+.footerView {
+  border-top: 1px solid #dddddd;
   text-align: center;
   cursor: pointer;
 }
-.footerView span{
+.footerView span {
   font-size: 14px;
-  color:#003f70;
+  color: #003f70;
   font-weight: 400;
   text-align: center;
 }

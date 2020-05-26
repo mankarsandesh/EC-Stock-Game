@@ -1605,9 +1605,8 @@ p.guideline {
 }
 
 .overflow-scroll {
-    overflow: scroll !important;
+  overflow: scroll !important;
 }
-
 
 /* align_button4 v-btn theme--light firstdigit low firstdigit-animation
 
@@ -1620,18 +1619,28 @@ align_button4 v-btn theme--light firstdigit firstdigitWin-9 firstdigit-animation
 
 <span data-v-70a183ee="" class="big-digit">0 - 9</span> */
 
-
 #style-3::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #F5F5F5;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
 }
 
 #style-3::-webkit-scrollbar {
-    width: 8px;
-    background-color: #F5F5F5;
+  width: 8px;
+  background-color: #f5f5f5;
 }
 
 #style-3::-webkit-scrollbar-thumb {
-    border-radius: 7px;
-    background-color: #00c58e;
+  border-radius: 7px;
+  background-color: #00c58e;
+}
+
+.followup {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+}
+.followDialog {
+  width: 600px;
+  border-radius: 10px;
+  padding: 10px;
 }
