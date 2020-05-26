@@ -74,7 +74,7 @@
           </span>
           <span v-if="TotalAmount < TotalRolling">
             <strong>{{ $t("betHistory.rolling") }}</strong> :
-            <span style="color:green;">
+            <span style="color:#FFF;">
               {{ TotalRolling | toCurrency }}
             </span>
           </span>
@@ -192,8 +192,7 @@ export default {
     }
   },
   methods: {
-    loadMore() {
-      console.log("Herllo");
+    loadMore() {   
       this.$emit("userLimit");
     },
     betDetails(betUUID, gameDraw, rollAmount, amount) {
@@ -257,7 +256,7 @@ export default {
   left: 0;
   width: 100%;
   background-color: #2bb03e;
-  padding: 15px 0px;
+  padding: 10px 0px;
   position: fixed;
   bottom: 0;
   color: #fff;
@@ -269,7 +268,7 @@ export default {
 }
 .footer div span {
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   margin: 0px 6px;
 }
 .lastDraw {
