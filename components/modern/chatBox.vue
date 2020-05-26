@@ -145,8 +145,13 @@
             @click="isShowCatalog = !isShowCatalog"
           >
             <span class="catalog-selected">
-              <span v-for="(item, index) in selectedCatalog" :key="index">
-                {{ index === 0 ? item.title : "/ " + item.title }}
+              <span v-if="selectedCatalog.length > 0">
+                <span v-for="(item, index) in selectedCatalog" :key="index">
+                  {{ index === 0 ? item.title : "/ " + item.title }}
+                </span>
+              </span>
+              <span v-else class="text-uppercase">
+                select Category
               </span>
             </span>
             <span style="position: relative;top: 3px;">
