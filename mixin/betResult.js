@@ -207,13 +207,13 @@ export const BetResult = {
         // cler the bet from localStroge after new game 
         clearItemsAfterLastDraw() {
 
-            localStorage.removeItem("itemBetting")
+            secureStorage.removeItem("itemBetting")
 
             if (this.getItemsBetting.length) {
 
                 this.clearItemBetting()
 
-                localStorage.removeItem("itemBetting")
+                secureStorage.removeItem("itemBetting")
 
             }
         }

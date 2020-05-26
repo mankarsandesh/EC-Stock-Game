@@ -9,16 +9,23 @@ class Betting {
      */
     cancelBettingClear(items) {
 
-        items.map(item => {
+        if (items.length) {
 
-            if ($("#" + item.id).hasClass(item.class)) {
+            items.map(item => {
 
-                localStorage.removeItem("itemBetting")
+                $("#" + item.id.split("-")[0]).removeClass(item.class)
 
-                $("#" + item.id).removeClass(item.class + ' ' + item.id.split("-")[1])
+                if ($("#" + item.id).hasClass(item.class)) {
 
-            }
-        })
+                    secureStorage.removeItem("itemBetting")
+
+                    $("#" + item.id).removeClass(item.class + ' ' + item.id.split("-")[1])
+
+                }
+            })
+
+        }
+
     }
 
 }
