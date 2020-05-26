@@ -41,7 +41,7 @@
               >-{{ item.betAmount | toCurrency }}</span
             >
             <span v-if="item.betResult == 'win'" class="winAmount"
-              >+{{ item.betAmount | toCurrency }}</span
+              >+{{ item.rollingAmount | toCurrency }}</span
             >
             <div v-if="item.isFollowBet == 1" class="following">
               {{ $t("betHistory.byFollowers") }}
@@ -269,7 +269,7 @@ export default {
 }
 .footer div span {
   text-align: center;
-  font-size: 18px;
+  font-size: 14px;
   margin: 0px 6px;
 }
 .lastDraw {
@@ -281,7 +281,7 @@ export default {
 .headingTitle {
   font-weight: 600;
   color: #003f70 !important;
-  font-size: 16px;
+  font-size: 14px;
 }
 .totalRollingWin {
   font-weight: 800;
