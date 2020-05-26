@@ -201,6 +201,8 @@ export default {
       validator.isEmail(ref.email.value) ||  (() =>  {throw new Error(this.$root.$t("profile.invalidEmail"))})();
       validator.isAlpha(ref.firstName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstName"))})();
       validator.isAlpha(ref.lastName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastName"))})();
+      validator.isByteLength(ref.firstName.value, { max: 25 }) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstNameLength"))})();
+      validator.isByteLength(ref.lastName.value, { max: 25 }) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastNameLength"))})();
       validator.isByteLength(ref.username.value, {min: 5, max: 20}) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidUsername"))})();
       var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
