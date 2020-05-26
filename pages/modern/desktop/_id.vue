@@ -189,12 +189,9 @@
             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn
-              class="buttonGreensmall"
-              to="/modern/desktop/gamerule"
-              dark
-              >{{ $t("msg.gameRule") }}</v-btn
-            >
+            <v-btn class="buttonGreensmall" to="/modern/desktop/gamerule" dark
+              >{{ $t("msg.gameRule") }}
+            </v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
@@ -217,7 +214,24 @@
               </v-btn>
             </template>
             <span>{{ $t("msg.enterFullScreen") }}</span>
-          </v-tooltip> 
+          </v-tooltip>
+          <!-- Multiple Screen Float Button 
+           <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                :to="'/modern/multigame/' + $route.params.id"
+                rigth
+                fab
+                class="multiGame"
+                dark
+                v-on="on"
+              >
+                <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
+              </v-btn>
+            </template>
+            <span>Enter Multi-Gaming Mode</span>
+          </v-tooltip>-->
         </div>
       </v-flex>
     </v-layout>
@@ -562,5 +576,3 @@ export default {
   border-radius: 180px;
 }
 </style>
-
-betting

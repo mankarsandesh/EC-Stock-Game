@@ -795,7 +795,8 @@ table.result-table tr {
     color: #fff !important;
 }
 
-.bg-btn-first {
+.bg-btn-first,
+.f-hover:hover {
     background: rgb(13, 204, 255);
     background: linear-gradient( 22deg, rgba(13, 204, 255, 1) 0%, rgba(71, 96, 255, 1) 100%);
     font-weight: 400;
@@ -805,7 +806,8 @@ table.result-table tr {
     margin: 4px;
 }
 
-.lastdigit {
+.lastdigit,
+.l-hover:hover {
     background: rgb(250, 209, 38);
     background: linear-gradient( 22deg, rgba(250, 209, 38, 1) 0%, rgba(255, 84, 79, 1) 100%);
     color: #fff !important;
@@ -822,7 +824,8 @@ table.result-table tr {
     margin: 4px;
 }
 
-.bothdigit {
+.bothdigit,
+.b-hover:hover {
     background: rgb(182, 53, 156);
     background: linear-gradient( 22deg, rgba(182, 53, 156, 1) 0%, rgba(239, 10, 106, 1) 100%);
     color: #fff !important;
@@ -839,7 +842,8 @@ table.result-table tr {
     margin: 4px;
 }
 
-.twodigit {
+.twodigit,
+.t-hover:hover {
     background: rgb(1, 233, 189);
     background: linear-gradient( 22deg, rgba(1, 233, 189, 1) 0%, rgba(0, 124, 222, 1) 100%);
     color: #fff !important;
@@ -1502,7 +1506,7 @@ p.guideline {
 }
 
 .overflow-scroll {
-    overflow: scroll !important;
+  overflow: scroll !important;
 }
 
 .marginTop-2 {
@@ -1520,7 +1524,6 @@ p.guideline {
     margin: -21px;
 } */
 
-
 /* align_button4 v-btn theme--light firstdigit low firstdigit-animation
 
 <span data-v-70a183ee="" id="firstdigitWin-low" class="big-digit firstdigitWin-low">Low</span>
@@ -1533,16 +1536,33 @@ align_button4 v-btn theme--light firstdigit firstdigitWin-9 firstdigit-animation
 <span data-v-70a183ee="" class="big-digit">0 - 9</span> */
 
 #style-3::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #F5F5F5;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
 }
 
 #style-3::-webkit-scrollbar {
-    width: 8px;
-    background-color: #F5F5F5;
+  width: 8px;
+  background-color: #f5f5f5;
 }
 
 #style-3::-webkit-scrollbar-thumb {
-    border-radius: 7px;
-    background-color: #00c58e;
+
+  border-radius: 7px;
+  background-color: #00c58e;
 }
+
+.followup {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+}
+.followDialog {
+  width: 600px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+    /* border-radius: 7px;
+    background-color: #00c58e;
+} */
+

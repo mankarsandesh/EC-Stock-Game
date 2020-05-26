@@ -26,7 +26,7 @@
                       hide-details
                       v-model="dateFrom"
                       :label="$t('msg.from')"
-                      append-icon="event"
+                      append-icon="fa-calendar"
                       readonly
                       v-on="on"
                     ></v-text-field>
@@ -50,7 +50,7 @@
                       hide-details
                       v-model="dateTo"
                       :label="$t('msg.to')"
-                      append-icon="event"
+                      append-icon="fa-calendar"
                       readonly
                       v-on="on"
                     ></v-text-field>

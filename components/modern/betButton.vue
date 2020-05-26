@@ -34,10 +34,10 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          class="align_button4 f-hover"
           :id="stockID + 'firstdigit-' + data.rule"
           slot="reference"
-          @click="storemarkColor(data.ruleid,stockID + 'firstdigit-' + data.rule,'firstdigit', null)"
+          @click="storemarkColor(data.ruleid,stockID + 'firstdigit-' + data.rule,'firstdigit', null, getItemPage, getFooterBetAmount)"
         >
           <showChipAmount
             size="45px"
@@ -62,7 +62,11 @@
       </popper>
 
       <span class="w10">
-        <v-btn class="align_button4" :id="stockID + 'firstdigit'" @click="btnNumber('first')">
+        <v-btn
+          class="align_button4 f-hover"
+          :id="stockID + 'firstdigit'"
+          @click="btnNumber('first')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -111,13 +115,14 @@
           ></betModal>
         </div>
         <v-btn
+          class="l-hover"
           :class="
             index == 3
               ? 'align_button4 betButtonGuide BetButtonGuideEven'
               : 'align_button4 betButtonGuide'
           "
           :id="stockID + 'lastdigit-' + data.rule"
-          @click="storemarkColor(data.ruleid, stockID + 'lastdigit-' + data.rule,'lastdigit', null)"
+          @click="storemarkColor(data.ruleid, stockID + 'lastdigit-' + data.rule,'lastdigit', null, getItemPage, getFooterBetAmount)"
           slot="reference"
         >
           <showChipAmount
@@ -144,7 +149,7 @@
 
       <span class="w10">
         <v-btn
-          class="align_button4 betButtonGuide"
+          class="align_button4 betButtonGuide l-hover"
           :id="stockID + 'lastdigit'"
           @click="btnNumber('last')"
         >
@@ -196,9 +201,9 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          class="align_button4 b-hover"
           :id="stockID + 'bothdigit-' + data.rule"
-          @click="storemarkColor(data.ruleid, stockID + 'bothdigit-' + data.rule,'bothdigit', null)"
+          @click="storemarkColor(data.ruleid, stockID + 'bothdigit-' + data.rule,'bothdigit', null, getItemPage, getFooterBetAmount)"
           slot="reference"
         >
           <showChipAmount
@@ -222,7 +227,7 @@
         </v-btn>
       </popper>
       <span class="w12">
-        <v-btn class="align_button4" :id="stockID + 'bothdigit'" @click="btnNumber('both')">
+        <v-btn class="align_button4 b-hover" :id="stockID + 'bothdigit'" @click="btnNumber('both')">
           <showChipAmount
             size="45px"
             :amount="
@@ -272,9 +277,9 @@
           ></betModal>
         </div>
         <v-btn
-          class="align_button4"
+          class="align_button4 t-hover"
           :id="stockID + 'twodigit-' + data.rule"
-          @click="storemarkColor(data.ruleid, stockID + 'twodigit-' + data.rule,'twodigit', null)"
+          @click="storemarkColor(data.ruleid, stockID + 'twodigit-' + data.rule,'twodigit', null, getItemPage, getFooterBetAmount)"
           slot="reference"
         >
           <showChipAmount
@@ -299,7 +304,7 @@
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4" :id="stockID + 'twodigit'" @click="btnNumber('two')">
+        <v-btn class="align_button4 t-hover" :id="stockID + 'twodigit'" @click="btnNumber('two')">
           <showChipAmount
             size="45px"
             :amount="
@@ -343,7 +348,7 @@
         <v-btn
           :id="stockID + 'firstdigit' + '-' + index"
           slot="reference"
-          @click="storemarkColor(8 + index,stockID + 'firstdigit' + '-' + index,'firstdigit','specific')"
+          @click="storemarkColor(8 + index,stockID + 'firstdigit' + '-' + index,'firstdigit','specific', getItemPage, getFooterBetAmount)"
           v-show="number == 'first'"
           class="btn-small"
         >{{ index }}</v-btn>
@@ -399,7 +404,7 @@
         <v-btn
           :id="stockID + 'bothdigit' + '-' + index"
           slot="reference"
-          @click="storemarkColor(149 + index, stockID + 'bothdigit' + '-' + index,'bothdigit','specific')"
+          @click="storemarkColor(149 + index, stockID + 'bothdigit' + '-' + index,'bothdigit','specific', getItemPage, getFooterBetAmount)"
           v-show="number == 'both'"
           class="btn-small"
         >{{ index }}</v-btn>
@@ -427,7 +432,7 @@
         <v-btn
           :id="index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index"
           slot="reference"
-          @click="storemarkColor(42 + index, index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index,'twodigit','specific')"
+          @click="storemarkColor(42 + index, index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index,'twodigit','specific', getItemPage, getFooterBetAmount)"
           v-show="number == 'two'"
           class="btn-small"
         >{{ index < 10 ? "0" + index : index }}</v-btn>
@@ -480,6 +485,7 @@ export default {
       twoDigit: gameRule.twoDigit
     };
   },
+
   components: {
     // popper is the third party package
     popper,
@@ -504,6 +510,10 @@ export default {
       } else {
         return this.stockName;
       }
+    },
+
+    getItemPage() {
+      return this.$route.path.split("/")[2];
     }
   },
 
