@@ -795,7 +795,8 @@ table.result-table tr {
     color: #fff !important;
 }
 
-.bg-btn-first {
+.bg-btn-first,
+.f-hover:hover {
     background: rgb(13, 204, 255);
     background: linear-gradient( 22deg, rgba(13, 204, 255, 1) 0%, rgba(71, 96, 255, 1) 100%);
     font-weight: 400;
@@ -805,7 +806,8 @@ table.result-table tr {
     margin: 4px;
 }
 
-.lastdigit {
+.lastdigit,
+.l-hover:hover {
     background: rgb(250, 209, 38);
     background: linear-gradient( 22deg, rgba(250, 209, 38, 1) 0%, rgba(255, 84, 79, 1) 100%);
     color: #fff !important;
@@ -822,7 +824,8 @@ table.result-table tr {
     margin: 4px;
 }
 
-.bothdigit {
+.bothdigit,
+.b-hover:hover {
     background: rgb(182, 53, 156);
     background: linear-gradient( 22deg, rgba(182, 53, 156, 1) 0%, rgba(239, 10, 106, 1) 100%);
     color: #fff !important;
@@ -839,7 +842,8 @@ table.result-table tr {
     margin: 4px;
 }
 
-.twodigit {
+.twodigit,
+.t-hover:hover {
     background: rgb(1, 233, 189);
     background: linear-gradient( 22deg, rgba(1, 233, 189, 1) 0%, rgba(0, 124, 222, 1) 100%);
     color: #fff !important;
