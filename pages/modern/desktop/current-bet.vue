@@ -38,10 +38,10 @@ export default {
     }) 
   },
   mounted() {
-    this.fetch();
+    this.currentBetData();
   },
   methods: {
-    async fetch() {
+    async currentBetData() {
       try {
         var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
@@ -64,6 +64,7 @@ export default {
           type: "error",
           timer: 1000
         });
+        // Error Logs
         log.error(
           {
             req: reqBody,

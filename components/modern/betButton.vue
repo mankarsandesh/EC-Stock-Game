@@ -147,7 +147,7 @@
         </v-btn>
       </popper>
 
-      <span class="w12">
+      <span class="w10">
         <v-btn
           class="align_button4 betButtonGuide l-hover"
           :id="stockID + 'lastdigit'"
