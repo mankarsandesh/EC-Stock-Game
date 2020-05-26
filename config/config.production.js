@@ -94,10 +94,10 @@ const config = {
   defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
   homePageStockName: "btc1",
   language: {
-    cn: "Chinese",
-    us: "English",
-    th: "Thai",
-    la: "Lao"
+    cn: "chinese",
+    us: "english",
+    th: "thai",
+    la: "lao"
   }
 };
 

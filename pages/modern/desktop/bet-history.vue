@@ -26,12 +26,12 @@
                       hide-details
                       v-model="dateFrom"
                       :label="$t('msg.from')"
-                      append-icon="event"
+                      append-icon="fa-calendar"
                       readonly
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" v-model="dateFrom" @input="from = false"></v-date-picker>
+                  <v-date-picker color="#1db42f" :max="maxDate" v-model="dateFrom" @input="from = false"></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md4>
@@ -50,12 +50,12 @@
                       hide-details
                       v-model="dateTo"
                       :label="$t('msg.to')"
-                      append-icon="event"
+                      append-icon="fa-calendar"
                       readonly
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" v-model="dateTo" @input="to = false"></v-date-picker>
+                  <v-date-picker color="#1db42f" :max="maxDate" v-model="dateTo" @input="to = false"></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md2>
@@ -115,6 +115,7 @@ export default {
     return {
       today: new Date(),
       sortby: "",
+      maxDate: new Date().toISOString(),
       search: "",
       loadingImage: false,
       dateFrom: "",

@@ -191,7 +191,7 @@
                     height="350"
                     :options="chartOptions"
                     :series="series"
-                    :key="series.length + '' + filter"
+                    :key="componentKey"
                   />
                 </div>
               </div>
@@ -269,6 +269,7 @@ export default {
     return {
       followDialog: false,
       myProfileImage: "",
+      componentKey: 0,
       renderComponent: true, // render Follow Bet
       username: "",
       FollowUserUUID: "",
@@ -322,12 +323,16 @@ export default {
     this.getUserProfileByID();
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getUserInfo"])
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getUserInfo", "getLocale"])
   },
   watch: {
     filter() {
       this.setFilter(this.filter * 30);
       this.getUserProfileByID();
+    },
+    getLocale() {
+      this.series[0].name = this.$root.$t("msg.onlineActiveTime")
+      this.componentKey++;
     }
   },
   methods: {
@@ -400,10 +405,12 @@ export default {
           });
           this.series = [
             {
+              name: this.$root.$t("msg.onlineActiveTime"),
               data: series
             }
           ];
           this.chartOptions.xaxis.categories = xaxis;
+          this.componentKey++;
         } else {
           this.messageError = true;
           // throw new Error(config.error.general);
