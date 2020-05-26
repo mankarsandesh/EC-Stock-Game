@@ -5,7 +5,7 @@
     <v-flex xs12 class="pt-2">
       <h3 class="text-uppercase ml-4 heading">
         {{ $t("stockName." + stockid) }} {{ getStockLoop(stockid) }}
-        {{ $t("msg.minute") }} {{ $t("msg.loop") }}
+        {{ $t("msg.minutes") }} {{ $t("msg.loop") }}
       </h3>
       <chartApp :stockName="stockid" />
 
@@ -14,9 +14,9 @@
         <v-flex align-left class="totalPrice">
           <h4>
             {{
-              formatToPrice(
-                getAmountBettingByStockId(getGameUUIDByStockName(stockid))
-              )
+            formatToPrice(
+            getAmountBettingByStockId(getGameUUIDByStockName(stockid))
+            )
             }}
           </h4>
         </v-flex>
@@ -28,10 +28,7 @@
           <v-flex class="text-xs-center" px-2>
             <span class="text-gray">{{ $t("msg.lastDraw") }}:</span>
             <v-flex class="lastdraw">
-              <span
-                class="text-black"
-                v-html="$options.filters.lastDraw(lastDraw)"
-              ></span>
+              <span class="text-black" v-html="$options.filters.lastDraw(lastDraw)"></span>
             </v-flex>
           </v-flex>
           <v-flex class="text-xs-center" px-2>
@@ -45,15 +42,15 @@
                 class="text-black"
               >
                 {{
-                  getTimerByStockName(stockid)
-                    | betclosein(getStockLoop(stockid))
+                getTimerByStockName(stockid)
+                | betclosein(getStockLoop(stockid))
                 }}
               </span>
               <span v-else class="text-black">
                 {{
-                  getTimerByStockName(stockid) &&
-                    getTimerByStockName(stockid).gameEndTimeCountDownInSec
-                      | betclosein(getStockLoop(stockid))
+                getTimerByStockName(stockid) &&
+                getTimerByStockName(stockid).gameEndTimeCountDownInSec
+                | betclosein(getStockLoop(stockid))
                 }}
               </span>
             </v-flex>
@@ -63,26 +60,17 @@
             <v-flex class="lottery">
               <span class="text-black">
                 {{
-                  getTimerByStockName(stockid) &&
-                    getTimerByStockName(stockid).gameEndTimeCountDownInSec
-                      | lotterydraw(getStockLoop(stockid))
+                getTimerByStockName(stockid) &&
+                getTimerByStockName(stockid).gameEndTimeCountDownInSec
+                | lotterydraw(getStockLoop(stockid))
                 }}
               </span>
             </v-flex>
           </v-flex>
         </v-layout>
 
-        <betButton
-          :isFullscreen="true"
-          :stockName="stockid"
-          :loop="getStockLoop(stockid)"
-        ></betButton>
-        <v-btn
-          @click="setAfterFullScreenClosePage"
-          fab
-          class="multiplefull"
-          style="float:right;"
-        >
+        <betButton :isFullscreen="true" :stockName="stockid" :loop="getStockLoop(stockid)"></betButton>
+        <v-btn @click="setAfterFullScreenClosePage" fab class="multiplefull" style="float:right;">
           <v-icon>fullscreen</v-icon>
         </v-btn>
       </v-flex>

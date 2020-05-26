@@ -58,13 +58,13 @@
     <v-layout row wrap class="container-bet" mt-3>
       <v-flex xs12 sm12 md12>
         <v-layout wrap xs12>
-          <v-flex xs1 align-self-center class="text-xs-center">
+          <v-flex xs1 align-self-center class="text-xs-right">
             <v-icon
               style="font-size:40px;"
               color="#003e70"
               v-show="isShowTrendMap"
               @click="changeShowTrendMap()"
-              >fa-angle-left</v-icon
+              >keyboard_arrow_left</v-icon
             >
           </v-flex>
 
@@ -96,18 +96,32 @@
               </span>
             </span>
             <v-flex sm12 xs12 class="chartDesgin">
+              <v-layout pa-2>
+                <v-flex xs6 class="text-xs-left" v-if="getStockLiveTime(this.stockID)">
+                  <span class="text-time">{{
+                    getStockLiveTime(this.stockID).split(" ")[1]
+                  }}</span>
+                </v-flex>
+                <v-spacer></v-spacer>
+                <v-flex xs6 class="text-xs-right">
+                  <span class="text-price">
+                    $ {{ getStockLivePrice(this.stockID) }}
+                  </span>
+                </v-flex>
+              </v-layout>
+
               <chartMobile :stockName="$route.params.id"></chartMobile>
             </v-flex>
           </v-flex>
 
-          <v-flex xs1 align-self-center arrow class="text-xs-center">
+          <v-flex xs1 align-self-center arrow>
             <v-icon
               style="font-size:40px;"
               v-show="!isShowTrendMap"
               @click="changeShowTrendMap()"
               color="#003e70"
-              >fa-angle-right
-            </v-icon>
+              >keyboard_arrow_right</v-icon
+            >
           </v-flex>
         </v-layout>
       </v-flex>
@@ -129,33 +143,33 @@
                 class="btn-digit-type first-digit"
                 @click="$refs.firstDigit.click()"
               >
-                <span class="text-pre-line text-white">
-                  {{ $t("gamemsg.firstdigits") }}
-                </span>
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.firstdigits")
+                }}</span>
               </div>
               <div
                 class="btn-digit-type last-digit"
                 @click="$refs.lastDigit.click()"
               >
-                <span class="text-pre-line text-white">
-                  {{ $t("gamemsg.lastdigits") }}
-                </span>
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.lastdigits")
+                }}</span>
               </div>
               <div
                 class="btn-digit-type both-digit"
                 @click="$refs.bothDigit.click()"
               >
-                <span class="text-pre-line text-white">
-                  {{ $t("gamemsg.bothdigits") }}
-                </span>
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.bothdigits")
+                }}</span>
               </div>
               <div
                 class="btn-digit-type two-digit"
                 @click="$refs.twoDigit.click()"
               >
-                <span class="text-pre-line text-white">
-                  {{ $t("gamemsg.twodigits") }}
-                </span>
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.twodigits")
+                }}</span>
               </div>
             </div>
             <span class="active-tab-mark" :style="leftActive"></span>
@@ -164,7 +178,7 @@
           <v-tabs
             grow
             centered
-            style="width:100%;background-color: #f2f4ff;"
+            style="width:100%;background-color: #f2f4ff;padding:0 !important;"
             @change="tabChanged($event)"
           >
             <v-tab v-show="false" ref="firstDigit">
@@ -181,7 +195,6 @@
             </v-tab>
 
             <!-- First Digit -->
-
             <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
@@ -370,9 +383,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
+            <!-- First Digit -->
 
             <!-- last digit -->
-            <v-tab-item>
+            <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -561,9 +575,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
+            <!-- last digit -->
 
             <!-- Both Digit -->
-            <v-tab-item>
+            <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -777,11 +792,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
-
             <!-- Both Digit -->
 
             <!-- TWO Digit -->
-            <v-tab-item>
+            <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -994,7 +1008,6 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
-
             <!-- TWO Digit -->
           </v-tabs>
         </v-layout>
@@ -1017,7 +1030,7 @@
     >
       <div class="dialog-content">
         <span class="close-dialog-icon">
-          <v-icon size="30" @click="bettingDialog = false">fa-times</v-icon>
+          <v-icon size="30" @click="bettingDialog = false">close</v-icon>
         </span>
         <div
           xs12
@@ -1027,7 +1040,7 @@
           <div class="d-block text-center" style="color:#000">
             <p class="text-uppercase">
               {{ $t("msg.stockName") }} :
-              {{ $t(`stockname.${$route.params.id}`) }}
+              {{ $t(`stockName.${$route.params.id}`) }}
               {{ $t("msg.payout") }}:
               {{ odd }}
             </p>
@@ -1076,12 +1089,12 @@
         </div>
 
         <div xs12 class="px-2 text-center mt-3">
-          <v-btn class="buttonGreen" @click="reviewbet()">
-            {{ $t("betting.reviewBet") }}
-          </v-btn>
-          <v-btn class="btn_cancel" @click="bettingDialog = false">
-            {{ $t("betting.cancelBet") }}
-          </v-btn>
+          <v-btn class="buttonGreen" @click="reviewbet()">{{
+            $t("betting.reviewBet")
+          }}</v-btn>
+          <v-btn class="btn_cancel" @click="bettingDialog = false">{{
+            $t("betting.cancelBet")
+          }}</v-btn>
         </div>
       </div>
     </v-dialog>
@@ -1097,9 +1110,9 @@
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="reviewbetDialog = false">
-            <v-icon>fa-times</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title> {{ $t("betting.reviewYourBet") }} </v-toolbar-title>
+          <v-toolbar-title>{{ $t("betting.reviewYourBet") }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <div
@@ -1112,7 +1125,7 @@
               <tr>
                 <td class="text-right">{{ $t("msg.stockName") }}:</td>
                 <td class="text-left pl-2 text-color-blue">
-                  {{ $t(`stockname.${$route.params.id}`) }}
+                  {{ $t(`stockName.${$route.params.id}`) }}
                 </td>
               </tr>
               <tr>
@@ -1130,9 +1143,7 @@
               </tr>
               <tr>
                 <td class="text-right">{{ $t("msg.bettingOn") }}:</td>
-                <td class="text-left pl-2 text-color-blue">
-                  {{ gameRule }}
-                </td>
+                <td class="text-left pl-2 text-color-blue">{{ gameRule }}</td>
               </tr>
               <tr>
                 <td class="text-right">{{ $t("msg.payout") }}:</td>
@@ -1153,12 +1164,12 @@
           <hr />
 
           <div xs12 class="px-2 text-center mt-3">
-            <v-btn class="buttonGreen" @click="placeBet">
-              {{ $t("betting.placeBet") }}
-            </v-btn>
-            <v-btn class="btn_cancel" @click="reviewbetDialog = false">
-              {{ $t("betting.cancelBet") }}
-            </v-btn>
+            <v-btn class="buttonGreen" @click="placeBet">{{
+              $t("betting.placeBet")
+            }}</v-btn>
+            <v-btn class="btn_cancel" @click="reviewbetDialog = false">{{
+              $t("betting.cancelBet")
+            }}</v-btn>
           </div>
         </div>
       </v-card>
@@ -1179,7 +1190,7 @@
         <h3 class="text-uppercase">{{ $t("gamemsg.firstdigit") }}</h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
         <v-icon size="30" @click="drawerderfirst = !drawerderfirst"
-          >fa-times</v-icon
+          >close</v-icon
         >
       </div>
       <hr class="head-jumbothron" />
@@ -1220,9 +1231,7 @@
       <div class="header-dialog">
         <h3 class="text-uppercase">{{ $t("gamemsg.lastdigit") }}</h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
-        <v-icon size="30" @click="drawerderlast = !drawerderlast"
-          >fa-times</v-icon
-        >
+        <v-icon size="30" @click="drawerderlast = !drawerderlast">close</v-icon>
       </div>
       <hr class="head-jumbothron" />
       <v-container pa-1>
@@ -1262,9 +1271,7 @@
       <div class="header-dialog">
         <h3 class="text-uppercase">{{ $t("gamemsg.bothdigit") }}</h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
-        <v-icon size="30" @click="drawerder018 = !drawerder018"
-          >fa-times</v-icon
-        >
+        <v-icon size="30" @click="drawerder018 = !drawerder018">close</v-icon>
       </div>
       <hr class="head-jumbothron" />
       <v-container pa-1>
@@ -1306,9 +1313,7 @@
         <div class="header-dialog">
           <h3 class="text-uppercase">{{ $t("gamemsg.twodigit") }}</h3>
           <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
-          <v-icon size="30" @click="drawerder099 = !drawerder099"
-            >fa-times</v-icon
-          >
+          <v-icon size="30" @click="drawerder099 = !drawerder099">close</v-icon>
         </div>
         <v-layout row>
           <v-tabs slider-color="#003e70" grow centered>
@@ -1588,6 +1593,7 @@ export default {
   },
   mounted() {
     this.stockID = this.$route.params.id;
+    console.log(this.stockID);
   },
   components: {
     chartMobile,
@@ -1596,6 +1602,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockLivePrice",
+      "getStockLiveTime",
       "getLastDraw",
       "getUserUUID",
       "getTimerByStockName",
@@ -1819,20 +1827,35 @@ export default {
 </script>
 
 <style scoped>
+.text-time {
+  font-weight: 600;
+  color: #003f70;
+}
+.text-price {
+  font-weight: 600;
+  color: green;
+}
 .tab-menu-container {
   position: relative;
   z-index: 2;
-  top: 10px;
+  top: 5px;
+  height: 70px;
   display: flex;
   width: 100%;
   flex-direction: column;
 }
 .digit-type-container {
-  height: 80px;
+  height: 70px;
   display: flex;
   width: 100%;
   justify-content: space-around;
   text-align: center;
+}
+.btn-digit-type {
+  margin: 5px;
+  width: 25%;
+  border-radius: 10px;
+  padding: 5px;
 }
 .active-tab-mark {
   width: 21%;
@@ -1842,14 +1865,6 @@ export default {
   position: relative;
   top: -3px;
   transition: left 0.3s;
-}
-
-.btn-digit-type {
-  background-color: #2e477d;
-  margin: 5px;
-  width: 25%;
-  border-radius: 10px;
-  padding: 5px -5px;
 }
 .first-digit {
   background: rgb(13, 204, 255);

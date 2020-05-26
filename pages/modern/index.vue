@@ -19,24 +19,18 @@
         >
           <div class="item-content text-color">
             <v-checkbox
-              off-icon="fa-square"
-              on-icon="fa-check-square"
               v-model="filter.stock.china"
               color="#003e70"
               label="china"
               hide-details
             ></v-checkbox>
             <v-checkbox
-              off-icon="fa-square"
-              on-icon="fa-check-square"
               v-model="filter.stock.usa"
               color="#003e70"
               label="usa"
               hide-details
             ></v-checkbox>
             <v-checkbox
-              off-icon="fa-square"
-              on-icon="fa-check-square"
               v-model="filter.stock.crypto"
               color="#003e70"
               label="crypto"
@@ -63,16 +57,12 @@
               color="#003e70"
               label="1 minute"
               hide-details
-              off-icon="fa-square"
-              on-icon="fa-check-square"
             ></v-checkbox>
             <v-checkbox
               v-model="filter.gameType.loop5"
               color="#003e70"
               label="5 minute"
               hide-details
-              off-icon="fa-square"
-              on-icon="fa-check-square"
             ></v-checkbox>
           </div>
         </div>
@@ -105,9 +95,7 @@
             }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <v-icon class="icon-primary" v-if="sortBy === 'name'"
-            >fa-check
-          </v-icon>
+          <v-icon class="icon-primary" v-if="sortBy === 'name'">done</v-icon>
         </v-list-tile>
 
         <!--sort game type -->
@@ -119,9 +107,7 @@
             }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <v-icon class="icon-primary" v-if="sortBy === 'type'">
-            fa-check
-          </v-icon>
+          <v-icon class="icon-primary" v-if="sortBy === 'type'">done</v-icon>
         </v-list-tile>
         <v-divider></v-divider>
         <v-list-tile class="py-2" @click="sortBy = ''">
@@ -132,28 +118,13 @@
           </v-list-tile-content>
           <v-spacer></v-spacer>
           <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
-                    <v-icon class="icon-primary">fa-check</v-icon>
+                    <v-icon class="icon-primary">done</v-icon>
           </v-btn>-->
         </v-list-tile>
         <v-divider></v-divider>
       </v-list>
       <v-spacer></v-spacer>
     </SlideMenu>
-    <!-- <v-toolbar class="buttonGreen pa-0" style="margin-top:15px!important;">
-        <v-layout row wrap class="pa-0">
-              <v-flex xs6 class="text-center border-right d-flex justify-center">            
-                  <v-btn text flat @click="filterClick">
-                      <span class="uppercase-text white--text">filter</span>
-                  </v-btn>
-              </v-flex>
-
-              <v-flex xs6 class="d-flex justify-center text-center">
-                  <v-btn text flat @click="filterClick">
-                      <span class="uppercase-text white--text">filter</span>
-                  </v-btn>
-              </v-flex>
-        </v-layout>
-    </v-toolbar>-->
     <div class="text-center mt-2">
       <v-flex order-xs6 class="text-center d-flex justify-center">
         <v-btn text flat @click="filterClick" class="buttonGreen">
@@ -171,9 +142,9 @@
       </v-flex>
     </div>
     <v-layout row wrap px-2 pt-2>
-      <v-flex pa-2 v-for="(data, index) in showStocks" :key="index" xs6 sm4 md4>
+      <v-flex pa-1 v-for="(data, index) in showStocks" :key="index" xs6 sm4 md4>
         <nuxt-link :to="'/modern/betting/' + data.stockName">
-          <v-card class="v-card-style">
+          <v-card class="v-card-style chartDesign">
             <!-- bet close -->
             <div
               class="close-bet-chart"
@@ -187,20 +158,20 @@
             <v-card-title class="px-1 py-0 pa-2" style="font-size:11px;">
               <v-layout>
                 <v-flex xs6 class="text-xs-left">
-                  {{ $t("msg.liveTime") }}:
-                  <!-- <span class="text-primary">{{getStockLivePrice(data.stockName)}}</span> -->
+                  <span class="text-primary">{{
+                    getStockLiveTime(data.stockName).split(" ")[1]
+                  }}</span>
                 </v-flex>
                 <v-spacer></v-spacer>
                 <v-flex xs6 class="text-xs-right">
-                  {{ $t("msg.livePrice") }}:
-                  <span class="text-primary">
+                  <span class="text-price">
                     {{ getStockLivePrice(data.stockName) }}
                   </span>
                 </v-flex>
               </v-layout>
             </v-card-title>
             <v-card-text class="pa-0" min-height="156">
-              <chartIndex :stockName="data.stockName" class="pa-2"></chartIndex>
+              <chartIndex :stockName="data.stockName"></chartIndex>
             </v-card-text>
           </v-card>
           <div class="pt-2">
@@ -254,7 +225,12 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters(["getAllStocks", "getTimerByStockName", "getStockLivePrice"]),
+    ...mapGetters([
+      "getAllStocks",
+      "getTimerByStockName",
+      "getStockLiveTime",
+      "getStockLivePrice"
+    ]),
     showStocks() {
       let result = [];
       let stockType = [];
@@ -323,8 +299,13 @@ export default {
 </script>
 
 <style scoped>
-.v-card-style {
-  border-radius: 10px;
+.chartDesign {
+  border-radius: 5px;
+  border: 1px solid #dddddd;
+}
+.text-price {
+  color: green;
+  font-size: 14px;
 }
 
 .filter-style {

@@ -51,7 +51,11 @@
                       : $t("leaderBoard.stopByBets")
                   }}:</label
                 >
-                {{ data.unFollowRuleValue[0].value }}
+                {{
+                  data.unFollowRuleValue[0].name == "byTime"
+                    ? data.unFollowRuleValue[0].value / 1440 +"&nbsp;"+$t("msg.days")
+                    : data.unFollowRuleValue[0].value
+                }}
               </span>
             </div>
             <button
@@ -76,7 +80,7 @@
       v-model="followDialog"
       width="500"
       class="followDialog"
-      :persistent=true
+      :persistent="true"
     >
       <followBet
         :username="this.username"

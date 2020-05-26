@@ -20,7 +20,7 @@
           <v-list-tile :key="item.index" avatar class="userList">
             <nuxt-link :to="'/modern/userprofile/' + item.userUUID">
               <v-list-tile-avatar>
-                <img :src="userImgProfile(item.userImage)" />
+                <img :src="userImgProfile(item.userImage)"  class="profileImage" />
               </v-list-tile-avatar>
             </nuxt-link>
 
@@ -28,7 +28,7 @@
               v-if="item.category.some(element => element == 3)"
               class="ranking"
             >
-              <v-list-tile-title>
+              <v-list-tile-title class="numberCenter">
                 <span
                   v-if="item.category[0] == 3 && item.category.length == 1"
                   class="label"
@@ -48,7 +48,7 @@
               v-if="item.category.some(element => element == 2)"
               class="followcount"
             >
-              <v-list-tile-title>
+              <v-list-tile-title class="numberCenter">
                 <span
                   v-if="item.category[0] == 2 && item.category.length == 1"
                   class="label"
@@ -68,7 +68,7 @@
               v-if="item.category.some(element => element == 1)"
               class="winRate"
             >
-              <v-list-tile-title>
+              <v-list-tile-title class="numberCenter">
                 <span
                   v-if="item.category[0] == 1 && item.category.length == 1"
                   class="label"
@@ -109,7 +109,7 @@
           <v-flex> {{ this.invitationError }} </v-flex>
         </v-layout>
         <v-layout justify-center>
-          <v-flex v-for="(item, index) in categoryName" v-bind:key="index" pl-3>
+          <v-flex v-for="(item, index) in categoryName" v-bind:key="index">
             <v-checkbox
               justify-center
               color="green"
@@ -117,8 +117,6 @@
               v-model="selectCategory"
               :label="item.value"
               :value="item.id"
-              off-icon="fa-square"
-              on-icon="fa-check-square"
             ></v-checkbox>
           </v-flex>
         </v-layout>
@@ -139,7 +137,7 @@
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="followDialog = false">
-            <v-icon>fa-times</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>
             {{
@@ -290,6 +288,15 @@ export default {
 };
 </script>
 <style scoped>
+.profileImage{
+  border-radius:5px;
+}
+.messageChat{
+  background-color: #FFF;
+  position: fixed;
+  width: 100%;
+  bottom:0;
+}
 .errorMessage {
   text-align: center;
   color: red;
@@ -297,6 +304,7 @@ export default {
 }
 .userList {
   border-bottom: 1px solid #dddddd;
+   border-top: 1px solid #dddddd;
 }
 .userList .ranking {
   color: #42c851;
@@ -306,6 +314,9 @@ export default {
 .userList .followcount {
   color: #5f70b1;
   font-weight: 800;
+  text-align: center;
+}
+.numberCenter{
   text-align: center;
 }
 .userList .winRate {
@@ -328,9 +339,10 @@ export default {
 }
 .bodyChat {
   padding-top: 10px;
-  border-bottom: 1px solid #dddddd;
   background-color: #f4f4f4;
-  height: 500px;
+  /* min-height: 400px; */
+  height:auto;
+  padding-bottom:50px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;

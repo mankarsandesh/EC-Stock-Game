@@ -7,7 +7,7 @@
     />
     <v-container>
       <v-layout row wrap justify-center>
-        <v-flex md10 lg10 xs12 mt-2>
+        <v-flex md12 lg10 xs12 mt-2>
           <leaderboardUserlist />
         </v-flex>
       </v-layout>
@@ -24,6 +24,12 @@ export default {
   components: {
     breadcrumbs,
     leaderboardUserlist: leaderboardUserlist
+  },
+  data() {
+    return {
+      tabs: ["history", "current bet"],
+      active: null
+    };
   }
 };
 </script>

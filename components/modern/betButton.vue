@@ -37,7 +37,7 @@
           class="align_button4"
           :id="stockID + 'firstdigit-' + data.rule"
           slot="reference"
-          @click="betButtonClick(data.ruleid)"
+          @click="storemarkColor(data.ruleid,stockID + 'firstdigit-' + data.rule,'firstdigit', null)"
         >
           <showChipAmount
             size="45px"
@@ -117,7 +117,7 @@
               : 'align_button4 betButtonGuide'
           "
           :id="stockID + 'lastdigit-' + data.rule"
-          @click="betButtonClick(data.ruleid)"
+          @click="storemarkColor(data.ruleid, stockID + 'lastdigit-' + data.rule,'lastdigit', null)"
           slot="reference"
         >
           <showChipAmount
@@ -176,9 +176,10 @@
 
       <popper
         :disabled="checkFooterBetAmount"
-        v-for="data in bothDigit"
-        :key="data.rule"
+        v-for="(data,index) in bothDigit"
+        :key="index"
         class="w12"
+        :class="index === 0 ? 'ml-13': null"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -197,7 +198,7 @@
         <v-btn
           class="align_button4"
           :id="stockID + 'bothdigit-' + data.rule"
-          @click="betButtonClick(data.ruleid)"
+          @click="storemarkColor(data.ruleid, stockID + 'bothdigit-' + data.rule,'bothdigit', null)"
           slot="reference"
         >
           <showChipAmount
@@ -251,9 +252,10 @@
 
       <popper
         :disabled="checkFooterBetAmount"
-        v-for="data in twoDigit"
-        :key="data.rule"
+        v-for="(data,index) in twoDigit"
+        :key="index"
         class="w12"
+        :class="index === 0 ? 'ml-13': null"
         trigger="clickToToggle"
         :options="{
           placement: 'bottom-end',
@@ -272,7 +274,7 @@
         <v-btn
           class="align_button4"
           :id="stockID + 'twodigit-' + data.rule"
-          @click="betButtonClick(data.ruleid)"
+          @click="storemarkColor(data.ruleid, stockID + 'twodigit-' + data.rule,'twodigit', null)"
           slot="reference"
         >
           <showChipAmount
@@ -341,7 +343,7 @@
         <v-btn
           :id="stockID + 'firstdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(8 + index, 'firstdigit')"
+          @click="storemarkColor(8 + index,stockID + 'firstdigit' + '-' + index,'firstdigit','specific')"
           v-show="number == 'first'"
           class="btn-small"
         >{{ index }}</v-btn>
@@ -369,7 +371,7 @@
         <v-btn
           :id="stockID + 'lastdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(25 + index, 'lastdigit')"
+          @click="storemarkColor(25 + index, stockID + 'lastdigit' + '-' + index,'lastdigit','specific')"
           v-show="number == 'last'"
           class="btn-small"
         >{{ index }}</v-btn>
@@ -397,7 +399,7 @@
         <v-btn
           :id="stockID + 'bothdigit' + '-' + index"
           slot="reference"
-          @click="betButtonClick(149 + index, 'bothdigit')"
+          @click="storemarkColor(149 + index, stockID + 'bothdigit' + '-' + index,'bothdigit','specific')"
           v-show="number == 'both'"
           class="btn-small"
         >{{ index }}</v-btn>
@@ -425,7 +427,7 @@
         <v-btn
           :id="index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index"
           slot="reference"
-          @click="betButtonClick(42 + index, 'twodigit')"
+          @click="storemarkColor(42 + index, index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index,'twodigit','specific')"
           v-show="number == 'two'"
           class="btn-small"
         >{{ index < 10 ? "0" + index : index }}</v-btn>
@@ -502,39 +504,6 @@ export default {
       } else {
         return this.stockName;
       }
-    },
-    // check bet close using stockOpenOrClosed and timer
-    checkBetClose() {
-      if (
-        this.getTimerByStockName(this.stockID) &&
-        this.getTimerByStockName(this.stockID).stockStatus === "Closed"
-      ) {
-        return true;
-      }
-      // check 1 or 5 loop
-      if (this.getStockLoop(this.stockID) === 5) {
-        if (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
-        ) {
-          this.clearDataMultiGameBet(5);
-        }
-        return (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60
-        );
-      } else {
-        if (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
-        ) {
-          this.clearDataMultiGameBet(1);
-        }
-        return (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
-        );
-      }
     }
   },
 
@@ -544,34 +513,7 @@ export default {
       "clearDataMultiGameBet",
       "setTempMultiGameBetData",
       "setCollegeButtonNumberParent"
-    ]),
-
-    betButtonClick(ruleID, specificNumber = "") {
-      // $("#"+ruleID).addClass('bg-btn-first');
-      if (this.checkFooterBetAmount) {
-        let betData = {
-          specificNumber: specificNumber,
-          gameUUID: this.getGameUUIDByStockName(this.stockID),
-          ruleID: ruleID,
-          betAmount: this.getFooterBetAmount
-        };
-        this.setTempMultiGameBetData(betData);
-        // this.pushDataMultiGameBet(betData);
-        // console.warn(this.getMultiGameBet);
-      }
-    },
-
-    // the btnNumber methods use to switch specific number first,last,both and two
-    btnNumber(value) {
-      value == this.number ? (this.number = null) : (this.number = value);
-    },
-    updateBet(items) {
-      const split = items.betRule.split("-");
-      // small button
-      $("#" + items.stock + items.betRule).addClass(items.betRule);
-      // parent the button
-      $("#" + items.stock + split[0]).addClass(split[0]);
-    }
+    ])
   }
 };
 </script>

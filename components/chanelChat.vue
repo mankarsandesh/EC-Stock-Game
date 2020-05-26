@@ -94,21 +94,25 @@
     <span class="leftMessage">
       <span v-if="this.invitationMessage">{{ this.invitationMessage }}</span>
     </span>
-    <v-flex col-md-12>
-      <div class="footer-bottom">
-        <div class="select-category">
-          <catalogInviteSelection
+    <div class="messageChat">
+      <v-flex col-md-12>
+        <!-- <v-btn class="buttonInvitation" @click="sendInvitation()"
+          >Send Invitation &nbsp;<i class="fa fa-paper-plane"></i
+        ></v-btn> -->
+        <v-btn class="buttonInvitation">
+          <v-select
+            class="selectCategory"
+            item-text="value"
+            item-value="id"
+            v-model="selectCategory"
             :items="categoryName"
-            ref="refSelect"
-          ></catalogInviteSelection>
-        </div>
-        <div class="plane-icon">
-          <v-icon color="#fff" @click="sendInvitation()">
-            fa-paper-plane
-          </v-icon>
-        </div>
-      </div>
-    </v-flex>
+            multiple
+            label="Select Category"
+          ></v-select>
+          &nbsp;<i @click="sendInvitation()" class="fa fa-paper-plane"></i
+        ></v-btn>
+      </v-flex>
+    </div>
     <!-- Follow Dialog -->
     <v-dialog v-model="dialog" width="500" class="followDialog">
       <followBet
@@ -126,13 +130,10 @@
 import config from "~/config/config.global";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 import followBet from "~/components/modern/follow/followBet";
-import catalogInviteSelection from "~/components/catalogInviteSelection";
-
 import log from "roarr";
 export default {
   components: {
-    followBet,
-    catalogInviteSelection
+    followBet
   },
   props: {
     gameUUID: {
@@ -149,15 +150,15 @@ export default {
       categoryName: [
         {
           id: "1",
-          title: "Win Bets"
+          value: "Win Bets"
         },
         {
           id: "2",
-          title: "Total Follower"
+          value: "Total Follower"
         },
         {
           id: "3",
-          title: "Rank"
+          value: "Rank"
         }
       ],
       FolloworNot: "",
@@ -206,13 +207,13 @@ export default {
     },
     // Channel for gameUUDI
     async sendInvitation() {
-      if (this.$refs["refSelect"].select.map(e => e.id).length > 0) {
+      if (this.selectCategory.length > 0) {
         try {
           var reqBody = {
             portalProviderUUID: this.getPortalProviderUUID,
             userUUID: this.getUserUUID,
             gameUUID: this.gameUUID,
-            category: this.$refs["refSelect"].select.map(e => e.id),
+            category: this.selectCategory,
             version: config.version
           };
           var res = await this.$axios.$post(
@@ -241,7 +242,6 @@ export default {
         eventName: "messageSend"
       },
       ({ data }) => {
-        console.log(data);
         const objectArray = Object.entries(data.data);
         let newData = [];
         objectArray.forEach(([key, value]) => {
@@ -266,26 +266,8 @@ export default {
 </script>
 
 <style scoped>
-.plane-icon {
-  flex-grow: 1;
-  align-self: center;
-  text-align: center;
-  width: 30;
-}
-.select-category {
-  width: 85%;
-}
-.footer-bottom {
-  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
-  border-radius: 4px;
-  text-align: left;
-  display: flex;
-  width: 100%;
-  padding: 5px 0;
-  height: 100%;
-}
 .leftMessage {
-  padding: 0px 10px;
+ padding: 0px 10px;
   margin-bottom: 10px;
   font-weight: 400;
   color: #ef5252;
@@ -325,7 +307,7 @@ export default {
   color: #fff !important;
 }
 .buttonInvitation {
-  padding: 10px;
+   padding: 10px;
   margin-top: -8px;
   width: 96%;
   color: #fff !important;
@@ -533,7 +515,7 @@ export default {
   color: #7f7e7e;
 }
 .messageChat {
-  width: 100%;
+  width:100%;
   bottom: 5px;
   background-color: #fff;
 }

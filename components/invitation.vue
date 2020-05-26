@@ -31,26 +31,17 @@
       <div class="chatRoom">
         <!-- for EC World -->
         <div v-if="tabActiveName === 'world'">
-          <div class="conve-container">
+          <div class="conve-container">     
             <div class="bodyChat">
-              <div
-                class="messageChatView noRecord"
-                v-if="globalInvitation.length == 0"
-              >
+              <div class="messageChatView noRecord" v-if="globalInvitation.length == 0">
                 <i class="fa fa-bell"></i>
-                <p>{{ $t("invitation.noInvitation") }}</p>
+                <p>{{$t("invitation.noInvitation")}}</p>
               </div>
 
-              <div
-                class="msgUser"
-                v-for="data in globalInvitation"
-                :key="data.index"
-              >
+              <div class="msgUser" v-for="data in globalInvitation" :key="data.index">
                 <div class="messageChatView" v-if="globalInvitation.length > 0">
                   <div>
-                    <nuxt-link
-                      :to="'/modern/desktop/userprofile/' + data.userUUID"
-                    >
+                    <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
                       <v-img
                         class="userImage"
                         :src="userImgProfile(data.userImage)"
@@ -61,59 +52,47 @@
                     </nuxt-link>
                   </div>
                   <div>
-                    <div
-                      class="ranking"
-                      v-if="data.category.some(element => element == 3)"
-                    >
+                    <div class="ranking" v-if="data.category.some(element => element == 3)">
                       <span
                         v-if="
                           data.category[0] == 3 && data.category.length == 1
                         "
                         class="label"
-                        >{{ $t("invitation.winningRank") }}</span
-                      >
+                      >{{$t("invitation.winningRank")}}</span>
 
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
                           <span v-on="on">#{{ data.Rank }}</span>
                         </template>
-                        <span>{{ $t("invitation.userRank") }}</span>
+                        <span>{{$t("invitation.userRank")}}</span>
                       </v-tooltip>
                     </div>
-                    <div
-                      v-if="data.category.some(element => element == 2)"
-                      class="followcount"
-                    >
+                    <div v-if="data.category.some(element => element == 2)" class="followcount">
                       <span
                         v-if="
                           data.category[0] == 2 && data.category.length == 1
                         "
                         class="label"
-                        >{{ $t("invitation.totalFollower") }}</span
-                      >
+                      >{{$t("invitation.totalFollower")}}</span>
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.followerCount }}</span>
                         </template>
-                        <span>{{ $t("invitation.userFollowCount") }}</span>
+                        <span>{{$t("invitation.userFollowCount")}}</span>
                       </v-tooltip>
                     </div>
-                    <div
-                      class="winRate"
-                      v-if="data.category.some(element => element == 1)"
-                    >
+                    <div class="winRate" v-if="data.category.some(element => element == 1)">
                       <span
                         v-if="
                           data.category[0] == 1 && data.category.length == 1
                         "
                         class="label"
-                        >{{ $t("invitation.winningRate") }}</span
-                      >
+                      >{{$t("invitation.winningRate")}}</span>
                       <v-tooltip top>
                         <template v-slot:activator="{ on }">
                           <span v-on="on">{{ data.winRate }}%</span>
                         </template>
-                        <span>{{ $t("invitation.userWinRate") }}</span>
+                        <span>{{$t("invitation.userWinRate")}}</span>
                       </v-tooltip>
                     </div>
                   </div>
@@ -121,57 +100,35 @@
                     <v-btn
                       v-if="getUserUUID != data.userUUID"
                       class="following"
-                      v-on:click="
-                        followUser(null, data.userImage, data.userUUID, '0')
-                      "
-                      >{{ $t("userAction.follow") }}</v-btn
-                    >
+                      v-on:click="followUser(null, data.userImage, data.userUUID, '0')"
+                    >{{$t("userAction.follow")}}</v-btn>
                     <v-btn
                       v-if="getUserUUID == data.userUUID"
                       class="following"
-                      >{{ $t("userAction.yourself") }}</v-btn
-                    >
+                    >{{$t("userAction.yourself")}}</v-btn>
                   </div>
                 </div>
               </div>
             </div>
             <span class="leftMessage">
-              <span v-if="invitationMessage"> {{ invitationMessage }} </span>
+            <span v-if="invitationMessage"> {{ invitationMessage }} </span>
             </span>
-            <v-flex col-md-12>
-              <div class="footer-bottom">
-                <div class="select-category">
-                  <catalogInviteSelection
-                    :items="categoryName"
-                    ref="refSelect"
-                  ></catalogInviteSelection>
-                </div>
-                <div class="plane-icon">
-                  <v-icon color="#fff" @click="sendInvitation()">
-                    fa-paper-plane
-                  </v-icon>
-                </div>
-              </div>
-            </v-flex>
-
-            <!-- <div class="messageChat">
+            <div class="messageChat">
               <v-flex col-md-12>
                 <v-btn class="buttonInvitation">
                   <v-select
                     class="selectCategory"
-                    append-icon="fa-angle-down"
                     item-text="value"
                     item-value="id"
                     v-model="selectCategory"
                     :items="categoryName"
                     multiple
                     label="Select Category"
-                  ></v-select
-                  >&nbsp;
+                  ></v-select>&nbsp;
                   <i @click="sendInvitation()" class="fa fa-paper-plane"></i>
                 </v-btn>
               </v-flex>
-            </div> -->
+            </div>
           </div>
         </div>
 
@@ -209,7 +166,6 @@ import moment from "moment";
 import config from "~/config/config.global";
 import chanelChat from "./chanelChat";
 import followBet from "~/components/modern/follow/followBet";
-import catalogInviteSelection from "~/components/catalogInviteSelection";
 import log from "roarr";
 let name = "btc5";
 export default {
@@ -217,7 +173,7 @@ export default {
     chanelChat,
     followBet,
     popper,
-    catalogInviteSelection
+    config
   },
   props: {
     gameUUID: {
@@ -240,15 +196,15 @@ export default {
       categoryName: [
         {
           id: "1",
-          title: "Win Bets"
+          value: "Win Bets"
         },
         {
           id: "2",
-          title: "Total Follower"
+          value: "Total Follower"
         },
         {
           id: "3",
-          title: "Rank"
+          value: "Rank"
         }
       ],
       FolloworNot: "",
@@ -289,7 +245,7 @@ export default {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
         eventName: "messageSend"
       },
-      ({ data }) => {
+      ({ data }) => {        
         const objectArray = Object.entries(data.data);
         let newData = [];
         objectArray.forEach(([key, value]) => {
@@ -313,49 +269,48 @@ export default {
     userImgProfile(userImage) {
       return userImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/` + userImage;
+        : `${config.apiDomain}/`+userImage;
     },
     // Close Follow Bet Popup
     closeFollowBet() {
       this.dialog = false;
     },
-
     // Send Top Player Users Invitation
     async sendInvitation() {
-      if (this.$refs["refSelect"].select.map(e => e.id).length > 0) {
-        try {
-          const reqBody = {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID: this.getUserUUID,
-            category: this.$refs["refSelect"].select.map(e => e.id),
-            version: config.version
-          };
-          const res = await this.$axios.$post(
-            config.getUserInvitation.url,
-            reqBody,
-            {
-              headers: config.header
-            }
-          );
-          if (res.code == 400) {
-            this.invitationMessage = res.message[0];
-          }
-        } catch (ex) {
-          this.$swal({
-            title: ex.message,
-            type: "error",
-            timer: 1000
-          });
-        }
-      } else {
+      if (this.selectCategory.length > 0) {     
+          try {
+            const reqBody = {
+              portalProviderUUID: this.getPortalProviderUUID,
+              userUUID: this.getUserUUID,
+              category: this.selectCategory,
+              version: config.version
+            };
+            const res = await this.$axios.$post(
+              config.getUserInvitation.url,
+              reqBody,
+              {
+                headers: config.header
+              }
+            );
+           if(res.code == 400){
+              this.invitationMessage = res.message[0];
+           }
+          } catch (ex) {
+            this.$swal({
+              title: ex.message,
+              type: "error",
+              timer: 1000
+            });
+          }       
+      }else{
         this.invitationMessage = "Please Select Cateogry.";
       }
-    },
+    },   
     // Follow Users Bets
-    followUser(username, userImage, userUUID, method) {
+    followUser(username, userImage, userUUID, method) {     
       this.username = username;
       this.FollowUserUUID = userUUID;
-      method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
+      method == 0 ? this.FolloworNot = 1 : this.FolloworNot = 2 
       this.userImage = this.userImgProfile(userImage);
       this.dialog = true;
     },
@@ -388,24 +343,6 @@ export default {
 };
 </script>
 <style scoped>
-.plane-icon {
-  flex-grow: 1;
-  align-self: center;
-  text-align: center;
-  width: 30;
-}
-.select-category {
-  width: 85%;
-}
-.footer-bottom {
-  background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
-  border-radius: 4px;
-  text-align: left;
-  display: flex;
-  width: 100%;
-  padding: 5px 0;
-  height: 100%;
-}
 .theme--light.v-select .v-select__selections {
   color: #fff !important;
 }

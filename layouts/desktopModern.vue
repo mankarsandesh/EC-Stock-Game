@@ -62,15 +62,16 @@
                   class="menuItemNotification"
                 >
                   <i class="fa fa-bell-o fa-2x" />
-                  <span class="badge">{{ messagesCount }}</span>
+                  <span class="badge">{{ winnerList.length }}</span>
                 </span>
               </template>
               <v-list id="notificationTab">
                 <v-list-tile
                   v-if="winnerList.length == 0"
                   class="noNotification"
-                  >There are no Notification.</v-list-tile
+                  >{{ $t("notification.noNotification") }}</v-list-tile
                 >
+
                 <v-list-tile
                   v-for="(item, i) in winnerList"
                   :key="i"
@@ -88,9 +89,9 @@
                 </v-list-tile>
               </v-list>
               <v-list class="footerView">
-                <span @click="$router.push('/modern/desktop/notification/')"
-                  >View All</span
-                >
+                <span @click="$router.push('/modern/desktop/notification/')">{{
+                  $t("notification.viewAll")
+                }}</span>
               </v-list>
             </v-menu>
           </v-toolbar-items>
@@ -115,7 +116,6 @@ import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
-import winnerMarquee from "~/components/modern/winnerMarquee";
 import i18n from "vue-i18n";
 import invitation from "~/components/invitation";
 import userMenu from "~/components/userMenu";
@@ -132,7 +132,6 @@ export default {
     invitation,
     countryFlag,
     languageDialog,
-    winnerMarquee,
     userMenu,
     AnimatedNumber,
     chatBox
@@ -140,7 +139,7 @@ export default {
   data() {
     return {
       isShowTutorial: true,
-      messagesCount: 2,
+      messagesCount: 0,
       activeClass: null,
       direction: "top",
       fab: true,
@@ -198,6 +197,9 @@ export default {
     this.fetchNotification();
   },
   methods: {
+    clearNotification() {
+      this.fetchNotification();
+    },
     pageLink(type) {
       return type == 3
         ? "/modern/desktop/profile/follower/"
@@ -244,7 +246,6 @@ export default {
           }
         );
         if (data.status) {
-          this.messagesCount = data.data.length;
           this.winnerList = data.data.reverse();
         } else {
           throw new Error(config.error.general);

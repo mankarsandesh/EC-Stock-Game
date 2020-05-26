@@ -18,7 +18,7 @@
                   class="selectAvatar"
                   :size="20"
                   @click="avatarDialog = true"
-                  >fa-camera</v-icon
+                  >photo_camera</v-icon
                 >
               </span>
             </div>
@@ -27,7 +27,7 @@
             </h3>
             <span>
               <strong>{{ $t("profile.onlineStatus") }} :</strong>
-              {{ getUserInfo.currentActiveTime }}
+              Available
             </span>
           </div>
         </v-flex>
@@ -47,7 +47,7 @@
                 class="camera_container"
                 style="position: absolute;top: 5%;"
               >
-                <v-icon color="black" :size="20">fa-camera</v-icon>
+                <v-icon color="black" :size="20">photo_camera</v-icon>
               </span>
             </div>
             <h3 class="text-capitalize">
@@ -76,7 +76,7 @@
             <div class="decorator_card decorator_card_blue"></div>
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ 161536 | currency }}</span>
+            <span class="amount">{{ getUserInfo.rollingAmount | currency }}</span>
             <span class="title_currentcy"></span>
           </div>
         </v-flex>
@@ -115,8 +115,8 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >fa-edit
-                    </v-icon>
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -139,8 +139,8 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >fa-edit
-                    </v-icon>
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -163,7 +163,7 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >fa-edit</v-icon
+                      >edit</v-icon
                     >
                   </span>
                 </v-flex>
@@ -187,7 +187,7 @@
                     <option value="male">Male</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd">fa-chevron-down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -210,8 +210,8 @@
                       :size="16"
                       color="#bdbdbd"
                       @click="iconClick($event)"
-                      >fa-edit
-                    </v-icon>
+                      >edit</v-icon
+                    >
                   </span>
                 </v-flex>
               </v-layout>
@@ -236,7 +236,7 @@
                     <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="16" color="#bdbdbd">fa-chevron-down</v-icon>
+                    <v-icon :size="16" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </v-flex>
               </v-layout>
@@ -266,7 +266,9 @@
                 class="btn_save width-50"
                 block
               >
- <span class="padding-right-60">{{ $t("profile.onlinehistory") }}</span>
+                <span class="padding-right-60">{{
+                  $t("profile.onlineHistory")
+                }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>
               <v-btn
@@ -278,7 +280,9 @@
                 "
                 block
               >
-                <span class="padding-right-60">{{ $t("profile.stockanalysis") }}</span>
+                <span class="padding-right-60">{{
+                  $t("profile.stockAnalysis")
+                }}</span>
                 <i class="fa fa-plus"></i>
               </v-btn>
             </div>
@@ -297,7 +301,7 @@
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
           <v-btn icon dark @click="avatarDialog = false">
-            <v-icon>fa-times</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Choose your Avatar</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -316,7 +320,7 @@
     </v-dialog>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-      <v-btn color="pink" text @click="snackbar = false">fa-times</v-btn>
+      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
 
     <OnlineHistory ref="onlineHistory"></OnlineHistory>

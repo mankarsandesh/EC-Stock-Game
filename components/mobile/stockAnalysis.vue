@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+    v-if="dialogStockAnalysis"
     v-model="dialogStockAnalysis"
     fullscreen
     hide-overlay
@@ -11,7 +12,7 @@
         <v-layout row justify-center>
           <h2>{{ $t("profile.stockAnalysis") }}</h2>
           <v-spacer></v-spacer>
-          <v-icon size="20" @click="dialogStockAnalysis = false">fa-times</v-icon>
+          <v-icon size="20" @click="dialogStockAnalysis = false">close</v-icon>
         </v-layout>
       </v-toolbar>
       <v-flex mt-2 xs12 md12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
@@ -54,16 +55,16 @@
               <div class="date_picker">
                 <span class="select_date">{{ startDate }}</span>
                 <span class="icon_date">
-                  <v-icon>fa-calendar</v-icon>
+                  <v-icon>date_range</v-icon>
                 </span>
               </div>
             </div>
             <div style="position:absolute;z-index:1">
-               <v-date-picker next-icon="fa-chevron-right"
-  prev-icon="fa-chevron-left"
+              <v-date-picker
                 color="#1db42f"
                 v-if="isShowDateStart"
                 v-model="startDate"
+                :max="maxDate"
                 @input="isShowDateStart = false"
               ></v-date-picker>
             </div>
@@ -77,16 +78,16 @@
               <div class="date_picker">
                 <span class="select_date">{{ endDate }}</span>
                 <span class="icon_date">
-                  <v-icon>fa-calendar</v-icon>
+                  <v-icon>date_range</v-icon>
                 </span>
               </div>
             </div>
             <div style="position:absolute;z-index:1">
-               <v-date-picker next-icon="fa-chevron-right"
-  prev-icon="fa-chevron-left"
+              <v-date-picker
                 color="#1db42f"
                 v-if="isShowDateEnd"
                 v-model="endDate"
+                :max="maxDate"
                 @input="isShowDateEnd = false"
               ></v-date-picker>
             </div>
@@ -121,6 +122,7 @@
                 height="350vh"
                 :options="chartOptions"
                 :series="series"
+                :key="componentKey"
               ></apexchart>
             </div>
           </v-flex>
@@ -151,6 +153,8 @@ export default {
   data() {
     return {
       stockAnalysis: [],
+      componentKey: 0,
+      maxDate: new Date().toISOString(),
       isDataValid: false,
       error: "",
       colors: barColor,
@@ -230,6 +234,7 @@ export default {
     ...mapActions(["setSnackBarMessage"]),
     showDialogStockAnalysis() {
       this.dialogStockAnalysis = true;
+      this.componentKey++;
     },
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
@@ -317,11 +322,11 @@ export default {
       });
       return [
         {
-          name: window.$nuxt.$root.$t("msg.win"),
+          name: this.$root.$t("msg.win"),
           data: win
         },
         {
-          name: window.$nuxt.$root.$t("msg.lose"),
+          name: this.$root.$t("msg.lose"),
           data: loss
         }
       ];

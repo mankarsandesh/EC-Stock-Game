@@ -38,7 +38,6 @@
               item-value="id"
               v-on:change="changeAmountRate($event)"
               solo
-              append-icon="fa-angle-down"
             ></v-select>
           </v-flex>
           <v-flex lg6 pr-2>
@@ -50,7 +49,7 @@
               solo
               label="10%"
               v-if="selectRate"
-              append-icon="fa-money"
+              append-icon="money"
               v-model="rateValue"
               @keypress="onlyNumber"
             ></v-text-field>
@@ -64,7 +63,7 @@
               v-if="selectAmount"
               @keypress="onlyNumber"
               v-model="amountValue"
-              append-icon="fa-money"
+              append-icon="money"
             ></v-text-field>
           </v-flex>
         </v-card-actions>
@@ -75,15 +74,13 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
-            <div
-              @change="changeAmount(n.value)"
-              class="pa-1"
+            <v-radio
               v-for="n in autoStopFollow"
               :key="n.id"
-            >
-              <input type="radio" :id="n.id" name="radio-group" />
-              <label :for="n.id">{{ n.name }}</label>
-            </div>
+              :label="`${n.name}`"
+              :value="n.id"
+              v-on:change="changeAmount(n.value)"
+            ></v-radio>
             <v-flex v-if="this.autoStop == 4 || this.autoStop == 5">
               <v-text-field
                 :rules="[
@@ -121,7 +118,7 @@
                 >{{ $t("msg.confirm") }}</v-btn
               >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
-                {{ $t("msg.cancel") }}
+                {{ $t("msg.close") }}
               </v-btn>
             </v-flex>
           </v-radio-group>
@@ -136,7 +133,7 @@
             >{{ $t("msg.confirm") }}</v-btn
           >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
-            {{ $t("msg.cancel") }}
+            {{ $t("msg.close") }}
           </v-btn>
         </v-flex>
       </div>
@@ -281,7 +278,6 @@ export default {
   },
   methods: {
     userImgProfile(userImg) {
-      console.log(userImg);
       return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
     },
     // Send to Parent Components

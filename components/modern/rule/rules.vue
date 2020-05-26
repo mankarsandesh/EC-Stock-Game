@@ -18,7 +18,7 @@
                   style="position:right;"
                   color="#808080 !important"
                   @click="dialog = false"
-                  >fa-times</v-icon
+                  >close</v-icon
                 >
                 <v-card-title
                   class="headline lighten-2"
@@ -71,9 +71,9 @@
         </v-layout>
       </v-container>
     </div>
-    <v-card>
+    
       <onlyrules />
-    </v-card>
+   
   </div>
 </template>
 

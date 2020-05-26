@@ -8,7 +8,9 @@
             <span>{{ $t("msg.accountBalance") }}</span>
             <br />
             <span class="amount" v-if="userData.balance != 0">
-              {{ userData.balance | currency }}
+              {{
+              userData.balance | currency
+              }}
             </span>
             <span class="amount" v-if="userData.balance == 0">00.00</span>
             <!-- <span class="title_currentcy">USD</span> -->
@@ -20,7 +22,7 @@
 
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ 161536 | currency }}</span>
+            <span class="amount">{{ userData.rollingAmount | currency }}</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -48,12 +50,7 @@
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >fa-edit</v-icon
-                    >
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </div>
               </div>
@@ -71,12 +68,7 @@
                     placeholder="Your first name"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >fa-edit</v-icon
-                    >
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </div>
               </div>
@@ -94,12 +86,7 @@
                     placeholder="Your Last Name"
                   />
                   <span class="icon-container">
-                    <v-icon
-                      :size="20"
-                      color="#bdbdbd"
-                      @click="iconClick($event)"
-                      >fa-edit</v-icon
-                    >
+                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
                   </span>
                 </div>
               </div>
@@ -111,17 +98,12 @@
                   </label>
                 </div>
                 <div class="col-85">
-                  <select
-                    ref="gender"
-                    id="gender"
-                    name="gender"
-                    :value="userData.gender"
-                  >
+                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
                     <option value="male">{{ $t("profile.male") }}</option>
                     <option value="female">{{ $t("profile.female") }}</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">fa-angle-down</v-icon>
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </div>
               </div>
@@ -148,19 +130,14 @@
                   </label>
                 </div>
                 <div class="col-85">
-                  <select
-                    ref="country"
-                    id="country"
-                    name="country"
-                    :value="userData.country"
-                  >
+                  <select ref="country" id="country" name="country" :value="userData.country">
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
                     <option value="THA">Thailand</option>
                     <option value="LAO">LAOS</option>
                   </select>
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd">fa-angle-down</v-icon>
+                    <v-icon :size="20" color="#bdbdbd">arrow_drop_down</v-icon>
                   </span>
                 </div>
               </div>
@@ -169,13 +146,13 @@
                 <div class="col-15"></div>
                 <div class="col-85">
                   <v-btn
+                    type="submit"
                     :loading="updating"
                     :disabled="updating"
                     class="btn_save"
-                    @click="saveClick()"
-                    >{{ $t("msg.save") }}</v-btn
-                  >
-                  <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
+                    @click.prevent="saveClick()"
+                  >{{ $t("msg.save") }}</v-btn>
+                  <v-btn class="btn_cancel" @click="cancelUpdateProfile">{{ $t("msg.cancel") }}</v-btn>
                 </div>
               </div>
             </form>
@@ -190,6 +167,7 @@
 import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
+import validator from "validator";
 import log from "roarr";
 
 export default {
@@ -213,20 +191,28 @@ export default {
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
+    cancelUpdateProfile() {
+      this.$forceUpdate();
+    },
     async saveClick() {
+      
+      try {
       this.updating = true;
       const ref = this.$refs;
+      validator.isEmail(ref.email.value) ||  (() =>  {throw new Error(this.$root.$t("profile.invalidEmail"))})();
+      validator.isAlpha(ref.firstName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstName"))})();
+      validator.isAlpha(ref.lastName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastName"))})();
+      validator.isByteLength(ref.username.value, {min: 5, max: 20}) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidUsername"))})();
       var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
-      formData.append("email", ref.email.value);
-      formData.append("userName", ref.username.value);
-      formData.append("firstName", ref.firstName.value);
-      formData.append("lastName", ref.lastName.value);
+      formData.append("email", validator.trim(ref.email.value));
+      formData.append("userName", validator.trim(ref.username.value));
+      formData.append("firstName", validator.trim(ref.firstName.value));
+      formData.append("lastName", validator.trim(ref.lastName.value));
       formData.append("gender", ref.gender.value);
       formData.append("country", ref.country.value);
       formData.append("version", config.version);
-      try {
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
@@ -239,7 +225,7 @@ export default {
           this.updating = false;
           this.$swal({
             type: "success",
-            title: "Successful Information Saved!",
+            title: this.$root.$t("profile.success"),
             showConfirmButton: false,
             timer: 1000
           });

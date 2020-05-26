@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+    v-if="dialogOnlineHistory"
     v-model="dialogOnlineHistory"
     fullscreen
     hide-overlay
@@ -11,7 +12,7 @@
         <v-layout row justify-center>
           <h2>{{ $t("profile.onlineHistory") }}</h2>
           <v-spacer></v-spacer>
-          <v-icon size="20" @click="dialogOnlineHistory = false">fa-times</v-icon>
+          <v-icon size="20" @click="dialogOnlineHistory = false">close</v-icon>
         </v-layout>
       </v-toolbar>
       <v-flex mt-2 xs12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
@@ -56,14 +57,14 @@
                   <div class="date_picker">
                     <span class="select_date">{{ startDate }}</span>
                     <span class="icon_date">
-                      <v-icon>fa-calendar</v-icon>
+                      <v-icon>date_range</v-icon>
                     </span>
                   </div>
                 </div>
                 <div style="position:absolute;z-index:1">
-                   <v-date-picker next-icon="fa-chevron-right"
-  prev-icon="fa-chevron-left"
+                  <v-date-picker
                     color="#1db42f"
+                    :max="maxDate"
                     v-if="isShowDateStart"
                     v-model="startDate"
                     @input="isShowDateStart = false"
@@ -79,14 +80,14 @@
                   <div class="date_picker">
                     <span class="select_date">{{ endDate }}</span>
                     <span class="icon_date">
-                      <v-icon>fa-calendar</v-icon>
+                      <v-icon>date_range</v-icon>
                     </span>
                   </div>
                 </div>
                 <div style="position:absolute;z-index:1">
-                   <v-date-picker next-icon="fa-chevron-right"
-  prev-icon="fa-chevron-left"
+                  <v-date-picker
                     color="#1db42f"
+                    :max="maxDate"
                     v-if="isShowDateEnd"
                     v-model="endDate"
                     @input="isShowDateEnd = false"
@@ -134,7 +135,7 @@
           </div>
           <div>
             <strong>{{$t("profile.totalOnline")}} :</strong>
-            {{ totalOnlineTime }}
+            {{ getTotalOnlineTime }}
           </div>
         </div>
       </v-flex>
@@ -158,6 +159,7 @@ export default {
     return {
       series: [],
       componentKey: 0,
+      maxDate: new Date().toISOString(),
       totalOnlineTime: "",
       currentActiveTime: "",
       dataReady: false,
@@ -217,12 +219,23 @@ export default {
         this.getUserInfo.profileImage == undefined
         ? "/user.png"
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
-    }
+    },
+    getTotalOnlineTime () {
+      let days = this.totalOnlineTime.split("|")[0];
+      let hours = this.totalOnlineTime.split("|")[1];
+      let minutes = this.totalOnlineTime.split("|")[2];
+      this.series[0].name = this.$root.$t("msg.onlineActiveTime");
+      this.componentKey++;
+      return `${
+              days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
+            }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t("msg.minutes")}`;
+    },
   },
   methods: {
     ...mapActions(["setSnackBarMessage"]),
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
+      this.componentKey++;
     },
     checkValidDate(startDate, endDate) {
       const now = date.format(new Date(), "YYYY-MM-DD");
@@ -270,10 +283,11 @@ export default {
           let days = Math.floor(totalActiveTime / (24 * 60));
           let hours = parseInt(totalActiveTime / 60) % 24;
           let minutes = totalActiveTime % 60;
-          this.totalOnlineTime = `${
-            days ? `${days} days, ` : ``
-          }${hours} hours and ${minutes} minutes`;
-          this.series = [{ data: chartData }];
+          this.totalOnlineTime = `${days}|${hours}|${minutes}`;
+          this.series = [{
+            name: this.$root.$t("msg.onlineActiveTime"),
+            data: chartData
+            }];
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {

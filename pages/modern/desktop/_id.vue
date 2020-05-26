@@ -2,9 +2,9 @@
   <v-container fluid mt-2 class="containerNew">
     <v-layout>
       <!-- Left Side Stock List  -->
-      <v-flex v-if="!isHidden" class="leftStocklist" mt-4>
+      <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
         <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">fa-times</v-icon>
+          <v-icon color="#0b2968">close</v-icon>
         </span>
         <v-layout column>
           <v-flex xs12 pt-3>
@@ -26,7 +26,7 @@
       </v-flex>
       <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
-          <v-icon color="#FFF">fa-th-list</v-icon>
+          <v-icon color="#FFF">list</v-icon>
         </span>
       </v-flex>
       <!-- End Left Side -->
@@ -36,15 +36,15 @@
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
             <!-- Stock Select Start -->
-            <v-flex md7 lg6 pt-2 id="selectstockGuidelines">
+            <v-flex md6 lg6 pt-2 id="selectstockGuidelines">
               <stockSelect />
             </v-flex>
             <!-- Stock Select End -->
 
             <!-- Stock Last Draw Start -->
-            <v-flex xs6 md5 lg6 pt-1>
-              <v-layout mb-3>
-                <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
+            <v-flex xs6 md6 lg6 pt-1>
+              <v-layout mb-3 justify-center wrap row>
+                <v-flex xs4 md3 lg3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
@@ -54,7 +54,6 @@
                     </v-flex>
                   </div>
                 </v-flex>
-
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.betCloseIn") }}</span>
                   <div id="betCloseInGuideline">
@@ -82,7 +81,6 @@
                     </v-flex>
                   </div>
                 </v-flex>
-
                 <v-flex xs4 md3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.lotteryDraw") }}</span>
                   <div id="lotteryDrawGuidelines">
@@ -99,7 +97,6 @@
                   </div>
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
-
                 <v-flex
                   xs2
                   md1
@@ -124,14 +121,14 @@
 
           <!-- Stock Chart and Bet button Component  -->
           <v-layout>
-            <v-flex md5 lg5 mt-2>
+            <v-flex md5 lg5 class="marginTop-2">
               <div id="chartGuidelineNew" class="chartDesgin">
                 <v-flex>
                   <chartApp :stockName="routeParams" />
                 </v-flex>
               </div>
             </v-flex>
-            <v-flex md7 lg7 mx-2 pt-2>
+            <v-flex md7 lg7 mx-2 class="marginTop-2">
               <div id="betRuleButton">
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
@@ -161,7 +158,7 @@
                   <v-icon>fa-plus</v-icon>
                 </span>
                 <span v-else class="addChart" @click="removeTradMap(index)">
-                  <v-icon>fa-times</v-icon>
+                  <v-icon>close</v-icon>
                 </span>
               </tableTrendMap>
             </div>
@@ -183,15 +180,13 @@
             <h2 style="text-align:center;">
               {{ $t("msg.ecGamingRulesDescription") }}
             </h2>
+
             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn
-              class="buttonGreensmall"
-              to="/modern/desktop/gamerule"
-              dark
-              >{{ $t("msg.gameRule") }}</v-btn
-            >
+            <v-btn class="buttonGreensmall" to="/modern/desktop/gamerule" dark
+              >{{ $t("msg.gameRule") }}
+            </v-btn>
           </v-flex>
         </v-card>
       </v-dialog>
@@ -213,7 +208,7 @@
                 <v-icon size="24px">fa-arrows-alt</v-icon>
               </v-btn>
             </template>
-            <span>Enter Fullscreen Mode</span>
+            <span>{{ $t("msg.enterFullScreen") }}</span>
           </v-tooltip>
           <!-- Multiple Screen Float Button 
            <v-tooltip left>
@@ -476,7 +471,6 @@ export default {
   },
   computed: {
     vueVersion() {
-      console.log(Vue.version, "Version");
       return Vue.version;
     },
     ...mapGetters([
@@ -547,15 +541,12 @@ export default {
 }
 
 .sidebar-close {
-  z-index: 999;
+  /* z-index: 999; */
+  padding: 3px;
   font-size: 16px;
   cursor: pointer;
   background-color: #4464ff !important;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  line-height: 35px;
-  text-align: center;
+  border-radius: 180px;
   position: absolute;
   top: -15px;
   right: -8px;
@@ -573,16 +564,10 @@ export default {
   position: fixed;
   left: 5px;
   top: 75px;
-  width: 45px;
-  height: 45px;
-  line-height: 48px;
-  text-align: center;
-  border-radius: 50%;
-
   background-color: #4464ff !important;
   color: #fff !important;
+  padding: 5px;
   border: 1px solid #dddddd;
+  border-radius: 180px;
 }
 </style>
-
-betting

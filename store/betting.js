@@ -163,7 +163,8 @@ const actions = {
                 this._vm.$swal({
                     type: resultStatus.success >= resultStatus.failed ? "success" : "error",
                     title: `<span style="color:green"> bet success ${resultStatus.success} </span> <span style="color:red;padding-left:10px"> bet failed ${resultStatus.failed} </span>`,
-                    showConfirmButton: true
+                    showConfirmButton: false,
+                    timer: 1000
                 });
             } else {
                 throw new Error(config.error.general);

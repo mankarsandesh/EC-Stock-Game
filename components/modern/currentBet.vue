@@ -2,8 +2,6 @@
   <v-layout row class="justify-center">
     <v-flex md10 lg10 mt-5>
       <v-data-table
-        prev-icon="fa-chevron-left"
-        next-icon="fa-chevron-right"
         :items="currentBets"
         :rows-per-page-items="[10]"
         ref="table"
@@ -32,7 +30,7 @@
           <td>
             {{ item.item.ruleName }} - ({{ item.item.payout }})
             {{ item.item.stockName }} / {{ item.item.loop }}
-            {{ $t("msg.minute") }}
+            {{ $t("msg.minutes") }}
           </td>
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
@@ -60,6 +58,11 @@
               class="text-uppercase betresult"
               >{{ $t("msg.pending") }}...</v-chip
             >
+          </td>
+        </template>
+        <template slot="no-data">
+          <td colspan="7">
+            {{ $t("currentBet.noBets") }}
           </td>
         </template>
         <template slot="footer">
