@@ -1,6 +1,6 @@
 <template>
   <v-layout row class="justify-center">
-    <v-flex   md10 lg10 mt-5>
+    <v-flex md10 lg10 mt-5>
       <v-data-table
         :items="currentBets"
         :rows-per-page-items="[10]"
@@ -29,7 +29,8 @@
           <td>{{ item.item.gameUUID }}</td>
           <td>
             {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minute')}}
+            {{ item.item.stockName }} / {{ item.item.loop }}
+            {{ $t("msg.minutes") }}
           </td>
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
           <td>{{ item.item.betAmount | toCurrency }}</td>
@@ -59,6 +60,11 @@
             >
           </td>
         </template>
+        <template slot="no-data">
+          <td colspan="7">
+            {{ $t("currentBet.noBets") }}
+          </td>
+        </template>
         <template slot="footer">
           <tr>
             <td>{{ $t("msg.total") }}</td>
@@ -71,8 +77,6 @@
             <td colspan="2"></td>
           </tr>
         </template>
-        
-
       </v-data-table>
     </v-flex>
   </v-layout>

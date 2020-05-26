@@ -15,6 +15,7 @@ export const BetResult = {
             "setCollegeButtonNumberParent",
             "setItemBetting",
             "clearItemBetting"
+
         ]),
 
         betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin   
@@ -202,13 +203,17 @@ export const BetResult = {
             this.setItemBetting(items)
         },
 
+
+        // cler the bet from localStroge after new game 
         clearItemsAfterLastDraw() {
+
+            localStorage.removeItem("itemBetting")
 
             if (this.getItemsBetting.length) {
 
-                secureStorage.removeItem("getItemsBetting")
-
                 this.clearItemBetting()
+
+                localStorage.removeItem("itemBetting")
 
             }
         }

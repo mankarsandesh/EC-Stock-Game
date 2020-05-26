@@ -19,8 +19,8 @@
       </v-flex>
       <v-flex class="pt-1 text-uppercase betHeading">
         <span>
-          {{ $t("msg.stockName") }}: {{ $t(`stockname.${stockName}`) }} -
-          {{ getStockLoop(stockName) }} {{ $t("msg.minute") }}
+          {{ $t("msg.stockName") }}: {{ $t(`stockName.${stockName}`) }} -
+          {{ getStockLoop(stockName) }} {{ $t("msg.minutes") }}
         </span>
         |
         <span>
@@ -71,17 +71,12 @@
           @click="confirmBet()"
           :disabled="confirmDisabled"
         >{{ $t("msg.confirm") }}</v-btn>
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">
-          {{
-          $t("msg.cancel")
-          }}
-        </v-btn>
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{ $t("msg.cancel") }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 <script>
-
 import Sound from "~/helpers/sound";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
@@ -90,6 +85,7 @@ import chips from "~/data/chips";
 import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 import { BetResult } from "~/mixin/betResult";
+
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   mixins: [BetResult],
@@ -101,7 +97,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([  
+    ...mapGetters([
       "getStockLoop",
       "getGameUUIDByStockName",
       "getCoinsModern",
@@ -113,7 +109,7 @@ export default {
     ])
   },
   watch: {
-    getLastDraw(val) {
+    getLastDraw(val) {     
       // sending the data to process on the helper♦
       this.betResult(val, this.stockName, this.betId, this.betWin);
     }
@@ -134,6 +130,17 @@ export default {
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
+      // if (parseInt(this.betValue + amount) > 10000) {
+      //   this.$swal({
+      //     type: "error",
+      //     title: "Bet value should not be more than 10000",
+      //     timer: 1000,
+      //     showConfirmButton: true
+      //   });
+      //   this.betValue = 0;
+      // } else {
+      //   this.betValue = this.betValue + amount;
+      // }
     },
     async sendBetting(betData) {
       try {
@@ -195,7 +202,15 @@ export default {
       }
     },
     confirmBet() {
-      if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
+      if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
+        this.$swal({
+          type: "error",
+          title: "Bet value should be greater than 0 and not be more than 10000",
+          timer: 1500,
+          showConfirmButton: true
+        });
+        this.betValue = 0;
+      } else if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
         this.$swal({
           type: "error",
           title: config.error.lowBalance,
@@ -208,7 +223,7 @@ export default {
           class: this.betId.split("-")[0],
           betAmount: this.betValue
         };
-
+        
         this.storeBetOnLocalStroge(betStore);
 
         let data = {
@@ -223,7 +238,9 @@ export default {
             stock: this.stockName,
             betRule: this.betId
           };
+
           this.$emit("update-bet", stockDetail);
+
           this.confirmDisabled = true;
           this.sendBetting(data);
           $("#" + this.stockName + this.betId).addClass(

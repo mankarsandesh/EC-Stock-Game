@@ -30,7 +30,7 @@
               <td>{{ item.item.gameUUID }}</td>
               <td>
                 {{ item.item.ruleName }} - ({{ item.item.payout }})
-                {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minute')}}
+                {{ item.item.stockName }} / {{ item.item.loop }} {{$t('msg.minutes')}}
               </td>
               <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
               <td>{{ item.item.betAmount | toCurrency }}</td>
@@ -42,10 +42,10 @@
                 <span class="losing">- {{ item.item.betAmount }}</span>
               </td>
               <td v-if="item.item.isFollowBet == 1" class="text-uppercase text-center">
-                <div class="following">by followers</div>
+                <div class="following">{{$t("currentBet.byFollowers")}}</div>
               </td>
               <td v-if="item.item.isFollowBet == 0" class="text-uppercase">
-                <div class="original">original</div>
+                <div class="original">{{$t("currentBet.original")}}</div>
               </td>
             </tr>
             <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
@@ -81,7 +81,11 @@
               </td>
             </tr>
           </template>
-
+          <template slot="no-data">
+          <td colspan="7">
+            {{ $t("betHistory.noBets") }}
+          </td>
+        </template>
           <template slot="footer">
             <tr>
               <td>{{ $t("msg.total") }}</td>
@@ -111,7 +115,7 @@
           <v-pagination
             v-model="pagination.page"
             color="#1db42f"
-            :length="Math.round(betHistory.length / rowPageCount)"
+            :length="Math.ceil(betHistory.length / rowPageCount)"
           ></v-pagination>
         </div>
       </v-flex>
@@ -161,11 +165,13 @@ export default {
       return total;
     },
     TotalRolling() {
-      let total = null;
+      let totalRolling = null;
+      let totalbBetting = null;
       this.betHistory.map(item => {
-        total += item.rollingAmount;
+        totalRolling += item.rollingAmount;
+        if(item.betResult == 'lose') { totalbBetting += item.betAmount; }
       });
-      return total;
+      return totalRolling - totalbBetting;
     }
   }
 };
@@ -199,7 +205,7 @@ export default {
 .original {
   margin: 0 auto;
   width: 150px;
-  border-radius: 5px;
+  border-radius: 15px;
   padding: 4px 10px;
   color: #333333;
   font-size: 14px;
@@ -210,7 +216,7 @@ export default {
 .following {
   margin: 0 auto;
   width: 150px;
-  border-radius: 5px;
+  border-radius: 15px;
   padding: 4px 16px;
   color: #fff;
   font-size: 14px;

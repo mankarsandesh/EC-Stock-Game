@@ -7,7 +7,7 @@ const config = {
   baseUrl: process.env.BASE_URL,
   secretKey: "GYXMAKGDYAWDW4K1C6HWWQHXH2W",
   secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
-  sessionExpiryTime: new Date(new Date().getTime() + 30 * 60 * 1000),
+  sessionExpiryTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   isMaintenance: process.env.MAINTENANCE_MODE,
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"

@@ -1,6 +1,7 @@
 import config from "../config/config.global";
 import secureStorage from "../plugins/secure-storage";
 import log from "roarr";
+import Sound from "~/helpers/sound";
 
 const state = () => ({
     collegeBtnNumber: null,
@@ -18,12 +19,12 @@ const mutations = {
     SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
         state.multiGameFooterBetAmount = payload;
     },
-    CLEAR_ITEMS_BETTING(state, payload) {
+    CLEAR_ITEMS_BETTING(state) {
         state.getItemsBetting = [];
     },
     SET_ITEMS_BETTING(state, payload) {
         state.getItemsBetting.push(payload);
-        secureStorage.setItem("getItemsBetting", state.getItemsBetting);
+        localStorage.setItem("itemBetting", JSON.stringify(state.getItemsBetting))
     },
     SET_COLLEGE_BUTTON_NUMBER(state, payload) {
         state.collegeBtnNumber = payload;
@@ -44,7 +45,7 @@ const mutations = {
         state.multiGameBet = [];
     },
     SET_FOOTER_BET_AMOUNT(state, payload) {
-        state.footerBetAmount = parseInt(payload);
+        state.footerBetAmount += parseInt(payload);
     },
     PUSH_DATA_ON_GOING_BET(state, payload) {
         state.onGoingBet.splice(0, 0, payload);
@@ -54,6 +55,7 @@ const mutations = {
     },
     SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
         state.tempMultiGameBetData.push(payload);
+        localStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
     },
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
         state.multiGameBetSend.push(...state.tempMultiGameBetData);
@@ -69,8 +71,8 @@ const actions = {
     clearItemBetting({ commit }) {
         commit("CLEAR_ITEMS_BETTING");
     },
-    setItemBetting({ commit }) {
-        commit("SET_ITEMS_BETTING");
+    setItemBetting({ commit }, payload) {
+        commit("SET_ITEMS_BETTING", payload);
     },
     setCollegeButtonNumberParent({ commit }) {
         commit("SET_COLLEGE_BUTTON_NUMBER");
@@ -97,6 +99,7 @@ const actions = {
     },
     // Push data to ongoing bet
     pushDataOnGoingBet({ commit }, payload) {
+
         commit("PUSH_DATA_ON_GOING_BET", payload);
     },
     // Clear data from multi game bet send
@@ -139,6 +142,7 @@ const actions = {
                 headers: config.header
             });
             if (res.status && res.code == 200) {
+                Sound.betTing();
                 context.dispatch("setUserData", "provider");
                 context.commit("SET_IS_SEND_BETTING", false);
                 context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
@@ -163,7 +167,8 @@ const actions = {
                 this._vm.$swal({
                     type: resultStatus.success >= resultStatus.failed ? "success" : "error",
                     title: `<span style="color:green"> bet success ${resultStatus.success} </span> <span style="color:red;padding-left:10px"> bet failed ${resultStatus.failed} </span>`,
-                    showConfirmButton: true
+                    showConfirmButton: false,
+                    timer: 1000
                 });
             } else {
                 throw new Error(config.error.general);
@@ -310,7 +315,8 @@ const getters = {
     },
     getMultiGameFooterBetAmount(state) {
         return state.multiGameFooterBetAmount;
-    }
+    },
+    gettempMultiGameBetData: state => state.tempMultiGameBetData
 };
 
 export default {

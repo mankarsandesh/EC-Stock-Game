@@ -125,8 +125,8 @@ export default {
     },
     getLogout() {
       this.$swal({
-        title: "Are you sure?",
-        text: "Did you leave the EC Gaming page?",
+        title: window.$nuxt.$root.$t("msg.sure"),
+        text: window.$nuxt.$root.$t("msg.bye"),
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
