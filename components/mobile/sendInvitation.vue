@@ -199,21 +199,21 @@ export default {
   },
   mounted() {
     // Users List Invitaion Socket
-    // this.listenForBroadcast(
-    //   {
-    //     channelName: `messageSend.${this.getPortalProviderUUID}.global`,
-    //     eventName: "messageSend"
-    //   },
-    //   ({ data }) => {
-    //     const objectArray = Object.entries(data.data);
-    //     let newData = [];
-    //     objectArray.forEach(([key, value]) => {
-    //       newData[key] = value;
-    //     });
-    //     this.globalInvitation.push(newData);
-    //     this.scrollDown();
-    //   }
-    // );
+    this.listenForBroadcast(
+      {
+        channelName: `messageSend.${this.getPortalProviderUUID}.global`,
+        eventName: "messageSend"
+      },
+      ({ data }) => {
+        const objectArray = Object.entries(data.data);
+        let newData = [];
+        objectArray.forEach(([key, value]) => {
+          newData[key] = value;
+        });
+        this.globalInvitation.push(newData);
+        this.scrollDown();
+      }
+    );
   },
   computed: {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
