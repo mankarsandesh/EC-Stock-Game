@@ -1,8 +1,22 @@
 <template>
   <div v-on-clickaway="closeChat">
-    <v-btn right fab @click="switchChat()" class="liveChat">
-      <v-icon>fa-comments</v-icon>
-    </v-btn>
+    <v-tooltip left>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="primary"
+          rigth
+          fab
+          class="liveChat"
+          dark
+          @click="switchChat()"
+          v-on="on"
+        >
+          <v-icon>fa-comments</v-icon>
+        </v-btn>
+      </template>
+      <span>{{ $t("invitation.sendInvitation") }}</span>
+    </v-tooltip>
+
     <div id="chat-container" v-show="isShowChat">
       <div id="chat-container-header">
         <div
