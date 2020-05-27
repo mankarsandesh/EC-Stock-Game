@@ -1,6 +1,5 @@
 import config from "../config/config.global";
 import secureStorage from "../plugins/secure-storage";
-import log from "roarr";
 import Sound from "~/helpers/sound";
 
 const state = () => ({
@@ -188,16 +187,6 @@ const actions = {
                 title: `${ex.message}`,
                 showConfirmButton: true
             });
-            log.error({
-                    req: reqBody,
-                    res,
-                    page: "store/betting.js",
-                    apiUrl: config.storeBet.url,
-                    provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-                    user: secureStorage.getItem("USER_UUID")
-                },
-                ex.message
-            );
         }
     }
 };

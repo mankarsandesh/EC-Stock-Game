@@ -9,16 +9,19 @@
         <v-layout column>
           <v-flex xs12 pt-3>
             <div id="stocklistGuidelines">
+              <!-- Stock List -->
               <stockList></stockList>
             </div>
           </v-flex>
           <v-flex xs12 pt-2>
             <div id="betresultGuidelines">
+              <!-- Stock Result  -->
               <stockResult></stockResult>
             </div>
           </v-flex>
           <v-flex xs12 pt-2>
             <div id="bettingGuidelines">
+              <!-- on going Betting -->
               <onBetting></onBetting>
             </div>
           </v-flex>
@@ -97,7 +100,7 @@
                   </div>
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
-
+                <!-- Help Tutorial -->
                 <v-flex
                   xs2
                   md3
@@ -125,12 +128,14 @@
             <v-flex md5 lg5 class="marginTop-2">
               <div id="chartGuidelineNew" class="chartDesgin">
                 <v-flex>
+                  <!-- Chart Stock wise -->
                   <chartApp :stockName="routeParams" />
                 </v-flex>
               </div>
             </v-flex>
             <v-flex md7 lg7 mx-2 class="marginTop-2">
               <div id="betRuleButton">
+                <!-- -Bet Button -->
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
             </v-flex>
@@ -248,7 +253,6 @@ import stockSelect from "~/components/stockSelect";
 import config from "~/config/config.global";
 import lotteryDraw from "~/components/modern/lotteryDraw";
 import { isMobile } from "mobile-device-detect";
-import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
 import onlyrules from "~/components/modern/rule/onlyrule";
 
@@ -290,10 +294,9 @@ export default {
       isStep: 0
     };
   },
-
   created() {
     this.clearBetValueFooterBet();
-
+    // Check size is Desktop or Mobile. and redirect to Mobile or Desktop
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }
@@ -333,19 +336,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.$route.params.id
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "pages/modern/desktop/_id.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -404,17 +394,6 @@ export default {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/_id.vue",
-            apiUrl: config.getStock.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     // Add TrendMap

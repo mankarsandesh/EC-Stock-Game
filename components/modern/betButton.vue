@@ -148,7 +148,7 @@
         </v-btn>
       </popper>
 
-      <span class="w12">
+      <span class="w10">
         <v-btn
           :class="number === 'last' ? 'active-lasttdigit' :null "
           class="align_button4 betButtonGuide l-hover"

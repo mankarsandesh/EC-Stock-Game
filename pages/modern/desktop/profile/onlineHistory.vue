@@ -101,7 +101,6 @@ import date from "date-and-time";
 import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import secureStorage from "../../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   components: {
@@ -266,17 +265,6 @@ export default {
           this.error = "Please select a valid date";
           this.dataReady = false;
         }
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/profile/onlineHistory.vue",
-            apiUrl: config.getUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

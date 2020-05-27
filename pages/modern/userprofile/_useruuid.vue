@@ -15,7 +15,20 @@
                     height="10px"
                     dense
                     hide-details
-                    :items="items"
+                    :items="[
+                      {
+                        text: $t('profile.1month'),
+                        value: 1
+                      },
+                      {
+                        text: $t('profile.2months'),
+                        value: 2
+                      },
+                      {
+                        text: $t('profile.3months'),
+                        value: 3
+                      }
+                    ]"
                     solo
                   ></v-select>
                 </div>
@@ -245,7 +258,6 @@ import config from "~/config/config.global";
 import followBet from "~/components/mobile/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   components: {
@@ -269,20 +281,6 @@ export default {
       endDate: "",
       visitProfileUserData: "",
       filter: 1,
-      items: [
-        {
-          text: "1 Month",
-          value: 1
-        },
-        {
-          text: "2 Month",
-          value: 2
-        },
-        {
-          text: "3 Month",
-          value: 3
-        }
-      ],
       series: [],
       chartOptions: {
         chart: {
@@ -423,17 +421,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/userprofile/_useruuid.vue",
-            apiUrl: config.getVisitUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

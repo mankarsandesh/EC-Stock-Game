@@ -220,10 +220,6 @@ export default {
       showfilterType: false
     };
   },
-  mounted() {
-    console.log(this.getAllStocks);
-  },
-  watch: {},
   computed: {
     ...mapGetters([
       "getAllStocks",

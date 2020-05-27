@@ -1,5 +1,5 @@
 <template>  
-    <bethistory :search="search" :userBetHistory="userBetHistory" />
+    <bethistory :search="search" :userBetHistory="userBetHistory"   @userLimit="loadMoreData" />
 </template>
 
 <script>
@@ -8,7 +8,6 @@ import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   layout: "default",
@@ -18,6 +17,7 @@ export default {
   },
   data() {
     return {
+      betDataLimit : 10,
       today: new Date(),
       sortby: "",
       search: "",
@@ -53,6 +53,10 @@ export default {
     this.fetchBetHsitory();
   },
   methods: {
+    loadMoreData(){
+     this.betDataLimit += 10;   
+     this.fetchBetHsitory();
+    },
     sortingBy() {
       if (this.sortby == "Today") {
         const lastWeek = new Date(
@@ -103,7 +107,8 @@ export default {
           version: config.version,
           betResult: [0, 1],
           dateRangeFrom: this.dateFrom,
-          dateRangeTo: this.dateTo
+          dateRangeTo: this.dateTo,
+          limit : this.betDataLimit
         };
         var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
@@ -123,17 +128,6 @@ export default {
           timer: 1000
         });
         this.loadingImage = false;
-        log.error(
-          {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/history.vue",
-            apiUrl: config.getAllBets.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

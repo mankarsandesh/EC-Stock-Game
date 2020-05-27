@@ -75,6 +75,9 @@ const config = {
   liveCountBetData: {
     url: `${process.env.BASE_URL}/liveCountBetData`
   },
+  getUserInvitationDetails: {
+    url: `${process.env.BASE_URL}/getUserInvitationDetail`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
@@ -94,10 +97,10 @@ const config = {
   defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
   homePageStockName: "btc1",
   language: {
-    cn: "Chinese",
-    us: "English",
-    th: "Thai",
-    la: "Lao"
+    cn: "chinese",
+    us: "english",
+    th: "thai",
+    la: "lao"
   }
 };
 

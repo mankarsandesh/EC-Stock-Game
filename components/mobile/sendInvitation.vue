@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-flex>
+    <v-flex mb-5>
       <v-list subheader class="topWrap">
         <v-list-tile>
           <v-list-tile-content>
@@ -8,7 +8,7 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-      <v-list two-line class="bodyChat">
+      <v-list two-line class="bodyChat" id="bodyChat">
         <template>
           <v-flex v-if="globalInvitation.length == 0" style="margin-top:200px;">
             <h2 class="text-center" style="color:#a3a3a3;">
@@ -37,7 +37,7 @@
 
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <span v-on="on">#{{ item.Rank }}</span>
+                    <span v-on="on">#{{ item.rank }}</span>
                   </template>
                   <span>{{ $t("invitation.userRank") }}</span>
                 </v-tooltip>
@@ -113,9 +113,9 @@
             <v-checkbox
               justify-center
               color="green"
-              :height="5"
+              :height="4"
               v-model="selectCategory"
-              :label="item.value"
+              :label="item.value+' '+' '+CatValue[index]"
               :value="item.id"
             ></v-checkbox>
           </v-flex>
@@ -182,6 +182,7 @@ export default {
           value: this.$root.$t("invitation.userRank")
         }
       ],
+      CatValue: [],
       globalInvitation: [],
       defaultImage: "/no-profile-pic.jpg",
       FolloworNot: "",
@@ -195,7 +196,11 @@ export default {
   components: {
     followBet
   },
+  created() {
+    this.fetchUserInvitation();
+  },
   mounted() {
+     this.scrollDown();
     // Users List Invitaion Socket
     this.listenForBroadcast(
       {
@@ -223,6 +228,31 @@ export default {
   methods: {
     // Set Error from SnackBar
     ...mapActions(["setSnackBarError"]),
+    // fetch Users Invitation
+    async fetchUserInvitation() {
+      try {
+        const reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        const res = await this.$axios.$post(
+          config.getUserInvitationDetails.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );    
+        this.CatValue = [
+          Math.round(res.data["winRate"]) + "%",
+          res.data["followerCount"],
+          "#" + res.data["rank"]
+        ];
+       
+      } catch (ex) {
+        this.setSnackBarError(true);
+      }
+    },    
     // Send Top Player Users Invitation
     async sendInvitation() {
       if (this.selectCategory.length > 0) {
@@ -252,14 +282,19 @@ export default {
     },
     // After more Invitation Come Scroll Down Automatically
     scrollDown() {
-      $(".bodyChat")
-        .stop()
-        .animate(
-          {
-            scrollTop: $(".bodyChat")[0].scrollHeight
-          },
-          1000
-        );
+       if ($("#bodyChat")[0]) {
+        $("#bodyChat")
+          .stop()
+          .animate({ scrollTop: $("#bodyChat")[0].scrollHeight }, 1000);
+      }      
+      // $(".bodyChat")
+      // .stop()
+      // .animate(
+      // {
+      // scrollTop: $(".bodyChat")[0].scrollHeight
+      // },
+      //  1000
+      // );
     },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);

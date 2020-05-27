@@ -5,6 +5,7 @@
     <!-- tutorial  end -->
 
     <v-app style=" background-color: #f4f5fd;">
+      <button id="closeButton" hidden>this button to close some modal</button>
       <div
         class="text-xs-center container-loading loading"
         v-if="getIsLoadingStockGame"
@@ -18,7 +19,7 @@
         ></v-progress-circular>
       </div>
       <v-toolbar class="toolbarMenu" style="background-color:#FFF;">
-        <v-container fluid class="navbar">
+        <v-container fluid class="navbar pr-0">
           <v-toolbar-title>
             <v-img
               src="/logo.png"
@@ -53,47 +54,26 @@
               </v-btn>
             </div>
             <userMenu class="layout-logout" />
-            <v-menu bottom offset-y>
-              <template v-slot:activator="{ on }">
-                <span
-                  v-on="on"
-                  flat
-                  id="notification"
-                  class="menuItemNotification"
-                >
-                  <i class="fa fa-bell-o fa-2x" />
-                  <span class="badge">{{ winnerList.length }}</span>
-                </span>
-              </template>
-              <v-list id="notificationTab">
-                <v-list-tile
-                  v-if="winnerList.length == 0"
-                  class="noNotification"
-                  >{{ $t("notification.noNotification") }}</v-list-tile
-                >
-
-                <v-list-tile
-                  v-for="(item, i) in winnerList"
-                  :key="i"
-                  class="mainNotification"
-                  @click="$router.push(pageLink(item.type))"
-                >
-                  <div class="userImage">
-                    <i class="fa fa-user-o fa-1x" />
-                  </div>
-                  <div class="messageBody">
-                    <div class="title">{{ item.title }}</div>
-                    <div class="description">{{ item.message }}</div>
-                    <div class="dateTime">{{ item.createdAt }}</div>
-                  </div>
-                </v-list-tile>
-              </v-list>
-              <v-list class="footerView">
-                <span @click="$router.push('/modern/desktop/notification/')">{{
-                  $t("notification.viewAll")
-                }}</span>
-              </v-list>
-            </v-menu>
+            <div
+              flat
+              id="notification"
+              :class="
+                isShowNotification
+                  ? 'notification-icon notification-icon-active'
+                  : 'notification-icon '
+              "
+              @click="isShowNotification = !isShowNotification"
+            >
+              <i class="fa fa-bell-o fa-2x" />
+              <span
+                :class="
+                  isShowNotification
+                    ? 'badge bg-color-green'
+                    : 'badge bg-color-red'
+                "
+                >{{ notificationList.length }}</span
+              >
+            </div>
           </v-toolbar-items>
         </v-container>
       </v-toolbar>
@@ -102,15 +82,21 @@
       <v-content>
         <nuxt />
       </v-content>
-      <chat-box
+      <notification
+        v-on-clickaway="closeNotification"
+        :data="notificationList"
+        v-if="isShowNotification"
+      ></notification>
+      <chatBox
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :stockName="$route.params.id"
         :pathName="$route.name"
-      ></chat-box>
+      ></chatBox>
     </v-app>
   </div>
 </template>
 <script>
+import { mixin as clickaway } from "vue-clickaway";
 import { mapGetters, mapActions } from "vuex";
 import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
@@ -118,6 +104,7 @@ import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import i18n from "vue-i18n";
 import invitation from "~/components/invitation";
+import notification from "~/components/notification";
 import userMenu from "~/components/userMenu";
 import chatBox from "~/components/modern/chatBox";
 import config from "~/config/config.global";
@@ -127,6 +114,8 @@ import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
 import Cookies from "../plugins/js-cookie";
 
 export default {
+  mixins: [clickaway],
+
   components: {
     DesktopTutorial,
     invitation,
@@ -134,10 +123,12 @@ export default {
     languageDialog,
     userMenu,
     AnimatedNumber,
-    chatBox
+    chatBox,
+    notification
   },
   data() {
     return {
+      isShowNotification: false,
       isShowTutorial: true,
       messagesCount: 0,
       activeClass: null,
@@ -151,7 +142,7 @@ export default {
       bottom: true,
       left: false,
       transition: "slide-y-reverse-transition",
-      winnerList: [],
+      notificationList: [],
       pauseTime: 2000,
       pauseOnHover: false,
       scrollSpeed: 30,
@@ -194,16 +185,12 @@ export default {
     // console.log("crearted");
   },
   mounted() {
+    // fetch Notification from API
     this.fetchNotification();
   },
   methods: {
-    clearNotification() {
-      this.fetchNotification();
-    },
-    pageLink(type) {
-      return type == 3
-        ? "/modern/desktop/profile/follower/"
-        : "/modern/desktop/notification";
+    closeNotification() {
+      this.isShowNotification = false;
     },
     ...mapActions(["setGameChannelShow", "setUserBalance"]),
     listenUserBalance({ channelName, eventName }, callback) {
@@ -246,12 +233,14 @@ export default {
           }
         );
         if (data.status) {
-          this.winnerList = data.data.reverse();
+          this.notificationList = data.data.reverse();
         } else {
           throw new Error(config.error.general);
         }
       } catch (ex) {
+        console.log("fetchNotification");
         console.log(ex);
+        console.log("fetchNotification");
       }
     }
   },
@@ -267,6 +256,20 @@ export default {
 };
 </script>
 <style scoped>
+.notification-icon {
+  height: 62px !important;
+  width: 70px !important;
+  text-align: center;
+  padding-top: 16px;
+  cursor: pointer;
+}
+.notification-icon-active {
+  width: 100px;
+  background-color: #2bb13a;
+  color: #fff;
+}
+.menuItemNotification {
+}
 .footerView {
   border-top: 1px solid #dddddd;
   text-align: center;
@@ -340,18 +343,24 @@ export default {
   font-weight: 800;
   text-transform: uppercase;
 }
+.bg-color-red {
+  background-color: red;
+}
+.bg-color-green {
+  background-color: #2bb13a;
+  border-color: #fff !important;
+  font-weight: 600;
+}
 .badge {
   position: absolute;
   margin-top: -6px;
   margin-left: -15px;
-  background-color: red;
   color: #fff;
   border-radius: 180px;
   padding: 1px;
   height: 20px;
   width: 20px;
   font-size: 12px;
-  /* font-weight: 800; */
   border: 1px solid #333;
 }
 .closeNotification {
@@ -360,13 +369,7 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-.menuItemNotification {
-  height: 62px !important;
-  width: 40px !important;
-  text-align: center;
-  padding-top: 16px;
-  cursor: pointer;
-}
+
 .activeNotification {
   color: #ffffff;
   background-color: #2bb13a;
@@ -473,5 +476,10 @@ nav .v-toolbar__content .v-toolbar__items a.v-btn--active {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #2c6b9e;
+}
+
+nav .v-toolbar__content .container.navbar {
+  padding-right: 0 !important;
+  margin: 0 !important;
 }
 </style>

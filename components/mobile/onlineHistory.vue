@@ -217,7 +217,7 @@ export default {
     imgProfile() {
       return this.getUserInfo.profileImage == "" ||
         this.getUserInfo.profileImage == undefined
-        ? "/user.png"
+        ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     },
     getTotalOnlineTime () {

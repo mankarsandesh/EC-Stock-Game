@@ -1,8 +1,22 @@
 <template>
   <div v-on-clickaway="closeChat">
-    <v-btn right fab @click="switchChat()" class="liveChat">
-      <v-icon>fa-comments</v-icon>
-    </v-btn>
+    <v-tooltip left>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="primary"
+          rigth
+          fab
+          class="liveChat"
+          dark
+          @click="switchChat()"
+          v-on="on"
+        >
+          <v-icon>fa-comments</v-icon>
+        </v-btn>
+      </template>
+      <span>{{ $t("invitation.sendInvitation") }}</span>
+    </v-tooltip>
+
     <div id="chat-container" v-show="isShowChat">
       <div id="chat-container-header">
         <div
@@ -44,9 +58,11 @@
           :key="index"
         >
           <div>
-            <v-avatar :size="40">
-              <img :src="userImgProfile(chat.userImage)" alt="profile" />
-            </v-avatar>
+            <nuxt-link :to="'/modern/desktop/userprofile/' + chat.userUUID">
+              <v-avatar :size="40">
+                <img :src="userImgProfile(chat.userImage)" alt="profile" />
+              </v-avatar>
+            </nuxt-link>
           </div>
           <!-- content catalog -->
           <!-- rank -->
@@ -59,7 +75,7 @@
 
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span class="ranking" v-on="on">#{{ chat.Rank }}</span>
+                <span class="ranking" v-on="on">#{{ chat.rank }}</span>
               </template>
               <span>{{ $t("invitation.userRank") }}</span>
             </v-tooltip>
@@ -75,7 +91,9 @@
 
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <span v-on="on" class="winRate">{{ chat.winRate }}%</span>
+                <span v-on="on" class="winRate"
+                  >{{ Math.round(chat.winRate) }}%</span
+                >
               </template>
               <span>{{ $t("invitation.userWinRate") }}</span>
             </v-tooltip>
@@ -130,7 +148,10 @@
             :key="index"
           >
             <input type="checkbox" :checked="selectedCatalog.includes(item)" />
-            <label for="vehicle1">{{ item.title }}</label>
+            <label for="vehicle1"
+              >{{ item.title }} -
+              <span class="userValues"> {{ CatValue[index] }} </span></label
+            >
           </li>
         </ul>
       </div>
@@ -145,8 +166,13 @@
             @click="isShowCatalog = !isShowCatalog"
           >
             <span class="catalog-selected">
-              <span v-for="(item, index) in selectedCatalog" :key="index">
-                {{ index === 0 ? item.title : "/ " + item.title }}
+              <span v-if="selectedCatalog.length > 0">
+                <span v-for="(item, index) in selectedCatalog" :key="index">
+                  {{ index === 0 ? item.title : "/ " + item.title }}
+                </span>
+              </span>
+              <span v-else class="text-uppercase">
+                select Category
               </span>
             </span>
             <span style="position: relative;top: 3px;">
@@ -158,7 +184,7 @@
             <span class="text-uppercase">
               send invitations
             </span>
-            <v-icon color="#fff">fa-paper-plane</v-icon>
+            <v-icon size="18" color="#fff">fa-paper-plane</v-icon>
           </div>
         </div>
       </div>
@@ -166,6 +192,7 @@
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog v-model="followDialog" width="500" class="followDialog">
       <followBet
+        v-if="renderComponent"
         :username="this.username"
         :userImage="this.userImage"
         :FollowerUserUUID="this.FollowUserUUID"
@@ -180,7 +207,7 @@
 import { mixin as clickaway } from "vue-clickaway";
 import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
-import followBet from "~/components/mobile/follow/followBet";
+import followBet from "~/components/modern/follow/followBet";
 
 export default {
   mixins: [clickaway],
@@ -190,6 +217,7 @@ export default {
   props: ["gameUUID", "stockName", "pathName"],
   data() {
     return {
+      renderComponent: true, // render Follow Be
       errorMessage: "",
       isShowChat: false,
       isShowCatalog: false,
@@ -197,17 +225,21 @@ export default {
       catalog: [
         {
           id: "1",
-          title: "Win Bets"
+          title: this.$root.$t("invitation.winBets")
         },
         {
           id: "2",
-          title: "Total Follower"
+          title: this.$root.$t("invitation.totalFollower")
         },
         {
           id: "3",
-          title: "Rank"
+          title: this.$root.$t("invitation.userRank")
         }
       ],
+      CatValue: [],
+      userRank: "",
+      userFollow: "",
+      userWinRate: "",
       selectedCatalog: [],
       globalInvitation: [],
       chanelInvitation: [],
@@ -220,6 +252,9 @@ export default {
       followDialog: false,
       chanelPageAvailable: ["modern-desktop-id", "modern-fullscreen-id"]
     };
+  },
+  created() {
+    this.fetchUserInvitation();
   },
   mounted() {
     this.scrollDown();
@@ -290,6 +325,13 @@ export default {
     //get 2 data from vuex first, in the computed
   },
   methods: {
+    // Render Follow Bet Component
+    forceRerender() {
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        this.renderComponent = true;
+      });
+    },
     // Set Error from SnackBar
     ...mapActions(["setSnackBarError"]),
     startSocketChanel() {
@@ -300,9 +342,6 @@ export default {
             eventName: "messageSend"
           },
           ({ data }) => {
-            console.log("socket....");
-            console.log(data);
-            console.log("socket....");
             const objectArray = Object.entries(data.data);
             let newData = [];
             objectArray.forEach(([key, value]) => {
@@ -344,6 +383,30 @@ export default {
         this.sendInvitationChannel();
       } else {
         this.sendInvitation();
+      }
+    },
+    // fetch Users Invitation
+    async fetchUserInvitation() {
+      try {
+        const reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        const res = await this.$axios.$post(
+          config.getUserInvitationDetails.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+        this.CatValue = [
+          Math.round(res.data["winRate"]) + "%",
+          res.data["followerCount"],
+          "#" + res.data["rank"]
+        ];
+      } catch (ex) {
+        this.setSnackBarError(true);
       }
     },
     // Send Top Player Users Invitation
@@ -432,22 +495,17 @@ export default {
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
       this.followDialog = true;
+      this.forceRerender();
     }
-    // Follow and Unfollow User
-    // followUser(username, userImage, userUUID, method) {
-    //   if (this.getUserUUID != userUUID) {
-    //     this.username = username;
-    //     this.FollowUserUUID = userUUID;
-    //     method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
-    //     this.userImage = this.userImgProfile(userImage);
-    //     this.followDialog = true;
-    //   }
-    // }
   }
 };
 </script>
 
 <style scoped>
+.userValues {
+  color: green;
+  font-weight: 600;
+}
 button {
   outline: none;
 }
@@ -514,12 +572,14 @@ input {
   position: fixed;
   z-index: 1000;
   height: 50%;
-  width: 420px;
+  min-height: 500px;
+  max-height: 400px;
+  width: 380px;
   bottom: 50px;
   right: 70px;
   background-color: #fff;
   border: green solid 1px;
-  border-radius: 5px;
+  border-radius: 3px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3) !important;
   display: flex;
   flex-direction: column;
@@ -533,12 +593,12 @@ input {
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
 }
 .chat-header-item {
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
   width: 100%;
   text-align: center;
   font-weight: bolder;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
   background-color: #fff;
 }
@@ -569,16 +629,17 @@ input {
 
 #bottom-button {
   position: relative;
-  height: 100px;
+  height: 80px;
+
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
 }
 .invitation-button {
   display: flex;
-  height: 50px;
+  height: 40px;
   width: 85%;
-  line-height: 50px;
+  line-height: 40px;
   background: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   border-radius: 5px;
   color: #fff;
@@ -600,6 +661,7 @@ input {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  font-size: 12px;
 }
 .catalog-container {
   display: flex;
@@ -712,7 +774,7 @@ input {
 }
 .no-invitation {
   text-align: center;
-  font-size: 22px;
+  font-size: 18px;
   color: gray;
   font-weight: 100;
 }
