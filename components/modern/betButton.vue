@@ -447,7 +447,7 @@
           @click="storemarkColor(42 + index, index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index,'twodigit','specific', getItemPage, getFooterBetAmount)"
           v-show="number == 'two'"
           class="btn-small t-hover"
-        >{{ index < 10 ? "0" + index : index }}</v-btn>
+        >{{ index < 10 ? "0" + index : index }}</v-btn>  
       </popper>
     </v-layout>
   </div>

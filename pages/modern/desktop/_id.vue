@@ -44,11 +44,13 @@
             <!-- Stock Last Draw Start -->
             <v-flex xs6 md6 lg6 pt-1>
               <v-layout mb-3 justify-center wrap row>
-                <v-flex xs4 md3 lg3 class="text-xs-center text-uppercase" px-2 >
+                <v-flex xs4 md3 lg3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
-                      <span v-html="$options.filters.lastDraw(getLastDraw)"></span>
+                      <span
+                        v-html="$options.filters.lastDraw(getLastDraw)"
+                      ></span>
                     </v-flex>
                   </div>
                 </v-flex>
@@ -64,16 +66,16 @@
                         "
                       >
                         {{
-                        getTimerByStockName($route.params.id)
-                        | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                       <span v-else>
                         {{
-                        getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                        .gameEndTimeCountDownInSec
-                        | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -85,10 +87,10 @@
                     <v-flex class="lottery">
                       <span>
                         {{
-                        getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                        .gameEndTimeCountDownInSec
-                        | lotterydraw(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | lotterydraw(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -96,8 +98,20 @@
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
 
-                <v-flex xs2 md3 class="text-xs-right" style="align-self: flex-end;">
-                  <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
+                <v-flex
+                  xs2
+                  md3
+                  class="text-xs-right"
+                  style="align-self: flex-end;"
+                >
+                  <v-btn
+                    fab
+                    dark
+                    small
+                    class="helpButton"
+                    @click="openTutorial()"
+                    title="Help"
+                  >
                     <v-icon dark size="22">fa-question</v-icon>
                   </v-btn>
                 </v-flex>
@@ -126,10 +140,22 @@
 
         <!-- Stock Road Map Start -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
+          <div
+            class="trendmap-container"
+            v-for="(trendType, index) in trendTypes"
+            :key="index"
+          >
             <div id="trendmapGuidelines">
-              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index">
-                <span class="addChart" @click="addTrendMap()" v-if="index === 0">
+              <tableTrendMap
+                :index="index"
+                :dataArray="getRoadMap"
+                :isShowMultigameButton="index"
+              >
+                <span
+                  class="addChart"
+                  @click="addTrendMap()"
+                  v-if="index === 0"
+                >
                   <v-icon>fa-plus</v-icon>
                 </span>
                 <span v-else class="addChart" @click="removeTradMap(index)">
@@ -149,9 +175,12 @@
             class="closePopup"
             color="#333 !important"
             @click="GameRuleDialog = false"
-          >fa-times</v-icon>
+            >fa-times</v-icon
+          >
           <v-card-text style="padding:40px;">
-            <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}}</h2>
+            <h2 style="text-align:center;">
+              {{ $t("msg.ecGamingRulesDescription") }}
+            </h2>
             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
@@ -159,7 +188,8 @@
               class="buttonGreensmall"
               to="/modern/desktop/gamerule"
               dark
-            >{{$t("msg.gameRule")}}</v-btn>
+              >{{ $t("msg.gameRule") }}</v-btn
+            >
           </v-flex>
         </v-card>
       </v-dialog>
@@ -181,7 +211,7 @@
                 <v-icon size="24px">fa-arrows-alt</v-icon>
               </v-btn>
             </template>
-            <span>{{$t("msg.enterFullScreen")}}</span>
+            <span>{{ $t("msg.enterFullScreen") }}</span>
           </v-tooltip>
           <!-- Multiple Screen Float Button 
            <v-tooltip left>
@@ -260,8 +290,10 @@ export default {
       isStep: 0
     };
   },
-  updated() {},
+
   created() {
+    this.clearBetValueFooterBet();
+
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }
@@ -343,7 +375,8 @@ export default {
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
-      "setIsLoadingStockGame"
+      "setIsLoadingStockGame",
+      "clearBetValueFooterBet"
     ]),
     setAfterFullScreenClosePage() {
       secureStorage.setItem("fullscreenclosed", "desktop");
@@ -545,5 +578,4 @@ export default {
 }
 </style>
 
-
-betting 
+betting

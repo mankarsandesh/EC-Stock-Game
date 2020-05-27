@@ -7,26 +7,67 @@ class Betting {
      * @param {*} items
      * @memberof Betting
      */
-    cancelBettingClear(items) {
+    async cancelBettingClear(items) {
 
-        if (items.length) {
+            try {
+                if (items.length) {
 
-            items.map(item => {
+                    items.map(item => {
 
-                $("#" + item.id.split("-")[0]).removeClass(item.class)
+                        $("#" + item.id.split("-")[0]).removeClass(item.class)
 
-                if ($("#" + item.id).hasClass(item.class)) {
+                        if ($("#" + item.id).hasClass(item.class)) {
 
-                    secureStorage.removeItem("itemBetting")
+                            secureStorage.removeItem("itemBetting")
 
-                    $("#" + item.id).removeClass(item.class + ' ' + item.id.split("-")[1])
+                            $("#" + item.id).removeClass(item.class + ' ' + item.id.split("-")[1])
+
+                        }
+                    })
 
                 }
-            })
-
+            } catch (error) {
+                console.log(error)
+            }
         }
+        /**
+         *
+         *
+         * @memberof Betting
+         */
+    async clearBettingFailure() {
+        try {
 
+            const getItem = secureStorage.getItem("itemBetting")
+
+            const array = JSON.parse(getItem)
+
+            if (array.length) {
+
+                array.map(item => {
+
+                    $("#" + item.id.split("-")[0]).removeClass(item.class)
+
+                    if ($("#" + item.id).hasClass(item.class)) {
+
+                        secureStorage.removeItem("itemBetting")
+
+                        $("#" + item.id).removeClass(item.class + ' ' + item.id.split("-")[1])
+
+                    }
+                })
+
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
     }
+
+
+
+
+
 
 }
 export default Betting = new Betting

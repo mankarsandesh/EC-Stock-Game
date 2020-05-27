@@ -63,6 +63,7 @@ const mutations = {
     },
     CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
         state.tempMultiGameBetData = [];
+
     },
     CLEAR_BET_VALUE_FOOTER_BET(state) {
         state.footerBetAmount = 0;

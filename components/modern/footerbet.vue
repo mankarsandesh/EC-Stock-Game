@@ -2,7 +2,13 @@
   <div>
     <v-layout row justify-center id="footerBet-guide">
       <v-flex lg2 md2 xs2 class="amount">
-        <div>$ {{ getFooterBetAmount }}</div>
+        <div>
+          <animated-number
+            :value="getFooterBetAmount"
+            :formatValue="formatToPrice"
+            :duration="1000"
+          />
+        </div>
       </v-flex>
       <v-flex lg5 md5 xs3 class="chipsdiv">
         <v-layout row>
@@ -32,9 +38,6 @@
       </v-flex>
       <v-flex lg3 md3 xs2 class="betButton">
         <div>
-          <v-btn @click="$CheckingBetting(156456123456123, 45646548643214564)"
-            >test Inject</v-btn
-          >
           <v-btn
             :disabled="!parseInt(this.getTempMultiGameBetAmount)"
             class="buttonGreensmall"
@@ -56,7 +59,11 @@ import { mapGetters, mapActions } from "vuex";
 import chips from "~/data/chips";
 import config from "../../config/config.global";
 import Betting from "~/helpers/betting";
+import AnimatedNumber from "animated-number-vue";
 export default {
+  components: {
+    AnimatedNumber
+  },
   data() {
     return {
       isSending: false,
@@ -95,6 +102,13 @@ export default {
             timer: 1000,
             showConfirmButton: true
           });
+
+          // clear the bet from LocalStroge
+          await Betting.clearBettingFailure();
+          //  clear the bet amount to = 0
+          await this.clearBetValueFooterBet();
+          //  clear the temputure game bet to = 0
+          this.clearTempMultiGameBetData();
         } else if (
           parseInt(this.getTempMultiGameBetAmount) <=
             parseInt(this.getUserBalance) &&
@@ -134,6 +148,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    formatToPrice(value) {
+      return `$ ${value.toFixed(2)}`;
     }
   }
 };

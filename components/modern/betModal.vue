@@ -140,7 +140,12 @@ export default {
     //  this.getwinuser()
   },
   methods: {
-    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
+    ...mapActions([
+      "pushDataOnGoingBet",
+      "setGameId",
+      "setUserData",
+      "setTempMultiGameBetData"
+    ]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
@@ -155,6 +160,65 @@ export default {
       // } else {
       //   this.betValue = this.betValue + amount;
       // }
+    },
+
+    async confirmBet() {
+      try {
+        if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
+          this.$swal({
+            type: "error",
+            title:
+              "Bet value should be greater than 0 and not be more than 10000",
+            timer: 1500,
+            showConfirmButton: true
+          });
+          this.betValue = 0;
+        } else if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
+          this.$swal({
+            type: "error",
+            title: config.error.lowBalance,
+            timer: 1000,
+            showConfirmButton: true
+          });
+        } else {
+          const betStore = {
+            id: this.stockName + this.betId,
+            class: this.betId.split("-")[0],
+            betAmount: this.betValue
+          };
+
+          let data = {
+            gameUUID: this.getGameUUIDByStockName(this.stockName),
+            ruleID: this.ruleid,
+            betAmount: this.betValue
+          };
+
+          if (this.betValue > 0) {
+            Sound.betTing();
+
+            const stockDetail = {
+              betAmount: this.betValue,
+              class: this.betId.split("-")[0],
+              gameUUID: this.getGameUUIDByStockName(this.stockName),
+              id: this.stockName + this.betId,
+              ruleID: this.ruleid,
+              specificNumber: "",
+              betRule: this.betId
+            };          
+            this.$emit("update-bet", stockDetail);
+            this.confirmDisabled = true;
+
+            this.$StoreBettingonConfirm(stockDetail);
+
+            this.sendBetting(data);
+            $("#" + this.stockName + this.betId).addClass(
+              this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+            );
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     async sendBetting(betData) {
       try {
@@ -180,6 +244,7 @@ export default {
             betAmount: res.data[0].betAmount,
             stockName: this.$props.stockName
           };
+
           this.pushDataOnGoingBet(OnGoingdata);
           this.$swal({
             type: "success",
@@ -213,55 +278,6 @@ export default {
           },
           ex.message
         );
-      }
-    },
-    confirmBet() {
-      if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
-        this.$swal({
-          type: "error",
-          title:
-            "Bet value should be greater than 0 and not be more than 10000",
-          timer: 1500,
-          showConfirmButton: true
-        });
-        this.betValue = 0;
-      } else if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
-        this.$swal({
-          type: "error",
-          title: config.error.lowBalance,
-          timer: 1000,
-          showConfirmButton: true
-        });
-      } else {
-        const betStore = {
-          id: this.stockName + this.betId,
-          class: this.betId.split("-")[0],
-          betAmount: this.betValue
-        };
-
-        this.storeBetOnLocalStroge(betStore);
-
-        let data = {
-          gameUUID: this.getGameUUIDByStockName(this.stockName),
-          ruleID: this.ruleid,
-          betAmount: this.betValue
-        };
-
-        if (this.betValue > 0) {
-          Sound.betTing();
-          const stockDetail = {
-            stock: this.stockName,
-            betRule: this.betId
-          };
-
-          this.$emit("update-bet", stockDetail);
-
-          this.confirmDisabled = true;
-          this.sendBetting(data);
-          $("#" + this.stockName + this.betId).addClass(
-            this.betId.split("-")[0] + " " + this.betId.split("-")[1]
-          );
-        }
       }
     },
     closePopper() {
