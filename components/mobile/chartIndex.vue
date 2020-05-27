@@ -188,11 +188,17 @@ export default {
             headers: config.header
           }
         );
-        if (res.code === 200) {
+        if (res.status) {
+          this.apiAttemptCount = 0;
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          if (this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.fetchChart();
+          } else {
+            throw new Error(config.error.general);
+          }
         }
       } catch (ex) {
         console.error(ex.message);
@@ -204,7 +210,8 @@ export default {
   },
   data() {
     return {
-      chartData: []
+      chartData: [],
+      apiAttemptCount: 0
     };
   }
 };

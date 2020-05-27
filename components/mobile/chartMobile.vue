@@ -185,7 +185,7 @@ export default {
     }
   },
   methods: {
-     ...mapActions(["setSnackBarMessage"]),
+    ...mapActions(["setSnackBarMessage"]),
     setLiveChart(payload) {
       this.chartData.push(payload);
     },
@@ -200,13 +200,18 @@ export default {
         };
         const res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
           headers: config.header
-        });       
-        if (res.code === 200) {
+        });
+        if (res.status) {
+          this.apiAttemptCount = 0;
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          
-            this.setSnackBarMessage(config.error.general);           
+          if (this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.fetchChart();
+          } else {
+            this.setSnackBarMessage(config.error.general);
+          }
         }
       } catch (ex) {
         this.setSnackBarMessage(ex);
@@ -219,7 +224,8 @@ export default {
   },
   data() {
     return {
-      chartData: []
+      chartData: [],
+      apiAttemptCount: 0
     };
   }
 };

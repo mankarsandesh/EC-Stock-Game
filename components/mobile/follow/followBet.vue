@@ -17,12 +17,25 @@
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase">{{$t("leaderBoard.followBy")}}</h4>
+        <h4 class="subtitle-1 text-uppercase">
+          {{ $t("leaderBoard.followBy") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
             <v-select
-              :items="followby"
+              :items="[
+                {
+                  id: 1,
+                  name: this.$root.$t('leaderBoard.followByAmount'),
+                  value: 'Amount'
+                },
+                {
+                  id: 2,
+                  name: this.$root.$t('leaderBoard.followByRate'),
+                  value: 'Rate'
+                }
+              ]"
               label="Select Follow type"
               v-model="selectedFollow"
               item-text="name"
@@ -59,14 +72,16 @@
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderBoard.autoStop")}}</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">
+          {{ $t("leaderBoard.autoStop") }}
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
             <v-radio
               v-for="n in autoStopFollow"
               :key="n.id"
-              :label="`${n.name}`"
+              :label="n.name"
               :value="n.id"
               v-on:change="changeAmount(n.value)"
             ></v-radio>
@@ -211,19 +226,6 @@ export default {
       selectRate: false,
       selectAmount: true,
       selectedFollow: 1,
-      // Default Follow By List
-      followby: [
-        {
-          id: 1,
-          name: this.$root.$t("leaderBoard.followByAmount"),
-          value: "Amount"
-        },
-        {
-          id: 2,
-          name: this.$root.$t("leaderBoard.followByRate"),
-          value: "Rate"
-        }
-      ],
       // Default AUto Stop Follow
       autoStopFollow: [
         {
@@ -281,18 +283,24 @@ export default {
         !this.autoStop &&
         !this.unfollowValue
       ) {
-        return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.followingType"));
+        return this.setSnackBarMessage(
+          window.$nuxt.$root.$t("follow.followingType")
+        );
       }
 
       // Check Amount Value or Bet Value
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
         if (this.BetValue > 1000 || this.BetValue < 100)
-          return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.amountShould"));
+          return this.setSnackBarMessage(
+            window.$nuxt.$root.$t("follow.amountShould")
+          );
       } else {
         this.BetValue = this.rateValue;
         if (this.BetValue > 100 || this.BetValue < 10)
-          return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.betRate"));
+          return this.setSnackBarMessage(
+            window.$nuxt.$root.$t("follow.betRate")
+          );
       }
 
       // Auto Stop Follow
@@ -300,17 +308,23 @@ export default {
         case 4:
         case 5:
           if (this.unfollowValue > 1000 || this.unfollowValue < 100) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.autoStop"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.autoStop")
+            );
           }
           break;
         case 3:
           if (this.unfollowValue > 10 || this.unfollowValue < 1) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.daysShould"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.daysShould")
+            );
           }
           break;
         case 6:
           if (this.unfollowValue > 100 || this.unfollowValue < 1) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.betsShould"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.betsShould")
+            );
           }
           break;
       }

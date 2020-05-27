@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import notification from "~/components/modern/notification";
 import config from "~/config/config.global";
@@ -42,7 +42,6 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["setIsLoadingStockGame"]),
     async fetch() {
       try {
         var reqBody = {

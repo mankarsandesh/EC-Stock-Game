@@ -1,18 +1,17 @@
 <template>
   <div>
     <v-flex v-if="topPlayerData.length == 0">
-      <h2 class="text-center" style="color:#a3a3a3;">{{$t("leaderBoard.noData")}}</h2>
+      <h2 class="text-center" style="color:#a3a3a3;">
+        {{ $t("leaderBoard.noData") }}
+      </h2>
     </v-flex>
     <v-flex>
       <v-list subheader>
         <v-list-tile>
           <v-list-tile-content>
             <v-list-tile-title>
-              {{$t("leaderBoard.Top10Leaders")}}
-              <i
-                v-if="loadingImage"
-                class="fa fa-circle-o-notch fa-spin"
-              ></i>
+              {{ $t("leaderBoard.Top10Leaders") }}
+              <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
             </v-list-tile-title>
           </v-list-tile-content>
 
@@ -22,7 +21,8 @@
                 :label="$t('leaderBoard.monthly')"
                 value="monthly"
                 v-on:click="sortingBy('monthly')"
-              ></v-radio>&nbsp;
+              ></v-radio
+              >&nbsp;
               <v-radio
                 :label="$t('leaderBoard.weekly')"
                 value="weekly"
@@ -70,21 +70,24 @@
                 dark
               >
                 {{
-                item.isFollowing == 0
-                ? $t("userAction.follow")
-                : $t("userAction.unFollow")
+                  item.isFollowing == 0
+                    ? $t("userAction.follow")
+                    : $t("userAction.unFollow")
                 }}
               </v-btn>
             </v-list-tile-action>
           </v-list-tile>
-          <v-divider v-if="index + 1 < topPlayerData.length" :key="index"></v-divider>
+          <v-divider
+            v-if="index + 1 < topPlayerData.length"
+            :key="index"
+          ></v-divider>
         </template>
       </v-list>
     </v-flex>
 
     <!-- Follow and UnFollow Dialog box-->
     <v-dialog
-      :persistent=true
+      :persistent="true"
       v-model="followDialog"
       fullscreen
       hide-overlay
@@ -98,13 +101,16 @@
           </v-btn>
           <v-toolbar-title>
             {{
-            this.FolloworNot == 1 ? $t("userAction.followBet") : $t("userAction.unFollowBet")
+              this.FolloworNot == 1
+                ? $t("userAction.followBet")
+                : $t("userAction.unFollowBet")
             }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
 
         <followBet
+          v-if="renderComponent"
           :username="this.username"
           :userImage="this.userImage"
           :FollowerUserUUID="this.FollowUserUUID"
@@ -122,6 +128,7 @@ import followBet from "~/components/mobile/follow/followBet";
 export default {
   data() {
     return {
+      renderComponent: true, // render Follow Bet
       loadingImage: false,
       sortValue: "monthly",
       defaultImage: "/no-profile-pic.jpg",
@@ -131,8 +138,7 @@ export default {
       method: "",
       username: "",
       userImage: "",
-      followDialog: false,
-      temp : false,
+      followDialog: false    
     };
   },
   components: {
@@ -148,6 +154,13 @@ export default {
     }) //get 2 data from vuex first, in the computed
   },
   methods: {
+    // Render Follow Bet Component
+    forceRerender() {
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        this.renderComponent = true;
+      });
+    },
     // fetch default image or from server image
     userImgProfile(userImage) {
       return userImage === null
@@ -188,7 +201,6 @@ export default {
     closeFollowBet() {
       this.followDialog = false;
       this.leaderBoard();
-      console.log("Close");
     },
     // Follow and Unfollow User
     followUser(username, userImage, userUUID, method) {
@@ -197,7 +209,7 @@ export default {
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
       this.followDialog = true;
-      this.temp = true;
+      this.forceRerender();
     },
     // Fetch Top 10 users in Leaderboard
     async leaderBoard() {
@@ -217,7 +229,6 @@ export default {
             headers: config.header
           }
         );
-        console.log(data.data);
         this.topPlayerData = data.data;
         this.loadingImage = false;
       } catch (error) {

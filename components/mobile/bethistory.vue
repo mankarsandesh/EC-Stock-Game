@@ -1,10 +1,13 @@
 <template>
   <div>
     <v-list-tile v-if="userBetHistory.length == 0" class="notBets">
-      <h3>{{$t("betHistory.noBets")}}.</h3>
+      <h3>{{ $t("betHistory.noBets") }}.</h3>
     </v-list-tile>
     <v-list three-line v-if="userBetHistory.length > 0">
-      <template v-for="(item, index) in userBetHistory" style="margin-bottom:50px;">
+      <template
+        v-for="(item, index) in userBetHistory"
+        style="margin-bottom:50px;"
+      >
         <v-list-tile
           :key="item.betUUID"
           @click="
@@ -17,52 +20,70 @@
           "
         >
           <v-list-tile-content>
-            <v-list-tile-sub-title
-              class="headingTitle"
-            >{{ item.ruleName }} - ({{ item.payout }}) {{ item.stockName }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title class="headingTitle"
+              >{{ item.ruleName }} - ({{ item.payout }})
+              {{ item.stockName }}</v-list-tile-sub-title
+            >
             <v-list-tile-sub-title>
-              <span class="lastDraw" v-html="$options.filters.lastDraw(item.gameDraw)"></span>
+              <span
+                class="lastDraw"
+                v-html="$options.filters.lastDraw(item.gameDraw)"
+              ></span>
             </v-list-tile-sub-title>
-            <v-list-tile-sub-title>{{ item.createdDate }} {{ item.createdTime }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title
+              >{{ item.createdDate }}
+              {{ item.createdTime }}</v-list-tile-sub-title
+            >
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <span
-              v-if="item.betResult == 'lose'"
-              class="lossAmount"
-            >-{{ item.betAmount | toCurrency }}</span>
-            <span
-              v-if="item.betResult == 'win'"
-              class="winAmount"
-            >+{{ item.betAmount | toCurrency }}</span>
-            <div v-if="item.isFollowBet == 1" class="following">{{$t("betHistory.byFollowers")}}</div>
-            <div v-if="item.isFollowBet == 0" class="original">{{$t("betHistory.original")}}</div>
+            <span v-if="item.betResult == 'lose'" class="lossAmount"
+              >-{{ item.betAmount | toCurrency }}</span
+            >
+            <span v-if="item.betResult == 'win'" class="winAmount"
+              >+{{ item.rollingAmount | toCurrency }}</span
+            >
+            <div v-if="item.isFollowBet == 1" class="following">
+              {{ $t("betHistory.byFollowers") }}
+            </div>
+            <div v-if="item.isFollowBet == 0" class="original">
+              {{ $t("betHistory.original") }}
+            </div>
           </v-list-tile-action>
         </v-list-tile>
         <v-divider :key="index"></v-divider>
       </template>
+
+      <v-layout text-center mb-5>
+        <v-flex>
+          <v-btn color="buttonGreen" v-on:click="loadMore()" text>{{
+            $t("stockList.loadMore")
+          }}</v-btn>
+        </v-flex>
+      </v-layout>
+
       <div class="footer" v-if="userBetHistory.length > 0">
         <div>
           <span>
-            <strong>{{$t("betHistory.bets")}} :</strong>
+            <strong>{{ $t("betHistory.bets") }} :</strong>
             {{ userBetHistory.length }}
           </span>
           <span>
-            <strong>{{$t("betHistory.total")}}</strong>
+            <strong>{{ $t("betHistory.total") }}</strong>
             :{{ TotalAmount | toCurrency }}
           </span>
           <span v-if="TotalAmount < TotalRolling">
-            <strong>{{$t("betHistory.rolling")}}</strong> :
-            <span style="color:green;">
-              {{
-              TotalRolling | toCurrency
-              }}
+            <strong>{{ $t("betHistory.rolling") }}</strong> :
+            <span style="color:#FFF;">
+              {{ TotalRolling | toCurrency }}
             </span>
           </span>
 
           <span v-if="TotalAmount > TotalRolling">
-            <strong>{{$t("betHistory.rolling")}}</strong> :
-            <span style="color: #c13f3f;font-weight: 800;">{{ TotalRolling | toCurrency }}</span>
+            <strong>{{ $t("betHistory.rolling") }}</strong> :
+            <span style="color: #c13f3f;font-weight: 800;">{{
+              TotalRolling | toCurrency
+            }}</span>
           </span>
         </div>
       </div>
@@ -71,11 +92,11 @@
     <!-- Follow and UnFollow Diealog Box -->
     <v-dialog v-model="dialog" width="500" class="betDetails">
       <v-card>
-        <h1 class="betId">{{$t("betHistory.bets")}} #{{ this.betUUID }}</h1>
+        <h1 class="betId">{{ $t("betHistory.bets") }} #{{ this.betUUID }}</h1>
 
         <v-layout class="betWrap">
           <v-flex xs6 sm6 class="betSide">
-            <span>{{$t("betHistory.betDraw")}}</span>
+            <span>{{ $t("betHistory.betDraw") }}</span>
 
             <h4 v-html="$options.filters.lastDraw(this.gameDraw)"></h4>
           </v-flex>
@@ -171,6 +192,9 @@ export default {
     }
   },
   methods: {
+    loadMore() {   
+      this.$emit("userLimit");
+    },
     betDetails(betUUID, gameDraw, rollAmount, amount) {
       this.dialog = true;
       this.betUUID = betUUID;
@@ -232,7 +256,7 @@ export default {
   left: 0;
   width: 100%;
   background-color: #2bb03e;
-  padding: 15px 0px;
+  padding: 10px 0px;
   position: fixed;
   bottom: 0;
   color: #fff;
@@ -244,7 +268,7 @@ export default {
 }
 .footer div span {
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   margin: 0px 6px;
 }
 .lastDraw {
@@ -256,7 +280,7 @@ export default {
 .headingTitle {
   font-weight: 600;
   color: #003f70 !important;
-  font-size: 16px;
+  font-size: 14px;
 }
 .totalRollingWin {
   font-weight: 800;

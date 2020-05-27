@@ -9,16 +9,19 @@
         <v-layout column>
           <v-flex xs12 pt-3>
             <div id="stocklistGuidelines">
+              <!-- Stock List -->
               <stockList></stockList>
             </div>
           </v-flex>
           <v-flex xs12 pt-2>
             <div id="betresultGuidelines">
+              <!-- Stock Result  -->
               <stockResult></stockResult>
             </div>
           </v-flex>
           <v-flex xs12 pt-2>
             <div id="bettingGuidelines">
+              <!-- on going Betting -->
               <onBetting></onBetting>
             </div>
           </v-flex>
@@ -97,9 +100,10 @@
                   </div>
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
+                <!-- Help Tutorial -->
                 <v-flex
                   xs2
-                  md1
+                  md3
                   class="text-xs-right"
                   style="align-self: flex-end;"
                 >
@@ -124,12 +128,14 @@
             <v-flex md5 lg5 class="marginTop-2">
               <div id="chartGuidelineNew" class="chartDesgin">
                 <v-flex>
+                  <!-- Chart Stock wise -->
                   <chartApp :stockName="routeParams" />
                 </v-flex>
               </div>
             </v-flex>
             <v-flex md7 lg7 mx-2 class="marginTop-2">
               <div id="betRuleButton">
+                <!-- -Bet Button -->
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
             </v-flex>
@@ -180,7 +186,6 @@
             <h2 style="text-align:center;">
               {{ $t("msg.ecGamingRulesDescription") }}
             </h2>
-
             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
@@ -286,8 +291,8 @@ export default {
       isStep: 0
     };
   },
-  updated() {},
   created() {
+    // Check size is Desktop or Mobile. and redirect to Mobile or Desktop
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }

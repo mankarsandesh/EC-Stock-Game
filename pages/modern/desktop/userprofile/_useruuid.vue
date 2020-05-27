@@ -325,7 +325,7 @@ export default {
       this.dialog = false;
       this.getUserProfileByID();
     },
-    // Follow User Bet
+    // Follow User Betting
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
@@ -343,12 +343,14 @@ export default {
     userImgProfile(userImg) {
       return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
     },
+    // SetFilter Month Wise
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
       const lastWeek = date.addDays(new Date(), -duration);
       this.startDate = date.format(lastWeek, "YYYY-MM-DD");
       this.endDate = now;
     },
+    // Fetch Users Profile Information 
     async getUserProfileByID() {
       try {
         if (!this.$route.params.useruuid) {

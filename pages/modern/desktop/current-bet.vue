@@ -37,10 +37,10 @@ export default {
     }) 
   },
   mounted() {
-    this.fetch();
+    this.currentBetData();
   },
   methods: {
-    async fetch() {
+    async currentBetData() {
       try {
         var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
