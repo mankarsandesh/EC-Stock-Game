@@ -75,6 +75,9 @@ const config = {
   liveCountBetData: {
     url: `${process.env.BASE_URL}/liveCountBetData`
   },
+  getUserInvitationDetails: {
+    url: `${process.env.BASE_URL}/getUserInvitationDetail`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"

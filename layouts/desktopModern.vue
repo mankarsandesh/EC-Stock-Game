@@ -87,11 +87,11 @@
         :data="notificationList"
         v-if="isShowNotification"
       ></notification>
-      <chat-box
+      <chatBox
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :stockName="$route.params.id"
         :pathName="$route.name"
-      ></chat-box>
+      ></chatBox>
     </v-app>
   </div>
 </template>
