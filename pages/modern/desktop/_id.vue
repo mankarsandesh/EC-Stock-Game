@@ -577,5 +577,3 @@ export default {
   border-radius: 180px;
 }
 </style>
-
-betting
