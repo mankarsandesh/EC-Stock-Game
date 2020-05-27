@@ -14,7 +14,6 @@ import VueApexCharts from "vue-apexcharts";
 import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -167,19 +166,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/mobile/chartIndex.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -202,11 +188,17 @@ export default {
             headers: config.header
           }
         );
-        if (res.code === 200) {
+        if (res.status) {
+          this.apiAttemptCount = 0;
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          if (this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.fetchChart();
+          } else {
+            throw new Error(config.error.general);
+          }
         }
       } catch (ex) {
         console.error(ex.message);
@@ -218,7 +210,8 @@ export default {
   },
   data() {
     return {
-      chartData: []
+      chartData: [],
+      apiAttemptCount: 0
     };
   }
 };

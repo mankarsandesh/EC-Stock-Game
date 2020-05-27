@@ -27,7 +27,7 @@
                         {{ visitProfileUserData.firstName }}
                         {{ visitProfileUserData.lastName }}
                       </v-flex>
-                      <v-flex>
+                      <v-flex v-if="visitProfileUserData.isAllowToLocation == 1">
                         <span>
                           <country-flag country="us" v-if="visitProfileUserData.country == 'USA'" />
                           <country-flag country="th" v-if="visitProfileUserData.country == 'THA'" />
@@ -173,7 +173,7 @@
                         height="350"
                         :options="chartOptions"
                         :series="series"
-                        :key="series.length + '' + filter"
+                        :key="componentKey"
                       />
                     </div>
                   </div>
@@ -220,7 +220,6 @@ import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../../plugins/secure-storage";
-import log from "roarr";
 import countryFlag from "vue-country-flag";
 
 export default {
@@ -233,6 +232,7 @@ export default {
   data() {
     return {
       myProfileImage: "",
+      componentKey: 0,
       renderComponent: true, // render Follow Bet
       username: "",
       FollowUserUUID: "",
@@ -300,9 +300,13 @@ export default {
     this.getUserProfileByID();
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getUserInfo"])
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getUserInfo", "getLocale"])
   },
   watch: {
+    getLocale() {
+      this.series[0].name = this.$root.$t("msg.onlineActiveTime");
+      this.componentKey++;
+    },
     filter() {
       this.setFilter(this.filter * 30);
       this.getUserProfileByID();
@@ -321,7 +325,7 @@ export default {
       this.dialog = false;
       this.getUserProfileByID();
     },
-    // Follow User Bet
+    // Follow User Betting
     followUserBet: function(username, userImg, userUUID, method) {
       this.username = username;
       this.FollowUserUUID = userUUID;
@@ -339,12 +343,14 @@ export default {
     userImgProfile(userImg) {
       return userImg ? `${config.apiDomain}/` + userImg : this.defaultImage;
     },
+    // SetFilter Month Wise
     setFilter(duration) {
       const now = date.format(new Date(), "YYYY-MM-DD");
       const lastWeek = date.addDays(new Date(), -duration);
       this.startDate = date.format(lastWeek, "YYYY-MM-DD");
       this.endDate = now;
     },
+    // Fetch Users Profile Information 
     async getUserProfileByID() {
       try {
         if (!this.$route.params.useruuid) {
@@ -381,11 +387,12 @@ export default {
           });
           this.series = [
             {
-              name: "Online Active Time",
+              name: this.$root.$t("msg.onlineActiveTime"),
               data: series
             }
           ];
           this.chartOptions.xaxis.categories = xaxis;
+          this.componentKey++;
         } else {
           this.messageError = true;
           throw new Error(config.error.general);
@@ -397,17 +404,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/userprofile/_useruuid.vue",
-            apiUrl: config.getVisitUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

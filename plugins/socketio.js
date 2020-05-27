@@ -1,6 +1,5 @@
 import Echo from "laravel-echo";
 import config from "../config/config.global";
-import log from "roarr";
 
 export default async ({ store, $axios }) => {
   const port = 6001;
@@ -8,6 +7,7 @@ export default async ({ store, $axios }) => {
   window.io = require("socket.io-client");
   window.Pusher = require("pusher-js");
 
+  // Get active games by category (api)
   try {
     var reqBody = {
       portalProviderUUID: store.getters.getPortalProviderUUID,
@@ -18,20 +18,10 @@ export default async ({ store, $axios }) => {
       reqBody,
       { headers: config.header }
     );
+    // Set stock category in vuex store
     store.dispatch("setStockCategory", data.data);
   } catch (ex) {
     console.log(ex);
-    log.error(
-      {
-        req: reqBody,
-        res,
-        page: "plugins/socketio.js",
-        apiUrl: config.getActiveGamesByCategory.url,
-        provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-        user: secureStorage.getItem("USER_UUID")
-      },
-      ex.message
-    );
   }
 
   if (typeof io !== "undefined") {
@@ -39,7 +29,7 @@ export default async ({ store, $axios }) => {
     try {
       window.Echo = new Echo({
         broadcaster: "pusher",
-        key: config.secretKey, // check on Config File.
+        key: config.secretKey, 
         wsHost: config.socketUrl,
         wsPort: port,
         disableStats: true,
@@ -55,7 +45,7 @@ export default async ({ store, $axios }) => {
   function listenStock({ channelName, eventName }, callback) {
     window.Echo.channel(channelName).listen(eventName, callback);
   }
-  // Get stock list countdown
+  // Get stock list countdown(socket)
   listenStock(
     {
       channelName: `countdown.${store.getters.getPortalProviderUUID}`,
@@ -71,21 +61,10 @@ export default async ({ store, $axios }) => {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            channel: `countdown.${store.getters.getPortalProviderUUID}`,
-            event: "countdown",
-            res: logData,
-            page: "plugins/socketio.js",
-            provider: store.getters.getPortalProviderUUID,
-            user: store.getters.getUserUUID
-          },
-          ex.message
-        );
       }
     }
   );
-  // Get active games by category
+  // Get active games by category(socket)
   listenStock(
     {
       channelName: `getActiveGamesByCategory.${store.getters.getPortalProviderUUID}`,
@@ -101,21 +80,10 @@ export default async ({ store, $axios }) => {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            channel: `getActiveGamesByCategory.${store.getters.getPortalProviderUUID}`,
-            event: "getActiveGamesByCategory",
-            res: logData,
-            page: "plugins/socketio.js",
-            provider: store.getters.getPortalProviderUUID,
-            user: store.getters.getUserUUID
-          },
-          ex.message
-        );
       }
     }
   );
-  // Get Stock list price
+  // Get Stock list price(socket)
   listenStock(
     {
       channelName: `stockListOnly.${store.getters.getPortalProviderUUID}`,
@@ -131,17 +99,6 @@ export default async ({ store, $axios }) => {
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            channel: `stockListOnly.${store.getters.getPortalProviderUUID}`,
-            event: "stockListOnly",
-            res: logData,
-            page: "plugins/socketio.js",
-            provider: store.getters.getPortalProviderUUID,
-            user: store.getters.getUserUUID
-          },
-          ex.message
-        );
       }
     }
   );

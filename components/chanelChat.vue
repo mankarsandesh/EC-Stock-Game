@@ -242,7 +242,6 @@ export default {
         eventName: "messageSend"
       },
       ({ data }) => {
-        console.log(data);
         const objectArray = Object.entries(data.data);
         let newData = [];
         objectArray.forEach(([key, value]) => {

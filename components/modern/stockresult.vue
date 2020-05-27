@@ -39,7 +39,6 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -47,7 +46,8 @@ export default {
     return {
       showStockresult: true,
       selected: 1,
-      getStockResult: []
+      getStockResult: [],
+      apiAttemptCount: 0
     };
   },
   computed: {
@@ -78,10 +78,16 @@ export default {
           headers: config.header
         });
         if (data.status) {
+          this.apiAttemptCount = 0;
           this.showStockresult = false;
           this.getStockResult = data.data;
         } else {
-          throw new Error(config.error.general);
+          if(this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.stockResult();
+          } else {
+            throw new Error(config.error.general);
+          }
         }
       } catch (ex) {
         console.log(ex);
@@ -90,17 +96,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res: data,
-            page: "components/modern/stockresult.vue",
-            apiUrl: config.getAllStock.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

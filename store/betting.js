@@ -1,6 +1,6 @@
 import config from "../config/config.global";
 import secureStorage from "../plugins/secure-storage";
-import log from "roarr";
+import Sound from "~/helpers/sound";
 
 const state = () => ({
     collegeBtnNumber: null,
@@ -23,7 +23,7 @@ const mutations = {
     },
     SET_ITEMS_BETTING(state, payload) {
         state.getItemsBetting.push(payload);
-        secureStorage.setItem("itemBetting", state.getItemsBetting)
+        localStorage.setItem("itemBetting", JSON.stringify(state.getItemsBetting))
     },
     SET_COLLEGE_BUTTON_NUMBER(state, payload) {
         state.collegeBtnNumber = payload;
@@ -44,7 +44,7 @@ const mutations = {
         state.multiGameBet = [];
     },
     SET_FOOTER_BET_AMOUNT(state, payload) {
-        state.footerBetAmount = parseInt(payload);
+        state.footerBetAmount += parseInt(payload);
     },
     PUSH_DATA_ON_GOING_BET(state, payload) {
         state.onGoingBet.splice(0, 0, payload);
@@ -54,6 +54,7 @@ const mutations = {
     },
     SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
         state.tempMultiGameBetData.push(payload);
+        localStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
     },
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
         state.multiGameBetSend.push(...state.tempMultiGameBetData);
@@ -97,6 +98,7 @@ const actions = {
     },
     // Push data to ongoing bet
     pushDataOnGoingBet({ commit }, payload) {
+
         commit("PUSH_DATA_ON_GOING_BET", payload);
     },
     // Clear data from multi game bet send
@@ -139,6 +141,7 @@ const actions = {
                 headers: config.header
             });
             if (res.status && res.code == 200) {
+                Sound.betTing();
                 context.dispatch("setUserData", "provider");
                 context.commit("SET_IS_SEND_BETTING", false);
                 context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
@@ -177,16 +180,6 @@ const actions = {
                 title: `${ex.message}`,
                 showConfirmButton: true
             });
-            log.error({
-                    req: reqBody,
-                    res,
-                    page: "store/betting.js",
-                    apiUrl: config.storeBet.url,
-                    provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-                    user: secureStorage.getItem("USER_UUID")
-                },
-                ex.message
-            );
         }
     }
 };
@@ -311,7 +304,8 @@ const getters = {
     },
     getMultiGameFooterBetAmount(state) {
         return state.multiGameFooterBetAmount;
-    }
+    },
+    gettempMultiGameBetData: state => state.tempMultiGameBetData
 };
 
 export default {

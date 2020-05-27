@@ -86,7 +86,6 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import config from "~/config/config.global";
 import secureStorage from "../../plugins/secure-storage";
-import log from "roarr";
 // import livechart from "~/modern/livechart"
 
 export default {
@@ -121,19 +120,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(this.stockid)}.${
-                this.getPortalProviderUUID
-              }`,
-              event: "roadMap",
-              res: logData,
-              page: "components/modern/multigame.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -189,17 +175,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "components/modern/multigame.vue",
-            apiUrl: config.getRoadMap.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

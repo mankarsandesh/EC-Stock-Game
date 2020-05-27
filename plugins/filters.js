@@ -61,7 +61,7 @@ Vue.filter("currency", (value, decimalCount = 2) => {
 // countdown bet close in
 Vue.filter("betclosein", (value, loop) => {
   if (!value || !loop) return "...";
-  if (value == "close") return "MARKET CLOSE";
+  if (value.stockStatus == "Closed") return "MARKET CLOSE";
   let result = "";
   // for  loop 1
   if (loop == 1) {

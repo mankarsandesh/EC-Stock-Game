@@ -24,6 +24,7 @@
           <div style="position:absolute;z-index:1">
             <v-date-picker
               color="#1db42f"
+              :max="maxDate"
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
@@ -46,6 +47,7 @@
           <div style="position:absolute;z-index:1">
             <v-date-picker
               color="#1db42f"
+              :max="maxDate"
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
@@ -87,6 +89,7 @@
           height="480"
           :options="chartOptions"
           :series="series"
+          :key="componentKey"
         ></apexchart>
       </div>
     </v-flex>
@@ -97,7 +100,6 @@
 import apexchart from "vue-apexcharts";
 import { mapGetters } from "vuex";
 import date from "date-and-time";
-import log from "roarr";
 import secureStorage from "../../../../plugins/secure-storage";
 import config from "~/config/config.global";
 
@@ -128,7 +130,9 @@ export default {
   data() {
     return {
       stockAnalysis: [],
+      componentKey: 0,
       colors: barColor,
+      maxDate: new Date().toISOString(),
       isShowDateStart: false,
       isShowDateEnd: false,
       startDate: "",
@@ -137,120 +141,6 @@ export default {
       isDataValid: false,
       stocks: [],
       series: [],
-      // chartOptions: {
-      //   colors: [
-      //     function({ value, seriesIndex, dataPointIndex, w }) {
-      //       if (seriesIndex == 0) {
-      //         return barColor[0][dataPointIndex];
-      //       }
-      //       if (seriesIndex == 1) {
-      //         return barColor[1][dataPointIndex];
-      //       }
-      //     }
-      //   ],
-      //   plotOptions: {
-      //     bar: {
-      //       horizontal: false,
-      //       columnWidth: "50%",
-      //       rangeBarOverlap: true,
-      //       barHeight: "100%"
-      //       // dataLabels: {
-      //       //   position: 'top'
-      //       // }
-      //       //endingShape: 'rounded'
-      //       // distributed: true
-      //     }
-      //   },
-      //   dataLabels: {
-      //     enabled: false
-      //   },
-      //   chart: {
-      //     type: "bar",
-      //     stacked: true,
-      //     //stackType: '100%',
-      //     toolbar: {
-      //       show: false
-      //     },
-      //     zoom: {
-      //       enabled: false
-      //     },
-      //     animations: {
-      //       enabled: true,
-      //       easing: "easeinout",
-      //       speed: 800,
-      //       animateGradually: {
-      //         enabled: true,
-      //         delay: 150
-      //       },
-      //       dynamicAnimation: {
-      //         enabled: true,
-      //         speed: 350
-      //       }
-      //     }
-      //   },
-      //   title: {
-      //     text: this.$root.$t("profile.stockAnalysis"),
-      //     align: "left",
-      //     margin: 10,
-      //     offsetX: 2,
-      //     offsetY: -5,
-      //     style: {
-      //       fontSize: "20px",
-      //       fontWeight: "bold"
-      //     }
-      //   },
-      //   stroke: {
-      //     show: true,
-      //     width: 2,
-      //     curve: "smooth"
-      //   },
-      //   noData: {
-      //     text: this.$root.$t('msg.noData')
-      //   },
-      //   tooltip: {
-      //     enabled: true,
-      //     followCursor: true,
-      //     intersect: true,
-      //     onDataSetHover: {
-      //       highlightDataSeries: false
-      //     },
-      //     x: {
-      //       show: false
-      //     },
-      //     y: {
-      //       formatter: (val, { series, seriesIndex, dataPointIndex }) => {
-      //         return (
-      //           '<div class="arrow_box">' +
-      //           "<span> " +
-      //           this.stockAnalysis[dataPointIndex].stockName +
-      //           " </span>" +
-      //           "<span> " +
-      //           series[seriesIndex][dataPointIndex] +
-      //           "</span>" +
-      //           "</div>"
-      //         );
-      //       },
-      //       title: {
-      //         formatter: function(seriesName) {
-      //           return seriesName.toUpperCase();
-      //         }
-      //       }
-      //     }
-      //   },
-      //   xaxis: {
-      //     labels: {
-      //       offsetX: 10,
-      //       offsetY: 10,
-      //       formatter: function(value) {
-      //         return "";
-      //       },
-      //       axisBorder: {
-      //         show: true,
-      //         width: "10%"
-      //       }
-      //     }
-      //   }
-      // }
       chartOptions: {
         chart: {
           type: "bar",
@@ -311,7 +201,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getLocale"])
+  },
+  watch: {
+    getLocale() {
+      this.series[0].name = this.$root.$t("msg.win");
+      this.series[1].name = this.$root.$t("msg.lose")
+      this.componentKey++;
+    }
   },
   methods: {
     checkValidDate(startDate, endDate) {
@@ -386,17 +283,6 @@ export default {
           this.error = "Please select a valid date";
           this.isDataValid = false;
         }
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/profile/stockAnalysis.vue",
-            apiUrl: config.getUserBetAnalysis.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     startDateClick() {

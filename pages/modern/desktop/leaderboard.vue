@@ -8,6 +8,7 @@
     <v-container>
       <v-layout row wrap justify-center>
         <v-flex md12 lg10 xs12 mt-2>
+          <!--  Leaderboard Users List -->
           <leaderboardUserlist />
         </v-flex>
       </v-layout>

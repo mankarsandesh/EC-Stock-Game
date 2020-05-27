@@ -146,10 +146,11 @@
                 <div class="col-15"></div>
                 <div class="col-85">
                   <v-btn
+                    type="submit"
                     :loading="updating"
                     :disabled="updating"
                     class="btn_save"
-                    @click="saveClick()"
+                    @click.prevent="saveClick()"
                   >{{ $t("msg.save") }}</v-btn>
                   <v-btn class="btn_cancel" @click="cancelUpdateProfile">{{ $t("msg.cancel") }}</v-btn>
                 </div>
@@ -167,7 +168,6 @@ import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
 import validator from "validator";
-import log from "roarr";
 
 export default {
   data() {
@@ -175,14 +175,14 @@ export default {
       updating: false
     };
   },
-  mounted() {
+  async mounted() {
     // alert(process.env.NODE_ENV)
+    await this.setUserData();
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
     userData() {
       let data = this.getUserInfo;
-      console.log(data);
       return data;
     }
   },
@@ -199,19 +199,19 @@ export default {
       try {
       this.updating = true;
       const ref = this.$refs;
-      validator.isEmail(ref.email.value) ? "" :  new Error('Email is invalid');
-      validator.isAlpha(ref.firstName.value) ? "" : new Error('First Name should be alphabetical');
-      validator.isAlpha(ref.lastName.value) ? "" : new Error('Last name should be alphanumeric');
-      if(!(validator.isByteLength(ref.username.value, {min: 5, max: 18}))) {
-        throw new Error("Username should be minimum 5 characters and maximum 18 characters long");
-      }
+      validator.isEmail(ref.email.value) ||  (() =>  {throw new Error(this.$root.$t("profile.invalidEmail"))})();
+      validator.isAlpha(ref.firstName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstName"))})();
+      validator.isAlpha(ref.lastName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastName"))})();
+      validator.isByteLength(ref.firstName.value, { max: 25 }) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstNameLength"))})();
+      validator.isByteLength(ref.lastName.value, { max: 25 }) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastNameLength"))})();
+      validator.isByteLength(ref.username.value, {min: 5, max: 20}) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidUsername"))})();
       var formData = new FormData();
       formData.append("portalProviderUUID", this.getPortalProviderUUID);
       formData.append("userUUID", this.getUserUUID);
-      formData.append("email", ref.email.value);
-      formData.append("userName", ref.username.value);
-      formData.append("firstName", ref.firstName.value);
-      formData.append("lastName", ref.lastName.value);
+      formData.append("email", validator.trim(ref.email.value));
+      formData.append("userName", validator.trim(ref.username.value));
+      formData.append("firstName", validator.trim(ref.firstName.value));
+      formData.append("lastName", validator.trim(ref.lastName.value));
       formData.append("gender", ref.gender.value);
       formData.append("country", ref.country.value);
       formData.append("version", config.version);
@@ -227,7 +227,7 @@ export default {
           this.updating = false;
           this.$swal({
             type: "success",
-            title: "Successful Information Saved!",
+            title: this.$root.$t("profile.success"),
             showConfirmButton: false,
             timer: 1000
           });
@@ -243,17 +243,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: formData,
-            res,
-            page: "pages/modern/desktop/profile/index.vue",
-            apiUrl: config.updateUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

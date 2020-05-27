@@ -1,4 +1,6 @@
 import secureStorage from '~/plugins/secure-storage'
+import Sound from "~/helpers/sound";
+
 export const itemBetting = {
 
     mounted() {
@@ -63,13 +65,14 @@ export const itemBetting = {
 
 
         findItemBetting() {
-            const itemBetting = secureStorage.getItem("itemBetting")
 
-            if (itemBetting !== undefined && itemBetting !== null) {
+            const itemBetting = localStorage.getItem("itemBetting")
 
-                const keys = Object.values(itemBetting)
+            const array = JSON.parse(itemBetting)
 
-                keys.map((item, index) => {
+            if (array) {
+
+                array.map((item, index) => {
 
                     if (!$("#" + item.id).hasClass(item.class + ' ' + item.id.split("-")[1])) {
 
@@ -82,7 +85,6 @@ export const itemBetting = {
 
         },
 
-
         /**
          *
          *
@@ -90,38 +92,56 @@ export const itemBetting = {
          * @param {*} id
          * @param {*} classe
          * @param {*} specific
+         * @param {*} page
+         * @param {*} footerAmount
          */
-        storemarkColor(ruleID, id, classe, specific) {
+        storemarkColor(ruleID, id, classe, specific, page, footerAmount) {
 
-            if (!$("#" + id).hasClass(classe)) {
+            // check the page only full screen can press the bet and color is come 
+            // check the valueAmout is  >= 100  
 
-                $("#" + id).addClass(classe + ' ' + id.split("-")[1])
+            if (page === "fullscreen") {
 
-            }
+                if (footerAmount >= 100) {
 
-            if (specific !== null) {
-                //  find the parent of small button in specific number
-                const parentBtn = "#" + id.split("-")[0]
+                    Sound.betTing();
 
-                if (!$(parentBtn).addClass(classe)) {
+                    if (!$("#" + id).hasClass(classe)) {
 
-                    $(parentBtn).addClass(classe)
+                        $("#" + id).addClass(classe + ' ' + id.split("-")[1])
 
+                    }
+
+                    if (specific !== null) {
+                        //  find the parent of small button in specific number
+                        const parentBtn = "#" + id.split("-")[0]
+
+                        if (!$(parentBtn).addClass(classe)) {
+
+                            $(parentBtn).addClass(classe)
+
+                        }
+                    }
+
+                    // $("#" + ruleID).addClass('bg-btn-first');
+                    if (this.checkFooterBetAmount) {
+                        let betData = {
+                            id: id,
+                            class: classe,
+                            specificNumber: '',
+                            gameUUID: this.getGameUUIDByStockName(this.stockID),
+                            ruleID: ruleID,
+                            betAmount: this.getFooterBetAmount
+                        };
+
+
+                        this.setTempMultiGameBetData(betData);
+                        // this.pushDataMultiGameBet(betData);
+                        // console.warn(this.getMultiGameBet);
+                    }
                 }
             }
 
-            // $("#" + ruleID).addClass('bg-btn-first');
-            if (this.checkFooterBetAmount) {
-                let betData = {
-                    specificNumber: '',
-                    gameUUID: this.getGameUUIDByStockName(this.stockID),
-                    ruleID: ruleID,
-                    betAmount: this.getFooterBetAmount
-                };
-                this.setTempMultiGameBetData(betData);
-                // this.pushDataMultiGameBet(betData);
-                // console.warn(this.getMultiGameBet);
-            }
         },
 
     }

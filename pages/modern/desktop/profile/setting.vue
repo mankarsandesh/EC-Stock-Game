@@ -23,7 +23,7 @@
                 <span class="slider round"></span>
               </label>
             </div>
-            <div class="setting_container">
+            <!-- <div class="setting_container">
               <span>{{ $t("setting.usersAllowFollowMe") }}</span>
               <label class="switch">
                 <input
@@ -34,7 +34,7 @@
                 />
                 <span class="slider round"></span>
               </label>
-            </div>
+            </div> -->
           </div>
         </div>
       </v-flex>
@@ -86,7 +86,6 @@ import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
 import chipsAmountDesktop from "~/components/modern/setting/chipamount";
-import log from "roarr";
 
 export default {
   components: {
@@ -105,7 +104,7 @@ export default {
       let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
         ? true
         : false;
-      let isAllowToFollow = this.$refs.isAllowToFollow.checked ? true : false;
+      let isAllowToFollow = false;
       let isSound = this.$refs.isSound.checked ? true : false;
       let isAllowToLocation = this.$refs.isAllowToLocation.checked
         ? true
@@ -148,17 +147,6 @@ export default {
           title: ex.message,
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/profile/setting.vue",
-            apiUrl: config.updateUserSetting.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

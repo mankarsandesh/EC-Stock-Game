@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+    v-if="dialogStockAnalysis"
     v-model="dialogStockAnalysis"
     fullscreen
     hide-overlay
@@ -63,6 +64,7 @@
                 color="#1db42f"
                 v-if="isShowDateStart"
                 v-model="startDate"
+                :max="maxDate"
                 @input="isShowDateStart = false"
               ></v-date-picker>
             </div>
@@ -85,6 +87,7 @@
                 color="#1db42f"
                 v-if="isShowDateEnd"
                 v-model="endDate"
+                :max="maxDate"
                 @input="isShowDateEnd = false"
               ></v-date-picker>
             </div>
@@ -119,6 +122,7 @@
                 height="350vh"
                 :options="chartOptions"
                 :series="series"
+                :key="componentKey"
               ></apexchart>
             </div>
           </v-flex>
@@ -149,6 +153,8 @@ export default {
   data() {
     return {
       stockAnalysis: [],
+      componentKey: 0,
+      maxDate: new Date().toISOString(),
       isDataValid: false,
       error: "",
       colors: barColor,
@@ -228,6 +234,7 @@ export default {
     ...mapActions(["setSnackBarMessage"]),
     showDialogStockAnalysis() {
       this.dialogStockAnalysis = true;
+      this.componentKey++;
     },
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
@@ -315,11 +322,11 @@ export default {
       });
       return [
         {
-          name: window.$nuxt.$root.$t("msg.win"),
+          name: this.$root.$t("msg.win"),
           data: win
         },
         {
-          name: window.$nuxt.$root.$t("msg.lose"),
+          name: this.$root.$t("msg.lose"),
           data: loss
         }
       ];
@@ -327,7 +334,7 @@ export default {
     imgProfile() {
       return this.getUserInfo.profileImage == "" ||
         this.getUserInfo.profileImage == undefined
-        ? "/user.png"
+        ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     }
   },

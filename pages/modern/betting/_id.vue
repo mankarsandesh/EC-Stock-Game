@@ -6,35 +6,44 @@
           <v-flex xs12 sm12>
             <v-layout>
               <v-flex class="text-xs-center" ma-1>
-                <span class="uppercase-text grey--text">{{ $t("msg.lastDraw") }}:</span>
+                <span class="uppercase-text grey--text"
+                  >{{ $t("msg.lastDraw") }}:</span
+                >
                 <v-flex flex-style class="lastdraw">
                   <h4 class="body-3">
-                    <span class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></span>
+                    <span
+                      class="text-black"
+                      v-html="$options.filters.lastDraw(getLastDraw)"
+                    ></span>
                   </h4>
                 </v-flex>
               </v-flex>
               <v-flex class="text-xs-center" ma-1>
-                <span class="uppercase-text grey--text">{{ $t("msg.betCloseIn") }}:</span>
+                <span class="uppercase-text grey--text"
+                  >{{ $t("msg.betCloseIn") }}:</span
+                >
                 <v-flex flex-style class="betclose">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
-                    getTimerByStockName(this.$route.params.id) &&
-                    getTimerByStockName(this.$route.params.id)
-                    .gameEndTimeCountDownInSec
-                    | betclosein(getStockLoop(this.$route.params.id))
+                      getTimerByStockName(this.$route.params.id) &&
+                        getTimerByStockName(this.$route.params.id)
+                          .gameEndTimeCountDownInSec
+                          | betclosein(getStockLoop(this.$route.params.id))
                     }}
                   </h4>
                 </v-flex>
               </v-flex>
               <v-flex class="text-xs-center" ma-1>
-                <span class="uppercase-text grey--text">{{ $t("msg.lotteryDraw") }}:</span>
+                <span class="uppercase-text grey--text"
+                  >{{ $t("msg.lotteryDraw") }}:</span
+                >
                 <v-flex flex-style class="lottery">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
-                    getTimerByStockName(this.$route.params.id) &&
-                    getTimerByStockName(this.$route.params.id)
-                    .gameEndTimeCountDownInSec
-                    | lotterydraw(getStockLoop(this.$route.params.id))
+                      getTimerByStockName(this.$route.params.id) &&
+                        getTimerByStockName(this.$route.params.id)
+                          .gameEndTimeCountDownInSec
+                          | lotterydraw(getStockLoop(this.$route.params.id))
                     }}
                   </h4>
                 </v-flex>
@@ -55,7 +64,8 @@
               color="#003e70"
               v-show="isShowTrendMap"
               @click="changeShowTrendMap()"
-            >keyboard_arrow_left</v-icon>
+              >keyboard_arrow_left</v-icon
+            >
           </v-flex>
 
           <v-flex v-if="isShowTrendMap" xs10 class="text-xs-center py-2">
@@ -86,6 +96,20 @@
               </span>
             </span>
             <v-flex sm12 xs12 class="chartDesgin">
+              <v-layout pa-2>
+                <v-flex xs6 class="text-xs-left" v-if="getStockLiveTime(this.stockID)">
+                  <span class="text-time">{{
+                    getStockLiveTime(this.stockID).split(" ")[1]
+                  }}</span>
+                </v-flex>
+                <v-spacer></v-spacer>
+                <v-flex xs6 class="text-xs-right">
+                  <span class="text-price">
+                    $ {{ getStockLivePrice(this.stockID) }}
+                  </span>
+                </v-flex>
+              </v-layout>
+
               <chartMobile :stockName="$route.params.id"></chartMobile>
             </v-flex>
           </v-flex>
@@ -96,7 +120,8 @@
               v-show="!isShowTrendMap"
               @click="changeShowTrendMap()"
               color="#003e70"
-            >keyboard_arrow_right</v-icon>
+              >keyboard_arrow_right</v-icon
+            >
           </v-flex>
         </v-layout>
       </v-flex>
@@ -114,17 +139,37 @@
         <v-layout wrap sm6>
           <div class="tab-menu-container">
             <div class="digit-type-container">
-              <div class="btn-digit-type first-digit" @click="$refs.firstDigit.click()">
-                <span class="text-pre-line text-white">{{ $t("gamemsg.firstdigits") }}</span>
+              <div
+                class="btn-digit-type first-digit"
+                @click="$refs.firstDigit.click()"
+              >
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.firstdigits")
+                }}</span>
               </div>
-              <div class="btn-digit-type last-digit" @click="$refs.lastDigit.click()">
-                <span class="text-pre-line text-white">{{ $t("gamemsg.lastdigits") }}</span>
+              <div
+                class="btn-digit-type last-digit"
+                @click="$refs.lastDigit.click()"
+              >
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.lastdigits")
+                }}</span>
               </div>
-              <div class="btn-digit-type both-digit" @click="$refs.bothDigit.click()">
-                <span class="text-pre-line text-white">{{ $t("gamemsg.bothdigits") }}</span>
+              <div
+                class="btn-digit-type both-digit"
+                @click="$refs.bothDigit.click()"
+              >
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.bothdigits")
+                }}</span>
               </div>
-              <div class="btn-digit-type two-digit" @click="$refs.twoDigit.click()">
-                <span class="text-pre-line text-white">{{ $t("gamemsg.twodigits") }}</span>
+              <div
+                class="btn-digit-type two-digit"
+                @click="$refs.twoDigit.click()"
+              >
+                <span class="text-pre-line text-white">{{
+                  $t("gamemsg.twodigits")
+                }}</span>
               </div>
             </div>
             <span class="active-tab-mark" :style="leftActive"></span>
@@ -133,7 +178,7 @@
           <v-tabs
             grow
             centered
-            style="width:100%;background-color: #f2f4ff;"
+            style="width:100%;background-color: #f2f4ff;padding:0 !important;"
             @change="tabChanged($event)"
           >
             <v-tab v-show="false" ref="firstDigit">
@@ -150,7 +195,6 @@
             </v-tab>
 
             <!-- First Digit -->
-
             <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
@@ -252,7 +296,10 @@
                   </v-card-title>
                 </v-card>
 
-                <v-card class="box-click" @click.stop="drawerderfirst = !drawerderfirst">
+                <v-card
+                  class="box-click"
+                  @click.stop="drawerderfirst = !drawerderfirst"
+                >
                   <v-card-title class="o-even">
                     <h5>0-9</h5>
                   </v-card-title>
@@ -336,9 +383,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
+            <!-- First Digit -->
 
             <!-- last digit -->
-            <v-tab-item>
+            <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -440,7 +488,10 @@
                   </v-card-title>
                 </v-card>
 
-                <v-card class="box-click" @click.stop="drawerderlast = !drawerderlast">
+                <v-card
+                  class="box-click"
+                  @click.stop="drawerderlast = !drawerderlast"
+                >
                   <v-card-title class="o-even">
                     <h5>0-9</h5>
                   </v-card-title>
@@ -524,9 +575,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
+            <!-- last digit -->
 
             <!-- Both Digit -->
-            <v-tab-item>
+            <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -653,7 +705,10 @@
                   </v-card-title>
                 </v-card>
 
-                <v-card class="box-click" @click.stop="drawerder018 = !drawerder018">
+                <v-card
+                  class="box-click"
+                  @click.stop="drawerder018 = !drawerder018"
+                >
                   <v-card-title class="o-even">
                     <h5>0-18</h5>
                   </v-card-title>
@@ -737,11 +792,10 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
-
             <!-- Both Digit -->
 
             <!-- TWO Digit -->
-            <v-tab-item>
+            <v-tab-item xs4>
               <v-layout row align-center justify-center>
                 <v-card
                   class="box-click"
@@ -867,7 +921,10 @@
                   </v-card-title>
                 </v-card>
 
-                <v-card class="box-click" @click.stop="drawerder099 = !drawerder099">
+                <v-card
+                  class="box-click"
+                  @click.stop="drawerder099 = !drawerder099"
+                >
                   <v-card-title class="o-even">
                     <h5>00-99</h5>
                   </v-card-title>
@@ -951,7 +1008,6 @@
                 </v-card>
               </v-layout>
             </v-tab-item>
-
             <!-- TWO Digit -->
           </v-tabs>
         </v-layout>
@@ -995,13 +1051,13 @@
             <p class="text-uppercase test-rule-betting">
               {{ $t("msg.bettingOn") }}
               {{
-              isNaN(gameRule.split("-")[1])
-              ? $t("gamemsg." + gameRule.split("-")[0]) +
-              "-" +
-              $t("gamemsg." + gameRule.split("-")[1])
-              : $t("gamemsg." + gameRule.split("-")[0]) +
-              "-" +
-              gameRule.split("-")[1]
+                isNaN(gameRule.split("-")[1])
+                  ? $t("gamemsg." + gameRule.split("-")[0]) +
+                    "-" +
+                    $t("gamemsg." + gameRule.split("-")[1])
+                  : $t("gamemsg." + gameRule.split("-")[0]) +
+                    "-" +
+                    gameRule.split("-")[1]
               }}
             </p>
           </div>
@@ -1021,14 +1077,24 @@
         </div>
 
         <div xs10 class="px-2 text-center ml-4 mt-3">
-          <input class="round-2 text-input" type="number" readonly label="$0" v-model="betAmount" />
+          <input
+            class="round-2 text-input"
+            type="number"
+            readonly
+            label="$0"
+            v-model="betAmount"
+          />
           <br />
           {{ $t("msg.min") }} = $100 ;{{ $t("msg.max") }} = $5000
         </div>
 
         <div xs12 class="px-2 text-center mt-3">
-          <v-btn class="buttonGreen" @click="reviewbet()">{{ $t("betting.reviewBet") }}</v-btn>
-          <v-btn class="btn_cancel" @click="bettingDialog = false">{{ $t("betting.cancelBet") }}</v-btn>
+          <v-btn class="buttonGreen" @click="reviewbet()">{{
+            $t("betting.reviewBet")
+          }}</v-btn>
+          <v-btn class="btn_cancel" @click="bettingDialog = false">{{
+            $t("betting.cancelBet")
+          }}</v-btn>
         </div>
       </div>
     </v-dialog>
@@ -1058,13 +1124,15 @@
             <table class="table-review">
               <tr>
                 <td class="text-right">{{ $t("msg.stockName") }}:</td>
-                <td class="text-left pl-2 text-color-blue">{{ $t(`stockName.${$route.params.id}`) }}</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{ $t(`stockName.${$route.params.id}`) }}
+                </td>
               </tr>
               <tr>
                 <td class="text-right">{{ $t("msg.gameId") }}:</td>
-                <td
-                  class="text-left pl-2 text-color-blue"
-                >{{ getGameUUIDByStockName(this.$route.params.id) }}</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{ getGameUUIDByStockName(this.$route.params.id) }}
+                </td>
               </tr>
               <tr>
                 <td class="text-right">{{ $t("gameType") }}:</td>
@@ -1096,8 +1164,12 @@
           <hr />
 
           <div xs12 class="px-2 text-center mt-3">
-            <v-btn class="buttonGreen" @click="placeBet">{{ $t("betting.placeBet") }}</v-btn>
-            <v-btn class="btn_cancel" @click="reviewbetDialog = false">{{ $t("betting.cancelBet") }}</v-btn>
+            <v-btn class="buttonGreen" @click="placeBet">{{
+              $t("betting.placeBet")
+            }}</v-btn>
+            <v-btn class="btn_cancel" @click="reviewbetDialog = false">{{
+              $t("betting.cancelBet")
+            }}</v-btn>
           </div>
         </div>
       </v-card>
@@ -1107,11 +1179,19 @@
     <!-- Test -->
 
     <!-- specific number first digit -->
-    <v-navigation-drawer class="drawer-asidebar" right v-model="drawerderfirst" fixed temporary>
+    <v-navigation-drawer
+      class="drawer-asidebar"
+      right
+      v-model="drawerderfirst"
+      fixed
+      temporary
+    >
       <div class="header-dialog">
         <h3 class="text-uppercase">{{ $t("gamemsg.firstdigit") }}</h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
-        <v-icon size="30" @click="drawerderfirst = !drawerderfirst">close</v-icon>
+        <v-icon size="30" @click="drawerderfirst = !drawerderfirst"
+          >close</v-icon
+        >
       </div>
       <hr class="head-jumbothron" />
 
@@ -1141,7 +1221,13 @@
       </v-container>
     </v-navigation-drawer>
     <!-- specific number last digit -->
-    <v-navigation-drawer class="drawer-asidebar" right v-model="drawerderlast" fixed temporary>
+    <v-navigation-drawer
+      class="drawer-asidebar"
+      right
+      v-model="drawerderlast"
+      fixed
+      temporary
+    >
       <div class="header-dialog">
         <h3 class="text-uppercase">{{ $t("gamemsg.lastdigit") }}</h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
@@ -1175,7 +1261,13 @@
     </v-navigation-drawer>
     <!-- both digit -->
 
-    <v-navigation-drawer class="drawer-asidebar" right v-model="drawerder018" fixed temporary>
+    <v-navigation-drawer
+      class="drawer-asidebar"
+      right
+      v-model="drawerder018"
+      fixed
+      temporary
+    >
       <div class="header-dialog">
         <h3 class="text-uppercase">{{ $t("gamemsg.bothdigit") }}</h3>
         <!-- <p>{{getStockById(this.$route.params.id).loop}} MINUTE GAME | FIRST DIGT - NUMBER</p> -->
@@ -1210,7 +1302,13 @@
     <!-- 0 -99 -->
     <!-- two digit -->
 
-    <v-navigation-drawer class="drawer-asidebar" right v-model="drawerder099" fixed temporary>
+    <v-navigation-drawer
+      class="drawer-asidebar"
+      right
+      v-model="drawerder099"
+      fixed
+      temporary
+    >
       <div style="display:flex;flex-direction:column">
         <div class="header-dialog">
           <h3 class="text-uppercase">{{ $t("gamemsg.twodigit") }}</h3>
@@ -1400,7 +1498,6 @@ import trendMap from "~/components/modern/trendMap";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   async validate({ params, store }) {
@@ -1476,25 +1573,13 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.$route.params.id
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "pages/modern/betting/_id.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
   },
   mounted() {
     this.stockID = this.$route.params.id;
+    console.log(this.stockID);
   },
   components: {
     chartMobile,
@@ -1503,6 +1588,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "getStockLivePrice",
+      "getStockLiveTime",
       "getLastDraw",
       "getUserUUID",
       "getTimerByStockName",
@@ -1650,17 +1737,6 @@ export default {
       } catch (ex) {
         this.confirmDisabled = false;
         this.setSnackBarMessage(ex.message);
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/betting/_id.vue",
-            apiUrl: config.storeBet.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     formatToPrice(value) {
@@ -1726,20 +1802,35 @@ export default {
 </script>
 
 <style scoped>
+.text-time {
+  font-weight: 600;
+  color: #003f70;
+}
+.text-price {
+  font-weight: 600;
+  color: green;
+}
 .tab-menu-container {
   position: relative;
   z-index: 2;
-  top: 10px;
+  top: 5px;
+  height: 70px;
   display: flex;
   width: 100%;
   flex-direction: column;
 }
 .digit-type-container {
-  height: 80px;
+  height: 70px;
   display: flex;
   width: 100%;
   justify-content: space-around;
   text-align: center;
+}
+.btn-digit-type {
+  margin: 5px;
+  width: 25%;
+  border-radius: 10px;
+  padding: 5px;
 }
 .active-tab-mark {
   width: 21%;
@@ -1749,14 +1840,6 @@ export default {
   position: relative;
   top: -3px;
   transition: left 0.3s;
-}
-
-.btn-digit-type {
-  background-color: #2e477d;
-  margin: 5px;
-  width: 25%;
-  border-radius: 10px;
-  padding: 5px -5px;
 }
 .first-digit {
   background: rgb(13, 204, 255);

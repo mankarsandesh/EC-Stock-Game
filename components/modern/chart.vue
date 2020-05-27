@@ -6,7 +6,11 @@
           getStockLiveTime(stockName).split(" ")[1]
         }}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right stockPrice">
+      <v-flex
+        xs6
+        class="text-xs-right stockPrice"
+        v-if="getStockLivePrice(stockName)"
+      >
         <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
@@ -16,6 +20,7 @@
       width="99.5%"
       :options="chartOptions"
       :series="series"
+      v-if="isDataReady"
     />
   </div>
 </template>
@@ -27,7 +32,6 @@ import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
 import { mapGetters, mapActions } from "vuex";
 import Echo from "laravel-echo";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -44,6 +48,8 @@ export default {
   data() {
     return {
       chartHeight: "240vh",
+      isDataReady: false,
+      apiAttemptCount: 0,
       window: {
         width: 0,
         height: 0
@@ -51,8 +57,8 @@ export default {
       chartData: []
     };
   },
-  created() {
-    this.fetchChart(this.getStockUUIDByStockName(this.stockName));
+  async created() {
+    await this.fetchChart(this.getStockUUIDByStockName(this.stockName));
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
@@ -99,19 +105,6 @@ export default {
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/modern/chart.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -253,10 +246,17 @@ export default {
         });
 
         if (res.status) {
+          this.apiAttemptCount = 0;
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
+          this.isDataReady = true;
         } else {
-          throw new Error(config.error.general);
+          if (this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.fetchChart();
+          } else {
+            throw new Error(config.error.general);
+          }
         }
       } catch (ex) {
         console.error(ex);
@@ -265,17 +265,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "components/modern/chart.vue",
-            apiUrl: config.getRoadMap.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -287,7 +276,7 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-      this.demo = this.window.width;     
+      this.demo = this.window.width;
       // Chart Size Change According Desktop and Laptop Size
       if (this.window.width >= 2000) {
         this.chartHeight = "360vh";
@@ -304,6 +293,9 @@ export default {
 };
 </script>
 <style>
+.v-card-style{
+ min-height:350px;
+}
 .arrow_boxChart {
   font-family: Arial, Helvetica, sans-serif;
   border: 1px solid #003f70;

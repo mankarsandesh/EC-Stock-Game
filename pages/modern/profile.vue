@@ -334,7 +334,6 @@ import OnlineHistory from "~/components/mobile/onlineHistory";
 import StockAnalysis from "~/components/mobile/stockAnalysis";
 import config from "../../config/config.global";
 import secureStorage from "../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   data() {
@@ -405,17 +404,6 @@ export default {
         }
       } catch (ex) {
         this.setSnackBarMessage(ex);
-        log.error(
-          {
-            req: reqBody,
-            res: res.data,
-            page: "pages/modern/mobile/profile.vue",
-            apiUrl: config.updateUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     async saveClick() {
@@ -450,17 +438,6 @@ export default {
       } catch (ex) {
         this.setSnackBarMessage(config.error.general);
         this.updating = false;
-        log.error(
-          {
-            req: formData,
-            res,
-            page: "pages/modern/profile.vue",
-            apiUrl: config.updateUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }
