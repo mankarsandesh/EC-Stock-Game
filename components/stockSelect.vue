@@ -49,17 +49,17 @@
         id="minute"
       >
         <template slot="selection" slot-scope="data"
-          >{{ data.item.loopName }} min</template
-        >
+          >{{ data.item.loopName }} min
+        </template>
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
             <v-list-tile-content>{{ data.loopName }} min</v-list-tile-content>
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title
-                >{{ data.item.loopName }} min</v-list-tile-title
-              >
+              <v-list-tile-title>
+                {{ data.item.loopName }} min
+              </v-list-tile-title>
             </v-list-tile-content>
           </template>
         </template>
@@ -97,6 +97,20 @@ export default {
       minutes: [],
       stockNames: []
     };
+  },
+  created() {
+    sessionStorage.setItem("STOCK_FULL_URL", this.$route.path);
+    const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+    sessionStorage.setItem("STOCK_URL", this.$route.params.id);
+    if (GET_STOCK_TYPE !== "crypto") {
+      sessionStorage.setItem("STOCK_LOOP", 5);
+    } else {
+      let stockURL = this.$route.params.id;
+      let stockURLName = stockURL.substring(0, stockURL.length - 1);
+      let stockURLLoop = stockURL.substr(stockURL.length - 1);
+      sessionStorage.setItem("STOCK_LOOP", stockURLLoop);
+    }
+    this.getActiveGamesByCategory();
   },
   watch: {
     stock(value) {
@@ -140,10 +154,17 @@ export default {
         sessionStorage.setItem("STOCK_LOOP", value.loopName);
         const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
         if (GET_STOCK_TYPE == "crypto") {
-          sessionStorage.setItem(
-            "STOCK_URL",
-            this.stockName.stockName + value.loopName
-          );
+          if (this.stockName === "btc") {
+            sessionStorage.setItem(
+              "STOCK_URL",
+              this.stockName + value.loopName
+            );
+          } else {
+            sessionStorage.setItem(
+              "STOCK_URL",
+              this.stockName.stockName + value.loopName
+            );
+          }
         } else {
           sessionStorage.setItem("STOCK_URL", this.stockName.stockName);
         }
@@ -160,21 +181,14 @@ export default {
       const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_LOOP");
       const GET_STOCK_FULL_URL = sessionStorage.getItem("STOCK_FULL_URL");
       if (GET_STOCK_FULL_URL !== `/modern/desktop/${GET_STOCK_URL}`) {
-        if (GET_STOCK_TYPE == "crypto") {
-          if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => {});
-          } else {
-            // if is multi game then add selected game
-            this.addStockMultiGame(GET_STOCK_URL);
-          }
+        //check multi game
+        if (this.$route.name === "modern-desktop-id") {
+          this.$router
+            .replace(`/modern/desktop/${GET_STOCK_URL}`)
+            .catch(ex => {});
         } else {
-          // check is multi game or not
-          if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => {});
-            // if is multi game then add selected game
-          } else {
-            this.addStockMultiGame(GET_STOCK_URL);
-          }
+          // if is multi game then add selected game
+          this.addStockMultiGame(GET_STOCK_URL);
         }
       }
     },
@@ -183,21 +197,6 @@ export default {
       this.updateGameUUID(val);
     }
   },
-  created() {
-    sessionStorage.setItem("STOCK_FULL_URL", this.$route.path);
-    const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
-    sessionStorage.setItem("STOCK_URL", this.$route.params.id);
-    if (GET_STOCK_TYPE !== "crypto") {
-      sessionStorage.setItem("STOCK_LOOP", 5);
-    } else {
-      let stockURL = this.$route.params.id;
-      let stockURLName = stockURL.substring(0, stockURL.length - 1);
-      let stockURLLoop = stockURL.substr(stockURL.length - 1);
-      sessionStorage.setItem("STOCK_LOOP", stockURLLoop);
-    }
-    this.getActiveGamesByCategory();
-  },
-  mounted() {},
   computed: {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
