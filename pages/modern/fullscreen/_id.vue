@@ -328,12 +328,19 @@
         <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
           <h3 class="balanceUser" v-if="getUserBalance > 0">
             Acc :
-            <span class="userBlanace">${{ getUserBalance | currency }}</span>
+
+            <span class="userBlanace">
+              <animated-number
+                :value="getUserBalance"
+                :formatValue="formatToPrice"
+                :duration="300"
+              />
+            </span>
           </h3>
-          <h3 class="balanceUser" v-if="getUserBalance == 0">
+          <!-- <h3 class="balanceUser" v-if="getUserBalance == 0">
             Acc :
             <span class="userBlanace">0000.00</span>
-          </h3>
+          </h3> -->
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-show="!isHidden"></fullscreenchart>
@@ -466,7 +473,7 @@ export default {
     footerBet,
     trendMapFullScreen,
     fullscreenchart,
-    fullscreencurrentbet
+    fullscreencurrentbet,
   },
   data() {
     return {
@@ -620,6 +627,10 @@ export default {
     }
   },
   methods: {
+    formatToPrice(value) {
+      return `R$ ${value.toFixed(2)}`;
+    },
+
     clearTutorialUI() {
       this.tutorialStepNumber = 0;
       this.isShowTutorial = false;

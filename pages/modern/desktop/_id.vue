@@ -189,9 +189,12 @@
             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn class="buttonGreensmall" to="/modern/desktop/gamerule" dark
-              >{{ $t("msg.gameRule") }}
-            </v-btn>
+            <v-btn
+              class="buttonGreensmall"
+              to="/modern/desktop/gamerule"
+              dark
+              >{{ $t("msg.gameRule") }}</v-btn
+            >
           </v-flex>
         </v-card>
       </v-dialog>
@@ -292,6 +295,7 @@ export default {
     };
   },
   created() {
+    this.clearBetValueFooterBet();
     // Check size is Desktop or Mobile. and redirect to Mobile or Desktop
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
@@ -361,7 +365,8 @@ export default {
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
-      "setIsLoadingStockGame"
+      "setIsLoadingStockGame",
+      "clearBetValueFooterBet"
     ]),
     setAfterFullScreenClosePage() {
       secureStorage.setItem("fullscreenclosed", "desktop");

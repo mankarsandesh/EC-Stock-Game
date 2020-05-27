@@ -23,7 +23,7 @@ const mutations = {
     },
     SET_ITEMS_BETTING(state, payload) {
         state.getItemsBetting.push(payload);
-        localStorage.setItem("itemBetting", JSON.stringify(state.getItemsBetting))
+        secureStorage.setItem("itemBetting", JSON.stringify(state.getItemsBetting))
     },
     SET_COLLEGE_BUTTON_NUMBER(state, payload) {
         state.collegeBtnNumber = payload;
@@ -37,7 +37,6 @@ const mutations = {
     },
     CLEAR_DATA_MULTI_GAME_BET(state) {
         state.multiGameBet = [];
-        state.footerBetAmount = 0;
         state.onGoingBet = [];
     },
     REMOVE_ALL_FOOTER_BET(state) {
@@ -54,7 +53,7 @@ const mutations = {
     },
     SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
         state.tempMultiGameBetData.push(payload);
-        localStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
+        secureStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
     },
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
         state.multiGameBetSend.push(...state.tempMultiGameBetData);
@@ -63,6 +62,10 @@ const mutations = {
     },
     CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
         state.tempMultiGameBetData = [];
+
+    },
+    CLEAR_BET_VALUE_FOOTER_BET(state) {
+        state.footerBetAmount = 0;
     }
 };
 
@@ -116,6 +119,10 @@ const actions = {
     clearTempMultiGameBetData({ commit }) {
         commit("CLEAR_TEMP_MULTI_GAME_BET_DATA");
     },
+    clearBetValueFooterBet({ commit }) {
+        commit("CLEAR_BET_VALUE_FOOTER_BET");
+    },
+
     // Send bet data for multi game and footer bet on full screen
     async sendBetting(context) {
         try {
@@ -302,10 +309,11 @@ const getters = {
         });
         return amount;
     },
-    getMultiGameFooterBetAmount(state) {
-        return state.multiGameFooterBetAmount;
-    },
-    gettempMultiGameBetData: state => state.tempMultiGameBetData
+
+    getMultiGameFooterBetAmount: state => state.multiGameFooterBetAmount,
+
+    gettempMultiGameBetData: state => state.tempMultiGameBetData,
+
 };
 
 export default {

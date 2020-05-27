@@ -13,8 +13,8 @@ export const BetResult = {
 
         ...mapActions([
             "setCollegeButtonNumberParent",
-            "setItemBetting",
-            "clearItemBetting"
+            "clearItemBetting",
+            "clearTempMultiGameBetData"
 
         ]),
 
@@ -197,23 +197,19 @@ export const BetResult = {
         },
 
 
-        // store bet in localStroge 
-        storeBetOnLocalStroge(items) {
-
-            this.setItemBetting(items)
-        },
-
-
         // cler the bet from localStroge after new game 
         clearItemsAfterLastDraw() {
 
-            localStorage.removeItem("itemBetting")
+            secureStorage.removeItem("itemBetting")
+
+            this.clearTempMultiGameBetData()
+
 
             if (this.getItemsBetting.length) {
 
                 this.clearItemBetting()
 
-                localStorage.removeItem("itemBetting")
+                secureStorage.removeItem("itemBetting")
 
             }
         }
