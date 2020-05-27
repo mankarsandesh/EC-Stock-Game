@@ -293,6 +293,9 @@ export default {
 };
 </script>
 <style>
+.v-card-style{
+ min-height:350px;
+}
 .arrow_boxChart {
   font-family: Arial, Helvetica, sans-serif;
   border: 1px solid #003f70;

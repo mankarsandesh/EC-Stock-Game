@@ -27,7 +27,7 @@
                         {{ visitProfileUserData.firstName }}
                         {{ visitProfileUserData.lastName }}
                       </v-flex>
-                      <v-flex>
+                      <v-flex v-if="visitProfileUserData.isAllowToLocation == 1">
                         <span>
                           <country-flag country="us" v-if="visitProfileUserData.country == 'USA'" />
                           <country-flag country="th" v-if="visitProfileUserData.country == 'THA'" />
