@@ -100,7 +100,6 @@ export default {
     };
   },
   created() {
-    console.log("created stock select");
     sessionStorage.setItem("STOCK_FULL_URL", this.$route.path);
     const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
     sessionStorage.setItem("STOCK_URL", this.$route.params.id);
@@ -116,7 +115,6 @@ export default {
   },
   watch: {
     stock(value) {
-      console.log("watch stock");
       let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       if (value.type === GET_STOCK_TYPE) {
         this.stockSocket = true;
@@ -142,7 +140,6 @@ export default {
       }
     },
     stockName(value) {
-      console.log("watch stockName");
       let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       if (value.stockName !== undefined) {
         sessionStorage.setItem("STOCK_NAME", this.stockName.stockName);
@@ -154,7 +151,6 @@ export default {
       }
     },
     minute(value) {
-      console.log("watch minute");
       if (value.loopName !== undefined) {
         sessionStorage.setItem("STOCK_LOOP", value.loopName);
         const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
@@ -180,7 +176,6 @@ export default {
       }
     },
     gameId(value) {
-      console.log("watch gameId");
       const GET_STOCK_URL = sessionStorage.getItem("STOCK_URL");
       const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       const GET_STOCK_NAME = sessionStorage.getItem("STOCK_NAME");
@@ -199,7 +194,6 @@ export default {
       }
     },
     getStockCategory(val) {
-      console.log("watch getStockCategory");
       this.items = val;
       this.updateGameUUID(val);
     }
@@ -222,7 +216,6 @@ export default {
             headers: config.header
           }
         );
-        console.log(res);
         if (res.status) {
           this.getGameUUID(res.data);
           this.setStockCategory(res.data);
