@@ -286,6 +286,7 @@ export default {
     },
     // Users Follow Bet Validation
     async followThisUser(followerID, followMethod) {
+      console.log("sasa");
       // Check Empty Filed
       if (
         !this.selectedFollow &&
@@ -355,7 +356,8 @@ export default {
             );
           }
           break;
-      }
+      }      
+      console.log("checked");
       return this.follwingBetting(followerID, followMethod);
     },
     // Error Function Common
@@ -393,6 +395,7 @@ export default {
         var { data } = await this.$axios.post(config.followUser.url, reqBody, {
           headers: config.header
         });
+        console.log(data);
         if (data.code == 200) {
           this.$emit("followBetClose");
           this.$swal({
