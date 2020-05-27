@@ -66,6 +66,7 @@ export default {
   border-top: 1px solid #dddddd;
   text-align: center;
   cursor: pointer;
+  padding:8px 4px;
   color: #003f70;
 }
 #notification-box-container {
@@ -89,19 +90,32 @@ export default {
   padding-top: 50%;
 }
 .item-list-container {
-  min-height: 500px;
-  max-height: 500px;
+  min-height: 350px;
+  max-height: 350px;
   overflow: auto;
 }
-/* hide scroll bar  note firefox not working
-/* Hide scrollbar for Chrome, Safari and Opera */
-.item-list-container::-webkit-scrollbar {
-  display: none;
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
 }
-/* Hide scrollbar for IE and Edge */
-.item-list-container {
-  -ms-overflow-style: none;
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 7px #acacac;
+  border-radius: 5px;
 }
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #acacac;
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2c6b9e;
+}
+
 .notification-item {
   display: flex;
   align-items: center;
