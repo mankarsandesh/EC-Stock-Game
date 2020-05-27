@@ -2,31 +2,32 @@
   <div id="tutorial-container" v-if="getIsShowTutorial">
     <div id="background-tutorial"></div>
     <div id="guide-container">
-      <div style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer">
+      <div
+        style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer"
+      >
         <v-icon @click="setIsShowTutorial(false)" color="#fff">close</v-icon>
       </div>
       <!-- last draw v-if="getTutorialStepNumber === 1" -->
       <div class="guide-top" v-if="getTutorialStepNumber === 1">
         <span id="result-draw">{{ getLastDraw | lastDraw2 }}</span>
-        <span class="guide-description">{{$t("tutorial.resultDraw")}}</span>
+        <span class="guide-description">{{ $t("tutorial.resultDraw") }}</span>
       </div>
       <!-- bet close in  -->
       <div class="guide-top" v-if="getTutorialStepNumber === 2">
-        <span
-          class="guide-description text-uppercase"
-          style="font-size:100px"
-        >{{$t("tutorial.calculation")}}...</span>
+        <span class="guide-description text-uppercase" style="font-size:100px"
+          >{{ $t("tutorial.calculation") }}...</span
+        >
       </div>
       <!-- lottery  -->
       <div class="guide-top" v-if="getTutorialStepNumber === 3">
         <span id="lottery-draw-guide-text">
           {{
-          getTimerByStockName($route.params.id) &&
-          getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
-          | lotterydraw(getStockLoop($route.params.id))
+            getTimerByStockName($route.params.id) &&
+              getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
+                | lotterydraw(getStockLoop($route.params.id))
           }}
         </span>
-        <span class="guide-description">{{$t("tutorial.lotteryDraw")}}</span>
+        <span class="guide-description">{{ $t("tutorial.lotteryDraw") }}</span>
       </div>
       <!-- chart  -->
       <!-- has scroll -->
@@ -34,37 +35,57 @@
         class="guide-chart-has-scroll"
         v-if="getTutorialStepNumber === 4 && getIsWindowsHasScroll"
       >
-        <span class="guide-title text-uppercase">{{$t("tutorial.analyseGraph")}}</span>
-        <span class="guide-description">{{$t("tutorial.stockGraph")}}</span>
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.analyseGraph")
+        }}</span>
+        <span class="guide-description">{{ $t("tutorial.stockGraph") }}</span>
       </div>
       <!-- no scroll -->
       <div
         class="guide-chart-no-scroll"
         v-if="getTutorialStepNumber === 4 && !getIsWindowsHasScroll"
       >
-        <span class="guide-title text-uppercase">{{$t("tutorial.analyseGraph")}}</span>
-        <span class="guide-description">{{$t("tutorial.stockGraph")}}</span>
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.analyseGraph")
+        }}</span>
+        <span class="guide-description">{{ $t("tutorial.stockGraph") }}</span>
       </div>
 
-      <!-- bet on digigt  -->
-      <div class="guide-top" style="margin-right: 90px;" v-if="getTutorialStepNumber === 5">
-        <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
-        <span class="guide-description">{{$t("tutorial.selectDigit")}}</span>
+      <!-- bet on digit  -->
+      <div
+        class="guide-top"
+        style="margin-right: 90px;"
+        v-if="getTutorialStepNumber === 5"
+      >
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.betOnDigits")
+        }}</span>
+        <span class="guide-description">{{ $t("tutorial.selectDigit") }}</span>
       </div>
       <!-- select chipcamount  -->
-      <div class="guide-top" style="margin-right: 90px;" v-if="getTutorialStepNumber === 6">
-        <span class="guide-title text-uppercase">{{$t("tutorial.betConfirm")}}</span>
-        <span class="guide-description">{{$t("tutorial.betLastDigitEven")}}</span>
+      <div
+        class="guide-top"
+        style="margin-right: 90px;"
+        v-if="getTutorialStepNumber === 6"
+      >
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.betConfirm")
+        }}</span>
+        <span class="guide-description">{{
+          $t("tutorial.betLastDigitEven")
+        }}</span>
       </div>
       <!-- enter amount bet -->
-      <!-- has scroll   v-if="getTutorialStepNumber === 7 && getIsWindowsHasScroll"-->
+      <!-- has scroll  -->
       <div
         class="guide-bottom-has-scroll"
         id="enter-bet-guide"
         v-if="getTutorialStepNumber === 7 && getIsWindowsHasScroll"
       >
-        <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
-        <span class="guide-description">{{$t("tutorial.selectChip")}}</span>
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.betOnDigits")
+        }}</span>
+        <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
       </div>
       <!-- no scroll -->
       <div
@@ -72,8 +93,10 @@
         id="enter-bet-guide"
         v-if="getTutorialStepNumber === 7 && !getIsWindowsHasScroll"
       >
-        <span class="guide-title text-uppercase">{{$t("tutorial.betOnDigits")}}</span>
-        <span class="guide-description">{{$t("tutorial.selectChip")}}</span>
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.betOnDigits")
+        }}</span>
+        <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
       </div>
       <!-- to scroll here -->
       <div id="enter-amount-to-bet" hidden>hidden</div>
@@ -81,23 +104,41 @@
 
       <!-- select stock to play -->
       <div class="guide-top" v-if="getTutorialStepNumber === 8">
-        <span class="guide-title text-uppercase">{{$t("tutorial.stockGame")}}</span>
-        <span class="guide-description">{{$t("tutorial.stockTime")}}</span>
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.stockGame")
+        }}</span>
+        <span class="guide-description">{{ $t("tutorial.stockTime") }}</span>
       </div>
       <!-- stock list -->
-      <div class="guide-top" v-if="getTutorialStepNumber === 9" style="margin-left: 100px;">
-        <span class="guide-title text-uppercase">{{$t("tutorial.stockAnalysis")}}</span>
-        <span class="guide-description">{{$t("tutorial.analysisCurrent")}}</span>
+      <div
+        class="guide-top"
+        v-if="getTutorialStepNumber === 9"
+        style="margin-left: 100px;"
+      >
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.stockAnalysis")
+        }}</span>
+        <span class="guide-description">{{
+          $t("tutorial.analysisCurrent")
+        }}</span>
       </div>
       <!-- stock result -->
-      <div class="guide-top" style="margin-left: 100px;" v-if="getTutorialStepNumber === 10">
-        <span class="guide-title text-uppercase">{{$t("tutorial.stockResult")}}</span>
-        <span class="guide-description">{{$t("tutorial.checkUpdate")}}</span>
+      <div
+        class="guide-top"
+        style="margin-left: 100px;"
+        v-if="getTutorialStepNumber === 10"
+      >
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.stockResult")
+        }}</span>
+        <span class="guide-description">{{ $t("tutorial.checkUpdate") }}</span>
       </div>
       <!-- road map  -->
       <div class="guide-bottom" v-if="getTutorialStepNumber === 11">
-        <span class="guide-title text-uppercase">{{$t("tutorial.roadMap")}}</span>
-        <span class="guide-description">{{$t("tutorial.analyseStock")}}</span>
+        <span class="guide-title text-uppercase">{{
+          $t("tutorial.roadMap")
+        }}</span>
+        <span class="guide-description">{{ $t("tutorial.analyseStock") }}</span>
       </div>
     </div>
   </div>
