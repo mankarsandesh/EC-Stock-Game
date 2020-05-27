@@ -90,6 +90,7 @@ export default {
   padding-top: 50%;
 }
 .item-list-container {
+  padding: 8px 0px;
   min-height: 350px;
   max-height: 350px;
   overflow: auto;
