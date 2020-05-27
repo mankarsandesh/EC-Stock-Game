@@ -2,15 +2,25 @@
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <div class="tab-container">
-      <div class="tab-item" v-for="(tab, index) in tabs" :key="index">
+      <div class="tab-item">
         <v-btn
           block
-          :class="active === index ? 'active-tab' : ''"
-          @click="active = index"
+          :class="active === 0 ? 'active-tab' : ''"
+          @click="active = 0"
         >
-          {{ $t("menu." + tabs[index]) }}
+          {{ $t("menu.chipAmount") }}
         </v-btn>
       </div>
+      <div class="tab-item">
+        <v-btn
+          block
+          :class="active === 1 ? 'active-tab' : ''"
+          @click="active = 1"
+        >
+          {{ $t("setting.account") }}
+        </v-btn>
+      </div>
+
       <div class="tab-content">
         <chipamount v-if="active === 0" />
         <soundcontrol v-else />
