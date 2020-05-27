@@ -49,17 +49,17 @@
         id="minute"
       >
         <template slot="selection" slot-scope="data"
-          >{{ data.item.loopName }} min</template
-        >
+          >{{ data.item.loopName }} min
+        </template>
         <template v-slot:item="data">
           <template v-if="typeof data.item !== 'object'">
             <v-list-tile-content>{{ data.loopName }} min</v-list-tile-content>
           </template>
           <template v-else>
             <v-list-tile-content>
-              <v-list-tile-title
-                >{{ data.item.loopName }} min</v-list-tile-title
-              >
+              <v-list-tile-title>
+                {{ data.item.loopName }} min
+              </v-list-tile-title>
             </v-list-tile-content>
           </template>
         </template>
@@ -99,8 +99,24 @@ export default {
       stockNames: []
     };
   },
+  created() {
+    console.log("created stock select");
+    sessionStorage.setItem("STOCK_FULL_URL", this.$route.path);
+    const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
+    sessionStorage.setItem("STOCK_URL", this.$route.params.id);
+    if (GET_STOCK_TYPE !== "crypto") {
+      sessionStorage.setItem("STOCK_LOOP", 5);
+    } else {
+      let stockURL = this.$route.params.id;
+      let stockURLName = stockURL.substring(0, stockURL.length - 1);
+      let stockURLLoop = stockURL.substr(stockURL.length - 1);
+      sessionStorage.setItem("STOCK_LOOP", stockURLLoop);
+    }
+    this.getActiveGamesByCategory();
+  },
   watch: {
     stock(value) {
+      console.log("watch stock");
       let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       if (value.type === GET_STOCK_TYPE) {
         this.stockSocket = true;
@@ -126,6 +142,7 @@ export default {
       }
     },
     stockName(value) {
+      console.log("watch stockName");
       let GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       if (value.stockName !== undefined) {
         sessionStorage.setItem("STOCK_NAME", this.stockName.stockName);
@@ -137,14 +154,22 @@ export default {
       }
     },
     minute(value) {
+      console.log("watch minute");
       if (value.loopName !== undefined) {
         sessionStorage.setItem("STOCK_LOOP", value.loopName);
         const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
         if (GET_STOCK_TYPE == "crypto") {
-          sessionStorage.setItem(
-            "STOCK_URL",
-            this.stockName.stockName + value.loopName
-          );
+          if (this.stockName === "btc") {
+            sessionStorage.setItem(
+              "STOCK_URL",
+              this.stockName + value.loopName
+            );
+          } else {
+            sessionStorage.setItem(
+              "STOCK_URL",
+              this.stockName.stockName + value.loopName
+            );
+          }
         } else {
           sessionStorage.setItem("STOCK_URL", this.stockName.stockName);
         }
@@ -155,50 +180,30 @@ export default {
       }
     },
     gameId(value) {
+      console.log("watch gameId");
       const GET_STOCK_URL = sessionStorage.getItem("STOCK_URL");
       const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
       const GET_STOCK_NAME = sessionStorage.getItem("STOCK_NAME");
       const GET_STOCK_LOOP = sessionStorage.getItem("STOCK_LOOP");
       const GET_STOCK_FULL_URL = sessionStorage.getItem("STOCK_FULL_URL");
       if (GET_STOCK_FULL_URL !== `/modern/desktop/${GET_STOCK_URL}`) {
-        if (GET_STOCK_TYPE == "crypto") {
-          if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => {});
-          } else {
-            // if is multi game then add selected game
-            this.addStockMultiGame(GET_STOCK_URL);
-          }
+        //check multi game
+        if (this.$route.name === "modern-desktop-id") {
+          this.$router
+            .replace(`/modern/desktop/${GET_STOCK_URL}`)
+            .catch(ex => {});
         } else {
-          // check is multi game or not
-          if (this.$route.name === "modern-desktop-id") {
-            this.$router.replace(`/modern/desktop/${GET_STOCK_URL}`).catch(ex => {});
-            // if is multi game then add selected game
-          } else {
-            this.addStockMultiGame(GET_STOCK_URL);
-          }
+          // if is multi game then add selected game
+          this.addStockMultiGame(GET_STOCK_URL);
         }
       }
     },
     getStockCategory(val) {
+      console.log("watch getStockCategory");
       this.items = val;
       this.updateGameUUID(val);
     }
   },
-  created() {
-    sessionStorage.setItem("STOCK_FULL_URL", this.$route.path);
-    const GET_STOCK_TYPE = sessionStorage.getItem("STOCK_TYPE");
-    sessionStorage.setItem("STOCK_URL", this.$route.params.id);
-    if (GET_STOCK_TYPE !== "crypto") {
-      sessionStorage.setItem("STOCK_LOOP", 5);
-    } else {
-      let stockURL = this.$route.params.id;
-      let stockURLName = stockURL.substring(0, stockURL.length - 1);
-      let stockURLLoop = stockURL.substr(stockURL.length - 1);
-      sessionStorage.setItem("STOCK_LOOP", stockURLLoop);
-    }
-    this.getActiveGamesByCategory();
-  },
-  mounted() {},
   computed: {
     ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
   },
@@ -217,6 +222,7 @@ export default {
             headers: config.header
           }
         );
+        console.log(res);
         if (res.status) {
           this.getGameUUID(res.data);
           this.setStockCategory(res.data);
