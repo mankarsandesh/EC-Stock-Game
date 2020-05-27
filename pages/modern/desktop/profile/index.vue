@@ -175,8 +175,9 @@ export default {
       updating: false
     };
   },
-  mounted() {
+  async mounted() {
     // alert(process.env.NODE_ENV)
+    await this.setUserData();
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
