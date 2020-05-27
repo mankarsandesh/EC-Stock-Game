@@ -19,7 +19,6 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
 import chipamount from "~/components/mobile/chipamount";
 import soundcontrol from "~/components/mobile/soundcontrol";
 
@@ -34,9 +33,6 @@ export default {
       tabs: ["chipAmount", "soundControl"],
       active: 0
     };
-  },
-  methods: {
-    ...mapActions(["setIsLoadingStockGame"])
   }
 };
 </script>

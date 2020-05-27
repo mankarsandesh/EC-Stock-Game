@@ -1,6 +1,5 @@
 import config from "~/config/config.global";
 import stock from "~/data/stockList";
-import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
 
 const state = () => ({
@@ -46,17 +45,6 @@ const actions = {
       }
     } catch (ex) {
       console.log(ex);
-      log.error(
-        {
-          req: reqBody,
-          res,
-          page: "store/stock.js",
-          apiUrl: config.getStock.url,
-          provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: secureStorage.getItem("USER_UUID")
-        },
-        ex.message
-      );
     }
   },
   // Set stocks category

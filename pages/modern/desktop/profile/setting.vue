@@ -86,7 +86,6 @@ import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
 import chipsAmountDesktop from "~/components/modern/setting/chipamount";
-import log from "roarr";
 
 export default {
   components: {
@@ -148,17 +147,6 @@ export default {
           title: ex.message,
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/profile/setting.vue",
-            apiUrl: config.updateUserSetting.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

@@ -17,7 +17,6 @@ import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   layout: "desktopModern",
@@ -64,18 +63,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        // Error Logs
-        log.error(
-          {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/desktop/current-bet.vue",
-            apiUrl: config.getAllBets.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

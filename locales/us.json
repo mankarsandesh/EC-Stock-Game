@@ -259,6 +259,8 @@
     "invalidFirstName": "Please enter a valid First Name. Only alphabetical characters are allowed",
     "invalidLastName": "'Please enter a valid Last Name. Only alphabetical characters are allowed'",
     "invalidUsername": "Username should be minimum 5 characters and maximum 20 characters long",
+    "invalidFirstNameLength": "First name can be maximum 25 characters long",
+    "invalidLastNameLength": "Last name can be maximum 25 characters long",
     "success": "Successful Information Saved!",
     "onlineStatus": "Online Status",
     "basicInfo": "basic information",

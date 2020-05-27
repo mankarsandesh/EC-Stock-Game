@@ -1,6 +1,5 @@
 import VuexPersistence from "vuex-persist";
 import config from "../config/config.global";
-import log from "roarr";
 import secureStorage from "./secure-storage";
 import Cookies from "./js-cookie";
 
@@ -239,17 +238,6 @@ const checkUserLogin = async (
     }
   } catch (ex) {
     console.log(ex);
-    log.error(
-      {
-        req: reqBody,
-        res: data,
-        page: "plugins/login.js",
-        apiUrl: config.userLoginAuth.url,
-        provider: portalProviderUUID,
-        user: userUUID
-      },
-      ex.message
-    );
   }
 };
 

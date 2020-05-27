@@ -220,7 +220,6 @@ import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../../plugins/secure-storage";
-import log from "roarr";
 import countryFlag from "vue-country-flag";
 
 export default {
@@ -405,18 +404,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        // Error Logs 
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/userprofile/_useruuid.vue",
-            apiUrl: config.getVisitUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }
