@@ -37,9 +37,7 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName)
         .listen(eventName, callback)
-        .on("pusher:subscription_succeeded", member => {
-          console.log("I am here");
-        });
+        .on("pusher:subscription_succeeded", member => {});
     }
   }
 };

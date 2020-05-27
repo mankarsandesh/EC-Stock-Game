@@ -97,9 +97,10 @@
                   </div>
                   <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
+
                 <v-flex
                   xs2
-                  md1
+                  md3
                   class="text-xs-right"
                   style="align-self: flex-end;"
                 >
@@ -180,13 +181,15 @@
             <h2 style="text-align:center;">
               {{ $t("msg.ecGamingRulesDescription") }}
             </h2>
-
             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
-            <v-btn class="buttonGreensmall" to="/modern/desktop/gamerule" dark
-              >{{ $t("msg.gameRule") }}
-            </v-btn>
+            <v-btn
+              class="buttonGreensmall"
+              to="/modern/desktop/gamerule"
+              dark
+              >{{ $t("msg.gameRule") }}</v-btn
+            >
           </v-flex>
         </v-card>
       </v-dialog>
@@ -287,8 +290,10 @@ export default {
       isStep: 0
     };
   },
-  updated() {},
+
   created() {
+    this.clearBetValueFooterBet();
+
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }
@@ -370,7 +375,8 @@ export default {
       "setLiveRoadMap",
       "setFooterBetAmount",
       "removeAllFooterBet",
-      "setIsLoadingStockGame"
+      "setIsLoadingStockGame",
+      "clearBetValueFooterBet"
     ]),
     setAfterFullScreenClosePage() {
       secureStorage.setItem("fullscreenclosed", "desktop");

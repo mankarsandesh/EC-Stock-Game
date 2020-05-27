@@ -63,6 +63,7 @@
 
       <span class="w10">
         <v-btn
+          :class="number === 'first' ? 'active-firstdigit' :null "
           class="align_button4 f-hover"
           :id="stockID + 'firstdigit'"
           @click="btnNumber('first')"
@@ -149,6 +150,7 @@
 
       <span class="w12">
         <v-btn
+          :class="number === 'last' ? 'active-lasttdigit' :null "
           class="align_button4 betButtonGuide l-hover"
           :id="stockID + 'lastdigit'"
           @click="btnNumber('last')"
@@ -227,7 +229,12 @@
         </v-btn>
       </popper>
       <span class="w12">
-        <v-btn class="align_button4 b-hover" :id="stockID + 'bothdigit'" @click="btnNumber('both')">
+        <v-btn
+          :class="number === 'both' ? 'active-bothdigit' :null "
+          class="align_button4 b-hover"
+          :id="stockID + 'bothdigit'"
+          @click="btnNumber('both')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -304,7 +311,12 @@
       </popper>
 
       <span class="w12">
-        <v-btn class="align_button4 t-hover" :id="stockID + 'twodigit'" @click="btnNumber('two')">
+        <v-btn
+          :class="number === 'two' ? 'active-twodigit' :null "
+          class="align_button4 t-hover"
+          :id="stockID + 'twodigit'"
+          @click="btnNumber('two')"
+        >
           <showChipAmount
             size="45px"
             :amount="
@@ -350,7 +362,7 @@
           slot="reference"
           @click="storemarkColor(8 + index,stockID + 'firstdigit' + '-' + index,'firstdigit','specific', getItemPage, getFooterBetAmount)"
           v-show="number == 'first'"
-          class="btn-small"
+          class="btn-small f-hover"
         >{{ index }}</v-btn>
       </popper>
       <popper
@@ -378,7 +390,7 @@
           slot="reference"
           @click="storemarkColor(25 + index, stockID + 'lastdigit' + '-' + index,'lastdigit','specific')"
           v-show="number == 'last'"
-          class="btn-small"
+          class="btn-small l-hover"
         >{{ index }}</v-btn>
       </popper>
       <popper
@@ -406,7 +418,7 @@
           slot="reference"
           @click="storemarkColor(149 + index, stockID + 'bothdigit' + '-' + index,'bothdigit','specific', getItemPage, getFooterBetAmount)"
           v-show="number == 'both'"
-          class="btn-small"
+          class="btn-small b-hover"
         >{{ index }}</v-btn>
       </popper>
       <popper
@@ -434,8 +446,8 @@
           slot="reference"
           @click="storemarkColor(42 + index, index < 10 ? stockID + 'twodigit-0' + index  :stockID + 'twodigit'+'-'+ index,'twodigit','specific', getItemPage, getFooterBetAmount)"
           v-show="number == 'two'"
-          class="btn-small"
-        >{{ index < 10 ? "0" + index : index }}</v-btn>
+          class="btn-small t-hover"
+        >{{ index < 10 ? "0" + index : index }}</v-btn>  
       </popper>
     </v-layout>
   </div>
@@ -463,11 +475,6 @@ export default {
     }
   },
 
-  watch: {
-    getCollegeBtnNumber(val) {
-      this.btnNumber(val);
-    }
-  },
   data() {
     return {
       isActive: false,
@@ -486,6 +493,11 @@ export default {
     };
   },
 
+  watch: {
+    getCollegeBtnNumber(val) {
+      this.btnNumber(val);
+    }
+  },
   components: {
     // popper is the third party package
     popper,
