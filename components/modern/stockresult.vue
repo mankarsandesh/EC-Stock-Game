@@ -46,7 +46,8 @@ export default {
     return {
       showStockresult: true,
       selected: 1,
-      getStockResult: []
+      getStockResult: [],
+      apiAttemptCount: 0
     };
   },
   computed: {
@@ -77,10 +78,16 @@ export default {
           headers: config.header
         });
         if (data.status) {
+          this.apiAttemptCount = 0;
           this.showStockresult = false;
           this.getStockResult = data.data;
         } else {
-          throw new Error(config.error.general);
+          if(this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.stockResult();
+          } else {
+            throw new Error(config.error.general);
+          }
         }
       } catch (ex) {
         console.log(ex);
