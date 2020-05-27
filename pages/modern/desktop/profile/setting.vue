@@ -23,7 +23,7 @@
                 <span class="slider round"></span>
               </label>
             </div>
-            <div class="setting_container">
+            <!-- <div class="setting_container">
               <span>{{ $t("setting.usersAllowFollowMe") }}</span>
               <label class="switch">
                 <input
@@ -34,7 +34,7 @@
                 />
                 <span class="slider round"></span>
               </label>
-            </div>
+            </div> -->
           </div>
         </div>
       </v-flex>
@@ -104,7 +104,7 @@ export default {
       let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
         ? true
         : false;
-      let isAllowToFollow = this.$refs.isAllowToFollow.checked ? true : false;
+      let isAllowToFollow = false;
       let isSound = this.$refs.isSound.checked ? true : false;
       let isAllowToLocation = this.$refs.isAllowToLocation.checked
         ? true
