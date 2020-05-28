@@ -153,7 +153,7 @@
                   getTimerByStockName(data.stockName).stockStatus === 'Closed'
               "
             >
-              <span class="text-close-bet">market close</span>
+              <span class="text-close-bet">{{ $t('msg.marketClosed') }}</span>
             </div>
             <v-card-title class="px-1 py-0 pa-2" style="font-size:11px;">
               <v-layout>
@@ -180,7 +180,7 @@
             </h3>
             <h4 style="line-height: 1">
               <div class="text-center">
-                <em>{{ data.loop }} minute game</em>
+                <em>{{ data.loop }}  {{ $t("msg.minuteGame") }} </em>
               </div>
             </h4>
           </div>

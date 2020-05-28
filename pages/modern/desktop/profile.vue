@@ -21,14 +21,14 @@
                   </button>
                 </span>
               </div>
-              <h2 v-if="getUserInfo.firstName == null">
+              <h3 v-if="getUserInfo.firstName == null">
                 {{ getUserInfo.userName }}
-              </h2>
-              <h2 v-if="getUserInfo.firstName" class="text-capitalize">
+              </h3>
+              <h3 v-if="getUserInfo.firstName" class="text-capitalize">
                 {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-              </h2>
+              </h3>
               <p>
-                <b>{{ $t("profile.onlineStatus") }}</b> : Available
+                <b>{{ $t("profile.onlineStatus") }}</b> : {{ $t('profile.available')}}
               </p>
             </div>
             <div class="profile_menu">
@@ -113,13 +113,13 @@
       <v-dialog v-model="avatarDialog" width="900" class="followDialog">
         <v-card class="followup">
           <h3 class="title" style="text-align: center; color: #0b2a68;">
-            Choose your Avatar
+           {{ $t('profile.chooseYourAvatar') }}
           </h3>
           <v-card-text style="text-align:center;">
             <div class="avatarImage" v-for="n in 10" v-bind:key="n">
               <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
               <span href class="userAvatar" @click="useAvatar(n)"
-                >Use Avatar</span
+                >{{ $t('profile.useAvatar') }}</span
               >
             </div>
           </v-card-text>
@@ -127,7 +127,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="avatarDialog = false">Close</v-btn>
+            <v-btn color="primary" text @click="avatarDialog = false">{{ $t('msg.close') }}</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -164,6 +164,7 @@ export default {
     // console.log(this.getUserInfo.profileImage);
     // make a active menu
     this.currentChild = this.$route.path;
+    console.log(this.getUserInfo);
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),

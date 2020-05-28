@@ -48,6 +48,7 @@
     "introduction": "This page is made to give you more information."
   },
   "msg": {
+    "betCount": "Bet Count",
     "currentActiveTime": "Current Active Time",
     "totalOnlineTime": "Total Online Time",
     "onlineActiveTime": "Online Active Time",
@@ -247,6 +248,11 @@
     "sh000300": "SH000300"
   },
   "profile": {
+    "available":"Available",
+    "typeUsername":"Type your Username",
+    "noData": "No data to display",
+    "chooseYourAvatar" : "Choose your Avatar",
+    "useAvatar": "User Avatar",
     "username": "Username",
     "firstName": "first name",
     "lastName": "last name",
@@ -256,11 +262,7 @@
     "email": "email",
     "country": "country",
     "invalidEmail": "Please enter a valid email address",
-    "invalidFirstName": "Please enter a valid First Name. Only alphabetical characters are allowed",
-    "invalidLastName": "'Please enter a valid Last Name. Only alphabetical characters are allowed'",
-    "invalidUsername": "Username should be minimum 5 characters and maximum 20 characters long",
-    "invalidFirstNameLength": "First name can be maximum 25 characters long",
-    "invalidLastNameLength": "Last name can be maximum 25 characters long",
+    "mandatoryField": "Please select the mandatory fields",
     "success": "Successful Information Saved!",
     "onlineStatus": "Online Status",
     "basicInfo": "basic information",
@@ -291,6 +293,9 @@
     "yourself": "YOURSELF"
   },
   "liveBetData": {
+    "totalUsers": "Total Users placed bet on the Game.",
+    "totalBet": "Total Bet Count on the Game.",
+    "totalAmount": "Total Amount places on the Game.",
     "betID" : "Bet ID",
     "dateTime" : "Date & Time",
     "bet" : "Bet",
@@ -376,6 +381,7 @@
     "pleaseConfirm" : "Please confirm your bet below"
   },
   "invitation": {
+    "selectCategoryError" : "Please Select Category",
     "ecWorld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
     "sendInvitation": "SEND INVITATION",
