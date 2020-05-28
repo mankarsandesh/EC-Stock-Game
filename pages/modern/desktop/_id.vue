@@ -126,10 +126,10 @@
           <!-- Stock Chart and Bet button Component  -->
           <v-layout>
             <v-flex md5 lg5 class="marginTop-2">
-              <div id="chartGuidelineNew" class="chartDesgin" > 
+              <div id="chartGuidelineNew" class="chartDesgin">
                 <v-flex>
                   <!-- Chart Stock wise -->
-                  <chartApp :stockName="routeParams"  />
+                  <chartApp :stockName="routeParams" />
                 </v-flex>
               </div>
             </v-flex>
@@ -355,9 +355,6 @@ export default {
         let linkto = `/modern/betting/btc1`;
         this.$router.push(linkto);
       }
-    },
-    getmultiGameBet(val) {
-      console.log(this.$route.name, val);
     }
   },
   methods: {
@@ -469,7 +466,6 @@ export default {
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "getStockLoop",
       "getmultiGameBet"
     ])
   }

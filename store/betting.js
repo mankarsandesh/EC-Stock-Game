@@ -39,7 +39,10 @@ const mutations = {
         state.onGoingBet = [];
     },
     SET_FOOTER_BET_AMOUNT(state, payload) {
-        state.footerBetAmount >= 10000 ? state.footerBetAmount += parseInt(payload) : null
+        state.footerBetAmount += parseInt(payload)
+        if (state.footerBetAmount > 10000) {
+            state.footerBetAmount = 10000;
+        }
     },
     PUSH_DATA_ON_GOING_BET(state, payload) {
         state.onGoingBet.splice(0, 0, payload);
