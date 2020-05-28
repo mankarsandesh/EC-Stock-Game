@@ -91,14 +91,12 @@
   </div>
 </template>
 <script>
-import Sound from "~/helpers/sound";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
 import secureStorage from "../../plugins/secure-storage";
 import { BetResult } from "~/mixin/betResult";
-
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   mixins: [BetResult],
@@ -193,7 +191,8 @@ export default {
           };
 
           if (this.betValue > 0) {
-            Sound.betTing();
+
+            this.$soundEffect("betting");
 
             const stockDetail = {
               betAmount: this.betValue,
@@ -203,10 +202,9 @@ export default {
               ruleID: this.ruleid,
               specificNumber: "",
               betRule: this.betId
-            };          
+            };
             this.$emit("update-bet", stockDetail);
             this.confirmDisabled = true;
-
             this.$StoreBettingonConfirm(stockDetail);
 
             this.sendBetting(data);
