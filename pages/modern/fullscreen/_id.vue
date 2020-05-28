@@ -183,7 +183,7 @@
                   {{ $t("stockName." + data.stockName) }}
                 </h3>
                 <h4 style="line-height: 1;">
-                  <em>{{ data.loop }} minute game</em>
+                  <em>{{ data.loop }}  {{ $t("msg.minuteGame") }}</em>
                 </h4>
               </div>
             </nuxt-link>
@@ -228,6 +228,7 @@
                 </v-layout>
               </v-flex>
               <v-flex
+                mr-1
                 xs12
                 sm12
                 md8

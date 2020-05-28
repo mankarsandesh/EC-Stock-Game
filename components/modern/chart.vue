@@ -1,6 +1,6 @@
 <template>
   <div class="v-card-style" id="v-card-style">
-    <v-layout px-1 mt-1>
+    <v-layout px-1 >
       <v-flex xs6 class="text-xs-left stockTimer">
         <span v-if="getStockLiveTime(stockName)">{{
           getStockLiveTime(stockName).split(" ")[1]

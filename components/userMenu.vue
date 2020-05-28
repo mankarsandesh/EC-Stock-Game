@@ -121,6 +121,7 @@ export default {
       }
       this.dialogConfirm = false;
     },
+    // Format Price
     formatToPrice(value) {
       return `$ ${Number(value)
         .toFixed(2)

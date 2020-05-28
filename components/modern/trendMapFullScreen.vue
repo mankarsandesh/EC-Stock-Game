@@ -19,6 +19,7 @@
         class="rounded-card"
       ></v-select>
     </v-flex>
+    <!-- TrendMap Start -->
     <v-flex lg10 md10>
       <trendMap
         v-if="which_one !== ''"
@@ -35,6 +36,7 @@
         :trendType="trendType"
       ></trendMap>
     </v-flex>
+    <!-- TrendMap Start -->
   </v-layout>
 </template>
 <script>
@@ -58,50 +60,57 @@ export default {
       trendType: null,
       selectedType: "",
       typeItems: [
-      {
-        id: 1,
-        name: "firstDigit",
-        value: this.$root.$t("gamemsg.firstdigit")
-      },
-      {
-        id: 2,
-        name: "lastDigit",
-        value: this.$root.$t("gamemsg.lastdigit")
-      },
-      {
-        id: 3,
-        name: "bothDigit",
-        value: this.$root.$t("gamemsg.bothdigit")
-      },
-      {
-        id: 4,
-        name: "twoDigit",
-         value: this.$root.$t("gamemsg.twodigit")
-      }
+        {
+          id: 1,
+          name: "firstDigit",
+          value: this.$root.$t("gamemsg.firstdigit")
+        },
+        {
+          id: 2,
+          name: "lastDigit",
+          value: this.$root.$t("gamemsg.lastdigit")
+        },
+        {
+          id: 3,
+          name: "bothDigit",
+          value: this.$root.$t("gamemsg.bothdigit")
+        },
+        {
+          id: 4,
+          name: "twoDigit",
+          value: this.$root.$t("gamemsg.twodigit")
+        }
       ],
-       which_oneItem: [
-      {
-        id: 1,
-        name: "B/S",
-        value: this.$root.$t("gamemsg.big")+"/"+this.$root.$t("gamemsg.small")
-      },
-      {
-        id: 2,
-        name: "O/E",
-        value: this.$root.$t("gamemsg.odd")+"/"+this.$root.$t("gamemsg.even")
-      },
-      {
-        id: 3,
-        name: "U/L",
-        value: this.$root.$t("gamemsg.high")+"/"+this.$root.$t("gamemsg.mid")+"/"+this.$root.$t("gamemsg.low")
-      },
-      {
-        id: 4,
-        name: "NUM",
-        value: this.$root.$t("gamemsg.number")
-      }
+      which_oneItem: [
+        {
+          id: 1,
+          name: "B/S",
+          value:
+            this.$root.$t("gamemsg.big") + "/" + this.$root.$t("gamemsg.small")
+        },
+        {
+          id: 2,
+          name: "O/E",
+          value:
+            this.$root.$t("gamemsg.odd") + "/" + this.$root.$t("gamemsg.even")
+        },
+        {
+          id: 3,
+          name: "U/L",
+          value:
+            this.$root.$t("gamemsg.high") +
+            "/" +
+            this.$root.$t("gamemsg.mid") +
+            "/" +
+            this.$root.$t("gamemsg.low")
+        },
+        {
+          id: 4,
+          name: "NUM",
+          value: this.$root.$t("gamemsg.number")
+        }
       ],
-      which_one: "B/S",
+      which_one: "B/S"
     };
   },
   components: {
@@ -109,7 +118,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.trendType = this.typeItems[this.index]['name'];
+    this.trendType = this.typeItems[this.index]["name"];
   },
   methods: {},
   watch: {

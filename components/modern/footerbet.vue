@@ -206,8 +206,8 @@ export default {
   border: 2px solid #dddddd;
 }
 .chipImg {
-  color: #333;
-  font-size: 24px;
+  color: #334455;
+  font-size: 22px;
   font-weight: 600;
   width: 75px;
   height: 75px;
