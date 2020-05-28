@@ -336,13 +336,9 @@
     </v-dialog>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-<<<<<<< HEAD
       <v-btn color="pink" text @click="snackbar = false">{{
         $t("profile.useAvatar")
       }}</v-btn>
-=======
-      <v-btn color="pink" text @click="snackbar = false">{{ $t('profile.useAvatar') }}</v-btn>
->>>>>>> b0aae7b95339019e581c1451ffb4bf0bf97748e4
     </v-snackbar>
 
     <OnlineHistory ref="onlineHistory"></OnlineHistory>
