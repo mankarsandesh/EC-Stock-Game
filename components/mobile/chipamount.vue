@@ -6,9 +6,10 @@
         <input
           :disabled="editAbleIndex !== index"
           class="input-chip-amount"
-          type="number"
+          type="text"
           :value="chip.amount"
           :ref="index"
+          @keypress="onlyNumber"
         />
       </div>
       <!-- edit -->
@@ -106,6 +107,13 @@ export default {
   },
   methods: {
     ...mapActions(["setCoinsModern", "setChips"]),
+    onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if (keyCode < 48 || keyCode > 57) {
+        $event.preventDefault();
+      }
+    },
     toEdit(index) {
       this.editAbleIndex = index;
     },
@@ -125,7 +133,10 @@ export default {
           this.$refs[index][0].value <= 10000
         ) {
           if (!this.getCoinsModern.includes(this.$refs[index][0].value)) {
-            this.setChips({ index, amount: this.$refs[index][0].value });
+            this.setChips({
+              index,
+              amount: parseInt(this.$refs[index][0].value)
+            });
             // reset select chip
             this.editAbleIndex = -1;
             // show success snack bar and set success message
