@@ -48,6 +48,7 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "betCount": "投注数",
     "currentActiveTime": "当前活动时间",
     "totalOnlineTime": "总在线时间",
     "onlineActiveTime": "在线活动时间",
@@ -290,6 +291,9 @@
     "yourself": "我"
   },
   "liveBetData": {
+    "totalUsers": "总用户下注于游戏。",
+    "totalBet": "游戏总投注数。",
+    "totalAmount": "总金额在游戏中的位置。",
     "betID" : "投注编号",
     "dateTime" : "日期和时间",
     "bet" : "打赌",

@@ -48,6 +48,7 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "betCount": "จำนวนเดิมพัน",
     "currentActiveTime": "เวลาที่ใช้งานในปัจจุบัน",
     "totalOnlineTime": "รวมเวลาออนไลน์",
     "onlineActiveTime": "เวลาที่ใช้งานออนไลน์",
@@ -289,6 +290,9 @@
     "yourself": "ด้วยตัวคุณเอง"
   },
   "liveBetData": {
+    "totalUsers": "ผู้ใช้ทั้งหมดทำการเดิมพันในเกม",
+    "totalBet": "จำนวนการเดิมพันทั้งหมดในเกม",
+    "totalAmount": "จำนวนสถานที่ทั้งหมดในเกม",
     "betID" : "รหัสเดิมพัน",
     "dateTime" : "วันและเวลา",
     "bet" : "เดิมพัน",

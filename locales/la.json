@@ -48,6 +48,7 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "betCount": "ການນັບເດີມພັນ",
     "currentActiveTime": "ເວລາທີ່ໃຊ້ງານໃນປະຈຸບັນ",
     "totalOnlineTime": "ເວລາ online ທັງ ໝົດ",
     "onlineActiveTime": "ເວລາທີ່ໃຊ້ວຽກ Online",
@@ -291,6 +292,9 @@
     "yourself": "ຕົວທ່ານເອງ"
   },
   "liveBetData": {
+    "totalUsers": "ຜູ້ໃຊ້ທັງ ໝົດ ວາງເດີມພັນໃນເກມ.",
+    "totalBet": "ຈຳ ນວນການເດີມພັນລວມຢູ່ໃນເກມ.",
+    "totalAmount": "ຈຳ ນວນສະຖານທີ່ທັງ ໝົດ ໃນເກມ.",
     "betID" : "ລະຫັດການພະນັນ",
     "dateTime" : "ວັນທີແລະເວລາ",
     "bet" : "ການເດີມພັນ",

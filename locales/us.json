@@ -48,6 +48,7 @@
     "introduction": "This page is made to give you more information."
   },
   "msg": {
+    "betCount": "Bet Count",
     "currentActiveTime": "Current Active Time",
     "totalOnlineTime": "Total Online Time",
     "onlineActiveTime": "Online Active Time",
@@ -291,6 +292,9 @@
     "yourself": "YOURSELF"
   },
   "liveBetData": {
+    "totalUsers": "Total Users placed bet on the Game.",
+    "totalBet": "Total Bet Count on the Game.",
+    "totalAmount": "Total Amount places on the Game.",
     "betID" : "Bet ID",
     "dateTime" : "Date & Time",
     "bet" : "Bet",
