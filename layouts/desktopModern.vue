@@ -421,7 +421,7 @@ export default {
 }
 
 .layout-btn {
-  padding: 0 5px;
+  padding: 0px 15px;
   display: flex;
 }
 

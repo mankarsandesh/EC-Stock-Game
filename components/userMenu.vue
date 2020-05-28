@@ -1,5 +1,5 @@
 <template>
-  <div style="z-index: 100;">
+  <div class="userMenu">
     <v-menu offset-y :close-on-content-click="false" :min-width="180">
       <template v-slot:activator="{ on }">
         <v-btn flat v-on="on">
@@ -132,6 +132,10 @@ export default {
 </script>
 
 <style scoped>
+.userMenu{
+  z-index: 100;
+  border-right:1px solid #dddddd !important;
+}
 .headlineh1 {
   font-weight: 600;
   font-size: 22px;

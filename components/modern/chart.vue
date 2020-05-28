@@ -1,5 +1,5 @@
 <template>
-  <div class="v-card-style">
+  <div class="v-card-style" id="v-card-style">
     <v-layout px-1 mt-1>
       <v-flex xs6 class="text-xs-left stockTimer">
         <span v-if="getStockLiveTime(stockName)">{{
@@ -293,9 +293,6 @@ export default {
 };
 </script>
 <style>
-.v-card-style{
- min-height:350px;
-}
 .arrow_boxChart {
   font-family: Arial, Helvetica, sans-serif;
   border: 1px solid #003f70;
