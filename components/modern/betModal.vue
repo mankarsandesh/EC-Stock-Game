@@ -32,7 +32,7 @@
         <v-layout row>
           <v-flex class="py-3 text-center">
             <v-avatar
-              size="70"
+              size="65"
               v-for="(item, key) in imgChip"
               :key="key"
               class="chips"
@@ -330,6 +330,8 @@ input[type="number"] {
 }
 
 .chipImg {
+  width: 70px;
+  height: 70px;
   cursor: pointer;
 }
 </style>

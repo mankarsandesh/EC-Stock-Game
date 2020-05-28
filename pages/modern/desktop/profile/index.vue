@@ -65,7 +65,7 @@
                     :value="userData.firstName"
                     id="first-name"
                     name="first-name"
-                    placeholder="Your first name"
+                    :placeholder="$t('profile.firstName')"
                   />
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
@@ -83,7 +83,7 @@
                     :value="userData.lastName"
                     id="last-name"
                     name="last-name"
-                    placeholder="Your Last Name"
+                    :placeholder="$t('profile.lastName')"
                   />
                   <span class="icon-container">
                     <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>

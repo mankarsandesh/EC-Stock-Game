@@ -40,7 +40,7 @@ const actions = {
       } else {
         if (context.state.apiAttemptCount < 3) {
           context.state.apiAttemptCount++;
-          context.dispatch("setRoadMap", "roadMap");
+          context.dispatch("setRoadMap", stockUUID);
         } else {
           throw new Error(config.error.general);
         }
