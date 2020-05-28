@@ -48,6 +48,7 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "betCount": "จำนวนเดิมพัน",
     "currentActiveTime": "เวลาที่ใช้งานในปัจจุบัน",
     "totalOnlineTime": "รวมเวลาออนไลน์",
     "onlineActiveTime": "เวลาที่ใช้งานออนไลน์",
@@ -247,6 +248,7 @@
   "profile": {
     "available":"ที่มีจำหน่าย",
     "typeUsername":"พิมพ์ชื่อผู้ใช้ของคุณ",
+    "noData": "ไม่มีข้อมูลที่จะแสดง",
     "chooseYourAvatar" : "เลือกรูปประจำตัวของคุณ",
     "useAvatar": "ใช้ Avatar",
     "username": "ຊື່ຜູ້ໃຊ້",
@@ -258,11 +260,7 @@
     "email": "อีเมล",
     "country": "ประเทศ",
     "invalidEmail": "กรุณาใส่อีเมล์ที่ถูกต้อง",
-    "invalidFirstName": "กรุณาใส่ชื่อที่ถูกต้อง อนุญาตให้ใช้ตัวอักษรตามตัวอักษรเท่านั้น",
-    "invalidLastName": "ກະລຸນາໃສ່ຊື່ນາມສະກຸນທີ່ຖືກຕ້ອງ. ອະນຸຍາດໃຫ້ມີພຽງຕົວອັກສອນຕົວອັກສອນເທົ່ານັ້ນ",
-    "invalidUsername": "ชื่อผู้ใช้ควรมีอย่างน้อย 5 ตัวและความยาวสูงสุด 20 ตัว",
-    "invalidFirstNameLength": "ชื่อสามารถยาวได้สูงสุด 25 อักขระ",
-    "invalidLastNameLength": "นามสกุลสามารถยาวได้สูงสุด 25 อักขระ",
+    "mandatoryField": "โปรดเลือกฟิลด์บังคับ",
     "success": "บันทึกข้อมูลสำเร็จแล้ว!",
     "onlineStatus": "สถานะออนไลน์",
     "basicInfo": "ข้อมูลพื้นฐาน",
@@ -293,6 +291,9 @@
     "yourself": "ด้วยตัวคุณเอง"
   },
   "liveBetData": {
+    "totalUsers": "ผู้ใช้ทั้งหมดทำการเดิมพันในเกม",
+    "totalBet": "จำนวนการเดิมพันทั้งหมดในเกม",
+    "totalAmount": "จำนวนสถานที่ทั้งหมดในเกม",
     "betID" : "รหัสเดิมพัน",
     "dateTime" : "วันและเวลา",
     "bet" : "เดิมพัน",

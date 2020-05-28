@@ -8,9 +8,7 @@
             <span>{{ $t("msg.accountBalance") }}</span>
             <br />
             <span class="amount" v-if="userData.balance != 0">
-              {{
-              userData.balance | currency
-              }}
+              {{ userData.balance | currency }}
             </span>
             <span class="amount" v-if="userData.balance == 0">00.00</span>
             <!-- <span class="title_currentcy">USD</span> -->
@@ -32,7 +30,7 @@
       <v-layout>
         <v-flex xs12 pt-2 pl-5>
           <div style="margin-top:20px">
-            <form action="/action_page.php">
+            <form>
               <div class="row">
                 <div class="col-15">
                   <label for="username">
@@ -44,13 +42,21 @@
                   <input
                     ref="username"
                     type="text"
-                    :value="userData.userName"
+                    minlength="5"
+                    maxlength="20"
+                    required="true"
+                    v-model.trim="userName"
                     id="username"
                     name="username"
                     placeholder="Type your Username"
                   />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -61,14 +67,20 @@
                 <div class="col-85">
                   <input
                     ref="firstName"
+                    v-model.trim="firstName"
                     type="text"
-                    :value="userData.firstName"
+                    maxlength="25"
                     id="first-name"
                     name="first-name"
                     :placeholder="$t('profile.firstName')"
                   />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -80,13 +92,19 @@
                   <input
                     ref="lastName"
                     type="text"
-                    :value="userData.lastName"
+                    maxlength="25"
+                    v-model.trim="lastName"
                     id="last-name"
                     name="last-name"
                     :placeholder="$t('profile.lastName')"
                   />
                   <span class="icon-container">
-                    <v-icon :size="20" color="#bdbdbd" @click="iconClick($event)">edit</v-icon>
+                    <v-icon
+                      :size="20"
+                      color="#bdbdbd"
+                      @click="iconClick($event)"
+                      >edit</v-icon
+                    >
                   </span>
                 </div>
               </div>
@@ -98,7 +116,13 @@
                   </label>
                 </div>
                 <div class="col-85">
-                  <select ref="gender" id="gender" name="gender" :value="userData.gender">
+                  <select
+                    ref="gender"
+                    id="gender"
+                    name="gender"
+                    required="true"
+                    v-model="gender"
+                  >
                     <option value="male">{{ $t("profile.male") }}</option>
                     <option value="female">{{ $t("profile.female") }}</option>
                   </select>
@@ -115,7 +139,7 @@
                   <input
                     ref="email"
                     type="text"
-                    :value="userData.email"
+                    v-model.trim="email"
                     id="email"
                     name="email"
                     placeholder="example@gmail.com"
@@ -130,7 +154,13 @@
                   </label>
                 </div>
                 <div class="col-85">
-                  <select ref="country" id="country" name="country" :value="userData.country">
+                  <select
+                    ref="country"
+                    id="country"
+                    name="country"
+                    required="true"
+                    v-model="country"
+                  >
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
                     <option value="THA">Thailand</option>
@@ -150,9 +180,12 @@
                     :loading="updating"
                     :disabled="updating"
                     class="btn_save"
-                    @click.prevent="saveClick()"
-                  >{{ $t("msg.save") }}</v-btn>
-                  <v-btn class="btn_cancel" @click="cancelUpdateProfile">{{ $t("msg.cancel") }}</v-btn>
+                    @click.prevent="saveClick($event)"
+                    >{{ $t("msg.save") }}</v-btn
+                  >
+                  <v-btn class="btn_cancel" @click="cancelUpdateProfile">{{
+                    $t("msg.cancel")
+                  }}</v-btn>
                 </div>
               </div>
             </form>
@@ -167,17 +200,23 @@
 import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
-import validator from "validator";
 
 export default {
   data() {
     return {
-      updating: false
+      updating: false,
+      userName: "",
+      firstName: "",
+      lastName: "",
+      gender: "",
+      email: "",
+      country: ""
     };
   },
   async mounted() {
     // alert(process.env.NODE_ENV)
     await this.setUserData();
+    this.setInputData();
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
@@ -188,33 +227,42 @@ export default {
   },
   methods: {
     ...mapActions(["setUserData"]),
+    setInputData() {
+      this.firstName = this.getUserInfo.firstName
+        ? this.getUserInfo.firstName
+        : "";
+      this.lastName = this.getUserInfo.lastName
+        ? this.getUserInfo.lastName
+        : "";
+      this.userName = this.getUserInfo.userName;
+      this.gender = this.getUserInfo.gender ? this.getUserInfo.gender : "";
+      this.email = this.getUserInfo.email ? this.getUserInfo.email : "";
+      this.country = this.getUserInfo.country ? this.getUserInfo.country : "";
+    },
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
     cancelUpdateProfile() {
       this.$forceUpdate();
+      this.setInputData();
     },
-    async saveClick() {
-      
+    async saveClick(e) {
       try {
-      this.updating = true;
-      const ref = this.$refs;
-      validator.isEmail(ref.email.value) ||  (() =>  {throw new Error(this.$root.$t("profile.invalidEmail"))})();
-      validator.isAlpha(ref.firstName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstName"))})();
-      validator.isAlpha(ref.lastName.value) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastName"))})();
-      validator.isByteLength(ref.firstName.value, { max: 25 }) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidFirstNameLength"))})();
-      validator.isByteLength(ref.lastName.value, { max: 25 }) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidLastNameLength"))})();
-      validator.isByteLength(ref.username.value, {min: 5, max: 20}) ? "" : (() => {throw new Error(this.$root.$t("profile.invalidUsername"))})();
-      var formData = new FormData();
-      formData.append("portalProviderUUID", this.getPortalProviderUUID);
-      formData.append("userUUID", this.getUserUUID);
-      formData.append("email", validator.trim(ref.email.value));
-      formData.append("userName", validator.trim(ref.username.value));
-      formData.append("firstName", validator.trim(ref.firstName.value));
-      formData.append("lastName", validator.trim(ref.lastName.value));
-      formData.append("gender", ref.gender.value);
-      formData.append("country", ref.country.value);
-      formData.append("version", config.version);
+        this.updating = true;
+        const ref = this.$refs;
+        if (!(ref.gender.value && ref.country.value && ref.username.value)) {
+          throw new Error("Please select the mandatory fields marked with *");
+        }
+        var formData = new FormData();
+        formData.append("portalProviderUUID", this.getPortalProviderUUID);
+        formData.append("userUUID", this.getUserUUID);
+        formData.append("email", ref.email.value);
+        formData.append("userName", ref.username.value);
+        formData.append("firstName", ref.firstName.value);
+        formData.append("lastName", ref.lastName.value);
+        formData.append("gender", ref.gender.value);
+        formData.append("country", ref.country.value);
+        formData.append("version", config.version);
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
@@ -223,13 +271,14 @@ export default {
           }
         );
         if (res.status) {
-          this.setUserData();
+          await this.setUserData();
           this.updating = false;
+          this.setInputData();
           this.$swal({
             type: "success",
             title: this.$root.$t("profile.success"),
             showConfirmButton: false,
-            timer: 1000
+            timer: 1500
           });
         } else {
           this.updating = false;
@@ -238,11 +287,20 @@ export default {
       } catch (ex) {
         console.error(ex);
         this.updating = false;
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000
-        });
+        this.setInputData();
+        if (ex.message == "It should be a valid email.") {
+          this.$swal({
+            title: this.$root.$t("profile.invalidEmail"),
+            type: "error",
+            timer: 1000
+          });
+        } else {
+          this.$swal({
+            title: ex.message,
+            type: "error",
+            timer: 1000
+          });
+        }
       }
     }
   }

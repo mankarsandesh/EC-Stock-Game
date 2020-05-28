@@ -357,7 +357,7 @@
                     <span>{{ dataliveBetAll.totalUsers }}</span>
                   </span>
                 </template>
-                <span>Total Users places bet on the Game.</span>
+                <span>{{ $t("liveBetData.totalUsers") }}</span>
               </v-tooltip>
             </v-flex>
             <v-flex md3 lg3 pt-2 style="text-align:center;">
@@ -368,7 +368,7 @@
                     <span>{{ dataliveBetAll.totalBetCount }}</span>
                   </span>
                 </template>
-                <span>Total Bet Count on the Game.</span>
+                <span>{{ $t("liveBetData.totalBet") }}</span>
               </v-tooltip>
             </v-flex>
             <v-flex md4 lg4 pt-2 style="text-align:center;">
@@ -379,7 +379,7 @@
                     <span>{{ dataliveBetAll.totalAmountPlaced }}</span>
                   </span>
                 </template>
-                <span>Total Amount places on the Game.</span>
+                <span>{{ $t("liveBetData.totalAmount") }}</span>
               </v-tooltip>
             </v-flex>
             <v-flex sm4 md4 lg4 mb-1 style="text-align:center;">

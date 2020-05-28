@@ -48,6 +48,7 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "betCount": "投注数",
     "currentActiveTime": "当前活动时间",
     "totalOnlineTime": "总在线时间",
     "onlineActiveTime": "在线活动时间",
@@ -248,6 +249,7 @@
   "profile": {
     "available":"可用的",
     "typeUsername":"输入您的用户名",
+    "noData": "没有数据显示",
     "chooseYourAvatar" : "选择您的头像",
     "useAvatar": "使用头像",
     "username": "用户名",
@@ -259,11 +261,7 @@
     "email": "电子邮件",
     "country": "国家",
     "invalidEmail": "请输入有效的电子邮件地址",
-    "invalidFirstName": "请输入一个有效的名字。只允许使用字母字符",
-    "invalidLastName": "请输入有效的姓氏。只允许使用字母字符",
-    "invalidUsername": "用户名应至少5个字符，最长20个​​字符",
-    "invalidFirstNameLength": "名字最多可包含25个字符",
-    "invalidLastNameLength": "姓氏最长不能超过25个字符",
+    "mandatoryField": "请选择必填字段",
     "success": "成功信息已保存！",
     "onlineStatus": "在线状态",
     "basicInfo": "基本信息",
@@ -294,6 +292,9 @@
     "yourself": "我"
   },
   "liveBetData": {
+    "totalUsers": "总用户下注于游戏。",
+    "totalBet": "游戏总投注数。",
+    "totalAmount": "总金额在游戏中的位置。",
     "betID" : "投注编号",
     "dateTime" : "日期和时间",
     "bet" : "打赌",
