@@ -1,10 +1,9 @@
 import config from "../config/config.global";
 import secureStorage from "../plugins/secure-storage";
-import Sound from "~/helpers/sound";
-
+const itemBetting = JSON.parse(secureStorage.getItem("itemBetting"));
 const state = () => ({
     collegeBtnNumber: null,
-    multiGameBet: [], // Store multi game bet
+    multiGameBet: itemBetting ? itemBetting : [],
     multiGameBetSend: [], // Store multi game bet send
     footerBetAmount: 0, // Store footer bet amount
     onGoingBet: [], // store data betting
@@ -23,7 +22,7 @@ const mutations = {
     },
     SET_ITEMS_BETTING(state, payload) {
         state.getItemsBetting.push(payload);
-        localStorage.setItem("itemBetting", JSON.stringify(state.getItemsBetting))
+        secureStorage.setItem("itemBetting", JSON.stringify(state.getItemsBetting))
     },
     SET_COLLEGE_BUTTON_NUMBER(state, payload) {
         state.collegeBtnNumber = payload;
@@ -37,14 +36,13 @@ const mutations = {
     },
     CLEAR_DATA_MULTI_GAME_BET(state) {
         state.multiGameBet = [];
-        state.footerBetAmount = 0;
         state.onGoingBet = [];
     },
-    REMOVE_ALL_FOOTER_BET(state) {
-        state.multiGameBet = [];
-    },
     SET_FOOTER_BET_AMOUNT(state, payload) {
-        state.footerBetAmount += parseInt(payload);
+        state.footerBetAmount += parseInt(payload)
+        if (state.footerBetAmount > 10000) {
+            state.footerBetAmount = 10000;
+        }
     },
     PUSH_DATA_ON_GOING_BET(state, payload) {
         state.onGoingBet.splice(0, 0, payload);
@@ -54,7 +52,7 @@ const mutations = {
     },
     SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
         state.tempMultiGameBetData.push(payload);
-        localStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
+        secureStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
     },
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
         state.multiGameBetSend.push(...state.tempMultiGameBetData);
@@ -63,10 +61,24 @@ const mutations = {
     },
     CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
         state.tempMultiGameBetData = [];
+
+    },
+    CLEAR_BET_VALUE_FOOTER_BET(state) {
+        state.footerBetAmount = 0;
+    },
+    SET_CONFIRM_BETTING(state, payload) {
+        state.multiGameBet.push(payload)
+        state.tempMultiGameBetData.push(payload);
+        secureStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
     }
+
+
 };
 
 const actions = {
+    setBettingOnConfirm({ commit }, payload) {
+        commit("SET_CONFIRM_BETTING", payload)
+    },
     clearItemBetting({ commit }) {
         commit("CLEAR_ITEMS_BETTING");
     },
@@ -87,10 +99,6 @@ const actions = {
     // Clear data from multi game bet
     clearDataMultiGameBet({ commit }) {
         commit("CLEAR_DATA_MULTI_GAME_BET");
-    },
-    // Clear data from footer bet
-    removeAllFooterBet({ commit }) {
-        commit("REMOVE_ALL_FOOTER_BET");
     },
     // Set the footer bet amount
     setFooterBetAmount({ commit }, payload) {
@@ -116,6 +124,10 @@ const actions = {
     clearTempMultiGameBetData({ commit }) {
         commit("CLEAR_TEMP_MULTI_GAME_BET_DATA");
     },
+    clearBetValueFooterBet({ commit }) {
+        commit("CLEAR_BET_VALUE_FOOTER_BET");
+    },
+
     // Send bet data for multi game and footer bet on full screen
     async sendBetting(context) {
         try {
@@ -141,7 +153,9 @@ const actions = {
                 headers: config.header
             });
             if (res.status && res.code == 200) {
-                Sound.betTing();
+
+                this.$soundEffect("betting");
+
                 context.dispatch("setUserData", "provider");
                 context.commit("SET_IS_SEND_BETTING", false);
                 context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
@@ -271,10 +285,7 @@ const getters = {
             return true;
         }
     },
-    // Get the footer bet amount
-    getFooterBetAmount(state) {
-        return state.footerBetAmount;
-    },
+
     // Get amount of betting that has already been confirm
     getBettingAmount(state) {
         return state.onGoingBet.map(x => x.betAmount).reduce((a, b) => a + b, 0);
@@ -302,10 +313,16 @@ const getters = {
         });
         return amount;
     },
-    getMultiGameFooterBetAmount(state) {
-        return state.multiGameFooterBetAmount;
-    },
-    gettempMultiGameBetData: state => state.tempMultiGameBetData
+
+    getMultiGameFooterBetAmount: state => state.multiGameFooterBetAmount,
+
+    gettempMultiGameBetData: state => state.tempMultiGameBetData,
+
+    getmultiGameBet: state => state.multiGameBet,
+    // Get the footer bet amount
+    getFooterBetAmount(state) {
+        return state.footerBetAmount;
+    }
 };
 
 export default {

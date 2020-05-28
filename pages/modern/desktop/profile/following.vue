@@ -203,7 +203,7 @@ export default {
 }
 .name {
   margin-top: 10px;
-  font-size: 18px;
+    font-size: 16px;
   color: #2bb13a;
   display: block;
   width: 100%;

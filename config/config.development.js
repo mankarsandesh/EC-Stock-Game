@@ -75,6 +75,9 @@ const config = {
   getUserInvitationDetails: {
     url: `${process.env.BASE_URL}/getUserInvitationDetail`
   },
+  userLogout: {
+    url: `${process.env.BASE_URL}/appUsersLogout`
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"

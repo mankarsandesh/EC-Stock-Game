@@ -91,7 +91,7 @@
                 </span>
               </h3>
               <span class="text-primary">
-                GAME ID:
+                {{ $t("msg.gameId") }} :
                 <span>{{ getGameUUIDByStockName(this.$route.params.id) }}</span>
               </span>
             </span>

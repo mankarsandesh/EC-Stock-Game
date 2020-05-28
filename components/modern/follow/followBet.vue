@@ -25,11 +25,11 @@
 
       <div v-if="isFollowing == 1">
         <h4 class="subtitle-1 text-uppercase">
-          {{ $t("leaderBoard.followBy") }}
+          {{ $t("leaderBoard.followBy") }} <span style="color:red;">*</span>
         </h4>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-flex lg6 pr-4>
+          <v-flex lg6 pr-2>
             <v-select
               :items="followby"
               label="Select Follow type"
@@ -69,12 +69,14 @@
         </v-card-actions>
 
         <h4 class="subtitle-1 text-uppercase pt-2">
-          {{ $t("leaderBoard.autoStop") }}
+          {{ $t("leaderBoard.autoStop") }} <span style="color:red;">*</span>
         </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
             <v-radio
+              class="black--text"
+              color="green"
               v-for="n in autoStopFollow"
               :key="n.id"
               :label="`${n.name}`"
@@ -284,8 +286,7 @@ export default {
       this.$emit("followBetClose");
     },
     // Users Follow Bet Validation
-    async followThisUser(followerID, followMethod) {
-      console.log("sasa");
+    async followThisUser(followerID, followMethod) {     
       // Check Empty Filed
       if (
         !this.selectedFollow &&
@@ -459,9 +460,6 @@ export default {
 </script>
 
 <style scoped>
-.v-slider .v-label {
-  color: green !important;
-}
 .title {
   text-align: center;
   color: #0b2a68;

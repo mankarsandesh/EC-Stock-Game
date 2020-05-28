@@ -101,8 +101,9 @@
           v-if="tutorialStepNumber === 7 && !getIsWindowsHasScroll"
         >
           <span class="guide-title text-uppercase" style="margin-left: 20px;"
-            >bet on digits has no scroll</span
-          >
+            >bet on digits
+          </span>
+          <!--has no scroll -->
           <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
         </div>
         <!-- to scroll here -->
@@ -174,7 +175,7 @@
                   <span class="text-close-bet">market close</span>
                 </div>
                 <!-- chart other stocks -->
-                <v-card-text class="pa-0" min-height="500">
+                <v-card-text class="pa-0" min-height="500"> 
                   <chartApp :stockName="data.stockName"></chartApp>
                 </v-card-text>
               </v-card>
@@ -183,7 +184,7 @@
                   {{ $t("stockName." + data.stockName) }}
                 </h3>
                 <h4 style="line-height: 1;">
-                  <em>{{ data.loop }} minute game</em>
+                  <em>{{ data.loop }}  {{ $t("msg.minuteGame") }}</em>
                 </h4>
               </div>
             </nuxt-link>
@@ -217,7 +218,7 @@
                   <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed">
                       {{ getStockLoop($route.params.id) }}
-                      {{ $t("msg.minutes") }} {{ $t("msg.loop") }}
+                      {{ $t("msg.minutes") }} 
                     </v-btn>
                     <v-btn
                       color="buttonGreen"
@@ -228,6 +229,7 @@
                 </v-layout>
               </v-flex>
               <v-flex
+                mr-1
                 xs12
                 sm12
                 md8
@@ -328,12 +330,19 @@
         <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
           <h3 class="balanceUser" v-if="getUserBalance > 0">
             Acc :
-            <span class="userBlanace">${{ getUserBalance | currency }}</span>
+
+            <span class="userBlanace">
+              <animated-number
+                :value="getUserBalance"
+                :formatValue="formatToPrice"
+                :duration="300"
+              />
+            </span>
           </h3>
-          <h3 class="balanceUser" v-if="getUserBalance == 0">
+          <!-- <h3 class="balanceUser" v-if="getUserBalance == 0">
             Acc :
             <span class="userBlanace">0000.00</span>
-          </h3>
+          </h3> -->
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-show="!isHidden"></fullscreenchart>
@@ -348,7 +357,7 @@
                     <span>{{ dataliveBetAll.totalUsers }}</span>
                   </span>
                 </template>
-                <span>Total Users places bet on the Game.</span>
+                <span>{{ $t("liveBetData.totalUsers") }}</span>
               </v-tooltip>
             </v-flex>
             <v-flex md3 lg3 pt-2 style="text-align:center;">
@@ -359,7 +368,7 @@
                     <span>{{ dataliveBetAll.totalBetCount }}</span>
                   </span>
                 </template>
-                <span>Total Bet Count on the Game.</span>
+                <span>{{ $t("liveBetData.totalBet") }}</span>
               </v-tooltip>
             </v-flex>
             <v-flex md4 lg4 pt-2 style="text-align:center;">
@@ -370,7 +379,7 @@
                     <span>{{ dataliveBetAll.totalAmountPlaced }}</span>
                   </span>
                 </template>
-                <span>Total Amount places on the Game.</span>
+                <span>{{ $t("liveBetData.totalAmount") }}</span>
               </v-tooltip>
             </v-flex>
             <v-flex sm4 md4 lg4 mb-1 style="text-align:center;">
@@ -455,6 +464,7 @@ import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
 import secureStorage from "../../../plugins/secure-storage";
+import AnimatedNumber from "animated-number-vue";
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -466,7 +476,8 @@ export default {
     footerBet,
     trendMapFullScreen,
     fullscreenchart,
-    fullscreencurrentbet
+    fullscreencurrentbet,
+    AnimatedNumber
   },
   data() {
     return {
@@ -555,7 +566,8 @@ export default {
       "getLastDraw",
       "getRoadMap",
       "getStockLoop",
-      "getUserBalance"
+      "getUserBalance",
+      "getmultiGameBet"
     ]),
     ...mapState({
       gameStockId: state => state.game.gameStockId
@@ -594,10 +606,11 @@ export default {
           break;
         case 7:
           $(".BetButtonGuideEven").click();
-          $("html, body").animate(
-            { scrollTop: $("#enter-amount-to-bet").scrollTop() },
-            1000
-          );
+          if ($(document).height() > $(window).height()) {
+            setTimeout(() => {
+              window.scrollTo(0, $(window).height() / 4);
+            }, 100);
+          }
           break;
         case 8:
           $(".BetButtonGuideEven").css("z-index", "1");
@@ -620,6 +633,10 @@ export default {
     }
   },
   methods: {
+    formatToPrice(value) {
+      return `R$ ${value.toFixed(2)}`;
+    },
+
     clearTutorialUI() {
       this.tutorialStepNumber = 0;
       this.isShowTutorial = false;
@@ -752,7 +769,7 @@ export default {
 }
 .close-icon {
   z-index: 10028;
-  position: absolute;
+  position: fixed;
   right: 10px;
   top: 20px;
   cursor: pointer;
@@ -791,7 +808,6 @@ export default {
 }
 
 .lastdraw {
-  font-size: 12px;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
   font-size: 22px;

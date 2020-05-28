@@ -48,6 +48,7 @@
     "introduction": "This page is made to give you more informations."
   },
   "msg": {
+    "betCount": "ການນັບເດີມພັນ",
     "currentActiveTime": "ເວລາທີ່ໃຊ້ງານໃນປະຈຸບັນ",
     "totalOnlineTime": "ເວລາ online ທັງ ໝົດ",
     "onlineActiveTime": "ເວລາທີ່ໃຊ້ວຽກ Online",
@@ -246,6 +247,11 @@
     "sh000300": "SH000300"
   },
   "profile": {
+    "available":"ມີ",
+    "typeUsername":"ພິມຊື່ຜູ້ໃຊ້ຂອງທ່ານ",
+    "noData": "ບໍ່ມີຂໍ້ມູນທີ່ຈະສະແດງ",
+    "chooseYourAvatar" : "ເລືອກ Avatar ຂອງທ່ານ",
+    "useAvatar": "ໃຊ້ Avatar",
     "username": "ຊື່ຜູ້ໃຊ້",
     "firstName": "ຊື່​ແທ້",
     "lastName": "ນາມ​ສະ​ກຸນ",
@@ -255,11 +261,7 @@
     "email": "ອີເມວ",
     "country": "ປະເທດ",
     "invalidEmail": "ກະລຸນາໃສ່ທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ",
-    "invalidFirstName": "ກະລຸນາໃສ່ຊື່ First Name ທີ່ຖືກຕ້ອງ. ອະນຸຍາດໃຫ້ມີພຽງຕົວອັກສອນຕົວອັກສອນເທົ່ານັ້ນ",
-    "invalidLastName": "ກະລຸນາໃສ່ຊື່ນາມສະກຸນທີ່ຖືກຕ້ອງ. ອະນຸຍາດໃຫ້ມີພຽງຕົວອັກສອນຕົວອັກສອນເທົ່ານັ້ນ",
-    "invalidUsername": "ຊື່ຜູ້ໃຊ້ຄວນຈະມີຕ່ ຳ ສຸດ 5 ໂຕແລະສູງສຸດ 20 ໂຕ.",
-    "invalidFirstNameLength": "ຊື່ ທຳ ອິດສາມາດສູງສຸດ 25 ໂຕອັກສອນ",
-    "invalidLastNameLength": "ນາມສະກຸນສາມາດສູງສຸດ 25 ໂຕອັກສອນ",
+    "mandatoryField": "ກະລຸນາເລືອກເອົາຊ່ອງຂໍ້ມູນທີ່ ຈຳ ເປັນ",
     "success": "ຂໍ້ມູນຂ່າວສານທີ່ປະສົບຜົນ ສຳ ເລັດຖືກບັນທຶກແລ້ວ!",
     "onlineStatus": "ສະຖານະພາບທາງອິນເຕີເນັດ",
     "basicInfo": "ຂໍ້ມູນພື້ນຖານ",
@@ -291,6 +293,9 @@
     "yourself": "ຕົວທ່ານເອງ"
   },
   "liveBetData": {
+    "totalUsers": "ຜູ້ໃຊ້ທັງ ໝົດ ວາງເດີມພັນໃນເກມ.",
+    "totalBet": "ຈຳ ນວນການເດີມພັນລວມຢູ່ໃນເກມ.",
+    "totalAmount": "ຈຳ ນວນສະຖານທີ່ທັງ ໝົດ ໃນເກມ.",
     "betID" : "ລະຫັດການພະນັນ",
     "dateTime" : "ວັນທີແລະເວລາ",
     "bet" : "ການເດີມພັນ",
@@ -376,6 +381,7 @@
     "pleaseConfirm": "ກະລຸນາຢືນຢັນການເດີມພັນຂອງທ່ານຂ້າງລຸ່ມນີ້"
   },
   "invitation": {
+    "selectCategoryError" : "ກະລຸນາເລືອກ ໝວດ ໝູ່",
     "ecWorld" : "EC ໂລກ",
     "gameChannel" : "ການຫຼິ້ນ ຊ່ອງທາງ",
     "sendInvitation" : "ສົ່ງການລົງທືນ",

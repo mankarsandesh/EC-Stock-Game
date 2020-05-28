@@ -2,7 +2,13 @@
   <div>
     <v-layout row justify-center id="footerBet-guide">
       <v-flex lg2 md2 xs2 class="amount">
-        <div>$ {{ getFooterBetAmount }}</div>
+        <div>
+          <animated-number
+            :value="getFooterBetAmount"
+            :formatValue="formatToPrice"
+            :duration="1000"
+          />
+        </div>
       </v-flex>
       <v-flex lg5 md5 xs3 class="chipsdiv">
         <v-layout row>
@@ -11,7 +17,10 @@
               size="65"
               v-for="(item, key) in imgChip"
               :key="key"
-              v-bind:class="[ getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '' , 'chips']"
+              v-bind:class="[
+                getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '',
+                'chips'
+              ]"
             >
               <v-img
                 @click="setFooterBetAmount(getCoinsModern[key])"
@@ -34,11 +43,10 @@
             class="buttonGreensmall"
             dark
             @click="confirmBet()"
-          >{{ $t("msg.confirm") }}</v-btn>
+            >{{ $t("msg.confirm") }}</v-btn
+          >
           <v-btn class="buttonCancel" @click="cancelBet()">
-            {{
-            $t("msg.cancel")
-            }}
+            {{ $t("msg.cancel") }}
           </v-btn>
         </div>
       </v-flex>
@@ -51,7 +59,11 @@ import { mapGetters, mapActions } from "vuex";
 import chips from "~/data/chips";
 import config from "../../config/config.global";
 import Betting from "~/helpers/betting";
+import AnimatedNumber from "animated-number-vue";
 export default {
+  components: {
+    AnimatedNumber
+  },
   data() {
     return {
       isSending: false,
@@ -60,58 +72,7 @@ export default {
       imgChip: chips.chipsData
     };
   },
-  methods: {
-    ...mapActions([
-      "setFooterBetAmount",
-      "clearDataMultiGameBet",
-      "sendBetting",
-      "confirmTempMultiGameBetData",
-      "clearTempMultiGameBetData"
-    ]),
-    confirmBet() {
-      if (parseInt(this.getTempMultiGameBetAmount) > 10000) {
-        this.$swal({
-          type: "error",
-          title: "Bet value should not be more than 10000",
-          timer: 1000,
-          showConfirmButton: true
-        });
-      } else if (
-        parseInt(this.getTempMultiGameBetAmount) <=
-          parseInt(this.getUserBalance) &&
-        parseInt(this.getTempMultiGameBetAmount) > 0
-      ) {
-        this.isSending = true;
-        this.texts = this.$root.$t("msg.sending");
-        this.confirmTempMultiGameBetData();
-        // setTimeout(() => {
-        this.sendBetting();
-        this.setFooterBetAmount(0);
-        this.isSending = false;
-        // }, 1000);
-      } else {
-        this.clearTempMultiGameBetData();
-        this.$swal({
-          type: "error",
-          title: config.error.lowBalance,
-          timer: 1500
-        });
-      }
-    },
-    async cancelBet() {
-      try {
-        this.isSending = false;
 
-        await Betting.cancelBettingClear(this.gettempMultiGameBetData);
-
-        await this.clearTempMultiGameBetData();
-
-        await this.clearDataMultiGameBet(0);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  },
   computed: {
     ...mapGetters([
       "getCoinsModern",
@@ -121,6 +82,77 @@ export default {
       "getUserBalance",
       "gettempMultiGameBetData"
     ])
+  },
+
+  methods: {
+    ...mapActions([
+      "setFooterBetAmount",
+      "clearDataMultiGameBet",
+      "sendBetting",
+      "confirmTempMultiGameBetData",
+      "clearTempMultiGameBetData",
+      "clearBetValueFooterBet"
+    ]),
+    async confirmBet() {
+      try {
+        if (parseInt(this.getTempMultiGameBetAmount) > 10000) {
+          this.$swal({
+            type: "error",
+            title: "Bet value should not be more than 10000",
+            timer: 1000,
+            showConfirmButton: true
+          });
+
+          // clear the bet from LocalStroge
+          await Betting.clearBettingFailure();
+          //  clear the bet amount to = 0
+          await this.clearBetValueFooterBet();
+          //  clear the temputure game bet to = 0
+          this.clearTempMultiGameBetData();
+        } else if (
+          parseInt(this.getTempMultiGameBetAmount) <=
+            parseInt(this.getUserBalance) &&
+          parseInt(this.getTempMultiGameBetAmount) > 0
+        ) {
+          this.isSending = true;
+          this.texts = this.$root.$t("msg.sending");
+          this.confirmTempMultiGameBetData();
+          // setTimeout(() => {
+          this.sendBetting();
+          this.setFooterBetAmount(0);
+          this.isSending = false;
+          // }, 1000);
+        } else {
+          this.clearTempMultiGameBetData();
+          this.$swal({
+            type: "error",
+            title: config.error.lowBalance,
+            timer: 1500
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //use for cancel the bet
+    async cancelBet() {
+      try {
+        this.isSending = false;
+
+        await Betting.cancelBettingClear(this.gettempMultiGameBetData);
+
+        await this.clearTempMultiGameBetData();
+
+        await this.clearBetValueFooterBet();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    formatToPrice(value) {
+      return `$ ${value.toFixed(2)}`;
+    }
   }
 };
 </script>
@@ -217,3 +249,4 @@ export default {
   font-size: 11.2821px;
 }
 </style>
+

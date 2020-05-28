@@ -6,13 +6,13 @@
           {{ $t("msg.bettingOn") }}
           <span class="text-uppercase">
             {{
-            isNaN(betId.split("-")[1])
-            ? $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            $t("gamemsg." + betId.split("-")[1])
-            : $t("gamemsg." + betId.split("-")[0]) +
-            " - " +
-            betId.split("-")[1]
+              isNaN(betId.split("-")[1])
+                ? $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  $t("gamemsg." + betId.split("-")[1])
+                : $t("gamemsg." + betId.split("-")[0]) +
+                  " - " +
+                  betId.split("-")[1]
             }}
           </span>
         </h3>
@@ -31,7 +31,12 @@
       <v-flex>
         <v-layout row>
           <v-flex class="py-3 text-center">
-            <v-avatar size="70" v-for="(item, key) in imgChip" :key="key" class="chips">
+            <v-avatar
+              size="65"
+              v-for="(item, key) in imgChip"
+              :key="key"
+              class="chips"
+            >
               <v-img
                 @click="coinClick(getCoinsModern[key])"
                 :src="item.img"
@@ -53,7 +58,13 @@
           </v-flex>-->
 
           <v-flex style="align-self:center">
-            <input type="number" readonly :min="1" v-model="betValue" class="input-bet" />
+            <input
+              type="number"
+              readonly
+              :min="1"
+              v-model="betValue"
+              class="input-bet"
+            />
           </v-flex>
           <v-flex style="align-self:center">
             <v-btn color="error" @click="clear">{{ $t("msg.clear") }}</v-btn>
@@ -70,21 +81,22 @@
           dark
           @click="confirmBet()"
           :disabled="confirmDisabled"
-        >{{ $t("msg.confirm") }}</v-btn>
-        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{ $t("msg.cancel") }}</v-btn>
+          >{{ $t("msg.confirm") }}</v-btn
+        >
+        <v-btn class="buttonCancel" color="#003e70" dark @click="closePopper">{{
+          $t("msg.cancel")
+        }}</v-btn>
       </v-flex>
     </v-layout>
   </div>
 </template>
 <script>
-import Sound from "~/helpers/sound";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import result from "~/data/result";
 import config from "~/config/config.global";
 import chips from "~/data/chips";
 import secureStorage from "../../plugins/secure-storage";
 import { BetResult } from "~/mixin/betResult";
-
 export default {
   props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
   mixins: [BetResult],
@@ -108,7 +120,7 @@ export default {
     ])
   },
   watch: {
-    getLastDraw(val) {     
+    getLastDraw(val) {
       // sending the data to process on the helper♦
       this.betResult(val, this.stockName, this.betId, this.betWin);
     }
@@ -125,7 +137,12 @@ export default {
     //  this.getwinuser()
   },
   methods: {
-    ...mapActions(["pushDataOnGoingBet", "setGameId", "setUserData"]),
+    ...mapActions([
+      "pushDataOnGoingBet",
+      "setGameId",
+      "setUserData",
+      "setTempMultiGameBetData"
+    ]),
     coinClick(value) {
       let amount = parseInt(value);
       this.betValue = this.betValue + amount;
@@ -140,6 +157,65 @@ export default {
       // } else {
       //   this.betValue = this.betValue + amount;
       // }
+    },
+
+    async confirmBet() {
+      try {
+        if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
+          this.$swal({
+            type: "error",
+            title:
+              "Bet value should be greater than 0 and not be more than 10000",
+            timer: 1500,
+            showConfirmButton: true
+          });
+          this.betValue = 0;
+        } else if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
+          this.$swal({
+            type: "error",
+            title: config.error.lowBalance,
+            timer: 1000,
+            showConfirmButton: true
+          });
+        } else {
+          const betStore = {
+            id: this.stockName + this.betId,
+            class: this.betId.split("-")[0],
+            betAmount: this.betValue
+          };
+
+          let data = {
+            gameUUID: this.getGameUUIDByStockName(this.stockName),
+            ruleID: this.ruleid,
+            betAmount: this.betValue
+          };
+
+          if (this.betValue > 0) {
+
+            this.$soundEffect("betting");
+
+            const stockDetail = {
+              betAmount: this.betValue,
+              class: this.betId.split("-")[0],
+              gameUUID: this.getGameUUIDByStockName(this.stockName),
+              id: this.stockName + this.betId,
+              ruleID: this.ruleid,
+              specificNumber: "",
+              betRule: this.betId
+            };
+            this.$emit("update-bet", stockDetail);
+            this.confirmDisabled = true;
+            this.$StoreBettingonConfirm(stockDetail);
+
+            this.sendBetting(data);
+            $("#" + this.stockName + this.betId).addClass(
+              this.betId.split("-")[0] + " " + this.betId.split("-")[1]
+            );
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     async sendBetting(betData) {
       try {
@@ -165,6 +241,7 @@ export default {
             betAmount: res.data[0].betAmount,
             stockName: this.$props.stockName
           };
+
           this.pushDataOnGoingBet(OnGoingdata);
           this.$swal({
             type: "success",
@@ -187,54 +264,6 @@ export default {
           showConfirmButton: true,
           timer: 1000
         });
-      }
-    },
-    confirmBet() {
-      if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
-        this.$swal({
-          type: "error",
-          title: "Bet value should be greater than 0 and not be more than 10000",
-          timer: 1500,
-          showConfirmButton: true
-        });
-        this.betValue = 0;
-      } else if (parseInt(this.betValue) > parseInt(this.getUserBalance)) {
-        this.$swal({
-          type: "error",
-          title: config.error.lowBalance,
-          timer: 1000,
-          showConfirmButton: true
-        });
-      } else {
-        const betStore = {
-          id: this.stockName + this.betId,
-          class: this.betId.split("-")[0],
-          betAmount: this.betValue
-        };
-        
-        this.storeBetOnLocalStroge(betStore);
-
-        let data = {
-          gameUUID: this.getGameUUIDByStockName(this.stockName),
-          ruleID: this.ruleid,
-          betAmount: this.betValue
-        };
-
-        if (this.betValue > 0) {
-          Sound.betTing();
-          const stockDetail = {
-            stock: this.stockName,
-            betRule: this.betId
-          };
-
-          this.$emit("update-bet", stockDetail);
-
-          this.confirmDisabled = true;
-          this.sendBetting(data);
-          $("#" + this.stockName + this.betId).addClass(
-            this.betId.split("-")[0] + " " + this.betId.split("-")[1]
-          );
-        }
       }
     },
     closePopper() {
@@ -301,6 +330,8 @@ input[type="number"] {
 }
 
 .chipImg {
+  width: 70px;
+  height: 70px;
   cursor: pointer;
 }
 </style>
