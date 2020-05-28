@@ -67,7 +67,7 @@ Vue.filter("betclosein", (value, loop) => {
   if (loop == 1) {
     // bet close
     if (value <= 20) {
-      result = "Calculating";
+      result =  window.$nuxt.$root.$t('msg.calculating');
     } else {
       result = "00:" + appendHero(value - 20);
     }

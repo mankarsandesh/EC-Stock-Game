@@ -54,7 +54,7 @@
             </tr>
             <tr style="display:none;" class="extraInfo" :id="item.item.betUUID">
               <td colspan="2">
-                <span class="betDraw">{{ $t("betHistory.betDraw") }} :</span>
+                <span class="betDraw">{{ $t("betHistory.betDraw") }} : </span>
                 <span
                   class="gameDraw"
                   v-html="$options.filters.lastDraw(item.item.gameDraw)"
@@ -161,8 +161,8 @@ export default {
   },
   methods: {
     clicked(betUUID) {
-      $(".extraInfo").hide();
-      $("#" + betUUID).show();
+      // $(".extraInfo").hide();
+      $("#" + betUUID).toggle();
     }
   },
   computed: {
