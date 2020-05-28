@@ -320,7 +320,7 @@
     </v-dialog>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-      <v-btn color="pink" text @click="snackbar = false">{{ $t('msg.useAvatar') }}</v-btn>
+      <v-btn color="pink" text @click="snackbar = false">{{ $t('profile.useAvatar') }}</v-btn>
     </v-snackbar>
 
     <OnlineHistory ref="onlineHistory"></OnlineHistory>
