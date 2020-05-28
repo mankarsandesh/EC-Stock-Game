@@ -247,6 +247,8 @@
     "sh000300": "SH000300"
   },
   "profile": {
+    "chooseYourAvatar" : "Choose your Avatar",
+    "useAvatar": "User Avatar",
     "username": "Username",
     "firstName": "first name",
     "lastName": "last name",

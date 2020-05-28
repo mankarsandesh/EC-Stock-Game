@@ -245,6 +245,8 @@
     "sh000300": "ดัชนีเซี่ยงไฮ้และเซินเจิ้น 300"
   },
   "profile": {
+    "chooseYourAvatar" : "เลือกรูปประจำตัวของคุณ",
+    "useAvatar": "ใช้ Avatar",
     "username": "ຊື່ຜູ້ໃຊ້",
     "firstName": "ชื่อจริง",
     "lastName": "นามสกุล",

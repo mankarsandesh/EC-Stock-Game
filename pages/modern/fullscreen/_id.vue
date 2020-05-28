@@ -174,7 +174,7 @@
                   <span class="text-close-bet">market close</span>
                 </div>
                 <!-- chart other stocks -->
-                <v-card-text class="pa-0" min-height="500">
+                <v-card-text class="pa-0" min-height="500"> 
                   <chartApp :stockName="data.stockName"></chartApp>
                 </v-card-text>
               </v-card>
@@ -805,7 +805,6 @@ export default {
 }
 
 .lastdraw {
-  font-size: 12px;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
   font-size: 22px;
