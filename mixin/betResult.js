@@ -1,6 +1,5 @@
 const jsonResult = require('~/data/result') // define the json result for the compare 
 import secureStorage from '~/plugins/secure-storage'
-import sound from "~/helpers/sound" // import the sound helper 
 import { mapMutations, mapGetters, mapActions } from 'vuex'
 // define a mixin object
 export const BetResult = {
@@ -17,7 +16,14 @@ export const BetResult = {
             "clearTempMultiGameBetData"
 
         ]),
-
+        /**
+         *
+         *
+         * @param {*} result
+         * @param {*} stockName
+         * @param {*} betID
+         * @param {*} betWin
+         */
         betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin   
             this.clearItemsAfterLastDraw()
             const lastDraw = result.substr(result.length - 2); //get the last two digit
@@ -51,13 +57,23 @@ export const BetResult = {
             this.setCollegeButtonNumberParent('Can not find any bet') // make the button collage 
         },
 
-        // Multiple Result 
+        /**
+         *
+         *
+         * @param {*} item
+         * @param {*} number
+         * @param {*} stockName
+         * @param {*} betID
+         * @param {*} betWin
+         * @param {*} name
+         */
         multipleResult(item, number, stockName, betID, betWin, name) {
             const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
 
-                sound.winBet(); // sound when user win the bet              
+                this.$soundEffect('win')
+
                 $("#" + betWin).addClass('chip-animation');
                 $("#" + stockName + betID).addClass(
                     betID.split("-")[0] + "-animation"
@@ -65,7 +81,8 @@ export const BetResult = {
 
                 setTimeout(() => {
                     this.setCollegeButtonNumberParent("You are win") // try to set the difference value 
-                    sound.winBet(); // sound when user win the bet
+
+                    this.$soundEffect('win')
 
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0]
@@ -111,12 +128,22 @@ export const BetResult = {
             }
         },
 
-        // Multiple Result 
+        /**
+         *
+         *
+         * @param {*} item
+         * @param {*} number
+         * @param {*} stockName
+         * @param {*} betID
+         * @param {*} betWin
+         * @param {*} name
+         */
         multipleResultTwoDigit(item, number, stockName, betID, betWin, name) {
             const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
-                sound.winBet(); // sound when user win the bet              
+                this.$soundEffect('win')
+
                 $("#" + betWin).addClass('chip-animation');
                 $(specificNumber + 'Number').addClass('chip-animation');
                 $("#" + stockName + betID.split("-")[0]).addClass(
@@ -128,7 +155,8 @@ export const BetResult = {
 
                 setTimeout(() => {
                     this.setCollegeButtonNumberParent("You are win")
-                    sound.winBet(); // sound when user win the bet
+
+                    this.$soundEffect('win')
 
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0]
@@ -197,7 +225,10 @@ export const BetResult = {
         },
 
 
-        // cler the bet from localStroge after new game 
+        /**
+         *
+         *
+         */
         clearItemsAfterLastDraw() {
 
             secureStorage.removeItem("itemBetting")

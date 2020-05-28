@@ -322,7 +322,12 @@ export default {
     this.getUserProfileByID();
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getUserInfo", "getLocale"])
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getUserInfo",
+      "getLocale"
+    ])
   },
   watch: {
     filter() {
@@ -330,7 +335,7 @@ export default {
       this.getUserProfileByID();
     },
     getLocale() {
-      this.series[0].name = this.$root.$t("msg.onlineActiveTime")
+      this.series[0].name = this.$root.$t("msg.onlineActiveTime");
       this.componentKey++;
     }
   },

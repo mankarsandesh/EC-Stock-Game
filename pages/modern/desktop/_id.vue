@@ -294,6 +294,7 @@ export default {
       isStep: 0
     };
   },
+
   created() {
     this.clearBetValueFooterBet();
     // Check size is Desktop or Mobile. and redirect to Mobile or Desktop
@@ -345,7 +346,6 @@ export default {
 
     // set footerBet to zero because on this page cant use bet footer
     this.setFooterBetAmount(0);
-    this.removeAllFooterBet();
   },
   watch: {
     // check size screen
@@ -355,6 +355,9 @@ export default {
         let linkto = `/modern/betting/btc1`;
         this.$router.push(linkto);
       }
+    },
+    getmultiGameBet(val) {
+      console.log(this.$route.name, val);
     }
   },
   methods: {
@@ -364,7 +367,6 @@ export default {
       "setIsShowTutorial",
       "setLiveRoadMap",
       "setFooterBetAmount",
-      "removeAllFooterBet",
       "setIsLoadingStockGame",
       "clearBetValueFooterBet"
     ]),
@@ -467,7 +469,8 @@ export default {
       "getRoadMap",
       "getPortalProviderUUID",
       "getLastDraw",
-      "getStockLoop"
+      "getStockLoop",
+      "getmultiGameBet"
     ])
   }
 };

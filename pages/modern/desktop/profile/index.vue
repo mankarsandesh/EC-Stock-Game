@@ -72,7 +72,7 @@
                     maxlength="25"
                     id="first-name"
                     name="first-name"
-                    placeholder="Your first name"
+                    :placeholder="$t('profile.firstName')"
                   />
                   <span class="icon-container">
                     <v-icon
@@ -96,7 +96,7 @@
                     v-model.trim="lastName"
                     id="last-name"
                     name="last-name"
-                    placeholder="Your Last Name"
+                    :placeholder="$t('profile.lastName')"
                   />
                   <span class="icon-container">
                     <v-icon

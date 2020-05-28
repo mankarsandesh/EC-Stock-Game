@@ -5,18 +5,34 @@
         <div class="chip-image">
           <v-img :width="90" :src="chip.image" class="chipImage" />
           <input
-            :disabled="toggleButtonStatus === 'edit' ? disableInput : false"
+            :disabled="editAbleIndex !== index"
             class="input-chip-amount"
             type="number"
             :value="chip.amount"
             :ref="index"
           />
         </div>
-        <div class="chip-action">
-          <v-btn class="chipamount" text @click="changeChipAmount(chip.chipID)">{{
-            $t("msg." + toggleButtonStatus)
-          }}</v-btn>
-          <div class="min-max" v-show="toggleButtonStatus === 'confirm'">
+        <!-- edit button -->
+        <div
+          class="chip-action"
+          v-if="editAbleIndex < 0 || editAbleIndex !== index"
+        >
+          <v-btn class="chipamount" text @click="toEdit(index)"
+            >{{ $t("msg.edit") }}
+          </v-btn>
+        </div>
+        <!-- confirm -->
+        <div
+          class="chip-action"
+          v-if="editAbleIndex >= 0 && editAbleIndex === index"
+        >
+          <v-btn
+            class="chipamount-confirm"
+            text
+            @click="saveChipAmount(chip.chipID)"
+            >{{ $t("msg.confirm") }}
+          </v-btn>
+          <div class="min-max">
             <span>{{ $t("msg.min") }} = $100</span>
             <span>{{ $t("msg.max") }} = $10,000</span>
           </div>
@@ -29,9 +45,8 @@
               text
               @click="reset()"
               style="background-color: #fec623!important;border-radius:8px;"
-              >{{ $t("msg.resetToDefault") }}</v-btn
-            >
-            <v-btn class="my-btn buttonCancel" @click="cancelAction()">{{ $t("msg.cancel") }}</v-btn>
+              >{{ $t("msg.resetToDefault") }}
+            </v-btn>
           </div>
         </div>
       </v-flex>
@@ -56,8 +71,7 @@ export default {
     return {
       snackbar: false,
       amount: [],
-      disableInput: true,
-      toggleButtonStatus: "edit"
+      editAbleIndex: -1
     };
   },
   mounted() {
@@ -97,34 +111,42 @@ export default {
   },
   methods: {
     ...mapActions(["setCoinsModern", "setChips"]),
-    changeChipAmount(chipId) {
-      if (this.toggleButtonStatus == "edit") {
-        this.toggleButtonStatus = "confirm";
-        //this.$nextTick(() => this.$refs[chipId][0].focus());
-      } else {
-        this.saveChipAmount(chipId);
-        this.toggleButtonStatus = "edit";
-      }
+    toEdit(index) {
+      this.editAbleIndex = index;
     },
     reset() {
       this.setCoinsModern(["100", "500", "1000", "5000", "10000"]);
-      this.toggleButtonStatus = "edit";
+      this.editAbleIndex = -1;
+      this.$swal({
+        type: "success",
+        title: "Changes saved!",
+        showConfirmButton: true,
+        timer: 1000
+      });
     },
     saveChipAmount(chipId) {
-      let index = this.chips.findIndex((chip) => chip.chipID == chipId);
-      if(index != -1) {
-        if(parseInt(this.$refs[index][0].value) >= 100 && this.$refs[index][0].value <= 10000) {
-          if(!(this.getCoinsModern.includes(this.$refs[index][0].value))) {
-            this.setChips({ index, amount: this.$refs[index][0].value })
-            this.toggleButtonStatus = "edit";
-            this.snackbar = true;
+      let index = this.chips.findIndex(chip => chip.chipID == chipId);
+      if (index != -1) {
+        if (
+          parseInt(this.$refs[index][0].value) >= 100 &&
+          this.$refs[index][0].value <= 10000
+        ) {
+          if (!this.getCoinsModern.includes(this.$refs[index][0].value)) {
+            this.setChips({ index, amount: this.$refs[index][0].value });
+            this.editAbleIndex = -1;
+            this.$swal({
+              type: "success",
+              title: "Changes saved!",
+              showConfirmButton: true,
+              timer: 1000
+            });
           } else {
             this.$swal({
-            type: "error",
-            title: "Chip Amount already exist",
-            showConfirmButton: true,
-            timer: 1000
-          });
+              type: "error",
+              title: "Chip Amount already exist",
+              showConfirmButton: true,
+              timer: 1000
+            });
           }
         } else {
           this.$swal({
@@ -142,9 +164,6 @@ export default {
           timer: 1000
         });
       }
-    },
-    cancelAction() {
-      this.toggleButtonStatus = "edit";
     }
   }
 };
@@ -216,12 +235,18 @@ export default {
   margin: 0 auto;
   text-align: center;
   border-radius: 8px;
+  background-color: #6424b9 !important;
+}
+.chipamount-confirm {
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 8px;
+  background-color: green !important;
 }
 
 .v-btn {
   font-size: 14px;
   font-weight: 400;
-  background-color: #6424b9 !important;
   color: #ffffff !important;
   padding: 4px 10px;
   margin: 4px;

@@ -566,13 +566,18 @@ export default {
       "getLastDraw",
       "getRoadMap",
       "getStockLoop",
-      "getUserBalance"
+      "getUserBalance",
+      "getmultiGameBet"
     ]),
     ...mapState({
       gameStockId: state => state.game.gameStockId
     })
   },
   watch: {
+    getmultiGameBet(val) {
+      console.log(this.$route.name, val);
+    },
+
     tutorialStepNumber(newValue) {
       switch (newValue) {
         case 1:

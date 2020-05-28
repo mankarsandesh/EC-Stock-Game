@@ -99,6 +99,7 @@ export default {
 <style>
 .show-chip {
   position: absolute;
+  margin-top: 20px;
 }
 
 .v-responsive__content {
