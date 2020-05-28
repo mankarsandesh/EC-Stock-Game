@@ -253,7 +253,7 @@ export default {
         } else {
           if (this.apiAttemptCount < 3) {
             this.apiAttemptCount++;
-            this.fetchChart();
+            this.fetchChart(stockUUID);
           } else {
             throw new Error(config.error.general);
           }

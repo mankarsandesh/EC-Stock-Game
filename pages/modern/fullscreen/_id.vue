@@ -101,8 +101,9 @@
           v-if="tutorialStepNumber === 7 && !getIsWindowsHasScroll"
         >
           <span class="guide-title text-uppercase" style="margin-left: 20px;"
-            >bet on digits has no scroll</span
-          >
+            >bet on digits
+          </span>
+          <!--has no scroll -->
           <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
         </div>
         <!-- to scroll here -->
@@ -604,10 +605,11 @@ export default {
           break;
         case 7:
           $(".BetButtonGuideEven").click();
-          $("html, body").animate(
-            { scrollTop: $("#enter-amount-to-bet").scrollTop() },
-            1000
-          );
+          if ($(document).height() > $(window).height()) {
+            setTimeout(() => {
+              window.scrollTo(0, $(window).height() / 4);
+            }, 100);
+          }
           break;
         case 8:
           $(".BetButtonGuideEven").css("z-index", "1");
@@ -766,7 +768,7 @@ export default {
 }
 .close-icon {
   z-index: 10028;
-  position: absolute;
+  position: fixed;
   right: 10px;
   top: 20px;
   cursor: pointer;

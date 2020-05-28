@@ -50,15 +50,15 @@
 
     <v-dialog v-model="logoutDialog" persistent max-width="400">
       <v-card class="logout">
-        <v-card-title class="headlineh1">{{$t("logout.sure")}}</v-card-title>
-        <v-card-text
-          >{{$t("logout.bye")}}</v-card-text
-        >
+        <v-card-title class="headlineh1">{{ $t("logout.sure") }}</v-card-title>
+        <v-card-text>{{ $t("logout.bye") }}</v-card-text>
         <v-card-actions>
-          <v-btn class="buttonGreen" text @click="dialogStatus">{{$t("logout.logout")}}</v-btn>
-          <v-btn class="buttonCancel" text @click="logoutDialog = false"
-            >{{$t("logout.cancel")}}</v-btn
-          >
+          <v-btn class="buttonGreen" text @click="dialogStatus">{{
+            $t("logout.logout")
+          }}</v-btn>
+          <v-btn class="buttonCancel" text @click="logoutDialog = false">{{
+            $t("logout.cancel")
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -69,6 +69,7 @@ import AnimatedNumber from "animated-number-vue";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import config from "../config/config.global";
+import Cookies from "~/plugins/js-cookie";
 import secureStorage from "../plugins/secure-storage";
 
 export default {
@@ -87,7 +88,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getUserBalance"]),
+    ...mapGetters(["getUserInfo", "getUserBalance", "getUserUUID"]),
     imgProfile() {
       if (this.getUserInfo.profileImage == null) {
         return `${this.defaultImage}`;
@@ -112,16 +113,38 @@ export default {
     getLogout() {
       this.logoutDialog = true;
     },
-    dialogStatus(value) {
+    async dialogStatus(value) {
       if (value) {
         secureStorage.removeItem("AUTH");
         const URL = secureStorage.getItem("referrerURL");
-        location.href = "http://" + URL;
+        await this.userLogout();
         this.dialogConfirm = false;
+        location.href = "http://" + URL;
       }
       this.dialogConfirm = false;
     },
-    // Format Price
+    // User Logout Function
+    async userLogout() {
+      try {
+        const reqBody = {
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        const res = await this.$axios.post(config.userLogout.url, reqBody, {
+          headers: config.header
+        });
+        if (res.data.status) {
+          // Clear local storage
+          secureStorage.clear();
+          // Remove login session cookie
+          Cookies.remove("login");
+        } else {
+          throw new Error(config.error.general);
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
     formatToPrice(value) {
       return `$ ${Number(value)
         .toFixed(2)
