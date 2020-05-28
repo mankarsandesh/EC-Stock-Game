@@ -107,7 +107,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    "~/plugins/inject.js",
+    "~/plugins/ControllerBetting.js",
     "@/plugins/vuetify",
     "@plugins/maintenance",
     "@plugins/js-cookie", // for setting and reading cookies
