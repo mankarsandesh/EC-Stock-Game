@@ -463,6 +463,7 @@ import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
 import secureStorage from "../../../plugins/secure-storage";
+import AnimatedNumber from "animated-number-vue";
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -474,7 +475,8 @@ export default {
     footerBet,
     trendMapFullScreen,
     fullscreenchart,
-    fullscreencurrentbet
+    fullscreencurrentbet,
+    AnimatedNumber
   },
   data() {
     return {

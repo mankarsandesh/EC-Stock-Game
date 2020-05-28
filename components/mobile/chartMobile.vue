@@ -208,7 +208,7 @@ export default {
         } else {
           if (this.apiAttemptCount < 3) {
             this.apiAttemptCount++;
-            this.fetchChart();
+            this.fetchChart(stockUUID);
           } else {
             this.setSnackBarMessage(config.error.general);
           }
