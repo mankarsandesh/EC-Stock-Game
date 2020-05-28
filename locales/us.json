@@ -375,6 +375,7 @@
   },
   "betting": {
     "reviewBet" : "Review Bet",
+    "betValue": "Bet value should be greater than 0 and not be more than 10000",
     "placeBet" : "Place Bet",
     "cancelBet" :"Cancel Bet",
     "reviewYourBet" : "REVIEW YOUR BET",

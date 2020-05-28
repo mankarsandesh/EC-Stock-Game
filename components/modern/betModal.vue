@@ -165,7 +165,7 @@ export default {
           this.$swal({
             type: "error",
             title:
-              "Bet value should be greater than 0 and not be more than 10000",
+              this.$root.$t("betting.betValue"),
             timer: 1500,
             showConfirmButton: true
           });
