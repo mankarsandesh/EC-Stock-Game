@@ -175,7 +175,7 @@
                   <span class="text-close-bet">market close</span>
                 </div>
                 <!-- chart other stocks -->
-                <v-card-text class="pa-0" min-height="500">
+                <v-card-text class="pa-0" min-height="500"> 
                   <chartApp :stockName="data.stockName"></chartApp>
                 </v-card-text>
               </v-card>
@@ -184,7 +184,7 @@
                   {{ $t("stockName." + data.stockName) }}
                 </h3>
                 <h4 style="line-height: 1;">
-                  <em>{{ data.loop }} minute game</em>
+                  <em>{{ data.loop }}  {{ $t("msg.minuteGame") }}</em>
                 </h4>
               </div>
             </nuxt-link>
@@ -218,7 +218,7 @@
                   <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed">
                       {{ getStockLoop($route.params.id) }}
-                      {{ $t("msg.minutes") }} {{ $t("msg.loop") }}
+                      {{ $t("msg.minutes") }} 
                     </v-btn>
                     <v-btn
                       color="buttonGreen"
@@ -229,6 +229,7 @@
                 </v-layout>
               </v-flex>
               <v-flex
+                mr-1
                 xs12
                 sm12
                 md8
@@ -806,7 +807,6 @@ export default {
 }
 
 .lastdraw {
-  font-size: 12px;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
   font-size: 22px;

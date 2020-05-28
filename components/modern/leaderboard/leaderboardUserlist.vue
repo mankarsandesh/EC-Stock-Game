@@ -252,7 +252,7 @@ export default {
         const monthly = new Date(
           today.getFullYear(),
           today.getMonth(),
-          today.getDate() - 30
+          today.getDate() - 28
         )
           .toISOString()
           .substr(0, 10);
@@ -267,7 +267,7 @@ export default {
         const lastWeek = new Date(
           today.getFullYear(),
           today.getMonth(),
-          today.getDate() - 7
+          today.getDate() - 5
         )
           .toISOString()
           .substr(0, 10);

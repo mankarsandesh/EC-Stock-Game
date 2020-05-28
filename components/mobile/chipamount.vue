@@ -88,7 +88,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setCoinsModern"]),
+    ...mapActions(["setCoinsModern","setSnackBarMessage"]),
     conOrEClick(ref) {
       if (this.conOrE == "edit") {
         this.conOrE = "confirm";
@@ -112,9 +112,9 @@ export default {
       let chip4 = this.$refs.chip4[0].value;
       let chip5 = this.$refs.chip5[0].value;
       let new_amount = [chip1, chip2, chip3, chip4, chip5];
-      this.setCoinsModern(new_amount);
-
+      this.setCoinsModern(new_amount);     
       this.conOrE = "edit";
+      return this.setSnackBarMessage( window.$nuxt.$root.$t("profile.success"));
     },
     cancel() {
       let chip1 = this.$refs.chip1[0].value;

@@ -246,6 +246,9 @@
     "sh000300": "沪深300指数"
   },
   "profile": {
+    "typeUsername":"输入您的用户名",
+    "chooseYourAvatar" : "选择您的头像",
+    "useAvatar": "使用头像",
     "username": "用户名",
     "firstName": "名字",
     "lastName": "姓",
@@ -375,6 +378,7 @@
     "pleaseConfirm": "請在下面確認您的投注"
   },
   "invitation": {
+    "selectCategoryError" : "请选择类别",
     "ecWorld" : "EC 世界",
     "gameChannel" : "游戏频道",
     "sendInvitation" : "发送邀请",
