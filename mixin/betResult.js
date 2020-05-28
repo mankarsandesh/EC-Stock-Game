@@ -231,7 +231,7 @@ export const BetResult = {
          */
         clearItemsAfterLastDraw() {
 
-            localStorage.removeItem("itemBetting")
+            secureStorage.removeItem("itemBetting")
 
             this.clearTempMultiGameBetData()
 
@@ -240,7 +240,7 @@ export const BetResult = {
 
                 this.clearItemBetting()
 
-                localStorage.removeItem("itemBetting")
+                secureStorage.removeItem("itemBetting")
 
             }
         }

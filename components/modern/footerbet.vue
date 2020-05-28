@@ -14,7 +14,7 @@
         <v-layout row>
           <v-flex class="text-center">
             <v-avatar
-              size="60"
+              size="65"
               v-for="(item, key) in imgChip"
               :key="key"
               v-bind:class="[
@@ -167,9 +167,9 @@ export default {
   color: #615f60;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  border-left: 2px solid #aeadad;
-  border-top: 2px solid #aeadad;
-  border-bottom: 2px solid #aeadad;
+  border-left: 3px solid #aeadad;
+  border-top: 3px solid #aeadad;
+  border-bottom: 3px solid #aeadad;
   font-size: 30px;
   text-align: left;
   vertical-align: center;
@@ -182,10 +182,10 @@ export default {
   border-bottom-left-radius: 50px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-  border-right: 2px solid #aeadad;
-  border-left: 2px solid #aeadad;
-  border-top: 2px solid #aeadad;
-  border-bottom: 2px solid #aeadad;
+  border-right: 3px solid #aeadad;
+  border-left: 3px solid #aeadad;
+  border-top: 3px solid #aeadad;
+  border-bottom: 3px solid #aeadad;
   background-color: #fff;
 }
 
@@ -194,23 +194,23 @@ export default {
   margin: 10px -18px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  border-right: 2px solid #aeadad;
-  border-top: 2px solid #aeadad;
-  border-bottom: 2px solid #aeadad;
+  border-right: 3px solid #aeadad;
+  border-top: 3px solid #aeadad;
+  border-bottom: 3px solid #aeadad;
   background-color: #fff;
 }
 
 .chips {
   cursor: pointer;
-  margin: 6px 10px;
+  margin: 2px 8px;
   border: 2px solid #dddddd;
 }
 .chipImg {
-  color: #334455;
-  font-size: 22px;
+  color: #333;
+  font-size: 24px;
   font-weight: 600;
-  width: 70px;
-  height: 70px;
+  width: 75px;
+  height: 75px;
 }
 
 .st0 {
@@ -249,3 +249,4 @@ export default {
   font-size: 11.2821px;
 }
 </style>
+

@@ -18,7 +18,7 @@ class Betting {
 
                         if ($("#" + item.id).hasClass(item.class)) {
 
-                            localStorage.removeItem("itemBetting")
+                            secureStorage.removeItem("itemBetting")
 
                             $("#" + item.id).removeClass(item.class + ' ' + item.id.split("-")[1])
 
@@ -38,7 +38,7 @@ class Betting {
     async clearBettingFailure() {
         try {
 
-            const getItem = localStorage.getItem("itemBetting")
+            const getItem = secureStorage.getItem("itemBetting")
 
             const array = JSON.parse(getItem)
 
@@ -50,7 +50,7 @@ class Betting {
 
                     if ($("#" + item.id).hasClass(item.class)) {
 
-                        localStorage.removeItem("itemBetting")
+                        secureStorage.removeItem("itemBetting")
 
                         $("#" + item.id).removeClass(item.class + ' ' + item.id.split("-")[1])
 
