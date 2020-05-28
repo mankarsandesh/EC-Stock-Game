@@ -2,7 +2,7 @@ const stock = {
   stockList: [   
     {
       stockName: "btc1",
-      stockUUID: "88778f4f-610b-4ec3-937d-65ef7bf24af5",
+      stockUUID: "c4d8832d-6853-47b8-84df-9ac446cb5770",
       reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
       type: "crypto",
       loop: 1,
@@ -11,7 +11,7 @@ const stock = {
     },
     {
       stockName: "sh000001",
-      stockUUID: "e9543b3d-7870-4a5e-975e-fbe228b50f49",
+      stockUUID: "451e6bcf-b564-41da-be3f-dc622c633109",
       reference:
         "http://finance.sina.com.cn/realstock/company/sh000001/nc.shtml",
       type: "china",
@@ -21,7 +21,7 @@ const stock = {
     },
     {
       stockName: "sh000300",
-      stockUUID: "56f0d2d4-4d9b-4cfc-bd76-97375b451d7d",
+      stockUUID: "9a7fa2f3-bbac-4453-8935-8d5a0c7407e9",
       reference:
         "http://finance.sina.com.cn/realstock/company/sh000300/nc.shtml",
       type: "china",
@@ -31,7 +31,7 @@ const stock = {
     },
     {
       stockName: "sz399415",
-      stockUUID: "0ecce345-8d3b-4fee-bf57-f1bdd6eaa373",
+      stockUUID: "b83f829d-7d8b-447e-8ea3-ec7b8061d0d6",
       reference:
         "http://finance.sina.com.cn/realstock/company/sz399415/nc.shtml",
       type: "china",
@@ -41,7 +41,7 @@ const stock = {
     },
     {
       stockName: "sz399001",
-      stockUUID: "636115a3-11cb-4498-a699-1e8ef6d90bce",
+      stockUUID: "4c27a2bb-d745-46ac-ad6a-02fe3dd97baa",
       reference:
         "http://finance.sina.com.cn/realstock/company/sz399001/nc.shtml",
       type: "china",
@@ -51,7 +51,7 @@ const stock = {
     },
     {
       stockName: "usindex",
-      stockUUID: "6503b060-414e-4749-bf73-a6b46b488d0d",
+      stockUUID: "7ded89a0-4210-4f14-af1f-6a73a1139b62",
       reference: "https://finance.sina.com.cn/money/forex/hq/DINIW.shtml",
       type: "usa",
       loop: 5,
@@ -60,7 +60,7 @@ const stock = {
     },
     {
       stockName: "btc5",
-      stockUUID: "6231bf0c-2a93-4325-8b42-b7bfcfaaab93",
+      stockUUID: "dee04948-c767-49e7-a3de-c346c6a155bd",
       reference: "https://www.hbg.com/zh-cn/exchange/?s=btc_usdt",
       type: "crypto",
       loop: 5,
