@@ -246,6 +246,7 @@
     "sh000300": "SH000300"
   },
   "profile": {
+    "typeUsername":"ພິມຊື່ຜູ້ໃຊ້ຂອງທ່ານ",
     "chooseYourAvatar" : "ເລືອກ Avatar ຂອງທ່ານ",
     "useAvatar": "ໃຊ້ Avatar",
     "username": "ຊື່ຜູ້ໃຊ້",

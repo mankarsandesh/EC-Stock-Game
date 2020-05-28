@@ -132,7 +132,7 @@
                     :value="userData.firstName"
                     id="first-name"
                     name="first-name"
-                    placeholder="Your First Name"
+                    :placeholder="$t('profile.firstName')"
                   />
                   <span class="icon-container">
                     <v-icon
@@ -156,7 +156,7 @@
                     :value="userData.lastName"
                     id="last-name"
                     name="last-name"
-                    placeholder="Your Last Name"
+                   :placeholder="$t('profile.lastName')"
                   />
                   <span class="icon-container">
                     <v-icon
@@ -320,7 +320,7 @@
     </v-dialog>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-      <v-btn color="pink" text @click="snackbar = false">{{ $t('msg.close') }}</v-btn>
+      <v-btn color="pink" text @click="snackbar = false">{{ $t('msg.useAvatar') }}</v-btn>
     </v-snackbar>
 
     <OnlineHistory ref="onlineHistory"></OnlineHistory>
