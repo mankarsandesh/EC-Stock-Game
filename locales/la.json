@@ -248,6 +248,7 @@
   },
   "profile": {
     "typeUsername":"ພິມຊື່ຜູ້ໃຊ້ຂອງທ່ານ",
+    "noData": "ບໍ່ມີຂໍ້ມູນທີ່ຈະສະແດງ",
     "chooseYourAvatar" : "ເລືອກ Avatar ຂອງທ່ານ",
     "useAvatar": "ໃຊ້ Avatar",
     "username": "ຊື່ຜູ້ໃຊ້",

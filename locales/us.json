@@ -249,6 +249,7 @@
   },
   "profile": {
     "typeUsername":"Type your Username",
+    "noData": "No data to display",
     "chooseYourAvatar" : "Choose your Avatar",
     "useAvatar": "User Avatar",
     "username": "Username",

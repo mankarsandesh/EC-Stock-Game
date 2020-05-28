@@ -247,6 +247,7 @@
   },
   "profile": {
     "typeUsername":"พิมพ์ชื่อผู้ใช้ของคุณ",
+    "noData": "ไม่มีข้อมูลที่จะแสดง",
     "chooseYourAvatar" : "เลือกรูปประจำตัวของคุณ",
     "useAvatar": "ใช้ Avatar",
     "username": "ຊື່ຜູ້ໃຊ້",

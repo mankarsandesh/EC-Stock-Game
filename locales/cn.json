@@ -248,6 +248,7 @@
   },
   "profile": {
     "typeUsername":"输入您的用户名",
+    "noData": "没有数据显示",
     "chooseYourAvatar" : "选择您的头像",
     "useAvatar": "使用头像",
     "username": "用户名",

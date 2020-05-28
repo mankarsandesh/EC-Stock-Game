@@ -76,7 +76,9 @@
             <div class="decorator_card decorator_card_blue"></div>
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ getUserInfo.rollingAmount | currency }}</span>
+            <span class="amount">{{
+              getUserInfo.rollingAmount | currency
+            }}</span>
             <span class="title_currentcy"></span>
           </div>
         </v-flex>
@@ -105,7 +107,10 @@
                   <input
                     ref="username"
                     type="text"
-                    :value="userData.userName"
+                    minlength="5"
+                    maxlength="20"
+                    v-model.trim="userName"
+                    required="true"
                     id="userName"
                     name="userName"
                     placeholder="Type your Username"
@@ -129,7 +134,8 @@
                   <input
                     ref="firstName"
                     type="text"
-                    :value="userData.firstName"
+                    maxlength="25"
+                    v-model.trim="firstName"
                     id="first-name"
                     name="first-name"
                     :placeholder="$t('profile.firstName')"
@@ -153,10 +159,11 @@
                   <input
                     ref="lastName"
                     type="text"
-                    :value="userData.lastName"
+                    maxlength="25"
+                    v-model="lastName"
                     id="last-name"
                     name="last-name"
-                   :placeholder="$t('profile.lastName')"
+                    :placeholder="$t('profile.lastName')"
                   />
                   <span class="icon-container">
                     <v-icon
@@ -181,6 +188,8 @@
                     ref="gender"
                     id="gender"
                     name="gender"
+                    required="true"
+                    v-model="gender"
                     :value="userData.gender"
                   >
                     <option value="female">Female</option>
@@ -200,10 +209,10 @@
                   <input
                     ref="email"
                     type="text"
-                    :value="userData.email"
+                    v-model.trim="email"
                     id="email"
                     name="email"
-                    placeholder="sandesh@gmail.com"
+                    placeholder="example@gmail.com"
                   />
                   <span class="icon-container">
                     <v-icon
@@ -228,7 +237,8 @@
                     ref="country"
                     id="country"
                     name="country"
-                    :value="userData.country"
+                    required="true"
+                    v-model="country"
                   >
                     <option value="CHN">China</option>
                     <option value="USA">USA</option>
@@ -248,10 +258,12 @@
                     :loading="updating"
                     :disabled="updating"
                     class="btn_save"
-                    @click="saveClick()"
+                    @click.prevent="saveClick()"
                     >{{ $t("msg.save") }}</v-btn
                   >
-                  <v-btn class="btn_cancel">{{ $t("msg.cancel") }}</v-btn>
+                  <v-btn class="btn_cancel" @click="cancelUpdateProfile">{{
+                    $t("msg.cancel")
+                  }}</v-btn>
                 </v-flex>
               </v-layout>
             </form>
@@ -303,14 +315,18 @@
           <v-btn icon dark @click="avatarDialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>{{ $t('profile.chooseYourAvatar') }}</v-toolbar-title>
+          <v-toolbar-title>{{
+            $t("profile.chooseYourAvatar")
+          }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-layout style="text-align:center;height:auto;">
           <v-flex xs12 sm12>
             <div class="avatarImage" v-for="n in 10" v-bind:key="n">
               <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
-              <span class="userAvatar" @click="useAvatar(n)">{{ $t('profile.useAvatar') }}</span>
+              <span class="userAvatar" @click="useAvatar(n)">{{
+                $t("profile.useAvatar")
+              }}</span>
             </div>
           </v-flex>
         </v-layout>
@@ -320,7 +336,9 @@
     </v-dialog>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-      <v-btn color="pink" text @click="snackbar = false">{{ $t('msg.useAvatar') }}</v-btn>
+      <v-btn color="pink" text @click="snackbar = false">{{
+        $t("profile.useAvatar")
+      }}</v-btn>
     </v-snackbar>
 
     <OnlineHistory ref="onlineHistory"></OnlineHistory>
@@ -339,6 +357,12 @@ export default {
   data() {
     return {
       messageShow: "",
+      userName: "",
+      firstName: "",
+      lastName: "",
+      gender: "",
+      email: "",
+      country: "",
       snackbar: false,
       avatarID: "",
       newImage: "",
@@ -369,8 +393,24 @@ export default {
       return data;
     }
   },
+  async mounted() {
+    await this.setUserData();
+    this.setInputData();
+  },
   methods: {
     ...mapActions(["setUserData", "setSnackBarMessage"]),
+    setInputData() {
+      this.firstName = this.getUserInfo.firstName
+        ? this.getUserInfo.firstName
+        : "";
+      this.lastName = this.getUserInfo.lastName
+        ? this.getUserInfo.lastName
+        : "";
+      this.userName = this.getUserInfo.userName;
+      this.gender = this.getUserInfo.gender ? this.getUserInfo.gender : "";
+      this.email = this.getUserInfo.email ? this.getUserInfo.email : "";
+      this.country = this.getUserInfo.country ? this.getUserInfo.country : "";
+    },
     // Update Avatar Picture
     useAvatar(image) {
       this.newImage = this.imagePath + image + ".jpg";
@@ -379,6 +419,10 @@ export default {
     },
     iconClick(e) {
       e.target.parentElement.parentElement.firstElementChild.focus();
+    },
+    cancelUpdateProfile() {
+      this.$$forceUpdate();
+      this.setInputData();
     },
     // Update Profile Picture
     async updateImageProfile() {
@@ -407,19 +451,22 @@ export default {
       }
     },
     async saveClick() {
-      this.updating = true;
-      const ref = this.$refs;
-      var formData = new FormData();
-      formData.append("portalProviderUUID", this.getPortalProviderUUID);
-      formData.append("userUUID", this.getUserUUID);
-      formData.append("email", ref.email.value);
-      formData.append("userName", ref.username.value);
-      formData.append("firstName", ref.firstName.value);
-      formData.append("lastName", ref.lastName.value);
-      formData.append("gender", ref.gender.value);
-      formData.append("country", ref.country.value);
-      formData.append("version", config.version);
       try {
+        this.updating = true;
+        const ref = this.$refs;
+        if (!(ref.gender.value && ref.country.value && ref.username.value)) {
+          throw new Error(this.$root.$t("profile.mandatoryField"));
+        }
+        var formData = new FormData();
+        formData.append("portalProviderUUID", this.getPortalProviderUUID);
+        formData.append("userUUID", this.getUserUUID);
+        formData.append("email", this.email);
+        formData.append("userName", this.userName);
+        formData.append("firstName", this.firstName);
+        formData.append("lastName", this.lastName);
+        formData.append("gender", this.gender);
+        formData.append("country", this.country);
+        formData.append("version", config.version);
         var res = await this.$axios.$post(
           config.updateUserProfile.url,
           formData,
@@ -428,16 +475,22 @@ export default {
           }
         );
         if (res.status) {
-          this.setUserData();
+          await this.setUserData();
           this.updating = false;
-          this.setSnackBarMessage("Data Save Sucessfully");
+          this.setInputData();
+          this.setSnackBarMessage(this.$root.$t("profile.success"));
         } else {
           this.updating = false;
-          this.setSnackBarMessage(res.message[0]);
+          throw new Error(res.message[0]);
         }
       } catch (ex) {
-        this.setSnackBarMessage(config.error.general);
         this.updating = false;
+        this.setInputData();
+        if (ex.message == "It should be a valid email.") {
+          this.setSnackBarMessage(this.$root.$t("profile.invalidEmail"));
+        } else {
+          this.setSnackBarMessage(ex.message);
+        }
       }
     }
   }
