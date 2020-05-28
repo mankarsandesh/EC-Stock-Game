@@ -245,6 +245,9 @@
     "sh000300": "ดัชนีเซี่ยงไฮ้และเซินเจิ้น 300"
   },
   "profile": {
+    "typeUsername":"พิมพ์ชื่อผู้ใช้ของคุณ",
+    "chooseYourAvatar" : "เลือกรูปประจำตัวของคุณ",
+    "useAvatar": "ใช้ Avatar",
     "username": "ຊື່ຜູ້ໃຊ້",
     "firstName": "ชื่อจริง",
     "lastName": "นามสกุล",
@@ -374,6 +377,7 @@
     "pleaseConfirm": "โปรดยืนยันการเดิมพันของคุณด้านล่าง"
   },
   "invitation": {
+    "selectCategoryError" : "กรุณาเลือกหมวดหมู่",
     "ecWorld" : "EC โลก",
     "gameChannel" : "ช่องเกม",
     "sendInvitation" : "ส่งคำเชิญ",

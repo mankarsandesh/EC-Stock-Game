@@ -361,6 +361,7 @@ export default {
     },
     switchChat() {
       this.isShowChat = !this.isShowChat;
+      this.fetchUserInvitation();
     },
     changeChatCannel(value) {
       this.isActiveEcWorld = value;
@@ -505,6 +506,7 @@ export default {
 .userValues {
   color: green;
   font-weight: 600;
+  cursor: pointer;
 }
 button {
   outline: none;
@@ -662,6 +664,7 @@ input {
   overflow: hidden;
   white-space: nowrap;
   font-size: 12px;
+  cursor: pointer;
 }
 .catalog-container {
   display: flex;

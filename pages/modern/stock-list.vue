@@ -2,7 +2,7 @@
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <!-- search -->
-    <v-layout row wrap>
+    <!-- <v-layout row wrap>
       <v-flex xs12 sm12 class="d-flex" pl-2 pr-2>
         <v-select
           v-model="sortBy"
@@ -15,7 +15,7 @@
           :placeholder="$t('msg.sortBy')"        
         ></v-select>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
     <!-- end serach -->
     <v-layout row wrap mt-2>
       <v-flex xs12>

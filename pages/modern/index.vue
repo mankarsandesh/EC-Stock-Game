@@ -180,7 +180,7 @@
             </h3>
             <h4 style="line-height: 1">
               <div class="text-center">
-                <em>{{ data.loop }} minute game</em>
+                <em>{{ data.loop }}  {{ $t("msg.minuteGame") }} </em>
               </div>
             </h4>
           </div>

@@ -132,7 +132,7 @@
                     :value="userData.firstName"
                     id="first-name"
                     name="first-name"
-                    placeholder="Your First Name"
+                    :placeholder="$t('profile.firstName')"
                   />
                   <span class="icon-container">
                     <v-icon
@@ -156,7 +156,7 @@
                     :value="userData.lastName"
                     id="last-name"
                     name="last-name"
-                    placeholder="Your Last Name"
+                   :placeholder="$t('profile.lastName')"
                   />
                   <span class="icon-container">
                     <v-icon
@@ -303,14 +303,14 @@
           <v-btn icon dark @click="avatarDialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Choose your Avatar</v-toolbar-title>
+          <v-toolbar-title>{{ $t('profile.chooseYourAvatar') }}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-layout style="text-align:center;height:auto;">
           <v-flex xs12 sm12>
             <div class="avatarImage" v-for="n in 10" v-bind:key="n">
               <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
-              <span class="userAvatar" @click="useAvatar(n)">Use Avatar</span>
+              <span class="userAvatar" @click="useAvatar(n)">{{ $t('profile.useAvatar') }}</span>
             </div>
           </v-flex>
         </v-layout>
@@ -320,7 +320,7 @@
     </v-dialog>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+      <v-btn color="pink" text @click="snackbar = false">{{ $t('msg.useAvatar') }}</v-btn>
     </v-snackbar>
 
     <OnlineHistory ref="onlineHistory"></OnlineHistory>
