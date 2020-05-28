@@ -345,6 +345,7 @@ export default {
     // Close Follow Bet Popup
     closeFollowBet() {
       this.followDialog = false;
+      this.getUserProfileByID();
     },
     // Follow User Bet
     followUserBet: function(username, userImg, userUUID, method) {
