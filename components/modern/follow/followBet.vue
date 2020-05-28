@@ -286,8 +286,7 @@ export default {
       this.$emit("followBetClose");
     },
     // Users Follow Bet Validation
-    async followThisUser(followerID, followMethod) {
-      console.log("sasa");
+    async followThisUser(followerID, followMethod) {     
       // Check Empty Filed
       if (
         !this.selectedFollow &&
