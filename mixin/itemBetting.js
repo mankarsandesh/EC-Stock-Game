@@ -1,14 +1,17 @@
 import secureStorage from '~/plugins/secure-storage'
-import Sound from "~/helpers/sound";
 
 export const itemBetting = {
-
     mounted() {
         this.findItemBetting()
     },
     computed: {
-        // check bet close using stockOpenOrClosed and timer
+        /**
+         *
+         *
+         * @returns
+         */
         checkBetClose() {
+
             if (
                 this.getTimerByStockName(this.stockID) &&
                 this.getTimerByStockName(this.stockID).stockStatus === "Closed"
@@ -65,7 +68,7 @@ export const itemBetting = {
 
         findItemBetting() {
 
-            const itemBetting = secureStorage.getItem("itemBetting")
+            const itemBetting = localStorage.getItem("itemBetting")
 
 
             const array = JSON.parse(itemBetting)
@@ -107,7 +110,7 @@ export const itemBetting = {
                     if (footerAmount >= 100) {
 
 
-                        Sound.betTing();
+                        this.$soundEffect("betting");
 
                         if (!$("#" + id).hasClass(classe)) {
 
