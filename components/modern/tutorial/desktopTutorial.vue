@@ -162,6 +162,7 @@ export default {
   },
   watch: {
     getTutorialStepNumber(newValue) {
+      // window.scrollTo(0, document.body.scrollHeight);
       switch (newValue) {
         case 1:
           $("#lastDrawGuideline").css("z-index", "10001");
@@ -178,6 +179,7 @@ export default {
           $("#lotteryDrawGuidelines").css("z-index", "1");
           $("#chartGuidelineNew").css("z-index", "10001");
           if ($(document).height() > $(window).height()) {
+            // window.scrollTo(0, document.body.scrollHeight);
             this.setIsWindowsHasScroll(true);
           } else {
             this.setIsWindowsHasScroll(false);
@@ -193,13 +195,16 @@ export default {
           break;
         case 7:
           $(".BetButtonGuideEven").click();
-          $("html, body").animate(
-            { scrollTop: $("#enter-amount-to-bet").scrollTop() },
-            1000
-          );
+          if ($(document).height() > $(window).height()) {
+            $("html, body").animate(
+              { scrollTop: ($(document).height() - $(window).height()) },
+              "slow"
+            );
+          }
           break;
         case 8:
           $(".BetButtonGuideEven").css("z-index", "1");
+          $("html, body").animate({ scrollTop: 0 }, "slow");
           $("#background-tutorial").click();
           $("#selectstockGuidelines").css("z-index", "10001");
           break;
