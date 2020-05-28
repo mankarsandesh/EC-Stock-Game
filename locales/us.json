@@ -378,6 +378,7 @@
     "pleaseConfirm" : "Please confirm your bet below"
   },
   "invitation": {
+    "selectCategoryError" : "Please Select Category",
     "ecWorld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
     "sendInvitation": "SEND INVITATION",

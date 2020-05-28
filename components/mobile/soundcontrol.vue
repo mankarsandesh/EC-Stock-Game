@@ -44,8 +44,8 @@
     </v-layout>
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
-      <v-btn color="pink" text @click="snackbar = false">
-        Close
+      <v-btn flat color="pink" text @click="snackbar = false">
+        {{ $t('msg.close') }}
       </v-btn>
     </v-snackbar>
   </div>

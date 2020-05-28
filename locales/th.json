@@ -376,6 +376,7 @@
     "pleaseConfirm": "โปรดยืนยันการเดิมพันของคุณด้านล่าง"
   },
   "invitation": {
+    "selectCategoryError" : "กรุณาเลือกหมวดหมู่",
     "ecWorld" : "EC โลก",
     "gameChannel" : "ช่องเกม",
     "sendInvitation" : "ส่งคำเชิญ",

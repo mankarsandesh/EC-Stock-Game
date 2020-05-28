@@ -377,6 +377,7 @@
     "pleaseConfirm": "請在下面確認您的投注"
   },
   "invitation": {
+    "selectCategoryError" : "请选择类别",
     "ecWorld" : "EC 世界",
     "gameChannel" : "游戏频道",
     "sendInvitation" : "发送邀请",

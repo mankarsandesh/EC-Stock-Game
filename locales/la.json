@@ -378,6 +378,7 @@
     "pleaseConfirm": "ກະລຸນາຢືນຢັນການເດີມພັນຂອງທ່ານຂ້າງລຸ່ມນີ້"
   },
   "invitation": {
+    "selectCategoryError" : "ກະລຸນາເລືອກ ໝວດ ໝູ່",
     "ecWorld" : "EC ໂລກ",
     "gameChannel" : "ການຫຼິ້ນ ຊ່ອງທາງ",
     "sendInvitation" : "ສົ່ງການລົງທືນ",
