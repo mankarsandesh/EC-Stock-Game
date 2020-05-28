@@ -247,6 +247,9 @@
     "sh000300": "SH000300"
   },
   "profile": {
+    "typeUsername":"ພິມຊື່ຜູ້ໃຊ້ຂອງທ່ານ",
+    "chooseYourAvatar" : "ເລືອກ Avatar ຂອງທ່ານ",
+    "useAvatar": "ໃຊ້ Avatar",
     "username": "ຊື່ຜູ້ໃຊ້",
     "firstName": "ຊື່​ແທ້",
     "lastName": "ນາມ​ສະ​ກຸນ",
@@ -376,6 +379,7 @@
     "pleaseConfirm": "ກະລຸນາຢືນຢັນການເດີມພັນຂອງທ່ານຂ້າງລຸ່ມນີ້"
   },
   "invitation": {
+    "selectCategoryError" : "ກະລຸນາເລືອກ ໝວດ ໝູ່",
     "ecWorld" : "EC ໂລກ",
     "gameChannel" : "ການຫຼິ້ນ ຊ່ອງທາງ",
     "sendInvitation" : "ສົ່ງການລົງທືນ",

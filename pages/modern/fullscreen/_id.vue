@@ -101,8 +101,9 @@
           v-if="tutorialStepNumber === 7 && !getIsWindowsHasScroll"
         >
           <span class="guide-title text-uppercase" style="margin-left: 20px;"
-            >bet on digits has no scroll</span
-          >
+            >bet on digits
+          </span>
+          <!--has no scroll -->
           <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
         </div>
         <!-- to scroll here -->
@@ -174,7 +175,7 @@
                   <span class="text-close-bet">market close</span>
                 </div>
                 <!-- chart other stocks -->
-                <v-card-text class="pa-0" min-height="500">
+                <v-card-text class="pa-0" min-height="500"> 
                   <chartApp :stockName="data.stockName"></chartApp>
                 </v-card-text>
               </v-card>
@@ -183,7 +184,7 @@
                   {{ $t("stockName." + data.stockName) }}
                 </h3>
                 <h4 style="line-height: 1;">
-                  <em>{{ data.loop }} minute game</em>
+                  <em>{{ data.loop }}  {{ $t("msg.minuteGame") }}</em>
                 </h4>
               </div>
             </nuxt-link>
@@ -217,7 +218,7 @@
                   <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed">
                       {{ getStockLoop($route.params.id) }}
-                      {{ $t("msg.minutes") }} {{ $t("msg.loop") }}
+                      {{ $t("msg.minutes") }} 
                     </v-btn>
                     <v-btn
                       color="buttonGreen"
@@ -228,6 +229,7 @@
                 </v-layout>
               </v-flex>
               <v-flex
+                mr-1
                 xs12
                 sm12
                 md8
@@ -603,10 +605,11 @@ export default {
           break;
         case 7:
           $(".BetButtonGuideEven").click();
-          $("html, body").animate(
-            { scrollTop: $("#enter-amount-to-bet").scrollTop() },
-            1000
-          );
+          if ($(document).height() > $(window).height()) {
+            setTimeout(() => {
+              window.scrollTo(0, $(window).height() / 4);
+            }, 100);
+          }
           break;
         case 8:
           $(".BetButtonGuideEven").css("z-index", "1");
@@ -765,7 +768,7 @@ export default {
 }
 .close-icon {
   z-index: 10028;
-  position: absolute;
+  position: fixed;
   right: 10px;
   top: 20px;
   cursor: pointer;
@@ -804,7 +807,6 @@ export default {
 }
 
 .lastdraw {
-  font-size: 12px;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
   font-size: 22px;

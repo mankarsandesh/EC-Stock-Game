@@ -10,7 +10,7 @@
       </v-list>
       <v-list two-line class="bodyChat" id="bodyChat">
         <template>
-          <v-flex v-if="globalInvitation.length == 0" style="margin-top:200px;">
+          <v-flex v-if="globalInvitation.length == 0" style="margin-top:100px;">
             <h2 class="text-center" style="color:#a3a3a3;">
               {{ $t("invitation.noInvitation") }}
             </h2>
@@ -115,7 +115,7 @@
               color="green"
               :height="4"
               v-model="selectCategory"
-              :label="item.value+' '+' '+CatValue[index]"
+              :label="item.value+' '+' : '+CatValue[index]"
               :value="item.id"
             ></v-checkbox>
           </v-flex>
@@ -200,7 +200,7 @@ export default {
     this.fetchUserInvitation();
   },
   mounted() {
-     this.scrollDown();
+    this.scrollDown();
     // Users List Invitaion Socket
     this.listenForBroadcast(
       {
@@ -277,24 +277,24 @@ export default {
           this.setSnackBarError(true);
         }
       } else {
-        this.invitationError = "Please Select Category";
+        this.invitationError = this.$root.$t("invitation.selectCategoryError")
       }
     },
     // After more Invitation Come Scroll Down Automatically
     scrollDown() {
-       if ($("#bodyChat")[0]) {
-        $("#bodyChat")
-          .stop()
-          .animate({ scrollTop: $("#bodyChat")[0].scrollHeight }, 1000);
-      }      
-      // $(".bodyChat")
-      // .stop()
-      // .animate(
-      // {
-      // scrollTop: $(".bodyChat")[0].scrollHeight
-      // },
-      //  1000
-      // );
+      //  if ($("#bodyChat")[0]) {
+      //   $("#bodyChat")
+      //     .stop()
+      //     .animate({ scrollTop: $("#bodyChat")[0].scrollHeight }, 1000);
+      // }      
+      $(".bodyChat")
+      .stop()
+      .animate(
+      {
+      scrollTop: $(".bodyChat")[0].scrollHeight
+      },
+       1000
+      );
     },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
@@ -377,7 +377,7 @@ export default {
   background-color: #f4f4f4;
   /* min-height: 400px; */
   height:auto;
-  padding-bottom:50px;
+  margin-bottom:100px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;

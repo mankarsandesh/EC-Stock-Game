@@ -248,6 +248,9 @@
     "sh000300": "SH000300"
   },
   "profile": {
+    "typeUsername":"Type your Username",
+    "chooseYourAvatar" : "Choose your Avatar",
+    "useAvatar": "User Avatar",
     "username": "Username",
     "firstName": "first name",
     "lastName": "last name",
@@ -376,6 +379,7 @@
     "pleaseConfirm" : "Please confirm your bet below"
   },
   "invitation": {
+    "selectCategoryError" : "Please Select Category",
     "ecWorld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
     "sendInvitation": "SEND INVITATION",
