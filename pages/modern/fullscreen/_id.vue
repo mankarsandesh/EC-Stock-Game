@@ -574,10 +574,6 @@ export default {
     })
   },
   watch: {
-    getmultiGameBet(val) {
-      console.log(this.$route.name, val);
-    },
-
     tutorialStepNumber(newValue) {
       switch (newValue) {
         case 1:
