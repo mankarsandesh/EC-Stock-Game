@@ -2,10 +2,25 @@
   <div id="tutorial-container" v-if="getIsShowTutorial">
     <div id="background-tutorial"></div>
     <div id="guide-container">
-      <div
-        style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer"
-      >
-        <v-icon @click="setIsShowTutorial(false)" color="#fff">close</v-icon>
+      <div class="tutorial-action">
+        <div style="text-align: end">
+          <v-btn @click="closeTutorial">
+            <span>Skip</span>
+            <v-icon>close</v-icon>
+          </v-btn>
+        </div>
+        <div>
+          <v-btn @click="backWard">
+            <v-icon>fa-step-backward</v-icon>
+            <span class="pl-2"> back </span>
+          </v-btn>
+          <v-btn @click="stepWard">
+            <span class="pr-2">
+              next
+            </span>
+            <v-icon>fa-step-forward</v-icon>
+          </v-btn>
+        </div>
       </div>
       <!-- last draw v-if="getTutorialStepNumber === 1" -->
       <div class="guide-top" v-if="getTutorialStepNumber === 1">
@@ -15,8 +30,8 @@
       <!-- bet close in  -->
       <div class="guide-top" v-if="getTutorialStepNumber === 2">
         <span class="guide-description text-uppercase" style="font-size:100px"
-          >{{ $t("tutorial.calculation") }}...</span
-        >
+          >{{ $t("tutorial.calculation") }}...
+        </span>
       </div>
       <!-- lottery  -->
       <div class="guide-top" v-if="getTutorialStepNumber === 3">
@@ -148,7 +163,40 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   methods: {
-    ...mapActions(["setIsShowTutorial", "setIsWindowsHasScroll"])
+    ...mapActions([
+      "setTutorialStepNumber",
+      "setIsShowTutorial",
+      "setIsWindowsHasScroll"
+    ]),
+    closeTutorial() {
+      this.clearTutorialUI();
+      this.setIsShowTutorial(false);
+      this.setTutorialStepNumber(0);
+      $(":button").prop("disabled", false); // Enable all the button
+    },
+    stepWard() {
+      console.log($("#next-back-ward"));
+      $("#next-back-ward").click();
+      this.setTutorialStepNumber(this.getTutorialStepNumber + 1);
+    },
+    backWard() {
+      if (this.getTutorialStepNumber > 0) {
+        $("#next-back-ward").click();
+        this.setTutorialStepNumber(this.getTutorialStepNumber - 1);
+      }
+    },
+    clearTutorialUI() {
+      $("#lastDrawGuideline").css("z-index", "1");
+      $("#betCloseInGuideline").css("z-index", "1");
+      $("#lotteryDrawGuidelines").css("z-index", "1");
+      $("#chartGuidelineNew").css("z-index", "1");
+      $(".betButtonGuide").css("z-index", "1");
+      $(".BetButtonGuideEven").css("z-index", "1");
+      $("#selectstockGuidelines").css("z-index", "1");
+      $("#stocklistGuidelines").css("z-index", "1");
+      $("#trendmapGuidelines").css("z-index", "1");
+      $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
+    }
   },
   computed: {
     ...mapGetters([
@@ -197,7 +245,7 @@ export default {
           $(".BetButtonGuideEven").click();
           if ($(document).height() > $(window).height()) {
             $("html, body").animate(
-              { scrollTop: ($(document).height() - $(window).height()) },
+              { scrollTop: $(document).height() - $(window).height() },
               "slow"
             );
           }
@@ -230,3 +278,12 @@ export default {
   }
 };
 </script>
+<style scoped>
+.tutorial-action {
+  z-index: 10028;
+  position: fixed;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
+}
+</style>

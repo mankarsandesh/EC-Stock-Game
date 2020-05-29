@@ -1,5 +1,6 @@
 <template>
   <v-container fluid mt-2 class="containerNew">
+    <button id="next-back-ward" @click="nextBackWard()"></button>
     <v-layout>
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
@@ -256,6 +257,7 @@ import { isMobile } from "mobile-device-detect";
 import secureStorage from "../../../plugins/secure-storage";
 import onlyrules from "~/components/modern/rule/onlyrule";
 
+let _stepGo;
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -433,24 +435,31 @@ export default {
       $("#trendmapGuidelines").css("z-index", "1");
       $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
     },
+    nextBackWard() {
+      console.log("nextBackWard.........");
+      this.closeTutorial();
+      this.openTutorial();
+    },
+    closeTutorial() {
+      clearInterval(_stepGo);
+      $(":button").prop("disabled", false); // Enable all the button
+      this.clearTutorialUI();
+    },
     openTutorial() {
       const _this = this;
-      let timeStart = this.getTutorialStepNumber === 0 ? 0 : 3000;
-      // setTimeout  to  resolve problems if user close tutorial and reopen
-      setTimeout(() => {
-        this.setIsShowTutorial(true);
-        let step = 1;
-        this.setTutorialStepNumber(step);
-        let stepGo = setInterval(() => {
-          step++;
-          this.setTutorialStepNumber(step);
-          if (step === 12 || !_this.getIsShowTutorial) {
-            clearInterval(stepGo);
-            _this.clearTutorialUI();
-            this.setTutorialStepNumber(0);
-          }
-        }, 3000);
-      }, timeStart);
+      $(":button").prop("disabled", true); // Disable all the buttons
+      _this.setTutorialStepNumber(_this.getTutorialStepNumber + 1);
+
+      _this.setIsShowTutorial(true);
+      _this.setTutorialStepNumber(_this.getTutorialStepNumber);
+      _stepGo = setInterval(() => {
+        _this.setTutorialStepNumber(_this.getTutorialStepNumber + 1);
+        this.setTutorialStepNumber(_this.getTutorialStepNumber);
+        if (_this.getTutorialStepNumber === 12 || !_this.getIsShowTutorial) {
+          this.closeTutorial();
+          _this.setTutorialStepNumber(0);
+        }
+      }, 4000);
     }
   },
   computed: {

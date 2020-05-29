@@ -37,7 +37,6 @@ export default {
   props: ["data"],
   data() {
     return {
-      nodata: []
       //   for remove notification
       //   hoverIndex: ""
     };
@@ -66,7 +65,7 @@ export default {
   border-top: 1px solid #dddddd;
   text-align: center;
   cursor: pointer;
-  padding:8px 4px;
+  padding: 8px 4px;
   color: #003f70;
 }
 #notification-box-container {
