@@ -172,7 +172,7 @@
                         'Closed'
                   "
                 >
-                  <span class="text-close-bet">market close</span>
+                  <span class="text-close-bet">{{ $t('msg.marketClosed') }}</span>
                 </div>
                 <!-- chart other stocks -->
                 <v-card-text class="pa-0" min-height="500"> 
