@@ -180,15 +180,11 @@ export default {
       return total;
     },
     TotalRolling() {
-      let totalRolling = null;
-      let totalbBetting = null;
+      let totalRolling = null;    
       this.betHistory.map(item => {
-        totalRolling += item.rollingAmount;
-        if (item.betResult == "lose") {
-          totalbBetting += item.betAmount;
-        }
+        totalRolling += item.rollingAmount;       
       });
-      return totalRolling - totalbBetting;
+      return totalRolling;
     }
   }
 };

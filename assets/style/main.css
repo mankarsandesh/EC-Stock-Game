@@ -878,6 +878,8 @@ table.result-table tr {
     border-radius: 6px;
     padding: 0;
     margin: 4px;
+    box-shadow: 0 2px 5px rgba(1, 1, 1, 0.15);
+    border: 1px solid #e8e8e8;
 }
 
 .align_button5.v-btn {
@@ -1510,7 +1512,7 @@ p.guideline {
 }
 
 .overflow-scroll {
-  overflow: scroll !important;
+    overflow: scroll !important;
 }
 
 .marginTop-2 {
@@ -1528,6 +1530,7 @@ p.guideline {
     margin: -21px;
 } */
 
+
 /* align_button4 v-btn theme--light firstdigit low firstdigit-animation
 
 <span data-v-70a183ee="" id="firstdigitWin-low" class="big-digit firstdigitWin-low">Low</span>
@@ -1540,33 +1543,37 @@ align_button4 v-btn theme--light firstdigit firstdigitWin-9 firstdigit-animation
 <span data-v-70a183ee="" class="big-digit">0 - 9</span> */
 
 #style-3::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #f5f5f5;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f5f5f5;
 }
 
 #style-3::-webkit-scrollbar {
-  width: 8px;
-  background-color: #f5f5f5;
+    width: 8px;
+    background-color: #f5f5f5;
 }
 
 #style-3::-webkit-scrollbar-thumb {
-
-  border-radius: 7px;
-  background-color: #00c58e;
+    border-radius: 7px;
+    background-color: #00c58e;
 }
 
 .followup {
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 20px;
-}
-.followDialog {
-  width: 600px;
-  border-radius: 10px;
-  padding: 10px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 20px;
 }
 
-    /* border-radius: 7px;
+.followDialog {
+    width: 600px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+/* border-radius: 7px;
     background-color: #00c58e;
 } */
 
+nav.toolbarMenu {
+    box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.2);
+}

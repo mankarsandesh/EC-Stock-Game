@@ -162,7 +162,7 @@ export default {
               this.setLiveChart(readyData);
             }
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
@@ -197,7 +197,7 @@ export default {
             this.apiAttemptCount++;
             this.fetchChart(stockUUID);
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         }
       } catch (ex) {

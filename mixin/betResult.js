@@ -1,9 +1,6 @@
 const jsonResult = require('~/data/result') // define the json result for the compare 
-import secureStorage from '~/plugins/secure-storage'
-import { mapMutations, mapGetters, mapActions } from 'vuex'
-// define a mixin object
+import { mapGetters, mapActions } from 'vuex'
 export const BetResult = {
-
     computed: {
         ...mapGetters(["getItemsBetting"])
     },
@@ -12,8 +9,6 @@ export const BetResult = {
 
         ...mapActions([
             "setCollegeButtonNumberParent",
-            "clearItemBetting",
-            "clearTempMultiGameBetData"
 
         ]),
         /**
@@ -25,7 +20,6 @@ export const BetResult = {
          * @param {*} betWin
          */
         betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin   
-            this.clearItemsAfterLastDraw()
             const lastDraw = result.substr(result.length - 2); //get the last two digit
             const first = parseInt(lastDraw.slice(0, 1)); // get the first digit number  
             const last = parseInt(lastDraw.slice(1, 2)); // get the last digit number 
@@ -110,7 +104,6 @@ export const BetResult = {
                 );
                 $(specificNumber + 'Number').addClass('chip-animation');
                 this.setCollegeButtonNumberParent('You are lose in else false')
-                console.log('You win from  ', specificNumber + '-' + number)
 
                 $("#" + stockName + betID).removeClass(
                     betID.split("-")[0]
@@ -176,7 +169,6 @@ export const BetResult = {
 
             } else {
                 $(specificNumber + 'Number').removeClass('chip-animation');
-                console.log('This is the result of two digit :', specificNumber + '-' + number)
                 this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
@@ -223,26 +215,5 @@ export const BetResult = {
                 }, 1200);
             }
         },
-
-
-        /**
-         *
-         *
-         */
-        clearItemsAfterLastDraw() {
-
-            secureStorage.removeItem("itemBetting")
-
-            this.clearTempMultiGameBetData()
-
-
-            if (this.getItemsBetting.length) {
-
-                this.clearItemBetting()
-
-                secureStorage.removeItem("itemBetting")
-
-            }
-        }
     }
 }

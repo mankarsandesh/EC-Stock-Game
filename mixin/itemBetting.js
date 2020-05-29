@@ -1,4 +1,6 @@
 import secureStorage from '~/plugins/secure-storage'
+import { mapGetters, mapActions } from "vuex";
+import Betting from "~/helpers/betting";
 
 export const itemBetting = {
     mounted() {
@@ -11,43 +13,79 @@ export const itemBetting = {
          * @returns
          */
         checkBetClose() {
-
+            const stockTime = this.getTimerByStockName(this.stockID)
             if (
-                this.getTimerByStockName(this.stockID) &&
-                this.getTimerByStockName(this.stockID).stockStatus === "Closed"
+                stockTime &&
+                stockTime.stockStatus === "Closed"
             ) {
                 return true;
             }
+
+            if (
+                stockTime &&
+                stockTime.gameEndTimeCountDownInSec === 0
+            ) {
+                this.clearTempMultiGameBetData()
+
+                this.clearItemBetting()
+
+                secureStorage.removeItem("itemBetting")
+            }
+
+
+
             // check 1 or 5 loop
             if (this.getStockLoop(this.stockID) === 5) {
                 if (
-                    this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
+                    stockTime &&
+                    stockTime.gameEndTimeCountDownInSec === 0
                 ) {
                     this.clearDataMultiGameBet(5);
                 }
-                return (
-                    this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60
-                );
+                if (stockTime &&
+                    stockTime.gameEndTimeCountDownInSec <= 60) {
+
+                    if (stockTime &&
+                        stockTime.gameEndTimeCountDownInSec === 60) {
+                        $(".closepopper").click()
+                        this.clearTempMultiGameBetData()
+                    }
+                    return true
+                } else {
+                    return false
+                }
+
             } else {
                 if (
-                    this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
+                    stockTime &&
+                    stockTime.gameEndTimeCountDownInSec === 0
                 ) {
                     this.clearDataMultiGameBet(1);
                 }
-                return (
-                    this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
-                );
+                if (stockTime &&
+                    stockTime.gameEndTimeCountDownInSec <= 20) {
+
+                    if (stockTime &&
+                        stockTime.gameEndTimeCountDownInSec === 20) {
+                        $(".closepopper").click()
+                        this.clearTempMultiGameBetData()
+                    }
+
+                    return true
+                } else {
+                    return false
+                }
             }
         }
 
 
     },
     methods: {
-
+        ...mapActions([
+            "clearTempMultiGameBetData",
+            "clearItemBetting",
+            "clearTempMultiGameBetData"
+        ]),
         /**
          *
          *
@@ -89,7 +127,6 @@ export const itemBetting = {
 
         },
 
-        // btc1firstdigit-big
         /**
          *
          *
@@ -99,15 +136,16 @@ export const itemBetting = {
          * @param {*} specific
          * @param {*} page
          * @param {*} footerAmount
+         * @param {*} stockName
          */
-        async storemarkColor(ruleID, id, classe, specific, page, footerAmount) {
+        async storemarkColor(ruleID, id, classe, specific, page, stockName) {
             try {
                 // check the page only full screen can press the bet and color is come 
                 // check the valueAmout is  >= 100  
 
                 if (page === "fullscreen") {
 
-                    if (footerAmount >= 100) {
+                    if (this.getFooterBetAmount >= 100) {
 
 
                         this.$soundEffect("betting");
@@ -137,9 +175,9 @@ export const itemBetting = {
                                 specificNumber: '',
                                 gameUUID: this.getGameUUIDByStockName(this.stockID),
                                 ruleID: ruleID,
-                                betAmount: this.getFooterBetAmount
+                                betAmount: this.getFooterBetAmount,
+                                stockName: stockName,
                             };
-
                             this.setTempMultiGameBetData(betData);
                             // this.pushDataMultiGameBet(betData);
                             // console.warn(this.getMultiGameBet);

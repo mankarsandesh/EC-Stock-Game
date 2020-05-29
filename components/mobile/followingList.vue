@@ -15,7 +15,7 @@
         </v-flex>
         <v-flex xs6 sm4 v-for="(data, index) in followingList" :key="index">
           <div class="followerContainer">
-            <nuxt-link :to="'/modern/userprofile/' + data.UUID">
+            <nuxt-link :to="'/modern/userprofile/?id=' +data.UUID">
               <img class="userImage" :src="userImgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">
@@ -151,10 +151,10 @@ export default {
         if (res.code == 200) {
           this.followingList = res.data;
         } else {
-          this.setSnackBarMessage(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
-        this.setSnackBarMessage(config.error.general);
+        this.setSnackBarMessage(ex.message);
         console.error(ex.message);
       }
     }

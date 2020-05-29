@@ -1569,7 +1569,7 @@ export default {
           if (data.status) {
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
@@ -1680,7 +1680,7 @@ export default {
 
           break;
         default:
-          this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(this.$root.$t("error.general"));
       }
     },
     changeShowTrendMap() {
@@ -1704,13 +1704,17 @@ export default {
     },
     // Place Bet Last Step
     placeBet() {
-      let data = {
+      if(this.betAmount > 10000) {
+        this.setSnackBarMessage(this.$root.$t("betting.betValue"));
+      } else {
+        let data = {
         gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
         ruleID: this.ruleid,
         betAmount: this.betAmount
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
+      }
     },
     // Final Betting on Mobile
     async sendBetting(betData) {
@@ -1732,7 +1736,7 @@ export default {
           this.pushDataOnGoingBet(res.data[0]);
           this.setSnackBarMessage("Sucessfully Bet Place.");
         } else {
-          this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(this.$root.$t("error.general"));
         }
       } catch (ex) {
         this.confirmDisabled = false;
@@ -1762,7 +1766,7 @@ export default {
     // set payout
     gameRule() {
       let payoutArray1 = ["small", "big", "odd", "even"];
-      let payoutArray2 = ["high", "mid", "low"];
+      let payoutArray2 = ["high", "mid", "low", "tie"];
       let payoutArray3 = ["firstdigit", "lastdigit", "bothdigit", "twodigit"];
       let array = this.gameRule.split("-");
 

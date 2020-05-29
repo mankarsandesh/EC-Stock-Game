@@ -116,7 +116,7 @@ export default {
             let dataIndex = data.data.roadMap[0];
             this.lastDraw = dataIndex.stockValue.replace(",", "");
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
@@ -166,7 +166,7 @@ export default {
             .reverse()[0]
             .stockValue.replace(",", "");
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.error(ex);

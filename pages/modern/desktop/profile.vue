@@ -12,12 +12,7 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon
-                      color="black"
-                      :size="20"
-                      @click="avatarDialog = true"
-                      >photo_camera</v-icon
-                    >
+                    <i class="fa fa-camera" aria-hidden="true" style="font-size:16px;"  @click="avatarDialog = true"></i>
                   </button>
                 </span>
               </div>
@@ -164,7 +159,6 @@ export default {
     // console.log(this.getUserInfo.profileImage);
     // make a active menu
     this.currentChild = this.$route.path;
-    console.log(this.getUserInfo);
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
@@ -223,7 +217,7 @@ export default {
             timer: 1000
           });
         } else {
-          throw new Error(config.error.general);
+          throw new Error(cthis.$root.$t("error.general"));
         }
       } catch (ex) {
         this.imageBase64 = "";

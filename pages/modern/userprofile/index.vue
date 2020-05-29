@@ -1,6 +1,9 @@
 <template>
   <div xs2>
-    <section v-if="messageError == false" style="background-color:;">
+    <section
+      v-if="messageError == false && visitProfileUserData"
+      style="background-color:;"
+    >
       <v-container>
         <v-flex>
           <v-layout justify-center row>
@@ -399,6 +402,7 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
+          this.visitProfileUserData.winRate = Math.round(this.visitProfileUserData.winRate);
           this.myProfileImage = res.data.userImage;
 
           //  series

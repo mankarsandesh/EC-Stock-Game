@@ -248,6 +248,7 @@
     "sh000300": "SH000300"
   },
   "profile": {
+    "invalidDate": "Please select a valid date",
     "available":"Available",
     "typeUsername":"Type your Username",
     "noData": "No data to display",
@@ -375,6 +376,7 @@
   },
   "betting": {
     "reviewBet" : "Review Bet",
+    "betValue": "Bet value should be greater than 0 and not be more than 10000",
     "placeBet" : "Place Bet",
     "cancelBet" :"Cancel Bet",
     "reviewYourBet" : "REVIEW YOUR BET",

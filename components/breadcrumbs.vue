@@ -1,18 +1,33 @@
 <template>
   <section class="breadcrumbs">
-    <v-container >
+    <v-container>
       <v-parallax dark height="130">
-        <v-layout align-center justify-center >
+        <v-layout align-center justify-center>
           <v-flex md5 lg5>
             <h3 class="title">{{ title }}</h3>
           </v-flex>
           <v-flex md5 lg5 class="text-right">
-            <Button v-if="linkItem" :linkItem="linkItem" :btnTitle="titlebtn" />
+            <v-btn
+              v-if="linkItem"
+              class="buttonGreen"
+              :to="'/modern/desktop/' + linkItem"
+              dark
+              >{{ titlebtn }}</v-btn
+            >
+
+            <v-btn
+              v-if="linkItem2"
+              class="buttonGreen"
+              :to="'/modern/desktop/' + linkItem2"
+              dark
+              >{{ titlebtn2 }}</v-btn
+            >
+            <!-- <Button v-if="linkItem" :linkItem="linkItem" :btnTitle="titlebtn" />
             <Button
               v-if="linkItem2"
               :linkItem="linkItem2"
               :btnTitle="titlebtn2"
-            />
+            /> -->
           </v-flex>
         </v-layout>
       </v-parallax>
@@ -29,7 +44,7 @@ export default {
 };
 </script>
 <style scoped>
-.title{
+.title {
   font-size: 30px !important;
 }
 </style>

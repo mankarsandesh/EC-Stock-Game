@@ -68,7 +68,7 @@
               >fa-trophy</v-icon
             >
 
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' + data.userUUID">
               <v-layout class="userProfileRow" pa-2>
                 <v-flex md3 lg3>
                   <img class="pimage" :src="userImgProfile(data.userImage)" />
@@ -80,7 +80,7 @@
                         {{ data.username.substring(0, 10) }}
                       </span>
                     </v-flex>
-                    <v-flex md4 lg4>
+                    <v-flex md4 lg4 v-if="data.isAllowToLocation == 1">
                       <country-flag country="us" v-if="data.country == 'USA'" />
                       <country-flag country="th" v-if="data.country == 'THA'" />
                       <country-flag country="cn" v-if="data.country == 'CHN'" />
@@ -311,7 +311,7 @@ export default {
           {
             headers: config.header
           }
-        );
+        );       
         this.topPlayerData = data.data;
         this.loadingImage = false;
       } catch (error) {
@@ -425,7 +425,6 @@ export default {
 }
 
 .pimage {
- 
   border: 2px solid #dddddd;
   border-radius: 180px;
 }

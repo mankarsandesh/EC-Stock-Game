@@ -102,7 +102,7 @@ export default {
           this.messageShow = this.$root.$t("msg.changesSaved");
           this.setUserData();
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.error(ex);

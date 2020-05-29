@@ -25,7 +25,9 @@ export default async context => {
               mutation.type == "SET_GAME_ID" ||
               mutation.type == "SET_LIVE_ROAD_MAP" ||
               mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
-              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA" ||
+              mutation.type == "SET_COINS_MODERN" ||
+              mutation.type == "SET_CHIPS"
           }).plugin(context.store);
         });
         // Set user data in vuex store
@@ -60,7 +62,9 @@ export default async context => {
               mutation.type == "SET_GAME_ID" ||
               mutation.type == "SET_LIVE_ROAD_MAP" ||
               mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
-              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+              mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA" ||
+              mutation.type == "SET_COINS_MODERN" ||
+              mutation.type == "SET_CHIPS"
           }).plugin(context.store);
         });
 
@@ -92,7 +96,9 @@ export default async context => {
             mutation.type == "SET_GAME_ID" ||
             mutation.type == "SET_LIVE_ROAD_MAP" ||
             mutation.type == "SET_TEMP_MULTI_GAME_BET_DATA" ||
-            mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA"
+            mutation.type == "CLEAR_TEMP_MULTI_GAME_BET_DATA" ||
+            mutation.type == "SET_COINS_MODERN" ||
+            mutation.type == "SET_CHIPS"
         }).plugin(context.store);
       });
 

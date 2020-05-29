@@ -44,7 +44,7 @@
               'firstdigit',
               null,
               getItemPage,
-              getFooterBetAmount
+              stockID
             )
           "
         >
@@ -137,7 +137,7 @@
               'lastdigit',
               null,
               getItemPage,
-              getFooterBetAmount
+              stockID
             )
           "
           slot="reference"
@@ -226,7 +226,7 @@
               'bothdigit',
               null,
               getItemPage,
-              getFooterBetAmount
+              stockID
             )
           "
           slot="reference"
@@ -314,7 +314,7 @@
               'twodigit',
               null,
               getItemPage,
-              getFooterBetAmount
+              stockID
             )
           "
           slot="reference"
@@ -395,7 +395,7 @@
               'firstdigit',
               'specific',
               getItemPage,
-              getFooterBetAmount
+              stockID
             )
           "
           v-show="number == 'first'"
@@ -431,7 +431,9 @@
               25 + index,
               stockID + 'lastdigit' + '-' + index,
               'lastdigit',
-              'specific'
+              'specific',
+              getItemPage,
+              stockID
             )
           "
           v-show="number == 'last'"
@@ -469,7 +471,7 @@
               'bothdigit',
               'specific',
               getItemPage,
-              getFooterBetAmount
+              stockID
             )
           "
           v-show="number == 'both'"
@@ -513,7 +515,7 @@
               'twodigit',
               'specific',
               getItemPage,
-              getFooterBetAmount
+              stockID
             )
           "
           v-show="number == 'two'"

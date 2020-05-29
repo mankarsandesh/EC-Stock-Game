@@ -140,7 +140,7 @@ export default {
     const lastWeek = new Date(
       this.today.getFullYear(),
       this.today.getMonth(),
-      this.today.getDate() - 7
+      this.today.getDate() - 5
     )
       .toISOString()
       .substr(0, 10);
@@ -177,7 +177,7 @@ export default {
         const lastWeek = new Date(
           this.today.getFullYear(),
           this.today.getMonth(),
-          this.today.getDate() - 30
+          this.today.getDate() - 28
         )
           .toISOString()
           .substr(0, 10);

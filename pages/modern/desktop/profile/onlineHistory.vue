@@ -246,24 +246,30 @@ export default {
             this.chartOptions.xaxis.categories = xAxis;
             this.componentKey++;
           } else {
-            this.error = "No data to display";
+            this.error = this.$root.$t("profile.noData");
             this.dataReady = false;
           }
         } else {
-          this.error = "Something went wrong";
+          this.error = this.$root.$t("error.general");
           this.dataReady = false;
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
-        this.$swal({
+        if (ex.message == "Please select a valid date") {
+          this.error = this.$root.$t("profile.invalidDate");
+          this.dataReady = false;
+          this.$swal({
+          title: this.$root.$t("profile.invalidDate"),
+          type: "error",
+          showConfirmButton: true
+        });
+        } else {
+          this.$swal({
           title: ex.message,
           type: "error",
           showConfirmButton: true
         });
-        if (ex.message == "Please select a valid date") {
-          this.error = "Please select a valid date";
-          this.dataReady = false;
         }
       }
     }

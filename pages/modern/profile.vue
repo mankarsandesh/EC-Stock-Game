@@ -444,7 +444,7 @@ export default {
           this.avatarDialog = false;
           this.setUserData();
         } else {
-          this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(this.$root.$t("error.general"));
         }
       } catch (ex) {
         this.setSnackBarMessage(ex);
