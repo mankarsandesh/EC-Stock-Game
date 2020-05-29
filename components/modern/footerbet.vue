@@ -72,7 +72,6 @@ export default {
       imgChip: chips.chipsData
     };
   },
-
   computed: {
     ...mapGetters([
       "getCoinsModern",
@@ -109,6 +108,7 @@ export default {
           this.isSending = false;
           // }, 1000);
         } else {
+          await Betting.cancelBettingClear(this.gettempMultiGameBetData);
           this.clearTempMultiGameBetData();
           this.$swal({
             type: "error",
