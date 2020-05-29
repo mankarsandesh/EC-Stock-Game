@@ -12,7 +12,7 @@
       <div v-for="data in conversationChanel" :key="data.index" class="msgUser">
         <div class="messageChatView">
           <div>
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' + data.userUUID">
               <v-img
                 class="userImage"
                 :src="userImgProfile(data.userImage)"

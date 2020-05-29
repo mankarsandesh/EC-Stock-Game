@@ -1,6 +1,9 @@
 <template>
   <div xs2>
-    <section v-if="messageError == false" style="background-color:;">
+    <section
+      v-if="messageError == false && visitProfileUserData"
+      style="background-color:;"
+    >
       <v-container>
         <v-flex>
           <v-layout justify-center row>
