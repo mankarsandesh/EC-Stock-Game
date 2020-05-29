@@ -72,16 +72,16 @@
       </v-container>
     </div>
     
-      <onlyrules />
+      <onlyrule />
    
   </div>
 </template>
 
 <script>
-import onlyrules from "~/components/modern/rule/onlyrule";
+import onlyrule from "~/components/modern/rule/onlyrule";
 export default {
   components: {
-    onlyrules
+    onlyrule
   },
   data() {
     return {
