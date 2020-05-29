@@ -18,7 +18,7 @@
         </template>
         <template v-for="item in globalInvitation">
           <v-list-tile :key="item.index" avatar class="userList">
-            <nuxt-link :to="'/modern/userprofile/' + item.userUUID">
+            <nuxt-link :to="'/modern/userprofile/?id=' +item.userUUID">
               <v-list-tile-avatar>
                 <img :src="userImgProfile(item.userImage)"  class="profileImage" />
               </v-list-tile-avatar>

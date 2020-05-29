@@ -19,7 +19,7 @@
       
         <v-flex xs6 sm4 v-for="(data, index) in followersList" :key="index">
           <div class="followerContainer">
-            <nuxt-link :to="'/modern/userprofile/' + data.UUID">
+            <nuxt-link :to="'/modern/userprofile/?id=' +data.UUID">
               <img class="userImage" :src="userImgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">{{
