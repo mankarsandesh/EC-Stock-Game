@@ -87,7 +87,7 @@ const actions = {
         context.commit("SET_USER_UUID", userInfo.userUUID);
         context.commit("SET_USER_BALANCE", userInfo.balance);
       } else {
-        throw new Error(this.$root.$t("error.general"));
+        throw new Error(window.$nuxt.$root.$t("error.general"));
       }
     } catch (ex) {
       console.error(ex);

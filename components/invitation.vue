@@ -41,7 +41,7 @@
               <div class="msgUser" v-for="data in globalInvitation" :key="data.index">
                 <div class="messageChatView" v-if="globalInvitation.length > 0">
                   <div>
-                    <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+                    <nuxt-link :to="'/modern/desktop/userprofile/?id=' +data.userUUID">
                       <v-img
                         class="userImage"
                         :src="userImgProfile(data.userImage)"

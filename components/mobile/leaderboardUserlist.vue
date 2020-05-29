@@ -35,7 +35,7 @@
       <v-list two-line>
         <template v-for="(item, index) in topPlayerData">
           <v-list-tile :key="item.username" avatar>
-            <nuxt-link :to="'/modern/userprofile/' + item.userUUID">
+            <nuxt-link :to="'/modern/userprofile/?id=' +item.userUUID">
               <v-list-tile-avatar>
                 <img :src="userImgProfile(item.userImage)" />
               </v-list-tile-avatar>

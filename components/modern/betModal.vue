@@ -141,7 +141,8 @@ export default {
       "pushDataOnGoingBet",
       "setGameId",
       "setUserData",
-      "setTempMultiGameBetData"
+      "setTempMultiGameBetData",
+      "setFooterBetAmount"
     ]),
     coinClick(value) {
       let amount = parseInt(value);
@@ -204,8 +205,8 @@ export default {
             this.$emit("update-bet", stockDetail);
             this.confirmDisabled = true;
             this.$StoreBettingonConfirm(stockDetail);
-
             this.sendBetting(data);
+            this.setFooterBetAmount(0);
             $("#" + this.stockName + this.betId).addClass(
               this.betId.split("-")[0] + " " + this.betId.split("-")[1]
             );

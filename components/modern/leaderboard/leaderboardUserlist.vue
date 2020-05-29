@@ -68,7 +68,7 @@
               >fa-trophy</v-icon
             >
 
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' + data.userUUID">
               <v-layout class="userProfileRow" pa-2>
                 <v-flex md3 lg3>
                   <img class="pimage" :src="userImgProfile(data.userImage)" />
@@ -425,7 +425,6 @@ export default {
 }
 
 .pimage {
- 
   border: 2px solid #dddddd;
   border-radius: 180px;
 }

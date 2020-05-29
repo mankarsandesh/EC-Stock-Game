@@ -175,7 +175,7 @@ const actions = {
                     timer: 1000
                 });
             } else {
-                throw new Error(cthis.$root.$t("error.general"));
+                throw new Error(window.$nuxt.$root.$t("error.general"));
             }
         } catch (ex) {
             console.error(ex.message);
