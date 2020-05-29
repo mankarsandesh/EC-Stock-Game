@@ -206,7 +206,8 @@ export default {
   watch: {
     getLocale() {
       this.series[0].name = this.$root.$t("msg.win");
-      this.series[1].name = this.$root.$t("msg.lose")
+      this.series[1].name = this.$root.$t("msg.lose");
+      this.getStockAnalysis();
       this.componentKey++;
     }
   },
@@ -266,7 +267,7 @@ export default {
             this.error = "";
           } else {
             this.isDataValid = false;
-            this.error = "No data to display";
+            this.error = this.$root.$t("profile.invalidDate");
           }
         } else {
           throw new Error(this.$root.$t("error.general"));

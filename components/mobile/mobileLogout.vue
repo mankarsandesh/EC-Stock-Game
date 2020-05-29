@@ -121,7 +121,7 @@ export default {
       return ` ${Number(value)
         .toFixed(2)
         .toString()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1, ")}`;
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     },
     getLogout() {
       this.$swal({

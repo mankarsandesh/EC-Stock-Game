@@ -112,7 +112,7 @@
           <v-flex xs11 sm10>
             <div class="chart_container">
               <p class="no-data" v-if="!dataReady">
-                <strong>No data to display</strong>
+                <strong>{{ $t("profile.noData") }}</strong>
               </p>
               <VueApexCharts
                 v-if="dataReady"
