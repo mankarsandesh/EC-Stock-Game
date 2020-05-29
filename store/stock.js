@@ -14,7 +14,15 @@ const mutations = {
     state.stockCategory = payload;
   },
   SET_STOCKS_DATA(state, payload) {
-    state.stocks = payload;
+    let newStocks = [];
+    payload.forEach((element) => {
+      if(element.gameUUID) {
+        newStocks.unshift(element);
+      } else {
+        newStocks.push(element);
+      }
+    });
+    state.stocks = newStocks;
   },
   SET_STOCK_COUNTDOWN(state, payload) {
     state.stockCountdown = payload;
@@ -32,7 +40,7 @@ const actions = {
   async setStocksData(context) {
     try {
       var reqBody = {
-        portalProviderUUID: context.rootState.portalProviderUUID,
+        portalProviderUUID: context.rootState.provider.portalProviderUUID,
         version: config.version
       };
       var res = await this.$axios.$post(config.getStock.url, reqBody, {
@@ -105,7 +113,7 @@ const getters = {
     return state.stockCategory;
   },
   // Get all stocks data
-  getAllStocks(state) {   
+  getAllStocks(state) {  
     return state.stocks;    
   },
   // get stock loop by stock name

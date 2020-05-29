@@ -502,7 +502,8 @@ export default {
       loopName: ""
     };
   },
-  created() {
+  async created() {
+    await this.setStocksData();
     this.getActiveGamesByCategory();
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     if (this.stockName.slice(0, -1) == "btc") {
@@ -672,7 +673,8 @@ export default {
       "setIsWindowsHasScroll",
       "setRoadMap",
       "setLiveRoadMap",
-      "setStockCategory"
+      "setStockCategory",
+      "setStocksData"
     ]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
