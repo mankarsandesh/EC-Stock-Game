@@ -13,24 +13,43 @@ export const itemBetting = {
          * @returns
          */
         checkBetClose() {
-
+            const stockTime = this.getTimerByStockName(this.stockID)
             if (
-                this.getTimerByStockName(this.stockID) &&
-                this.getTimerByStockName(this.stockID).stockStatus === "Closed"
+                stockTime &&
+                stockTime.stockStatus === "Closed"
             ) {
                 return true;
             }
+
+            if (
+                stockTime &&
+                stockTime.gameEndTimeCountDownInSec === 0
+            ) {
+                this.clearTempMultiGameBetData()
+
+                this.clearItemBetting()
+
+                secureStorage.removeItem("itemBetting")
+            }
+
+
+
             // check 1 or 5 loop
             if (this.getStockLoop(this.stockID) === 5) {
                 if (
-                    this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
+                    stockTime &&
+                    stockTime.gameEndTimeCountDownInSec === 0
                 ) {
                     this.clearDataMultiGameBet(5);
                 }
-                if (this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60) {
-                    this.clearTempMultiGameBetData()
+                if (stockTime &&
+                    stockTime.gameEndTimeCountDownInSec <= 60) {
+
+                    if (stockTime &&
+                        stockTime.gameEndTimeCountDownInSec === 60) {
+                        $(".closepopper").click()
+                        this.clearTempMultiGameBetData()
+                    }
                     return true
                 } else {
                     return false
@@ -38,19 +57,20 @@ export const itemBetting = {
 
             } else {
                 if (
-                    this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
+                    stockTime &&
+                    stockTime.gameEndTimeCountDownInSec === 0
                 ) {
-
                     this.clearDataMultiGameBet(1);
                 }
-                if (this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20) {
-                    if (this.getTimerByStockName(this.stockID) &&
-                        this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec === 20) {
+                if (stockTime &&
+                    stockTime.gameEndTimeCountDownInSec <= 20) {
+
+                    if (stockTime &&
+                        stockTime.gameEndTimeCountDownInSec === 20) {
                         $(".closepopper").click()
+                        this.clearTempMultiGameBetData()
                     }
-                    this.clearTempMultiGameBetData()
+
                     return true
                 } else {
                     return false
@@ -61,7 +81,11 @@ export const itemBetting = {
 
     },
     methods: {
-        ...mapActions(["clearTempMultiGameBetData"]),
+        ...mapActions([
+            "clearTempMultiGameBetData",
+            "clearItemBetting",
+            "clearTempMultiGameBetData"
+        ]),
         /**
          *
          *

@@ -107,6 +107,7 @@ export default {
           this.setFooterBetAmount(0);
           this.isSending = false;
           // }, 1000);
+          this.clearTempMultiGameBetData();
         } else {
           await Betting.cancelBettingClear(this.gettempMultiGameBetData);
           this.clearTempMultiGameBetData();
