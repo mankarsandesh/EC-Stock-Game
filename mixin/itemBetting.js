@@ -7,9 +7,6 @@ export const itemBetting = {
         this.findItemBetting()
     },
     computed: {
-        ...mapGetters([
-            "gettempMultiGameBetData"
-        ]),
         /**
          *
          *
@@ -33,7 +30,6 @@ export const itemBetting = {
                 }
                 if (this.getTimerByStockName(this.stockID) &&
                     this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60) {
-                    Betting.cancelBettingClear(this.gettempMultiGameBetData);
                     this.clearTempMultiGameBetData()
                     return true
                 } else {
@@ -50,7 +46,10 @@ export const itemBetting = {
                 }
                 if (this.getTimerByStockName(this.stockID) &&
                     this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20) {
-                    Betting.cancelBettingClear(this.gettempMultiGameBetData);
+                    if (this.getTimerByStockName(this.stockID) &&
+                        this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec === 20) {
+                        $(".closepopper").click()
+                    }
                     this.clearTempMultiGameBetData()
                     return true
                 } else {
@@ -115,14 +114,14 @@ export const itemBetting = {
          * @param {*} footerAmount
          * @param {*} stockName
          */
-        async storemarkColor(ruleID, id, classe, specific, page, footerAmount, stockName) {
+        async storemarkColor(ruleID, id, classe, specific, page, stockName) {
             try {
                 // check the page only full screen can press the bet and color is come 
                 // check the valueAmout is  >= 100  
 
                 if (page === "fullscreen") {
 
-                    if (footerAmount >= 100) {
+                    if (this.getFooterBetAmount >= 100) {
 
 
                         this.$soundEffect("betting");
