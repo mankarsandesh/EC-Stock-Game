@@ -158,7 +158,7 @@ export default {
       } else {
         // show error snack bar and set error message
         this.snackbar = true;
-        this.snackbarMessage = config.error.general;
+        this.snackbarMessage = this.$root.$t("error.general");
       }
     }
   }

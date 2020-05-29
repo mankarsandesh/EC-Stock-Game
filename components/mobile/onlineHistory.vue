@@ -291,11 +291,16 @@ export default {
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {
-          this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(this.$root.$t("error.general"));
         }
       } catch (ex) {
         this.setSnackBarMessage("Please select a valid date");
         this.dataReady = false;
+        if (ex.message == "Please select a valid date") {
+          this.setSnackBarMessage(this.$root.$t("profile.invalidDate"));
+        } else {
+          this.setSnackBarMessage(ex.message);
+        }
       }
     }
   }

@@ -222,7 +222,7 @@ export default {
             timer: 1000
           });
         } else {
-          throw new Error(config.error.general);
+          throw new Error(cthis.$root.$t("error.general"));
         }
       } catch (ex) {
         this.imageBase64 = "";

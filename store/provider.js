@@ -87,7 +87,7 @@ const actions = {
         context.commit("SET_USER_UUID", userInfo.userUUID);
         context.commit("SET_USER_BALANCE", userInfo.balance);
       } else {
-        throw new Error(config.error.general);
+        throw new Error(this.$root.$t("error.general"));
       }
     } catch (ex) {
       console.error(ex);

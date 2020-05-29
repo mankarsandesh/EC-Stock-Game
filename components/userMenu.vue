@@ -139,7 +139,7 @@ export default {
           // Remove login session cookie
           Cookies.remove("login");
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
