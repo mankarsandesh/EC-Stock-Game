@@ -41,7 +41,7 @@ const actions = {
       if (res.status) {
         context.commit("SET_STOCKS_DATA", res.data);
       } else {
-        throw new Error(config.error.general);
+        throw new Error(window.$nuxt.$root.$t("error.general"));
       }
     } catch (ex) {
       console.log(ex);
@@ -105,15 +105,15 @@ const getters = {
     return state.stockCategory;
   },
   // Get all stocks data
-  getAllStocks(state) {
-    return state.stocks;
+  getAllStocks(state) {   
+    return state.stocks;    
   },
   // get stock loop by stock name
   getStockLoop: state => stockName => {
     let result = null;
     for (let i = 0; i < state.stocks.length; i++) {
       if (state.stocks[i].stockName === stockName) {
-        result = state.stocks[i].loop;
+        result = state.stocks[i].loop;       
         break;
       }
     }
@@ -136,10 +136,10 @@ const getters = {
       .stockTimestamp;
   },
   // Get timer by stock name
-  getTimerByStockName: state => stockName => {
+  getTimerByStockName: state => stockName => {    
     if (!stockName || state.stockCountdown.length == 0) {
       return null;
-    }
+    }  
     return state.stockCountdown.find(stock => stock.stockName == stockName);
   },
   // Get stock list countdown

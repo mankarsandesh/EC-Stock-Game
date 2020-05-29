@@ -445,7 +445,9 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
           this.componentKey++;
         } else {
-          throw new Error(config.error.general);
+
+          this.messageError = true;
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         this.messageError = true;

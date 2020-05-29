@@ -246,6 +246,7 @@
     "sh000300": "ดัชนีเซี่ยงไฮ้และเซินเจิ้น 300"
   },
   "profile": {
+    "invalidDate": "โปรดเลือกวันที่ที่ถูกต้อง",
     "available":"ที่มีจำหน่าย",
     "typeUsername":"พิมพ์ชื่อผู้ใช้ของคุณ",
     "noData": "ไม่มีข้อมูลที่จะแสดง",
@@ -335,7 +336,7 @@
   },
   "setting": {
     "account": "บัญชีผู้ใช้",
-    "usersAllowToVisitMyProfile": "ผู้ใช้อนุญาตให้เยี่ยมชมโปรไฟล์ของฉัน",
+    "usersAllowToVisitMyProfile": "อนุญาตให้เยี่ยมชมโปรไฟล์",
     "usersAllowFollowMe": "ผู้ใช้อนุญาตให้ติดตามฉัน",
     "userAllowToSendDirectMessage": "ผู้ใช้อนุญาตให้ส่งข้อความโดยตรง",
     "gameOptions": "ตัวเลือกของเกม",

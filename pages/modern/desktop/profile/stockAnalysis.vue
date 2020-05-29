@@ -206,7 +206,8 @@ export default {
   watch: {
     getLocale() {
       this.series[0].name = this.$root.$t("msg.win");
-      this.series[1].name = this.$root.$t("msg.lose")
+      this.series[1].name = this.$root.$t("msg.lose");
+      this.getStockAnalysis();
       this.componentKey++;
     }
   },
@@ -266,22 +267,29 @@ export default {
             this.error = "";
           } else {
             this.isDataValid = false;
-            this.error = "No data to display";
+            this.error = this.$root.$t("profile.invalidDate");
           }
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex.message);
-        this.$swal({
+        if (ex.message == "Please select a valid date") {
+          this.error = this.$root.$t("profile.invalidDate");
+          this.isDataValid = false;
+          this.$swal({
+          title: this.$root.$t("profile.invalidDate"),
+          type: "error",
+          timer: 1000,
+          showConfirmButton: false
+        });
+        } else {
+          this.$swal({
           title: ex.message,
           type: "error",
           timer: 1000,
           showConfirmButton: false
         });
-        if (ex.message == "Please select a valid date") {
-          this.error = "Please select a valid date";
-          this.isDataValid = false;
         }
       }
     },

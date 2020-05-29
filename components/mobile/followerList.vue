@@ -151,10 +151,10 @@ export default {
         if (res.code == 200) {
           this.followersList = res.data;
         } else {
-          this.setSnackBarMessage(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
-        this.setSnackBarMessage(config.error.general);
+        this.setSnackBarMessage(this.$root.$t("error.general"));
         console.error(ex.message);
       }
     }

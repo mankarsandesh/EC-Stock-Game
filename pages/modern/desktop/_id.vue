@@ -33,8 +33,7 @@
         </span>
       </v-flex>
       <!-- End Left Side -->
-
-      <!-- Main Middle Layout -->
+      <!-- Main Middle Lay    out -->
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
@@ -333,7 +332,7 @@ export default {
           if (data.status) {
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
@@ -389,7 +388,7 @@ export default {
         if (res.status) {
           this.stock = res.data;
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
@@ -521,6 +520,7 @@ export default {
   border-radius: 5px;
   position: relative;
   top: 0;
+  height:100%;
   box-shadow: 0 0 2px grey;
 }
 

@@ -112,7 +112,7 @@
           <v-flex xs11 sm10>
             <div class="chart_container">
               <p class="no-data" v-if="!dataReady">
-                <strong>No data to display</strong>
+                <strong>{{ $t("profile.noData") }}</strong>
               </p>
               <VueApexCharts
                 v-if="dataReady"
@@ -291,11 +291,16 @@ export default {
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {
-          this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(this.$root.$t("error.general"));
         }
       } catch (ex) {
         this.setSnackBarMessage("Please select a valid date");
         this.dataReady = false;
+        if (ex.message == "Please select a valid date") {
+          this.setSnackBarMessage(this.$root.$t("profile.invalidDate"));
+        } else {
+          this.setSnackBarMessage(ex.message);
+        }
       }
     }
   }

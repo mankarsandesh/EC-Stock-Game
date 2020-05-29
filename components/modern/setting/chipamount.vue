@@ -170,7 +170,7 @@ export default {
       } else {
         this.$swal({
           type: "error",
-          title: config.error.general,
+          title: this.$root.$t("error.general"),
           showConfirmButton: true,
           timer: 1000
         });

@@ -37,7 +37,7 @@
                   }}
                   :</label
                 >
-                {{ data.followRuleValue[0].value }}
+                {{  data.followRuleValue[0].name == "byAmount" ? "$"+data.followRuleValue[0].value : data.followRuleValue[0].value+"%" }}
               </span>
               <span>
                 <label

@@ -75,9 +75,7 @@
       <template v-slot:header>
         <div>
           <span class="rules">
-            {{ $t("gamemsg.bothdigit") }} (????. ?+?
-            <b class="headline1">=??</b>
-            )
+            {{ $t("gamemsg.bothdigit") }} (????.  <b class="headline1">?+?</b>)
           </span>
         </div>
       </template>

@@ -42,7 +42,7 @@ const actions = {
           context.state.apiAttemptCount++;
           context.dispatch("setRoadMap", stockUUID);
         } else {
-          throw new Error(config.error.general);
+          throw new Error(window.$nuxt.$root.$t("error.general"));
         }
       }
     } catch (ex) {
