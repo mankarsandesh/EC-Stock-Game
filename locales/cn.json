@@ -373,6 +373,7 @@
     "rolling": "滚动"
   },
   "betting": {
+    "betValue": "投注值应大于0且不大于10000",
     "reviewBet" : "複習投注",
     "placeBet" : "下注",
     "cancelBet" :"取消投注",
