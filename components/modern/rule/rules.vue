@@ -28,7 +28,10 @@
                   <b>{{ $t("msg.introduction") }}</b>
                 </v-card-title>
                 <v-card-text>
-                  <p class="text-center">
+                  <p style="line-hight:15px;text-align:center;font-size:18px;">
+                   {{ $t('msg.textResultIntroduction')}}
+                  </p>
+                  <!-- <p class="text-center">
                     e.g. Assuming a stock resulting in 1234.
                     <span class="text-red">56</span>, all our game types would
                     only take decimal
@@ -54,7 +57,7 @@
                   <p class="text-center">
                     <span class="text-red">both</span>, digits’ result, which is
                     <span class="text-red">‘11’</span>.
-                  </p>
+                  </p> -->
                   <div class="text-xs-center">
                     <v-btn
                       class="accept"
@@ -71,9 +74,8 @@
         </v-layout>
       </v-container>
     </div>
-    
-      <onlyrule />
-   
+
+    <onlyrule />
   </div>
 </template>
 
