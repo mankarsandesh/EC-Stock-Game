@@ -105,15 +105,16 @@ const getters = {
     return state.stockCategory;
   },
   // Get all stocks data
-  getAllStocks(state) {
-    return state.stocks;
+  getAllStocks(state) {   
+    console.log(state.stocks);
+    return state.stocks;    
   },
   // get stock loop by stock name
   getStockLoop: state => stockName => {
     let result = null;
     for (let i = 0; i < state.stocks.length; i++) {
       if (state.stocks[i].stockName === stockName) {
-        result = state.stocks[i].loop;
+        result = state.stocks[i].loop;       
         break;
       }
     }
