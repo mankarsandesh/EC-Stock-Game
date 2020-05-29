@@ -179,7 +179,7 @@ export default {
               this.series = data.data;
               this.componentKey += 1;
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
             console.log(ex);
@@ -208,7 +208,7 @@ export default {
               this.series = data.data;
               this.componentKey += 1;
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
             console.log(ex);

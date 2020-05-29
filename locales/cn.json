@@ -247,6 +247,7 @@
     "sh000300": "沪深300指数"
   },
   "profile": {
+    "invalidDate": "请选择一个有效日期",
     "available":"可用的",
     "typeUsername":"输入您的用户名",
     "noData": "没有数据显示",

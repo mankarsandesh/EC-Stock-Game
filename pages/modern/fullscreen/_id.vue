@@ -536,7 +536,7 @@ export default {
           if (data.status) {
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
@@ -695,7 +695,7 @@ export default {
             if (data.status) {
               this.dataliveBetAll = data.data;
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
             console.log(ex);
@@ -716,7 +716,7 @@ export default {
             if (data.status) {
               this.dataliveBetAll = data.data;
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
             console.log(ex);
@@ -741,7 +741,7 @@ export default {
           this.setStockCategory(res.data);
           this.items = res.data;
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);

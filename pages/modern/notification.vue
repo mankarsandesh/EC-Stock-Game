@@ -57,7 +57,7 @@ export default {
           this.notificationData = res.data;
           // console.log(this.notificationData,"Notification response");
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);

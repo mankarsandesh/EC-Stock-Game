@@ -269,19 +269,26 @@ export default {
             this.error = "No data to display";
           }
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex.message);
-        this.$swal({
+        if (ex.message == "Please select a valid date") {
+          this.error = this.$root.$t("profile.invalidDate");
+          this.isDataValid = false;
+          this.$swal({
+          title: this.$root.$t("profile.invalidDate"),
+          type: "error",
+          timer: 1000,
+          showConfirmButton: false
+        });
+        } else {
+          this.$swal({
           title: ex.message,
           type: "error",
           timer: 1000,
           showConfirmButton: false
         });
-        if (ex.message == "Please select a valid date") {
-          this.error = "Please select a valid date";
-          this.isDataValid = false;
         }
       }
     },

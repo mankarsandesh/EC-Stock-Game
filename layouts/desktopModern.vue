@@ -208,7 +208,7 @@ export default {
             if (data.status) {
               this.setUserBalance(data.data.userBalance);
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
             console.log(ex);
@@ -235,12 +235,10 @@ export default {
         if (data.status) {
           this.notificationList = data.data.reverse();
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
-        console.log("fetchNotification");
         console.log(ex);
-        console.log("fetchNotification");
       }
     }
   },

@@ -251,9 +251,9 @@ export default {
           });
         } else {
           if (res.status) {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         }
       } catch (ex) {
