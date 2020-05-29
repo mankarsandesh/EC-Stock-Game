@@ -1766,7 +1766,7 @@ export default {
     // set payout
     gameRule() {
       let payoutArray1 = ["small", "big", "odd", "even"];
-      let payoutArray2 = ["high", "mid", "low"];
+      let payoutArray2 = ["high", "mid", "low", "tie"];
       let payoutArray3 = ["firstdigit", "lastdigit", "bothdigit", "twodigit"];
       let array = this.gameRule.split("-");
 

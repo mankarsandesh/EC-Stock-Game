@@ -94,21 +94,7 @@ export default {
     ]),
     async confirmBet() {
       try {
-        if (parseInt(this.getTempMultiGameBetAmount) > 10000) {
-          this.$swal({
-            type: "error",
-            title: "Bet value should not be more than 10000",
-            timer: 1000,
-            showConfirmButton: true
-          });
-
-          // clear the bet from LocalStroge
-          await Betting.clearBettingFailure();
-          //  clear the bet amount to = 0
-          await this.clearBetValueFooterBet();
-          //  clear the temputure game bet to = 0
-          this.clearTempMultiGameBetData();
-        } else if (
+        if (
           parseInt(this.getTempMultiGameBetAmount) <=
             parseInt(this.getUserBalance) &&
           parseInt(this.getTempMultiGameBetAmount) > 0

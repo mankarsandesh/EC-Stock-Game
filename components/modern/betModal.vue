@@ -103,7 +103,7 @@ export default {
   data() {
     return {
       confirmDisabled: false,
-      betValue: 100,
+      betValue: 0,
       imgChip: chips.chipsData
     };
   },
@@ -145,18 +145,18 @@ export default {
     ]),
     coinClick(value) {
       let amount = parseInt(value);
-      this.betValue = this.betValue + amount;
-      // if (parseInt(this.betValue + amount) > 10000) {
-      //   this.$swal({
-      //     type: "error",
-      //     title: "Bet value should not be more than 10000",
-      //     timer: 1000,
-      //     showConfirmButton: true
-      //   });
-      //   this.betValue = 0;
-      // } else {
-      //   this.betValue = this.betValue + amount;
-      // }
+      // this.betValue = this.betValue + amount;
+      if (parseInt(this.betValue + amount) > 10000) {
+        this.$swal({
+          type: "error",
+          title: this.$root.$t("betting.betValue"),
+          timer: 1500,
+          showConfirmButton: true
+        });
+        this.betValue = 0;
+      } else {
+        this.betValue = this.betValue + amount;
+      }
     },
 
     async confirmBet() {
@@ -164,8 +164,7 @@ export default {
         if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
           this.$swal({
             type: "error",
-            title:
-              this.$root.$t("betting.betValue"),
+            title: this.$root.$t("betting.betValue"),
             timer: 1500,
             showConfirmButton: true
           });
@@ -191,7 +190,6 @@ export default {
           };
 
           if (this.betValue > 0) {
-
             this.$soundEffect("betting");
 
             const stockDetail = {
