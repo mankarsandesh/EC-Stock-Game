@@ -41,7 +41,7 @@ const actions = {
       if (res.status) {
         context.commit("SET_STOCKS_DATA", res.data);
       } else {
-        throw new Error(this.$root.$t("error.general"));
+        throw new Error(window.$nuxt.$root.$t("error.general"));
       }
     } catch (ex) {
       console.log(ex);
