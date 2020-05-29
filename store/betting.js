@@ -163,7 +163,18 @@ const actions = {
                 let len = res.data.length;
 
                 for (i; i < len; i++) {
-                    context.commit("PUSH_DATA_ON_GOING_BET", res.data[i]);
+                    const OnGoingdata = {
+                        betUUID: res.data[i].betUUID,
+                        gameUUID: res.data[i].gameUUID,
+                        ruleName: res.data[i].ruleName,
+                        payout: res.data[i].payout,
+                        betDate: res.data[i].createdDate,
+                        betTime: res.data[i].createdTime,
+                        betAmount: res.data[i].betAmount,
+                        stockName: res.data[i].stockName
+                    };
+
+                    context.commit("PUSH_DATA_ON_GOING_BET", OnGoingdata);
                 }
                 // check betting false or true
                 let resultStatus = {
@@ -187,6 +198,7 @@ const actions = {
                 throw new Error(cthis.$root.$t("error.general"));
             }
         } catch (ex) {
+            console.error("AM here in the catch", ex)
             console.error(ex.message);
             context.commit("SET_IS_SEND_BETTING", false);
             this._vm.$swal({

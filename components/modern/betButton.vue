@@ -44,7 +44,8 @@
               'firstdigit',
               null,
               getItemPage,
-              getFooterBetAmount
+              getFooterBetAmount,
+              stockID
             )
           "
         >
@@ -137,7 +138,8 @@
               'lastdigit',
               null,
               getItemPage,
-              getFooterBetAmount
+              getFooterBetAmount,
+              stockID
             )
           "
           slot="reference"
@@ -226,7 +228,8 @@
               'bothdigit',
               null,
               getItemPage,
-              getFooterBetAmount
+              getFooterBetAmount,
+              stockID
             )
           "
           slot="reference"
@@ -314,7 +317,8 @@
               'twodigit',
               null,
               getItemPage,
-              getFooterBetAmount
+              getFooterBetAmount,
+              stockID
             )
           "
           slot="reference"
@@ -395,7 +399,8 @@
               'firstdigit',
               'specific',
               getItemPage,
-              getFooterBetAmount
+              getFooterBetAmount,
+              stockID
             )
           "
           v-show="number == 'first'"
@@ -431,7 +436,10 @@
               25 + index,
               stockID + 'lastdigit' + '-' + index,
               'lastdigit',
-              'specific'
+              'specific',
+              getItemPage,
+              getFooterBetAmount,
+              stockID
             )
           "
           v-show="number == 'last'"
@@ -469,7 +477,8 @@
               'bothdigit',
               'specific',
               getItemPage,
-              getFooterBetAmount
+              getFooterBetAmount,
+              stockID
             )
           "
           v-show="number == 'both'"
@@ -513,7 +522,8 @@
               'twodigit',
               'specific',
               getItemPage,
-              getFooterBetAmount
+              getFooterBetAmount,
+              stockID
             )
           "
           v-show="number == 'two'"

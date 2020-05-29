@@ -1,10 +1,15 @@
 import secureStorage from '~/plugins/secure-storage'
+import { mapGetters, mapActions } from "vuex";
+import Betting from "~/helpers/betting";
 
 export const itemBetting = {
     mounted() {
         this.findItemBetting()
     },
     computed: {
+        ...mapGetters([
+            "gettempMultiGameBetData"
+        ]),
         /**
          *
          *
@@ -26,28 +31,38 @@ export const itemBetting = {
                 ) {
                     this.clearDataMultiGameBet(5);
                 }
-                return (
-                    this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60
-                );
+                if (this.getTimerByStockName(this.stockID) &&
+                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60) {
+                    Betting.cancelBettingClear(this.gettempMultiGameBetData);
+                    this.clearTempMultiGameBetData()
+                    return true
+                } else {
+                    return false
+                }
+
             } else {
                 if (
                     this.getTimerByStockName(this.stockID) &&
                     this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 0
                 ) {
+
                     this.clearDataMultiGameBet(1);
                 }
-                return (
-                    this.getTimerByStockName(this.stockID) &&
-                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
-                );
+                if (this.getTimerByStockName(this.stockID) &&
+                    this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20) {
+                    Betting.cancelBettingClear(this.gettempMultiGameBetData);
+                    this.clearTempMultiGameBetData()
+                    return true
+                } else {
+                    return false
+                }
             }
         }
 
 
     },
     methods: {
-
+        ...mapActions(["clearTempMultiGameBetData"]),
         /**
          *
          *
@@ -89,7 +104,6 @@ export const itemBetting = {
 
         },
 
-        // btc1firstdigit-big
         /**
          *
          *
@@ -99,8 +113,9 @@ export const itemBetting = {
          * @param {*} specific
          * @param {*} page
          * @param {*} footerAmount
+         * @param {*} stockName
          */
-        async storemarkColor(ruleID, id, classe, specific, page, footerAmount) {
+        async storemarkColor(ruleID, id, classe, specific, page, footerAmount, stockName) {
             try {
                 // check the page only full screen can press the bet and color is come 
                 // check the valueAmout is  >= 100  
@@ -137,9 +152,9 @@ export const itemBetting = {
                                 specificNumber: '',
                                 gameUUID: this.getGameUUIDByStockName(this.stockID),
                                 ruleID: ruleID,
-                                betAmount: this.getFooterBetAmount
+                                betAmount: this.getFooterBetAmount,
+                                stockName: stockName,
                             };
-
                             this.setTempMultiGameBetData(betData);
                             // this.pushDataMultiGameBet(betData);
                             // console.warn(this.getMultiGameBet);
