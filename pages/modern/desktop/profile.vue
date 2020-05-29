@@ -164,7 +164,6 @@ export default {
     // console.log(this.getUserInfo.profileImage);
     // make a active menu
     this.currentChild = this.$route.path;
-    console.log(this.getUserInfo);
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
