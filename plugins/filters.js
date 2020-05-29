@@ -61,7 +61,7 @@ Vue.filter("currency", (value, decimalCount = 2) => {
 // countdown bet close in
 Vue.filter("betclosein", (value, loop) => {
   if (!value || !loop) return "...";
-  if (value.stockStatus == "Closed" || value == "close") return "MARKET CLOSE";
+  if (value.stockStatus == "Closed" || value == "close") return window.$nuxt.$root.$t("msg.marketClosed");
   let result = "";
   // for  loop 1
   if (loop == 1) {

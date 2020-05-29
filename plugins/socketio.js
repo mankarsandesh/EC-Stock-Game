@@ -57,7 +57,7 @@ export default async ({ store, $axios }) => {
         if (data.status) {
           store.dispatch("setStockCountdown", data.data.timeData);
         } else {
-          throw new Error(this.$root.$t("error.general"));
+          throw new Error(window.$nuxt.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
@@ -76,7 +76,7 @@ export default async ({ store, $axios }) => {
         if (data.res.status) {
           store.dispatch("setStockCategory", data.res.data);
         } else {
-          throw new Error(this.$root.$t("error.general"));
+          throw new Error(window.$nuxt.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
@@ -95,7 +95,7 @@ export default async ({ store, $axios }) => {
         if (data.status) {
           store.dispatch("setStockPrice", data.data.stockData);
         } else {
-          throw new Error(this.$root.$t("error.general"));
+          throw new Error(window.$nuxt.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
