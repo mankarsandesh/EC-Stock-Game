@@ -33,8 +33,7 @@
         </span>
       </v-flex>
       <!-- End Left Side -->
-
-      <!-- Main Middle Layout -->
+      <!-- Main Middle Lay    out -->
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
@@ -521,6 +520,7 @@ export default {
   border-radius: 5px;
   position: relative;
   top: 0;
+  height:100%;
   box-shadow: 0 0 2px grey;
 }
 
