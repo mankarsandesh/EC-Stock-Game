@@ -106,7 +106,6 @@ const getters = {
   },
   // Get all stocks data
   getAllStocks(state) {   
-    console.log(state.stocks);
     return state.stocks;    
   },
   // get stock loop by stock name
@@ -137,10 +136,10 @@ const getters = {
       .stockTimestamp;
   },
   // Get timer by stock name
-  getTimerByStockName: state => stockName => {
+  getTimerByStockName: state => stockName => {    
     if (!stockName || state.stockCountdown.length == 0) {
       return null;
-    }
+    }  
     return state.stockCountdown.find(stock => stock.stockName == stockName);
   },
   // Get stock list countdown
