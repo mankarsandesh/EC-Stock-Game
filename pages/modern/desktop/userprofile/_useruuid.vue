@@ -376,6 +376,7 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
+          this.visitProfileUserData.winRate = Math.round(this.visitProfileUserData.winRate);
           this.myProfileImage = res.data.userImage;
 
           //  series

@@ -1704,13 +1704,17 @@ export default {
     },
     // Place Bet Last Step
     placeBet() {
-      let data = {
+      if(this.betAmount > 10000) {
+        this.setSnackBarMessage(this.$root.$t("betting.betValue"));
+      } else {
+        let data = {
         gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
         ruleID: this.ruleid,
         betAmount: this.betAmount
       };
       this.confirmDisabled = true;
       this.sendBetting(data);
+      }
     },
     // Final Betting on Mobile
     async sendBetting(betData) {
