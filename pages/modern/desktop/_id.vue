@@ -1,6 +1,6 @@
 <template>
   <v-container fluid mt-2 class="containerNew">
-    <button id="next-back-ward" @click="nextBackWard()"></button>
+    <button ref="nextBackWard" @click="nextBackWard()"></button>
     <v-layout>
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>

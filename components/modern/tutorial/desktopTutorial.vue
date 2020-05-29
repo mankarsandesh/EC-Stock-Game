@@ -175,13 +175,14 @@ export default {
       $(":button").prop("disabled", false); // Enable all the button
     },
     stepWard() {
-      console.log($("#next-back-ward"));
-      $("#next-back-ward").click();
+      console.log($(this.$refs.nextBackWard.$el.click()));
+      this.$refs["nextBackWard"].click();
       this.setTutorialStepNumber(this.getTutorialStepNumber + 1);
     },
     backWard() {
+      console.log($(this.$refs.nextBackWard));
       if (this.getTutorialStepNumber > 0) {
-        $("#next-back-ward").click();
+        this.$refs.nextBackWard.$el.click();
         this.setTutorialStepNumber(this.getTutorialStepNumber - 1);
       }
     },
