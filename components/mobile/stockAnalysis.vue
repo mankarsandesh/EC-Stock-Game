@@ -275,7 +275,7 @@ export default {
     async getStockAnalysis() {
       try {
         if (!this.checkValidDate(this.startDate, this.endDate)) {
-          this.setSnackBarMessage("Please select a valid date");
+          throw new Error(this.$root.$t("profile.invalidDate"));
         }
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -305,6 +305,7 @@ export default {
           this.setSnackBarMessage(res.message[0]);
         }
       } catch (ex) {
+        this.error = ex.message;
         this.setSnackBarMessage(ex.message);
         this.isDataValid = false;
       }

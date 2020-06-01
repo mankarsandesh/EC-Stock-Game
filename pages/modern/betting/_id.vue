@@ -1653,7 +1653,6 @@ export default {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
     stopListenSocket(channel) {
-      console.log("stopListenSocket");
       window.Echo.leave(channel);
     },
     tabChanged(e) {

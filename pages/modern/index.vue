@@ -274,7 +274,6 @@ export default {
       } else if (this.sortBy === "type") {
         result.sort(sortByType);
       }
-      console.log('showStocks', result);
       return result;
     }
   },
