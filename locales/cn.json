@@ -444,7 +444,8 @@
     "daysShould":"日期需控制在1-10",
     "betsShould":"下注次数需控制在1-100",
     "userFollowed":"用户已成功关注。",
-    "userUnFollowed":"用户成功取消关注。"
+    "userUnFollowed":"用户成功取消关注。",
+    "maxFollow":"您一次最多只能追踪10位使用者。"
   },
   "currentBet": {
     "noBets" : "目前没有下注。",

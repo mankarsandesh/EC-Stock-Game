@@ -372,7 +372,14 @@ export default {
             ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed"))
             : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));
         } else {
-          this.setSnackBarMessage(data.message[0]);
+          //For translation of 10 users follow list check.
+          if (
+            data.message[0] == "You cant follow more than 10 users at a time."
+          ) {
+            this.setSnackBarMessage(this.$root.$t("follow.maxFollow"));
+          } else {
+            this.setSnackBarMessage(data.message[0]);
+          }
           // this.errorShow(true, false, true, data.message[0]);
         }
         this.$emit("followBetClose");
