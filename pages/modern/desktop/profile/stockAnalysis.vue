@@ -212,6 +212,7 @@ export default {
     }
   },
   methods: {
+    // Check Date is Valid or NOT
     checkValidDate(startDate, endDate) {
       const now = date.format(new Date(), "YYYY-MM-DD");
       if (endDate > now || !(endDate >= startDate)) {
@@ -219,6 +220,7 @@ export default {
       }
       return true;
     },
+    // Fetch Stock info
     async getStockAnalysis() {
       try {
         if (!this.checkValidDate(this.startDate, this.endDate)) {
