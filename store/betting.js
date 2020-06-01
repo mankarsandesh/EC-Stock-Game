@@ -45,7 +45,6 @@ const mutations = {
         }
     },
     PUSH_DATA_ON_GOING_BET(state, payload) {
-        state.tempMultiGameBetData = [];
         state.onGoingBet.splice(0, 0, payload);
     },
     SET_IS_SEND_BETTING(state, value) {

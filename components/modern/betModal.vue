@@ -204,8 +204,7 @@ export default {
             };
             this.$emit("update-bet", stockDetail);
             this.confirmDisabled = true;
-            this.$StoreBettingonConfirm(stockDetail);
-            this.sendBetting(data);
+            this.sendBetting(data, stockDetail);
             this.setFooterBetAmount(0);
             $("#" + this.stockName + this.betId).addClass(
               this.betId.split("-")[0] + " " + this.betId.split("-")[1]
@@ -216,7 +215,7 @@ export default {
         console.log(error);
       }
     },
-    async sendBetting(betData) {
+    async sendBetting(betData, itemBetting) {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -228,6 +227,7 @@ export default {
           headers: config.header
         });
         if (res.status && res.data[0].status) {
+          this.$StoreBettingonConfirm(itemBetting);
           this.setUserData();
           this.closePopper();
 
