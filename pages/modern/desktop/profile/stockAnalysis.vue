@@ -99,9 +99,10 @@
 <script>
 import apexchart from "vue-apexcharts";
 import { mapGetters } from "vuex";
-import date from "date-and-time";
 import secureStorage from "../../../../plugins/secure-storage";
 import config from "~/config/config.global";
+import utils from "~/mixin/utils";
+import date from "date-and-time";
 
 // set color win and lose color in bar chart
 let index = 0;
@@ -113,7 +114,9 @@ export default {
   components: {
     apexchart: apexchart
   },
+  mixins: [utils],
   created() {
+    console.log('this', date);
     const now = date.format(new Date(), "YYYY-MM-DD");
     const lastWeek = date.addDays(new Date(), -7);
     this.startDate = date.format(lastWeek, "YYYY-MM-DD");
@@ -212,13 +215,6 @@ export default {
     }
   },
   methods: {
-    checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), "YYYY-MM-DD");
-      if (endDate > now || !(endDate >= startDate)) {
-        return false;
-      }
-      return true;
-    },
     async getStockAnalysis() {
       try {
         if (!this.checkValidDate(this.startDate, this.endDate)) {
@@ -278,18 +274,18 @@ export default {
           this.error = this.$root.$t("profile.invalidDate");
           this.isDataValid = false;
           this.$swal({
-          title: this.$root.$t("profile.invalidDate"),
-          type: "error",
-          timer: 1000,
-          showConfirmButton: false
-        });
+            title: this.$root.$t("profile.invalidDate"),
+            type: "error",
+            timer: 1000,
+            showConfirmButton: false
+          });
         } else {
           this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000,
-          showConfirmButton: false
-        });
+            title: ex.message,
+            type: "error",
+            timer: 1000,
+            showConfirmButton: false
+          });
         }
       }
     },
@@ -319,7 +315,7 @@ li {
   position: relative;
   float: right;
   margin-top: 15px;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .circle-color {

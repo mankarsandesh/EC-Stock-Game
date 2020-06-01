@@ -15,13 +15,20 @@
           <v-icon size="20" @click="dialogOnlineHistory = false">close</v-icon>
         </v-layout>
       </v-toolbar>
-      <v-flex mt-2 xs12 v-if="$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+      <v-flex
+        mt-2
+        xs12
+        v-if="$vuetify.breakpoint.xs"
+        class="profile_head text-xs-center"
+      >
         <div class="image_container" mt-2>
           <v-avatar :size="90">
             <img :src="imgProfile" alt="img-profile" />
           </v-avatar>
         </div>
-        <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+        <h3 class="text-capitalize">
+          {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+        </h3>
         <p>
           <strong>{{ $t("profile.onlineStatus") }} :</strong>
           {{ getUserInfo.currentActiveTime }}
@@ -31,13 +38,21 @@
 
       <v-flex xs12 sm12 pt-3>
         <v-layout row justify-center>
-          <v-flex xs2 sm12 md2 v-if="!$vuetify.breakpoint.xs" class="profile_head text-xs-center">
+          <v-flex
+            xs2
+            sm12
+            md2
+            v-if="!$vuetify.breakpoint.xs"
+            class="profile_head text-xs-center"
+          >
             <div class="image_container">
               <v-avatar :size="60">
                 <img :src="imgProfile" alt="img-profile" />
               </v-avatar>
             </div>
-            <h3 class="text-capitalize">{{ getUserInfo.firstName }} {{ getUserInfo.lastName }}</h3>
+            <h3 class="text-capitalize">
+              {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
+            </h3>
             <p>
               <strong>{{ $t("profile.onlineStatus") }} :</strong>
               {{ getUserInfo.currentActiveTime }}
@@ -100,14 +115,23 @@
                   <div class="title_date_picker">
                     <span></span>
                   </div>
-                  <button @click="getOnlineHistory" class="buttonGreen btn-go">{{$t("msg.go")}}</button>
+                  <button @click="getOnlineHistory" class="buttonGreen btn-go">
+                    {{ $t("msg.go") }}
+                  </button>
                 </div>
               </v-flex>
             </v-layout>
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex xs12 sm12 md10 lg10 mt-2 :class="$vuetify.breakpoint.xs ? 'mt-4' : ''">
+      <v-flex
+        xs12
+        sm12
+        md10
+        lg10
+        mt-2
+        :class="$vuetify.breakpoint.xs ? 'mt-4' : ''"
+      >
         <v-layout row justify-center>
           <v-flex xs11 sm10>
             <div class="chart_container">
@@ -130,11 +154,11 @@
       <v-flex v-if="dataReady" xs12 pb-2 class="pt-3 text-xs-center">
         <div class="text-xs-center">
           <div>
-            <strong>{{$t("profile.onlineTime")}} :</strong>
+            <strong>{{ $t("profile.onlineTime") }} :</strong>
             {{ currentActiveTime }}
           </div>
           <div>
-            <strong>{{$t("profile.totalOnline")}} :</strong>
+            <strong>{{ $t("profile.totalOnline") }} :</strong>
             {{ getTotalOnlineTime }}
           </div>
         </div>
@@ -149,12 +173,15 @@ import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import onlineChart from "./onlinechart";
 import VueApexCharts from "vue-apexcharts";
-import date from "date-and-time";
 import config from "~/config/config.global";
+import date from "date-and-time";
+import utils from "~/mixin/utils.js";
+
 export default {
   components: {
     VueApexCharts
   },
+  mixins: [utils],
   data() {
     return {
       series: [],
@@ -220,29 +247,24 @@ export default {
         ? "/no-profile-pic.jpg"
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     },
-    getTotalOnlineTime () {
+    getTotalOnlineTime() {
       let days = this.totalOnlineTime.split("|")[0];
       let hours = this.totalOnlineTime.split("|")[1];
       let minutes = this.totalOnlineTime.split("|")[2];
       this.series[0].name = this.$root.$t("msg.onlineActiveTime");
       this.componentKey++;
       return `${
-              days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
-            }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t("msg.minutes")}`;
-    },
+        days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
+      }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t(
+        "msg.minutes"
+      )}`;
+    }
   },
   methods: {
     ...mapActions(["setSnackBarMessage"]),
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
       this.componentKey++;
-    },
-    checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), "YYYY-MM-DD");
-      if (endDate > now || !(endDate >= startDate)) {
-        return false;
-      }
-      return true;
     },
     startDateClick() {
       this.isShowDateStart = !this.isShowDateStart;
@@ -284,10 +306,12 @@ export default {
           let hours = parseInt(totalActiveTime / 60) % 24;
           let minutes = totalActiveTime % 60;
           this.totalOnlineTime = `${days}|${hours}|${minutes}`;
-          this.series = [{
-            name: this.$root.$t("msg.onlineActiveTime"),
-            data: chartData
-            }];
+          this.series = [
+            {
+              name: this.$root.$t("msg.onlineActiveTime"),
+              data: chartData
+            }
+          ];
           this.chartOptions.xaxis.categories = xAxis;
           this.componentKey++;
         } else {
