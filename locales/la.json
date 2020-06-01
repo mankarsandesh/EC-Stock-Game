@@ -344,7 +344,9 @@
     "gameOptions": "ຕົວເລືອກເກມ",
     "chipOptions": "ຕົວເລືອກຊິບ",
     "sound": "ສຽງ",
-    "allowToLocation": "ອະນຸຍາດໃຫ້ຕັ້ງສະຖານທີ່"
+    "allowToLocation": "ອະນຸຍາດໃຫ້ຕັ້ງສະຖານທີ່",
+    "chipExists" : "ຈຳ ນວນຊິບມີຢູ່ແລ້ວ",
+    "chipAmount" : "ຈຳ ນວນຊິບຄວນຈະໃຫຍ່ກວ່າ 100 ແລະ ໜ້ອຍ ກວ່າ 10000"
   },
   "notification": {
     "myNotification": "ແຈ້ງການຂອງຂ້ອຍ",
@@ -380,7 +382,8 @@
     "placeBet" : "ວາງເດີມພັນ",
     "cancelBet" :"ຍົກເລີກການເດີມພັນ",
     "reviewYourBet" : "ທົບທວນການເດີມພັນຂອງທ່ານ",
-    "pleaseConfirm": "ກະລຸນາຢືນຢັນການເດີມພັນຂອງທ່ານຂ້າງລຸ່ມນີ້"
+    "pleaseConfirm": "ກະລຸນາຢືນຢັນການເດີມພັນຂອງທ່ານຂ້າງລຸ່ມນີ້",
+    "betSuccess": "ການວາງເດີມພັນ ສຳ ເລັດແລ້ວ"
   },
   "invitation": {
     "selectCategoryError" : "ກະລຸນາເລືອກ ໝວດ ໝູ່",

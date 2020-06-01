@@ -343,7 +343,9 @@
     "gameOptions": "游戏选项",
     "chipOptions": "筹码设置",
     "sound": "声音",
-    "allowToLocation": "允许定位"
+    "allowToLocation": "允许定位",
+    "chipExists" : "筹码数量已存在",
+    "chipAmount" : "筹码数量应大于100且小于10000"
   },
   "notification": {
     "myNotification": "我的消息",
@@ -379,7 +381,8 @@
     "placeBet" : "下注",
     "cancelBet" :"取消投注",
     "reviewYourBet" : "查看您的投注",
-    "pleaseConfirm": "請在下面確認您的投注"
+    "pleaseConfirm": "請在下面確認您的投注",
+    "betSuccess": "投注成功"
   },
   "invitation": {
     "selectCategoryError" : "请选择类别",
