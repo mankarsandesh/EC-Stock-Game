@@ -344,7 +344,9 @@
     "gameOptions": "GAME OPTIONS",
     "chipOptions": "CHIP OPTIONS",
     "sound": "Sound",
-    "allowToLocation": "Allow To Location"
+    "allowToLocation": "Allow To Location",
+    "chipExists" : "Chip Amount already exist",
+    "chipAmount" : "Chip amount should be greater than 100 and less than 10000"
   },
   "notification": {
     "myNotification": "my notification",
@@ -380,7 +382,8 @@
     "placeBet" : "Place Bet",
     "cancelBet" :"Cancel Bet",
     "reviewYourBet" : "REVIEW YOUR BET",
-    "pleaseConfirm" : "Please confirm your bet below"
+    "pleaseConfirm" : "Please confirm your bet below",
+    "betSuccess": "Bet placed successfully"
   },
   "invitation": {
     "selectCategoryError" : "Please Select Category",
@@ -445,7 +448,8 @@
     "daysShould":"Days should be Between 1 to 10.",
     "betsShould":"Bets should be Between 1 to 100",
     "userFollowed":"User followed successfully.",
-    "userUnFollowed":"User un-followed successfully."
+    "userUnFollowed":"User un-followed successfully.",
+    "maxFollow":"You can't follow more than 10 users at a time."
   },
   "currentBet": {
     "noBets" : "There are no current bets.",

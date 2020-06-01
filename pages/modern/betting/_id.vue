@@ -1734,7 +1734,7 @@ export default {
           this.bettingDialog = false;
           this.reviewbetDialog = false;
           this.pushDataOnGoingBet(res.data[0]);
-          this.setSnackBarMessage("Sucessfully Bet Place.");
+          this.setSnackBarMessage(this.$root.$t("betting.betSuccess"));
         } else {
           this.setSnackBarMessage(this.$root.$t("error.general"));
         }

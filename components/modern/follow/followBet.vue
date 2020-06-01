@@ -286,7 +286,7 @@ export default {
       this.$emit("followBetClose");
     },
     // Users Follow Bet Validation
-    async followThisUser(followerID, followMethod) {     
+    async followThisUser(followerID, followMethod) {
       // Check Empty Filed
       if (
         !this.selectedFollow &&
@@ -356,7 +356,7 @@ export default {
             );
           }
           break;
-      }      
+      }
       console.log("checked");
       return this.follwingBetting(followerID, followMethod);
     },
@@ -408,12 +408,23 @@ export default {
             timer: 1000
           });
         } else {
-          this.$swal({
-            type: "error",
-            title: data.message[0],
-            showConfirmButton: true,
-            timer: 1000
-          });
+          if (
+            data.message[0] == "You cant follow more than 10 users at a time."
+          ) {
+            this.$swal({
+              type: "error",
+              title: this.$root.$t("follow.maxFollow"),
+              showConfirmButton: true,
+              timer: 1000
+            });
+          } else {
+            this.$swal({
+              type: "error",
+              title: data.message[0],
+              showConfirmButton: true,
+              timer: 1000
+            });
+          }
         }
       } catch (error) {
         console.log(error);
