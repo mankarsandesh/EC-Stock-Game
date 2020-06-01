@@ -22,6 +22,7 @@
               v-model="filter.stock.china"
               color="#003e70"
               label="china"
+              value="china"
               hide-details
             ></v-checkbox>
             <v-checkbox

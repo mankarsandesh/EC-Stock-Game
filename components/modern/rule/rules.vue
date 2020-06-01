@@ -30,34 +30,7 @@
                 <v-card-text>
                   <p style="line-hight:15px;text-align:center;font-size:18px;">
                    {{ $t('msg.textResultIntroduction')}}
-                  </p>
-                  <!-- <p class="text-center">
-                    e.g. Assuming a stock resulting in 1234.
-                    <span class="text-red">56</span>, all our game types would
-                    only take decimal
-                  </p>
-                  <p class="text-center">
-                    ‘56’ as result; In the case the result is now serving as
-                    <span class="text-red">‘56’</span>, we define decimal
-                    <span class="text-red">‘5’</span>, as
-                    <span class="text-red">‘first</span>,
-                  </p>
-                  <p class="text-center">
-                    digit’ result; decimal
-                    <span class="text-red">‘6’</span>, as
-                    <span class="text-red">‘last’</span>,‘ digit’ result;
-                    decimals <span class="text-red">‘5’</span>, and
-                    <span class="text-red">‘6’</span>, together as
-                    <span class="text-red">two</span>,
-                  </p>
-                  <p class="text-center">
-                    ‘-digit’ result; Other than these, we are also appointing
-                    the outcome of ‘5 + 6’ as
-                  </p>
-                  <p class="text-center">
-                    <span class="text-red">both</span>, digits’ result, which is
-                    <span class="text-red">‘11’</span>.
-                  </p> -->
+                  </p>     
                   <div class="text-xs-center">
                     <v-btn
                       class="accept"
