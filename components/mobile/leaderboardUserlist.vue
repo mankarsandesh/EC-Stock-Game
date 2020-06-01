@@ -18,16 +18,16 @@
           <v-list-tile-action>
             <v-radio-group v-model="sortValue" row>
               <v-radio
-                :label="$t('leaderBoard.monthly')"
-                value="monthly"
-                v-on:click="sortingBy('monthly')"
-              ></v-radio
-              >&nbsp;
-              <v-radio
                 :label="$t('leaderBoard.weekly')"
                 value="weekly"
                 v-on:click="sortingBy('weekly')"
+              ></v-radio>&nbsp;
+              <v-radio
+                :label="$t('leaderBoard.monthly')"
+                value="monthly"
+                v-on:click="sortingBy('monthly')"
               ></v-radio>
+              
             </v-radio-group>
           </v-list-tile-action>
         </v-list-tile>
@@ -130,7 +130,7 @@ export default {
     return {
       renderComponent: true, // render Follow Bet
       loadingImage: false,
-      sortValue: "monthly",
+      sortValue: "weekly",
       defaultImage: "/no-profile-pic.jpg",
       topPlayerData: [],
       FolloworNot: "",
