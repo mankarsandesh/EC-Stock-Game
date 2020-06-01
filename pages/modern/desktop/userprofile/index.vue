@@ -323,6 +323,17 @@ export default {
             distributed: true
           }
         },
+        tooltip: {
+           y: {
+            formatter: (val, q) => {
+              return (
+                '<div>' + "<span>" +
+                q.series[0][q.dataPointIndex] + ` ${this.$root.$t("msg.minutes")}` + 
+                " </span>"
+              )
+            }
+          }
+        },
         dataLabels: {
           enabled: false
         },
