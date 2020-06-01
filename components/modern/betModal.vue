@@ -230,7 +230,7 @@ export default {
         if (res.status && res.data[0].status) {
           this.setUserData();
           this.closePopper();
-          
+
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
             gameUUID: res.data[0].gameUUID,

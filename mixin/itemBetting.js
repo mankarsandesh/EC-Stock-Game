@@ -106,11 +106,7 @@ export const itemBetting = {
 
         findItemBetting() {
 
-            const itemBetting = secureStorage.getItem("itemBetting")
-
-
-            const array = JSON.parse(itemBetting)
-
+            const array = secureStorage.getItem("itemBetting")
 
             if (array) {
 

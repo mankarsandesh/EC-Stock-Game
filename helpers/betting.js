@@ -38,9 +38,7 @@ class Betting {
     async clearBettingFailure() {
         try {
 
-            const getItem = secureStorage.getItem("itemBetting")
-
-            const array = JSON.parse(getItem)
+            const array = secureStorage.getItem("itemBetting")
 
             if (array.length) {
 

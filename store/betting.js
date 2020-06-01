@@ -1,6 +1,6 @@
 import config from "../config/config.global";
 import secureStorage from "../plugins/secure-storage";
-const itemBetting = JSON.parse(secureStorage.getItem("itemBetting"));
+const itemBetting = secureStorage.getItem("itemBetting");
 const state = () => ({
     collegeBtnNumber: null,
     multiGameBet: itemBetting ? itemBetting : [],
@@ -21,7 +21,7 @@ const mutations = {
     },
     SET_ITEMS_BETTING(state, payload) {
         state.getItemsBetting.push(payload);
-        secureStorage.setItem("itemBetting", JSON.stringify(state.getItemsBetting))
+        secureStorage.setItem("itemBetting", state.getItemsBetting)
     },
     SET_COLLEGE_BUTTON_NUMBER(state, payload) {
         state.collegeBtnNumber = payload;
@@ -53,7 +53,7 @@ const mutations = {
     },
     SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
         state.tempMultiGameBetData.push(payload);
-        secureStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
+        secureStorage.setItem("itemBetting", state.tempMultiGameBetData)
     },
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
         state.multiGameBetSend.push(...state.tempMultiGameBetData);
@@ -69,7 +69,7 @@ const mutations = {
     SET_CONFIRM_BETTING(state, payload) {
         state.multiGameBet.push(payload)
         state.tempMultiGameBetData.push(payload);
-        secureStorage.setItem("itemBetting", JSON.stringify(state.tempMultiGameBetData))
+        secureStorage.setItem("itemBetting", state.tempMultiGameBetData)
     }
 };
 const actions = {
