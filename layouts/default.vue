@@ -19,9 +19,11 @@
             router
             exact
             class="text-primary text-uppercase"
+            active-class="activeMenu"
+            :class="item.to === $route.path ? 'activeMenu' : ''"
           >
             <v-list-tile-content>
-              <v-list-tile-title>
+              <v-list-tile-title     >
                 {{ $t(`menu.${item.title}`) }}
               </v-list-tile-title>
             </v-list-tile-content>
@@ -213,6 +215,10 @@ export default {
 </script>
 
 <style scoped>
+.activeMenu {
+  background-color: #1db42f !important;
+  color:#FFF !important;
+}
 .light-toobar {
   background-color: #fff !important;
 }

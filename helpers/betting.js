@@ -64,10 +64,5 @@ class Betting {
         }
     }
 
-
-
-
-
-
 }
 export default Betting = new Betting
