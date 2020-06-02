@@ -162,7 +162,7 @@
                 >
                   <v-icon>fa-plus</v-icon>
                 </span>
-                <span v-else class="addChart" @click="removeTradMap(index)">
+                <span v-else class="addChart" @click="removeTrendMap(index)">
                   <v-icon>close</v-icon>
                 </span>
               </tableTrendMap>
@@ -359,13 +359,18 @@ export default {
   methods: {
     ...mapActions([
       "setRoadMap",
-      "setTutorialStepNumber",
       "setIsShowTutorial",
       "setLiveRoadMap",
       "setFooterBetAmount",
       "setIsLoadingStockGame",
       "clearBetValueFooterBet"
     ]),
+    openTutorial() {
+      this.setIsShowTutorial(true);
+      setTimeout(() => {
+        $("#open-Tutorial").click();
+      }, 10);
+    },
     setAfterFullScreenClosePage() {
       secureStorage.setItem("fullscreenclosed", "desktop");
       this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
@@ -410,7 +415,7 @@ export default {
       }
     },
     // Remove trendMap
-    removeTradMap(index) {
+    removeTrendMap(index) {
       let indexValue = this.trendTypes[index];
       let newData = this.trendTypes.filter(data => {
         return data != indexValue;
@@ -419,37 +424,6 @@ export default {
     },
     loaded() {
       this.isLoad = true;
-    },
-    clearTutorialUI() {
-      $("#lastDrawGuideline").css("z-index", "1");
-      $("#betCloseInGuideline").css("z-index", "1");
-      $("#lotteryDrawGuidelines").css("z-index", "1");
-      $("#chartGuidelineNew").css("z-index", "1");
-      $(".betButtonGuide").css("z-index", "1");
-      $(".BetButtonGuideEven").css("z-index", "1");
-      $("#selectstockGuidelines").css("z-index", "1");
-      $("#stocklistGuidelines").css("z-index", "1");
-      $("#trendmapGuidelines").css("z-index", "1");
-      $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
-    },
-    openTutorial() {
-      const _this = this;
-      let timeStart = this.getTutorialStepNumber === 0 ? 0 : 3000;
-      // setTimeout  to  resolve problems if user close tutorial and reopen
-      setTimeout(() => {
-        this.setIsShowTutorial(true);
-        let step = 1;
-        this.setTutorialStepNumber(step);
-        let stepGo = setInterval(() => {
-          step++;
-          this.setTutorialStepNumber(step);
-          if (step === 12 || !_this.getIsShowTutorial) {
-            clearInterval(stepGo);
-            _this.clearTutorialUI();
-            this.setTutorialStepNumber(0);
-          }
-        }, 3000);
-      }, timeStart);
     }
   },
   computed: {
