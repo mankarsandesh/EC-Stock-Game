@@ -165,7 +165,7 @@ export default {
         if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
           this.$swal({
             type: "error",
-            title: this.$root.$t("betting.betValue"),
+            title: this.$root.$t("betting.betValue"),  
             timer: 1500,
             showConfirmButton: true
           });
@@ -192,7 +192,6 @@ export default {
 
           if (this.betValue > 0) {
             this.$soundEffect("betting");
-
             const stockDetail = {
               betAmount: this.betValue,
               class: this.betId.split("-")[0],
@@ -206,6 +205,7 @@ export default {
             this.confirmDisabled = true;
             this.sendBetting(data, stockDetail);
             this.setFooterBetAmount(0);
+
             $("#" + this.stockName + this.betId).addClass(
               this.betId.split("-")[0] + " " + this.betId.split("-")[1]
             );
@@ -273,7 +273,9 @@ export default {
     clear() {
       this.betValue = 0;
       this.confirmDisabled = false;
-    }
+    },
+
+ 
   }
 };
 </script>

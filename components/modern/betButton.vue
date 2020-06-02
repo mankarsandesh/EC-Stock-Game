@@ -70,7 +70,6 @@
 
       <span class="w10">
         <v-btn
-          :class="number === 'first' ? 'active-firstdigit' : null"
           class="align_button4 f-hover"
           :id="stockID + 'firstdigit'"
           @click="btnNumber('first')"
@@ -164,7 +163,6 @@
 
       <span class="w10">
         <v-btn
-          :class="number === 'last' ? 'active-lasttdigit' : null"
           class="align_button4 betButtonGuide l-hover"
           :id="stockID + 'lastdigit'"
           @click="btnNumber('last')"
@@ -251,7 +249,6 @@
       </popper>
       <span class="w12">
         <v-btn
-          :class="number === 'both' ? 'active-bothdigit' : null"
           class="align_button4 b-hover"
           :id="stockID + 'bothdigit'"
           @click="btnNumber('both')"
@@ -340,7 +337,6 @@
 
       <span class="w12">
         <v-btn
-          :class="number === 'two' ? 'active-twodigit' : null"
           class="align_button4 t-hover"
           :id="stockID + 'twodigit'"
           @click="btnNumber('two')"
