@@ -33,7 +33,7 @@
                 {{ item.item.stockName }} / {{ item.item.loop }}
                 {{ $t("msg.minutes") }}
               </td>
-              <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
+              <td >{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
               <td>{{ item.item.betAmount | toCurrency }}</td>
 
               <td v-if="item.item.betResult == 'win'">
@@ -169,7 +169,7 @@ export default {
     //Filter Bet Details Content
     betHistory() {
       return this.userBetHistory.filter(data => {
-        return data.ruleName.toLowerCase().includes(this.search.toLowerCase());
+        return data.stockName.toLowerCase().includes(this.search.toLowerCase());
       });
     },
     TotalAmount() {

@@ -97,7 +97,6 @@
                       </span>
                     </v-flex>
                   </div>
-                  <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
                 <!-- Help Tutorial -->
                 <v-flex
@@ -106,16 +105,20 @@
                   class="text-xs-right"
                   style="align-self: flex-end;"
                 >
-                  <v-btn
-                    fab
-                    dark
-                    small
-                    class="helpButton"
-                    @click="openTutorial()"
-                    title="Help"
-                  >
-                    <v-icon dark size="22">fa-question</v-icon>
-                  </v-btn>
+                  <v-tooltip left>
+                    <template v-slot:activator="{ on }">
+                      <v-btn
+                        fab
+                        class="helpButton"
+                        dark
+                        @click="openTutorial()"
+                        v-on="on"
+                      >
+                        <v-icon dark size="24">fa-question</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ $t("msg.enterFullScreen") }}</span>
+                  </v-tooltip>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -246,11 +249,10 @@ import stockList from "~/components/modern/stockList";
 import stockResult from "~/components/modern/stockresult";
 import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
-import chartApp from "~/components/modern/chart";
-import tableTrendMap from "~/components/modern/tableTrendMap";
-import stockSelect from "~/components/stockSelect";
-import config from "~/config/config.global";
-import lotteryDraw from "~/components/modern/lotteryDraw";
+import chartApp from "~/components/modern/chart"; // Chart
+import tableTrendMap from "~/components/modern/tableTrendMap"; // Road Map
+import stockSelect from "~/components/stockSelect"; // Select Stock
+import config from "~/config/config.global"; // Config Settings
 import { isMobile } from "mobile-device-detect";
 import secureStorage from "../../../plugins/secure-storage";
 import onlyrules from "~/components/modern/rule/onlyrule";
@@ -268,7 +270,6 @@ export default {
     betButton,
     tableTrendMap,
     stockSelect,
-    lotteryDraw,
     isMobile: isMobile,
     onlyrules
   },
@@ -513,6 +514,8 @@ export default {
   background-color: #4464ff !important;
   color: #fff;
   padding: 3px;
+  width: 40px;
+  height: 40px;
 }
 
 .leftStocklist {
@@ -520,7 +523,7 @@ export default {
   border-radius: 5px;
   position: relative;
   top: 0;
-  height:100%;
+  height: 100%;
   box-shadow: 0 0 2px grey;
 }
 
