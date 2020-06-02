@@ -181,7 +181,9 @@
     "enterFullScreen":"ໃສ່ຮູບແບບເຕັມຈໍ",
     "closeFullScreen":"ປິດຮູບແບບເຕັມຈໍ",
     "close" : "ປິດ",
-    "rowsPerPage":"ແຖວເກັດທີ່ຢູ່ຕໍ່ຫນ້າ:"
+    "rowsPerPage":"ແຖວເກັດທີ່ຢູ່ຕໍ່ຫນ້າ:",
+    "betSuccess":"ຄວາມ ສຳ ເລັດຂອງການພະນັນ",
+    "betFailed" : "ການເດີມພັນລົ້ມເຫລວ"
   },
   "navlist": {
     "live Stock": "ຫຸ້ນເປີດ",
