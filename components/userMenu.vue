@@ -88,7 +88,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getUserBalance", "getUserUUID"]),
+    ...mapGetters(["getUserInfo", "getUserBalance", "getUserUUID","getUserCurrency"]),
     imgProfile() {
       if (this.getUserInfo.profileImage == null) {
         return `${this.defaultImage}`;
@@ -145,8 +145,8 @@ export default {
         console.log(ex);
       }
     },
-    formatToPrice(value) {
-      return `$ ${Number(value)
+    formatToPrice(value) {     
+      return ``+this.getUserCurrency+` ${Number(value)
         .toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;

@@ -201,7 +201,7 @@
                         class="number-box"
                         v-if="visitProfileUserData.totalWinAmount"
                       >
-                        ${{ visitProfileUserData.totalWinAmount | currency }}
+                        {{ this.getUserCurrency}} {{ visitProfileUserData.totalWinAmount | currency }}
                       </span>
                       <span
                         class="number-box"
@@ -324,13 +324,15 @@ export default {
           }
         },
         tooltip: {
-           y: {
+          y: {
             formatter: (val, q) => {
               return (
-                '<div>' + "<span>" +
-                q.series[0][q.dataPointIndex] + ` ${this.$root.$t("msg.minutes")}` + 
+                "<div>" +
+                "<span>" +
+                q.series[0][q.dataPointIndex] +
+                ` ${this.$root.$t("msg.minutes")}` +
                 " </span>"
-              )
+              );
             }
           }
         },
@@ -360,7 +362,8 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getUserInfo",
-      "getLocale"
+      "getLocale",
+      "getUserCurrency"
     ])
   },
   watch: {
@@ -437,7 +440,9 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
-          this.visitProfileUserData.winRate = Math.round(this.visitProfileUserData.winRate);
+          this.visitProfileUserData.winRate = Math.round(
+            this.visitProfileUserData.winRate
+          );
           this.myProfileImage = res.data.userImage;
 
           //  series
@@ -456,7 +461,6 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
           this.componentKey++;
         } else {
-
           this.messageError = true;
           throw new Error(this.$root.$t("error.general"));
         }

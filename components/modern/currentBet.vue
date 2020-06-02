@@ -33,7 +33,7 @@
             {{ $t("msg.minutes") }}
           </td>
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
-          <td>{{ item.item.betAmount | toCurrency }}</td>
+          <td>{{currency}}{{ item.item.betAmount | currency }}</td>
           <td>{{ item.item.payout }}</td>
           <td v-if="item.item.betResult == 'win'">
             <v-chip
@@ -72,7 +72,7 @@
               {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
             </td>
             <td>
-              <strong>{{ TotalAmount | toCurrency }}</strong>
+              <strong>{{ currency }}{{ TotalAmount | currency }}</strong>
             </td>
             <td colspan="2"></td>
           </tr>
@@ -84,7 +84,7 @@
 
 <script>
 export default {
-  props: ["currentBets"],
+  props: ["currentBets","currency"],
   data: () => ({
     search: ""
   }),
