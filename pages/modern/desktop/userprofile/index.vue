@@ -282,6 +282,60 @@ import secureStorage from "../../../../plugins/secure-storage";
 import countryFlag from "vue-country-flag";
 
 export default {
+  async watchQuery(newQuery) {
+    try {
+      let reqBody = {
+        portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
+        visitingUserUUID: newQuery.id ? newQuery.id : this.getUserUUID,
+        dateRangeFrom: this.startDate,
+        dateRangeTo: this.endDate,
+        version: config.version
+      };
+      let res = await this.$axios.$post(
+        config.getVisitUserProfile.url,
+        reqBody,
+        {
+          headers: config.header
+        }
+      );
+      if (res.status) {
+        this.messageError = false;
+        this.visitProfileUserData = res.data;
+        this.visitProfileUserData.winRate = Math.round(
+          this.visitProfileUserData.winRate
+        );
+        this.myProfileImage = res.data.userImage;
+
+        //  series
+        let series = [];
+        let xaxis = [];
+        res.data.activeTimeDateWise.forEach(element => {
+          series.push(element.activeTimeInMins);
+          xaxis.push(element.Date);
+        });
+        this.series = [
+          {
+            name: this.$root.$t("msg.onlineActiveTime"),
+            data: series
+          }
+        ];
+        this.chartOptions.xaxis.categories = xaxis;
+        this.componentKey++;
+      } else {
+        this.messageError = true;
+        throw new Error(this.$root.$t("error.general"));
+      }
+    } catch (ex) {
+      this.messageError = true;
+      console.error(ex);
+      this.$swal({
+        title: ex.message,
+        type: "error",
+        timer: 1000
+      });
+    }
+  },
   layout: "desktopModern",
   components: {
     countryFlag,
@@ -324,13 +378,15 @@ export default {
           }
         },
         tooltip: {
-           y: {
+          y: {
             formatter: (val, q) => {
               return (
-                '<div>' + "<span>" +
-                q.series[0][q.dataPointIndex] + ` ${this.$root.$t("msg.minutes")}` + 
+                "<div>" +
+                "<span>" +
+                q.series[0][q.dataPointIndex] +
+                ` ${this.$root.$t("msg.minutes")}` +
                 " </span>"
-              )
+              );
             }
           }
         },
@@ -437,7 +493,9 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
-          this.visitProfileUserData.winRate = Math.round(this.visitProfileUserData.winRate);
+          this.visitProfileUserData.winRate = Math.round(
+            this.visitProfileUserData.winRate
+          );
           this.myProfileImage = res.data.userImage;
 
           //  series
@@ -456,7 +514,6 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
           this.componentKey++;
         } else {
-
           this.messageError = true;
           throw new Error(this.$root.$t("error.general"));
         }
