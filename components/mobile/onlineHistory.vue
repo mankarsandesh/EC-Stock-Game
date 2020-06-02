@@ -206,6 +206,19 @@ export default {
             show: false
           }
         },
+        tooltip: {
+          y: {
+            formatter: (val, q) => {
+              return (
+                "<div>" +
+                "<span>" +
+                q.series[0][q.dataPointIndex] +
+                ` ${this.$root.$t("msg.minutes")}` +
+                " </span>"
+              );
+            }
+          }
+        },
         plotOptions: {
           bar: {
             columnWidth: "45%",
@@ -278,7 +291,7 @@ export default {
     async getOnlineHistory() {
       try {
         if (!this.checkValidDate(this.startDate, this.endDate)) {
-          this.setSnackBarMessage("Please select a valid date");
+          throw new Error("profile.invalidDate");
         }
         var reBody = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -318,13 +331,8 @@ export default {
           this.setSnackBarMessage(this.$root.$t("error.general"));
         }
       } catch (ex) {
-        this.setSnackBarMessage("Please select a valid date");
+        this.setSnackBarMessage(ex.message);
         this.dataReady = false;
-        if (ex.message == "Please select a valid date") {
-          this.setSnackBarMessage(this.$root.$t("profile.invalidDate"));
-        } else {
-          this.setSnackBarMessage(ex.message);
-        }
       }
     }
   }

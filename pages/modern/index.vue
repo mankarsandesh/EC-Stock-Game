@@ -22,6 +22,7 @@
               v-model="filter.stock.china"
               color="#003e70"
               label="china"
+              value="china"
               hide-details
             ></v-checkbox>
             <v-checkbox
@@ -274,7 +275,6 @@ export default {
       } else if (this.sortBy === "type") {
         result.sort(sortByType);
       }
-      console.log('showStocks', result);
       return result;
     }
   },

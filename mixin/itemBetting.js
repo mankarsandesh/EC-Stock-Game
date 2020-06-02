@@ -98,19 +98,16 @@ export const itemBetting = {
         updateBet(items) {
             const split = items.betRule.split("-");
             // small button
-            $("#" + items.stock + items.betRule).addClass(items.betRule);
+            $("#" + items.id).addClass(items.betRule);
             // parent the button
             $("#" + items.stock + split[0]).addClass(split[0]);
         },
 
+        // btc1firstdigit-9
 
         findItemBetting() {
 
-            const itemBetting = secureStorage.getItem("itemBetting")
-
-
-            const array = JSON.parse(itemBetting)
-
+            const array = secureStorage.getItem("itemBetting")
 
             if (array) {
 
@@ -193,3 +190,13 @@ export const itemBetting = {
 
     }
 }
+
+// item {rule: Array(1), name: "firstdigit-1"}
+// number 8
+// stockName btc1
+// betID firstdigit-1
+// betWin firstdigitWin-1
+// name firstdigit-1
+
+
+// btc1firstdigitNumber

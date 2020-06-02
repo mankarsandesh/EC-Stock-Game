@@ -1,7 +1,7 @@
 <template>
   <section class="breadcrumbs">
     <v-container>
-      <v-parallax dark height="130">
+      <v-parallax dark height="130" class="parallax" >
         <v-layout align-center justify-center>
           <v-flex md5 lg5>
             <h3 class="title">{{ title }}</h3>
@@ -22,12 +22,6 @@
               dark
               >{{ titlebtn2 }}</v-btn
             >
-            <!-- <Button v-if="linkItem" :linkItem="linkItem" :btnTitle="titlebtn" />
-            <Button
-              v-if="linkItem2"
-              :linkItem="linkItem2"
-              :btnTitle="titlebtn2"
-            /> -->
           </v-flex>
         </v-layout>
       </v-parallax>
@@ -46,5 +40,8 @@ export default {
 <style scoped>
 .title {
   font-size: 30px !important;
+}
+.parallax .v-parallax__image{
+  display: contents !important;
 }
 </style>
