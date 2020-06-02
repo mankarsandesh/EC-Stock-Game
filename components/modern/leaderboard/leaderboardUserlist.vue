@@ -106,7 +106,7 @@
           <div class="rows">
             <h3 class="header">{{ $t("leaderBoard.winningAmount") }}</h3>
             <h4 style="color:#0b2a68;" class="titleText">
-              ${{ Math.round(data.totalWinAmount, 1) | currency }}
+           {{ getUserCurrency }}{{ Math.round(data.totalWinAmount, 1) | currency }}
             </h4>
           </div>
           <div
@@ -230,7 +230,7 @@ export default {
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
     }),
-    ...mapGetters(["getUserInfo"])
+    ...mapGetters(["getUserInfo","getUserCurrency"])
   },
   methods: {
     // Render Follow Bet Component

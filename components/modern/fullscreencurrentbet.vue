@@ -55,7 +55,7 @@ export default {
   min-width: 400px;
   margin: auto;
   overflow: auto;
-  max-height: 350px;
+  height: 350px;
 }
 
 .table-wrapper-scroll-y {

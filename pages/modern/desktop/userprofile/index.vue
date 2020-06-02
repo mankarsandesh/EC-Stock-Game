@@ -201,7 +201,7 @@
                         class="number-box"
                         v-if="visitProfileUserData.totalWinAmount"
                       >
-                        ${{ visitProfileUserData.totalWinAmount | currency }}
+                        {{ this.getUserCurrency}} {{ visitProfileUserData.totalWinAmount | currency }}
                       </span>
                       <span
                         class="number-box"
@@ -416,7 +416,8 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getUserInfo",
-      "getLocale"
+      "getLocale",
+      "getUserCurrency"
     ])
   },
   watch: {

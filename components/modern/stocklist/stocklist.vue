@@ -12,7 +12,9 @@
         <tbody>
           <tr v-for="(item, index) in stockLists[0]" :key="item.stockUUID">
             <td>
-              <b>{{ item.stockName.toUpperCase() }}</b>
+              <nuxt-link :to="'/modern/desktop/' + item.stockName">
+                <b>{{ item.stockName.toUpperCase() }}</b>
+              </nuxt-link>
             </td>
             <td v-if="item.stockStatus == 'Closed'" :style="{ color: 'red' }">
               Closed
@@ -46,7 +48,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import config from "~/config/config.global";
-import stockListVue from '../../../pages/modern/desktop/stock-list.vue';
+import stockListVue from "../../../pages/modern/desktop/stock-list.vue";
 export default {
   props: {
     sortBy: {
@@ -78,10 +80,10 @@ export default {
       if (this.sortBy === "asc") {
         stockNewList.push(this.getStockListPrice[0].sort(sortByAsc));
         stockNewList.push(this.getStockListPrice[1].sort(sortByAsc));
-      } else  if (this.sortBy === "desc") {
+      } else if (this.sortBy === "desc") {
         stockNewList.push(this.getStockListPrice[0].sort(sortByDesc));
         stockNewList.push(this.getStockListPrice[1].sort(sortByDesc));
-      }else{
+      } else {
         stockNewList.push(this.getStockListPrice[0]);
         stockNewList.push(this.getStockListPrice[1]);
       }

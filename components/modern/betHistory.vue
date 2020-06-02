@@ -34,13 +34,13 @@
                 {{ $t("msg.minutes") }}
               </td>
               <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
-              <td>{{ item.item.betAmount | toCurrency }}</td>
+              <td>{{ curreny }}{{ item.item.betAmount | currency }}</td>
 
               <td v-if="item.item.betResult == 'win'">
-                <span class="winning">{{ item.item.rollingAmount }}</span>
+                <span class="winning">{{ curreny }}{{ item.item.rollingAmount | currency }}</span>
               </td>
               <td v-if="item.item.betResult == 'lose'">
-                <span class="losing">- {{ item.item.betAmount }}</span>
+                <span class="losing">{{ curreny }}{{ item.item.betAmount | currency }}</span>
               </td>
               <td
                 v-if="item.item.isFollowBet == 1"
@@ -82,13 +82,13 @@
                 <span class="betDraw"
                   >{{ $t("betHistory.yourLosingAmount") }} :</span
                 >
-                <span class="lossAmount">{{ item.item.betAmount }}</span>
+                <span class="lossAmount">{{ curreny }}{{ item.item.betAmount | currency }}</span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount != 0">
                 <span class="betDraw"
                   >{{ $t("betHistory.yourWinningAmount") }} :</span
                 >
-                <span class="winAmount">{{ item.item.rollingAmount }}</span>
+                <span class="winAmount">{{ curreny }}{{ item.item.rollingAmount | currency}}</span>
               </td>
             </tr>
           </template>
@@ -138,22 +138,25 @@
   </v-container>
 </template>
 <script>
+import date from "date-and-time";
 export default {
-  props: ["userBetHistory", "search"],
-  data: () => ({
-    rowPageCount: 10,
-    pagination: {
-      page: 1
-    }
-  }),
+  props: ["userBetHistory", "search","curreny"],
+  data() {
+    return {
+      rowPageCount: 10,
+      pagination: {
+        page: 1
+      }
+    };
+  },
   filters: {
     toCurrency(value) {
       if (typeof value !== "number") {
         return value;
       }
-      var formatter = new Intl.NumberFormat("en-US", {
+      var formatter = new Intl.NumberFormat("zh-CN", {
         style: "currency",
-        currency: "USD",
+        currency: "CNY",
         minimumFractionDigits: 0
       });
       return formatter.format(value);
@@ -169,7 +172,7 @@ export default {
     //Filter Bet Details Content
     betHistory() {
       return this.userBetHistory.filter(data => {
-        return data.ruleName.toLowerCase().includes(this.search.toLowerCase());
+        return data.stockName.toLowerCase().includes(this.search.toLowerCase());
       });
     },
     TotalAmount() {
@@ -180,9 +183,9 @@ export default {
       return total;
     },
     TotalRolling() {
-      let totalRolling = null;    
+      let totalRolling = null;
       this.betHistory.map(item => {
-        totalRolling += item.rollingAmount;       
+        totalRolling += item.rollingAmount;
       });
       return totalRolling;
     }
@@ -191,11 +194,11 @@ export default {
 </script>
 <style scoped>
 .totalRollingWin {
-  font-weight: 800;
+  font-weight: 600;
   color: green;
 }
 .totalRollingLoss {
-  font-weight: 800;
+  font-weight: 600;
   color: red;
 }
 
