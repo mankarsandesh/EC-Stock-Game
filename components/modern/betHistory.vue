@@ -33,7 +33,7 @@
                 {{ item.item.stockName }} / {{ item.item.loop }}
                 {{ $t("msg.minutes") }}
               </td>
-              <td >{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
+              <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
               <td>{{ item.item.betAmount | toCurrency }}</td>
 
               <td v-if="item.item.betResult == 'win'">
@@ -138,14 +138,17 @@
   </v-container>
 </template>
 <script>
+import date from "date-and-time";
 export default {
   props: ["userBetHistory", "search"],
-  data: () => ({
-    rowPageCount: 10,
-    pagination: {
-      page: 1
-    }
-  }),
+  data() {
+    return {
+      rowPageCount: 10,
+      pagination: {
+        page: 1
+      }
+    };
+  },
   filters: {
     toCurrency(value) {
       if (typeof value !== "number") {
@@ -180,9 +183,9 @@ export default {
       return total;
     },
     TotalRolling() {
-      let totalRolling = null;    
+      let totalRolling = null;
       this.betHistory.map(item => {
-        totalRolling += item.rollingAmount;       
+        totalRolling += item.rollingAmount;
       });
       return totalRolling;
     }
