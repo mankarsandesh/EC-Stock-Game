@@ -1,6 +1,5 @@
 <template>
   <v-container fluid mt-2 class="containerNew">
-    <button ref="nextBackWard" @click="nextBackWard()"></button>
     <v-layout>
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
@@ -164,7 +163,7 @@
                 >
                   <v-icon>fa-plus</v-icon>
                 </span>
-                <span v-else class="addChart" @click="removeTradMap(index)">
+                <span v-else class="addChart" @click="removeTrendMap(index)">
                   <v-icon>close</v-icon>
                 </span>
               </tableTrendMap>
@@ -257,7 +256,6 @@ import { isMobile } from "mobile-device-detect";
 import secureStorage from "../../../plugins/secure-storage";
 import onlyrules from "~/components/modern/rule/onlyrule";
 
-let _stepGo;
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
@@ -362,13 +360,18 @@ export default {
   methods: {
     ...mapActions([
       "setRoadMap",
-      "setTutorialStepNumber",
       "setIsShowTutorial",
       "setLiveRoadMap",
       "setFooterBetAmount",
       "setIsLoadingStockGame",
       "clearBetValueFooterBet"
     ]),
+    openTutorial() {
+      this.setIsShowTutorial(true);
+      setTimeout(() => {
+        $("#open-Tutorial").click();
+      }, 10);
+    },
     setAfterFullScreenClosePage() {
       secureStorage.setItem("fullscreenclosed", "desktop");
       this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
@@ -413,7 +416,7 @@ export default {
       }
     },
     // Remove trendMap
-    removeTradMap(index) {
+    removeTrendMap(index) {
       let indexValue = this.trendTypes[index];
       let newData = this.trendTypes.filter(data => {
         return data != indexValue;
@@ -422,44 +425,6 @@ export default {
     },
     loaded() {
       this.isLoad = true;
-    },
-    clearTutorialUI() {
-      $("#lastDrawGuideline").css("z-index", "1");
-      $("#betCloseInGuideline").css("z-index", "1");
-      $("#lotteryDrawGuidelines").css("z-index", "1");
-      $("#chartGuidelineNew").css("z-index", "1");
-      $(".betButtonGuide").css("z-index", "1");
-      $(".BetButtonGuideEven").css("z-index", "1");
-      $("#selectstockGuidelines").css("z-index", "1");
-      $("#stocklistGuidelines").css("z-index", "1");
-      $("#trendmapGuidelines").css("z-index", "1");
-      $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
-    },
-    nextBackWard() {
-      console.log("nextBackWard.........");
-      this.closeTutorial();
-      this.openTutorial();
-    },
-    closeTutorial() {
-      clearInterval(_stepGo);
-      $(":button").prop("disabled", false); // Enable all the button
-      this.clearTutorialUI();
-    },
-    openTutorial() {
-      const _this = this;
-      $(":button").prop("disabled", true); // Disable all the buttons
-      _this.setTutorialStepNumber(_this.getTutorialStepNumber + 1);
-
-      _this.setIsShowTutorial(true);
-      _this.setTutorialStepNumber(_this.getTutorialStepNumber);
-      _stepGo = setInterval(() => {
-        _this.setTutorialStepNumber(_this.getTutorialStepNumber + 1);
-        this.setTutorialStepNumber(_this.getTutorialStepNumber);
-        if (_this.getTutorialStepNumber === 12 || !_this.getIsShowTutorial) {
-          this.closeTutorial();
-          _this.setTutorialStepNumber(0);
-        }
-      }, 4000);
     }
   },
   computed: {
