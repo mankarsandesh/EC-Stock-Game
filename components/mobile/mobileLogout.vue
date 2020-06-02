@@ -1,7 +1,7 @@
 <template>
   <div style="z-index:100">
     <template>
-      <nuxt-link :to="'/modern/userprofile/' + getUserInfo.userUUID">
+      <nuxt-link :to="'/modern/userprofile/?id=' +getUserInfo.userUUID">
         <v-btn flat>
           <v-avatar size="35" mr-1>
             <img :src="imgProfile" alt />
@@ -121,7 +121,7 @@ export default {
       return ` ${Number(value)
         .toFixed(2)
         .toString()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1, ")}`;
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     },
     getLogout() {
       this.$swal({

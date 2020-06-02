@@ -22,6 +22,7 @@
               v-model="filter.stock.china"
               color="#003e70"
               label="china"
+              value="china"
               hide-details
             ></v-checkbox>
             <v-checkbox
@@ -141,7 +142,7 @@
         </v-btn>
       </v-flex>
     </div>
-    <v-layout row wrap px-2 pt-2>
+    <v-layout row wrap px-2 pt-2 v-if="getStockListCountdown.length >= 1">
       <v-flex pa-1 v-for="(data, index) in showStocks" :key="index" xs6 sm4 md4>
         <nuxt-link :to="'/modern/betting/' + data.stockName">
           <v-card class="v-card-style chartDesign">
@@ -225,7 +226,8 @@ export default {
       "getAllStocks",
       "getTimerByStockName",
       "getStockLiveTime",
-      "getStockLivePrice"
+      "getStockLivePrice",
+      "getStockListCountdown"
     ]),
     showStocks() {
       let result = [];

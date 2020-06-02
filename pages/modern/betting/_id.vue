@@ -1653,7 +1653,6 @@ export default {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
     stopListenSocket(channel) {
-      console.log("stopListenSocket");
       window.Echo.leave(channel);
     },
     tabChanged(e) {
@@ -1734,7 +1733,7 @@ export default {
           this.bettingDialog = false;
           this.reviewbetDialog = false;
           this.pushDataOnGoingBet(res.data[0]);
-          this.setSnackBarMessage("Sucessfully Bet Place.");
+          this.setSnackBarMessage(this.$root.$t("betting.betSuccess"));
         } else {
           this.setSnackBarMessage(this.$root.$t("error.general"));
         }
@@ -1766,7 +1765,7 @@ export default {
     // set payout
     gameRule() {
       let payoutArray1 = ["small", "big", "odd", "even"];
-      let payoutArray2 = ["high", "mid", "low"];
+      let payoutArray2 = ["high", "mid", "low", "tie"];
       let payoutArray3 = ["firstdigit", "lastdigit", "bothdigit", "twodigit"];
       let array = this.gameRule.split("-");
 

@@ -192,7 +192,7 @@
                         'Closed'
                   "
                 >
-                  <span class="text-close-bet">market close</span>
+                  <span class="text-close-bet">{{ $t('msg.marketClosed') }}</span>
                 </div>
                 <!-- chart other stocks -->
                 <v-card-text class="pa-0" min-height="500">
@@ -512,7 +512,8 @@ export default {
       _stepGo: null
     };
   },
-  created() {
+  async created() {
+    await this.setStocksData();
     this.getActiveGamesByCategory();
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     if (this.stockName.slice(0, -1) == "btc") {
@@ -719,7 +720,8 @@ export default {
       "setIsWindowsHasScroll",
       "setRoadMap",
       "setLiveRoadMap",
-      "setStockCategory"
+      "setStockCategory",
+      "setStocksData"
     ]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
@@ -745,7 +747,6 @@ export default {
               throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
-            console.log(ex);
           }
         });
     },

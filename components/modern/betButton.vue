@@ -44,7 +44,6 @@
               'firstdigit',
               null,
               getItemPage,
-              getFooterBetAmount,
               stockID
             )
           "
@@ -138,7 +137,6 @@
               'lastdigit',
               null,
               getItemPage,
-              getFooterBetAmount,
               stockID
             )
           "
@@ -228,7 +226,6 @@
               'bothdigit',
               null,
               getItemPage,
-              getFooterBetAmount,
               stockID
             )
           "
@@ -317,7 +314,6 @@
               'twodigit',
               null,
               getItemPage,
-              getFooterBetAmount,
               stockID
             )
           "
@@ -399,7 +395,6 @@
               'firstdigit',
               'specific',
               getItemPage,
-              getFooterBetAmount,
               stockID
             )
           "
@@ -438,7 +433,6 @@
               'lastdigit',
               'specific',
               getItemPage,
-              getFooterBetAmount,
               stockID
             )
           "
@@ -477,7 +471,6 @@
               'bothdigit',
               'specific',
               getItemPage,
-              getFooterBetAmount,
               stockID
             )
           "
@@ -522,7 +515,6 @@
               'twodigit',
               'specific',
               getItemPage,
-              getFooterBetAmount,
               stockID
             )
           "

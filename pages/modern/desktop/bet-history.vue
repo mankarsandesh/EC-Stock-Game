@@ -103,7 +103,7 @@ import breadcrumbs from "~/components/breadcrumbs";
 import { mapState } from "vuex";
 import config from "../../../config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
-
+import date from "date-and-time";
 export default {
   layout: "desktopModern",
   components: {
@@ -120,12 +120,7 @@ export default {
       dateFrom: "",
       from: false,
       dateTo: "",
-      to: false,
-      // dropdown_font: [
-      //   this.$root.$t("bethistory.today"),
-      //   this.$root.$t("bethistory.thisWeek"),
-      //   this.$root.$t("bethistory.thisMonth")
-      // ],
+      to: false,    
       userBetHistory: []
     };
   },
@@ -152,14 +147,14 @@ export default {
     // Sorting By Today,Week, Month
     sortingBy() {
       if (this.sortby == "Today") {
-        const lastWeek = new Date(
+        const todayDate = new Date(
           this.today.getFullYear(),
           this.today.getMonth(),
           this.today.getDate() + 1
         )
           .toISOString()
           .substr(0, 10);
-        this.dateFrom = lastWeek;
+        this.dateFrom = todayDate;
         this.dateTo = this.today.toISOString().substring(0, 10);
         this.fetchBetHsitory();
       } else if (this.sortby == "This Week") {
@@ -174,27 +169,39 @@ export default {
         this.dateTo = this.today.toISOString().substring(0, 10);
         this.fetchBetHsitory();
       } else if (this.sortby == "This Month") {
-        const lastWeek = new Date(
+        const lastMonth = new Date(
           this.today.getFullYear(),
           this.today.getMonth(),
           this.today.getDate() - 28
         )
           .toISOString()
           .substr(0, 10);
-        this.dateFrom = lastWeek;
+        this.dateFrom = lastMonth;
         this.dateTo = this.today.toISOString().substring(0, 10);
         this.fetchBetHsitory();
       }
     },
+    // Search Betting Details in Bet History
     searchBetHistory() {
       this.loadingImage = true;
       if (this.dateFrom && this.dateTo) {
         this.fetchBetHsitory();
       }
     },
+    // Check Date is Valid or NOT
+    checkValidDate(startDate, endDate) {
+      const now = date.format(new Date(), "YYYY-MM-DD");
+      if (endDate > now || !(endDate >= startDate)) {
+        return false;
+      }
+      return true;
+    },
     // Fetch bet History user wise
     async fetchBetHsitory() {
       try {
+         if (!this.checkValidDate(this.dateFrom, this.dateTo)) {
+          throw new Error("Please select a valid date");
+        }
         var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
@@ -202,10 +209,10 @@ export default {
           betResult: [0, 1],
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo
-        };
+        };       
         var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
-        });
+        });      
         if (data.status) {
           this.userBetHistory = data.data;
           this.loadingImage = false;
@@ -213,8 +220,7 @@ export default {
           throw new Error(data.message);
           this.loadingImage = false;
         }
-      } catch (ex) {
-        console.log(data.message);
+      } catch (ex) {     
         this.$swal({
           title: ex.message,
           type: "error",

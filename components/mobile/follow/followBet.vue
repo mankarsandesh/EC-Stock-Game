@@ -18,7 +18,7 @@
 
       <div v-if="isFollowing == 1">
         <h4 class="subtitle-1 text-uppercase">
-          {{ $t("leaderBoard.followBy") }}
+          {{ $t("leaderBoard.followBy") }} <span style="color:red;">*</span>
         </h4>
         <v-divider></v-divider>
         <v-card-actions>
@@ -73,12 +73,13 @@
         </v-card-actions>
 
         <h4 class="subtitle-1 text-uppercase pt-2">
-          {{ $t("leaderBoard.autoStop") }}
+          {{ $t("leaderBoard.autoStop") }} <span style="color:red;">*</span>
         </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
             <v-radio
+              color="green"
               v-for="n in autoStopFollow"
               :key="n.id"
               :label="n.name"
@@ -367,14 +368,21 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-             data.message[0] == "User followed successfully."
-              ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed")) 
-              : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));                     
+          data.message[0] == "User followed successfully."
+            ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed"))
+            : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));
         } else {
-          this.setSnackBarMessage(data.message[0]);
+          //For translation of 10 users follow list check.
+          if (
+            data.message[0] == "You cant follow more than 10 users at a time."
+          ) {
+            this.setSnackBarMessage(this.$root.$t("follow.maxFollow"));
+          } else {
+            this.setSnackBarMessage(data.message[0]);
+          }
           // this.errorShow(true, false, true, data.message[0]);
         }
-        this.$emit("followBetClose");       
+        this.$emit("followBetClose");
       } catch (error) {
         console.log(error);
       }

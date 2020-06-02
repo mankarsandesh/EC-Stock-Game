@@ -15,7 +15,7 @@
         </v-flex>
         <v-flex xs6 sm4 v-for="(data, index) in followingList" :key="index">
           <div class="followerContainer">
-            <nuxt-link :to="'/modern/userprofile/' + data.UUID">
+            <nuxt-link :to="'/modern/userprofile/?id=' +data.UUID">
               <img class="userImage" :src="userImgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">
@@ -24,6 +24,37 @@
                 }}
               </span>
             </nuxt-link>
+             <div class="followType">
+              <span>
+                <label
+                  >{{
+                    data.followRuleValue[0].name == "byAmount"
+                      ? $t("leaderBoard.followByAmount")
+                      : $t("leaderBoard.followByRate")
+                  }}
+                  :</label
+                >
+                {{  data.followRuleValue[0].name == "byAmount" ? "$"+data.followRuleValue[0].value : data.followRuleValue[0].value+"%" }}
+              </span>
+              <span>
+                <label
+                  >{{
+                    data.unFollowRuleValue[0].name == "byWin"
+                      ? $t("leaderBoard.stopByWinning")
+                      : data.unFollowRuleValue[0].name == "byLose"
+                      ? $t("leaderBoard.stopByLosing")
+                      : data.unFollowRuleValue[0].name == "byTime"
+                      ? $t("leaderBoard.stopByTiming")
+                      : $t("leaderBoard.stopByBets")
+                  }}:</label
+                >
+                {{
+                  data.unFollowRuleValue[0].name == "byTime"
+                    ? data.unFollowRuleValue[0].value / 1440 +"&nbsp;"+$t("msg.days")
+                    : data.unFollowRuleValue[0].value
+                }}
+              </span>
+            </div>
             <button
               v-bind:class="[
                 data.isFollowing == 0
@@ -162,6 +193,15 @@ export default {
 };
 </script>
 <style scoped>
+.followType span {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+.followType label {
+  width: 100%;
+  font-weight: 600;
+}
 .noMore {
   margin-top: 50px;
 }

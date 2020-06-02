@@ -101,11 +101,13 @@ import date from "date-and-time";
 import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import secureStorage from "../../../../plugins/secure-storage";
+import utils from "~/mixin/utils";
 
 export default {
   components: {
     VueApexCharts
   },
+  mixins: [utils],
   data() {
     return {
       series: [],
@@ -127,9 +129,7 @@ export default {
             show: false
           },
           events: {
-            click: function(chart, w, e) {
-
-            }
+            click: function(chart, w, e) {}
           }
         },
         // colors: colors,
@@ -147,12 +147,14 @@ export default {
         },
         tooltip: {
           y: {
-            formatter(val, q) {
+            formatter: (val, q) => {
               return (
-                '<div>' + "<span>" +
-                q.series[0][q.dataPointIndex] + " minutes" + 
+                "<div>" +
+                "<span>" +
+                q.series[0][q.dataPointIndex] +
+                ` ${this.$root.$t("msg.minutes")}` +
                 " </span>"
-              )
+              );
             }
           }
         },
@@ -178,16 +180,18 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-    getTotalOnlineTime () {
+    getTotalOnlineTime() {
       let days = this.totalOnlineTime.split("|")[0];
       let hours = this.totalOnlineTime.split("|")[1];
       let minutes = this.totalOnlineTime.split("|")[2];
       this.series[0].name = this.$root.$t("msg.onlineActiveTime");
       this.componentKey++;
       return `${
-              days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
-            }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t("msg.minutes")}`;
-    },
+        days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
+      }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t(
+        "msg.minutes"
+      )}`;
+    }
   },
   methods: {
     startDateClick() {
@@ -198,15 +202,9 @@ export default {
       this.isShowDateEnd = !this.isShowDateEnd;
       this.isShowDateStart = false;
     },
-    checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), "YYYY-MM-DD");
-      if (endDate > now || !(endDate >= startDate)) {
-        return false;
-      }
-      return true;
-    },
     async getOnlineHistory() {
       try {
+        // Check if the date is valid(function is written in util mixin)
         if (!this.checkValidDate(this.startDate, this.endDate)) {
           throw new Error("Please select a valid date");
         }
@@ -260,16 +258,16 @@ export default {
           this.error = this.$root.$t("profile.invalidDate");
           this.dataReady = false;
           this.$swal({
-          title: this.$root.$t("profile.invalidDate"),
-          type: "error",
-          showConfirmButton: true
-        });
+            title: this.$root.$t("profile.invalidDate"),
+            type: "error",
+            showConfirmButton: true
+          });
         } else {
           this.$swal({
-          title: ex.message,
-          type: "error",
-          showConfirmButton: true
-        });
+            title: ex.message,
+            type: "error",
+            showConfirmButton: true
+          });
         }
       }
     }
