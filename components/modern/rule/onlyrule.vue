@@ -22,12 +22,11 @@
           <span class="text-yellow">{{ $t("gamemsg.odd") }}</span> – 1, 3, 5, 7,
           9
           <br />
-          <span class="text-blue-light">{{ $t("gamemsg.high") }}</span> – 0, 1,
-          2, 3
+          <span class="text-blue-light">{{ $t("gamemsg.high") }}</span> – 7, 8, 9
           <br />
           <span class="text-blue-dark">{{ $t("gamemsg.mid") }}</span> – 4, 5, 6
           <br />
-          <span class="text-dont-no">{{ $t("gamemsg.low") }}</span> – 7, 8, 9
+          <span class="text-dont-no">{{ $t("gamemsg.low") }}</span> –  0, 1, 2, 3
           <br />
           <span class="text-red">{{ $t("gamemsg.number") }}</span> – 0, 1, 2, 3,
           4, 5, 6, 7, 8, 9
@@ -58,13 +57,13 @@
           <span class="text-yellow">{{ $t("gamemsg.odd") }}</span> – 1, 3, 5, 7,
           9
           <br />
-          <span class="text-blue-light">{{ $t("gamemsg.high") }}</span> – 0, 1,
-          2, 3
+          <span class="text-blue-light">{{ $t("gamemsg.high") }}</span> – 7, 8, 9
           <br />
           <span class="text-blue-dark">{{ $t("gamemsg.mid") }}</span> – 4, 5, 6
           <br />
-          <span class="text-dont-no">{{ $t("gamemsg.low") }}</span> – 7, 8, 9
-          <br />
+          <span class="text-dont-no">{{ $t("gamemsg.low") }}</span> – 0, 1,
+          2, 3
+          <br /> 
           <span class="text-red">{{ $t("gamemsg.number") }}</span> – 0, 1, 2, 3,
           4, 5, 6, 7, 8, 9
         </v-card-text>
@@ -94,14 +93,14 @@
           <span class="text-yellow">{{ $t("gamemsg.odd") }}</span> – 1, 3, 5, 7,
           9, 11, 13, 15, 17
           <br />
-          <span class="text-blue-light">{{ $t("gamemsg.high") }}</span> – 0,
-          1, 2, 3, 4, 5
+          <span class="text-blue-light">{{ $t("gamemsg.high") }}</span> – 12, 13, 14,
+          15, 16, 17, 18
           <br />
           <span class="text-blue-dark">{{ $t("gamemsg.mid") }}</span> – 6, 7, 8,
           9, 10, 11
           <br />
-          <span class="text-dont-no">{{ $t("gamemsg.low") }}</span> –12, 13, 14,
-          15, 16, 17, 18
+          <span class="text-dont-no">{{ $t("gamemsg.low") }}</span> – 0,
+          1, 2, 3, 4, 5
           <br />
           <span class="text-red">{{ $t("gamemsg.number") }}</span> – 0, 1, 2, 3,
           4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
@@ -141,17 +140,17 @@
           41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73,
           75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99
           <br />
-          <span class="text-blue-light">{{ $t("gamemsg.high") }}</span> – 00,
-          01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17,
-          18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33
+          <span class="text-blue-light">{{ $t("gamemsg.high") }}</span> – 67, 68,
+          69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
+          86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99
           <br />
           <span class="text-blue-dark">{{ $t("gamemsg.mid") }}</span> – 34, 35,
           36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
           53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66
           <br />
-          <span class="text-dont-no">{{ $t("gamemsg.low") }}</span> – 67, 68,
-          69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
-          86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99
+          <span class="text-dont-no">{{ $t("gamemsg.low") }}</span> – 00,
+          01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17,
+          18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33
           <br />
           <span class="text-red">{{ $t("gamemsg.number") }}</span> – 00, 01, 02,
           03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,

@@ -169,7 +169,7 @@ const actions = {
                 });
                 this._vm.$swal({
                     type: resultStatus.success >= resultStatus.failed ? "success" : "error",
-                    title: `<span style="color:green"> bet success ${resultStatus.success} </span> <span style="color:red;padding-left:10px"> bet failed ${resultStatus.failed} </span>`,
+                    title: `<span style="color:green">`+ window.$nuxt.$root.$t("msg.betSuccess") + `${resultStatus.success} </span> <span style="color:red;padding-left:10px">`+ window.$nuxt.$root.$t("msg.betFailed") + `${resultStatus.failed} </span>`,
                     showConfirmButton: false,
                     timer: 1000
                 });

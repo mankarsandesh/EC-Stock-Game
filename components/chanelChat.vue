@@ -6,7 +6,7 @@
         v-if="conversationChanel.length == 0"
       >
         <i class="fa fa-bell"></i>
-        <p>There are no users Invitaion in {{ stockName }} Channel.</p>
+        <p>There are no users Invitation in {{ stockName }} Channel.</p>
       </div>
 
       <div v-for="data in conversationChanel" :key="data.index" class="msgUser">
