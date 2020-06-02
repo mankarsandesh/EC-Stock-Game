@@ -7,7 +7,7 @@
   "gameType": "Game Type",
   "default": "default",
   "menu": {
-    "invitation":"Send Invitaion",
+    "invitation":"Send Invitation",
     "home": "home",
     "profile": "profile",
     "currentBet": "current bet",
@@ -182,7 +182,9 @@
     "enterFullScreen":"Enter Fullscreen Mode",
     "closeFullScreen":"Close Fullscreen Mode",
     "close" : "Close",
-    "rowsPerPage":"Rows per page:"
+    "rowsPerPage":"Rows per page:",
+    "betSuccess":"bet Success",
+    "betFailed" : "bet Failed"
   },
   "navlist": {
     "live Stock": "live Stock",

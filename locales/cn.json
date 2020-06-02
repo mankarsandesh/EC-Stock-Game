@@ -181,7 +181,9 @@
     "enterFullScreen":"进入全屏模式",
     "closeFullScreen":"关闭全屏模式",
     "close" : "关",
-    "rowsPerPage":"每页行:"
+    "rowsPerPage":"每页行:",
+    "betSuccess":"押注成功",
+    "betFailed" : "投注失败"
   },
   "navlist": {
     "live Stock": "正开放股票",

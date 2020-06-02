@@ -109,8 +109,12 @@
           <v-flex> {{ this.invitationError }} </v-flex>
         </v-layout>
         <v-layout justify-center>
-          <v-flex v-for="(item, index) in categoryName" v-bind:key="index">
+          <v-flex 
+          
+          v-for="(item, index) in categoryName" v-bind:key="index">
+            
             <v-checkbox
+              
               justify-center
               color="green"
               :height="4"
@@ -171,15 +175,15 @@ export default {
       categoryName: [
         {
           id: "1",
-          value: this.$root.$t("invitation.winBets")
+          value: window.$nuxt.$root.$t("invitation.winBets")
         },
         {
           id: "2",
-          value: this.$root.$t("invitation.totalFollower")
+          value: window.$nuxt.$root.$t("invitation.totalFollower")
         },
         {
           id: "3",
-          value: this.$root.$t("invitation.userRank")
+          value: window.$nuxt.$root.$t("invitation.userRank")
         }
       ],
       CatValue: [],
@@ -201,7 +205,7 @@ export default {
   },
   mounted() {
     this.scrollDown();
-    // Users List Invitaion Socket
+    // Users List Invitation Socket
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,

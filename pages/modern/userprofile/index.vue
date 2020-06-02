@@ -263,6 +263,59 @@ import date from "date-and-time";
 import secureStorage from "../../../plugins/secure-storage";
 
 export default {
+  async watchQuery(newQuery, oldQuery) {
+    try {
+      let reqBody = {
+        portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
+        visitingUserUUID: newQuery.id ? newQuery.id : this.getUserUUID,
+        dateRangeFrom: this.startDate,
+        dateRangeTo: this.endDate,
+        version: config.version
+      };
+      let res = await this.$axios.$post(
+        config.getVisitUserProfile.url,
+        reqBody,
+        {
+          headers: config.header
+        }
+      );
+      if (res.status) {
+        this.messageError = false;
+        this.visitProfileUserData = res.data;
+        this.visitProfileUserData.winRate = Math.round(
+          this.visitProfileUserData.winRate
+        );
+        this.myProfileImage = res.data.userImage;
+
+        //  series
+        let series = [];
+        let xaxis = [];
+        res.data.activeTimeDateWise.forEach(element => {
+          series.push(element.activeTimeInMins);
+          xaxis.push(element.Date);
+        });
+        this.series = [
+          {
+            name: this.$root.$t("msg.onlineActiveTime"),
+            data: series
+          }
+        ];
+        this.chartOptions.xaxis.categories = xaxis;
+        this.componentKey++;
+      } else {
+        this.messageError = true;
+        // throw new Error(config.error.general);
+      }
+    } catch (ex) {
+      console.error(ex);
+      this.$swal({
+        title: ex.message,
+        type: "error",
+        timer: 1000
+      });
+    }
+  },
   components: {
     followBet,
     VueApexCharts
@@ -379,10 +432,10 @@ export default {
     // fetch Visitor User Profile Infomation.
     async getUserProfileByID() {
       try {
-        if (!this.$route.params.useruuid) {
+        if (!this.$route.query.id) {
           this.userNew = this.getUserUUID;
         } else {
-          this.userNew = this.$route.params.useruuid;
+          this.userNew = this.$route.query.id;
         }
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -402,7 +455,9 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
-          this.visitProfileUserData.winRate = Math.round(this.visitProfileUserData.winRate);
+          this.visitProfileUserData.winRate = Math.round(
+            this.visitProfileUserData.winRate
+          );
           this.myProfileImage = res.data.userImage;
 
           //  series

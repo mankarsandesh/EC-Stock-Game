@@ -2,10 +2,28 @@
   <div id="tutorial-container" v-if="getIsShowTutorial">
     <div id="background-tutorial"></div>
     <div id="guide-container">
-      <div
-        style="z-index: 10028;position: absolute;right:10px;top:20px;cursor:pointer"
-      >
-        <v-icon @click="setIsShowTutorial(false)" color="#fff">close</v-icon>
+      <div class="tutorial-action">
+        <div style="text-align: end">
+          <button id="open-Tutorial" hidden @click="openTutorial()">
+            openTutorial
+          </button>
+          <v-btn @click="closeTutorial()" class="no-disable">
+            <span>Skip</span>
+            <v-icon>close</v-icon>
+          </v-btn>
+        </div>
+        <div>
+          <v-btn @click="backWard()" class="no-disable">
+            <v-icon>fa-step-backward</v-icon>
+            <span class="pl-2"> back </span>
+          </v-btn>
+          <v-btn @click="stepWard()" class="no-disable">
+            <span class="pr-2">
+              next
+            </span>
+            <v-icon>fa-step-forward</v-icon>
+          </v-btn>
+        </div>
       </div>
       <!-- last draw v-if="getTutorialStepNumber === 1" -->
       <div class="guide-top" v-if="getTutorialStepNumber === 1">
@@ -15,8 +33,8 @@
       <!-- bet close in  -->
       <div class="guide-top" v-if="getTutorialStepNumber === 2">
         <span class="guide-description text-uppercase" style="font-size:100px"
-          >{{ $t("tutorial.calculation") }}...</span
-        >
+          >{{ $t("tutorial.calculation") }}...
+        </span>
       </div>
       <!-- lottery  -->
       <div class="guide-top" v-if="getTutorialStepNumber === 3">
@@ -146,9 +164,103 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+
+// let _stepGo = null;
 export default {
+  data() {
+    return {
+      _stepGo: null
+    };
+  },
   methods: {
-    ...mapActions(["setIsShowTutorial", "setIsWindowsHasScroll"])
+    ...mapActions([
+      "setTutorialStepNumber",
+      "setIsShowTutorial",
+      "setIsWindowsHasScroll"
+    ]),
+    stepWard() {
+      this.clearUITutorial();
+      clearInterval(this._stepGo);
+      setTimeout(() => {
+        this.openTutorial();
+      }, 100);
+    },
+    backWard() {
+      if (this.getTutorialStepNumber > 1) {
+        this.clearUITutorial();
+        clearInterval(this._stepGo);
+        this.setTutorialStepNumber(this.getTutorialStepNumber - 2);
+        this.openTutorial();
+      }
+    },
+
+    openTutorial() {
+      let _this = this;
+      const timeDuration = 4000;
+      this.disableClick();
+      if (this.getTutorialStepNumber < 11) {
+        this.setTutorialStepNumber(this.getTutorialStepNumber + 1);
+      } else {
+        this.setTutorialStepNumber(1);
+      }
+      this.setIsShowTutorial(true);
+      this._stepGo = setInterval(() => {
+        _this.setTutorialStepNumber(_this.getTutorialStepNumber + 1);
+        _this.setTutorialStepNumber(_this.getTutorialStepNumber);
+        if (_this.getTutorialStepNumber > 11 || !_this.getIsShowTutorial) {
+          clearInterval(_this._stepGo);
+          _this.clearUITutorial();
+          _this.setTutorialStepNumber(0);
+          _this.setIsShowTutorial(false);
+        }
+      }, timeDuration);
+    },
+    closeTutorial() {
+      clearInterval(this._stepGo);
+      this.clearUITutorial();
+      this.setIsShowTutorial(false);
+      this.setTutorialStepNumber(0);
+    },
+    disableClick() {
+      $("button").prop("disabled", true); // Disabled all the button
+      $(".v-image__image").prop("disabled", true); // Disabled all the button
+      $("button.no-disable").prop("disabled", false); // Disable all the buttons
+    },
+    enableClick() {
+      $("button").prop("disabled", false); // Enable all the button
+      $(".v-image__image").prop("disabled", false); // Enable all the button
+    },
+    clearUITutorial() {
+      this.enableClick();
+      $("#lastDrawGuideline").css("z-index", "1");
+      // $("#lastDrawGuideline").css("backgroundColor", "#f2f4ff");
+
+      $("#betCloseInGuideline").css("z-index", "1");
+      // $("#betCloseInGuideline").css("backgroundColor", "#f2f4ff");
+
+      $("#lotteryDrawGuidelines").css("z-index", "1");
+      // $("#lotteryDrawGuidelines").css("backgroundColor", "#f2f4ff");
+
+      $("#chartGuidelineNew").css("z-index", "1");
+      // $("#chartGuidelineNew").css("backgroundColor", "#f2f4ff");
+
+      $(".betButtonGuide").css("z-index", "1");
+      // $(".betButtonGuide").css("backgroundColor", "#f2f4ff");
+
+      $(".BetButtonGuideEven").css("z-index", "1");
+      // $(".BetButtonGuideEven").css("backgroundColor", "#f2f4ff");
+
+      $("#selectstockGuidelines").css("z-index", "1");
+      // $("#selectstockGuidelines").css("backgroundColor", "#f2f4ff");
+
+      $("#stocklistGuidelines").css("z-index", "1");
+      // $("#stocklistGuidelines").css("backgroundColor", "#f2f4ff");
+
+      $("#betresultGuidelines").css("z-index", "1");
+
+      $("#trendmapGuidelines").css("z-index", "1");
+      $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
+    }
   },
   computed: {
     ...mapGetters([
@@ -162,6 +274,7 @@ export default {
   },
   watch: {
     getTutorialStepNumber(newValue) {
+      console.log(newValue);
       // window.scrollTo(0, document.body.scrollHeight);
       switch (newValue) {
         case 1:
@@ -194,10 +307,12 @@ export default {
           $(".BetButtonGuideEven").css("z-index", "10001");
           break;
         case 7:
+          this.enableClick();
           $(".BetButtonGuideEven").click();
+          this.disableClick();
           if ($(document).height() > $(window).height()) {
             $("html, body").animate(
-              { scrollTop: ($(document).height() - $(window).height()) },
+              { scrollTop: $(document).height() - $(window).height() },
               "slow"
             );
           }
@@ -230,3 +345,12 @@ export default {
   }
 };
 </script>
+<style scoped>
+.tutorial-action {
+  z-index: 10028;
+  position: fixed;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
+}
+</style>

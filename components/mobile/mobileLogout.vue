@@ -1,7 +1,7 @@
 <template>
   <div style="z-index:100">
     <template>
-      <nuxt-link :to="'/modern/userprofile/?id=' +getUserInfo.userUUID">
+      <nuxt-link to="/modern/userprofile/">
         <v-btn flat>
           <v-avatar size="35" mr-1>
             <img :src="imgProfile" alt />

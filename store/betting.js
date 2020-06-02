@@ -73,88 +73,118 @@ const mutations = {
   }
 };
 const actions = {
-  setBettingOnConfirm({ commit }, payload) {
-    commit("SET_CONFIRM_BETTING", payload);
-  },
-  clearItemBetting({ commit }) {
-    commit("CLEAR_ITEMS_BETTING");
-  },
-  setItemBetting({ commit }, payload) {
-    commit("SET_ITEMS_BETTING", payload);
-  },
-  setCollegeButtonNumberParent({ commit }) {
-    commit("SET_COLLEGE_BUTTON_NUMBER");
-  },
-  setMultiGameFooterBetAmount({ commit }, payload) {
-    commit("SET_MULTI_GAME_FOOTER_BET_AMOUNT", payload);
-  },
-  // Push data to multi game bet
-  pushDataMultiGameBet({ commit }, payload) {
-    commit("PUSH_DATA_MULTI_GAME_BET", payload);
-  },
-  // Clear data from multi game bet
-  clearDataMultiGameBet({ commit }) {
-    commit("CLEAR_DATA_MULTI_GAME_BET");
-  },
-  // Set the footer bet amount
-  setFooterBetAmount({ commit }, payload) {
-    commit("SET_FOOTER_BET_AMOUNT", payload);
-  },
-  // Push data to ongoing bet
-  pushDataOnGoingBet({ commit }, payload) {
-    commit("PUSH_DATA_ON_GOING_BET", payload);
-  },
-  // Clear data from multi game bet send
-  clearDataMultiGameBetSend({ commit }) {
-    commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
-  },
-  // Set temporary multi game bet data
-  setTempMultiGameBetData({ commit }, payload) {
-    commit("SET_TEMP_MULTI_GAME_BET_DATA", payload);
-  },
-  // Move temporary multi game bet data to multi game bet
-  confirmTempMultiGameBetData({ commit }) {
-    commit("CONFIRM_TEMP_MULTI_GAME_BET_DATA");
-  },
-  clearTempMultiGameBetData({ commit }) {
-    commit("CLEAR_TEMP_MULTI_GAME_BET_DATA");
-  },
-  clearBetValueFooterBet({ commit }) {
-    commit("CLEAR_BET_VALUE_FOOTER_BET");
-  },
-  // Send bet data for multi game and footer bet on full screen
-  async sendBetting(context) {
-    try {
-      context.commit("SET_IS_SEND_BETTING", true);
-      const betDataFinal = context.state.multiGameBetSend;
-      if (betDataFinal.length == 0) {
-        context.commit("SET_IS_SEND_BETTING", false);
-        this._vm.$swal({
-          type: "error",
-          title: `Sorry, No Betting...!`,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        return;
-      }
-      var reqBody = {
-        portalProviderUUID: context.rootState.provider.portalProviderUUID,
-        userUUID: context.rootState.provider.userUUID,
-        version: config.version,
-        betData: betDataFinal
-      };
-      var res = await this.$axios.$post(config.storeBet.url, reqBody, {
-        headers: config.header
-      });
-      if (res.status && res.code == 200) {
-        this.$soundEffect("betting");
-        context.dispatch("setUserData", "provider");
-        context.commit("SET_IS_SEND_BETTING", false);
-        context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
-        let i = 0;
-        let len = res.data.length;
-        for (i; i < len; i++) {
-          context.commit("PUSH_DATA_ON_GOING_BET", res.data[i]);
+    setBettingOnConfirm({ commit }, payload) {
+        commit("SET_CONFIRM_BETTING", payload)
+    },
+    clearItemBetting({ commit }) {
+        commit("CLEAR_ITEMS_BETTING");
+    },
+    setItemBetting({ commit }, payload) {
+        commit("SET_ITEMS_BETTING", payload);
+    },
+    setCollegeButtonNumberParent({ commit }) {
+        commit("SET_COLLEGE_BUTTON_NUMBER");
+    },
+    setMultiGameFooterBetAmount({ commit }, payload) {
+        commit("SET_MULTI_GAME_FOOTER_BET_AMOUNT", payload);
+    },
+    // Push data to multi game bet
+    pushDataMultiGameBet({ commit }, payload) {
+        commit("PUSH_DATA_MULTI_GAME_BET", payload);
+    },
+    // Clear data from multi game bet
+    clearDataMultiGameBet({ commit }) {
+        commit("CLEAR_DATA_MULTI_GAME_BET");
+    },
+    // Set the footer bet amount
+    setFooterBetAmount({ commit }, payload) {
+        commit("SET_FOOTER_BET_AMOUNT", payload);
+    },
+    // Push data to ongoing bet
+    pushDataOnGoingBet({ commit }, payload) {
+        commit("PUSH_DATA_ON_GOING_BET", payload);
+    },
+    // Clear data from multi game bet send
+    clearDataMultiGameBetSend({ commit }) {
+        commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
+    },
+    // Set temporary multi game bet data
+    setTempMultiGameBetData({ commit }, payload) {
+        commit("SET_TEMP_MULTI_GAME_BET_DATA", payload);
+    },
+    // Move temporary multi game bet data to multi game bet
+    confirmTempMultiGameBetData({ commit }) {
+        commit("CONFIRM_TEMP_MULTI_GAME_BET_DATA");
+    },
+    clearTempMultiGameBetData({ commit }) {
+        commit("CLEAR_TEMP_MULTI_GAME_BET_DATA");
+    },
+    clearBetValueFooterBet({ commit }) {
+        commit("CLEAR_BET_VALUE_FOOTER_BET");
+    },
+    // Send bet data for multi game and footer bet on full screen
+    async sendBetting(context) {
+        try {
+            context.commit("SET_IS_SEND_BETTING", true);
+            const betDataFinal = context.state.multiGameBetSend;
+            if (betDataFinal.length == 0) {
+                context.commit("SET_IS_SEND_BETTING", false);
+                this._vm.$swal({
+                    type: "error",
+                    title: `Sorry, No Betting...!`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return;
+            }
+            var reqBody = {
+                portalProviderUUID: context.rootState.provider.portalProviderUUID,
+                userUUID: context.rootState.provider.userUUID,
+                version: config.version,
+                betData: betDataFinal
+            };
+            var res = await this.$axios.$post(config.storeBet.url, reqBody, {
+                headers: config.header
+            });
+            if (res.status && res.code == 200) {
+                this.$soundEffect("betting");
+                context.dispatch("setUserData", "provider");
+                context.commit("SET_IS_SEND_BETTING", false);
+                context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
+                let i = 0;
+                let len = res.data.length;
+                for (i; i < len; i++) {
+                    context.commit("PUSH_DATA_ON_GOING_BET", res.data[i]);
+                }
+                // check betting false or true
+                let resultStatus = {
+                    success: 0,
+                    failed: 0
+                };
+                res.data.forEach(element => {
+                    if (element.status) {
+                        resultStatus.success++;
+                    } else {
+                        resultStatus.failed++;
+                    }
+                });
+                this._vm.$swal({
+                    type: resultStatus.success >= resultStatus.failed ? "success" : "error",
+                    title: `<span style="color:green">`+ window.$nuxt.$root.$t("msg.betSuccess") + `${resultStatus.success} </span> <span style="color:red;padding-left:10px">`+ window.$nuxt.$root.$t("msg.betFailed") + `${resultStatus.failed} </span>`,
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            } else {
+                throw new Error(window.$nuxt.$root.$t("error.general"));
+            }
+        } catch (ex) {
+            console.error(ex.message);
+            context.commit("SET_IS_SEND_BETTING", false);
+            this._vm.$swal({
+                type: "error",
+                title: `${ex.message}`,
+                showConfirmButton: true
+            });
         }
         // check betting false or true
         let resultStatus = {

@@ -180,7 +180,9 @@
     "enterFullScreen":"เข้าสู่โหมดเต็มหน้าจอ",
     "closeFullScreen":"ปิดโหมดเต็มหน้าจอ",
     "close" : "ปิด",
-    "rowsPerPage":"แถวต่อหน้า:"
+    "rowsPerPage":"แถวต่อหน้า:",
+    "betSuccess":"เดิมพันสำเร็จ",
+    "betFailed" : "การเดิมพันล้มเหลว"
   },
   "navlist": {
     "live Stock": "หุ้นที่เปิดอยู่",
