@@ -2,7 +2,7 @@ import config from "../config/config.global";
 import secureStorage from "../plugins/secure-storage";
 const itemBetting = secureStorage.getItem("itemBetting");
 const state = () => ({
-  currency: "¥",
+  currency: "₭",
   collegeBtnNumber: null,
   multiGameBet: itemBetting ? itemBetting : [],
   multiGameBetSend: [], // Store multi game bet send
