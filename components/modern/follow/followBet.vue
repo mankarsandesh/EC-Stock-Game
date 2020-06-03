@@ -93,7 +93,7 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red">{{ unfollowSign }}</span>
+                <span slot="append" color="red">{{ this.getUserCurrency }}</span>
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
@@ -143,7 +143,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState,mapGetters  } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
 
@@ -212,7 +212,7 @@ export default {
       hasError: false,
       hasSucess: false,
       FollwingError: false,
-      unfollowSign: "USD",
+      unfollowSign: "",
       unfollowValue: 100,
       selectAmount: false,
       selectTime: false,
@@ -275,7 +275,8 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+    ...mapGetters(["getUserCurrency"])
   },
   methods: {
     userImgProfile(userImg) {
@@ -357,7 +358,6 @@ export default {
           }
           break;
       }
-      console.log("checked");
       return this.follwingBetting(followerID, followMethod);
     },
     // Error Function Common
@@ -445,7 +445,7 @@ export default {
     changeAmount(value) {
       if (value == "stopWin" || value == "stopLoss") {
         this.unfollowValue = 100;
-        this.unfollowSign = "USD";
+        this.unfollowSign = this.getUserCurrency;
       } else if (value == "stopTime") {
         this.unFollowValueMax = 10;
         this.unFollowValueMin = 1;

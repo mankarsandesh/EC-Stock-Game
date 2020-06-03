@@ -7,14 +7,14 @@
     />
     <v-container>
       <!-- Send Data to currentBet Component -->
-      <currentBet :currentBets="currentBets" />
+    <currentBet :currentBets="currentBets" :currency="getUserCurrency" />
     </v-container>
   </div>
 </template>
 <script>
 import currentBet from "~/components/modern/currentBet";
 import breadcrumbs from "~/components/breadcrumbs";
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
 
@@ -34,7 +34,8 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) 
+    }),
+    ...mapGetters(["getUserCurrency"]) 
   },
   mounted() {
     this.currentBetData();

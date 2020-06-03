@@ -1183,20 +1183,23 @@ p {
   height: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 7px #acacac;
-  border-radius: 5px;
+  border-radius: 7px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #acacac;
   border-radius: 7px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #2c6b9e;
+}
+
+table {
+  overflow-x: scroll;
+  scrollbar-color: #acacac #f2f2f2;
+  scrollbar-width: thin;
 }
 </style>

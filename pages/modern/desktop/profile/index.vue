@@ -8,9 +8,9 @@
             <span>{{ $t("msg.accountBalance") }}</span>
             <br />
             <span class="amount" v-if="userData.balance != 0">
-              {{ userData.balance | currency }}
+              {{ getUserCurrency }}{{ userData.balance | currency }}
             </span>
-            <span class="amount" v-if="userData.balance == 0">00.00</span>
+            <span class="amount" v-if="userData.balance == 0"> {{ getUserCurrency }} 00.00</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -20,7 +20,7 @@
 
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ userData.rollingAmount | currency }}</span>
+            <span class="amount"> {{ getUserCurrency }}{{ userData.rollingAmount | currency }}</span>
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -219,7 +219,7 @@ export default {
     this.setInputData();
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID","getUserCurrency"]),
     userData() {
       let data = this.getUserInfo;
       return data;

@@ -258,7 +258,7 @@ export default {
   },
   mounted() {
     this.scrollDown();
-    // Users World List  Invitaion Socket
+    // Users World List  Invitation Socket
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
@@ -274,7 +274,7 @@ export default {
         this.scrollDown();
       }
     );
-    // Users chanel List  Invitaion Socket
+    // Users chanel List  Invitation Socket
     this.startSocketChanel();
   },
   watch: {
@@ -285,7 +285,7 @@ export default {
       }
     },
     gameUUID(value) {
-      // Users chanel List  Invitaion Socket
+      // Users chanel List  Invitation Socket
       this.startSocketChanel();
     },
     stockName(value) {

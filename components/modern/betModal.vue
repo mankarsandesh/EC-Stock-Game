@@ -25,7 +25,7 @@
         |
         <span>
           {{ $t("msg.payout") }}:
-          {{ $store.state.game.payout[parseInt(payout)].dynamicOdds }}
+          {{ Number($store.state.game.payout[parseInt(payout)].dynamicOdds).toFixed(2) }}
         </span>
       </v-flex>
       <v-flex>

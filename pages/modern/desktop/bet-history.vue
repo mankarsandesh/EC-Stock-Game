@@ -94,13 +94,13 @@
       </v-container>
     </section>
     <!-- Bet History Data Table -->
-    <bethistory :search="search" :userBetHistory="userBetHistory" />
+    <bethistory :search="search" :userBetHistory="userBetHistory" :curreny="getUserCurrency" />
   </div>
 </template>
 <script>
 import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
 import config from "../../../config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
 import date from "date-and-time";
@@ -129,7 +129,8 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+    ...mapGetters(["getUserCurrency"])
   },
   mounted() {
     const lastWeek = new Date(
