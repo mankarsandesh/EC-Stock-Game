@@ -1039,10 +1039,10 @@
         >
           <div class="d-block text-center" style="color:#000">
             <p class="text-uppercase">
-              {{ $t("msg.stockName") }} :
+              <b> {{ $t("msg.stockName") }} : </b>
               {{ $t(`stockName.${$route.params.id}`) }}
-              {{ $t("msg.payout") }}:
-              {{ odd }}
+              <b>{{ $t("msg.payout") }}:</b>
+              {{ Number(odd).toFixed(2) }}
             </p>
             <p class="text-uppercase test-time-loop">
               {{ getStockLoop(this.$route.params.id) }}
@@ -1125,7 +1125,7 @@
               <tr>
                 <td class="text-right">{{ $t("msg.stockName") }}:</td>
                 <td class="text-left pl-2 text-color-blue">
-                  {{ $t(`stockName.${$route.params.id}`) }}
+                  <b>{{ $t(`stockName.${$route.params.id}`) }}</b>
                 </td>
               </tr>
               <tr>

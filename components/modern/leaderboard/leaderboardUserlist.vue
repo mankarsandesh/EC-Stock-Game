@@ -106,7 +106,7 @@
           <div class="rows">
             <h3 class="header">{{ $t("leaderBoard.winningAmount") }}</h3>
             <h4 style="color:#0b2a68;" class="titleText">
-           {{ getUserCurrency }}{{ Math.round(data.totalWinAmount, 1) | currency }}
+           {{ Math.round(data.totalWinAmount, 1) | currency }}
             </h4>
           </div>
           <div

@@ -15,7 +15,6 @@ const state = () => ({
 
     bettingConfirm: itemBetting ? itemBetting : [], // after confirm 
     selectBetting: [] // for select the betting
-
 });
 const getters = {
     // Get user UUID

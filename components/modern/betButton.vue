@@ -59,7 +59,7 @@
           ></showChipAmount>
           <div :id="'firstdigitWin-' + data.rule"></div>
 
-          <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
+          <span class="big-digit"> {{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
