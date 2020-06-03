@@ -1,6 +1,6 @@
 import secureStorage from '~/plugins/secure-storage'
-import { mapGetters, mapActions } from "vuex";
-import Betting from "~/helpers/betting";
+import { mapActions } from "vuex";
+const jsonResult = require('~/data/result') // define the json result for the compare 
 
 export const itemBetting = {
     mounted() {
@@ -95,34 +95,51 @@ export const itemBetting = {
             value == this.number ? (this.number = null) : (this.number = value);
         },
 
-        updateBet(items) {
-            const split = items.betRule.split("-");
-            // small button
-            $("#" + items.id).addClass(items.betRule);
-            // parent the button
-            $("#" + items.stock + split[0]).addClass(split[0]);
-        },
-
-        // btc1firstdigit-9
-
-        findItemBetting() {
-
-            const array = secureStorage.getItem("itemBetting")
-
-            if (array) {
-
-                array.map((item, index) => {
-
-                    if (!$("#" + item.id).hasClass(item.class + ' ' + item.id.split("-")[1])) {
-
-                        $("#" + item.id).addClass(item.class + ' ' + item.id.split("-")[1])
-
-                    }
-                })
-
+        /**
+         *
+         *
+         * @param {*} items
+         */
+        async updateBet(items) {
+            try {
+                // parent the button
+                if (!$("#" + items.id.split("-")[0]).hasClass(items.class)) {
+                    $("#" + items.id.split("-")[0]).addClass(items.class)
+                }
+                // small button
+                $("#" + items.id).addClass(items.betRule);
+            } catch (error) {
+                console.error(error)
             }
 
         },
+
+
+        findItemBetting() {
+            const array = secureStorage.getItem("itemBetting")
+            jsonResult.resultBet.map((items, index) => {
+                if (array) {
+                    array.map((item, index) => {
+                        if (item.class === items.type) {
+                            if (item.specificNumber) {
+                                if (!$("#" + item.id.split("-")[0]).hasClass(item.class)) {
+                                    $("#" + item.id.split("-")[0]).addClass(item.class)
+                                }
+                            }
+                        }
+
+                        if (!$("#" + item.id).hasClass(item.class + ' ' + item.id.split("-")[1])) {
+                            $("#" + item.id).addClass(item.class + ' ' + item.id.split("-")[1])
+
+                        }
+                    })
+                }
+
+            })
+
+
+        },
+
 
         /**
          *
@@ -136,35 +153,32 @@ export const itemBetting = {
          * @param {*} stockName
          */
         async storemarkColor(ruleID, id, classe, specific, page, stockName) {
+
+            // ruleID 8
+            // id btc1firstdigit - 0
+            // classe firstdigit
+            // specific firstdigit - 0
+            // page fullscreen
+            // stockName btc1
+
             try {
-                // check the page only full screen can press the bet and color is come 
                 // check the valueAmout is  >= 100  
-
                 if (page === "fullscreen") {
-
                     if (this.getFooterBetAmount >= 100) {
-
-
                         this.$soundEffect("betting");
-
                         if (!$("#" + id).hasClass(classe)) {
-
                             $("#" + id).addClass(classe + ' ' + id.split("-")[1])
-
                         }
-
                         if (specific !== null) {
                             //  find the parent of small button in specific number
                             const parentBtn = "#" + id.split("-")[0]
-
                             if (!$(parentBtn).addClass(classe)) {
-
                                 $(parentBtn).addClass(classe)
-
+                            }
+                            if (!$("#" + id).hasClass(specific)) {
+                                $("#" + id).addClass(specific)
                             }
                         }
-
-                        // $("#" + ruleID).addClass('bg-btn-first');
                         if (this.checkFooterBetAmount) {
                             let betData = {
                                 id: id,
@@ -176,13 +190,11 @@ export const itemBetting = {
                                 stockName: stockName,
                             };
                             this.setTempMultiGameBetData(betData);
-                            // this.pushDataMultiGameBet(betData);
-                            // console.warn(this.getMultiGameBet);
                         }
                     }
                 }
             } catch (error) {
-                console.log(error)
+                console.error(error)
             }
 
 
@@ -190,13 +202,3 @@ export const itemBetting = {
 
     }
 }
-
-// item {rule: Array(1), name: "firstdigit-1"}
-// number 8
-// stockName btc1
-// betID firstdigit-1
-// betWin firstdigitWin-1
-// name firstdigit-1
-
-
-// btc1firstdigitNumber
