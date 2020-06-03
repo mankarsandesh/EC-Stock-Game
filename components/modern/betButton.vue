@@ -59,7 +59,7 @@
           ></showChipAmount>
           <div :id="'firstdigitWin-' + data.rule"></div>
 
-          <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
+          <span class="big-digit"> {{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
@@ -70,7 +70,6 @@
 
       <span class="w10">
         <v-btn
-          :class="number === 'first' ? 'active-firstdigit' : null"
           class="align_button4 f-hover"
           :id="stockID + 'firstdigit'"
           @click="btnNumber('first')"
@@ -164,7 +163,6 @@
 
       <span class="w10">
         <v-btn
-          :class="number === 'last' ? 'active-lasttdigit' : null"
           class="align_button4 betButtonGuide l-hover"
           :id="stockID + 'lastdigit'"
           @click="btnNumber('last')"
@@ -251,7 +249,6 @@
       </popper>
       <span class="w12">
         <v-btn
-          :class="number === 'both' ? 'active-bothdigit' : null"
           class="align_button4 b-hover"
           :id="stockID + 'bothdigit'"
           @click="btnNumber('both')"
@@ -340,7 +337,6 @@
 
       <span class="w12">
         <v-btn
-          :class="number === 'two' ? 'active-twodigit' : null"
           class="align_button4 t-hover"
           :id="stockID + 'twodigit'"
           @click="btnNumber('two')"
@@ -383,6 +379,7 @@
             :betId="'firstdigit-' + index"
             :betWin="'firstdigitWin-' + index"
             :payout="index + 30"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -393,7 +390,7 @@
               8 + index,
               stockID + 'firstdigit' + '-' + index,
               'firstdigit',
-              'specific',
+              'firstdigit' + '-' + index,
               getItemPage,
               stockID
             )
@@ -421,6 +418,7 @@
             :betId="'lastdigit-' + index"
             :betWin="'lastdigitWin-' + index"
             :payout="index + 40"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -431,7 +429,7 @@
               25 + index,
               stockID + 'lastdigit' + '-' + index,
               'lastdigit',
-              'specific',
+              'lastdigit' + '-' + index,
               getItemPage,
               stockID
             )
@@ -459,6 +457,7 @@
             :betId="'bothdigit-' + index"
             :betWin="'bothdigitWin-' + index"
             :payout="index + 50"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -469,7 +468,7 @@
               149 + index,
               stockID + 'bothdigit' + '-' + index,
               'bothdigit',
-              'specific',
+              'bothdigit' + '-' + index,
               getItemPage,
               stockID
             )
@@ -497,6 +496,7 @@
             :betId="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
             :betWin="'twodigitWin-' + index"
             :payout="index + 69"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -513,7 +513,7 @@
                 ? stockID + 'twodigit-0' + index
                 : stockID + 'twodigit' + '-' + index,
               'twodigit',
-              'specific',
+              'twodigit' + '-' + index,
               getItemPage,
               stockID
             )

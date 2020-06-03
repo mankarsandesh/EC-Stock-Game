@@ -9,5 +9,6 @@
     "swal",
     "topup",
     "vuex"
-  ]
+  ],
+  "vue-i18n.i18nPaths": "locales"
 }

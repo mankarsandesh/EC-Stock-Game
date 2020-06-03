@@ -72,7 +72,7 @@
               {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
             </td>
             <td>
-              <strong>{{ currency }}{{ TotalAmount | currency }}</strong>
+              <strong> <span v-if="TotalAmount > 0">{{ currency }}{{ TotalAmount | currency }} </span> </strong>
             </td>
             <td colspan="2"></td>
           </tr>

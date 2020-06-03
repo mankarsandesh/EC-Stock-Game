@@ -8,27 +8,21 @@ class Betting {
      * @memberof Betting
      */
     async cancelBettingClear(items) {
-
+            console.log('items', items)
             try {
                 if (items.length) {
-
                     items.map(item => {
-
                         $("#" + item.id.split("-")[0]).removeClass(item.class)
-
                         if ($("#" + item.id).hasClass(item.class)) {
-
                             secureStorage.removeItem("itemBetting")
-
                             $("#" + item.id).removeClass(item.class + ' ' + item.id.split("-")[1])
-
                         }
                     })
-
                 }
             } catch (error) {
                 console.log(error)
             }
+
         }
         /**
          *

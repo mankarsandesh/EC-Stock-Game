@@ -24,7 +24,7 @@
         </span>
         |
         <span>
-          {{ $t("msg.payout") }}:
+          {{ $t("msg.payout") }}:         
           {{ Number($store.state.game.payout[parseInt(payout)].dynamicOdds).toFixed(2) }}
         </span>
       </v-flex>
@@ -98,7 +98,15 @@ import chips from "~/data/chips";
 import secureStorage from "../../plugins/secure-storage";
 import { BetResult } from "~/mixin/betResult";
 export default {
-  props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
+  props: [
+    "stockName",
+    "ruleid",
+    "loop",
+    "betId",
+    "payout",
+    "betWin",
+    "specific"
+  ],
   mixins: [BetResult],
   data() {
     return {
@@ -192,20 +200,20 @@ export default {
 
           if (this.betValue > 0) {
             this.$soundEffect("betting");
-
             const stockDetail = {
               betAmount: this.betValue,
               class: this.betId.split("-")[0],
               gameUUID: this.getGameUUIDByStockName(this.stockName),
               id: this.stockName + this.betId,
               ruleID: this.ruleid,
-              specificNumber: "",
+              specificNumber: this.specific,
               betRule: this.betId
             };
             this.$emit("update-bet", stockDetail);
             this.confirmDisabled = true;
             this.sendBetting(data, stockDetail);
             this.setFooterBetAmount(0);
+
             $("#" + this.stockName + this.betId).addClass(
               this.betId.split("-")[0] + " " + this.betId.split("-")[1]
             );
