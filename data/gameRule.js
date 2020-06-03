@@ -245,6 +245,10 @@ const gamerule = {
   ],
   bothDigitNumber: [
     {
+      ruleid: 149,
+      name: "BD_0"
+    },
+    {
       ruleid: 150,
       name: "BD_1"
     },
