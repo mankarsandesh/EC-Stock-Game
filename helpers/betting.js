@@ -22,6 +22,7 @@ class Betting {
             } catch (error) {
                 console.log(error)
             }
+
         }
         /**
          *

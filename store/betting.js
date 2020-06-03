@@ -3,15 +3,144 @@ import secureStorage from "../plugins/secure-storage";
 const itemBetting = secureStorage.getItem("itemBetting");
 const state = () => ({
     collegeBtnNumber: null,
-    multiGameBet: itemBetting ? itemBetting : [],
+    chipConfirms: itemBetting ? itemBetting : [],
     multiGameBetSend: [], // Store multi game bet send
     footerBetAmount: 0, // Store footer bet amount
     onGoingBet: [], // store data betting
     isSendBetting: false,
     multiGameFooterBetAmount: 0, // Store multi game footer bet amount
     tempMultiGameBetData: [], // Store temp bet data of multi game until the bet is ent to the server,
-    getItemsBetting: []
+    getItemsBetting: [],
+
+    bettingConfirm: itemBetting ? itemBetting : [], // after confirm 
+    selectBetting: [] // for select the betting
+
 });
+const getters = {
+    //  use for get the betting after confirm 
+    bettingConfirm: state => state.bettingConfirm,
+    // use for get the select betting 
+    selectBetting: state => state.selectBetting,
+
+    getItemsBetting: state => state.getItemsBetting,
+    // make the college the small bettin digit button 
+    getCollegeBtnNumber: state => state.collegeBtnNumber,
+    // Get multi game bet
+    getMultiGameBet: state => state.chipConfirms,
+    // Get multi game bet length
+    getMultiGameBetLength: state => state.chipConfirms.length,
+    // Get on going bet data
+    getOnGoingBet: state => state.onGoingBet,
+    // Get Is send betting status
+    getIsSendBetting: state => state.isSendBetting,
+
+    getMultiGameFooterBetAmount: state => state.multiGameFooterBetAmount,
+
+    gettempMultiGameBetData: state => state.tempMultiGameBetData,
+
+    getmultiGameBet: state => state.chipConfirms,
+    // Get the footer bet amount
+    getFooterBetAmount(state) {
+        return state.footerBetAmount;
+    },
+
+
+    // Get amount of betting that has been confirmed
+    getAllBettingAmount(state) {
+        let amount1 = state.onGoingBet
+            .map(x => x.betAmount)
+            .reduce((a, b) => a + b, 0);
+        let amount2 = state.chipConfirms
+            .map(x => x.betAmount)
+            .reduce((a, b) => a + b, 0);
+        return amount1 + amount2;
+    },
+    // Get amount of betting by stock Id
+    getAmountBettingByStockId: state => gameUUID => {
+        function getAmount(object) {
+            // find stock name
+            if (object.findIndex(x => x.gameUUID === gameUUID) == -1) return 0;
+            let result = object
+                .filter(x => x.gameUUID === gameUUID)
+                .map(x => x.betAmount)
+                .reduce((a, b) => a + b, 0);
+            return parseInt(result);
+        }
+        return getAmount(state.chipConfirms);
+    },
+    // Get bet amount for ech game rule to show on chip
+    getAmountMultiGameBet: state => data => {
+        // get total bottom bet amount
+        function getAmount(object) {
+            // check gameUUID is exist or not,if not return 0
+            if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1) {
+                return 0;
+            }
+            // get data by gameUUID and store in 'oneGameUUID'
+            let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
+            // check there is rule id in gameUUID or not,if no has return 0
+            if (oneGameUUID.findIndex(x => x.ruleID === data.ruleID) == -1) return 0;
+            // get gameUUID from 'oneGameUUID'
+            let result = oneGameUUID
+                .filter(x => x.ruleID === data.ruleID)
+                .map(x => x.betAmount)
+                .reduce((a, b) => a + b, 0);
+            return parseInt(result);
+        }
+        return getAmount(state.chipConfirms);
+    },
+    // Get amount of specific bet number
+    getAmountBetSpecificNumber: state => data => {
+        // get total bottom bet amount
+        function getAmount(object) {
+            // check gameUUID is exist or not,if not return 0
+            if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1) {
+                return 0;
+            }
+            // get data by gameUUID and store in 'oneGameUUID'
+            let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
+            // check there is rule id in gameUUID or not,if no has return 0
+            if (oneGameUUID.findIndex(x => x.specificNumber === data.ruleID) == -1)
+                return 0;
+            // get gameUUID from 'oneGameUUID'
+            let result = oneGameUUID
+                .filter(x => x.specificNumber === data.ruleID)
+                .map(x => x.betAmount)
+                .reduce((a, b) => a + b, 0);
+            return parseInt(result);
+        }
+        return getAmount(state.chipConfirms);
+        //  + getAmount(state.onGoingBet);
+    },
+    // check the footer bet amount
+    checkFooterBetAmount(state) {
+        if (state.footerBetAmount == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    },
+    // Get amount of betting that has already been confirm
+    getBettingAmount(state) {
+        return state.onGoingBet.map(x => x.betAmount).reduce((a, b) => a + b, 0);
+    },
+
+    // Get amount by rule id
+    getBetAmountRuleID: state => data => {
+        return 0;
+    },
+    getTempMultiGameBetAmount(state) {
+        if (!state.tempMultiGameBetData.length > 0) {
+            return 0;
+        }
+        let amount = 0;
+        state.tempMultiGameBetData.forEach(betData => {
+            amount += betData.betAmount;
+        });
+        return amount;
+    },
+
+};
 const mutations = {
     SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
         state.multiGameFooterBetAmount = payload;
@@ -27,14 +156,14 @@ const mutations = {
         state.collegeBtnNumber = payload;
     },
     PUSH_DATA_MULTI_GAME_BET(state, payload) {
-        state.multiGameBet.push(payload);
+        state.chipConfirms.push(payload);
         state.multiGameBetSend.push(payload);
     },
     CLEAR_DATA_MULTI_GAME_BET_SEND(state) {
         state.multiGameBetSend = [];
     },
     CLEAR_DATA_MULTI_GAME_BET(state) {
-        state.multiGameBet = [];
+        state.chipConfirms = [];
         state.onGoingBet = [];
     },
     SET_FOOTER_BET_AMOUNT(state, payload) {
@@ -56,7 +185,7 @@ const mutations = {
     },
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
         state.multiGameBetSend.push(...state.tempMultiGameBetData);
-        state.multiGameBet.push(...state.tempMultiGameBetData);
+        state.chipConfirms.push(...state.tempMultiGameBetData);
         state.tempMultiGameBetData = [];
     },
     CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
@@ -66,12 +195,31 @@ const mutations = {
         state.footerBetAmount = 0;
     },
     SET_CONFIRM_BETTING(state, payload) {
-        state.multiGameBet.push(payload)
+        state.chipConfirms.push(payload)
         state.tempMultiGameBetData.push(payload);
         secureStorage.setItem("itemBetting", state.tempMultiGameBetData)
-    }
+    },
+
+    CONFIRM_BETTING(state, payload) {
+        state.chipConfirms.push(payload)
+        state.bettingConfirm.push(payload)
+        secureStorage.setItem("itemBetting", state.bettingConfirm)
+    },
+
+    CLEAR_CONFIRM_BETTING(state) {
+        console.log('CLEAR_CONFIRM_BETTING')
+        state.selectBetting = []
+        state.bettingConfirm = []
+        secureStorage.removeItem("itemBetting")
+    },
 };
 const actions = {
+
+    // action from after confirm betting
+    setConfirmBetting({ commit }, payload) {
+        commit("CONFIRM_BETTING", payload)
+    },
+
     setBettingOnConfirm({ commit }, payload) {
         commit("SET_CONFIRM_BETTING", payload)
     },
@@ -187,127 +335,7 @@ const actions = {
         }
     }
 };
-const getters = {
-    getItemsBetting: state => state.getItemsBetting,
-    // make the college the small bettin digit button 
-    getCollegeBtnNumber: state => state.collegeBtnNumber,
-    // Get multi game bet
-    getMultiGameBet(state) {
-        return state.multiGameBet;
-    },
-    // Get multi game bet length
-    getMultiGameBetLength(state) {
-        return state.multiGameBet.length;
-    },
-    // Get amount of betting that has been confirmed
-    getAllBettingAmount(state) {
-        let amount1 = state.onGoingBet
-            .map(x => x.betAmount)
-            .reduce((a, b) => a + b, 0);
-        let amount2 = state.multiGameBet
-            .map(x => x.betAmount)
-            .reduce((a, b) => a + b, 0);
-        return amount1 + amount2;
-    },
-    // Get amount of betting by stock Id
-    getAmountBettingByStockId: state => gameUUID => {
-        function getAmount(object) {
-            // find stock name
-            if (object.findIndex(x => x.gameUUID === gameUUID) == -1) return 0;
-            let result = object
-                .filter(x => x.gameUUID === gameUUID)
-                .map(x => x.betAmount)
-                .reduce((a, b) => a + b, 0);
-            return parseInt(result);
-        }
-        return getAmount(state.multiGameBet);
-    },
-    // Get bet amount for ech game rule to show on chip
-    getAmountMultiGameBet: state => data => {
-        // get total bottom bet amount
-        function getAmount(object) {
-            // check gameUUID is exist or not,if not return 0
-            if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1) {
-                return 0;
-            }
-            // get data by gameUUID and store in 'oneGameUUID'
-            let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
-            // check there is rule id in gameUUID or not,if no has return 0
-            if (oneGameUUID.findIndex(x => x.ruleID === data.ruleID) == -1) return 0;
-            // get gameUUID from 'oneGameUUID'
-            let result = oneGameUUID
-                .filter(x => x.ruleID === data.ruleID)
-                .map(x => x.betAmount)
-                .reduce((a, b) => a + b, 0);
-            return parseInt(result);
-        }
-        return getAmount(state.multiGameBet);
-    },
-    // Get amount of specific bet number
-    getAmountBetSpecificNumber: state => data => {
-        // get total bottom bet amount
-        function getAmount(object) {
-            // check gameUUID is exist or not,if not return 0
-            if (object.findIndex(x => x.gameUUID == data.gameUUID) == -1) {
-                return 0;
-            }
-            // get data by gameUUID and store in 'oneGameUUID'
-            let oneGameUUID = object.filter(x => x.gameUUID === data.gameUUID);
-            // check there is rule id in gameUUID or not,if no has return 0
-            if (oneGameUUID.findIndex(x => x.specificNumber === data.ruleID) == -1)
-                return 0;
-            // get gameUUID from 'oneGameUUID'
-            let result = oneGameUUID
-                .filter(x => x.specificNumber === data.ruleID)
-                .map(x => x.betAmount)
-                .reduce((a, b) => a + b, 0);
-            return parseInt(result);
-        }
-        return getAmount(state.multiGameBet);
-        //  + getAmount(state.onGoingBet);
-    },
-    // check the footer bet amount
-    checkFooterBetAmount(state) {
-        if (state.footerBetAmount == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    },
-    // Get amount of betting that has already been confirm
-    getBettingAmount(state) {
-        return state.onGoingBet.map(x => x.betAmount).reduce((a, b) => a + b, 0);
-    },
-    // Get on going bet data
-    getOnGoingBet(state) {
-        return state.onGoingBet;
-    },
-    // Get Is send betting status
-    getIsSendBetting(state) {
-        return state.isSendBetting;
-    },
-    // Get amount by rule id
-    getBetAmountRuleID: state => data => {
-        return 0;
-    },
-    getTempMultiGameBetAmount(state) {
-        if (!state.tempMultiGameBetData.length > 0) {
-            return 0;
-        }
-        let amount = 0;
-        state.tempMultiGameBetData.forEach(betData => {
-            amount += betData.betAmount;
-        });
-        return amount;
-    },
-    getMultiGameFooterBetAmount: state => state.multiGameFooterBetAmount,
-    gettempMultiGameBetData: state => state.tempMultiGameBetData,
-    getmultiGameBet: state => state.multiGameBet,
-    // Get the footer bet amount
-    getFooterBetAmount(state) {
-        return state.footerBetAmount;
-    }
-};
+
 export default {
     state,
     mutations,

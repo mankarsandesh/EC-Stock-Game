@@ -379,6 +379,7 @@
             :betId="'firstdigit-' + index"
             :betWin="'firstdigitWin-' + index"
             :payout="index + 30"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -389,7 +390,7 @@
               8 + index,
               stockID + 'firstdigit' + '-' + index,
               'firstdigit',
-              'specific',
+              'firstdigit' + '-' + index,
               getItemPage,
               stockID
             )
@@ -417,6 +418,7 @@
             :betId="'lastdigit-' + index"
             :betWin="'lastdigitWin-' + index"
             :payout="index + 40"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -427,7 +429,7 @@
               25 + index,
               stockID + 'lastdigit' + '-' + index,
               'lastdigit',
-              'specific',
+              'lastdigit' + '-' + index,
               getItemPage,
               stockID
             )
@@ -455,6 +457,7 @@
             :betId="'bothdigit-' + index"
             :betWin="'bothdigitWin-' + index"
             :payout="index + 50"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -465,7 +468,7 @@
               149 + index,
               stockID + 'bothdigit' + '-' + index,
               'bothdigit',
-              'specific',
+              'bothdigit' + '-' + index,
               getItemPage,
               stockID
             )
@@ -493,6 +496,7 @@
             :betId="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
             :betWin="'twodigitWin-' + index"
             :payout="index + 69"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -509,7 +513,7 @@
                 ? stockID + 'twodigit-0' + index
                 : stockID + 'twodigit' + '-' + index,
               'twodigit',
-              'specific',
+              'twodigit' + '-' + index,
               getItemPage,
               stockID
             )

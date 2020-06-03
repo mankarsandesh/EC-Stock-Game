@@ -98,7 +98,15 @@ import chips from "~/data/chips";
 import secureStorage from "../../plugins/secure-storage";
 import { BetResult } from "~/mixin/betResult";
 export default {
-  props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
+  props: [
+    "stockName",
+    "ruleid",
+    "loop",
+    "betId",
+    "payout",
+    "betWin",
+    "specific"
+  ],
   mixins: [BetResult],
   data() {
     return {
@@ -165,7 +173,7 @@ export default {
         if (parseInt(this.betValue) > 10000 || parseInt(this.betValue) == 0) {
           this.$swal({
             type: "error",
-            title: this.$root.$t("betting.betValue"),  
+            title: this.$root.$t("betting.betValue"),
             timer: 1500,
             showConfirmButton: true
           });
@@ -198,7 +206,7 @@ export default {
               gameUUID: this.getGameUUIDByStockName(this.stockName),
               id: this.stockName + this.betId,
               ruleID: this.ruleid,
-              specificNumber: "",
+              specificNumber: this.specific,
               betRule: this.betId
             };
             this.$emit("update-bet", stockDetail);
@@ -273,9 +281,7 @@ export default {
     clear() {
       this.betValue = 0;
       this.confirmDisabled = false;
-    },
-
- 
+    }
   }
 };
 </script>

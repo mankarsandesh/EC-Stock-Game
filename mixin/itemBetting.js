@@ -102,8 +102,6 @@ export const itemBetting = {
          */
         async updateBet(items) {
             try {
-                // active-firstdigit
-                // select the class of the paret button
                 // parent the button
                 if (!$("#" + items.id.split("-")[0]).hasClass(items.class)) {
                     $("#" + items.id.split("-")[0]).addClass(items.class)
@@ -123,10 +121,13 @@ export const itemBetting = {
                 if (array) {
                     array.map((item, index) => {
                         if (item.class === items.type) {
-                            if (!$("#" + item.id.split("-")[0]).hasClass(item.class)) {
-                                $("#" + item.id.split("-")[0]).addClass(item.class)
+                            if (item.specificNumber) {
+                                if (!$("#" + item.id.split("-")[0]).hasClass(item.class)) {
+                                    $("#" + item.id.split("-")[0]).addClass(item.class)
+                                }
                             }
                         }
+
                         if (!$("#" + item.id).hasClass(item.class + ' ' + item.id.split("-")[1])) {
                             $("#" + item.id).addClass(item.class + ' ' + item.id.split("-")[1])
 
@@ -152,10 +153,16 @@ export const itemBetting = {
          * @param {*} stockName
          */
         async storemarkColor(ruleID, id, classe, specific, page, stockName) {
-            try {
-                // check the page only full screen can press the bet and color is come 
-                // check the valueAmout is  >= 100  
 
+            // ruleID 8
+            // id btc1firstdigit - 0
+            // classe firstdigit
+            // specific firstdigit - 0
+            // page fullscreen
+            // stockName btc1
+
+            try {
+                // check the valueAmout is  >= 100  
                 if (page === "fullscreen") {
                     if (this.getFooterBetAmount >= 100) {
                         this.$soundEffect("betting");
@@ -168,8 +175,10 @@ export const itemBetting = {
                             if (!$(parentBtn).addClass(classe)) {
                                 $(parentBtn).addClass(classe)
                             }
+                            if (!$("#" + id).hasClass(specific)) {
+                                $("#" + id).addClass(specific)
+                            }
                         }
-                        // $("#" + ruleID).addClass('bg-btn-first');
                         if (this.checkFooterBetAmount) {
                             let betData = {
                                 id: id,
@@ -181,13 +190,11 @@ export const itemBetting = {
                                 stockName: stockName,
                             };
                             this.setTempMultiGameBetData(betData);
-                            // this.pushDataMultiGameBet(betData);
-                            // console.warn(this.getMultiGameBet);
                         }
                     }
                 }
             } catch (error) {
-                console.log(error)
+                console.error(error)
             }
 
 
