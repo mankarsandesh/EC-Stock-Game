@@ -117,7 +117,7 @@
                         <v-icon dark size="24">fa-question</v-icon>
                       </v-btn>
                     </template>
-                    <span>{{ $t("msg.enterFullScreen") }}</span>
+                    <span>{{ $t("tutorial.help") }}</span>
                   </v-tooltip>
                 </v-flex>
               </v-layout>
@@ -215,7 +215,7 @@
                 @click="setAfterFullScreenClosePage()"
                 v-on="on"
               >
-                <v-icon size="24px">fa-arrows-alt</v-icon>
+                <v-icon size="24px">fa-expand</v-icon>
               </v-btn>
             </template>
             <span>{{ $t("msg.enterFullScreen") }}</span>
