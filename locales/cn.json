@@ -45,7 +45,7 @@
   },
   "about": {
     "title": "About",
-    "introduction": "This page is made to give you more informations."
+    "introduction": "创建此页面是为了向您提供更多信息。"
   },
   "msg": {
     "betCount": "投注数",
@@ -405,6 +405,7 @@
     "followBet":"跟随投注邀请"
   },
   "tutorial": {
+    "help":"采取游览",
     "resultDraw":"开奖结果",
     "calculation" : "计算",
     "lotteryDraw" : "彩票开奖？",
@@ -434,10 +435,10 @@
   "follow": {
     "amount" : "量",
     "rate" : "率",
-    "amountMust" : "最低下注$100",
+    "amountMust" : "最低下注 100",
     "timeMust" : "必须达到1天时间",
     "betMust" : "必须至少下注1次",
-    "amountMay" : "注码不可超过 $1000",
+    "amountMay" : "注码不可超过 1000",
     "timeMay" : "时间不可超过10天",
     "betMay" : "最多下注不可超过10次",
     "mustBe" : "必须至少达到",

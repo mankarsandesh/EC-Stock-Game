@@ -38,8 +38,7 @@
       <template v-slot:header>
         <div >
           <span class="rules">
-            {{ $t("gamemsg.lastdigit") }} (????.?
-            <b class="headline1">?</b>)
+            {{ $t("gamemsg.lastdigit") }} (????.?<b class="headline1">?</b>)
           </span>
         </div>
       </template>
@@ -74,7 +73,7 @@
       <template v-slot:header>
         <div>
           <span class="rules">
-            {{ $t("gamemsg.bothdigit") }} (????.  <b class="headline1">?+?</b>)
+            {{ $t("gamemsg.bothdigit") }} (????.<b class="headline1">?+?</b>)
           </span>
         </div>
       </template>
@@ -111,8 +110,7 @@
       <template v-slot:header>
         <div >
           <span class="rules">
-            {{ $t("gamemsg.twodigit") }} (????.
-            <b class="headline1">??</b>)
+            {{ $t("gamemsg.twodigit") }} (????.<b class="headline1">??</b>)
           </span>
         </div>
       </template>

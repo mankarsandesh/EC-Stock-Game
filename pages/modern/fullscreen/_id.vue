@@ -329,12 +329,11 @@
                       dark
                       small
                       class="helpButton"
-                      title="Help"
                     >
                       <v-icon dark size="25">fa-question</v-icon>
                     </v-btn>
                   </template>
-                  <span>Full Game Screen Tutorial</span>
+                  <span>{{ $t("tutorial.help") }}</span>
                 </v-tooltip>
               </v-flex>
             </v-layout>

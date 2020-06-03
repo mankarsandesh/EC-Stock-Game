@@ -406,6 +406,7 @@
     "followBet":"FOLLOW BET INVITATION"
   },
   "tutorial": {
+    "help":"Take A Tour",
     "resultDraw" : "Result of the DRAW",
     "calculation" : "Calculation",
     "lotteryDraw" : "Lottery DRAW",
@@ -435,10 +436,10 @@
   "follow": {
     "amount" : "Amount",
     "rate" : "Rate",
-    "amountMust" : "Minimum Amount must be at least 100 USD",
+    "amountMust" : "Minimum Amount must be at least 100",
     "timeMust" : "Minimum Time must be at least 1 Day.",
     "betMust" : "Minimum Bet must be at least 1.",
-    "amountMay" : "Amount should not be greater than 1000 USD",
+    "amountMay" : "Amount should not be greater than 1000",
     "timeMay" : "Time should not be greater than 10 Days",
     "betMay" : "Bet should not be greater than 10 Bets",
     "mustBe" : "must be at least",
