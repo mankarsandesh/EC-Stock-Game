@@ -139,12 +139,7 @@
         </div>
       </div>
 
-      <div
-        id="my-poper"
-        v-if="isShowCatalog"
-        v-on-clickaway="closePoper"
-        :key="getLocale"
-      >
+      <div id="my-poper" v-if="isShowCatalog" v-on-clickaway="closePoper">
         <ul class="pa-0">
           <li
             @click="clickCatalogItem(item)"
@@ -317,12 +312,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      "getPortalProviderUUID",
-      "getUserUUID",
-      "getStockGameId",
-      "getLocale"
-    ]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
     wiseBorderColor() {
       return catalog => {
         if (catalog.length === 1) {
