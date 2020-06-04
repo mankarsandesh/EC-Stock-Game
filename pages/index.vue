@@ -31,7 +31,6 @@ import log from "roarr";
 export default {
   layout: "nolayout",
   middleware: ["checkAuth"],
-
   data() {
     return {
       stockName: config.homePageStockName,
@@ -50,6 +49,7 @@ export default {
       this.getProgress();
     }
   },
+
   watch: {
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
@@ -59,6 +59,7 @@ export default {
       }
     }
   },
+
   computed: {
     ...mapGetters(["getLoginError"])
   },

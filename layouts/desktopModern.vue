@@ -47,9 +47,9 @@
                 @click="$refs.language.showDialog()"
               >
                 <country-flag :country="getLocale" size="normal" />
-                <span
-                  >&nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}</span
-                >
+                <span>
+                  &nbsp;{{ $t(`msg.${language[getLocale].toString()}`) }}
+                </span>
                 <i class="fa fa-caret-down" style="margin: 0 -6px 0px 8px;" />
               </v-btn>
             </div>
@@ -91,6 +91,7 @@
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :stockName="$route.params.id"
         :pathName="$route.name"
+        :key="getLocale"
       ></chatBox>
     </v-app>
   </div>
@@ -113,7 +114,6 @@ import Cookies from "../plugins/js-cookie";
 
 export default {
   mixins: [clickaway],
-
   components: {
     DesktopTutorial,
     invitation,
