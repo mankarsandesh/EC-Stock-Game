@@ -71,7 +71,16 @@
             <nuxt-link :to="'/modern/desktop/userprofile/?id=' + data.userUUID">
               <v-layout class="userProfileRow" pa-2>
                 <v-flex md3 lg3>
-                  <img class="pimage" :src="userImgProfile(data.userImage)" />
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <img
+                        class="pimage"
+                        :src="userImgProfile(data.userImage)"
+                        v-on="on"
+                      />
+                    </template>
+                    <span>{{ $t("leaderBoard.viewUserProfile") }}</span>
+                  </v-tooltip>
                 </v-flex>
                 <v-flex md9 lg9 pt-4 pl-3>
                   <v-layout mt-1>
@@ -106,7 +115,7 @@
           <div class="rows">
             <h3 class="header">{{ $t("leaderBoard.winningAmount") }}</h3>
             <h4 style="color:#0b2a68;" class="titleText">
-           {{ Math.round(data.totalWinAmount, 1) | currency }}
+              {{ Math.round(data.totalWinAmount, 1) | currency }}
             </h4>
           </div>
           <div
@@ -230,7 +239,7 @@ export default {
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
     }),
-    ...mapGetters(["getUserInfo","getUserCurrency"])
+    ...mapGetters(["getUserInfo", "getUserCurrency"])
   },
   methods: {
     // Render Follow Bet Component
@@ -311,7 +320,7 @@ export default {
           {
             headers: config.header
           }
-        );       
+        );
         this.topPlayerData = data.data;
         this.loadingImage = false;
       } catch (error) {

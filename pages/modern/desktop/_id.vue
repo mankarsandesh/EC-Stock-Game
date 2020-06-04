@@ -163,10 +163,20 @@
                   @click="addTrendMap()"
                   v-if="index === 0"
                 >
-                  <v-icon>fa-plus</v-icon>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">fa-plus</v-icon>
+                    </template>
+                    <span>Add new roadmap</span>
+                  </v-tooltip>
                 </span>
                 <span v-else class="addChart" @click="removeTrendMap(index)">
-                  <v-icon>close</v-icon>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">close</v-icon>
+                    </template>
+                    <span>Close roadmap</span>
+                  </v-tooltip>
                 </span>
               </tableTrendMap>
             </div>
@@ -184,6 +194,14 @@
             @click="GameRuleDialog = false"
             >fa-times</v-icon
           >
+
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-btn color="primary" dark v-on="on">Right</v-btn>
+            </template>
+            <span>Right tooltip</span>
+          </v-tooltip>
+
           <v-card-text style="padding:40px;">
             <h2 style="text-align:center;">
               {{ $t("msg.ecGamingRulesDescription") }}

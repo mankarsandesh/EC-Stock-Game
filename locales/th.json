@@ -182,7 +182,9 @@
     "close" : "ปิด",
     "rowsPerPage":"แถวต่อหน้า:",
     "betSuccess":"เดิมพันสำเร็จ",
-    "betFailed" : "การเดิมพันล้มเหลว"
+    "betFailed" : "การเดิมพันล้มเหลว",
+    "addNewRoadMap" : "เพิ่มแผนงานใหม่",
+    "closeRoadMap" : "ปิดแผนงาน"
   },
   "navlist": {
     "live Stock": "หุ้นที่เปิดอยู่",
@@ -324,7 +326,8 @@
     "stopByTiming":"หยุดตามกำหนดเวลา",
     "stopByBets":"หยุดโดยการเดิมพัน",
     "monthly":"รายเดือน",
-    "weekly":"รายสัปดาห์"
+    "weekly":"รายสัปดาห์",
+    "viewUserProfile" : "ดูโปรไฟล์ผู้ใช้"
   },
   "breadcrumbs": {
     "rule": "กฎ",

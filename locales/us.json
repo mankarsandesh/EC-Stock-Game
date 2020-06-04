@@ -184,7 +184,10 @@
     "close" : "Close",
     "rowsPerPage":"Rows per page:",
     "betSuccess":"bet Success",
-    "betFailed" : "bet Failed"
+    "betFailed" : "bet Failed",
+    "addNewRoadMap" : "Add New Roadmap",
+    "closeRoadMap" : "Close Roadmap"
+    
   },
   "navlist": {
     "live Stock": "live Stock",
@@ -326,7 +329,8 @@
     "stopByTiming":"Stop by Timing",
     "stopByBets":"Stop by Bets",
     "monthly":"Monthly",
-    "weekly":"Weekly"
+    "weekly":"Weekly",
+    "viewUserProfile" : "View User Profile"
   },
   "breadcrumbs": {
     "rule": "Rule",
