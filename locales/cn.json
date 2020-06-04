@@ -387,6 +387,7 @@
     "betSuccess": "投注成功"
   },
   "invitation": {
+    "selectCategory" : "选择类别",
     "selectCategoryError" : "请选择类别",
     "ecWorld" : "EC 世界",
     "gameChannel" : "游戏频道",

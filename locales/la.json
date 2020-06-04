@@ -388,6 +388,7 @@
     "betSuccess": "ການວາງເດີມພັນ ສຳ ເລັດແລ້ວ"
   },
   "invitation": {
+    "selectCategory" : "ເລືອກ ໝວດ ໝູ່",
     "selectCategoryError" : "ກະລຸນາເລືອກ ໝວດ ໝູ່",
     "ecWorld" : "EC ໂລກ",
     "gameChannel" : "ການຫຼິ້ນ ຊ່ອງທາງ",
