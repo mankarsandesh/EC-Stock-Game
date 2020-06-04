@@ -58,7 +58,7 @@
           :key="index"
         >
           <div>
-            <nuxt-link :to="'/modern/desktop/userprofile/?id=' +chat.userUUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' + chat.userUUID">
               <v-avatar :size="40">
                 <img :src="userImgProfile(chat.userImage)" alt="profile" />
               </v-avatar>
@@ -139,12 +139,17 @@
         </div>
       </div>
 
-      <div id="my-poper" v-if="isShowCatalog" v-on-clickaway="closePoper">
+      <div
+        id="my-poper"
+        v-if="isShowCatalog"
+        v-on-clickaway="closePoper"
+        :key="getLocale"
+      >
         <ul class="pa-0">
           <li
             @click="clickCatalogItem(item)"
             class="item-catalog"
-            :catalog=" [
+            :catalog="[
               {
                 id: '1',
                 title: $t('invitation.winBets')
@@ -312,7 +317,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getStockGameId"]),
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getStockGameId",
+      "getLocale"
+    ]),
     wiseBorderColor() {
       return catalog => {
         if (catalog.length === 1) {

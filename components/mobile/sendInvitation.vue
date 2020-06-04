@@ -18,9 +18,12 @@
         </template>
         <template v-for="item in globalInvitation">
           <v-list-tile :key="item.index" avatar class="userList">
-            <nuxt-link :to="'/modern/userprofile/?id=' +item.userUUID">
+            <nuxt-link :to="'/modern/userprofile/?id=' + item.userUUID">
               <v-list-tile-avatar>
-                <img :src="userImgProfile(item.userImage)"  class="profileImage" />
+                <img
+                  :src="userImgProfile(item.userImage)"
+                  class="profileImage"
+                />
               </v-list-tile-avatar>
             </nuxt-link>
 
@@ -108,18 +111,14 @@
         <v-layout class="errorMessage">
           <v-flex> {{ this.invitationError }} </v-flex>
         </v-layout>
-        <v-layout justify-center>
-          <v-flex 
-          
-          v-for="(item, index) in categoryName" v-bind:key="index">
-            
+        <v-layout justify-center v-if="CatValue.length > 0">
+          <v-flex v-for="(item, index) in categoryName" :key="index">
             <v-checkbox
-              
               justify-center
               color="green"
               :height="4"
               v-model="selectCategory"
-              :label="item.value+' '+' : '+CatValue[index]"
+              :label="item.value + ' ' + ' : ' + CatValue[index]"
               :value="item.id"
             ></v-checkbox>
           </v-flex>
@@ -246,17 +245,16 @@ export default {
           {
             headers: config.header
           }
-        );    
+        );
         this.CatValue = [
           Math.round(res.data["winRate"]) + "%",
           res.data["followerCount"],
           "#" + res.data["rank"]
         ];
-       
       } catch (ex) {
         this.setSnackBarError(true);
       }
-    },    
+    },
     // Send Top Player Users Invitation
     async sendInvitation() {
       if (this.selectCategory.length > 0) {
@@ -281,7 +279,7 @@ export default {
           this.setSnackBarError(true);
         }
       } else {
-        this.invitationError = this.$root.$t("invitation.selectCategoryError")
+        this.invitationError = this.$root.$t("invitation.selectCategoryError");
       }
     },
     // After more Invitation Come Scroll Down Automatically
@@ -290,15 +288,15 @@ export default {
       //   $("#bodyChat")
       //     .stop()
       //     .animate({ scrollTop: $("#bodyChat")[0].scrollHeight }, 1000);
-      // }      
+      // }
       $(".bodyChat")
-      .stop()
-      .animate(
-      {
-      scrollTop: $(".bodyChat")[0].scrollHeight
-      },
-       1000
-      );
+        .stop()
+        .animate(
+          {
+            scrollTop: $(".bodyChat")[0].scrollHeight
+          },
+          1000
+        );
     },
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
@@ -327,14 +325,14 @@ export default {
 };
 </script>
 <style scoped>
-.profileImage{
-  border-radius:5px;
+.profileImage {
+  border-radius: 5px;
 }
-.messageChat{
-  background-color: #FFF;
+.messageChat {
+  background-color: #fff;
   position: fixed;
   width: 100%;
-  bottom:0;
+  bottom: 0;
 }
 .errorMessage {
   text-align: center;
@@ -343,7 +341,7 @@ export default {
 }
 .userList {
   border-bottom: 1px solid #dddddd;
-   border-top: 1px solid #dddddd;
+  border-top: 1px solid #dddddd;
 }
 .userList .ranking {
   color: #42c851;
@@ -355,7 +353,7 @@ export default {
   font-weight: 800;
   text-align: center;
 }
-.numberCenter{
+.numberCenter {
   text-align: center;
 }
 .userList .winRate {
@@ -380,8 +378,8 @@ export default {
   padding-top: 10px;
   background-color: #f4f4f4;
   /* min-height: 400px; */
-  height:auto;
-  margin-bottom:100px;
+  height: auto;
+  margin-bottom: 100px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;
