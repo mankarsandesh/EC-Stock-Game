@@ -19,7 +19,7 @@
         <template v-for="item in globalInvitation">
           <v-list-tile :key="item.index" avatar class="userList">
             <nuxt-link :to="'/modern/userprofile/?id=' + item.userUUID">
-              <v-list-tile-avatar>
+              <v-list-tile-avatar :size="48">
                 <img
                   :src="userImgProfile(item.userImage)"
                   class="profileImage"
@@ -55,9 +55,8 @@
                 <span
                   v-if="item.category[0] == 2 && item.category.length == 1"
                   class="label"
-                  >{{ $t("invitation.totalFollower") }}</span
-                >
-
+                  >{{ $t("invitation.totalFollower") }}
+                </span>
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span v-on="on">{{ item.followerCount }}</span>
@@ -90,7 +89,7 @@
             <v-list-tile-action>
               <v-btn
                 class="buttonGreensmall"
-                v-on:click="
+                @click="
                   followUser(item.username, item.userImage, item.userUUID, 0)
                 "
                 dark
@@ -111,22 +110,29 @@
         <v-layout class="errorMessage">
           <v-flex> {{ this.invitationError }} </v-flex>
         </v-layout>
-        <v-layout justify-center v-if="CatValue.length > 0">
-          <v-flex v-for="(item, index) in categoryName" :key="index">
+        <div class="catalog-container" v-if="CatValue.length > 0">
+          <div
+            class="catalog-item"
+            v-for="(item, index) in categoryName"
+            :key="index"
+          >
             <v-checkbox
+              class="invite-catalog"
               justify-center
               color="green"
               :height="4"
               v-model="selectCategory"
-              :label="item.value + ' ' + ' : ' + CatValue[index]"
+              :label="item.value + ': ' + CatValue[index]"
               :value="item.id"
             ></v-checkbox>
-          </v-flex>
-        </v-layout>
-        <v-btn class="buttonInvitation" @click="sendInvitation()">
+            <!-- CatValue[index] -->
+          </div>
+        </div>
+
+        <div id="buttonInvitation" @click="sendInvitation()">
           {{ $t("invitation.sendInvitation") }} &nbsp;
           <i class="fa fa-paper-plane"></i>
-        </v-btn>
+        </div>
       </v-flex>
     </div>
     <!-- Follow and UnFollow Dialog box-->
@@ -257,6 +263,7 @@ export default {
     },
     // Send Top Player Users Invitation
     async sendInvitation() {
+      this.invitationError = "";
       if (this.selectCategory.length > 0) {
         try {
           const reqBody = {
@@ -284,11 +291,6 @@ export default {
     },
     // After more Invitation Come Scroll Down Automatically
     scrollDown() {
-      //  if ($("#bodyChat")[0]) {
-      //   $("#bodyChat")
-      //     .stop()
-      //     .animate({ scrollTop: $("#bodyChat")[0].scrollHeight }, 1000);
-      // }
       $(".bodyChat")
         .stop()
         .animate(
@@ -325,6 +327,19 @@ export default {
 };
 </script>
 <style scoped>
+.catalog-container {
+  display: flex;
+  border-top: #f1f1f1 solid 2px;
+}
+.catalog-item {
+  border-right: #f1f1f1 solid 1px;
+}
+.catalog-item:last-child {
+  border-right: none !important;
+}
+.invite-catalog {
+  font-size: 12px !important;
+}
 .profileImage {
   border-radius: 5px;
 }
@@ -365,26 +380,49 @@ export default {
   color: #585757;
   font-size: 14px;
 }
-.buttonInvitation {
-  padding: 8px;
-  width: 96%;
+#buttonInvitation {
+  position: relative;
+  width: 100%;
   color: #fff !important;
-  border-radius: 3px;
   background-image: linear-gradient(to right, #0bb177 30%, #2bb13a 51%);
   text-align: center;
-  height: 40px;
+  height: 50px;
+  line-height: 50px;
 }
+
+#buttonInvitation:after,
+#buttonInvitation:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+#buttonInvitation:after {
+  border-color: rgba(11, 177, 119, 0);
+  border-bottom-color: #0bb177;
+  border-width: 8px;
+  margin-left: -8px;
+}
+#buttonInvitation:before {
+  border-color: rgba(11, 177, 119, 0);
+  border-bottom-color: #0bb177;
+  border-width: 8px;
+  margin-left: -8px;
+}
+
 .bodyChat {
-  padding-top: 10px;
-  background-color: #f4f4f4;
-  /* min-height: 400px; */
-  height: auto;
+  background-color: #ffffff;
+  height: 90vh;
   margin-bottom: 100px;
   text-align: left;
   overflow: scroll;
   overflow-x: hidden;
   border-radius: 4px;
-  margin-top: 10px;
 }
 .topWrap {
   background-color: #2bb13a;
