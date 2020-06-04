@@ -58,7 +58,7 @@
           :key="index"
         >
           <div>
-            <nuxt-link :to="'/modern/desktop/userprofile/?id=' +chat.userUUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' + chat.userUUID">
               <v-avatar :size="40">
                 <img :src="userImgProfile(chat.userImage)" alt="profile" />
               </v-avatar>
@@ -144,7 +144,7 @@
           <li
             @click="clickCatalogItem(item)"
             class="item-catalog"
-            :catalog=" [
+            :catalog="[
               {
                 id: '1',
                 title: $t('invitation.winBets')
