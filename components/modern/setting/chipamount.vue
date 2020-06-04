@@ -127,7 +127,7 @@ export default {
       this.editAbleIndex = -1;
       this.$swal({
         type: "success",
-        title: "Changes saved!",
+        title: this.$root.$t("msg.changesSaved"),
         showConfirmButton: true,
         timer: 1000
       });

@@ -183,7 +183,10 @@
     "close" : "ປິດ",
     "rowsPerPage":"ແຖວເກັດທີ່ຢູ່ຕໍ່ຫນ້າ:",
     "betSuccess":"ຄວາມ ສຳ ເລັດຂອງການພະນັນ",
-    "betFailed" : "ການເດີມພັນລົ້ມເຫລວ"
+    "betFailed" : "ການເດີມພັນລົ້ມເຫລວ",
+    "addNewRoadMap" : "ຕື່ມແຜນທີ່ເສັ້ນທາງ ໃໝ່",
+    "closeRoadMap" : "ການປິດຖະ ໜົນ",
+    "expand" : "ຂະຫຍາຍ"
   },
   "navlist": {
     "live Stock": "ຫຸ້ນເປີດ",
@@ -326,7 +329,8 @@
     "stopByTiming":"ຢຸດເຊົາໂດຍເວລາ",
     "stopByBets":"ຢຸດໂດຍການເດີມພັນ",
     "monthly":"ລາຍເດືອນ",
-    "weekly":"ປະ ຈຳ ອາທິດ"
+    "weekly":"ປະ ຈຳ ອາທິດ",
+    "viewUserProfile" : "ເບິ່ງໂປຣໄຟລ໌ຂອງຜູ້ໃຊ້"
   },
   "breadcrumbs": {
     "rule": "ກົດລະບຽບ",
