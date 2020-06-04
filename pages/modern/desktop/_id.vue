@@ -205,13 +205,6 @@
             >fa-times</v-icon
           >
 
-          <v-tooltip right>
-            <template v-slot:activator="{ on }">
-              <v-btn color="primary" dark v-on="on">Right</v-btn>
-            </template>
-            <span>Right tooltip</span>
-          </v-tooltip>
-
           <v-card-text style="padding:40px;">
             <h2 style="text-align:center;">
               {{ $t("msg.ecGamingRulesDescription") }}

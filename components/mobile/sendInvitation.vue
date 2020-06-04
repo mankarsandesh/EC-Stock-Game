@@ -10,7 +10,7 @@
       </v-list>
       <v-list two-line class="bodyChat" id="bodyChat">
         <template>
-          <v-flex v-if="globalInvitation.length == 0" style="margin-top:100px;">
+          <v-flex v-if="globalInvitation.length == 0" style="margin-top:50px;">
             <h2 class="text-center" style="color:#a3a3a3;">
               {{ $t("invitation.noInvitation") }}
             </h2>

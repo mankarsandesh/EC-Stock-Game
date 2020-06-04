@@ -157,7 +157,7 @@
     "membership": "membership",
     "min": "Min",
     "max": "Max",
-    "otherStock": "Other Stock",
+    "otherStock": "Other Stocks",
     "music": "Music",
     "customLength": "Custom Length",
     "titles": "Title",
@@ -189,14 +189,14 @@
     "closeRoadMap" : "Close Roadmap",
     "expand" : "expand"
   },
-  "navlist": {
+  "navList": {
     "live Stock": "live Stock",
     "Us Stock": "Us Stock",
-    "Cypto Currency": "Cypto Currency",
+    "Cypto Currency": "Crypto Currency",
     "China Stocck": "China Stock",
     "usa": "Usa Stock",
-    "cypto": "Cypto Currency",
-    "china": "China Stocck"
+    "cypto": "Crypto Currency",
+    "china": "China Stock"
   },
   "listCS": {
     "live": "Live",
