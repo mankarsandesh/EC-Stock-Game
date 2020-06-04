@@ -388,6 +388,7 @@
     "betSuccess": "Bet placed successfully"
   },
   "invitation": {
+    "selectCategory" : "select category",
     "selectCategoryError" : "Please Select Category",
     "ecWorld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
