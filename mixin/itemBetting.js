@@ -114,7 +114,10 @@ export const itemBetting = {
 
         },
 
-
+        /**
+         *
+         *
+         */
         findItemBetting() {
             const array = secureStorage.getItem("itemBetting")
             jsonResult.resultBet.map((items, index) => {
@@ -122,8 +125,13 @@ export const itemBetting = {
                     array.map((item, index) => {
                         if (item.class === items.type) {
                             if (item.specificNumber) {
+                                //  find and make the parent color button
                                 if (!$("#" + item.id.split("-")[0]).hasClass(item.class)) {
                                     $("#" + item.id.split("-")[0]).addClass(item.class)
+                                }
+                                //  find child button with mark color 
+                                if (!$("#" + item.id).hasClass(item.betRule)) {
+                                    $("#" + item.id).addClass(item.betRule)
                                 }
                             }
                         }
@@ -196,9 +204,6 @@ export const itemBetting = {
             } catch (error) {
                 console.error(error)
             }
-
-
         },
-
     }
 }

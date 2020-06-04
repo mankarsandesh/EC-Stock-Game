@@ -102,11 +102,9 @@ export default {
           this.isSending = true;
           this.texts = this.$root.$t("msg.sending");
           this.confirmTempMultiGameBetData();
-          // setTimeout(() => {
           this.sendBetting();
           this.setFooterBetAmount(0);
           this.isSending = false;
-          // }, 1000);
           this.clearTempMultiGameBetData();
         } else {
           await Betting.cancelBettingClear(this.gettempMultiGameBetData);

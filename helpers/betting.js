@@ -8,7 +8,6 @@ class Betting {
      * @memberof Betting
      */
     async cancelBettingClear(items) {
-            console.log('items', items)
             try {
                 if (items.length) {
                     items.map(item => {
