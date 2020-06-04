@@ -184,7 +184,8 @@
     "betSuccess":"เดิมพันสำเร็จ",
     "betFailed" : "การเดิมพันล้มเหลว",
     "addNewRoadMap" : "เพิ่มแผนงานใหม่",
-    "closeRoadMap" : "ปิดแผนงาน"
+    "closeRoadMap" : "ปิดแผนงาน",
+    "expand" : "ขยายตัว"
   },
   "navlist": {
     "live Stock": "หุ้นที่เปิดอยู่",

@@ -185,7 +185,8 @@
     "betSuccess":"押注成功",
     "betFailed" : "投注失败",
     "addNewRoadMap" : "添加新路线图",
-    "closeRoadMap" : "关闭路线图"
+    "closeRoadMap" : "关闭路线图",
+    "expand" : "扩大"
   },
   "navlist": {
     "live Stock": "正开放股票",

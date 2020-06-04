@@ -186,8 +186,8 @@
     "betSuccess":"bet Success",
     "betFailed" : "bet Failed",
     "addNewRoadMap" : "Add New Roadmap",
-    "closeRoadMap" : "Close Roadmap"
-    
+    "closeRoadMap" : "Close Roadmap",
+    "expand" : "expand"
   },
   "navlist": {
     "live Stock": "live Stock",
