@@ -97,7 +97,9 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red">{{ unfollowSign }}</span>
+                <span slot="append" color="red"
+                  >{{ checkCurrency(this.getUserCurrency) }}</span
+                >
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
@@ -147,9 +149,10 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
+import utils from "~/mixin/utils";
 
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
@@ -261,12 +264,14 @@ export default {
       userId: 0
     };
   },
+  mixins: [utils],
   computed: {
     // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+    ...mapGetters(["getUserCurrency"])
   },
   methods: {
     // Snackbar Notification
@@ -390,7 +395,6 @@ export default {
     // Change Amount Rate Validation
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
-      console.log(this.selectedFollow);
       if (this.selectedFollow == "Amount") {
         this.selectAmount = true;
         this.selectRate = false;

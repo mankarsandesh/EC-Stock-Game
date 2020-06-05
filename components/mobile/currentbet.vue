@@ -18,7 +18,7 @@
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <span class="betAmount">{{ item.betAmount | toCurrency }}</span>
+              <span class="betAmount"> {{ checkCurrency(currency) }}{{ item.betAmount | currency }}</span>
               <div v-if="item.isFollowBet == 1" class="following">{{$t("currentBet.byFollowers")}}</div>
               <div v-if="item.isFollowBet == 0" class="original">{{$t("currentBet.original")}}</div>
             </v-list-tile-action>
@@ -33,7 +33,7 @@
             </span>
             <span>
               <strong>{{$t("currentBet.totalAmount")}}</strong>  
-              :{{ TotalAmount | toCurrency }}
+              : {{ checkCurrency(currency)}}{{ TotalAmount | currency }}
             </span>
           </div>
         </div>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import utils from "~/mixin/utils";
 export default {
   props: ["currentBets"],
   data: () => ({
@@ -61,6 +62,7 @@ export default {
       return formatter.format(value);
     }
   },
+  mixins:[utils],
   computed: {
     TotalAmount() {
       let total = null;

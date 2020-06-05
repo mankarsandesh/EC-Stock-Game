@@ -38,10 +38,10 @@
 
           <v-list-tile-action>
             <span v-if="item.betResult == 'lose'" class="lossAmount"
-              >-{{ item.betAmount | toCurrency }}</span
+              >{{ checkCurrency(currency)}}{{ item.betAmount | currency }}</span
             >
             <span v-if="item.betResult == 'win'" class="winAmount"
-              >+{{ item.rollingAmount | toCurrency }}</span
+              >{{ checkCurrency(currency)}}{{ item.rollingAmount | currency }}</span
             >
             <div v-if="item.isFollowBet == 1" class="following">
               {{ $t("betHistory.byFollowers") }}
@@ -70,19 +70,19 @@
           </span>
           <span>
             <strong>{{ $t("betHistory.total") }}</strong>
-            :{{ TotalAmount | toCurrency }}
+            :{{ checkCurrency(currency)}}{{ TotalAmount | currency }}
           </span>
           <span v-if="TotalAmount < TotalRolling">
             <strong>{{ $t("betHistory.rolling") }}</strong> :
             <span style="color:#FFF;">
-              {{ TotalRolling | toCurrency }}
+              {{ TotalRolling | currency }}
             </span>
           </span>
 
           <span v-if="TotalAmount > TotalRolling">
             <strong>{{ $t("betHistory.rolling") }}</strong> :
-            <span style="color: #c13f3f;font-weight: 800;">{{
-              TotalRolling | toCurrency
+            <span style="color: #c13f3f;font-weight: 800;">{{ checkCurrency(currency)}}{{
+              TotalRolling | currency
             }}</span>
           </span>
         </div>
@@ -103,11 +103,11 @@
           <v-flex xs6 sm6 class="betSide">
             <div v-if="this.rollingAmount == 0">
               <span>{{ $t("betHistory.yourLosingAmount") }}</span>
-              <h4 class="lossAmount">{{ this.betAmount }}</h4>
+              <h4 class="lossAmount">{{ checkCurrency(currency)}}{{ this.betAmount  | currency }}</h4>
             </div>
             <div v-if="this.rollingAmount != 0">
               <span>{{ $t("betHistory.yourWinningAmount") }}</span>
-              <h4 class="winAmount">{{ this.rollingAmount }}</h4>
+              <h4 class="winAmount">{{ checkCurrency(currency)}}{{ this.rollingAmount   | currency }}</h4>
             </div>
           </v-flex>
         </v-layout>
@@ -126,8 +126,9 @@
   </div>
 </template>
 <script>
+import utils from "~/mixin/utils";
 export default {
-  props: ["userBetHistory"],
+  props: ["userBetHistory","currency"],
   data() {
     return {
       betAmount: "",
@@ -175,6 +176,7 @@ export default {
       return formatter.format(value);
     }
   },
+  mixins:[utils],
   computed: {
     TotalAmount() {
       let total = null;
