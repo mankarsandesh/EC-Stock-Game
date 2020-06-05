@@ -97,7 +97,11 @@
             </span>
             <v-flex sm12 xs12 class="chartDesgin">
               <v-layout pa-2>
-                <v-flex xs6 class="text-xs-left" v-if="getStockLiveTime(this.stockID)">
+                <v-flex
+                  xs6
+                  class="text-xs-left"
+                  v-if="getStockLiveTime(this.stockID)"
+                >
                   <span class="text-time">{{
                     getStockLiveTime(this.stockID).split(" ")[1]
                   }}</span>
@@ -1015,7 +1019,7 @@
         <div class="bettingFooter justify-center sm10 xs10">
           <span>
             {{ $t("msg.totalBet") }}:
-            {{ formatToPrice(getAllBettingAmount) }}
+            {{ formatToPrice(getBettingAmount) }}
           </span>
         </div>
       </v-flex>
@@ -1597,7 +1601,7 @@ export default {
       "getGameUUIDByStockName",
       "getCheckStock",
       "getCoinsModern",
-      "getAllBettingAmount",
+      "getBettingAmount",
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",
@@ -1605,36 +1609,47 @@ export default {
     ]),
     // check bet close using stockOpenOrClosed and timer
     checkBetClose() {
-      if (
-        this.getTimerByStockName(this.stockID) &&
-        this.getTimerByStockName(this.stockID).stockStatus === "Closed"
-      ) {
+      const stockTime = this.getTimerByStockName(this.stockID);
+      if (stockTime && stockTime.stockStatus === "Closed") {
         return true;
       }
+
+      if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+        this.clearTempMultiGameBetData();
+
+        this.clearItemBetting();
+
+        secureStorage.removeItem("itemBetting");
+      }
+
       // check 1 or 5 loop
       if (this.getStockLoop(this.stockID) === 5) {
-        if (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec ==
-            240
-        ) {
-          this.clearDataMultiGameBet();
+        if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+          this.clearDataMultiGameBet(5);
         }
-        return (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60
-        );
+        if (stockTime && stockTime.gameEndTimeCountDownInSec <= 60) {
+          if (stockTime && stockTime.gameEndTimeCountDownInSec === 60) {
+            $(".closepopper").click();
+            this.clearTempMultiGameBetData();
+          }
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        if (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 40
-        ) {
-          this.clearDataMultiGameBet();
+        if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+          this.clearDataMultiGameBet(1);
         }
-        return (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
-        );
+        if (stockTime && stockTime.gameEndTimeCountDownInSec <= 20) {
+          if (stockTime && stockTime.gameEndTimeCountDownInSec === 20) {
+            $(".closepopper").click();
+            this.clearTempMultiGameBetData();
+          }
+
+          return true;
+        } else {
+          return false;
+        }
       }
     }
   },
@@ -1646,7 +1661,9 @@ export default {
       "setLiveRoadMap",
       "setRoadMap",
       "setUserData",
-      "setSnackBarMessage"
+      "setSnackBarMessage",
+      "clearTempMultiGameBetData",
+      "clearItemBetting"
     ]),
 
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -1703,16 +1720,16 @@ export default {
     },
     // Place Bet Last Step
     placeBet() {
-      if(this.betAmount > 10000) {
+      if (this.betAmount > 10000) {
         this.setSnackBarMessage(this.$root.$t("betting.betValue"));
       } else {
         let data = {
-        gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
-        ruleID: this.ruleid,
-        betAmount: this.betAmount
-      };
-      this.confirmDisabled = true;
-      this.sendBetting(data);
+          gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
+          ruleID: this.ruleid,
+          betAmount: this.betAmount
+        };
+        this.confirmDisabled = true;
+        this.sendBetting(data);
       }
     },
     // Final Betting on Mobile
