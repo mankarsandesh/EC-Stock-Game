@@ -115,8 +115,7 @@ export default {
     apexchart: apexchart
   },
   mixins: [utils],
-  created() {
-    console.log('this', date);
+  created() {   
     const now = date.format(new Date(), "YYYY-MM-DD");
     const lastWeek = date.addDays(new Date(), -7);
     this.startDate = date.format(lastWeek, "YYYY-MM-DD");
@@ -215,17 +214,10 @@ export default {
     }
   },
   methods: {
-    // Check Date is Valid or NOT
-    checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), "YYYY-MM-DD");
-      if (endDate > now || !(endDate >= startDate)) {
-        return false;
-      }
-      return true;
-    },
     // Fetch Stock info
     async getStockAnalysis() {
       try {
+        // Check if the date is valid(function is written in util mixin)
         if (!this.checkValidDate(this.startDate, this.endDate)) {
           throw new Error("Please select a valid date");
         }

@@ -20,7 +20,20 @@ const utils = {
         return false;
       }
       return true;
+    },
+    // Check Currency Symbol
+    checkCurrency(currencyID) {
+      if(currencyID == 1){
+          return "$";
+      }else if(currencyID == 2){
+        return "₭";
+      }else if(currencyID == 3){
+        return "฿";
+      }else if(currencyID == 4){
+        return "¥";
+      }
     }
+
   }
 };
 

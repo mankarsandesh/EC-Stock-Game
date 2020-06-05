@@ -197,17 +197,10 @@
                           style="font-size: 40px; color: #ffd682;"
                         />
                       </span>
-                      <span
-                        class="number-box"
-                        v-if="visitProfileUserData.totalWinAmount"
-                      >
-                        {{ this.getUserCurrency}} {{ visitProfileUserData.totalWinAmount | currency }}
+                      <span class="number-box">
+                        {{ checkCurrency(visitProfileUserData.currencyID) }}{{ visitProfileUserData.totalWinAmount | currency }}
                       </span>
-                      <span
-                        class="number-box"
-                        v-if="visitProfileUserData.totalWinAmount == 0"
-                        >${{ 0 }}</span
-                      >
+
                       <span class="des-title text-uppercase">{{
                         $t("leaderBoard.winningAmount")
                       }}</span>
@@ -280,6 +273,7 @@ import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../../plugins/secure-storage";
 import countryFlag from "vue-country-flag";
+import utils from "~/mixin/utils";
 
 export default {
   async watchQuery(newQuery) {
@@ -342,6 +336,7 @@ export default {
     followBet,
     VueApexCharts
   },
+  mixins: [utils],
   data() {
     return {
       myProfileImage: "",

@@ -34,13 +34,13 @@
                 {{ $t("msg.minutes") }}
               </td>
               <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
-              <td>{{ curreny }}{{ item.item.betAmount | currency }}</td>
+              <td>{{ checkCurrency(curreny) }}{{ item.item.betAmount | currency }}</td>
 
               <td v-if="item.item.betResult == 'win'">
-                <span class="winning">{{ curreny }}{{ item.item.rollingAmount | currency }}</span>
+                <span class="winning">{{ checkCurrency(curreny) }}{{ item.item.rollingAmount | currency }}</span>
               </td>
               <td v-if="item.item.betResult == 'lose'">
-                <span class="losing">{{ curreny }}{{ item.item.betAmount | currency }}</span>
+                <span class="losing">{{ checkCurrency(curreny) }}{{ item.item.betAmount | currency }}</span>
               </td>
               <td
                 v-if="item.item.isFollowBet == 1"
@@ -82,13 +82,13 @@
                 <span class="betDraw"
                   >{{ $t("betHistory.yourLosingAmount") }} :</span
                 >
-                <span class="lossAmount">{{ curreny }}{{ item.item.betAmount | currency }}</span>
+                <span class="lossAmount">{{ checkCurrency(curreny) }}{{ item.item.betAmount | currency }}</span>
               </td>
               <td colspan="3" v-if="item.item.rollingAmount != 0">
                 <span class="betDraw"
                   >{{ $t("betHistory.yourWinningAmount") }} :</span
                 >
-                <span class="winAmount">{{ curreny }}{{ item.item.rollingAmount | currency}}</span>
+                <span class="winAmount">{{ checkCurrency(curreny) }}{{ item.item.rollingAmount | currency}}</span>
               </td>
             </tr>
           </template>
@@ -104,18 +104,18 @@
                 {{ betHistory.length }} {{ $t("leaderBoard.bets") }}
               </td>
               <td>
-                <strong>{{ TotalAmount | toCurrency }}</strong>
+                <strong>{{ checkCurrency(curreny)}}{{ TotalAmount | currency }}</strong>
               </td>
               <td>
                 <span
                   class="totalRollingWin"
                   v-if="TotalAmount < TotalRolling"
-                  >{{ TotalRolling | toCurrency }}</span
+                  >{{ checkCurrency(curreny)}}{{ TotalRolling | currency }}</span
                 >
                 <span
                   class="totalRollingLoss"
                   v-if="TotalAmount > TotalRolling"
-                  >{{ TotalRolling | toCurrency }}</span
+                  >{{ checkCurrency(curreny)}}{{ TotalRolling | currency }}</span
                 >
               </td>
               <td colspan="1"></td>
@@ -139,6 +139,7 @@
 </template>
 <script>
 import date from "date-and-time";
+import utils from "~/mixin/utils";
 export default {
   props: ["userBetHistory", "search","curreny"],
   data() {
@@ -168,6 +169,8 @@ export default {
       $("#" + betUUID).toggle();
     }
   },
+  // Call Helper
+  mixins: [utils],
   computed: {
     //Filter Bet Details Content
     betHistory() {

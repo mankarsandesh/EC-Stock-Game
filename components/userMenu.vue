@@ -14,6 +14,7 @@
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </span>
             <span id="userBalance" @click="getUserBalancePosition()">
+              {{ checkCurrency(getUserCurrency) }}
               <animated-number
                 :value="getUserBalance"
                 :formatValue="formatToPrice"
@@ -71,7 +72,7 @@ import { mapGetters, mapActions, mapMutations } from "vuex";
 import config from "../config/config.global";
 import Cookies from "~/plugins/js-cookie";
 import secureStorage from "../plugins/secure-storage";
-
+import utils from "~/mixin/utils";
 export default {
   components: {
     AnimatedNumber,
@@ -87,8 +88,15 @@ export default {
       isShow: ""
     };
   },
+  // Call Helper Function
+  mixins: [utils],
   computed: {
-    ...mapGetters(["getUserInfo", "getUserBalance", "getUserUUID","getUserCurrency"]),
+    ...mapGetters([
+      "getUserInfo",
+      "getUserBalance",
+      "getUserUUID",
+      "getUserCurrency"
+    ]),
     imgProfile() {
       if (this.getUserInfo.profileImage == null) {
         return `${this.defaultImage}`;
@@ -101,6 +109,9 @@ export default {
     this.isShow = location.pathname.split("/")[1];
   },
   methods: {
+    async checkCurrency1(currency) {
+      return checkCurrency(currency);
+    },
     getUserBalancePosition() {
       // console.log(document.getElementById("userBanlance").offsetTop);
       // console.log(
@@ -145,8 +156,8 @@ export default {
         console.log(ex);
       }
     },
-    formatToPrice(value) {     
-      return ``+this.getUserCurrency+` ${Number(value)
+    formatToPrice(value) {
+      return `${Number(value)
         .toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
@@ -156,9 +167,9 @@ export default {
 </script>
 
 <style scoped>
-.userMenu{
+.userMenu {
   z-index: 100;
-  border-right:1px solid #dddddd !important;
+  border-right: 1px solid #dddddd !important;
 }
 .headlineh1 {
   font-weight: 600;
@@ -172,6 +183,8 @@ export default {
 }
 #userBalance {
   position: relative;
+  color: #003f70;
+  font-size: 16px;
 }
 .v-menu__content {
   border-radius: 15px;
