@@ -204,6 +204,8 @@ const checkUserLogin = async (
   axios
 ) => {
   try {
+   const defaultCoinsModern =  ["100", "500", "1000", "5000", "548855"];
+   const defaultCurrency =  "USD";
     if (config.authUser && config.authPassword) {
       var reqBody = {
         portalProviderUUID: portalProviderUUID,
@@ -211,7 +213,8 @@ const checkUserLogin = async (
         version: config.version,
         ip: "225.457.454.123",
         domain: document.referrer.match(/:\/\/(.[^/]+)/)[1],
-        balance: balance
+        balance: balance,
+        currencyID : 1
       };
       var { data } = await axios.post(config.userLoginAuth.url, reqBody, {
         headers: config.header
@@ -221,8 +224,11 @@ const checkUserLogin = async (
         var userUUID = data.data.userUUID;
         store.dispatch("setPortalProviderUUID", portalProviderUUID);
         store.dispatch("setUserUUID", userUUID);
+        store.dispatch("setCoinsModern", defaultCoinsModern);
+        store.dispatch("setCurrency", defaultCurrency);
         secureStorage.setItem("USER_UUID", userUUID); // Set User UUID in local Storage
         secureStorage.setItem("PORTAL_PROVIDERUUID", portalProviderUUID); // Set portal provider UUID in local storage
+        
         // Set Cookie for user session
         Cookies.set(
           "login",
@@ -266,6 +272,7 @@ const setLanguage = store => {
  */
 
 const initLocalStorageCoin = store => {
+  console.log("Login");
   const chips = secureStorage.getItem("coinsModern")
     ? secureStorage.getItem("coinsModern")
     : config.defaultCoinsModern;

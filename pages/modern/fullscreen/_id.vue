@@ -192,7 +192,9 @@
                         'Closed'
                   "
                 >
-                  <span class="text-close-bet">{{ $t('msg.marketClosed') }}</span>
+                  <span class="text-close-bet">{{
+                    $t("msg.marketClosed")
+                  }}</span>
                 </div>
                 <!-- chart other stocks -->
                 <v-card-text class="pa-0" min-height="500">
@@ -320,7 +322,7 @@
                 </div>
               </v-flex>
               <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
-                <v-tooltip bottom>
+                <v-tooltip left>
                   <template v-slot:activator="{ on }">
                     <v-btn
                       v-on="on"
@@ -745,8 +747,7 @@ export default {
             } else {
               throw new Error(this.$root.$t("error.general"));
             }
-          } catch (ex) {
-          }
+          } catch (ex) {}
         });
     },
     connectLiveBetCountDataSocket() {

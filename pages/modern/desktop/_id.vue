@@ -4,7 +4,12 @@
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
         <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">close</v-icon>
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-icon color="#0b2968" v-on="on">close</v-icon>
+            </template>
+            <span>{{ $t("msg.close") }}</span>
+          </v-tooltip>
         </span>
         <v-layout column>
           <v-flex xs12 pt-3>
@@ -29,7 +34,12 @@
       </v-flex>
       <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
-          <v-icon color="#FFF">list</v-icon>
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-icon color="#FFF" v-on="on">list</v-icon>
+            </template>
+            <span>{{ $t("msg.expand") }}</span>
+          </v-tooltip>
         </span>
       </v-flex>
       <!-- End Left Side -->
@@ -163,10 +173,20 @@
                   @click="addTrendMap()"
                   v-if="index === 0"
                 >
-                  <v-icon>fa-plus</v-icon>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">fa-plus</v-icon>
+                    </template>
+                    <span>{{ $t("msg.addNewRoadMap") }}</span>
+                  </v-tooltip>
                 </span>
                 <span v-else class="addChart" @click="removeTrendMap(index)">
-                  <v-icon>close</v-icon>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">fa-close</v-icon>
+                    </template>
+                    <span>{{ $t("msg.closeRoadMap") }}</span>
+                  </v-tooltip>
                 </span>
               </tableTrendMap>
             </div>
@@ -184,6 +204,7 @@
             @click="GameRuleDialog = false"
             >fa-times</v-icon
           >
+
           <v-card-text style="padding:40px;">
             <h2 style="text-align:center;">
               {{ $t("msg.ecGamingRulesDescription") }}

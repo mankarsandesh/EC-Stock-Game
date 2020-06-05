@@ -15,7 +15,7 @@
                 {{ $t("msg.SelectStock") }} <i class="fa fa-caret-right"></i
               ></span>
               <span>
-                {{ $t("navlist." + getStockType(stockId)) }}
+                {{ $t("navList." + getStockType(stockId)) }}
                 <i class="fa fa-caret-right"></i>
               </span>
               <span
@@ -34,7 +34,7 @@
         <ul>
           <li v-for="(stockType, index) in getAllStockByType" :key="index">
             <a href="#">
-              <span>{{ $t("navlist." + stockType.type) }}</span>
+              <span>{{ $t("navList." + stockType.type) }}</span>
               <span class="show-icon">
                 <i class="fa fa-caret-right"></i>
               </span>

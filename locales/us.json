@@ -157,7 +157,7 @@
     "membership": "membership",
     "min": "Min",
     "max": "Max",
-    "otherStock": "Other Stock",
+    "otherStock": "Other Stocks",
     "music": "Music",
     "customLength": "Custom Length",
     "titles": "Title",
@@ -184,16 +184,19 @@
     "close" : "Close",
     "rowsPerPage":"Rows per page:",
     "betSuccess":"bet Success",
-    "betFailed" : "bet Failed"
+    "betFailed" : "bet Failed",
+    "addNewRoadMap" : "Add New Roadmap",
+    "closeRoadMap" : "Close Roadmap",
+    "expand" : "expand"
   },
-  "navlist": {
+  "navList": {
     "live Stock": "live Stock",
     "Us Stock": "Us Stock",
-    "Cypto Currency": "Cypto Currency",
+    "Cypto Currency": "Crypto Currency",
     "China Stocck": "China Stock",
     "usa": "Usa Stock",
-    "cypto": "Cypto Currency",
-    "china": "China Stocck"
+    "cypto": "Crypto Currency",
+    "china": "China Stock"
   },
   "listCS": {
     "live": "Live",
@@ -326,7 +329,8 @@
     "stopByTiming":"Stop by Timing",
     "stopByBets":"Stop by Bets",
     "monthly":"Monthly",
-    "weekly":"Weekly"
+    "weekly":"Weekly",
+    "viewUserProfile" : "View User Profile"
   },
   "breadcrumbs": {
     "rule": "Rule",
@@ -388,6 +392,7 @@
     "betSuccess": "Bet placed successfully"
   },
   "invitation": {
+    "selectCategory" : "select category",
     "selectCategoryError" : "Please Select Category",
     "ecWorld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",

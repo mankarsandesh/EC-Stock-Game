@@ -183,7 +183,10 @@
     "close" : "关",
     "rowsPerPage":"每页行:",
     "betSuccess":"押注成功",
-    "betFailed" : "投注失败"
+    "betFailed" : "投注失败",
+    "addNewRoadMap" : "添加新路线图",
+    "closeRoadMap" : "关闭路线图",
+    "expand" : "扩大"
   },
   "navlist": {
     "live Stock": "正开放股票",
@@ -325,7 +328,8 @@
     "stopByTiming":"定时自动停止",
     "stopByBets":"下注一定次数后自动停止投注",
     "monthly":"每月一次",
-    "weekly":"每周"
+    "weekly":"每周",
+    "viewUserProfile" : "查看用户资料"   
   },
   "breadcrumbs": {
     "rule": "规则",
@@ -387,6 +391,7 @@
     "betSuccess": "投注成功"
   },
   "invitation": {
+    "selectCategory" : "选择类别",
     "selectCategoryError" : "请选择类别",
     "ecWorld" : "EC 世界",
     "gameChannel" : "游戏频道",
