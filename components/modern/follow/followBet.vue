@@ -93,7 +93,7 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red">{{ this.getUserCurrency }}</span>
+                <span slot="append" color="red">{{ checkCurrency(this.getUserCurrency) }}</span>
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
@@ -146,7 +146,7 @@
 import { mapState,mapGetters  } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
-
+import utils from "~/mixin/utils";
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
@@ -270,6 +270,7 @@ export default {
       userId: 0
     };
   },
+  mixins:[utils],
   computed: {
     // Get 2 Data from vuex first, in the computed
     ...mapState({

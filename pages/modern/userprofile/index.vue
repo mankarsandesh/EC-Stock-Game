@@ -173,7 +173,7 @@
                     />
                   </span>
                   <span class="number-box"
-                    >${{ visitProfileUserData.totalWinAmount | currency }}</span
+                    >  {{ checkCurrency(getUserCurrency) }}{{ visitProfileUserData.totalWinAmount | currency }}</span
                   >
                   <span class="des-title text-uppercase">
                     {{ $t("leaderBoard.winningAmount") }}
@@ -261,6 +261,7 @@ import config from "~/config/config.global";
 import followBet from "~/components/mobile/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../plugins/secure-storage";
+import utils from "~/mixin/utils";
 
 export default {
   async watchQuery(newQuery, oldQuery) {
@@ -373,6 +374,7 @@ export default {
       }
     };
   },
+  mixins:[utils],
   created() {
     this.setFilter(30);
     this.getUserProfileByID();
@@ -382,7 +384,8 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getUserInfo",
-      "getLocale"
+      "getLocale",
+      "getUserCurrency"
     ])
   },
   watch: {

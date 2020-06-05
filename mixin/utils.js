@@ -31,6 +31,8 @@ const utils = {
         return "฿";
       }else if(currencyID == 4){
         return "¥";
+      }else{
+        return "$";
       }
     }
 
