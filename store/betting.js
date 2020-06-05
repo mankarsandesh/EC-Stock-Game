@@ -11,11 +11,13 @@ const state = () => ({
     multiGameFooterBetAmount: 0, // Store multi game footer bet amount
     tempMultiGameBetData: [], // Store temp bet data of multi game until the bet is ent to the server,
     getItemsBetting: [],
-
     bettingConfirm: itemBetting ? itemBetting : [], // after confirm 
     selectBetting: [] // for select the betting
 });
-const getters = {   
+
+const getters = {
+    // Get user UUID
+    getUserCurrency: state => state.currency,
     //  use for get the betting after confirm 
     bettingConfirm: state => state.bettingConfirm,
     // use for get the select betting 
@@ -42,8 +44,6 @@ const getters = {
     getFooterBetAmount(state) {
         return state.footerBetAmount;
     },
-
-
     // Get amount of betting that has been confirmed
     getAllBettingAmount(state) {
         let amount1 = state.onGoingBet
@@ -178,10 +178,12 @@ const mutations = {
     SET_IS_SEND_BETTING(state, value) {
         state.isSendBetting = value;
     },
+
     SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
         state.tempMultiGameBetData.push(payload);
         secureStorage.setItem("itemBetting", state.tempMultiGameBetData)
     },
+
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
         state.multiGameBetSend.push(...state.tempMultiGameBetData);
         state.chipConfirms.push(...state.tempMultiGameBetData);
@@ -206,7 +208,6 @@ const mutations = {
     },
 
     CLEAR_CONFIRM_BETTING(state) {
-        console.log('CLEAR_CONFIRM_BETTING')
         state.selectBetting = []
         state.bettingConfirm = []
         secureStorage.removeItem("itemBetting")
