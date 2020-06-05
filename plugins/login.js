@@ -213,7 +213,8 @@ const checkUserLogin = async (
         version: config.version,
         ip: "225.457.454.123",
         domain: document.referrer.match(/:\/\/(.[^/]+)/)[1],
-        balance: balance
+        balance: balance,
+        currencyID : 1
       };
       var { data } = await axios.post(config.userLoginAuth.url, reqBody, {
         headers: config.header
