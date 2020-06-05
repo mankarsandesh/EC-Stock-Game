@@ -1,12 +1,15 @@
 import secureStorage from '~/plugins/secure-storage'
-import { mapActions } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 const jsonResult = require('~/data/result') // define the json result for the compare 
+import Betting from "~/helpers/betting";
 
 export const itemBetting = {
     mounted() {
         this.findItemBetting()
     },
+
     computed: {
+        ...mapGetters(["selectBetting"]),
         /**
          *
          *
@@ -25,6 +28,8 @@ export const itemBetting = {
                 stockTime &&
                 stockTime.gameEndTimeCountDownInSec === 0
             ) {
+
+
                 this.clearTempMultiGameBetData()
 
                 this.clearItemBetting()
@@ -47,6 +52,7 @@ export const itemBetting = {
 
                     if (stockTime &&
                         stockTime.gameEndTimeCountDownInSec === 60) {
+                        //  clear the select betting 
                         $(".closepopper").click()
                         this.clearTempMultiGameBetData()
                     }
@@ -67,9 +73,14 @@ export const itemBetting = {
 
                     if (stockTime &&
                         stockTime.gameEndTimeCountDownInSec === 20) {
+                        //  clear the select betting                         
+                        Betting.clearBettingSelect(this.selectBetting)
+                        this.CLEAR_SELECT_BETTING()
+                        this.setCollegeButtonNumberParent('Betting are not confirm have to clear') // make the button collage 
                         $(".closepopper").click()
                         this.clearTempMultiGameBetData()
                     }
+
 
                     return true
                 } else {
@@ -81,10 +92,12 @@ export const itemBetting = {
 
     },
     methods: {
+        ...mapMutations(["CLEAR_SELECT_BETTING"]),
         ...mapActions([
             "clearTempMultiGameBetData",
             "clearItemBetting",
-            "clearTempMultiGameBetData"
+            "clearTempMultiGameBetData",
+            "setCollegeButtonNumberParent"
         ]),
         /**
          *
@@ -124,6 +137,7 @@ export const itemBetting = {
                 if (array) {
                     array.map((item, index) => {
                         if (item.class === items.type) {
+                            console.log("am here in the findItemBetting ", item)
                             if (item.specificNumber) {
                                 //  find and make the parent color button
                                 if (!$("#" + item.id.split("-")[0]).hasClass(item.class)) {
@@ -135,20 +149,16 @@ export const itemBetting = {
                                 }
                             }
                         }
-
                         if (!$("#" + item.id).hasClass(item.class + ' ' + item.id.split("-")[1])) {
                             $("#" + item.id).addClass(item.class + ' ' + item.id.split("-")[1])
 
                         }
                     })
+
                 }
 
             })
-
-
         },
-
-
         /**
          *
          *
@@ -191,7 +201,7 @@ export const itemBetting = {
                             let betData = {
                                 id: id,
                                 class: classe,
-                                specificNumber: '',
+                                specificNumber: specific,
                                 gameUUID: this.getGameUUIDByStockName(this.stockID),
                                 ruleID: ruleID,
                                 betAmount: this.getFooterBetAmount,

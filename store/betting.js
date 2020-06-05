@@ -16,8 +16,6 @@ const state = () => ({
 });
 
 const getters = {
-    // Get user UUID
-    getUserCurrency: state => state.currency,
     //  use for get the betting after confirm 
     bettingConfirm: state => state.bettingConfirm,
     // use for get the select betting 
@@ -159,6 +157,7 @@ const mutations = {
         state.multiGameBetSend.push(payload);
     },
     CLEAR_DATA_MULTI_GAME_BET_SEND(state) {
+        console.log('CLEAR_DATA_MULTI_GAME_BET_SEND')
         state.multiGameBetSend = [];
     },
     CLEAR_DATA_MULTI_GAME_BET(state) {
@@ -180,14 +179,17 @@ const mutations = {
     },
 
     SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
+        state.selectBetting.push(payload);
         state.tempMultiGameBetData.push(payload);
-        secureStorage.setItem("itemBetting", state.tempMultiGameBetData)
     },
 
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
-        state.multiGameBetSend.push(...state.tempMultiGameBetData);
-        state.chipConfirms.push(...state.tempMultiGameBetData);
-        state.tempMultiGameBetData = [];
+        state.multiGameBetSend.push(...state.selectBetting);
+        state.chipConfirms.push(...state.selectBetting);
+        secureStorage.setItem("itemBetting", state.multiGameBetSend)
+        state.selectBetting = [];
+
+
     },
     CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
         state.tempMultiGameBetData = [];
@@ -207,14 +209,11 @@ const mutations = {
         secureStorage.setItem("itemBetting", state.bettingConfirm)
     },
 
-    CLEAR_CONFIRM_BETTING(state) {
+    CLEAR_SELECT_BETTING(state) {
         state.selectBetting = []
-        state.bettingConfirm = []
-        secureStorage.removeItem("itemBetting")
     },
 };
 const actions = {
-
     // action from after confirm betting
     setConfirmBetting({ commit }, payload) {
         commit("CONFIRM_BETTING", payload)
@@ -296,8 +295,9 @@ const actions = {
             if (res.status && res.code == 200) {
                 this.$soundEffect("betting");
                 context.dispatch("setUserData", "provider");
+                context.commit("CONFIRM_TEMP_MULTI_GAME_BET_DATA");
                 context.commit("SET_IS_SEND_BETTING", false);
-                context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
+                // context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
                 let i = 0;
                 let len = res.data.length;
                 for (i; i < len; i++) {
@@ -325,6 +325,10 @@ const actions = {
                 throw new Error(window.$nuxt.$root.$t("error.general"));
             }
         } catch (ex) {
+
+            context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
+
+            console.error('Hello am herer')
             console.error(ex.message);
             context.commit("SET_IS_SEND_BETTING", false);
             this._vm.$swal({
