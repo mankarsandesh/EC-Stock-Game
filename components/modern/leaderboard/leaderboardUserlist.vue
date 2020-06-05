@@ -115,7 +115,7 @@
           <div class="rows">
             <h3 class="header">{{ $t("leaderBoard.winningAmount") }}</h3>
             <h4 style="color:#0b2a68;" class="titleText">
-              {{ Math.round(data.totalWinAmount, 1) | currency }}
+              {{ checkCurrency(data.currencyID) }}{{ Math.round(data.totalWinAmount, 1) | currency }}
             </h4>
           </div>
           <div
@@ -192,6 +192,7 @@ import { mapState, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 import countryFlag from "vue-country-flag";
+import utils from "~/mixin/utils";
 export default {
   components: {
     followBet,
@@ -220,6 +221,8 @@ export default {
     };
     props: ["linkItem"];
   },
+  // Helper Function
+  mixins: [utils],
   mounted() {
     const today = new Date();
     const lastWeek = new Date(

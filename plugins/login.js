@@ -204,8 +204,8 @@ const checkUserLogin = async (
   axios
 ) => {
   try {
-   const defaultCoinsModern =  ["100", "500", "1000", "5000", "548855"];
-   const defaultCurrency =  "USD";
+   const defaultCoinsModern =  ["100", "500", "1000", "5000", "10000"];
+   const defaultCurrency =  1;
     if (config.authUser && config.authPassword) {
       var reqBody = {
         portalProviderUUID: portalProviderUUID,
@@ -214,12 +214,13 @@ const checkUserLogin = async (
         ip: "225.457.454.123",
         domain: document.referrer.match(/:\/\/(.[^/]+)/)[1],
         balance: balance,
-        currencyID : 1
+        currencyID : defaultCurrency
       };
       var { data } = await axios.post(config.userLoginAuth.url, reqBody, {
         headers: config.header
       });
-
+     
+     
       if (data.status) {
         var userUUID = data.data.userUUID;
         store.dispatch("setPortalProviderUUID", portalProviderUUID);

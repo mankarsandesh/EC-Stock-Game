@@ -395,7 +395,6 @@ export default {
         var { data } = await this.$axios.post(config.followUser.url, reqBody, {
           headers: config.header
         });
-        console.log(data);
         if (data.code == 200) {
           this.$emit("followBetClose");
           this.$swal({
