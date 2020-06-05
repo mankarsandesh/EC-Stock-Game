@@ -14,7 +14,7 @@
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </span>
             <span id="userBalance" @click="getUserBalancePosition()">
-              {{ checkCurrency(getUserCurrency) }}
+              {{ checkCurrency(getUserCurrency) }} 
               <animated-number
                 :value="getUserBalance"
                 :formatValue="formatToPrice"
