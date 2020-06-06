@@ -10,17 +10,13 @@
       <v-flex xs12>
         <div class="group_container">
           <span class="group_title">
-            {{
-            $t("notification.receiveByEmail")
-            }}
+            {{ $t("notification.receiveByEmail") }}
           </span>
           <div class="title_container">
             <!-- <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" @click="dialog = showAlert()"/> -->
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
             <span class="titile">
-              {{
-              $t("notification.insufficientBalance")
-              }}
+              {{ $t("notification.insufficientBalance") }}
             </span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
@@ -34,9 +30,7 @@
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
             <span class="titile">
-              {{
-              $t("notification.amountCreditedOrDebitedToAccount")
-              }}
+              {{ $t("notification.amountCreditedOrDebitedToAccount") }}
             </span>
             <br />
           </div>
@@ -45,16 +39,12 @@
       <v-flex xs12>
         <div class="group_container">
           <span class="group_title">
-            {{
-            $t("notification.receiveByMessage")
-            }}
+            {{ $t("notification.receiveByMessage") }}
           </span>
           <div class="title_container">
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
             <span class="titile">
-              {{
-              $t("notification.insufficientBalance")
-              }}
+              {{ $t("notification.insufficientBalance") }}
             </span>
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
@@ -68,9 +58,7 @@
             <br />
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
             <span class="titile">
-              {{
-              $t("notification.amountCreditedOrDebitedToAccount")
-              }}
+              {{ $t("notification.amountCreditedOrDebitedToAccount") }}
             </span>
             <br />
           </div>
@@ -84,17 +72,17 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  methods: {
-    showAlert() {
-      this.$swal.fire({
-        position: "top",
-        type: "success",
-        title: "Changes saved",
-        showConfirmButton: false,
-        timer: 1000
-      });
-    }
-  }
+  // methods: {
+  //   showAlert() {
+  //     this.$swal.fire({
+  //       position: "top",
+  //       type: "success",
+  //       title: "Changes saved",
+  //       showConfirmButton: false,
+  //       timer: 1000
+  //     });
+  //   }
+  // }
 };
 </script>
 

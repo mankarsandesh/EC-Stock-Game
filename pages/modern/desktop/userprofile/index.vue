@@ -198,7 +198,8 @@
                         />
                       </span>
                       <span class="number-box">
-                        {{ checkCurrency(visitProfileUserData.currencyID) }}{{ visitProfileUserData.totalWinAmount | currency }}
+                        {{ checkCurrency(visitProfileUserData.currencyID)
+                        }}{{ visitProfileUserData.totalWinAmount | currency }}
                       </span>
 
                       <span class="des-title text-uppercase">{{
@@ -232,7 +233,7 @@
                       The Link you followed have expired, or the page may only
                       be visiable to an audiencce you're not in.
                     </p>
-                    <a @click="$router.push('/modern/desktop/userprofile/')"
+                    <a @click="$router.push('/modern/desktop/leaderboard/')"
                       >Go back to the previous Page</a
                     >
                     <a @click="$router.push('/modern/desktop/btc1/')"

@@ -421,7 +421,6 @@ export default {
       e.target.parentElement.parentElement.firstElementChild.focus();
     },
     cancelUpdateProfile() {
-      this.$$forceUpdate();
       this.setInputData();
     },
     // Update Profile Picture
