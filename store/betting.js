@@ -159,7 +159,7 @@ const mutations = {
         state.multiGameBetSend.push(payload);
     },
     CLEAR_DATA_MULTI_GAME_BET_SEND(state) {
-        console.log('CLEAR_DATA_MULTI_GAME_BET_SEND')
+        // console.log('CLEAR_DATA_MULTI_GAME_BET_SEND')
         state.multiGameBetSend = [];
     },
     CLEAR_DATA_MULTI_GAME_BET(state) {
@@ -189,7 +189,7 @@ const mutations = {
         state.multiGameBetSend.push(...state.selectBetting);
         state.chipConfirms.push(...state.selectBetting);
         secureStorage.setItem("itemBetting", state.multiGameBetSend)
-        console.log('itemBetting', state.multiGameBetSend)
+        // console.log('itemBetting', state.multiGameBetSend)
         state.selectBetting = [];
 
 
