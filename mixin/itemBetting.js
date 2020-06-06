@@ -29,6 +29,7 @@ export const itemBetting = {
                 stockTime.gameEndTimeCountDownInSec === 0
             ) {
 
+                this.clearDataMultiGameBetSend()
 
                 this.clearTempMultiGameBetData()
 
@@ -97,7 +98,8 @@ export const itemBetting = {
             "clearTempMultiGameBetData",
             "clearItemBetting",
             "clearTempMultiGameBetData",
-            "setCollegeButtonNumberParent"
+            "setCollegeButtonNumberParent",
+            "clearDataMultiGameBetSend"
         ]),
         /**
          *

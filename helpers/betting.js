@@ -63,7 +63,6 @@ class Betting {
     clearBettingSelect(items) {
         if (items.length) {
             items.map(item => {
-
                 // betAmount: 100
                 // class: "firstdigit"
                 // gameUUID: "419bfdf8-720b-4d52-9052-38d8e12d946a"
