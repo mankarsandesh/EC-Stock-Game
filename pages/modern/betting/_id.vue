@@ -1583,7 +1583,6 @@ export default {
   },
   mounted() {
     this.stockID = this.$route.params.id;
-    console.log(this.stockID);
   },
   components: {
     chartMobile,

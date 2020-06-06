@@ -198,7 +198,8 @@
                         />
                       </span>
                       <span class="number-box">
-                        {{ checkCurrency(visitProfileUserData.currencyID) }}{{ visitProfileUserData.totalWinAmount | currency }}
+                        {{ checkCurrency(visitProfileUserData.currencyID)
+                        }}{{ visitProfileUserData.totalWinAmount | currency }}
                       </span>
 
                       <span class="des-title text-uppercase">{{
@@ -227,16 +228,15 @@
               <v-flex v-if="messageError == true">
                 <div class="container-content">
                   <div class="box-error">
-                    <h1>Sorry, this content isn't avaiable right now</h1>
+                    <h1>{{ $t("leaderBoard.sorry")}}</h1>
                     <p>
-                      The Link you followed have expired, or the page may only
-                      be visiable to an audiencce you're not in.
+                      {{ $t("leaderBoard.theLink")}}
                     </p>
-                    <a @click="$router.push('/modern/desktop/userprofile/')"
-                      >Go back to the previous Page</a
+                    <a @click="$router.push('/modern/desktop/leaderboard/')"
+                      >{{ $t("leaderBoard.previousPage")}}</a
                     >
                     <a @click="$router.push('/modern/desktop/btc1/')"
-                      >EC Game Home Page</a
+                      >{{ $t("leaderBoard.homePage")}}</a
                     >
                   </div>
                 </div>

@@ -139,7 +139,7 @@ export const itemBetting = {
                 if (array) {
                     array.map((item, index) => {
                         if (item.class === items.type) {
-                            console.log("am here in the findItemBetting ", item)
+                            // console.log("am here in the findItemBetting ", item)
                             if (item.specificNumber) {
                                 //  find and make the parent color button
                                 if (!$("#" + item.id.split("-")[0]).hasClass(item.class)) {

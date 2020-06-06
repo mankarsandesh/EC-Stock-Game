@@ -329,7 +329,11 @@
     "stopByBets":"下注一定次数后自动停止投注",
     "monthly":"每月一次",
     "weekly":"每周",
-    "viewUserProfile" : "查看用户资料"   
+    "viewUserProfile" : "查看用户资料",
+    "sorry" : "抱歉，这是一个私人帐户",
+    "theLink" : "您遵循的链接已过期，或者该页面仅对您不在的受众可见。",
+    "previousPage" : "返回上一个页面",
+    "homePage" : "EC 游戏首页"
   },
   "breadcrumbs": {
     "rule": "规则",

@@ -572,7 +572,7 @@ export default {
       this.btnNumber(val);
     },
     selectBetting(val) {
-      console.log("betting are not confirm ", val.length);
+      // console.log("betting are not confirm ", val.length);
     }
   },
   components: {

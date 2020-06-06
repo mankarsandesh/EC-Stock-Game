@@ -33,8 +33,8 @@
           >{{ $t("msg.confirm") }}</v-btn
         >
         <div class="min-max">
-          <span>{{ $t("msg.min") }} = $200</span>
-          <span>{{ $t("msg.max") }} = $20,000</span>
+          <span>{{ $t("msg.min") }} = $100</span>
+          <span>{{ $t("msg.max") }} = $10,000</span>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@
     <v-snackbar v-model="snackbar">
       {{ this.snackbarMessage }}
       <v-btn color="pink" text @click="snackbar = false">
-        Close
+        {{ $t("msg.close") }}
       </v-btn>
     </v-snackbar>
   </div>
