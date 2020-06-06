@@ -208,13 +208,12 @@
       <v-flex pa-2>
         <div class="container-content">
           <div class="box-error">
-            <h2>Sorry, this content isn't avaiable right now</h2>
+            <h2>{{ $t("leaderBoard.sorry")}}</h2>
             <p>
-              The Link you followed have expired, or the page may only be
-              visiable to an audiencce you're not in.
+              {{ $t("leaderBoard.theLink")}}
             </p>
-            <a :href="linkpreviouspage">Go back to the previous Page</a>
-            <a :href="linkhome">EC Game Home Page</a>
+            <a :href="linkpreviouspage">{{ $t("leaderBoard.previousPage")}}</a>
+            <a :href="linkhome">{{ $t("leaderBoard.homePage")}}</a>
           </div>
         </div>
       </v-flex>

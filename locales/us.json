@@ -330,7 +330,11 @@
     "stopByBets":"Stop by Bets",
     "monthly":"Monthly",
     "weekly":"Weekly",
-    "viewUserProfile" : "View User Profile"
+    "viewUserProfile" : "View User Profile",
+    "sorry" : "Sorry, this is private account",
+    "theLink" : "The Link you followed have expired, or the page may only be visible to an audience you're not in.",
+    "previousPage" : "Go back to the previous Page",
+    "homePage" : "EC Game Home Page"
   },
   "breadcrumbs": {
     "rule": "Rule",
