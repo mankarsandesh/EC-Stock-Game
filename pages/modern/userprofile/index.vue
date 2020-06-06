@@ -172,8 +172,9 @@
                       style="font-size: 40px; color: #f19135;"
                     />
                   </span>
-                  <span class="number-box"
-                    >  {{ checkCurrency(getUserCurrency) }}{{ visitProfileUserData.totalWinAmount | currency }}</span
+                  <span class="number-box">
+                    {{ checkCurrency(getUserCurrency)
+                    }}{{ visitProfileUserData.totalWinAmount | currency }}</span
                   >
                   <span class="des-title text-uppercase">
                     {{ $t("leaderBoard.winningAmount") }}
@@ -207,17 +208,12 @@
       <v-flex pa-2>
         <div class="container-content">
           <div class="box-error">
-            <h2>Sorry, this content isn't avaiable right now</h2>
+            <h2>{{ $t("leaderBoard.sorry")}}</h2>
             <p>
-              The Link you followed have expired, or the page may only be
-              visiable to an audiencce you're not in.
+              {{ $t("leaderBoard.theLink")}}
             </p>
-            <a @click="$router.push('/modern/desktop/userprofile/')"
-              >Go back to the previous Page</a
-            >
-            <a @click="$router.push('/modern/desktop/btc1/')"
-              >EC Game Home Page</a
-            >
+            <a :href="linkpreviouspage">{{ $t("leaderBoard.previousPage")}}</a>
+            <a :href="linkhome">{{ $t("leaderBoard.homePage")}}</a>
           </div>
         </div>
       </v-flex>
@@ -262,6 +258,7 @@ import followBet from "~/components/mobile/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../plugins/secure-storage";
 import utils from "~/mixin/utils";
+import { isMobile } from "mobile-device-detect";
 
 export default {
   // async watchQuery(newQuery, oldQuery) {
@@ -311,7 +308,7 @@ export default {
   //       // throw new Error(config.error.general);
   //     }
   //   } catch (ex) {
-  //     console.error(ex);     
+  //     console.error(ex);
   //   }
   // },
   components: {
@@ -371,7 +368,13 @@ export default {
       }
     };
   },
-  mixins:[utils],
+  mounted() {
+    this.linkpreviouspage = isMobile
+      ? "/modern/leaderboard/"
+      : "/modern/desktop/leaderboard/";
+    this.linkhome = isMobile ? "/modern/" : "/modern/desktop/btc1/";
+  },
+  mixins: [utils],
   created() {
     this.setFilter(30);
     this.getUserProfileByID();
@@ -480,7 +483,7 @@ export default {
           // throw new Error(config.error.general);
         }
       } catch (ex) {
-        console.error(ex);   
+        console.error(ex);
       }
     }
   }
