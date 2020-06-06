@@ -239,7 +239,7 @@ export default {
           headers: config.header
         });
         if (res.status && res.data[0].status) {
-          this.$StoreBettingonConfirm(itemBetting);
+          this.$StoreBettingonConfirm(itemBetting);  
           this.setUserData();
           this.closePopper();
 
