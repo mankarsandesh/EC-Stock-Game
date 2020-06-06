@@ -74,7 +74,9 @@
               :trendType="trendType"
               :isFullscreen="false"
               :key="
-                getRoadMap[getRoadMap.length - 1].stockTimestamp + trendType
+                getRoadMap[getRoadMap.length - 1].stockTimestamp +
+                  trendType +
+                  getLocale
               "
               :rowTable="4"
               :lop="30"
@@ -1605,7 +1607,8 @@ export default {
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",
-      "getPortalProviderUUID"
+      "getPortalProviderUUID",
+      "getLocale"
     ]),
     // check bet close using stockOpenOrClosed and timer
     checkBetClose() {
