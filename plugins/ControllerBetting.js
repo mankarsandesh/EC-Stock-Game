@@ -9,7 +9,7 @@ export default ({ app, store }, inject) => {
         try {
             await store.dispatch("setBettingOnConfirm", items)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     })
 
@@ -23,7 +23,7 @@ export default ({ app, store }, inject) => {
             const loadLibrary = new Audio(`/voice/${name}`);
             return loadLibrary
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     })
 
@@ -36,7 +36,7 @@ export default ({ app, store }, inject) => {
         try {
             await app.$audioLibrary(`${name}.mp3`).play();
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     })
 

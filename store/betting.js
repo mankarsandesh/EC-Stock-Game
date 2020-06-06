@@ -1,6 +1,8 @@
 import config from "../config/config.global";
 import secureStorage from "../plugins/secure-storage";
 const itemBetting = secureStorage.getItem("itemBetting");
+import Betting from "~/helpers/betting";
+
 const state = () => ({
     collegeBtnNumber: null,
     chipConfirms: itemBetting ? itemBetting : [],
@@ -157,6 +159,7 @@ const mutations = {
         state.multiGameBetSend.push(payload);
     },
     CLEAR_DATA_MULTI_GAME_BET_SEND(state) {
+        console.log('CLEAR_DATA_MULTI_GAME_BET_SEND')
         state.multiGameBetSend = [];
     },
     CLEAR_DATA_MULTI_GAME_BET(state) {
@@ -178,14 +181,18 @@ const mutations = {
     },
 
     SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
+        state.selectBetting.push(payload);
         state.tempMultiGameBetData.push(payload);
-        secureStorage.setItem("itemBetting", state.tempMultiGameBetData)
     },
 
     CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
-        state.multiGameBetSend.push(...state.tempMultiGameBetData);
-        state.chipConfirms.push(...state.tempMultiGameBetData);
-        state.tempMultiGameBetData = [];
+        state.multiGameBetSend.push(...state.selectBetting);
+        state.chipConfirms.push(...state.selectBetting);
+        secureStorage.setItem("itemBetting", state.multiGameBetSend)
+        console.log('itemBetting', state.multiGameBetSend)
+        state.selectBetting = [];
+
+
     },
     CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
         state.tempMultiGameBetData = [];
@@ -205,14 +212,11 @@ const mutations = {
         secureStorage.setItem("itemBetting", state.bettingConfirm)
     },
 
-    CLEAR_CONFIRM_BETTING(state) {
+    CLEAR_SELECT_BETTING(state) {
         state.selectBetting = []
-        state.bettingConfirm = []
-        secureStorage.removeItem("itemBetting")
     },
 };
 const actions = {
-
     // action from after confirm betting
     setConfirmBetting({ commit }, payload) {
         commit("CONFIRM_BETTING", payload)
@@ -271,31 +275,20 @@ const actions = {
     async sendBetting(context) {
         try {
             context.commit("SET_IS_SEND_BETTING", true);
-            const betDataFinal = context.state.multiGameBetSend;
-            if (betDataFinal.length == 0) {
-                context.commit("SET_IS_SEND_BETTING", false);
-                this._vm.$swal({
-                    type: "error",
-                    title: `Sorry, No Betting...!`,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                return;
-            }
             var reqBody = {
                 portalProviderUUID: context.rootState.provider.portalProviderUUID,
                 userUUID: context.rootState.provider.userUUID,
                 version: config.version,
-                betData: betDataFinal
+                betData: context.state.selectBetting
             };
             var res = await this.$axios.$post(config.storeBet.url, reqBody, {
                 headers: config.header
             });
             if (res.status && res.code == 200) {
+                context.commit("CONFIRM_TEMP_MULTI_GAME_BET_DATA");
                 this.$soundEffect("betting");
                 context.dispatch("setUserData", "provider");
                 context.commit("SET_IS_SEND_BETTING", false);
-                context.commit("CLEAR_DATA_MULTI_GAME_BET_SEND");
                 let i = 0;
                 let len = res.data.length;
                 for (i; i < len; i++) {
@@ -323,14 +316,17 @@ const actions = {
                 throw new Error(window.$nuxt.$root.$t("error.general"));
             }
         } catch (ex) {
-            console.error(ex.message);
+            Betting.clearBettingSelect(context.state.selectBetting)
             context.commit("SET_IS_SEND_BETTING", false);
             this._vm.$swal({
                 type: "error",
                 title: `${ex.message}`,
                 showConfirmButton: true
             });
+            context.commit("CLEAR_SELECT_BETTING");
+            console.error(ex.message);
         }
+
     }
 };
 

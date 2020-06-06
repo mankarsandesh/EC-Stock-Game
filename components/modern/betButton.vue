@@ -570,6 +570,9 @@ export default {
   watch: {
     getCollegeBtnNumber(val) {
       this.btnNumber(val);
+    },
+    selectBetting(val) {
+      console.log("betting are not confirm ", val.length);
     }
   },
   components: {
@@ -588,7 +591,8 @@ export default {
       "getFooterBetAmount",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "getCollegeBtnNumber"
+      "getCollegeBtnNumber",
+      "selectBetting"
     ]),
     stockID() {
       if (this.stockName == null) {
