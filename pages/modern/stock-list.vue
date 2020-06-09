@@ -22,9 +22,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "getStockList",
-    ]),
+    ...mapGetters(["getStockList"]),
     isHorizontal() {
       let w = window.innerWidth;
       let h = window.innerHeight;

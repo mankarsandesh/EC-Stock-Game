@@ -26,7 +26,7 @@
               "
             ></v-list-tile-sub-title>
             <v-list-tile-sub-title>
-              <a :href="item.referenceUrl" target="_blank">
+              <a :href="item.stockReference" target="_blank">
                 <b>{{ item.stockReference }}</b>
               </a>
             </v-list-tile-sub-title>
