@@ -7,8 +7,8 @@
             <v-layout>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lastDraw") }}:</span
-                >
+                  >{{ $t("msg.lastDraw") }}:
+                </span>
                 <v-flex flex-style class="lastdraw">
                   <h4 class="body-3">
                     <span
@@ -20,8 +20,8 @@
               </v-flex>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.betCloseIn") }}:</span
-                >
+                  >{{ $t("msg.betCloseIn") }}:
+                </span>
                 <v-flex flex-style class="betclose">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
@@ -35,8 +35,8 @@
               </v-flex>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lotteryDraw") }}:</span
-                >
+                  >{{ $t("msg.lotteryDraw") }}:
+                </span>
                 <v-flex flex-style class="lottery">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
@@ -54,7 +54,7 @@
       </v-flex>
     </v-layout>
 
-    <!-- betting zone -->
+    <!-- bet buttons zone -->
     <v-layout row wrap class="container-bet" mt-3>
       <v-flex xs12 sm12 md12>
         <v-layout wrap xs12>
@@ -1050,6 +1050,7 @@
               <b>{{ $t("msg.payout") }}:</b>
               {{ Number(odd).toFixed(2) }}
             </p>
+            <!-- jump here -->
             <p class="text-uppercase test-time-loop">
               {{ getStockLoop(this.$route.params.id) }}
               {{ $t("msg.minuteGame") }}
@@ -1305,9 +1306,9 @@
         </v-layout>
       </v-container>
     </v-navigation-drawer>
+
     <!-- 0 -99 -->
     <!-- two digit -->
-
     <v-navigation-drawer
       class="drawer-asidebar"
       right
@@ -1789,9 +1790,12 @@ export default {
       let array = this.gameRule.split("-");
 
       // check the last one is string or not
-      // alert(parseInt(array[1]).isNaN)
       let firstArray = array[0];
       let lastArray = array[1];
+      if (firstArray === "bothdigit" || firstArray === "twodigit") {
+        payoutArray1 = [ "odd", "even"];
+        payoutArray2 = ["high", "mid", "low", "tie", "small", "big",];
+      }
       if (Number.isNaN(parseInt(lastArray))) {
         if (payoutArray1.includes(lastArray)) {
           this.odd = this.payout_big_small;
