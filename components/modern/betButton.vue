@@ -12,6 +12,7 @@
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
         </v-btn>
       </span>
+      <!-- first digit bet button -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="data in firstDigit"
@@ -100,7 +101,7 @@
           <span class="btn-digit">{{ $t("gamemsg.lastdigits") }}</span>
         </v-btn>
       </span>
-
+      <!-- last digit bet button -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(data, index) in lastDigit"
@@ -192,7 +193,7 @@
           <span class="btn-digit">{{ $t("gamemsg.bothdigits") }}</span>
         </v-btn>
       </span>
-
+      <!-- both digit -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(data, index) in bothDigit"
@@ -279,7 +280,7 @@
           <span class="btn-digit">{{ $t("gamemsg.twodigits") }}</span>
         </v-btn>
       </span>
-
+      <!-- two digit -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(data, index) in twoDigit"
@@ -361,6 +362,8 @@
 
     <!-- specific number bet button -->
     <v-layout row class="setlayuot">
+      
+      <!-- first digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
@@ -400,6 +403,7 @@
           >{{ index }}</v-btn
         >
       </popper>
+      <!-- last digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
@@ -439,6 +443,7 @@
           >{{ index }}</v-btn
         >
       </popper>
+      <!-- both digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 19"
@@ -475,9 +480,10 @@
           "
           v-show="number == 'both'"
           class="btn-small b-hover"
-          >{{ index }}</v-btn
-        >
+          >{{ index }}
+        </v-btn>
       </popper>
+      <!-- two digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 100"
@@ -520,8 +526,8 @@
           "
           v-show="number == 'two'"
           class="btn-small t-hover"
-          >{{ index < 10 ? "0" + index : index }}</v-btn
-        >
+          >{{ index < 10 ? "0" + index : index }}
+        </v-btn>
       </popper>
     </v-layout>
   </div>
