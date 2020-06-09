@@ -942,8 +942,8 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'twodigit-' + twoDigit[8].rule,
-                      twoDigit[8].ruleid
+                      'twodigit-' + twoDigit[7].rule,
+                      twoDigit[7].ruleid
                     )
                   "
                 >
@@ -967,8 +967,8 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'twodigit-' + twoDigit[7].rule,
-                      twoDigit[7].ruleid
+                      'twodigit-' + twoDigit[6].rule,
+                      twoDigit[6].ruleid
                     )
                   "
                 >
@@ -992,8 +992,8 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'twodigit-' + twoDigit[6].rule,
-                      twoDigit[6].ruleid
+                      'twodigit-' + twoDigit[5].rule,
+                      twoDigit[5].ruleid
                     )
                   "
                 >
