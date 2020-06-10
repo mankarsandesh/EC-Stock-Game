@@ -5,7 +5,6 @@
 import date from "date-and-time";
 
 const utils = {
-  
   methods: {
     /**
      * Check whether the selected date is valid
@@ -23,19 +22,18 @@ const utils = {
     },
     // Check Currency Symbol
     checkCurrency(currencyID) {
-      if(currencyID == 1){
-          return "$";
-      }else if(currencyID == 2){
+      if (currencyID == 1) {
+        return "$";
+      } else if (currencyID == 2) {
         return "₭";
-      }else if(currencyID == 3){
+      } else if (currencyID == 3) {
         return "฿";
-      }else if(currencyID == 4){
+      } else if (currencyID == 4) {
         return "¥";
-      }else{
+      } else {
         return "$";
       }
     }
-
   }
 };
 

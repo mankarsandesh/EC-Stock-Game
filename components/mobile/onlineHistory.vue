@@ -135,7 +135,7 @@
         <v-layout row justify-center>
           <v-flex xs11 sm10>
             <div class="chart_container">
-              <p class="no-data" v-if="!dataReady">
+              <p class="no-data" v-if="displayNodata">
                 <strong>{{ $t("profile.noData") }}</strong>
               </p>
               <VueApexCharts
@@ -184,6 +184,7 @@ export default {
   mixins: [utils],
   data() {
     return {
+      displayNodata: true,
       series: [],
       componentKey: 0,
       maxDate: new Date().toISOString(),
@@ -305,6 +306,9 @@ export default {
         });
         if (res.code == 200) {
           this.dataReady = true;
+          if (res.data.activeTimeDateWise[0].activeTimeInMins !== "0") {
+            this.displayNodata = false;
+          }
           let result = res.data.activeTimeDateWise;
           this.currentActiveTime = res.data.currentActiveTime;
           let totalActiveTime = 0;
