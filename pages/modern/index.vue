@@ -111,16 +111,14 @@
           <v-icon class="icon-primary" v-if="sortBy === 'type'">done</v-icon>
         </v-list-tile>
         <v-divider></v-divider>
-        <v-list-tile class="py-2" @click="sortBy = ''">
+        <v-list-tile class="py-2" @click="sortBy = 'default'">
           <v-list-tile-content>
             <v-list-tile-title class="text-uppercase">{{
               $t("default")
             }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
-                    <v-icon class="icon-primary">done</v-icon>
-          </v-btn>-->
+          <v-icon class="icon-primary" v-if="sortBy === 'default'">done</v-icon>
         </v-list-tile>
         <v-divider></v-divider>
       </v-list>
@@ -154,7 +152,7 @@
                   getTimerByStockName(data.stockName).stockStatus === 'Closed'
               "
             >
-              <span class="text-close-bet">{{ $t('msg.marketClosed') }}</span>
+              <span class="text-close-bet">{{ $t("msg.marketClosed") }}</span>
             </div>
             <v-card-title class="px-1 py-0 pa-2" style="font-size:11px;">
               <v-layout>
@@ -181,7 +179,7 @@
             </h3>
             <h4 style="line-height: 1">
               <div class="text-center">
-                <em>{{ data.loop }}  {{ $t("msg.minuteGame") }} </em>
+                <em>{{ data.loop }} {{ $t("msg.minuteGame") }} </em>
               </div>
             </h4>
           </div>
@@ -204,7 +202,7 @@ export default {
   },
   data() {
     return {
-      sortBy: "",
+      sortBy: "default",
       filter: {
         stock: {
           china: true,
@@ -227,9 +225,11 @@ export default {
       "getTimerByStockName",
       "getStockLiveTime",
       "getStockLivePrice",
-      "getStockListCountdown"
+      "getStockListCountdown",
+      "getGameUUIDByStockName"
     ]),
     showStocks() {
+      const _this = this;
       let result = [];
       let stockType = [];
       this.getAllStocks.forEach(element => {
@@ -250,6 +250,26 @@ export default {
           this.filter.gameType.loop5 == true ? result.push(element) : "";
         }
       });
+
+      // getTimerByStockName(data.stockName) &&
+      // getTimerByStockName(data.stockName).stockStatus === 'Closed'
+      // sort by default function
+      // open stock above close stock below
+      function sortByDefault(a, b) {
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return -1;
+        }
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return 1;
+        }
+        return 0;
+      }
       // sort by name function
       function sortByName(a, b) {
         if (a.stockName < b.stockName) {
@@ -274,6 +294,8 @@ export default {
         result.sort(sortByName);
       } else if (this.sortBy === "type") {
         result.sort(sortByType);
+      } else {
+        result.sort(sortByDefault);
       }
       return result;
     }
