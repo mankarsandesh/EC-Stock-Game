@@ -208,12 +208,12 @@
       <v-flex pa-2>
         <div class="container-content">
           <div class="box-error">
-            <h2>{{ $t("leaderBoard.sorry")}}</h2>
+            <h2>{{ $t("leaderBoard.sorry") }}</h2>
             <p>
-              {{ $t("leaderBoard.theLink")}}
+              {{ $t("leaderBoard.theLink") }}
             </p>
-            <a :href="linkpreviouspage">{{ $t("leaderBoard.previousPage")}}</a>
-            <a :href="linkhome">{{ $t("leaderBoard.homePage")}}</a>
+            <a :href="linkpreviouspage">{{ $t("leaderBoard.previousPage") }}</a>
+            <a :href="linkhome">{{ $t("leaderBoard.homePage") }}</a>
           </div>
         </div>
       </v-flex>
@@ -229,7 +229,7 @@
     >
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
-          <v-btn icon dark @click="followDialog = false">
+          <v-btn icon dark @click="closeFollowDialog()">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>
@@ -244,6 +244,7 @@
           :FollowerUserUUID="this.FollowUserUUID"
           :isFollowing="this.FolloworNot"
           @followBetClose="closeFollowBet"
+          :key="followDialog"
         />
       </v-card>
     </v-dialog>
@@ -399,6 +400,9 @@ export default {
     }
   },
   methods: {
+    closeFollowDialog() {
+      this.followDialog = false;
+    },
     // Render Follow Bet Component
     forceRerender() {
       this.renderComponent = false;

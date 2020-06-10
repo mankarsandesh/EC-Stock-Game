@@ -23,6 +23,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
+            <!-- jump here -->
             <v-select
               :items="[
                 {
@@ -52,7 +53,7 @@
               ]"
               solo
               label="10%"
-              v-if="selectRate"
+              v-if="selectedFollow === 2"
               append-icon="money"
               v-model="rateValue"
               @keypress="onlyNumber"
@@ -64,7 +65,7 @@
               ]"
               solo
               label="100"
-              v-if="selectAmount"
+              v-if="selectedFollow === 1"
               @keypress="onlyNumber"
               v-model="amountValue"
               append-icon="money"
@@ -97,9 +98,9 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red"
-                  >{{ checkCurrency(this.getUserCurrency) }}</span
-                >
+                <span slot="append" color="red">{{
+                  checkCurrency(this.getUserCurrency)
+                }}</span>
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
