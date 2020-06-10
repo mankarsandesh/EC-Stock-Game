@@ -115,7 +115,7 @@ export default {
     apexchart: apexchart
   },
   mixins: [utils],
-  created() {   
+  created() {
     const now = date.format(new Date(), "YYYY-MM-DD");
     const lastWeek = date.addDays(new Date(), -7);
     this.startDate = date.format(lastWeek, "YYYY-MM-DD");
@@ -236,7 +236,7 @@ export default {
           }
         );
         if (res.status) {
-          if (res.data.length) {
+          if (res.data.length > 0) {
             this.stockAnalysis = res.data;
             let stocks = [];
             this.stockAnalysis.forEach(element => {
@@ -264,7 +264,7 @@ export default {
             this.error = "";
           } else {
             this.isDataValid = false;
-            this.error = this.$root.$t("profile.invalidDate");
+            this.error = this.$root.$t("profile.noData");
           }
         } else {
           throw new Error(this.$root.$t("error.general"));
