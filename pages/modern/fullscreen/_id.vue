@@ -175,7 +175,7 @@
         <v-layout row wrap px-2 pt-2>
           <v-flex
             pa-2
-            v-for="(data, index) in getAllStocks"
+            v-for="(data, index) in showOtherStocks"
             :key="index"
             xs6
             sm6
@@ -557,6 +557,26 @@ export default {
     );
   },
   computed: {
+    showOtherStocks() {
+      const _this = this;
+      // open stock above close stock below
+      function sortByOpenStock(a, b) {
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return -1;
+        }
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return 1;
+        }
+        return 0;
+      }
+      return this.getAllStocks.sort(sortByOpenStock);
+    },
     closeFullscreen() {
       let fullscreenClose = secureStorage.getItem("fullscreenclosed");
       if (

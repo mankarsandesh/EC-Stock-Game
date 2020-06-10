@@ -22,7 +22,6 @@
               v-model="filter.stock.china"
               color="#003e70"
               label="china"
-              value="china"
               hide-details
             ></v-checkbox>
             <v-checkbox
@@ -215,8 +214,8 @@ export default {
         }
       },
       checkbox1: false,
-      showfilterStock: false,
-      showfilterType: false
+      showfilterStock: true,
+      showfilterType: true
     };
   },
   computed: {
@@ -233,7 +232,7 @@ export default {
       let result = [];
       let stockType = [];
       this.getAllStocks.forEach(element => {
-        // filter type
+        // filter for game type
         if (element.type === "crypto") {
           this.filter.stock.crypto == true ? stockType.push(element) : "";
         } else if (element.type === "china") {
@@ -242,7 +241,7 @@ export default {
           this.filter.stock.usa == true ? stockType.push(element) : "";
         }
       });
-      // filter loop
+      // filter for game loop
       stockType.forEach(element => {
         if (element.loop === 1) {
           this.filter.gameType.loop1 == true ? result.push(element) : "";
@@ -250,10 +249,7 @@ export default {
           this.filter.gameType.loop5 == true ? result.push(element) : "";
         }
       });
-
-      // getTimerByStockName(data.stockName) &&
-      // getTimerByStockName(data.stockName).stockStatus === 'Closed'
-      // sort by default function
+      // the function for sort by default
       // open stock above close stock below
       function sortByDefault(a, b) {
         if (
@@ -270,7 +266,7 @@ export default {
         }
         return 0;
       }
-      // sort by name function
+      // the function for sort by name
       function sortByName(a, b) {
         if (a.stockName < b.stockName) {
           return -1;
@@ -280,7 +276,7 @@ export default {
         }
         return 0;
       }
-      // sort by type function
+      // the function for sort by type
       function sortByType(a, b) {
         if (a.type < b.type) {
           return -1;
