@@ -208,7 +208,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[0].rule,
-                      firstDigit[0].ruleid
+                      firstDigit[0].ruleid,
+                      firstDigit[0].payout
                     )
                   "
                 >
@@ -232,7 +233,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[1].rule,
-                      firstDigit[1].ruleid
+                      firstDigit[1].ruleid,
+                      firstDigit[1].payout
                     )
                   "
                 >
@@ -259,7 +261,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[2].rule,
-                      firstDigit[2].ruleid
+                      firstDigit[2].ruleid,
+                      firstDigit[2].payout
                     )
                   "
                 >
@@ -283,7 +286,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[3].rule,
-                      firstDigit[3].ruleid
+                      firstDigit[3].ruleid,
+                      firstDigit[3].payout
                     )
                   "
                 >
@@ -318,7 +322,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[6].rule,
-                      firstDigit[6].ruleid
+                      firstDigit[6].ruleid,
+                      firstDigit[6].payout
                     )
                   "
                 >
@@ -343,7 +348,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[5].rule,
-                      firstDigit[5].ruleid
+                      firstDigit[5].ruleid,
+                      firstDigit[5].payout
                     )
                   "
                 >
@@ -368,7 +374,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[4].rule,
-                      firstDigit[4].ruleid
+                      firstDigit[4].ruleid,
+                      firstDigit[4].payout
                     )
                   "
                 >
@@ -399,7 +406,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[1].rule,
-                      lastDigit[1].ruleid
+                      lastDigit[1].ruleid,
+                      lastDigit[1].payout
                     )
                   "
                 >
@@ -424,7 +432,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[0].rule,
-                      lastDigit[0].ruleid
+                      lastDigit[0].ruleid,
+                      lastDigit[0].payout
                     )
                   "
                 >
@@ -451,7 +460,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[2].rule,
-                      lastDigit[2].ruleid
+                      lastDigit[2].ruleid,
+                      lastDigit[2].payout
                     )
                   "
                 >
@@ -475,7 +485,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[3].rule,
-                      lastDigit[3].ruleid
+                      lastDigit[3].ruleid,
+                      lastDigit[3].payout
                     )
                   "
                 >
@@ -510,7 +521,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[6].rule,
-                      lastDigit[6].ruleid
+                      lastDigit[6].ruleid,
+                      lastDigit[6].payout
                     )
                   "
                 >
@@ -535,7 +547,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[5].rule,
-                      lastDigit[5].ruleid
+                      lastDigit[5].ruleid,
+                      lastDigit[5].payout
                     )
                   "
                 >
@@ -560,7 +573,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[4].rule,
-                      lastDigit[4].ruleid
+                      lastDigit[4].ruleid,
+                      lastDigit[4].payout
                     )
                   "
                 >
@@ -591,7 +605,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[2].rule,
-                      bothDigit[2].ruleid
+                      bothDigit[2].ruleid,
+                      bothDigit[2].payout
                     )
                   "
                 >
@@ -616,7 +631,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[1].rule,
-                      bothDigit[1].ruleid
+                      bothDigit[1].ruleid,
+                      bothDigit[1].payout
                     )
                   "
                 >
@@ -641,7 +657,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[0].rule,
-                      bothDigit[0].ruleid
+                      bothDigit[0].ruleid,
+                      bothDigit[0].payout
                     )
                   "
                 >
@@ -668,7 +685,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[3].rule,
-                      bothDigit[3].ruleid
+                      bothDigit[3].ruleid,
+                      bothDigit[3].payout
                     )
                   "
                 >
@@ -692,7 +710,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[4].rule,
-                      bothDigit[4].ruleid
+                      bothDigit[4].ruleid,
+                      bothDigit[4].payout
                     )
                   "
                 >
@@ -727,7 +746,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[7].rule,
-                      bothDigit[7].ruleid
+                      bothDigit[7].ruleid,
+                      bothDigit[7].payout
                     )
                   "
                 >
@@ -752,7 +772,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[6].rule,
-                      bothDigit[6].ruleid
+                      bothDigit[6].ruleid,
+                      bothDigit[6].payout
                     )
                   "
                 >
@@ -777,7 +798,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[5].rule,
-                      bothDigit[5].ruleid
+                      bothDigit[5].ruleid,
+                      bothDigit[5].payout
                     )
                   "
                 >
@@ -808,7 +830,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + bothDigit[2].rule,
-                      twoDigit[2].ruleid
+                      twoDigit[2].ruleid,
+                      twoDigit[2].payout
                     )
                   "
                 >
@@ -833,7 +856,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[1].rule,
-                      twoDigit[1].ruleid
+                      twoDigit[1].ruleid,
+                      twoDigit[1].payout
                     )
                   "
                 >
@@ -858,7 +882,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[0].rule,
-                      twoDigit[0].ruleid
+                      twoDigit[0].ruleid,
+                      twoDigit[0].payout
                     )
                   "
                 >
@@ -884,7 +909,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[3].rule,
-                      twoDigit[3].ruleid
+                      twoDigit[3].ruleid,
+                      twoDigit[3].payout
                     )
                   "
                 >
@@ -908,7 +934,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[4].rule,
-                      twoDigit[4].ruleid
+                      twoDigit[4].ruleid,
+                      twoDigit[4].payout
                     )
                   "
                 >
@@ -943,7 +970,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[7].rule,
-                      twoDigit[7].ruleid
+                      twoDigit[7].ruleid,
+                      twoDigit[7].payout
                     )
                   "
                 >
@@ -968,7 +996,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[6].rule,
-                      twoDigit[6].ruleid
+                      twoDigit[6].ruleid,
+                      twoDigit[6].payout
                     )
                   "
                 >
@@ -993,7 +1022,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[5].rule,
-                      twoDigit[5].ruleid
+                      twoDigit[5].ruleid,
+                      twoDigit[5].payout
                     )
                   "
                 >
@@ -1208,7 +1238,9 @@
             xs3
             v-for="(item, index) in firstDigitNumber"
             :key="index"
-            @click="showBetDialog(`firstdigit-${index}`, item.ruleid)"
+            @click="
+              showBetDialog(`firstdigit-${index}`, item.ruleid, index + 30)
+            "
           >
             <showChipAmount
               text-center
@@ -1247,7 +1279,9 @@
             xs3
             v-for="(item, index) in lastDigitNumber"
             :key="index"
-            @click="showBetDialog(`lastdigit-${index}`, item.ruleid)"
+            @click="
+              showBetDialog(`lastdigit-${index}`, item.ruleid, index + 40)
+            "
           >
             <showChipAmount
               text-center
@@ -1287,7 +1321,9 @@
             xs3
             v-for="(item, index) in bothDigitNumber"
             :key="index"
-            @click="showBetDialog(`bothdigit-${index}`, item.ruleid)"
+            @click="
+              showBetDialog(`bothdigit-${index}`, item.ruleid, index + 50)
+            "
           >
             <showChipAmount
               text-center
@@ -1341,7 +1377,8 @@
                     @click="
                       showBetDialog(
                         `twodigit-${index < 10 ? '0' + index : index}`,
-                        item.ruleid
+                        item.ruleid,
+                        index + 69
                       )
                     "
                   >
@@ -1375,7 +1412,7 @@
                     v-for="(item, index) in twoDigitNumber"
                     :key="index"
                     v-show="index > 19 && index < 40"
-                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                    @click="showBetDialog(`twodigit-${index}`, item.ruleid,index + 69)"
                   >
                     <showChipAmount
                       text-center
@@ -1405,7 +1442,7 @@
                     v-for="(item, index) in twoDigitNumber"
                     :key="index"
                     v-show="index > 39 && index < 60"
-                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                    @click="showBetDialog(`twodigit-${index}`, item.ruleid,index + 69)"
                   >
                     <showChipAmount
                       text-center
@@ -1435,7 +1472,7 @@
                     v-for="(item, index) in twoDigitNumber"
                     :key="index"
                     v-show="index > 59 && index < 80"
-                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                    @click="showBetDialog(`twodigit-${index}`, item.ruleid,index + 69)"
                   >
                     <showChipAmount
                       text-center
@@ -1465,7 +1502,7 @@
                     v-for="(item, index) in twoDigitNumber"
                     :key="index"
                     v-show="index > 79"
-                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                    @click="showBetDialog(`twodigit-${index}`, item.ruleid,index + 69)"
                   >
                     <showChipAmount
                       text-center
@@ -1495,15 +1532,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
 import gameRule from "~/data/gameRule";
+import chips from "~/data/chips";
 
+import { mapGetters, mapActions, mapState } from "vuex";
 import chartMobile from "~/components/mobile/chartMobile";
-import payout from "~/data/payout";
 import showChipAmount from "~/components/modern/showChipAmount";
 import trendMap from "~/components/modern/trendMap";
 import config from "~/config/config.global";
-import chips from "~/data/chips";
 import secureStorage from "../../../plugins/secure-storage";
 
 export default {
@@ -1527,11 +1563,6 @@ export default {
       // rule id
       trendType: "firstdigit",
       isShowTrendMap: false,
-      payout_high_mid_low: payout.high_mid_low,
-      payout_big_small: payout.big_small,
-      payout_09: payout._09,
-      payout_18: payout._18,
-      payout_99: payout._99,
 
       stockID: "",
       bettingDialog: false,
@@ -1552,6 +1583,7 @@ export default {
       betAmount: 0
     };
   },
+  // stop listen on  socket
   beforeDestroy() {
     this.stopListenSocket(
       `roadMap.${this.getStockUUIDByStockName(this.routeParams)}.${
@@ -1579,7 +1611,7 @@ export default {
             throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
-          console.log(ex);
+          console.error(ex);
         }
       }
     );
@@ -1648,7 +1680,6 @@ export default {
             $(".closepopper").click();
             this.clearTempMultiGameBetData();
           }
-
           return true;
         } else {
           return false;
@@ -1668,13 +1699,16 @@ export default {
       "clearTempMultiGameBetData",
       "clearItemBetting"
     ]),
-
+    // listen socket
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
+    // stop listen socket
     stopListenSocket(channel) {
       window.Echo.leave(channel);
     },
+    // deal with tab
+    // to switch game rule first digit =>... two digit
     tabChanged(e) {
       switch (e) {
         case 0:
@@ -1702,18 +1736,24 @@ export default {
           this.setSnackBarMessage(this.$root.$t("error.general"));
       }
     },
+    // switch between chart and tren map
     changeShowTrendMap() {
       this.isShowTrendMap = !this.isShowTrendMap;
     },
-    //
-    showBetDialog(rule, ruleid) {
+    // show bet dialog
+    showBetDialog(rule, ruleid, payoutIndex) {
       this.gameRule = rule;
       this.ruleid = ruleid;
+      this.odd = this.$store.state.game.payout[payoutIndex].dynamicOdds.toFixed(
+        2
+      );
       this.bettingDialog = true;
     },
+    // set bet amount when click on the chip
     shipClick(value) {
       this.betAmount = this.betAmount + parseInt(value);
     },
+    // display modal review bet
     reviewbet() {
       if (this.betAmount > 0) {
         this.reviewbetDialog = true;
@@ -1735,7 +1775,7 @@ export default {
         this.sendBetting(data);
       }
     },
-    // Final Betting on Mobile
+    // send Betting data to server
     async sendBetting(betData) {
       try {
         var reqBody = {
@@ -1779,48 +1819,6 @@ export default {
     bettingDialog(value) {
       if (!value) {
         this.betAmount = 0;
-      }
-    },
-
-    // set payout
-    gameRule() {
-      let payoutArray1 = ["small", "big", "odd", "even"];
-      let payoutArray2 = ["high", "mid", "low", "tie"];
-      let payoutArray3 = ["firstdigit", "lastdigit", "bothdigit", "twodigit"];
-      let array = this.gameRule.split("-");
-
-      // check the last one is string or not
-      let firstArray = array[0];
-      let lastArray = array[1];
-      if (firstArray === "bothdigit" || firstArray === "twodigit") {
-        payoutArray1 = [ "odd", "even"];
-        payoutArray2 = ["high", "mid", "low", "tie", "small", "big",];
-      }
-      if (Number.isNaN(parseInt(lastArray))) {
-        if (payoutArray1.includes(lastArray)) {
-          this.odd = this.payout_big_small;
-        } else if (payoutArray2.includes(lastArray)) {
-          this.odd = this.payout_high_mid_low;
-        } else {
-          this.odd = "error";
-        }
-      } else {
-        switch (firstArray) {
-          case "firstdigit":
-            this.odd = this.payout_09;
-            break;
-          case "lastdigit":
-            this.odd = this.payout_09;
-            break;
-          case "bothdigit":
-            this.odd = this.payout_18;
-            break;
-          case "twodigit":
-            this.odd = this.payout_99;
-            break;
-          default:
-            this.odd = "error";
-        }
       }
     }
   }

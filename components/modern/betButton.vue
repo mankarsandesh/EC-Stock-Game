@@ -61,10 +61,13 @@
           <div :id="'firstdigitWin-' + data.rule"></div>
 
           <span class="big-digit"> {{ $t("gamemsg." + data.rule) }}</span>
-          <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
-          <!-- show payout on button if is fullscreen -->
+          <!-- show payout on bet button in the page fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
+            {{
+              $store.state.game.payout[
+                parseInt(data.payout)
+              ].dynamicOdds.toFixed(2)
+            }}
           </span>
         </v-btn>
       </popper>
@@ -87,9 +90,8 @@
 
           <div class="big-digit" :id="stockID + 'firstdigitNumber'"></div>
           <span class="big-digit">0 - 9</span>
-          <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{ payout_09 }}</span>
+          <span class="small-digit" v-show="isFullscreen"> 9.55</span>
         </v-btn>
       </span>
     </v-layout>
@@ -157,7 +159,11 @@
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
+            {{
+              $store.state.game.payout[
+                parseInt(data.payout)
+              ].dynamicOdds.toFixed(2)
+            }}
           </span>
         </v-btn>
       </popper>
@@ -181,7 +187,7 @@
           <span class="big-digit">0 - 9</span>
           <!-- <span class="small-digit">{{$t('gamemsg.lastdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{ payout_09 }}</span>
+          <span class="small-digit" v-show="isFullscreen"> 9.55</span>
         </v-btn>
       </span>
     </v-layout>
@@ -244,7 +250,11 @@
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
+            {{
+              $store.state.game.payout[
+                parseInt(data.payout)
+              ].dynamicOdds.toFixed(2)
+            }}
           </span>
         </v-btn>
       </popper>
@@ -268,7 +278,7 @@
           <span class="big-digit">0 - 18</span>
           <!-- <span class="small-digit">{{$t('gamemsg.bothdigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{ payout_18 }}</span>
+          <span class="small-digit" v-show="isFullscreen">18.10</span>
         </v-btn>
       </span>
     </v-layout>
@@ -331,7 +341,11 @@
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
           <span class="small-digit" v-show="isFullscreen">
-            {{ $store.state.game.payout[parseInt(data.payout)].dynamicOdds }}
+            {{
+              $store.state.game.payout[
+                parseInt(data.payout)
+              ].dynamicOdds.toFixed(2)
+            }}
           </span>
         </v-btn>
       </popper>
@@ -355,14 +369,13 @@
           <span class="big-digit">0 - 99</span>
           <!-- <span class="small-digit">{{$t('gamemsg.twodigit')}}</span> -->
           <!-- show payout if in fullscreen mode -->
-          <span class="small-digit" v-show="isFullscreen">{{ payout_99 }}</span>
+          <span class="small-digit" v-show="isFullscreen">95.05</span>
         </v-btn>
       </span>
     </v-layout>
 
     <!-- specific number bet button -->
     <v-layout row class="setlayuot">
-      
       <!-- first digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
@@ -534,14 +547,16 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
 import gameRule from "~/data/gameRule";
+
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import betModal from "~/components/modern/betModal";
 import showChipAmount from "~/components/modern/showChipAmount";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import payout from "~/data/payout";
+
 import { itemBetting } from "~/mixin/itemBetting";
+
 export default {
   mixins: [itemBetting],
   props: {
@@ -559,12 +574,6 @@ export default {
     return {
       isActive: false,
       number: null,
-      // rules payout
-      payout_high_mid_low: payout.high_mid_low,
-      payout_big_small: 21,
-      payout_09: payout._09,
-      payout_18: payout._18,
-      payout_99: payout._99,
       // games rules
       firstDigit: gameRule.firstDigit,
       lastDigit: gameRule.lastDigit,
