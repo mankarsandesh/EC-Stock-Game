@@ -228,16 +228,16 @@
               <v-flex v-if="messageError == true">
                 <div class="container-content">
                   <div class="box-error">
-                    <h1>{{ $t("leaderBoard.sorry")}}</h1>
+                    <h1>{{ $t("leaderBoard.sorry") }}</h1>
                     <p>
-                      {{ $t("leaderBoard.theLink")}}
+                      {{ $t("leaderBoard.theLink") }}
                     </p>
-                    <a @click="$router.push('/modern/desktop/leaderboard/')"
-                      >{{ $t("leaderBoard.previousPage")}}</a
-                    >
-                    <a @click="$router.push('/modern/desktop/btc1/')"
-                      >{{ $t("leaderBoard.homePage")}}</a
-                    >
+                    <a @click="$router.push('/modern/desktop/leaderboard/')">{{
+                      $t("leaderBoard.previousPage")
+                    }}</a>
+                    <a @click="$router.push('/modern/desktop/btc1/')">{{
+                      $t("leaderBoard.homePage")
+                    }}</a>
                   </div>
                 </div>
               </v-flex>
@@ -276,7 +276,10 @@ import countryFlag from "vue-country-flag";
 import utils from "~/mixin/utils";
 
 export default {
-  async watchQuery(newQuery) {
+  async watchQuery(newQuery, oldQuery) {
+    if (oldQuery.id === undefined) {
+      return;
+    }
     try {
       let reqBody = {
         portalProviderUUID: this.getPortalProviderUUID,
@@ -464,7 +467,7 @@ export default {
       this.endDate = now;
     },
     // Fetch Users Profile Information
-    async getUserProfileByID() {
+    async getUserProfileByID(visitingUserUUID = undefined) {
       try {
         if (!this.$route.query.id) {
           this.userNew = this.getUserUUID;
