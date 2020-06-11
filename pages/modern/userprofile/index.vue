@@ -394,7 +394,6 @@ export default {
     filter() {
       this.setFilter(this.filter * 30);
       this.getUserProfileByID();
-      console.log("created");
     },
     getLocale() {
       this.series[0].name = this.$root.$t("msg.onlineActiveTime");
@@ -461,7 +460,6 @@ export default {
             headers: config.header
           }
         );
-        console.log(reqBody);
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
