@@ -4,15 +4,15 @@
       <nuxt />
     </div>
     <!-- Chat Windows-->
-    <chat-box
+    <invitaionBox
       :gameUUID="getGameUUIDByStockName($route.params.id)"
       :stockName="$route.params.id"
       :pathName="$route.name"
-    ></chat-box>
+    ></invitaionBox>
   </v-app>
 </template>
 <script>
-import chatBox from "~/components/modern/chatBox";
+import invitaionBox from "~/components/modern/invitationBox";
 
 import { mapGetters, mapActions } from "vuex";
 export default {
@@ -22,7 +22,7 @@ export default {
     };
   },
   components: {
-    chatBox
+    invitaionBox
   },
   created() {
     let path = this.$nuxt.$route.fullPath.split("/");

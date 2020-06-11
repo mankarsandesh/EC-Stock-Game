@@ -87,12 +87,12 @@
         :data="notificationList"
         v-if="isShowNotification"
       ></notification>
-      <chatBox
+      <invitationBox
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :stockName="$route.params.id"
         :pathName="$route.name"
         :key="getLocale"
-      ></chatBox>
+      ></invitationBox>
     </v-app>
   </div>
 </template>
@@ -105,7 +105,7 @@ import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
 import notification from "~/components/notification";
 import userMenu from "~/components/userMenu";
-import chatBox from "~/components/modern/chatBox";
+import invitationBox from "~/components/modern/invitationBox";
 import config from "~/config/config.global";
 import secureStorage from "../plugins/secure-storage";
 import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
@@ -119,7 +119,7 @@ export default {
     languageDialog,
     userMenu,
     AnimatedNumber,
-    chatBox,
+    invitationBox,
     notification
   },
   data() {
