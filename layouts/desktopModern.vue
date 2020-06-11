@@ -103,7 +103,6 @@ import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
-import invitation from "~/components/invitation";
 import notification from "~/components/notification";
 import userMenu from "~/components/userMenu";
 import chatBox from "~/components/modern/chatBox";
@@ -116,7 +115,6 @@ export default {
   mixins: [clickaway],
   components: {
     DesktopTutorial,
-    invitation,
     countryFlag,
     languageDialog,
     userMenu,

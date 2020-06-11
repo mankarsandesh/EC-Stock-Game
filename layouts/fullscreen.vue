@@ -12,7 +12,6 @@
   </v-app>
 </template>
 <script>
-import invitation from "~/components/invitation";
 import chatBox from "~/components/modern/chatBox";
 
 import { mapGetters, mapActions } from "vuex";
@@ -23,7 +22,6 @@ export default {
     };
   },
   components: {
-    invitation,
     chatBox
   },
   created() {
