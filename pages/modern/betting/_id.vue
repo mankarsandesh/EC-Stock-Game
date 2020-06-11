@@ -7,8 +7,8 @@
             <v-layout>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lastDraw") }}:</span
-                >
+                  >{{ $t("msg.lastDraw") }}:
+                </span>
                 <v-flex flex-style class="lastdraw">
                   <h4 class="body-3">
                     <span
@@ -20,8 +20,8 @@
               </v-flex>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.betCloseIn") }}:</span
-                >
+                  >{{ $t("msg.betCloseIn") }}:
+                </span>
                 <v-flex flex-style class="betclose">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
@@ -35,8 +35,8 @@
               </v-flex>
               <v-flex class="text-xs-center" ma-1>
                 <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lotteryDraw") }}:</span
-                >
+                  >{{ $t("msg.lotteryDraw") }}:
+                </span>
                 <v-flex flex-style class="lottery">
                   <h4 class="body-3 uppercase-text text-black">
                     {{
@@ -54,7 +54,7 @@
       </v-flex>
     </v-layout>
 
-    <!-- betting zone -->
+    <!-- bet buttons zone -->
     <v-layout row wrap class="container-bet" mt-3>
       <v-flex xs12 sm12 md12>
         <v-layout wrap xs12>
@@ -74,7 +74,9 @@
               :trendType="trendType"
               :isFullscreen="false"
               :key="
-                getRoadMap[getRoadMap.length - 1].stockTimestamp + trendType
+                getRoadMap[getRoadMap.length - 1].stockTimestamp +
+                  trendType +
+                  getLocale
               "
               :rowTable="4"
               :lop="30"
@@ -97,7 +99,11 @@
             </span>
             <v-flex sm12 xs12 class="chartDesgin">
               <v-layout pa-2>
-                <v-flex xs6 class="text-xs-left" v-if="getStockLiveTime(this.stockID)">
+                <v-flex
+                  xs6
+                  class="text-xs-left"
+                  v-if="getStockLiveTime(this.stockID)"
+                >
                   <span class="text-time">{{
                     getStockLiveTime(this.stockID).split(" ")[1]
                   }}</span>
@@ -936,8 +942,8 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'twodigit-' + twoDigit[8].rule,
-                      twoDigit[8].ruleid
+                      'twodigit-' + twoDigit[7].rule,
+                      twoDigit[7].ruleid
                     )
                   "
                 >
@@ -961,8 +967,8 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'twodigit-' + twoDigit[7].rule,
-                      twoDigit[7].ruleid
+                      'twodigit-' + twoDigit[6].rule,
+                      twoDigit[6].ruleid
                     )
                   "
                 >
@@ -986,8 +992,8 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'twodigit-' + twoDigit[6].rule,
-                      twoDigit[6].ruleid
+                      'twodigit-' + twoDigit[5].rule,
+                      twoDigit[5].ruleid
                     )
                   "
                 >
@@ -1015,7 +1021,7 @@
         <div class="bettingFooter justify-center sm10 xs10">
           <span>
             {{ $t("msg.totalBet") }}:
-            {{ formatToPrice(getAllBettingAmount) }}
+            {{ formatToPrice(getBettingAmount) }}
           </span>
         </div>
       </v-flex>
@@ -1039,11 +1045,12 @@
         >
           <div class="d-block text-center" style="color:#000">
             <p class="text-uppercase">
-              {{ $t("msg.stockName") }} :
+              <b> {{ $t("msg.stockName") }} : </b>
               {{ $t(`stockName.${$route.params.id}`) }}
-              {{ $t("msg.payout") }}:
-              {{ odd }}
+              <b>{{ $t("msg.payout") }}:</b>
+              {{ Number(odd).toFixed(2) }}
             </p>
+            <!-- jump here -->
             <p class="text-uppercase test-time-loop">
               {{ getStockLoop(this.$route.params.id) }}
               {{ $t("msg.minuteGame") }}
@@ -1125,7 +1132,7 @@
               <tr>
                 <td class="text-right">{{ $t("msg.stockName") }}:</td>
                 <td class="text-left pl-2 text-color-blue">
-                  {{ $t(`stockName.${$route.params.id}`) }}
+                  <b>{{ $t(`stockName.${$route.params.id}`) }}</b>
                 </td>
               </tr>
               <tr>
@@ -1299,9 +1306,9 @@
         </v-layout>
       </v-container>
     </v-navigation-drawer>
+
     <!-- 0 -99 -->
     <!-- two digit -->
-
     <v-navigation-drawer
       class="drawer-asidebar"
       right
@@ -1579,7 +1586,6 @@ export default {
   },
   mounted() {
     this.stockID = this.$route.params.id;
-    console.log(this.stockID);
   },
   components: {
     chartMobile,
@@ -1597,44 +1603,56 @@ export default {
       "getGameUUIDByStockName",
       "getCheckStock",
       "getCoinsModern",
-      "getAllBettingAmount",
+      "getBettingAmount",
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",
-      "getPortalProviderUUID"
+      "getPortalProviderUUID",
+      "getLocale"
     ]),
     // check bet close using stockOpenOrClosed and timer
     checkBetClose() {
-      if (
-        this.getTimerByStockName(this.stockID) &&
-        this.getTimerByStockName(this.stockID).stockStatus === "Closed"
-      ) {
+      const stockTime = this.getTimerByStockName(this.stockID);
+      if (stockTime && stockTime.stockStatus === "Closed") {
         return true;
       }
+
+      if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+        this.clearTempMultiGameBetData();
+
+        this.clearItemBetting();
+
+        secureStorage.removeItem("itemBetting");
+      }
+
       // check 1 or 5 loop
       if (this.getStockLoop(this.stockID) === 5) {
-        if (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec ==
-            240
-        ) {
-          this.clearDataMultiGameBet();
+        if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+          this.clearDataMultiGameBet(5);
         }
-        return (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60
-        );
+        if (stockTime && stockTime.gameEndTimeCountDownInSec <= 60) {
+          if (stockTime && stockTime.gameEndTimeCountDownInSec === 60) {
+            $(".closepopper").click();
+            this.clearTempMultiGameBetData();
+          }
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        if (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 40
-        ) {
-          this.clearDataMultiGameBet();
+        if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+          this.clearDataMultiGameBet(1);
         }
-        return (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
-        );
+        if (stockTime && stockTime.gameEndTimeCountDownInSec <= 20) {
+          if (stockTime && stockTime.gameEndTimeCountDownInSec === 20) {
+            $(".closepopper").click();
+            this.clearTempMultiGameBetData();
+          }
+
+          return true;
+        } else {
+          return false;
+        }
       }
     }
   },
@@ -1646,14 +1664,15 @@ export default {
       "setLiveRoadMap",
       "setRoadMap",
       "setUserData",
-      "setSnackBarMessage"
+      "setSnackBarMessage",
+      "clearTempMultiGameBetData",
+      "clearItemBetting"
     ]),
 
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
     stopListenSocket(channel) {
-      console.log("stopListenSocket");
       window.Echo.leave(channel);
     },
     tabChanged(e) {
@@ -1704,16 +1723,16 @@ export default {
     },
     // Place Bet Last Step
     placeBet() {
-      if(this.betAmount > 10000) {
+      if (this.betAmount > 10000) {
         this.setSnackBarMessage(this.$root.$t("betting.betValue"));
       } else {
         let data = {
-        gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
-        ruleID: this.ruleid,
-        betAmount: this.betAmount
-      };
-      this.confirmDisabled = true;
-      this.sendBetting(data);
+          gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
+          ruleID: this.ruleid,
+          betAmount: this.betAmount
+        };
+        this.confirmDisabled = true;
+        this.sendBetting(data);
       }
     },
     // Final Betting on Mobile
@@ -1734,7 +1753,7 @@ export default {
           this.bettingDialog = false;
           this.reviewbetDialog = false;
           this.pushDataOnGoingBet(res.data[0]);
-          this.setSnackBarMessage("Sucessfully Bet Place.");
+          this.setSnackBarMessage(this.$root.$t("betting.betSuccess"));
         } else {
           this.setSnackBarMessage(this.$root.$t("error.general"));
         }
@@ -1771,9 +1790,12 @@ export default {
       let array = this.gameRule.split("-");
 
       // check the last one is string or not
-      // alert(parseInt(array[1]).isNaN)
       let firstArray = array[0];
       let lastArray = array[1];
+      if (firstArray === "bothdigit" || firstArray === "twodigit") {
+        payoutArray1 = [ "odd", "even"];
+        payoutArray2 = ["high", "mid", "low", "tie", "small", "big",];
+      }
       if (Number.isNaN(parseInt(lastArray))) {
         if (payoutArray1.includes(lastArray)) {
           this.odd = this.payout_big_small;

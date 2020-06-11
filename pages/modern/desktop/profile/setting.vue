@@ -129,7 +129,7 @@ export default {
           }
         );
         if (res.status) {
-          this.$swal.fire({
+          this.$swal({
             position: "top",
             type: "success",
             title: this.$root.$t("msg.changesSaved"),

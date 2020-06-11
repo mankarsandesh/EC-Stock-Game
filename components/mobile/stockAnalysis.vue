@@ -159,6 +159,7 @@ import { mapGetters, mapActions } from "vuex";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import config from "~/config/config.global";
+import utils from "~/mixin/utils";
 import date from "date-and-time";
 
 // set win and lose color in bar chart
@@ -171,6 +172,7 @@ export default {
   components: {
     apexchart: apexchart
   },
+  mixins: [utils],
   data() {
     return {
       stockAnalysis: [],
@@ -262,13 +264,6 @@ export default {
     showDialogOnlineHistory() {
       this.dialogOnlineHistory = true;
     },
-    checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), "YYYY-MM-DD");
-      if (endDate > now || !(endDate >= startDate)) {
-        return false;
-      }
-      return true;
-    },
     startDateClick() {
       this.isShowDateStart = !this.isShowDateStart;
       this.isShowDateEnd = false;
@@ -280,7 +275,7 @@ export default {
     async getStockAnalysis() {
       try {
         if (!this.checkValidDate(this.startDate, this.endDate)) {
-          this.setSnackBarMessage("Please select a valid date");
+          throw new Error(this.$root.$t("profile.invalidDate"));
         }
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -310,6 +305,7 @@ export default {
           this.setSnackBarMessage(res.message[0]);
         }
       } catch (ex) {
+        this.error = ex.message;
         this.setSnackBarMessage(ex.message);
         this.isDataValid = false;
       }

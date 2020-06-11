@@ -1,11 +1,16 @@
-<template>  
-    <bethistory :search="search" :userBetHistory="userBetHistory"   @userLimit="loadMoreData" />
+<template>
+  <bethistory
+    :search="search"
+    :userBetHistory="userBetHistory"
+    @userLimit="loadMoreData"
+    :currency="getUserCurrency"
+  />
 </template>
 
 <script>
 import bethistory from "~/components/mobile/bethistory";
 import breadcrumbs from "~/components/breadcrumbs";
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../plugins/secure-storage";
 
@@ -17,7 +22,7 @@ export default {
   },
   data() {
     return {
-      betDataLimit : 10,
+      betDataLimit: 10,
       today: new Date(),
       sortby: "",
       search: "",
@@ -38,7 +43,9 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }), //get 2 data from vuex first, in the computed
+    // Fet User Currency
+    ...mapGetters(["getUserCurrency"])
   },
   mounted() {
     const lastWeek = new Date(
@@ -53,9 +60,9 @@ export default {
     this.fetchBetHsitory();
   },
   methods: {
-    loadMoreData(){
-     this.betDataLimit += 10;   
-     this.fetchBetHsitory();
+    loadMoreData() {
+      this.betDataLimit += 10;
+      this.fetchBetHsitory();
     },
     sortingBy() {
       if (this.sortby == "Today") {
@@ -108,11 +115,11 @@ export default {
           betResult: [0, 1],
           dateRangeFrom: this.dateFrom,
           dateRangeTo: this.dateTo,
-          limit : this.betDataLimit
+          limit: this.betDataLimit
         };
         var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
-        });     
+        });
         if (data.status) {
           this.userBetHistory = data.data;
           this.loadingImage = false;

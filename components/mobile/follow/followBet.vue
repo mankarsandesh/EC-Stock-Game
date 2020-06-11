@@ -23,6 +23,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
+            <!-- jump here -->
             <v-select
               :items="[
                 {
@@ -52,7 +53,7 @@
               ]"
               solo
               label="10%"
-              v-if="selectRate"
+              v-if="selectedFollow === 2"
               append-icon="money"
               v-model="rateValue"
               @keypress="onlyNumber"
@@ -64,7 +65,7 @@
               ]"
               solo
               label="100"
-              v-if="selectAmount"
+              v-if="selectedFollow === 1"
               @keypress="onlyNumber"
               v-model="amountValue"
               append-icon="money"
@@ -97,7 +98,9 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red">{{ unfollowSign }}</span>
+                <span slot="append" color="red">{{
+                  checkCurrency(this.getUserCurrency)
+                }}</span>
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
@@ -147,9 +150,10 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
+import utils from "~/mixin/utils";
 
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
@@ -261,12 +265,14 @@ export default {
       userId: 0
     };
   },
+  mixins: [utils],
   computed: {
     // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+    ...mapGetters(["getUserCurrency"])
   },
   methods: {
     // Snackbar Notification
@@ -372,7 +378,14 @@ export default {
             ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed"))
             : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));
         } else {
-          this.setSnackBarMessage(data.message[0]);
+          //For translation of 10 users follow list check.
+          if (
+            data.message[0] == "You cant follow more than 10 users at a time."
+          ) {
+            this.setSnackBarMessage(this.$root.$t("follow.maxFollow"));
+          } else {
+            this.setSnackBarMessage(data.message[0]);
+          }
           // this.errorShow(true, false, true, data.message[0]);
         }
         this.$emit("followBetClose");
@@ -383,7 +396,6 @@ export default {
     // Change Amount Rate Validation
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
-      console.log(this.selectedFollow);
       if (this.selectedFollow == "Amount") {
         this.selectAmount = true;
         this.selectRate = false;

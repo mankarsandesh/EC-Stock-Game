@@ -7,6 +7,7 @@ const state = () => ({
   userUUID: secureStorage.getItem("USER_UUID"), // Store user UUID
   userBalance: 0,
   userData: {}, // Store user data
+  userCurrency : "",
   locales: ["cn", "us", "th", "la"], // Store language locales
   locale: secureStorage.getItem("lang"), // Store locale
   coinsModern: [], // Store coins modern
@@ -31,6 +32,9 @@ const mutations = {
   SET_COINS_MODERN(state, payload) {
     state.coinsModern = payload;
     secureStorage.setItem("coinsModern", payload);
+  },
+  SET_CURRENCY_MODERN(state, payload) {
+    state.userCurrency = payload;   
   },
   SET_LANGUAGE(state, payload) {
     state.locale = payload;
@@ -105,6 +109,10 @@ const actions = {
   setCoinsModern({ commit }, payload) {
     commit("SET_COINS_MODERN", payload);
   },
+   // Set Currency
+  setCurrency({ commit }, payload) {
+    commit("SET_CURRENCY_MODERN", payload);
+  },
   // Set language locale
   setLanguage({ commit }, payload) {
     commit("SET_LANGUAGE", payload);
@@ -170,6 +178,10 @@ const getters = {
   // get chip amount
   getCoinsModern(state) {
     return state.coinsModern;
+  },
+   // get chip amount
+   getUserCurrency(state) {
+    return state.userCurrency;
   },
   // get current language
   getLocale(state) {

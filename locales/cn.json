@@ -45,7 +45,7 @@
   },
   "about": {
     "title": "About",
-    "introduction": "This page is made to give you more informations."
+    "introduction": "创建此页面是为了向您提供更多信息。"
   },
   "msg": {
     "betCount": "投注数",
@@ -181,7 +181,12 @@
     "enterFullScreen":"进入全屏模式",
     "closeFullScreen":"关闭全屏模式",
     "close" : "关",
-    "rowsPerPage":"每页行:"
+    "rowsPerPage":"每页行:",
+    "betSuccess":"押注成功",
+    "betFailed" : "投注失败",
+    "addNewRoadMap" : "添加新路线图",
+    "closeRoadMap" : "关闭路线图",
+    "expand" : "扩大"
   },
   "navlist": {
     "live Stock": "正开放股票",
@@ -323,7 +328,12 @@
     "stopByTiming":"定时自动停止",
     "stopByBets":"下注一定次数后自动停止投注",
     "monthly":"每月一次",
-    "weekly":"每周"
+    "weekly":"每周",
+    "viewUserProfile" : "查看用户资料",
+    "sorry" : "抱歉，这是一个私人帐户",
+    "theLink" : "您遵循的链接已过期，或者该页面仅对您不在的受众可见。",
+    "previousPage" : "返回上一个页面",
+    "homePage" : "EC 游戏首页"
   },
   "breadcrumbs": {
     "rule": "规则",
@@ -343,7 +353,9 @@
     "gameOptions": "游戏选项",
     "chipOptions": "筹码设置",
     "sound": "声音",
-    "allowToLocation": "允许定位"
+    "allowToLocation": "允许定位",
+    "chipExists" : "筹码数量已存在",
+    "chipAmount" : "筹码数量应大于100且小于10000"
   },
   "notification": {
     "myNotification": "我的消息",
@@ -379,9 +391,11 @@
     "placeBet" : "下注",
     "cancelBet" :"取消投注",
     "reviewYourBet" : "查看您的投注",
-    "pleaseConfirm": "請在下面確認您的投注"
+    "pleaseConfirm": "請在下面確認您的投注",
+    "betSuccess": "投注成功"
   },
   "invitation": {
+    "selectCategory" : "选择类别",
     "selectCategoryError" : "请选择类别",
     "ecWorld" : "EC 世界",
     "gameChannel" : "游戏频道",
@@ -400,6 +414,7 @@
     "followBet":"跟随投注邀请"
   },
   "tutorial": {
+    "help":"采取游览",
     "resultDraw":"开奖结果",
     "calculation" : "计算",
     "lotteryDraw" : "彩票开奖？",
@@ -429,10 +444,10 @@
   "follow": {
     "amount" : "量",
     "rate" : "率",
-    "amountMust" : "最低下注$100",
+    "amountMust" : "最低下注 100",
     "timeMust" : "必须达到1天时间",
     "betMust" : "必须至少下注1次",
-    "amountMay" : "注码不可超过 $1000",
+    "amountMay" : "注码不可超过 1000",
     "timeMay" : "时间不可超过10天",
     "betMay" : "最多下注不可超过10次",
     "mustBe" : "必须至少达到",
@@ -444,7 +459,8 @@
     "daysShould":"日期需控制在1-10",
     "betsShould":"下注次数需控制在1-100",
     "userFollowed":"用户已成功关注。",
-    "userUnFollowed":"用户成功取消关注。"
+    "userUnFollowed":"用户成功取消关注。",
+    "maxFollow":"您一次最多只能追踪10位使用者。"
   },
   "currentBet": {
     "noBets" : "目前没有下注。",

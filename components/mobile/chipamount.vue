@@ -33,8 +33,8 @@
           >{{ $t("msg.confirm") }}</v-btn
         >
         <div class="min-max">
-          <span>{{ $t("msg.min") }} = $200</span>
-          <span>{{ $t("msg.max") }} = $20,000</span>
+          <span>{{ $t("msg.min") }} = $100</span>
+          <span>{{ $t("msg.max") }} = $10,000</span>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@
     <v-snackbar v-model="snackbar">
       {{ this.snackbarMessage }}
       <v-btn color="pink" text @click="snackbar = false">
-        Close
+        {{ $t("msg.close") }}
       </v-btn>
     </v-snackbar>
   </div>
@@ -123,7 +123,7 @@ export default {
       this.editAbleIndex = -1;
       // show success snack bar and set success message
       this.snackbar = true;
-      this.snackbarMessage = "Changes saved!";
+      this.snackbarMessage = this.$root.$t("msg.changesSaved");
     },
     saveChipAmount(chipId) {
       let index = this.chips.findIndex(chip => chip.chipID == chipId);
@@ -141,19 +141,19 @@ export default {
             this.editAbleIndex = -1;
             // show success snack bar and set success message
             this.snackbar = true;
-            this.snackbarMessage = "Changes saved!";
+            this.snackbarMessage = this.$root.$t("msg.changesSaved");
             // assign new value to amount after successfully update the chip
             this.amount = this.getCoinsModern;
           } else {
             // show error snack bar and set error message
             this.snackbar = true;
-            this.snackbarMessage = "Chip Amount already exist";
+            this.snackbarMessage = this.$root.$t("setting.chipExists");
           }
         } else {
           // show error snack bar and set error message
           this.snackbar = true;
           this.snackbarMessage =
-            "Chip amount should be greater than 100 and less than 10000";
+            this.$root.$t("setting.chipAmount");
         }
       } else {
         // show error snack bar and set error message

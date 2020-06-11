@@ -4,12 +4,9 @@ export const BetResult = {
     computed: {
         ...mapGetters(["getItemsBetting"])
     },
-
     methods: {
-
         ...mapActions([
             "setCollegeButtonNumberParent",
-
         ]),
         /**
          *
@@ -19,12 +16,21 @@ export const BetResult = {
          * @param {*} betID
          * @param {*} betWin
          */
-        betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin   
-            const lastDraw = result.substr(result.length - 2); //get the last two digit
-            const first = parseInt(lastDraw.slice(0, 1)); // get the first digit number  
-            const last = parseInt(lastDraw.slice(1, 2)); // get the last digit number 
-            const bothDigit = first + last; // get the both digit number 
-            const twoDigit = lastDraw.slice(0, 1) + lastDraw.slice(1, 2); // git the two digit number          
+        betResult(result, stockName, betID, betWin) {
+
+            // result 9510.87
+            // stockName btc1
+            // betID firstdigit - big
+            // betWin firstdigitWin - big
+
+            const lastDraw = result.substr(result.length - 2);
+            const first = parseInt(lastDraw.slice(0, 1));
+            const last = parseInt(lastDraw.slice(1, 2));
+            const bothDigit = first + last;
+            const twoDigit = lastDraw.slice(0, 1) + lastDraw.slice(1, 2);
+
+
+
             jsonResult.resultBet.map((items, index) => {
                 if ($("#" + stockName + betID).hasClass(items.type)) {
                     items.rules.map((item, index) => {
@@ -62,22 +68,25 @@ export const BetResult = {
          * @param {*} name
          */
         multipleResult(item, number, stockName, betID, betWin, name) {
-            const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
-            const result = item.rule.includes(number); // check the value is have or not in the json result
+
+            // item { rule: Array(1), name: "firstdigit-0" }
+            // number 9
+            // stockName btc1
+            // betID firstdigit - 0
+            // betWin firstdigitWin - 0
+            // name firstdigit - 0
+
+            const specificNumber = "#" + stockName + betID.split("-")[0]
+            const result = item.rule.includes(number);
             if (result) {
-
                 this.$soundEffect('win')
-
                 $("#" + betWin).addClass('chip-animation');
                 $("#" + stockName + betID).addClass(
                     betID.split("-")[0] + "-animation"
                 );
-
                 setTimeout(() => {
                     this.setCollegeButtonNumberParent("You are win") // try to set the difference value 
-
                     this.$soundEffect('win')
-
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0]
                     );
@@ -89,8 +98,10 @@ export const BetResult = {
                     );
                     $(specificNumber).removeClass(
                         betID.split("-")[0]);
-
+                    $("#" + stockName + betID).removeClass(name); // remove the name firstdigit-1 
+                    $("#" + stockName + betID).removeClass(number); // remove the number 8
                     $("#" + betWin).removeClass('chip-animation');
+                    $(specificNumber + 'Number').removeClass('chip-animation');
                     // this.collectCoin()
                 }, 5000);
 
@@ -104,13 +115,15 @@ export const BetResult = {
                 );
                 $(specificNumber + 'Number').addClass('chip-animation');
                 this.setCollegeButtonNumberParent('You are lose in else false')
-
                 $("#" + stockName + betID).removeClass(
                     betID.split("-")[0]
                 );
+                $("#" + stockName + betID).removeClass(name); // remove the name firstdigit-1 
+                $("#" + stockName + betID).removeClass(number); // remove the number 8
             } else {
                 $(specificNumber + 'Number').removeClass('chip-animation');
-
+                $("#" + stockName + betID).removeClass(name); // remove the name firstdigit-1 
+                $("#" + stockName + betID).removeClass(number); // remove the number 8
                 this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
@@ -120,6 +133,7 @@ export const BetResult = {
                 );
             }
         },
+
 
         /**
          *

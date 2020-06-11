@@ -25,7 +25,11 @@
         |
         <span>
           {{ $t("msg.payout") }}:
-          {{ $store.state.game.payout[parseInt(payout)].dynamicOdds }}
+          {{
+            Number(
+              $store.state.game.payout[parseInt(payout)].dynamicOdds
+            ).toFixed(2)
+          }}
         </span>
       </v-flex>
       <v-flex>
@@ -98,7 +102,15 @@ import chips from "~/data/chips";
 import secureStorage from "../../plugins/secure-storage";
 import { BetResult } from "~/mixin/betResult";
 export default {
-  props: ["stockName", "ruleid", "loop", "betId", "payout", "betWin"],
+  props: [
+    "stockName",
+    "ruleid",
+    "loop",
+    "betId",
+    "payout",
+    "betWin",
+    "specific"
+  ],
   mixins: [BetResult],
   data() {
     return {
@@ -192,21 +204,20 @@ export default {
 
           if (this.betValue > 0) {
             this.$soundEffect("betting");
-
             const stockDetail = {
               betAmount: this.betValue,
               class: this.betId.split("-")[0],
               gameUUID: this.getGameUUIDByStockName(this.stockName),
               id: this.stockName + this.betId,
               ruleID: this.ruleid,
-              specificNumber: "",
+              specificNumber: this.specific,
               betRule: this.betId
             };
             this.$emit("update-bet", stockDetail);
             this.confirmDisabled = true;
-            this.$StoreBettingonConfirm(stockDetail);
-            this.sendBetting(data);
+            this.sendBetting(data, stockDetail);
             this.setFooterBetAmount(0);
+
             $("#" + this.stockName + this.betId).addClass(
               this.betId.split("-")[0] + " " + this.betId.split("-")[1]
             );
@@ -216,7 +227,7 @@ export default {
         console.log(error);
       }
     },
-    async sendBetting(betData) {
+    async sendBetting(betData, itemBetting) {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -228,9 +239,10 @@ export default {
           headers: config.header
         });
         if (res.status && res.data[0].status) {
+          this.$StoreBettingonConfirm(itemBetting);
           this.setUserData();
           this.closePopper();
-          
+
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
             gameUUID: res.data[0].gameUUID,

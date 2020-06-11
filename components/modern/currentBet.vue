@@ -33,7 +33,7 @@
             {{ $t("msg.minutes") }}
           </td>
           <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
-          <td>{{ item.item.betAmount | toCurrency }}</td>
+          <td>{{ checkCurrency(currency)}}{{ item.item.betAmount | currency }}</td>
           <td>{{ item.item.payout }}</td>
           <td v-if="item.item.betResult == 'win'">
             <v-chip
@@ -72,7 +72,7 @@
               {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
             </td>
             <td>
-              <strong>{{ TotalAmount | toCurrency }}</strong>
+              <strong> <span v-if="TotalAmount > 0">{{  checkCurrency(currency) }}{{ TotalAmount | currency }} </span> </strong>
             </td>
             <td colspan="2"></td>
           </tr>
@@ -83,8 +83,9 @@
 </template>
 
 <script>
+import utils from "~/mixin/utils";
 export default {
-  props: ["currentBets"],
+  props: ["currentBets","currency"],
   data: () => ({
     search: ""
   }),
@@ -104,6 +105,7 @@ export default {
       return formatter.format(value); // after get the currency that you prefer, than we return out with value
     }
   },
+  mixins :[utils],
   computed: {
     TotalAmount() {
       // make the new value to make the frontend get this value from the computed

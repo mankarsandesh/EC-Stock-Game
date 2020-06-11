@@ -129,7 +129,7 @@ export default {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             return (
               '<div class="arrow_boxChart"> $' +
-              series[seriesIndex][dataPointIndex].toFixed(2) +
+              w.config.series[0].data[dataPointIndex] +
               "</div>"
             );
           }

@@ -110,16 +110,14 @@
           <v-icon class="icon-primary" v-if="sortBy === 'type'">done</v-icon>
         </v-list-tile>
         <v-divider></v-divider>
-        <v-list-tile class="py-2" @click="sortBy = ''">
+        <v-list-tile class="py-2" @click="sortBy = 'default'">
           <v-list-tile-content>
             <v-list-tile-title class="text-uppercase">{{
               $t("default")
             }}</v-list-tile-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
-          <!-- <v-btn icon class="hidden-xs-only" @click.stop="drawer = !drawer">
-                    <v-icon class="icon-primary">done</v-icon>
-          </v-btn>-->
+          <v-icon class="icon-primary" v-if="sortBy === 'default'">done</v-icon>
         </v-list-tile>
         <v-divider></v-divider>
       </v-list>
@@ -141,7 +139,7 @@
         </v-btn>
       </v-flex>
     </div>
-    <v-layout row wrap px-2 pt-2>
+    <v-layout row wrap px-2 pt-2 v-if="getStockListCountdown.length >= 1">
       <v-flex pa-1 v-for="(data, index) in showStocks" :key="index" xs6 sm4 md4>
         <nuxt-link :to="'/modern/betting/' + data.stockName">
           <v-card class="v-card-style chartDesign">
@@ -153,7 +151,7 @@
                   getTimerByStockName(data.stockName).stockStatus === 'Closed'
               "
             >
-              <span class="text-close-bet">{{ $t('msg.marketClosed') }}</span>
+              <span class="text-close-bet">{{ $t("msg.marketClosed") }}</span>
             </div>
             <v-card-title class="px-1 py-0 pa-2" style="font-size:11px;">
               <v-layout>
@@ -180,7 +178,7 @@
             </h3>
             <h4 style="line-height: 1">
               <div class="text-center">
-                <em>{{ data.loop }}  {{ $t("msg.minuteGame") }} </em>
+                <em>{{ data.loop }} {{ $t("msg.minuteGame") }} </em>
               </div>
             </h4>
           </div>
@@ -203,7 +201,7 @@ export default {
   },
   data() {
     return {
-      sortBy: "",
+      sortBy: "default",
       filter: {
         stock: {
           china: true,
@@ -216,8 +214,8 @@ export default {
         }
       },
       checkbox1: false,
-      showfilterStock: false,
-      showfilterType: false
+      showfilterStock: true,
+      showfilterType: true
     };
   },
   computed: {
@@ -225,13 +223,16 @@ export default {
       "getAllStocks",
       "getTimerByStockName",
       "getStockLiveTime",
-      "getStockLivePrice"
+      "getStockLivePrice",
+      "getStockListCountdown",
+      "getGameUUIDByStockName"
     ]),
     showStocks() {
+      const _this = this;
       let result = [];
       let stockType = [];
       this.getAllStocks.forEach(element => {
-        // filter type
+        // filter for game type
         if (element.type === "crypto") {
           this.filter.stock.crypto == true ? stockType.push(element) : "";
         } else if (element.type === "china") {
@@ -240,7 +241,7 @@ export default {
           this.filter.stock.usa == true ? stockType.push(element) : "";
         }
       });
-      // filter loop
+      // filter for game loop
       stockType.forEach(element => {
         if (element.loop === 1) {
           this.filter.gameType.loop1 == true ? result.push(element) : "";
@@ -248,7 +249,24 @@ export default {
           this.filter.gameType.loop5 == true ? result.push(element) : "";
         }
       });
-      // sort by name function
+      // the function for sort by default
+      // open stock above close stock below
+      function sortByDefault(a, b) {
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return -1;
+        }
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return 1;
+        }
+        return 0;
+      }
+      // the function for sort by name
       function sortByName(a, b) {
         if (a.stockName < b.stockName) {
           return -1;
@@ -258,7 +276,7 @@ export default {
         }
         return 0;
       }
-      // sort by type function
+      // the function for sort by type
       function sortByType(a, b) {
         if (a.type < b.type) {
           return -1;
@@ -272,6 +290,8 @@ export default {
         result.sort(sortByName);
       } else if (this.sortBy === "type") {
         result.sort(sortByType);
+      } else {
+        result.sort(sortByDefault);
       }
       return result;
     }

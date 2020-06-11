@@ -4,7 +4,12 @@
       <!-- Left Side Stock List  -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
         <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">close</v-icon>
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-icon color="#0b2968" v-on="on">close</v-icon>
+            </template>
+            <span>{{ $t("msg.close") }}</span>
+          </v-tooltip>
         </span>
         <v-layout column>
           <v-flex xs12 pt-3>
@@ -29,7 +34,12 @@
       </v-flex>
       <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
-          <v-icon color="#FFF">list</v-icon>
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-icon color="#FFF" v-on="on">list</v-icon>
+            </template>
+            <span>{{ $t("msg.expand") }}</span>
+          </v-tooltip>
         </span>
       </v-flex>
       <!-- End Left Side -->
@@ -97,7 +107,6 @@
                       </span>
                     </v-flex>
                   </div>
-                  <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
                 <!-- Help Tutorial -->
                 <v-flex
@@ -106,16 +115,20 @@
                   class="text-xs-right"
                   style="align-self: flex-end;"
                 >
-                  <v-btn
-                    fab
-                    dark
-                    small
-                    class="helpButton"
-                    @click="openTutorial()"
-                    title="Help"
-                  >
-                    <v-icon dark size="22">fa-question</v-icon>
-                  </v-btn>
+                  <v-tooltip left>
+                    <template v-slot:activator="{ on }">
+                      <v-btn
+                        fab
+                        class="helpButton"
+                        dark
+                        @click="openTutorial()"
+                        v-on="on"
+                      >
+                        <v-icon dark size="24">fa-question</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ $t("tutorial.help") }}</span>
+                  </v-tooltip>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -160,10 +173,20 @@
                   @click="addTrendMap()"
                   v-if="index === 0"
                 >
-                  <v-icon>fa-plus</v-icon>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">fa-plus</v-icon>
+                    </template>
+                    <span>{{ $t("msg.addNewRoadMap") }}</span>
+                  </v-tooltip>
                 </span>
-                <span v-else class="addChart" @click="removeTradMap(index)">
-                  <v-icon>close</v-icon>
+                <span v-else class="addChart" @click="removeTrendMap(index)">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">fa-close</v-icon>
+                    </template>
+                    <span>{{ $t("msg.closeRoadMap") }}</span>
+                  </v-tooltip>
                 </span>
               </tableTrendMap>
             </div>
@@ -181,6 +204,7 @@
             @click="GameRuleDialog = false"
             >fa-times</v-icon
           >
+
           <v-card-text style="padding:40px;">
             <h2 style="text-align:center;">
               {{ $t("msg.ecGamingRulesDescription") }}
@@ -212,7 +236,7 @@
                 @click="setAfterFullScreenClosePage()"
                 v-on="on"
               >
-                <v-icon size="24px">fa-arrows-alt</v-icon>
+                <v-icon size="24px">fa-expand</v-icon>
               </v-btn>
             </template>
             <span>{{ $t("msg.enterFullScreen") }}</span>
@@ -246,11 +270,10 @@ import stockList from "~/components/modern/stockList";
 import stockResult from "~/components/modern/stockresult";
 import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
-import chartApp from "~/components/modern/chart";
-import tableTrendMap from "~/components/modern/tableTrendMap";
-import stockSelect from "~/components/stockSelect";
-import config from "~/config/config.global";
-import lotteryDraw from "~/components/modern/lotteryDraw";
+import chartApp from "~/components/modern/chart"; // Chart
+import tableTrendMap from "~/components/modern/tableTrendMap"; // Road Map
+import stockSelect from "~/components/stockSelect"; // Select Stock
+import config from "~/config/config.global"; // Config Settings
 import { isMobile } from "mobile-device-detect";
 import secureStorage from "../../../plugins/secure-storage";
 import onlyrules from "~/components/modern/rule/onlyrule";
@@ -268,7 +291,6 @@ export default {
     betButton,
     tableTrendMap,
     stockSelect,
-    lotteryDraw,
     isMobile: isMobile,
     onlyrules
   },
@@ -359,13 +381,18 @@ export default {
   methods: {
     ...mapActions([
       "setRoadMap",
-      "setTutorialStepNumber",
       "setIsShowTutorial",
       "setLiveRoadMap",
       "setFooterBetAmount",
       "setIsLoadingStockGame",
       "clearBetValueFooterBet"
     ]),
+    openTutorial() {
+      this.setIsShowTutorial(true);
+      setTimeout(() => {
+        $("#open-Tutorial").click();
+      }, 10);
+    },
     setAfterFullScreenClosePage() {
       secureStorage.setItem("fullscreenclosed", "desktop");
       this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
@@ -410,7 +437,7 @@ export default {
       }
     },
     // Remove trendMap
-    removeTradMap(index) {
+    removeTrendMap(index) {
       let indexValue = this.trendTypes[index];
       let newData = this.trendTypes.filter(data => {
         return data != indexValue;
@@ -419,37 +446,6 @@ export default {
     },
     loaded() {
       this.isLoad = true;
-    },
-    clearTutorialUI() {
-      $("#lastDrawGuideline").css("z-index", "1");
-      $("#betCloseInGuideline").css("z-index", "1");
-      $("#lotteryDrawGuidelines").css("z-index", "1");
-      $("#chartGuidelineNew").css("z-index", "1");
-      $(".betButtonGuide").css("z-index", "1");
-      $(".BetButtonGuideEven").css("z-index", "1");
-      $("#selectstockGuidelines").css("z-index", "1");
-      $("#stocklistGuidelines").css("z-index", "1");
-      $("#trendmapGuidelines").css("z-index", "1");
-      $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
-    },
-    openTutorial() {
-      const _this = this;
-      let timeStart = this.getTutorialStepNumber === 0 ? 0 : 3000;
-      // setTimeout  to  resolve problems if user close tutorial and reopen
-      setTimeout(() => {
-        this.setIsShowTutorial(true);
-        let step = 1;
-        this.setTutorialStepNumber(step);
-        let stepGo = setInterval(() => {
-          step++;
-          this.setTutorialStepNumber(step);
-          if (step === 12 || !_this.getIsShowTutorial) {
-            clearInterval(stepGo);
-            _this.clearTutorialUI();
-            this.setTutorialStepNumber(0);
-          }
-        }, 3000);
-      }, timeStart);
     }
   },
   computed: {
@@ -513,6 +509,8 @@ export default {
   background-color: #4464ff !important;
   color: #fff;
   padding: 3px;
+  width: 40px;
+  height: 40px;
 }
 
 .leftStocklist {
@@ -520,7 +518,7 @@ export default {
   border-radius: 5px;
   position: relative;
   top: 0;
-  height:100%;
+  height: 100%;
   box-shadow: 0 0 2px grey;
 }
 

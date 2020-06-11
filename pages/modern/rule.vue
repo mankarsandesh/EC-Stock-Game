@@ -1,5 +1,5 @@
 <template>
-  <div xs12 >
+  <div xs12>
     <h1 class="jumbotron-heading text-center">
       {{ $t("msg.ecGamingRulesDescription") }}
     </h1>
@@ -29,21 +29,9 @@
               @click="dialog = false"
               >close</v-icon
             >
-            <p>
-              e.g. Assuming a stock resulting in 1234.
-              <span class="text-red">56</span>, all our game types would only
-              take decimal ‘56’ as result;In the case the result is now serving
-              as <span class="text-red">‘56’</span>,we define decimal
-              <span class="text-red">‘5’</span>, as
-              <span class="text-red">‘first</span>, digit’ result;decimal
-              <span class="text-red">‘6’</span>, as
-              <span class="text-red">‘last’</span>,‘ digit’ result;decimals
-              <span class="text-red">‘5’</span>, and
-              <span class="text-red">‘6’</span>, together as
-              <span class="text-red">two</span>, ‘-digit’ result; Other than
-              these, we are also appointing the outcome of ‘5 + 6’ as
-              <span class="text-red">both</span>, digits’ result, which is
-              <span class="text-red">‘11’</span>.
+
+            <p style="line-hight:15px;text-align:center;font-size:16px;">
+              {{ $t("msg.textResultIntroduction") }}
             </p>
           </v-card-text>
           <v-card-actions>

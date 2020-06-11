@@ -172,8 +172,9 @@
                       style="font-size: 40px; color: #f19135;"
                     />
                   </span>
-                  <span class="number-box"
-                    >${{ visitProfileUserData.totalWinAmount | currency }}</span
+                  <span class="number-box">
+                    {{ checkCurrency(getUserCurrency)
+                    }}{{ visitProfileUserData.totalWinAmount | currency }}</span
                   >
                   <span class="des-title text-uppercase">
                     {{ $t("leaderBoard.winningAmount") }}
@@ -207,17 +208,12 @@
       <v-flex pa-2>
         <div class="container-content">
           <div class="box-error">
-            <h2>Sorry, this content isn't avaiable right now</h2>
+            <h2>{{ $t("leaderBoard.sorry") }}</h2>
             <p>
-              The Link you followed have expired, or the page may only be
-              visiable to an audiencce you're not in.
+              {{ $t("leaderBoard.theLink") }}
             </p>
-            <a @click="$router.push('/modern/desktop/userprofile/')"
-              >Go back to the previous Page</a
-            >
-            <a @click="$router.push('/modern/desktop/btc1/')"
-              >EC Game Home Page</a
-            >
+            <a :href="linkpreviouspage">{{ $t("leaderBoard.previousPage") }}</a>
+            <a :href="linkhome">{{ $t("leaderBoard.homePage") }}</a>
           </div>
         </div>
       </v-flex>
@@ -233,7 +229,7 @@
     >
       <v-card tile>
         <v-toolbar card dark style="background-color:#2cb13b;">
-          <v-btn icon dark @click="followDialog = false">
+          <v-btn icon dark @click="closeFollowDialog()">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>
@@ -248,6 +244,7 @@
           :FollowerUserUUID="this.FollowUserUUID"
           :isFollowing="this.FolloworNot"
           @followBetClose="closeFollowBet"
+          :key="followDialog"
         />
       </v-card>
     </v-dialog>
@@ -261,8 +258,60 @@ import config from "~/config/config.global";
 import followBet from "~/components/mobile/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../plugins/secure-storage";
+import utils from "~/mixin/utils";
+import { isMobile } from "mobile-device-detect";
 
 export default {
+  // async watchQuery(newQuery, oldQuery) {
+  //   try {
+  //     let reqBody = {
+  //       portalProviderUUID: this.getPortalProviderUUID,
+  //       userUUID: this.getUserUUID,
+  //       visitingUserUUID: newQuery.id ? newQuery.id : this.getUserUUID,
+  //       dateRangeFrom: this.startDate,
+  //       dateRangeTo: this.endDate,
+  //       version: config.version
+  //     };
+  //     let res = await this.$axios.$post(
+  //       config.getVisitUserProfile.url,
+  //       reqBody,
+  //       {
+  //         headers: config.header
+  //       }
+  //     );
+  //     console.log(reqBody);
+  //     console.log(res);
+  //     if (res.status) {
+  //       this.messageError = false;
+  //       this.visitProfileUserData = res.data;
+  //       this.visitProfileUserData.winRate = Math.round(
+  //         this.visitProfileUserData.winRate
+  //       );
+  //       this.myProfileImage = res.data.userImage;
+
+  //       //  series
+  //       let series = [];
+  //       let xaxis = [];
+  //       res.data.activeTimeDateWise.forEach(element => {
+  //         series.push(element.activeTimeInMins);
+  //         xaxis.push(element.Date);
+  //       });
+  //       this.series = [
+  //         {
+  //           name: this.$root.$t("msg.onlineActiveTime"),
+  //           data: series
+  //         }
+  //       ];
+  //       this.chartOptions.xaxis.categories = xaxis;
+  //       this.componentKey++;
+  //     } else {
+  //       this.messageError = true;
+  //       // throw new Error(config.error.general);
+  //     }
+  //   } catch (ex) {
+  //     console.error(ex);
+  //   }
+  // },
   components: {
     followBet,
     VueApexCharts
@@ -320,6 +369,13 @@ export default {
       }
     };
   },
+  mounted() {
+    this.linkpreviouspage = isMobile
+      ? "/modern/leaderboard/"
+      : "/modern/desktop/leaderboard/";
+    this.linkhome = isMobile ? "/modern/" : "/modern/desktop/btc1/";
+  },
+  mixins: [utils],
   created() {
     this.setFilter(30);
     this.getUserProfileByID();
@@ -329,7 +385,8 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getUserInfo",
-      "getLocale"
+      "getLocale",
+      "getUserCurrency"
     ])
   },
   watch: {
@@ -343,6 +400,9 @@ export default {
     }
   },
   methods: {
+    closeFollowDialog() {
+      this.followDialog = false;
+    },
     // Render Follow Bet Component
     forceRerender() {
       this.renderComponent = false;
@@ -379,10 +439,10 @@ export default {
     // fetch Visitor User Profile Infomation.
     async getUserProfileByID() {
       try {
-        if (!this.$route.params.useruuid) {
+        if (!this.$route.query.id) {
           this.userNew = this.getUserUUID;
         } else {
-          this.userNew = this.$route.params.useruuid;
+          this.userNew = this.$route.query.id;
         }
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -402,7 +462,9 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
-          this.visitProfileUserData.winRate = Math.round(this.visitProfileUserData.winRate);
+          this.visitProfileUserData.winRate = Math.round(
+            this.visitProfileUserData.winRate
+          );
           this.myProfileImage = res.data.userImage;
 
           //  series
@@ -426,11 +488,6 @@ export default {
         }
       } catch (ex) {
         console.error(ex);
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000
-        });
       }
     }
   }

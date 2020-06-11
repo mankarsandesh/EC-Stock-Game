@@ -99,9 +99,10 @@
 <script>
 import apexchart from "vue-apexcharts";
 import { mapGetters } from "vuex";
-import date from "date-and-time";
 import secureStorage from "../../../../plugins/secure-storage";
 import config from "~/config/config.global";
+import utils from "~/mixin/utils";
+import date from "date-and-time";
 
 // set color win and lose color in bar chart
 let index = 0;
@@ -113,6 +114,7 @@ export default {
   components: {
     apexchart: apexchart
   },
+  mixins: [utils],
   created() {
     const now = date.format(new Date(), "YYYY-MM-DD");
     const lastWeek = date.addDays(new Date(), -7);
@@ -212,15 +214,10 @@ export default {
     }
   },
   methods: {
-    checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), "YYYY-MM-DD");
-      if (endDate > now || !(endDate >= startDate)) {
-        return false;
-      }
-      return true;
-    },
+    // Fetch Stock info
     async getStockAnalysis() {
       try {
+        // Check if the date is valid(function is written in util mixin)
         if (!this.checkValidDate(this.startDate, this.endDate)) {
           throw new Error("Please select a valid date");
         }
@@ -239,7 +236,7 @@ export default {
           }
         );
         if (res.status) {
-          if (res.data.length) {
+          if (res.data.length > 0) {
             this.stockAnalysis = res.data;
             let stocks = [];
             this.stockAnalysis.forEach(element => {
@@ -267,7 +264,7 @@ export default {
             this.error = "";
           } else {
             this.isDataValid = false;
-            this.error = this.$root.$t("profile.invalidDate");
+            this.error = this.$root.$t("profile.noData");
           }
         } else {
           throw new Error(this.$root.$t("error.general"));
@@ -278,18 +275,18 @@ export default {
           this.error = this.$root.$t("profile.invalidDate");
           this.isDataValid = false;
           this.$swal({
-          title: this.$root.$t("profile.invalidDate"),
-          type: "error",
-          timer: 1000,
-          showConfirmButton: false
-        });
+            title: this.$root.$t("profile.invalidDate"),
+            type: "error",
+            timer: 1000,
+            showConfirmButton: false
+          });
         } else {
           this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000,
-          showConfirmButton: false
-        });
+            title: ex.message,
+            type: "error",
+            timer: 1000,
+            showConfirmButton: false
+          });
         }
       }
     },
@@ -319,7 +316,7 @@ li {
   position: relative;
   float: right;
   margin-top: 15px;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .circle-color {

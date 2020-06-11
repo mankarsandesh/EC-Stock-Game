@@ -197,17 +197,11 @@
                           style="font-size: 40px; color: #ffd682;"
                         />
                       </span>
-                      <span
-                        class="number-box"
-                        v-if="visitProfileUserData.totalWinAmount"
-                      >
-                        ${{ visitProfileUserData.totalWinAmount | currency }}
+                      <span class="number-box">
+                        {{ checkCurrency(visitProfileUserData.currencyID)
+                        }}{{ visitProfileUserData.totalWinAmount | currency }}
                       </span>
-                      <span
-                        class="number-box"
-                        v-if="visitProfileUserData.totalWinAmount == 0"
-                        >${{ 0 }}</span
-                      >
+
                       <span class="des-title text-uppercase">{{
                         $t("leaderBoard.winningAmount")
                       }}</span>
@@ -234,16 +228,15 @@
               <v-flex v-if="messageError == true">
                 <div class="container-content">
                   <div class="box-error">
-                    <h1>Sorry, this content isn't avaiable right now</h1>
+                    <h1>{{ $t("leaderBoard.sorry")}}</h1>
                     <p>
-                      The Link you followed have expired, or the page may only
-                      be visiable to an audiencce you're not in.
+                      {{ $t("leaderBoard.theLink")}}
                     </p>
-                    <a @click="$router.push('/modern/desktop/userprofile/')"
-                      >Go back to the previous Page</a
+                    <a @click="$router.push('/modern/desktop/leaderboard/')"
+                      >{{ $t("leaderBoard.previousPage")}}</a
                     >
                     <a @click="$router.push('/modern/desktop/btc1/')"
-                      >EC Game Home Page</a
+                      >{{ $t("leaderBoard.homePage")}}</a
                     >
                   </div>
                 </div>
@@ -280,14 +273,70 @@ import followBet from "~/components/modern/follow/followBet";
 import date from "date-and-time";
 import secureStorage from "../../../../plugins/secure-storage";
 import countryFlag from "vue-country-flag";
+import utils from "~/mixin/utils";
 
 export default {
+  async watchQuery(newQuery) {
+    try {
+      let reqBody = {
+        portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
+        visitingUserUUID: newQuery.id ? newQuery.id : this.getUserUUID,
+        dateRangeFrom: this.startDate,
+        dateRangeTo: this.endDate,
+        version: config.version
+      };
+      let res = await this.$axios.$post(
+        config.getVisitUserProfile.url,
+        reqBody,
+        {
+          headers: config.header
+        }
+      );
+      if (res.status) {
+        this.messageError = false;
+        this.visitProfileUserData = res.data;
+        this.visitProfileUserData.winRate = Math.round(
+          this.visitProfileUserData.winRate
+        );
+        this.myProfileImage = res.data.userImage;
+
+        //  series
+        let series = [];
+        let xaxis = [];
+        res.data.activeTimeDateWise.forEach(element => {
+          series.push(element.activeTimeInMins);
+          xaxis.push(element.Date);
+        });
+        this.series = [
+          {
+            name: this.$root.$t("msg.onlineActiveTime"),
+            data: series
+          }
+        ];
+        this.chartOptions.xaxis.categories = xaxis;
+        this.componentKey++;
+      } else {
+        this.messageError = true;
+        throw new Error(this.$root.$t("error.general"));
+      }
+    } catch (ex) {
+      this.messageError = true;
+      console.error(ex);
+      this.$swal({
+        title: ex.message,
+        type: "error",
+        timer: 1000
+      });
+    }
+  },
   layout: "desktopModern",
   components: {
     countryFlag,
     followBet,
     VueApexCharts
   },
+  mixins: [utils],
   data() {
     return {
       myProfileImage: "",
@@ -323,6 +372,19 @@ export default {
             distributed: true
           }
         },
+        tooltip: {
+          y: {
+            formatter: (val, q) => {
+              return (
+                "<div>" +
+                "<span>" +
+                q.series[0][q.dataPointIndex] +
+                ` ${this.$root.$t("msg.minutes")}` +
+                " </span>"
+              );
+            }
+          }
+        },
         dataLabels: {
           enabled: false
         },
@@ -349,7 +411,8 @@ export default {
       "getPortalProviderUUID",
       "getUserUUID",
       "getUserInfo",
-      "getLocale"
+      "getLocale",
+      "getUserCurrency"
     ])
   },
   watch: {
@@ -426,7 +489,9 @@ export default {
         if (res.status) {
           this.messageError = false;
           this.visitProfileUserData = res.data;
-          this.visitProfileUserData.winRate = Math.round(this.visitProfileUserData.winRate);
+          this.visitProfileUserData.winRate = Math.round(
+            this.visitProfileUserData.winRate
+          );
           this.myProfileImage = res.data.userImage;
 
           //  series
@@ -445,7 +510,6 @@ export default {
           this.chartOptions.xaxis.categories = xaxis;
           this.componentKey++;
         } else {
-
           this.messageError = true;
           throw new Error(this.$root.$t("error.general"));
         }

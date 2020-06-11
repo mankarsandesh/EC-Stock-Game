@@ -7,10 +7,11 @@
             <div class="decorator_card decorator_card_green"></div>
             <span>{{ $t("msg.accountBalance") }}</span>
             <br />
-            <span class="amount" v-if="userData.balance != 0">
-              {{ userData.balance | currency }}
+            <span class="amount">
+              {{ checkCurrency(userData.currencyID)
+              }}{{ userData.balance | currency }}
             </span>
-            <span class="amount" v-if="userData.balance == 0">00.00</span>
+
             <!-- <span class="title_currentcy">USD</span> -->
           </div>
         </v-flex>
@@ -20,8 +21,10 @@
 
             <span>{{ $t("msg.rollingAmount") }}</span>
             <br />
-            <span class="amount">{{ userData.rollingAmount | currency }}</span>
-            <!-- <span class="title_currentcy">USD</span> -->
+            <span class="amount">
+              {{ checkCurrency(userData.currencyID)
+              }}{{ userData.rollingAmount | currency }}</span
+            >
           </div>
         </v-flex>
       </v-layout>
@@ -200,7 +203,7 @@
 import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../../plugins/secure-storage";
-
+import utils from "~/mixin/utils";
 export default {
   data() {
     return {
@@ -213,15 +216,22 @@ export default {
       country: ""
     };
   },
+  mixins: [utils],
   async mounted() {
     // alert(process.env.NODE_ENV)
     await this.setUserData();
     this.setInputData();
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
+    ...mapGetters([
+      "getUserInfo",
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getUserCurrency"
+    ]),
     userData() {
       let data = this.getUserInfo;
+      console.log(this.getUserInfo);
       return data;
     }
   },
@@ -246,6 +256,7 @@ export default {
       this.$forceUpdate();
       this.setInputData();
     },
+    // Update Profile Info
     async saveClick(e) {
       try {
         this.updating = true;

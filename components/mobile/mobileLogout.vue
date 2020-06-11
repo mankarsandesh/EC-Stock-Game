@@ -1,15 +1,14 @@
 <template>
   <div style="z-index:100">
     <template>
-      <nuxt-link :to="'/modern/userprofile/?id=' +getUserInfo.userUUID">
+      <nuxt-link to="/modern/userprofile/">
         <v-btn flat>
           <v-avatar size="35" mr-1>
             <img :src="imgProfile" alt />
           </v-avatar>
-          <div class="userLogoutMenu">
-            <span> {{ getUserName }} </span>
-            <span
-              >&nbsp; {{ $t("msg.acc") }}:
+          <div class="userLogoutMenu">           
+            <span > &nbsp;
+             {{ checkCurrency(getUserCurrency) }}
               <animated-number
                 :value="getUserBalance"
                 :formatValue="formatToPrice"
@@ -46,7 +45,7 @@ import { mapGetters } from "vuex";
 import profile from "~/pages/modern/desktop/profile";
 import config from "~/config/config.global";
 import secureStorage from "../../plugins/secure-storage";
-
+import utils from "~/mixin/utils";
 export default {
   components: {
     profile,
@@ -65,7 +64,8 @@ export default {
       "getUserName",
       "getBalance",
       "getUserInfo",
-      "getUserBalance"
+      "getUserBalance",
+      "getUserCurrency"
     ]),
     imgProfile() {
       return this.getUserInfo.profileImage === null
@@ -73,6 +73,7 @@ export default {
         : `${config.apiDomain}/` + this.getUserInfo.profileImage;
     }
   },
+  mixins: [utils],
   methods: {
     nFormatter(num, digits) {
       var si = [
@@ -117,8 +118,7 @@ export default {
       );
     },
     formatToPrice(value) {
-      // return `$ ${this.nFormatter(value, 2)}`;
-      return ` ${Number(value)
+      return `${Number(value)
         .toFixed(2)
         .toString()
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
@@ -168,10 +168,10 @@ export default {
 }
 
 .userLogoutMenu {
-  font-size: 12px;
   float: left;
   text-align: left;
-
+  color: #003f70;
+  font-size: 16px;
   display: inline-grid;
 }
 

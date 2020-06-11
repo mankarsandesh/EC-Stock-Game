@@ -1,12 +1,15 @@
 import secureStorage from '~/plugins/secure-storage'
-import { mapGetters, mapActions } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+const jsonResult = require('~/data/result') // define the json result for the compare 
 import Betting from "~/helpers/betting";
 
 export const itemBetting = {
     mounted() {
         this.findItemBetting()
     },
+
     computed: {
+        ...mapGetters(["selectBetting"]),
         /**
          *
          *
@@ -25,6 +28,9 @@ export const itemBetting = {
                 stockTime &&
                 stockTime.gameEndTimeCountDownInSec === 0
             ) {
+
+                this.clearDataMultiGameBetSend()
+
                 this.clearTempMultiGameBetData()
 
                 this.clearItemBetting()
@@ -47,6 +53,7 @@ export const itemBetting = {
 
                     if (stockTime &&
                         stockTime.gameEndTimeCountDownInSec === 60) {
+                        //  clear the select betting 
                         $(".closepopper").click()
                         this.clearTempMultiGameBetData()
                     }
@@ -67,9 +74,14 @@ export const itemBetting = {
 
                     if (stockTime &&
                         stockTime.gameEndTimeCountDownInSec === 20) {
+                        //  clear the select betting                         
+                        Betting.clearBettingSelect(this.selectBetting)
+                        this.CLEAR_SELECT_BETTING()
+                        this.setCollegeButtonNumberParent('Betting are not confirm have to clear') // make the button collage 
                         $(".closepopper").click()
                         this.clearTempMultiGameBetData()
                     }
+
 
                     return true
                 } else {
@@ -81,10 +93,13 @@ export const itemBetting = {
 
     },
     methods: {
+        ...mapMutations(["CLEAR_SELECT_BETTING"]),
         ...mapActions([
             "clearTempMultiGameBetData",
             "clearItemBetting",
-            "clearTempMultiGameBetData"
+            "clearTempMultiGameBetData",
+            "setCollegeButtonNumberParent",
+            "clearDataMultiGameBetSend"
         ]),
         /**
          *
@@ -95,38 +110,57 @@ export const itemBetting = {
             value == this.number ? (this.number = null) : (this.number = value);
         },
 
-        updateBet(items) {
-            const split = items.betRule.split("-");
-            // small button
-            $("#" + items.stock + items.betRule).addClass(items.betRule);
-            // parent the button
-            $("#" + items.stock + split[0]).addClass(split[0]);
-        },
-
-
-        findItemBetting() {
-
-            const itemBetting = secureStorage.getItem("itemBetting")
-
-
-            const array = JSON.parse(itemBetting)
-
-
-            if (array) {
-
-                array.map((item, index) => {
-
-                    if (!$("#" + item.id).hasClass(item.class + ' ' + item.id.split("-")[1])) {
-
-                        $("#" + item.id).addClass(item.class + ' ' + item.id.split("-")[1])
-
-                    }
-                })
-
+        /**
+         *
+         *
+         * @param {*} items
+         */
+        async updateBet(items) {
+            try {
+                // parent the button
+                if (!$("#" + items.id.split("-")[0]).hasClass(items.class)) {
+                    $("#" + items.id.split("-")[0]).addClass(items.class)
+                }
+                // small button
+                $("#" + items.id).addClass(items.betRule);
+            } catch (error) {
+                console.error(error)
             }
 
         },
 
+        /**
+         *
+         *
+         */
+        findItemBetting() {
+            const array = secureStorage.getItem("itemBetting")
+            jsonResult.resultBet.map((items, index) => {
+                if (array) {
+                    array.map((item, index) => {
+                        if (item.class === items.type) {
+                            // console.log("am here in the findItemBetting ", item)
+                            if (item.specificNumber) {
+                                //  find and make the parent color button
+                                if (!$("#" + item.id.split("-")[0]).hasClass(item.class)) {
+                                    $("#" + item.id.split("-")[0]).addClass(item.class)
+                                }
+                                //  find child button with mark color 
+                                if (!$("#" + item.id).hasClass(item.betRule)) {
+                                    $("#" + item.id).addClass(item.betRule)
+                                }
+                            }
+                        }
+                        if (!$("#" + item.id).hasClass(item.class + ' ' + item.id.split("-")[1])) {
+                            $("#" + item.id).addClass(item.class + ' ' + item.id.split("-")[1])
+
+                        }
+                    })
+
+                }
+
+            })
+        },
         /**
          *
          *
@@ -139,57 +173,49 @@ export const itemBetting = {
          * @param {*} stockName
          */
         async storemarkColor(ruleID, id, classe, specific, page, stockName) {
+
+            // ruleID 8
+            // id btc1firstdigit - 0
+            // classe firstdigit
+            // specific firstdigit - 0
+            // page fullscreen
+            // stockName btc1
+
             try {
-                // check the page only full screen can press the bet and color is come 
                 // check the valueAmout is  >= 100  
-
                 if (page === "fullscreen") {
-
                     if (this.getFooterBetAmount >= 100) {
-
-
                         this.$soundEffect("betting");
-
                         if (!$("#" + id).hasClass(classe)) {
-
                             $("#" + id).addClass(classe + ' ' + id.split("-")[1])
-
                         }
-
                         if (specific !== null) {
                             //  find the parent of small button in specific number
                             const parentBtn = "#" + id.split("-")[0]
-
                             if (!$(parentBtn).addClass(classe)) {
-
                                 $(parentBtn).addClass(classe)
-
+                            }
+                            if (!$("#" + id).hasClass(specific)) {
+                                $("#" + id).addClass(specific)
                             }
                         }
-
-                        // $("#" + ruleID).addClass('bg-btn-first');
                         if (this.checkFooterBetAmount) {
                             let betData = {
                                 id: id,
                                 class: classe,
-                                specificNumber: '',
+                                specificNumber: specific,
                                 gameUUID: this.getGameUUIDByStockName(this.stockID),
                                 ruleID: ruleID,
                                 betAmount: this.getFooterBetAmount,
                                 stockName: stockName,
                             };
                             this.setTempMultiGameBetData(betData);
-                            // this.pushDataMultiGameBet(betData);
-                            // console.warn(this.getMultiGameBet);
                         }
                     }
                 }
             } catch (error) {
-                console.log(error)
+                console.error(error)
             }
-
-
         },
-
     }
 }

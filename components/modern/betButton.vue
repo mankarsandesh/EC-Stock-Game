@@ -12,6 +12,7 @@
           <span class="btn-digit">{{ $t("gamemsg.firstdigits") }}</span>
         </v-btn>
       </span>
+      <!-- first digit bet button -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="data in firstDigit"
@@ -59,7 +60,7 @@
           ></showChipAmount>
           <div :id="'firstdigitWin-' + data.rule"></div>
 
-          <span class="big-digit">{{ $t("gamemsg." + data.rule) }}</span>
+          <span class="big-digit"> {{ $t("gamemsg." + data.rule) }}</span>
           <!-- <span class="small-digit">{{$t('gamemsg.firstdigit')}}</span> -->
           <!-- show payout on button if is fullscreen -->
           <span class="small-digit" v-show="isFullscreen">
@@ -70,7 +71,6 @@
 
       <span class="w10">
         <v-btn
-          :class="number === 'first' ? 'active-firstdigit' : null"
           class="align_button4 f-hover"
           :id="stockID + 'firstdigit'"
           @click="btnNumber('first')"
@@ -101,7 +101,7 @@
           <span class="btn-digit">{{ $t("gamemsg.lastdigits") }}</span>
         </v-btn>
       </span>
-
+      <!-- last digit bet button -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(data, index) in lastDigit"
@@ -164,7 +164,6 @@
 
       <span class="w10">
         <v-btn
-          :class="number === 'last' ? 'active-lasttdigit' : null"
           class="align_button4 betButtonGuide l-hover"
           :id="stockID + 'lastdigit'"
           @click="btnNumber('last')"
@@ -194,7 +193,7 @@
           <span class="btn-digit">{{ $t("gamemsg.bothdigits") }}</span>
         </v-btn>
       </span>
-
+      <!-- both digit -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(data, index) in bothDigit"
@@ -251,7 +250,6 @@
       </popper>
       <span class="w12">
         <v-btn
-          :class="number === 'both' ? 'active-bothdigit' : null"
           class="align_button4 b-hover"
           :id="stockID + 'bothdigit'"
           @click="btnNumber('both')"
@@ -282,7 +280,7 @@
           <span class="btn-digit">{{ $t("gamemsg.twodigits") }}</span>
         </v-btn>
       </span>
-
+      <!-- two digit -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(data, index) in twoDigit"
@@ -340,7 +338,6 @@
 
       <span class="w12">
         <v-btn
-          :class="number === 'two' ? 'active-twodigit' : null"
           class="align_button4 t-hover"
           :id="stockID + 'twodigit'"
           @click="btnNumber('two')"
@@ -365,6 +362,8 @@
 
     <!-- specific number bet button -->
     <v-layout row class="setlayuot">
+      
+      <!-- first digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
@@ -383,6 +382,7 @@
             :betId="'firstdigit-' + index"
             :betWin="'firstdigitWin-' + index"
             :payout="index + 30"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -393,7 +393,7 @@
               8 + index,
               stockID + 'firstdigit' + '-' + index,
               'firstdigit',
-              'specific',
+              'firstdigit' + '-' + index,
               getItemPage,
               stockID
             )
@@ -403,6 +403,7 @@
           >{{ index }}</v-btn
         >
       </popper>
+      <!-- last digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 10"
@@ -421,6 +422,7 @@
             :betId="'lastdigit-' + index"
             :betWin="'lastdigitWin-' + index"
             :payout="index + 40"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -431,7 +433,7 @@
               25 + index,
               stockID + 'lastdigit' + '-' + index,
               'lastdigit',
-              'specific',
+              'lastdigit' + '-' + index,
               getItemPage,
               stockID
             )
@@ -441,6 +443,7 @@
           >{{ index }}</v-btn
         >
       </popper>
+      <!-- both digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 19"
@@ -459,6 +462,7 @@
             :betId="'bothdigit-' + index"
             :betWin="'bothdigitWin-' + index"
             :payout="index + 50"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -469,16 +473,17 @@
               149 + index,
               stockID + 'bothdigit' + '-' + index,
               'bothdigit',
-              'specific',
+              'bothdigit' + '-' + index,
               getItemPage,
               stockID
             )
           "
           v-show="number == 'both'"
           class="btn-small b-hover"
-          >{{ index }}</v-btn
-        >
+          >{{ index }}
+        </v-btn>
       </popper>
+      <!-- two digit specificNumber -->
       <popper
         :disabled="checkFooterBetAmount"
         v-for="(n, index) in 100"
@@ -497,6 +502,7 @@
             :betId="index < 10 ? 'twodigit-0' + index : 'twodigit-' + index"
             :betWin="'twodigitWin-' + index"
             :payout="index + 69"
+            :specific="true"
           ></betModal>
         </div>
         <v-btn
@@ -513,15 +519,15 @@
                 ? stockID + 'twodigit-0' + index
                 : stockID + 'twodigit' + '-' + index,
               'twodigit',
-              'specific',
+              'twodigit' + '-' + index,
               getItemPage,
               stockID
             )
           "
           v-show="number == 'two'"
           class="btn-small t-hover"
-          >{{ index < 10 ? "0" + index : index }}</v-btn
-        >
+          >{{ index < 10 ? "0" + index : index }}
+        </v-btn>
       </popper>
     </v-layout>
   </div>
@@ -570,6 +576,9 @@ export default {
   watch: {
     getCollegeBtnNumber(val) {
       this.btnNumber(val);
+    },
+    selectBetting(val) {
+      // console.log("betting are not confirm ", val.length);
     }
   },
   components: {
@@ -588,7 +597,8 @@ export default {
       "getFooterBetAmount",
       "getAmountMultiGameBet",
       "getAmountBetSpecificNumber",
-      "getCollegeBtnNumber"
+      "getCollegeBtnNumber",
+      "selectBetting"
     ]),
     stockID() {
       if (this.stockName == null) {

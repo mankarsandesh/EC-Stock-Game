@@ -58,7 +58,7 @@
           :key="index"
         >
           <div>
-            <nuxt-link :to="'/modern/desktop/userprofile/?id=' +chat.userUUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' + chat.userUUID">
               <v-avatar :size="40">
                 <img :src="userImgProfile(chat.userImage)" alt="profile" />
               </v-avatar>
@@ -144,6 +144,20 @@
           <li
             @click="clickCatalogItem(item)"
             class="item-catalog"
+            :catalog="[
+              {
+                id: '1',
+                title: $t('invitation.winBets')
+              },
+              {
+                id: '2',
+                title: $t('invitation.totalFollower')
+              },
+              {
+                id: '3',
+                title: $t('invitation.userRank')
+              }
+            ]"
             v-for="(item, index) in catalog"
             :key="index"
           >
@@ -172,7 +186,7 @@
                 </span>
               </span>
               <span v-else class="text-uppercase">
-                select Category
+                {{ $t("invitation.selectCategory") }}
               </span>
             </span>
             <span style="position: relative;top: 3px;">
@@ -182,7 +196,7 @@
 
           <div @click="sendBtnClick()">
             <span class="text-uppercase">
-              send invitations
+              {{ $t("invitation.sendInvitation") }}
             </span>
             <v-icon size="18" color="#fff">fa-paper-plane</v-icon>
           </div>
@@ -258,7 +272,7 @@ export default {
   },
   mounted() {
     this.scrollDown();
-    // Users World List  Invitaion Socket
+    // Users World List  Invitation Socket
     this.listenForBroadcast(
       {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
@@ -274,7 +288,7 @@ export default {
         this.scrollDown();
       }
     );
-    // Users chanel List  Invitaion Socket
+    // Users chanel List  Invitation Socket
     this.startSocketChanel();
   },
   watch: {
@@ -285,7 +299,7 @@ export default {
       }
     },
     gameUUID(value) {
-      // Users chanel List  Invitaion Socket
+      // Users chanel List  Invitation Socket
       this.startSocketChanel();
     },
     stockName(value) {
@@ -435,7 +449,7 @@ export default {
           this.setSnackBarError(true);
         }
       } else {
-        this.errorMessage = "Please Select Category";
+        this.errorMessage = this.$root.$t("invitation.selectCategoryError");
       }
     },
     // Channel for gameUUDI
@@ -465,7 +479,7 @@ export default {
           this.setSnackBarError(true);
         }
       } else {
-        this.errorMessage = "Please Select Category";
+        this.errorMessage = this.$root.$t("invitation.selectCategoryError");
       }
     },
     // After more Invitation Come Scroll Down Automatically

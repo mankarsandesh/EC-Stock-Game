@@ -1,14 +1,14 @@
 <template>
   <div>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <currentbet :currentBets="currentBets"></currentbet>
+    <currentbet :currentBets="currentBets" :currency="getUserCurrency"></currentbet>
   </div>
 </template>
 
 <script>
 import currentbet from "~/components/mobile/currentbet";
 import config from "~/config/config.global";
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -25,7 +25,8 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }),//get 2 data from vuex first, in the computed
+   ...mapGetters(["getUserCurrency"]) 
   },
   mounted() {
     this.fetch();

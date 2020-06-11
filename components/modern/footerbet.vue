@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import chips from "~/data/chips";
 import config from "../../config/config.global";
 import Betting from "~/helpers/betting";
@@ -84,6 +84,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations(["CLEAR_SELECT_BETTING"]),
     ...mapActions([
       "setFooterBetAmount",
       "clearDataMultiGameBet",
@@ -101,12 +102,9 @@ export default {
         ) {
           this.isSending = true;
           this.texts = this.$root.$t("msg.sending");
-          this.confirmTempMultiGameBetData();
-          // setTimeout(() => {
           this.sendBetting();
           this.setFooterBetAmount(0);
           this.isSending = false;
-          // }, 1000);
           this.clearTempMultiGameBetData();
         } else {
           await Betting.cancelBettingClear(this.gettempMultiGameBetData);
@@ -132,6 +130,8 @@ export default {
         await this.clearTempMultiGameBetData();
 
         await this.clearBetValueFooterBet();
+
+        await this.CLEAR_SELECT_BETTING();
       } catch (error) {
         console.log(error);
       }

@@ -127,7 +127,7 @@ export default {
       this.editAbleIndex = -1;
       this.$swal({
         type: "success",
-        title: "Changes saved!",
+        title: this.$root.$t("msg.changesSaved"),
         showConfirmButton: true,
         timer: 1000
       });
@@ -147,14 +147,14 @@ export default {
             this.editAbleIndex = -1;
             this.$swal({
               type: "success",
-              title: "Changes saved!",
+              title: this.$root.$t("msg.changesSaved"),
               showConfirmButton: true,
               timer: 1000
             });
           } else {
             this.$swal({
               type: "error",
-              title: "Chip Amount already exist",
+              title: this.$root.$t("setting.chipExists"),
               showConfirmButton: true,
               timer: 1000
             });
@@ -162,7 +162,7 @@ export default {
         } else {
           this.$swal({
             type: "error",
-            title: "Chip amount should be greater than 100 and less than 10000",
+            title: this.$root.$t("setting.chipAmount"),
             showConfirmButton: true,
             timer: 1000
           });

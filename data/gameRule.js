@@ -200,7 +200,7 @@ const gamerule = {
       ruleid: 17,
       name: "FD_9"
     }
-  ],  
+  ],
   lastDigitNumber: [
     {
       ruleid: 25,
@@ -244,6 +244,10 @@ const gamerule = {
     }
   ],
   bothDigitNumber: [
+    {
+      ruleid: 149,
+      name: "BD_0"
+    },
     {
       ruleid: 150,
       name: "BD_1"

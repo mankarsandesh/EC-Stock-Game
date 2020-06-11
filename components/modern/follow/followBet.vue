@@ -93,7 +93,7 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red">{{ unfollowSign }}</span>
+                <span slot="append" color="red">{{ checkCurrency(this.getUserCurrency) }}</span>
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
@@ -143,10 +143,10 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState,mapGetters  } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
-
+import utils from "~/mixin/utils";
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
@@ -212,7 +212,7 @@ export default {
       hasError: false,
       hasSucess: false,
       FollwingError: false,
-      unfollowSign: "USD",
+      unfollowSign: "",
       unfollowValue: 100,
       selectAmount: false,
       selectTime: false,
@@ -270,12 +270,14 @@ export default {
       userId: 0
     };
   },
+  mixins:[utils],
   computed: {
     // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+    ...mapGetters(["getUserCurrency"])
   },
   methods: {
     userImgProfile(userImg) {
@@ -286,7 +288,7 @@ export default {
       this.$emit("followBetClose");
     },
     // Users Follow Bet Validation
-    async followThisUser(followerID, followMethod) {     
+    async followThisUser(followerID, followMethod) {
       // Check Empty Filed
       if (
         !this.selectedFollow &&
@@ -356,8 +358,7 @@ export default {
             );
           }
           break;
-      }      
-      console.log("checked");
+      }
       return this.follwingBetting(followerID, followMethod);
     },
     // Error Function Common
@@ -395,7 +396,6 @@ export default {
         var { data } = await this.$axios.post(config.followUser.url, reqBody, {
           headers: config.header
         });
-        console.log(data);
         if (data.code == 200) {
           this.$emit("followBetClose");
           this.$swal({
@@ -408,12 +408,23 @@ export default {
             timer: 1000
           });
         } else {
-          this.$swal({
-            type: "error",
-            title: data.message[0],
-            showConfirmButton: true,
-            timer: 1000
-          });
+          if (
+            data.message[0] == "You cant follow more than 10 users at a time."
+          ) {
+            this.$swal({
+              type: "error",
+              title: this.$root.$t("follow.maxFollow"),
+              showConfirmButton: true,
+              timer: 1000
+            });
+          } else {
+            this.$swal({
+              type: "error",
+              title: data.message[0],
+              showConfirmButton: true,
+              timer: 1000
+            });
+          }
         }
       } catch (error) {
         console.log(error);
@@ -434,7 +445,7 @@ export default {
     changeAmount(value) {
       if (value == "stopWin" || value == "stopLoss") {
         this.unfollowValue = 100;
-        this.unfollowSign = "USD";
+        this.unfollowSign = this.getUserCurrency;
       } else if (value == "stopTime") {
         this.unFollowValueMax = 10;
         this.unFollowValueMin = 1;

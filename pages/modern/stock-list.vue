@@ -1,22 +1,5 @@
 <template>
   <div>
-    <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <!-- search -->
-    <!-- <v-layout row wrap>
-      <v-flex xs12 sm12 class="d-flex" pl-2 pr-2>
-        <v-select
-          v-model="sortBy"
-          class="border-round"
-          hide-details
-          :items="[
-            { value: 'asc', text: $t('stockList.ascending') },
-            { value: 'desc', text: $t('stockList.descending') }
-          ]"
-          :placeholder="$t('msg.sortBy')"        
-        ></v-select>
-      </v-flex>
-    </v-layout> -->
-    <!-- end serach -->
     <v-layout row wrap mt-2>
       <v-flex xs12>
         <stocklist :sortBy="sortBy" />
@@ -39,11 +22,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "getStockList",
-      "getPreviousPrice",
-      "getPortalProviderUUID"
-    ]),
+    ...mapGetters(["getStockList"]),
     isHorizontal() {
       let w = window.innerWidth;
       let h = window.innerHeight;
