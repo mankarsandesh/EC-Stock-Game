@@ -8,7 +8,7 @@
         <div class="tutorial-action">
           <div style="text-align: end">
             <button id="open-Tutorial" hidden @click="openTutorial()">
-              openTutorial
+              hidden openTutorial
             </button>
             <v-btn @click="closeTutorial()" class="no-disable">
               <span>Skip</span>
@@ -360,10 +360,7 @@
               />
             </span>
           </h3>
-          <!-- <h3 class="balanceUser" v-if="getUserBalance == 0">
-            Acc :
-            <span class="userBlanace">0000.00</span>
-          </h3> -->
+
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
             <fullscreenchart v-show="!isHidden"></fullscreenchart>

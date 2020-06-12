@@ -54,7 +54,8 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }),
+    ...mapGetters(["getGameUUIDByStockName"]) //get 2 data from vuex first, in the computed
   },
   mounted() {
     this.stockResult();
@@ -69,6 +70,22 @@ export default {
       return d[1];
     },
     async stockResult() {
+      let _this = this;
+      function sortByOpenStock(a, b) {
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return -1;
+        }
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return 1;
+        }
+        return 0;
+      }
       try {
         var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
@@ -80,9 +97,9 @@ export default {
         if (data.status) {
           this.apiAttemptCount = 0;
           this.showStockresult = false;
-          this.getStockResult = data.data;
+          this.getStockResult = data.data.sort(sortByOpenStock);
         } else {
-          if(this.apiAttemptCount < 3) {
+          if (this.apiAttemptCount < 3) {
             this.apiAttemptCount++;
             this.stockResult();
           } else {

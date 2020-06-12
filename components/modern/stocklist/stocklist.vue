@@ -50,43 +50,29 @@ import { mapGetters, mapState } from "vuex";
 import config from "~/config/config.global";
 import stockListVue from "../../../pages/modern/desktop/stock-list.vue";
 export default {
-  props: {
-    sortBy: {
-      type: String
-    }
-  },
   computed: {
-    ...mapGetters(["getStockListPrice"]),
+    ...mapGetters(["getStockListPrice", "getGameUUIDByStockName"]),
     stockLists() {
-      function sortByAsc(a, b) {
-        if (a.stockName < b.stockName) {
+      let _this = this;
+      function sortByOpenStock(a, b) {
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
           return -1;
         }
-        if (a.stockName > b.stockName) {
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
           return 1;
-        }
-        return 0;
-      }
-      function sortByDesc(a, b) {
-        if (a.stockName < b.stockName) {
-          return 1;
-        }
-        if (a.stockName > b.stockName) {
-          return -1;
         }
         return 0;
       }
       let stockNewList = [];
-      if (this.sortBy === "asc") {
-        stockNewList.push(this.getStockListPrice[0].sort(sortByAsc));
-        stockNewList.push(this.getStockListPrice[1].sort(sortByAsc));
-      } else if (this.sortBy === "desc") {
-        stockNewList.push(this.getStockListPrice[0].sort(sortByDesc));
-        stockNewList.push(this.getStockListPrice[1].sort(sortByDesc));
-      } else {
-        stockNewList.push(this.getStockListPrice[0]);
-        stockNewList.push(this.getStockListPrice[1]);
-      }
+      stockNewList.push(this.getStockListPrice[0].sort(sortByOpenStock));
+      stockNewList.push(this.getStockListPrice[1].sort(sortByOpenStock));
+
       return stockNewList;
     }
   }

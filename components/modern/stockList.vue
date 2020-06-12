@@ -12,7 +12,7 @@
             <th>{{ $t("msg.status") }}</th>
             <th>{{ $t("msg.countDown") }}</th>
           </tr>
-          <tr v-for="(stock, index) in getStockListPrice[0]" :key="stock.stockUUID">
+          <tr v-for="(stock, index) in stockLists[0]" :key="stock.stockUUID">
             <td>
               <nuxt-link :to="'/modern/desktop/' + stock.stockName">
                 {{ $t(`stockName.${stock.stockName}`)
@@ -21,10 +21,10 @@
             </td>
             <td
               v-html="
-                getStockListPrice.length > 1
+                stockLists.length > 1
                   ? $options.filters.livePriceColor(
                       stock.stockPrice,
-                      getStockListPrice[1][index].stockPrice
+                      stockLists[1][index].stockPrice
                     )
                   : stock.stockPrice
               "
@@ -34,23 +34,24 @@
               <span
                 v-if="stock.stockStatus === 'Closed'"
                 :style="{ color: 'red' }"
-              >{{$t("msg.closed")}}</span>
+                >{{ $t("msg.closed") }}</span
+              >
               <span
                 v-if="
                   stock.stockStatus !== 'Closed' && getStockListCountdown[index]
                 "
               >
                 {{
-                getStockListCountdown[index].gameEndTimeCountDownInSec
-                | betstatus(getStockLoop(stock.stockName))
+                  getStockListCountdown[index].gameEndTimeCountDownInSec
+                    | betstatus(getStockLoop(stock.stockName))
                 }}
               </span>
             </td>
             <td>
               <span v-if="getStockListCountdown[index]">
                 {{
-                getStockListCountdown[index].gameEndTimeCountDownInSec
-                | lotterydraw(getStockLoop(stock.stockName))
+                  getStockListCountdown[index].gameEndTimeCountDownInSec
+                    | lotterydraw(getStockLoop(stock.stockName))
                 }}
               </span>
             </td>
@@ -67,8 +68,34 @@ export default {
     ...mapGetters([
       "getStockLoop",
       "getStockListPrice",
-      "getStockListCountdown"
-    ])
+      "getStockListCountdown",
+      "getGameUUIDByStockName"
+    ]),
+    stockLists() {
+      if (this.getStockListPrice.length <= 0) {
+        return this.getStockListPrice;
+      }
+      let _this = this;
+      function sortByOpenStock(a, b) {
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return -1;
+        }
+        if (
+          (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+          (_this.getGameUUIDByStockName(b.stockName) === undefined)
+        ) {
+          return 1;
+        }
+        return 0;
+      }
+      return [
+        this.getStockListPrice[0].sort(sortByOpenStock),
+        this.getStockListPrice[1].sort(sortByOpenStock)
+      ];
+    }
   }
 };
 </script>

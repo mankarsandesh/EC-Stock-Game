@@ -33,8 +33,7 @@ export default {
   middleware: ["checkAuth"],
   data() {
     return {
-      stockName: config.homePageStockName,
-      linkto: ""
+      stockName: config.homePageStockName
     };
   },
   mounted() {
@@ -49,17 +48,6 @@ export default {
       this.getProgress();
     }
   },
-
-  watch: {
-    "$screen.width"() {
-      if (this.$screen.width <= 1204) {
-        this.linkto = "modern";
-      } else {
-        this.linkto = "/modern/desktop/" + this.stockName;
-      }
-    }
-  },
-
   computed: {
     ...mapGetters(["getLoginError"])
   },

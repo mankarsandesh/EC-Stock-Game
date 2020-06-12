@@ -4,9 +4,7 @@
     <v-container>
       <v-layout row wrap mt-3 md6 align-center justify-center>
         <v-flex md10>
-          <v-flex md6 class="d-flex">
-        
-          </v-flex>
+          <v-flex md6 class="d-flex"> </v-flex>
         </v-flex>
       </v-layout>
       <v-layout row wrap align-center justify-center>
@@ -27,9 +25,7 @@ export default {
     breadcrumbs
   },
   data() {
-    return {
-    
-    };
+    return {};
   }
 };
 </script>

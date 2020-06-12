@@ -242,7 +242,6 @@ export default {
           this.$StoreBettingonConfirm(itemBetting);
           this.setUserData();
           this.closePopper();
-
           let OnGoingdata = {
             betUUID: res.data[0].betUUID,
             gameUUID: res.data[0].gameUUID,
@@ -251,7 +250,7 @@ export default {
             betDate: res.data[0].createdDate,
             betTime: res.data[0].createdTime,
             betAmount: res.data[0].betAmount,
-            stockName: this.$props.stockName
+            stockName: this.stockName
           };
 
           this.pushDataOnGoingBet(OnGoingdata);

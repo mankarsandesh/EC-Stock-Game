@@ -160,11 +160,11 @@
           <div
             class="trendmap-container"
             v-for="(trendType, index) in trendTypes"
-            :key="index"
+            :key="trendType"
           >
             <div id="trendmapGuidelines">
               <tableTrendMap
-                :index="index"
+                :index="trendType"
                 :dataArray="getRoadMap"
                 :isShowMultigameButton="index"
               >
@@ -438,11 +438,9 @@ export default {
     },
     // Remove trendMap
     removeTrendMap(index) {
-      let indexValue = this.trendTypes[index];
-      let newData = this.trendTypes.filter(data => {
-        return data != indexValue;
-      });
-      this.trendTypes = newData;
+      if (index > -1) {
+        this.trendTypes.splice(index, 1);
+      }
     },
     loaded() {
       this.isLoad = true;

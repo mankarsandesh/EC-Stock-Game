@@ -1,5 +1,5 @@
 const stock = {
-  stockList: [   
+  stockList: [
     {
       stockName: "btc1",
       stockUUID: "88778f4f-610b-4ec3-937d-65ef7bf24af5",
