@@ -115,7 +115,8 @@
           <div class="rows">
             <h3 class="header">{{ $t("leaderBoard.winningAmount") }}</h3>
             <h4 style="color:#0b2a68;" class="titleText">
-              {{ checkCurrency(data.currencyID) }}{{ Math.round(data.totalWinAmount, 1) | currency }}
+              {{ checkCurrency(data.currencyID)
+              }}{{ Math.round(data.totalWinAmount, 1) | currency }}
             </h4>
           </div>
           <div
@@ -324,8 +325,19 @@ export default {
             headers: config.header
           }
         );
-        this.topPlayerData = data.data;
-        this.loadingImage = false;
+
+        if (data.code == 200) {
+          this.topPlayerData = data.data;
+          this.loadingImage = false;
+        } else if (data.code == 202) {
+          this.loadingImage = false;
+          this.$swal({
+          type: "error",
+          title: "Session expired! Please Login Again.",
+          showConfirmButton: true,
+          timer: 1000
+        });
+        }
       } catch (error) {
         console.log(error);
       }

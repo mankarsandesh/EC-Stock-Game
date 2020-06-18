@@ -242,8 +242,7 @@ export default {
     async fetchNotification() {
       try {
         var reqBody = {
-          portalProviderUUID:
-            this.getPortalProviderUUID || Cookies.getJSON("portalProviderUUID"),
+          portalProviderUUID:this.getPortalProviderUUID || Cookies.getJSON("portalProviderUUID"),
           userUUID: this.getUserUUID || Cookies.getJSON("userUUID"),
           version: config.version
         };
