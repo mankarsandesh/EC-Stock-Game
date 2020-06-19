@@ -877,7 +877,7 @@ export default {
 
                   this.$refs.tablebUMLTwo.children[i].children[
                     j
-                  ].textContent = this.$root.$t("gamemsg.U");
+                  ].textContent = this.$root.$t("gamemsg.H");
                 } else if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
                     .textContent === "1"

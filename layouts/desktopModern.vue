@@ -181,10 +181,36 @@ export default {
     // console.log("crearted");
   },
   mounted() {
+    // Every 5 MIn API Call For User activity
+    window.setInterval(() => {
+      this.userActivity();
+    }, config.userActivityLog.timer);
+
     // fetch Notification from API
     this.fetchNotification();
   },
   methods: {
+    // User Activity Call every 5 MIn
+    async userActivity() {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        const { data } = await this.$axios.post(
+          config.userActivityLog.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+        console.log("User Activity");
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    // Close Notification
     closeNotification() {
       this.isShowNotification = false;
     },
@@ -216,8 +242,7 @@ export default {
     async fetchNotification() {
       try {
         var reqBody = {
-          portalProviderUUID:
-            this.getPortalProviderUUID || Cookies.getJSON("portalProviderUUID"),
+          portalProviderUUID:this.getPortalProviderUUID || Cookies.getJSON("portalProviderUUID"),
           userUUID: this.getUserUUID || Cookies.getJSON("userUUID"),
           version: config.version
         };

@@ -115,6 +115,7 @@ export default {
   computed: {
     ...mapGetters([
       "getPortalProviderUUID",
+      "getUserUUID",
       "getStockLivePrice",
       "getStockLiveTime",
       "getStockUUIDByStockName"
@@ -237,6 +238,7 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
           limit: 50,
           stockUUID: [stockUUID],
           version: config.version
