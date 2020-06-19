@@ -11,6 +11,7 @@ export default async ({ store, $axios }) => {
   try {
     var reqBody = {
       portalProviderUUID: store.getters.getPortalProviderUUID,
+      userUUID : store.getters.getUserUUID,
       version: config.version
     };
     var { data } = await $axios.post(
@@ -52,8 +53,7 @@ export default async ({ store, $axios }) => {
       eventName: "countdown"
     },
     ({ data }) => {
-      try {
-        var logData = data;
+      try {      
         if (data.status) {
           store.dispatch("setStockCountdown", data.data.timeData);
         } else {
@@ -71,9 +71,8 @@ export default async ({ store, $axios }) => {
       eventName: "getActiveGamesByCategory"
     },
     ({ data }) => {
-      try {
-        var logData = data.res;
-        if (data.res.status) {
+      try {      
+        if (data.res.status) {         
           store.dispatch("setStockCategory", data.res.data);
         } else {
           throw new Error(window.$nuxt.$root.$t("error.general"));
@@ -90,8 +89,7 @@ export default async ({ store, $axios }) => {
       eventName: "stockListOnly"
     },
     ({ data }) => {
-      try {
-        var logData = data.data;
+      try {       
         if (data.status) {
           store.dispatch("setStockPrice", data.data.stockData);
         } else {

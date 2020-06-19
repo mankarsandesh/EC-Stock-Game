@@ -407,6 +407,7 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID : this.getUserUUID,
           version: config.version
         };
         var res = await this.$axios.$post(config.getStock.url, reqBody, {
@@ -460,6 +461,7 @@ export default {
       "getStockUUIDByStockName",
       "getRoadMap",
       "getPortalProviderUUID",
+      "getUserUUID",
       "getLastDraw",
       "getmultiGameBet"
     ])

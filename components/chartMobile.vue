@@ -81,7 +81,7 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getStockUUIDByStockName"]),
+    ...mapGetters(["getPortalProviderUUID","getUserUUID", "getStockUUIDByStockName"]),
     chartOptions() {
       let newTime = [];
       this.chartData.forEach(element => {
@@ -192,6 +192,7 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
           limit: 50,
           stockUUID: [stockUUID],
           version: config.version

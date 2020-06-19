@@ -44,12 +44,12 @@ export default {
   methods: {
     async fetch() {
       try {
-        var reqBody = {
+        let reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(
+        let res = await this.$axios.$post(
           config.getUserNotification.url,
           reqBody,
           {
@@ -57,7 +57,7 @@ export default {
           }
         );
         if (res.status) {
-          this.notificationData = res.data;
+          this.notificationData = res.data.reverse();
         } else {
           throw new Error(this.$root.$t("error.general"));
         }

@@ -48,7 +48,6 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import config from "~/config/config.global";
-import stockListVue from "../../../pages/modern/desktop/stock-list.vue";
 export default {
   props: {
     sortBy: {

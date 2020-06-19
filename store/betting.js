@@ -143,55 +143,55 @@ const getters = {
 };
 const mutations = {
   SET_MULTI_GAME_FOOTER_BET_AMOUNT(state, payload) {
-      state.multiGameFooterBetAmount = payload;
+    state.multiGameFooterBetAmount = payload;
   },
   CLEAR_ITEMS_BETTING(state) {
-      state.getItemsBetting = [];
+    state.getItemsBetting = [];
   },
   SET_ITEMS_BETTING(state, payload) {
-      state.getItemsBetting.push(payload);
-      secureStorage.setItem("itemBetting", state.getItemsBetting)
+    state.getItemsBetting.push(payload);
+    secureStorage.setItem("itemBetting", state.getItemsBetting);
   },
   SET_COLLEGE_BUTTON_NUMBER(state, payload) {
-      state.collegeBtnNumber = payload;
+    state.collegeBtnNumber = payload;
   },
   PUSH_DATA_MULTI_GAME_BET(state, payload) {
-      state.chipConfirms.push(payload);
-      state.multiGameBetSend.push(payload);
+    state.chipConfirms.push(payload);
+    state.multiGameBetSend.push(payload);
   },
   CLEAR_DATA_MULTI_GAME_BET_SEND(state) {
-      // console.log('CLEAR_DATA_MULTI_GAME_BET_SEND')
-      state.multiGameBetSend = [];
+    // console.log('CLEAR_DATA_MULTI_GAME_BET_SEND')
+    state.multiGameBetSend = [];
   },
   CLEAR_DATA_MULTI_GAME_BET(state) {
-      state.chipConfirms = [];
-      state.onGoingBet = [];
+    state.chipConfirms = [];
+    state.onGoingBet = [];
   },
   SET_FOOTER_BET_AMOUNT(state, payload) {
-      if (state.footerBetAmount + parseInt(payload) > 10000) {
-          state.footerBetAmount = parseInt(payload);
-      } else {
-          state.footerBetAmount += parseInt(payload);
-      }
+    if (state.footerBetAmount + parseInt(payload) > 10000) {
+      state.footerBetAmount = parseInt(payload);
+    } else {
+      state.footerBetAmount += parseInt(payload);
+    }
   },
   PUSH_DATA_ON_GOING_BET(state, payload) {
-      state.onGoingBet.splice(0, 0, payload);
+    state.onGoingBet.splice(0, 0, payload);
   },
   SET_IS_SEND_BETTING(state, value) {
-      state.isSendBetting = value;
+    state.isSendBetting = value;
   },
 
   SET_TEMP_MULTI_GAME_BET_DATA(state, payload) {
-      state.selectBetting.push(payload);
-      state.tempMultiGameBetData.push(payload);
+    state.selectBetting.push(payload);
+    state.tempMultiGameBetData.push(payload);
   },
 
   CONFIRM_TEMP_MULTI_GAME_BET_DATA(state) {
-      state.multiGameBetSend.push(...state.selectBetting);
-      state.chipConfirms.push(...state.selectBetting);
-      secureStorage.setItem("itemBetting", state.multiGameBetSend)
-      // console.log('itemBetting', state.multiGameBetSend)
-      state.selectBetting = [];
+    state.multiGameBetSend.push(...state.selectBetting);
+    state.chipConfirms.push(...state.selectBetting);
+    secureStorage.setItem("itemBetting", state.multiGameBetSend);
+    // console.log('itemBetting', state.multiGameBetSend)
+    state.selectBetting = [];
   },
 
   CLEAR_TEMP_MULTI_GAME_BET_DATA(state) {
@@ -292,6 +292,8 @@ const actions = {
         let i = 0;
         let len = res.data.length;
         for (i; i < len; i++) {
+          res.data[i].betDate =
+            res.data[i].createdDate + " " + res.data[i].createdTime;
           context.commit("PUSH_DATA_ON_GOING_BET", res.data[i]);
         }
         // check betting false or true

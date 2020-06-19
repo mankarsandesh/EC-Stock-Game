@@ -144,6 +144,7 @@ export default {
       "getGameUUIDByStockName",
       "getStockUUIDByStockName",
       "getPortalProviderUUID",
+      "getUserUUID",
       "getTimerByStockName",
       "getStockLoop",
       "getAmountBettingByStockId"
@@ -154,6 +155,7 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID : this.getUserUUID,
           limit: 50,
           stockUUID: [stockUUID],
           version: config.version

@@ -78,6 +78,10 @@ const config = {
   userLogout: {
     url: `${process.env.BASE_URL}/appUsersLogout`
   },
+  userActivityLog :{
+    url: `${process.env.BASE_URL}/userActivityLog`,
+    timer : process.env.USER_ACTIVITY_TIME
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"

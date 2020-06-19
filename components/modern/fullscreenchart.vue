@@ -160,6 +160,7 @@ export default {
     ...mapGetters([
       "getGameUUIDByStockName",
       "getPortalProviderUUID",
+      "getUserUUID",
       "getStockUUIDByStockName"
     ])
   },
@@ -193,7 +194,7 @@ export default {
         .on("pusher:subscription_succeeded", async member => {
           try {
             var reqBody = {
-              portalProviderUUID: this.getPortalProviderUUID,
+              portalProviderUUID: this.getPortalProviderUUID,            
               gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
               version: 1
             };
