@@ -41,6 +41,7 @@ const actions = {
     try {
       var reqBody = {
         portalProviderUUID: context.rootState.provider.portalProviderUUID,
+        userUUID : context.rootState.provider.userUUID,
         version: config.version
       };
       var res = await this.$axios.$post(config.getStock.url, reqBody, {

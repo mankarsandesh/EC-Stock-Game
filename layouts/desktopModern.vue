@@ -87,12 +87,12 @@
         :data="notificationList"
         v-if="isShowNotification"
       ></notification>
-      <chatBox
+      <invitationBox
         :gameUUID="getGameUUIDByStockName($route.params.id)"
         :stockName="$route.params.id"
         :pathName="$route.name"
         :key="getLocale"
-      ></chatBox>
+      ></invitationBox>
     </v-app>
   </div>
 </template>
@@ -103,10 +103,9 @@ import AnimatedNumber from "animated-number-vue";
 import menu from "~/data/menudesktop";
 import countryFlag from "vue-country-flag";
 import languageDialog from "~/components/LanguageDialog";
-import invitation from "~/components/invitation";
 import notification from "~/components/notification";
 import userMenu from "~/components/userMenu";
-import chatBox from "~/components/modern/chatBox";
+import invitationBox from "~/components/modern/invitationBox";
 import config from "~/config/config.global";
 import secureStorage from "../plugins/secure-storage";
 import DesktopTutorial from "~/components/modern/tutorial/desktopTutorial";
@@ -116,12 +115,11 @@ export default {
   mixins: [clickaway],
   components: {
     DesktopTutorial,
-    invitation,
     countryFlag,
     languageDialog,
     userMenu,
     AnimatedNumber,
-    chatBox,
+    invitationBox,
     notification
   },
   data() {
@@ -183,10 +181,36 @@ export default {
     // console.log("crearted");
   },
   mounted() {
+    // Every 5 MIn API Call For User activity
+    window.setInterval(() => {
+      this.userActivity();
+    }, config.userActivityLog.timer);
+
     // fetch Notification from API
     this.fetchNotification();
   },
   methods: {
+    // User Activity Call every 5 MIn
+    async userActivity() {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        const { data } = await this.$axios.post(
+          config.userActivityLog.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+        console.log("User Activity");
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    // Close Notification
     closeNotification() {
       this.isShowNotification = false;
     },
@@ -218,8 +242,7 @@ export default {
     async fetchNotification() {
       try {
         var reqBody = {
-          portalProviderUUID:
-            this.getPortalProviderUUID || Cookies.getJSON("portalProviderUUID"),
+          portalProviderUUID:this.getPortalProviderUUID || Cookies.getJSON("portalProviderUUID"),
           userUUID: this.getUserUUID || Cookies.getJSON("userUUID"),
           version: config.version
         };

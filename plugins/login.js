@@ -150,7 +150,6 @@ export default async context => {
     window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
   }
 };
-
 /**
  * Validate Login values in URL
  *

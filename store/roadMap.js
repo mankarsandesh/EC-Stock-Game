@@ -26,6 +26,7 @@ const actions = {
     try {
       var reqBody = {
         portalProviderUUID: context.rootGetters.getPortalProviderUUID,
+        userUUID: context.rootGetters.getUserUUID,
         limit: 50,
         stockUUID: [stockUUID],
         version: config.version
