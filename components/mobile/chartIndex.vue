@@ -31,7 +31,11 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID","getStockUUIDByStockName"]),
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getStockUUIDByStockName"
+    ]),
     series() {
       let newData = [];
       this.chartData.forEach(element => {
@@ -176,19 +180,16 @@ export default {
     },
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            userUUID : this.getUserUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        const res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });
         if (res.status) {
           this.apiAttemptCount = 0;
           let readyData = res.data[0].roadMap.reverse();
