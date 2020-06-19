@@ -2,7 +2,7 @@
   <v-container fluid grid-list-lg fill-height class="image-bg">
     <v-fade-transition mode="out-in">
       <v-layout align-center column>
-        <v-img src="/bg/group33.png" width="500" height="100" />
+        <v-img src="/logo.png" width="500" height="100" />
         <div class="errorBox" v-if="getLoginError.length > 0">
           <h4 v-for="(data, index) in getLoginError" :key="index">
             {{ data }}
