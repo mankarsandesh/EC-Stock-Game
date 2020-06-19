@@ -9,10 +9,14 @@
               class="text-white firstDigit"
               color="#003e70"
               @click="changeChartType('firstDigit')"
-            >{{ $t("gamemsg.firstdigits") }}</v-btn>
+              >{{ $t("gamemsg.firstdigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="activeType == 'firstDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'firstDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9 lg8>
@@ -21,10 +25,14 @@
               class="text-white lastDigit"
               color="#003e70"
               @click="changeChartType('lastDigit')"
-            >{{ $t("gamemsg.lastdigits") }}</v-btn>
+              >{{ $t("gamemsg.lastdigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="activeType == 'lastDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'lastDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9 lg8>
@@ -33,11 +41,15 @@
               class="text-white bothDigit"
               color="#003e70"
               @click="changeChartType('bothDigit')"
-            >{{ $t("gamemsg.bothdigits") }}</v-btn>
+              >{{ $t("gamemsg.bothdigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
 
-          <v-flex class="triangle-right" v-show="activeType == 'bothDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'bothDigit'"
+          ></v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs9 lg8>
@@ -46,10 +58,14 @@
               class="text-white twoDigit"
               color="#003e70"
               @click="changeChartType('twoDigit')"
-            >{{ $t("gamemsg.twodigits") }}</v-btn>
+              >{{ $t("gamemsg.twodigits") }}</v-btn
+            >
           </v-flex>
           <v-spacer></v-spacer>
-          <v-flex class="triangle-right" v-show="activeType == 'twoDigit'"></v-flex>
+          <v-flex
+            class="triangle-right"
+            v-show="activeType == 'twoDigit'"
+          ></v-flex>
         </v-layout>
       </v-flex>
       <v-flex xs9 md10 lg11 xl11>

@@ -204,12 +204,12 @@ export default {
     ...mapActions(["addStockMultiGame", "setGameId", "setStockCategory"]),
     async getActiveGamesByCategory() {
       try {
-        var reqBody = {
+        let reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID : this.getUserUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(
+        let res = await this.$axios.$post(
           config.getActiveGamesByCategory.url,
           reqBody,
           {

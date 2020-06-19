@@ -8,7 +8,7 @@
         <div class="tutorial-action">
           <div style="text-align: end">
             <button id="open-Tutorial" hidden @click="openTutorial()">
-              openTutorial
+               openTutorial
             </button>
             <v-btn @click="closeTutorial()" class="no-disable">
               <span>Skip</span>
