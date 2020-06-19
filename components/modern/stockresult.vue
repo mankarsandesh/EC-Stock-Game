@@ -72,6 +72,7 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
           version: config.version
         };
         var { data } = await this.$axios.post(config.getAllStock.url, reqBody, {

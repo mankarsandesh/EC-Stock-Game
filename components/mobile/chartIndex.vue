@@ -31,7 +31,7 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getStockUUIDByStockName"]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID","getStockUUIDByStockName"]),
     series() {
       let newData = [];
       this.chartData.forEach(element => {
@@ -180,6 +180,7 @@ export default {
           config.getRoadMap.url,
           {
             portalProviderUUID: this.getPortalProviderUUID,
+            userUUID : this.getUserUUID,
             limit: 50,
             stockUUID: [stockUUID],
             version: config.version

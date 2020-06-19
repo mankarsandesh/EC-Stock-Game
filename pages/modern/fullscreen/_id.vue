@@ -594,6 +594,7 @@ export default {
       "getTimerByStockName",
       "getStockUUIDByStockName",
       "getPortalProviderUUID",
+      "getUserUUID",
       "getUserInfo",
       "getLastDraw",
       "getRoadMap",
@@ -747,13 +748,14 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
+    // Full Screen LIve Bet data Count
     liveBetCountData({ channelName, eventName }, callback) {
       window.Echo.channel(channelName)
         .listen(eventName, callback)
         .on("pusher:subscription_succeeded", async member => {
           try {
             var reqBody = {
-              portalProviderUUID: this.getPortalProviderUUID,
+              portalProviderUUID: this.getPortalProviderUUID,             
               gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
               version: config.version
             };
@@ -761,7 +763,7 @@ export default {
               config.liveCountBetData.url,
               reqBody,
               { headers: config.header }
-            );
+            );         
             if (data.status) {
               this.dataliveBetAll = data.data;
             } else {
@@ -770,6 +772,7 @@ export default {
           } catch (ex) {}
         });
     },
+    // Full Lscreen Live Users Data
     connectLiveBetCountDataSocket() {
       this.liveBetCountData(
         {
@@ -779,8 +782,7 @@ export default {
           eventName: "LiveTotalBetData"
         },
         ({ data }) => {
-          try {
-            var logData = data;
+          try {           
             if (data.status) {
               this.dataliveBetAll = data.data;
             } else {
@@ -795,6 +797,7 @@ export default {
     async getActiveGamesByCategory() {
       var reqBody = {
         portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
         version: config.version
       };
       try {

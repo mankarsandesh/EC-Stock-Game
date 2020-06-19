@@ -198,7 +198,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getStockCategory", "getPortalProviderUUID"])
+    ...mapGetters(["getStockCategory", "getPortalProviderUUID","getUserUUID"])
   },
   methods: {
     ...mapActions(["addStockMultiGame", "setGameId", "setStockCategory"]),
@@ -206,6 +206,7 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID : this.getUserUUID,
           version: config.version
         };
         var res = await this.$axios.$post(
