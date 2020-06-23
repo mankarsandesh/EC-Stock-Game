@@ -6,8 +6,10 @@ import Cookies from "./js-cookie";
 export default async context => {
   try {
     // document.referrer.match(/:\/\/(.[^/]+)/)[1];
+    // http://192.168.1.131:8000/?radio-73=Hulk&serverLink=http%3A%2F%2F159.138.129.40%2F&portalProviderUUID=ef60e64b-dc17-4ff1-9f22-a177c6f1c204&portalProviderUserID=sandesh12&balance=300
     // Set Initial storage coins
     initLocalStorageCoin(context.store);
+    console.log(performance.navigation.type);
     if (performance.navigation.type == 1) {
       // If User reloads the page
       if (
@@ -43,14 +45,15 @@ export default async context => {
         throw new Error("Unauthorized access. Please login again");
       }
     } else if (
-      performance.navigation.type == 0 &&
-      document.referrer.match(/:\/\/(.[^/]+)/)[1] == window.location.host
+      performance.navigation.type == 0 
     ) {
-      // If user opens a new tab by right click
-      if (
+      console.log("Yesssssss");
+      // If user opens a new tab by right click  
+      if (  Cookies.getJSON("login") && 
         Cookies.getJSON("login").userUUID &&
         Cookies.getJSON("login").portalProviderUUID
       ) {
+      
         // If the user has a valid session
         // Get vuex state if it exists in the local storage
         await window.onNuxtReady(() => {
@@ -77,10 +80,11 @@ export default async context => {
           Cookies.getJSON("login").portalProviderUUID
         );
       } else {
+        console.log("User Login");
         // Invalid user session
-        throw new Error("Unauthorized access. Please login again");
-      }
-    } else {
+        // throw new Error("Unauthorized access. Please login again");
+    //   }
+    // } else {
       // If the user gets redirected from portal provider page
 
       // Clear localStorage
@@ -118,6 +122,7 @@ export default async context => {
         balance,
         context.store
       );
+      console.log("Validation");
       // Check User Login
       await checkUserLogin(
         portalProviderUUID,
@@ -135,19 +140,19 @@ export default async context => {
       // Set portal provider url
       secureStorage.setItem(
         "referrerUrl",
-        document.referrer.match(/:\/\/(.[^/]+)/)[1]
+        "159.138.130.64/login/"
       );
 
-      // When the cookie expires redirect user to portal provider's login page
-      setTimeout(() => {
-        window.location.replace(
-          `http://${secureStorage.getItem("referrerUrl")}/`
-        );
-      }, 24 * 60 * 60 * 1000);
+      // // When the cookie expires redirect user to portal provider's login page
+      // setTimeout(() => {
+      //   window.location.replace(
+      //     `http://${secureStorage.getItem("referrerUrl")}/`
+      //   );
+      // }, 24 * 60 * 60 * 1000);
     }
+  }
   } catch (ex) {
     console.log(ex);
-    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
   }
 };
 /**
@@ -211,14 +216,14 @@ const checkUserLogin = async (
         portalProviderUserID: portalProviderUserId,
         version: config.version,
         ip: "225.457.454.123",
-        domain: document.referrer.match(/:\/\/(.[^/]+)/)[1],
+        domain: "localhost",
         balance: balance,
         currencyID : defaultCurrency
       };
       var { data } = await axios.post(config.userLoginAuth.url, reqBody, {
         headers: config.header
       });
-     
+     console.log(data);
      
       if (data.status) {
         var userUUID = data.data.userUUID;

@@ -5,7 +5,7 @@ export default function({ query, store, redirect }) {
   if (referrerURL == undefined) {
     secureStorage.setItem(
       "referrerURL",
-      document.referrer.match(/:\/\/(.[^/]+)/)[1]
+      "159.138.130.64/login"
     );
   }
 }
