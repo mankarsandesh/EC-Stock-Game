@@ -42,9 +42,9 @@ export default {
       // Set referrer Url
       secureStorage.setItem(
         "referrerUrl",
-        document.referrer.match(/:\/\/(.[^/]+)/)[1]
+        "http://159.138.130.64/login/"
       );
-      this.setReferrer(document.referrer.match(/:\/\/(.[^/]+)/)[1]);
+      this.setReferrer("http://159.138.130.64/login/");
       this.getProgress();
     }
   },
