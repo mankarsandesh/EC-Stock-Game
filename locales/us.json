@@ -438,7 +438,10 @@
     "selectAmount":"select amount",
     "betMultiGame":"You can select amount and Bet Multi Game Rule",
     "liveBet":"live bet",
-    "wholeBets":"You can see the whole bets for this game"
+    "wholeBets":"You can see the whole bets for this game",
+    "skip" : "Skip",
+    "next": "Next",
+    "back": "Back"
   },
   "error": {
     "general" : "Something went wrong!"
