@@ -11,18 +11,18 @@
                openTutorial
             </button>
             <v-btn @click="closeTutorial()" class="no-disable">
-              <span>Skip</span>
+              <span>{{ $t("tutorial.skip") }}</span>
               <v-icon>close</v-icon>
             </v-btn>
           </div>
           <div>
             <v-btn @click="backWard()" class="no-disable">
               <v-icon>fa-step-backward</v-icon>
-              <span class="pl-2"> back </span>
+              <span class="pl-2"> {{ $t("tutorial.back") }} </span>
             </v-btn>
             <v-btn @click="stepWard()" class="no-disable">
               <span class="pr-2">
-                next
+                {{ $t("tutorial.next") }}
               </span>
               <v-icon>fa-step-forward</v-icon>
             </v-btn>

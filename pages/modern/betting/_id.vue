@@ -1184,7 +1184,7 @@
               </tr>
               <tr>
                 <td class="text-right">{{ $t("msg.payout") }}:</td>
-                <td class="text-left pl-2 text-color-blue">1.95</td>
+                <td class="text-left pl-2 text-color-blue">{{ Number(odd).toFixed(2) }}</td>
               </tr>
               <tr>
                 <td class="text-right">{{ $t("msg.amount") }}:</td>

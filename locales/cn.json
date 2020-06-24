@@ -437,7 +437,10 @@
     "selectAmount":"选择数额",
     "betMultiGame":"选择数额后，可以在多台下注大厅进行投注",
     "liveBet":"实时投注",
-    "wholeBets":"你可以查看你在这个游戏中的所有下注记录"
+    "wholeBets":"你可以查看你在这个游戏中的所有下注记录",
+    "skip" : "跳过",
+    "next": "下一个",
+    "back": "背部"
   },
   "error": {
     "general" : "出问题了！"
