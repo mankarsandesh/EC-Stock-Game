@@ -121,7 +121,7 @@ export default {
                 " </span>" +
                 "</div>" +
                 '<div class="arrow_box">' +
-                `<span> ${this.$root.$t("msg.betCount")}` +
+                `<span> ${this.$root.$t("msg.betCount")} : ` +
                 w.config.series[seriesIndex].betCounts[dataPointIndex] +
                 "</span>" +
                 "</div>"
