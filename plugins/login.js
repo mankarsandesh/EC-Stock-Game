@@ -6,10 +6,8 @@ import Cookies from "./js-cookie";
 export default async context => {
   try {
     // document.referrer.match(/:\/\/(.[^/]+)/)[1];
-    // http://192.168.1.131:8000/?radio-73=Hulk&serverLink=http%3A%2F%2F159.138.129.40%2F&portalProviderUUID=ef60e64b-dc17-4ff1-9f22-a177c6f1c204&portalProviderUserID=sandesh12&balance=300
     // Set Initial storage coins
     initLocalStorageCoin(context.store);
-    console.log(performance.navigation.type);
     if (performance.navigation.type == 1) {
       // If User reloads the page
       if (
@@ -52,6 +50,7 @@ export default async context => {
         Cookies.getJSON("login").userUUID &&
         Cookies.getJSON("login").portalProviderUUID
       ) {
+
         // If the user has a valid session
         // Get vuex state if it exists in the local storage
         await window.onNuxtReady(() => {
@@ -78,7 +77,6 @@ export default async context => {
           Cookies.getJSON("login").portalProviderUUID
         );
       } else {
-        console.log("User Login");
         // Invalid user session
         // throw new Error("Unauthorized access. Please login again");
         //   }
@@ -86,6 +84,7 @@ export default async context => {
         // If the user gets redirected from portal provider page
         // Clear localStorage
         secureStorage.clear();
+
         // Get vuex state if it exists in the local storage
         await window.onNuxtReady(() => {
           new VuexPersistence({
@@ -126,6 +125,7 @@ export default async context => {
           context.store,
           context.$axios
         );
+
         // Set default language
         setLanguage(context.store);
         // Set user data in vuex store
@@ -145,7 +145,6 @@ export default async context => {
         // }, 24 * 60 * 60 * 1000);
       }
     }
-  }
   } catch (ex) {
     console.log(ex);
   }
