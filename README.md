@@ -1,4 +1,4 @@
-# modern-mobile
+# EC Gaming 
 
 > EC Gaming version 2
 
@@ -51,10 +51,6 @@ Version Features (1.1)
 12. Work on security. No one can enter the game without authentication.
 13. Cookies(for user auth and session management) implementation if done from the backend side will be implemented.
 
-
-
-Issues and Enhancements to be addressed in future
-
-1. Difference between confirmed and unconfirmed bets in full Screen(design team will decide what to show in confirmed bet and what to show in unconfirmed bets).
-2. Login screen flow after the user enter details on the whitelabel screen. The initial data should be set in plugins(callApi plugin) and then the first page index.vue should be shown where the game loader will load and then the user will be redirected to the home page.
-3. Popups displayed while betting on the numbers. When the user bets on the numbers the numbers shown shifts the Road Map component down hence the numbers should be shown in a popup. It will not affect the whole screen then.
+Version Features (1.2)
+1. User Activity 
+2. With Domian whitelist User can Open Our Game
