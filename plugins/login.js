@@ -76,7 +76,7 @@ export default async context => {
           "setPortalProviderUUID",
           Cookies.getJSON("login").portalProviderUUID
         );
-      } else {
+      } else {      
         // Invalid user session
         // throw new Error("Unauthorized access. Please login again");
         //   }
@@ -102,30 +102,21 @@ export default async context => {
         });
 
         // Check whether the portalProviderUUID, portalProviderUserId and balance exists in the query
-        const portalProviderUUID = context.query.portalProviderUUID
-          ? context.query.portalProviderUUID
-          : undefined;
-        const portalProviderUserId = context.query.portalProviderUserID
-          ? context.query.portalProviderUserID
-          : undefined;
-        const balance = context.query.balance ? context.query.balance : undefined;
-
+        const token = context.query.token
+          ? context.query.token
+          : undefined;     
+          console.log("User Login 1");
         // Validate Login values in URL
         validateLoginValues(
-          portalProviderUUID,
-          portalProviderUserId,
-          balance,
+          token,         
           context.store
         );
         // Check User Login
         await checkUserLogin(
-          portalProviderUUID,
-          portalProviderUserId,
-          balance,
+          token,         
           context.store,
           context.$axios
         );
-
         // Set default language
         setLanguage(context.store);
         // Set user data in vuex store
@@ -159,22 +150,14 @@ export default async context => {
  * @returns
  */
 const validateLoginValues = (
-  portalProviderUUID,
-  portalProviderUserId,
-  balance,
+  token, 
   store
 ) => {
   try {
     const error = [];
-    if (!portalProviderUUID) {
-      error.push(config.loginError.portalProvider);
-    }
-    if (!portalProviderUserId) {
-      error.push(config.loginError.portalProviderUserId);
-    }
-    if (!balance) {
-      error.push(config.loginError.balance);
-    }
+    if (!token) {
+      error.push(config.loginError.token);
+    }  
     if (error.length > 0) {
       store.dispatch("setLoginError", error);
       return true;
@@ -195,9 +178,7 @@ const validateLoginValues = (
  * @param {*} store
  */
 const checkUserLogin = async (
-  portalProviderUUID,
-  portalProviderUserId,
-  balance,
+  token,
   store,
   axios
 ) => {
@@ -206,19 +187,14 @@ const checkUserLogin = async (
     const defaultCurrency = 1;
     if (config.authUser && config.authPassword) {
       var reqBody = {
-        portalProviderUUID: portalProviderUUID,
-        portalProviderUserID: portalProviderUserId,
-        version: config.version,
-        ip: "225.457.454.123",
-        domain: "localhost",
-        balance: balance,
-        currencyID: defaultCurrency
-      };
-      var { data } = await axios.post(config.userLoginAuth.url, reqBody, {
+        token: token
+      };    
+      var { data } = await axios.post(config.userAuthorizedLogin.url, reqBody, {
         headers: config.header
       });
       if (data.status) {
         var userUUID = data.data.userUUID;
+        var portalProviderUUID = data.data.portalProviderUUID;
         store.dispatch("setPortalProviderUUID", portalProviderUUID);
         store.dispatch("setUserUUID", userUUID);
         store.dispatch("setCoinsModern", defaultCoinsModern);
