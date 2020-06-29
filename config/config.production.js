@@ -81,9 +81,12 @@ const config = {
   userLogout: {
     url: `${process.env.BASE_URL}/appUsersLogout`
   },
-  userActivityLog :{
+  userActivityLog: {
     url: `${process.env.BASE_URL}/userActivityLog`,
-    timer : process.env.USER_ACTIVITY_TIME
+    timer: process.env.USER_ACTIVITY_TIME
+  },
+  userAuthorizedLogin: {
+    url: `${process.env.BASE_URL}/webUserAuthorizedLogin`,
   },
   serverConfig: {
     port: 8000,
@@ -94,6 +97,7 @@ const config = {
     lowBalance: "Insufficient Balance. Please topup your balance"
   },
   loginError: {
+    token: "Token is Missing",
     portalProvider: "Portal Provider UUID is invalid",
     portalProviderUserId: "Portal Provider User Id is invalid",
     balance: "Balance is invalid",
