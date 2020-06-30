@@ -30,6 +30,6 @@ export default function({ isHMR, app, store, route, error, redirect }) {
   } catch (ex) {
     console.log(ex);
     // Redirect to portal provider login page if there is no session
-    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
+    window.location.replace(config.Whitelabel.url);
   }
 }

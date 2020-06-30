@@ -132,6 +132,7 @@ import i18n from "vue-i18n";
 import secureStorage from "../plugins/secure-storage";
 import Button from "~/components/Button";
 import Snackbar from "../components/mobile/Snackbar.vue";
+import config from "../config/config.global";
 
 export default {
   components: {
@@ -140,7 +141,8 @@ export default {
     languageDialog,
     mobileLogout,
     Button,
-    Snackbar
+    Snackbar,
+    config
   },
   data() {
     return {
@@ -173,7 +175,7 @@ export default {
       if (value) {
         secureStorage.removeItem("AUTH");
         const URL = secureStorage.getItem("referrerURL");
-        location.href = "http://" + URL;
+        location.href = config.Whitelabel.url;
         this.dialogConfirm = false;
       }
       this.dialogConfirm = false;
