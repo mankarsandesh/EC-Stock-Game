@@ -105,7 +105,6 @@ export default async context => {
         const token = context.query.token
           ? context.query.token
           : undefined;     
-          console.log("User Login 1");
         // Validate Login values in URL
         validateLoginValues(
           token,         
@@ -117,6 +116,7 @@ export default async context => {
           context.store,
           context.$axios
         );
+       
         // Set default language
         setLanguage(context.store);
         // Set user data in vuex store
@@ -125,7 +125,7 @@ export default async context => {
         // Set portal provider url
         secureStorage.setItem(
           "referrerUrl",
-          "159.138.130.64/login/"
+          config.Whitelabel.url
         );
 
         // // When the cookie expires redirect user to portal provider's login page

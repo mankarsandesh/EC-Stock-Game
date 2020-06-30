@@ -130,7 +130,7 @@ export default {
         const URL = secureStorage.getItem("referrerURL");
         await this.userLogout();
         this.dialogConfirm = false;
-        location.href = "http://" + URL;
+        location.href =  config.Whitelabel.url;
       }
       this.dialogConfirm = false;
     },
