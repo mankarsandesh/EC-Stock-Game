@@ -77,8 +77,7 @@ export default async context => {
           "setPortalProviderUUID",
           Cookies.getJSON("login").portalProviderUUID
         );
-      } else {
-        console.log("User Login");
+      } else {      
         // Invalid user session
         // throw new Error("Unauthorized access. Please login again");
         //   }
@@ -106,7 +105,6 @@ export default async context => {
         const token = context.query.token
           ? context.query.token
           : undefined;     
-          console.log("User Login 1");
         // Validate Login values in URL
         validateLoginValues(
           token,         
@@ -118,8 +116,7 @@ export default async context => {
           context.store,
           context.$axios
         );
-
-        console.log("User Login 2");
+       
         // Set default language
         setLanguage(context.store);
         // Set user data in vuex store
@@ -128,7 +125,7 @@ export default async context => {
         // Set portal provider url
         secureStorage.setItem(
           "referrerUrl",
-          "159.138.130.64/login/"
+          config.Whitelabel.url
         );
 
         // // When the cookie expires redirect user to portal provider's login page
@@ -191,11 +188,10 @@ const checkUserLogin = async (
     if (config.authUser && config.authPassword) {
       var reqBody = {
         token: token
-      };
+      };    
       var { data } = await axios.post(config.userAuthorizedLogin.url, reqBody, {
         headers: config.header
       });
-      console.log(data,"User Data");
       if (data.status) {
         var userUUID = data.data.userUUID;
         var portalProviderUUID = data.data.portalProviderUUID;

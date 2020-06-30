@@ -9,6 +9,9 @@ const config = {
   secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
   sessionExpiryTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   isMaintenance: process.env.MAINTENANCE_MODE,
+  Whitelabel : {
+    URL :  `${process.env.WHITELABEL_URL}`
+  },
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
