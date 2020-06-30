@@ -42,7 +42,7 @@ export default {
       // Set referrer Url
       secureStorage.setItem(
         "referrerUrl",
-        "http://159.138.130.64/login/"
+        config.Whitelabel.url
       );
       this.setReferrer("http://159.138.130.64/login/");
       this.getProgress();
