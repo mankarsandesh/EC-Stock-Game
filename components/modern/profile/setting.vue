@@ -88,10 +88,8 @@
 <script>
 import VueApexCharts from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "./UploadFile";
 import config from '../../../config/config.global';
 export default {
   data() {
@@ -137,9 +135,6 @@ export default {
         );
         if (res.code === 200) {
           this.asynUserInfo();
-        } else {
-          console.log(res.message);
-          alert(res.message);
         }
       } catch (ex) {
         console.error(ex);

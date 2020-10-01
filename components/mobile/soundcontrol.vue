@@ -3,9 +3,24 @@
     <v-layout row wrap justify-center>
       <div>
         <v-flex class="setting_container">
-          <span class="pt-1">{{ $t("msg.music") }}</span>
+          <span class="pt-1">{{
+            $t("setting.usersAllowToVisitMyProfile")
+          }}</span>
           <label class="switch">
             <input
+              @change="updateSetting"
+              type="checkbox"
+              ref="isAllowToVisitProfile"
+              :checked="getUserInfo.isAllowToVisitProfile"
+            />
+            <span class="slider round"></span>
+          </label>
+        </v-flex>
+        <v-flex class="setting_container">
+          <span class="pt-1">{{ $t("setting.sound") }}</span>
+          <label class="switch">
+            <input
+              @change="updateSetting"
               type="checkbox"
               ref="isSound"
               :checked="getUserInfo.isSound"
@@ -13,29 +28,33 @@
             <span class="slider round"></span>
           </label>
         </v-flex>
+        <v-flex class="setting_container">
+          <span class="pt-1">{{ $t("setting.allowToLocation") }}</span>
+          <label class="switch">
+            <input
+              @change="updateSetting"
+              type="checkbox"
+              ref="isAllowToLocation"
+              :checked="getUserInfo.isAllowToLocation"
+            />
+            <span class="slider round"></span>
+          </label>
+        </v-flex>
       </div>
     </v-layout>
-    <!-- <v-slider v-model="length" color="#003e70" min="1" max="15" :label="$t('msg.customlength')"></v-slider> -->
-    <v-layout row wrap justify-center>
-      <v-btn class="my-btn buttonGreensmall" @click="updateSetting">{{
-        $t("msg.save")
-      }}</v-btn>
-      <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
-    </v-layout>
-
     <v-snackbar v-model="snackbar">
       {{ this.messageShow }}
       <v-btn color="pink" text @click="snackbar = false">
-        Close
+        {{ $t("msg.close") }}
       </v-btn>
     </v-snackbar>
-    
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
+import secureStorage from "../../plugins/secure-storage";
 
 export default {
   data() {
@@ -51,28 +70,65 @@ export default {
     ...mapActions(["setUserData"]),
     // Update Sount on or Off
     async updateSetting() {
+      // set value to 1 or 0 true==1 false==0
+      let isAllowToVisitProfile = this.$refs.isAllowToVisitProfile.checked
+        ? true
+        : false;
+      let isAllowToFollow = false;
       let isSound = this.$refs.isSound.checked ? true : false;
+      let isAllowToLocation = this.$refs.isAllowToLocation.checked
+        ? true
+        : false;
+      // end set value to 1 or 0 true==1 false==0
+
       try {
-        let userSetting = {
+        var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
           userUUID: this.getUserUUID,
           version: config.version,
-          isSound
+          isAllowToVisitProfile,
+          isAllowToFollow,
+          isSound,
+          isAllowToLocation
         };
-        const res = await this.$axios.$post(
+        var res = await this.$axios.$post(
           config.updateUserSetting.url,
-          userSetting,
+          reqBody,
           {
             headers: config.header
           }
         );
         if (res.code == 200) {
           this.snackbar = true;
-          this.messageShow = "Changes saved";
-          this.setUserData();        
+          this.messageShow = this.$root.$t("msg.changesSaved");
+          this.setUserData();
+        } else if (res.code == 202) {
+          this.$swal({
+            type: "error",
+            title: this.$root.$t("popupMsg.sessionExpired"),
+            confirmButtonText: this.$root.$t("popupMsg.okLogout"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            if (result.value) {
+              const URL = secureStorage.getItem("referrerURL");              
+                secureStorage.removeItem("USER_UUID");
+                secureStorage.removeItem("PORTAL_PROVIDERUUID");
+                secureStorage.removeItem("userSessionID");  
+              location.href = URL;
+            }
+          });
+        } else {
+          this.messageError = true;
         }
       } catch (ex) {
-        console.log(ex.message);
+        console.error(ex);
+        this.$swal({
+          type: "error",
+          title: ex.message,
+          timer: 1000
+        });
       }
     }
   }
@@ -90,7 +146,7 @@ export default {
   margin-left: 5px;
   margin-bottom: 15px;
   position: relative;
-  width: 200px;
+  width: 300px;
   padding: 10px;
   padding-left: 15px;
   border-width: 1px;

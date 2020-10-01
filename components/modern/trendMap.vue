@@ -1,72 +1,100 @@
 <template>
-<div>
-  <v-layout wrap>
-    <v-flex :class="setClass(' pl-3 pb-5')" style="margin-top:10px;" v-show="which_one == 'B/S' || which_one == !isFullscreen">
-      <div v-show="isFullscreen">
-        <span class="countBig text-grey"></span>
-        <span class="countSmall text-grey"></span>
-      </div>
-      <div class="bs-coltabledivlast">
-        <table class="table-responsive RoadMapTable" ref="tablebsTwo">
-          <tr v-for="(tr, index) in rowTable" :key="index">
-            <td v-for="(td, index) in BSLength" :key="index"></td>
-          </tr>
-        </table>
-      </div>
-    </v-flex>
+  <div>
+    <v-layout wrap>
+      
+      <span class="toopTip" v-if="titleToolTip && this.isDevice">
+        {{ titleToolTip }}
+      </span>
+      <v-flex
+        :class="setClass(' pl-3 pb-5')"
+        style="margin-top:10px;"
+        v-show="which_one == 'B/S' || which_one == !isFullscreen"
+      >
+        <div v-show="isFullscreen">
+          <span v-bind:class="['countBig' + trendType, 'text-grey']"></span>
+          <span v-bind:class="['countSmall' + trendType, 'text-grey']"></span>          
+        </div>
+        <div class="bs-coltabledivlast">
+          <table class="table-responsive RoadMapTable" ref="tablebsTwo">
+            <tr v-for="(tr, index) in rowTable" :key="index">
+              <td v-for="(td, index) in BSLength" :key="index"  @click="showToolTipNew"></td>
+            </tr>
+          </table>
+        </div>
+      </v-flex>
 
-    <v-flex :class="setClass(' pl-3 pb-5')" style="margin-top:10px;" v-show="which_one == 'O/E' || which_one == !isFullscreen">
-      <div v-show="isFullscreen">
-        <span class="countOdd text-grey"></span>
-        <span class="countEven text-grey"></span>
-      </div>
-      <div class="oe-coltabledivlast">
-        <table class="table-responsive RoadMapTable" ref="tableOETwo">
-          <tr v-for="(tr, index) in rowTable" :key="index">
-            <td v-for="(td, index) in OELength" :key="index"></td>
-          </tr>
-        </table>
-      </div>
-    </v-flex>
+      <v-flex
+        :class="setClass(' pl-3 pb-5')"
+        style="margin-top:10px;"
+        v-show="which_one == 'O/E' || which_one == !isFullscreen"
+      >
+        <div v-show="isFullscreen">
+          <span v-bind:class="['countOdd' + trendType, 'text-grey']"></span>
+          <span v-bind:class="['countEven' + trendType, 'text-grey']"></span>
+        </div>
+        <div class="oe-coltabledivlast">
+          <table class="table-responsive RoadMapTable" ref="tableOETwo">
+            <tr v-for="(tr, index) in rowTable" :key="index">
+              <td v-for="(td, index) in OELength" :key="index"  @click="showToolTipNew"></td>
+            </tr>
+          </table>
+        </div>
+      </v-flex>
 
-    <v-flex :class="setClass('pl-3 pb-5')" style="margin-top:10px;" v-show="which_one == 'U/L' || which_one == !isFullscreen">
-      <div v-show="isFullscreen">
-        <span class="countUpper text-grey"></span>
-        <span class="countMiddle text-grey"></span>
-        <span class="countLower text-grey"></span>
-      </div>
-      <div class="ul-coltabledivlast">
-        <table class="table-responsive RoadMapTable" ref="tablebUMLTwo">
-          <tr v-for="(tr, index) in rowTable" :key="index">
-            <td v-for="(td, index) in HMLLength" :key="index"></td>
-          </tr>
-        </table>
-      </div>
-    </v-flex>
+      <v-flex
+        :class="setClass('pl-3 pb-5')"
+        style="margin-top:10px;"
+        v-show="which_one == 'U/L' || which_one == !isFullscreen"
+      >
+        <div v-show="isFullscreen">
+          <span v-bind:class="['countUpper' + trendType, 'text-grey']"></span>
+          <span v-bind:class="['countMiddle' + trendType, 'text-grey']"></span>
+          <span v-bind:class="['countLower' + trendType, 'text-grey']"></span>        
+        </div>
+        <div class="ul-coltabledivlast">
+          <table class="table-responsive RoadMapTable" ref="tablebUMLTwo">
+            <tr v-for="(tr, index) in rowTable" :key="index">
+              <td v-for="(td, index) in HMLLength" :key="index"  @click="showToolTipNew"></td>
+            </tr>
+          </table>
+        </div>
+      </v-flex>
 
-    <v-flex :class="setClass('pl-3 pb-5')" style="margin-top:10px;" v-show="which_one == 'NUM' || which_one == !isFullscreen">
-      <div v-show="isFullscreen" ref="sortNumber">
-        <span class="text-grey"></span>
-        <span class="text-grey"></span>
-        <span class="text-grey"></span>
-        <span class="text-grey"></span>
-        <span class="text-grey"></span>
-        <span class="text-grey"></span>
-      </div>
-      <div class="num-coltabledivlast">
-        <table class="table-responsive RoadMapTable" ref="tableNumberTwo">
-          <tr v-for="(tr, index) in rowTable" :key="index">
-            <td v-for="(td, index) in Numlength" :key="index"></td>
-          </tr>
-        </table>
-      </div>
-    </v-flex>
-  </v-layout>
-</div>
+      <v-flex
+        :class="setClass('pl-3 pb-5')"
+        style="margin-top:10px;"
+        v-show="which_one == 'NUM' || which_one == !isFullscreen"
+      >
+        <div v-show="isFullscreen" ref="sortNumber">
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+          <span class="text-grey"></span>
+        </div>
+        <div class="num-coltabledivlast">
+          <table class="table-responsive RoadMapTable" ref="tableNumberTwo">
+            <tr v-for="(tr, index) in rowTable" :key="index">
+              <td
+                v-for="(td, index) in Numlength"
+                :key="index"
+                @click="showToolTipNew"
+              ></td>
+            </tr>
+          </table>
+        </div>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
+
+import { itemBetting } from "~/mixin/itemBetting";
+
 export default {
+  mixins: [itemBetting],
   props: {
     dataArray: {
       type: Array,
@@ -86,6 +114,10 @@ export default {
       default: true
     },
     isFullscreen: {
+      type: Boolean,
+      default: false
+    },
+    isDevice: {
       type: Boolean,
       default: false
     },
@@ -111,7 +143,8 @@ export default {
       is_show_bs: true,
       is_show_oe: true,
       is_show_hml: true,
-      is_show_num: true
+      is_show_num: true,
+      titleToolTip : "",
     };
   },
   mounted() {
@@ -153,6 +186,9 @@ export default {
     // }
   },
   methods: {
+    showToolTipNew : function(event){
+      this.titleToolTip = event.target.getAttribute('title');      
+    },
     addTrendMap() {
       let trendCount = this.trendTypes.length;
       switch (trendCount) {
@@ -225,21 +261,25 @@ export default {
           firstlast = element.number1;
           this.gameID.push(
             element.stockTimeStamp +
-            "\n" +
-            element.stockValue +
-            "\n" +
-            "Fist Digit = " +
-            element.number1 +
-            "\n" +
-            "Last Digit = " +
-            element.number2 +
-            "\n" +
-            "Both Digit = " +
-            (parseInt(element.number1) + parseInt(element.number2)) +
-            "\n" +
-            "Two Digit = " +
-            element.number1 +
-            element.number2
+              "\n" +
+              element.stockValue +
+              "\n" +
+              this.$root.$t("gamemsg.firstdigit") +
+              " = " +
+              element.number1 +
+              "\n" +
+              this.$root.$t("gamemsg.lastdigit") +
+              " = " +
+              element.number2 +
+              "\n" +
+              this.$root.$t("gamemsg.bothdigit") +
+              " = " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              "\n" +
+              this.$root.$t("gamemsg.twodigit") +
+              " = " +
+              element.number1 +
+              element.number2
           );
           //bigsmall
           if (firstlast < 5) {
@@ -262,31 +302,35 @@ export default {
           this.trentNumber.push(firstlast);
           if (n == this.dataArray.length) {
             // console.log(this.trentUML);
-            this.tablechartBS();
-            this.tablechartOE();
-            this.tablechartUML();
-            this.tablechartnumber();
+            this.tablechartBS("firstDigit");
+            this.tablechartOE("firstDigit");
+            this.tablechartUML("firstDigit");
+            this.tablechartnumber("firstDigit");
             return;
           }
         } else if (this.trendType === "lastDigit") {
           firstlast = element.number2;
           this.gameID.push(
             element.stockTimeStamp +
-            "\n" +
-            element.stockValue +
-            "\n" +
-            "Fist Digit = " +
-            element.number1 +
-            "\n" +
-            "Last Digit = " +
-            element.number2 +
-            "\n" +
-            "Both Digit = " +
-            (parseInt(element.number1) + parseInt(element.number2)) +
-            "\n" +
-            "Two Digit = " +
-            element.number1 +
-            element.number2
+              "\n" +
+              element.stockValue +
+              "\n" +
+              this.$root.$t("gamemsg.firstdigit") +
+              " = " +
+              element.number1 +
+              "\n" +
+              this.$root.$t("gamemsg.lastdigit") +
+              " = " +
+              element.number2 +
+              "\n" +
+              this.$root.$t("gamemsg.bothdigit") +
+              " = " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              "\n" +
+              this.$root.$t("gamemsg.twodigit") +
+              " = " +
+              element.number1 +
+              element.number2
           );
           //bigsmall
           if (firstlast < 5) {
@@ -308,11 +352,11 @@ export default {
           //number
           this.trentNumber.push(firstlast);
           if (n == this.dataArray.length) {
-            // console.log(this.trentUML);
-            this.tablechartBS();
-            this.tablechartOE();
-            this.tablechartUML();
-            this.tablechartnumber();
+            this.tablechartBS("lastDigit");
+            this.tablechartOE("lastDigit");
+            this.tablechartUML("lastDigit");
+            this.tablechartnumber("lastDigit");
+
             return;
           }
         } else if (this.trendType === "bothDigit") {
@@ -320,21 +364,25 @@ export default {
           firstlast = parseInt(rs);
           this.gameID.push(
             element.stockTimeStamp +
-            "\n" +
-            element.stockValue +
-            "\n" +
-            "Fist Digit = " +
-            element.number1 +
-            "\n" +
-            "Last Digit = " +
-            element.number2 +
-            "\n" +
-            "Both Digit = " +
-            (parseInt(element.number1) + parseInt(element.number2)) +
-            "\n" +
-            "Two Digit = " +
-            element.number1 +
-            element.number2
+              "\n" +
+              element.stockValue +
+              "\n" +
+              this.$root.$t("gamemsg.firstdigit") +
+              " = " +
+              element.number1 +
+              "\n" +
+              this.$root.$t("gamemsg.lastdigit") +
+              " = " +
+              element.number2 +
+              "\n" +
+              this.$root.$t("gamemsg.bothdigit") +
+              " = " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              "\n" +
+              this.$root.$t("gamemsg.twodigit") +
+              " = " +
+              element.number1 +
+              element.number2
           );
           //bigsmall
           if (firstlast < 9) {
@@ -356,11 +404,11 @@ export default {
           //number
           this.trentNumber.push(firstlast);
           if (n == this.dataArray.length) {
-            // console.log(this.trentUML);
-            this.tablechartBS();
-            this.tablechartOE();
-            this.tablechartUML();
-            this.tablechartnumber();
+            this.tablechartBS("bothDigit");
+            this.tablechartOE("bothDigit");
+            this.tablechartUML("bothDigit");
+            this.tablechartnumber("bothDigit");
+
             return;
           }
         } else if (this.trendType === "twoDigit") {
@@ -368,21 +416,25 @@ export default {
           firstlast = parseInt(rs);
           this.gameID.push(
             element.stockTimeStamp +
-            "\n" +
-            element.stockValue +
-            "\n" +
-            "Fist Digit = " +
-            element.number1 +
-            "\n" +
-            "Last Digit = " +
-            element.number2 +
-            "\n" +
-            "Both Digit = " +
-            (parseInt(element.number1) + parseInt(element.number2)) +
-            "\n" +
-            "Two Digit = " +
-            element.number1 +
-            element.number2
+              "\n" +
+              element.stockValue +
+              "\n" +
+              this.$root.$t("gamemsg.firstdigit") +
+              " = " +
+              element.number1 +
+              "\n" +
+              this.$root.$t("gamemsg.lastdigit") +
+              " = " +
+              element.number2 +
+              "\n" +
+              this.$root.$t("gamemsg.bothdigit") +
+              " = " +
+              (parseInt(element.number1) + parseInt(element.number2)) +
+              "\n" +
+              this.$root.$t("gamemsg.twodigit") +
+              " = " +
+              element.number1 +
+              element.number2
           );
           //bigsmall
           if (firstlast <= 49) {
@@ -405,10 +457,10 @@ export default {
           this.trentNumber.push(firstlast);
           if (n == this.dataArray.length) {
             // console.log(this.trentUML);
-            this.tablechartBS();
-            this.tablechartOE();
-            this.tablechartUML();
-            this.tablechartnumber();
+            this.tablechartBS("twoDigit");
+            this.tablechartOE("twoDigit");
+            this.tablechartUML("twoDigit");
+            this.tablechartnumber("twoDigit");
             return;
           }
         }
@@ -417,18 +469,22 @@ export default {
       var diff = end - start;
       // console.log(`${diff} Good`);
     },
-    tablechartBS() {
+    tablechartBS(rulename) {
       let countBig = 0;
       let countSmall = 0;
       // console.log(this.$refs);
       // loop table[][]
       var s = -1;
       loop1: for (
-        let j = 0; j < this.$refs.tablebsTwo.children[0].children.length; j++
+        let j = 0;
+        j < this.$refs.tablebsTwo.children[0].children.length;
+        j++
       ) {
         // j = td tag
         loop2: for (
-          let i = 0; i < this.$refs.tablebsTwo.childElementCount; i++
+          let i = 0;
+          i < this.$refs.tablebsTwo.childElementCount;
+          i++
         ) {
           // auto scroll
           //set classs to ref the last one
@@ -454,7 +510,7 @@ export default {
                   "1"
                 ) {
                   countBig++;
-                  $(".countBig").text(
+                  $(".countBig" + rulename).text(
                     this.$root.$t("gamemsg.big") + " = " + countBig
                   );
                   this.$refs.tablebsTwo.children[i].children[j].textContent =
@@ -470,7 +526,7 @@ export default {
                   "0"
                 ) {
                   countSmall++;
-                  $(".countSmall").text(
+                  $(".countSmall" + rulename).text(
                     this.$root.$t("gamemsg.small") + " = " + countSmall
                   );
                   this.$refs.tablebsTwo.children[i].children[j].textContent =
@@ -605,17 +661,21 @@ export default {
     },
 
     //odd even............................................................
-    tablechartOE() {
+    tablechartOE(rulename) {
       let countOdd = 0;
       let countEven = 0;
       // loop table[][]
       var s = -1;
       loop1: for (
-        let j = 0; j < this.$refs.tableOETwo.children[0].children.length; j++
+        let j = 0;
+        j < this.$refs.tableOETwo.children[0].children.length;
+        j++
       ) {
         // j = td tag
         loop2: for (
-          let i = 0; i < this.$refs.tableOETwo.childElementCount; i++
+          let i = 0;
+          i < this.$refs.tableOETwo.childElementCount;
+          i++
         ) {
           // auto scroll
           if (this.trentOE.length == s) {
@@ -643,7 +703,7 @@ export default {
                   "1"
                 ) {
                   countOdd++;
-                  $(".countOdd").text(
+                  $(".countOdd" + rulename).text(
                     this.$root.$t("gamemsg.odd") + " = " + countOdd
                   );
                   this.$refs.tableOETwo.children[i].children[j].textContent =
@@ -660,7 +720,7 @@ export default {
                   "0"
                 ) {
                   countEven++;
-                  $(".countEven").text(
+                  $(".countEven" + rulename).text(
                     this.$root.$t("gamemsg.even") + " = " + countEven
                   );
                   this.$refs.tableOETwo.children[i].children[j].textContent =
@@ -787,17 +847,21 @@ export default {
     },
 
     //high middle low............................................................
-    tablechartUML() {
+    tablechartUML(rulename) {
       let countUpper = 0;
       let countMiddle = 0;
       let countLower = 0;
       var s = -1;
       loop1: for (
-        let j = 0; j < this.$refs.tablebUMLTwo.children[0].children.length; j++
+        let j = 0;
+        j < this.$refs.tablebUMLTwo.children[0].children.length;
+        j++
       ) {
         // j = td tag
         loop2: for (
-          let i = 0; i < this.$refs.tablebUMLTwo.childElementCount; i++
+          let i = 0;
+          i < this.$refs.tablebUMLTwo.childElementCount;
+          i++
         ) {
           // auto scroll
           if (this.trentUML.length == s) {
@@ -819,10 +883,10 @@ export default {
               for (let j = 0; j < this.HMLLength; j++) {
                 if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
-                  .textContent === "2"
+                    .textContent === "2"
                 ) {
                   countUpper++;
-                  $(".countUpper").text(
+                  $(".countUpper" + rulename).text(
                     this.$root.$t("gamemsg.high") + " = " + countUpper
                   );
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
@@ -833,13 +897,13 @@ export default {
 
                   this.$refs.tablebUMLTwo.children[i].children[
                     j
-                  ].textContent = this.$root.$t("gamemsg.U");
+                  ].textContent = this.$root.$t("gamemsg.H");
                 } else if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
-                  .textContent === "1"
+                    .textContent === "1"
                 ) {
                   countMiddle++;
-                  $(".countMiddle").text(
+                  $(".countMiddle" + rulename).text(
                     this.$root.$t("gamemsg.mid") + " = " + countMiddle
                   );
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
@@ -853,10 +917,10 @@ export default {
                   ].textContent = this.$root.$t("gamemsg.M");
                 } else if (
                   this.$refs.tablebUMLTwo.children[i].children[j]
-                  .textContent === "0"
+                    .textContent === "0"
                 ) {
                   countLower++;
-                  $(".countLower").text(
+                  $(".countLower" + rulename).text(
                     this.$root.$t("gamemsg.low") + " = " + countLower
                   );
                   this.$refs.tablebUMLTwo.children[i].children[j].textContent =
@@ -1017,7 +1081,7 @@ export default {
                 sortable.push([maxSpeed, counts[maxSpeed]]);
               }
 
-              sortable.sort(function (a, b) {
+              sortable.sort(function(a, b) {
                 return b[1] - a[1];
               });
               // console.log(sortable);
@@ -1055,9 +1119,9 @@ export default {
           }
           if (this.trendType === "twoDigit") {
             this.$refs.tableNumberTwo.children[k].children[j].textContent =
-              this.trentNumber[s] < 10 ?
-              "0" + this.trentNumber[s] :
-              this.trentNumber[s];
+              this.trentNumber[s] < 10
+                ? "0" + this.trentNumber[s]
+                : this.trentNumber[s];
           } else {
             this.$refs.tableNumberTwo.children[k].children[
               j
@@ -1074,6 +1138,16 @@ export default {
 };
 </script>
 <style scoped>
+.toopTip{
+  background-color: #333;
+  color:#FFF;
+  padding: 5px;
+  text-align: center;
+  width: 180px;
+  margin:0 auto;
+  font-size: 12px;
+  border-radius: 5px;
+}
 /* tr td[title]:hover:after {
   width: 100%;
   content: attr(title);
@@ -1086,7 +1160,8 @@ export default {
   border-radius: 4px;
 } */
 .line-through {
-  background: transparent url("http://davidrhysthomas.co.uk/linked/strike.png") 0 50% repeat-x;
+  background: transparent url("http://davidrhysthomas.co.uk/linked/strike.png")
+    0 50% repeat-x;
 }
 .tooltip-inner {
   text-align: left;
@@ -1138,20 +1213,23 @@ p {
   height: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 7px #acacac;
-  border-radius: 5px;
+  border-radius: 7px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #acacac;
   border-radius: 7px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #2c6b9e;
+}
+
+table {
+  overflow-x: scroll;
+  scrollbar-color: #acacac #f2f2f2;
+  scrollbar-width: thin;
 }
 </style>

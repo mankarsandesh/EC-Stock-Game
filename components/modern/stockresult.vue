@@ -14,7 +14,7 @@
             <tr>
               <th>{{ $t("msg.stockName") }}</th>
               <th>{{ $t("msg.time") }}</th>
-              <th>{{ $t("msg.result") }}</th>
+              <th class="text-xs-left">{{ $t("msg.result") }}</th>
             </tr>
             <tr
               v-for="(data, index) in getStockResult"
@@ -28,7 +28,7 @@
                 </nuxt-link>
               </td>
               <td class="text-xs-center">{{ data.stockTimeStamp }}</td>
-              <td class="text-xs-center">{{ roundValue(data.stockValue) }}</td>
+              <td class="text-xs-left">{{ roundValue(data.stockValue) }}</td>
             </tr>
           </table>
         </div>
@@ -37,9 +37,8 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState,mapActions } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -47,7 +46,8 @@ export default {
     return {
       showStockresult: true,
       selected: 1,
-      getStockResult: []
+      getStockResult: [],
+      apiAttemptCount: 0
     };
   },
   computed: {
@@ -59,8 +59,11 @@ export default {
   mounted() {
     this.stockResult();
   },
-
+  beforeMount() {
+    this.userActivityAction();
+  },
   methods: {
+    ...mapActions(["userActivityAction"]),
     roundValue(value) {
       return `${Number(value).toFixed(2)}`;
     },
@@ -72,16 +75,21 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
+          userUUID: this.userUUID,
           version: config.version
         };
         var { data } = await this.$axios.post(config.getAllStock.url, reqBody, {
           headers: config.header
         });
         if (data.status) {
+          this.apiAttemptCount = 0;
           this.showStockresult = false;
           this.getStockResult = data.data;
         } else {
-          throw new Error(config.error.general);
+          if (this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.stockResult();
+          }
         }
       } catch (ex) {
         console.log(ex);
@@ -90,17 +98,6 @@ export default {
           type: "error",
           timer: 1000
         });
-        log.error(
-          {
-            req: reqBody,
-            res: data,
-            page: "components/modern/stockresult.vue",
-            apiUrl: config.getAllStock.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

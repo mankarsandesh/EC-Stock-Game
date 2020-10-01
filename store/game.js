@@ -5,7 +5,8 @@ const state = () => ({
   isLoadingStockGame: false,
   gameStockId: null, // Store game stock id
   stockMultiGame: [], // Store stocks of multi game
-  payout: payouts // Store payouts
+  payout: payouts, // Store payouts,
+  previousGameId : null //
 });
 
 const mutations = {
@@ -78,7 +79,6 @@ const getters = {
   // Get payout by game rule
   getPayout: state => gameRule => {
     {
-      // console.log(state.payout[gameRule])
       return state.payout[gameRule];
     }
   }

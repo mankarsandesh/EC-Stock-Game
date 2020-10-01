@@ -1,14 +1,91 @@
-<template>  
-    <bethistory :search="search" :userBetHistory="userBetHistory" />
+<template>
+  <div>
+    <v-layout class="filter-history" align-center justify-center>
+      <v-flex xs12 sm12 md5 lg5 pt-3 pl-2>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm12 md5 xs6> 
+            <v-menu
+              v-model="from"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              min-width="200px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  hide-details
+                  v-model="dateFrom"
+                  :label="$t('msg.from')"
+                    append-icon="fa-calendar"
+                  readonly
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                color="#1db42f"
+                :max="maxDate"
+                v-model="dateFrom"
+                @input="from = false"
+                :locale="lang"
+              ></v-date-picker>
+            </v-menu>
+          </v-flex>
+          <v-flex xs12 sm12 md5 xs6 ml-2>
+            <v-menu
+              v-model="to"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  hide-details
+                  v-model="dateTo"
+                  :label="$t('msg.to')"
+                  append-icon="fa-calendar"
+                  readonly
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                color="#1db42f"
+                :max="maxDate"
+                v-model="dateTo"
+                @input="to = false"
+                :locale="lang"
+              ></v-date-picker>
+            </v-menu>
+          </v-flex>
+          <v-flex xs12 sm12 md2 ml-2 text-center>
+            <v-btn class="goButton" @click="searchBetHistory()" small>
+              <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
+              &nbsp;{{ $t("msg.go") }}
+            </v-btn>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+    <bethistory
+      :search="search"
+      :userBetHistory="userBetHistory"
+      @userLimit="loadMoreData"
+      :curreny="getUserCurrency"
+    />
+  </div>
 </template>
 
 <script>
 import bethistory from "~/components/mobile/bethistory";
 import breadcrumbs from "~/components/breadcrumbs";
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   layout: "default",
@@ -18,6 +95,8 @@ export default {
   },
   data() {
     return {
+      betDataLimit: 10,
+       maxDate: new Date().toISOString(),
       today: new Date(),
       sortby: "",
       search: "",
@@ -38,7 +117,20 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) //get 2 data from vuex first, in the computed
+    }), //get 2 data from vuex first, in the computed
+    // Fet User Currency
+    ...mapGetters(["getUserCurrency","getLocale"]),
+    lang() {
+      if(this.getLocale == "us"){
+        return "en-US"
+      } else if(this.getLocale == "th") {
+        return "th-TH"
+      } else if(this.getLocale == "cn") {
+        return "zh-CN"
+      } else {
+        return "la"
+      }
+    }
   },
   mounted() {
     const lastWeek = new Date(
@@ -53,42 +145,11 @@ export default {
     this.fetchBetHsitory();
   },
   methods: {
-    sortingBy() {
-      if (this.sortby == "Today") {
-        const lastWeek = new Date(
-          this.today.getFullYear(),
-          this.today.getMonth(),
-          this.today.getDate() + 1
-        )
-          .toISOString()
-          .substr(0, 10);
-        this.dateFrom = lastWeek;
-        this.dateTo = this.today.toISOString().substring(0, 10);
-        this.fetchBetHsitory();
-      } else if (this.sortby == "This Week") {
-        const lastWeek = new Date(
-          this.today.getFullYear(),
-          this.today.getMonth(),
-          this.today.getDate() - 5
-        )
-          .toISOString()
-          .substr(0, 10);
-        this.dateFrom = lastWeek;
-        this.dateTo = this.today.toISOString().substring(0, 10);
-        this.fetchBetHsitory();
-      } else if (this.sortby == "This Month") {
-        const lastWeek = new Date(
-          this.today.getFullYear(),
-          this.today.getMonth(),
-          this.today.getDate() - 30
-        )
-          .toISOString()
-          .substr(0, 10);
-        this.dateFrom = lastWeek;
-        this.dateTo = this.today.toISOString().substring(0, 10);
-        this.fetchBetHsitory();
-      }
+    loadMoreData() {
+      this.betDataLimit += 10;
+      this.fetchBetHsitory();
     },
+    // Date Wise Bet History  
     searchBetHistory() {
       this.loadingImage = true;
       if (this.dateFrom && this.dateTo) {
@@ -103,14 +164,32 @@ export default {
           version: config.version,
           betResult: [0, 1],
           dateRangeFrom: this.dateFrom,
-          dateRangeTo: this.dateTo
+          dateRangeTo: this.dateTo,
+          limit: this.betDataLimit
         };
         var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
           headers: config.header
-        });     
-        if (data.status) {
-          this.userBetHistory = data.data;
+        });
+        if (data.code == 200) {
+          this.userBetHistory = data.data.reverse();
           this.loadingImage = false;
+        } else if (data.code == 202) {
+          this.$swal({
+            type: "error",
+            title: this.$root.$t("popupMsg.sessionExpired"),
+            confirmButtonText: this.$root.$t("popupMsg.okLogout"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            if (result.value) {
+              const URL = secureStorage.getItem("referrerURL");
+              secureStorage.removeItem("USER_UUID");
+              secureStorage.removeItem("PORTAL_PROVIDERUUID");
+              secureStorage.removeItem("userSessionID");
+              location.href = URL;
+            }
+          });
         } else {
           throw new Error(data.message);
           this.loadingImage = false;
@@ -120,20 +199,9 @@ export default {
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
         this.loadingImage = false;
-        log.error(
-          {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/history.vue",
-            apiUrl: config.getAllBets.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }
@@ -220,14 +288,8 @@ label,
   padding: 11px;
 }
 
-.goButton {
-  /* padding: 6px 4px; */
-  background-color: #003e70 !important;
-  color: #fff;
-  height: 100%;
-  margin-top: 0px;
-  left: -8px;
-  width: 100%;
+.goButtonSmall {
+  width: 100px;
 }
 .betDraw {
   color: #545353;
@@ -274,9 +336,9 @@ label,
 .goButton {
   background-color: #1db42f;
   color: #fff !important;
-  font-size: 16px;
+  font-size: 14px;
   border-radius: 8px;
-  height: 40px;
+  height: 30px;
   background: rgba(10, 177, 118, 1);
   background: -moz-linear-gradient(
     left,

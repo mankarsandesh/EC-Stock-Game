@@ -20,7 +20,7 @@
             v-for="(data, index) in followingList"
             :key="index"
           >
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.UUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' +data.UUID">
               <img class="userImage" :src="imgProfile(data.profileImage)" />
               <span v-if="data.fullName" class="name">{{ data.fullName }}</span>
               <span v-if="data.fullName == null" class="name">
@@ -37,7 +37,7 @@
                   }}
                   :</label
                 >
-                {{ data.followRuleValue[0].value }}
+                {{  data.followRuleValue[0].name == "byAmount" ? "$"+data.followRuleValue[0].value : data.followRuleValue[0].value+"%" }}
               </span>
               <span>
                 <label
@@ -121,7 +121,11 @@ export default {
   computed: {
     ...mapGetters(["getPortalProviderUUID", "getUserUUID"])
   },
+  beforeDestroy(){
+    this.userActivityAction();
+  },
   methods: {
+    ...mapActions(["userActivityAction"]),
     // Close Follow Bet Popup
     closeFollowBet() {
       this.followDialog = false;
@@ -203,7 +207,7 @@ export default {
 }
 .name {
   margin-top: 10px;
-  font-size: 18px;
+    font-size: 16px;
   color: #2bb13a;
   display: block;
   width: 100%;

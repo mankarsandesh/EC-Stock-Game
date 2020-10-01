@@ -74,7 +74,6 @@
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
 import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
-import moment from "moment";
 import config from "../config/config.global";
 import chanelChat from "./chanelChat";
 let name = "btc5";
@@ -139,9 +138,7 @@ export default {
         channelName: `messageSend.${this.getPortalProviderUUID}.global`,
         eventName: "messageSend"
       },
-      ({ data }) => {
-        console.log("world Listing");
-        console.log(data);
+      ({ data }) => {       
         data.data.forEach(element => {
           this.conversationWorld.push({
             name: element.userName,
@@ -199,7 +196,7 @@ export default {
           if (res.status) {
             this.messageInput = "";
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         }
       } catch (ex) {
@@ -207,7 +204,7 @@ export default {
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
       }
     },
@@ -232,7 +229,7 @@ export default {
           if (res.status) {
             this.messageInput = "";
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         }
       } catch (ex) {
@@ -240,7 +237,7 @@ export default {
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
       }
     }

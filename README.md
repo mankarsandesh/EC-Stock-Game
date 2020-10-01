@@ -54,3 +54,11 @@ Version Features (1.1)
 Version Features (1.2)
 1. User Activity 
 2. With Domian whitelist User can Open Our Game
+
+
+1. RoadMap Issue Solved in Mobile (Done)
+2. Bet Close Counter add on Confirm Box (Done)
+3. Game Rule Translation Update on all page (Done)
+4. Session Logout Popup show on home page in Mobile (Done)
+5. if user Login another window Old Window will be close - Duplicate Login (Working)
+6. After Game Finish Win and Loss Result Show. ( Working )

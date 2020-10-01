@@ -17,12 +17,26 @@
       </v-flex>
 
       <div v-if="isFollowing == 1">
-        <h4 class="subtitle-1 text-uppercase">{{$t("leaderBoard.followBy")}}</h4>
+        <h4 class="subtitle-1 text-uppercase">
+          {{ $t("leaderBoard.followBy") }} <span style="color:red;">*</span>
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-flex lg6 pr-4>
+            <!-- jump here -->
             <v-select
-              :items="followby"
+              :items="[
+                {
+                  id: 1,
+                  name: this.$root.$t('leaderBoard.followByAmount'),
+                  value: 'Amount'
+                },
+                {
+                  id: 2,
+                  name: this.$root.$t('leaderBoard.followByRate'),
+                  value: 'Rate'
+                }
+              ]"
               label="Select Follow type"
               v-model="selectedFollow"
               item-text="name"
@@ -39,7 +53,7 @@
               ]"
               solo
               label="10%"
-              v-if="selectRate"
+              v-if="selectedFollow === 2"
               append-icon="money"
               v-model="rateValue"
               @keypress="onlyNumber"
@@ -51,7 +65,7 @@
               ]"
               solo
               label="100"
-              v-if="selectAmount"
+              v-if="selectedFollow === 1"
               @keypress="onlyNumber"
               v-model="amountValue"
               append-icon="money"
@@ -59,14 +73,17 @@
           </v-flex>
         </v-card-actions>
 
-        <h4 class="subtitle-1 text-uppercase pt-2">{{$t("leaderBoard.autoStop")}}</h4>
+        <h4 class="subtitle-1 text-uppercase pt-2">
+          {{ $t("leaderBoard.autoStop") }} <span style="color:red;">*</span>
+        </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
             <v-radio
+              color="green"
               v-for="n in autoStopFollow"
               :key="n.id"
-              :label="`${n.name}`"
+              :label="n.name"
               :value="n.id"
               v-on:change="changeAmount(n.value)"
             ></v-radio>
@@ -81,7 +98,9 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red">{{ unfollowSign }}</span>
+                <span slot="append" color="red">{{
+                  checkCurrency(this.getUserCurrency)
+                }}</span>
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
@@ -131,10 +150,10 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
+import utils from "~/mixin/utils";
 
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
@@ -212,19 +231,6 @@ export default {
       selectRate: false,
       selectAmount: true,
       selectedFollow: 1,
-      // Default Follow By List
-      followby: [
-        {
-          id: 1,
-          name: this.$root.$t("leaderBoard.followByAmount"),
-          value: "Amount"
-        },
-        {
-          id: 2,
-          name: this.$root.$t("leaderBoard.followByRate"),
-          value: "Rate"
-        }
-      ],
       // Default AUto Stop Follow
       autoStopFollow: [
         {
@@ -259,12 +265,14 @@ export default {
       userId: 0
     };
   },
+  mixins: [utils],
   computed: {
     // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+    ...mapGetters(["getUserCurrency"])
   },
   methods: {
     // Snackbar Notification
@@ -282,18 +290,24 @@ export default {
         !this.autoStop &&
         !this.unfollowValue
       ) {
-        return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.followingType"));
+        return this.setSnackBarMessage(
+          window.$nuxt.$root.$t("follow.followingType")
+        );
       }
 
       // Check Amount Value or Bet Value
       if (this.selectedFollow == 1) {
         this.BetValue = this.amountValue;
         if (this.BetValue > 1000 || this.BetValue < 100)
-          return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.amountShould"));
+          return this.setSnackBarMessage(
+            window.$nuxt.$root.$t("follow.amountShould")
+          );
       } else {
         this.BetValue = this.rateValue;
         if (this.BetValue > 100 || this.BetValue < 10)
-          return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.betRate"));
+          return this.setSnackBarMessage(
+            window.$nuxt.$root.$t("follow.betRate")
+          );
       }
 
       // Auto Stop Follow
@@ -301,17 +315,23 @@ export default {
         case 4:
         case 5:
           if (this.unfollowValue > 1000 || this.unfollowValue < 100) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.autoStop"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.autoStop")
+            );
           }
           break;
         case 3:
           if (this.unfollowValue > 10 || this.unfollowValue < 1) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.daysShould"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.daysShould")
+            );
           }
           break;
         case 6:
           if (this.unfollowValue > 100 || this.unfollowValue < 1) {
-            return this.setSnackBarMessage(window.$nuxt.$root.$t("follow.betsShould"));
+            return this.setSnackBarMessage(
+              window.$nuxt.$root.$t("follow.betsShould")
+            );
           }
           break;
       }
@@ -354,33 +374,28 @@ export default {
           headers: config.header
         });
         if (data.code == 200) {
-             data.message[0] == "User followed successfully."
-              ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed")) 
-              : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));                     
+          data.message[0] == "User followed successfully."
+            ? this.setSnackBarMessage(this.$root.$t("follow.userFollowed"))
+            : this.setSnackBarMessage(this.$root.$t("follow.userUnFollowed"));
         } else {
-          this.setSnackBarMessage(data.message[0]);
+          //For translation of 10 users follow list check.
+          if (
+            data.message[0] == "You cant follow more than 10 users at a time."
+          ) {
+            this.setSnackBarMessage(this.$root.$t("follow.maxFollow"));
+          } else {
+            this.setSnackBarMessage(data.message[0]);
+          }
           // this.errorShow(true, false, true, data.message[0]);
         }
-        this.$emit("followBetClose");       
+        this.$emit("followBetClose");
       } catch (error) {
         console.log(error);
-        log.error(
-          {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/follow/followBet.vue",
-            apiUrl: config.followUser.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     // Change Amount Rate Validation
     changeAmountRate() {
       this.UserfollowType = this.selectedFollow;
-      console.log(this.selectedFollow);
       if (this.selectedFollow == "Amount") {
         this.selectAmount = true;
         this.selectRate = false;

@@ -1,5 +1,5 @@
 <template>
-  <div style="z-index: 100;">
+  <div class="userMenu">
     <v-menu offset-y :close-on-content-click="false" :min-width="180">
       <template v-slot:activator="{ on }">
         <v-btn flat v-on="on">
@@ -13,12 +13,9 @@
             <span v-if="getUserInfo.firstName">
               {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
             </span>
-            <span id="userBalance" @click="getUserBalancePosition()">
-              <animated-number
-                :value="getUserBalance"
-                :formatValue="formatToPrice"
-                class="balance"
-              />
+            <span id="userBalance">
+              <!-- User Balance fetch from state and Socket                  -->
+              <userMainBalance />
             </span>
           </div>
           <i class="fa fa-caret-down" />
@@ -50,31 +47,33 @@
 
     <v-dialog v-model="logoutDialog" persistent max-width="400">
       <v-card class="logout">
-        <v-card-title class="headlineh1">{{$t("logout.sure")}}</v-card-title>
-        <v-card-text
-          >{{$t("logout.bye")}}</v-card-text
-        >
+        <v-card-title class="headlineh1">{{ $t("logout.sure") }}</v-card-title>
+        <v-card-text>{{ $t("logout.bye") }}</v-card-text>
         <v-card-actions>
-          <v-btn class="buttonGreen" text @click="dialogStatus">{{$t("logout.logout")}}</v-btn>
-          <v-btn class="buttonCancel" text @click="logoutDialog = false"
-            >{{$t("logout.cancel")}}</v-btn
-          >
+          <v-btn class="buttonGreen" text @click="dialogStatus">{{
+            $t("logout.logout")
+          }}</v-btn>
+          <v-btn class="buttonCancel" text @click="logoutDialog = false">{{
+            $t("logout.cancel")
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
 </template>
 <script>
-import AnimatedNumber from "animated-number-vue";
 import AppDialogsConfirm from "~/components/dialogsConfirm";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import config from "../config/config.global";
+import Cookies from "~/plugins/js-cookie";
 import secureStorage from "../plugins/secure-storage";
+import utils from "~/mixin/utils";
+import userMainBalance from "~/components/global/userMainBalance";
 
 export default {
   components: {
-    AnimatedNumber,
-    AppDialogsConfirm
+    AppDialogsConfirm,
+    userMainBalance
   },
   data() {
     return {
@@ -86,8 +85,15 @@ export default {
       isShow: ""
     };
   },
+  // Call Helper Function
+  mixins: [utils],
   computed: {
-    ...mapGetters(["getUserInfo", "getUserBalance"]),
+    ...mapGetters([
+      "getUserInfo",
+      "getUserBalance",
+      "getUserUUID",
+      "getUserCurrency"
+    ]),
     imgProfile() {
       if (this.getUserInfo.profileImage == null) {
         return `${this.defaultImage}`;
@@ -100,38 +106,25 @@ export default {
     this.isShow = location.pathname.split("/")[1];
   },
   methods: {
-    getUserBalancePosition() {
-      // console.log(document.getElementById("userBanlance").offsetTop);
-      // console.log(
-      //   document.getElementById("userBanlance").offsetParent.offsetParent
-      //     .offsetLeft
-      // );
-      // console.log(document.getElementById("betRuleButton").offsetTop);
-      // console.log(document.getElementById("betRuleButton").offsetLeft);
-    },
+    ...mapActions(['setUserLogout']),
     getLogout() {
       this.logoutDialog = true;
     },
-    dialogStatus(value) {
-      if (value) {
-        secureStorage.removeItem("AUTH");
+    async dialogStatus() {   
         const URL = secureStorage.getItem("referrerURL");
-        location.href = "http://" + URL;
+        await this.setUserLogout();
         this.dialogConfirm = false;
-      }
-      this.dialogConfirm = false;
-    },
-    formatToPrice(value) {
-      return `$ ${Number(value)
-        .toFixed(2)
-        .toString()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
+        location.href = URL;
     }
   }
 };
 </script>
 
 <style scoped>
+.userMenu {
+  z-index: 100;
+  border-right: 1px solid #dddddd !important;
+}
 .headlineh1 {
   font-weight: 600;
   font-size: 22px;
@@ -144,6 +137,8 @@ export default {
 }
 #userBalance {
   position: relative;
+  color: #003f70;
+  font-size: 16px;
 }
 .v-menu__content {
   border-radius: 15px;

@@ -1,6 +1,5 @@
 import config from "~/config/config.global";
 import stock from "~/data/stockList";
-import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
 
 const state = () => ({
@@ -15,7 +14,15 @@ const mutations = {
     state.stockCategory = payload;
   },
   SET_STOCKS_DATA(state, payload) {
-    state.stocks = payload;
+    let newStocks = [];
+    payload.forEach((element) => {
+      if(element.gameUUID) {
+        newStocks.unshift(element);
+      } else {
+        newStocks.push(element);
+      }
+    });
+    state.stocks = newStocks;
   },
   SET_STOCK_COUNTDOWN(state, payload) {
     state.stockCountdown = payload;
@@ -33,7 +40,8 @@ const actions = {
   async setStocksData(context) {
     try {
       var reqBody = {
-        portalProviderUUID: context.rootState.portalProviderUUID,
+        portalProviderUUID: context.rootState.provider.portalProviderUUID,
+        userUUID : context.rootState.provider.userUUID,
         version: config.version
       };
       var res = await this.$axios.$post(config.getStock.url, reqBody, {
@@ -42,21 +50,10 @@ const actions = {
       if (res.status) {
         context.commit("SET_STOCKS_DATA", res.data);
       } else {
-        throw new Error(config.error.general);
+        throw new Error(window.$nuxt.$root.$t("error.general"));
       }
     } catch (ex) {
       console.log(ex);
-      log.error(
-        {
-          req: reqBody,
-          res,
-          page: "store/stock.js",
-          apiUrl: config.getStock.url,
-          provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-          user: secureStorage.getItem("USER_UUID")
-        },
-        ex.message
-      );
     }
   },
   // Set stocks category
@@ -117,15 +114,15 @@ const getters = {
     return state.stockCategory;
   },
   // Get all stocks data
-  getAllStocks(state) {
-    return state.stocks;
+  getAllStocks(state) {  
+    return state.stocks;    
   },
   // get stock loop by stock name
   getStockLoop: state => stockName => {
     let result = null;
     for (let i = 0; i < state.stocks.length; i++) {
       if (state.stocks[i].stockName === stockName) {
-        result = state.stocks[i].loop;
+        result = state.stocks[i].loop;       
         break;
       }
     }
@@ -148,10 +145,10 @@ const getters = {
       .stockTimestamp;
   },
   // Get timer by stock name
-  getTimerByStockName: state => stockName => {
+  getTimerByStockName: state => stockName => {    
     if (!stockName || state.stockCountdown.length == 0) {
       return null;
-    }
+    }  
     return state.stockCountdown.find(stock => stock.stockName == stockName);
   },
   // Get stock list countdown
@@ -159,7 +156,7 @@ const getters = {
     return state.stockCountdown;
   },
   // Get stock price
-  getStockListPrice(state) {
+  getStockListPrice(state) {    
     return state.stockPrice;
   },
   // Get stock UUID by stock name

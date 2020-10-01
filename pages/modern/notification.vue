@@ -12,7 +12,6 @@
 <script>
 import { mapState } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import notification from "~/components/mobile/notification";
 import secureStorage from "../../plugins/secure-storage";
 
@@ -41,12 +40,12 @@ export default {
   methods: {
     async fetch() {
       try {
-        var reqBody = {
+        let reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(
+        let res = await this.$axios.$post(
           config.getUserNotification.url,
           reqBody,
           {
@@ -55,28 +54,17 @@ export default {
         );
 
         if (res.status) {
-          this.notificationData = res.data;
-          // console.log(this.notificationData,"Notification response");
+          this.notificationData = res.data.reverse();
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/notification",
-            apiUrl: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

@@ -1,63 +1,15 @@
 <template>
   <div>
-    <v-layout style="margin: 0 0 -1% 0px;">
-      <v-flex>
-        <v-layout row wrap class="pt-1">
-          <v-flex xs12 sm12>
-            <v-layout>
-              <v-flex class="text-xs-center" ma-1>
-                <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lastDraw") }}:</span
-                >
-                <v-flex flex-style class="lastdraw">
-                  <h4 class="body-3">
-                    <span
-                      class="text-black"
-                      v-html="$options.filters.lastDraw(getLastDraw)"
-                    ></span>
-                  </h4>
-                </v-flex>
-              </v-flex>
-              <v-flex class="text-xs-center" ma-1>
-                <span class="uppercase-text grey--text"
-                  >{{ $t("msg.betCloseIn") }}:</span
-                >
-                <v-flex flex-style class="betclose">
-                  <h4 class="body-3 uppercase-text text-black">
-                    {{
-                      getTimerByStockName(this.$route.params.id) &&
-                        getTimerByStockName(this.$route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | betclosein(getStockLoop(this.$route.params.id))
-                    }}
-                  </h4>
-                </v-flex>
-              </v-flex>
-              <v-flex class="text-xs-center" ma-1>
-                <span class="uppercase-text grey--text"
-                  >{{ $t("msg.lotteryDraw") }}:</span
-                >
-                <v-flex flex-style class="lottery">
-                  <h4 class="body-3 uppercase-text text-black">
-                    {{
-                      getTimerByStockName(this.$route.params.id) &&
-                        getTimerByStockName(this.$route.params.id)
-                          .gameEndTimeCountDownInSec
-                          | lotterydraw(getStockLoop(this.$route.params.id))
-                    }}
-                  </h4>
-                </v-flex>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-flex>
+    <v-layout>
+      <!-- Last Draw Stock Game -->
+      <lastDraw />
     </v-layout>
 
-    <!-- betting zone -->
-    <v-layout row wrap class="container-bet" mt-3>
+    <!-- bet buttons zone -->
+    <v-layout row wrap class="container-bet" mt-2>
       <v-flex xs12 sm12 md12>
-        <v-layout wrap xs12>
+        <v-layout wrap xs12x>
+          <v-flex v-if="checkBettingResult"></v-flex>
           <v-flex xs1 align-self-center class="text-xs-right">
             <v-icon
               style="font-size:40px;"
@@ -69,19 +21,13 @@
           </v-flex>
 
           <v-flex v-if="isShowTrendMap" xs10 class="text-xs-center py-2">
-            <trendMap
+            <tableTrendMapMobile
               :dataArray="getRoadMap"
               :trendType="trendType"
-              :isFullscreen="false"
-              :key="
-                getRoadMap[getRoadMap.length - 1].stockTimestamp + trendType
-              "
-              :rowTable="4"
-              :lop="30"
-            ></trendMap>
+            />
           </v-flex>
 
-          <v-flex v-else sm10 xs10 class="text-xs-center">
+          <v-flex v-else sm12 xs12 pa-2>
             <span>
               <h3 class="text-uppercase">
                 {{ $t("stockName." + $route.params.id) }} /
@@ -89,22 +35,43 @@
                   {{ getStockLoop(this.$route.params.id) }}
                   {{ $t("msg.minuteGame") }}
                 </span>
+
+                <span
+                  v-show="!isShowTrendMap"
+                  class="roadMap"
+                  @click="changeShowTrendMap()"
+                >
+                  Road Map &nbsp;
+                  <v-icon size="18px" class="roadMapIcon"
+                    >fa fa-arrow-circle-o-right</v-icon
+                  >
+                </span>
               </h3>
-              <span class="text-primary">
-                GAME ID:
+              <span
+                class="text-primary text-xs-center"
+                v-if="getGameUUIDByStockName(this.$route.params.id)"
+              >
+                <b>{{ $t("msg.gameId") }} : </b>
                 <span>{{ getGameUUIDByStockName(this.$route.params.id) }}</span>
               </span>
             </span>
             <v-flex sm12 xs12 class="chartDesgin">
               <v-layout pa-2>
-                <v-flex xs6 class="text-xs-left" v-if="getStockLiveTime(this.stockID)">
+                <v-flex
+                  xs6
+                  class="text-xs-left"
+                  v-if="getStockLiveTime(this.stockID)"
+                >
                   <span class="text-time">{{
                     getStockLiveTime(this.stockID).split(" ")[1]
                   }}</span>
                 </v-flex>
                 <v-spacer></v-spacer>
                 <v-flex xs6 class="text-xs-right">
-                  <span class="text-price">
+                  <span
+                    class="text-price"
+                    v-if="getStockLivePrice(this.stockID)"
+                  >
                     $ {{ getStockLivePrice(this.stockID) }}
                   </span>
                 </v-flex>
@@ -113,29 +80,10 @@
               <chartMobile :stockName="$route.params.id"></chartMobile>
             </v-flex>
           </v-flex>
-
-          <v-flex xs1 align-self-center arrow>
-            <v-icon
-              style="font-size:40px;"
-              v-show="!isShowTrendMap"
-              @click="changeShowTrendMap()"
-              color="#003e70"
-              >keyboard_arrow_right</v-icon
-            >
-          </v-flex>
         </v-layout>
       </v-flex>
 
       <v-flex style="background-color:rgb(242, 244, 255);">
-        <div
-          sm12
-          xs12
-          class="betClose"
-          :style="$vuetify.breakpoint.xs ? 'width: 100%;' : ' width: 50%;'"
-          v-if="checkBetClose"
-        >
-          <p>{{ $t("msg.betClosed") }}</p>
-        </div>
         <v-layout wrap sm6>
           <div class="tab-menu-container">
             <div class="digit-type-container">
@@ -143,36 +91,38 @@
                 class="btn-digit-type first-digit"
                 @click="$refs.firstDigit.click()"
               >
-                <span class="text-pre-line text-white">{{
-                  $t("gamemsg.firstdigits")
-                }}</span>
+                <span class="text-white">{{ $t("gamemsg.firstdigit") }}</span>
               </div>
               <div
                 class="btn-digit-type last-digit"
                 @click="$refs.lastDigit.click()"
               >
-                <span class="text-pre-line text-white">{{
-                  $t("gamemsg.lastdigits")
-                }}</span>
+                <span class="text-white">{{ $t("gamemsg.lastdigit") }}</span>
               </div>
               <div
                 class="btn-digit-type both-digit"
                 @click="$refs.bothDigit.click()"
               >
-                <span class="text-pre-line text-white">{{
-                  $t("gamemsg.bothdigits")
-                }}</span>
+                <span class="text-white">{{ $t("gamemsg.bothdigit") }}</span>
               </div>
               <div
                 class="btn-digit-type two-digit"
                 @click="$refs.twoDigit.click()"
               >
-                <span class="text-pre-line text-white">{{
-                  $t("gamemsg.twodigits")
-                }}</span>
+                <span class="text-white">{{ $t("gamemsg.twodigit") }}</span>
               </div>
             </div>
             <span class="active-tab-mark" :style="leftActive"></span>
+          </div>
+
+          <div
+            sm12
+            xs12
+            class="betClose"
+            :style="$vuetify.breakpoint.xs ? 'width: 100%;' : ' width: 100%;'"
+            v-if="checkBetCloseMobile"
+          >
+            <p>{{ $t("msg.betClosed") }}</p>
           </div>
 
           <v-tabs
@@ -194,6 +144,29 @@
               <span>{{ $t("gamemsg.twodigits") }}</span>
             </v-tab>
 
+            <div xs12 class="multipleChips">
+              <v-avatar
+                class="ml-2"
+                v-for="(item, key) in imgChip"
+                :key="key"
+                @click="setFooterBetAmount(getCoinsModern[key])"
+              >
+                <v-img
+                  class="ma-2"
+                  width="52px"
+                  :src="item.img"
+                  :alt="item.title"
+                >
+                  <span class="setpricechip">{{ getCoinsModern[key] }}</span>
+                </v-img>
+              </v-avatar>
+
+              {{ formatToPrice(getFooterBetAmount) }}
+              <span class="clearButton" @click="clearChipsAmount()">
+                {{ $t("msg.clear") }}
+              </span>
+            </div>
+
             <!-- First Digit -->
             <v-tab-item xs4>
               <v-layout row align-center justify-center>
@@ -202,23 +175,24 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[0].rule,
-                      firstDigit[0].ruleid
+                      firstDigit[0].ruleid,
+                      firstDigit[0].payout
                     )
                   "
                 >
                   <showChipAmount
                     text-center
-                    size="35px"
+                    size="40px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: firstDigit[1].ruleid
+                        ruleID: firstDigit[0].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.big") }}</h5>
-                    <span>5 TO 9</span>
+                    <span>{{ payoutValue(firstDigit[0].payout) }}</span>
                   </v-card-title>
                 </v-card>
                 <v-card
@@ -226,7 +200,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[1].rule,
-                      firstDigit[1].ruleid
+                      firstDigit[1].ruleid,
+                      firstDigit[1].payout
                     )
                   "
                 >
@@ -234,15 +209,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: firstDigit[0].ruleid
+                        ruleID: firstDigit[1].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.small") }}</h5>
-                    <span>0 TO 4</span>
+                    <span>{{ payoutValue(firstDigit[1].payout) }}</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -253,7 +228,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[2].rule,
-                      firstDigit[2].ruleid
+                      firstDigit[2].ruleid,
+                      firstDigit[2].payout
                     )
                   "
                 >
@@ -261,14 +237,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
                         ruleID: firstDigit[2].ruleid
                       })
                     "
                   />
-                  <v-card-title class="o-even">
+                  <v-card-title class="d-block">
                     <h5>{{ $t("gamemsg.odd") }}</h5>
+                    <span>{{ payoutValue(firstDigit[2].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -277,7 +254,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[3].rule,
-                      firstDigit[3].ruleid
+                      firstDigit[3].ruleid,
+                      firstDigit[3].payout
                     )
                   "
                 >
@@ -285,14 +263,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
                         ruleID: firstDigit[3].ruleid
                       })
                     "
                   />
-                  <v-card-title class="o-even">
+                  <v-card-title class="d-block">
                     <h5>{{ $t("gamemsg.even") }}</h5>
+                    <span>{{ payoutValue(firstDigit[3].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -300,8 +279,19 @@
                   class="box-click"
                   @click.stop="drawerderfirst = !drawerderfirst"
                 >
-                  <v-card-title class="o-even">
+                  <showChipAmount
+                    text-center
+                    size="35px"
+                    :amount="
+                      getAmountBetSpecificNumber({
+                        gameUUID: getGameUUIDByStockName($route.params.id),
+                        ruleID: 'firstdigit'
+                      })
+                    "
+                  />
+                  <v-card-title class="d-block">
                     <h5>0-9</h5>
+                    <span>9.82</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -312,7 +302,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[6].rule,
-                      firstDigit[6].ruleid
+                      firstDigit[6].ruleid,
+                      firstDigit[6].payout
                     )
                   "
                 >
@@ -320,15 +311,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
                         ruleID: firstDigit[6].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.low") }}</h5>
-                    <span>0 TO 3</span>
+                    <span>{{ payoutValue(firstDigit[6].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -337,7 +328,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[5].rule,
-                      firstDigit[5].ruleid
+                      firstDigit[5].ruleid,
+                      firstDigit[5].payout
                     )
                   "
                 >
@@ -345,15 +337,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
                         ruleID: firstDigit[5].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.mid") }}</h5>
-                    <span>4 TO 6</span>
+                    <span>{{ payoutValue(firstDigit[5].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -362,7 +354,8 @@
                   @click="
                     showBetDialog(
                       'firstdigit-' + firstDigit[4].rule,
-                      firstDigit[4].ruleid
+                      firstDigit[4].ruleid,
+                      firstDigit[4].payout
                     )
                   "
                 >
@@ -370,15 +363,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
                         ruleID: firstDigit[4].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.high") }}</h5>
-                    <span>7 TO 9</span>
+                    <span>{{ payoutValue(firstDigit[4].payout) }}</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -392,8 +385,9 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'lastdigit-' + lastDigit[1].rule,
-                      lastDigit[1].ruleid
+                      'lastdigit-' + lastDigit[0].rule,
+                      lastDigit[0].ruleid,
+                      lastDigit[0].payout
                     )
                   "
                 >
@@ -401,15 +395,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'lastdigit-small'
+                        ruleID: lastDigit[0].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.small") }}</h5>
-                    <span>0 TO 4</span>
+                    <span>{{ payoutValue(lastDigit[0].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -417,8 +411,9 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'lastdigit-' + lastDigit[0].rule,
-                      lastDigit[0].ruleid
+                      'lastdigit-' + lastDigit[1].rule,
+                      lastDigit[1].ruleid,
+                      lastDigit[1].payout
                     )
                   "
                 >
@@ -426,15 +421,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'lastdigit-big'
+                        ruleID: lastDigit[1].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.big") }}</h5>
-                    <span>5 TO 9</span>
+                    <span>{{ payoutValue(lastDigit[1].payout) }}</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -445,7 +440,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[2].rule,
-                      lastDigit[2].ruleid
+                      lastDigit[2].ruleid,
+                      lastDigit[2].payout
                     )
                   "
                 >
@@ -453,14 +449,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'lastdigit-odd'
+                        ruleID: lastDigit[2].ruleid
                       })
                     "
                   />
-                  <v-card-title class="o-even">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.odd") }}</h5>
+                    <span>{{ payoutValue(lastDigit[2].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -469,7 +466,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[3].rule,
-                      lastDigit[3].ruleid
+                      lastDigit[3].ruleid,
+                      lastDigit[3].payout
                     )
                   "
                 >
@@ -477,14 +475,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'lastdigit-even'
+                        ruleID: lastDigit[3].ruleid
                       })
                     "
                   />
-                  <v-card-title class="o-even">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.even") }}</h5>
+                    <span>{{ payoutValue(lastDigit[3].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -492,8 +491,19 @@
                   class="box-click"
                   @click.stop="drawerderlast = !drawerderlast"
                 >
-                  <v-card-title class="o-even">
+                  <showChipAmount
+                    text-center
+                    size="35px"
+                    :amount="
+                      getAmountBetSpecificNumber({
+                        gameUUID: getGameUUIDByStockName($route.params.id),
+                        ruleID: 'lastdigit'
+                      })
+                    "
+                  />
+                  <v-card-title class="d-block">
                     <h5>0-9</h5>
+                    <span>9.82</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -504,7 +514,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[6].rule,
-                      lastDigit[6].ruleid
+                      lastDigit[6].ruleid,
+                      lastDigit[6].payout
                     )
                   "
                 >
@@ -512,15 +523,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'lastdigit-low'
+                        ruleID: lastDigit[6].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.low") }}</h5>
-                    <span>0 TO 3</span>
+                    <span>{{ payoutValue(lastDigit[6].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -529,7 +540,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[5].rule,
-                      lastDigit[5].ruleid
+                      lastDigit[5].ruleid,
+                      lastDigit[5].payout
                     )
                   "
                 >
@@ -537,15 +549,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'lastdigit-mid'
+                        ruleID: lastDigit[5].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.mid") }}</h5>
-                    <span>4 TO 6</span>
+                    <span>{{ payoutValue(lastDigit[5].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -554,7 +566,8 @@
                   @click="
                     showBetDialog(
                       'lastdigit-' + lastDigit[4].rule,
-                      lastDigit[4].ruleid
+                      lastDigit[4].ruleid,
+                      lastDigit[4].payout
                     )
                   "
                 >
@@ -562,15 +575,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'lastdigit-high'
+                        ruleID: lastDigit[4].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.high") }}</h5>
-                    <span>7 TO 9</span>
+                    <span>{{ payoutValue(lastDigit[4].payout) }}</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -585,7 +598,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[2].rule,
-                      bothDigit[2].ruleid
+                      bothDigit[2].ruleid,
+                      bothDigit[2].payout
                     )
                   "
                 >
@@ -593,15 +607,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'bothdigit-small'
+                        ruleID: bothDigit[2].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.small") }}</h5>
-                    <span>0 TO 9</span>
+                    <span>{{ payoutValue(bothDigit[2].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -610,7 +624,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[1].rule,
-                      bothDigit[1].ruleid
+                      bothDigit[1].ruleid,
+                      bothDigit[1].payout
                     )
                   "
                 >
@@ -618,15 +633,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'bothdigit-tie'
+                        ruleID: bothDigit[1].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.tie") }}</h5>
-                    <span>0</span>
+                    <span>{{ payoutValue(bothDigit[1].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -635,7 +650,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[0].rule,
-                      bothDigit[0].ruleid
+                      bothDigit[0].ruleid,
+                      bothDigit[0].payout
                     )
                   "
                 >
@@ -643,15 +659,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'bothdigit-big'
+                        ruleID: bothDigit[0].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.big") }}</h5>
-                    <span>9 TO 18</span>
+                    <span>{{ payoutValue(bothDigit[0].payout) }}</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -662,7 +678,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[3].rule,
-                      bothDigit[3].ruleid
+                      bothDigit[3].ruleid,
+                      bothDigit[3].payout
                     )
                   "
                 >
@@ -670,14 +687,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'bothdigit-odd'
+                        ruleID: bothDigit[3].ruleid
                       })
                     "
                   />
-                  <v-card-title class="o-even">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.odd") }}</h5>
+                    <span>{{ payoutValue(bothDigit[3].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -686,7 +704,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[4].rule,
-                      bothDigit[4].ruleid
+                      bothDigit[4].ruleid,
+                      bothDigit[4].payout
                     )
                   "
                 >
@@ -694,14 +713,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'bothdigit-even'
+                        ruleID: bothDigit[4].ruleid
                       })
                     "
                   />
-                  <v-card-title class="o-even">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.even") }}</h5>
+                    <span>{{ payoutValue(bothDigit[4].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -709,8 +729,19 @@
                   class="box-click"
                   @click.stop="drawerder018 = !drawerder018"
                 >
-                  <v-card-title class="o-even">
+                  <showChipAmount
+                    text-center
+                    size="35px"
+                    :amount="
+                      getAmountBetSpecificNumber({
+                        gameUUID: getGameUUIDByStockName($route.params.id),
+                        ruleID: 'bothdigit'
+                      })
+                    "
+                  />
+                  <v-card-title class="d-block ">
                     <h5>0-18</h5>
+                    <span>18.64</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -721,7 +752,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[7].rule,
-                      bothDigit[7].ruleid
+                      bothDigit[7].ruleid,
+                      bothDigit[7].payout
                     )
                   "
                 >
@@ -729,15 +761,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'bothdigit-low'
+                        ruleID: bothDigit[7].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.low") }}</h5>
-                    <span>0 TO 5</span>
+                    <span>{{ payoutValue(bothDigit[7].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -746,7 +778,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[6].rule,
-                      bothDigit[6].ruleid
+                      bothDigit[6].ruleid,
+                      bothDigit[6].payout
                     )
                   "
                 >
@@ -754,15 +787,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'bothdigit-mid'
+                        ruleID: bothDigit[6].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.mid") }}</h5>
-                    <span>6 to 11</span>
+                    <span>{{ payoutValue(bothDigit[6].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -771,7 +804,8 @@
                   @click="
                     showBetDialog(
                       'bothdigit-' + bothDigit[5].rule,
-                      bothDigit[5].ruleid
+                      bothDigit[5].ruleid,
+                      bothDigit[5].payout
                     )
                   "
                 >
@@ -779,15 +813,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'bothdigit-high'
+                        ruleID: bothDigit[5].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.high") }}</h5>
-                    <span>12 to 18</span>
+                    <span>{{ payoutValue(bothDigit[5].payout) }}</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -802,7 +836,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + bothDigit[2].rule,
-                      twoDigit[2].ruleid
+                      twoDigit[2].ruleid,
+                      twoDigit[2].payout
                     )
                   "
                 >
@@ -810,15 +845,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'twodigit-small'
+                        ruleID: twoDigit[2].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.small") }}</h5>
-                    <span>00 TO 49</span>
+                    <span>{{ payoutValue(twoDigit[2].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -827,7 +862,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[1].rule,
-                      twoDigit[1].ruleid
+                      twoDigit[1].ruleid,
+                      twoDigit[1].payout
                     )
                   "
                 >
@@ -835,15 +871,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'twodigit-tie'
+                        ruleID: twoDigit[1].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.tie") }}</h5>
-                    <span>0</span>
+                    <span>{{ payoutValue(twoDigit[1].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -852,7 +888,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[0].rule,
-                      twoDigit[0].ruleid
+                      twoDigit[0].ruleid,
+                      twoDigit[0].payout
                     )
                   "
                 >
@@ -860,15 +897,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'twodigit-big'
+                        ruleID: twoDigit[0].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.big") }}</h5>
-                    <span>50 TO 99</span>
+                    <span>{{ payoutValue(twoDigit[0].payout) }}</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -878,7 +915,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[3].rule,
-                      twoDigit[3].ruleid
+                      twoDigit[3].ruleid,
+                      twoDigit[3].payout
                     )
                   "
                 >
@@ -886,14 +924,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'twodigit-odd'
+                        ruleID: twoDigit[3].ruleid
                       })
                     "
                   />
-                  <v-card-title class="o-even">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.odd") }}</h5>
+                    <span>{{ payoutValue(twoDigit[3].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -902,7 +941,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[4].rule,
-                      twoDigit[4].ruleid
+                      twoDigit[4].ruleid,
+                      twoDigit[4].payout
                     )
                   "
                 >
@@ -910,14 +950,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'twodigit-even'
+                        ruleID: twoDigit[4].ruleid
                       })
                     "
                   />
-                  <v-card-title class="o-even">
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.even") }}</h5>
+                    <span>{{ payoutValue(twoDigit[4].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -925,8 +966,20 @@
                   class="box-click"
                   @click.stop="drawerder099 = !drawerder099"
                 >
-                  <v-card-title class="o-even">
+                  <showChipAmount
+                    text-center
+                    size="35px"
+                    :amount="
+                      getAmountBetSpecificNumber({
+                        gameUUID: getGameUUIDByStockName($route.params.id),
+                        ruleID: 'twodigit'
+                      })
+                    "
+                  />
+
+                  <v-card-title class="d-block">
                     <h5>00-99</h5>
+                    <span> 98.02</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -936,33 +989,9 @@
                   class="box-click"
                   @click="
                     showBetDialog(
-                      'twodigit-' + twoDigit[8].rule,
-                      twoDigit[8].ruleid
-                    )
-                  "
-                >
-                  <showChipAmount
-                    text-center
-                    size="35px"
-                    :amount="
-                      getBetAmountRuleID({
-                        gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'twodigit-low'
-                      })
-                    "
-                  />
-                  <v-card-title class="d-block">
-                    <h5>{{ $t("gamemsg.low") }}</h5>
-                    <span>0 TO 33</span>
-                  </v-card-title>
-                </v-card>
-
-                <v-card
-                  class="box-click"
-                  @click="
-                    showBetDialog(
                       'twodigit-' + twoDigit[7].rule,
-                      twoDigit[7].ruleid
+                      twoDigit[7].ruleid,
+                      twoDigit[7].payout
                     )
                   "
                 >
@@ -970,15 +999,15 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'twodigit-mid'
+                        ruleID: twoDigit[7].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
-                    <h5>{{ $t("gamemsg.mid") }}</h5>
-                    <span>34 to 66</span>
+                  <v-card-title class="d-block ">
+                    <h5>{{ $t("gamemsg.low") }}</h5>
+                    <span>{{ payoutValue(twoDigit[7].payout) }}</span>
                   </v-card-title>
                 </v-card>
 
@@ -987,7 +1016,8 @@
                   @click="
                     showBetDialog(
                       'twodigit-' + twoDigit[6].rule,
-                      twoDigit[6].ruleid
+                      twoDigit[6].ruleid,
+                      twoDigit[6].payout
                     )
                   "
                 >
@@ -995,15 +1025,41 @@
                     text-center
                     size="35px"
                     :amount="
-                      getBetAmountRuleID({
+                      getAmountMultiGameBet({
                         gameUUID: getGameUUIDByStockName($route.params.id),
-                        ruleID: 'twodigit-high'
+                        ruleID: twoDigit[6].ruleid
                       })
                     "
                   />
-                  <v-card-title class="d-block">
+                  <v-card-title class="d-block ">
+                    <h5>{{ $t("gamemsg.mid") }}</h5>
+                    <span>{{ payoutValue(twoDigit[6].payout) }}</span>
+                  </v-card-title>
+                </v-card>
+
+                <v-card
+                  class="box-click"
+                  @click="
+                    showBetDialog(
+                      'twodigit-' + twoDigit[5].rule,
+                      twoDigit[5].ruleid,
+                      twoDigit[5].payout
+                    )
+                  "
+                >
+                  <showChipAmount
+                    text-center
+                    size="35px"
+                    :amount="
+                      getAmountMultiGameBet({
+                        gameUUID: getGameUUIDByStockName($route.params.id),
+                        ruleID: twoDigit[5].ruleid
+                      })
+                    "
+                  />
+                  <v-card-title class="d-block ">
                     <h5>{{ $t("gamemsg.high") }}</h5>
-                    <span>66 to 99</span>
+                    <span>{{ payoutValue(twoDigit[5].payout) }}</span>
                   </v-card-title>
                 </v-card>
               </v-layout>
@@ -1012,11 +1068,37 @@
           </v-tabs>
         </v-layout>
 
-        <div class="bettingFooter justify-center sm10 xs10">
-          <span>
-            {{ $t("msg.totalBet") }}:
-            {{ formatToPrice(getAllBettingAmount) }}
-          </span>
+        <div class="bettingFooter" sm12 xs12>
+          <v-flex sm6 xs6 pl-2>
+            <v-flex
+              >{{ $t("msg.totalAmount") }}:
+              <!-- {{ formatToPrice(getBettingAmount) }} -->
+              {{
+                formatToPrice(
+                  getAllSelectedBettingAmount(getGameUUIDByStockName($route.params.id)) 
+                )
+              }}</v-flex
+            >
+            <v-flex>
+              {{ $t("msg.confirmBet") }} :
+              {{
+                formatToPrice(
+                  getConfirmMultipleBetTotalAmount(getGameUUIDByStockName($route.params.id)))
+              }}
+            </v-flex>
+          </v-flex>
+          <v-flex sm6 xs6 class="pt-1">
+            <v-btn
+              :disabled="!parseInt(this.getTempMultiGameBetAmount)"
+              class="confimButton"
+              small
+              @click="reviewMultiplebet()"
+              >{{ $t("msg.confirmBet") }}</v-btn
+            >
+            <v-btn class="cancelButton" small @click="cancelBet()">
+              {{ $t("msg.cancel") }}
+            </v-btn>
+          </v-flex>
         </div>
       </v-flex>
     </v-layout>
@@ -1037,13 +1119,16 @@
           class="text-center mx-auto pa-2 round-3"
           :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
         >
+          <!-- Last Draw Stock Game -->
+          <lastDraw />
           <div class="d-block text-center" style="color:#000">
             <p class="text-uppercase">
-              {{ $t("msg.stockName") }} :
+              <b> {{ $t("msg.stockName") }} : </b>
               {{ $t(`stockName.${$route.params.id}`) }}
-              {{ $t("msg.payout") }}:
-              {{ odd }}
+              <b>{{ $t("msg.payout") }}:</b>
+              {{ Number(odd).toFixed(2) }}
             </p>
+            <!-- jump here -->
             <p class="text-uppercase test-time-loop">
               {{ getStockLoop(this.$route.params.id) }}
               {{ $t("msg.minuteGame") }}
@@ -1080,12 +1165,16 @@
           <input
             class="round-2 text-input"
             type="number"
-            readonly
+            :min="minimumBetAmount"
             label="$0"
             v-model="betAmount"
+            placeholder="0"
           />
           <br />
-          {{ $t("msg.min") }} = $100 ;{{ $t("msg.max") }} = $5000
+          {{ $t("msg.min") }} = ${{ this.minimumBetAmount }} ;{{
+            $t("msg.max")
+          }}
+          = $10,000
         </div>
 
         <div xs12 class="px-2 text-center mt-3">
@@ -1099,6 +1188,109 @@
       </div>
     </v-dialog>
     <!-- price: "200" -->
+    <!-- Review Multiple  -->
+    <v-dialog
+      v-model="reviewMultipleBetDialog"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      light
+    >
+      <v-card tile>
+        <v-toolbar card dark style="background-color:#2cb13b;">
+          <v-btn icon dark @click="reviewMultipleBetDialog = false">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>{{ $t("betting.reviewYourBet") }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <div
+          class="mx-auto round-3 mt-2"
+          :style="$vuetify.breakpoint.xs ? 'width: 100%;' : 'width: 60%;'"
+          color="#ffffff"
+        >
+          <div xs12 class="px-2 text-center mt-3">
+            <v-layout row wrap>
+              <v-flex class="text-right" xs6 md6>
+                <h3>{{ $t("msg.totalBet") }}:</h3>
+              </v-flex>
+              <v-flex class="text-center" xs6 md6>
+                <h4>{{ selectBetting.length }} {{ $t("leaderBoard.bets") }}</h4>
+              </v-flex>
+              <v-flex class="text-right" xs6 md6>
+                <h3>{{ $t("msg.totalAmount") }}:</h3>
+              </v-flex>
+              <v-flex class="text-center" xs6 md6>
+                <h4>${{ totalBetAmount }}</h4>
+              </v-flex>
+            </v-layout>
+          </div>
+
+          <div xs12 class="px-2 text-center mt-3">
+            <v-btn class="buttonGreen" @click="confirmBet">{{
+              $t("betting.placeBet")
+            }}</v-btn>
+            <v-btn class="btn_cancel" @click="cancelBet()">{{
+              $t("betting.cancelBet")
+            }}</v-btn>
+          </div>
+
+          <div xs12 class="text-center">
+            <div class="d-block text-center" style="color:#000">
+              <p>{{ $t("betting.pleaseConfirm") }}</p>
+            </div>
+          </div>
+          <hr />
+
+          <div xs12 class="text-center  pa-3">
+            <!-- Last Draw Stock Game -->
+            <lastDraw />
+            <template v-for="(data, index) in getAllSelectedBetDataGameWise(getGameUUIDByStockName($route.params.id))" class="pa-0">
+              <table class="table-review" :key="data.index">
+                <tr>
+                  <td class="text-right">{{ $t("msg.stockName") }}:</td>
+                  <td class="text-left pl-2 text-color-blue">
+                    {{ data.stockName }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-right">{{ $t("msg.gameId") }}:</td>
+                  <td class="text-left pl-2 text-color-blue">
+                    {{ data.gameUUID }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-right">{{ $t("gameType") }}:</td>
+                  <td class="text-left pl-2 text-color-blue">
+                    {{ getStockLoop(data.stockName) }}
+                    {{ $t("msg.minuteGame") }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-right">{{ $t("msg.bettingOn") }}:</td>
+                  <td class="text-left pl-2 text-color-blue">
+                    {{ data.class }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-right">{{ $t("msg.payout") }}:</td>
+                  <td class="text-left pl-2 text-color-blue">
+                    {{ Number(odd).toFixed(2) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-right">{{ $t("msg.amount") }}:</td>
+                  <td class="text-left pl-2 text-color-green">
+                    ${{ data.betAmount }}
+                  </td>
+                </tr>
+              </table>
+            </template>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+    <!-- Review Multiple bet End -->
     <!-- Review bet  -->
     <v-dialog
       v-model="reviewbetDialog"
@@ -1121,11 +1313,13 @@
           color="#ffffff"
         >
           <div xs12 class="text-center mt-5 pa-3">
+            <!-- Last Draw Stock Game -->
+            <lastDraw />
             <table class="table-review">
               <tr>
                 <td class="text-right">{{ $t("msg.stockName") }}:</td>
                 <td class="text-left pl-2 text-color-blue">
-                  {{ $t(`stockName.${$route.params.id}`) }}
+                  <b>{{ $t(`stockName.${$route.params.id}`) }}</b>
                 </td>
               </tr>
               <tr>
@@ -1143,15 +1337,29 @@
               </tr>
               <tr>
                 <td class="text-right">{{ $t("msg.bettingOn") }}:</td>
-                <td class="text-left pl-2 text-color-blue">{{ gameRule }}</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{
+                    isNaN(gameRule.split("-")[1])
+                      ? $t("gamemsg." + gameRule.split("-")[0]) +
+                        "-" +
+                        $t("gamemsg." + gameRule.split("-")[1])
+                      : $t("gamemsg." + gameRule.split("-")[0]) +
+                        "-" +
+                        gameRule.split("-")[1]
+                  }}
+                </td>
               </tr>
               <tr>
                 <td class="text-right">{{ $t("msg.payout") }}:</td>
-                <td class="text-left pl-2 text-color-blue">1.95</td>
+                <td class="text-left pl-2 text-color-blue">
+                  {{ Number(odd).toFixed(2) }}
+                </td>
               </tr>
               <tr>
                 <td class="text-right">{{ $t("msg.amount") }}:</td>
-                <td class="text-left pl-2 text-color-green">{{ betAmount }}</td>
+                <td class="text-left pl-2 text-color-green">
+                  ${{ betAmount }}
+                </td>
               </tr>
             </table>
           </div>
@@ -1201,15 +1409,22 @@
             xs3
             v-for="(item, index) in firstDigitNumber"
             :key="index"
-            @click="showBetDialog(`firstdigit-${index}`, item.ruleid)"
+            @click="
+              showBetDialog(
+                `firstdigit-${index}`,
+                item.ruleid,
+                index + 30,
+                true
+              )
+            "
           >
             <showChipAmount
               text-center
               size="35px"
               :amount="
-                getBetAmountRuleID({
-                  stockId: 'btc1',
-                  gameRule: `firstdigit-${index}`
+                getAmountBetSpecificNumber({
+                  gameUUID: getGameUUIDByStockName($route.params.id),
+                  ruleID: `firstdigit-${index}`
                 })
               "
             />
@@ -1240,15 +1455,17 @@
             xs3
             v-for="(item, index) in lastDigitNumber"
             :key="index"
-            @click="showBetDialog(`lastdigit-${index}`, item.ruleid)"
+            @click="
+              showBetDialog(`lastdigit-${index}`, item.ruleid, index + 40, true)
+            "
           >
             <showChipAmount
               text-center
               size="35px"
               :amount="
-                getBetAmountRuleID({
-                  stockId: 'btc1',
-                  gameRule: `lastdigit-${index}`
+                getAmountBetSpecificNumber({
+                  gameUUID: getGameUUIDByStockName($route.params.id),
+                  ruleID: `lastdigit-${index}`
                 })
               "
             />
@@ -1280,15 +1497,17 @@
             xs3
             v-for="(item, index) in bothDigitNumber"
             :key="index"
-            @click="showBetDialog(`bothdigit-${index}`, item.ruleid)"
+            @click="
+              showBetDialog(`bothdigit-${index}`, item.ruleid, index + 50, true)
+            "
           >
             <showChipAmount
               text-center
               size="35px"
               :amount="
-                getBetAmountRuleID({
-                  stockId: 'btc1',
-                  gameRule: `bothdigit-${index}`
+                getAmountBetSpecificNumber({
+                  gameUUID: getGameUUIDByStockName($route.params.id),
+                  ruleID: `bothdigit-${index}`
                 })
               "
             />
@@ -1299,9 +1518,9 @@
         </v-layout>
       </v-container>
     </v-navigation-drawer>
+
     <!-- 0 -99 -->
     <!-- two digit -->
-
     <v-navigation-drawer
       class="drawer-asidebar"
       right
@@ -1334,7 +1553,9 @@
                     @click="
                       showBetDialog(
                         `twodigit-${index < 10 ? '0' + index : index}`,
-                        item.ruleid
+                        item.ruleid,
+                        index + 69,
+                        true
                       )
                     "
                   >
@@ -1342,11 +1563,9 @@
                       text-center
                       size="35px"
                       :amount="
-                        getBetAmountRuleID({
+                        getAmountBetSpecificNumber({
                           gameUUID: getGameUUIDByStockName($route.params.id),
-                          gameRule: `twodigit-${
-                            index < 10 ? '0' + index : index
-                          }`
+                          ruleID: `twodigit-${index < 10 ? '0' + index : index}`
                         })
                       "
                     />
@@ -1368,7 +1587,13 @@
                     v-for="(item, index) in twoDigitNumber"
                     :key="index"
                     v-show="index > 19 && index < 40"
-                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                    @click="
+                      showBetDialog(
+                        `twodigit-${index}`,
+                        item.ruleid,
+                        index + 69
+                      )
+                    "
                   >
                     <showChipAmount
                       text-center
@@ -1398,7 +1623,13 @@
                     v-for="(item, index) in twoDigitNumber"
                     :key="index"
                     v-show="index > 39 && index < 60"
-                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                    @click="
+                      showBetDialog(
+                        `twodigit-${index}`,
+                        item.ruleid,
+                        index + 69
+                      )
+                    "
                   >
                     <showChipAmount
                       text-center
@@ -1428,7 +1659,13 @@
                     v-for="(item, index) in twoDigitNumber"
                     :key="index"
                     v-show="index > 59 && index < 80"
-                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                    @click="
+                      showBetDialog(
+                        `twodigit-${index}`,
+                        item.ruleid,
+                        index + 69
+                      )
+                    "
                   >
                     <showChipAmount
                       text-center
@@ -1458,7 +1695,13 @@
                     v-for="(item, index) in twoDigitNumber"
                     :key="index"
                     v-show="index > 79"
-                    @click="showBetDialog(`twodigit-${index}`, item.ruleid)"
+                    @click="
+                      showBetDialog(
+                        `twodigit-${index}`,
+                        item.ruleid,
+                        index + 69
+                      )
+                    "
                   >
                     <showChipAmount
                       text-center
@@ -1488,24 +1731,29 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
 import gameRule from "~/data/gameRule";
-
-import chartMobile from "~/components/mobile/chartMobile";
-import payout from "~/data/payout";
-import showChipAmount from "~/components/modern/showChipAmount";
-import trendMap from "~/components/modern/trendMap";
-import config from "~/config/config.global";
 import chips from "~/data/chips";
-import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
 
+import { mapGetters, mapActions, mapState, mapMutations } from "vuex";
+import chartMobile from "~/components/mobile/chartMobile";
+import showChipAmount from "~/components/modern/showChipAmount";
+import config from "~/config/config.global";
+import secureStorage from "../../../plugins/secure-storage";
+import Betting from "~/helpers/betting";
+import { BetResult } from "~/mixin/betResult";
+import { itemBetting } from "~/mixin/itemBetting";
+import tableTrendMapMobile from "~/components/modern/tableTrendMapMobile"; // Road Map
+import lastDraw from "~/components/mobile/lastDraw";
+import jsonResult from "~/data/result.json";
+import utils from "~/mixin/utils";
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
+  mixins: [BetResult, itemBetting],
   data() {
     return {
+      isSending: false,
       leftActive: {
         left: "2%"
       },
@@ -1521,15 +1769,11 @@ export default {
       // rule id
       trendType: "firstdigit",
       isShowTrendMap: false,
-      payout_high_mid_low: payout.high_mid_low,
-      payout_big_small: payout.big_small,
-      payout_09: payout._09,
-      payout_18: payout._18,
-      payout_99: payout._99,
 
       stockID: "",
       bettingDialog: false,
       reviewbetDialog: false,
+      reviewMultipleBetDialog: false,
       dialog: false,
       notifications: false,
       sound: true,
@@ -1543,20 +1787,29 @@ export default {
       gameRule: "null",
       confirmDisabled: false,
       ruleid: "",
-      betAmount: 0
+      betAmount: 100,
+      specific: true,
+      winBetPop: false,
+      winBetInfo: [],
+      resultData: "",
+      winBetData: [],
+      minimumBetAmount: 10
     };
   },
+  // stop listen on  socket
   beforeDestroy() {
     this.stopListenSocket(
-      `roadMap.${this.getStockUUIDByStockName(this.routeParams)}.${
+      `roadMap.${this.getStockUUIDByStockName(this.$route.params.id)}.${
         this.getPortalProviderUUID
       }`
     );
   },
-  created() {
-    // get road map data from API
+  mounted() {
+    //  this.getTimerByStockName(this.$route.params.id).gameEndTimeCountDownInSec > 50 ? this.winBetPop = true : this.winBetPop = false
+    this.stockID = this.$route.params.id;
+
     this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
-    // live road map from socket
+    // Live Road Map From Socket
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -1566,42 +1819,38 @@ export default {
       },
       ({ data }) => {
         try {
-          var logData = data;
           if (data.status) {
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.$route.params.id
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "pages/modern/betting/_id.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
   },
-  mounted() {
-    this.stockID = this.$route.params.id;
-    console.log(this.stockID);
-  },
   components: {
+    lastDraw,
     chartMobile,
-    trendMap,
-    showChipAmount
+    showChipAmount,
+    tableTrendMapMobile
   },
   computed: {
     ...mapGetters([
+      "getAllSelectedBetDataGameWise",
+      "getUserCurrency",
+      "getMultiGameBet",
+      "getPreviousGameID",
+      "getConfirmMultipleBetTotalAmount",
+      "getAllSelectedBettingAmount",
+      "selectBetting",
+      "getIsSendBetting",
+      "getUserBalance",
+      "getTempMultiGameBetAmount",
+      "getFooterBetAmount",
+      "getAmountBetSpecificNumber",
+      "getAmountMultiGameBet",
       "getStockLivePrice",
       "getStockLiveTime",
       "getLastDraw",
@@ -1611,65 +1860,223 @@ export default {
       "getGameUUIDByStockName",
       "getCheckStock",
       "getCoinsModern",
-      "getAllBettingAmount",
+      "getBettingAmount",
       "getBetAmountRuleID",
       "getRoadMap",
       "getStockUUIDByStockName",
-      "getPortalProviderUUID"
+      "getPortalProviderUUID",
+      "getLocale",
+      "gettempMultiGameBetData"
     ]),
-    // check bet close using stockOpenOrClosed and timer
-    checkBetClose() {
-      if (
-        this.getTimerByStockName(this.stockID) &&
-        this.getTimerByStockName(this.stockID).stockStatus === "Closed"
+    totalBetAmount() {
+      let totalAmount = null;
+      this.selectBetting.map(item => {
+        totalAmount += item.betAmount;
+      });
+      return totalAmount;
+    },
+    checkBettingResult() {
+      // Stock Time
+      const stockTime = this.getTimerByStockName(this.stockID);
+
+      // New Game Open Old Game Stock Result Popup
+      if (this.getStockLoop(this.stockID) === 5) {
+        var resultSecond = 296;
+      } else {
+        var resultSecond = 56;
+      }
+      if (stockTime && stockTime.gameEndTimeCountDownInSec == resultSecond) {
+        this.resultFetch(); // Fetch Previous Game Result
+      } else if (
+        stockTime &&
+        stockTime.gameEndTimeCountDownInSec <= resultSecond - 2 &&
+        stockTime.gameEndTimeCountDownInSec >= resultSecond - 6
       ) {
+        // Update Previous Game ID
+        this.setNewGameId(this.getGameUUIDByStockName(this.$route.params.id));
+        this.winBetInfo = "";
+      }
+    },
+    // check bet close using stockOpenOrClosed and timer
+    checkBetCloseMobile() {
+      const stockTime = this.getTimerByStockName(this.stockID);
+      if (stockTime && stockTime.stockStatus === "Closed") {
         return true;
+      }
+
+      if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+        this.clearDataMultiGameBetSend();
+        this.clearTempMultiGameBetData();
+
+        this.clearItemBetting();
+
+        secureStorage.removeItem("itemBetting");
       }
       // check 1 or 5 loop
       if (this.getStockLoop(this.stockID) === 5) {
-        if (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec ==
-            240
-        ) {
-          this.clearDataMultiGameBet();
+        if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+          this.closeReviewTab(); // Close review Tab and Conform Bet pop
+          this.clearDataMultiGameBet(5);
         }
-        return (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 60
-        );
+        if (stockTime && stockTime.gameEndTimeCountDownInSec <= 60) {
+          if (stockTime && stockTime.gameEndTimeCountDownInSec === 60) {
+            this.CLEAR_TEMP_CHIPS_IMAGE();
+            this.closeReviewTab(); // Close review Tab and Conform Bet pop
+            $(".closepopper").click();
+            this.clearTempMultiGameBetData();
+          }
+          return true;
+        } else {
+          return false;
+        }
       } else {
-        if (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec == 40
-        ) {
-          this.clearDataMultiGameBet();
+        if (stockTime && stockTime.gameEndTimeCountDownInSec === 0) {
+          this.clearDataMultiGameBet(1);
+          this.closeReviewTab(); // Close review Tab and Conform Bet pop
         }
-        return (
-          this.getTimerByStockName(this.stockID) &&
-          this.getTimerByStockName(this.stockID).gameEndTimeCountDownInSec <= 20
-        );
+        if (stockTime && stockTime.gameEndTimeCountDownInSec <= 20) {
+          if (stockTime && stockTime.gameEndTimeCountDownInSec === 20) {
+            this.CLEAR_TEMP_CHIPS_IMAGE();
+            this.closeReviewTab(); // Close review Tab and Conform Bet pop
+            Betting.clearBettingSelect(this.selectBetting);
+            this.CLEAR_SELECT_BETTING();
+            this.setCollegeButtonNumberParent(
+              "Betting are not confirm have to clear"
+            ); // make the button collage
+            $(".closepopper").click();
+            this.clearTempMultiGameBetData();
+          }
+          return true;
+        } else {
+          return false;
+        }
+        // return true;
       }
     }
   },
   methods: {
+    ...mapMutations(["CLEAR_SELECT_BETTING", "CLEAR_TEMP_CHIPS_IMAGE"]),
     ...mapActions([
+      "clearPreviousGameId",
+      "setNewGameId",
+      "sendBetting",
+      "setTempMultiGameBetData",
+      "clearDataMultiGameBetSend",
       "setFooterBetAmount",
       "pushDataOnGoingBet",
       "clearDataMultiGameBet",
       "setLiveRoadMap",
       "setRoadMap",
       "setUserData",
-      "setSnackBarMessage"
+      "setSnackBarMessage",
+      "clearTempMultiGameBetData",
+      "clearTempChips",
+      "clearBetValueFooterBet",
+      "clearItemBetting"
     ]),
+    // Place Bet Last Step
+    async resultFetch() {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          gameUUID: this.getPreviousGameID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.checkBetStatus.url, reqBody, {
+          headers: config.header
+        });
+        if (res.code == 200 && res.data.length > 0) {
+          let resultStatus = {
+            win: 0,
+            loss: 0
+          };
+          let resultData = [];
+          // Sum Same Rule Name BetAmount
+          res.data.forEach(function(a) {
+            if (!this[a.ruleName]) {
+              this[a.ruleName] = {
+                ruleName: a.ruleName,
+                betAmount: 0,
+                betResult: a.betResult,
+                rollingAmount: 0
+              };
+              resultData.push(this[a.ruleName]);
+            }
+            this[a.ruleName].betAmount += a.betAmount;
+            this[a.ruleName].rollingAmount += a.rollingAmount;
+          }, Object.create(null));
 
+          // Sperate Win and Loss Amount Rule Wise
+          resultData.forEach(element => {
+            const result = element.betResult == "Win" ? "green" : "red";
+            const winAmount =
+              element.rollingAmount == 0
+                ? "-$" + element.betAmount
+                : "+$" + element.rollingAmount;
+
+            if (element.betResult == "Win") {
+              resultStatus.win += element.rollingAmount - element.betAmount;
+            } else if (element.betResult == "Lose") {
+              resultStatus.loss += element.betAmount;
+            }
+            const ruleData = isNaN(element.ruleName.split("_")[1])
+              ? window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[0]
+                ) +
+                "-" +
+                window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[1]
+                )
+              : window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[0]
+                ) +
+                "-" +
+                element.ruleName.split("_")[1];
+
+            this.winBetData += `<div class="betResult">
+         ${window.$nuxt.$root.$t("gamemsg.you")}
+             <b>${ruleData}</b>  <span style="color:${result}"> ${window.$nuxt.$root.$t(
+              "stockList." + element.betResult
+            )} </span>   : <span  style="color:${result}"> ${winAmount} </span>
+         </div>`;
+          });
+
+          if (resultStatus.win >= resultStatus.loss) {
+            this.resultData = `<span style="color:green"> ${window.$nuxt.$root.$t(
+              "betHistory.yourWinningAmount"
+            )} +$${resultStatus.win - resultStatus.loss} </span>`;
+          } else {
+            this.resultData = `<span style="color:red">${window.$nuxt.$root.$t(
+              "betHistory.yourLosingAmount"
+            )} -$${resultStatus.loss - resultStatus.win} </span>`;
+          }
+
+          this.winBetInfo += `<div class="betResult">  ${this.winBetData} <h1>${this.resultData}</h1> </div>`;
+
+          this.$swal({
+            title: window.$nuxt.$root.$t("msg.betResult"),
+            html: this.winBetInfo,
+            confirmButtonText: window.$nuxt.$root.$t("msg.ok"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          });
+        }
+      } catch (ex) {
+        // this.setSnackBarMessage(ex.message);
+      }
+    },
+    // listen socket
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
+    // stop listen socket
     stopListenSocket(channel) {
-      console.log("stopListenSocket");
       window.Echo.leave(channel);
     },
+    // deal with tab
+    // to switch game rule first digit =>... two digit
     tabChanged(e) {
       switch (e) {
         case 0:
@@ -1694,40 +2101,162 @@ export default {
 
           break;
         default:
-          this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(this.$root.$t("error.general"));
       }
     },
+    closeReviewTab() {
+      this.reviewMultipleBetDialog = false; // Review Multiple Bet Close
+      this.reviewbetDialog = false; // Review Single bet close
+      this.bettingDialog = false;
+    },
+    // switch between chart and tren map
     changeShowTrendMap() {
       this.isShowTrendMap = !this.isShowTrendMap;
     },
-    //
-    showBetDialog(rule, ruleid) {
+    payoutValue(payoutIndex) {
+      return this.$store.state.game.payout[payoutIndex].dynamicOdds.toFixed(2);
+    },
+    // show bet dialog
+    showBetDialog(rule, ruleid, payoutIndex, specific) {
       this.gameRule = rule;
       this.ruleid = ruleid;
-      this.bettingDialog = true;
+      this.odd = this.$store.state.game.payout[payoutIndex].dynamicOdds.toFixed(
+        2
+      );
+      this.specific = specific;
+      // Check bet Amount is grater then Minum Amount
+      if (this.getFooterBetAmount >= this.minimumBetAmount) {
+        // Total Confirm Amount
+        const TotalAmount = this.getAllSelectedBettingAmount(this.getGameUUIDByStockName(this.$route.params.id))
+          ? this.getAllSelectedBettingAmount(this.getGameUUIDByStockName(this.$route.params.id)) + this.getFooterBetAmount
+          : 0 + this.getFooterBetAmount;
+        // Check current Balance is grater then Footer Bet Amount
+        if (this.getUserBalance >= this.getFooterBetAmount) {
+          var newBetAmount = this.getFooterBetAmount;
+          if (this.getUserBalance <= TotalAmount) {
+            var newBetAmount =
+              this.getFooterBetAmount - (TotalAmount - this.getUserBalance);
+          }
+          if (newBetAmount > 0) {
+            const betData = {
+              id: this.stockID + this.gameRule,
+              class: this.gameRule,
+              specificNumber: specific,
+              gameUUID: this.getGameUUIDByStockName(this.stockID),
+              ruleID: ruleid,
+              betAmount: newBetAmount,
+              stockName: this.stockID
+            };
+            this.setTempMultiGameBetData(betData);
+          } else {
+            this.$swal({
+              type: "info",
+              title: window.$nuxt.$root.$t("notification.insufficientBalance"),
+              confirmButtonText: window.$nuxt.$root.$t("msg.ok"),
+              showConfirmButton: true,
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            });
+          }
+        } else {
+          this.$swal({
+            type: "info",
+            title: window.$nuxt.$root.$t("notification.insufficientBalance"),
+            confirmButtonText: window.$nuxt.$root.$t("msg.ok"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          });
+        }
+      } else {
+        this.bettingDialog = true;
+      }
     },
+    // set bet amount when click on the chip
     shipClick(value) {
       this.betAmount = this.betAmount + parseInt(value);
     },
+    // display modal review bet
     reviewbet() {
-      if (this.betAmount > 0) {
+      if (this.betAmount >= this.minimumBetAmount) {
         this.reviewbetDialog = true;
       } else {
-        this.setSnackBarMessage("Please Select Chips.");
+        this.setSnackBarMessage("Please enter Min Bet Amount.");
+      }
+    },
+    // Display Modal Review Multiple bet
+    reviewMultiplebet() {
+      if (this.getFooterBetAmount >= this.minimumBetAmount) {
+        this.reviewMultipleBetDialog = true;
+      } else {
+        this.setSnackBarMessage("Please enter Min Bet Amount.");
+      }
+    },
+    async confirmBet() {
+      try {
+        if (
+          parseInt(this.getTempMultiGameBetAmount) <=
+            parseInt(this.getUserBalance) &&
+          parseInt(this.getTempMultiGameBetAmount) > 0
+        ) {
+          this.isSending = true;
+          this.sendBetting(this.getGameUUIDByStockName(this.$route.params.id));
+          this.setFooterBetAmount(0);
+          this.isSending = false;
+          this.clearTempMultiGameBetData();
+          this.reviewMultipleBetDialog = false;
+        } else {
+          await Betting.cancelBettingClear(this.gettempMultiGameBetData);
+          this.clearTempMultiGameBetData();
+          this.setSnackBarMessage(this.$root.$t("betting.betSuccess"));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async clearChipsAmount() {
+      await this.clearBetValueFooterBet();
+    },
+    //use for cancel the bet
+    async cancelBet() {
+      try {
+        this.isSending = false;
+        await Betting.cancelBettingClear(this.gettempMultiGameBetData);
+        await this.clearTempMultiGameBetData();
+        await this.clearTempChips();
+        await this.clearBetValueFooterBet();
+        await this.CLEAR_SELECT_BETTING();
+        this.reviewMultipleBetDialog = false;
+      } catch (error) {
+        console.log(error);
       }
     },
     // Place Bet Last Step
     placeBet() {
-      let data = {
-        gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
-        ruleID: this.ruleid,
-        betAmount: this.betAmount
-      };
-      this.confirmDisabled = true;
-      this.sendBetting(data);
+      if (this.betAmount > 10000) {
+        this.setSnackBarMessage(this.$root.$t("betting.betValue"));
+      } else {
+        let data = {
+          gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
+          ruleID: this.ruleid,
+          betAmount: this.betAmount
+        };
+        this.confirmDisabled = true;
+
+        const stockDetail = {
+          betAmount: this.betAmount,
+          class: this.gameRule.split("-")[0],
+          gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
+          id: this.$route.params.id + this.gameRule,
+          ruleID: this.ruleid,
+          specificNumber: this.specific,
+          betRule: this.gameRule
+        };
+        this.sendBettingSingle(data, stockDetail);
+      }
     },
-    // Final Betting on Mobile
-    async sendBetting(betData) {
+    // send Betting data to server
+    async sendBettingSingle(betData, itemBetting) {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
@@ -1738,34 +2267,28 @@ export default {
         var res = await this.$axios.$post(config.storeBet.url, reqBody, {
           headers: config.header
         });
-        if (res.status && res.data[0].status) {
-          this.setUserData();
-          this.betAmount = 0;
-          this.bettingDialog = false;
-          this.reviewbetDialog = false;
-          this.pushDataOnGoingBet(res.data[0]);
-          this.setSnackBarMessage("Sucessfully Bet Place.");
+        if (res.code == 200) {
+          if (res.data[0].status) {
+            this.$StoreBettingonConfirm(itemBetting);
+            this.setUserData();
+            this.betAmount = 100;
+            this.bettingDialog = false;
+            this.reviewbetDialog = false;
+            this.pushDataOnGoingBet(res.data[0]);
+            this.setSnackBarMessage(this.$root.$t("betting.betSuccess"));
+          } else {
+            this.setSnackBarMessage(res.data[0].message[0]);
+          }
         } else {
-          this.setSnackBarMessage(config.error.general);
+          this.setSnackBarMessage(this.$root.$t("error.general"));
         }
       } catch (ex) {
         this.confirmDisabled = false;
         this.setSnackBarMessage(ex.message);
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/betting/_id.vue",
-            apiUrl: config.storeBet.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     formatToPrice(value) {
-      return `$ ${Number(value)
+      return `$${Number(value)
         .toFixed(2)
         .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     }
@@ -1780,46 +2303,7 @@ export default {
     },
     bettingDialog(value) {
       if (!value) {
-        this.betAmount = 0;
-      }
-    },
-
-    // set payout
-    gameRule() {
-      let payoutArray1 = ["small", "big", "odd", "even"];
-      let payoutArray2 = ["high", "mid", "low"];
-      let payoutArray3 = ["firstdigit", "lastdigit", "bothdigit", "twodigit"];
-      let array = this.gameRule.split("-");
-
-      // check the last one is string or not
-      // alert(parseInt(array[1]).isNaN)
-      let firstArray = array[0];
-      let lastArray = array[1];
-      if (Number.isNaN(parseInt(lastArray))) {
-        if (payoutArray1.includes(lastArray)) {
-          this.odd = this.payout_big_small;
-        } else if (payoutArray2.includes(lastArray)) {
-          this.odd = this.payout_high_mid_low;
-        } else {
-          this.odd = "error";
-        }
-      } else {
-        switch (firstArray) {
-          case "firstdigit":
-            this.odd = this.payout_09;
-            break;
-          case "lastdigit":
-            this.odd = this.payout_09;
-            break;
-          case "bothdigit":
-            this.odd = this.payout_18;
-            break;
-          case "twodigit":
-            this.odd = this.payout_99;
-            break;
-          default:
-            this.odd = "error";
-        }
+        this.betAmount = 100;
       }
     }
   }
@@ -1827,6 +2311,20 @@ export default {
 </script>
 
 <style scoped>
+.betResult {
+  width: 100%;
+  border: 1px solid #dddddd;
+}
+.multipleChips {
+  position: relative;
+  padding: 2px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.box-click1 {
+  background-color: red;
+}
 .text-time {
   font-weight: 600;
   color: #003f70;
@@ -1845,7 +2343,7 @@ export default {
   flex-direction: column;
 }
 .digit-type-container {
-  height: 70px;
+  height: 50px;
   display: flex;
   width: 100%;
   justify-content: space-around;
@@ -1866,7 +2364,10 @@ export default {
   top: -3px;
   transition: left 0.3s;
 }
+
 .first-digit {
+  height: 40px;
+  font-size: 12px;
   background: rgb(13, 204, 255);
   background: linear-gradient(
     22deg,
@@ -1875,6 +2376,8 @@ export default {
   );
 }
 .last-digit {
+  height: 40px;
+  font-size: 12px;
   background: rgb(250, 209, 38);
   background: linear-gradient(
     22deg,
@@ -1884,6 +2387,8 @@ export default {
 }
 
 .both-digit {
+  height: 40px;
+  font-size: 12px;
   background: rgb(182, 53, 156);
   background: linear-gradient(
     22deg,
@@ -1892,6 +2397,8 @@ export default {
   );
 }
 .two-digit {
+  height: 40px;
+  font-size: 12px;
   background: rgb(1, 233, 189);
   background: linear-gradient(
     22deg,
@@ -1925,36 +2432,6 @@ h4 {
   font-size: 0.8em;
 }
 
-.lastdraw {
-  font-size: 14px;
-  border: 1px solid #4b65ff;
-  border-radius: 20px;
-  padding: 6px 6px;
-  margin: 0px 3px;
-  font-weight: 400;
-  text-align: center;
-}
-
-.betclose {
-  font-size: 14px;
-  border: 1px solid #ef076a;
-  border-radius: 20px;
-  padding: 6px 10px;
-  margin: 0px 3px;
-  font-weight: 400;
-  text-align: center;
-}
-
-.lottery {
-  font-size: 14px;
-  border: 1px solid #01e3bf;
-  border-radius: 20px;
-  padding: 6px 6px;
-  margin: 0px 3px;
-  font-weight: 400;
-  text-align: center;
-}
-
 .chartDesgin {
   margin-top: 10px;
   padding: 0px;
@@ -1972,20 +2449,45 @@ h4 {
 }
 
 .bettingFooter {
-  border-radius: 20px;
-  margin: 15px 0px;
-  padding: 10px;
+  border-radius: 15px;
+  margin-top: 10px;
+  padding: 5px;
   color: #fff;
   background-color: #8291b2;
-  text-align: center !important;
-  font-size: 22px;
+  /* text-align: center !important; */
+  font-size: 14px;
+  display: flex;
 }
-
+.confimButton {
+  background-color: #fff;
+  font-size: 13px;
+  padding: 4px !important;
+  color: green !important;
+  border-radius: 4px;
+  max-width: 18px !important;
+  margin: 0;
+}
+.cancelButton {
+  background-color: #fff;
+  font-size: 13px !important;
+  padding: 4px !important;
+  color: #333 !important;
+  border-radius: 4px;
+}
+.clearButton {
+  background-color: #fff;
+  font-size: 13px !important;
+  padding: 2px 8px !important;
+  color: #333 !important;
+  border-radius: 4px;
+  margin-left: 6px;
+}
 .setpricechip {
   position: relative;
   top: 0px;
   color: black;
-  font-size: 0.85rem;
+  font-size: 10px;
+  font-weight: 600;
 }
 
 .btn_cancel {
@@ -2041,5 +2543,17 @@ h4 {
 .text-color-green {
   color: #17b542;
   font-weight: bold;
+}
+.roadMap {
+  border-radius: 40px;
+  background-color: #2e477d !important;
+  color: #fff;
+  float: right;
+  font-size: 13px;
+  padding: 2px 10px;
+  font-weight: 400;
+}
+.roadMap .roadMapIcon {
+  color: #fff;
 }
 </style>

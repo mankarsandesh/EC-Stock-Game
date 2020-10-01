@@ -1,54 +1,71 @@
 <template>
   <v-container fluid mt-2 class="containerNew">
     <v-layout>
-      <!-- Left Side Stock List  -->
+      <!-- Start of Left Side Stock List  -->
+      <v-flex v-if="checkBettingResult"></v-flex>
+      <!-- <span v-if="checkBettingResultNew"></span> -->
       <v-flex v-if="!isHidden" class="leftStocklist" mt-4 lg2>
         <span @click="isHidden = true" class="sidebar-close">
-          <v-icon color="#0b2968">close</v-icon>
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-icon color="#0b2968" v-on="on">close</v-icon>
+            </template>
+            <span>{{ $t("msg.close") }}</span>
+          </v-tooltip>
         </span>
         <v-layout column>
+          <!-- Stock List -->
           <v-flex xs12 pt-3>
             <div id="stocklistGuidelines">
-              <stockList></stockList>
+              <stockList />
             </div>
           </v-flex>
+          <!-- Stock Result  -->
           <v-flex xs12 pt-2>
             <div id="betresultGuidelines">
-              <stockResult></stockResult>
+              <stockResult  v-if="renderStockResult" />
             </div>
           </v-flex>
+          <!-- on going Betting -->
           <v-flex xs12 pt-2>
             <div id="bettingGuidelines">
-              <onBetting></onBetting>
+              <onBetting />
             </div>
           </v-flex>
         </v-layout>
       </v-flex>
       <v-flex v-if="isHidden" @click="isHidden = false" mr-3>
         <span class="sidebar-toggle">
-          <v-icon color="#FFF">list</v-icon>
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-icon color="#FFF" v-on="on">list</v-icon>
+            </template>
+            <span>{{ $t("msg.expand") }}</span>
+          </v-tooltip>
         </span>
       </v-flex>
-      <!-- End Left Side -->
+      <!-- End of Left Side Stock List-->
 
-      <!-- Main Middle Layout -->
+      <!-- Start of Main Middle Layout -->
       <v-flex :xs10="!isHidden" :xs12="isHidden">
         <v-flex md12 lg12 pl-3>
           <v-layout row wrap md12>
-            <!-- Stock Select Start -->
+            <!-- Start of Stock Select -->
             <v-flex md6 lg6 pt-2 id="selectstockGuidelines">
               <stockSelect />
             </v-flex>
-            <!-- Stock Select End -->
+            <!-- End of Stock Select -->
 
-            <!-- Stock Last Draw Start -->
+            <!-- Start of Stock Last Draw -->
             <v-flex xs6 md6 lg6 pt-1>
               <v-layout mb-3 justify-center wrap row>
-                <v-flex xs4 md3 lg3 class="text-xs-center text-uppercase" px-2 >
+                <v-flex xs4 md3 lg3 class="text-xs-center text-uppercase" px-2>
                   <span>{{ $t("msg.lastDraw") }}</span>
                   <div id="lastDrawGuideline">
                     <v-flex class="lastdraw">
-                      <span v-html="$options.filters.lastDraw(getLastDraw)"></span>
+                      <span
+                        v-html="$options.filters.lastDraw(getLastDraw)"
+                      ></span>
                     </v-flex>
                   </div>
                 </v-flex>
@@ -64,16 +81,16 @@
                         "
                       >
                         {{
-                        getTimerByStockName($route.params.id)
-                        | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id)
+                            | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                       <span v-else>
                         {{
-                        getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                        .gameEndTimeCountDownInSec
-                        | betclosein(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | betclosein(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
@@ -85,61 +102,105 @@
                     <v-flex class="lottery">
                       <span>
                         {{
-                        getTimerByStockName($route.params.id) &&
-                        getTimerByStockName($route.params.id)
-                        .gameEndTimeCountDownInSec
-                        | lotterydraw(getStockLoop($route.params.id))
+                          getTimerByStockName($route.params.id) &&
+                            getTimerByStockName($route.params.id)
+                              .gameEndTimeCountDownInSec
+                              | lotterydraw(getStockLoop($route.params.id))
                         }}
                       </span>
                     </v-flex>
                   </div>
-                  <!-- <lotteryDraw > </lotteryDraw>   -->
                 </v-flex>
-
-                <v-flex xs2 md3 class="text-xs-right" style="align-self: flex-end;">
-                  <v-btn fab dark small class="helpButton" @click="openTutorial()" title="Help">
-                    <v-icon dark size="22">fa-question</v-icon>
-                  </v-btn>
+                <!-- Start of Help Tutorial -->
+                <v-flex
+                  xs2
+                  md3
+                  class="text-xs-right"
+                  style="align-self: flex-end;"
+                >
+                  <v-tooltip left>
+                    <template v-slot:activator="{ on }">
+                      <v-btn
+                        fab
+                        class="helpButton"
+                        dark
+                        @click="openTutorial()"
+                        v-on="on"
+                      >
+                        <v-icon dark size="24">fa-question</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>{{ $t("tutorial.help") }}</span>
+                  </v-tooltip>
                 </v-flex>
+                <!-- End of Help Tutorial -->
               </v-layout>
             </v-flex>
-            <!-- Stock Last Draw End -->
+            <!-- End of Stock Last Draw -->
           </v-layout>
 
-          <!-- Stock Chart and Bet button Component  -->
+          <!-- Start of Stock Chart and Bet button Component  -->
           <v-layout>
             <v-flex md5 lg5 class="marginTop-2">
               <div id="chartGuidelineNew" class="chartDesgin">
                 <v-flex>
+                  <!-- Chart Stock wise -->
                   <chartApp :stockName="routeParams" />
                 </v-flex>
               </div>
             </v-flex>
             <v-flex md7 lg7 mx-2 class="marginTop-2">
               <div id="betRuleButton">
+                <!-- -Bet Button -->
                 <betButton :stockName="$route.params.id" :loop="1"></betButton>
               </div>
             </v-flex>
           </v-layout>
-          <!-- End Stock Chart and Bet button Component  -->
+          <!-- End of Stock Chart and Bet button Component  -->
         </v-flex>
 
-        <!-- Stock Road Map Start -->
+        <!-- Stock of Road Map -->
         <v-flex xs12 v-if="getRoadMap.length > 0">
-          <div class="trendmap-container" v-for="(trendType, index) in trendTypes" :key="index">
-            <div id="trendmapGuidelines">
-              <tableTrendMap :index="index" :dataArray="getRoadMap" :isShowMultigameButton="index">
-                <span class="addChart" @click="addTrendMap()" v-if="index === 0">
-                  <v-icon>fa-plus</v-icon>
+          <div
+            class="trendmap-container"
+            v-for="(trendType, index) in trendTypes"
+            :key="index"
+          >
+            <div id="trendmapGuidelines" >
+              <tableTrendMap
+                :index="index"
+                :dataArray="getRoadMap"
+                :isShowMultigameButton="index"
+              >
+                <!-- Start of add new trend map-->
+                <span
+                  class="addChart"
+                  @click="addTrendMap()"
+                  v-if="index === 0"
+                >
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">fa-plus</v-icon>
+                    </template>
+                    <span>{{ $t("msg.addNewRoadMap") }}</span>
+                  </v-tooltip>
                 </span>
-                <span v-else class="addChart" @click="removeTradMap(index)">
-                  <v-icon>close</v-icon>
+                <!-- End of add new trend map-->
+                <!-- Start of close trend map-->
+                <span v-else class="addChart" @click="removeTrendMap(index)">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">fa-close</v-icon>
+                    </template>
+                    <span>{{ $t("msg.closeRoadMap") }}</span>
+                  </v-tooltip>
                 </span>
+                <!-- End of close trend map-->
               </tableTrendMap>
             </div>
           </div>
         </v-flex>
-        <!-- Road Map End -->
+        <!-- End of Road Map  -->
       </v-flex>
 
       <!-- Game Rule Popup open First Time -->
@@ -149,9 +210,13 @@
             class="closePopup"
             color="#333 !important"
             @click="GameRuleDialog = false"
-          >fa-times</v-icon>
+            >fa-times</v-icon
+          >
+
           <v-card-text style="padding:40px;">
-            <h2 style="text-align:center;">{{$t("msg.ecGamingRulesDescription")}}</h2>
+            <h2 style="text-align:center;">
+              {{ $t("msg.ecGamingRulesDescription") }}
+            </h2>
             <onlyrules />
           </v-card-text>
           <v-flex class="text-lg-right">
@@ -159,7 +224,8 @@
               class="buttonGreensmall"
               to="/modern/desktop/gamerule"
               dark
-            >{{$t("msg.gameRule")}}</v-btn>
+              >{{ $t("msg.gameRule") }}</v-btn
+            >
           </v-flex>
         </v-card>
       </v-dialog>
@@ -178,28 +244,14 @@
                 @click="setAfterFullScreenClosePage()"
                 v-on="on"
               >
-                <v-icon size="24px">fa-arrows-alt</v-icon>
+                <v-icon size="26px" v-if="$t('msg.TName') != 'chinese'"
+                  >fa-expand</v-icon
+                >
+                <span v-else> {{ $t("msg.FullScreen") }} </span>
               </v-btn>
             </template>
-            <span>{{$t("msg.enterFullScreen")}}</span>
+            <span>{{ $t("msg.enterFullScreen") }}</span>
           </v-tooltip>
-          <!-- Multiple Screen Float Button 
-           <v-tooltip left>
-            <template v-slot:activator="{ on }">
-              <v-btn
-                color="primary"
-                :to="'/modern/multigame/' + $route.params.id"
-                rigth
-                fab
-                class="multiGame"
-                dark
-                v-on="on"
-              >
-                <i style="font-size:26px;" class="fa fa-gamepad" aria-hidden="true"></i>
-              </v-btn>
-            </template>
-            <span>Enter Multi-Gaming Mode</span>
-          </v-tooltip>-->
         </div>
       </v-flex>
     </v-layout>
@@ -212,20 +264,20 @@ import stockList from "~/components/modern/stockList";
 import stockResult from "~/components/modern/stockresult";
 import onBetting from "~/components/modern/onBetting";
 import betButton from "~/components/modern/betButton";
-import chartApp from "~/components/modern/chart";
-import tableTrendMap from "~/components/modern/tableTrendMap";
-import stockSelect from "~/components/stockSelect";
-import config from "~/config/config.global";
-import lotteryDraw from "~/components/modern/lotteryDraw";
+import chartApp from "~/components/modern/chart"; // Chart
+import tableTrendMap from "~/components/modern/tableTrendMap"; // Road Map
+import stockSelect from "~/components/stockSelect"; // Select Stock
+import config from "~/config/config.global"; // Config Settings
 import { isMobile } from "mobile-device-detect";
-import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
 import onlyrules from "~/components/modern/rule/onlyrule";
+import {BetResult} from "../../../mixin/betResult";
 
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
+  mixins : [BetResult],
   layout: "desktopModern",
   components: {
     stockList,
@@ -235,7 +287,6 @@ export default {
     betButton,
     tableTrendMap,
     stockSelect,
-    lotteryDraw,
     isMobile: isMobile,
     onlyrules
   },
@@ -257,11 +308,15 @@ export default {
       ],
       trendTypes: ["firstDigit"],
       isloading: false,
-      isStep: 0
+      isStep: 0,
+      defaultStcok: config.homePageStockName,
+      renderStockResult : true,
     };
   },
-  updated() {},
+
   created() {
+    this.clearBetValueFooterBet();
+    // Check size is Desktop or Mobile. and redirect to Mobile or Desktop
     if (isMobile) {
       window.location = `/modern/betting/${this.$route.params.id}`;
     }
@@ -293,61 +348,67 @@ export default {
       },
       ({ data }) => {
         try {
-          var logData = data;
           if (data.status) {
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.$route.params.id
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "pages/modern/desktop/_id.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
     // call this every page that used "dekstopModern" layout to hide loading
     this.setIsLoadingStockGame(false);
-    // console.warn("mounted...");
 
     // set footerBet to zero because on this page cant use bet footer
     this.setFooterBetAmount(0);
-    this.removeAllFooterBet();
   },
   watch: {
     // check size screen
     // change to mobile component
     "$screen.width"() {
       if (this.$screen.width <= 1204) {
-        let linkto = `/modern/betting/btc1`;
+        let linkto = "/modern/betting/" + this.defaultStcok;
         this.$router.push(linkto);
       }
     }
   },
+  beforeMount(){
+     this.userActivityAction();
+  },
   methods: {
     ...mapActions([
+      "userActivityAction",
+      "setNewGameId",
       "setRoadMap",
-      "setTutorialStepNumber",
       "setIsShowTutorial",
       "setLiveRoadMap",
       "setFooterBetAmount",
-      "removeAllFooterBet",
-      "setIsLoadingStockGame"
+      "setIsLoadingStockGame",
+      "clearBetValueFooterBet"
     ]),
+    // Force Render Stock Result
+    forceRenderStock() {
+        // Remove my-component from the DOM
+        this.renderStockResult = false;
+
+        this.$nextTick(() => {
+          // Add the component back in
+          this.renderStockResult = true;
+        });
+    },
+    // Open Tutorial
+    openTutorial() {
+      this.setIsShowTutorial(true);
+      setTimeout(() => {
+        $("#open-Tutorial").click();
+      }, 10);
+    },
     setAfterFullScreenClosePage() {
       secureStorage.setItem("fullscreenclosed", "desktop");
       this.$router.push(`/modern/fullscreen/${this.$route.params.id}`);
+      this.userActivity();
     },
     stopListenSocket(channel) {
       window.Echo.leave(channel);
@@ -355,10 +416,32 @@ export default {
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
+    // User Activity Call every 5 MIn
+    async userActivity() {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+
+        const res = await this.$axios.$post(
+          config.userActivityLog.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    // Stock List
     async getStock() {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
           version: config.version
         };
         var res = await this.$axios.$post(config.getStock.url, reqBody, {
@@ -367,21 +450,10 @@ export default {
         if (res.status) {
           this.stock = res.data;
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/_id.vue",
-            apiUrl: config.getStock.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     // Add TrendMap
@@ -400,7 +472,7 @@ export default {
       }
     },
     // Remove trendMap
-    removeTradMap(index) {
+    removeTrendMap(index) {
       let indexValue = this.trendTypes[index];
       let newData = this.trendTypes.filter(data => {
         return data != indexValue;
@@ -410,43 +482,106 @@ export default {
     loaded() {
       this.isLoad = true;
     },
-    clearTutorialUI() {
-      $("#lastDrawGuideline").css("z-index", "1");
-      $("#betCloseInGuideline").css("z-index", "1");
-      $("#lotteryDrawGuidelines").css("z-index", "1");
-      $("#chartGuidelineNew").css("z-index", "1");
-      $(".betButtonGuide").css("z-index", "1");
-      $(".BetButtonGuideEven").css("z-index", "1");
-      $("#selectstockGuidelines").css("z-index", "1");
-      $("#stocklistGuidelines").css("z-index", "1");
-      $("#trendmapGuidelines").css("z-index", "1");
-      $("#trendmapGuidelines").css("backgroundColor", "#f2f4ff");
-    },
-    openTutorial() {
-      const _this = this;
-      let timeStart = this.getTutorialStepNumber === 0 ? 0 : 3000;
-      // setTimeout  to  resolve problems if user close tutorial and reopen
-      setTimeout(() => {
-        this.setIsShowTutorial(true);
-        let step = 1;
-        this.setTutorialStepNumber(step);
-        let stepGo = setInterval(() => {
-          step++;
-          this.setTutorialStepNumber(step);
-          if (step === 12 || !_this.getIsShowTutorial) {
-            clearInterval(stepGo);
-            _this.clearTutorialUI();
-            this.setTutorialStepNumber(0);
+    // Place Bet Last Step
+    async resultFetch() {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          gameUUID: this.getPreviousGameID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.checkBetStatus.url, reqBody, {
+          headers: config.header
+        });
+        if (res.code == 200 && res.data.length > 0) {
+          let resultStatus = {
+            win: 0,
+            loss: 0
+          };
+          let resultData = [];
+          // Sum Same Rule Name BetAmount
+          res.data.forEach(function(a) {
+            if (!this[a.ruleName]) {
+              this[a.ruleName] = {
+                ruleName: a.ruleName,
+                betAmount: 0,
+                betResult: a.betResult,
+                rollingAmount: 0
+              };
+              resultData.push(this[a.ruleName]);
+            }
+            this[a.ruleName].betAmount += a.betAmount;
+            this[a.ruleName].rollingAmount += a.rollingAmount;
+          }, Object.create(null));
+
+          // Sperate Win and Loss Amount Rule Wise
+          resultData.forEach(element => {
+            const result = element.betResult == "Win" ? "green" : "red";
+
+            const winAmount =
+              element.rollingAmount == 0
+                ? "-$" + element.betAmount
+                : "+$" + element.rollingAmount;
+
+            if (element.betResult == "Win") {
+              resultStatus.win += element.rollingAmount - element.betAmount;
+            } else if (element.betResult == "Lose") {
+              resultStatus.loss += element.betAmount;
+            }
+
+            const ruleData = isNaN(element.ruleName.split("_")[1])
+              ? window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[0]
+                ) +
+                "-" +
+                window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[1]
+                )
+              : window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[0]
+                ) +
+                "-" +
+                element.ruleName.split("_")[1];
+
+            this.winBetData += `<div class="betResult">
+         ${window.$nuxt.$root.$t("gamemsg.you")}
+             <b>${ruleData}</b>  <span style="color:${result}"> ${window.$nuxt.$root.$t(
+              "stockList." + element.betResult
+            )} </span>   : <span  style="color:${result}"> ${winAmount} </span>
+         </div>`;
+          });
+
+          if (resultStatus.win >= resultStatus.loss) {
+            this.resultData = `<span style="color:green"> ${window.$nuxt.$root.$t(
+              "betHistory.yourWinningAmount"
+            )} +$${resultStatus.win - resultStatus.loss} </span>`;
+          } else {
+            this.resultData = `<span style="color:red">${window.$nuxt.$root.$t(
+              "betHistory.yourLosingAmount"
+            )} -$${resultStatus.loss - resultStatus.win} </span>`;
           }
-        }, 3000);
-      }, timeStart);
+
+          this.winBetInfo += `<div class="betResult">  ${this.winBetData} <h1>${this.resultData}</h1> </div>`;
+
+          this.$swal({
+            title: window.$nuxt.$root.$t("msg.betResult"),
+            html: this.winBetInfo,
+            confirmButtonText: window.$nuxt.$root.$t("msg.ok"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          });
+        }
+      } catch (ex) {
+        // this.setSnackBarMessage(ex.message);
+      }
     }
   },
   computed: {
-    vueVersion() {
-      return Vue.version;
-    },
     ...mapGetters([
+      "getPreviousGameID",
+      "getGameUUIDByStockName",
       "getTutorialStepNumber",
       "getIsShowTutorial",
       "getStockLoop",
@@ -454,9 +589,37 @@ export default {
       "getStockUUIDByStockName",
       "getRoadMap",
       "getPortalProviderUUID",
+      "getUserUUID",
       "getLastDraw",
-      "getStockLoop"
-    ])
+      "getmultiGameBet",
+      "getPreviousGameID"
+    ]),
+    checkBettingResult() {
+      // Stock Time
+      const stockTime = this.getTimerByStockName(this.$route.params.id);
+      if(this.getPreviousGameID == null){
+        this.setNewGameId(this.getGameUUIDByStockName(this.$route.params.id));
+      }
+      // New Game Open Old Game Stock Result Popup
+      if (this.getStockLoop(this.$route.params.id) === 5) {
+        var resultSecond = 296;
+      } else {
+        var resultSecond = 56;
+      }
+      if (stockTime && stockTime.gameEndTimeCountDownInSec == resultSecond) {
+        this.winBetData = "";
+        this.winBetInfo = "";
+        this.forceRenderStock();
+        this.resultFetch(); // Fetch Previous Game Result     
+      } else if (
+        stockTime &&
+        stockTime.gameEndTimeCountDownInSec <= resultSecond - 2 &&
+        stockTime.gameEndTimeCountDownInSec >= resultSecond - 6
+      ) {
+        // Update Previous Game ID
+        this.setNewGameId(this.getGameUUIDByStockName(this.$route.params.id));
+      }
+    }
   }
 };
 </script>
@@ -484,10 +647,10 @@ export default {
 }
 .fullscreen {
   position: fixed !important;
-  bottom: 80px;
+  bottom: 90px;
   right: 0px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   color: #fff;
   z-index: 999;
   background: linear-gradient(to right, #773bca 20%, #9c2bce 51%);
@@ -503,6 +666,8 @@ export default {
   background-color: #4464ff !important;
   color: #fff;
   padding: 3px;
+  width: 40px;
+  height: 40px;
 }
 
 .leftStocklist {
@@ -510,6 +675,7 @@ export default {
   border-radius: 5px;
   position: relative;
   top: 0;
+  height: 100%;
   box-shadow: 0 0 2px grey;
 }
 
@@ -530,6 +696,8 @@ export default {
   color: #fff !important;
 }
 .chartDesgin {
+  height: 380px;
+  padding: 2px;
   border-radius: 10px;
 }
 .sidebar-toggle {
@@ -544,6 +712,3 @@ export default {
   border-radius: 180px;
 }
 </style>
-
-
-betting 

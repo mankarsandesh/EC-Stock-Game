@@ -788,6 +788,7 @@ main.v-content {
 /* Main Page design  */
 .container.image-bg.fluid.grid-list-lg.fill-height {
   background-image: url("/bg/19928.png");
+  // background-color: #333;
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
@@ -805,7 +806,6 @@ main.v-content {
 }
 
 .container.bg-gmaeType.fluid.grid-list-lg.fill-height {
-  background-image: url("/bg/17580.png");
   height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;

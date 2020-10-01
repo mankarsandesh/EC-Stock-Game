@@ -26,12 +26,18 @@
                       hide-details
                       v-model="dateFrom"
                       :label="$t('msg.from')"
-                      append-icon="event"
+                      append-icon="fa-calendar"
                       readonly
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" :max="maxDate" v-model="dateFrom" @input="from = false"></v-date-picker>
+                  <v-date-picker
+                    color="#1db42f"
+                    :max="maxDate"
+                    v-model="dateFrom"
+                    @input="from = false"
+                    :locale="lang"
+                  ></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md4>
@@ -50,17 +56,26 @@
                       hide-details
                       v-model="dateTo"
                       :label="$t('msg.to')"
-                      append-icon="event"
+                      append-icon="fa-calendar"
                       readonly
                       v-on="on"
                     ></v-text-field>
                   </template>
-                  <v-date-picker color="#1db42f" :max="maxDate" v-model="dateTo" @input="to = false"></v-date-picker>
+                  <v-date-picker
+                    color="#1db42f"
+                    :max="maxDate"
+                    v-model="dateTo"
+                    @input="to = false"
+                    :locale="lang"
+                  ></v-date-picker>
                 </v-menu>
               </v-flex>
               <v-flex xs12 sm12 md2>
                 <v-btn class="goButton" @click="searchBetHistory()">
-                  <i v-if="loadingImage" class="fa fa-circle-o-notch fa-spin"></i>
+                  <i
+                    v-if="loadingImage"
+                    class="fa fa-circle-o-notch fa-spin"
+                  ></i>
                   &nbsp;{{ $t("msg.go") }}
                 </v-btn>
               </v-flex>
@@ -84,27 +99,36 @@
                   @change="sortingBy"
                   v-model="sortby"
                   hide-details
-                  :items="[$t('betHistory.today'),$t('betHistory.thisWeek'),$t('betHistory.thisMonth')]"
+                  :items="[
+                    $t('betHistory.today'),
+                    $t('betHistory.thisWeek'),
+                    $t('betHistory.thisMonth')
+                  ]"
                   :placeholder="$t('msg.sortBy')"
                 ></v-select>
               </v-flex>
             </v-layout>
           </v-flex>
         </v-layout>
+        
       </v-container>
     </section>
     <!-- Bet History Data Table -->
-    <bethistory :search="search" :userBetHistory="userBetHistory" />
+    <bethistory     
+      :search="search"
+      :userBetHistory="userBetHistory"
+      :curreny="getUserCurrency"
+      :userBetHistoryOld = "userBetHistoryOld"
+    />
   </div>
 </template>
 <script>
 import bethistory from "~/components/modern/betHistory";
 import breadcrumbs from "~/components/breadcrumbs";
-import { mapState } from "vuex";
+import { mapState, mapGetters,mapActions } from "vuex";
 import config from "../../../config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
-
+import date from "date-and-time";
 export default {
   layout: "desktopModern",
   components: {
@@ -122,12 +146,8 @@ export default {
       from: false,
       dateTo: "",
       to: false,
-      // dropdown_font: [
-      //   this.$root.$t("bethistory.today"),
-      //   this.$root.$t("bethistory.thisWeek"),
-      //   this.$root.$t("bethistory.thisMonth")
-      // ],
-      userBetHistory: []
+      userBetHistory: [],
+      userBetHistoryOld : [],
     };
   },
   computed: {
@@ -135,13 +155,25 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+    ...mapGetters(["getUserCurrency","getLocale"]),
+    lang() {
+      if(this.getLocale == "us"){
+        return "en-US"
+      } else if(this.getLocale == "th") {
+        return "th-TH"
+      } else if(this.getLocale == "cn") {
+        return "zh-CN"
+      } else {
+        return "la"
+      }
+    }
   },
   mounted() {
     const lastWeek = new Date(
       this.today.getFullYear(),
       this.today.getMonth(),
-      this.today.getDate() - 7
+      this.today.getDate() - 5
     )
       .toISOString()
       .substr(0, 10);
@@ -149,18 +181,22 @@ export default {
     this.dateTo = this.today.toISOString().substring(0, 10);
     this.fetchBetHsitory();
   },
+  beforeDestroy(){
+    this.userActivityAction();
+  },
   methods: {
+    ...mapActions(["userActivityAction"]),
     // Sorting By Today,Week, Month
     sortingBy() {
       if (this.sortby == "Today") {
-        const lastWeek = new Date(
+        const todayDate = new Date(
           this.today.getFullYear(),
           this.today.getMonth(),
           this.today.getDate() + 1
         )
           .toISOString()
           .substr(0, 10);
-        this.dateFrom = lastWeek;
+        this.dateFrom = todayDate;
         this.dateTo = this.today.toISOString().substring(0, 10);
         this.fetchBetHsitory();
       } else if (this.sortby == "This Week") {
@@ -175,27 +211,39 @@ export default {
         this.dateTo = this.today.toISOString().substring(0, 10);
         this.fetchBetHsitory();
       } else if (this.sortby == "This Month") {
-        const lastWeek = new Date(
+        const lastMonth = new Date(
           this.today.getFullYear(),
           this.today.getMonth(),
-          this.today.getDate() - 30
+          this.today.getDate() - 28
         )
           .toISOString()
           .substr(0, 10);
-        this.dateFrom = lastWeek;
+        this.dateFrom = lastMonth;
         this.dateTo = this.today.toISOString().substring(0, 10);
         this.fetchBetHsitory();
       }
     },
+    // Search Betting Details in Bet History
     searchBetHistory() {
       this.loadingImage = true;
       if (this.dateFrom && this.dateTo) {
         this.fetchBetHsitory();
       }
     },
+    // Check Date is Valid or NOT
+    checkValidDate(startDate, endDate) {
+      const now = date.format(new Date(), "YYYY-MM-DD");
+      if (endDate > now || !(endDate >= startDate)) {
+        return false;
+      }
+      return true;
+    },
     // Fetch bet History user wise
     async fetchBetHsitory() {
       try {
+        if (!this.checkValidDate(this.dateFrom, this.dateTo)) {
+          throw new Error("Please select a valid date");
+        }
         var reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
@@ -208,31 +256,35 @@ export default {
           headers: config.header
         });
         if (data.status) {
-          this.userBetHistory = data.data;
+          // this.userBetHistory = data.data;
+          this.userBetHistoryOld = data.data;
+          const formattedData = data => {
+            const result = data.reduce((res, d) => {
+              if (res[d.gameUUID]) {
+                res[d.gameUUID].data.push(d);
+              } else {
+                res[d.gameUUID] = {
+                  id: d.gameUUID,
+                  data: [{ ...d }]
+                };
+              }
+              return res;
+            }, {});
+            return Object.values(result);
+          };
+          this.userBetHistory = formattedData(data.data);
           this.loadingImage = false;
         } else {
           throw new Error(data.message);
           this.loadingImage = false;
         }
       } catch (ex) {
-        console.log(data.message);
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
         this.loadingImage = false;
-        log.error(
-          {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/desktop/bet-history.vue",
-            apiUrl: config.getAllBets.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

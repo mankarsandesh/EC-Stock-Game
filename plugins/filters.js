@@ -55,19 +55,19 @@ Vue.filter("lastDraw", value => {
 });
 // currency format
 Vue.filter("currency", (value, decimalCount = 2) => {
-  if (!value) return "...";
+  if (!value) return "00";
   return formatCurrency(value, decimalCount);
 });
 // countdown bet close in
 Vue.filter("betclosein", (value, loop) => {
   if (!value || !loop) return "...";
-  if (value == "close") return "MARKET CLOSE";
+  if (value.stockStatus == "Closed" || value == "close") return window.$nuxt.$root.$t("msg.marketClosed");
   let result = "";
   // for  loop 1
   if (loop == 1) {
     // bet close
     if (value <= 20) {
-      result = "Calculating";
+      result =  window.$nuxt.$root.$t('msg.calculating');
     } else {
       result = "00:" + appendHero(value - 20);
     }

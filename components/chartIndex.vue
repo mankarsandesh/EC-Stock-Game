@@ -14,7 +14,6 @@ import VueApexCharts from "vue-apexcharts";
 import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
 
 export default {
@@ -32,7 +31,7 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getStockUUIDByStockName"]),
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID","getStockUUIDByStockName"]),
     series() {
       let newData = [];
       this.chartData.forEach(element => {
@@ -167,23 +166,10 @@ export default {
               this.setLiveChart(readyData);
             }
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/chartIndex.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -196,6 +182,7 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID : this.getUserUUID,
           limit: 50,
           stockUUID: [stockUUID],
           version: config.version
@@ -207,26 +194,15 @@ export default {
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.error(ex);
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "components/chartIndex.vue",
-            apiUrl: config.getRoadMap.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

@@ -7,7 +7,7 @@
   "gameType": "Game Type",
   "default": "default",
   "menu": {
-    "invitation":"Send Invitaion",
+    "invitation":"Send Invitation",
     "home": "home",
     "profile": "profile",
     "currentBet": "current bet",
@@ -26,6 +26,7 @@
     "myFollowing": "Following"
   },
   "stockList": {
+    "Pending":"Pending",
     "stockLists": "Stock Lists",
     "stockName": "Stock Name",
     "sortBy": "Sort By:",
@@ -35,6 +36,8 @@
     "searchStock": "SEARCH STOCK",
     "lose": "Lose",
     "win": "Win",
+    "Lose": "Lose",
+    "Win": "Win",
     "ascending" : "Ascending",
     "descending" : "Descending"
   },
@@ -48,6 +51,8 @@
     "introduction": "This page is made to give you more information."
   },
   "msg": {
+    "TName":"english",
+    "betCount": "Bet Count",
     "currentActiveTime": "Current Active Time",
     "totalOnlineTime": "Total Online Time",
     "onlineActiveTime": "Online Active Time",
@@ -58,6 +63,7 @@
     "marketClosed": "Market Closed!",
     "reset": "Reset",
     "confirm": "Confirm",
+    "confirmBet": "Confirm Bet",
     "gameRule": "Game Rule",
     "payout": "Payout",
     "deleteAll": "Delete All",
@@ -117,8 +123,8 @@
     "minuteGame": "minute game",
     "ecGamingRulesDescription": "EC Gaming Rules description",
     "resultIntroduction": "result introduction",
-    "textInfoRule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules..",
-    "textResultIntroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’;",
+    "textInfoRule": "Our site utilizes different stocks with references to construct a stimulating, uncontrollable game. We provide four main game types (BIG/SMALL, EVEN/ODD, UP/MID/LOW and NUMBERS) based on the chosen stocks, all game results depend on the two specific decimals according to our rules.",
+    "textResultIntroduction": "e.g. Assuming a stock resulting in 1234.56, all our game types would only take decimal ‘56’ as result; In the case the result is now serving as ‘56’, we define decimal ‘5’ as ‘first digit’ result; decimal ‘6’ as ‘last digit’ result; decimals ‘5’ and ‘6’ together as ‘two-digit’ result; Other than these, we are also appointing the outcome of ‘5 + 6’ as ‘both digits’ result, which is ‘11’",
     "lastDraw": "Last draw",
     "betCloseIn": "Bet Close in",
     "lotteryDraw": "lottery draw",
@@ -130,7 +136,7 @@
     "noBetting": "There are No Betting",
     "exit": "Exit",
     "addTrendChart": "add trend chart",
-    "bettingOn": "betting on",
+    "bettingOn": "Betting On",
     "status": "Status",
     "countDown": "Count Down",
     "loop": "Loop",
@@ -156,7 +162,7 @@
     "membership": "membership",
     "min": "Min",
     "max": "Max",
-    "otherStock": "Other Stock",
+    "otherStock": "Other Stocks",
     "music": "Music",
     "customLength": "Custom Length",
     "titles": "Title",
@@ -181,16 +187,21 @@
     "enterFullScreen":"Enter Fullscreen Mode",
     "closeFullScreen":"Close Fullscreen Mode",
     "close" : "Close",
-    "rowsPerPage":"Rows per page:"
+    "rowsPerPage":"Rows per page:",
+    "betSuccess":"bet Success",
+    "betFailed" : "bet Failed",
+    "addNewRoadMap" : "Add New Roadmap",
+    "closeRoadMap" : "Close Roadmap",
+    "expand" : "expand"
   },
-  "navlist": {
+  "navList": {
     "live Stock": "live Stock",
     "Us Stock": "Us Stock",
-    "Cypto Currency": "Cypto Currency",
+    "Cypto Currency": "Crypto Currency",
     "China Stocck": "China Stock",
     "usa": "Usa Stock",
-    "cypto": "Cypto Currency",
-    "china": "China Stocck"
+    "cypto": "Crypto Currency",
+    "china": "China Stock"
   },
   "listCS": {
     "live": "Live",
@@ -204,6 +215,9 @@
     "Odd-Even Two Digit": "Odd-Even Two Digit"
   },
   "gamemsg": {
+    "you" : "you",
+    "betResults" : "Bet Results",
+    "on" : "On",
     "All games": "All games",
     "Big-Small": "Big-Small",
     "Odd-Even": "Odd-Even",
@@ -231,10 +245,23 @@
     "E": "E",
     "O": "O",
     "U": "U",
+    "H": "H",
     "L": "L",
     "M": "M",
     "null": "",
-    "undefined" :""
+    "undefined" :"",
+    "FD": "First Digit",
+    "LD": "Last Digit",
+    "BD": "Both Digit",
+    "TD": "Two Digit",
+    "BIG": "Big",
+    "SMALL": "Small",
+    "ODD": "Odd",
+    "EVEN": "Even",
+    "HIGH": "High",
+    "MIDDLE": "Mid",
+    "LOW": "Low",
+    "TIE": "Tie"
   },
   "stockName": {
     "btc1": "BTC/USDT1",
@@ -247,6 +274,12 @@
     "sh000300": "SH000300"
   },
   "profile": {
+    "invalidDate": "Please select a valid date",
+    "available":"Available",
+    "typeUsername":"Type your Username",
+    "noData": "No data to display",
+    "chooseYourAvatar" : "Choose your Avatar",
+    "useAvatar": "User Avatar",
     "username": "Username",
     "firstName": "first name",
     "lastName": "last name",
@@ -256,9 +289,7 @@
     "email": "email",
     "country": "country",
     "invalidEmail": "Please enter a valid email address",
-    "invalidFirstName": "Please enter a valid First Name. Only alphabetical characters are allowed",
-    "invalidLastName": "'Please enter a valid Last Name. Only alphabetical characters are allowed'",
-    "invalidUsername": "Username should be minimum 5 characters and maximum 20 characters long",
+    "mandatoryField": "Please select the mandatory fields",
     "success": "Successful Information Saved!",
     "onlineStatus": "Online Status",
     "basicInfo": "basic information",
@@ -289,6 +320,9 @@
     "yourself": "YOURSELF"
   },
   "liveBetData": {
+    "totalUsers": "Total Users placed bet on the Game.",
+    "totalBet": "Total Bet Count on the Game.",
+    "totalAmount": "Total Amount places on the Game.",
     "betID" : "Bet ID",
     "dateTime" : "Date & Time",
     "bet" : "Bet",
@@ -296,9 +330,9 @@
   },
   "leaderBoard": {
     "user": "User",
-    "winningRate": "Winning rate",
+    "winningRate": "Winning Rate",
     "bets": "Bets",
-    "winningAmount": "Winning amount",
+    "winningAmount": "Winning Amount",
     "follow": "follow",
     "weeklyRankings": "WEEKLY RANKINGS",
     "monthlyRankings": "MONTHLY RANKINGS",
@@ -316,7 +350,12 @@
     "stopByTiming":"Stop by Timing",
     "stopByBets":"Stop by Bets",
     "monthly":"Monthly",
-    "weekly":"Weekly"
+    "weekly":"Weekly",
+    "viewUserProfile" : "View User Profile",
+    "sorry" : "Sorry, this is private account",
+    "theLink" : "The Link you followed have expired, or the page may only be visible to an audience you're not in.",
+    "previousPage" : "Go back to the previous Page",
+    "homePage" : "EC Game Home Page"
   },
   "breadcrumbs": {
     "rule": "Rule",
@@ -336,7 +375,9 @@
     "gameOptions": "GAME OPTIONS",
     "chipOptions": "CHIP OPTIONS",
     "sound": "Sound",
-    "allowToLocation": "Allow To Location"
+    "allowToLocation": "Allow To Location",
+    "chipExists" : "Chip amount already exist",
+    "chipAmount" : "Chip amount should be Between 100 to 10000"
   },
   "notification": {
     "myNotification": "my notification",
@@ -351,10 +392,12 @@
     "viewAll": "View All"
   },
   "betHistory": {
+    "income": "Income",
     "betDraw": "BET DRAW",
     "yourLosingAmount": "Your Loosing Amount",
     "yourWinningAmount": "Your Winning Amount",
-    "searchByName" : "Search by Name",
+    "yourBalance": "Your Balance",
+    "searchByName" : "Search By Name",
     "today":"Today",
     "thisWeek":"This Week",
     "thisMonth":"This Month",
@@ -368,12 +411,16 @@
   },
   "betting": {
     "reviewBet" : "Review Bet",
+    "betValue": "Bet value should be greater than 0 and not be more than 10000",
     "placeBet" : "Place Bet",
     "cancelBet" :"Cancel Bet",
     "reviewYourBet" : "REVIEW YOUR BET",
-    "pleaseConfirm" : "Please confirm your bet below"
+    "pleaseConfirm" : "Please confirm your bet below",
+    "betSuccess": "Bet placed successfully"
   },
   "invitation": {
+    "selectCategory" : "select category",
+    "selectCategoryError" : "Please Select Category",
     "ecWorld" : "EC WORLD",
     "gameChannel" : "GAME CHANNEL",
     "sendInvitation": "SEND INVITATION",
@@ -391,6 +438,7 @@
     "followBet":"FOLLOW BET INVITATION"
   },
   "tutorial": {
+    "help":"Take A Tour",
     "resultDraw" : "Result of the DRAW",
     "calculation" : "Calculation",
     "lotteryDraw" : "Lottery DRAW",
@@ -412,7 +460,10 @@
     "selectAmount":"select amount",
     "betMultiGame":"You can select amount and Bet Multi Game Rule",
     "liveBet":"live bet",
-    "wholeBets":"You can see the whole bets for this game"
+    "wholeBets":"You can see the whole bets for this game",
+    "skip" : "Skip",
+    "next": "Next",
+    "back": "Back"
   },
   "error": {
     "general" : "Something went wrong!"
@@ -420,22 +471,23 @@
   "follow": {
     "amount" : "Amount",
     "rate" : "Rate",
-    "amountMust" : "Minimum Amount must be at least 100 USD",
+    "amountMust" : "Minimum Amount must be at least 100",
     "timeMust" : "Minimum Time must be at least 1 Day.",
     "betMust" : "Minimum Bet must be at least 1.",
-    "amountMay" : "Amount should not be greater than 1000 USD",
+    "amountMay" : "Amount should not be greater than 1000",
     "timeMay" : "Time should not be greater than 10 Days",
     "betMay" : "Bet should not be greater than 10 Bets",
     "mustBe" : "must be at least",
     "mayNotBe":"may not be greater than",
     "followingType":"Following type is not selected",
-    "amountShould":"Amount should be Lower than 1001 & Greater than 101",
-    "betRate":"Bet Rate Should be Lower than 101 & Greater than 11",
+    "amountShould":"Amount should Between 100 to 1000",
+    "betRate":"Bet Rate Should be Between 10 to 100",
     "autoStop":"Auto Stop Amount should Between 100 to 1000",
     "daysShould":"Days should be Between 1 to 10.",
     "betsShould":"Bets should be Between 1 to 100",
     "userFollowed":"User followed successfully.",
-    "userUnFollowed":"User un-followed successfully."
+    "userUnFollowed":"User un-followed successfully.",
+    "maxFollow":"You can't follow more than 10 users at a time."
   },
   "currentBet": {
     "noBets" : "There are no current bets.",
@@ -450,5 +502,20 @@
     "bye" : "This will erase all data from this device and take you back to the logging screen.",
     "logout" : "LOGOUT",
     "cancel" : "CANCEL"
+  },
+  "popupMsg": {
+    "alreadyLogin":"You have logged in from another device",
+    "okLogout": "Okay! Logout",
+    "sessionExpired":"Session expired! Please Login Again."
+  },
+  "loginError": {
+    "token": "Token is Missing",
+    "portalProvider": "Portal Provider UUID is invalid",
+    "portalProviderUserId": "Portal Provider User Id is invalid",
+    "balance": "Balance is invalid",
+    "authError": "Authentication authUser & authPassword is Missing.",
+    "general": "Something went wrong!",
+    "lowBalance": "Insufficient Balance. Please topup your balance",
+    "limitExceeded":"Bet amount limit exceeded"
   }
 }

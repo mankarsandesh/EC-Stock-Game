@@ -26,6 +26,7 @@
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
+              :locale="lang"
             ></v-date-picker>
           </div>
         </v-flex>
@@ -43,7 +44,7 @@
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false" :locale="lang"></v-date-picker>
           </div>
         </v-flex>
         <!-- go button -->
@@ -106,10 +107,8 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "./UploadFile";
 import onlineChart from "./onlinechart";
 import config from '../../../config/config.global';
 export default {
@@ -146,7 +145,18 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"])
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID","getLocale"]),
+    lang() {
+      if(this.getLocale == "us"){
+        return "en-US"
+      } else if(this.getLocale == "th") {
+        return "th-TH"
+      } else if(this.getLocale == "cn") {
+        return "zh-CN"
+      } else {
+        return "la"
+      }
+    }
   },
   methods: {
     ...mapActions(["asynUserInfo"]),
@@ -170,18 +180,12 @@ export default {
         if (res.code === 200) {
           this.chartData = [1500];
           this.xaxis = ["2020-02-26"];
-          let result = res.data[0].activeTimeDateWise;
-          console.log("result online chart");
-          console.log(res);
-          console.log("result online chart");
+          let result = res.data[0].activeTimeDateWise;        
           result.forEach(element => {
             this.chartData.push(parseInt(element.activeTimeInMins));
             this.xaxis.push(element.Date);
-          });
-          console.log(this.chartData);
-          console.log(this.xaxis);
-        } else {
-          console.log(res);
+          });         
+        } else {        
           alert(res.message);
         }
       } catch (ex) {

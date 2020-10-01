@@ -14,7 +14,6 @@ import VueApexCharts from "vue-apexcharts";
 import Echo from "laravel-echo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -32,7 +31,11 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getStockUUIDByStockName"]),
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getStockUUIDByStockName"
+    ]),
     series() {
       let newData = [];
       this.chartData.forEach(element => {
@@ -163,23 +166,10 @@ export default {
               this.setLiveChart(readyData);
             }
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/mobile/chartIndex.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -190,23 +180,27 @@ export default {
     },
     async fetchChart(stockUUID) {
       try {
-        const res = await this.$axios.$post(
-          config.getRoadMap.url,
-          {
-            portalProviderUUID: this.getPortalProviderUUID,
-            limit: 50,
-            stockUUID: [stockUUID],
-            version: config.version
-          },
-          {
-            headers: config.header
-          }
-        );
-        if (res.code === 200) {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          limit: 50,
+          stockUUID: [stockUUID],
+          version: config.version
+        };
+        const res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
+          headers: config.header
+        });
+        if (res.status) {
+          this.apiAttemptCount = 0;
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          throw new Error();
+          if (this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.fetchChart(stockUUID);
+          } else {
+             throw new Error(this.$root.$t("error.general"));
+          }
         }
       } catch (ex) {
         console.error(ex.message);
@@ -218,7 +212,8 @@ export default {
   },
   data() {
     return {
-      chartData: []
+      chartData: [],
+      apiAttemptCount: 0
     };
   }
 };

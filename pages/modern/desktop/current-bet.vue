@@ -7,17 +7,17 @@
     />
     <v-container>
       <!-- Send Data to currentBet Component -->
-      <currentBet :currentBets="currentBets" />
+      <currentBet :currentBets="currentBets" :currency="getUserCurrency" />
     </v-container>
   </div>
 </template>
 <script>
+
 import currentBet from "~/components/modern/currentBet";
 import breadcrumbs from "~/components/breadcrumbs";
-import { mapState } from "vuex";
+import { mapState, mapGetters,mapActions } from "vuex";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
 
 export default {
   layout: "desktopModern",
@@ -35,46 +35,55 @@ export default {
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    }) 
+    }),
+    ...mapGetters(["getUserCurrency"])
   },
   mounted() {
-    this.fetch();
+    this.currentBetData();
+  },
+  beforeDestroy(){
+    this.userActivityAction();
   },
   methods: {
-    async fetch() {
+    ...mapActions(["userActivityAction"]),
+    async currentBetData() {
       try {
-        var reqBody = {
+        const reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           version: config.version,
           betResult: [-1]
         };
-        var { data } = await this.$axios.post(config.getAllBets.url, reqBody, {
-          headers: config.header
-        });
-        if (data.status) {
-          this.currentBets = data.data;
-        } else {
-          throw new Error(config.error.general);
-        }
-      } catch (ex) {
-        console.error(ex);
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000
-        });
-        log.error(
+        const { data } = await this.$axios.post(
+          config.getAllBets.url,
+          reqBody,
           {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/desktop/current-bet.vue",
-            apiUrl: config.getAllBets.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
+            headers: config.header
+          }
         );
+        if (data.code == 200) {
+          this.currentBets = data.data;
+        } else if (data.code == 202) {
+          this.loadingImage = false;
+          this.$swal({
+            type: "error",
+            title: this.$root.$t("popupMsg.sessionExpired"),
+            confirmButtonText: this.$root.$t("popupMsg.okLogout"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            if (result.value) {
+              const URL = secureStorage.getItem("referrerURL");
+              secureStorage.removeItem("USER_UUID");
+              secureStorage.removeItem("PORTAL_PROVIDERUUID");
+              secureStorage.removeItem("userSessionID");
+              location.href = URL;
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   }

@@ -4,9 +4,7 @@
     <v-container>
       <v-layout row wrap mt-3 md6 align-center justify-center>
         <v-flex md10>
-          <v-flex md6 class="d-flex">
-        
-          </v-flex>
+          <v-flex md6 class="d-flex"> </v-flex>
         </v-flex>
       </v-layout>
       <v-layout row wrap align-center justify-center>
@@ -18,6 +16,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import stocklist from "~/components/modern/stocklist/stocklist";
 export default {
@@ -26,10 +25,11 @@ export default {
     stocklist,
     breadcrumbs
   },
-  data() {
-    return {
-    
-    };
+  methods: {
+    ...mapActions(["userActivityAction"])
+  },
+  beforeDestroy() {
+    this.userActivityAction();
   }
 };
 </script>

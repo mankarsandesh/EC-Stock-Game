@@ -9,6 +9,9 @@ const config = {
   secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
   sessionExpiryTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   isMaintenance: process.env.MAINTENANCE_MODE,
+  Whitelabel : {
+    url :  `${process.env.WHITELABEL_URL}`
+  },
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
@@ -75,6 +78,22 @@ const config = {
   liveCountBetData: {
     url: `${process.env.BASE_URL}/liveCountBetData`
   },
+  getUserInvitationDetails: {
+    url: `${process.env.BASE_URL}/getUserInvitationDetail`
+  },
+  userLogout: {
+    url: `${process.env.BASE_URL}/appUsersLogout`
+  },
+  checkBetStatus: {
+    url: `${process.env.BASE_URL}/checkBetStatus`
+  },
+  userActivityLog: {
+    url: `${process.env.BASE_URL}/userActivityLog`,
+    timer: process.env.USER_ACTIVITY_TIME
+  },
+  userAuthorizedLogin: {
+    url: `${process.env.BASE_URL}/webUserAuthorizedLogin`,
+  },
   serverConfig: {
     port: 8000,
     host: "0.0.0.0"
@@ -84,6 +103,7 @@ const config = {
     lowBalance: "Insufficient Balance. Please topup your balance"
   },
   loginError: {
+    token: "Token is Missing",
     portalProvider: "Portal Provider UUID is invalid",
     portalProviderUserId: "Portal Provider User Id is invalid",
     balance: "Balance is invalid",
@@ -92,7 +112,7 @@ const config = {
   logDomain: process.env.LOG_DOMAIN,
   defaultLanguageLocale: "cn",
   defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
-  homePageStockName: "btc1",
+  homePageStockName: "btc5",
   language: {
     cn: "chinese",
     us: "english",

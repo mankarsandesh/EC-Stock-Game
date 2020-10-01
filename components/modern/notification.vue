@@ -4,11 +4,10 @@
       <v-data-table
         :items="notificationData"
         :items-per-page="5"
-        ref="table"
         class="current-bet"
         :rows-per-page-text="msg"
       >
-        <template v-slot:headers="head">
+        <template v-slot:headers>
           <tr>
             <th scope="col">{{ $t("msg.titles") }}</th>
             <th scope="col">{{ $t("msg.date") }}</th>

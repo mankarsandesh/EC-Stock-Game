@@ -12,23 +12,24 @@
                 </v-avatar>
                 <span class="camera_container">
                   <button class="btn_camera">
-                    <v-icon
-                      color="black"
-                      :size="20"
+                    <i
+                      class="fa fa-camera"
+                      aria-hidden="true"
+                      style="font-size:16px;"
                       @click="avatarDialog = true"
-                      >photo_camera</v-icon
-                    >
+                    ></i>
                   </button>
                 </span>
               </div>
-              <h2 v-if="getUserInfo.firstName == null">
+              <h3 v-if="getUserInfo.firstName == null">
                 {{ getUserInfo.userName }}
-              </h2>
-              <h2 v-if="getUserInfo.firstName" class="text-capitalize">
+              </h3>
+              <h3 v-if="getUserInfo.firstName" class="text-capitalize">
                 {{ getUserInfo.firstName }} {{ getUserInfo.lastName }}
-              </h2>
+              </h3>
               <p>
-                <b>{{ $t("profile.onlineStatus") }}</b> : Available
+                <b>{{ $t("profile.onlineStatus") }}</b> :
+                {{ $t("profile.available") }}
               </p>
             </div>
             <div class="profile_menu">
@@ -113,21 +114,23 @@
       <v-dialog v-model="avatarDialog" width="900" class="followDialog">
         <v-card class="followup">
           <h3 class="title" style="text-align: center; color: #0b2a68;">
-            Choose your Avatar
+            {{ $t("profile.chooseYourAvatar") }}
           </h3>
           <v-card-text style="text-align:center;">
             <div class="avatarImage" v-for="n in 10" v-bind:key="n">
               <v-img class="img" v-bind:src="imagePath + n + '.jpg'"></v-img>
-              <span href class="userAvatar" @click="useAvatar(n)"
-                >Use Avatar</span
-              >
+              <span href class="userAvatar" @click="useAvatar(n)">{{
+                $t("profile.useAvatar")
+              }}</span>
             </div>
           </v-card-text>
           <v-divider></v-divider>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">Close</v-btn>
+            <v-btn color="primary" text @click="avatarDialog = false">{{
+              $t("msg.close")
+            }}</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -137,7 +140,6 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
 
 export default {
@@ -162,8 +164,6 @@ export default {
     this.currentChild = this.$route.path;
   },
   created() {
-    // console.log(this.getUserInfo.profileImage);
-    // make a active menu
     this.currentChild = this.$route.path;
   },
   computed: {
@@ -176,7 +176,11 @@ export default {
       }
     }
   },
+  beforeDestroy() {
+    this.userActivityAction();
+  },
   methods: {
+    ...mapActions(["userActivityAction"]),
     useAvatar(image) {
       this.newImage = this.imagePath + image + ".jpg";
       this.avatarID = image;
@@ -220,10 +224,10 @@ export default {
             type: "success",
             title: this.$root.$t("msg.confirm"),
             showConfirmButton: false,
-            timer: 1000
+            timer: 2000
           });
         } else {
-          throw new Error(config.error.general);
+          throw new Error(cthis.$root.$t("error.general"));
         }
       } catch (ex) {
         this.imageBase64 = "";
@@ -231,19 +235,8 @@ export default {
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
-        log.error(
-          {
-            req: reqBody,
-            res: res.data,
-            page: "pages/modern/desktop/profile.vue",
-            apiUrl: config.updateUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

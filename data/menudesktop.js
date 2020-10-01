@@ -1,5 +1,10 @@
 const Menu = [
   {
+    icon: "fa fa-home fa-2x",
+    title: "home",
+    to: "/modern/desktop/btc5"
+  },
+  {
     icon: "fa fa-file-text-o fa-2x",
     title: "rule",
     to: "/modern/desktop/gamerule"

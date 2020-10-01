@@ -26,6 +26,7 @@
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
+              :locale="lang"
             ></v-date-picker>
           </div>
         </v-flex>
@@ -43,7 +44,7 @@
             </div>
           </div>
           <div style="position:absolute;z-index:1">
-            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false"></v-date-picker>
+            <v-date-picker v-if="isShowDateEnd" v-model="endDate" @input="isShowDateEnd = false" :locale="lang"></v-date-picker>
           </div>
         </v-flex>
         <!-- go button -->
@@ -97,10 +98,8 @@
 <script>
 import apexchart from "vue-apexcharts";
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 import popper from "vue-popperjs";
 import "vue-popperjs/dist/vue-popper.css";
-import uploadprofile from "./UploadFile";
 // set color win and lose color in bar chart
 let index = 0;
 let barColor = [
@@ -119,7 +118,20 @@ export default {
     this.startDate = yyyy + "-" + mm + "-" + dd;
     this.endDate = yyyy + "-" + mm + "-" + dd;
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["getLocale"]),
+    lang() {
+      if(this.getLocale == "us"){
+        return "en-US"
+      } else if(this.getLocale == "th") {
+        return "th-TH"
+      } else if(this.getLocale == "cn") {
+        return "zh-CN"
+      } else {
+        return "la"
+      }
+    }
+  },
   destroyed() {
     index = 0; // reset index
   },

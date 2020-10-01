@@ -1,20 +1,20 @@
 <template>
-  <v-app>
+  <v-app pa-0>
     <div style="height:100%">
       <nuxt />
     </div>
     <!-- Chat Windows-->
-
-    <invitation
+    <invitaionBox
       :gameUUID="getGameUUIDByStockName($route.params.id)"
-      :stockName="this.stockName"
-      :key="$route.name"
-    />
+      :stockName="$route.params.id"
+      :pathName="$route.name"
+    ></invitaionBox>
   </v-app>
 </template>
 <script>
-import invitation from "~/components/invitation";
+import invitaionBox from "~/components/modern/invitationBox";
 import { mapGetters, mapActions } from "vuex";
+import config from "../config/config.global";
 export default {
   data() {
     return {
@@ -22,12 +22,12 @@ export default {
     };
   },
   components: {
-    invitation
+    invitaionBox
   },
   created() {
     let path = this.$nuxt.$route.fullPath.split("/");
     this.stockName = path[3];
-    this.connectUserBalanceSocket();
+    // this.connectUserBalanceSocket();
   },
   computed: {
     ...mapGetters([
@@ -35,43 +35,6 @@ export default {
       "getUserUUID",
       "getPortalProviderUUID"
     ])
-  },
-  methods: {
-    ...mapActions(["setUserBalance"]),
-    listenUserBalance({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
-    },
-    connectUserBalanceSocket() {
-      this.listenUserBalance(
-        {
-          channelName: `balanceUpdate.${this.getUserUUID}`,
-          eventName: "balanceUpdate"
-        },
-        ({ data }) => {
-          try {
-            var logData = data;
-            if (data.status) {
-              this.setUserBalance(data.data.userBalance);
-            } else {
-              throw new Error(config.error.general);
-            }
-          } catch (ex) {
-            console.log(ex);
-            log.error(
-              {
-                channelName: `balanceUpdate.${this.getUserUUID}`,
-                eventName: "balanceUpdate",
-                res: logData,
-                page: "layouts/fullscreen.vue",
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
-          }
-        }
-      );
-    }
   },
   beforeDestroy() {
     window.Echo.leaveChannel(`balanceUpdate.${this.getUserUUID}`);

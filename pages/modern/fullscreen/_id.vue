@@ -1,12 +1,33 @@
 <template>
   <div>
+    <v-flex v-if="checkBettingResult"></v-flex>
     <!-- tutorial -->
     <!-- tutorial v-if="isShowTutorial" -->
     <div id="tutorial-container" v-if="isShowTutorial">
       <div id="background-tutorial"></div>
       <div id="guide-container">
-        <div class="close-icon">
-          <v-icon @click="clearTutorialUI()" color="#fff">close</v-icon>
+        <div class="tutorial-action">
+          <div style="text-align: end">
+            <button id="open-Tutorial" hidden @click="openTutorial()">
+              openTutorial
+            </button>
+            <v-btn @click="closeTutorial()" class="no-disable">
+              <span>{{ $t("tutorial.skip") }}</span>
+              <v-icon>close</v-icon>
+            </v-btn>
+          </div>
+          <div>
+            <v-btn @click="backWard()" class="no-disable">
+              <v-icon>fa-step-backward</v-icon>
+              <span class="pl-2"> {{ $t("tutorial.back") }} </span>
+            </v-btn>
+            <v-btn @click="stepWard()" class="no-disable">
+              <span class="pr-2">
+                {{ $t("tutorial.next") }}
+              </span>
+              <v-icon>fa-step-forward</v-icon>
+            </v-btn>
+          </div>
         </div>
         <!-- last draw v-if="tutorialStepNumber === 1" -->
         <div class="guide-top" v-if="tutorialStepNumber === 1">
@@ -15,70 +36,69 @@
         </div>
         <!-- bet close in  -->
         <div class="guide-top" v-if="tutorialStepNumber === 2">
-          <span
-            class="guide-description text-uppercase"
-            style="font-size:100px"
-          >{{ $t("tutorial.calculation") }}...</span>
+          <span class="guide-description text-uppercase" style="font-size:100px"
+            >{{ $t("tutorial.calculation") }}...</span
+          >
         </div>
         <!-- lottery  -->
         <div class="guide-top" v-if="tutorialStepNumber === 3">
           <span id="lottery-draw-guide-text">
             {{
-            getTimerByStockName($route.params.id) &&
-            getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
-            | lotterydraw(getStockLoop($route.params.id))
+              getTimerByStockName($route.params.id) &&
+                getTimerByStockName($route.params.id).gameEndTimeCountDownInSec
+                  | lotterydraw(getStockLoop($route.params.id))
             }}
           </span>
           <span class="guide-description">
-            {{
-            $t("tutorial.lotteryDraw")
-            }}
+            {{ $t("tutorial.lotteryDraw") }}
           </span>
         </div>
         <!-- chart  -->
         <!-- has scroll -->
-        <div class="guide-top" v-if="tutorialStepNumber === 4 && getIsWindowsHasScroll">
+        <div
+          class="guide-top"
+          v-if="tutorialStepNumber === 4 && getIsWindowsHasScroll"
+        >
           <span class="guide-title text-uppercase">
-            {{
-            $t("tutorial.analyseGraph")
-            }}
+            {{ $t("tutorial.analyseGraph") }}
           </span>
           <span class="guide-description">
-            {{
-            $t("tutorial.analyseGraph")
-            }}
+            {{ $t("tutorial.analyseGraph") }}
           </span>
         </div>
         <!-- no scroll -->
-        <div class="guide-top" v-if="tutorialStepNumber === 4 && !getIsWindowsHasScroll">
+        <div
+          class="guide-top"
+          v-if="tutorialStepNumber === 4 && !getIsWindowsHasScroll"
+        >
           <span class="guide-title text-uppercase">analysis graph</span>
           <span class="guide-description">{{ $t("tutorial.stockGraph") }}</span>
         </div>
 
         <!-- bet on digigt  -->
-        <div class="guide-top" style="margin-right: 90px;" v-if="tutorialStepNumber === 5">
+        <div
+          class="guide-top"
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 5"
+        >
           <span class="guide-title text-uppercase">
-            {{
-            $t("tutorial.betOnDigits")
-            }}
+            {{ $t("tutorial.betOnDigits") }}
           </span>
           <span class="guide-description">
-            {{
-            $t("tutorial.selectDigit")
-            }}
+            {{ $t("tutorial.selectDigit") }}
           </span>
         </div>
         <!-- select chipcamount  -->
-        <div class="guide-top" style="margin-right: 90px;" v-if="tutorialStepNumber === 6">
+        <div
+          class="guide-top"
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 6"
+        >
           <span class="guide-title text-uppercase">
-            {{
-            $t("tutorial.betConfirm")
-            }}
+            {{ $t("tutorial.betConfirm") }}
           </span>
           <span class="guide-description">
-            {{
-            $t("tutorial.betLastDigitEven")
-            }}
+            {{ $t("tutorial.betLastDigitEven") }}
           </span>
         </div>
         <!-- enter amount bet -->
@@ -90,9 +110,7 @@
           v-if="tutorialStepNumber === 7 && getIsWindowsHasScroll"
         >
           <span class="guide-title text-uppercase">
-            {{
-            $t("tutorial.betOnDigits")
-            }}
+            {{ $t("tutorial.betOnDigits") }}
           </span>
           <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
         </div>
@@ -103,10 +121,10 @@
           id="enter-bet-guide"
           v-if="tutorialStepNumber === 7 && !getIsWindowsHasScroll"
         >
-          <span
-            class="guide-title text-uppercase"
-            style="margin-left: 20px;"
-          >bet on digits has no scroll</span>
+          <span class="guide-title text-uppercase" style="margin-left: 20px;"
+            >bet on digits
+          </span>
+          <!--has no scroll -->
           <span class="guide-description">{{ $t("tutorial.selectChip") }}</span>
         </div>
         <!-- to scroll here -->
@@ -116,35 +134,29 @@
         <!-- select chipcamount for multi game rules  -->
         <div class="guide-bottom" v-if="tutorialStepNumber === 8">
           <span class="guide-title text-uppercase">
-            {{
-            $t("tutorial.selectAmount")
-            }}
+            {{ $t("tutorial.selectAmount") }}
           </span>
           <span class="guide-description">
-            {{
-            $t("tutorial.betMultiGame")
-            }}
+            {{ $t("tutorial.betMultiGame") }}
           </span>
         </div>
         <!-- road map  -->
         <div class="guide-bottom" v-if="tutorialStepNumber === 9">
           <span class="guide-title text-uppercase">
-            {{
-            $t("tutorial.roadMap")
-            }}
+            {{ $t("tutorial.roadMap") }}
           </span>
           <span class="guide-description">
-            {{
-            $t("tutorial.analyseStock")
-            }}
+            {{ $t("tutorial.analyseStock") }}
           </span>
         </div>
         <!-- live betting  -->
-        <div class="guide-top" style="margin-right: 90px;" v-if="tutorialStepNumber === 10">
+        <div
+          class="guide-top"
+          style="margin-right: 90px;"
+          v-if="tutorialStepNumber === 10"
+        >
           <span class="guide-title text-uppercase">
-            {{
-            $t("tutorial.liveBet")
-            }}
+            {{ $t("tutorial.liveBet") }}
           </span>
           <span class="guide-description">{{ $t("tutorial.wholeBets") }}</span>
         </div>
@@ -164,7 +176,7 @@
         <v-layout row wrap px-2 pt-2>
           <v-flex
             pa-2
-            v-for="(data, index) in getAllStocks"
+            v-for="(data, index) in showOtherStocks"
             :key="index"
             xs6
             sm6
@@ -181,7 +193,9 @@
                         'Closed'
                   "
                 >
-                  <span class="text-close-bet">market close</span>
+                  <span class="text-close-bet">{{
+                    $t("msg.marketClosed")
+                  }}</span>
                 </div>
                 <!-- chart other stocks -->
                 <v-card-text class="pa-0" min-height="500">
@@ -189,9 +203,11 @@
                 </v-card-text>
               </v-card>
               <div class="pt-2" style="color: white;">
-                <h3 class="text-uppercase">{{ $t("stockName." + data.stockName) }}</h3>
+                <h3 class="text-uppercase">
+                  {{ $t("stockName." + data.stockName) }}
+                </h3>
                 <h4 style="line-height: 1;">
-                  <em>{{ data.loop }} minute game</em>
+                  <em>{{ data.loop }} {{ $t("msg.minuteGame") }}</em>
                 </h4>
               </div>
             </nuxt-link>
@@ -201,7 +217,7 @@
     </v-dialog>
 
     <v-container fluid class="containerNew">
-      <v-layout pa-1 wrap>
+      <v-layout  wrap>
         <v-flex xs4 sm12 md6 lg4>
           <v-layout column>
             <div id="livechartGuidelines">
@@ -214,23 +230,34 @@
                     class="text-xs-center1"
                     style="width: 100%; align-self: center;"
                   >
-                    <div class="stockname">{{ $t(`stockName.${$route.params.id}`) }}</div>
-                    <span class="gameid">{{ getGameUUIDByStockName($route.params.id) }}</span>
+                    <div class="stockname">
+                      {{ $t(`stockName.${$route.params.id}`) }}
+                    </div>
+                    <span class="gameid">{{
+                      getGameUUIDByStockName($route.params.id)
+                    }}</span>
                   </v-flex>
 
                   <v-flex xs12 md8 lg8 class="text-xs-right topHeader">
                     <v-btn color="buttonRed">
                       {{ getStockLoop($route.params.id) }}
-                      {{ $t("msg.minutes") }} {{ $t("msg.loop") }}
+                      {{ $t("msg.minutes") }}
                     </v-btn>
-                    <v-btn
-                      color="buttonGreen"
-                      @click="dialogOtherstock = true"
-                    >{{ $t("msg.otherStock") }}</v-btn>
+                    <v-btn color="buttonGreen" @click="showStockroadMapData">{{
+                      $t("msg.otherStock")
+                    }}</v-btn>
                   </v-flex>
                 </v-layout>
               </v-flex>
-              <v-flex xs12 sm12 md8 lg12 class="chartDesgin" id="chartGuidelineNew">
+              <v-flex
+                mr-1
+                xs12
+                sm12
+                md8
+                lg12
+                class="chartDesgin"
+                id="chartGuidelineNew"
+              >
                 <chartApp :stockName="$route.params.id"></chartApp>
               </v-flex>
             </div>
@@ -243,7 +270,10 @@
                 <span class="text-black">{{ $t("msg.lastDraw") }}:</span>
                 <div id="lastDrawGuideline">
                   <v-flex flex-style class="lastdraw">
-                    <h4 class="text-black" v-html="$options.filters.lastDraw(getLastDraw)"></h4>
+                    <h4
+                      class="text-black"
+                      v-html="$options.filters.lastDraw(getLastDraw)"
+                    ></h4>
                   </v-flex>
                 </div>
               </v-flex>
@@ -260,16 +290,16 @@
                       class="text-black"
                     >
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      "close" | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          "close" | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                     <span v-else class="text-black">
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | betclosein(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | betclosein(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
@@ -281,17 +311,17 @@
                   <v-flex flex-style class="lottery">
                     <span class="text-black">
                       {{
-                      getTimerByStockName($route.params.id) &&
-                      getTimerByStockName($route.params.id)
-                      .gameEndTimeCountDownInSec
-                      | lotterydraw(getStockLoop($route.params.id))
+                        getTimerByStockName($route.params.id) &&
+                          getTimerByStockName($route.params.id)
+                            .gameEndTimeCountDownInSec
+                            | lotterydraw(getStockLoop($route.params.id))
                       }}
                     </span>
                   </v-flex>
                 </div>
               </v-flex>
               <v-flex xs3 class="text-xs-right" style="align-self: flex-end;">
-                <v-tooltip bottom>
+                <v-tooltip left>
                   <template v-slot:activator="{ on }">
                     <v-btn
                       v-on="on"
@@ -300,28 +330,29 @@
                       dark
                       small
                       class="helpButton"
-                      title="Help"
                     >
                       <v-icon dark size="25">fa-question</v-icon>
                     </v-btn>
                   </template>
-                  <span>Full Game Screen Tutorial</span>
+                  <span>{{ $t("tutorial.help") }}</span>
                 </v-tooltip>
               </v-flex>
             </v-layout>
           </v-flex>
           <v-flex id="betButtonGuidelines" xs4 sm12 md12 lg12 mt-4>
-            <betButton :isFullscreen="true" :stockName="$route.params.id" :loop="1"></betButton>
+            <betButton
+              :isFullscreen="true"
+              :stockName="$route.params.id"
+              :loop="1"
+            ></betButton>
           </v-flex>
         </v-flex>
         <v-flex xs12 sm12 md3 lg3 id="live-bet-guide">
-          <h3 class="balanceUser" v-if="getUserBalance > 0">
+          <h3 class="balanceUser">
             Acc :
-            <span class="userBlanace">${{ getUserBalance | currency }}</span>
-          </h3>
-          <h3 class="balanceUser" v-if="getUserBalance == 0">
-            Acc :
-            <span class="userBlanace">0000.00</span>
+            <span class="userBlanace">
+              <userMainBalance />
+            </span>
           </h3>
           <!-- Toggle between two components -->
           <div id="livebetGuidelines">
@@ -329,7 +360,7 @@
             <fullscreencurrentbet v-show="isHidden"></fullscreencurrentbet>
           </div>
           <v-layout pa-3>
-            <v-flex md3 lg3 pt-2 style="text-align:center;">
+            <v-flex md6 lg6 pt-2 style="text-align:center;">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <span class="seticon" v-on="on">
@@ -337,10 +368,10 @@
                     <span>{{ dataliveBetAll.totalUsers }}</span>
                   </span>
                 </template>
-                <span>Total Users places bet on the Game.</span>
+                <span>{{ $t("liveBetData.totalUsers") }}</span>
               </v-tooltip>
             </v-flex>
-            <v-flex md3 lg3 pt-2 style="text-align:center;">
+            <v-flex md6 lg6 pt-2 style="text-align:center;">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <span class="seticon" v-on="on">
@@ -348,10 +379,10 @@
                     <span>{{ dataliveBetAll.totalBetCount }}</span>
                   </span>
                 </template>
-                <span>Total Bet Count on the Game.</span>
+                <span>{{ $t("liveBetData.totalBet") }}</span>
               </v-tooltip>
             </v-flex>
-            <v-flex md4 lg4 pt-2 style="text-align:center;">
+            <!-- <v-flex md4 lg4 pt-2 style="text-align:center;">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <span class="seticon" v-on="on">
@@ -359,37 +390,53 @@
                     <span>{{ dataliveBetAll.totalAmountPlaced }}</span>
                   </span>
                 </template>
-                <span>Total Amount places on the Game.</span>
+                <span>{{ $t("liveBetData.totalAmount") }}</span>
               </v-tooltip>
-            </v-flex>
+            </v-flex> -->
             <v-flex sm4 md4 lg4 mb-1 style="text-align:center;">
               <v-btn
                 @click="isHidden = !isHidden"
                 color="buttonGreensmall"
                 class="curretbet-btn"
-              >{{ $t("menu.currentBet") }}</v-btn>
+                >{{ $t("menu.currentBet") }}</v-btn
+              >
             </v-flex>
           </v-layout>
         </v-flex>
         <!-- live Chart road map -->
-        <v-flex xs12 class="text-xs-center">
-          <footerBet lg12 md12></footerBet>
-          <v-layout class="fullroadMap elevation-4" id="fullscreen-roadmap-guide">
+        <v-flex xs12 class="text-xs-center" >
+          <footerBet lg12 md12 ></footerBet>
+          <v-layout
+            class="fullroadMap elevation-4"
+            id="fullscreen-roadmap-guide"
+          >
             <v-flex xs12 sm12 md12 lg12 wrap pt-2 id="roadmapGuidelines">
               <v-layout>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="0" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="0"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="1" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="1"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
               </v-layout>
-              <v-layout>
+              <v-layout style="margin-top:-25px; ">
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="2" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="2"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
                 <v-flex xs12 sm12 md6 lg6>
-                  <trendMapFullScreen :index="3" :dataArray="getRoadMap"></trendMapFullScreen>
+                  <trendMapFullScreen
+                    :index="3"
+                    :dataArray="getRoadMap"
+                  ></trendMapFullScreen>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -408,10 +455,13 @@
               v-on="on"
               title="Full Screen"
             >
-              <v-icon>close</v-icon>
+              <v-icon size="26px" v-if="$t('msg.TName') != 'chinese'"
+                >close</v-icon
+              >
+              <span v-else> {{ $t("msg.exit") }} </span>
             </v-btn>
           </template>
-          <span>{{$t("msg.closeFullScreen")}}</span>
+          <span>{{ $t("msg.closeFullScreen") }}</span>
         </v-tooltip>
       </v-layout>
     </v-container>
@@ -428,39 +478,38 @@ import trendMapFullScreen from "~/components/modern/trendMapFullScreen";
 import fullscreenchart from "~/components/modern/fullscreenchart";
 import fullscreencurrentbet from "~/components/modern/fullscreencurrentbet";
 import secureStorage from "../../../plugins/secure-storage";
-import log from "roarr";
-
+import userMainBalance from "~/components/global/userMainBalance";
 export default {
   async validate({ params, store }) {
     return store.getters.getCheckStock(params.id);
   },
   layout: "fullscreen",
+  components: {
+    betButton,
+    chartApp,
+    footerBet,
+    trendMapFullScreen,
+    fullscreenchart,
+    fullscreencurrentbet,
+    userMainBalance
+  },
   data() {
     return {
       isShowTutorial: false,
       tutorialStepNumber: 0,
       routeParamID: this.$route.params.id,
       dialogOtherstock: false,
-      //winner mqrquee
-      winner: [],
-      pauseTime: 2000,
-      pauseOnHover: false,
-      scrollSpeed: 30,
-      showSpeed: 20,
-      isShow: false,
       isHidden: false,
-      rule: [],
-      msg: "",
       dataliveBetAll: {},
-      stockId: "",
-      isStep: 0,
       stockName: this.$route.path.split("/")[3],
-      loopName: ""
+      loopName: "",
+      _stepGo: null
     };
   },
-  created() {
+  async created() {
+    await this.setStocksData();
     this.getActiveGamesByCategory();
-    this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
+
     if (this.stockName.slice(0, -1) == "btc") {
       this.loopName =
         this.stockName.slice(-1) == 1 ? this.stockName.slice(-1) : "5";
@@ -479,6 +528,7 @@ export default {
     );
   },
   mounted() {
+    this.setRoadMap(this.getStockUUIDByStockName(this.$route.params.id));
     this.listenForBroadcast(
       {
         channelName: `roadMap.${this.getStockUUIDByStockName(
@@ -488,41 +538,84 @@ export default {
       },
       ({ data }) => {
         try {
-          var logData = data;
           if (data.status) {
             this.setLiveRoadMap(data.data.roadMap[0]);
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.$route.params.id
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "pages/modern/fullscreen/_id.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
   },
-
-  components: {
-    betButton,
-    chartApp,
-    footerBet,
-    trendMapFullScreen,
-    fullscreenchart,
-    fullscreencurrentbet
-  },
   computed: {
+     ...mapGetters([
+      "getIsWindowsHasScroll",
+      "getGameUUIDByStockName",
+      "getAllStocks",
+      "getTimerByStockName",
+      "getStockUUIDByStockName",
+      "getPortalProviderUUID",
+      "getPreviousGameID",
+      "getUserUUID",
+      "getUserInfo",
+      "getLastDraw",
+      "getRoadMap",
+      "getStockLoop",
+      "getUserBalance",
+      "getmultiGameBet",
+      "getPreviousGameID"
+    ]),
+    // Check Result Win and Loss
+    checkBettingResult() {
+      // Stock Time
+      const stockTime = this.getTimerByStockName(this.$route.params.id);
+       if(this.getPreviousGameID == null){
+        this.setNewGameId(this.getGameUUIDByStockName(this.$route.params.id));
+      }
+      // New Game Open Old Game Stock Result Popup
+      if (this.getStockLoop(this.$route.params.id) === 5) {
+        var resultSecond = 296;
+      } else {
+        var resultSecond = 56;
+      }
+      if (stockTime && stockTime.gameEndTimeCountDownInSec == resultSecond) {
+        this.winBetData = "";
+        this.winBetInfo = "";
+        this.resultFetch(); // Fetch Previous Game Result
+      } else if (
+        stockTime &&
+        stockTime.gameEndTimeCountDownInSec <= resultSecond - 2 &&
+        stockTime.gameEndTimeCountDownInSec >= resultSecond - 6
+      ) {
+        // Update Previous Game ID
+        this.setNewGameId(this.getGameUUIDByStockName(this.$route.params.id));
+      }
+    },
+    // Show all Stock Info
+    showOtherStocks() {
+      if (this.dialogOtherstock == true) {
+        const _this = this;
+        // open stock above close stock below
+        function sortByOpenStock(a, b) {
+          if (
+            (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+            (_this.getGameUUIDByStockName(b.stockName) === undefined)
+          ) {
+            return -1;
+          }
+          if (
+            (_this.getGameUUIDByStockName(a.stockName) !== undefined) &
+            (_this.getGameUUIDByStockName(b.stockName) === undefined)
+          ) {
+            return 1;
+          }
+          return 0;
+        }
+        return this.getAllStocks.sort(sortByOpenStock);
+      }
+    },
     closeFullscreen() {
       let fullscreenClose = secureStorage.getItem("fullscreenclosed");
       if (
@@ -532,20 +625,7 @@ export default {
         fullscreenClose = "desktop";
       }
       return `/modern/${fullscreenClose}/${this.$route.params.id}`;
-    },
-    ...mapGetters([
-      "getIsWindowsHasScroll",
-      "getGameUUIDByStockName",
-      "getAllStocks",
-      "getTimerByStockName",
-      "getStockUUIDByStockName",
-      "getPortalProviderUUID",
-      "getUserInfo",
-      "getLastDraw",
-      "getRoadMap",
-      "getStockLoop",
-      "getUserBalance"
-    ]),
+    },   
     ...mapState({
       gameStockId: state => state.game.gameStockId
     })
@@ -582,11 +662,14 @@ export default {
           $(".BetButtonGuideEven").css("z-index", "10001");
           break;
         case 7:
+          this.enableClick();
           $(".BetButtonGuideEven").click();
-          $("html, body").animate(
-            { scrollTop: $("#enter-amount-to-bet").scrollTop() },
-            1000
-          );
+          this.disableClick();
+          if ($(document).height() > $(window).height()) {
+            setTimeout(() => {
+              window.scrollTo(0, $(window).height() / 4);
+            }, 100);
+          }
           break;
         case 8:
           $(".BetButtonGuideEven").css("z-index", "1");
@@ -603,15 +686,188 @@ export default {
           $("#live-bet-guide").css("backgroundColor", "#fff");
           break;
         default:
-          this.clearTutorialUI();
+          this.clearUITutorial();
           this.isShowTutorial = false;
       }
     }
   },
+  beforeMount(){
+    this.userActivityAction();
+  },
   methods: {
-    clearTutorialUI() {
-      this.tutorialStepNumber = 0;
+    // Place Bet Last Step
+    async resultFetch() {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          gameUUID: this.getPreviousGameID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        var res = await this.$axios.$post(config.checkBetStatus.url, reqBody, {
+          headers: config.header
+        });
+        if (res.code == 200 && res.data.length > 0) {
+          let resultStatus = {
+            win: 0,
+            loss: 0
+          };
+          let resultData = [];
+          // Sum Same Rule Name BetAmount
+          res.data.forEach(function(a) {
+            if (!this[a.ruleName]) {
+              this[a.ruleName] = {
+                ruleName: a.ruleName,
+                betAmount: 0,
+                betResult: a.betResult,
+                rollingAmount: 0
+              };
+              resultData.push(this[a.ruleName]);
+            }
+            this[a.ruleName].betAmount += a.betAmount;
+            this[a.ruleName].rollingAmount += a.rollingAmount;
+          }, Object.create(null));
+
+          // Sperate Win and Loss Amount Rule Wise
+          resultData.forEach(element => {
+            const result = element.betResult == "Win" ? "green" : "red";
+
+            const winAmount =
+              element.rollingAmount == 0
+                ? "-$" + element.betAmount
+                : "+$" + element.rollingAmount;
+
+            if (element.betResult == "Win") {
+              resultStatus.win += element.rollingAmount - element.betAmount;
+            } else if (element.betResult == "Lose") {
+              resultStatus.loss += element.betAmount;
+            }
+
+            const ruleData = isNaN(element.ruleName.split("_")[1])
+              ? window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[0]
+                ) +
+                "-" +
+                window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[1]
+                )
+              : window.$nuxt.$root.$t(
+                  "gamemsg." + element.ruleName.split("_")[0]
+                ) +
+                "-" +
+                element.ruleName.split("_")[1];
+
+               this.winBetData += `<div class="betResult">
+         ${window.$nuxt.$root.$t("gamemsg.you")}
+             <b>${ruleData}</b>  <span style="color:${result}"> ${window.$nuxt.$root.$t(
+              "stockList." + element.betResult
+            )} </span>   : <span  style="color:${result}"> ${winAmount} </span>
+         </div>`;
+          });
+
+          if (resultStatus.win >= resultStatus.loss) {
+            this.resultData = `<span style="color:green"> ${window.$nuxt.$root.$t(
+              "betHistory.yourWinningAmount"
+            )} +$${resultStatus.win - resultStatus.loss} </span>`;
+          } else {
+            this.resultData = `<span style="color:red">${window.$nuxt.$root.$t(
+              "betHistory.yourLosingAmount"
+            )} -$${resultStatus.loss - resultStatus.win} </span>`;
+          }
+
+          this.winBetInfo += `<div class="betResult">  ${this.winBetData} <h1>${this.resultData}</h1> </div>`;
+
+          this.$swal({
+            title: window.$nuxt.$root.$t("msg.betResult"),
+            html: this.winBetInfo,
+            confirmButtonText: window.$nuxt.$root.$t("msg.ok"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          });
+        }
+      } catch (ex) {
+        // this.setSnackBarMessage(ex.message);
+      }
+    },
+    // User Activity Call every 5 MIn
+    async userActivity() {
+      try {
+        var reqBody = {
+          portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
+          version: config.version
+        };
+        const { data } = await this.$axios.post(
+          config.userActivityLog.url,
+          reqBody,
+          {
+            headers: config.header
+          }
+        );
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    showStockroadMapData() {
+      this.dialogOtherstock = true;
+    },
+    // Next Step
+    stepWard() {
+      this.clearUITutorial();
+      clearInterval(this._stepGo);
+
+      setTimeout(() => {
+        this.openTutorial();
+      }, 100);
+    },
+    // Back Steup
+    backWard() {
+      if (this.tutorialStepNumber > 1) {
+        this.clearUITutorial();
+        clearInterval(this._stepGo);
+        this.tutorialStepNumber = this.tutorialStepNumber - 2;
+        this.openTutorial();
+      }
+    },
+    // Open Tutorial
+    openTutorial() {
+      this.disableClick();
+      const _this = this;
+      const timeDuration = 4000;
+      if (this.tutorialStepNumber < 10) {
+        this.tutorialStepNumber = this.tutorialStepNumber + 1;
+      } else {
+        this.tutorialStepNumber = 1;
+      }
+      this.isShowTutorial = true;
+      this._stepGo = setInterval(() => {
+        this.tutorialStepNumber++;
+        if (_this.tutorialStepNumber > 10 || !_this.isShowTutorial) {
+          clearInterval(_this._stepGo);
+          _this.clearUITutorial();
+          _this.tutorialStepNumber = 0;
+          _this.isShowTutorial = false;
+        }
+      }, timeDuration);
+    },
+    closeTutorial() {
+      clearInterval(this._stepGo);
+      this.clearUITutorial();
       this.isShowTutorial = false;
+      this.tutorialStepNumber = 0;
+    },
+    disableClick() {
+      $("button").prop("disabled", true); // Disabled all the button
+      $(".v-image__image").prop("disabled", true); // Disabled all the button
+      $("button.no-disable").prop("disabled", false); // Disable all the buttons
+    },
+    enableClick() {
+      $("button").prop("disabled", false); // Enable all the button
+      $(".v-image__image").prop("disabled", false); // Enable all the button
+    },
+    clearUITutorial() {
+      this.enableClick();
       $("#lastDrawGuideline").css("z-index", "1");
       $("#betCloseInGuideline").css("z-index", "1");
       $("#lotteryDrawGuidelines").css("z-index", "1");
@@ -625,30 +881,19 @@ export default {
       $("#live-bet-guide").css("z-index", "1");
       $("#live-bet-guide").css("backgroundColor", "#f2f4ff");
     },
-    openTutorial() {
-      const _this = this;
-      let time = this.tutorialStepNumber === 0 ? 0 : 3000;
-      setTimeout(() => {
-        this.isShowTutorial = true;
-        this.tutorialStepNumber++;
-        let stepGo = setInterval(() => {
-          this.tutorialStepNumber++;
-          if (this.tutorialStepNumber > 10 || !_this.isShowTutorial) {
-            clearInterval(stepGo);
-            this.clearTutorialUI();
-          }
-        }, 3000);
-      }, time);
-    },
     ...mapActions([
+      "userActivityAction",
       "setIsWindowsHasScroll",
       "setRoadMap",
       "setLiveRoadMap",
-      "setStockCategory"
+      "setStockCategory",
+      "setStocksData",
+      "setNewGameId",
     ]),
     listenForBroadcast({ channelName, eventName }, callback) {
       window.Echo.channel(channelName).listen(eventName, callback);
     },
+    // Full Screen LIve Bet data Count
     liveBetCountData({ channelName, eventName }, callback) {
       window.Echo.channel(channelName)
         .listen(eventName, callback)
@@ -667,24 +912,12 @@ export default {
             if (data.status) {
               this.dataliveBetAll = data.data;
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
-          } catch (ex) {
-            console.log(ex);
-            log.error(
-              {
-                req: reqBody,
-                res: data,
-                page: "pages/modern/fullscreen/_id.vue",
-                apiUrl: config.liveCountBetData.url,
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
-          }
+          } catch (ex) {}
         });
     },
+    // Full Lscreen Live Users Data
     connectLiveBetCountDataSocket() {
       this.liveBetCountData(
         {
@@ -695,29 +928,13 @@ export default {
         },
         ({ data }) => {
           try {
-            var logData = data;
             if (data.status) {
               this.dataliveBetAll = data.data;
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
             console.log(ex);
-            log.error(
-              {
-                channel: `LiveTotalBetData.${
-                  this.getPortalProviderUUID
-                }.${this.getStockUUIDByStockName(this.stockName)}.${
-                  this.loopName
-                }`,
-                event: "LiveTotalBetData",
-                res: logData,
-                page: "pages/modern/fullscreen/_id.vue",
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         }
       );
@@ -725,6 +942,7 @@ export default {
     async getActiveGamesByCategory() {
       var reqBody = {
         portalProviderUUID: this.getPortalProviderUUID,
+        userUUID: this.getUserUUID,
         version: config.version
       };
       try {
@@ -739,27 +957,11 @@ export default {
           this.setStockCategory(res.data);
           this.items = res.data;
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/fullscreen/_id.vue",
-            apiUrl: config.getActiveGamesByCategory.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
-    },
-    formatToPrice(value) {
-      return `$ ${Number(value)
-        .toFixed(2)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
     }
   },
   beforeDestroy() {
@@ -778,7 +980,7 @@ export default {
 }
 .close-icon {
   z-index: 10028;
-  position: absolute;
+  position: fixed;
   right: 10px;
   top: 20px;
   cursor: pointer;
@@ -799,10 +1001,10 @@ export default {
   border-radius: 180px;
   z-index: 999;
   cursor: pointer;
-  bottom: 80px;
+  bottom: 90px;
   right: 0px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   color: #fff;
   background: linear-gradient(
     215deg,
@@ -817,7 +1019,6 @@ export default {
 }
 
 .lastdraw {
-  font-size: 12px;
   border: 1.5px solid #4b65ff;
   border-radius: 10px;
   font-size: 22px;
@@ -885,5 +1086,12 @@ export default {
   color: #fff;
   padding: 5px;
   font-size: 22px;
+}
+.tutorial-action {
+  z-index: 10028;
+  position: fixed;
+  right: 10px;
+  top: 20px;
+  cursor: pointer;
 }
 </style>

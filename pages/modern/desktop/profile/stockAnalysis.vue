@@ -28,6 +28,7 @@
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
+              :locale="lang"
             ></v-date-picker>
           </div>
         </v-flex>
@@ -51,6 +52,7 @@
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
+              :locale="lang"
             ></v-date-picker>
           </div>
         </v-flex>
@@ -98,11 +100,11 @@
 
 <script>
 import apexchart from "vue-apexcharts";
-import { mapGetters } from "vuex";
-import date from "date-and-time";
-import log from "roarr";
+import { mapGetters,mapActions } from "vuex";
 import secureStorage from "../../../../plugins/secure-storage";
 import config from "~/config/config.global";
+import utils from "~/mixin/utils";
+import date from "date-and-time";
 
 // set color win and lose color in bar chart
 let index = 0;
@@ -114,6 +116,7 @@ export default {
   components: {
     apexchart: apexchart
   },
+  mixins: [utils],
   created() {
     const now = date.format(new Date(), "YYYY-MM-DD");
     const lastWeek = date.addDays(new Date(), -7);
@@ -142,120 +145,6 @@ export default {
       isDataValid: false,
       stocks: [],
       series: [],
-      // chartOptions: {
-      //   colors: [
-      //     function({ value, seriesIndex, dataPointIndex, w }) {
-      //       if (seriesIndex == 0) {
-      //         return barColor[0][dataPointIndex];
-      //       }
-      //       if (seriesIndex == 1) {
-      //         return barColor[1][dataPointIndex];
-      //       }
-      //     }
-      //   ],
-      //   plotOptions: {
-      //     bar: {
-      //       horizontal: false,
-      //       columnWidth: "50%",
-      //       rangeBarOverlap: true,
-      //       barHeight: "100%"
-      //       // dataLabels: {
-      //       //   position: 'top'
-      //       // }
-      //       //endingShape: 'rounded'
-      //       // distributed: true
-      //     }
-      //   },
-      //   dataLabels: {
-      //     enabled: false
-      //   },
-      //   chart: {
-      //     type: "bar",
-      //     stacked: true,
-      //     //stackType: '100%',
-      //     toolbar: {
-      //       show: false
-      //     },
-      //     zoom: {
-      //       enabled: false
-      //     },
-      //     animations: {
-      //       enabled: true,
-      //       easing: "easeinout",
-      //       speed: 800,
-      //       animateGradually: {
-      //         enabled: true,
-      //         delay: 150
-      //       },
-      //       dynamicAnimation: {
-      //         enabled: true,
-      //         speed: 350
-      //       }
-      //     }
-      //   },
-      //   title: {
-      //     text: this.$root.$t("profile.stockAnalysis"),
-      //     align: "left",
-      //     margin: 10,
-      //     offsetX: 2,
-      //     offsetY: -5,
-      //     style: {
-      //       fontSize: "20px",
-      //       fontWeight: "bold"
-      //     }
-      //   },
-      //   stroke: {
-      //     show: true,
-      //     width: 2,
-      //     curve: "smooth"
-      //   },
-      //   noData: {
-      //     text: this.$root.$t('msg.noData')
-      //   },
-      //   tooltip: {
-      //     enabled: true,
-      //     followCursor: true,
-      //     intersect: true,
-      //     onDataSetHover: {
-      //       highlightDataSeries: false
-      //     },
-      //     x: {
-      //       show: false
-      //     },
-      //     y: {
-      //       formatter: (val, { series, seriesIndex, dataPointIndex }) => {
-      //         return (
-      //           '<div class="arrow_box">' +
-      //           "<span> " +
-      //           this.stockAnalysis[dataPointIndex].stockName +
-      //           " </span>" +
-      //           "<span> " +
-      //           series[seriesIndex][dataPointIndex] +
-      //           "</span>" +
-      //           "</div>"
-      //         );
-      //       },
-      //       title: {
-      //         formatter: function(seriesName) {
-      //           return seriesName.toUpperCase();
-      //         }
-      //       }
-      //     }
-      //   },
-      //   xaxis: {
-      //     labels: {
-      //       offsetX: 10,
-      //       offsetY: 10,
-      //       formatter: function(value) {
-      //         return "";
-      //       },
-      //       axisBorder: {
-      //         show: true,
-      //         width: "10%"
-      //       }
-      //     }
-      //   }
-      // }
       chartOptions: {
         chart: {
           type: "bar",
@@ -316,25 +205,36 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getLocale"])
+    ...mapGetters(["getPortalProviderUUID", "getUserUUID", "getLocale"]),
+    lang() {
+      if(this.getLocale == "us"){
+        return "en-US"
+      } else if(this.getLocale == "th") {
+        return "th-TH"
+      } else if(this.getLocale == "cn") {
+        return "zh-CN"
+      } else {
+        return "la"
+      }
+    }
   },
   watch: {
     getLocale() {
       this.series[0].name = this.$root.$t("msg.win");
-      this.series[1].name = this.$root.$t("msg.lose")
+      this.series[1].name = this.$root.$t("msg.lose");
+      this.getStockAnalysis();
       this.componentKey++;
     }
   },
+  beforeDestroy(){
+    this.userActivityAction();
+  },
   methods: {
-    checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), "YYYY-MM-DD");
-      if (endDate > now || !(endDate >= startDate)) {
-        return false;
-      }
-      return true;
-    },
+    ...mapActions(["userActivityAction"]),
+    // Fetch Stock info
     async getStockAnalysis() {
       try {
+        // Check if the date is valid(function is written in util mixin)
         if (!this.checkValidDate(this.startDate, this.endDate)) {
           throw new Error("Please select a valid date");
         }
@@ -352,8 +252,8 @@ export default {
             headers: config.header
           }
         );
-        if (res.status) {
-          if (res.data.length) {
+        if (res.code == 200) {
+          if (res.data.length > 0) {
             this.stockAnalysis = res.data;
             let stocks = [];
             this.stockAnalysis.forEach(element => {
@@ -381,34 +281,46 @@ export default {
             this.error = "";
           } else {
             this.isDataValid = false;
-            this.error = "No data to display";
+            this.error = this.$root.$t("profile.noData");
           }
-        } else {
-          throw new Error(config.error.general);
+        } else if (res.code == 202) {
+          this.dataReady = false;
+          this.$swal({
+            type: "error",
+            title: this.$root.$t("popupMsg.sessionExpired"),
+            confirmButtonText: this.$root.$t("popupMsg.okLogout"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            if (result.value) {
+              const URL = secureStorage.getItem("referrerURL");
+                secureStorage.removeItem("USER_UUID");
+                secureStorage.removeItem("PORTAL_PROVIDERUUID");
+                secureStorage.removeItem("userSessionID");  
+              location.href = URL;
+            }
+          });
         }
       } catch (ex) {
         console.log(ex.message);
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          timer: 1000,
-          showConfirmButton: false
-        });
         if (ex.message == "Please select a valid date") {
-          this.error = "Please select a valid date";
+          this.error = this.$root.$t("profile.invalidDate");
           this.isDataValid = false;
+          this.$swal({
+            title: this.$root.$t("profile.invalidDate"),
+            type: "error",
+            timer: 2000,
+            showConfirmButton: false
+          });
+        } else {
+          this.$swal({
+            title: ex.message,
+            type: "error",
+            timer: 2000,
+            showConfirmButton: false
+          });
         }
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/profile/stockAnalysis.vue",
-            apiUrl: config.getUserBetAnalysis.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     startDateClick() {
@@ -437,7 +349,7 @@ li {
   position: relative;
   float: right;
   margin-top: 15px;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .circle-color {

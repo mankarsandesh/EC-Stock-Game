@@ -25,11 +25,11 @@
 
       <div v-if="isFollowing == 1">
         <h4 class="subtitle-1 text-uppercase">
-          {{ $t("leaderBoard.followBy") }}
+          {{ $t("leaderBoard.followBy") }} <span style="color:red;">*</span>
         </h4>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-flex lg6 pr-4>
+          <v-flex lg6 pr-2>
             <v-select
               :items="followby"
               label="Select Follow type"
@@ -69,12 +69,14 @@
         </v-card-actions>
 
         <h4 class="subtitle-1 text-uppercase pt-2">
-          {{ $t("leaderBoard.autoStop") }}
+          {{ $t("leaderBoard.autoStop") }} <span style="color:red;">*</span>
         </h4>
         <v-divider></v-divider>
         <v-card-actions>
           <v-radio-group v-model="autoStop" :mandatory="false">
             <v-radio
+              class="black--text"
+              color="green"
               v-for="n in autoStopFollow"
               :key="n.id"
               :label="`${n.name}`"
@@ -91,7 +93,7 @@
                 @keypress="onlyNumber"
                 v-model="unfollowValue"
               >
-                <span slot="append" color="red">{{ unfollowSign }}</span>
+                <span slot="append" color="red">{{ checkCurrency(this.getUserCurrency) }}</span>
               </v-text-field>
             </v-flex>
             <v-flex v-if="this.autoStop == 3 || this.autoStop == 6">
@@ -115,7 +117,7 @@
                 color="buttonGreensmall"
                 v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
                 text
-                >{{ $t("msg.confirm") }}</v-btn
+                >{{ $t("userAction.followBet") }}</v-btn
               >
               <v-btn color="buttonCancel" v-on:click="closePopup" text>
                 {{ $t("msg.close") }}
@@ -130,7 +132,7 @@
             color="buttonGreen"
             v-on:click="followThisUser(FollowerUserUUID, isFollowing)"
             text
-            >{{ $t("msg.confirm") }}</v-btn
+            >{{ $t("userAction.unFollowBet") }}</v-btn
           >
           <v-btn color="buttonCancel" v-on:click="closePopup" text>
             {{ $t("msg.close") }}
@@ -141,11 +143,10 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState,mapGetters  } from "vuex";
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../../../plugins/secure-storage";
-
+import utils from "~/mixin/utils";
 export default {
   props: ["username", "userImage", "FollowerUserUUID", "isFollowing"],
   data() {
@@ -211,7 +212,7 @@ export default {
       hasError: false,
       hasSucess: false,
       FollwingError: false,
-      unfollowSign: "USD",
+      unfollowSign: "",
       unfollowValue: 100,
       selectAmount: false,
       selectTime: false,
@@ -269,12 +270,14 @@ export default {
       userId: 0
     };
   },
+  mixins:[utils],
   computed: {
     // Get 2 Data from vuex first, in the computed
     ...mapState({
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
-    })
+    }),
+    ...mapGetters(["getUserCurrency"])
   },
   methods: {
     userImgProfile(userImg) {
@@ -402,29 +405,29 @@ export default {
                 ? this.$root.$t("follow.userFollowed")
                 : this.$root.$t("follow.userUnFollowed"),
             showConfirmButton: false,
-            timer: 1000
+            timer: 2000
           });
         } else {
-          this.$swal({
-            type: "error",
-            title: data.message[0],
-            showConfirmButton: true,
-            timer: 1000
-          });
+          if (
+            data.message[0] == "You cant follow more than 10 users at a time."
+          ) {
+            this.$swal({
+              type: "error",
+              title: this.$root.$t("follow.maxFollow"),
+              showConfirmButton: true,
+              timer: 2000
+            });
+          } else {
+            this.$swal({
+              type: "error",
+              title: data.message[0],
+              showConfirmButton: true,
+              timer: 2000
+            });
+          }
         }
       } catch (error) {
         console.log(error);
-        log.error(
-          {
-            req: reqBody,
-            res: data.data,
-            page: "pages/modern/follow/followBet.vue",
-            apiUrl: config.followUser.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     // Change Amount Rate Validation
@@ -442,7 +445,7 @@ export default {
     changeAmount(value) {
       if (value == "stopWin" || value == "stopLoss") {
         this.unfollowValue = 100;
-        this.unfollowSign = "USD";
+        this.unfollowSign = this.getUserCurrency;
       } else if (value == "stopTime") {
         this.unFollowValueMax = 10;
         this.unFollowValueMin = 1;
@@ -468,9 +471,6 @@ export default {
 </script>
 
 <style scoped>
-.v-slider .v-label {
-  color: green !important;
-}
 .title {
   text-align: center;
   color: #0b2a68;

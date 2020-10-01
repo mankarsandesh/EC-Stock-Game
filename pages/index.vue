@@ -2,7 +2,7 @@
   <v-container fluid grid-list-lg fill-height class="image-bg">
     <v-fade-transition mode="out-in">
       <v-layout align-center column>
-        <v-img src="/bg/group33.png" width="500" height="100" />
+        <v-img src="/logo.png" width="500" height="100" />
         <div class="errorBox" v-if="getLoginError.length > 0">
           <h4 v-for="(data, index) in getLoginError" :key="index">
             {{ data }}
@@ -31,44 +31,28 @@ import log from "roarr";
 export default {
   layout: "nolayout",
   middleware: ["checkAuth"],
-
   data() {
     return {
-      stockName: config.homePageStockName,
-      linkto: ""
+      stockName: config.homePageStockName
     };
   },
   mounted() {
     if (this.getLoginError.length > 0) {
     } else {
       // Set referrer Url
-      secureStorage.setItem(
-        "referrerUrl",
-        document.referrer.match(/:\/\/(.[^/]+)/)[1]
-      );
-      this.setReferrer(document.referrer.match(/:\/\/(.[^/]+)/)[1]);
+      secureStorage.setItem("referrerUrl", config.Whitelabel.url);
       this.getProgress();
-    }
-  },
-  watch: {
-    "$screen.width"() {
-      if (this.$screen.width <= 1204) {
-        this.linkto = "modern";
-      } else {
-        this.linkto = "/modern/desktop/" + this.stockName;
-      }
     }
   },
   computed: {
     ...mapGetters(["getLoginError"])
   },
   methods: {
-    ...mapActions(["setReferrer"]),
     getProgress() {
       let width = 100,
         perfData = window.performance.timing, // The PerformanceTiming interface represents timing-related performance information for the given page.
         EstimatedTime = -(perfData.loadEventEnd - perfData.navigationStart),
-        time = 1000;
+        time = 500;
       // Load bar Animation
       $(".loadbar").animate(
         {

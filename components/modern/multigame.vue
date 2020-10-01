@@ -8,8 +8,6 @@
         {{ $t("msg.minutes") }} {{ $t("msg.loop") }}
       </h3>
       <chartApp :stockName="stockid" />
-
-      <!-- <livechart  :StockData="getStockById(stockid).prices" /> -->
       <v-layout>
         <v-flex align-left class="totalPrice">
           <h4>
@@ -86,8 +84,6 @@ import betButton from "~/components/modern/betButton";
 import chartApp from "~/components/modern/chart";
 import config from "~/config/config.global";
 import secureStorage from "../../plugins/secure-storage";
-import log from "roarr";
-// import livechart from "~/modern/livechart"
 
 export default {
   data() {
@@ -117,23 +113,10 @@ export default {
             let dataIndex = data.data.roadMap[0];
             this.lastDraw = dataIndex.stockValue.replace(",", "");
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(this.stockid)}.${
-                this.getPortalProviderUUID
-              }`,
-              event: "roadMap",
-              res: logData,
-              page: "components/modern/multigame.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -151,13 +134,13 @@ export default {
   components: {
     betButton,
     chartApp
-    // livechart
   },
   computed: {
     ...mapGetters([
       "getGameUUIDByStockName",
       "getStockUUIDByStockName",
       "getPortalProviderUUID",
+      "getUserUUID",
       "getTimerByStockName",
       "getStockLoop",
       "getAmountBettingByStockId"
@@ -168,6 +151,7 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID : this.getUserUUID,
           limit: 50,
           stockUUID: [stockUUID],
           version: config.version
@@ -180,26 +164,15 @@ export default {
             .reverse()[0]
             .stockValue.replace(",", "");
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.error(ex);
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "components/modern/multigame.vue",
-            apiUrl: config.getRoadMap.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {

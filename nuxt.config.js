@@ -1,5 +1,6 @@
 const pkg = require("./package");
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
+
 import config from "./config/config.global";
 module.exports = {
   mode: "spa",
@@ -19,19 +20,7 @@ module.exports = {
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: pkg.description }
     ],
-    link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.png" },
-      {
-        rel: "stylesheet",
-        href:
-          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
-      },
-      {
-        rel: "stylesheet",
-        href:
-          "https://fonts.googleapis.com/css?family=Roboto:300,400,500,500i,700,900&display=swap"
-      }
-    ],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.png" }],
     script: [
       {
         src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
@@ -57,13 +46,13 @@ module.exports = {
       "/modern/fullscreen/sz399001",
       "/modern/fullscreen/usindex",
       // dynamic route for multigame
-      "/modern/multigame/btc1",
-      "/modern/multigame/btc5",
-      "/modern/multigame/sh000001",
-      "/modern/multigame/sh000300",
-      "/modern/multigame/sz399415",
-      "/modern/multigame/sz399001",
-      "/modern/multigame/usindex",
+      //   "/modern/multigame/btc1",
+      //   "/modern/multigame/btc5",
+      //   "/modern/multigame/sh000001",
+      //   "/modern/multigame/sh000300",
+      //   "/modern/multigame/sz399415",
+      //   "/modern/multigame/sz399001",
+      //   "/modern/multigame/usindex",
       // dynamic route for mobile
       "/modern/betting/btc1",
       "/modern/betting/btc5",
@@ -101,18 +90,20 @@ module.exports = {
     "~/assets/style/media-query.css",
     "~/assets/style/main.css",
     "~/assets/style/main.scss",
-    "~/assets/style/app.styl"
+    "~/assets/style/app.styl",
+    "material-design-icons/iconfont/material-icons.css",
+    "typeface-roboto/index.css"
   ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    "~/plugins/inject.js",
+    "~/plugins/ControllerBetting",
     "@/plugins/vuetify",
     "@plugins/maintenance",
     "@plugins/js-cookie", // for setting and reading cookies
     // "~/plugins/axios",
-    "@/plugins/roarr", // for generating logs
+    // "@/plugins/roarr", // for generating logs
     "@plugins/secure-storage", // for encrypting local storage
     "@/plugins/filters",
     //{ src: "~/plugins/vuex-persist", ssr: false }, // for making vuex state persistent
@@ -122,8 +113,8 @@ module.exports = {
     "@/plugins/sweetAlert",
     "@/plugins/vueScreen",
     "@/plugins/socketio",
-    { src: "@/plugins/vChart", mode: "client" },
-    { src: "@/plugins/ga", mode: "client" }
+    { src: "@/plugins/vChart", mode: "client" }
+    // { src: "@/plugins/ga", mode: "client" }
   ],
   router: {
     middleware: ["auth", "showLoading"]
@@ -133,11 +124,8 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage 
     "@nuxtjs/axios",
     "@nuxtjs/font-awesome",
-    "@nuxtjs/moment",
-    //['vue-wait/nuxt', { useVuex: true }],
     [
       "nuxt-fontawesome",
       {
@@ -160,7 +148,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    transpile: ["vuetify/lib", "@rabota/yandex-metrika"],
+    transpile: ["vuetify/lib"],
     plugins: [new VuetifyLoaderPlugin()],
     loaders: {
       stylus: {
@@ -170,7 +158,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend: function(config, { isDev, isClient }) {
+    extend: function (config, { isDev, isClient }) {
       if (isDev) {
         config.devtool = isClient ? "source-map" : "inline-source-map";
       }

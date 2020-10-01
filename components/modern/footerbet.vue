@@ -2,7 +2,13 @@
   <div>
     <v-layout row justify-center id="footerBet-guide">
       <v-flex lg2 md2 xs2 class="amount">
-        <div>$ {{ getFooterBetAmount }}</div>
+        <div>
+          <animated-number
+            :value="getFooterBetAmount"
+            :formatValue="formatToPrice"
+            :duration="1000"
+          />
+        </div>
       </v-flex>
       <v-flex lg5 md5 xs3 class="chipsdiv">
         <v-layout row>
@@ -11,7 +17,10 @@
               size="65"
               v-for="(item, key) in imgChip"
               :key="key"
-              v-bind:class="[ getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '' , 'chips']"
+              v-bind:class="[
+                getFooterBetAmount == getCoinsModern[key] ? 'activeChips' : '',
+                'chips'
+              ]"
             >
               <v-img
                 @click="setFooterBetAmount(getCoinsModern[key])"
@@ -25,6 +34,22 @@
               </v-img>
             </v-avatar>
           </v-flex>
+          <v-flex style="align-self:center">
+            <input
+              type="number"
+              :min="10"
+              v-model="betValue"
+              class="input-bet"
+            />
+            <v-btn
+              :disabled="!parseInt(this.betValue)"
+              class="buttonGreensmall"
+              dark
+              small
+              @click="betValueUpdate()"
+              >Okay</v-btn
+            >
+          </v-flex>
         </v-layout>
       </v-flex>
       <v-flex lg3 md3 xs2 class="betButton">
@@ -34,11 +59,10 @@
             class="buttonGreensmall"
             dark
             @click="confirmBet()"
-          >{{ $t("msg.confirm") }}</v-btn>
+            >{{ $t("msg.confirmBet") }}</v-btn
+          >
           <v-btn class="buttonCancel" @click="cancelBet()">
-            {{
-            $t("msg.cancel")
-            }}
+            {{ $t("msg.cancel") }}
           </v-btn>
         </div>
       </v-flex>
@@ -47,76 +71,141 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import chips from "~/data/chips";
 import config from "../../config/config.global";
-
+import Betting from "~/helpers/betting";
+import AnimatedNumber from "animated-number-vue";
 export default {
+  components: {
+    AnimatedNumber
+  },
   data() {
     return {
       isSending: false,
       dialog: false,
-      texts: this.$root.$t("msg.confirm"),
-      imgChip: chips.chipsData
+      texts: this.$root.$t("msg.confirmBet"),
+      imgChip: chips.chipsData,
+      betValue: 0
     };
   },
+  computed: {
+    ...mapGetters([
+      "getGameUUIDByStockName",
+      "getAllSelectedBetDataGameWise",
+      "getCoinsModern",
+      "getFooterBetAmount",
+      "getTempMultiGameBetAmount",
+      "getUserInfo",
+      "getUserBalance",
+      "gettempMultiGameBetData"
+    ])
+  },
+
   methods: {
+    ...mapMutations([
+      "CLEAR_SELECT_BETTING",
+      "CLEAR_TEMP_MULTI_GAME_BET_DATA",
+      "CLEAR_TEMP_CHIPS_IMAGE",
+      "CLEAR_BET_VALUE_FOOTER_BET"
+    ]),
     ...mapActions([
       "setFooterBetAmount",
       "clearDataMultiGameBet",
       "sendBetting",
       "confirmTempMultiGameBetData",
-      "clearTempMultiGameBetData"
+      "clearTempMultiGameBetData",
+      "clearTempChips",
+      "clearBetValueFooterBet"
     ]),
-    confirmBet() {
-      if (parseInt(this.getTempMultiGameBetAmount) > 10000) {
-        this.$swal({
-          type: "error",
-          title: "Bet value should not be more than 10000",
-          timer: 1000,
-          showConfirmButton: true
-        });
-      } else if (
-        parseInt(this.getTempMultiGameBetAmount) <=
-          parseInt(this.getUserBalance) &&
-        parseInt(this.getTempMultiGameBetAmount) > 0
-      ) {
-        this.isSending = true;
-        this.texts = this.$root.$t("msg.sending");
-        this.confirmTempMultiGameBetData();
-        // setTimeout(() => {
-        this.sendBetting();
-        this.setFooterBetAmount(0);
-        this.isSending = false;
-        // }, 1000);
-      } else {
-        this.clearTempMultiGameBetData();
-        this.$swal({
-          type: "error",
-          title: config.error.lowBalance,
-          timer: 1500
-        });
+    betValueUpdate() {
+      this.setFooterBetAmount(parseInt(this.betValue));
+    },
+    async confirmBet() {
+      try {
+        if (
+          parseInt(this.getTempMultiGameBetAmount) <=
+            parseInt(this.getUserBalance) &&
+          parseInt(this.getTempMultiGameBetAmount) > 0
+        ) {
+          this.isSending = true;
+          this.texts = this.$root.$t("msg.sending");
+          this.sendBetting(this.getGameUUIDByStockName(this.$route.params.id));
+          this.setFooterBetAmount(0);
+          this.isSending = false;
+          this.clearTempMultiGameBetData();
+        } else {
+          await Betting.cancelBettingClear(this.gettempMultiGameBetData);
+          this.clearTempMultiGameBetData();
+          this.$swal({
+            type: "error",
+            title: config.error.lowBalance,
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            if (result.value) {
+              // this.CLEAR_TEMP_MULTI_GAME_BET_DATA(); // Clear Temp Multi Game Bet Data
+              // this.CLEAR_TEMP_CHIPS_IMAGE(); // Clear temp Chips Image
+              // this.CLEAR_BET_VALUE_FOOTER_BET(); // Clear Bet Value
+              // this.CLEAR_SELECT_BETTING(); // Clear Select Betting
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
-    cancelBet() {
-      this.isSending = false;
-      this.clearTempMultiGameBetData();
-      this.setFooterBetAmount(0);
+
+    //use for cancel the bet
+    async cancelBet() {
+      try {
+        this.isSending = false;
+        await Betting.cancelBettingClear(this.gettempMultiGameBetData);
+
+        await this.CLEAR_TEMP_MULTI_GAME_BET_DATA(); // Clear Temp Multi Game Bet Data
+        await this.CLEAR_TEMP_CHIPS_IMAGE(); // Clear temp Chips Image
+        await this.CLEAR_BET_VALUE_FOOTER_BET(); // Clear Bet Value
+        await this.CLEAR_SELECT_BETTING(); // Clear Select Betting
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    formatToPrice(value) {
+      return `$ ${value.toFixed(2)}`;
     }
-  },
-  computed: {
-    ...mapGetters([
-      "getCoinsModern",
-      "getFooterBetAmount",
-      "getTempMultiGameBetAmount",
-      "getUserInfo",
-      "getUserBalance"
-    ])
   }
 };
 </script>
 
 <style scoped>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.input-bet:focus {
+  outline: none;
+}
+
+.input-bet {
+  border: 1px solid #dddddd;
+  font-size: 18px;
+  color: #545353;
+  font-weight: 800;
+  width: 100px;
+  padding: 4px 5px;
+  text-align: center;
+  border-radius: 8px;
+}
 .activeChips {
   box-shadow: 0 10px 10px -6px #333;
 }

@@ -68,10 +68,19 @@
               >fa-trophy</v-icon
             >
 
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' + data.userUUID">
               <v-layout class="userProfileRow" pa-2>
                 <v-flex md3 lg3>
-                  <img class="pimage" :src="userImgProfile(data.userImage)" />
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <img
+                        class="pimage"
+                        :src="userImgProfile(data.userImage)"
+                        v-on="on"
+                      />
+                    </template>
+                    <span>{{ $t("leaderBoard.viewUserProfile") }}</span>
+                  </v-tooltip>
                 </v-flex>
                 <v-flex md9 lg9 pt-4 pl-3>
                   <v-layout mt-1>
@@ -80,7 +89,7 @@
                         {{ data.username.substring(0, 10) }}
                       </span>
                     </v-flex>
-                    <v-flex md4 lg4>
+                    <v-flex md4 lg4 v-if="data.isAllowToLocation == 1">
                       <country-flag country="us" v-if="data.country == 'USA'" />
                       <country-flag country="th" v-if="data.country == 'THA'" />
                       <country-flag country="cn" v-if="data.country == 'CHN'" />
@@ -100,13 +109,14 @@
           <div class="rows">
             <h3 class="header">{{ $t("leaderBoard.bets") }}</h3>
             <H4 style="color:#eb0b6e;" class="titleText">{{
-              data.totalWinBets
+              data.totalBets
             }}</H4>
           </div>
           <div class="rows">
             <h3 class="header">{{ $t("leaderBoard.winningAmount") }}</h3>
             <h4 style="color:#0b2a68;" class="titleText">
-              ${{ Math.round(data.totalWinAmount, 1) | currency }}
+              {{ checkCurrency(data.currencyID)
+              }}{{ Math.round(data.totalWinAmount, 1) | currency }}
             </h4>
           </div>
           <div
@@ -179,10 +189,13 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters,mapActions } from "vuex";
 import config from "~/config/config.global";
 import followBet from "~/components/modern/follow/followBet";
 import countryFlag from "vue-country-flag";
+import utils from "~/mixin/utils";
+import secureStorage from "../../../plugins/secure-storage";
+
 export default {
   components: {
     followBet,
@@ -211,6 +224,8 @@ export default {
     };
     props: ["linkItem"];
   },
+  // Helper Function
+  mixins: [utils],
   mounted() {
     const today = new Date();
     const lastWeek = new Date(
@@ -230,7 +245,7 @@ export default {
       portalProviderUUID: state => state.provider.portalProviderUUID,
       userUUID: state => state.provider.userUUID
     }),
-    ...mapGetters(["getUserInfo"])
+    ...mapGetters(["getUserInfo", "getUserCurrency"])
   },
   methods: {
     // Render Follow Bet Component
@@ -252,7 +267,7 @@ export default {
         const monthly = new Date(
           today.getFullYear(),
           today.getMonth(),
-          today.getDate() - 30
+          today.getDate() - 28
         )
           .toISOString()
           .substr(0, 10);
@@ -267,7 +282,7 @@ export default {
         const lastWeek = new Date(
           today.getFullYear(),
           today.getMonth(),
-          today.getDate() - 7
+          today.getDate() - 5
         )
           .toISOString()
           .substr(0, 10);
@@ -312,12 +327,34 @@ export default {
             headers: config.header
           }
         );
-        this.topPlayerData = data.data;
-        this.loadingImage = false;
+
+        if (data.code == 200) {
+          this.topPlayerData = data.data;
+          this.loadingImage = false;
+        } else if (data.code == 202) {
+          this.loadingImage = false;
+
+          this.$swal({
+            type: "error",
+            title: this.$root.$t("popupMsg.sessionExpired"),
+            confirmButtonText: this.$root.$t("popupMsg.okLogout"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            if (result.value) {
+              const URL = secureStorage.getItem("referrerURL");              
+                secureStorage.removeItem("USER_UUID");
+                secureStorage.removeItem("PORTAL_PROVIDERUUID");
+                secureStorage.removeItem("userSessionID");  
+              location.href = URL;
+            }
+          });
+        }
       } catch (error) {
         console.log(error);
       }
-    }
+    }   
   }
 };
 </script>
@@ -425,7 +462,6 @@ export default {
 }
 
 .pimage {
- 
   border: 2px solid #dddddd;
   border-radius: 180px;
 }

@@ -18,6 +18,8 @@ import Chart from "chart.js";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import Echo from "laravel-echo";
 import config from "~/config/config.global";
+import secureStorage from "../../plugins/secure-storage";
+
 export default {
   props: {
     height: {
@@ -68,23 +70,10 @@ export default {
               this.setLiveChart(readyData);
             }
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/chartMobile.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -93,7 +82,11 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapGetters(["getPortalProviderUUID", "getStockUUIDByStockName"]),
+    ...mapGetters([
+      "getPortalProviderUUID",
+      "getUserUUID",
+      "getStockUUIDByStockName"
+    ]),
     chartOptions() {
       let newTime = [];
       this.chartData.forEach(element => {
@@ -198,7 +191,7 @@ export default {
     }
   },
   methods: {
-     ...mapActions(["setSnackBarMessage"]),
+    ...mapActions(["setSnackBarMessage"]),
     setLiveChart(payload) {
       this.chartData.push(payload);
     },
@@ -207,23 +200,44 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
           limit: 50,
           stockUUID: [stockUUID],
           version: config.version
         };
         const res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
           headers: config.header
-        });       
-        if (res.code === 200) {
+        });
+        if (res.status) {
+          this.apiAttemptCount = 0;
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
         } else {
-          
-            this.setSnackBarMessage(config.error.general);           
+          if (this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.fetchChart(stockUUID);
+          } else {
+            this.setSnackBarMessage(this.$root.$t("error.general"));
+            this.$swal({
+              type: "error",
+              title: this.$root.$t("popupMsg.sessionExpired"),
+              confirmButtonText: this.$root.$t("popupMsg.okLogout"),
+              showConfirmButton: true,
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then(result => {
+              if (result.value) {
+                const URL = secureStorage.getItem("referrerURL");  
+                secureStorage.removeItem("USER_UUID");
+                secureStorage.removeItem("PORTAL_PROVIDERUUID");
+                secureStorage.removeItem("userSessionID");  
+                location.href = URL;
+              }
+            });
+          }
         }
       } catch (ex) {
-        this.setSnackBarMessage(ex);
-        console.error(ex.message);
+        this.setSnackBarMessage(ex.message);
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -232,7 +246,8 @@ export default {
   },
   data() {
     return {
-      chartData: []
+      chartData: [],
+      apiAttemptCount: 0
     };
   }
 };

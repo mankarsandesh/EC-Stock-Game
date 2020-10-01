@@ -1,5 +1,6 @@
 import secureStorage from "../plugins/secure-storage";
 import Cookies from "../plugins/js-cookie";
+import config from "../config/config.global";
 
 export default function({ isHMR, app, store, route, error, redirect }) {
   try {
@@ -30,6 +31,6 @@ export default function({ isHMR, app, store, route, error, redirect }) {
   } catch (ex) {
     console.log(ex);
     // Redirect to portal provider login page if there is no session
-    window.location.replace(`http://${secureStorage.getItem("referrerUrl")}/`);
+    // window.location.replace(config.Whitelabel.url);
   }
 }

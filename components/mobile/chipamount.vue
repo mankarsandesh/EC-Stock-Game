@@ -4,20 +4,37 @@
       <div class="chip-image">
         <v-img :width="80" :src="chip.image" class="chipImage" />
         <input
-          :disabled="conOrE === 'edit' ? disableInput : false"
+          :disabled="editAbleIndex !== index"
           class="input-chip-amount"
-          type="number"
+          type="text"
           :value="chip.amount"
-          :ref="chip.chipID"
+          :ref="index"
+          @keypress="onlyNumber"
         />
       </div>
-      <div class="chip-action">
-        <v-btn class="chipamount" text @click="conOrEClick(chip.chipID)">{{
-          $t("msg." + conOrE)
+      <!-- edit -->
+      <div
+        class="chip-action"
+        v-if="editAbleIndex < 0 || editAbleIndex !== index"
+      >
+        <v-btn class="chipamount" text @click="toEdit(index)">{{
+          $t("msg.edit")
         }}</v-btn>
-        <div class="min-max" v-show="conOrE === 'confirm'">
-          <span>{{ $t("msg.min") }} = $200</span>
-          <span>{{ $t("msg.max") }} = $20,000</span>
+      </div>
+      <!-- confirm -->
+      <div
+        class="chip-action"
+        v-if="editAbleIndex >= 0 && editAbleIndex === index"
+      >
+        <v-btn
+          class="chipamount-confirm"
+          text
+          @click="saveChipAmount(chip.chipID)"
+          >{{ $t("msg.confirm") }}</v-btn
+        >
+        <div class="min-max">
+          <span>{{ $t("msg.min") }} = $100</span>
+          <span>{{ $t("msg.max") }} = $10,000</span>
         </div>
       </div>
     </div>
@@ -26,15 +43,15 @@
         text
         @click="reset()"
         style="background-color: #fec623!important;border-radius:8px;"
-        >{{ $t("msg.resetToDefault") }}</v-btn
-      >
-      <div class="pt-3">
-        <v-btn class="my-btn buttonGreensmall" @click="saveChipAmount()">{{
-          $t("msg.save")
-        }}</v-btn>
-        <v-btn class="my-btn buttonCancel">{{ $t("msg.cancel") }}</v-btn>
-      </div>
+        >{{ $t("msg.resetToDefault") }}
+      </v-btn>
     </div>
+    <v-snackbar v-model="snackbar">
+      {{ this.snackbarMessage }}
+      <v-btn color="pink" text @click="snackbar = false">
+        {{ $t("msg.close") }}
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -47,9 +64,10 @@ import secureStorage from "../../plugins/secure-storage";
 export default {
   data() {
     return {
+      snackbar: false,
+      snackbarMessage: "",
       amount: [],
-      disableInput: true,
-      conOrE: "edit"
+      editAbleIndex: -1
     };
   },
   mounted() {
@@ -88,44 +106,59 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setCoinsModern"]),
-    conOrEClick(ref) {
-      if (this.conOrE == "edit") {
-        this.conOrE = "confirm";
-        this.$nextTick(() => this.$refs[ref][0].focus());
-      } else {
-        this.saveChipAmount();
-
-        this.conOrE = "edit";
+    ...mapActions(["setCoinsModern", "setChips"]),
+    onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if (keyCode < 48 || keyCode > 57) {
+        $event.preventDefault();
       }
+    },
+    toEdit(index) {
+      this.editAbleIndex = index;
     },
     reset() {
-      this.setCoinsModern(config.defaultCoinsModern);
-      if (this.conOrE == "confirm") {
-        this.conOrE = "edit";
-      }
+      // default chips
+      this.setCoinsModern(["100", "500", "1000", "5000", "10000"]);
+      this.editAbleIndex = -1;
+      // show success snack bar and set success message
+      this.snackbar = true;
+      this.snackbarMessage = this.$root.$t("msg.changesSaved");
     },
-    saveChipAmount() {
-      let chip1 = this.$refs.chip1[0].value;
-      let chip2 = this.$refs.chip2[0].value;
-      let chip3 = this.$refs.chip3[0].value;
-      let chip4 = this.$refs.chip4[0].value;
-      let chip5 = this.$refs.chip5[0].value;
-      let new_amount = [chip1, chip2, chip3, chip4, chip5];
-      this.setCoinsModern(new_amount);
-
-      this.conOrE = "edit";
-    },
-    cancel() {
-      let chip1 = this.$refs.chip1[0].value;
-      let chip2 = this.$refs.chip2[0].value;
-      let chip3 = this.$refs.chip3[0].value;
-      let chip4 = this.$refs.chip4[0].value;
-      let chip5 = this.$refs.chip5[0].value;
-      let new_amount = [chip1, chip2, chip3, chip4, chip5];
-      this.setCoinsModern(new_amount);
-      if (this.conOrE == "confirm") {
-        this.conOrE = "edit";
+    saveChipAmount(chipId) {
+      let index = this.chips.findIndex(chip => chip.chipID == chipId);
+      if (index != -1) {
+        if (
+          parseInt(this.$refs[index][0].value) >= 100 &&
+          this.$refs[index][0].value <= 10000
+        ) {
+          if (!this.getCoinsModern.includes(this.$refs[index][0].value)) {
+            this.setChips({
+              index,
+              amount: parseInt(this.$refs[index][0].value)
+            });
+            // reset select chip
+            this.editAbleIndex = -1;
+            // show success snack bar and set success message
+            this.snackbar = true;
+            this.snackbarMessage = this.$root.$t("msg.changesSaved");
+            // assign new value to amount after successfully update the chip
+            this.amount = this.getCoinsModern;
+          } else {
+            // show error snack bar and set error message
+            this.snackbar = true;
+            this.snackbarMessage = this.$root.$t("setting.chipExists");
+          }
+        } else {
+          // show error snack bar and set error message
+          this.snackbar = true;
+          this.snackbarMessage =
+            this.$root.$t("setting.chipAmount");
+        }
+      } else {
+        // show error snack bar and set error message
+        this.snackbar = true;
+        this.snackbarMessage = this.$root.$t("error.general");
       }
     }
   }
@@ -196,13 +229,19 @@ export default {
 .chipamount {
   margin: 0 auto;
   text-align: center;
+  background-color: #6424b9 !important;
   border-radius: 8px;
+}
+.chipamount-confirm {
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 8px;
+  background-color: green !important;
 }
 
 .v-btn {
   font-size: 14px;
   font-weight: 400;
-  background-color: #6424b9 !important;
   color: #ffffff !important;
   padding: 4px 10px;
   margin: 4px;

@@ -1,13 +1,13 @@
 import config from "~/config/config.global";
-import log from "roarr";
 import secureStorage from "../plugins/secure-storage";
 import Cookies from "../plugins/js-cookie";
 
 const state = () => ({
   portalProviderUUID: secureStorage.getItem("PORTAL_PROVIDERUUID"), // Store portal provider UUID
-  userUUID: secureStorage.getItem("USER_UUID"), // Store user UUID
+  userUUID: secureStorage.getItem("USER_UUID"), // Store user UUID,
   userBalance: 0,
   userData: {}, // Store user data
+  userCurrency : "",
   locales: ["cn", "us", "th", "la"], // Store language locales
   locale: secureStorage.getItem("lang"), // Store locale
   coinsModern: [], // Store coins modern
@@ -15,7 +15,6 @@ const state = () => ({
   isWindowsHasScroll: false,
   tutorialStepNumber: 0, // Store tutorial step number
   loginError: [], // Error occurred on the login screen
-  referrer: "",
   snackBarMessage: ""
 });
 
@@ -32,6 +31,9 @@ const mutations = {
   SET_COINS_MODERN(state, payload) {
     state.coinsModern = payload;
     secureStorage.setItem("coinsModern", payload);
+  },
+  SET_CURRENCY_MODERN(state, payload) {
+    state.userCurrency = payload;   
   },
   SET_LANGUAGE(state, payload) {
     state.locale = payload;
@@ -51,9 +53,6 @@ const mutations = {
   },
   SET_LOGIN_ERROR(state, payload) {
     state.loginError.push(...payload);
-  },
-  SET_REFERRER(state, payload) {
-    state.referrer = payload;
   },
   SET_SNACK_BAR_MESSAGE(state, payload) {
     state.snackBarMessage = payload;
@@ -81,28 +80,17 @@ const actions = {
       };
       var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
         headers: config.header
-      });
+      });   
       if (res.status) {
         let userInfo = res.data;
         context.commit("SET_USER_DATA", userInfo);
         context.commit("SET_USER_UUID", userInfo.userUUID);
         context.commit("SET_USER_BALANCE", userInfo.balance);
       } else {
-        throw new Error(config.error.general);
+        throw new Error(window.$nuxt.$root.$t("error.general"));
       }
     } catch (ex) {
       console.error(ex);
-      log.error(
-        {
-          req: reqBody,
-          res,
-          page: "store/provider.js",
-          apiUrl: config.getUserProfile.url,
-          provider: this.portalProviderUUID,
-          user: this.userUUID
-        },
-        ex.message
-      );
     }
   },
   // Set portal provider UUID
@@ -116,6 +104,10 @@ const actions = {
   // Set coins modern
   setCoinsModern({ commit }, payload) {
     commit("SET_COINS_MODERN", payload);
+  },
+   // Set Currency
+  setCurrency({ commit }, payload) {
+    commit("SET_CURRENCY_MODERN", payload);
   },
   // Set language locale
   setLanguage({ commit }, payload) {
@@ -139,10 +131,6 @@ const actions = {
   },
   setLoginError({ commit }, payload) {
     commit("SET_LOGIN_ERROR", payload);
-  },
-  // Set portal provider's whitelabel Url
-  setReferrer({ commit }, payload) {
-    commit("SET_REFERRER", payload);
   },
   setSnackBarMessage({ commit }, payload) {
     commit("SET_SNACK_BAR_MESSAGE", payload);
@@ -183,6 +171,10 @@ const getters = {
   getCoinsModern(state) {
     return state.coinsModern;
   },
+   // get chip amount
+   getUserCurrency(state) {
+    return state.userCurrency;
+  },
   // get current language
   getLocale(state) {
     return state.locale;
@@ -205,9 +197,6 @@ const getters = {
     } else {
       return false;
     }
-  },
-  getReferrer(state) {
-    return state.referrer;
   },
   getUserBalance(state) {
     return state.userBalance;

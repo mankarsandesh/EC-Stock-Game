@@ -28,6 +28,7 @@
               v-if="isShowDateStart"
               v-model="startDate"
               @input="isShowDateStart = false"
+              :locale="lang"
             ></v-date-picker>
           </div>
         </v-flex>
@@ -51,6 +52,7 @@
               v-if="isShowDateEnd"
               v-model="endDate"
               @input="isShowDateEnd = false"
+              :locale="lang"
             ></v-date-picker>
           </div>
         </v-flex>
@@ -101,12 +103,13 @@ import date from "date-and-time";
 import config from "~/config/config.global";
 import VueApexCharts from "vue-apexcharts";
 import secureStorage from "../../../../plugins/secure-storage";
-import log from "roarr";
+import utils from "~/mixin/utils";
 
 export default {
   components: {
     VueApexCharts
   },
+  mixins: [utils],
   data() {
     return {
       series: [],
@@ -128,9 +131,7 @@ export default {
             show: false
           },
           events: {
-            click: function(chart, w, e) {
-
-            }
+            click: function(chart, w, e) {}
           }
         },
         // colors: colors,
@@ -148,12 +149,14 @@ export default {
         },
         tooltip: {
           y: {
-            formatter(val, q) {
+            formatter: (val, q) => {
               return (
-                '<div>' + "<span>" +
-                q.series[0][q.dataPointIndex] + " minutes" + 
+                "<div>" +
+                "<span>" +
+                q.series[0][q.dataPointIndex] +
+                ` ${this.$root.$t("msg.minutes")}` +
                 " </span>"
-              )
+              );
             }
           }
         },
@@ -178,19 +181,36 @@ export default {
     await this.getOnlineHistory();
   },
   computed: {
-    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID"]),
-    getTotalOnlineTime () {
+    ...mapGetters(["getUserInfo", "getPortalProviderUUID", "getUserUUID","getLocale"]),
+    lang() {
+      if(this.getLocale == "us"){
+        return "en-US"
+      } else if(this.getLocale == "th") {
+        return "th-TH"
+      } else if(this.getLocale == "cn") {
+        return "zh-CN"
+      } else {
+        return "la"
+      }
+    },
+    getTotalOnlineTime() {
       let days = this.totalOnlineTime.split("|")[0];
       let hours = this.totalOnlineTime.split("|")[1];
       let minutes = this.totalOnlineTime.split("|")[2];
       this.series[0].name = this.$root.$t("msg.onlineActiveTime");
       this.componentKey++;
       return `${
-              days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
-            }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t("msg.minutes")}`;
-    },
+        days ? `${days} ${this.$root.$t("msg.days")}, ` : ``
+      }${hours} ${this.$root.$t("msg.hours")} ${minutes} ${this.$root.$t(
+        "msg.minutes"
+      )}`;
+    }
+  },
+  beforeMount(){
+    this.userActivityAction();
   },
   methods: {
+    ...mapActions(["userActivityAction"]),
     startDateClick() {
       this.isShowDateStart = !this.isShowDateStart;
       this.isShowDateEnd = false;
@@ -199,15 +219,9 @@ export default {
       this.isShowDateEnd = !this.isShowDateEnd;
       this.isShowDateStart = false;
     },
-    checkValidDate(startDate, endDate) {
-      const now = date.format(new Date(), "YYYY-MM-DD");
-      if (endDate > now || !(endDate >= startDate)) {
-        return false;
-      }
-      return true;
-    },
     async getOnlineHistory() {
       try {
+        // Check if the date is valid(function is written in util mixin)
         if (!this.checkValidDate(this.startDate, this.endDate)) {
           throw new Error("Please select a valid date");
         }
@@ -221,7 +235,7 @@ export default {
         var res = await this.$axios.$post(config.getUserProfile.url, reqBody, {
           headers: config.header
         });
-        if (res.status) {
+        if (res.code == 200) {
           if (res.data.activeTimeDateWise.length) {
             this.dataReady = true;
             let result = res.data.activeTimeDateWise;
@@ -247,36 +261,45 @@ export default {
             this.chartOptions.xaxis.categories = xAxis;
             this.componentKey++;
           } else {
-            this.error = "No data to display";
+            this.error = this.$root.$t("profile.noData");
             this.dataReady = false;
           }
-        } else {
-          this.error = "Something went wrong";
+        } else if (res.code == 202) {
           this.dataReady = false;
-          throw new Error(config.error.general);
+          this.$swal({
+            type: "error",
+            title: this.$root.$t("popupMsg.sessionExpired"),
+            confirmButtonText: this.$root.$t("popupMsg.okLogout"),
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            if (result.value) {
+              const URL = secureStorage.getItem("referrerURL");              
+                secureStorage.removeItem("USER_UUID");
+                secureStorage.removeItem("PORTAL_PROVIDERUUID");
+                secureStorage.removeItem("userSessionID");  
+              location.href = URL;
+            }
+          });
         }
       } catch (ex) {
         console.log(ex);
-        this.$swal({
-          title: ex.message,
-          type: "error",
-          showConfirmButton: true
-        });
         if (ex.message == "Please select a valid date") {
-          this.error = "Please select a valid date";
+          this.error = this.$root.$t("profile.invalidDate");
           this.dataReady = false;
+          this.$swal({
+            title: this.$root.$t("profile.invalidDate"),
+            type: "error",
+            showConfirmButton: true
+          });
+        } else {
+          this.$swal({
+            title: ex.message,
+            type: "error",
+            showConfirmButton: true
+          });
         }
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/profile/onlineHistory.vue",
-            apiUrl: config.getUserProfile.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

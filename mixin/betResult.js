@@ -1,30 +1,46 @@
 const jsonResult = require('~/data/result') // define the json result for the compare 
-import secureStorage from '~/plugins/secure-storage'
-import sound from "~/helpers/sound" // import the sound helper 
-import { mapMutations, mapGetters, mapActions } from 'vuex'
-// define a mixin object
+import { mapGetters, mapActions } from 'vuex'
 export const BetResult = {
-
     computed: {
-        ...mapGetters(["getItemsBetting"])
+        ...mapGetters(["getItemsBetting","getTimerByStockName","getStockLoop"]),
+        checkBettingResultNew(){
+            const stockTime = this.getTimerByStockName(this.$route.params.id);
+             // New Game Open Old Game Stock Result Popup
+            if (this.getStockLoop(this.$route.params.id) === 5) {
+                var resultSecond = 296;
+            } else {
+                var resultSecond = 56;
+            }
+            console.log(this.winBetData);
+        }   
     },
-
     methods: {
-
         ...mapActions([
             "setCollegeButtonNumberParent",
-            "setItemBetting",
-            "clearItemBetting"
-
         ]),
+        /**
+         *
+         *
+         * @param {*} result
+         * @param {*} stockName
+         * @param {*} betID
+         * @param {*} betWin
+         */
+        betResult(result, stockName, betID, betWin) {
 
-        betResult(result, stockName, betID, betWin) { // result, stockName , betID , betWin   
-            this.clearItemsAfterLastDraw()
-            const lastDraw = result.substr(result.length - 2); //get the last two digit
-            const first = parseInt(lastDraw.slice(0, 1)); // get the first digit number  
-            const last = parseInt(lastDraw.slice(1, 2)); // get the last digit number 
-            const bothDigit = first + last; // get the both digit number 
-            const twoDigit = lastDraw.slice(0, 1) + lastDraw.slice(1, 2); // git the two digit number          
+            // result 9510.87
+            // stockName btc1
+            // betID firstdigit - big
+            // betWin firstdigitWin - big
+
+            const lastDraw = result.substr(result.length - 2);
+            const first = parseInt(lastDraw.slice(0, 1));
+            const last = parseInt(lastDraw.slice(1, 2));
+            const bothDigit = first + last;
+            const twoDigit = lastDraw.slice(0, 1) + lastDraw.slice(1, 2);
+
+
+
             jsonResult.resultBet.map((items, index) => {
                 if ($("#" + stockName + betID).hasClass(items.type)) {
                     items.rules.map((item, index) => {
@@ -51,22 +67,36 @@ export const BetResult = {
             this.setCollegeButtonNumberParent('Can not find any bet') // make the button collage 
         },
 
-        // Multiple Result 
+        /**
+         *
+         *
+         * @param {*} item
+         * @param {*} number
+         * @param {*} stockName
+         * @param {*} betID
+         * @param {*} betWin
+         * @param {*} name
+         */
         multipleResult(item, number, stockName, betID, betWin, name) {
-            const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
-            const result = item.rule.includes(number); // check the value is have or not in the json result
-            if (result) {
 
-                sound.winBet(); // sound when user win the bet              
+            // item { rule: Array(1), name: "firstdigit-0" }
+            // number 9
+            // stockName btc1
+            // betID firstdigit - 0
+            // betWin firstdigitWin - 0
+            // name firstdigit - 0
+
+            const specificNumber = "#" + stockName + betID.split("-")[0]
+            const result = item.rule.includes(number);
+            if (result) {
+                this.$soundEffect('win')
                 $("#" + betWin).addClass('chip-animation');
                 $("#" + stockName + betID).addClass(
                     betID.split("-")[0] + "-animation"
                 );
-
                 setTimeout(() => {
                     this.setCollegeButtonNumberParent("You are win") // try to set the difference value 
-                    sound.winBet(); // sound when user win the bet
-
+                    this.$soundEffect('win')
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0]
                     );
@@ -78,8 +108,10 @@ export const BetResult = {
                     );
                     $(specificNumber).removeClass(
                         betID.split("-")[0]);
-
+                    $("#" + stockName + betID).removeClass(name); // remove the name firstdigit-1 
+                    $("#" + stockName + betID).removeClass(number); // remove the number 8
                     $("#" + betWin).removeClass('chip-animation');
+                    $(specificNumber + 'Number').removeClass('chip-animation');
                     // this.collectCoin()
                 }, 5000);
 
@@ -93,14 +125,15 @@ export const BetResult = {
                 );
                 $(specificNumber + 'Number').addClass('chip-animation');
                 this.setCollegeButtonNumberParent('You are lose in else false')
-                console.log('You win from  ', specificNumber + '-' + number)
-
                 $("#" + stockName + betID).removeClass(
                     betID.split("-")[0]
                 );
+                $("#" + stockName + betID).removeClass(name); // remove the name firstdigit-1 
+                $("#" + stockName + betID).removeClass(number); // remove the number 8
             } else {
                 $(specificNumber + 'Number').removeClass('chip-animation');
-
+                $("#" + stockName + betID).removeClass(name); // remove the name firstdigit-1 
+                $("#" + stockName + betID).removeClass(number); // remove the number 8
                 this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
@@ -111,12 +144,23 @@ export const BetResult = {
             }
         },
 
-        // Multiple Result 
+
+        /**
+         *
+         *
+         * @param {*} item
+         * @param {*} number
+         * @param {*} stockName
+         * @param {*} betID
+         * @param {*} betWin
+         * @param {*} name
+         */
         multipleResultTwoDigit(item, number, stockName, betID, betWin, name) {
             const specificNumber = "#" + stockName + betID.split("-")[0] // create the variable for receive the value
             const result = item.rule.includes(number); // check the value is have or not in the json result
             if (result) {
-                sound.winBet(); // sound when user win the bet              
+                this.$soundEffect('win')
+
                 $("#" + betWin).addClass('chip-animation');
                 $(specificNumber + 'Number').addClass('chip-animation');
                 $("#" + stockName + betID.split("-")[0]).addClass(
@@ -128,7 +172,8 @@ export const BetResult = {
 
                 setTimeout(() => {
                     this.setCollegeButtonNumberParent("You are win")
-                    sound.winBet(); // sound when user win the bet
+
+                    this.$soundEffect('win')
 
                     $("#" + stockName + betID).removeClass(
                         betID.split("-")[0]
@@ -148,7 +193,6 @@ export const BetResult = {
 
             } else {
                 $(specificNumber + 'Number').removeClass('chip-animation');
-                console.log('This is the result of two digit :', specificNumber + '-' + number)
                 this.setCollegeButtonNumberParent('You are lose in else' + specificNumber + '-' + number)
                 $(specificNumber).removeClass(
                     betID.split("-")[0]
@@ -195,24 +239,5 @@ export const BetResult = {
                 }, 1200);
             }
         },
-
-
-        // store bet in localStroge 
-        storeBetOnLocalStroge(items) {
-
-            this.setItemBetting(items)
-        },
-
-
-        // cler the bet from localStroge after new game 
-        clearItemsAfterLastDraw() {
-
-            if (this.getItemsBetting.length) {
-
-                this.clearItemBetting()
-
-                secureStorage.removeItem("itemBetting")
-            }
-        }
     }
 }

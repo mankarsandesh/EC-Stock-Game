@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import rules from "~/components/modern/rule/rules";
 import breadcrumbs from "~/components/breadcrumbs";
 export default {
@@ -19,6 +19,12 @@ export default {
   components: {
     rules,
     breadcrumbs
+  },
+  methods: {
+    ...mapActions(["userActivityAction"])
+  },
+  beforeDestroy() {
+    this.userActivityAction();
   }
 };
 </script>

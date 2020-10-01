@@ -8,6 +8,7 @@
     <v-container>
       <v-layout row wrap justify-center>
         <v-flex md12 lg10 xs12 mt-2>
+          <!--  Leaderboard Users List -->
           <leaderboardUserlist />
         </v-flex>
       </v-layout>
@@ -16,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions } from "vuex";
 import leaderboardUserlist from "~/components/modern/leaderboard/leaderboardUserlist";
 import breadcrumbs from "~/components/breadcrumbs";
 export default {
@@ -30,6 +31,12 @@ export default {
       tabs: ["history", "current bet"],
       active: null
     };
+  },
+  methods: {
+    ...mapActions(["userActivityAction"])
+  },
+  beforeDestroy() {
+    this.userActivityAction();
   }
 };
 </script>

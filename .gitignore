@@ -90,4 +90,4 @@ sw.*
 node_modules
 
 #stocklist data
-#data/stockList.js
+data/stockList.js

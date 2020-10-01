@@ -4,7 +4,7 @@
 
     <v-flex pa-2 class="headerStockBar">{{ $t("msg.betting") }}</v-flex>
 
-    <v-flex class="text-xs-center" style="overflow-y: auto;height:200px">
+    <v-flex class="text-xs-center" style="overflow-y: auto;height:150px">
       <h3 v-show="getOnGoingBet.length <= 0" class="pa-5 noBetting">{{ $t("msg.noBetting") }}</h3>
 
       <v-list three-line class="pa-0" v-show="getOnGoingBet.length > 0">

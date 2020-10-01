@@ -28,12 +28,26 @@
           <td>{{ item.item.betUUID }}</td>
           <td>{{ item.item.gameUUID }}</td>
           <td>
-            {{ item.item.ruleName }} - ({{ item.item.payout }})
-            {{ item.item.stockName }} / {{ item.item.loop }}
+            {{
+              isNaN(item.item.ruleName.split("_")[1])
+                ? $t("gamemsg." + item.item.ruleName.split("_")[0]) +
+                  "-" +
+                  $t("gamemsg." + item.item.ruleName.split("_")[1])
+                : $t("gamemsg." + item.item.ruleName.split("_")[0]) +
+                  "-" +
+                  item.item.ruleName.split("_")[1]
+            }}
+            - ({{ item.item.payout }}) {{ item.item.stockName }} /
+            {{ item.item.loop }}
             {{ $t("msg.minutes") }}
           </td>
-          <td>{{ item.item.createdDate }} {{ item.item.createdTime }}</td>
-          <td>{{ item.item.betAmount | toCurrency }}</td>
+          <td>
+            {{ item.item.createdDate | toStringDate }}
+            {{ item.item.createdTime }}
+          </td>
+          <td>
+            {{ checkCurrency(currency) }}{{ item.item.betAmount | currency }}
+          </td>
           <td>{{ item.item.payout }}</td>
           <td v-if="item.item.betResult == 'win'">
             <v-chip
@@ -72,7 +86,11 @@
               {{ currentBets.length }} {{ $t("leaderBoard.bets") }}
             </td>
             <td>
-              <strong>{{ TotalAmount | toCurrency }}</strong>
+              <strong>
+                <span v-if="TotalAmount > 0"
+                  >{{ checkCurrency(currency) }}{{ TotalAmount | currency }}
+                </span>
+              </strong>
             </td>
             <td colspan="2"></td>
           </tr>
@@ -83,8 +101,12 @@
 </template>
 
 <script>
+import date from "date-and-time";
+import utils from "~/mixin/utils";
+import moment from "moment";
+
 export default {
-  props: ["currentBets"],
+  props: ["currentBets", "currency"],
   data: () => ({
     search: ""
   }),
@@ -102,8 +124,20 @@ export default {
         minimumFractionDigits: 0 // minumum the value is not equal than 0
       });
       return formatter.format(value); // after get the currency that you prefer, than we return out with value
+    },
+    //To filter the default date format of bet data.
+    toStringDate(value) {
+      if (value) {
+        const now = date.format(new Date(), "YYYY-MM-DD");
+        if (value == now) {
+          return window.$nuxt.$root.$t("betHistory.today");;
+        } else {
+          return moment(String(value)).format("DD MMM YYYY");
+        }
+      }
     }
   },
+  mixins: [utils],
   computed: {
     TotalAmount() {
       // make the new value to make the frontend get this value from the computed

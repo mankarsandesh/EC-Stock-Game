@@ -1,10 +1,13 @@
 <template>
   <div>
     <v-list-tile v-if="userBetHistory.length == 0" class="notBets">
-      <h3>{{$t("betHistory.noBets")}}.</h3>
+      <h3>{{ $t("betHistory.noBets") }}.</h3>
     </v-list-tile>
     <v-list three-line v-if="userBetHistory.length > 0">
-      <template v-for="(item, index) in userBetHistory" style="margin-bottom:50px;">
+      <template
+        v-for="(item, index) in userBetHistory"
+        style="margin-bottom:50px;"
+      >
         <v-list-tile
           :key="item.betUUID"
           @click="
@@ -12,57 +15,86 @@
               item.betUUID,
               item.gameDraw,
               item.rollingAmount,
-              item.betAmount
+              item.betAmount,
+              item.tempBalance
             )
           "
         >
           <v-list-tile-content>
-            <v-list-tile-sub-title
-              class="headingTitle"
-            >{{ item.ruleName }} - ({{ item.payout }}) {{ item.stockName }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title class="headingTitle">
+              {{
+                isNaN(item.ruleName.split("_")[1])
+                  ? $t("gamemsg." + item.ruleName.split("_")[0]) +
+                    "-" +
+                    $t("gamemsg." + item.ruleName.split("_")[1])
+                  : $t("gamemsg." + item.ruleName.split("_")[0]) +
+                    "-" +
+                    item.ruleName.split("_")[1]
+              }}
+              - ({{ item.payout }}) {{ item.stockName }}</v-list-tile-sub-title
+            >
             <v-list-tile-sub-title>
-              <span class="lastDraw" v-html="$options.filters.lastDraw(item.gameDraw)"></span>
+              <span
+                class="lastDraw"
+                v-html="$options.filters.lastDraw(item.gameDraw)"
+              ></span>
             </v-list-tile-sub-title>
-            <v-list-tile-sub-title>{{ item.createdDate }} {{ item.createdTime }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title
+              >{{ item.createdDate | toStringDate }}
+              {{ item.createdTime }}</v-list-tile-sub-title
+            >
           </v-list-tile-content>
 
           <v-list-tile-action>
-            <span
-              v-if="item.betResult == 'lose'"
-              class="lossAmount"
-            >-{{ item.betAmount | toCurrency }}</span>
-            <span
-              v-if="item.betResult == 'win'"
-              class="winAmount"
-            >+{{ item.betAmount | toCurrency }}</span>
-            <div v-if="item.isFollowBet == 1" class="following">{{$t("betHistory.byFollowers")}}</div>
-            <div v-if="item.isFollowBet == 0" class="original">{{$t("betHistory.original")}}</div>
+            <span v-if="item.betResult == 'lose'" class="lossAmount"
+              >-{{ checkCurrency(curreny)
+              }}{{ item.betAmount | currency }}</span
+            >
+            <span v-if="item.betResult == 'win'" class="winAmount"
+              >+{{ checkCurrency(curreny)
+              }}{{ item.rollingAmount | currency }}</span
+            >
+            <div v-if="item.isFollowBet == 1" class="following">
+              {{ $t("betHistory.byFollowers") }}
+            </div>
+            <div v-if="item.isFollowBet == 0" class="original">
+              {{ $t("betHistory.original") }}
+            </div>
           </v-list-tile-action>
         </v-list-tile>
         <v-divider :key="index"></v-divider>
       </template>
+
+      <v-layout text-center mb-5>
+        <v-flex v-if="userBetHistory.length > 6">
+          <v-btn color="buttonGreen" v-on:click="loadMore()" text
+            >{{ $t("stockList.loadMore") }}
+          </v-btn>
+        </v-flex>
+      </v-layout>
+
       <div class="footer" v-if="userBetHistory.length > 0">
         <div>
           <span>
-            <strong>{{$t("betHistory.bets")}} :</strong>
+            <strong>{{ $t("betHistory.bets") }} :</strong>
             {{ userBetHistory.length }}
           </span>
           <span>
-            <strong>{{$t("betHistory.total")}}</strong>
-            :{{ TotalAmount | toCurrency }}
+            <strong>{{ $t("msg.totalAmount") }}</strong>
+            :{{ checkCurrency(curreny) }}{{ TotalAmount | currency }}
           </span>
           <span v-if="TotalAmount < TotalRolling">
-            <strong>{{$t("betHistory.rolling")}}</strong> :
-            <span style="color:green;">
-              {{
-              TotalRolling | toCurrency
-              }}
+            <strong>{{ $t("betHistory.income") }}</strong> :
+            <span style="color:#FFF;">
+              {{ TotalRolling | toCurrency }}
             </span>
           </span>
 
           <span v-if="TotalAmount > TotalRolling">
-            <strong>{{$t("betHistory.rolling")}}</strong> :
-            <span style="color: #c13f3f;font-weight: 800;">{{ TotalRolling | toCurrency }}</span>
+            <strong>{{ $t("betHistory.income") }}</strong> :
+            <span style="color: #c13f3f;font-weight: 800;">{{
+              TotalRolling | toCurrency
+            }}</span>
           </span>
         </div>
       </div>
@@ -71,22 +103,40 @@
     <!-- Follow and UnFollow Diealog Box -->
     <v-dialog v-model="dialog" width="500" class="betDetails">
       <v-card>
-        <h1 class="betId">{{$t("betHistory.bets")}} #{{ this.betUUID }}</h1>
+        <h1 class="betId">{{ $t("betHistory.bets") }} #{{ this.betUUID }}</h1>
 
         <v-layout class="betWrap">
-          <v-flex xs6 sm6 class="betSide">
-            <span>{{$t("betHistory.betDraw")}}</span>
+          <!-- <v-flex xs6 sm6 class="betSide">
+            <span>{{ $t("betHistory.betDraw") }}</span>
 
             <h4 v-html="$options.filters.lastDraw(this.gameDraw)"></h4>
-          </v-flex>
-          <v-flex xs6 sm6 class="betSide">
+          </v-flex> -->
+          <v-flex xs12 sm12 class="betSide">
             <div v-if="this.rollingAmount == 0">
-              <span>{{ $t("betHistory.yourLosingAmount") }}</span>
-              <h4 class="lossAmount">{{ this.betAmount }}</h4>
+              <span>{{ $t("betHistory.yourBalance") }}</span>
+              <h4 class="lossAmount">
+                {{ checkCurrency(curreny) }}
+                {{ parseInt(this.tempBalance) | currency }} -
+                {{ checkCurrency(curreny) }}{{ this.betAmount | currency }} =
+                {{ checkCurrency(curreny) }}
+                {{
+                  (parseInt(this.tempBalance) - parseInt(this.betAmount))
+                    | currency
+                }}
+              </h4>
             </div>
             <div v-if="this.rollingAmount != 0">
-              <span>{{ $t("betHistory.yourWinningAmount") }}</span>
-              <h4 class="winAmount">{{ this.rollingAmount }}</h4>
+              <span>{{ $t("betHistory.yourBalance") }}</span>
+              <h4 class="winAmount">
+                {{ checkCurrency(curreny)
+                }}{{ parseInt(this.tempBalance) | currency }} -
+                {{ checkCurrency(curreny) }}{{ this.betAmount | currency }} =
+                {{ checkCurrency(curreny)
+                }}{{
+                  (parseInt(this.tempBalance) - parseInt(this.betAmount))
+                    | currency
+                }}
+              </h4>
             </div>
           </v-flex>
         </v-layout>
@@ -105,14 +155,19 @@
   </div>
 </template>
 <script>
+import date from "date-and-time";
+import utils from "~/mixin/utils";
+import moment from "moment";
+
 export default {
-  props: ["userBetHistory"],
+  props: ["userBetHistory", "curreny"],
   data() {
     return {
       betAmount: "",
       betUUID: "",
       gameDraw: "",
       rollingAmount: "",
+      tempBalance: "",
       dialog: false,
       rowPageCount: 10,
       dateTo: new Date().toISOString().substr(0, 10),
@@ -141,6 +196,7 @@ export default {
     };
   },
   filters: {
+    //To filter the currency signs in footer.
     toCurrency(value) {
       if (typeof value !== "number") {
         return value;
@@ -152,8 +208,20 @@ export default {
         minimumFractionDigits: 0
       });
       return formatter.format(value);
+    },
+    //To filter the default date format of bet data.
+    toStringDate(value) {
+      if (value) {
+        const now = date.format(new Date(), "YYYY-MM-DD");
+        if (value == now) {
+          return window.$nuxt.$root.$t("betHistory.today");
+        } else {
+          return moment(String(value)).format("DD MMM YYYY");
+        }
+      }
     }
   },
+  mixins: [utils],
   computed: {
     TotalAmount() {
       let total = null;
@@ -165,18 +233,22 @@ export default {
     TotalRolling() {
       let total = null;
       this.userBetHistory.map(item => {
-        total += item.rollingAmount;
+        total += item.rollingAmount - item.betAmount;
       });
       return total;
     }
   },
   methods: {
-    betDetails(betUUID, gameDraw, rollAmount, amount) {
+    loadMore() {
+      this.$emit("userLimit");
+    },
+    betDetails(betUUID, gameDraw, rollAmount, amount, tempBalance) {
       this.dialog = true;
       this.betUUID = betUUID;
       this.gameDraw = gameDraw;
       this.rollingAmount = rollAmount;
       this.betAmount = amount;
+      this.tempBalance = tempBalance;
     },
     setZero(num, digit) {
       var zero = "";
@@ -232,7 +304,7 @@ export default {
   left: 0;
   width: 100%;
   background-color: #2bb03e;
-  padding: 15px 0px;
+  padding: 10px 0px;
   position: fixed;
   bottom: 0;
   color: #fff;
@@ -244,8 +316,8 @@ export default {
 }
 .footer div span {
   text-align: center;
-  font-size: 18px;
-  margin: 0px 6px;
+  font-size: 15px;
+  margin: 0px 4px;
 }
 .lastDraw {
   background-color: #dddddd;
@@ -256,7 +328,7 @@ export default {
 .headingTitle {
   font-weight: 600;
   color: #003f70 !important;
-  font-size: 16px;
+  font-size: 14px;
 }
 .totalRollingWin {
   font-weight: 800;

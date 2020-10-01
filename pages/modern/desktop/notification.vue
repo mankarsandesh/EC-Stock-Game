@@ -11,13 +11,11 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapGetters, mapState ,mapActions} from "vuex";
 import breadcrumbs from "~/components/breadcrumbs";
 import notification from "~/components/modern/notification";
 import config from "~/config/config.global";
 import secureStorage from "../../../plugins/secure-storage";
-//const { Translate } = require("@google-cloud/translate").v2;
-import log from "roarr";
 
 export default {
   layout: "desktopModern",
@@ -35,6 +33,7 @@ export default {
   },
   async created() {
     await this.fetch();
+    this.userActivityAction();
   },
   computed: {
     ...mapState({
@@ -43,15 +42,15 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["setIsLoadingStockGame"]),
+    ...mapActions(["userActivityAction"]),
     async fetch() {
       try {
-        var reqBody = {
+        let reqBody = {
           portalProviderUUID: this.portalProviderUUID,
           userUUID: this.userUUID,
           version: config.version
         };
-        var res = await this.$axios.$post(
+        let res = await this.$axios.$post(
           config.getUserNotification.url,
           reqBody,
           {
@@ -59,28 +58,17 @@ export default {
           }
         );
         if (res.status) {
-          this.notificationData = res.data;
+          this.notificationData = res.data.reverse();
         } else {
-          throw new Error(config.error.general);
+          throw new Error(this.$root.$t("error.general"));
         }
       } catch (ex) {
         console.log(ex);
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          timer: 2000
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "pages/modern/desktop/notification.vue",
-            apiUrl: config.getUserNotification.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     }
   }

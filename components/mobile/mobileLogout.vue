@@ -1,20 +1,14 @@
 <template>
   <div style="z-index:100">
     <template>
-      <nuxt-link :to="'/modern/userprofile/' + getUserInfo.userUUID">
+      <nuxt-link to="/modern/userprofile/">
         <v-btn flat>
-          <v-avatar size="35" mr-1>
+          <v-avatar size="25" mr-1>
             <img :src="imgProfile" alt />
           </v-avatar>
-          <div class="userLogoutMenu">
-            <span> {{ getUserName }} </span>
-            <span
-              >&nbsp; {{ $t("msg.acc") }}:
-              <animated-number
-                :value="getUserBalance"
-                :formatValue="formatToPrice"
-                class="balance"
-              />
+          <div class="userLogoutMenu">           
+            <span > &nbsp;           
+            <userMainBalance/>
             </span>
           </div>
         </v-btn>
@@ -41,18 +35,19 @@
 <script>
 import OnlineHistory from "~/components/mobile/onlineHistory";
 import StockAnalysis from "~/components/mobile/stockAnalysis";
-import AnimatedNumber from "animated-number-vue";
 import { mapGetters } from "vuex";
 import profile from "~/pages/modern/desktop/profile";
 import config from "~/config/config.global";
 import secureStorage from "../../plugins/secure-storage";
+import utils from "~/mixin/utils";
+import userMainBalance from "~/components/global/userMainBalance";
 
 export default {
   components: {
-    profile,
-    AnimatedNumber,
+    profile,  
     OnlineHistory,
-    StockAnalysis
+    StockAnalysis,
+    userMainBalance
   },
   data() {
     return {
@@ -65,14 +60,15 @@ export default {
       "getUserName",
       "getBalance",
       "getUserInfo",
-      "getUserBalance"
+      "getUserCurrency"
     ]),
-    imgProfile() {
+    imgProfile() {    
       return this.getUserInfo.profileImage === null
         ? this.defaultImage
-        : `${config.apiDomain}/` + this.getUserInfo.profileImage;
+        : `${config.apiDomain}/`+this.getUserInfo.profileImage;
     }
   },
+  mixins: [utils],
   methods: {
     nFormatter(num, digits) {
       var si = [
@@ -116,13 +112,6 @@ export default {
         (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol
       );
     },
-    formatToPrice(value) {
-      // return `$ ${this.nFormatter(value, 2)}`;
-      return ` ${Number(value)
-        .toFixed(2)
-        .toString()
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1, ")}`;
-    },
     getLogout() {
       this.$swal({
         title: window.$nuxt.$root.$t("msg.sure"),
@@ -140,7 +129,7 @@ export default {
             title: "Good Bye EC Gaming!",
             type: "success",
             showConfirmButton: false,
-            timer: 1500
+            timer: 2000
           }).then(Confirm => {
             window.close();
           });
@@ -149,7 +138,7 @@ export default {
             title: "Cancelled Logout",
             type: "error",
             showConfirmButton: false,
-            timer: 1500
+            timer: 2000
           });
         }
       });
@@ -168,10 +157,10 @@ export default {
 }
 
 .userLogoutMenu {
-  font-size: 12px;
   float: left;
   text-align: left;
-
+  color: #003f70;
+  font-size: 16px;
   display: inline-grid;
 }
 

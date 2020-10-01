@@ -85,7 +85,7 @@ export default {
           } else {
             // this.imageUrl = dataurl
             // this.$refs.output.src = dataurl;
-            console.log(dataurl);
+         
             // let res = await this.$axios.$post("/api/me/uploadImage?apikey=" + this.$store.state.auth_token, {
             //     image: dataurl
             // });

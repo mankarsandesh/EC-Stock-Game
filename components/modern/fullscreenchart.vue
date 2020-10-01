@@ -14,7 +14,6 @@
 import VueApexCharts from "vue-apexcharts";
 import { mapGetters } from "vuex";
 import config from "../../config/config.global";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage.js";
 
 export default {
@@ -25,55 +24,55 @@ export default {
   data() {
     return {
       chartHeight: "350vh",
-      stockName: this.$route.path.split('/')[3],
-      loopName: '',
+      stockName: this.$route.path.split("/")[3],
+      loopName: "",
       window: {
         width: 0,
         height: 0
       },
       series: [
         {
-          name: window.$nuxt.$root.$t("gamemsg.big"),
+          name: this.$root.$t("gamemsg.big"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: window.$nuxt.$root.$t("gamemsg.small"),
+          name: this.$root.$t("gamemsg.small"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: window.$nuxt.$root.$t("gamemsg.odd"),
+          name: this.$root.$t("gamemsg.odd"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: window.$nuxt.$root.$t("gamemsg.even"),
+          name: this.$root.$t("gamemsg.even"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: window.$nuxt.$root.$t("gamemsg.high"),
+          name: this.$root.$t("gamemsg.high"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: window.$nuxt.$root.$t("gamemsg.mid"),
+          name: this.$root.$t("gamemsg.mid"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: window.$nuxt.$root.$t("gamemsg.low"),
+          name: this.$root.$t("gamemsg.low"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: window.$nuxt.$root.$t("gamemsg.number"),
+          name: this.$root.$t("gamemsg.number"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         },
         {
-          name: window.$nuxt.$root.$t("gamemsg.tie"),
+          name: this.$root.$t("gamemsg.tie"),
           data: [0, 0, 0, 0],
           betCounts: [0, 0, 0, 0]
         }
@@ -114,22 +113,27 @@ export default {
             highlightDataSeries: false
           },
           y: {
-            formatter: function(
-              val,
-              { series, seriesIndex, dataPointIndex, w }
-            ) {
+            formatter: (val, { series, seriesIndex, dataPointIndex, w }) => {
               return (
                 '<div class="arrow_box">' +
-                "<span> Amount: $" +
-                series[seriesIndex][dataPointIndex] +
-                " </span>" +
-                "</div>" +
-                '<div class="arrow_box">' +
-                "<span> BetCount:" +
+                `<span> ${this.$root.$t("msg.betCount")} : ` +
                 w.config.series[seriesIndex].betCounts[dataPointIndex] +
                 "</span>" +
                 "</div>"
               );
+
+              // return (
+              //   '<div class="arrow_box">' +
+              //   `<span> ${this.$root.$t("msg.amount")}: $` +
+              //   series[seriesIndex][dataPointIndex] +
+              //   " </span>" +
+              //   "</div>" +
+              //   '<div class="arrow_box">' +
+              //   `<span> ${this.$root.$t("msg.betCount")} : ` +
+              //   w.config.series[seriesIndex].betCounts[dataPointIndex] +
+              //   "</span>" +
+              //   "</div>"
+              // );
             }
           }
         },
@@ -147,12 +151,13 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    if(this.stockName.slice(0, -1) == 'btc') {
-      this.loopName = this.stockName.slice(-1) == 1 ? this.stockName.slice(-1) : '5';
-      this.stockName = this.stockName; 
+    if (this.stockName.slice(0, -1) == "btc") {
+      this.loopName =
+        this.stockName.slice(-1) == 1 ? this.stockName.slice(-1) : "5";
+      this.stockName = this.stockName;
     } else {
       this.stockName = this.stockName[3];
-      this.loopName = '5';
+      this.loopName = "5";
     }
     this.connectSocket();
   },
@@ -163,6 +168,7 @@ export default {
     ...mapGetters([
       "getGameUUIDByStockName",
       "getPortalProviderUUID",
+      "getUserUUID",
       "getStockUUIDByStockName"
     ])
   },
@@ -170,7 +176,9 @@ export default {
     connectSocket() {
       this.listenForBroadcast(
         {
-          channelName: `liveBetCounts.${this.getPortalProviderUUID}.${this.getStockUUIDByStockName(this.stockName)}.${this.loopName}`,
+          channelName: `liveBetCounts.${
+            this.getPortalProviderUUID
+          }.${this.getStockUUIDByStockName(this.stockName)}.${this.loopName}`,
           eventName: "liveBetCounts"
         },
         ({ data }) => {
@@ -180,23 +188,10 @@ export default {
               this.series = data.data;
               this.componentKey += 1;
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
             console.log(ex);
-            log.error(
-              {
-                channel: `liveBetCounts.${this.getGameUUIDByStockName(
-                  this.$route.params.id
-                )}`,
-                event: "liveBetCounts",
-                res: logData,
-                page: "components/modern/fullscreenchart.vue",
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         }
       );
@@ -207,7 +202,7 @@ export default {
         .on("pusher:subscription_succeeded", async member => {
           try {
             var reqBody = {
-              portalProviderUUID: this.getPortalProviderUUID,
+              portalProviderUUID: this.getPortalProviderUUID,            
               gameUUID: this.getGameUUIDByStockName(this.$route.params.id),
               version: 1
             };
@@ -222,21 +217,9 @@ export default {
               this.series = data.data;
               this.componentKey += 1;
             } else {
-              throw new Error(config.error.general);
+              throw new Error(this.$root.$t("error.general"));
             }
           } catch (ex) {
-            console.log(ex);
-            log.error(
-              {
-                req: reqBody,
-                res: data,
-                page: "components/modern/fullscreenchart.vue",
-                apiUrl: config.liveBetCount.url,
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
           }
         });
     },

@@ -1,5 +1,6 @@
 <template>
-  <v-app>
+  <v-app style="touch-action:pan-y; !important">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -19,6 +20,8 @@
             router
             exact
             class="text-primary text-uppercase"
+            active-class="activeMenu"
+            :class="item.to === $route.path ? 'activeMenu' : ''"
           >
             <v-list-tile-content>
               <v-list-tile-title>
@@ -39,9 +42,9 @@
 
     <v-toolbar
       :clipped-left="clipped"
-      class="pa-3 text-primary light-toobar setheight"
+      class="pa-2 text-primary light-toobar setheight"
     >
-      <v-flex class="pa-2">
+      <v-flex>
         <nuxt-link to="/modern">
           <v-toolbar-title>
             <v-img width="30" src="/favicon.png"></v-img>
@@ -130,6 +133,7 @@ import i18n from "vue-i18n";
 import secureStorage from "../plugins/secure-storage";
 import Button from "~/components/Button";
 import Snackbar from "../components/mobile/Snackbar.vue";
+import config from "../config/config.global";
 
 export default {
   components: {
@@ -138,7 +142,8 @@ export default {
     languageDialog,
     mobileLogout,
     Button,
-    Snackbar
+    Snackbar,
+    config
   },
   data() {
     return {
@@ -154,61 +159,22 @@ export default {
       isShow: ""
     };
   },
-  created() {
-    this.connectUserBalanceSocket();
-  },
   mounted() {
     setInterval(() => {
       this.isShow = location.pathname.split("/")[2];
     });
   },
   methods: {
-    ...mapActions(["setUserBalance"]),
+    ...mapActions(["setUserLogout"]),
     getLogout() {
       this.dialogConfirm = true;
     },
-    dialogStatus(value) {
-      if (value) {
-        secureStorage.removeItem("AUTH");
-        const URL = secureStorage.getItem("referrerURL");
-        location.href = "http://" + URL;
-        this.dialogConfirm = false;
-      }
+    async dialogStatus() {
       this.dialogConfirm = false;
-    },
-    listenUserBalance({ channelName, eventName }, callback) {
-      window.Echo.channel(channelName).listen(eventName, callback);
-    },
-    connectUserBalanceSocket() {
-      this.listenUserBalance(
-        {
-          channelName: `balanceUpdate.${this.getUserUUID}`,
-          eventName: "balanceUpdate"
-        },
-        ({ data }) => {
-          try {
-            var logData = data;
-            if (data.status) {
-              this.setUserBalance(data.data.userBalance);
-            } else {
-              throw new Error(config.error.general);
-            }
-          } catch (ex) {
-            console.log(ex);
-            log.error(
-              {
-                channelName: `balanceUpdate.${this.getUserUUID}`,
-                eventName: "balanceUpdate",
-                res: logData,
-                page: "layouts/default.vue",
-                provider: this.getPortalProviderUUID,
-                user: secureStorage.getItem("USER_UUID")
-              },
-              ex.message
-            );
-          }
-        }
-      );
+      const URL = secureStorage.getItem("referrerURL");
+      await this.setUserLogout();         
+      location.href = URL;
+      secureStorage.removeItem("referrerURL");
     }
   },
   beforeDestroy() {
@@ -224,6 +190,10 @@ export default {
 </script>
 
 <style scoped>
+.activeMenu {
+  background-color: #1db42f !important;
+  color: #fff !important;
+}
 .light-toobar {
   background-color: #fff !important;
 }

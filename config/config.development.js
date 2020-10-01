@@ -5,10 +5,13 @@ const config = {
   apiDomain: process.env.API_DOMAIN,
   socketUrl: process.env.SOCKET_URL,
   baseUrl: process.env.BASE_URL,
-  secretKey: "CC21128A312FAF7817C93D1B51CB9",
+  secretKey: "GYXMAKGDYAWDW4K1C6HWWQHXH2W",
   secureStorageSecretKey: process.env.SECURE_STORAGE_SECRET_KEY,
   sessionExpiryTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   isMaintenance: process.env.MAINTENANCE_MODE,
+  Whitelabel : {
+    url :  `${process.env.WHITELABEL_URL}`
+  },
   header: {
     authorization: "Basic VG5rd2ViQXBpOlRlc3QxMjMh"
   },
@@ -72,8 +75,24 @@ const config = {
   liveCountBetData: {
     url: `${process.env.BASE_URL}/liveCountBetData`
   },
+  getUserInvitationDetails: {
+    url: `${process.env.BASE_URL}/getUserInvitationDetail`
+  },
+  userLogout: {
+    url: `${process.env.BASE_URL}/appUsersLogout`
+  },
+  checkBetStatus: {
+    url: `${process.env.BASE_URL}/checkBetStatus`
+  },
+  userActivityLog: {
+    url: `${process.env.BASE_URL}/userActivityLog`,
+    timer: process.env.USER_ACTIVITY_TIME
+  },
+  userAuthorizedLogin: {
+    url: `${process.env.BASE_URL}/webUserAuthorizedLogin`,
+  },
   serverConfig: {
-    port: 8000,
+    port: 9000,
     host: "0.0.0.0"
   },
   error: {
@@ -81,6 +100,7 @@ const config = {
     lowBalance: "Insufficient Balance. Please topup your balance"
   },
   loginError: {
+    token: "Token is Missing",
     portalProvider: "Portal Provider UUID is invalid",
     portalProviderUserId: "Portal Provider User Id is invalid",
     balance: "Balance is invalid",
@@ -89,7 +109,7 @@ const config = {
   logDomain: process.env.LOG_DOMAIN,
   defaultLanguageLocale: "cn",
   defaultCoinsModern: ["100", "500", "1000", "5000", "10000"],
-  homePageStockName: "btc1",
+  homePageStockName: "btc5",
   language: {
     cn: "chinese",
     us: "english",

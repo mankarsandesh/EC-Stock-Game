@@ -6,13 +6,13 @@
         v-if="conversationChanel.length == 0"
       >
         <i class="fa fa-bell"></i>
-        <p>There are no users Invitaion in {{ stockName }} Channel.</p>
+        <p>There are no users Invitation in {{ stockName }} Channel.</p>
       </div>
 
       <div v-for="data in conversationChanel" :key="data.index" class="msgUser">
         <div class="messageChatView">
           <div>
-            <nuxt-link :to="'/modern/desktop/userprofile/' + data.userUUID">
+            <nuxt-link :to="'/modern/desktop/userprofile/?id=' + data.userUUID">
               <v-img
                 class="userImage"
                 :src="userImgProfile(data.userImage)"
@@ -188,8 +188,6 @@ export default {
       this.FollowUserUUID = userUUID;
       method == 0 ? (this.FolloworNot = 1) : (this.FolloworNot = 2);
       this.userImage = this.userImgProfile(userImage);
-      console.log(userImage);
-      console.log(this.userImage);
       this.dialog = true;
     },
     scrollDown() {

@@ -1,13 +1,8 @@
 <template>
-  <div class="d-flex justify-center">
+  <div class="d-flex justify-center ChipsDiv">
     <v-img v-if="isShow" :src="setsrc" :width="size" class="show-chip">
-      <span>{{ amount }}</span>
+      <span class="show-chipAmount">{{ amount }}</span>
     </v-img>
-    <!-- <v-img v-show="amounts > 0 " src="/chip/danger.png'" width="20" class="show-chip" />
-    <v-img v-show="amounts >=500" src="/chip/primary.png" width="25" class="show-chip" />
-    <v-img v-show="amounts >=1000" src="/chip/success.png" width="30" class="show-chip" />
-    <v-img v-show="amounts >=5000" src="/chip/warning.png" width="35" class="show-chip" />
-    <v-img v-show="amounts >=10000" src="/chip/black.png" width="40" class="show-chip" />-->
   </div>
 </template>
 
@@ -96,13 +91,20 @@ export default {
 };
 </script>
 
-<style>
+<style >
+
 .show-chip {
   position: absolute;
+  margin-top: 15px;
+  color:#003e70;
 }
 
 .v-responsive__content {
   align-self: center !important;
   font-size: 12px;
 }
+.show-chipAmount{
+  font-weight: 800;
+}
+
 </style>

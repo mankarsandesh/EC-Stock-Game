@@ -1,21 +1,26 @@
 <template>
-  <div class="v-card-style">
-    <v-layout px-1 mt-1>
+  <div class="v-card-style" id="v-card-style">
+    <v-layout px-1 >
       <v-flex xs6 class="text-xs-left stockTimer">
         <span v-if="getStockLiveTime(stockName)">{{
           getStockLiveTime(stockName).split(" ")[1]
         }}</span>
       </v-flex>
-      <v-flex xs6 class="text-xs-right stockPrice" v-if="getStockLivePrice(stockName) ">
+      <v-flex
+        xs6
+        class="text-xs-right stockPrice"
+        v-if="getStockLivePrice(stockName)"
+      >
         <span>${{ getStockLivePrice(stockName) }}</span>
       </v-flex>
     </v-layout>
-    <apexchart
+    <apexchart   
       type="area"
       :height="chartHeight"
       width="99.5%"
       :options="chartOptions"
       :series="series"
+      v-if="isDataReady"
     />
   </div>
 </template>
@@ -27,7 +32,6 @@ import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
 import { mapGetters, mapActions } from "vuex";
 import Echo from "laravel-echo";
-import log from "roarr";
 import secureStorage from "../../plugins/secure-storage";
 
 export default {
@@ -43,7 +47,9 @@ export default {
   },
   data() {
     return {
-      chartHeight: "240vh",
+      chartHeight: "245vh",
+      isDataReady: false,
+      apiAttemptCount: 0,
       window: {
         width: 0,
         height: 0
@@ -51,8 +57,7 @@ export default {
       chartData: []
     };
   },
-  created() {
-    this.fetchChart(this.getStockUUIDByStockName(this.stockName));
+  async created() {    
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
@@ -64,6 +69,7 @@ export default {
     );
   },
   mounted() {
+    this.fetchChart(this.getStockUUIDByStockName(this.stockName));
     // socket new api
     this.listenForBroadcast(
       {
@@ -75,7 +81,6 @@ export default {
       },
       ({ data }) => {
         try {
-          var logData = data;
           if (data.status) {
             let dataIndex = data.data.roadMap[0];
             let readyData = {
@@ -84,10 +89,6 @@ export default {
               number1: dataIndex.number1,
               number2: dataIndex.number2
             };
-            // if (
-            //   dataIndex.stockTimeStamp !==
-            //   this.chartData[this.chartData.length - 1].stockTimeStamp
-            // ) {
             this.setClearRoadMap(true);
             this.setLiveChart(readyData);
             setTimeout(() => {
@@ -95,23 +96,10 @@ export default {
             }, 1000);
             // }
           } else {
-            throw new Error(config.error.general);
+            throw new Error(this.$root.$t("error.general"));
           }
         } catch (ex) {
           console.log(ex);
-          log.error(
-            {
-              channel: `roadMap.${this.getStockUUIDByStockName(
-                this.stockName
-              )}.${this.getPortalProviderUUID}`,
-              event: "roadMap",
-              res: logData,
-              page: "components/modern/chart.vue",
-              provider: this.getPortalProviderUUID,
-              user: secureStorage.getItem("USER_UUID")
-            },
-            ex.message
-          );
         }
       }
     );
@@ -122,6 +110,7 @@ export default {
   computed: {
     ...mapGetters([
       "getPortalProviderUUID",
+      "getUserUUID",
       "getStockLivePrice",
       "getStockLiveTime",
       "getStockUUIDByStockName"
@@ -136,7 +125,7 @@ export default {
           custom: function({ series, seriesIndex, dataPointIndex, w }) {
             return (
               '<div class="arrow_boxChart"> $' +
-              series[seriesIndex][dataPointIndex].toFixed(2) +
+              w.config.series[0].data[dataPointIndex] +
               "</div>"
             );
           }
@@ -244,38 +233,42 @@ export default {
       try {
         var reqBody = {
           portalProviderUUID: this.getPortalProviderUUID,
+          userUUID: this.getUserUUID,
           limit: 50,
           stockUUID: [stockUUID],
           version: config.version
         };
         var res = await this.$axios.$post(config.getRoadMap.url, reqBody, {
           headers: config.header
-        });
-
-        if (res.status) {
+        });        
+        if (res.code) {        
+          this.apiAttemptCount = 0;
           let readyData = res.data[0].roadMap.reverse();
           this.chartData = readyData;
+          this.isDataReady = true;
         } else {
-          throw new Error(config.error.general);
-        }
+          if (this.apiAttemptCount < 3) {
+            this.apiAttemptCount++;
+            this.fetchChart(stockUUID);
+          } else {
+            throw new Error(this.$root.$t("error.general"));
+          }
+        }       
       } catch (ex) {
         console.error(ex);
         this.$swal({
           title: ex.message,
           type: "error",
-          timer: 1000
+          confirmButtonText: "Okay Logout",
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        }).then(result => {
+          if (result.value) {
+             const URL = secureStorage.getItem("referrerURL");
+             location.href = URL;
+          } else {
+          }
         });
-        log.error(
-          {
-            req: reqBody,
-            res,
-            page: "components/modern/chart.vue",
-            apiUrl: config.getRoadMap.url,
-            provider: secureStorage.getItem("PORTAL_PROVIDERUUID"),
-            user: secureStorage.getItem("USER_UUID")
-          },
-          ex.message
-        );
       }
     },
     listenForBroadcast({ channelName, eventName }, callback) {
@@ -287,10 +280,10 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-      this.demo = this.window.width;     
+      this.demo = this.window.width;
       // Chart Size Change According Desktop and Laptop Size
       if (this.window.width >= 2000) {
-        this.chartHeight = "360vh";
+        this.chartHeight = "350vh";
         this.heightChart = 360;
       } else if (this.window.width > 1400) {
         this.chartHeight = "330vh";
